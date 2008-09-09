@@ -450,7 +450,7 @@ operator|.
 name|getDirName
 argument_list|()
 argument_list|,
-literal|"tmp."
+literal|"_tmp."
 operator|+
 name|Utilities
 operator|.

@@ -2548,6 +2548,51 @@ name|parts
 return|;
 block|}
 block|}
+specifier|public
+specifier|static
+name|boolean
+name|needsDeletion
+parameter_list|(
+name|FileStatus
+name|file
+parameter_list|)
+block|{
+name|String
+name|name
+init|=
+name|file
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+comment|// There is a race condition in hadoop as a result of which
+comment|// the _task files created in the output directory at the time
+comment|// of the mapper is reported in the output directory even though
+comment|// it is actually removed. The first check works around that
+comment|// NOTE: it's not clear that this still affects recent versions of hadoop
+comment|// the second check deals with uncommitted output files produced by hive tasks
+comment|// this would typically happen on task failures or due to speculation
+return|return
+operator|(
+name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"_task"
+argument_list|)
+operator|||
+name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"_tmp."
+argument_list|)
+operator|)
+return|;
+block|}
 specifier|private
 name|void
 name|checkPaths
@@ -2621,12 +2666,21 @@ name|j
 operator|++
 control|)
 block|{
-comment|// There is a race condition in hadoop as a result of which
-comment|// the _task files created in the output directory at the time
-comment|// of the mapper is reported in the output directory even though
-comment|// it is actually removed. The following check works around that
 if|if
 condition|(
+name|needsDeletion
+argument_list|(
+name|items
+index|[
+name|j
+index|]
+argument_list|)
+condition|)
+block|{
+name|fs
+operator|.
+name|delete
+argument_list|(
 name|items
 index|[
 name|j
@@ -2634,16 +2688,10 @@ index|]
 operator|.
 name|getPath
 argument_list|()
-operator|.
-name|getName
-argument_list|()
-operator|.
-name|startsWith
-argument_list|(
-literal|"_task"
+argument_list|,
+literal|true
 argument_list|)
-condition|)
-block|{
+expr_stmt|;
 continue|continue;
 block|}
 if|if
@@ -3103,27 +3151,6 @@ name|j
 operator|++
 control|)
 block|{
-if|if
-condition|(
-name|items
-index|[
-name|j
-index|]
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-operator|.
-name|startsWith
-argument_list|(
-literal|"_task"
-argument_list|)
-condition|)
-block|{
-continue|continue;
-block|}
 name|boolean
 name|b
 init|=

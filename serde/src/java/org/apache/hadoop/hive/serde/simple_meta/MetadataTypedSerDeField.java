@@ -171,26 +171,7 @@ operator|<=
 name|_position
 condition|)
 block|{
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"get "
-operator|+
-name|temp
-operator|.
-name|col
-operator|.
-name|size
-argument_list|()
-operator|+
-literal|"<="
-operator|+
-name|_position
-argument_list|)
-expr_stmt|;
+comment|//System.err.println("get " + temp.col.size() + "<=" + _position);
 return|return
 literal|null
 return|;
