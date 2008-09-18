@@ -144,6 +144,13 @@ name|showTblsDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the createTblDesc    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Create Table Operator"
+argument_list|)
 specifier|public
 name|createTableDesc
 name|getCreateTblDesc
@@ -170,6 +177,13 @@ name|createTblDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the dropTblDesc    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Drop Table Operator"
+argument_list|)
 specifier|public
 name|dropTableDesc
 name|getDropTblDesc
@@ -196,6 +210,13 @@ name|dropTblDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the alterTblDesc    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Alter Table Operator"
+argument_list|)
 specifier|public
 name|alterTableDesc
 name|getAlterTblDesc
@@ -222,6 +243,13 @@ name|alterTblDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the showTblsDesc    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Show Table Operator"
+argument_list|)
 specifier|public
 name|showTablesDesc
 name|getShowTblsDesc
@@ -248,6 +276,13 @@ name|showTblsDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the descTblDesc    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Describe Table Operator"
+argument_list|)
 specifier|public
 name|descTableDesc
 name|getDescTblDesc

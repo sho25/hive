@@ -445,7 +445,7 @@ name|put
 argument_list|(
 literal|"__udf__concat"
 argument_list|,
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDFClass
 argument_list|(

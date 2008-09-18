@@ -40,6 +40,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Move Operator"
+argument_list|)
 specifier|public
 class|class
 name|moveWork
@@ -103,6 +110,13 @@ operator|=
 name|loadFileWork
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"tables"
+argument_list|)
 specifier|public
 name|List
 argument_list|<
@@ -136,6 +150,13 @@ operator|=
 name|loadTableWork
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"files"
+argument_list|)
 specifier|public
 name|List
 argument_list|<

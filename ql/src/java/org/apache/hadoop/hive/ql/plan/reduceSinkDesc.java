@@ -30,6 +30,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Reduce Output Operator"
+argument_list|)
 specifier|public
 class|class
 name|reduceSinkDesc
@@ -199,6 +206,13 @@ operator|=
 name|numPartitionFields
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"key expressions"
+argument_list|)
 specifier|public
 name|java
 operator|.
@@ -240,6 +254,13 @@ operator|=
 name|keyCols
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"value expressions"
+argument_list|)
 specifier|public
 name|java
 operator|.
@@ -281,6 +302,13 @@ operator|=
 name|valueCols
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"# partition fields"
+argument_list|)
 specifier|public
 name|int
 name|getNumPartitionFields
@@ -307,6 +335,13 @@ operator|=
 name|numPartitionFields
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"tag"
+argument_list|)
 specifier|public
 name|int
 name|getTag

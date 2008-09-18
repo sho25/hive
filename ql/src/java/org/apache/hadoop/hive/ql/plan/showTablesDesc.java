@@ -35,11 +35,28 @@ name|java
 operator|.
 name|io
 operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|Serializable
 import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Show Tables"
+argument_list|)
 specifier|public
 class|class
 name|showTablesDesc
@@ -106,6 +123,13 @@ name|pattern
 expr_stmt|;
 block|}
 comment|/**    * @return the pattern    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"pattern"
+argument_list|)
 specifier|public
 name|String
 name|getPattern
@@ -140,6 +164,43 @@ block|{
 return|return
 name|resFile
 return|;
+block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"result file"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
+argument_list|)
+specifier|public
+name|String
+name|getResFileString
+parameter_list|()
+block|{
+try|try
+block|{
+return|return
+name|getResFile
+argument_list|()
+operator|.
+name|getCanonicalPath
+argument_list|()
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|ioe
+parameter_list|)
+block|{
+return|return
+literal|"error"
+return|;
+block|}
 block|}
 comment|/**    * @param resFile the resFile to set    */
 specifier|public

@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -57,7 +67,32 @@ name|FieldSchema
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Alter Table"
+argument_list|)
 specifier|public
 class|class
 name|alterTableDesc
@@ -163,6 +198,13 @@ name|newCols
 expr_stmt|;
 block|}
 comment|/**    * @return the old name of the table    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"old name"
+argument_list|)
 specifier|public
 name|String
 name|getOldName
@@ -189,6 +231,13 @@ name|oldName
 expr_stmt|;
 block|}
 comment|/**    * @return the newName    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"new name"
+argument_list|)
 specifier|public
 name|String
 name|getNewName
@@ -224,6 +273,40 @@ return|return
 name|op
 return|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"type"
+argument_list|)
+specifier|public
+name|String
+name|getAlterTableTypeString
+parameter_list|()
+block|{
+switch|switch
+condition|(
+name|op
+condition|)
+block|{
+case|case
+name|RENAME
+case|:
+return|return
+literal|"rename"
+return|;
+case|case
+name|ADDCOLS
+case|:
+return|return
+literal|"add columns"
+return|;
+block|}
+return|return
+literal|"unknown"
+return|;
+block|}
 comment|/**    * @param op the op to set    */
 specifier|public
 name|void
@@ -251,6 +334,31 @@ parameter_list|()
 block|{
 return|return
 name|newCols
+return|;
+block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"new columns"
+argument_list|)
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getNewColsString
+parameter_list|()
+block|{
+return|return
+name|Utilities
+operator|.
+name|getFieldSchemaString
+argument_list|(
+name|getNewCols
+argument_list|()
+argument_list|)
 return|;
 block|}
 comment|/**    * @param newCols the newCols to set    */

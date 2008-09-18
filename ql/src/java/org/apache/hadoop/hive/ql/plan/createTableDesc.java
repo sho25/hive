@@ -57,7 +57,32 @@ name|FieldSchema
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Create Table"
+argument_list|)
 specifier|public
 class|class
 name|createTableDesc
@@ -271,6 +296,13 @@ operator|=
 name|partCols
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"name"
+argument_list|)
 specifier|public
 name|String
 name|getTableName
@@ -307,6 +339,31 @@ return|return
 name|cols
 return|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"columns"
+argument_list|)
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getColsString
+parameter_list|()
+block|{
+return|return
+name|Utilities
+operator|.
+name|getFieldSchemaString
+argument_list|(
+name|getCols
+argument_list|()
+argument_list|)
+return|;
+block|}
 specifier|public
 name|void
 name|setCols
@@ -337,6 +394,31 @@ return|return
 name|partCols
 return|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"partition columns"
+argument_list|)
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getPartColsString
+parameter_list|()
+block|{
+return|return
+name|Utilities
+operator|.
+name|getFieldSchemaString
+argument_list|(
+name|getPartCols
+argument_list|()
+argument_list|)
+return|;
+block|}
 specifier|public
 name|void
 name|setPartCols
@@ -355,6 +437,13 @@ operator|=
 name|partCols
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"bucket columns"
+argument_list|)
 specifier|public
 name|List
 argument_list|<
@@ -385,6 +474,13 @@ operator|=
 name|bucketCols
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"# buckets"
+argument_list|)
 specifier|public
 name|int
 name|getNumBuckets
@@ -409,6 +505,13 @@ operator|=
 name|numBuckets
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"field delimiter"
+argument_list|)
 specifier|public
 name|String
 name|getFieldDelim
@@ -433,6 +536,13 @@ operator|=
 name|fieldDelim
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"collection delimiter"
+argument_list|)
 specifier|public
 name|String
 name|getCollItemDelim
@@ -457,6 +567,13 @@ operator|=
 name|collItemDelim
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"map key delimiter"
+argument_list|)
 specifier|public
 name|String
 name|getMapKeyDelim
@@ -481,6 +598,13 @@ operator|=
 name|mapKeyDelim
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"line delimiter"
+argument_list|)
 specifier|public
 name|String
 name|getLineDelim
@@ -505,6 +629,13 @@ operator|=
 name|lineDelim
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"comment"
+argument_list|)
 specifier|public
 name|String
 name|getComment
@@ -529,6 +660,13 @@ operator|=
 name|comment
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"isCompressed"
+argument_list|)
 specifier|public
 name|boolean
 name|isCompressed
@@ -553,6 +691,13 @@ operator|=
 name|isCompressed
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"location"
+argument_list|)
 specifier|public
 name|String
 name|getLocation
@@ -577,6 +722,13 @@ operator|=
 name|location
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"isExternal"
+argument_list|)
 specifier|public
 name|boolean
 name|isExternal
@@ -602,6 +754,13 @@ name|isExternal
 expr_stmt|;
 block|}
 comment|/**    * @return the sortCols    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"sort columns"
+argument_list|)
 specifier|public
 name|List
 argument_list|<

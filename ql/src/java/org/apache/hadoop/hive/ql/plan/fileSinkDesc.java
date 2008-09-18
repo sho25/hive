@@ -30,6 +30,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"File Output Operator"
+argument_list|)
 specifier|public
 class|class
 name|fileSinkDesc
@@ -81,6 +88,17 @@ operator|=
 name|tableInfo
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"directory"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
+argument_list|)
 specifier|public
 name|String
 name|getDirName
@@ -108,6 +126,13 @@ operator|=
 name|dirName
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"table"
+argument_list|)
 specifier|public
 name|tableDesc
 name|getTableInfo

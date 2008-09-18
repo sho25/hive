@@ -30,6 +30,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Collect"
+argument_list|)
 specifier|public
 class|class
 name|collectDesc

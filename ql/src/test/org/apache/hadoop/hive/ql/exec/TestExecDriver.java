@@ -1025,14 +1025,14 @@ operator|.
 name|class
 argument_list|)
 argument_list|,
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDFClass
 argument_list|(
 literal|"<"
 argument_list|)
 argument_list|,
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDFMethod
 argument_list|(

@@ -67,6 +67,17 @@ operator|=
 name|sourceDir
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"source"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
+argument_list|)
 specifier|public
 name|String
 name|getSourceDir

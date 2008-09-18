@@ -835,7 +835,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|UDAFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDAF
 argument_list|(
@@ -6433,7 +6433,7 @@ name|UDAF
 argument_list|>
 name|aggClass
 init|=
-name|UDAFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDAF
 argument_list|(
@@ -6610,7 +6610,7 @@ if|if
 condition|(
 literal|null
 operator|==
-name|UDAFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDAFMethod
 argument_list|(
@@ -7049,7 +7049,7 @@ name|UDAF
 argument_list|>
 name|aggClass
 init|=
-name|UDAFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDAF
 argument_list|(
@@ -7226,7 +7226,7 @@ if|if
 condition|(
 literal|null
 operator|==
-name|UDAFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDAFMethod
 argument_list|(
@@ -8952,6 +8952,11 @@ control|(
 name|Map
 operator|.
 name|Entry
+argument_list|<
+name|String
+argument_list|,
+name|CommonTree
+argument_list|>
 name|entry
 range|:
 name|aggregationTrees
@@ -8960,17 +8965,6 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|String
-name|key
-init|=
-operator|(
-name|String
-operator|)
-name|entry
-operator|.
-name|getKey
-argument_list|()
-decl_stmt|;
 name|reduceValues
 operator|.
 name|add
@@ -9383,7 +9377,7 @@ name|UDAF
 argument_list|>
 name|aggClass
 init|=
-name|UDAFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDAF
 argument_list|(
@@ -10150,12 +10144,6 @@ block|}
 block|}
 comment|// We have the table object here - go over the row resolver
 comment|// and check all the types are the same
-name|Vector
-argument_list|<
-name|ColumnInfo
-argument_list|>
-name|srcOpns
-init|=
 name|input
 operator|.
 name|get
@@ -10168,7 +10156,7 @@ argument_list|()
 operator|.
 name|getColumnInfos
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|Vector
 argument_list|<
 name|ColumnInfo
@@ -12330,7 +12318,7 @@ argument_list|()
 decl_stmt|;
 name|commonClass
 operator|=
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|getCommonClass
 argument_list|(
@@ -17795,7 +17783,7 @@ block|}
 name|Method
 name|udfMethod
 init|=
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDFMethod
 argument_list|(
@@ -17967,7 +17955,7 @@ name|pType
 decl_stmt|;
 assert|assert
 operator|(
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|implicitConvertable
 argument_list|(
@@ -17980,7 +17968,7 @@ assert|;
 name|Method
 name|m
 init|=
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDFMethod
 argument_list|(
@@ -18002,9 +17990,14 @@ literal|null
 operator|)
 assert|;
 name|Class
+argument_list|<
+name|?
+extends|extends
+name|UDF
+argument_list|>
 name|c
 init|=
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDFClass
 argument_list|(
@@ -18089,7 +18082,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 argument_list|,
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDFClass
 argument_list|(
@@ -19278,7 +19271,7 @@ name|UDF
 argument_list|>
 name|udf
 init|=
-name|UDFRegistry
+name|FunctionRegistry
 operator|.
 name|getUDFClass
 argument_list|(

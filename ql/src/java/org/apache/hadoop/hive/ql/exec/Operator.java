@@ -145,6 +145,24 @@ name|LogFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|explain
+import|;
+end_import
+
 begin_comment
 comment|/**  * Base operator implementation  **/
 end_comment
@@ -250,6 +268,8 @@ operator|=
 name|conf
 expr_stmt|;
 block|}
+annotation|@
+name|explain
 specifier|public
 name|T
 name|getConf
@@ -389,6 +409,11 @@ return|return;
 for|for
 control|(
 name|Operator
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
 name|op
 range|:
 name|childOperators
@@ -539,6 +564,9 @@ specifier|public
 name|Map
 argument_list|<
 name|Enum
+argument_list|<
+name|?
+argument_list|>
 argument_list|,
 name|Long
 argument_list|>
@@ -548,6 +576,9 @@ block|{
 name|HashMap
 argument_list|<
 name|Enum
+argument_list|<
+name|?
+argument_list|>
 argument_list|,
 name|Long
 argument_list|>
@@ -557,6 +588,9 @@ operator|new
 name|HashMap
 argument_list|<
 name|Enum
+argument_list|<
+name|?
+argument_list|>
 argument_list|,
 name|Long
 argument_list|>
@@ -565,6 +599,9 @@ decl_stmt|;
 for|for
 control|(
 name|Enum
+argument_list|<
+name|?
+argument_list|>
 name|one
 range|:
 name|statsMap
@@ -928,6 +965,9 @@ block|{
 for|for
 control|(
 name|Enum
+argument_list|<
+name|?
+argument_list|>
 name|e
 range|:
 name|statsMap
@@ -1022,6 +1062,9 @@ block|{
 for|for
 control|(
 name|Enum
+argument_list|<
+name|?
+argument_list|>
 name|e
 range|:
 name|statsMap

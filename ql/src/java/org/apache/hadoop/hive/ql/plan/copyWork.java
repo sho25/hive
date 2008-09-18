@@ -30,6 +30,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Copy"
+argument_list|)
 specifier|public
 class|class
 name|copyWork
@@ -81,6 +88,13 @@ operator|=
 name|toPath
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"source"
+argument_list|)
 specifier|public
 name|String
 name|getFromPath
@@ -108,6 +122,13 @@ operator|=
 name|fromPath
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"destination"
+argument_list|)
 specifier|public
 name|String
 name|getToPath

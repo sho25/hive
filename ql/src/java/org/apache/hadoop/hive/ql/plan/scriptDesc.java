@@ -30,6 +30,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Transform Operator"
+argument_list|)
 specifier|public
 class|class
 name|scriptDesc
@@ -81,6 +88,13 @@ operator|=
 name|scriptOutputInfo
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"command"
+argument_list|)
 specifier|public
 name|String
 name|getScriptCmd
@@ -108,6 +122,13 @@ operator|=
 name|scriptCmd
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"output info"
+argument_list|)
 specifier|public
 name|tableDesc
 name|getScriptOutputInfo

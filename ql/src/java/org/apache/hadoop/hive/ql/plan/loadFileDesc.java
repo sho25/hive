@@ -110,6 +110,13 @@ operator|=
 name|isDfsDir
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"destination"
+argument_list|)
 specifier|public
 name|String
 name|getTargetDir
@@ -137,6 +144,13 @@ operator|=
 name|targetDir
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"hdfs directory"
+argument_list|)
 specifier|public
 name|boolean
 name|getIsDfsDir

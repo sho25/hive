@@ -621,6 +621,9 @@ block|}
 name|Map
 argument_list|<
 name|Enum
+argument_list|<
+name|?
+argument_list|>
 argument_list|,
 name|Long
 argument_list|>

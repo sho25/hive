@@ -1091,6 +1091,17 @@ return|return
 name|primitiveClass
 return|;
 block|}
+specifier|public
+name|String
+name|getTypeString
+parameter_list|()
+block|{
+comment|// TODO: Change this to print out a better user visible string
+return|return
+name|toString
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

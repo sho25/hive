@@ -76,6 +76,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Map Reduce"
+argument_list|)
 specifier|public
 class|class
 name|mapredWork
@@ -309,6 +316,17 @@ operator|=
 name|command
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Path -> Alias"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
+argument_list|)
 specifier|public
 name|LinkedHashMap
 argument_list|<
@@ -352,6 +370,17 @@ operator|=
 name|pathToAliases
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Path -> Partition"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
+argument_list|)
 specifier|public
 name|LinkedHashMap
 argument_list|<
@@ -389,6 +418,13 @@ operator|=
 name|pathToPartitionInfo
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Alias -> Map Operator Tree"
+argument_list|)
 specifier|public
 name|HashMap
 argument_list|<
@@ -500,6 +536,13 @@ operator|=
 name|aliasToSchema
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Reduce Operator Tree"
+argument_list|)
 specifier|public
 name|Operator
 argument_list|<
@@ -533,6 +576,13 @@ operator|=
 name|reducer
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"# Reducers"
+argument_list|)
 specifier|public
 name|Integer
 name|getNumReduceTasks
@@ -877,6 +927,17 @@ name|setAliases
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Needs Tagging"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
+argument_list|)
 specifier|public
 name|boolean
 name|getNeedsTagging

@@ -30,6 +30,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Select Operator"
+argument_list|)
 specifier|public
 class|class
 name|selectDesc
@@ -105,6 +112,13 @@ operator|=
 name|colList
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"expressions"
+argument_list|)
 specifier|public
 name|java
 operator|.

@@ -30,6 +30,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Filter Operator"
+argument_list|)
 specifier|public
 class|class
 name|filterDesc
@@ -91,6 +98,13 @@ operator|=
 name|predicate
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"predicate"
+argument_list|)
 specifier|public
 name|org
 operator|.
