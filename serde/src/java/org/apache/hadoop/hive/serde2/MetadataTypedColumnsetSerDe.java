@@ -625,11 +625,9 @@ name|columnNames
 argument_list|)
 expr_stmt|;
 block|}
-name|System
+name|LOG
 operator|.
-name|out
-operator|.
-name|println
+name|info
 argument_list|(
 name|getClass
 argument_list|()

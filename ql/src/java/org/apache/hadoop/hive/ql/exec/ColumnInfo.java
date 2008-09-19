@@ -51,9 +51,27 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|typeinfo
 operator|.
 name|TypeInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfoFactory
 import|;
 end_import
 
@@ -149,7 +167,7 @@ name|this
 operator|.
 name|type
 operator|=
-name|TypeInfo
+name|TypeInfoFactory
 operator|.
 name|getPrimitiveTypeInfo
 argument_list|(

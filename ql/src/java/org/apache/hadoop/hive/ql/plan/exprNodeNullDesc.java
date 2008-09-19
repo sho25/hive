@@ -41,9 +41,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|typeinfo
 operator|.
-name|TypeInfo
+name|TypeInfoFactory
 import|;
 end_import
 
@@ -70,8 +70,9 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-operator|new
-name|TypeInfo
+name|TypeInfoFactory
+operator|.
+name|getPrimitiveTypeInfo
 argument_list|(
 name|Void
 operator|.

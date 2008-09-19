@@ -151,10 +151,15 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+name|ObjectInspectorUtils
+operator|.
+name|getClassShortName
+argument_list|(
 name|c
 operator|.
 name|getName
 argument_list|()
+argument_list|)
 argument_list|,
 name|oi1
 operator|.

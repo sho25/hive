@@ -2057,6 +2057,8 @@ name|MetaStoreUtils
 operator|.
 name|getTable
 argument_list|(
+name|conf
+argument_list|,
 name|schema
 argument_list|)
 return|;
@@ -2415,6 +2417,8 @@ name|MetaStoreUtils
 operator|.
 name|getTable
 argument_list|(
+name|conf
+argument_list|,
 name|schema
 argument_list|)
 decl_stmt|;
@@ -2587,6 +2591,7 @@ name|getSd
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// TODO: get a copy
 name|tPartition
 operator|.
 name|setParameters
@@ -2689,6 +2694,39 @@ block|{
 comment|// TODO Auto-generated method stub
 return|return
 literal|false
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|listPartitionNames
+parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|short
+name|max_parts
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+block|{
+comment|// TODO Auto-generated method stub
+return|return
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
 return|;
 block|}
 block|}

@@ -162,6 +162,7 @@ parameter_list|()
 block|{
 try|try
 block|{
+comment|// enable assertion
 name|String
 name|hadoopExec
 init|=

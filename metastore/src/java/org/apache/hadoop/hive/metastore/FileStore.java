@@ -1704,7 +1704,7 @@ name|DB
 argument_list|(
 name|tbl
 operator|.
-name|getDatabase
+name|getDbName
 argument_list|()
 argument_list|,
 name|conf
@@ -1857,6 +1857,8 @@ name|MetaStoreUtils
 operator|.
 name|getTable
 argument_list|(
+name|conf
+argument_list|,
 name|p
 argument_list|)
 return|;
@@ -2081,6 +2083,32 @@ name|shutdown
 parameter_list|()
 block|{
 comment|// no-op
+block|}
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|listPartitionNames
+parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|short
+name|max_parts
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+comment|// TODO Auto-generated method stub
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class

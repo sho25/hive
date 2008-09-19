@@ -41,7 +41,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|typeinfo
 operator|.
 name|TypeInfo
 import|;

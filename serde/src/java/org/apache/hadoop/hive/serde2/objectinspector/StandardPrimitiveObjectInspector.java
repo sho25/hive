@@ -83,10 +83,15 @@ name|getTypeName
 parameter_list|()
 block|{
 return|return
+name|ObjectInspectorUtils
+operator|.
+name|getClassShortName
+argument_list|(
 name|primitiveClass
 operator|.
 name|getName
 argument_list|()
+argument_list|)
 return|;
 block|}
 block|}

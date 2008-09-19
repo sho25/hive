@@ -25,16 +25,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|Serializable
 import|;
 end_import
@@ -46,6 +36,20 @@ operator|.
 name|util
 operator|.
 name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
 import|;
 end_import
 
@@ -83,7 +87,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|File
+name|Path
 name|resFile
 decl_stmt|;
 specifier|private
@@ -112,7 +116,7 @@ block|{ }
 specifier|public
 name|explainWork
 parameter_list|(
-name|File
+name|Path
 name|resFile
 parameter_list|,
 name|List
@@ -159,7 +163,7 @@ name|extended
 expr_stmt|;
 block|}
 specifier|public
-name|File
+name|Path
 name|getResFile
 parameter_list|()
 block|{
@@ -171,7 +175,7 @@ specifier|public
 name|void
 name|setResFile
 parameter_list|(
-name|File
+name|Path
 name|resFile
 parameter_list|)
 block|{

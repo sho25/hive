@@ -913,7 +913,7 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Invalid key& values"
+literal|"Invalid partition key& values"
 argument_list|)
 throw|;
 block|}

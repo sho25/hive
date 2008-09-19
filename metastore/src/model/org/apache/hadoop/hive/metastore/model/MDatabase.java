@@ -38,7 +38,7 @@ name|name
 decl_stmt|;
 specifier|private
 name|String
-name|location
+name|description
 decl_stmt|;
 comment|/**    * Default construction to keep jpox/jdo happy    */
 specifier|public
@@ -64,7 +64,7 @@ name|name
 expr_stmt|;
 name|this
 operator|.
-name|location
+name|description
 operator|=
 name|location
 expr_stmt|;
@@ -95,30 +95,30 @@ operator|=
 name|name
 expr_stmt|;
 block|}
-comment|/**    * @return the location    */
+comment|/**    * @return the description    */
 specifier|public
 name|String
-name|getLocation
+name|getDescription
 parameter_list|()
 block|{
 return|return
-name|location
+name|description
 return|;
 block|}
-comment|/**    * @param location the location to set    */
+comment|/**    * @param description the description to set    */
 specifier|public
 name|void
-name|setLocation
+name|setDescription
 parameter_list|(
 name|String
-name|location
+name|description
 parameter_list|)
 block|{
 name|this
 operator|.
-name|location
+name|description
 operator|=
-name|location
+name|description
 expr_stmt|;
 block|}
 block|}

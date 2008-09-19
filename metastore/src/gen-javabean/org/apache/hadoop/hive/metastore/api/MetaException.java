@@ -169,7 +169,7 @@ block|}
 specifier|public
 name|MetaException
 parameter_list|()
-block|{   }
+block|{ }
 specifier|public
 name|MetaException
 parameter_list|(

@@ -561,7 +561,6 @@ name|id
 condition|)
 block|{
 case|case
-operator|-
 literal|1
 case|:
 if|if
@@ -609,7 +608,6 @@ expr_stmt|;
 block|}
 break|break;
 case|case
-operator|-
 literal|2
 case|:
 if|if
@@ -742,7 +740,6 @@ name|field
 operator|.
 name|id
 operator|=
-operator|-
 literal|1
 expr_stmt|;
 name|oprot
@@ -794,7 +791,6 @@ name|field
 operator|.
 name|id
 operator|=
-operator|-
 literal|2
 expr_stmt|;
 name|oprot

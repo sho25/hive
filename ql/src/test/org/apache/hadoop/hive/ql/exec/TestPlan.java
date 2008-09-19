@@ -107,9 +107,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|plan
 operator|.
-name|TypeInfo
+name|*
 import|;
 end_import
 
@@ -125,9 +125,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|typeinfo
 operator|.
-name|*
+name|TypeInfoFactory
 import|;
 end_import
 
@@ -177,11 +177,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde
+name|serde2
 operator|.
-name|thrift
-operator|.
-name|columnsetSerDe
+name|MetadataTypedColumnsetSerDe
 import|;
 end_import
 
@@ -220,7 +218,7 @@ init|=
 operator|new
 name|exprNodeColumnDesc
 argument_list|(
-name|TypeInfo
+name|TypeInfoFactory
 operator|.
 name|getPrimitiveTypeInfo
 argument_list|(
@@ -238,7 +236,7 @@ init|=
 operator|new
 name|exprNodeColumnDesc
 argument_list|(
-name|TypeInfo
+name|TypeInfoFactory
 operator|.
 name|getPrimitiveTypeInfo
 argument_list|(
@@ -350,25 +348,9 @@ expr_stmt|;
 name|tableDesc
 name|tblDesc
 init|=
-operator|new
-name|tableDesc
-argument_list|(
-name|columnsetSerDe
+name|Utilities
 operator|.
-name|class
-argument_list|,
-name|TextInputFormat
-operator|.
-name|class
-argument_list|,
-name|IgnoreKeyTextOutputFormat
-operator|.
-name|class
-argument_list|,
-operator|new
-name|Properties
-argument_list|()
-argument_list|)
+name|defaultTd
 decl_stmt|;
 name|partitionDesc
 name|partDesc

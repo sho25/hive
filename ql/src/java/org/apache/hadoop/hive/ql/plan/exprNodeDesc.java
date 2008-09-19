@@ -41,9 +41,27 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|typeinfo
 operator|.
 name|TypeInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|ObjectInspectorUtils
 import|;
 end_import
 
@@ -62,7 +80,6 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 name|TypeInfo
 name|typeInfo
 decl_stmt|;
@@ -83,6 +100,21 @@ name|typeInfo
 operator|=
 name|typeInfo
 expr_stmt|;
+if|if
+condition|(
+name|typeInfo
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"typeInfo cannot be null!"
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|public
 name|TypeInfo
@@ -139,7 +171,7 @@ block|{
 return|return
 name|typeInfo
 operator|.
-name|getTypeString
+name|getTypeName
 argument_list|()
 return|;
 block|}

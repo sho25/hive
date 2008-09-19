@@ -431,6 +431,26 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+specifier|public
+specifier|abstract
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|listPartitionNames
+parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|short
+name|max_parts
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
 block|}
 end_interface
 

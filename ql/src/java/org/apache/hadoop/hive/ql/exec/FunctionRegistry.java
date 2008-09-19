@@ -141,9 +141,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|udf
 operator|.
-name|TypeInfo
+name|*
 import|;
 end_import
 
@@ -157,11 +157,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|serde2
 operator|.
-name|udf
+name|objectinspector
 operator|.
-name|*
+name|ObjectInspectorUtils
 import|;
 end_import
 
@@ -2080,7 +2080,7 @@ name|?
 argument_list|>
 name|accepted
 init|=
-name|TypeInfo
+name|ObjectInspectorUtils
 operator|.
 name|generalizePrimitive
 argument_list|(

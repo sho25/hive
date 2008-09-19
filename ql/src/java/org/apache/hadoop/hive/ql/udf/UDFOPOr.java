@@ -81,7 +81,12 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"org.apache.hadoop.hive.ql.udf.UDFOPOr"
+name|UDFOPOr
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -163,7 +168,7 @@ expr_stmt|;
 block|}
 comment|// LOG.info("evaluate(" + a + "," + b + ")=" + r);
 return|return
-literal|null
+name|r
 return|;
 block|}
 block|}
