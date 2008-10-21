@@ -71,7 +71,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|thrift_test
+name|thrift
+operator|.
+name|test
 operator|.
 name|Complex
 import|;
@@ -89,7 +91,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|thrift_test
+name|thrift
+operator|.
+name|test
 operator|.
 name|IntString
 import|;
@@ -288,7 +292,7 @@ literal|1
 expr_stmt|;
 name|c
 operator|.
-name|astring
+name|aString
 operator|=
 literal|"test"
 expr_stmt|;
@@ -342,7 +346,7 @@ argument_list|)
 decl_stmt|;
 name|c
 operator|.
-name|lstring
+name|lString
 operator|=
 name|c3
 expr_stmt|;
@@ -361,13 +365,13 @@ argument_list|()
 decl_stmt|;
 name|c
 operator|.
-name|lintstring
+name|lintString
 operator|=
 name|c4
 expr_stmt|;
 name|c
 operator|.
-name|mstringstring
+name|mStringString
 operator|=
 literal|null
 expr_stmt|;

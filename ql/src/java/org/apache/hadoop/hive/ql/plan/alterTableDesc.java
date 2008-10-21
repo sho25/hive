@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -117,6 +107,8 @@ block|{
 name|RENAME
 block|,
 name|ADDCOLS
+block|,
+name|REPLACECOLS
 block|}
 empty_stmt|;
 name|alterTableTypes
@@ -176,13 +168,16 @@ argument_list|<
 name|FieldSchema
 argument_list|>
 name|newCols
+parameter_list|,
+name|alterTableTypes
+name|alterType
 parameter_list|)
 block|{
+name|this
+operator|.
 name|op
 operator|=
-name|alterTableTypes
-operator|.
-name|ADDCOLS
+name|alterType
 expr_stmt|;
 name|this
 operator|.
@@ -301,6 +296,12 @@ name|ADDCOLS
 case|:
 return|return
 literal|"add columns"
+return|;
+case|case
+name|REPLACECOLS
+case|:
+return|return
+literal|"replace columns"
 return|;
 block|}
 return|return

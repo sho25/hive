@@ -61,6 +61,10 @@ name|showTablesDesc
 name|showTblsDesc
 decl_stmt|;
 specifier|private
+name|showPartitionsDesc
+name|showPartsDesc
+decl_stmt|;
+specifier|private
 name|descTableDesc
 name|descTblDesc
 decl_stmt|;
@@ -141,6 +145,21 @@ operator|.
 name|showTblsDesc
 operator|=
 name|showTblsDesc
+expr_stmt|;
+block|}
+comment|/**    * @param showPartsDesc    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|showPartitionsDesc
+name|showPartsDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|showPartsDesc
+operator|=
+name|showPartsDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the createTblDesc    */
@@ -273,6 +292,39 @@ operator|.
 name|showTblsDesc
 operator|=
 name|showTblsDesc
+expr_stmt|;
+block|}
+comment|/**    * @return the showPartsDesc    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Show Partitions Operator"
+argument_list|)
+specifier|public
+name|showPartitionsDesc
+name|getShowPartsDesc
+parameter_list|()
+block|{
+return|return
+name|showPartsDesc
+return|;
+block|}
+comment|/**    * @param showPartsDesc the showPartsDesc to set    */
+specifier|public
+name|void
+name|setShowPartsDesc
+parameter_list|(
+name|showPartitionsDesc
+name|showPartsDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|showPartsDesc
+operator|=
+name|showPartsDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the descTblDesc    */

@@ -108,7 +108,9 @@ name|name
 init|=
 name|ThriftSerDe
 operator|.
-name|shortName
+name|class
+operator|.
+name|getName
 argument_list|()
 decl_stmt|;
 name|SerDe

@@ -69,7 +69,7 @@ begin_class
 specifier|public
 class|class
 name|UDFStrGe
-extends|extends
+implements|implements
 name|UDF
 block|{
 specifier|public

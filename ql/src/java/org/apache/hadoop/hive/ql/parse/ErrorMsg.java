@@ -57,6 +57,11 @@ argument_list|(
 literal|"Invalid Column Reference"
 argument_list|)
 block|,
+name|INVALID_PARTITION
+argument_list|(
+literal|"Partition not found"
+argument_list|)
+block|,
 name|AMBIGOUS_COLUMN
 argument_list|(
 literal|"Ambigous Column Reference"
@@ -152,6 +157,21 @@ argument_list|(
 literal|"Non Constant Expressions for Array Indexes not Supported"
 argument_list|)
 block|,
+name|INVALID_MAPINDEX_CONSTANT
+argument_list|(
+literal|"Non Constant Expression for Map Indexes not Supported"
+argument_list|)
+block|,
+name|INVALID_MAPINDEX_TYPE
+argument_list|(
+literal|"Map Key Type does not Match Index Expression Type"
+argument_list|)
+block|,
+name|NON_COLLECTION_TYPE
+argument_list|(
+literal|"[] not Valid on Non Collection Types"
+argument_list|)
+block|,
 name|SELECT_DISTINCT_WITH_GROUPBY
 argument_list|(
 literal|"SELECT DISTINCT and GROUP BY can not be in the same query"
@@ -180,6 +200,16 @@ block|,
 name|SAMPLE_COLUMN_NOT_FOUND
 argument_list|(
 literal|"Sample Column Not Found"
+argument_list|)
+block|,
+name|NO_PARTITION_PREDICATE
+argument_list|(
+literal|"No Partition Predicate Found"
+argument_list|)
+block|,
+name|INVALID_DOT
+argument_list|(
+literal|". operator is only supported on struct or list of struct types"
 argument_list|)
 block|;
 specifier|private

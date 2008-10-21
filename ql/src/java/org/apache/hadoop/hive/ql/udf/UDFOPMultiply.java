@@ -69,7 +69,7 @@ begin_class
 specifier|public
 class|class
 name|UDFOPMultiply
-extends|extends
+implements|implements
 name|UDF
 block|{
 specifier|private

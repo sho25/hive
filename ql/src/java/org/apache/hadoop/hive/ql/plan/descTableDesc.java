@@ -31,6 +31,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -70,10 +80,21 @@ decl_stmt|;
 name|String
 name|tableName
 decl_stmt|;
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+decl_stmt|;
 name|Path
 name|resFile
 decl_stmt|;
-comment|/**    * @param resFile    * @param tableName    */
+name|boolean
+name|isExt
+decl_stmt|;
+comment|/**    * @param isExt    * @param partSpec    * @param resFile    * @param tableName    */
 specifier|public
 name|descTableDesc
 parameter_list|(
@@ -82,8 +103,31 @@ name|resFile
 parameter_list|,
 name|String
 name|tableName
+parameter_list|,
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|,
+name|boolean
+name|isExt
 parameter_list|)
 block|{
+name|this
+operator|.
+name|isExt
+operator|=
+name|isExt
+expr_stmt|;
+name|this
+operator|.
+name|partSpec
+operator|=
+name|partSpec
+expr_stmt|;
 name|this
 operator|.
 name|resFile
@@ -97,6 +141,33 @@ operator|=
 name|tableName
 expr_stmt|;
 block|}
+comment|/**    * @return the isExt    */
+specifier|public
+name|boolean
+name|isExt
+parameter_list|()
+block|{
+return|return
+name|isExt
+return|;
+block|}
+comment|/**    * @param isExt the isExt to set    */
+specifier|public
+name|void
+name|setExt
+parameter_list|(
+name|boolean
+name|isExt
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isExt
+operator|=
+name|isExt
+expr_stmt|;
+block|}
+comment|/**    * @return the tableName    */
 annotation|@
 name|explain
 argument_list|(
@@ -113,6 +184,7 @@ return|return
 name|tableName
 return|;
 block|}
+comment|/**    * @param tableName the tableName to set    */
 specifier|public
 name|void
 name|setTableName
@@ -126,6 +198,49 @@ operator|.
 name|tableName
 operator|=
 name|tableName
+expr_stmt|;
+block|}
+comment|/**    * @return the partSpec    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"partition"
+argument_list|)
+specifier|public
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|getPartSpec
+parameter_list|()
+block|{
+return|return
+name|partSpec
+return|;
+block|}
+comment|/**    * @param partSpec the partSpec to set    */
+specifier|public
+name|void
+name|setPartSpecs
+parameter_list|(
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|)
+block|{
+name|this
+operator|.
+name|partSpec
+operator|=
+name|partSpec
 expr_stmt|;
 block|}
 comment|/**    * @return the resFile    */

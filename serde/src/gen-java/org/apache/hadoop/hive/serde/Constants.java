@@ -130,6 +130,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|SERIALIZATION_NULL_FORMAT
+init|=
+literal|"serialization.null.format"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|FIELD_DELIM
 init|=
 literal|"field.delim"

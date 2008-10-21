@@ -2876,13 +2876,86 @@ operator|.
 name|toLowerCase
 argument_list|()
 expr_stmt|;
+comment|// Take the pattern and split it on the | to get all the composing patterns
+name|String
+index|[]
+name|subpatterns
+init|=
 name|pattern
+operator|.
+name|trim
+argument_list|()
+operator|.
+name|split
+argument_list|(
+literal|"\\|"
+argument_list|)
+decl_stmt|;
+name|String
+name|query
+init|=
+literal|"select tableName from org.apache.hadoop.hive.metastore.model.MTable where database.name == dbName&& ("
+decl_stmt|;
+name|boolean
+name|first
+init|=
+literal|true
+decl_stmt|;
+for|for
+control|(
+name|String
+name|subpattern
+range|:
+name|subpatterns
+control|)
+block|{
+name|subpattern
 operator|=
 literal|"(?i)"
 operator|+
-name|pattern
+name|subpattern
+operator|.
+name|replaceAll
+argument_list|(
+literal|"\\*"
+argument_list|,
+literal|".*"
+argument_list|)
 expr_stmt|;
-comment|// add the case insensitivity
+if|if
+condition|(
+operator|!
+name|first
+condition|)
+block|{
+name|query
+operator|=
+name|query
+operator|+
+literal|" || "
+expr_stmt|;
+block|}
+name|query
+operator|=
+name|query
+operator|+
+literal|" tableName.matches(\""
+operator|+
+name|subpattern
+operator|+
+literal|"\")"
+expr_stmt|;
+name|first
+operator|=
+literal|false
+expr_stmt|;
+block|}
+name|query
+operator|=
+name|query
+operator|+
+literal|")"
+expr_stmt|;
 name|Query
 name|q
 init|=
@@ -2890,14 +2963,14 @@ name|pm
 operator|.
 name|newQuery
 argument_list|(
-literal|"select tableName from org.apache.hadoop.hive.metastore.model.MTable where database.name == dbName&& tableName.matches(pattern)"
+name|query
 argument_list|)
 decl_stmt|;
 name|q
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String dbName, java.lang.String pattern"
+literal|"java.lang.String dbName"
 argument_list|)
 expr_stmt|;
 name|q
@@ -2918,11 +2991,6 @@ operator|.
 name|execute
 argument_list|(
 name|dbName
-operator|.
-name|trim
-argument_list|()
-argument_list|,
-name|pattern
 operator|.
 name|trim
 argument_list|()
@@ -4638,7 +4706,7 @@ name|pm
 operator|.
 name|newQuery
 argument_list|(
-literal|"select partitionName from org.apache.hadoop.hive.metastore.model.MPartition where table.database.name == t1&& table.tableName == t2"
+literal|"select partitionName from org.apache.hadoop.hive.metastore.model.MPartition where table.database.name == t1&& table.tableName == t2 order by partitionName asc"
 argument_list|)
 decl_stmt|;
 name|q
@@ -4844,6 +4912,13 @@ name|trim
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Done executing query for listMPartitions"
+argument_list|)
+expr_stmt|;
 name|pm
 operator|.
 name|retrieveAll
@@ -4860,7 +4935,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done e xecuting listMPartitions"
+literal|"Done retrieving all objects for listMPartitions"
 argument_list|)
 expr_stmt|;
 block|}

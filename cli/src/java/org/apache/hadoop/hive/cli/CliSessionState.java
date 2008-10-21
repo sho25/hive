@@ -19,6 +19,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -85,6 +95,15 @@ comment|/**    * -f option if any that the session has been invoked with    */
 specifier|public
 name|String
 name|fileName
+decl_stmt|;
+comment|/**    * properties set from -hiveconf via cmdline    */
+specifier|public
+name|Properties
+name|cmdProperties
+init|=
+operator|new
+name|Properties
+argument_list|()
 decl_stmt|;
 specifier|public
 name|CliSessionState

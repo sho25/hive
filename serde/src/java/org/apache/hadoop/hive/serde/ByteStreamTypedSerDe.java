@@ -196,6 +196,12 @@ operator|new
 name|BytesWritable
 argument_list|()
 expr_stmt|;
+name|json_serializer
+operator|=
+operator|new
+name|TSerializer
+argument_list|()
+expr_stmt|;
 block|}
 specifier|public
 name|Object

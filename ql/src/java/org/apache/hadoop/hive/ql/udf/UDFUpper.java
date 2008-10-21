@@ -65,7 +65,7 @@ begin_class
 specifier|public
 class|class
 name|UDFUpper
-extends|extends
+implements|implements
 name|UDF
 block|{
 specifier|public

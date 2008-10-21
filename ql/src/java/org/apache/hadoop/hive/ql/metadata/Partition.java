@@ -349,6 +349,22 @@ name|String
 argument_list|>
 name|spec
 decl_stmt|;
+comment|/**      * @return      * @see org.apache.hadoop.hive.metastore.api.Partition#getValues()      */
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getValues
+parameter_list|()
+block|{
+return|return
+name|tPartition
+operator|.
+name|getValues
+argument_list|()
+return|;
+block|}
 specifier|private
 name|Path
 name|partPath

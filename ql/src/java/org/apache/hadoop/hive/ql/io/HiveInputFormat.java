@@ -973,6 +973,9 @@ name|inputFormatClass
 argument_list|)
 decl_stmt|;
 return|return
+operator|new
+name|HiveRecordReader
+argument_list|(
 name|inputFormat
 operator|.
 name|getRecordReader
@@ -982,6 +985,7 @@ argument_list|,
 name|job
 argument_list|,
 name|reporter
+argument_list|)
 argument_list|)
 return|;
 block|}

@@ -637,7 +637,10 @@ name|setSerializationLib
 argument_list|(
 name|deserializer
 operator|.
-name|getShortName
+name|getClass
+argument_list|()
+operator|.
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -715,7 +718,9 @@ name|setSerializationLib
 argument_list|(
 name|MetadataTypedColumnsetSerDe
 operator|.
-name|shortName
+name|class
+operator|.
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;

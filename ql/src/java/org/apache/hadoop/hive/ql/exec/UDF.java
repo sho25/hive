@@ -20,30 +20,15 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * A dummy User-defined function (UDF) for the use with Hive.  *   * New UDF classes do NOT need to inherit from this UDF class.  *   * Required for all UDF classes:  * 1. Implement a single method named "evaluate" which will be called by Hive.  *    The following are some examples:  *    public int evaluate(int a);  *    public double evaluate(int a, double b);  *    public String evaluate(String a, int b, String c);  *   *    "evaluate" should neither be a void method, nor should it returns "null" in any case.  *    In both cases, the Hive system will throw an HiveException saying the evaluation of UDF  *    is failed.  */
+comment|/**  * A User-defined function (UDF) for the use with Hive.  *   * New UDF classes need to inherit from this UDF class.  *   * Required for all UDF classes:  * 1. Implement one or more methods named "evaluate" which will be called by Hive.  *    The following are some examples:  *    public int evaluate();  *    public int evaluate(int a);  *    public double evaluate(int a, double b);  *    public String evaluate(String a, int b, String c);  *   *    "evaluate" should never be a void method.  However it can return "null" if needed.  */
 end_comment
 
-begin_class
+begin_interface
 specifier|public
-class|class
+interface|interface
 name|UDF
-block|{
-specifier|public
-name|UDF
-parameter_list|()
-block|{ }
-comment|/** Evaluate the UDF.    *  @return plain old java object    **/
-specifier|public
-name|int
-name|evaluate
-parameter_list|()
-block|{
-return|return
-literal|0
-return|;
-block|}
-block|}
-end_class
+block|{  }
+end_interface
 
 end_unit
 

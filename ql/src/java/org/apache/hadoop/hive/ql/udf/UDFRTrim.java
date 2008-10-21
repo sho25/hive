@@ -79,7 +79,7 @@ begin_class
 specifier|public
 class|class
 name|UDFRTrim
-extends|extends
+implements|implements
 name|UDF
 block|{
 specifier|public
@@ -108,7 +108,7 @@ block|}
 return|return
 name|StringUtils
 operator|.
-name|strip
+name|stripEnd
 argument_list|(
 name|s
 argument_list|,

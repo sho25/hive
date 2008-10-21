@@ -421,6 +421,14 @@ name|String
 name|field
 parameter_list|)
 block|{
+name|String
+name|fieldLowerCase
+init|=
+name|field
+operator|.
+name|toLowerCase
+argument_list|()
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -441,7 +449,7 @@ control|)
 block|{
 if|if
 condition|(
-name|field
+name|fieldLowerCase
 operator|.
 name|equals
 argument_list|(
@@ -472,7 +480,11 @@ literal|"cannot find field "
 operator|+
 name|field
 operator|+
-literal|" in "
+literal|"(lowercase form: "
+operator|+
+name|fieldLowerCase
+operator|+
+literal|") in "
 operator|+
 name|allStructFieldNames
 argument_list|)

@@ -877,6 +877,13 @@ literal|"Could not connect to meta store using any of the URIs provided"
 argument_list|)
 throw|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Connected to metastore."
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -917,7 +924,7 @@ operator|)
 operator|.
 name|setTimeout
 argument_list|(
-literal|2000
+literal|20000
 argument_list|)
 expr_stmt|;
 name|TProtocol

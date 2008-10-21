@@ -86,6 +86,10 @@ specifier|private
 name|String
 name|column
 decl_stmt|;
+specifier|private
+name|boolean
+name|isVirtual
+decl_stmt|;
 specifier|public
 name|exprNodeColumnDesc
 parameter_list|()
@@ -110,6 +114,12 @@ operator|.
 name|column
 operator|=
 name|column
+expr_stmt|;
+name|this
+operator|.
+name|isVirtual
+operator|=
+name|isVirtual
 expr_stmt|;
 block|}
 specifier|public

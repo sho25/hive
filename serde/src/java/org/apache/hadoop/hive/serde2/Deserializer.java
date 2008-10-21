@@ -115,11 +115,6 @@ parameter_list|()
 throws|throws
 name|SerDeException
 function_decl|;
-specifier|public
-name|String
-name|getShortName
-parameter_list|()
-function_decl|;
 block|}
 end_interface
 

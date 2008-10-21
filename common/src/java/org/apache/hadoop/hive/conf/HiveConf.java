@@ -367,6 +367,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVEPARTITIONPRUNER
+argument_list|(
+literal|"hive.partition.pruning"
+argument_list|,
+literal|"nonstrict"
+argument_list|)
+block|,
 name|HIVEALIAS
 argument_list|(
 literal|"hive.alias"
@@ -858,9 +865,9 @@ condition|)
 block|{
 name|l4j
 operator|.
-name|warn
+name|debug
 argument_list|(
-literal|"Unable to locate default hive configuration"
+literal|"hive-default.xml not found."
 argument_list|)
 expr_stmt|;
 block|}
@@ -892,9 +899,9 @@ condition|)
 block|{
 name|l4j
 operator|.
-name|warn
+name|debug
 argument_list|(
-literal|"Unable to locate hive site configuration"
+literal|"hive-site.xml not found."
 argument_list|)
 expr_stmt|;
 block|}

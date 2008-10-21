@@ -332,6 +332,23 @@ name|cls
 argument_list|)
 expr_stmt|;
 block|}
+comment|// All getXXX needs toLowerCase() because they are directly called from SemanticAnalyzer
+comment|// All setXXX does not need it because they are called from QB which already lowercases
+comment|// the aliases.
+specifier|public
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|Table
+argument_list|>
+name|getAliasToTable
+parameter_list|()
+block|{
+return|return
+name|aliasToTable
+return|;
+block|}
 specifier|public
 name|Table
 name|getTableForAlias
@@ -348,6 +365,9 @@ operator|.
 name|get
 argument_list|(
 name|alias
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -519,6 +539,9 @@ operator|.
 name|get
 argument_list|(
 name|alias
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -538,6 +561,9 @@ operator|.
 name|get
 argument_list|(
 name|alias
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -557,6 +583,9 @@ operator|.
 name|get
 argument_list|(
 name|alias
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -576,6 +605,9 @@ operator|.
 name|get
 argument_list|(
 name|alias
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -595,6 +627,9 @@ operator|.
 name|get
 argument_list|(
 name|alias
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 return|;
 block|}

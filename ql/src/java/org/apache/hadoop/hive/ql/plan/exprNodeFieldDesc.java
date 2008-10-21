@@ -70,6 +70,11 @@ decl_stmt|;
 name|String
 name|fieldName
 decl_stmt|;
+comment|// Used to support a.b where a is a list of struct that contains a field called b.
+comment|// a.b will return an array that contains field b of all elements of array a.
+name|Boolean
+name|isList
+decl_stmt|;
 specifier|public
 name|exprNodeFieldDesc
 parameter_list|()
@@ -85,6 +90,9 @@ name|desc
 parameter_list|,
 name|String
 name|fieldName
+parameter_list|,
+name|Boolean
+name|isList
 parameter_list|)
 block|{
 name|super
@@ -103,6 +111,12 @@ operator|.
 name|fieldName
 operator|=
 name|fieldName
+expr_stmt|;
+name|this
+operator|.
+name|isList
+operator|=
+name|isList
 expr_stmt|;
 block|}
 specifier|public
@@ -155,6 +169,30 @@ operator|.
 name|fieldName
 operator|=
 name|fieldName
+expr_stmt|;
+block|}
+specifier|public
+name|Boolean
+name|getIsList
+parameter_list|()
+block|{
+return|return
+name|isList
+return|;
+block|}
+specifier|public
+name|void
+name|setIsList
+parameter_list|(
+name|Boolean
+name|isList
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isList
+operator|=
+name|isList
 expr_stmt|;
 block|}
 annotation|@

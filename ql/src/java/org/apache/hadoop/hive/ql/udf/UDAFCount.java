@@ -77,9 +77,26 @@ name|Object
 name|o
 parameter_list|)
 block|{
+comment|// Our SerDe between map/reduce boundary may convert MetadataTypedSerDe to
+if|if
+condition|(
+name|o
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|o
+operator|.
+name|equals
+argument_list|(
+literal|""
+argument_list|)
+condition|)
+block|{
 name|mCount
 operator|++
 expr_stmt|;
+block|}
 return|return
 literal|true
 return|;

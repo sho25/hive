@@ -260,7 +260,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|Deserializer
+name|SerDe
 argument_list|>
 name|serdeClass
 parameter_list|)

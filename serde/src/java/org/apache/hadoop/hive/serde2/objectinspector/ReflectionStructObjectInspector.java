@@ -427,8 +427,24 @@ return|return
 literal|null
 return|;
 block|}
-try|try
+if|if
+condition|(
+operator|!
+operator|(
+name|fieldRef
+operator|instanceof
+name|MyField
+operator|)
+condition|)
 block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"fieldRef has to be of MyField"
+argument_list|)
+throw|;
+block|}
 name|MyField
 name|f
 init|=
@@ -437,7 +453,11 @@ name|MyField
 operator|)
 name|fieldRef
 decl_stmt|;
-return|return
+try|try
+block|{
+name|Object
+name|r
+init|=
 name|f
 operator|.
 name|field
@@ -446,6 +466,9 @@ name|get
 argument_list|(
 name|data
 argument_list|)
+decl_stmt|;
+return|return
+name|r
 return|;
 block|}
 catch|catch
@@ -458,7 +481,22 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-name|e
+literal|"cannot get field "
+operator|+
+name|f
+operator|.
+name|field
+operator|+
+literal|" from "
+operator|+
+name|data
+operator|.
+name|getClass
+argument_list|()
+operator|+
+literal|" "
+operator|+
+name|data
 argument_list|)
 throw|;
 block|}

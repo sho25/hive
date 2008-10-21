@@ -184,7 +184,7 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
-name|analyze
+name|analyzeInternal
 parameter_list|(
 name|CommonTree
 name|ast
