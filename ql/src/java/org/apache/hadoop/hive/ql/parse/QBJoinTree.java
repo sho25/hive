@@ -43,6 +43,10 @@ name|CommonTree
 import|;
 end_import
 
+begin_comment
+comment|/**  * Internal representation of the join tree  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -84,7 +88,7 @@ specifier|private
 name|boolean
 name|noOuterJoin
 decl_stmt|;
-comment|// conditions
+comment|// join conditions
 specifier|private
 name|Vector
 argument_list|<
@@ -95,6 +99,18 @@ argument_list|>
 argument_list|>
 name|expressions
 decl_stmt|;
+comment|// filters
+specifier|private
+name|Vector
+argument_list|<
+name|Vector
+argument_list|<
+name|CommonTree
+argument_list|>
+argument_list|>
+name|filters
+decl_stmt|;
+comment|/**    * constructor     */
 specifier|public
 name|QBJoinTree
 parameter_list|()
@@ -104,6 +120,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
+comment|/**    * returns left alias if any - this is used for merging later on    * @return left alias if any    */
 specifier|public
 name|String
 name|getLeftAlias
@@ -113,6 +130,7 @@ return|return
 name|leftAlias
 return|;
 block|}
+comment|/**    * set left alias for the join expression    * @param leftAlias String    */
 specifier|public
 name|void
 name|setLeftAlias
@@ -333,6 +351,44 @@ operator|.
 name|noOuterJoin
 operator|=
 name|noOuterJoin
+expr_stmt|;
+block|}
+comment|/** 	 * @return the filters 	 */
+specifier|public
+name|Vector
+argument_list|<
+name|Vector
+argument_list|<
+name|CommonTree
+argument_list|>
+argument_list|>
+name|getFilters
+parameter_list|()
+block|{
+return|return
+name|filters
+return|;
+block|}
+comment|/** 	 * @param filters the filters to set 	 */
+specifier|public
+name|void
+name|setFilters
+parameter_list|(
+name|Vector
+argument_list|<
+name|Vector
+argument_list|<
+name|CommonTree
+argument_list|>
+argument_list|>
+name|filters
+parameter_list|)
+block|{
+name|this
+operator|.
+name|filters
+operator|=
+name|filters
 expr_stmt|;
 block|}
 block|}

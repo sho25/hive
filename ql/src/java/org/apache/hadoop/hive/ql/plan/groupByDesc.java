@@ -37,7 +37,7 @@ name|io
 operator|.
 name|Serializable
 block|{
-comment|/** Group-by Mode:    *  COMPLETE: complete 1-phase aggregation: aggregate, evaluate    *  PARTIAL1: partial aggregation - first phase:  aggregate, evaluatePartial    *  PARTIAL2: partial aggregation - second phase: aggregatePartial, evaluate    *  HASH: the same as PARTIAL1 but use hash-table-based aggregation      */
+comment|/** Group-by Mode:    *  COMPLETE: complete 1-phase aggregation: aggregate, evaluate    *  PARTIAL1: partial aggregation - first phase:  aggregate, evaluatePartial    *  PARTIAL2: partial aggregation - second phase: aggregatePartial, evaluatePartial    *  FINAL: partial aggregation - final phase: aggregatePartial, evaluate    *  HASH: the same as PARTIAL1 but use hash-table-based aggregation      */
 specifier|private
 specifier|static
 specifier|final
@@ -56,6 +56,8 @@ block|,
 name|PARTIAL1
 block|,
 name|PARTIAL2
+block|,
+name|FINAL
 block|,
 name|HASH
 block|}

@@ -380,6 +380,29 @@ literal|"hive.alias"
 argument_list|,
 literal|""
 argument_list|)
+block|,
+name|HIVEMAPSIDEAGGREGATE
+argument_list|(
+literal|"hive.map.aggr"
+argument_list|,
+literal|"false"
+argument_list|)
+block|,
+name|HIVEJOINEMITINTERVAL
+argument_list|(
+literal|"hive.join.emit.interval"
+argument_list|,
+literal|1000
+argument_list|)
+block|,
+comment|// Default file format for CREATE TABLE statement
+comment|// Options: TextFile, SequenceFile
+name|HIVEDEFAULTFILEFORMAT
+argument_list|(
+literal|"hive.default.fileformat"
+argument_list|,
+literal|"TextFile"
+argument_list|)
 block|;
 specifier|public
 specifier|final

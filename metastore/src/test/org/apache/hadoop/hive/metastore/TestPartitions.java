@@ -208,12 +208,7 @@ name|assertTrue
 argument_list|(
 name|partitions
 operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|equals
+name|contains
 argument_list|(
 literal|"ds=2008-01-01"
 argument_list|)
@@ -223,12 +218,7 @@ name|assertTrue
 argument_list|(
 name|partitions
 operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-operator|.
-name|equals
+name|contains
 argument_list|(
 literal|"ds=2008-01-02"
 argument_list|)

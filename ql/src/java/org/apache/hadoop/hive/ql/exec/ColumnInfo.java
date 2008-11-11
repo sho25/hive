@@ -211,6 +211,20 @@ operator|=
 name|internalName
 expr_stmt|;
 block|}
+comment|/**    * Returns the string representation of the ColumnInfo.    */
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|internalName
+operator|+
+literal|": "
+operator|+
+name|type
+return|;
+block|}
 block|}
 end_class
 

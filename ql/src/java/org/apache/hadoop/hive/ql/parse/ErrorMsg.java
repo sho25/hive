@@ -107,6 +107,11 @@ argument_list|(
 literal|"Neither Left nor Right Aliases Encountered in Join"
 argument_list|)
 block|,
+name|INVALID_JOIN_CONDITION_3
+argument_list|(
+literal|"OR not supported in Join currently"
+argument_list|)
+block|,
 name|INVALID_TRANSFORM
 argument_list|(
 literal|"TRANSFORM with Other Select Columns not Supported"
@@ -177,7 +182,7 @@ argument_list|(
 literal|"SELECT DISTINCT and GROUP BY can not be in the same query"
 argument_list|)
 block|,
-name|COLUMN_REPAEATED_IN_PARTITIONING_COLS
+name|COLUMN_REPEATED_IN_PARTITIONING_COLS
 argument_list|(
 literal|"Column repeated in partitioning columns"
 argument_list|)
@@ -210,6 +215,26 @@ block|,
 name|INVALID_DOT
 argument_list|(
 literal|". operator is only supported on struct or list of struct types"
+argument_list|)
+block|,
+name|INVALID_TBL_DDL_SERDE
+argument_list|(
+literal|"Either list of columns or a custom serializer should be specified"
+argument_list|)
+block|,
+name|TARGET_TABLE_COLUMN_MISMATCH
+argument_list|(
+literal|"Cannot insert into target table because column number/types are different"
+argument_list|)
+block|,
+name|TABLE_ALIAS_NOT_ALLOWED
+argument_list|(
+literal|"Table Alias not Allowed in Sampling Clause"
+argument_list|)
+block|,
+name|NON_BUCKETED_TABLE
+argument_list|(
+literal|"Sampling Expression Needed for Non-Bucketed Table"
 argument_list|)
 block|;
 specifier|private

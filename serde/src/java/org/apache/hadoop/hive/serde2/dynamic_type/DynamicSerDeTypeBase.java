@@ -139,6 +139,14 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
+name|void
+name|initialize
+parameter_list|()
+block|{
+comment|// for base type, do nothing. Other types, like structs may initialize internal data
+comment|// structures.
+block|}
+specifier|public
 name|Class
 name|getRealType
 parameter_list|()

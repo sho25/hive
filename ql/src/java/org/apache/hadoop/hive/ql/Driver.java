@@ -1305,6 +1305,10 @@ block|{
 if|if
 condition|(
 name|sem
+operator|!=
+literal|null
+operator|&&
+name|sem
 operator|.
 name|getFetchTask
 argument_list|()

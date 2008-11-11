@@ -458,6 +458,9 @@ literal|0
 argument_list|,
 name|eqIndex
 argument_list|)
+operator|.
+name|trim
+argument_list|()
 expr_stmt|;
 name|part
 index|[
@@ -472,6 +475,9 @@ name|eqIndex
 operator|+
 literal|1
 argument_list|)
+operator|.
+name|trim
+argument_list|()
 expr_stmt|;
 block|}
 try|try

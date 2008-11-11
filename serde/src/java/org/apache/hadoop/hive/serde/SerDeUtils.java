@@ -265,7 +265,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde
+name|serde2
 operator|.
 name|dynamic_type
 operator|.

@@ -79,30 +79,26 @@ name|Path
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|*
-import|;
-end_import
+begin_comment
+comment|/**  *   * This class stores the mapping from table alias to the parse tree information of the table  * sample clause(stored in the TableSample class).  *  */
+end_comment
 
 begin_class
 specifier|public
 class|class
 name|SamplePruner
 block|{
+comment|/**    * Table alias for the table e.g. in case of FROM t TABLESAMPLE(1 OUT OF 2 ON rand()) a    * "a" is the table alias    */
 specifier|private
 name|String
 name|tabAlias
 decl_stmt|;
+comment|/**    * The parse tree corresponding to the TABLESAMPLE clause. e.g. in case of     * FROM t TABLESAMPLE(1 OUT OF 2 ON rand()) a the parse tree of     * "TABLESAMPLE(1 OUT OF 2 ON rand())" is parsed out and stored in tableSample    */
 specifier|private
 name|TableSample
 name|tableSample
 decl_stmt|;
-comment|// The log
+comment|/**    * The log handle for this class    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -121,6 +117,7 @@ argument_list|(
 literal|"hive.ql.parse.SamplePruner"
 argument_list|)
 decl_stmt|;
+comment|/**    * Constructs the SamplePruner given the table alias and the table sample    * 	    * @param alias The alias of the table specified in the query    * @param tableSample The parse infromation of the TABLESAMPLE clause    */
 specifier|public
 name|SamplePruner
 parameter_list|(
@@ -144,6 +141,7 @@ operator|=
 name|tableSample
 expr_stmt|;
 block|}
+comment|/**    * Gets the table alias    *     * @return String    */
 specifier|public
 name|String
 name|getTabAlias
@@ -155,6 +153,7 @@ operator|.
 name|tabAlias
 return|;
 block|}
+comment|/**    * Sets the table alias    *     * @param tabAlias The table alias as specified in the query    */
 specifier|public
 name|void
 name|setTabAlias
@@ -170,6 +169,7 @@ operator|=
 name|tabAlias
 expr_stmt|;
 block|}
+comment|/**    * Gets the parse information of the associated table sample clause    *     * @return TableSample    */
 specifier|public
 name|TableSample
 name|getTableSample
@@ -181,6 +181,7 @@ operator|.
 name|tableSample
 return|;
 block|}
+comment|/**    * Sets the parse information of the associated table sample clause    *     * @param tableSample Information related to the table sample clause    */
 specifier|public
 name|void
 name|setTableSample
@@ -196,6 +197,7 @@ operator|=
 name|tableSample
 expr_stmt|;
 block|}
+comment|/**    * Prunes to get all the files in the partition that satisfy the TABLESAMPLE clause    *     * @param part The partition to prune    * @return Path[]    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -240,30 +242,6 @@ operator|.
 name|getBucketCount
 argument_list|()
 decl_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|tabBucketCols
-init|=
-name|part
-operator|.
-name|getBucketCols
-argument_list|()
-decl_stmt|;
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-name|sampleCols
-init|=
-name|this
-operator|.
-name|tableSample
-operator|.
-name|getCols
-argument_list|()
-decl_stmt|;
 name|String
 name|fullScanMsg
 init|=
@@ -272,23 +250,12 @@ decl_stmt|;
 comment|// check if input pruning is possible
 if|if
 condition|(
-name|sampleCols
-operator|==
-literal|null
-operator|||
-name|sampleCols
+name|this
 operator|.
-name|size
+name|tableSample
+operator|.
+name|getInputPruning
 argument_list|()
-operator|==
-literal|0
-operator|||
-name|tabBucketCols
-operator|.
-name|equals
-argument_list|(
-name|sampleCols
-argument_list|)
 condition|)
 block|{
 name|LOG

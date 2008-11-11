@@ -300,11 +300,6 @@ condition|)
 block|{
 name|oprot
 operator|.
-name|writeFieldStop
-argument_list|()
-expr_stmt|;
-name|oprot
-operator|.
 name|writeStructEnd
 argument_list|()
 expr_stmt|;

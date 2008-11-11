@@ -31,6 +31,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -59,9 +69,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|parse
 operator|.
-name|limitDesc
+name|OpParseContext
 import|;
 end_import
 
@@ -75,11 +85,29 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde2
+name|ql
 operator|.
-name|objectinspector
+name|parse
 operator|.
-name|InspectableObject
+name|RowResolver
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|limitDesc
 import|;
 end_import
 
@@ -116,7 +144,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Limit operator implementation  * Limits a subobject and passes that on.  **/
+comment|/**  * Limit operator implementation  * Limits the number of rows to be passed on.  **/
 end_comment
 
 begin_class

@@ -156,9 +156,6 @@ operator|.
 name|getClassShortName
 argument_list|(
 name|c
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 argument_list|,
 name|oi1

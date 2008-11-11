@@ -81,7 +81,7 @@ specifier|public
 name|boolean
 name|aggregate
 parameter_list|(
-name|String
+name|Double
 name|o
 parameter_list|)
 block|{
@@ -90,12 +90,6 @@ condition|(
 name|o
 operator|!=
 literal|null
-operator|&&
-operator|!
-name|o
-operator|.
-name|isEmpty
-argument_list|()
 condition|)
 block|{
 if|if
@@ -105,12 +99,7 @@ condition|)
 block|{
 name|mMin
 operator|=
-name|Double
-operator|.
-name|parseDouble
-argument_list|(
 name|o
-argument_list|)
 expr_stmt|;
 name|mEmpty
 operator|=
@@ -127,12 +116,7 @@ name|min
 argument_list|(
 name|mMin
 argument_list|,
-name|Double
-operator|.
-name|parseDouble
-argument_list|(
 name|o
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -142,7 +126,7 @@ literal|true
 return|;
 block|}
 specifier|public
-name|String
+name|Double
 name|evaluatePartial
 parameter_list|()
 block|{
@@ -151,7 +135,7 @@ name|mEmpty
 condition|?
 literal|null
 else|:
-name|String
+name|Double
 operator|.
 name|valueOf
 argument_list|(
@@ -163,7 +147,7 @@ specifier|public
 name|boolean
 name|aggregatePartial
 parameter_list|(
-name|String
+name|Double
 name|o
 parameter_list|)
 block|{
@@ -175,7 +159,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|String
+name|Double
 name|evaluate
 parameter_list|()
 block|{
@@ -184,7 +168,7 @@ name|mEmpty
 condition|?
 literal|null
 else|:
-name|String
+name|Double
 operator|.
 name|valueOf
 argument_list|(

@@ -95,6 +95,50 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -281,6 +325,24 @@ argument_list|>
 implements|implements
 name|Serializable
 block|{
+specifier|static
+specifier|final
+specifier|private
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|JoinOperator
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+decl_stmt|;
 comment|// a list of value expressions for each alias are maintained
 specifier|public
 specifier|static
@@ -424,6 +486,12 @@ name|ExprNodeEvaluator
 name|aliasField
 decl_stmt|;
 specifier|transient
+specifier|static
+specifier|protected
+name|ExprNodeEvaluator
+name|keyField
+decl_stmt|;
+specifier|transient
 specifier|protected
 name|HashMap
 argument_list|<
@@ -440,7 +508,8 @@ name|Byte
 index|[]
 name|order
 decl_stmt|;
-comment|// order in which the results should be outputted
+comment|// order in which the results should
+comment|// be outputted
 specifier|transient
 specifier|protected
 name|joinCond
@@ -458,7 +527,9 @@ name|Object
 index|[]
 name|dummyObj
 decl_stmt|;
-comment|// for outer joins, contains the potential nulls for the concerned aliases
+comment|// for outer joins, contains the
+comment|// potential nulls for the concerned
+comment|// aliases
 specifier|transient
 specifier|private
 name|Vector
@@ -521,6 +592,30 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|keyField
+operator|=
+name|ExprNodeEvaluatorFactory
+operator|.
+name|get
+argument_list|(
+operator|new
+name|exprNodeColumnDesc
+argument_list|(
+name|String
+operator|.
+name|class
+argument_list|,
+name|Utilities
+operator|.
+name|ReduceField
+operator|.
+name|KEY
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 name|HashMap
 argument_list|<
@@ -535,6 +630,12 @@ argument_list|>
 argument_list|>
 argument_list|>
 name|storage
+decl_stmt|;
+name|int
+name|joinEmitInterval
+init|=
+operator|-
+literal|1
 decl_stmt|;
 specifier|public
 name|void
@@ -1002,6 +1103,21 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
+name|joinEmitInterval
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEPARTITIONNAME
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|void
@@ -1159,6 +1275,92 @@ operator|.
 name|o
 argument_list|)
 expr_stmt|;
+block|}
+comment|// Are we consuming too much memory
+if|if
+condition|(
+name|storage
+operator|.
+name|get
+argument_list|(
+name|alias
+argument_list|)
+operator|.
+name|size
+argument_list|()
+operator|==
+name|joinEmitInterval
+condition|)
+block|{
+if|if
+condition|(
+name|alias
+operator|==
+name|numValues
+operator|-
+literal|1
+condition|)
+block|{
+comment|// The input is sorted by alias, so if we are already in the last join
+comment|// operand,
+comment|// we can emit some results now.
+comment|// Note this has to be done before adding the current row to the
+comment|// storage,
+comment|// to preserve the correctness for outer joins.
+name|checkAndGenObject
+argument_list|()
+expr_stmt|;
+name|storage
+operator|.
+name|get
+argument_list|(
+name|alias
+argument_list|)
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Output a warning if we reached at least 1000 rows for a join
+comment|// operand
+comment|// We won't output a warning for the last join operand since the size
+comment|// will never goes to joinEmitInterval.
+name|InspectableObject
+name|io
+init|=
+operator|new
+name|InspectableObject
+argument_list|()
+decl_stmt|;
+name|keyField
+operator|.
+name|evaluate
+argument_list|(
+name|row
+argument_list|,
+name|rowInspector
+argument_list|,
+name|io
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"table "
+operator|+
+name|alias
+operator|+
+literal|" has more than joinEmitInterval rows for join key "
+operator|+
+name|io
+operator|.
+name|o
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// Add the value to the vector
 name|storage
@@ -2234,7 +2436,7 @@ return|return
 name|resNulls
 return|;
 block|}
-comment|/*    * The new input is added to the list of existing inputs. Each entry in the     * array of inputNulls denotes the entries in the intermediate object to    * be used. The intermediate object is augmented with the new object, and     * list of nulls is changed appropriately. The list will contain all non-nulls    * for a inner join. The outer joins are processed appropriately.    */
+comment|/*    * The new input is added to the list of existing inputs. Each entry in the    * array of inputNulls denotes the entries in the intermediate object to be    * used. The intermediate object is augmented with the new object, and list of    * nulls is changed appropriately. The list will contain all non-nulls for a    * inner join. The outer joins are processed appropriately.    */
 specifier|private
 name|Vector
 argument_list|<
@@ -2560,7 +2762,7 @@ name|newObjNull
 argument_list|)
 return|;
 block|}
-comment|/*     * genObject is a recursive function. For the inputs, a array of    * bitvectors is maintained (inputNulls) where each entry denotes whether    * the element is to be used or not (whether it is null or not). The size of    * the bitvector is same as the number of inputs under consideration     * currently. When all inputs are accounted for, the output is forwared    * appropriately.    */
+comment|/*    * genObject is a recursive function. For the inputs, a array of bitvectors is    * maintained (inputNulls) where each entry denotes whether the element is to    * be used or not (whether it is null or not). The size of the bitvector is    * same as the number of inputs under consideration currently. When all inputs    * are accounted for, the output is forwared appropriately.    */
 specifier|private
 name|void
 name|genObject
@@ -2740,8 +2942,6 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-try|try
-block|{
 name|LOG
 operator|.
 name|trace
@@ -2751,6 +2951,17 @@ operator|+
 name|numValues
 argument_list|)
 expr_stmt|;
+name|checkAndGenObject
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|checkAndGenObject
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
 comment|// does any result need to be emitted
 for|for
 control|(
@@ -2859,26 +3070,6 @@ argument_list|(
 literal|"called genObject"
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 block|}
 comment|/**    * All done    *     */
 specifier|public

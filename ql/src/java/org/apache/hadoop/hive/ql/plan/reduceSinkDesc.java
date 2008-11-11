@@ -51,7 +51,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|// these are the expressions that go into the reduce key
+comment|/**    * Key columns are passed to reducer in the "key".     */
 specifier|private
 name|java
 operator|.
@@ -63,6 +63,7 @@ name|exprNodeDesc
 argument_list|>
 name|keyCols
 decl_stmt|;
+comment|/**    * Value columns are passed to reducer in the "value".     */
 specifier|private
 name|java
 operator|.
@@ -74,26 +75,32 @@ name|exprNodeDesc
 argument_list|>
 name|valueCols
 decl_stmt|;
-comment|// Describe how to serialize the key
+comment|/**     * Describe how to serialize the key.    */
 specifier|private
 name|tableDesc
 name|keySerializeInfo
 decl_stmt|;
-comment|// Describe how to serialize the value
+comment|/**    * Describe how to serialize the value.    */
 specifier|private
 name|tableDesc
 name|valueSerializeInfo
 decl_stmt|;
+comment|/**    * The tag for this reducesink descriptor.    */
 specifier|private
 name|int
 name|tag
 decl_stmt|;
-comment|// The partition key will be the first #numPartitionFields of keyCols
-comment|// If the value is 0, then all data will go to a single reducer
-comment|// If the value is -1, then data will go to a random reducer
+comment|/**    * The partition columns (CLUSTER BY or DISTRIBUTE BY in Hive language).    * Partition columns decide the reducer that the current row goes to.    * Partition columns are not passed to reducer.    */
 specifier|private
-name|int
-name|numPartitionFields
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|exprNodeDesc
+argument_list|>
+name|partitionCols
 decl_stmt|;
 specifier|private
 name|boolean
@@ -133,8 +140,15 @@ parameter_list|,
 name|int
 name|tag
 parameter_list|,
-name|int
-name|numPartitionFields
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|exprNodeDesc
+argument_list|>
+name|partitionCols
 parameter_list|,
 name|int
 name|numReducers
@@ -183,9 +197,9 @@ name|inferNumReducers
 expr_stmt|;
 name|this
 operator|.
-name|numPartitionFields
+name|partitionCols
 operator|=
-name|numPartitionFields
+name|partitionCols
 expr_stmt|;
 name|this
 operator|.
@@ -301,32 +315,47 @@ name|explain
 argument_list|(
 name|displayName
 operator|=
-literal|"# partition fields"
+literal|"Map-reduce partition columns"
 argument_list|)
 specifier|public
-name|int
-name|getNumPartitionFields
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|exprNodeDesc
+argument_list|>
+name|getPartitionCols
 parameter_list|()
 block|{
 return|return
 name|this
 operator|.
-name|numPartitionFields
+name|partitionCols
 return|;
 block|}
 specifier|public
 name|void
-name|setNumPartitionFields
+name|setPartitionCols
 parameter_list|(
-name|int
-name|numPartitionFields
+specifier|final
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|exprNodeDesc
+argument_list|>
+name|partitionCols
 parameter_list|)
 block|{
 name|this
 operator|.
-name|numPartitionFields
+name|partitionCols
 operator|=
-name|numPartitionFields
+name|partitionCols
 expr_stmt|;
 block|}
 annotation|@
