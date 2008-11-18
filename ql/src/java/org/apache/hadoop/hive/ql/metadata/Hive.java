@@ -3642,7 +3642,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Error in getting fields from serde."
+literal|"Error in getting fields from serde. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3659,6 +3664,11 @@ operator|new
 name|HiveException
 argument_list|(
 literal|"Error in getting fields from serde."
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
