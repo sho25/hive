@@ -68,7 +68,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|UDFToFloat
+name|UDFToShort
 implements|implements
 name|UDF
 block|{
@@ -81,7 +81,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|UDFToFloat
+name|UDFToByte
 operator|.
 name|class
 operator|.
@@ -90,12 +90,12 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|public
-name|UDFToFloat
+name|UDFToShort
 parameter_list|()
 block|{   }
-comment|/**    * Convert from boolean to a float. This is called for CAST(... AS FLOAT)    *    * @param i The boolean value to convert    * @return Float    */
+comment|/**    * Convert from boolean to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The boolean value to convert    * @return Short    */
 specifier|public
-name|Float
+name|Short
 name|evaluate
 parameter_list|(
 name|Boolean
@@ -122,20 +122,20 @@ name|booleanValue
 argument_list|()
 condition|?
 operator|(
-name|float
+name|short
 operator|)
-literal|1.0
+literal|1
 else|:
 operator|(
-name|float
+name|short
 operator|)
-literal|0.0
+literal|0
 return|;
 block|}
 block|}
-comment|/**    * Convert from byte to a float. This is called for CAST(... AS FLOAT)    *    * @param i The byte value to convert    * @return Float    */
+comment|/**    * Convert from byte to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The byte value to convert    * @return Short    */
 specifier|public
-name|Float
+name|Short
 name|evaluate
 parameter_list|(
 name|Byte
@@ -156,56 +156,21 @@ block|}
 else|else
 block|{
 return|return
-name|Float
-operator|.
-name|valueOf
-argument_list|(
-name|i
-operator|.
-name|floatValue
-argument_list|()
-argument_list|)
-return|;
-block|}
-block|}
-comment|/**    * Convert from short to a float. This is called for CAST(... AS FLOAT)    *    * @param i The short value to convert    * @return Float    */
-specifier|public
-name|Float
-name|evaluate
-parameter_list|(
 name|Short
-name|i
-parameter_list|)
-block|{
-if|if
-condition|(
-name|i
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
-else|else
-block|{
-return|return
-name|Float
 operator|.
 name|valueOf
 argument_list|(
 name|i
 operator|.
-name|floatValue
+name|shortValue
 argument_list|()
 argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Convert from integer to a float. This is called for CAST(... AS FLOAT)    *    * @param i The integer value to convert    * @return Float    */
+comment|/**    * Convert from integer to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The integer value to convert    * @return Short    */
 specifier|public
-name|Float
+name|Short
 name|evaluate
 parameter_list|(
 name|Integer
@@ -226,21 +191,21 @@ block|}
 else|else
 block|{
 return|return
-name|Float
+name|Short
 operator|.
 name|valueOf
 argument_list|(
 name|i
 operator|.
-name|floatValue
+name|shortValue
 argument_list|()
 argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Convert from long to a float. This is called for CAST(... AS FLOAT)    *    * @param i The long value to convert    * @return Float    */
+comment|/**    * Convert from long to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The long value to convert    * @return Short    */
 specifier|public
-name|Float
+name|Short
 name|evaluate
 parameter_list|(
 name|Long
@@ -261,21 +226,56 @@ block|}
 else|else
 block|{
 return|return
-name|Float
+name|Short
 operator|.
 name|valueOf
 argument_list|(
 name|i
 operator|.
-name|floatValue
+name|shortValue
 argument_list|()
 argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Convert from double to a float. This is called for CAST(... AS FLOAT)    *    * @param i The double value to convert    * @return Float    */
+comment|/**    * Convert from float to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The float value to convert    * @return Short    */
 specifier|public
+name|Short
+name|evaluate
+parameter_list|(
 name|Float
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Short
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|shortValue
+argument_list|()
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**    * Convert from double to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The double value to convert    * @return Short    */
+specifier|public
+name|Short
 name|evaluate
 parameter_list|(
 name|Double
@@ -296,21 +296,21 @@ block|}
 else|else
 block|{
 return|return
-name|Float
+name|Short
 operator|.
 name|valueOf
 argument_list|(
 name|i
 operator|.
-name|floatValue
+name|shortValue
 argument_list|()
 argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Convert from string to a float. This is called for CAST(... AS FLOAT)    *    * @param i The string value to convert    * @return Float    */
+comment|/**    * Convert from string to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The string value to convert    * @return Short    */
 specifier|public
-name|Float
+name|Short
 name|evaluate
 parameter_list|(
 name|String
@@ -330,12 +330,30 @@ return|;
 block|}
 else|else
 block|{
+try|try
+block|{
+return|return
+name|Short
+operator|.
+name|valueOf
+argument_list|(
+name|i
+argument_list|)
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|NumberFormatException
+name|e
+parameter_list|)
+block|{
 comment|// MySQL returns 0 if the string is not a well-formed numeric value.
-comment|// return Float.valueOf(0);
+comment|// return Byte.valueOf(0);
 comment|// But we decided to return NULL instead, which is more conservative.
 return|return
 literal|null
 return|;
+block|}
 block|}
 block|}
 block|}

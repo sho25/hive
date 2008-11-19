@@ -93,6 +93,81 @@ specifier|public
 name|UDFToBoolean
 parameter_list|()
 block|{   }
+comment|/**    * Convert from a byte to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The byte value to convert    * @return Boolean    */
+specifier|public
+name|Boolean
+name|evaluate
+parameter_list|(
+name|Byte
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Boolean
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|byteValue
+argument_list|()
+operator|==
+literal|0
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**    * Convert from a short to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The short value to convert    * @return Boolean    */
+specifier|public
+name|Boolean
+name|evaluate
+parameter_list|(
+name|Short
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Boolean
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|shortValue
+argument_list|()
+operator|==
+literal|0
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**    * Convert from a integer to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The integer value to convert    * @return Boolean    */
 specifier|public
 name|Boolean
 name|evaluate
@@ -129,6 +204,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from a long to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The long value to convert    * @return Boolean    */
 specifier|public
 name|Boolean
 name|evaluate
@@ -165,6 +241,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from a float to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The float value to convert    * @return Boolean    */
 specifier|public
 name|Boolean
 name|evaluate
@@ -201,6 +278,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from a double to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The double value to convert    * @return Boolean    */
 specifier|public
 name|Boolean
 name|evaluate
@@ -237,6 +315,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from a string to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The string value to convert    * @return Boolean    */
 specifier|public
 name|Boolean
 name|evaluate

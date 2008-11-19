@@ -93,6 +93,82 @@ specifier|public
 name|UDFToByte
 parameter_list|()
 block|{   }
+comment|/**    * Convert from boolean to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The boolean value to convert    * @return Byte    */
+specifier|public
+name|Byte
+name|evaluate
+parameter_list|(
+name|Boolean
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|i
+operator|.
+name|booleanValue
+argument_list|()
+condition|?
+operator|(
+name|byte
+operator|)
+literal|1
+else|:
+operator|(
+name|byte
+operator|)
+literal|0
+return|;
+block|}
+block|}
+comment|/**    * Convert from short to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The short value to convert    * @return Byte    */
+specifier|public
+name|Byte
+name|evaluate
+parameter_list|(
+name|Short
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Byte
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|byteValue
+argument_list|()
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**    * Convert from integer to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The integer value to convert    * @return Byte    */
 specifier|public
 name|Byte
 name|evaluate
@@ -127,6 +203,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from long to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The long value to convert    * @return Byte    */
 specifier|public
 name|Byte
 name|evaluate
@@ -161,6 +238,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from float to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The float value to convert    * @return Byte    */
 specifier|public
 name|Byte
 name|evaluate
@@ -195,6 +273,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from double to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The double value to convert    * @return Byte    */
 specifier|public
 name|Byte
 name|evaluate
@@ -229,6 +308,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from string to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The string value to convert    * @return Byte    */
 specifier|public
 name|Byte
 name|evaluate

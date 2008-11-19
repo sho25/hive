@@ -256,6 +256,13 @@ name|UDFClass
 operator|=
 name|UDFClass
 expr_stmt|;
+assert|assert
+operator|(
+name|UDFMethod
+operator|!=
+literal|null
+operator|)
+assert|;
 name|this
 operator|.
 name|UDFMethod

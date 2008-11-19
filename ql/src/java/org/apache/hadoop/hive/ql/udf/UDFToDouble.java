@@ -93,6 +93,41 @@ specifier|public
 name|UDFToDouble
 parameter_list|()
 block|{   }
+comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The boolean value to convert    * @return Double    */
+specifier|public
+name|Double
+name|evaluate
+parameter_list|(
+name|Boolean
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|i
+operator|.
+name|booleanValue
+argument_list|()
+condition|?
+literal|1.0
+else|:
+literal|0.0
+return|;
+block|}
+block|}
+comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The byte value to convert    * @return Double    */
 specifier|public
 name|Double
 name|evaluate
@@ -127,6 +162,42 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from short to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The short value to convert    * @return Double    */
+specifier|public
+name|Double
+name|evaluate
+parameter_list|(
+name|Short
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Double
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|doubleValue
+argument_list|()
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**    * Convert from integer to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The integer value to convert    * @return Double    */
 specifier|public
 name|Double
 name|evaluate
@@ -161,6 +232,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from long to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The long value to convert    * @return Double    */
 specifier|public
 name|Double
 name|evaluate
@@ -195,6 +267,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from float to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The float value to convert    * @return Double    */
 specifier|public
 name|Double
 name|evaluate
@@ -229,6 +302,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from string to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The string value to convert    * @return Double    */
 specifier|public
 name|Double
 name|evaluate

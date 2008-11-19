@@ -93,6 +93,7 @@ specifier|public
 name|UDFToInteger
 parameter_list|()
 block|{   }
+comment|/**    * Convert from boolean to an integer. This is called for CAST(... AS INT)    *    * @param i The boolean value to convert    * @return Integer    */
 specifier|public
 name|Integer
 name|evaluate
@@ -126,6 +127,7 @@ literal|0
 return|;
 block|}
 block|}
+comment|/**    * Convert from byte to an integer. This is called for CAST(... AS INT)    *    * @param i The byte value to convert    * @return Integer    */
 specifier|public
 name|Integer
 name|evaluate
@@ -160,6 +162,42 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from short to an integer. This is called for CAST(... AS INT)    *    * @param i The short value to convert    * @return Integer    */
+specifier|public
+name|Integer
+name|evaluate
+parameter_list|(
+name|Short
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Integer
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|shortValue
+argument_list|()
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**    * Convert from long to an integer. This is called for CAST(... AS INT)    *    * @param i The long value to convert    * @return Integer    */
 specifier|public
 name|Integer
 name|evaluate
@@ -194,6 +232,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from float to an integer. This is called for CAST(... AS INT)    *    * @param i The float value to convert    * @return Integer    */
 specifier|public
 name|Integer
 name|evaluate
@@ -228,6 +267,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from double to an integer. This is called for CAST(... AS INT)    *    * @param i The double value to convert    * @return Integer    */
 specifier|public
 name|Integer
 name|evaluate
@@ -262,6 +302,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Convert from string to an integer. This is called for CAST(... AS INT)    *    * @param i The string value to convert    * @return Integer    */
 specifier|public
 name|Integer
 name|evaluate
