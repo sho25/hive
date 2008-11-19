@@ -218,6 +218,13 @@ argument_list|,
 literal|"false"
 argument_list|)
 block|,
+name|SCRIPTERRORLIMIT
+argument_list|(
+literal|"hive.exec.script.maxerrsize"
+argument_list|,
+literal|100000
+argument_list|)
+block|,
 comment|// hadoop stuff
 name|HADOOPBIN
 argument_list|(
