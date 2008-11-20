@@ -13625,6 +13625,7 @@ argument_list|,
 name|limit
 argument_list|)
 decl_stmt|;
+comment|// If it is a outer most query, the exact limit is applied by the fetch task
 if|if
 condition|(
 name|isOuterQuery
@@ -17670,7 +17671,10 @@ operator|.
 name|intValue
 argument_list|()
 argument_list|,
-literal|true
+name|qb
+operator|.
+name|getIsQuery
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|qb
