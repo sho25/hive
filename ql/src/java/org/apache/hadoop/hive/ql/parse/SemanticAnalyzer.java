@@ -5737,6 +5737,27 @@ argument_list|(
 name|name
 argument_list|)
 decl_stmt|;
+comment|// Skip the colinfos which are not for this particular alias
+if|if
+condition|(
+name|tabAlias
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|tmp
+index|[
+literal|0
+index|]
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|tabAlias
+argument_list|)
+condition|)
+block|{
+continue|continue;
+block|}
 name|exprNodeColumnDesc
 name|expr
 init|=
@@ -13118,8 +13139,11 @@ operator|+
 literal|" columns but query has "
 operator|+
 name|rowFields
+operator|.
+name|size
+argument_list|()
 operator|+
-literal|"."
+literal|" columns."
 decl_stmt|;
 throw|throw
 operator|new
