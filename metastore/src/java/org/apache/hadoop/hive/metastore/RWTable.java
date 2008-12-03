@@ -248,7 +248,7 @@ name|path
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * drop    *    * delete the schema for this table and optionally delete the data. Note the data is actually moved to the    * Trash, not really deleted.    *    * @exception MetaException if any problems instantiating this object    *    */
+comment|/**    * drop    *    * delete the schema for this table and optionally delete the data. Note the data is actually moved to the    * Trash, not really deleted.    *    * @param deleteData should we delete the underlying data or just the schema?    * @exception MetaException if any problems instantiating this object    *    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -257,7 +257,10 @@ argument_list|)
 specifier|public
 name|void
 name|drop
-parameter_list|()
+parameter_list|(
+name|boolean
+name|deleteData
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -276,6 +279,11 @@ literal|"cannot perform write operation on a read-only table"
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|deleteData
+condition|)
+block|{
 name|MetaStoreUtils
 operator|.
 name|deleteWHDirectory
@@ -293,6 +301,7 @@ operator|.
 name|use_trash_
 argument_list|)
 expr_stmt|;
+block|}
 try|try
 block|{
 name|this
@@ -335,6 +344,44 @@ operator|=
 literal|true
 expr_stmt|;
 comment|// the table is dropped, so can only do reads now
+block|}
+comment|/**    * drop    *    * delete the schema for this table and optionally delete the data. Note the data is actually moved to the    * Trash, not really deleted.    *    * @exception MetaException if any problems instantiating this object    *    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"nls"
+argument_list|)
+specifier|public
+name|void
+name|drop
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+comment|//external table, don't delete the data;
+name|boolean
+name|isExternal
+init|=
+literal|"TRUE"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|this
+operator|.
+name|schema_
+operator|.
+name|getProperty
+argument_list|(
+literal|"EXTERNAL"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|drop
+argument_list|(
+operator|!
+name|isExternal
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * truncate    *    * delete the data, but not the schema    * Can be applied on a partition by partition basis    *    * @param partition partition in that table or "" or null    * @exception MetaException if any problems instantiating this object    *    */
 specifier|public
