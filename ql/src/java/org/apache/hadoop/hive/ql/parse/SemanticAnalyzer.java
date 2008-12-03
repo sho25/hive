@@ -18815,7 +18815,10 @@ operator|.
 name|getPrimitiveClass
 argument_list|()
 argument_list|,
-name|col
+name|ci
+operator|.
+name|getInternalName
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
