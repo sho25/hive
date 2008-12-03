@@ -19,18 +19,8 @@ name|parse
 package|;
 end_package
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
 begin_comment
-comment|/**  * Implementation of the Operator Parse Context. It maintains the parse context  * that may be needed by an operator. Currently, it only maintains the row  * resolver and the list of columns used by the operator  **/
+comment|/**  * Implementation of the Operator Parse Context. It maintains the parse context  * that may be needed by an operator. Currently, it only maintains the row  * resolver.  **/
 end_comment
 
 begin_class
@@ -43,14 +33,6 @@ name|RowResolver
 name|rr
 decl_stmt|;
 comment|// row resolver for the operator
-comment|// list of internal column names used
-specifier|private
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|colNames
-decl_stmt|;
 comment|/**    * @param rr row resolver    */
 specifier|public
 name|OpParseContext
@@ -90,38 +72,6 @@ operator|.
 name|rr
 operator|=
 name|rr
-expr_stmt|;
-block|}
-comment|/**    * @return the column names desired    */
-specifier|public
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|getColNames
-parameter_list|()
-block|{
-return|return
-name|colNames
-return|;
-block|}
-comment|/**    * @param colNames the column names to set    */
-specifier|public
-name|void
-name|setColNames
-parameter_list|(
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|colNames
-parameter_list|)
-block|{
-name|this
-operator|.
-name|colNames
-operator|=
-name|colNames
 expr_stmt|;
 block|}
 block|}

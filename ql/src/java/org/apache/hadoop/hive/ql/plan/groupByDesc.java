@@ -291,7 +291,7 @@ name|explain
 argument_list|(
 name|displayName
 operator|=
-literal|""
+literal|"aggregations"
 argument_list|)
 specifier|public
 name|java

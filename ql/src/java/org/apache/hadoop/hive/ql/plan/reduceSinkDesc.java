@@ -491,6 +491,43 @@ operator|=
 name|valueSerializeInfo
 expr_stmt|;
 block|}
+comment|/**    * Returns the sort order of the key columns.    * @return null, which means ascending order for all key columns,    *   or a String of the same length as key columns, that consists of only     *   "+" (ascending order) and "-" (descending order).     */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"sort order"
+argument_list|)
+specifier|public
+name|String
+name|getOrder
+parameter_list|()
+block|{
+return|return
+name|keySerializeInfo
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|getProperty
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|Constants
+operator|.
+name|SERIALIZATION_SORT_ORDER
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

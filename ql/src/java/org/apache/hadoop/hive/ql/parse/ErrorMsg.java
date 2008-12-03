@@ -232,6 +232,16 @@ argument_list|(
 literal|"Table Alias not Allowed in Sampling Clause"
 argument_list|)
 block|,
+name|CLUSTERBY_DISTRIBUTEBY_CONFLICT
+argument_list|(
+literal|"Cannot have both Cluster By and Distribute By Clauses"
+argument_list|)
+block|,
+name|CLUSTERBY_SORTBY_CONFLICT
+argument_list|(
+literal|"Cannot have both Cluster By and Sort By Clauses"
+argument_list|)
+block|,
 name|NON_BUCKETED_TABLE
 argument_list|(
 literal|"Sampling Expression Needed for Non-Bucketed Table"
