@@ -565,12 +565,10 @@ decl_stmt|;
 name|boolean
 name|isCompressed
 init|=
-name|FileOutputFormat
+name|conf
 operator|.
-name|getCompressOutput
-argument_list|(
-name|jc
-argument_list|)
+name|getCompressed
+argument_list|()
 decl_stmt|;
 comment|// The reason to keep these instead of using OutputFormat.getRecordWriter() is that
 comment|// getRecordWriter does not give us enough control over the file name that we create.
@@ -579,11 +577,6 @@ condition|(
 name|outputFormat
 operator|instanceof
 name|IgnoreKeyTextOutputFormat
-condition|)
-block|{
-if|if
-condition|(
-name|isCompressed
 condition|)
 block|{
 name|finalPath
@@ -603,10 +596,16 @@ argument_list|(
 name|hconf
 argument_list|)
 operator|+
-literal|".gz"
+name|Utilities
+operator|.
+name|getFileExtension
+argument_list|(
+name|jc
+argument_list|,
+name|isCompressed
+argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 name|String
 name|rowSeparatorString
 init|=
@@ -682,6 +681,8 @@ name|create
 argument_list|(
 name|outPath
 argument_list|)
+argument_list|,
+name|isCompressed
 argument_list|)
 decl_stmt|;
 name|outWriter
@@ -825,6 +826,8 @@ operator|.
 name|class
 argument_list|,
 name|outputClass
+argument_list|,
+name|isCompressed
 argument_list|)
 decl_stmt|;
 name|outWriter

@@ -727,6 +727,10 @@ if|if
 condition|(
 name|val
 operator|instanceof
+name|Boolean
+operator|||
+name|val
+operator|instanceof
 name|String
 operator|||
 name|val

@@ -1139,6 +1139,8 @@ argument_list|,
 name|Utilities
 operator|.
 name|defaultTd
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1219,6 +1221,8 @@ argument_list|,
 name|Utilities
 operator|.
 name|defaultTd
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1444,6 +1448,8 @@ argument_list|,
 name|Utilities
 operator|.
 name|defaultTd
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1644,6 +1650,8 @@ argument_list|,
 name|Utilities
 operator|.
 name|defaultTd
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1964,6 +1972,8 @@ argument_list|,
 name|Utilities
 operator|.
 name|defaultTd
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2300,6 +2310,8 @@ argument_list|,
 name|Utilities
 operator|.
 name|defaultTd
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2542,6 +2554,8 @@ argument_list|,
 name|Utilities
 operator|.
 name|defaultTd
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2829,6 +2843,8 @@ argument_list|,
 name|Utilities
 operator|.
 name|defaultTd
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -3169,7 +3185,7 @@ argument_list|)
 expr_stmt|;
 name|fileDiff
 argument_list|(
-literal|"lt100.txt"
+literal|"lt100.txt.deflate"
 argument_list|,
 literal|"mapplan1.out"
 argument_list|)

@@ -13189,6 +13189,17 @@ argument_list|(
 name|queryTmpdir
 argument_list|,
 name|table_desc
+argument_list|,
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|COMPRESSRESULT
+argument_list|)
 argument_list|)
 argument_list|,
 operator|new
