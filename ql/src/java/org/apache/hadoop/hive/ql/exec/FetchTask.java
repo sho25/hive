@@ -535,11 +535,9 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|static
-specifier|final
 specifier|private
 name|int
-name|MAX_ROWS
+name|maxRows
 init|=
 literal|100
 decl_stmt|;
@@ -710,6 +708,19 @@ literal|false
 assert|;
 return|return
 literal|0
+return|;
+block|}
+comment|/**    * Return the tableDesc of the fetchWork    */
+specifier|public
+name|tableDesc
+name|getTblDesc
+parameter_list|()
+block|{
+return|return
+name|work
+operator|.
+name|getTblDesc
+argument_list|()
 return|;
 block|}
 comment|/**    * A cache of InputFormat instances.    */
@@ -1556,6 +1567,32 @@ return|return
 name|currRecReader
 return|;
 block|}
+comment|/**    * Return the maximum number of rows returned by fetch    */
+specifier|public
+name|int
+name|getMaxRows
+parameter_list|()
+block|{
+return|return
+name|maxRows
+return|;
+block|}
+comment|/**    * Set the maximum number of rows returned by fetch    */
+specifier|public
+name|void
+name|setMaxRows
+parameter_list|(
+name|int
+name|maxRows
+parameter_list|)
+block|{
+name|this
+operator|.
+name|maxRows
+operator|=
+name|maxRows
+expr_stmt|;
+block|}
 specifier|public
 name|boolean
 name|fetch
@@ -1577,7 +1614,7 @@ decl_stmt|;
 name|int
 name|rowsRet
 init|=
-name|MAX_ROWS
+name|maxRows
 decl_stmt|;
 if|if
 condition|(

@@ -232,12 +232,12 @@ literal|"hadoop.bin.path"
 argument_list|,
 name|System
 operator|.
-name|getProperty
+name|getenv
 argument_list|(
-literal|"user.dir"
+literal|"HADOOP_HOME"
 argument_list|)
 operator|+
-literal|"/../../../bin/hadoop"
+literal|"/bin/hadoop"
 argument_list|)
 block|,
 name|HADOOPCONF
