@@ -4806,6 +4806,13 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+if|if
+condition|(
+name|joinCond
+operator|==
+literal|null
+condition|)
+return|return;
 switch|switch
 condition|(
 name|joinCond
@@ -16907,11 +16914,6 @@ argument_list|(
 literal|2
 argument_list|)
 decl_stmt|;
-assert|assert
-name|joinCond
-operator|!=
-literal|null
-assert|;
 name|Vector
 argument_list|<
 name|String
