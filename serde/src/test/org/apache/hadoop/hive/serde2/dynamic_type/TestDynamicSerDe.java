@@ -809,7 +809,7 @@ name|Constants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
-literal|"struct test { i32 hello, list<string> bye, map<string,i32> another, i32 nhello, double d, double nd}"
+literal|"struct test { i32 _hello, list<string> 2bye, map<string,i32> another, i32 nhello, double d, double nd}"
 argument_list|)
 expr_stmt|;
 name|schema

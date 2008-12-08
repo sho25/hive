@@ -10663,6 +10663,7 @@ literal|"Missing return statement in function"
 argument_list|)
 throw|;
 block|}
+comment|/** Generated Token Manager. */
 specifier|public
 name|thrift_grammarTokenManager
 name|token_source
@@ -10670,10 +10671,14 @@ decl_stmt|;
 name|SimpleCharStream
 name|jj_input_stream
 decl_stmt|;
+comment|/** Current token. */
 specifier|public
 name|Token
 name|token
-decl_stmt|,
+decl_stmt|;
+comment|/** Next token. */
+specifier|public
+name|Token
 name|jj_nt
 decl_stmt|;
 specifier|private
@@ -10716,20 +10721,20 @@ name|jj_la1_2
 decl_stmt|;
 static|static
 block|{
-name|jj_la1_0
+name|jj_la1_init_0
 argument_list|()
 expr_stmt|;
-name|jj_la1_1
+name|jj_la1_init_1
 argument_list|()
 expr_stmt|;
-name|jj_la1_2
+name|jj_la1_init_2
 argument_list|()
 expr_stmt|;
 block|}
 specifier|private
 specifier|static
 name|void
-name|jj_la1_0
+name|jj_la1_init_0
 parameter_list|()
 block|{
 name|jj_la1_0
@@ -10809,7 +10814,7 @@ block|}
 specifier|private
 specifier|static
 name|void
-name|jj_la1_1
+name|jj_la1_init_1
 parameter_list|()
 block|{
 name|jj_la1_1
@@ -10889,7 +10894,7 @@ block|}
 specifier|private
 specifier|static
 name|void
-name|jj_la1_2
+name|jj_la1_init_2
 parameter_list|()
 block|{
 name|jj_la1_2
@@ -10966,6 +10971,7 @@ literal|0x0
 block|,}
 expr_stmt|;
 block|}
+comment|/** Constructor with InputStream. */
 specifier|public
 name|thrift_grammar
 parameter_list|(
@@ -10985,6 +10991,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|/** Constructor with InputStream and supplied encoding */
 specifier|public
 name|thrift_grammar
 parameter_list|(
@@ -11080,6 +11087,7 @@ operator|-
 literal|1
 expr_stmt|;
 block|}
+comment|/** Reinitialise. */
 specifier|public
 name|void
 name|ReInit
@@ -11100,6 +11108,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|/** Reinitialise. */
 specifier|public
 name|void
 name|ReInit
@@ -11199,6 +11208,7 @@ operator|-
 literal|1
 expr_stmt|;
 block|}
+comment|/** Constructor. */
 specifier|public
 name|thrift_grammar
 parameter_list|(
@@ -11268,6 +11278,7 @@ operator|-
 literal|1
 expr_stmt|;
 block|}
+comment|/** Reinitialise. */
 specifier|public
 name|void
 name|ReInit
@@ -11341,6 +11352,7 @@ operator|-
 literal|1
 expr_stmt|;
 block|}
+comment|/** Constructor with generated Token Manager. */
 specifier|public
 name|thrift_grammar
 parameter_list|(
@@ -11390,6 +11402,7 @@ operator|-
 literal|1
 expr_stmt|;
 block|}
+comment|/** Reinitialise. */
 specifier|public
 name|void
 name|ReInit
@@ -11445,7 +11458,6 @@ operator|-
 literal|1
 expr_stmt|;
 block|}
-specifier|final
 specifier|private
 name|Token
 name|jj_consume_token
@@ -11523,6 +11535,7 @@ name|generateParseException
 argument_list|()
 throw|;
 block|}
+comment|/** Get the next Token. */
 specifier|final
 specifier|public
 name|Token
@@ -11567,6 +11580,7 @@ return|return
 name|token
 return|;
 block|}
+comment|/** Get the specific Token. */
 specifier|final
 specifier|public
 name|Token
@@ -11627,7 +11641,6 @@ return|return
 name|t
 return|;
 block|}
-specifier|final
 specifier|private
 name|int
 name|jj_ntk
@@ -11679,7 +11692,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|List
 name|jj_expentries
 init|=
 operator|new
@@ -11687,7 +11700,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|ArrayList
 argument_list|()
 decl_stmt|;
 specifier|private
@@ -11702,6 +11715,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+comment|/** Generate ParseException. */
 specifier|public
 name|ParseException
 name|generateParseException
@@ -11709,7 +11723,7 @@ parameter_list|()
 block|{
 name|jj_expentries
 operator|.
-name|removeAllElements
+name|clear
 argument_list|()
 expr_stmt|;
 name|boolean
@@ -11722,29 +11736,6 @@ index|[
 literal|71
 index|]
 decl_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-literal|71
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|la1tokens
-index|[
-name|i
-index|]
-operator|=
-literal|false
-expr_stmt|;
-block|}
 if|if
 condition|(
 name|jj_kind
@@ -11930,7 +11921,7 @@ name|i
 expr_stmt|;
 name|jj_expentries
 operator|.
-name|addElement
+name|add
 argument_list|(
 name|jj_expentry
 argument_list|)
@@ -11981,7 +11972,7 @@ index|[]
 operator|)
 name|jj_expentries
 operator|.
-name|elementAt
+name|get
 argument_list|(
 name|i
 argument_list|)
@@ -11999,12 +11990,14 @@ name|tokenImage
 argument_list|)
 return|;
 block|}
+comment|/** Enable tracing. */
 specifier|final
 specifier|public
 name|void
 name|enable_tracing
 parameter_list|()
 block|{   }
+comment|/** Disable tracing. */
 specifier|final
 specifier|public
 name|void
