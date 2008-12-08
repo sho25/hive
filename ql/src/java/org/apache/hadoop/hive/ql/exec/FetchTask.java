@@ -627,7 +627,7 @@ name|mSerde
 operator|.
 name|initialize
 argument_list|(
-literal|null
+name|job
 argument_list|,
 name|mSerdeProp
 argument_list|)
@@ -1451,7 +1451,7 @@ name|serde
 operator|.
 name|initialize
 argument_list|(
-literal|null
+name|job
 argument_list|,
 name|tmp
 operator|.
