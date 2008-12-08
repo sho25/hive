@@ -260,12 +260,12 @@ literal|"hadoop.config.dir"
 argument_list|,
 name|System
 operator|.
-name|getProperty
+name|getenv
 argument_list|(
-literal|"user.dir"
+literal|"HADOOP_HOME"
 argument_list|)
 operator|+
-literal|"/../../../conf"
+literal|"/conf"
 argument_list|)
 block|,
 name|HADOOPFS
