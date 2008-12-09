@@ -132,6 +132,11 @@ argument_list|(
 literal|"No Alias For Subquery"
 argument_list|)
 block|,
+name|NO_INSERT_INSUBQUERY
+argument_list|(
+literal|"Cannot insert in a Subquery. Inserting to table "
+argument_list|)
+block|,
 name|NON_KEY_EXPR_IN_GROUPBY
 argument_list|(
 literal|"Expression Not In Group By Key"
