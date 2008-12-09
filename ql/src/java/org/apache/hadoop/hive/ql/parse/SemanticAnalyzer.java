@@ -2760,6 +2760,33 @@ argument_list|)
 expr_stmt|;
 block|}
 break|break;
+case|case
+name|HiveParser
+operator|.
+name|TOK_UNION
+case|:
+comment|// currently, we dont support subq1 union subq2 - the user has to explicitly say:
+comment|// select * from (subq1 union subq2) subqalias
+if|if
+condition|(
+operator|!
+name|qbp
+operator|.
+name|getIsSubQ
+argument_list|()
+condition|)
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|UNION_NOTIN_SUBQ
+operator|.
+name|getMsg
+argument_list|()
+argument_list|)
+throw|;
 default|default:
 name|skipRecursion
 operator|=

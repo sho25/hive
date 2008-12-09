@@ -242,6 +242,11 @@ argument_list|(
 literal|"Cannot have both Cluster By and Sort By Clauses"
 argument_list|)
 block|,
+name|UNION_NOTIN_SUBQ
+argument_list|(
+literal|"Top level Union is not supported currently; use a subquery for the union"
+argument_list|)
+block|,
 name|NON_BUCKETED_TABLE
 argument_list|(
 literal|"Sampling Expression Needed for Non-Bucketed Table"
