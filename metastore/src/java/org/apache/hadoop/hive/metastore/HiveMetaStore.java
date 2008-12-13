@@ -2162,6 +2162,7 @@ comment|// ok even if the data is not deleted
 block|}
 block|}
 block|}
+comment|/**        * Is this an external table?        * @param table Check if this table is external.        * @return True if the table is external, otherwise false.        */
 specifier|private
 name|boolean
 name|isExternal
@@ -3028,6 +3029,11 @@ name|partPath
 init|=
 literal|null
 decl_stmt|;
+name|Table
+name|tbl
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
 name|getMS
@@ -3141,6 +3147,15 @@ name|getLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|tbl
+operator|=
+name|get_table
+argument_list|(
+name|db_name
+argument_list|,
+name|tbl_name
+argument_list|)
+expr_stmt|;
 block|}
 finally|finally
 block|{
@@ -3169,6 +3184,19 @@ literal|null
 operator|)
 condition|)
 block|{
+if|if
+condition|(
+name|tbl
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|isExternal
+argument_list|(
+name|tbl
+argument_list|)
+condition|)
+block|{
 name|wh
 operator|.
 name|deleteDir
@@ -3179,6 +3207,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 comment|// ok even if the data is not deleted
+block|}
 block|}
 block|}
 return|return
