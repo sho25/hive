@@ -1115,7 +1115,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVEPARTITIONNAME
+name|HIVEJOINEMITINTERVAL
 argument_list|)
 expr_stmt|;
 block|}
