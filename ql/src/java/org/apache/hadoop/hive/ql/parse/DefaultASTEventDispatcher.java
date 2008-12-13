@@ -78,6 +78,7 @@ argument_list|>
 name|dispatchMap
 decl_stmt|;
 comment|/** 	 * Constructs the default event dispatcher 	 */
+specifier|public
 name|DefaultASTEventDispatcher
 parameter_list|()
 block|{
