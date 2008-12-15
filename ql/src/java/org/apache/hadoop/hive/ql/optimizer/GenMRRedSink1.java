@@ -735,6 +735,10 @@ name|GenMapRedUtils
 operator|.
 name|joinPlan
 argument_list|(
+name|op
+argument_list|,
+literal|null
+argument_list|,
 name|opMapTask
 argument_list|,
 name|ctx
@@ -743,6 +747,13 @@ expr_stmt|;
 name|currTask
 operator|=
 name|opMapTask
+expr_stmt|;
+name|ctx
+operator|.
+name|setCurrTask
+argument_list|(
+name|currTask
+argument_list|)
 expr_stmt|;
 block|}
 name|mapCurrCtx

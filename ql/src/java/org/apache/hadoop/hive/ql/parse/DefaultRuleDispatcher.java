@@ -201,10 +201,17 @@ specifier|private
 name|OperatorProcessorContext
 name|opProcCtx
 decl_stmt|;
-comment|/**    * constructor    * @param opp operator processor that handles actual processing of the node    * @param opProcCtx operator processor context, which is opaque to the dispatcher    */
+specifier|private
+name|OperatorProcessor
+name|defaultProc
+decl_stmt|;
+comment|/**    * constructor    * @param defaultProc defualt processor to be fired if no rule matches    * @param opp operator processor that handles actual processing of the node    * @param opProcCtx operator processor context, which is opaque to the dispatcher    */
 specifier|public
 name|DefaultRuleDispatcher
 parameter_list|(
+name|OperatorProcessor
+name|defaultProc
+parameter_list|,
 name|Map
 argument_list|<
 name|Rule
@@ -217,6 +224,12 @@ name|OperatorProcessorContext
 name|opProcCtx
 parameter_list|)
 block|{
+name|this
+operator|.
+name|defaultProc
+operator|=
+name|defaultProc
+expr_stmt|;
 name|this
 operator|.
 name|opProcRules
@@ -294,9 +307,17 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+operator|(
+name|cost
+operator|>=
+literal|0
+operator|)
+operator|&&
+operator|(
 name|cost
 operator|<=
 name|minCost
+operator|)
 condition|)
 block|{
 name|minCost
@@ -309,21 +330,29 @@ name|r
 expr_stmt|;
 block|}
 block|}
-assert|assert
-name|rule
-operator|!=
-literal|null
-assert|;
 name|OperatorProcessor
 name|proc
-init|=
+decl_stmt|;
+if|if
+condition|(
+name|rule
+operator|==
+literal|null
+condition|)
+name|proc
+operator|=
+name|defaultProc
+expr_stmt|;
+else|else
+name|proc
+operator|=
 name|opProcRules
 operator|.
 name|get
 argument_list|(
 name|rule
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// If the processor has registered a process method for the particular operator, invoke it.
 comment|// Otherwise implement the generic function, which would definitely be implemented
 for|for
