@@ -16596,6 +16596,11 @@ name|left
 operator|.
 name|getChild
 argument_list|(
+name|left
+operator|.
+name|getChildCount
+argument_list|()
+operator|-
 literal|1
 argument_list|)
 operator|.
@@ -16829,6 +16834,11 @@ name|right
 operator|.
 name|getChild
 argument_list|(
+name|right
+operator|.
+name|getChildCount
+argument_list|()
+operator|-
 literal|1
 argument_list|)
 operator|.
