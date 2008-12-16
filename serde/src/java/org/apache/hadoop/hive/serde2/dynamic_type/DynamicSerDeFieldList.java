@@ -1146,6 +1146,17 @@ operator|+
 name|ordered_types
 operator|.
 name|length
+operator|+
+literal|" object="
+operator|+
+name|o
+operator|+
+literal|" objectinspector="
+operator|+
+name|oi
+operator|.
+name|getTypeName
+argument_list|()
 argument_list|)
 throw|;
 block|}
