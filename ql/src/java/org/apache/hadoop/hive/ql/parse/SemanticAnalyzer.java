@@ -7126,6 +7126,18 @@ name|selectStar
 init|=
 literal|false
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"genSelectPlan: input = "
+operator|+
+name|inputRR
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Iterate over the selects
 for|for
 control|(
@@ -7950,6 +7962,7 @@ return|return
 name|r
 return|;
 block|}
+comment|/**    * Generate the GroupByOperator for the Query Block (parseInfo.getXXX(dest)).    * The new GroupByOperator will be a child of the reduceSinkOperatorInfo.    *     * @param mode The mode of the aggregation (PARTIAL1 or COMPLETE)    * @return the new GroupByOperator    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -8533,6 +8546,7 @@ name|groupByOutputRowResolver
 argument_list|)
 return|;
 block|}
+comment|/**    * Generate the GroupByOperator for the Query Block (parseInfo.getXXX(dest)).    * The new GroupByOperator will be a child of the reduceSinkOperatorInfo.    *     * @param mode The mode of the aggregation (PARTIAL2)    * @return the new GroupByOperator    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -9131,6 +9145,18 @@ argument_list|(
 name|aggName
 argument_list|)
 decl_stmt|;
+name|Method
+name|aggEvaluateMethod
+init|=
+name|FunctionRegistry
+operator|.
+name|getUDAFEvaluateMethod
+argument_list|(
+name|aggName
+argument_list|,
+name|mode
+argument_list|)
+decl_stmt|;
 assert|assert
 operator|(
 name|aggClass
@@ -9299,9 +9325,9 @@ operator|.
 name|toString
 argument_list|()
 argument_list|,
-name|paraExprInfo
+name|aggEvaluateMethod
 operator|.
-name|getType
+name|getReturnType
 argument_list|()
 argument_list|)
 argument_list|)
@@ -9340,6 +9366,7 @@ name|groupByOutputRowResolver
 argument_list|)
 return|;
 block|}
+comment|/**    * Generate the map-side GroupByOperator for the Query Block (qb.getParseInfo().getXXX(dest)).    * The new GroupByOperator will be a child of the inputOperatorInfo.    *     * @param mode The mode of the aggregation (HASH)    * @return the new GroupByOperator    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -10266,6 +10293,7 @@ return|return
 name|newParameters
 return|;
 block|}
+comment|/**    * Generate the ReduceSinkOperator for the Group By Query Block (parseInfo.getXXX(dest)).    * The new ReduceSinkOperator will be a child of inputOperatorInfo.    *     * It will put all Group By keys and the distinct field (if any) in the map-reduce sort key,    * and all other fields in the map-reduce value.    *     * The map-reduce partition key will be random() if there is no distinct, or the same as    * the map-reduce sort key otherwise.      *     * @return the new ReduceSinkOperator.    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -10833,6 +10861,7 @@ name|reduceSinkOutputRowResolver
 argument_list|)
 return|;
 block|}
+comment|/**    * Generate the ReduceSinkOperator for the Group By Query Block (qb.getPartInfo().getXXX(dest)).    * The new ReduceSinkOperator will be a child of inputOperatorInfo.    *     * It will put all Group By keys and the distinct field (if any) in the map-reduce sort key,    * and all other fields in the map-reduce value.    *     * @param numPartitionFields  the number of fields for map-reduce partitioning.    *      This is usually the number of fields in the Group By keys.    * @return the new ReduceSinkOperator.    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -11435,6 +11464,7 @@ name|reduceSinkOutputRowResolver
 argument_list|)
 return|;
 block|}
+comment|/**    * Generate the second ReduceSinkOperator for the Group By Plan (parseInfo.getXXX(dest)).    * The new ReduceSinkOperator will be a child of groupByOperatorInfo.    *     * The second ReduceSinkOperator will put the group by keys in the map-reduce sort    * key, and put the partial aggregation results in the map-reduce value.     *      * @param numPartitionFields the number of fields in the map-reduce partition key.    *     This should always be the same as the number of Group By keys.  We should be     *     able to remove this parameter since in this phase there is no distinct any more.      * @return the new ReduceSinkOperator.    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -11820,6 +11850,7 @@ name|reduceSinkOutputRowResolver2
 argument_list|)
 return|;
 block|}
+comment|/**    * Generate the second GroupByOperator for the Group By Plan (parseInfo.getXXX(dest)).    * The new GroupByOperator will do the second aggregation based on the partial aggregation     * results.    *     * @param mode the mode of aggregation (FINAL)      * @return the new GroupByOperator    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -12114,6 +12145,18 @@ argument_list|(
 name|aggName
 argument_list|)
 decl_stmt|;
+name|Method
+name|aggEvaluateMethod
+init|=
+name|FunctionRegistry
+operator|.
+name|getUDAFEvaluateMethod
+argument_list|(
+name|aggName
+argument_list|,
+name|mode
+argument_list|)
+decl_stmt|;
 assert|assert
 operator|(
 name|aggClass
@@ -12282,9 +12325,9 @@ operator|.
 name|toString
 argument_list|()
 argument_list|,
-name|paraExprInfo
+name|aggEvaluateMethod
 operator|.
-name|getType
+name|getReturnType
 argument_list|()
 argument_list|)
 argument_list|)
@@ -13739,8 +13782,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-else|else
-block|{
 name|expressions
 operator|.
 name|add
@@ -13748,7 +13789,6 @@ argument_list|(
 name|column
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 if|if
@@ -23516,6 +23556,11 @@ operator|.
 name|getMsg
 argument_list|(
 name|expr
+argument_list|,
+name|myt
+operator|.
+name|getTypeName
+argument_list|()
 argument_list|)
 argument_list|)
 throw|;

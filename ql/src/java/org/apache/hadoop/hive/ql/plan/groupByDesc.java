@@ -217,6 +217,12 @@ case|:
 return|return
 literal|"hash"
 return|;
+case|case
+name|FINAL
+case|:
+return|return
+literal|"final"
+return|;
 block|}
 return|return
 literal|"unknown"

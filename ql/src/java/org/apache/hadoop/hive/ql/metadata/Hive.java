@@ -1108,6 +1108,16 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+throw|throw
+name|e
+throw|;
+block|}
+catch|catch
+parameter_list|(
 name|Exception
 name|e
 parameter_list|)
