@@ -1216,6 +1216,16 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|out
+operator|.
+name|checkError
+argument_list|()
+condition|)
+block|{
+break|break;
+block|}
 block|}
 name|int
 name|cret
