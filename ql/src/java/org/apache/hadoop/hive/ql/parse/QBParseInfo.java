@@ -89,7 +89,7 @@ name|String
 name|alias
 decl_stmt|;
 specifier|private
-name|CommonTree
+name|ASTNode
 name|joinExpr
 decl_stmt|;
 specifier|private
@@ -97,7 +97,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|aliasToSrc
 decl_stmt|;
@@ -106,7 +106,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|nameToDest
 decl_stmt|;
@@ -124,7 +124,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|destToSelExpr
 decl_stmt|;
@@ -133,7 +133,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|destToWhereExpr
 decl_stmt|;
@@ -142,7 +142,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|destToGroupby
 decl_stmt|;
@@ -152,7 +152,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|destToClusterby
 decl_stmt|;
@@ -162,7 +162,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|destToDistributeby
 decl_stmt|;
@@ -172,7 +172,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|destToSortby
 decl_stmt|;
@@ -199,7 +199,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 name|destToAggregationExprs
@@ -209,7 +209,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|destToDistinctFuncExpr
 decl_stmt|;
@@ -255,7 +255,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -268,7 +268,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -294,7 +294,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -307,7 +307,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -320,7 +320,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -333,7 +333,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -346,7 +346,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -359,7 +359,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -389,7 +389,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 argument_list|()
@@ -403,7 +403,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -438,7 +438,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|aggregationTrees
 parameter_list|)
@@ -460,7 +460,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|getAggregationExprsForClause
 parameter_list|(
@@ -486,7 +486,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{
@@ -503,7 +503,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getDistinctFuncExprForClause
 parameter_list|(
 name|String
@@ -528,7 +528,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{
@@ -551,7 +551,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{
@@ -574,7 +574,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{
@@ -597,7 +597,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{
@@ -621,7 +621,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{
@@ -645,7 +645,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{
@@ -669,7 +669,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{
@@ -692,7 +692,7 @@ parameter_list|(
 name|String
 name|alias
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{
@@ -746,7 +746,7 @@ argument_list|()
 return|;
 block|}
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getDestForClause
 parameter_list|(
 name|String
@@ -765,7 +765,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getWhrForClause
 parameter_list|(
 name|String
@@ -788,7 +788,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|getDestToWhereExpr
 parameter_list|()
@@ -798,7 +798,7 @@ name|destToWhereExpr
 return|;
 block|}
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getGroupByForClause
 parameter_list|(
 name|String
@@ -817,7 +817,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getSelForClause
 parameter_list|(
 name|String
@@ -837,7 +837,7 @@ return|;
 block|}
 comment|/**    * Get the Cluster By AST for the clause.      * @param clause the name of the clause    * @return the abstract syntax tree    */
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getClusterByForClause
 parameter_list|(
 name|String
@@ -857,7 +857,7 @@ return|;
 block|}
 comment|/**    * Get the Distribute By AST for the clause.      * @param clause the name of the clause    * @return the abstract syntax tree    */
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getDistributeByForClause
 parameter_list|(
 name|String
@@ -877,7 +877,7 @@ return|;
 block|}
 comment|/**    * Get the Sort By AST for the clause.      * @param clause the name of the clause    * @return the abstract syntax tree    */
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getSortByForClause
 parameter_list|(
 name|String
@@ -896,7 +896,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getSrcForAlias
 parameter_list|(
 name|String
@@ -940,7 +940,7 @@ name|isSubQ
 return|;
 block|}
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getJoinExpr
 parameter_list|()
 block|{
@@ -954,7 +954,7 @@ specifier|public
 name|void
 name|setJoinExpr
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|joinExpr
 parameter_list|)
 block|{
@@ -1135,7 +1135,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 argument_list|>
@@ -1161,7 +1161,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|h
 init|=
@@ -1210,7 +1210,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 name|distn
@@ -1231,7 +1231,7 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
-name|CommonTree
+name|ASTNode
 name|ct
 init|=
 name|distn
@@ -1261,7 +1261,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 name|iter
@@ -1288,7 +1288,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|entry
 init|=
@@ -1297,7 +1297,7 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
-name|CommonTree
+name|ASTNode
 name|v
 init|=
 name|entry
@@ -1311,7 +1311,7 @@ operator|!
 operator|(
 operator|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|v
 operator|.
@@ -1360,7 +1360,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|entry
 init|=
@@ -1369,7 +1369,7 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
-name|CommonTree
+name|ASTNode
 name|selExprList
 init|=
 name|entry
@@ -1397,11 +1397,11 @@ name|i
 control|)
 block|{
 comment|// list of the columns
-name|CommonTree
+name|ASTNode
 name|selExpr
 init|=
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|selExprList
 operator|.
@@ -1410,11 +1410,11 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-name|CommonTree
+name|ASTNode
 name|sel
 init|=
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|selExpr
 operator|.

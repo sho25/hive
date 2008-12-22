@@ -1219,7 +1219,7 @@ block|}
 comment|/**    * @return the name of the operator    */
 specifier|public
 name|String
-name|getOperatorName
+name|getName
 parameter_list|()
 block|{
 return|return

@@ -278,7 +278,7 @@ specifier|private
 name|int
 name|getLine
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|tree
 parameter_list|)
 block|{
@@ -306,7 +306,7 @@ return|return
 name|getLine
 argument_list|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|tree
 operator|.
@@ -321,7 +321,7 @@ specifier|private
 name|int
 name|getCharPositionInLine
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|tree
 parameter_list|)
 block|{
@@ -349,7 +349,7 @@ return|return
 name|getCharPositionInLine
 argument_list|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|tree
 operator|.
@@ -365,7 +365,7 @@ specifier|private
 name|String
 name|getText
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|tree
 parameter_list|)
 block|{
@@ -390,7 +390,7 @@ return|return
 name|getText
 argument_list|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|tree
 operator|.
@@ -409,7 +409,7 @@ block|}
 name|String
 name|getMsg
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|tree
 parameter_list|)
 block|{
@@ -451,7 +451,7 @@ return|return
 name|getMsg
 argument_list|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|tree
 argument_list|)
@@ -460,7 +460,7 @@ block|}
 name|String
 name|getMsg
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|tree
 parameter_list|,
 name|String
@@ -512,7 +512,7 @@ return|return
 name|getMsg
 argument_list|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|tree
 argument_list|,

@@ -15,7 +15,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|lib
 package|;
 end_package
 
@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|Serializable
+name|Collection
 import|;
 end_import
 
@@ -41,54 +41,31 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|parse
 operator|.
-name|Operator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|OperatorProcessorContext
+name|SemanticException
 import|;
 end_import
 
 begin_comment
-comment|/**  * Base class for processing operators which is no-op. The specific processors can register their own context with  * the dispatcher.  */
+comment|/**  * Interface for operator graph walker.  */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|OperatorProcessor
+name|GraphWalker
 block|{
-comment|/**    * generic process for all ops that don't have specific implementations    * @param op operator to process    * @param opProcCtx operator processor context    * @throws SemanticException    */
+comment|/**    * starting point for walking.    *     * @param startNodes list of starting operators    * @throws SemanticException    */
 specifier|public
 name|void
-name|process
+name|startWalking
 parameter_list|(
-name|Operator
+name|Collection
 argument_list|<
-name|?
-extends|extends
-name|Serializable
+name|Node
 argument_list|>
-name|op
-parameter_list|,
-name|OperatorProcessorContext
-name|opProcCtx
+name|startNodes
 parameter_list|)
 throws|throws
 name|SemanticException

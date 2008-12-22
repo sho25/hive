@@ -15,19 +15,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|lib
 package|;
 end_package
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
 
 begin_import
 import|import
@@ -51,9 +41,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|parse
 operator|.
-name|Operator
+name|SemanticException
 import|;
 end_import
 
@@ -66,28 +56,18 @@ specifier|public
 interface|interface
 name|Dispatcher
 block|{
-comment|/**    * dispatcher function    * @param op operator to process    * @param Stack operator stack to process    * @throws SemanticException    */
+comment|/**    * dispatcher function    * @param nd operator to process    * @param Stack operator stack to process    * @throws SemanticException    */
 specifier|public
 specifier|abstract
 name|void
 name|dispatch
 parameter_list|(
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-name|op
+name|Node
+name|nd
 parameter_list|,
 name|Stack
 argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
+name|Node
 argument_list|>
 name|stack
 parameter_list|)

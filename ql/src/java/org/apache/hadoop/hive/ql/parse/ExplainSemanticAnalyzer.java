@@ -53,20 +53,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|antlr
-operator|.
-name|runtime
-operator|.
-name|tree
-operator|.
-name|CommonTree
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|apache
 operator|.
 name|hadoop
@@ -189,7 +175,7 @@ specifier|public
 name|void
 name|analyzeInternal
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|,
 name|Context
@@ -209,7 +195,7 @@ argument_list|(
 name|conf
 argument_list|,
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|ast
 operator|.
@@ -224,7 +210,7 @@ operator|.
 name|analyze
 argument_list|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|ast
 operator|.
@@ -368,7 +354,7 @@ name|tasks
 argument_list|,
 operator|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|ast
 operator|.

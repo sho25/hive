@@ -29,20 +29,6 @@ name|ArrayList
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|antlr
-operator|.
-name|runtime
-operator|.
-name|tree
-operator|.
-name|CommonTree
-import|;
-end_import
-
 begin_comment
 comment|/**  *   * This class stores all the information specified in the TABLESAMPLE clause. e.g.   * for the clause "FROM t TABLESAMPLE(1 OUT OF 2 ON c1) it will store the numerator  * 1, the denominator 2 and the list of expressions(in this case c1) in the appropriate  * fields. The afore-mentioned sampling clause causes the 1st bucket to be picked out of  * the 2 buckets created by hashing on c1.  *  */
 end_comment
@@ -66,7 +52,7 @@ comment|/**    * The list of expressions following ON part of the TABLESAMPLE cl
 specifier|private
 name|ArrayList
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|exprs
 decl_stmt|;
@@ -87,7 +73,7 @@ name|den
 parameter_list|,
 name|ArrayList
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|exprs
 parameter_list|)
@@ -183,11 +169,11 @@ operator|=
 name|den
 expr_stmt|;
 block|}
-comment|/**    * Gets the ON part's expression list    *     * @return ArrayList<CommonTree>    */
+comment|/**    * Gets the ON part's expression list    *     * @return ArrayList<ASTNode>    */
 specifier|public
 name|ArrayList
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|getExprs
 parameter_list|()
@@ -205,7 +191,7 @@ name|setExprs
 parameter_list|(
 name|ArrayList
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 name|exprs
 parameter_list|)

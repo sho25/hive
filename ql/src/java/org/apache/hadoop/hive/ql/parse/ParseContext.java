@@ -107,20 +107,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|antlr
-operator|.
-name|runtime
-operator|.
-name|tree
-operator|.
-name|CommonTree
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|apache
 operator|.
 name|hadoop
@@ -163,7 +149,7 @@ name|QB
 name|qb
 decl_stmt|;
 specifier|private
-name|CommonTree
+name|ASTNode
 name|ast
 decl_stmt|;
 specifier|private
@@ -258,7 +244,7 @@ parameter_list|,
 name|QB
 name|qb
 parameter_list|,
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|,
 name|HashMap
@@ -479,7 +465,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the ast    */
 specifier|public
-name|CommonTree
+name|ASTNode
 name|getParseTree
 parameter_list|()
 block|{
@@ -492,7 +478,7 @@ specifier|public
 name|void
 name|setParseTree
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|ast
 parameter_list|)
 block|{

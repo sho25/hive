@@ -33,20 +33,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|antlr
-operator|.
-name|runtime
-operator|.
-name|tree
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|apache
 operator|.
 name|hadoop
@@ -541,7 +527,7 @@ specifier|private
 name|exprNodeDesc
 name|genExprNodeDesc
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|expr
 parameter_list|)
 throws|throws
@@ -693,7 +679,7 @@ argument_list|,
 name|colName
 argument_list|,
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|expr
 operator|.
@@ -910,7 +896,7 @@ init|=
 name|genExprNodeDesc
 argument_list|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|expr
 operator|.
@@ -1258,7 +1244,7 @@ specifier|public
 name|boolean
 name|hasPartitionPredicate
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|expr
 parameter_list|)
 block|{
@@ -1410,7 +1396,7 @@ operator|||
 name|hasPartitionPredicate
 argument_list|(
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|expr
 operator|.
@@ -1439,7 +1425,7 @@ specifier|public
 name|void
 name|addExpression
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|expr
 parameter_list|)
 throws|throws
@@ -1541,7 +1527,7 @@ specifier|public
 name|void
 name|addJoinOnExpression
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|expr
 parameter_list|)
 throws|throws

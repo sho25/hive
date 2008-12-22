@@ -15,7 +15,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|lib
 package|;
 end_package
 
@@ -35,7 +35,9 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
+name|regex
+operator|.
+name|Matcher
 import|;
 end_import
 
@@ -48,28 +50,6 @@ operator|.
 name|regex
 operator|.
 name|Pattern
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Matcher
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
 import|;
 end_import
 
@@ -85,14 +65,14 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|parse
 operator|.
-name|Operator
+name|SemanticException
 import|;
 end_import
 
 begin_comment
-comment|/**  * Rule interface for Operators  * Used in operator dispatching to dispatch process/visitor functions for operators  */
+comment|/**  * Rule interface for Nodes  * Used in Node dispatching to dispatch process/visitor functions for Nodes  */
 end_comment
 
 begin_class
@@ -107,14 +87,10 @@ name|String
 name|ruleName
 decl_stmt|;
 specifier|private
-name|String
-name|regExp
-decl_stmt|;
-specifier|private
 name|Pattern
 name|pattern
 decl_stmt|;
-comment|/**    * The rule specified by the regular expression. Note that, the regular expression is specified in terms of operator    * name. For eg: TS.*RS -> means TableScan operator followed by anything any number of times followed by ReduceSink    * @param ruleName name of the rule    * @param regExp regular expression for the rule    **/
+comment|/**    * The rule specified by the regular expression. Note that, the regular expression is specified in terms of Node    * name. For eg: TS.*RS -> means TableScan Node followed by anything any number of times followed by ReduceSink    * @param ruleName name of the rule    * @param regExp regular expression for the rule    **/
 specifier|public
 name|RuleRegExp
 parameter_list|(
@@ -131,12 +107,6 @@ name|ruleName
 operator|=
 name|ruleName
 expr_stmt|;
-name|this
-operator|.
-name|regExp
-operator|=
-name|regExp
-expr_stmt|;
 name|pattern
 operator|=
 name|Pattern
@@ -147,19 +117,14 @@ name|regExp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * This function returns the cost of the rule for the specified stack. Lower the cost, the better the rule is matched    * @param stacl operator stack encountered so far    * @return cost of the function    * @throws SemanticException    */
+comment|/**    * This function returns the cost of the rule for the specified stack. Lower the cost, the better the rule is matched    * @param stack Node stack encountered so far    * @return cost of the function    * @throws SemanticException    */
 specifier|public
 name|int
 name|cost
 parameter_list|(
 name|Stack
 argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
+name|Node
 argument_list|>
 name|stack
 parameter_list|)
@@ -169,10 +134,18 @@ block|{
 name|int
 name|numElems
 init|=
+operator|(
+name|stack
+operator|!=
+literal|null
+condition|?
 name|stack
 operator|.
 name|size
 argument_list|()
+else|:
+literal|0
+operator|)
 decl_stmt|;
 name|String
 name|name
@@ -207,13 +180,12 @@ argument_list|(
 name|pos
 argument_list|)
 operator|.
-name|getOperatorName
+name|getName
 argument_list|()
-operator|.
-name|concat
-argument_list|(
+operator|+
+literal|"%"
+operator|+
 name|name
-argument_list|)
 expr_stmt|;
 name|Matcher
 name|m
@@ -247,7 +219,7 @@ operator|-
 literal|1
 return|;
 block|}
-comment|/**    * @return the name of the operator    **/
+comment|/**    * @return the name of the Node    **/
 specifier|public
 name|String
 name|getName

@@ -29,20 +29,6 @@ name|Vector
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|antlr
-operator|.
-name|runtime
-operator|.
-name|tree
-operator|.
-name|CommonTree
-import|;
-end_import
-
 begin_comment
 comment|/**  * Internal representation of the join tree  *  */
 end_comment
@@ -94,7 +80,7 @@ name|Vector
 argument_list|<
 name|Vector
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 name|expressions
@@ -105,7 +91,7 @@ name|Vector
 argument_list|<
 name|Vector
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 name|filters
@@ -203,7 +189,7 @@ name|Vector
 argument_list|<
 name|Vector
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 name|getExpressions
@@ -221,7 +207,7 @@ name|Vector
 argument_list|<
 name|Vector
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 name|expressions
@@ -359,7 +345,7 @@ name|Vector
 argument_list|<
 name|Vector
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 name|getFilters
@@ -378,7 +364,7 @@ name|Vector
 argument_list|<
 name|Vector
 argument_list|<
-name|CommonTree
+name|ASTNode
 argument_list|>
 argument_list|>
 name|filters

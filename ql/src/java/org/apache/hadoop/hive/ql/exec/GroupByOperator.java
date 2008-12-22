@@ -3569,6 +3569,22 @@ return|return
 name|colLists
 return|;
 block|}
+comment|/**    * @return the name of the operator    */
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getName
+parameter_list|()
+block|{
+return|return
+operator|new
+name|String
+argument_list|(
+literal|"GBY"
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

@@ -167,7 +167,7 @@ block|}
 comment|/**    * The operator name for this operator type. This is used to construct the rule for an operator    * @return the operator name    **/
 specifier|public
 name|String
-name|getOperatorName
+name|getName
 parameter_list|()
 block|{
 return|return

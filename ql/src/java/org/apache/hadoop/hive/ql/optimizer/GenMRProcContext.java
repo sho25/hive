@@ -401,6 +401,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|lib
+operator|.
+name|NodeProcessorCtx
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|*
@@ -466,7 +484,7 @@ specifier|public
 class|class
 name|GenMRProcContext
 extends|extends
-name|OperatorProcessorContext
+name|NodeProcessorCtx
 block|{
 comment|/**     * GenMapRedCtx is used to keep track of the current state.     */
 specifier|public

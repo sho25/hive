@@ -61,13 +61,17 @@ begin_import
 import|import
 name|org
 operator|.
-name|antlr
+name|apache
 operator|.
-name|runtime
+name|hadoop
 operator|.
-name|tree
+name|hive
 operator|.
-name|CommonTree
+name|ql
+operator|.
+name|parse
+operator|.
+name|ASTNode
 import|;
 end_import
 
@@ -922,7 +926,7 @@ operator|new
 name|ParseDriver
 argument_list|()
 expr_stmt|;
-name|CommonTree
+name|ASTNode
 name|tree
 init|=
 name|pd
@@ -956,7 +960,7 @@ block|{
 name|tree
 operator|=
 operator|(
-name|CommonTree
+name|ASTNode
 operator|)
 name|tree
 operator|.

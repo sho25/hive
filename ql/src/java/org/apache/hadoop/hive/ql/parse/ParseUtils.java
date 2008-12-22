@@ -19,20 +19,6 @@ name|parse
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|antlr
-operator|.
-name|runtime
-operator|.
-name|tree
-operator|.
-name|CommonTree
-import|;
-end_import
-
 begin_comment
 comment|/**  * Library of utility functions used in the parse code  *  */
 end_comment
@@ -48,7 +34,7 @@ specifier|static
 name|boolean
 name|isJoinToken
 parameter_list|(
-name|CommonTree
+name|ASTNode
 name|node
 parameter_list|)
 block|{
