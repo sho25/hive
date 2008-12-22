@@ -2669,51 +2669,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// get the partitions on the HDFS location
-name|List
-argument_list|<
-name|Partition
-argument_list|>
-name|hdfsPartitions
-init|=
-name|tbl
-operator|.
-name|getPartitionsFromHDFS
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|hdfsPartitions
-operator|.
-name|size
-argument_list|()
-operator|!=
-name|parts
-operator|.
-name|size
-argument_list|()
-condition|)
-block|{
-comment|// HACK: either we are connecting to old metastore or metadata is out of sync with data
-comment|// TODO: for the former case, move this logic into OLD metastore and compare
-comment|// the two lists here for any conflict between metadata and data
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Metadata for partitions doesn't match the data in HDFS. Table name: "
-operator|+
-name|tbl
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
-comment|// let's trust hdfs partitions for now
-return|return
-name|hdfsPartitions
-return|;
-block|}
 return|return
 name|parts
 return|;
