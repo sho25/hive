@@ -252,6 +252,16 @@ argument_list|(
 literal|"Top level Union is not supported currently; use a subquery for the union"
 argument_list|)
 block|,
+name|INVALID_INPUT_FORMAT_TYPE
+argument_list|(
+literal|"Input Format must implement InputFormat"
+argument_list|)
+block|,
+name|INVALID_OUTPUT_FORMAT_TYPE
+argument_list|(
+literal|"Output Format must implement OutputFormat"
+argument_list|)
+block|,
 name|NON_BUCKETED_TABLE
 argument_list|(
 literal|"Sampling Expression Needed for Non-Bucketed Table"
