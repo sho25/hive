@@ -225,24 +225,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|lib
-operator|.
-name|RuleRegExp
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|parse
 operator|.
 name|ASTNode
@@ -332,7 +314,7 @@ name|LineageInfo
 implements|implements
 name|NodeProcessor
 block|{
-comment|/** 	 * Stores input tables in sql 	 */
+comment|/**    * Stores input tables in sql    */
 name|TreeSet
 argument_list|<
 name|String
@@ -346,7 +328,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/** 	 * Stores output tables in sql 	 */
+comment|/**    * Stores output tables in sql    */
 name|TreeSet
 argument_list|<
 name|String
@@ -360,7 +342,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/** 	 *  	 * @return java.util.TreeSet  	 */
+comment|/**    *     * @return java.util.TreeSet     */
 specifier|public
 name|TreeSet
 argument_list|<
@@ -373,7 +355,7 @@ return|return
 name|inputTableList
 return|;
 block|}
-comment|/** 	 * @return java.util.TreeSet 	 */
+comment|/**    * @return java.util.TreeSet    */
 specifier|public
 name|TreeSet
 argument_list|<
@@ -386,7 +368,7 @@ return|return
 name|OutputTableList
 return|;
 block|}
-comment|/** 	 * Implements the process method for the NodeProcessor interface. 	 */
+comment|/**    * Implements the process method for the NodeProcessor interface.    */
 annotation|@
 name|Override
 specifier|public
@@ -424,26 +406,8 @@ block|{
 case|case
 name|HiveParser
 operator|.
-name|TOK_DESTINATION
-case|:
-block|{
-if|if
-condition|(
-name|pt
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getType
-argument_list|()
-operator|==
-name|HiveParser
-operator|.
 name|TOK_TAB
-condition|)
-block|{
+case|:
 name|OutputTableList
 operator|.
 name|add
@@ -455,71 +419,30 @@ argument_list|(
 literal|0
 argument_list|)
 operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-operator|.
 name|getText
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
-block|}
 break|break;
 case|case
 name|HiveParser
 operator|.
-name|TOK_FROM
-case|:
-block|{
-if|if
-condition|(
-operator|(
-operator|(
-name|ASTNode
-operator|)
-name|pt
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-operator|)
-operator|.
-name|getToken
-argument_list|()
-operator|.
-name|getType
-argument_list|()
-operator|==
-name|HiveParser
-operator|.
 name|TOK_TABREF
-condition|)
-block|{
-name|ASTNode
-name|tabRef
-init|=
-operator|(
-name|ASTNode
-operator|)
-name|pt
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
+case|:
 name|String
 name|table_name
 init|=
-name|tabRef
+operator|(
+operator|(
+name|ASTNode
+operator|)
+name|pt
 operator|.
 name|getChild
 argument_list|(
 literal|0
 argument_list|)
+operator|)
 operator|.
 name|getText
 argument_list|()
@@ -531,12 +454,10 @@ argument_list|(
 name|table_name
 argument_list|)
 expr_stmt|;
-block|}
-block|}
 break|break;
 block|}
 block|}
-comment|/** 	 *  parses given query and gets the lineage info. 	 * @param query 	 * @throws ParseException 	 */
+comment|/**    *  parses given query and gets the lineage info.    * @param query    * @throws ParseException    */
 specifier|public
 name|void
 name|getLineageInfo
@@ -549,7 +470,7 @@ name|ParseException
 throws|,
 name|SemanticException
 block|{
-comment|/* 		 *  Get the AST tree 		 */
+comment|/*      *  Get the AST tree      */
 name|ParseDriver
 name|pd
 init|=
@@ -601,7 +522,7 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* 		 * initialize Event Processor and dispatcher. 		 */
+comment|/*      * initialize Event Processor and dispatcher.      */
 name|inputTableList
 operator|.
 name|clear
