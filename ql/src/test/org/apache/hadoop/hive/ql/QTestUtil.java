@@ -636,16 +636,14 @@ specifier|private
 name|String
 name|tmpdir
 init|=
-literal|"/tmp/"
-operator|+
 name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"user.name"
+literal|"user.dir"
 argument_list|)
 operator|+
-literal|"/"
+literal|"/../build/ql/tmp"
 decl_stmt|;
 specifier|private
 name|Path
@@ -3661,7 +3659,7 @@ index|]
 operator|=
 literal|"\\(\\(<java version=\".*\" class=\"java.beans.XMLDecoder\">\\)"
 operator|+
-literal|"\\|\\(<string>/tmp/.*</string>\\)"
+literal|"\\|\\(<string>.*/tmp/.*</string>\\)"
 operator|+
 literal|"\\|\\(<string>file:.*</string>\\)"
 operator|+
@@ -4521,7 +4519,7 @@ index|[
 literal|2
 index|]
 operator|=
-literal|"\\(file:\\)\\|\\(tmp/hive-.*\\)"
+literal|"\\(file:\\)\\|\\(/tmp/.*\\)"
 expr_stmt|;
 name|cmdArray
 index|[

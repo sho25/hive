@@ -1995,6 +1995,10 @@ decl_stmt|;
 name|String
 name|taskTmpDir
 init|=
+operator|(
+operator|new
+name|Path
+argument_list|(
 name|scratchDir
 operator|+
 name|File
@@ -2006,6 +2010,11 @@ operator|+
 literal|'.'
 operator|+
 name|pathid
+argument_list|)
+operator|)
+operator|.
+name|toString
+argument_list|()
 decl_stmt|;
 name|pathid
 operator|++
