@@ -328,6 +328,8 @@ operator|.
 name|ConfVars
 name|oneVar
 range|:
+name|HiveConf
+operator|.
 name|metaVars
 control|)
 block|{
@@ -347,36 +349,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * metastore related options that the db is initialized against    */
-specifier|protected
-specifier|final
-specifier|static
-name|HiveConf
-operator|.
-name|ConfVars
-index|[]
-name|metaVars
-init|=
-block|{
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTOREDIRECTORY
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTOREWAREHOUSE
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTOREURIS
-block|}
-decl_stmt|;
 comment|/**    * cached values of such options    */
 specifier|private
 specifier|final
@@ -420,6 +392,8 @@ operator|.
 name|ConfVars
 name|oneVar
 range|:
+name|HiveConf
+operator|.
 name|metaVars
 control|)
 block|{
@@ -476,6 +450,8 @@ operator|.
 name|get
 argument_list|(
 name|conf
+argument_list|,
+name|needsRefresh
 argument_list|)
 expr_stmt|;
 block|}

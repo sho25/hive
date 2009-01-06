@@ -148,6 +148,12 @@ block|,
 literal|"groupby1.q"
 block|,
 literal|"groupby2.q"
+block|,
+literal|"join3.q"
+block|,
+literal|"input1.q"
+block|,
+literal|"input19.q"
 block|}
 decl_stmt|;
 name|String
