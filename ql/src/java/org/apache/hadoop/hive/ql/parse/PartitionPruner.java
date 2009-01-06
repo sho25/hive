@@ -1322,7 +1322,7 @@ if|if
 condition|(
 name|tabAlias
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|tableAlias
 argument_list|)
