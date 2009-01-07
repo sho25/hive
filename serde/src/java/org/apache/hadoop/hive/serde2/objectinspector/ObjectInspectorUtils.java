@@ -177,6 +177,14 @@ argument_list|(
 name|c
 argument_list|)
 operator|||
+operator|(
+name|c
+operator|==
+name|Void
+operator|.
+name|class
+operator|)
+operator|||
 name|c
 operator|.
 name|isPrimitive

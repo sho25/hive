@@ -323,7 +323,7 @@ name|HADOOPNUMREDUCERS
 argument_list|(
 literal|"mapred.reduce.tasks"
 argument_list|,
-literal|"1"
+literal|1
 argument_list|)
 block|,
 name|HADOOPJOBNAME

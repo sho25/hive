@@ -1261,6 +1261,13 @@ name|getSchema
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Need a new DynamicSerDe instance - re-initialization is not supported.
+name|ds
+operator|=
+operator|new
+name|DynamicSerDe
+argument_list|()
+expr_stmt|;
 name|ds
 operator|.
 name|initialize

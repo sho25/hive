@@ -1015,25 +1015,11 @@ name|stopSeen
 condition|)
 block|{
 comment|// strip off the STOP marker, which may be left if all the fields were in the serialization
-name|TField
-name|field
-init|=
 name|iprot
 operator|.
 name|readFieldBegin
 argument_list|()
-decl_stmt|;
-assert|assert
-operator|(
-name|field
-operator|.
-name|type
-operator|==
-name|TType
-operator|.
-name|STOP
-operator|)
-assert|;
+expr_stmt|;
 block|}
 return|return
 name|struct

@@ -1500,8 +1500,8 @@ operator|!=
 literal|0
 operator|)
 assert|;
-assert|assert
-operator|(
+if|if
+condition|(
 name|expressionTree
 operator|.
 name|getChild
@@ -1515,8 +1515,8 @@ operator|==
 name|HiveParser
 operator|.
 name|Identifier
-operator|)
-assert|;
+condition|)
+block|{
 name|String
 name|functionName
 init|=
@@ -1558,6 +1558,7 @@ name|expressionTree
 argument_list|)
 expr_stmt|;
 return|return;
+block|}
 block|}
 block|}
 for|for

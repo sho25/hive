@@ -2112,6 +2112,23 @@ return|return
 literal|true
 return|;
 block|}
+comment|// Void can be converted to any type
+if|if
+condition|(
+name|from
+operator|.
+name|equals
+argument_list|(
+name|Void
+operator|.
+name|class
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
 comment|// Allow implicit conversion from Byte -> Integer -> Long -> Float -> Double -> String
 name|Integer
 name|f
