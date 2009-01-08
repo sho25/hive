@@ -2110,8 +2110,6 @@ argument_list|)
 throw|;
 block|}
 comment|//These will disappear when the server is unified for both filestore and dbstore
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<
@@ -2145,8 +2143,6 @@ argument_list|>
 argument_list|()
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|Partition
 name|getPartition
@@ -2239,8 +2235,6 @@ literal|null
 return|;
 block|}
 block|}
-annotation|@
-name|Override
 specifier|public
 name|void
 name|createTable
@@ -2669,8 +2663,6 @@ return|return
 name|tPartition
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|void
 name|alter_table
@@ -2699,8 +2691,6 @@ literal|"Not yet implementd in filestore"
 argument_list|)
 throw|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|createDatabase
@@ -2723,8 +2713,6 @@ return|return
 literal|false
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|dropDatabase
@@ -2742,8 +2730,6 @@ return|return
 literal|false
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<

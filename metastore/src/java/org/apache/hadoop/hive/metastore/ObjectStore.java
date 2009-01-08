@@ -714,8 +714,6 @@ specifier|public
 name|ObjectStore
 parameter_list|()
 block|{}
-annotation|@
-name|Override
 specifier|public
 name|Configuration
 name|getConf
@@ -725,8 +723,6 @@ return|return
 name|hiveConf
 return|;
 block|}
-annotation|@
-name|Override
 annotation|@
 name|SuppressWarnings
 argument_list|(

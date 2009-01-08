@@ -415,8 +415,6 @@ specifier|private
 name|Configuration
 name|conf
 decl_stmt|;
-annotation|@
-name|Override
 specifier|public
 name|Configuration
 name|getConf
@@ -427,8 +425,6 @@ return|return
 literal|null
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|void
 name|setConf
@@ -688,8 +684,6 @@ return|return
 name|f
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|createDatabase
@@ -738,8 +732,6 @@ return|return
 name|mkdir
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|createDatabase
@@ -1301,8 +1293,6 @@ return|return
 name|names
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<
@@ -1402,8 +1392,6 @@ name|isDirectory
 argument_list|()
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|dropDatabase
@@ -1417,8 +1405,6 @@ literal|true
 return|;
 comment|// no-op
 block|}
-annotation|@
-name|Override
 specifier|public
 name|Database
 name|getDatabase
@@ -1490,8 +1476,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-annotation|@
-name|Override
 comment|/**    * getDatabases    *    * @return the list of dbs. is never null.    * @exception MetaException    * Assuming 1 level here - bugbug    *    */
 specifier|public
 name|List
@@ -1641,8 +1625,6 @@ name|exists
 argument_list|()
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|void
 name|alterTable
@@ -1670,8 +1652,6 @@ literal|"Not yet implemented"
 argument_list|)
 throw|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|void
 name|createTable
@@ -1745,8 +1725,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|dropTable
@@ -1814,8 +1792,6 @@ return|return
 literal|true
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|Table
 name|getTable
@@ -1893,8 +1869,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|createType
@@ -1908,8 +1882,6 @@ literal|true
 return|;
 comment|// no-op
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|dropType
@@ -1923,8 +1895,6 @@ literal|true
 return|;
 comment|// no-op
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|addPartition
@@ -1942,8 +1912,6 @@ literal|true
 return|;
 comment|// no-op as there is no metadata
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|dropPartition
@@ -1968,8 +1936,6 @@ literal|true
 return|;
 comment|// no-op
 block|}
-annotation|@
-name|Override
 specifier|public
 name|Partition
 name|getPartition
@@ -1998,8 +1964,6 @@ literal|"Not yet implemented"
 argument_list|)
 throw|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<
@@ -2028,8 +1992,6 @@ literal|"Not yet implemented"
 argument_list|)
 throw|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|Type
 name|getType
@@ -2043,8 +2005,6 @@ literal|null
 return|;
 comment|// no-op
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|openTransaction
@@ -2054,8 +2014,6 @@ return|return
 literal|true
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|void
 name|rollbackTransaction
@@ -2063,8 +2021,6 @@ parameter_list|()
 block|{
 comment|// no-op
 block|}
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|commitTransaction
@@ -2075,8 +2031,6 @@ literal|true
 return|;
 comment|// no-op
 block|}
-annotation|@
-name|Override
 specifier|public
 name|void
 name|shutdown
@@ -2084,8 +2038,6 @@ parameter_list|()
 block|{
 comment|// no-op
 block|}
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<

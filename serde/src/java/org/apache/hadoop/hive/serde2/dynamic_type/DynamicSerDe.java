@@ -980,8 +980,6 @@ argument_list|)
 return|;
 block|}
 block|}
-annotation|@
-name|Override
 specifier|public
 name|ObjectInspector
 name|getObjectInspector
@@ -998,8 +996,6 @@ name|bt
 argument_list|)
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|Class
 argument_list|<
@@ -1023,8 +1019,6 @@ operator|new
 name|BytesWritable
 argument_list|()
 decl_stmt|;
-annotation|@
-name|Override
 specifier|public
 name|Writable
 name|serialize

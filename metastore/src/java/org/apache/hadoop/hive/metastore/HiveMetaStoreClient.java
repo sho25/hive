@@ -1852,8 +1852,6 @@ name|tableName
 argument_list|)
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<

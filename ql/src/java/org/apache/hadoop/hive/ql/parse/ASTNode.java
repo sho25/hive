@@ -101,8 +101,6 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.lib.Node#getChildren()    */
-annotation|@
-name|Override
 specifier|public
 name|Vector
 argument_list|<
@@ -177,8 +175,6 @@ name|ret_vec
 return|;
 block|}
 comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.lib.Node#getName()    */
-annotation|@
-name|Override
 specifier|public
 name|String
 name|getName

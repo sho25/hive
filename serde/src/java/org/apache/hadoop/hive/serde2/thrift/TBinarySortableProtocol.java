@@ -237,8 +237,6 @@ comment|/**    * Whether the current field is sorted ascendingly.  Always equals
 name|boolean
 name|ascending
 decl_stmt|;
-annotation|@
-name|Override
 specifier|public
 name|void
 name|initialize
@@ -3210,8 +3208,6 @@ block|}
 name|boolean
 name|lastPrimitiveWasNull
 decl_stmt|;
-annotation|@
-name|Override
 specifier|public
 name|boolean
 name|lastPrimitiveWasNull
@@ -3223,8 +3219,6 @@ return|return
 name|lastPrimitiveWasNull
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|void
 name|writeNull

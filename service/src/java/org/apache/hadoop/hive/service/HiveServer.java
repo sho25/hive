@@ -599,8 +599,6 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**      * Executes a query.      *      * @param query HiveQL query to execute      */
-annotation|@
-name|Override
 specifier|public
 name|void
 name|execute
@@ -680,8 +678,6 @@ throw|;
 block|}
 block|}
 comment|/**      * Return the schema of the query result      */
-annotation|@
-name|Override
 specifier|public
 name|String
 name|getSchema
@@ -721,8 +717,6 @@ throw|;
 block|}
 block|}
 comment|/**       * Fetches the next row in a query result set.      *       * @return the next row in a query result set. null if there is no more row to fetch.      */
-annotation|@
-name|Override
 specifier|public
 name|String
 name|fetchOne
@@ -779,8 +773,6 @@ literal|""
 return|;
 block|}
 comment|/**      * Fetches numRows rows.      *      * @param numRows Number of rows to fetch.      * @return A list of rows. The size of the list is numRows if there are at least       *         numRows rows available to return. The size is smaller than numRows if      *         there aren't enough rows. The list will be empty if there is no more       *         row to fetch or numRows == 0.       * @throws HiveServerException Invalid value for numRows (numRows< 0)      */
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<
@@ -845,8 +837,6 @@ name|result
 return|;
 block|}
 comment|/**      * Fetches all the rows in a result set.      *      * @return All the rows in a result set of a query executed using execute method.      *      * TODO: Currently the server buffers all the rows before returning them       * to the client. Decide whether the buffering should be done in the client.      */
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<
