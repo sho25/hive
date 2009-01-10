@@ -135,9 +135,9 @@ operator|.
 name|getProperty
 argument_list|(
 literal|"test.log.dir"
+argument_list|)
 operator|+
 literal|"/clientpositive"
-argument_list|)
 decl_stmt|;
 specifier|public
 name|void
