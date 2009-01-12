@@ -64,6 +64,16 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
 operator|.
 name|Entry
 import|;
@@ -640,7 +650,7 @@ specifier|static
 name|String
 name|makePartName
 parameter_list|(
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

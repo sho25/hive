@@ -1449,7 +1449,7 @@ specifier|public
 name|boolean
 name|isValidSpec
 parameter_list|(
-name|AbstractMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

@@ -49,6 +49,16 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
 begin_class
 annotation|@
 name|explain
@@ -78,7 +88,7 @@ name|tableName
 decl_stmt|;
 name|List
 argument_list|<
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -116,7 +126,7 @@ name|tableName
 parameter_list|,
 name|List
 argument_list|<
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -176,7 +186,7 @@ comment|/**    * @return the partSpecs    */
 specifier|public
 name|List
 argument_list|<
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -197,7 +207,7 @@ name|setPartSpecs
 parameter_list|(
 name|List
 argument_list|<
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

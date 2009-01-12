@@ -68,6 +68,10 @@ specifier|private
 name|descTableDesc
 name|descTblDesc
 decl_stmt|;
+specifier|private
+name|MsckDesc
+name|msckDesc
+decl_stmt|;
 specifier|public
 name|DDLWork
 parameter_list|()
@@ -160,6 +164,20 @@ operator|.
 name|showPartsDesc
 operator|=
 name|showPartsDesc
+expr_stmt|;
+block|}
+specifier|public
+name|DDLWork
+parameter_list|(
+name|MsckDesc
+name|checkDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|msckDesc
+operator|=
+name|checkDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the createTblDesc    */
@@ -358,6 +376,32 @@ operator|.
 name|descTblDesc
 operator|=
 name|descTblDesc
+expr_stmt|;
+block|}
+comment|/**    * @return Metastore check description    */
+specifier|public
+name|MsckDesc
+name|getMsckDesc
+parameter_list|()
+block|{
+return|return
+name|msckDesc
+return|;
+block|}
+comment|/**    * @param msckDesc metastore check description    */
+specifier|public
+name|void
+name|setMsckDesc
+parameter_list|(
+name|MsckDesc
+name|msckDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|msckDesc
+operator|=
+name|msckDesc
 expr_stmt|;
 block|}
 block|}

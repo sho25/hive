@@ -132,6 +132,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_MSCK
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_ALTERTABLE_ADDCOLS
 case|:
 case|case
