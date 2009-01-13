@@ -327,6 +327,7 @@ specifier|private
 name|URI
 name|partURI
 decl_stmt|;
+specifier|public
 name|Partition
 parameter_list|(
 name|Table
