@@ -777,11 +777,17 @@ name|i
 init|=
 literal|0
 init|;
+operator|(
+name|dirs
+operator|!=
+literal|null
+operator|&&
 name|i
 operator|<
 name|dirs
 operator|.
 name|length
+operator|)
 condition|;
 name|i
 operator|++
