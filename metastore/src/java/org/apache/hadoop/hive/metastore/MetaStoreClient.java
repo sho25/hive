@@ -2099,13 +2099,44 @@ name|TException
 throws|,
 name|NoSuchObjectException
 block|{
+if|if
+condition|(
+name|dbName
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+argument_list|)
+condition|)
+block|{
+name|Properties
+name|schema
+init|=
+name|this
+operator|.
+name|getSchema
+argument_list|(
+name|tableName
+argument_list|)
+decl_stmt|;
+return|return
+name|MetaStoreUtils
+operator|.
+name|getTable
+argument_list|(
+name|conf
+argument_list|,
+name|schema
+argument_list|)
+return|;
+block|}
 throw|throw
 operator|new
 name|UnsupportedOperationException
 argument_list|(
-literal|"getTable from a specific db "
-operator|+
-literal|"not supported by this metastore"
+literal|"Operation not supported in this metastore"
 argument_list|)
 throw|;
 block|}

@@ -39,6 +39,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -821,6 +831,13 @@ argument_list|(
 operator|new
 name|QFileFilter
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|Arrays
+operator|.
+name|sort
+argument_list|(
+name|qFiles
 argument_list|)
 expr_stmt|;
 block|}
