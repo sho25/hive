@@ -71,6 +71,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|mapred
+operator|.
+name|Reporter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|conf
 operator|.
 name|Configuration
@@ -662,6 +676,8 @@ operator|.
 name|initialize
 argument_list|(
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 for|for
@@ -1060,6 +1076,10 @@ name|TestOperators
 operator|.
 name|class
 argument_list|)
+argument_list|,
+name|Reporter
+operator|.
+name|NULL
 argument_list|)
 expr_stmt|;
 comment|// evaluate on row
@@ -1451,6 +1471,8 @@ name|TestOperators
 operator|.
 name|class
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 comment|// evaluate on row
@@ -1993,6 +2015,8 @@ operator|.
 name|initialize
 argument_list|(
 name|hconf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|Text

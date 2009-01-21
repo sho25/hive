@@ -91,6 +91,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|mapred
+operator|.
+name|Reporter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|conf
 operator|.
 name|Configuration
@@ -127,6 +141,9 @@ name|initialize
 parameter_list|(
 name|Configuration
 name|hconf
+parameter_list|,
+name|Reporter
+name|reporter
 parameter_list|)
 throws|throws
 name|HiveException
@@ -136,6 +153,8 @@ operator|.
 name|initialize
 argument_list|(
 name|hconf
+argument_list|,
+name|reporter
 argument_list|)
 expr_stmt|;
 comment|// nothing to do really ..

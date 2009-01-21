@@ -404,6 +404,9 @@ name|initialize
 parameter_list|(
 name|Configuration
 name|hconf
+parameter_list|,
+name|Reporter
+name|reporter
 parameter_list|)
 throws|throws
 name|HiveException
@@ -413,6 +416,8 @@ operator|.
 name|initialize
 argument_list|(
 name|hconf
+argument_list|,
+name|reporter
 argument_list|)
 expr_stmt|;
 try|try
@@ -943,6 +948,11 @@ name|HiveException
 block|{
 try|try
 block|{
+name|reporter
+operator|.
+name|progress
+argument_list|()
+expr_stmt|;
 comment|// user SerDe to serialize r, and write it out
 name|recordValue
 operator|=

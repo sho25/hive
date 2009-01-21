@@ -261,6 +261,8 @@ operator|.
 name|initialize
 argument_list|(
 name|jc
+argument_list|,
+name|reporter
 argument_list|)
 expr_stmt|;
 name|rp
@@ -376,6 +378,8 @@ operator|.
 name|initialize
 argument_list|(
 name|jc
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|rp
