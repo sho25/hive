@@ -4358,6 +4358,11 @@ operator|.
 name|createTable
 argument_list|(
 name|tbl
+argument_list|,
+name|crtTbl
+operator|.
+name|getIfNotExists
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return

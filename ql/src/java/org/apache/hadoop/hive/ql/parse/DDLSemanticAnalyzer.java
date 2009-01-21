@@ -1279,6 +1279,11 @@ name|mapProp
 init|=
 literal|null
 decl_stmt|;
+name|boolean
+name|ifNotExists
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 literal|"SequenceFile"
@@ -1363,6 +1368,16 @@ name|getType
 argument_list|()
 condition|)
 block|{
+case|case
+name|HiveParser
+operator|.
+name|TOK_IFNOTEXISTS
+case|:
+name|ifNotExists
+operator|=
+literal|true
+expr_stmt|;
+break|break;
 case|case
 name|HiveParser
 operator|.
@@ -1919,6 +1934,8 @@ argument_list|,
 name|serde
 argument_list|,
 name|mapProp
+argument_list|,
+name|ifNotExists
 argument_list|)
 decl_stmt|;
 name|validateCreateTable
