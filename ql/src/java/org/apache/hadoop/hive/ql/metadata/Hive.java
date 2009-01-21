@@ -1092,7 +1092,7 @@ name|tbl
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Updates the existing table metadata with the new metadata.     * @param tblName name of the existing table    * @param newTbl new name of the table. could be the old name    * @throws InvalidOperationException if the changes in metadata is not acceptable    * @throws MetaException    * @throws TException    */
+comment|/**    * Updates the existing table metadata with the new metadata.     * @param tblName name of the existing table    * @param newTbl new name of the table. could be the old name    * @throws InvalidOperationException if the changes in metadata is not acceptable    * @throws TException    */
 specifier|public
 name|void
 name|alterTable
@@ -1106,9 +1106,9 @@ parameter_list|)
 throws|throws
 name|InvalidOperationException
 throws|,
-name|MetaException
-throws|,
-name|TException
+name|HiveException
+block|{
+try|try
 block|{
 name|getMSC
 argument_list|()
@@ -1127,6 +1127,39 @@ name|getTTable
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unable to alter table."
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|TException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unable to alter table."
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 comment|/**    * Creates the table with the give objects    * @param tbl a table object    * @throws HiveException    */
 specifier|public

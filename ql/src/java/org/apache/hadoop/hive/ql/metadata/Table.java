@@ -1240,7 +1240,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Partition collumn name "
+literal|"Partition column name "
 operator|+
 name|partCol
 operator|+
