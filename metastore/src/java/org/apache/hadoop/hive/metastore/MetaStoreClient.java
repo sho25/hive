@@ -2856,6 +2856,32 @@ literal|"Operation not supported in this metastore"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|Partition
+name|add_partition
+parameter_list|(
+name|Partition
+name|partition
+parameter_list|)
+throws|throws
+name|InvalidObjectException
+throws|,
+name|AlreadyExistsException
+throws|,
+name|MetaException
+throws|,
+name|TException
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"Operation not supported in this metastore"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 

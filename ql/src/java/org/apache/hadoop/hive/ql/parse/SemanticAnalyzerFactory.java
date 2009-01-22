@@ -157,6 +157,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_ALTERTABLE_ADDPARTS
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_ALTERTABLE_PROPERTIES
 case|:
 case|case

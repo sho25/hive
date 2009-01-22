@@ -69,6 +69,10 @@ name|descTableDesc
 name|descTblDesc
 decl_stmt|;
 specifier|private
+name|AddPartitionDesc
+name|addPartitionDesc
+decl_stmt|;
+specifier|private
 name|MsckDesc
 name|msckDesc
 decl_stmt|;
@@ -164,6 +168,21 @@ operator|.
 name|showPartsDesc
 operator|=
 name|showPartsDesc
+expr_stmt|;
+block|}
+comment|/**    * @param addPartitionDesc information about the partitions    * we want to add.    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|AddPartitionDesc
+name|addPartitionDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|addPartitionDesc
+operator|=
+name|addPartitionDesc
 expr_stmt|;
 block|}
 specifier|public
@@ -376,6 +395,32 @@ operator|.
 name|descTblDesc
 operator|=
 name|descTblDesc
+expr_stmt|;
+block|}
+comment|/**    * @return information about the partitions    * we want to add.    */
+specifier|public
+name|AddPartitionDesc
+name|getAddPartitionDesc
+parameter_list|()
+block|{
+return|return
+name|addPartitionDesc
+return|;
+block|}
+comment|/**    * @param addPartitionDesc information about the partitions    * we want to add.    */
+specifier|public
+name|void
+name|setAddPartitionDesc
+parameter_list|(
+name|AddPartitionDesc
+name|addPartitionDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|addPartitionDesc
+operator|=
+name|addPartitionDesc
 expr_stmt|;
 block|}
 comment|/**    * @return Metastore check description    */
