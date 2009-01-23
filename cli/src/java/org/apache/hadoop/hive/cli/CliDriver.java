@@ -1897,7 +1897,7 @@ name|line
 operator|=
 name|prefix
 operator|+
-literal|" "
+literal|"\n"
 operator|+
 name|line
 expr_stmt|;
@@ -1924,6 +1924,8 @@ block|{
 name|prefix
 operator|=
 name|prefix
+operator|+
+literal|"\n"
 operator|+
 name|line
 expr_stmt|;
