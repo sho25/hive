@@ -455,7 +455,7 @@ implements|implements
 name|NodeProcessor
 block|{
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -463,6 +463,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|ctx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -531,6 +535,9 @@ name|cl
 argument_list|)
 argument_list|)
 expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 block|}
 comment|/**    * Factory method to get the ColumnPrunerFilterProc class.    * @return ColumnPrunerFilterProc    */
@@ -555,7 +562,7 @@ implements|implements
 name|NodeProcessor
 block|{
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -563,6 +570,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|ctx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -700,6 +711,9 @@ argument_list|,
 name|colLists
 argument_list|)
 expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 block|}
 comment|/**    * Factory method to get the ColumnPrunerGroupByProc class.    * @return ColumnPrunerGroupByProc    */
@@ -724,7 +738,7 @@ implements|implements
 name|NodeProcessor
 block|{
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -732,6 +746,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|ctx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -777,6 +795,9 @@ name|nd
 argument_list|)
 argument_list|)
 expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 block|}
 comment|/**    * Factory method to get the ColumnPrunerDefaultProc class.    * @return ColumnPrunerDefaultProc    */
@@ -801,7 +822,7 @@ implements|implements
 name|NodeProcessor
 block|{
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -809,6 +830,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|ctx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -1201,6 +1226,9 @@ argument_list|,
 name|colLists
 argument_list|)
 expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 block|}
 comment|/**    * The Factory method to get ColumnPrunerReduceSinkProc class.    * @return ColumnPrunerReduceSinkProc    */
@@ -1225,7 +1253,7 @@ implements|implements
 name|NodeProcessor
 block|{
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -1233,6 +1261,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|ctx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -1327,7 +1359,9 @@ name|op
 argument_list|)
 argument_list|)
 expr_stmt|;
-return|return;
+return|return
+literal|null
+return|;
 block|}
 name|cols
 operator|=
@@ -1393,7 +1427,9 @@ name|cols
 argument_list|)
 argument_list|)
 expr_stmt|;
-return|return;
+return|return
+literal|null
+return|;
 block|}
 name|cppCtx
 operator|.
@@ -1412,6 +1448,9 @@ name|op
 argument_list|)
 argument_list|)
 expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 block|}
 comment|/**    * The Factory method to get the ColumnPrunerSelectProc class.    * @return ColumnPrunerSelectProc    */

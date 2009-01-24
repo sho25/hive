@@ -384,7 +384,7 @@ argument_list|()
 return|;
 block|}
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -392,6 +392,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|ctx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -485,8 +489,13 @@ operator|==
 literal|null
 condition|)
 block|{
-return|return;
+return|return
+literal|null
+return|;
 block|}
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class

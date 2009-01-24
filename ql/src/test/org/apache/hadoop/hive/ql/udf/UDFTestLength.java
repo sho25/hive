@@ -45,7 +45,7 @@ begin_class
 specifier|public
 class|class
 name|UDFTestLength
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|public

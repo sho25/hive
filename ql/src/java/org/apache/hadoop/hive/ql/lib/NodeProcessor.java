@@ -46,9 +46,9 @@ specifier|public
 interface|interface
 name|NodeProcessor
 block|{
-comment|/**    * generic process for all ops that don't have specific implementations    * @param nd operator to process    * @param procCtx operator processor context    * @throws SemanticException    */
+comment|/**    * generic process for all ops that don't have specific implementations    * @param nd operator to process    * @param procCtx operator processor context    * @param nodeOutputs A variable argument list of outputs from other nodes in the walk    * @return Object to be returned by the process call    * @throws SemanticException    */
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -56,6 +56,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|procCtx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException

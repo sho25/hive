@@ -210,7 +210,7 @@ parameter_list|()
 block|{   }
 comment|/**    * File Sink Operator encountered     * @param nd the file sink operator encountered    * @param opProcCtx context    */
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -218,6 +218,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|opProcCtx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -504,6 +508,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class

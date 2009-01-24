@@ -23,13 +23,12 @@ begin_comment
 comment|/**  * Operator Processor Context  */
 end_comment
 
-begin_class
+begin_interface
 specifier|public
-specifier|abstract
-class|class
+interface|interface
 name|NodeProcessorCtx
 block|{ }
-end_class
+end_interface
 
 end_unit
 

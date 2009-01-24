@@ -19,24 +19,6 @@ name|exec
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveException
-import|;
-end_import
-
 begin_comment
 comment|//import org.apache.hadoop.hive.serde.ReflectionSerDe;
 end_comment
@@ -47,21 +29,71 @@ end_comment
 
 begin_class
 specifier|public
-specifier|abstract
 class|class
 name|UDAF
 block|{
+comment|/**    * The resolver used for method resolution.    */
+name|UDAFEvaluatorResolver
+name|rslv
+decl_stmt|;
+comment|/**    * The default constructor.    */
 specifier|public
 name|UDAF
 parameter_list|()
-block|{ }
-comment|/** Initialize the aggregation object.    *  The class should reset the status of the aggregation if aggregate() was called before.    */
+block|{
+name|rslv
+operator|=
+operator|new
+name|DefaultUDAFEvaluatorResolver
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * The constructor with a particular type of resolver.    */
 specifier|public
-specifier|abstract
+name|UDAF
+parameter_list|(
+name|UDAFEvaluatorResolver
+name|rslv
+parameter_list|)
+block|{
+name|this
+operator|.
+name|rslv
+operator|=
+name|rslv
+expr_stmt|;
+block|}
+comment|/**    * Sets the resolver    *     * @param The method resolver to use for method resolution.    */
+specifier|public
 name|void
-name|init
+name|setResolver
+parameter_list|(
+name|UDAFEvaluatorResolver
+name|rslv
+parameter_list|)
+block|{
+name|this
+operator|.
+name|rslv
+operator|=
+name|rslv
+expr_stmt|;
+block|}
+comment|/**    * Gets the resolver.    */
+specifier|public
+name|UDAFEvaluatorResolver
+name|getResolver
 parameter_list|()
-function_decl|;
+block|{
+return|return
+name|rslv
+return|;
+block|}
 block|}
 end_class
 

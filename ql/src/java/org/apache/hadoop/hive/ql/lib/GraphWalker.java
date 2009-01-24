@@ -31,6 +31,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -56,7 +66,7 @@ specifier|public
 interface|interface
 name|GraphWalker
 block|{
-comment|/**    * starting point for walking.    *     * @param startNodes list of starting operators    * @throws SemanticException    */
+comment|/**    * starting point for walking.    *     * @param startNodes list of starting operators    * @param nodeOutput If this parameter is not null, the call to the function returns the     * map from node to objects returned by the processors.    * @throws SemanticException    */
 specifier|public
 name|void
 name|startWalking
@@ -66,6 +76,14 @@ argument_list|<
 name|Node
 argument_list|>
 name|startNodes
+parameter_list|,
+name|HashMap
+argument_list|<
+name|Node
+argument_list|,
+name|Object
+argument_list|>
+name|nodeOutput
 parameter_list|)
 throws|throws
 name|SemanticException

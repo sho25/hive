@@ -73,8 +73,8 @@ begin_class
 specifier|public
 class|class
 name|UDFOPPlus
-implements|implements
-name|UDF
+extends|extends
+name|UDFBaseNumericOp
 block|{
 specifier|private
 specifier|static

@@ -73,6 +73,24 @@ name|UDAF
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|UDAFEvaluator
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -97,7 +115,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|UDAF
+name|UDAFEvaluator
 argument_list|>
 name|aggregationClass
 decl_stmt|;
@@ -128,7 +146,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|UDAF
+name|UDAFEvaluator
 argument_list|>
 name|aggregationClass
 parameter_list|,
@@ -172,7 +190,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|UDAF
+name|UDAFEvaluator
 argument_list|>
 name|getAggregationClass
 parameter_list|()
@@ -192,7 +210,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|UDAF
+name|UDAFEvaluator
 argument_list|>
 name|aggregationClass
 parameter_list|)

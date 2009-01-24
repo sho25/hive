@@ -33,7 +33,25 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDAF
+name|NumericUDAF
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|UDAFEvaluator
 import|;
 end_import
 
@@ -42,7 +60,9 @@ specifier|public
 class|class
 name|UDAFAvg
 extends|extends
-name|UDAF
+name|NumericUDAF
+implements|implements
+name|UDAFEvaluator
 block|{
 specifier|private
 name|long
@@ -79,7 +99,7 @@ expr_stmt|;
 block|}
 specifier|public
 name|boolean
-name|aggregate
+name|iterate
 parameter_list|(
 name|Double
 name|o
@@ -106,7 +126,7 @@ return|;
 block|}
 specifier|public
 name|String
-name|evaluatePartial
+name|terminatePartial
 parameter_list|()
 block|{
 comment|// This is SQL standard - average of zero items should be null.
@@ -136,7 +156,7 @@ return|;
 block|}
 specifier|public
 name|boolean
-name|aggregatePartial
+name|merge
 parameter_list|(
 name|String
 name|o
@@ -212,7 +232,7 @@ return|;
 block|}
 specifier|public
 name|Double
-name|evaluate
+name|terminate
 parameter_list|()
 block|{
 comment|// This is SQL standard - average of zero items should be null.

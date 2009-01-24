@@ -927,7 +927,9 @@ block|}
 comment|// Create function desc
 name|desc
 operator|=
-name|SemanticAnalyzer
+name|TypeCheckProcFactory
+operator|.
+name|DefaultExprProcessor
 operator|.
 name|getXpathOrFuncExprNodeDesc
 argument_list|(
@@ -1502,7 +1504,9 @@ name|this
 operator|.
 name|prunerExpr
 operator|=
-name|SemanticAnalyzer
+name|TypeCheckProcFactory
+operator|.
+name|DefaultExprProcessor
 operator|.
 name|getFuncExprNodeDesc
 argument_list|(
@@ -1604,7 +1608,9 @@ name|this
 operator|.
 name|prunerExpr
 operator|=
-name|SemanticAnalyzer
+name|TypeCheckProcFactory
+operator|.
+name|DefaultExprProcessor
 operator|.
 name|getFuncExprNodeDesc
 argument_list|(

@@ -56,10 +56,9 @@ specifier|public
 interface|interface
 name|Dispatcher
 block|{
-comment|/**    * dispatcher function    * @param nd operator to process    * @param Stack operator stack to process    * @throws SemanticException    */
+comment|/**    * Dispatcher function.    * @param nd operator to process.    * @param Stack operator stack to process.    * @param nodeOutputs The argument list of outputs from processing other nodes that are    * passed to this dispatcher from the walker.    * @return Object The return object from the processing call.    * @throws SemanticException    */
 specifier|public
-specifier|abstract
-name|void
+name|Object
 name|dispatch
 parameter_list|(
 name|Node
@@ -70,6 +69,10 @@ argument_list|<
 name|Node
 argument_list|>
 name|stack
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException

@@ -69,7 +69,7 @@ begin_class
 specifier|public
 class|class
 name|UDFToFloat
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|private
@@ -93,6 +93,19 @@ specifier|public
 name|UDFToFloat
 parameter_list|()
 block|{   }
+comment|/**    * Convert from void to a float. This is called for CAST(... AS FLOAT)    *    * @param i The void value to convert    * @return Float    */
+specifier|public
+name|Float
+name|evaluate
+parameter_list|(
+name|Void
+name|i
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|/**    * Convert from boolean to a float. This is called for CAST(... AS FLOAT)    *    * @param i The boolean value to convert    * @return Float    */
 specifier|public
 name|Float
@@ -335,6 +348,45 @@ comment|// return Float.valueOf(0);
 comment|// But we decided to return NULL instead, which is more conservative.
 return|return
 literal|null
+return|;
+block|}
+block|}
+comment|/**    * Convert from date to a float. This is called for CAST(... AS FLOAT)    *    * @param i The date value to convert    * @return Float    */
+specifier|public
+name|Float
+name|evaluate
+parameter_list|(
+name|java
+operator|.
+name|sql
+operator|.
+name|Date
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Float
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|getTime
+argument_list|()
+argument_list|)
 return|;
 block|}
 block|}

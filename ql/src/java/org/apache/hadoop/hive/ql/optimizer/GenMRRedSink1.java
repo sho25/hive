@@ -230,7 +230,7 @@ parameter_list|()
 block|{   }
 comment|/**    * Reduce Scan encountered     * @param nd the reduce sink operator encountered    * @param opProcCtx context    */
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -238,6 +238,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|opProcCtx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -508,6 +512,9 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class

@@ -221,7 +221,7 @@ begin_class
 specifier|public
 class|class
 name|ColumnPrunerProcCtx
-extends|extends
+implements|implements
 name|NodeProcessorCtx
 block|{
 specifier|private

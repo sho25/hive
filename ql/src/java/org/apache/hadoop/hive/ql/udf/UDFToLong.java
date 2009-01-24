@@ -69,7 +69,7 @@ begin_class
 specifier|public
 class|class
 name|UDFToLong
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|private
@@ -93,6 +93,19 @@ specifier|public
 name|UDFToLong
 parameter_list|()
 block|{   }
+comment|/**    * Convert from void to a long. This is called for CAST(... AS BIGINT)    *    * @param i The void value to convert    * @return Long    */
+specifier|public
+name|Long
+name|evaluate
+parameter_list|(
+name|Void
+name|i
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|/**    * Convert from boolean to a long. This is called for CAST(... AS BIGINT)    *    * @param i The boolean value to convert    * @return Long    */
 specifier|public
 name|Long
@@ -367,6 +380,45 @@ return|return
 literal|null
 return|;
 block|}
+block|}
+block|}
+comment|/**    * Convert from date to a long. This is called for CAST(... AS BIGINT)    *    * @param i The date value to convert    * @return Long    */
+specifier|public
+name|Long
+name|evaluate
+parameter_list|(
+name|java
+operator|.
+name|sql
+operator|.
+name|Date
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Long
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|getTime
+argument_list|()
+argument_list|)
+return|;
 block|}
 block|}
 block|}

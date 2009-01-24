@@ -69,7 +69,7 @@ begin_class
 specifier|public
 class|class
 name|UDFOPPositive
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|private

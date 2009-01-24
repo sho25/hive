@@ -125,7 +125,7 @@ expr_stmt|;
 block|}
 comment|/**    * dispatcher function    * @param nd operator to process    * @param ndStack the operators encountered so far    * @throws SemanticException    */
 specifier|public
-name|void
+name|Object
 name|dispatch
 parameter_list|(
 name|Node
@@ -136,6 +136,10 @@ argument_list|<
 name|Node
 argument_list|>
 name|ndStack
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -230,7 +234,9 @@ name|proc
 operator|!=
 literal|null
 condition|)
+block|{
 comment|// Call the process function
+return|return
 name|proc
 operator|.
 name|process
@@ -238,8 +244,15 @@ argument_list|(
 name|nd
 argument_list|,
 name|procCtx
+argument_list|,
+name|nodeOutputs
 argument_list|)
-expr_stmt|;
+return|;
+block|}
+else|else
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class

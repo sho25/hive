@@ -69,7 +69,7 @@ begin_class
 specifier|public
 class|class
 name|UDFOPBitAnd
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|private

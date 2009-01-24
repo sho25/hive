@@ -61,7 +61,7 @@ begin_class
 specifier|public
 class|class
 name|UDFSize
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|public

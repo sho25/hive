@@ -173,7 +173,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessorCtx
+name|GraphWalker
 import|;
 end_import
 
@@ -191,7 +191,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|NodeProcessorCtx
 import|;
 end_import
 
@@ -370,7 +370,7 @@ return|;
 block|}
 comment|/**    * Implements the process method for the NodeProcessor interface.    */
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -378,6 +378,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|procCtx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -454,6 +458,9 @@ argument_list|)
 expr_stmt|;
 break|break;
 block|}
+return|return
+literal|null
+return|;
 block|}
 comment|/**    *  parses given query and gets the lineage info.    * @param query    * @throws ParseException    */
 specifier|public
@@ -599,6 +606,8 @@ operator|.
 name|startWalking
 argument_list|(
 name|topNodes
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}

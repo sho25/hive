@@ -69,7 +69,7 @@ begin_class
 specifier|public
 class|class
 name|UDFToBoolean
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|private
@@ -93,6 +93,19 @@ specifier|public
 name|UDFToBoolean
 parameter_list|()
 block|{   }
+comment|/**    * Convert a void to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The value of a void type    * @return Boolean    */
+specifier|public
+name|Boolean
+name|evaluate
+parameter_list|(
+name|Void
+name|i
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|/**    * Convert from a byte to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The byte value to convert    * @return Boolean    */
 specifier|public
 name|Boolean
@@ -308,6 +321,43 @@ argument_list|(
 name|i
 operator|.
 name|doubleValue
+argument_list|()
+operator|!=
+literal|0
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**    * Convert from a string to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i The string value to convert    * @return Boolean    */
+specifier|public
+name|Boolean
+name|evaluate
+parameter_list|(
+name|String
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Boolean
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|length
 argument_list|()
 operator|!=
 literal|0

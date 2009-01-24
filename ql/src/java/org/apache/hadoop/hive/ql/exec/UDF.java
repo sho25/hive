@@ -23,12 +23,61 @@ begin_comment
 comment|/**  * A User-defined function (UDF) for the use with Hive.  *   * New UDF classes need to inherit from this UDF class.  *   * Required for all UDF classes:  * 1. Implement one or more methods named "evaluate" which will be called by Hive.  *    The following are some examples:  *    public int evaluate();  *    public int evaluate(int a);  *    public double evaluate(int a, double b);  *    public String evaluate(String a, int b, String c);  *   *    "evaluate" should never be a void method.  However it can return "null" if needed.  */
 end_comment
 
-begin_interface
+begin_class
 specifier|public
-interface|interface
+class|class
 name|UDF
-block|{  }
-end_interface
+block|{
+comment|/**    * The resolver to use for method resolution.    */
+specifier|private
+name|UDFMethodResolver
+name|rslv
+decl_stmt|;
+comment|/**    * The constructor    */
+specifier|public
+name|UDF
+parameter_list|()
+block|{
+name|rslv
+operator|=
+operator|new
+name|DefaultUDFMethodResolver
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Sets the resolver    *     * @param The method resolver to use for method resolution.    */
+specifier|public
+name|void
+name|setResolver
+parameter_list|(
+name|UDFMethodResolver
+name|rslv
+parameter_list|)
+block|{
+name|this
+operator|.
+name|rslv
+operator|=
+name|rslv
+expr_stmt|;
+block|}
+comment|/**    * Get the method resolver.    */
+specifier|public
+name|UDFMethodResolver
+name|getResolver
+parameter_list|()
+block|{
+return|return
+name|rslv
+return|;
+block|}
+block|}
+end_class
 
 end_unit
 

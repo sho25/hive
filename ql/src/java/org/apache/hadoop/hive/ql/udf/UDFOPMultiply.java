@@ -69,8 +69,8 @@ begin_class
 specifier|public
 class|class
 name|UDFOPMultiply
-implements|implements
-name|UDF
+extends|extends
+name|UDFBaseNumericOp
 block|{
 specifier|private
 specifier|static

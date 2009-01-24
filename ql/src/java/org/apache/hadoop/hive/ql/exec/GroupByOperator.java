@@ -25,16 +25,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -277,24 +267,6 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|RowResolver
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
 name|OpParseContext
 import|;
 end_import
@@ -469,7 +441,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|UDAF
+name|UDAFEvaluator
 argument_list|>
 index|[]
 name|aggregationClasses
@@ -510,7 +482,7 @@ name|currentKeys
 decl_stmt|;
 specifier|transient
 specifier|protected
-name|UDAF
+name|UDAFEvaluator
 index|[]
 name|aggregations
 decl_stmt|;
@@ -531,7 +503,7 @@ argument_list|<
 name|Object
 argument_list|>
 argument_list|,
-name|UDAF
+name|UDAFEvaluator
 index|[]
 argument_list|>
 name|hashAggregations
@@ -893,7 +865,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|UDAF
+name|UDAFEvaluator
 argument_list|>
 index|[]
 operator|)
@@ -1015,9 +987,9 @@ operator|.
 name|PARTIAL2
 operator|)
 condition|?
-literal|"evaluatePartial"
+literal|"terminatePartial"
 else|:
-literal|"evaluate"
+literal|"terminate"
 operator|)
 decl_stmt|;
 for|for
@@ -1069,9 +1041,9 @@ name|HASH
 operator|)
 operator|)
 condition|?
-literal|"aggregate"
+literal|"iterate"
 else|:
-literal|"aggregatePartial"
+literal|"merge"
 operator|)
 decl_stmt|;
 if|if
@@ -1096,7 +1068,7 @@ operator|)
 condition|)
 name|aggregateMethodName
 operator|=
-literal|"aggregate"
+literal|"iterate"
 expr_stmt|;
 comment|// aggregationsAggregateMethods
 for|for
@@ -1334,7 +1306,7 @@ argument_list|<
 name|Object
 argument_list|>
 argument_list|,
-name|UDAF
+name|UDAFEvaluator
 index|[]
 argument_list|>
 argument_list|()
@@ -2014,7 +1986,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|UDAF
+name|UDAFEvaluator
 argument_list|>
 name|agg
 init|=
@@ -2053,19 +2025,19 @@ expr_stmt|;
 block|}
 block|}
 specifier|protected
-name|UDAF
+name|UDAFEvaluator
 index|[]
 name|newAggregations
 parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|UDAF
+name|UDAFEvaluator
 index|[]
 name|aggs
 init|=
 operator|new
-name|UDAF
+name|UDAFEvaluator
 index|[
 name|aggregationClasses
 operator|.
@@ -2111,6 +2083,11 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
 throw|throw
 operator|new
 name|HiveException
@@ -2155,7 +2132,7 @@ specifier|protected
 name|void
 name|updateAggregations
 parameter_list|(
-name|UDAF
+name|UDAFEvaluator
 index|[]
 name|aggs
 parameter_list|,
@@ -2659,7 +2636,7 @@ throws|throws
 name|HiveException
 block|{
 comment|// Prepare aggs for updating
-name|UDAF
+name|UDAFEvaluator
 index|[]
 name|aggs
 init|=
@@ -2756,7 +2733,7 @@ throws|throws
 name|HiveException
 block|{
 comment|// Prepare aggs for updating
-name|UDAF
+name|UDAFEvaluator
 index|[]
 name|aggs
 init|=
@@ -2814,7 +2791,7 @@ expr_stmt|;
 comment|// init aggregations
 for|for
 control|(
-name|UDAF
+name|UDAFEvaluator
 name|aggregation
 range|:
 name|aggregations
@@ -2940,7 +2917,7 @@ name|length
 argument_list|()
 expr_stmt|;
 block|}
-name|UDAF
+name|UDAFEvaluator
 index|[]
 name|aggs
 init|=
@@ -2991,7 +2968,7 @@ operator|.
 name|getFields
 argument_list|()
 decl_stmt|;
-name|UDAF
+name|UDAFEvaluator
 name|agg
 init|=
 name|aggs
@@ -3141,7 +3118,7 @@ argument_list|<
 name|Object
 argument_list|>
 argument_list|,
-name|UDAF
+name|UDAFEvaluator
 index|[]
 argument_list|>
 name|m
@@ -3199,7 +3176,7 @@ name|Object
 argument_list|>
 name|keys
 parameter_list|,
-name|UDAF
+name|UDAFEvaluator
 index|[]
 name|aggs
 parameter_list|)

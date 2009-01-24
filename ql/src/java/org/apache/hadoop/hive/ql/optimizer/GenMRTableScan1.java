@@ -238,7 +238,7 @@ parameter_list|()
 block|{   }
 comment|/**    * Table Sink encountered     * @param nd the table sink operator encountered    * @param opProcCtx context    */
 specifier|public
-name|void
+name|Object
 name|process
 parameter_list|(
 name|Node
@@ -246,6 +246,10 @@ name|nd
 parameter_list|,
 name|NodeProcessorCtx
 name|opProcCtx
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -408,12 +412,17 @@ name|currAliasId
 argument_list|)
 argument_list|)
 expr_stmt|;
-return|return;
+return|return
+literal|null
+return|;
 block|}
 block|}
 assert|assert
 literal|false
 assert|;
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class

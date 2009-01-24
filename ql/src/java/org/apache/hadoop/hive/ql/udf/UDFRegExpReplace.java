@@ -65,7 +65,7 @@ begin_class
 specifier|public
 class|class
 name|UDFRegExpReplace
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|private

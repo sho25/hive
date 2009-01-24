@@ -89,7 +89,7 @@ begin_class
 specifier|public
 class|class
 name|UDFFromUnixTime
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|private

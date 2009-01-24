@@ -1195,6 +1195,8 @@ operator|.
 name|startWalking
 argument_list|(
 name|topNodes
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 comment|// create a new select operator if any of input tables' columns can be pruned

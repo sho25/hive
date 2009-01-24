@@ -69,7 +69,7 @@ begin_class
 specifier|public
 class|class
 name|UDFToDouble
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|private
@@ -93,6 +93,19 @@ specifier|public
 name|UDFToDouble
 parameter_list|()
 block|{   }
+comment|/**    * Convert from void to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The void value to convert    * @return Double    */
+specifier|public
+name|Double
+name|evaluate
+parameter_list|(
+name|Void
+name|i
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The boolean value to convert    * @return Double    */
 specifier|public
 name|Double
@@ -348,6 +361,45 @@ return|return
 literal|null
 return|;
 block|}
+block|}
+block|}
+comment|/**    * Convert from date to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The date value to convert    * @return Double    */
+specifier|public
+name|Double
+name|evaluate
+parameter_list|(
+name|java
+operator|.
+name|sql
+operator|.
+name|Date
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|Double
+operator|.
+name|valueOf
+argument_list|(
+name|i
+operator|.
+name|getTime
+argument_list|()
+argument_list|)
+return|;
 block|}
 block|}
 block|}

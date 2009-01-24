@@ -41,7 +41,7 @@ begin_class
 specifier|public
 class|class
 name|UDFConcat
-implements|implements
+extends|extends
 name|UDF
 block|{
 specifier|public

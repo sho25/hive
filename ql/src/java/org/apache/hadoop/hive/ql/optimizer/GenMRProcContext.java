@@ -483,7 +483,7 @@ begin_class
 specifier|public
 class|class
 name|GenMRProcContext
-extends|extends
+implements|implements
 name|NodeProcessorCtx
 block|{
 comment|/**     * GenMapRedCtx is used to keep track of the current state.     */

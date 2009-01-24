@@ -33,7 +33,25 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDAF
+name|NumericUDAF
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|UDAFEvaluator
 import|;
 end_import
 
@@ -42,7 +60,9 @@ specifier|public
 class|class
 name|UDAFSum
 extends|extends
-name|UDAF
+name|NumericUDAF
+implements|implements
+name|UDAFEvaluator
 block|{
 specifier|private
 name|double
@@ -79,7 +99,7 @@ expr_stmt|;
 block|}
 specifier|public
 name|boolean
-name|aggregate
+name|iterate
 parameter_list|(
 name|Double
 name|o
@@ -107,7 +127,7 @@ return|;
 block|}
 specifier|public
 name|Double
-name|evaluatePartial
+name|terminatePartial
 parameter_list|()
 block|{
 comment|// This is SQL standard - sum of zero items should be null.
@@ -125,7 +145,7 @@ return|;
 block|}
 specifier|public
 name|boolean
-name|aggregatePartial
+name|merge
 parameter_list|(
 name|Double
 name|o
@@ -153,7 +173,7 @@ return|;
 block|}
 specifier|public
 name|Double
-name|evaluate
+name|terminate
 parameter_list|()
 block|{
 comment|// This is SQL standard - sum of zero items should be null.
