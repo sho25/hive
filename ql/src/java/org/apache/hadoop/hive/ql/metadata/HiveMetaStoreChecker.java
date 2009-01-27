@@ -580,6 +580,7 @@ name|isExternal
 operator|==
 literal|null
 operator|||
+operator|!
 literal|"TRUE"
 operator|.
 name|equalsIgnoreCase
