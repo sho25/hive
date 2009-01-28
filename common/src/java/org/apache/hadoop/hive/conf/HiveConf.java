@@ -403,9 +403,17 @@ literal|""
 argument_list|)
 block|,
 comment|// query being executed (multiple per session)
-name|HIVEQUERYID
+name|HIVEQUERYSTRING
 argument_list|(
 literal|"hive.query.string"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+comment|// id of query being executed (multiple per session)
+name|HIVEQUERYID
+argument_list|(
+literal|"hive.query.id"
 argument_list|,
 literal|""
 argument_list|)
@@ -501,6 +509,21 @@ argument_list|(
 literal|"hive.default.fileformat"
 argument_list|,
 literal|"TextFile"
+argument_list|)
+block|,
+comment|//Location of Hive run time structured log file
+name|HIVEHISTORYFILELOC
+argument_list|(
+literal|"hive.querylog.location"
+argument_list|,
+literal|"/tmp/"
+operator|+
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"user.name"
+argument_list|)
 argument_list|)
 block|;
 specifier|public

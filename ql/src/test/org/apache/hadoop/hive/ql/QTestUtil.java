@@ -1179,6 +1179,22 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|CliSessionState
+name|ss
+init|=
+operator|new
+name|CliSessionState
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|ss
+argument_list|)
+expr_stmt|;
 comment|// System.out.println(conf.toString());
 name|testFiles
 operator|=
@@ -2685,14 +2701,14 @@ name|createSources
 argument_list|()
 expr_stmt|;
 block|}
-name|CliSessionState
+comment|//CliSessionState ss = new CliSessionState(conf);
+name|SessionState
 name|ss
 init|=
-operator|new
-name|CliSessionState
-argument_list|(
-name|conf
-argument_list|)
+name|SessionState
+operator|.
+name|get
+argument_list|()
 decl_stmt|;
 name|ss
 operator|.

@@ -1546,13 +1546,6 @@ literal|3
 argument_list|)
 expr_stmt|;
 block|}
-name|SessionState
-operator|.
-name|start
-argument_list|(
-name|ss
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -1623,6 +1616,13 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|ss
+argument_list|)
+expr_stmt|;
 name|CliDriver
 name|cli
 init|=

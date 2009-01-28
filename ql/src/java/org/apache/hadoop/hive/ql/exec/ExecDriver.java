@@ -293,6 +293,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|history
+operator|.
+name|HiveHistory
+operator|.
+name|Keys
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|io
 operator|.
 name|*
@@ -748,7 +768,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * A list of the currently running jobs spawned in this Hive instance that is used    * to kill all running jobs in the event of an unexpected shutdown - i.e., the JVM shuts    * down while there are still jobs running.    */
+comment|/**    * A list of the currently running jobs spawned in this Hive instance that is    * used to kill all running jobs in the event of an unexpected shutdown -    * i.e., the JVM shuts down while there are still jobs running.    */
 specifier|public
 specifier|static
 name|HashMap
@@ -768,7 +788,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * In Hive, when the user control-c's the command line, any running jobs spawned from that command     * line are best-effort killed.    *    * This static constructor registers a shutdown thread to iterate over all the running job    * kill URLs and do a get on them.    *    */
+comment|/**    * In Hive, when the user control-c's the command line, any running jobs    * spawned from that command line are best-effort killed.    *     * This static constructor registers a shutdown thread to iterate over all the    * running job kill URLs and do a get on them.    *     */
 static|static
 block|{
 if|if
@@ -977,6 +997,48 @@ argument_list|(
 literal|"mapred.job.tracker"
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getHiveHistory
+argument_list|()
+operator|.
+name|setTaskProperty
+argument_list|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|,
+name|getId
+argument_list|()
+argument_list|,
+name|Keys
+operator|.
+name|TASK_HADOOP_ID
+argument_list|,
+name|rj
+operator|.
+name|getJobID
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|console
 operator|.
 name|printInfo
@@ -1133,6 +1195,86 @@ name|lastReport
 argument_list|)
 condition|)
 block|{
+name|SessionState
+name|ss
+init|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|ss
+operator|!=
+literal|null
+condition|)
+block|{
+name|ss
+operator|.
+name|getHiveHistory
+argument_list|()
+operator|.
+name|setTaskCounters
+argument_list|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|,
+name|getId
+argument_list|()
+argument_list|,
+name|rj
+argument_list|)
+expr_stmt|;
+name|ss
+operator|.
+name|getHiveHistory
+argument_list|()
+operator|.
+name|setTaskProperty
+argument_list|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|,
+name|getId
+argument_list|()
+argument_list|,
+name|Keys
+operator|.
+name|TASK_HADOOP_PROGRESS
+argument_list|,
+name|report
+argument_list|)
+expr_stmt|;
+name|ss
+operator|.
+name|getHiveHistory
+argument_list|()
+operator|.
+name|progressTask
+argument_list|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|,
+name|this
+argument_list|)
+expr_stmt|;
+block|}
 name|console
 operator|.
 name|printInfo
@@ -1301,7 +1443,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Add new elements to the classpath    * @param newPaths Array of classpath elements    */
+comment|/**    * Add new elements to the classpath    *     * @param newPaths    *          Array of classpath elements    */
 specifier|private
 specifier|static
 name|void
@@ -1800,6 +1942,100 @@ block|}
 name|inferNumReducers
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|work
+operator|.
+name|getReducer
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getHiveHistory
+argument_list|()
+operator|.
+name|setTaskProperty
+argument_list|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|,
+name|getId
+argument_list|()
+argument_list|,
+name|Keys
+operator|.
+name|TASK_NUM_REDUCERS
+argument_list|,
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|work
+operator|.
+name|getNumReduceTasks
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getHiveHistory
+argument_list|()
+operator|.
+name|setTaskProperty
+argument_list|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|,
+name|getId
+argument_list|()
+argument_list|,
+name|Keys
+operator|.
+name|TASK_NUM_REDUCERS
+argument_list|,
+name|String
+operator|.
+name|valueOf
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|JobClient
 name|jc
 init|=
@@ -1828,7 +2064,8 @@ argument_list|(
 name|job
 argument_list|)
 expr_stmt|;
-comment|// add to list of running jobs so in case of abnormal shutdown can kill it.
+comment|// add to list of running jobs so in case of abnormal shutdown can kill
+comment|// it.
 name|runningJobKillURIs
 operator|.
 name|put
@@ -1952,7 +2189,8 @@ operator|+
 name|mesg
 expr_stmt|;
 block|}
-comment|// Has to use full name to make sure it does not conflict with org.apache.commons.lang.StringUtils
+comment|// Has to use full name to make sure it does not conflict with
+comment|// org.apache.commons.lang.StringUtils
 name|console
 operator|.
 name|printError
@@ -2039,7 +2277,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{}
+block|{       }
 block|}
 return|return
 operator|(
@@ -2470,7 +2708,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// workaround for hadoop-17 - libjars are not added to classpath. this affects local
+comment|// workaround for hadoop-17 - libjars are not added to classpath. this
+comment|// affects local
 comment|// mode execution
 name|boolean
 name|localMode
@@ -2616,7 +2855,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Given a Hive Configuration object - generate a command line    * fragment for passing such configuration information to ExecDriver    */
+comment|/**    * Given a Hive Configuration object - generate a command line fragment for    * passing such configuration information to ExecDriver    */
 specifier|public
 specifier|static
 name|String
@@ -2765,8 +3004,10 @@ literal|" "
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Multiple concurrent local mode job submissions can cause collisions in working dirs
-comment|// Workaround is to rename map red working dir to a temp dir in such a case
+comment|// Multiple concurrent local mode job submissions can cause collisions in
+comment|// working dirs
+comment|// Workaround is to rename map red working dir to a temp dir in such a
+comment|// case
 if|if
 condition|(
 name|localMode
