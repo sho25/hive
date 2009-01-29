@@ -1029,7 +1029,7 @@ return|return
 name|schemas
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param tag       The tag for this reducesink    * @param partitionCols The columns for partitioning.    * @param numReducers  The number of reducers.    * @param inferNumReducers  whether we should try to infer the number of reducers.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param tag       The tag for this reducesink    * @param partitionCols The columns for partitioning.    * @param numReducers  The number of reducers, set to -1 for automatic inference     *                     based on input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|reduceSinkDesc
@@ -1061,9 +1061,6 @@ name|order
 parameter_list|,
 name|int
 name|numReducers
-parameter_list|,
-name|boolean
-name|inferNumReducers
 parameter_list|)
 block|{
 return|return
@@ -1079,8 +1076,6 @@ argument_list|,
 name|partitionCols
 argument_list|,
 name|numReducers
-argument_list|,
-name|inferNumReducers
 argument_list|,
 name|getBinarySortableTableDesc
 argument_list|(
@@ -1106,7 +1101,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param tag       The tag for this reducesink    * @param numPartitionFields  The first numPartitionFields of keyCols will be partition columns.    *                  If numPartitionFields=-1, then partition randomly.    * @param numReducers  The number of reducers.    * @param inferNumReducers  whether we should try to infer the number of reducers.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param tag       The tag for this reducesink    * @param numPartitionFields  The first numPartitionFields of keyCols will be partition columns.    *                  If numPartitionFields=-1, then partition randomly.    * @param numReducers  The number of reducers, set to -1 for automatic inference     *                     based on input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|reduceSinkDesc
@@ -1132,9 +1127,6 @@ name|numPartitionFields
 parameter_list|,
 name|int
 name|numReducers
-parameter_list|,
-name|boolean
-name|inferNumReducers
 parameter_list|)
 block|{
 name|ArrayList
@@ -1287,8 +1279,6 @@ name|toString
 argument_list|()
 argument_list|,
 name|numReducers
-argument_list|,
-name|inferNumReducers
 argument_list|)
 return|;
 block|}

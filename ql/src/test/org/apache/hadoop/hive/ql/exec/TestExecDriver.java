@@ -1510,8 +1510,6 @@ literal|1
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1712,8 +1710,6 @@ literal|1
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1940,8 +1936,6 @@ literal|1
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2047,8 +2041,6 @@ name|MAX_VALUE
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2285,8 +2277,6 @@ literal|1
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2574,8 +2564,6 @@ literal|1
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2818,8 +2806,6 @@ literal|1
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;

@@ -10599,8 +10599,6 @@ name|inputOperatorInfo
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 return|;
 block|}
@@ -10624,9 +10622,6 @@ name|inputOperatorInfo
 parameter_list|,
 name|int
 name|numReducers
-parameter_list|,
-name|boolean
-name|inferNumReducers
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -11156,8 +11151,6 @@ name|MAX_VALUE
 operator|)
 argument_list|,
 name|numReducers
-argument_list|,
-name|inferNumReducers
 argument_list|)
 argument_list|,
 operator|new
@@ -11744,8 +11737,6 @@ name|numPartitionFields
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 argument_list|,
 operator|new
@@ -12130,8 +12121,6 @@ name|numPartitionFields
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|true
 argument_list|)
 argument_list|,
 operator|new
@@ -13128,8 +13117,6 @@ argument_list|,
 name|groupByOperatorInfo
 argument_list|,
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 decl_stmt|;
 return|return
@@ -14839,8 +14826,6 @@ name|toString
 argument_list|()
 argument_list|,
 name|numReducers
-argument_list|,
-literal|false
 argument_list|)
 argument_list|,
 operator|new
@@ -15771,8 +15756,6 @@ argument_list|()
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|false
 argument_list|)
 argument_list|,
 operator|new
