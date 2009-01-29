@@ -22118,6 +22118,12 @@ literal|"%|"
 operator|+
 name|HiveParser
 operator|.
+name|KW_IF
+operator|+
+literal|"%|"
+operator|+
+name|HiveParser
+operator|.
 name|TOK_CHARSETLITERAL
 operator|+
 literal|"%"
@@ -22164,7 +22170,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-literal|"R4"
+literal|"R5"
 argument_list|,
 name|HiveParser
 operator|.

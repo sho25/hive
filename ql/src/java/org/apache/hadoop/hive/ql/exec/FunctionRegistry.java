@@ -1077,6 +1077,21 @@ argument_list|,
 literal|"is not null"
 argument_list|)
 expr_stmt|;
+name|registerUDF
+argument_list|(
+literal|"if"
+argument_list|,
+name|UDFIf
+operator|.
+name|class
+argument_list|,
+name|OperatorType
+operator|.
+name|PREFIX
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 comment|// Aliases for Java Class Names
 comment|// These are used in getImplicitConvertUDFMethod
 name|registerUDF
@@ -1791,7 +1806,7 @@ name|numericTypes
 operator|.
 name|put
 argument_list|(
-name|Integer
+name|Short
 operator|.
 name|class
 argument_list|,
@@ -1802,7 +1817,7 @@ name|numericTypes
 operator|.
 name|put
 argument_list|(
-name|Long
+name|Integer
 operator|.
 name|class
 argument_list|,
@@ -1813,7 +1828,7 @@ name|numericTypes
 operator|.
 name|put
 argument_list|(
-name|Float
+name|Long
 operator|.
 name|class
 argument_list|,
@@ -1824,7 +1839,7 @@ name|numericTypes
 operator|.
 name|put
 argument_list|(
-name|Double
+name|Float
 operator|.
 name|class
 argument_list|,
@@ -1835,11 +1850,22 @@ name|numericTypes
 operator|.
 name|put
 argument_list|(
-name|String
+name|Double
 operator|.
 name|class
 argument_list|,
 literal|6
+argument_list|)
+expr_stmt|;
+name|numericTypes
+operator|.
+name|put
+argument_list|(
+name|String
+operator|.
+name|class
+argument_list|,
+literal|7
 argument_list|)
 expr_stmt|;
 block|}

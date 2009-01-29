@@ -50,6 +50,21 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * The constructor with user-provided UDFMethodResolver.    */
+specifier|protected
+name|UDF
+parameter_list|(
+name|UDFMethodResolver
+name|rslv
+parameter_list|)
+block|{
+name|this
+operator|.
+name|rslv
+operator|=
+name|rslv
+expr_stmt|;
+block|}
 comment|/**    * Sets the resolver    *     * @param The method resolver to use for method resolution.    */
 specifier|public
 name|void

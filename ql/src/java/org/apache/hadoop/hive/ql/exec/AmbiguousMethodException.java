@@ -67,6 +67,7 @@ argument_list|>
 name|argClasses
 decl_stmt|;
 comment|/**    * Constructor.    *     * @param funcClass The UDF or UDAF class.    * @param argClasses The list of argument types that lead to an ambiguity.    */
+specifier|public
 name|AmbiguousMethodException
 parameter_list|(
 name|Class

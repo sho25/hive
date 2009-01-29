@@ -72,6 +72,11 @@ specifier|public
 name|UDFBaseNumericOp
 parameter_list|()
 block|{
+name|super
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
 name|setResolver
 argument_list|(
 operator|new
