@@ -17886,8 +17886,6 @@ name|getLeft
 argument_list|()
 operator|+
 name|targetCondnsSize
-operator|-
-literal|1
 argument_list|)
 expr_stmt|;
 name|nodeCondn
@@ -17900,8 +17898,6 @@ name|getRight
 argument_list|()
 operator|+
 name|targetCondnsSize
-operator|-
-literal|1
 argument_list|)
 expr_stmt|;
 name|newCondns
