@@ -55,6 +55,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -330,7 +340,7 @@ operator|.
 name|Partition
 name|tPartition
 decl_stmt|;
-comment|/**      * @return the tPartition      */
+comment|/**    * @return the tPartition    */
 specifier|public
 name|org
 operator|.
@@ -361,7 +371,7 @@ name|String
 argument_list|>
 name|spec
 decl_stmt|;
-comment|/**      * @return      * @see org.apache.hadoop.hive.metastore.api.Partition#getValues()      */
+comment|/**    * @return    * @see org.apache.hadoop.hive.metastore.api.Partition#getValues()    */
 specifier|public
 name|List
 argument_list|<
@@ -417,7 +427,7 @@ name|tp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Create partition object with the given info.      * @param tbl Table the partition will be in.      * @param partSpec Partition specifications.      * @param location Location of the partition, relative to the table.      * @throws HiveException Thrown if we could not create the partition.      */
+comment|/**    * Create partition object with the given info.    * @param tbl Table the partition will be in.    * @param partSpec Partition specifications.    * @param location Location of the partition, relative to the table.    * @throws HiveException Thrown if we could not create the partition.    */
 specifier|public
 name|Partition
 parameter_list|(
@@ -634,7 +644,7 @@ name|tpart
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Initializes this object with the given variables      * @param tbl Table the partition belongs to      * @param tp Thrift Partition object      * @throws HiveException Thrown if we cannot initialize the partition      */
+comment|/**    * Initializes this object with the given variables    * @param tbl Table the partition belongs to    * @param tp Thrift Partition object    * @throws HiveException Thrown if we cannot initialize the partition    */
 specifier|private
 name|void
 name|initialize
@@ -867,7 +877,7 @@ operator|.
 name|partURI
 return|;
 block|}
-comment|/**      * The number of buckets is a property of the partition. However - internally we are just      * storing it as a property of the table as a short term measure.      */
+comment|/**    * The number of buckets is a property of the partition. However - internally we are just    * storing it as a property of the table as a short term measure.    */
 specifier|public
 name|int
 name|getBucketCount
@@ -881,7 +891,7 @@ operator|.
 name|getNumBuckets
 argument_list|()
 return|;
-comment|/*       TODO: Keeping this code around for later use when we will support       sampling on tables which are not created with CLUSTERED INTO clause         // read from table meta data       int numBuckets = this.table.getNumBuckets();       if (numBuckets == -1) {         // table meta data does not have bucket information         // check if file system has multiple buckets(files) in this partition         String pathPattern = this.partPath.toString() + "/*";         try {           FileSystem fs = FileSystem.get(this.table.getDataLocation(), Hive.get().getConf());           FileStatus srcs[] = fs.globStatus(new Path(pathPattern));           numBuckets = srcs.length;         }         catch (Exception e) {           throw new RuntimeException("Cannot get bucket count for table " + this.table.getName(), e);         }       }       return numBuckets;       */
+comment|/*       TODO: Keeping this code around for later use when we will support       sampling on tables which are not created with CLUSTERED INTO clause        // read from table meta data       int numBuckets = this.table.getNumBuckets();       if (numBuckets == -1) {         // table meta data does not have bucket information         // check if file system has multiple buckets(files) in this partition         String pathPattern = this.partPath.toString() + "/*";         try {           FileSystem fs = FileSystem.get(this.table.getDataLocation(), Hive.get().getConf());           FileStatus srcs[] = fs.globStatus(new Path(pathPattern));           numBuckets = srcs.length;         }         catch (Exception e) {           throw new RuntimeException("Cannot get bucket count for table " + this.table.getName(), e);         }       }       return numBuckets;      */
 block|}
 specifier|public
 name|List
@@ -900,7 +910,7 @@ name|getBucketCols
 argument_list|()
 return|;
 block|}
-comment|/**      * mapping from bucket number to bucket path      */
+comment|/**    * mapping from bucket number to bucket path    */
 comment|//TODO: add test case and clean it up
 annotation|@
 name|SuppressWarnings
@@ -989,6 +999,13 @@ name|pathPattern
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|Arrays
+operator|.
+name|sort
+argument_list|(
+name|srcs
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|FileStatus
@@ -1040,7 +1057,7 @@ throw|;
 block|}
 comment|// return new Path(this.partPath, String.format("part-%1$05d", bucketNum));
 block|}
-comment|/**      * mapping from a Path to the bucket number if any      */
+comment|/**    * mapping from a Path to the bucket number if any    */
 specifier|private
 specifier|static
 name|Pattern
@@ -1456,7 +1473,7 @@ operator|.
 name|spec
 return|;
 block|}
-comment|/**      * Replaces files in the partition with new data set specified by srcf. Works by moving files      *      * @param srcf Files to be moved. Leaf Directories or Globbed File Paths      */
+comment|/**    * Replaces files in the partition with new data set specified by srcf. Works by moving files    *    * @param srcf Files to be moved. Leaf Directories or Globbed File Paths    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1529,7 +1546,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Inserts files specified into the partition. Works by moving files      *      * @param srcf Files to be moved. Leaf Directories or Globbed File Paths      */
+comment|/**    * Inserts files specified into the partition. Works by moving files    *    * @param srcf Files to be moved. Leaf Directories or Globbed File Paths    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
