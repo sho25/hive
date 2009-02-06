@@ -853,7 +853,7 @@ name|compareTo
 argument_list|(
 name|o
 argument_list|)
-operator|<
+operator|>
 literal|0
 condition|)
 block|{
@@ -987,7 +987,7 @@ name|compareTo
 argument_list|(
 name|o
 argument_list|)
-operator|<
+operator|>
 literal|0
 condition|)
 block|{
