@@ -271,14 +271,7 @@ block|}
 specifier|public
 name|StorageDescriptor
 parameter_list|()
-block|{
-name|this
-operator|.
-name|numBuckets
-operator|=
-literal|32
-expr_stmt|;
-block|}
+block|{ }
 specifier|public
 name|StorageDescriptor
 parameter_list|(

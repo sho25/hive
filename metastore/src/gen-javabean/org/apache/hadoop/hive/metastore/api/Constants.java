@@ -108,6 +108,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|META_TABLE_COLUMN_TYPES
+init|=
+literal|"columns.types"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|BUCKET_FIELD_NAME
 init|=
 literal|"bucket_field_name"
