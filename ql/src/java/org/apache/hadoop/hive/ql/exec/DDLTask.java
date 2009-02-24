@@ -669,6 +669,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazy
+operator|.
+name|LazySimpleSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|util
 operator|.
 name|StringUtils
@@ -2931,14 +2949,14 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Replacing columns for columnsetSerDe and changing to typed SerDe"
+literal|"Replacing columns for columnsetSerDe and changing to LazySimpleSerDe"
 argument_list|)
 expr_stmt|;
 name|tbl
 operator|.
 name|setSerializationLib
 argument_list|(
-name|MetadataTypedColumnsetSerDe
+name|LazySimpleSerDe
 operator|.
 name|class
 operator|.
@@ -3110,14 +3128,14 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Replacing columns for columnsetSerDe and changing to typed SerDe"
+literal|"Replacing columns for columnsetSerDe and changing to LazySimpleSerDe"
 argument_list|)
 expr_stmt|;
 name|tbl
 operator|.
 name|setSerializationLib
 argument_list|(
-name|MetadataTypedColumnsetSerDe
+name|LazySimpleSerDe
 operator|.
 name|class
 operator|.
@@ -3138,6 +3156,22 @@ operator|.
 name|equals
 argument_list|(
 name|MetadataTypedColumnsetSerDe
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+operator|&&
+operator|!
+name|tbl
+operator|.
+name|getSerializationLib
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|LazySimpleSerDe
 operator|.
 name|class
 operator|.

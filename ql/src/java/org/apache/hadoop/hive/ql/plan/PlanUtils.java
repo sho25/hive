@@ -177,24 +177,6 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|SemanticAnalyzer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
 name|TypeCheckProcFactory
 import|;
 end_import
@@ -230,6 +212,24 @@ operator|.
 name|serde
 operator|.
 name|Constants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazy
+operator|.
+name|LazySimpleSerDe
 import|;
 end_import
 
@@ -527,7 +527,7 @@ return|return
 operator|new
 name|tableDesc
 argument_list|(
-name|MetadataTypedColumnsetSerDe
+name|LazySimpleSerDe
 operator|.
 name|class
 argument_list|,
@@ -543,7 +543,7 @@ name|properties
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    */
+comment|/**     * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode.    * MetaDataTypedColumnsetSerDe is used because LazySimpleSerDe does not support a table    * with a single column "col" with type "array<string>".    */
 specifier|public
 specifier|static
 name|tableDesc

@@ -287,6 +287,24 @@ name|MetadataTypedColumnsetSerDe
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazy
+operator|.
+name|LazySimpleSerDe
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -443,7 +461,7 @@ argument_list|()
 operator|.
 name|setSerializationLib
 argument_list|(
-name|MetadataTypedColumnsetSerDe
+name|LazySimpleSerDe
 operator|.
 name|class
 operator|.

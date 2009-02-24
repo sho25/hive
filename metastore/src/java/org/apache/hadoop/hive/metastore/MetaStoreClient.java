@@ -1702,15 +1702,6 @@ name|val
 argument_list|)
 expr_stmt|;
 block|}
-name|p
-operator|=
-name|MetaStoreUtils
-operator|.
-name|hive1Tohive3ClassNames
-argument_list|(
-name|p
-argument_list|)
-expr_stmt|;
 name|this
 operator|.
 name|close

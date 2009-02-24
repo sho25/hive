@@ -121,6 +121,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|lazy
+operator|.
+name|LazySimpleSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
@@ -14233,7 +14251,7 @@ argument_list|(
 name|columnNumber
 argument_list|)
 decl_stmt|;
-comment|// MetadataTypedColumnsetSerDe does not need type conversions because it does
+comment|// MetadataTypedColumnsetSerDe/LazySimpleSerDe does not need type conversions because it does
 comment|// the conversion to String by itself.
 if|if
 condition|(
@@ -14246,6 +14264,19 @@ operator|.
 name|equals
 argument_list|(
 name|MetadataTypedColumnsetSerDe
+operator|.
+name|class
+argument_list|)
+operator|&&
+operator|!
+name|table_desc
+operator|.
+name|getDeserializerClass
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|LazySimpleSerDe
 operator|.
 name|class
 argument_list|)
@@ -21552,7 +21583,7 @@ argument_list|,
 operator|new
 name|tableDesc
 argument_list|(
-name|MetadataTypedColumnsetSerDe
+name|LazySimpleSerDe
 operator|.
 name|class
 argument_list|,

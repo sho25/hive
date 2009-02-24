@@ -163,6 +163,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|lazy
+operator|.
+name|LazySimpleSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|thrift
 operator|.
 name|test
@@ -767,7 +785,7 @@ name|tbl
 operator|.
 name|setSerializationLib
 argument_list|(
-name|MetadataTypedColumnsetSerDe
+name|LazySimpleSerDe
 operator|.
 name|class
 operator|.
@@ -920,7 +938,7 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"Tables  doesn't match: "
+literal|"Tables doesn't match: "
 operator|+
 name|tableName
 argument_list|,
@@ -974,7 +992,7 @@ operator|.
 name|getSerializationLib
 argument_list|()
 argument_list|,
-name|MetadataTypedColumnsetSerDe
+name|LazySimpleSerDe
 operator|.
 name|class
 operator|.

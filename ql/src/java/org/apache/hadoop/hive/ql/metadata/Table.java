@@ -383,6 +383,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|lazy
+operator|.
+name|LazySimpleSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|objectinspector
 operator|.
 name|StructField
@@ -691,6 +709,8 @@ operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|)
 expr_stmt|;
+comment|// We have to use MetadataTypedColumnsetSerDe because LazySimpleSerDe does not
+comment|// support a table with no columns.
 name|getSerdeInfo
 argument_list|()
 operator|.
