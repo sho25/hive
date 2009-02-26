@@ -1004,6 +1004,21 @@ name|remove
 argument_list|()
 expr_stmt|;
 block|}
+name|pctx
+operator|.
+name|setDestTableId
+argument_list|(
+literal|1
+argument_list|)
+expr_stmt|;
+name|pctx
+operator|.
+name|getIdToTableNameMap
+argument_list|()
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * Transform the query tree. For each table under consideration, check if all columns are needed. If not,     * only select the operators needed at the beginning and proceed     * @param pactx the current parse context    */
 specifier|public
