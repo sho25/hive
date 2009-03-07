@@ -505,6 +505,13 @@ name|HIVEMAPSIDEAGGREGATE
 argument_list|(
 literal|"hive.map.aggr"
 argument_list|,
+literal|"true"
+argument_list|)
+block|,
+name|HIVEGROUPBYSKEW
+argument_list|(
+literal|"hive.groupby.skewindata"
+argument_list|,
 literal|"false"
 argument_list|)
 block|,
@@ -513,6 +520,13 @@ argument_list|(
 literal|"hive.join.emit.interval"
 argument_list|,
 literal|1000
+argument_list|)
+block|,
+name|HIVEGROUPBYMAPINTERVAL
+argument_list|(
+literal|"hive.groupby.mapaggr.checkinterval"
+argument_list|,
+literal|100000
 argument_list|)
 block|,
 name|HIVEMAPAGGRHASHMEMORY
