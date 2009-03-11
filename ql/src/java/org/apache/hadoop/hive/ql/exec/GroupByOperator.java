@@ -2974,6 +2974,13 @@ name|intValue
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// Ignore nulls
+if|if
+condition|(
+name|key
+operator|!=
+literal|null
+condition|)
 name|totalVariableSize
 operator|+=
 operator|(
