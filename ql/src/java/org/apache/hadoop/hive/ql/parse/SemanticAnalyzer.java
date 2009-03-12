@@ -12594,7 +12594,7 @@ name|groupByOutputRowResolver2
 argument_list|)
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using a single map-reduce job (3 operators will be    * inserted):    *    * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) SortGroupBy (keys = (KEY.0,KEY.1), aggregations =    * (count_distinct(KEY.2), sum(VALUE.0), count(VALUE.1))) Select (final    * selects)    *    * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    */
+comment|/**    * Generate a Group-By plan using a single map-reduce job (3 operators will be    * inserted):    *    * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) SortGroupBy (keys = (KEY.0,KEY.1), aggregations =    * (count_distinct(KEY.2), sum(VALUE.0), count(VALUE.1))) Select (final    * selects)    *    * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *    * Generate a Group-By plan using 1 map-reduce job.     * Spray by the group by key, and sort by the distinct key (if any), and     * compute aggregates   *     * The agggregation evaluation functions are as follows:    *   Partitioning Key:     *      grouping key    *    *   Sorting Key:     *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *     *   Reducer: iterate/merge    *   (mode = COMPLETE)    **/
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -12679,7 +12679,7 @@ return|return
 name|groupByOperatorInfo
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs (5 operators will be    * inserted):    *    * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) NOTE: If DISTINCT_EXP is null, partition by rand() SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (count_distinct(KEY.2), sum(VALUE.0),    * count(VALUE.1))) ReduceSink ( keys = (0,1), values=(2,3,4)) SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (sum(VALUE.0), sum(VALUE.1),    * sum(VALUE.2))) Select (final selects)    *    * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    */
+comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs (5 operators will be    * inserted):    *    * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) NOTE: If DISTINCT_EXP is null, partition by rand() SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (count_distinct(KEY.2), sum(VALUE.0),    * count(VALUE.1))) ReduceSink ( keys = (0,1), values=(2,3,4)) SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (sum(VALUE.0), sum(VALUE.1),    * sum(VALUE.2))) Select (final selects)    *    * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *    * Generate a Group-By plan using a 2 map-reduce jobs.     * Spray by the grouping key and distinct key (or a random number, if no distinct is     * present) in hope of getting a uniform distribution, and compute partial aggregates     * grouped by the reduction key (grouping key + distinct key).    * Evaluate partial aggregates first, and spray by the grouping key to compute actual    * aggregates in the second phase.    * The agggregation evaluation functions are as follows:    *   Partitioning Key:     *      random() if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Sorting Key:     *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *     *   Reducer: iterate/terminatePartial    *   (mode = PARTIAL1)    *     *   STAGE 2    *    *   Partitioning Key:     *      grouping key     *    *   Sorting Key:     *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Reducer: merge/terminate    *   (mode = FINAL)    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -12879,7 +12879,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs. First perform a map    * side partial aggregation (to reduce the amount of data). Then spray by    * the distinct key (or a random number) in hope of getting a uniform     * distribution, and compute partial aggregates grouped by that distinct key.    * Evaluate partial aggregates first, followed by actual aggregates.    */
+comment|/**    * Generate a Group-By plan using 1 map-reduce job.     * First perform a map-side partial aggregation (to reduce the amount of data), at this    * point of time, we may turn off map-side partial aggregation based on its performance.     * Then spray by the group by key, and sort by the distinct key (if any), and     * compute aggregates based on actual aggregates    *     * The agggregation evaluation functions are as follows:    *   Mapper: iterate/terminatePartial          *   (mode = HASH)    *    *   Partitioning Key:     *      grouping key    *    *   Sorting Key:     *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *     *   Reducer: iterate/terminate if DISTINCT    *            merge/terminate if NO DISTINCT    *   (mode = MERGEPARTIAL)    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -12976,8 +12976,12 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+comment|// This is a 1-stage map-reduce processing of the groupby. Tha map-side aggregates was just used to
+comment|// reduce output data. In case of distincts, partial results are not used, and so iterate is again
+comment|// invoked on the reducer. In case of non-distincts, partial results are used, and merge is invoked
+comment|// on the reducer.
 return|return
-name|genGroupByPlanGroupByOperator2MR
+name|genGroupByPlanGroupByOperator1
 argument_list|(
 name|parseInfo
 argument_list|,
@@ -12989,11 +12993,11 @@ name|groupByDesc
 operator|.
 name|Mode
 operator|.
-name|FINAL
+name|MERGEPARTIAL
 argument_list|)
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs. First perform a map    * side partial aggregation (to reduce the amount of data). Then spray by    * the distinct key (or a random number) in hope of getting a uniform     * distribution, and compute partial aggregates grouped by that distinct key.    * Evaluate partial aggregates first, followed by actual aggregates.    */
+comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs.     * However, only 1 group-by plan is generated if the query involves no grouping key and    * no distincts. In that case, the plan is same as generated by genGroupByPlanMapAggr1MR.    * Otherwise, the following plan is generated:    * First perform a map side partial aggregation (to reduce the amount of data). Then     * spray by the grouping key and distinct key (or a random number, if no distinct is     * present) in hope of getting a uniform distribution, and compute partial aggregates     * grouped by the reduction key (grouping key + distinct key).    * Evaluate partial aggregates first, and spray by the grouping key to compute actual    * aggregates in the second phase.    * The agggregation evaluation functions are as follows:    *   Mapper: iterate/terminatePartial          *   (mode = HASH)    *     *   Partitioning Key:     *      random() if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Sorting Key:     *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *     *   Reducer: iterate/terminatePartial if DISTINCT    *            merge/terminatePartial if NO DISTINCT    *   (mode = PARTIAL2)    *     *   STAGE 2    *    *   Partitioining Key:     *      grouping key     *    *   Sorting Key:     *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Reducer: merge/terminate    *   (mode = FINAL)    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

@@ -2409,7 +2409,7 @@ block|{
 name|numRowsInput
 operator|++
 expr_stmt|;
-comment|// if hash aggregation is not behvaing properly, disable it
+comment|// if hash aggregation is not behaving properly, disable it
 if|if
 condition|(
 name|numRowsInput
@@ -2421,7 +2421,7 @@ name|numRowsCompareHashAggr
 operator|+=
 name|groupbyMapAggrInterval
 expr_stmt|;
-comment|// map-side aggregation should reduce the entries by atleast half
+comment|// map-side aggregation should reduce the entries by at-least half
 if|if
 condition|(
 operator|(

@@ -60,6 +60,8 @@ block|,
 name|FINAL
 block|,
 name|HASH
+block|,
+name|MERGEPARTIAL
 block|}
 empty_stmt|;
 specifier|private
@@ -278,6 +280,12 @@ name|FINAL
 case|:
 return|return
 literal|"final"
+return|;
+case|case
+name|MERGEPARTIAL
+case|:
+return|return
+literal|"mergepartial"
 return|;
 block|}
 return|return

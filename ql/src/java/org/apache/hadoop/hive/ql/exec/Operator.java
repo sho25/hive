@@ -487,6 +487,7 @@ return|return
 name|parentOperators
 return|;
 block|}
+specifier|transient
 specifier|protected
 name|String
 name|id
