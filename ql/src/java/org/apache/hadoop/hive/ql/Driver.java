@@ -1654,7 +1654,9 @@ name|getHiveHistory
 argument_list|()
 operator|.
 name|printRowCount
-argument_list|()
+argument_list|(
+name|queryId
+argument_list|)
 expr_stmt|;
 block|}
 block|}
