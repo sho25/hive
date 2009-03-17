@@ -217,6 +217,11 @@ argument_list|(
 literal|"No Partition Predicate Found"
 argument_list|)
 block|,
+name|INCORRECT_PARTITION_PREDICATE
+argument_list|(
+literal|"Incorrect Partition Predicate Found, probably wrong type,"
+argument_list|)
+block|,
 name|INVALID_DOT
 argument_list|(
 literal|". operator is only supported on struct or list of struct types"
@@ -536,6 +541,22 @@ parameter_list|()
 block|{
 return|return
 name|mesg
+return|;
+block|}
+specifier|public
+name|String
+name|getMsg
+parameter_list|(
+name|String
+name|reason
+parameter_list|)
+block|{
+return|return
+name|mesg
+operator|+
+literal|" "
+operator|+
+name|reason
 return|;
 block|}
 block|}
