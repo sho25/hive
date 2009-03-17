@@ -1207,6 +1207,12 @@ name|HiveException
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|reporter
+operator|!=
+literal|null
+condition|)
 name|reporter
 operator|.
 name|progress
