@@ -19,11 +19,36 @@ name|exec
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|UDFType
+import|;
+end_import
+
 begin_comment
 comment|/**  * A User-defined function (UDF) for the use with Hive.  *   * New UDF classes need to inherit from this UDF class.  *   * Required for all UDF classes:  * 1. Implement one or more methods named "evaluate" which will be called by Hive.  *    The following are some examples:  *    public int evaluate();  *    public int evaluate(int a);  *    public double evaluate(int a, double b);  *    public String evaluate(String a, int b, String c);  *   *    "evaluate" should never be a void method.  However it can return "null" if needed.  */
 end_comment
 
 begin_class
+annotation|@
+name|UDFType
+argument_list|(
+name|deterministic
+operator|=
+literal|true
+argument_list|)
 specifier|public
 class|class
 name|UDF
