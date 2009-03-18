@@ -1173,7 +1173,16 @@ parameter_list|(
 name|HiveException
 name|e
 parameter_list|)
-block|{     }
+block|{
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
+throw|throw
+name|e
+throw|;
+block|}
 block|}
 comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed    *    * @param conf Configuration with with which job was submitted    * @param succes whether the job was completed successfully or not    */
 specifier|public

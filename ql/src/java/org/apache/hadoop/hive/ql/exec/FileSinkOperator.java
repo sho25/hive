@@ -457,18 +457,8 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Error in committing output in file: "
-operator|+
-name|outPath
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-throw|;
+comment|// Don't throw an exception, just ignore and return
+return|return;
 block|}
 block|}
 block|}
