@@ -19234,6 +19234,61 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+operator|!
+name|lInfo
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|getTypeName
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|rInfo
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|getTypeName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Schema of both sides of union should match: Column "
+operator|+
+name|field
+operator|+
+literal|" is of type "
+operator|+
+name|lInfo
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|getTypeName
+argument_list|()
+operator|+
+literal|" on first table and type "
+operator|+
+name|rInfo
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|getTypeName
+argument_list|()
+operator|+
+literal|" on second table"
+argument_list|)
+throw|;
+block|}
 block|}
 comment|// construct the forward operator
 name|RowResolver
