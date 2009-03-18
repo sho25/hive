@@ -1430,7 +1430,7 @@ break|break;
 block|}
 block|}
 specifier|private
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1444,7 +1444,7 @@ parameter_list|)
 block|{
 comment|// Iterate over the selects search for aggregation Trees.
 comment|// Use String as keys to eliminate duplicate trees.
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1453,7 +1453,7 @@ argument_list|>
 name|aggregationTrees
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -2552,7 +2552,7 @@ argument_list|,
 name|ast
 argument_list|)
 expr_stmt|;
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

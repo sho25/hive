@@ -191,11 +191,11 @@ name|outerQueryLimit
 decl_stmt|;
 comment|// used by GroupBy
 specifier|private
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -381,11 +381,11 @@ operator|.
 name|destToAggregationExprs
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -434,7 +434,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1173,7 +1173,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
