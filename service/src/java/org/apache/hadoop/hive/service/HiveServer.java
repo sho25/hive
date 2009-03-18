@@ -949,7 +949,7 @@ condition|(
 name|args
 operator|.
 name|length
-operator|>
+operator|>=
 literal|1
 condition|)
 block|{
@@ -957,7 +957,7 @@ name|port
 operator|=
 name|Integer
 operator|.
-name|getInteger
+name|parseInt
 argument_list|(
 name|args
 index|[
