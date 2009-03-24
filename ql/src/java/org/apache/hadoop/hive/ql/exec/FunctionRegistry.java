@@ -782,6 +782,21 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
+literal|"unix_timestamp"
+argument_list|,
+name|UDFUnixTimeStamp
+operator|.
+name|class
+argument_list|,
+name|OperatorType
+operator|.
+name|PREFIX
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|registerUDF
+argument_list|(
 literal|"to_date"
 argument_list|,
 name|UDFDate
@@ -2347,7 +2362,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Get the UDF method for the name and argumentClasses.     * @param name the name of the UDF    * @param argumentClasses    * @return    */
+comment|/**    * Get the UDF method for the name and argumentClasses.    * @param name the name of the UDF    * @param argumentClasses    * @return    */
 specifier|public
 specifier|static
 name|Method
@@ -2440,7 +2455,7 @@ return|return
 name|udfMethod
 return|;
 block|}
-comment|/**    * Get the UDAF evaluator for the name and argumentClasses.     * @param name the name of the UDAF    * @param argumentClasses    * @return    */
+comment|/**    * Get the UDAF evaluator for the name and argumentClasses.    * @param name the name of the UDAF    * @param argumentClasses    * @return    */
 specifier|public
 specifier|static
 name|Class
@@ -2543,7 +2558,7 @@ return|return
 name|evalClass
 return|;
 block|}
-comment|/**    * This method is shared between UDFRegistry and UDAFRegistry.    * methodName will be "evaluate" for UDFRegistry, and "aggregate"/"evaluate"/"evaluatePartial" for UDAFRegistry.     */
+comment|/**    * This method is shared between UDFRegistry and UDAFRegistry.    * methodName will be "evaluate" for UDFRegistry, and "aggregate"/"evaluate"/"evaluatePartial" for UDAFRegistry.    */
 specifier|public
 specifier|static
 parameter_list|<
@@ -2883,7 +2898,7 @@ name|argumentClasses
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns the evaluate method for the UDAF based on the aggregation mode.    * See groupByDesc.Mode for details.    *     * @param name  name of the UDAF    * @param mode  the mode of the aggregation    * @return      null if no such UDAF is found    */
+comment|/**    * Returns the evaluate method for the UDAF based on the aggregation mode.    * See groupByDesc.Mode for details.    *    * @param name  name of the UDAF    * @param mode  the mode of the aggregation    * @return      null if no such UDAF is found    */
 specifier|public
 specifier|static
 name|Method
@@ -3221,7 +3236,7 @@ return|return
 name|o
 return|;
 block|}
-comment|/**    * Gets the closest matching method corresponding to the argument list from a list of methods.    *     * @param mlist The list of methods to inspect.    * @param exact Boolean to indicate whether this is an exact match or not.    * @param argumentClasses The classes for the argument.    * @return The matching method.    */
+comment|/**    * Gets the closest matching method corresponding to the argument list from a list of methods.    *    * @param mlist The list of methods to inspect.    * @param exact Boolean to indicate whether this is an exact match or not.    * @param argumentClasses The classes for the argument.    * @return The matching method.    */
 specifier|public
 specifier|static
 name|Method
