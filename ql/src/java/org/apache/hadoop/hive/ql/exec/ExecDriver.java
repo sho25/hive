@@ -1949,11 +1949,13 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+comment|// LazySimpleSerDe writes to Text
+comment|// Revert to DynamicSerDe: job.setMapOutputValueClass(BytesWritable.class);
 name|job
 operator|.
 name|setMapOutputValueClass
 argument_list|(
-name|BytesWritable
+name|Text
 operator|.
 name|class
 argument_list|)

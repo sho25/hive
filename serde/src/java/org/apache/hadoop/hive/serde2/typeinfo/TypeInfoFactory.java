@@ -13,7 +13,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|serde2
 operator|.
 name|typeinfo
 package|;
@@ -51,6 +51,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Stack
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -64,6 +74,20 @@ operator|.
 name|objectinspector
 operator|.
 name|ObjectInspectorUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|IntWritable
 import|;
 end_import
 
@@ -466,6 +490,7 @@ return|return
 name|result
 return|;
 block|}
+empty_stmt|;
 block|}
 end_class
 

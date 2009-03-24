@@ -36,27 +36,29 @@ block|{
 specifier|public
 name|LazyLong
 parameter_list|()
-block|{
-name|super
-argument_list|(
-name|Long
-operator|.
-name|class
-argument_list|)
-expr_stmt|;
-block|}
+block|{   }
 annotation|@
 name|Override
 specifier|public
-name|Long
-name|getPrimitiveObject
-parameter_list|()
+name|void
+name|init
+parameter_list|(
+name|ByteArrayRef
+name|bytes
+parameter_list|,
+name|int
+name|start
+parameter_list|,
+name|int
+name|length
+parameter_list|)
 block|{
 try|try
 block|{
 comment|// Slower method: convert to String and then convert to Long
 comment|// return Long.valueOf(LazyUtils.convertToString(bytes, start, length));
-return|return
+name|data
+operator|=
 name|Long
 operator|.
 name|valueOf
@@ -64,13 +66,16 @@ argument_list|(
 name|parseLong
 argument_list|(
 name|bytes
+operator|.
+name|getData
+argument_list|()
 argument_list|,
 name|start
 argument_list|,
 name|length
 argument_list|)
 argument_list|)
-return|;
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -78,9 +83,10 @@ name|NumberFormatException
 name|e
 parameter_list|)
 block|{
-return|return
+name|data
+operator|=
 literal|null
-return|;
+expr_stmt|;
 block|}
 block|}
 comment|/**    * Parses the string argument as if it was a long value and returns the    * result. Throws NumberFormatException if the string does not represent a    * long quantity.    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of a long quantity.    * @return long the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as a long quantity.    */
@@ -115,7 +121,7 @@ literal|10
 argument_list|)
 return|;
 block|}
-comment|/**    * Parses the string argument as if it was an long value and returns the    * result. Throws NumberFormatException if the string does not represent an    * long quantity. The second argument specifies the radix to use when    * parsing the value.    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of a long quantity.    * @param radix    *            the base to use for conversion.    * @return long the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as an long quantity.    */
+comment|/**    * Parses the string argument as if it was an long value and returns the    * result. Throws NumberFormatException if the string does not represent an    * long quantity. The second argument specifies the radix to use when    * parsing the value.    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of a long quantity.    * @param radix    *            the base to use for conversion.    * @return the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as an long quantity.    */
 specifier|public
 specifier|static
 name|long
@@ -264,6 +270,7 @@ name|negative
 argument_list|)
 return|;
 block|}
+comment|/**   /**    * Parses the string argument as if it was an long value and returns the    * result. Throws NumberFormatException if the string does not represent an    * long quantity. The second argument specifies the radix to use when    * parsing the value.    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of a long quantity.    * @param offset    *            the starting position after the sign (if exists)    * @param radix    *            the base to use for conversion.    * @param negative    *            whether the number is negative.    * @return the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as an long quantity.    */
 specifier|private
 specifier|static
 name|long

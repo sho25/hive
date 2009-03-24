@@ -183,7 +183,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|serde2
 operator|.
 name|typeinfo
 operator|.

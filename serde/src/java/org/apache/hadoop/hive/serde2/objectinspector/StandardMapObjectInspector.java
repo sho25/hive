@@ -141,6 +141,7 @@ name|key
 argument_list|)
 return|;
 block|}
+specifier|public
 name|int
 name|getMapSize
 parameter_list|(

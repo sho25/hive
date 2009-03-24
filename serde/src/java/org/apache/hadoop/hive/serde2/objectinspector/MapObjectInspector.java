@@ -78,6 +78,15 @@ name|Object
 name|data
 parameter_list|)
 function_decl|;
+comment|/**    * returns -1 for NULL map.    */
+specifier|public
+name|int
+name|getMapSize
+parameter_list|(
+name|Object
+name|data
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

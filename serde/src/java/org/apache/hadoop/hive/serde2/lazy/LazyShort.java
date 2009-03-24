@@ -36,27 +36,29 @@ block|{
 specifier|public
 name|LazyShort
 parameter_list|()
-block|{
-name|super
-argument_list|(
-name|Short
-operator|.
-name|class
-argument_list|)
-expr_stmt|;
-block|}
+block|{   }
 annotation|@
 name|Override
 specifier|public
-name|Short
-name|getPrimitiveObject
-parameter_list|()
+name|void
+name|init
+parameter_list|(
+name|ByteArrayRef
+name|bytes
+parameter_list|,
+name|int
+name|start
+parameter_list|,
+name|int
+name|length
+parameter_list|)
 block|{
 try|try
 block|{
 comment|// Slower method: convert to String and then convert to Integer
 comment|// return Short.valueOf(LazyUtils.convertToString(bytes, start, length));
-return|return
+name|data
+operator|=
 name|Short
 operator|.
 name|valueOf
@@ -64,13 +66,16 @@ argument_list|(
 name|parseShort
 argument_list|(
 name|bytes
+operator|.
+name|getData
+argument_list|()
 argument_list|,
 name|start
 argument_list|,
 name|length
 argument_list|)
 argument_list|)
-return|;
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -78,9 +83,10 @@ name|NumberFormatException
 name|e
 parameter_list|)
 block|{
-return|return
+name|data
+operator|=
 literal|null
-return|;
+expr_stmt|;
 block|}
 block|}
 comment|/**    * Parses the string argument as if it was a short value and returns the    * result. Throws NumberFormatException if the string does not represent an    * short quantity.    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of a short quantity.    * @return short the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as a short quantity.    */
