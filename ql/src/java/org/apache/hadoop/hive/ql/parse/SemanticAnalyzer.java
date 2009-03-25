@@ -12934,16 +12934,26 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-comment|// Optimize the scenario when there are no grouping keys and no distinct - only 1 reducer is needed
-comment|// For eg: select count(1) from T where t.ds = ....
+comment|// Optimize the scenario when there are no grouping keys - only 1 reducer is needed
+name|List
+argument_list|<
+name|ASTNode
+argument_list|>
+name|grpByExprs
+init|=
+name|getGroupByForClause
+argument_list|(
+name|parseInfo
+argument_list|,
+name|dest
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
-name|optimizeMapAggrGroupBy
-argument_list|(
-name|dest
-argument_list|,
-name|qb
-argument_list|)
+name|grpByExprs
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 name|numReducers
 operator|=
@@ -12961,12 +12971,7 @@ name|dest
 argument_list|,
 name|groupByOperatorInfo
 argument_list|,
-name|getGroupByForClause
-argument_list|(
-name|parseInfo
-argument_list|,
-name|dest
-argument_list|)
+name|grpByExprs
 operator|.
 name|size
 argument_list|()
