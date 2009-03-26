@@ -15,7 +15,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|lib
+name|plan
 package|;
 end_package
 
@@ -23,65 +23,49 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|Stack
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|SemanticException
+name|Serializable
 import|;
 end_import
 
 begin_comment
-comment|/**  * Base class for processing operators which is no-op. The specific processors can register their own context with  * the dispatcher.  */
+comment|/**  * unionDesc is a empty class currently.   * However, union has more than one input (as compared with forward), and therefore, we need a separate class.  **/
 end_comment
 
-begin_interface
+begin_class
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Union"
+argument_list|)
 specifier|public
-interface|interface
-name|NodeProcessor
+class|class
+name|unionDesc
+implements|implements
+name|Serializable
 block|{
-comment|/**    * generic process for all ops that don't have specific implementations    * @param nd operator to process    * @param procCtx operator processor context    * @param nodeOutputs A variable argument list of outputs from other nodes in the walk    * @return Object to be returned by the process call    * @throws SemanticException    */
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"nls"
+argument_list|)
 specifier|public
-name|Object
-name|process
-parameter_list|(
-name|Node
-name|nd
-parameter_list|,
-name|Stack
-argument_list|<
-name|Node
-argument_list|>
-name|stack
-parameter_list|,
-name|NodeProcessorCtx
-name|procCtx
-parameter_list|,
-name|Object
-modifier|...
-name|nodeOutputs
-parameter_list|)
-throws|throws
-name|SemanticException
-function_decl|;
+name|unionDesc
+parameter_list|()
+block|{ }
 block|}
-end_interface
+end_class
 
 end_unit
 

@@ -1519,7 +1519,7 @@ comment|// populate local work if needed
 block|}
 block|}
 comment|/**    * set key and value descriptor    * @param plan     current plan    * @param topOp    current top operator in the path    */
-specifier|private
+specifier|public
 specifier|static
 name|void
 name|setKeyAndValueDesc

@@ -300,6 +300,31 @@ specifier|static
 name|int
 name|seqId
 decl_stmt|;
+comment|// It can be opimized later so that an operator operator (init/close) is performed
+comment|// only after that operation has been performed on all the parents. This will require
+comment|// initializing the whole tree in all the mappers (which might be required for mappers
+comment|// spanning multiple files anyway, in future)
+specifier|public
+specifier|static
+enum|enum
+name|State
+block|{
+name|UNINIT
+block|,
+name|INIT
+block|,
+name|CLOSE
+block|}
+empty_stmt|;
+specifier|transient
+specifier|private
+name|State
+name|state
+init|=
+name|State
+operator|.
+name|UNINIT
+decl_stmt|;
 static|static
 block|{
 name|seqId
@@ -933,6 +958,24 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|state
+operator|==
+name|state
+operator|.
+name|INIT
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Already Initialized"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 name|LOG
 operator|.
 name|info
@@ -985,6 +1028,12 @@ name|reporter
 argument_list|)
 expr_stmt|;
 block|}
+name|state
+operator|=
+name|State
+operator|.
+name|INIT
+expr_stmt|;
 name|LOG
 operator|.
 name|info
@@ -1125,6 +1174,15 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|state
+operator|==
+name|state
+operator|.
+name|CLOSE
+condition|)
+return|return;
 try|try
 block|{
 name|logStats
@@ -1158,6 +1216,12 @@ name|abort
 argument_list|)
 expr_stmt|;
 block|}
+name|state
+operator|=
+name|State
+operator|.
+name|CLOSE
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(

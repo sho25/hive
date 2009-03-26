@@ -41,6 +41,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Stack
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -171,6 +181,12 @@ name|process
 parameter_list|(
 name|Node
 name|nd
+parameter_list|,
+name|Stack
+argument_list|<
+name|Node
+argument_list|>
+name|stack
 parameter_list|,
 name|NodeProcessorCtx
 name|procCtx

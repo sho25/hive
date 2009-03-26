@@ -135,6 +135,26 @@ name|HiveConf
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|unionproc
+operator|.
+name|UnionProcContext
+import|;
+end_import
+
 begin_comment
 comment|/**  * Parse Context: The current parse context. This is passed to the optimizer  * which then transforms the operator tree using the parse context. All the  * optimizations are performed sequentially and then the new parse context  * populated. Note that since the parse context contains the operator tree, it  * can be easily retrieved by the next optimization step or finally for task  * generation after the plan has been completely optimized.  *   **/
 end_comment
@@ -247,6 +267,10 @@ specifier|private
 name|int
 name|destTableId
 decl_stmt|;
+specifier|private
+name|UnionProcContext
+name|uCtx
+decl_stmt|;
 comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param aliasToPruner    *          partition pruner list    * @param aliasToSamplePruner    *          sample pruner list    * @param loadFileWork    *          list of destination files being loaded    * @param loadTableWork    *          list of destination tables being loaded    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    */
 specifier|public
 name|ParseContext
@@ -340,6 +364,9 @@ name|idToTableNameMap
 parameter_list|,
 name|int
 name|destTableId
+parameter_list|,
+name|UnionProcContext
+name|uCtx
 parameter_list|)
 block|{
 name|this
@@ -419,6 +446,12 @@ operator|.
 name|destTableId
 operator|=
 name|destTableId
+expr_stmt|;
+name|this
+operator|.
+name|uCtx
+operator|=
+name|uCtx
 expr_stmt|;
 block|}
 comment|/**    * @return the qb    */
@@ -855,6 +888,30 @@ operator|.
 name|destTableId
 operator|=
 name|destTableId
+expr_stmt|;
+block|}
+specifier|public
+name|UnionProcContext
+name|getUCtx
+parameter_list|()
+block|{
+return|return
+name|uCtx
+return|;
+block|}
+specifier|public
+name|void
+name|setUCtx
+parameter_list|(
+name|UnionProcContext
+name|uCtx
+parameter_list|)
+block|{
+name|this
+operator|.
+name|uCtx
+operator|=
+name|uCtx
 expr_stmt|;
 block|}
 block|}

@@ -243,6 +243,8 @@ name|process
 argument_list|(
 name|nd
 argument_list|,
+name|ndStack
+argument_list|,
 name|procCtx
 argument_list|,
 name|nodeOutputs

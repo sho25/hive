@@ -539,6 +539,26 @@ name|ql
 operator|.
 name|optimizer
 operator|.
+name|unionproc
+operator|.
+name|UnionProcContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
 name|GenMROperator
 import|;
 end_import
@@ -576,6 +596,24 @@ operator|.
 name|optimizer
 operator|.
 name|GenMRFileSink1
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|GenMRUnion1
 import|;
 end_import
 
@@ -889,6 +927,10 @@ name|int
 name|destTableId
 decl_stmt|;
 specifier|private
+name|UnionProcContext
+name|uCtx
+decl_stmt|;
+specifier|private
 specifier|static
 class|class
 name|Phase1Ctx
@@ -1020,6 +1062,12 @@ name|destTableId
 operator|=
 literal|1
 expr_stmt|;
+name|this
+operator|.
+name|uCtx
+operator|=
+literal|null
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -1086,6 +1134,10 @@ operator|=
 literal|null
 expr_stmt|;
 name|ast
+operator|=
+literal|null
+expr_stmt|;
+name|uCtx
 operator|=
 literal|null
 expr_stmt|;
@@ -1168,6 +1220,15 @@ operator|.
 name|getIdToTableNameMap
 argument_list|()
 expr_stmt|;
+name|this
+operator|.
+name|uCtx
+operator|=
+name|pctx
+operator|.
+name|getUCtx
+argument_list|()
+expr_stmt|;
 block|}
 specifier|public
 name|ParseContext
@@ -1203,6 +1264,8 @@ argument_list|,
 name|idToTableNameMap
 argument_list|,
 name|destTableId
+argument_list|,
+name|uCtx
 argument_list|)
 return|;
 block|}
@@ -19092,6 +19155,8 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+comment|// Currently, the unions are not merged - each union has only 2 parents. So, a n-way union will lead to (n-1) union operators.
+comment|// This can be easily merged into 1 union
 name|RowResolver
 name|leftRR
 init|=
@@ -19396,11 +19461,11 @@ name|unionforward
 init|=
 name|OperatorFactory
 operator|.
-name|get
+name|getAndMakeChild
 argument_list|(
-name|forwardDesc
-operator|.
-name|class
+operator|new
+name|unionDesc
+argument_list|()
 argument_list|,
 operator|new
 name|RowSchema
@@ -19448,6 +19513,27 @@ operator|.
 name|setChildOperators
 argument_list|(
 name|child
+argument_list|)
+expr_stmt|;
+name|child
+operator|=
+operator|new
+name|ArrayList
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|child
+operator|.
+name|add
+argument_list|(
+name|unionforward
 argument_list|)
 expr_stmt|;
 name|leftOp
@@ -21782,8 +21868,8 @@ argument_list|>
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack. The dispatcher
-comment|// generates the plan from the operator tree
+comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack.
+comment|// The dispatcher generates the plan from the operator tree
 name|Map
 argument_list|<
 name|Rule
@@ -21882,6 +21968,27 @@ argument_list|)
 argument_list|,
 operator|new
 name|GenMRFileSink1
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|opRules
+operator|.
+name|put
+argument_list|(
+operator|new
+name|RuleRegExp
+argument_list|(
+operator|new
+name|String
+argument_list|(
+literal|"R4"
+argument_list|)
+argument_list|,
+literal|"UNION%"
+argument_list|)
+argument_list|,
+operator|new
+name|GenMRUnion1
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -22215,6 +22322,8 @@ argument_list|,
 name|idToTableNameMap
 argument_list|,
 name|destTableId
+argument_list|,
+name|uCtx
 argument_list|)
 decl_stmt|;
 name|Optimizer
@@ -22281,8 +22390,6 @@ argument_list|(
 literal|"Completed sample pruning"
 argument_list|)
 expr_stmt|;
-comment|// TODO - this can be extended to create multiple
-comment|// map reduce plans later
 comment|// At this point we have the complete operator tree
 comment|// from which we want to find the reduce operator
 name|genMapRedTasks
