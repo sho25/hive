@@ -135,7 +135,7 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
-comment|/** 	 * This method scans the SessionItem collection. If a SessionItem is in the 	 * QUERY_SET state that signals that its thread should be started. If the 	 * SessionItem is in the DESTROY state it should be cleaned up and 	 * removed from the collection. Currently we are using a sleep. A 	 * wait/notify could be implemented. Queries will run for a long time, a one 	 * second wait on start will not be noticed. 	 *  	 */
+comment|/** 	 * This method scans the SessionItem collection. If a SessionItem is in the 	 * QUERY_SET state that signals that its thread should be started. If the 	 * SessionItem is in the DESTROY state it should be cleaned up and removed 	 * from the collection. Currently we are using a sleep. A wait/notify could be 	 * implemented. Queries will run for a long time, a one second wait on start 	 * will not be noticed. 	 *  	 */
 specifier|public
 name|void
 name|run
@@ -189,38 +189,6 @@ name|a
 argument_list|)
 control|)
 block|{
-if|if
-condition|(
-name|i
-operator|.
-name|getStatus
-argument_list|()
-operator|==
-name|HWISessionItem
-operator|.
-name|WebSessionItemStatus
-operator|.
-name|QUERY_SET
-condition|)
-block|{
-name|l4j
-operator|.
-name|debug
-argument_list|(
-literal|"Starting item: "
-operator|+
-name|i
-operator|.
-name|getSessionName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|i
-operator|.
-name|startIt
-argument_list|()
-expr_stmt|;
-block|}
 if|if
 condition|(
 name|i
@@ -515,7 +483,7 @@ name|items
 expr_stmt|;
 block|}
 comment|// client methods called from JSP
-comment|/** 	 * Rather then return the actual items we return a list copies. This 	 * enforces our HWISessionManager by preventing the ability of the 	 * client(jsp) to create SessionItems. 	 *  	 * @return A set of SessionItems this framework manages 	 */
+comment|/** 	 * Rather then return the actual items we return a list copies. This enforces 	 * our HWISessionManager by preventing the ability of the client(jsp) to 	 * create SessionItems. 	 *  	 * @return A set of SessionItems this framework manages 	 */
 specifier|public
 name|Vector
 argument_list|<
@@ -565,7 +533,7 @@ return|return
 name|otherItems
 return|;
 block|}
-comment|/** 	   * Here we handle creating the SessionItem, we do this for the JSP client 	   * because we need to set parameters the client is not aware of. One such  	   * parameter is the command line arguments the server was started with. 	   * @param sessionname Represents the session name 	   * @param sessionpass the session password, can be "" 	   * @return a new SessionItem or null if a session with that name already exists 	   */
+comment|/** 	 * Here we handle creating the SessionItem, we do this for the JSP client 	 * because we need to set parameters the client is not aware of. One such 	 * parameter is the command line arguments the server was started with. 	 *  	 * @param sessionname 	 *          Represents the session name 	 * @param sessionpass 	 *          the session password, can be "" 	 * @return a new SessionItem or null if a session with that name already 	 *         exists 	 */
 specifier|public
 name|HWISessionItem
 name|createSession
@@ -618,7 +586,7 @@ literal|"Initializing session: "
 operator|+
 name|sessionName
 operator|+
-literal|" already exists for "
+literal|" a for "
 operator|+
 name|a
 operator|.
@@ -641,41 +609,9 @@ argument_list|)
 expr_stmt|;
 name|si
 operator|.
-name|itemInit
-argument_list|()
-expr_stmt|;
-name|si
-operator|.
-name|runSetProcessorQuery
+name|setAuth
 argument_list|(
-literal|"hadoop.job.ugi="
-operator|+
 name|a
-operator|.
-name|getUser
-argument_list|()
-operator|+
-literal|","
-operator|+
-name|a
-operator|.
-name|getGroups
-argument_list|()
-index|[
-literal|0
-index|]
-argument_list|)
-expr_stmt|;
-name|si
-operator|.
-name|runSetProcessorQuery
-argument_list|(
-literal|"user.name="
-operator|+
-name|a
-operator|.
-name|getUser
-argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -809,7 +745,7 @@ return|return
 name|si
 return|;
 block|}
-comment|/** 	   * Helper method useful when you know the session name you wish to reference. 	   * @param sessionname 	   * @return A SessionItem matching the sessionname or null if it does not exists 	   */
+comment|/** 	 * Helper method useful when you know the session name you wish to reference. 	 *  	 * @param sessionname 	 * @return A SessionItem matching the sessionname or null if it does not 	 *         exists 	 */
 specifier|public
 name|HWISessionItem
 name|findSessionItemByName
@@ -877,7 +813,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/** 	   * Used to list all users that have at least one session 	   * @return keySet of items all users that have any sessions 	   */
+comment|/** 	 * Used to list all users that have at least one session 	 *  	 * @return keySet of items all users that have any sessions 	 */
 specifier|public
 name|Set
 argument_list|<
@@ -893,7 +829,7 @@ name|keySet
 argument_list|()
 return|;
 block|}
-comment|/** 	   * Used to list all the sessions of a user 	   * @param auth the user being enquired about 	   * @return all the sessions of that user 	   */
+comment|/** 	 * Used to list all the sessions of a user 	 *  	 * @param auth 	 *          the user being enquired about 	 * @return all the sessions of that user 	 */
 specifier|public
 name|Set
 argument_list|<

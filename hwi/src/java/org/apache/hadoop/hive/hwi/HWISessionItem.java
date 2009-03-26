@@ -183,6 +183,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|history
+operator|.
+name|HiveHistoryViewer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -232,7 +250,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HWISessionItem can be viewed as a wrapper for a Hive shell. With it the user has a    * session on the web server rather then in a console window.   *  */
+comment|/**  * HWISessionItem can be viewed as a wrapper for a Hive shell. With it the user  * has a session on the web server rather then in a console window.  *   */
 end_comment
 
 begin_class
@@ -265,7 +283,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/** 	 * Represents the state a session item can be in. 	 * 	 */
+comment|/** 	 * Represents the state a session item can be in. 	 *  	 */
 specifier|public
 enum|enum
 name|WebSessionItemStatus
@@ -327,7 +345,14 @@ decl_stmt|;
 name|Thread
 name|runnable
 decl_stmt|;
-comment|/** 	 * Creates an instance of WebSessionItem, sets status 	 * to NEW. 	 */
+name|HWIAuth
+name|auth
+decl_stmt|;
+specifier|private
+name|String
+name|historyFile
+decl_stmt|;
+comment|/** 	 * Creates an instance of WebSessionItem, sets status to NEW. 	 */
 specifier|protected
 name|HWISessionItem
 parameter_list|()
@@ -350,8 +375,21 @@ operator|=
 operator|-
 literal|40
 expr_stmt|;
+name|runnable
+operator|=
+operator|new
+name|Thread
+argument_list|(
+name|this
+argument_list|)
+expr_stmt|;
+name|runnable
+operator|.
+name|start
+argument_list|()
+expr_stmt|;
 block|}
-comment|/** 	 * This is the initialization process that is carried out for each 	 * SessionItem this is a section of the code taken from the CLIDriver 	 */
+comment|/** 	 * This is the initialization process that is carried out for each 	 * SessionItem. The goal is to emulate the startup of CLIDriver. 	 */
 specifier|protected
 name|void
 name|itemInit
@@ -458,6 +496,54 @@ operator|new
 name|Driver
 argument_list|()
 expr_stmt|;
+name|runSetProcessorQuery
+argument_list|(
+literal|"hadoop.job.ugi="
+operator|+
+name|auth
+operator|.
+name|getUser
+argument_list|()
+operator|+
+literal|","
+operator|+
+name|auth
+operator|.
+name|getGroups
+argument_list|()
+index|[
+literal|0
+index|]
+argument_list|)
+expr_stmt|;
+name|runSetProcessorQuery
+argument_list|(
+literal|"user.name="
+operator|+
+name|auth
+operator|.
+name|getUser
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|/* 		 * HiveHistoryFileName will not be accessible outside this thread. We must 		 * capture this now. 		 */
+name|this
+operator|.
+name|historyFile
+operator|=
+name|this
+operator|.
+name|ss
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getHiveHistory
+argument_list|()
+operator|.
+name|getHistFileName
+argument_list|()
+expr_stmt|;
 name|l4j
 operator|.
 name|debug
@@ -471,7 +557,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** 	* Set processor queries block for only a short amount of time the 	* client can issue these directly. 	* @param query This is a query in the form of SET THIS=THAT 	* @return chained call to setProcessor.run(String) 	*/
+comment|/** 	 * Set processor queries block for only a short amount of time. The client can 	 * issue these directly. 	 *  	 * @param query 	 *          This is a query in the form of SET THIS=THAT 	 * @return chained call to setProcessor.run(String) 	 */
 specifier|public
 name|int
 name|runSetProcessorQuery
@@ -489,7 +575,7 @@ name|query
 argument_list|)
 return|;
 block|}
-comment|/** 	* The client does not start the thread themselves. They set their status to 	* QUERY_SET.  	*  	*/
+comment|/** 	 * HWISessionItem is a Runnable instance. Calling this method will change the 	 * status to QUERY_SET and notify(). The run method detects this and then 	 * continues processing. 	 */
 specifier|public
 name|void
 name|clientStart
@@ -497,36 +583,6 @@ parameter_list|()
 throws|throws
 name|HWIException
 block|{
-if|if
-condition|(
-name|ss
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|HWIException
-argument_list|(
-literal|"SessionState is null."
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
-name|query
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|HWIException
-argument_list|(
-literal|"No Query was specified."
-argument_list|)
-throw|;
-block|}
 if|if
 condition|(
 name|this
@@ -554,6 +610,21 @@ name|WebSessionItemStatus
 operator|.
 name|QUERY_SET
 expr_stmt|;
+synchronized|synchronized
+init|(
+name|this
+operator|.
+name|runnable
+init|)
+block|{
+name|this
+operator|.
+name|runnable
+operator|.
+name|notifyAll
+argument_list|()
+expr_stmt|;
+block|}
 name|l4j
 operator|.
 name|debug
@@ -614,126 +685,6 @@ literal|" Query is set to KILL_QUERY"
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** 	 * This method returns A KILL command a non silent clisession would return  	 * when invoking a HQL query from the CLI. 	 * @return a string URL showing the job in the job tracker 	 */
-specifier|public
-name|Collection
-argument_list|<
-name|String
-argument_list|>
-name|getKillCommand
-parameter_list|()
-block|{
-return|return
-name|ExecDriver
-operator|.
-name|runningJobKillURIs
-operator|.
-name|values
-argument_list|()
-return|;
-comment|//Kill Command = /opt/hadoop/hadoop-0.19.0/bin/../bin/hadoop job  -Dmapred.job.tracker=hadoop1.jointhegrid.local:54311 -kill job_200812231617_0001
-comment|//StringBuffer sb = new StringBuffer();
-comment|//sb.append( conf.getVar(HiveConf.ConfVars.HADOOPBIN));
-comment|//sb.append( " job ");
-comment|//sb.append( " -Dmapred.job.tracker= ");
-comment|//sb.append( conf.getVar(HiveConf.ConfVars.HADOOPJT));
-comment|//sb.append( " -kill ");
-comment|//sb.append( conf.getVar(HiveConf.ConfVars.HADOOPJOBNAME));
-comment|//return sb.toString();
-block|}
-comment|/** 	 * This method returns the URL a non silent clisession would return  	 * when invoking a HQL query from the CLI. 	 * @return a string URL showing the job in the job tracker 	 */
-specifier|public
-name|Vector
-argument_list|<
-name|String
-argument_list|>
-name|getJobTrackerURI
-parameter_list|()
-block|{
-comment|//is this my job?
-name|Vector
-argument_list|<
-name|String
-argument_list|>
-name|results
-init|=
-operator|new
-name|Vector
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
-for|for
-control|(
-name|String
-name|id
-range|:
-name|ExecDriver
-operator|.
-name|runningJobKillURIs
-operator|.
-name|keySet
-argument_list|()
-control|)
-block|{
-name|StringBuffer
-name|sb
-init|=
-operator|new
-name|StringBuffer
-argument_list|()
-decl_stmt|;
-name|sb
-operator|.
-name|append
-argument_list|(
-literal|"http://"
-argument_list|)
-expr_stmt|;
-comment|//sb.append( this.conf.getVar( HiveConf.ConfVars.HADOOPJT ) );
-name|sb
-operator|.
-name|append
-argument_list|(
-name|conf
-operator|.
-name|get
-argument_list|(
-literal|"mapred.job.tracker.http.address"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|sb
-operator|.
-name|append
-argument_list|(
-literal|"/jobdetails.jsp?jobid="
-argument_list|)
-expr_stmt|;
-name|sb
-operator|.
-name|append
-argument_list|(
-name|id
-argument_list|)
-expr_stmt|;
-name|results
-operator|.
-name|add
-argument_list|(
-name|sb
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|results
-return|;
-comment|//http://hadoop1.jointhegrid.local:50030/jobdetails.jsp?jobid=
-block|}
 comment|/** This method clears the private member variables. */
 specifier|public
 name|void
@@ -787,6 +738,36 @@ name|WebSessionItemStatus
 operator|.
 name|NEW
 expr_stmt|;
+name|this
+operator|.
+name|resultFile
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|conf
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|ss
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|qp
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|sp
+operator|=
+literal|null
+expr_stmt|;
 name|l4j
 operator|.
 name|debug
@@ -800,7 +781,7 @@ literal|" Query is renewed to start"
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**  	* This is a chained call to SessionState.setIsSilent(). Use this  	* if you do not want the result file to have information status 	*/
+comment|/** 	 * This is a chained call to SessionState.setIsSilent(). Use this if you do 	 * not want the result file to have information status 	 */
 specifier|public
 name|void
 name|setSSIsSilent
@@ -834,7 +815,7 @@ name|silent
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**  	* This is a chained call to SessionState.getIsSilent() 	*/
+comment|/** 	 * This is a chained call to SessionState.getIsSilent() 	 */
 specifier|public
 name|boolean
 name|getSSIsSilent
@@ -862,59 +843,7 @@ name|getIsSilent
 argument_list|()
 return|;
 block|}
-comment|/** 	 * This is a callback style function used by the HiveSessionManager. The 	 * HiveSessionManager notices this and changes the state to QUERY_RUNNING 	 * then starts a thread. 	 */
-specifier|protected
-name|void
-name|startIt
-parameter_list|()
-block|{
-name|this
-operator|.
-name|status
-operator|=
-name|WebSessionItemStatus
-operator|.
-name|QUERY_RUNNING
-expr_stmt|;
-name|l4j
-operator|.
-name|debug
-argument_list|(
-name|this
-operator|.
-name|getSessionName
-argument_list|()
-operator|+
-literal|" Runnable is starting"
-argument_list|)
-expr_stmt|;
-name|runnable
-operator|=
-operator|new
-name|Thread
-argument_list|(
-name|this
-argument_list|)
-expr_stmt|;
-name|runnable
-operator|.
-name|start
-argument_list|()
-expr_stmt|;
-name|l4j
-operator|.
-name|debug
-argument_list|(
-name|this
-operator|.
-name|getSessionName
-argument_list|()
-operator|+
-literal|" Runnable has started"
-argument_list|)
-expr_stmt|;
-block|}
-comment|/** 	 * This is a callback style function used by the HiveSessionManager. The 	 * HiveSessionManager notices this and attempts to stop the query.  	 */
+comment|/** 	 * This is a callback style function used by the HiveSessionManager. The 	 * HiveSessionManager notices this and attempts to stop the query. 	 */
 specifier|protected
 name|void
 name|killIt
@@ -988,7 +917,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/** 	 * Helper function to get configuration variables 	 *  	 * @param wanted a ConfVar 	 * @return 	 */
+comment|/** 	 * Helper function to get configuration variables 	 *  	 * @param wanted 	 *          a ConfVar 	 * @return 	 */
 specifier|public
 name|String
 name|getHiveConfVar
@@ -1043,24 +972,97 @@ return|;
 block|}
 annotation|@
 name|Override
-comment|/** 	* The run method will be called by HiveSessionManager. This method 	* reads the results from query processor completely when the query is done. 	* when completed this is set to HWISessionItemStatus.QUERY_COMPLETE. 	*/
+comment|/* 	 * HWISessionItem uses a wait() notify() system. If the thread detects conf to 	 * be null, control is transfered to initItem().A status of QUERY_SET causes 	 * control to transfer to the runQuery() method. DESTROY will cause the run 	 * loop to end permanently. 	 */
 specifier|public
 name|void
 name|run
 parameter_list|()
 block|{
-name|l4j
-operator|.
-name|debug
-argument_list|(
+synchronized|synchronized
+init|(
 name|this
 operator|.
-name|getSessionName
+name|runnable
+init|)
+block|{
+while|while
+condition|(
+name|this
+operator|.
+name|status
+operator|!=
+name|HWISessionItem
+operator|.
+name|WebSessionItemStatus
+operator|.
+name|DESTROY
+condition|)
+block|{
+if|if
+condition|(
+name|conf
+operator|==
+literal|null
+condition|)
+block|{
+name|this
+operator|.
+name|itemInit
 argument_list|()
-operator|+
-literal|" state is now QUERY_COMPLETE."
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|this
+operator|.
+name|status
+operator|==
+name|WebSessionItemStatus
+operator|.
+name|QUERY_SET
+condition|)
+block|{
+name|this
+operator|.
+name|runQuery
+argument_list|()
+expr_stmt|;
+block|}
+try|try
+block|{
+name|this
+operator|.
+name|runnable
+operator|.
+name|wait
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|e
+parameter_list|)
+block|{
+name|l4j
+operator|.
+name|error
+argument_list|(
+literal|"in wait() state "
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+block|}
+block|}
+comment|/** 	 * This method calls the qp.run() method, writes the output to the result 	 * file, when finished the status will be QUERY_COMPLETE. 	 */
+specifier|public
+name|void
+name|runQuery
+parameter_list|()
+block|{
 name|FileOutputStream
 name|fos
 init|=
@@ -1181,6 +1183,26 @@ literal|" Output file was not specified"
 argument_list|)
 expr_stmt|;
 block|}
+name|l4j
+operator|.
+name|debug
+argument_list|(
+name|this
+operator|.
+name|getSessionName
+argument_list|()
+operator|+
+literal|" state is now QUERY_RUNNING."
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|status
+operator|=
+name|WebSessionItemStatus
+operator|.
+name|QUERY_RUNNING
+expr_stmt|;
 name|queryRet
 operator|=
 name|qp
@@ -1347,7 +1369,44 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/** 	 * Uses the sessionName property to compare to sessions 	 * @return true if sessionNames are equal false otherwise 	 */
+comment|/** 	 *  	 * @return the HiveHistoryViewer for the session 	 * @throws HWIException 	 */
+specifier|public
+name|HiveHistoryViewer
+name|getHistoryViewer
+parameter_list|()
+throws|throws
+name|HWIException
+block|{
+if|if
+condition|(
+name|ss
+operator|==
+literal|null
+condition|)
+throw|throw
+operator|new
+name|HWIException
+argument_list|(
+literal|"Session state was null"
+argument_list|)
+throw|;
+comment|/* 		 * we can not call this.ss.get().getHiveHistory().getHistFileName() directly 		 * as this call is made from a a Jetty thread and will return null 		 */
+name|HiveHistoryViewer
+name|hv
+init|=
+operator|new
+name|HiveHistoryViewer
+argument_list|(
+name|this
+operator|.
+name|historyFile
+argument_list|)
+decl_stmt|;
+return|return
+name|hv
+return|;
+block|}
+comment|/** 	 * Uses the sessionName property to compare to sessions 	 *  	 * @return true if sessionNames are equal false otherwise 	 */
 specifier|public
 name|boolean
 name|equals
@@ -1427,7 +1486,7 @@ operator|=
 name|qp
 expr_stmt|;
 block|}
-comment|/** 	 * The query executed by Hive 	 * @return The query that this is executing or will be executed 	 */
+comment|/** 	 * The query executed by Hive 	 *  	 * @return The query that this is executing or will be executed 	 */
 specifier|public
 name|String
 name|getQuery
@@ -1437,7 +1496,7 @@ return|return
 name|query
 return|;
 block|}
-comment|/** 	 * Use this function to set the query that Hive will run. 	 * @param query A query in Hive Query Language 	 */
+comment|/** 	 * Use this function to set the query that Hive will run. 	 *  	 * @param query 	 *          A query in Hive Query Language 	 */
 specifier|public
 name|void
 name|setQuery
@@ -1453,7 +1512,7 @@ operator|=
 name|query
 expr_stmt|;
 block|}
-comment|/** 	 * Used to determine the status of a query, possibly why it failed 	 * @return The result from Hive queryProcessor 	 */
+comment|/** 	 * Used to determine the status of a query, possibly why it failed 	 *  	 * @return The result from Hive queryProcessor 	 */
 specifier|public
 name|int
 name|getQueryRet
@@ -1502,7 +1561,7 @@ operator|=
 name|resultFile
 expr_stmt|;
 block|}
-comment|/** 	 * The session name is an identifier to recognize the session 	 * @return the sessions name 	 */
+comment|/** 	 * The session name is an identifier to recognize the session 	 *  	 * @return the session's name 	 */
 specifier|public
 name|String
 name|getSessionName
@@ -1575,7 +1634,7 @@ operator|=
 name|ss
 expr_stmt|;
 block|}
-comment|/** 	 * Used to represent to the user and other components what state the HWISessionItem  	 * is in. Certain commands can only be run when the application is in certain states. 	 * @return the current status of the session 	 */
+comment|/** 	 * Used to represent to the user and other components what state the 	 * HWISessionItem is in. Certain commands can only be run when the application 	 * is in certain states. 	 *  	 * @return the current status of the session 	 */
 specifier|public
 name|WebSessionItemStatus
 name|getStatus
@@ -1585,7 +1644,7 @@ return|return
 name|status
 return|;
 block|}
-comment|/** 	 * Currently unused 	 * @return a String with the full path to the error file. 	 */
+comment|/** 	 * Currently unused 	 *  	 * @return a String with the full path to the error file. 	 */
 specifier|public
 name|String
 name|getErrorFile
@@ -1595,7 +1654,7 @@ return|return
 name|errorFile
 return|;
 block|}
-comment|/** 	 * Currently unused 	 * @param errorFile 	 *            the full path to the file for results. 	 */
+comment|/** 	 * Currently unused 	 *  	 * @param errorFile 	 *          the full path to the file for results. 	 */
 specifier|public
 name|void
 name|setErrorFile
@@ -1609,6 +1668,32 @@ operator|.
 name|errorFile
 operator|=
 name|errorFile
+expr_stmt|;
+block|}
+comment|/** 	 * @return the auth 	 */
+specifier|public
+name|HWIAuth
+name|getAuth
+parameter_list|()
+block|{
+return|return
+name|auth
+return|;
+block|}
+comment|/** 	 * @param auth the auth to set 	 */
+specifier|protected
+name|void
+name|setAuth
+parameter_list|(
+name|HWIAuth
+name|auth
+parameter_list|)
+block|{
+name|this
+operator|.
+name|auth
+operator|=
+name|auth
 expr_stmt|;
 block|}
 block|}
