@@ -73,6 +73,40 @@ decl_stmt|;
 name|Path
 name|resFile
 decl_stmt|;
+comment|/**    * table name for the result of show tables    */
+specifier|private
+specifier|final
+name|String
+name|table
+init|=
+literal|"show"
+decl_stmt|;
+comment|/**    * thrift ddl for the result of show tables    */
+specifier|private
+specifier|final
+name|String
+name|schema
+init|=
+literal|"tab_name#string"
+decl_stmt|;
+specifier|public
+name|String
+name|getTable
+parameter_list|()
+block|{
+return|return
+name|table
+return|;
+block|}
+specifier|public
+name|String
+name|getSchema
+parameter_list|()
+block|{
+return|return
+name|schema
+return|;
+block|}
 comment|/**    * @param resFile    */
 specifier|public
 name|showTablesDesc

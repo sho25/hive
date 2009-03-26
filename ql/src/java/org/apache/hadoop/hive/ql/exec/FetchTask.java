@@ -638,7 +638,15 @@ name|Constants
 operator|.
 name|SERIALIZATION_NULL_FORMAT
 argument_list|,
-literal|"NULL"
+operator|(
+operator|(
+name|fetchWork
+operator|)
+name|work
+operator|)
+operator|.
+name|getSerializationNullFormat
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|mSerde

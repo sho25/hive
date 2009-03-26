@@ -119,6 +119,13 @@ specifier|private
 name|int
 name|limit
 decl_stmt|;
+comment|/**    * Serialization Null Format for the serde used to fetch data    */
+specifier|private
+name|String
+name|serializationNullFormat
+init|=
+literal|"NULL"
+decl_stmt|;
 specifier|public
 name|fetchWork
 parameter_list|()
@@ -191,6 +198,28 @@ operator|.
 name|limit
 operator|=
 name|limit
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getSerializationNullFormat
+parameter_list|()
+block|{
+return|return
+name|serializationNullFormat
+return|;
+block|}
+specifier|public
+name|void
+name|setSerializationNullFormat
+parameter_list|(
+name|String
+name|format
+parameter_list|)
+block|{
+name|serializationNullFormat
+operator|=
+name|format
 expr_stmt|;
 block|}
 comment|/** 	 * @return the tblDir 	 */
