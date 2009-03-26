@@ -3175,6 +3175,33 @@ operator|+
 name|numEntriesHashTable
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|(
+name|numEntries
+operator|%
+operator|(
+literal|100
+operator|*
+name|NUMROWSESTIMATESIZE
+operator|)
+operator|)
+operator|==
+literal|0
+condition|)
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Hash Aggr: #hash table = "
+operator|+
+name|numEntries
+operator|+
+literal|" #max in hash table = "
+operator|+
+name|numEntriesHashTable
+argument_list|)
+expr_stmt|;
 block|}
 comment|// flush if necessary
 if|if

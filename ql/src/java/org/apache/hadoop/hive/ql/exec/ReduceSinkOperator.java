@@ -1210,6 +1210,12 @@ throw|;
 block|}
 try|try
 block|{
+if|if
+condition|(
+name|out
+operator|!=
+literal|null
+condition|)
 name|out
 operator|.
 name|collect
