@@ -1270,7 +1270,7 @@ name|mightBeUnknown
 argument_list|(
 name|d
 operator|.
-name|getChildren
+name|getChildExprs
 argument_list|()
 operator|.
 name|get

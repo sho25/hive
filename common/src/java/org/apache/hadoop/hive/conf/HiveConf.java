@@ -591,7 +591,16 @@ argument_list|)
 operator|+
 literal|"/lib/hive_hwi.war"
 argument_list|)
+block|,
+comment|// Optimizer
+name|HIVEOPTPPD
+argument_list|(
+literal|"hive.optimize.ppd"
+argument_list|,
+literal|false
+argument_list|)
 block|;
+comment|// predicate pushdown
 specifier|public
 specifier|final
 name|String

@@ -252,6 +252,27 @@ return|return
 name|lst
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|exprNodeDesc
+name|clone
+parameter_list|()
+block|{
+return|return
+operator|new
+name|exprNodeColumnDesc
+argument_list|(
+name|this
+operator|.
+name|typeInfo
+argument_list|,
+name|this
+operator|.
+name|column
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

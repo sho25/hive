@@ -25,17 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Stack
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Vector
+name|List
 import|;
 end_import
 
@@ -53,7 +43,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|*
+name|ReduceSinkOperator
 import|;
 end_import
 
@@ -149,8 +139,10 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|Vector
+name|List
 argument_list|<
+name|?
+extends|extends
 name|Node
 argument_list|>
 name|children

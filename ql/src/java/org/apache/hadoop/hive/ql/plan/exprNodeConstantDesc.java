@@ -258,6 +258,27 @@ argument_list|()
 return|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|exprNodeDesc
+name|clone
+parameter_list|()
+block|{
+return|return
+operator|new
+name|exprNodeConstantDesc
+argument_list|(
+name|this
+operator|.
+name|typeInfo
+argument_list|,
+name|this
+operator|.
+name|value
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

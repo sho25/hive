@@ -140,6 +140,20 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+name|Set
+argument_list|<
+name|Node
+argument_list|>
+name|seenList
+init|=
+operator|new
+name|HashSet
+argument_list|<
+name|Node
+argument_list|>
+argument_list|()
+decl_stmt|;
+specifier|private
 name|HashMap
 argument_list|<
 name|Node
@@ -436,6 +450,20 @@ argument_list|)
 condition|)
 block|{
 comment|// all children are done or no need to walk the children
+if|if
+condition|(
+name|getDispatchedList
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|nd
+argument_list|)
+condition|)
+comment|// sanity check
+assert|assert
+literal|false
+assert|;
 name|dispatch
 argument_list|(
 name|nd
@@ -450,7 +478,17 @@ argument_list|()
 expr_stmt|;
 return|return;
 block|}
-comment|// move all the children to the front of queue
+comment|// add children, self to the front of the queue in that order
+name|getToWalk
+argument_list|()
+operator|.
+name|add
+argument_list|(
+literal|0
+argument_list|,
+name|nd
+argument_list|)
+expr_stmt|;
 name|getToWalk
 argument_list|()
 operator|.
@@ -473,15 +511,6 @@ name|nd
 operator|.
 name|getChildren
 argument_list|()
-argument_list|)
-expr_stmt|;
-comment|// add self to the end of the queue
-name|getToWalk
-argument_list|()
-operator|.
-name|add
-argument_list|(
-name|nd
 argument_list|)
 expr_stmt|;
 name|opStack

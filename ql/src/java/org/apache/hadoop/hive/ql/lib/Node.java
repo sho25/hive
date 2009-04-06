@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|List
 import|;
 end_import
 
@@ -40,8 +40,10 @@ name|Node
 block|{
 comment|/**    * Gets the vector of children nodes. This is used in the graph walker algorithms.    *     * @return Vector<Node>    */
 specifier|public
-name|Vector
+name|List
 argument_list|<
+name|?
+extends|extends
 name|Node
 argument_list|>
 name|getChildren

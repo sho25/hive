@@ -108,6 +108,19 @@ return|return
 literal|"null"
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|exprNodeDesc
+name|clone
+parameter_list|()
+block|{
+return|return
+operator|new
+name|exprNodeNullDesc
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 
