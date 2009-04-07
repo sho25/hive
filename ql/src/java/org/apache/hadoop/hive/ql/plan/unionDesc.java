@@ -55,6 +55,11 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|transient
+specifier|private
+name|int
+name|numInputs
+decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -63,7 +68,38 @@ argument_list|)
 specifier|public
 name|unionDesc
 parameter_list|()
-block|{ }
+block|{
+name|numInputs
+operator|=
+literal|2
+expr_stmt|;
+block|}
+comment|/**    * @return the numInputs    */
+specifier|public
+name|int
+name|getNumInputs
+parameter_list|()
+block|{
+return|return
+name|numInputs
+return|;
+block|}
+comment|/**    * @param numInputs the numInputs to set    */
+specifier|public
+name|void
+name|setNumInputs
+parameter_list|(
+name|int
+name|numInputs
+parameter_list|)
+block|{
+name|this
+operator|.
+name|numInputs
+operator|=
+name|numInputs
+expr_stmt|;
+block|}
 block|}
 end_class
 

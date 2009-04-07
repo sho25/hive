@@ -101,18 +101,24 @@ name|boolean
 index|[]
 name|rootTask
 decl_stmt|;
-comment|// currently, union has 2 inputs, but that should change - merging of unions should be allowed
 specifier|transient
 specifier|private
 name|int
 name|numInputs
-init|=
-literal|2
 decl_stmt|;
 specifier|public
 name|UnionParseContext
-parameter_list|()
+parameter_list|(
+name|int
+name|numInputs
+parameter_list|)
 block|{
+name|this
+operator|.
+name|numInputs
+operator|=
+name|numInputs
+expr_stmt|;
 name|mapOnlySubq
 operator|=
 operator|new
@@ -227,6 +233,37 @@ name|numInputs
 expr_stmt|;
 block|}
 block|}
+comment|// the subqueries are map-only jobs
+specifier|private
+name|boolean
+name|mapOnlySubq
+decl_stmt|;
+comment|/**    * @return the mapOnlySubq    */
+specifier|public
+name|boolean
+name|isMapOnlySubq
+parameter_list|()
+block|{
+return|return
+name|mapOnlySubq
+return|;
+block|}
+comment|/**    * @param mapOnlySubq the mapOnlySubq to set    */
+specifier|public
+name|void
+name|setMapOnlySubq
+parameter_list|(
+name|boolean
+name|mapOnlySubq
+parameter_list|)
+block|{
+name|this
+operator|.
+name|mapOnlySubq
+operator|=
+name|mapOnlySubq
+expr_stmt|;
+block|}
 specifier|private
 name|Map
 argument_list|<
@@ -250,6 +287,10 @@ argument_list|,
 name|UnionParseContext
 argument_list|>
 argument_list|()
+expr_stmt|;
+name|mapOnlySubq
+operator|=
+literal|true
 expr_stmt|;
 block|}
 specifier|public
