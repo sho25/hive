@@ -2840,6 +2840,8 @@ name|SQLException
 block|{
 name|String
 name|row_str
+init|=
+literal|""
 decl_stmt|;
 try|try
 block|{
@@ -2909,9 +2911,13 @@ throw|;
 block|}
 comment|// NOTE: fetchOne dosn't throw new SQLException("Method not supported").
 return|return
+operator|!
 name|row_str
-operator|!=
+operator|.
+name|equals
+argument_list|(
 literal|""
+argument_list|)
 return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.ResultSet#previous()    */

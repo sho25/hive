@@ -528,12 +528,17 @@ name|i
 init|=
 literal|0
 decl_stmt|;
-while|while
-condition|(
+name|boolean
+name|moreRow
+init|=
 name|res
 operator|.
 name|next
 argument_list|()
+decl_stmt|;
+while|while
+condition|(
+name|moreRow
 condition|)
 block|{
 try|try
@@ -566,6 +571,13 @@ comment|// TODO add assert
 comment|//      System.out.println(res.getString(2));
 comment|//      System.out.println(res.getString(1));
 comment|//      System.out.println(res.getInt(1));
+name|moreRow
+operator|=
+name|res
+operator|.
+name|next
+argument_list|()
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -608,6 +620,14 @@ argument_list|(
 literal|500
 argument_list|,
 name|i
+argument_list|)
+expr_stmt|;
+comment|// should have no more rows
+name|assertEquals
+argument_list|(
+literal|false
+argument_list|,
+name|moreRow
 argument_list|)
 expr_stmt|;
 block|}
