@@ -143,6 +143,12 @@ name|Long
 name|count
 parameter_list|)
 block|{
+if|if
+condition|(
+name|count
+operator|!=
+literal|null
+condition|)
 name|mCount
 operator|+=
 name|count
