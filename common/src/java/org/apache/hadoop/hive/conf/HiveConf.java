@@ -592,6 +592,14 @@ operator|+
 literal|"/lib/hive_hwi.war"
 argument_list|)
 block|,
+comment|// mapper/reducer memory in local mode
+name|HIVEHADOOPMAXMEM
+argument_list|(
+literal|"hive.mapred.local.mem"
+argument_list|,
+literal|0
+argument_list|)
+block|,
 comment|// Optimizer
 name|HIVEOPTPPD
 argument_list|(
