@@ -350,8 +350,10 @@ operator|.
 name|toUri
 argument_list|()
 decl_stmt|;
-comment|// if the METASTOREWAREHOUSE value doesn't have schema and authority specified then inherit
-comment|// from fs.default.name in hadoop-site.xml
+comment|// if the METASTOREWAREHOUSE value does not specify the schema and the authority
+comment|// then use the default file system as specified by the Configuration
+try|try
+block|{
 if|if
 condition|(
 operator|(
@@ -373,29 +375,33 @@ literal|null
 operator|)
 condition|)
 block|{
+name|fs
+operator|=
+name|FileSystem
+operator|.
+name|get
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|whRoot
 operator|=
 operator|new
 name|Path
 argument_list|(
-name|HiveConf
+name|fs
 operator|.
-name|getVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
+name|getUri
+argument_list|()
 operator|.
-name|ConfVars
-operator|.
-name|HADOOPFS
-argument_list|)
+name|toString
+argument_list|()
 argument_list|,
 name|whRootString
 argument_list|)
 expr_stmt|;
 block|}
-try|try
+else|else
 block|{
 name|fs
 operator|=
@@ -406,6 +412,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
