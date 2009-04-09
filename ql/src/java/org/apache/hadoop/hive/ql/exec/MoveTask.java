@@ -603,6 +603,14 @@ argument_list|,
 name|mesg_detail
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|work
+operator|.
+name|getCheckFileFormat
+argument_list|()
+condition|)
+block|{
 comment|// Get the file format of the table
 name|boolean
 name|tableIsSequenceFile
@@ -862,6 +870,7 @@ argument_list|(
 literal|"Cannot load SequenceFiles into a table stored as TextFile."
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 if|if

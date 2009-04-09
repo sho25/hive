@@ -1447,6 +1447,8 @@ argument_list|(
 name|loadTableWork
 argument_list|,
 name|loadFileWork
+argument_list|,
+literal|true
 argument_list|)
 argument_list|,
 name|this
@@ -1470,6 +1472,8 @@ argument_list|(
 name|loadTableWork
 argument_list|,
 name|loadFileWork
+argument_list|,
+literal|true
 argument_list|)
 argument_list|,
 name|this
