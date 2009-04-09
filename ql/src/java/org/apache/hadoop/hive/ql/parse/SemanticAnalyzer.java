@@ -7191,7 +7191,7 @@ argument_list|(
 literal|"nls"
 argument_list|)
 specifier|private
-name|void
+name|Integer
 name|genColList
 parameter_list|(
 name|String
@@ -7370,6 +7370,9 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+return|return
+name|pos
+return|;
 block|}
 comment|/**    * If the user script command needs any modifications - do it here    */
 specifier|private
@@ -8576,6 +8579,8 @@ name|toLowerCase
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|pos
+operator|=
 name|genColList
 argument_list|(
 name|tabAlias
@@ -8730,6 +8735,8 @@ name|toLowerCase
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|pos
+operator|=
 name|genColList
 argument_list|(
 name|tabAlias
