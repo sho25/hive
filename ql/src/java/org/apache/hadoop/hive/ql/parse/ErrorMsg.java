@@ -259,7 +259,7 @@ argument_list|)
 block|,
 name|INVALID_OUTPUT_FORMAT_TYPE
 argument_list|(
-literal|"Output Format must implement OutputFormat"
+literal|"Output Format must implement HiveOutputFormat, otherwise it should be either IgnoreKeyTextOutputFormat or SequenceFileOutputFormat"
 argument_list|)
 block|,
 name|NON_BUCKETED_TABLE

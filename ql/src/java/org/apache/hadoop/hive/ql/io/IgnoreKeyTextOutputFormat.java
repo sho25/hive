@@ -142,7 +142,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class replaces key with null before feeding the<key, value>   * to TextOutputFormat.RecordWriter.  *     */
+comment|/**  * This class replaces key with null before feeding the<key, value>   * to TextOutputFormat.RecordWriter.  *   * @deprecated use {@link HiveIgnoreKeyTextOutputFormat} instead}  */
 end_comment
 
 begin_class
