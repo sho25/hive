@@ -466,7 +466,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Writes out the text representation of an integer using base 10 to an     * OutputStream in UTF-8 encoding.    *    * Note: division by a constant (like 10) is much faster than division by    * a variable.  That's one of the reasons that we don't make radix a     * parameter here.    *      * @param i   an int to write out    * @return String the representation of the argument    * @throws IOException     */
+comment|/**    * Writes out the text representation of an integer using base 10 to an     * OutputStream in UTF-8 encoding.    *    * Note: division by a constant (like 10) is much faster than division by    * a variable.  That's one of the reasons that we don't make radix a     * parameter here.    *      * @param out the outputstream to write to    * @param i   an int to write out    * @throws IOException     */
 specifier|public
 specifier|static
 name|void

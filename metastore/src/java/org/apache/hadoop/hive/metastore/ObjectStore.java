@@ -1369,7 +1369,7 @@ name|isActive
 argument_list|()
 return|;
 block|}
-comment|/**    * if this is the commit of the first open call then an actual commit is called.     * @return     */
+comment|/**    * if this is the commit of the first open call then an actual commit is called.     * @return Always returns true    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

@@ -2813,7 +2813,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * This operation is unsupported in this metastore.    * @see MetaStoreClient#dropTable(String, String)     */
+comment|/**    * This operation is unsupported in this metastore.    * @see IMetaStoreClient#dropTable(String, String, boolean, boolean)     */
 specifier|public
 name|void
 name|dropTable

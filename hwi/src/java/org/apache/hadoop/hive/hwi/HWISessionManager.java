@@ -533,7 +533,7 @@ return|return
 name|otherItems
 return|;
 block|}
-comment|/** 	 * Here we handle creating the SessionItem, we do this for the JSP client 	 * because we need to set parameters the client is not aware of. One such 	 * parameter is the command line arguments the server was started with. 	 *  	 * @param sessionname 	 *          Represents the session name 	 * @param sessionpass 	 *          the session password, can be "" 	 * @return a new SessionItem or null if a session with that name already 	 *         exists 	 */
+comment|/** 	 * Here we handle creating the SessionItem, we do this for the JSP client 	 * because we need to set parameters the client is not aware of. One such 	 * parameter is the command line arguments the server was started with. 	 *  	 * @param a 	 *          Authenticated user 	 * @param sessionName 	 *          Represents the session name 	 * @return a new SessionItem or null if a session with that name already 	 *         exists 	 */
 specifier|public
 name|HWISessionItem
 name|createSession

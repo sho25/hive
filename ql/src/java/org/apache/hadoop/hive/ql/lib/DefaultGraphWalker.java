@@ -175,7 +175,7 @@ specifier|private
 name|Dispatcher
 name|dispatcher
 decl_stmt|;
-comment|/**    * Constructor    * @param ctx graph of operators to walk    * @param disp dispatcher to call for each op encountered    */
+comment|/**    * Constructor    * @param disp dispatcher to call for each op encountered    */
 specifier|public
 name|DefaultGraphWalker
 parameter_list|(
@@ -228,7 +228,7 @@ name|keySet
 argument_list|()
 return|;
 block|}
-comment|/**    * Dispatch the current operator    * @param op operator being walked    * @param opStack stack of operators encountered    * @throws SemanticException    */
+comment|/**    * Dispatch the current operator    * @param nd node being walked    * @param ndStack stack of nodes encountered    * @throws SemanticException    */
 specifier|public
 name|void
 name|dispatch

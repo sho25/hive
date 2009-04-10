@@ -734,7 +734,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**    * get hiveHitsory object which does structured logging    * @return     */
+comment|/**    * get hiveHitsory object which does structured logging    * @return The hive history object    */
 specifier|public
 name|HiveHistory
 name|getHiveHistory

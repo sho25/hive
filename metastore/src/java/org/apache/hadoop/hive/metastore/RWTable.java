@@ -383,7 +383,7 @@ name|isExternal
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * truncate    *    * delete the data, but not the schema    * Can be applied on a partition by partition basis    *    * @param partition partition in that table or "" or null    * @exception MetaException if any problems instantiating this object    *    */
+comment|/**    * truncate    *    * delete the data, but not the schema    * Can be applied on a partition by partition basis    *    * @exception MetaException if any problems instantiating this object    *    */
 specifier|public
 name|void
 name|truncate
@@ -522,7 +522,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * alter    *    * Add column names to a column set ser de table.    *    * @param tableName the name of the table to alter    * @param columns the name of the columns    * @exception MetaException if any problems altering the table    *    */
+comment|/**    * alter    *    * Add column names to a column set ser de table.    *    * @param schema the property value pairs for the table    * @exception MetaException if any problems altering the table    *    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

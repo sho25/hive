@@ -409,7 +409,7 @@ argument_list|>
 argument_list|>
 name|rootOps
 decl_stmt|;
-comment|/**    * @param opTaskMap  reducer to task mapping    * @param seenOps    operator already visited    * @param parseCtx   current parse context    * @param rootTasks  root tasks for the plan    * @param mvTask     the final move task    * @param scratchDir directory for temp destinations       * @param randomId   identifier used for temp destinations       * @param pathId     identifier used for temp destinations       * @param mapCurrCtx operator to task mappings    */
+comment|/**    * @param opTaskMap  reducer to task mapping    * @param seenOps    operator already visited    * @param parseCtx   current parse context    * @param rootTasks  root tasks for the plan    * @param mvTask     the final move task    * @param scratchDir directory for temp destinations       * @param mapCurrCtx operator to task mappings    */
 specifier|public
 name|GenMRProcContext
 parameter_list|(
@@ -877,7 +877,7 @@ return|return
 name|randomid
 return|;
 block|}
-comment|/**    * @param randomId   identifier used for temp destinations       */
+comment|/**    * @param randomid   identifier used for temp destinations       */
 specifier|public
 name|void
 name|setRandomId

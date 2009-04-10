@@ -265,7 +265,7 @@ specifier|public
 name|UnionProcessor
 parameter_list|()
 block|{ }
-comment|/**    * Transform the query tree. For each union, store the fact whether both the     * sub-queries are map-only    * @param pactx the current parse context    */
+comment|/**    * Transform the query tree. For each union, store the fact whether both the     * sub-queries are map-only    * @param pCtx the current parse context    */
 specifier|public
 name|ParseContext
 name|transform

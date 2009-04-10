@@ -2362,7 +2362,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Get the UDF method for the name and argumentClasses.    * @param name the name of the UDF    * @param argumentClasses    * @return    */
+comment|/**    * Get the UDF method for the name and argumentClasses.    * @param name the name of the UDF    * @param argumentClasses    * @return The UDF method    */
 specifier|public
 specifier|static
 name|Method
@@ -2455,7 +2455,7 @@ return|return
 name|udfMethod
 return|;
 block|}
-comment|/**    * Get the UDAF evaluator for the name and argumentClasses.    * @param name the name of the UDAF    * @param argumentClasses    * @return    */
+comment|/**    * Get the UDAF evaluator for the name and argumentClasses.    * @param name the name of the UDAF    * @param argumentClasses    * @return The UDAF evaluator    */
 specifier|public
 specifier|static
 name|Class

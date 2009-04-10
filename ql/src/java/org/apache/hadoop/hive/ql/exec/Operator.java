@@ -1277,7 +1277,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed    *    * @param conf Configuration with with which job was submitted    * @param succes whether the job was completed successfully or not    */
+comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed    *    * @param conf Configuration with with which job was submitted    * @param success whether the job was completed successfully or not    */
 specifier|public
 name|void
 name|jobClose

@@ -1016,7 +1016,7 @@ name|Object
 argument_list|>
 name|cachedMap
 decl_stmt|;
-comment|/**    * Return the map object representing this LazyMap.    * Note that the keyObjects will be Java primitive objects.    * @param itemSeparator     The separator between different entries.    * @param keyValueSeparator The separator between key and value.    * @param nullSequence      The byte sequence representing NULL.    * @return    */
+comment|/**    * Return the map object representing this LazyMap.    * Note that the keyObjects will be Java primitive objects.    * @param itemSeparator     The separator between different entries.    * @param keyValueSeparator The separator between key and value.    * @param nullSequence      The byte sequence representing NULL.    * @return the map object    */
 specifier|public
 name|Map
 argument_list|<

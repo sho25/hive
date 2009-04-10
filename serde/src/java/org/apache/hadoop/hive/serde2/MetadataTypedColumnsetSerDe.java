@@ -760,7 +760,7 @@ name|splitLimit
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Split the row into columns.    * @param limit  up to limit columns will be produced (the last column takes all the rest), -1 for unlimited.    * @return    * @throws Exception    */
+comment|/**    * Split the row into columns.    * @param limit  up to limit columns will be produced (the last column takes all the rest), -1 for unlimited.    * @return The ColumnSet object    * @throws Exception    */
 specifier|public
 specifier|static
 name|Object

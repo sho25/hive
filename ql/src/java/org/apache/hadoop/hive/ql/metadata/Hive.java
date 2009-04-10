@@ -678,7 +678,7 @@ expr_stmt|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Returns hive object for the current thread. If one is not initialized then a new one is created     * If the new configuration is different in metadata conf vars then a new one is created.    * @param c new Hive Configuration    * @return Hive object for current thread    * @exception    *    */
+comment|/**    * Gets hive object for the current thread. If one is not initialized then a new one is created     * If the new configuration is different in metadata conf vars then a new one is created.    * @param c new Hive Configuration    * @return Hive object for current thread    * @throws HiveException    *    */
 specifier|public
 specifier|static
 name|Hive
@@ -766,7 +766,7 @@ name|needsRefresh
 argument_list|)
 return|;
 block|}
-comment|/**    * get a connection to metastore. see get(HiveConf) function for comments    * @param c new conf    * @param needsRefresh if true then creates a new one    * @return    * @throws HiveException    */
+comment|/**    * get a connection to metastore. see get(HiveConf) function for comments    * @param c new conf    * @param needsRefresh if true then creates a new one    * @return The connection to the metastore    * @throws HiveException    */
 specifier|public
 specifier|static
 name|Hive
@@ -2309,7 +2309,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * @param name    * @param location_uri    * @return    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.HiveMetaStoreClient#createDatabase(java.lang.String, java.lang.String)    */
+comment|/**    * @param name    * @param locationUri    * @return true or false    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.HiveMetaStoreClient#createDatabase(java.lang.String, java.lang.String)    */
 specifier|protected
 name|boolean
 name|createDatabase
@@ -2339,7 +2339,7 @@ name|locationUri
 argument_list|)
 return|;
 block|}
-comment|/**    * @param name    * @return    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.HiveMetaStoreClient#dropDatabase(java.lang.String)    */
+comment|/**    * @param name    * @return true or false    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.HiveMetaStoreClient#dropDatabase(java.lang.String)    */
 specifier|protected
 name|boolean
 name|dropDatabase
@@ -2362,7 +2362,7 @@ name|name
 argument_list|)
 return|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition    * - Alters existing content of the partition with the contents of loadPath.    * - If he partition does not exist - one is created    * - files in loadPath are moved into Hive. But the directory itself is not removed.    *    * @param jc Job configuration    * @param loadPath Directory containing files to load into Table    * @param tableName name of table to be loaded.    * @param partSpec defines which partition needs to be loaded    * @param replace if true - replace files in the partition, otherwise add files to the partition    */
+comment|/**    * Load a directory into a Hive Table Partition    * - Alters existing content of the partition with the contents of loadPath.    * - If he partition does not exist - one is created    * - files in loadPath are moved into Hive. But the directory itself is not removed.    *    * @param loadPath Directory containing files to load into Table    * @param tableName name of table to be loaded.    * @param partSpec defines which partition needs to be loaded    * @param replace if true - replace files in the partition, otherwise add files to the partition    */
 specifier|public
 name|void
 name|loadPartition
@@ -2431,7 +2431,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Load a directory into a Hive Table.    * - Alters existing content of table with the contents of loadPath.    * - If table does not exist - an exception is thrown    * - files in loadPath are moved into Hive. But the directory itself is not removed.    *    * @param jc Job configuration    * @param loadPath Directory containing files to load into Table    * @param tableName name of table to be loaded.    * @param replace if true - replace files in the table, otherwise add files to table    */
+comment|/**    * Load a directory into a Hive Table.    * - Alters existing content of table with the contents of loadPath.    * - If table does not exist - an exception is thrown    * - files in loadPath are moved into Hive. But the directory itself is not removed.    *    * @param loadPath Directory containing files to load into Table    * @param tableName name of table to be loaded.    * @param replace if true - replace files in the table, otherwise add files to table    */
 specifier|public
 name|void
 name|loadTable
@@ -2660,7 +2660,7 @@ name|partition
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns partition metadata    * @param tableName name of the partition's table    * @param partSpec partition keys and values    * @param forceCreate if this is true and partition doesn't exist then a partition is created    * @return result partition object or null if there is no partition    * @throws HiveException    */
+comment|/**    * Returns partition metadata    * @param tbl the partition's table    * @param partSpec partition keys and values    * @param forceCreate if this is true and partition doesn't exist then a partition is created    * @return result partition object or null if there is no partition    * @throws HiveException    */
 specifier|public
 name|Partition
 name|getPartition

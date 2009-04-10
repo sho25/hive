@@ -371,7 +371,7 @@ name|String
 argument_list|>
 name|spec
 decl_stmt|;
-comment|/**    * @return    * @see org.apache.hadoop.hive.metastore.api.Partition#getValues()    */
+comment|/**    * @return The values of the partition    * @see org.apache.hadoop.hive.metastore.api.Partition#getValues()    */
 specifier|public
 name|List
 argument_list|<

@@ -187,7 +187,7 @@ name|boolean
 name|openTransaction
 parameter_list|()
 function_decl|;
-comment|/**    * if this is the commit of the first open call then an actual commit is called.     * @return     */
+comment|/**    * if this is the commit of the first open call then an actual commit is called.     * @return true or false    */
 specifier|public
 specifier|abstract
 name|boolean

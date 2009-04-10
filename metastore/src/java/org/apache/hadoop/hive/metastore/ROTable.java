@@ -442,7 +442,7 @@ return|return
 name|whPath_
 return|;
 block|}
-comment|/**    * getPartitions    *    * Scan the file system and find all the partitions of this table    * Not recursive right now - needs to be!    *    * @param the table name    * @return a list of partitions - not full paths    * @exception MetaException if gneneral problem or this table does not exist.    */
+comment|/**    * getPartitions    *    * Scan the file system and find all the partitions of this table    * Not recursive right now - needs to be!    *    * @return a list of partitions - not full paths    * @exception MetaException if gneneral problem or this table does not exist.    */
 specifier|public
 name|ArrayList
 argument_list|<

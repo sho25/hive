@@ -575,7 +575,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns true if the specified expression is pushdown candidate else false    * @param expr    * @return    */
+comment|/**    * Returns true if the specified expression is pushdown candidate else false    * @param expr    * @return true or false    */
 specifier|public
 name|boolean
 name|isCandidate
@@ -661,7 +661,7 @@ operator|=
 name|b
 expr_stmt|;
 block|}
-comment|/**    * Returns the alias of the specified expr    * @param expr    * @return    */
+comment|/**    * Returns the alias of the specified expr    * @param expr    * @return The alias of the expression    */
 specifier|public
 name|String
 name|getAlias

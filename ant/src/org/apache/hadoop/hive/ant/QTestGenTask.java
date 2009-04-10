@@ -612,7 +612,6 @@ operator|.
 name|queryFile
 return|;
 block|}
-comment|/**    * Invoke {@link org.apache.hadoop.fs.FsShell#doMain FsShell.doMain} after a    * few cursory checks of the configuration.    */
 specifier|public
 name|void
 name|execute

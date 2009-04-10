@@ -1975,7 +1975,7 @@ return|return
 name|funcText
 return|;
 block|}
-comment|/**      * Get the exprNodeDesc      * @param name      * @param children      * @return      */
+comment|/**      * Get the exprNodeDesc      * @param name      * @param children      * @return The expression node descriptor      */
 specifier|public
 specifier|static
 name|exprNodeDesc

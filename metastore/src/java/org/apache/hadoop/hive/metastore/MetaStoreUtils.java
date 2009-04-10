@@ -961,7 +961,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *    * Get the Deserializer for a table given its name and properties.    *    * @param name the name of the table    * @param conf - hadoop config    * @param p - the properties to use to instantiate the schema    * @return the Deserializer    * @exception MetaException if any problems instantiating the Deserializer    *    * todo - this should move somewhere into serde.jar    *    */
+comment|/**    * getDeserializer    *    * Get the Deserializer for a table given its name and properties.    *    * @param conf hadoop config    * @param schema the properties to use to instantiate the deserializer    * @return the Deserializer    * @exception MetaException if any problems instantiating the Deserializer    *    * todo - this should move somewhere into serde.jar    *    */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1085,7 +1085,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *    * Get the Deserializer for a table given its name and properties.    *    * @param name the name of the table    * @param conf - hadoop config    * @param p - SerDe info    * @return the Deserializer    * @exception MetaException if any problems instantiating the Deserializer    *    * todo - this should move somewhere into serde.jar    *    */
+comment|/**    * getDeserializer    *    * Get the Deserializer for a table.    *    * @param conf - hadoop config    * @param table the table    * @return the Deserializer    * @exception MetaException if any problems instantiating the Deserializer    *    * todo - this should move somewhere into serde.jar    *    */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1470,7 +1470,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * validateName    *    * Checks the name conforms to our standars which are: "[a-zA-z_0-9]+".    * checks this is just characters and numbers and _     *    * @param tableName the name to validate    * @return none    * @exception MetaException if it doesn't match the pattern.    */
+comment|/**    * validateName    *    * Checks the name conforms to our standars which are: "[a-zA-z_0-9]+".    * checks this is just characters and numbers and _     *    * @param name the name to validate    * @return true or false depending on conformance    * @exception MetaException if it doesn't match the pattern.    */
 specifier|static
 specifier|public
 name|boolean
@@ -4305,7 +4305,7 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-comment|/**    * @param tableName    * @param deserializer    * @return    * @throws SerDeException    * @throws MetaException    */
+comment|/**    * @param tableName    * @param deserializer    * @return the list of fields    * @throws SerDeException    * @throws MetaException    */
 specifier|public
 specifier|static
 name|List

@@ -143,7 +143,7 @@ return|return
 name|type
 return|;
 block|}
-comment|/**    * @param type the type to set    */
+comment|/**    * @param field the type to set    */
 specifier|public
 name|void
 name|setType

@@ -1001,7 +1001,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * getPartitions      *      * return a table's partitions      *      * @param tableName - a valid table name      * @param low - low index      * @param high - high index      * @return a string (including '\n's) of the rows      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      * @exception UnknownTableException if we don't know about this table.      */
+comment|/**      * getPartitions      *      * return a table's partitions      *      * @param dbName the database name      * @param tableName a valid table name      * @return a string (including '\n's) of the rows      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      * @exception UnknownTableException if we don't know about this table.      */
 specifier|public
 name|ArrayList
 argument_list|<
@@ -1220,7 +1220,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * alter_table      *      * For a columnsetSerDe table, add column names to it      *      * @param tableName - a valid existing table name      * @param columns - ordered list of column names      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      * @exception UnknownTableException if table does not exist already      */
+comment|/**      * alter_table      *      * For a columnsetSerDe table, add column names to it      *      * @param dbName the database      * @param tableName  a valid existing table name      * @param schema The schema information for the table      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      * @exception UnknownTableException if table does not exist already      */
 specifier|public
 name|void
 name|alter_table
@@ -1429,7 +1429,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * create_table      *      * Create names columns for a columnset type table      *      * @param tableName - a valid table name      * @param columns - ordered list of column names      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      */
+comment|/**      * create_table      *      * Create names columns for a columnset type table      *      * @param dbName a valid database name      * @param tableName - a valid table name      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      */
 specifier|public
 name|void
 name|create_table
@@ -2072,7 +2072,7 @@ name|m
 throw|;
 block|}
 block|}
-comment|/**      * drop      *      * drop a table      *      * @param tableName - a valid existing table name      * @param delete_data - should the store auto delete the data.      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      * @exception UnknownTableException if table does not exist already      */
+comment|/**      * drop      *      * drop a table      *      * @param dbName the name of a database      * @param tableName a valid existing table name      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      * @exception UnknownTableException if table does not exist already      */
 specifier|public
 name|void
 name|drop_table
@@ -2203,7 +2203,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * truncate      *      * drop a table      *      * @param tableName - a valid existing table name      * @param delete_data - should the store auto delete the data.      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      * @exception UnknownTableException if table does not exist already      */
+comment|/**      * truncate      *      * drop a table      *      * @param dbName  a valid database name      * @param tableName  a valid existing table name      * @exception TException if thrift problem      * @exception MetaException if internal problem or bad input      * @exception UnknownTableException if table does not exist already      */
 specifier|public
 name|void
 name|truncate_table
@@ -2343,7 +2343,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * get_schema      *      * Gets the (opaque) schema which is currently represented as a key=>value map.      *      * @param name - the name of the table      * @return the key/value of the opaque schema      * @exception MetaException if internal problem      * @exception UnknownTableException if the table doesn't exist      */
+comment|/**      * get_schema      *      * Gets the (opaque) schema which is currently represented as a key=>value map.      *      * @param tableName - the name of the table      * @return the key/value of the opaque schema      * @exception MetaException if internal problem      * @exception UnknownTableException if the table doesn't exist      */
 specifier|public
 name|AbstractMap
 argument_list|<

@@ -917,7 +917,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/** 	 * Helper function to get configuration variables 	 *  	 * @param wanted 	 *          a ConfVar 	 * @return 	 */
+comment|/** 	 * Helper function to get configuration variables 	 *  	 * @param wanted 	 *          a ConfVar 	 * @return Value of the configuration variable. 	 */
 specifier|public
 name|String
 name|getHiveConfVar

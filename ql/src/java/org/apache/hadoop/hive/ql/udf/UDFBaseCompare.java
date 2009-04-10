@@ -63,7 +63,7 @@ name|UDFBaseCompare
 extends|extends
 name|UDF
 block|{
-comment|/**    * This constructor sets the resolver to be used for comparison operators.    * See {@link UDFMethodResolver}    */
+comment|/**    * This constructor sets the resolver to be used for comparison operators.    * See {@link org.apache.hadoop.hive.ql.exec.UDFMethodResolver}    */
 specifier|public
 name|UDFBaseCompare
 parameter_list|()

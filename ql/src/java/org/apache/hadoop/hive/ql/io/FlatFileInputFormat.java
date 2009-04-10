@@ -324,7 +324,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** An {@link InputFormat} for Plain files with {@link Deserializer} records */
+comment|/** An {@link org.apache.hadoop.mapred.InputFormat} for Plain files with {@link Deserializer} records */
 end_comment
 
 begin_class

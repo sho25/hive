@@ -1301,7 +1301,7 @@ name|preds
 argument_list|)
 return|;
 block|}
-comment|/**    * Extracts pushdown predicates from the given list of predicate expression    * @param opContext operator context used for resolving column references    * @param op operator of the predicates being processed    * @param preds    * @return    * @throws SemanticException    */
+comment|/**    * Extracts pushdown predicates from the given list of predicate expression    * @param opContext operator context used for resolving column references    * @param op operator of the predicates being processed    * @param preds    * @return The expression walker information    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|ExprWalkerInfo

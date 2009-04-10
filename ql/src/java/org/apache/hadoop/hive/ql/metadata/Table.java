@@ -556,7 +556,7 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{   }
-comment|/**    * Table    *    * Create a TableMetaInfo object presumably with the intent of saving it to the metastore    *    * @param name the name of this table in the metadb    * @param schema an object that represents the schema that this SerDe must know    * @param serDe a Class to be used for serializing and deserializing the data    * @param dataLocation where is the table ? (e.g., dfs://hadoop001.sf2p.facebook.com:9000/user/facebook/warehouse/example) NOTE: should not be hardcoding this, but ok for now    *    * @exception HiveException on internal error. Note not possible now, but in the future reserve the right to throw an exception    */
+comment|/**    * Table    *    * Create a TableMetaInfo object presumably with the intent of saving it to the metastore    *    * @param name the name of this table in the metadb    * @param schema an object that represents the schema that this SerDe must know    * @param deserializer a Class to be used for deserializing the data    * @param dataLocation where is the table ? (e.g., dfs://hadoop001.sf2p.facebook.com:9000/user/facebook/warehouse/example) NOTE: should not be hardcoding this, but ok for now    *    * @exception HiveException on internal error. Note not possible now, but in the future reserve the right to throw an exception    */
 specifier|public
 name|Table
 parameter_list|(
@@ -1811,7 +1811,7 @@ operator|=
 name|schema
 expr_stmt|;
 block|}
-comment|/**    * @param serDe the serDe to set    */
+comment|/**    * @param deserializer the deserializer to set    */
 specifier|public
 name|void
 name|setDeserializer
@@ -2700,7 +2700,7 @@ name|nb
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @return    * @see org.apache.hadoop.hive.metastore.api.Table#getOwner()    */
+comment|/**    * @return The owner of the table.    * @see org.apache.hadoop.hive.metastore.api.Table#getOwner()    */
 specifier|public
 name|String
 name|getOwner
@@ -2713,7 +2713,7 @@ name|getOwner
 argument_list|()
 return|;
 block|}
-comment|/**    * @return    * @see org.apache.hadoop.hive.metastore.api.Table#getParameters()    */
+comment|/**    * @return The table parameters.    * @see org.apache.hadoop.hive.metastore.api.Table#getParameters()    */
 specifier|public
 name|Map
 argument_list|<
@@ -2731,7 +2731,7 @@ name|getParameters
 argument_list|()
 return|;
 block|}
-comment|/**    * @return    * @see org.apache.hadoop.hive.metastore.api.Table#getRetention()    */
+comment|/**    * @return The retention on the table.    * @see org.apache.hadoop.hive.metastore.api.Table#getRetention()    */
 specifier|public
 name|int
 name|getRetention

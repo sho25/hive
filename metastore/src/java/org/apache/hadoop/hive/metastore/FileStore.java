@@ -1106,7 +1106,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * getTablesByPattern    *    * Looks at metastore directories    *    * @param db    * @param tablePattern    * @return the list of tables    * @exception MetaException    *    */
+comment|/**    * getTablesByPattern    *    * Looks at metastore directories    *    * @param parent    * @param tablePattern    * @return the list of tables    * @exception MetaException    *    */
 specifier|public
 name|ArrayList
 argument_list|<

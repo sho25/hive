@@ -90,7 +90,7 @@ operator|=
 name|rslv
 expr_stmt|;
 block|}
-comment|/**    * Sets the resolver    *     * @param The method resolver to use for method resolution.    */
+comment|/**    * Sets the resolver    *     * @param rslv The method resolver to use for method resolution.    */
 specifier|public
 name|void
 name|setResolver

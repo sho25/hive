@@ -289,7 +289,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Drop the table.    * @param dbName The database for this table    * @param tableName The table to drop    * @throws MetaException Could not drop table properly.    * @throws NoSuchObjectException The table wasn't found.    * @throws TException A thrift communication error occurred    * @throws ExistingDependentsException    */
+comment|/**    * Drop the table.    * @param dbname The database for this table    * @param tableName The table to drop    * @throws MetaException Could not drop table properly.    * @throws NoSuchObjectException The table wasn't found.    * @throws TException A thrift communication error occurred    * @throws ExistingDependentsException    */
 specifier|public
 name|void
 name|dropTable
@@ -364,7 +364,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * @param table_name    * @param db_name    * @param part_vals    * @return    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String, java.lang.String, java.util.List)    */
+comment|/**    * @param tableName    * @param dbName    * @param partVals    * @return the partition object    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String, java.lang.String, java.util.List)    */
 specifier|public
 name|Partition
 name|appendPartition
@@ -407,7 +407,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param tbl_name    * @param db_name    * @param part_vals    * @return    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#lookup_partition(java.lang.String, java.lang.String, java.util.List)    */
+comment|/**    * @param tblName    * @param dbName    * @param partVals    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String, java.lang.String, java.util.List)    */
 specifier|public
 name|Partition
 name|getPartition
@@ -429,7 +429,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param tbl_name    * @param db_name    * @param max_parts    * @return    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#list_partitions(java.lang.String, java.lang.String, short)    */
+comment|/**    * @param tbl_name    * @param db_name    * @param max_parts    * @return the list of partitions    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<
@@ -474,7 +474,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param tbl    * @return    * @throws AlreadyExistsException    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_table(org.apache.hadoop.hive.metastore.api.Table)    */
+comment|/**    * @param tbl    * @throws AlreadyExistsException    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_table(org.apache.hadoop.hive.metastore.api.Table)    */
 specifier|public
 name|void
 name|createTable
@@ -542,7 +542,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData delete the underlying data or just delete the table in metadata    * @return    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String, java.lang.String, java.util.List)    */
+comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData delete the underlying data or just delete the table in metadata    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String, java.lang.String, java.util.List, boolean)    */
 specifier|public
 name|boolean
 name|dropPartition
