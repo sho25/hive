@@ -416,6 +416,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|METASTOREPWD
+argument_list|(
+literal|"javax.jdo.option.ConnectionPassword"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// Things we log in the jobconf
 comment|// session identifier
 name|HIVESESSIONID
