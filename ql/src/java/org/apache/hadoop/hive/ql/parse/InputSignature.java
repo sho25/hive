@@ -267,7 +267,7 @@ name|add
 argument_list|(
 name|TypeInfoFactory
 operator|.
-name|getPrimitiveTypeInfo
+name|getPrimitiveTypeInfoFromPrimitiveWritable
 argument_list|(
 name|cl
 argument_list|)

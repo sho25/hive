@@ -275,7 +275,7 @@ argument_list|,
 name|V
 argument_list|>
 block|{
-comment|/**    * create the final out file, and output row by row. After one row is    * appended, a configured row separator is appended    *     * @param jc    *          the job configuration file    * @param finalOutPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableInfo    *          the tableInfo of this file's corresponding table    * @param progress    *          progress used for status report    * @return    * @throws IOException    */
+comment|/**    * create the final out file, and output row by row. After one row is    * appended, a configured row separator is appended    *     * @param jc    *          the job configuration file    * @param outPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the tableProperties of this file's corresponding table    * @param progress    *          progress used for status report    * @return the RecordWriter    */
 annotation|@
 name|Override
 specifier|public

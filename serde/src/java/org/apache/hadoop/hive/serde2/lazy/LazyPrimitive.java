@@ -37,6 +37,11 @@ block|{
 name|T
 name|data
 decl_stmt|;
+name|boolean
+name|isNull
+init|=
+literal|false
+decl_stmt|;
 comment|/**    * Returns the actual primitive object represented by this LazyObject.    */
 specifier|public
 name|T
@@ -44,6 +49,10 @@ name|getObject
 parameter_list|()
 block|{
 return|return
+name|isNull
+condition|?
+literal|null
+else|:
 name|data
 return|;
 block|}

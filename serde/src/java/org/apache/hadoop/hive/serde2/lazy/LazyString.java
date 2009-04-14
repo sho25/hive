@@ -21,18 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|nio
-operator|.
-name|charset
-operator|.
-name|CharacterCodingException
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -56,13 +44,20 @@ name|LazyString
 extends|extends
 name|LazyPrimitive
 argument_list|<
-name|String
+name|Text
 argument_list|>
 block|{
 specifier|public
 name|LazyString
 parameter_list|()
-block|{   }
+block|{
+name|data
+operator|=
+operator|new
+name|Text
+argument_list|()
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -79,15 +74,9 @@ name|int
 name|length
 parameter_list|)
 block|{
-comment|// In the future, we should allow returning a Text Object to save the UTF-8
-comment|// decoding/encoding, and the creation of new String object.
-try|try
-block|{
 name|data
-operator|=
-name|Text
 operator|.
-name|decode
+name|set
 argument_list|(
 name|bytes
 operator|.
@@ -99,18 +88,6 @@ argument_list|,
 name|length
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|CharacterCodingException
-name|e
-parameter_list|)
-block|{
-name|data
-operator|=
-literal|null
-expr_stmt|;
-block|}
 block|}
 block|}
 end_class

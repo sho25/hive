@@ -157,7 +157,7 @@ name|type
 operator|=
 name|TypeInfoFactory
 operator|.
-name|getPrimitiveTypeInfo
+name|getPrimitiveTypeInfoFromPrimitiveWritable
 argument_list|(
 name|type
 argument_list|)

@@ -238,12 +238,7 @@ name|exprNodeColumnDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
-name|getPrimitiveTypeInfo
-argument_list|(
-name|String
-operator|.
-name|class
-argument_list|)
+name|stringTypeInfo
 argument_list|,
 name|F1
 argument_list|)
@@ -256,12 +251,7 @@ name|exprNodeColumnDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
-name|getPrimitiveTypeInfo
-argument_list|(
-name|String
-operator|.
-name|class
-argument_list|)
+name|stringTypeInfo
 argument_list|,
 name|F2
 argument_list|)

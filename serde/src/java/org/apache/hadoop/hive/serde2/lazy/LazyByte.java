@@ -19,6 +19,24 @@ name|lazy
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|ByteWritable
+import|;
+end_import
+
 begin_comment
 comment|/**  * LazyObject for storing a value of Byte.  *   *<p>  * Part of the code is adapted from Apache Harmony Project.  *   * As with the specification, this implementation relied on code laid out in<a  * href="http://www.hackersdelight.org/">Henry S. Warren, Jr.'s Hacker's  * Delight, (Addison Wesley, 2002)</a> as well as<a  * href="http://aggregate.org/MAGIC/">The Aggregate's Magic Algorithms</a>.  *</p>  *   */
 end_comment
@@ -30,13 +48,20 @@ name|LazyByte
 extends|extends
 name|LazyPrimitive
 argument_list|<
-name|Byte
+name|ByteWritable
 argument_list|>
 block|{
 specifier|public
 name|LazyByte
 parameter_list|()
-block|{   }
+block|{
+name|data
+operator|=
+operator|new
+name|ByteWritable
+argument_list|()
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -55,13 +80,9 @@ parameter_list|)
 block|{
 try|try
 block|{
-comment|// Slower method: convert to String and then convert to Integer
-comment|// return Byte.valueOf(LazyUtils.convertToString(bytes, start, length));
 name|data
-operator|=
-name|Byte
 operator|.
-name|valueOf
+name|set
 argument_list|(
 name|parseByte
 argument_list|(
@@ -73,8 +94,14 @@ argument_list|,
 name|start
 argument_list|,
 name|length
+argument_list|,
+literal|10
 argument_list|)
 argument_list|)
+expr_stmt|;
+name|isNull
+operator|=
+literal|false
 expr_stmt|;
 block|}
 catch|catch
@@ -83,9 +110,9 @@ name|NumberFormatException
 name|e
 parameter_list|)
 block|{
-name|data
+name|isNull
 operator|=
-literal|null
+literal|true
 expr_stmt|;
 block|}
 block|}

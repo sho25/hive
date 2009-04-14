@@ -149,7 +149,7 @@ name|super
 argument_list|(
 name|TypeInfoFactory
 operator|.
-name|getPrimitiveTypeInfo
+name|getPrimitiveTypeInfoFromJavaPrimitive
 argument_list|(
 name|c
 argument_list|)

@@ -283,7 +283,7 @@ name|o
 init|=
 name|ObjectInspectorUtils
 operator|.
-name|getStandardObject
+name|copyToStandardObject
 argument_list|(
 name|row
 argument_list|,

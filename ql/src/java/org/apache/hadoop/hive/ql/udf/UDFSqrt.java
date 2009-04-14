@@ -65,6 +65,24 @@ name|UDF
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|DoubleWritable
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implementation of the SQRT UDF found in many databases.  */
 end_comment
@@ -93,16 +111,23 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|DoubleWritable
+name|result
+init|=
+operator|new
+name|DoubleWritable
+argument_list|()
+decl_stmt|;
 specifier|public
 name|UDFSqrt
 parameter_list|()
 block|{   }
 comment|/**    * Return NULL for NULL or negative inputs; otherwise, return    * the square root.    */
 specifier|public
-name|Double
+name|DoubleWritable
 name|evaluate
 parameter_list|(
-name|Double
+name|DoubleWritable
 name|i
 parameter_list|)
 block|{
@@ -121,6 +146,9 @@ elseif|else
 if|if
 condition|(
 name|i
+operator|.
+name|get
+argument_list|()
 operator|<
 literal|0
 condition|)
@@ -131,18 +159,23 @@ return|;
 block|}
 else|else
 block|{
-return|return
-name|Double
+name|result
 operator|.
-name|valueOf
+name|set
 argument_list|(
 name|Math
 operator|.
 name|sqrt
 argument_list|(
 name|i
+operator|.
+name|get
+argument_list|()
 argument_list|)
 argument_list|)
+expr_stmt|;
+return|return
+name|result
 return|;
 block|}
 block|}

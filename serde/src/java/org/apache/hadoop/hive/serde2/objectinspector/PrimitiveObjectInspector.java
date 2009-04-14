@@ -26,12 +26,88 @@ name|PrimitiveObjectInspector
 extends|extends
 name|ObjectInspector
 block|{
+comment|/**    * The primitive types supported by Hive.     */
+specifier|public
+specifier|static
+enum|enum
+name|PrimitiveCategory
+block|{
+name|VOID
+block|,
+name|BOOLEAN
+block|,
+name|BYTE
+block|,
+name|SHORT
+block|,
+name|INT
+block|,
+name|LONG
+block|,
+name|FLOAT
+block|,
+name|DOUBLE
+block|,
+name|STRING
+block|,
+name|UNKNOWN
+block|}
+empty_stmt|;
+comment|/**    * Get the primitive category of the PrimitiveObjectInspector.    */
+specifier|public
+name|PrimitiveCategory
+name|getPrimitiveCategory
+parameter_list|()
+function_decl|;
+comment|/**    * Get the Primitive Writable class which is the return type of     * getPrimitiveWritableObject() and copyToPrimitiveWritableObject()    */
 specifier|public
 name|Class
 argument_list|<
 name|?
 argument_list|>
-name|getPrimitiveClass
+name|getPrimitiveWritableClass
+parameter_list|()
+function_decl|;
+comment|/**    * Return the data in an instance of primitive writable Object.  If the     * Object is already a primitive writable Object, just return o.    */
+specifier|public
+name|Object
+name|getPrimitiveWritableObject
+parameter_list|(
+name|Object
+name|o
+parameter_list|)
+function_decl|;
+comment|/**    * Get the Java Primitive class which is the return type of     * getJavaPrimitiveObject().    */
+specifier|public
+name|Class
+argument_list|<
+name|?
+argument_list|>
+name|getJavaPrimitiveClass
+parameter_list|()
+function_decl|;
+comment|/**    * Get the Java Primitive object.    */
+specifier|public
+name|Object
+name|getPrimitiveJavaObject
+parameter_list|(
+name|Object
+name|o
+parameter_list|)
+function_decl|;
+comment|/**    * Get a copy of the Object in the same class, so the return value can be     * stored independently of the parameter.    *     * If the Object is a Primitive Java Object, we just return the parameter    * since Primitive Java Object is immutable.    */
+specifier|public
+name|Object
+name|copyObject
+parameter_list|(
+name|Object
+name|o
+parameter_list|)
+function_decl|;
+comment|/**    * Whether the ObjectInspector prefers to return a Primitive Writable Object    * instead of a Primitive Java Object.    * This can be useful for determining the most efficient way to getting    * data out of the Object.     */
+specifier|public
+name|boolean
+name|isWritable
 parameter_list|()
 function_decl|;
 block|}

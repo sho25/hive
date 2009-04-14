@@ -64,7 +64,7 @@ name|Object
 name|key
 parameter_list|)
 function_decl|;
-comment|/** returns null for data = null.    */
+comment|/** returns null for data = null.    *    *  Note: This method should not return a Map object that is reused by the     *  same MapObjectInspector, because it's possible that the same     *  MapObjectInspector will be used in multiple places in the code.    *      *  However it's OK if the Map object is part of the Object data.    */
 specifier|public
 name|Map
 argument_list|<

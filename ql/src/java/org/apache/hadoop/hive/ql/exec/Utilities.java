@@ -1261,18 +1261,6 @@ name|ctrlaCode
 init|=
 literal|1
 decl_stmt|;
-specifier|public
-specifier|final
-specifier|static
-name|ByteWritable
-name|zeroByteWritable
-init|=
-operator|new
-name|ByteWritable
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
 comment|// Note: When DDL supports specifying what string to represent null,
 comment|// we should specify "NULL" to represent null in the temp table, and then
 comment|// we can make the following translation deprecated.

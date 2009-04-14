@@ -181,7 +181,7 @@ operator|!
 operator|(
 name|other
 operator|instanceof
-name|TypeInfo
+name|ListTypeInfo
 operator|)
 condition|)
 block|{
@@ -189,11 +189,11 @@ return|return
 literal|false
 return|;
 block|}
-name|TypeInfo
+name|ListTypeInfo
 name|o
 init|=
 operator|(
-name|TypeInfo
+name|ListTypeInfo
 operator|)
 name|other
 decl_stmt|;

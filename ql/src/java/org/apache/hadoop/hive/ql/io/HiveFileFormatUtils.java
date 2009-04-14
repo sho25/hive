@@ -238,7 +238,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An util class for various Hive file format tasks. {@link  * registerOutputFormatSubstitute( Class<? extends OutputFormat>, Class<?  * extends HiveOutputFormat>)} and {@link getOutputFormatSubstitute(Class<?  * extends OutputFormat> )} is added for backward compatibility. They find the  * newly added HiveOutputFormat for older ones.  *   */
+comment|/**  * An util class for various Hive file format tasks.  * {@link #registerOutputFormatSubstitute(Class, Class) and   * {@link #getOutputFormatSubstitute(Class)} are added for backward   * compatibility. They return the newly added HiveOutputFormat for the older   * ones.  *   * }  *   *   */
 end_comment
 
 begin_class
@@ -360,7 +360,7 @@ name|substitute
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * get a OutputFormat's substitute HiveOutputFormat    *     * @param origin    * @return    */
+comment|/**    * get a OutputFormat's substitute HiveOutputFormat    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -425,7 +425,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * get the final output path of a given FileOutputFormat.    *     * @param parent    *          parent dir of the expected final output path    * @param jc    *          job configuration    * @param hiveOutputFormat    * @param isCompressed    * @param defaultFinalPath    * @return    * @throws IOException    */
+comment|/**    * get the final output path of a given FileOutputFormat.    *     * @param parent    *          parent dir of the expected final output path    * @param jc    *          job configuration    */
 specifier|public
 specifier|static
 name|Path
@@ -489,7 +489,7 @@ return|return
 name|defaultFinalPath
 return|;
 block|}
-comment|/**    * checks if files are in same format as the given input format    *     * @param fs    * @param conf    * @param inputFormatCls    * @param files    * @throws HiveException    */
+comment|/**    * checks if files are in same format as the given input format    */
 specifier|public
 specifier|static
 name|boolean

@@ -29,6 +29,24 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfo
+import|;
+end_import
+
 begin_comment
 comment|/**  * Exception thrown by the UDF and UDAF method resolvers in case a unique method is not found.  *  */
 end_comment
@@ -59,14 +77,11 @@ decl_stmt|;
 comment|/**    * The list of parameter types.    */
 name|List
 argument_list|<
-name|Class
-argument_list|<
-name|?
+name|TypeInfo
 argument_list|>
-argument_list|>
-name|argClasses
+name|argTypeInfos
 decl_stmt|;
-comment|/**    * Constructor.    *     * @param funcClass The UDF or UDAF class.    * @param argClasses The list of argument types that lead to an ambiguity.    */
+comment|/**    * Constructor.    *     * @param funcClass The UDF or UDAF class.    * @param argTypeInfos The list of argument types that lead to an ambiguity.    */
 specifier|public
 name|AmbiguousMethodException
 parameter_list|(
@@ -78,12 +93,9 @@ name|funcClass
 parameter_list|,
 name|List
 argument_list|<
-name|Class
-argument_list|<
-name|?
+name|TypeInfo
 argument_list|>
-argument_list|>
-name|argClasses
+name|argTypeInfos
 parameter_list|)
 block|{
 name|this
@@ -94,9 +106,9 @@ name|funcClass
 expr_stmt|;
 name|this
 operator|.
-name|argClasses
+name|argTypeInfos
 operator|=
-name|argClasses
+name|argTypeInfos
 expr_stmt|;
 block|}
 name|Class
@@ -112,16 +124,13 @@ return|;
 block|}
 name|List
 argument_list|<
-name|Class
-argument_list|<
-name|?
-argument_list|>
+name|TypeInfo
 argument_list|>
 name|getArgTypeList
 parameter_list|()
 block|{
 return|return
-name|argClasses
+name|argTypeInfos
 return|;
 block|}
 block|}

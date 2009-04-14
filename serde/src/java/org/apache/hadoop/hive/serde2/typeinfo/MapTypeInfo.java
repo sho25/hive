@@ -225,7 +225,7 @@ operator|!
 operator|(
 name|other
 operator|instanceof
-name|TypeInfo
+name|MapTypeInfo
 operator|)
 condition|)
 block|{
@@ -233,11 +233,11 @@ return|return
 literal|false
 return|;
 block|}
-name|TypeInfo
+name|MapTypeInfo
 name|o
 init|=
 operator|(
-name|TypeInfo
+name|MapTypeInfo
 operator|)
 name|other
 decl_stmt|;

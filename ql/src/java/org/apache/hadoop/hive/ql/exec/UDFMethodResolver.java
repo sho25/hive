@@ -41,6 +41,24 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfo
+import|;
+end_import
+
 begin_comment
 comment|/**  * The UDF Method resolver interface. A user can plugin a resolver to their UDF by implementing the  * functions in this interface. Note that the resolver is stored in the UDF class as an instance  * variable. We did not use a static variable because many resolvers maintain the class of the   * enclosing UDF as state and are called from a base class e.g. UDFBaseCompare. This makes it very  * easy to write UDFs that want to do resolution similar to the comparison operators. Such UDFs  * just need to extend UDFBaseCompare and do not have to care about the UDFMethodResolver interface.  * Same is true for UDFs that want to do resolution similar to that done by the numeric operators.  * Such UDFs simply have to extend UDFBaseNumericOp class. For the default resolution the UDF  * implementation simply needs to extend the UDF class.  */
 end_comment
@@ -57,10 +75,7 @@ name|getEvalMethod
 parameter_list|(
 name|List
 argument_list|<
-name|Class
-argument_list|<
-name|?
-argument_list|>
+name|TypeInfo
 argument_list|>
 name|argClasses
 parameter_list|)

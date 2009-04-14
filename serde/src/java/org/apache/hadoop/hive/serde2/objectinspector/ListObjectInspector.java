@@ -64,7 +64,7 @@ name|Object
 name|data
 parameter_list|)
 function_decl|;
-comment|/** returns null for data = null.    */
+comment|/** returns null for data = null.    *      *  Note: This method should not return a List object that is reused by the     *  same ListObjectInspector, because it's possible that the same     *  ListObjectInspector will be used in multiple places in the code.    *      *  However it's OK if the List object is part of the Object data.    */
 specifier|public
 name|List
 argument_list|<

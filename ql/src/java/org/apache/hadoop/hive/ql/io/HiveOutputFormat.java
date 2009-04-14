@@ -130,7 +130,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *<code>HiveOutputFormat</code> describes the output-specification for Hive's  * operators. It has  *<p>  * Add a {@link getHiveRecordWriter(JobConf, Path, final Class<? extends  * Writable>, boolean, tableProperties, Progressable)}, with various parameters  * used to create the final out file and get some specific settings.  *   *   * @see OutputFormat  * @see RecordWriter  * @see JobConf  */
+comment|/**  *<code>HiveOutputFormat</code> describes the output-specification for Hive's  * operators. It has a method {@link #getHiveRecordWriter(JobConf, Path, Class,   * boolean, Properties, Progressable)}, with various parameters used to create   * the final out file and get some specific settings.  *   * @see org.apache.hadoop.mapred.OutputFormat  * @see RecordWriter  * @see JobConf  */
 end_comment
 
 begin_interface
@@ -147,7 +147,7 @@ extends|extends
 name|Writable
 parameter_list|>
 block|{
-comment|/**    * create the final out file and get some specific settings.    *     * @param jc    *          the job configuration file    * @param finalOutPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the table properties of this file's corresponding table    * @param progress    *          progress used for status report    * @return    * @throws IOException    */
+comment|/**    * create the final out file and get some specific settings.    *     * @param jc    *          the job configuration file    * @param finalOutPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the table properties of this file's corresponding table    * @param progress    *          progress used for status report    * @return the RecordWriter for the output file    */
 specifier|public
 name|RecordWriter
 name|getHiveRecordWriter

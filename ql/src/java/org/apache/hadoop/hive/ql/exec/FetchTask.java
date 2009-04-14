@@ -529,6 +529,26 @@ name|StructObjectInspector
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|PrimitiveObjectInspectorFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * FetchTask implementation  **/
 end_comment
@@ -1099,14 +1119,9 @@ name|partObjectInspectors
 operator|.
 name|add
 argument_list|(
-name|ObjectInspectorFactory
+name|PrimitiveObjectInspectorFactory
 operator|.
-name|getStandardPrimitiveObjectInspector
-argument_list|(
-name|String
-operator|.
-name|class
-argument_list|)
+name|javaStringObjectInspector
 argument_list|)
 expr_stmt|;
 block|}

@@ -47,6 +47,20 @@ name|TypeInfoFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|NullWritable
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -72,9 +86,9 @@ name|super
 argument_list|(
 name|TypeInfoFactory
 operator|.
-name|getPrimitiveTypeInfo
+name|getPrimitiveTypeInfoFromPrimitiveWritable
 argument_list|(
-name|Void
+name|NullWritable
 operator|.
 name|class
 argument_list|)
