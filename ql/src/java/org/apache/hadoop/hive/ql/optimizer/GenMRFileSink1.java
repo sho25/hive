@@ -413,6 +413,8 @@ name|currAliasId
 argument_list|,
 name|currTopOp
 argument_list|,
+literal|null
+argument_list|,
 operator|(
 name|mapredWork
 operator|)
@@ -470,6 +472,8 @@ argument_list|(
 name|currAliasId
 argument_list|,
 name|currTopOp
+argument_list|,
+literal|null
 argument_list|,
 operator|(
 name|mapredWork

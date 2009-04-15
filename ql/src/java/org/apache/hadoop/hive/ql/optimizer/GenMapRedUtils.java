@@ -796,6 +796,8 @@ name|currAliasId
 argument_list|,
 name|currTopOp
 argument_list|,
+name|op
+argument_list|,
 name|plan
 argument_list|,
 literal|false
@@ -972,6 +974,8 @@ argument_list|(
 name|currAliasId
 argument_list|,
 name|currTopOp
+argument_list|,
+name|op
 argument_list|,
 name|plan
 argument_list|,
@@ -1185,6 +1189,14 @@ extends|extends
 name|Serializable
 argument_list|>
 name|topOp
+parameter_list|,
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|currOp
 parameter_list|,
 name|mapredWork
 name|plan
@@ -1481,7 +1493,7 @@ name|setKeyAndValueDesc
 argument_list|(
 name|plan
 argument_list|,
-name|topOp
+name|currOp
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1536,6 +1548,13 @@ argument_list|>
 name|topOp
 parameter_list|)
 block|{
+if|if
+condition|(
+name|topOp
+operator|==
+literal|null
+condition|)
+return|return;
 if|if
 condition|(
 name|topOp

@@ -1073,6 +1073,8 @@ operator|.
 name|getCurrTopOp
 argument_list|()
 argument_list|,
+name|union
+argument_list|,
 operator|(
 name|mapredWork
 operator|)
