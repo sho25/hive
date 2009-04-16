@@ -126,7 +126,7 @@ argument_list|>
 name|pathToPartitionInfo
 decl_stmt|;
 specifier|private
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -201,7 +201,7 @@ argument_list|>
 name|pathToPartitionInfo
 parameter_list|,
 specifier|final
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -422,7 +422,7 @@ operator|=
 literal|"Alias -> Map Operator Tree"
 argument_list|)
 specifier|public
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -447,7 +447,7 @@ name|void
 name|setAliasToWork
 parameter_list|(
 specifier|final
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

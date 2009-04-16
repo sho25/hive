@@ -1963,7 +1963,7 @@ argument_list|(
 name|cd
 argument_list|)
 expr_stmt|;
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1977,7 +1977,7 @@ argument_list|>
 name|aliasToWork
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
