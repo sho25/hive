@@ -2208,6 +2208,12 @@ operator|.
 name|varname
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|pwd
+operator|!=
+literal|null
+condition|)
 name|job
 operator|.
 name|set
@@ -2254,6 +2260,12 @@ name|job
 argument_list|)
 expr_stmt|;
 comment|// replace it back
+if|if
+condition|(
+name|pwd
+operator|!=
+literal|null
+condition|)
 name|job
 operator|.
 name|set
