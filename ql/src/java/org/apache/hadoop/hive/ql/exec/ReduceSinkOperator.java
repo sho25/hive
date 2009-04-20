@@ -51,6 +51,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Random
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -733,6 +743,10 @@ name|Object
 index|[]
 name|cachedValues
 decl_stmt|;
+specifier|transient
+name|Random
+name|random
+decl_stmt|;
 specifier|public
 name|void
 name|process
@@ -1066,6 +1080,45 @@ name|keyHashCode
 init|=
 literal|0
 decl_stmt|;
+if|if
+condition|(
+name|partitionEval
+operator|.
+name|length
+operator|==
+literal|0
+condition|)
+block|{
+comment|// If no partition cols, just distribute the data uniformly to provide better
+comment|// load balance.  If the requirement is to have a single reducer, we should set
+comment|// the number of reducers to 1.
+comment|// Use a constant seed to make the code deterministic.
+if|if
+condition|(
+name|random
+operator|==
+literal|null
+condition|)
+block|{
+name|random
+operator|=
+operator|new
+name|Random
+argument_list|(
+literal|12345
+argument_list|)
+expr_stmt|;
+block|}
+name|keyHashCode
+operator|=
+name|random
+operator|.
+name|nextInt
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
 for|for
 control|(
 name|ExprNodeEvaluator
@@ -1108,6 +1161,7 @@ name|hashCode
 argument_list|()
 operator|)
 expr_stmt|;
+block|}
 block|}
 name|keyWritable
 operator|.
