@@ -242,9 +242,29 @@ argument_list|(
 literal|"Cannot have both Cluster By and Distribute By Clauses"
 argument_list|)
 block|,
+name|ORDERBY_DISTRIBUTEBY_CONFLICT
+argument_list|(
+literal|"Cannot have both Order By and Distribute By Clauses"
+argument_list|)
+block|,
 name|CLUSTERBY_SORTBY_CONFLICT
 argument_list|(
 literal|"Cannot have both Cluster By and Sort By Clauses"
+argument_list|)
+block|,
+name|ORDERBY_SORTBY_CONFLICT
+argument_list|(
+literal|"Cannot have both Order By and Sort By Clauses"
+argument_list|)
+block|,
+name|CLUSTERBY_ORDERBY_CONFLICT
+argument_list|(
+literal|"Cannot have both Cluster By and Order By Clauses"
+argument_list|)
+block|,
+name|NO_LIMIT_WITH_ORDERBY
+argument_list|(
+literal|"In strict mode, limit must be specified if ORDER BY is present"
 argument_list|)
 block|,
 name|UNION_NOTIN_SUBQ
