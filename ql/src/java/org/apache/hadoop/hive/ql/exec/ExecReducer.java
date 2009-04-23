@@ -365,6 +365,18 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
+name|long
+name|cntr
+init|=
+literal|0
+decl_stmt|;
+specifier|private
+name|long
+name|nextCntr
+init|=
+literal|1
+decl_stmt|;
+specifier|private
 specifier|static
 name|String
 index|[]
@@ -1101,6 +1113,35 @@ argument_list|(
 name|tag
 argument_list|)
 expr_stmt|;
+name|cntr
+operator|++
+expr_stmt|;
+if|if
+condition|(
+name|cntr
+operator|==
+name|nextCntr
+condition|)
+block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"ExecReducer: processing "
+operator|+
+name|cntr
+operator|+
+literal|" rows"
+argument_list|)
+expr_stmt|;
+name|nextCntr
+operator|=
+name|getNextCntr
+argument_list|(
+name|cntr
+argument_list|)
+expr_stmt|;
+block|}
 name|reducer
 operator|.
 name|process
@@ -1136,6 +1177,33 @@ name|e
 argument_list|)
 throw|;
 block|}
+block|}
+specifier|private
+name|long
+name|getNextCntr
+parameter_list|(
+name|long
+name|cntr
+parameter_list|)
+block|{
+comment|// A very simple counter to keep track of number of rows processed by the reducer. It dumps
+comment|// every 1 million times, and quickly before that
+if|if
+condition|(
+name|cntr
+operator|>=
+literal|1000000
+condition|)
+return|return
+name|cntr
+operator|+
+literal|1000000
+return|;
+return|return
+literal|10
+operator|*
+name|cntr
+return|;
 block|}
 specifier|public
 name|void
@@ -1222,6 +1290,17 @@ name|endGroup
 argument_list|()
 expr_stmt|;
 block|}
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"ExecReducer: processed "
+operator|+
+name|cntr
+operator|+
+literal|" rows"
+argument_list|)
+expr_stmt|;
 name|reducer
 operator|.
 name|close

@@ -746,6 +746,17 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+name|int
+name|nextSz
+init|=
+literal|0
+decl_stmt|;
+specifier|transient
+name|Byte
+name|lastAlias
+init|=
+literal|null
+decl_stmt|;
 specifier|public
 name|void
 name|initialize
@@ -1287,6 +1298,32 @@ operator|new
 name|InspectableObject
 argument_list|()
 decl_stmt|;
+specifier|private
+name|int
+name|getNextSize
+parameter_list|(
+name|int
+name|sz
+parameter_list|)
+block|{
+comment|// A very simple counter to keep track of join entries for a key
+if|if
+condition|(
+name|sz
+operator|>=
+literal|100000
+condition|)
+return|return
+name|sz
+operator|+
+literal|100000
+return|;
+return|return
+literal|2
+operator|*
+name|sz
+return|;
+block|}
 specifier|public
 name|void
 name|process
@@ -1336,6 +1373,28 @@ operator|.
 name|o
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|(
+name|lastAlias
+operator|==
+literal|null
+operator|)
+operator|||
+operator|(
+operator|!
+name|lastAlias
+operator|.
+name|equals
+argument_list|(
+name|alias
+argument_list|)
+operator|)
+condition|)
+name|nextSz
+operator|=
+name|joinEmitInterval
+expr_stmt|;
 comment|// get the expressions for that alias
 name|JoinExprMap
 name|exmap
@@ -1412,9 +1471,10 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Are we consuming too much memory
-if|if
-condition|(
+comment|// number of rows for the key in the given table
+name|int
+name|sz
+init|=
 name|storage
 operator|.
 name|get
@@ -1424,10 +1484,8 @@ argument_list|)
 operator|.
 name|size
 argument_list|()
-operator|==
-name|joinEmitInterval
-condition|)
-block|{
+decl_stmt|;
+comment|// Are we consuming too much memory
 if|if
 condition|(
 name|alias
@@ -1437,11 +1495,16 @@ operator|-
 literal|1
 condition|)
 block|{
-comment|// The input is sorted by alias, so if we are already in the last join
-comment|// operand,
+if|if
+condition|(
+name|sz
+operator|==
+name|joinEmitInterval
+condition|)
+block|{
+comment|// The input is sorted by alias, so if we are already in the last join operand,
 comment|// we can emit some results now.
-comment|// Note this has to be done before adding the current row to the
-comment|// storage,
+comment|// Note this has to be done before adding the current row to the storage,
 comment|// to preserve the correctness for outer joins.
 name|checkAndGenObject
 argument_list|()
@@ -1457,10 +1520,17 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
+block|}
 else|else
 block|{
-comment|// Output a warning if we reached at least 1000 rows for a join
-comment|// operand
+if|if
+condition|(
+name|sz
+operator|==
+name|nextSz
+condition|)
+block|{
+comment|// Output a warning if we reached at least 1000 rows for a join operand
 comment|// We won't output a warning for the last join operand since the size
 comment|// will never goes to joinEmitInterval.
 name|InspectableObject
@@ -1489,11 +1559,22 @@ literal|"table "
 operator|+
 name|alias
 operator|+
-literal|" has more than joinEmitInterval rows for join key "
+literal|" has "
+operator|+
+name|sz
+operator|+
+literal|" rows for join key "
 operator|+
 name|io
 operator|.
 name|o
+argument_list|)
+expr_stmt|;
+name|nextSz
+operator|=
+name|getNextSize
+argument_list|(
+name|nextSz
 argument_list|)
 expr_stmt|;
 block|}
