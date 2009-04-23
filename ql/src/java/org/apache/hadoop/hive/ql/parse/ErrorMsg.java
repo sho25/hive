@@ -57,19 +57,29 @@ argument_list|(
 literal|"Invalid Column Reference"
 argument_list|)
 block|,
+name|INVALID_TABLE_OR_COLUMN
+argument_list|(
+literal|"Invalid Table Alias or Column Reference"
+argument_list|)
+block|,
+name|AMBIGUOUS_TABLE_OR_COLUMN
+argument_list|(
+literal|"Ambiguous Table Alias or Column Reference"
+argument_list|)
+block|,
 name|INVALID_PARTITION
 argument_list|(
 literal|"Partition not found"
 argument_list|)
 block|,
-name|AMBIGOUS_COLUMN
+name|AMBIGUOUS_COLUMN
 argument_list|(
-literal|"Ambigous Column Reference"
+literal|"Ambiguous Column Reference"
 argument_list|)
 block|,
-name|AMBIGOUS_TABLE_ALIAS
+name|AMBIGUOUS_TABLE_ALIAS
 argument_list|(
-literal|"Ambigous Table Alias"
+literal|"Ambiguous Table Alias"
 argument_list|)
 block|,
 name|INVALID_TABLE_ALIAS
