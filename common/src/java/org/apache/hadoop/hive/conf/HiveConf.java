@@ -494,9 +494,9 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
-name|HIVEPARTITIONPRUNER
+name|HIVEMAPREDMODE
 argument_list|(
-literal|"hive.partition.pruning"
+literal|"hive.mapred.mode"
 argument_list|,
 literal|"nonstrict"
 argument_list|)

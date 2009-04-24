@@ -277,6 +277,11 @@ argument_list|(
 literal|"In strict mode, limit must be specified if ORDER BY is present"
 argument_list|)
 block|,
+name|NO_CARTESIAN_PRODUCT
+argument_list|(
+literal|"In strict mode, cartesian product is not allowed. If you really want to perform the operation, set hive.mapred.mode=nonstrict"
+argument_list|)
+block|,
 name|UNION_NOTIN_SUBQ
 argument_list|(
 literal|"Top level Union is not supported currently; use a subquery for the union"
