@@ -753,9 +753,10 @@ operator|=
 name|id
 expr_stmt|;
 block|}
+comment|/**    * This function is not named getId(), to make sure java serialization    * does NOT serialize it.  Some TestParse tests will fail if we serialize    * this field, since the Operator ID will change based on the number of    * query tests.    */
 specifier|public
 name|String
-name|getid
+name|getIdentifier
 parameter_list|()
 block|{
 return|return

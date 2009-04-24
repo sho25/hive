@@ -545,7 +545,7 @@ operator|)
 name|nd
 operator|)
 operator|.
-name|getid
+name|getIdentifier
 argument_list|()
 operator|+
 literal|")"
@@ -613,7 +613,7 @@ operator|)
 name|nd
 operator|)
 operator|.
-name|getid
+name|getIdentifier
 argument_list|()
 operator|+
 literal|")"
@@ -1069,7 +1069,7 @@ operator|)
 name|nd
 operator|)
 operator|.
-name|getid
+name|getIdentifier
 argument_list|()
 operator|+
 literal|")"
@@ -1227,7 +1227,7 @@ operator|)
 name|nd
 operator|)
 operator|.
-name|getid
+name|getIdentifier
 argument_list|()
 operator|+
 literal|")"
@@ -1629,7 +1629,7 @@ operator|)
 name|nd
 operator|)
 operator|.
-name|getid
+name|getIdentifier
 argument_list|()
 operator|+
 literal|")"
@@ -1776,7 +1776,7 @@ operator|)
 name|nd
 operator|)
 operator|.
-name|getid
+name|getIdentifier
 argument_list|()
 operator|+
 literal|")"
