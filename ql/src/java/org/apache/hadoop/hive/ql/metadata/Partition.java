@@ -1473,7 +1473,7 @@ operator|.
 name|spec
 return|;
 block|}
-comment|/**    * Replaces files in the partition with new data set specified by srcf. Works by moving files    *    * @param srcf Files to be moved. Leaf Directories or Globbed File Paths    */
+comment|/**    * Replaces files in the partition with new data set specified by srcf. Works by moving files    *    * @param srcf Files to be moved. Leaf Directories or Globbed File Paths    * @param tmpd Temporary directory    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1485,6 +1485,9 @@ name|replaceFiles
 parameter_list|(
 name|Path
 name|srcf
+parameter_list|,
+name|Path
+name|tmpd
 parameter_list|)
 throws|throws
 name|HiveException
@@ -1526,6 +1529,8 @@ argument_list|,
 name|partPath
 argument_list|,
 name|fs
+argument_list|,
+name|tmpd
 argument_list|)
 expr_stmt|;
 block|}

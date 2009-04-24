@@ -1474,6 +1474,53 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|private
+name|void
+name|runLoadCmd
+parameter_list|(
+name|String
+name|loadCmd
+parameter_list|)
+throws|throws
+name|Exception
+block|{
+name|int
+name|ecode
+init|=
+literal|0
+decl_stmt|;
+name|ecode
+operator|=
+name|drv
+operator|.
+name|run
+argument_list|(
+name|loadCmd
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|ecode
+operator|!=
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|Exception
+argument_list|(
+literal|"load command: "
+operator|+
+name|loadCmd
+operator|+
+literal|" failed with exit code= "
+operator|+
+name|ecode
+argument_list|)
+throw|;
+block|}
+return|return;
+block|}
 specifier|public
 name|void
 name|createSources
@@ -1599,11 +1646,6 @@ decl_stmt|;
 name|String
 name|loadCmd
 decl_stmt|;
-name|int
-name|ecode
-init|=
-literal|0
-decl_stmt|;
 for|for
 control|(
 name|String
@@ -1705,8 +1747,8 @@ operator|=
 name|newfpath
 expr_stmt|;
 comment|//db.loadPartition(fpath, srcpart.getName(), part_spec, true);
-name|loadCmd
-operator|=
+name|runLoadCmd
+argument_list|(
 literal|"LOAD DATA INPATH '"
 operator|+
 name|newfpath
@@ -1723,37 +1765,8 @@ operator|+
 name|hr
 operator|+
 literal|"')"
-expr_stmt|;
-name|ecode
-operator|=
-name|drv
-operator|.
-name|run
-argument_list|(
-name|loadCmd
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|ecode
-operator|!=
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|Exception
-argument_list|(
-literal|"load command: "
-operator|+
-name|loadCmd
-operator|+
-literal|" failed with exit code= "
-operator|+
-name|ecode
-argument_list|)
-throw|;
-block|}
 block|}
 block|}
 name|ArrayList
@@ -1854,8 +1867,8 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-name|loadCmd
-operator|=
+name|runLoadCmd
+argument_list|(
 literal|"LOAD DATA INPATH '"
 operator|+
 name|newfpath
@@ -1864,37 +1877,8 @@ name|toString
 argument_list|()
 operator|+
 literal|"' INTO TABLE srcbucket"
-expr_stmt|;
-name|ecode
-operator|=
-name|drv
-operator|.
-name|run
-argument_list|(
-name|loadCmd
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|ecode
-operator|!=
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|Exception
-argument_list|(
-literal|"load command: "
-operator|+
-name|loadCmd
-operator|+
-literal|" failed with exit code= "
-operator|+
-name|ecode
-argument_list|)
-throw|;
-block|}
 block|}
 for|for
 control|(
@@ -2136,8 +2120,8 @@ name|newfpath
 argument_list|)
 expr_stmt|;
 comment|//db.loadTable(newfpath, "src", false);
-name|loadCmd
-operator|=
+name|runLoadCmd
+argument_list|(
 literal|"LOAD DATA INPATH '"
 operator|+
 name|newfpath
@@ -2146,37 +2130,8 @@ name|toString
 argument_list|()
 operator|+
 literal|"' INTO TABLE src"
-expr_stmt|;
-name|ecode
-operator|=
-name|drv
-operator|.
-name|run
-argument_list|(
-name|loadCmd
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|ecode
-operator|!=
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|Exception
-argument_list|(
-literal|"load command: "
-operator|+
-name|loadCmd
-operator|+
-literal|" failed with exit code= "
-operator|+
-name|ecode
-argument_list|)
-throw|;
-block|}
 comment|// load the input data into the src table
 name|fpath
 operator|=
@@ -2211,15 +2166,17 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-name|db
-operator|.
-name|loadTable
+comment|//db.loadTable(newfpath, "src1", false);
+name|runLoadCmd
 argument_list|(
+literal|"LOAD DATA INPATH '"
+operator|+
 name|newfpath
-argument_list|,
-literal|"src1"
-argument_list|,
-literal|false
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|"' INTO TABLE src1"
 argument_list|)
 expr_stmt|;
 comment|// load the input data into the src_sequencefile table
@@ -2256,15 +2213,17 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-name|db
-operator|.
-name|loadTable
+comment|//db.loadTable(newfpath, "src_sequencefile", true);
+name|runLoadCmd
 argument_list|(
+literal|"LOAD DATA INPATH '"
+operator|+
 name|newfpath
-argument_list|,
-literal|"src_sequencefile"
-argument_list|,
-literal|true
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|"' INTO TABLE src_sequencefile"
 argument_list|)
 expr_stmt|;
 comment|// load the input data into the src_thrift table
@@ -2301,15 +2260,17 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-name|db
-operator|.
-name|loadTable
+comment|//db.loadTable(newfpath, "src_thrift", true);
+name|runLoadCmd
 argument_list|(
+literal|"LOAD DATA INPATH '"
+operator|+
 name|newfpath
-argument_list|,
-literal|"src_thrift"
-argument_list|,
-literal|true
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|"' INTO TABLE src_thrift"
 argument_list|)
 expr_stmt|;
 comment|// load the json data into the src_json table
@@ -2346,15 +2307,17 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-name|db
-operator|.
-name|loadTable
+comment|//db.loadTable(newfpath, "src_json", false);
+name|runLoadCmd
 argument_list|(
+literal|"LOAD DATA INPATH '"
+operator|+
 name|newfpath
-argument_list|,
-literal|"src_json"
-argument_list|,
-literal|false
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|"' INTO TABLE src_json"
 argument_list|)
 expr_stmt|;
 block|}

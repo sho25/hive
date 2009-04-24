@@ -2407,13 +2407,16 @@ name|getNumBuckets
 argument_list|()
 return|;
 block|}
-comment|/**    * Replaces files in the partition with new data set specified by srcf. Works by moving files    * @param srcf Files to be replaced. Leaf directories or globbed file paths    */
+comment|/**    * Replaces files in the partition with new data set specified by srcf. Works by moving files    * @param srcf Files to be replaced. Leaf directories or globbed file paths    * @param tmpd Temporary directory    */
 specifier|protected
 name|void
 name|replaceFiles
 parameter_list|(
 name|Path
 name|srcf
+parameter_list|,
+name|Path
+name|tmpd
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2461,6 +2464,8 @@ argument_list|()
 argument_list|)
 argument_list|,
 name|fs
+argument_list|,
+name|tmpd
 argument_list|)
 expr_stmt|;
 block|}

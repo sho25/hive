@@ -1392,6 +1392,9 @@ operator|.
 name|toString
 argument_list|()
 argument_list|,
+name|getTmpFileName
+argument_list|()
+argument_list|,
 name|Utilities
 operator|.
 name|getTableDesc

@@ -14744,6 +14744,9 @@ name|loadTableDesc
 argument_list|(
 name|queryTmpdir
 argument_list|,
+name|getTmpFileName
+argument_list|()
+argument_list|,
 name|table_desc
 argument_list|,
 operator|new
@@ -14850,6 +14853,9 @@ operator|new
 name|loadTableDesc
 argument_list|(
 name|queryTmpdir
+argument_list|,
+name|getTmpFileName
+argument_list|()
 argument_list|,
 name|table_desc
 argument_list|,

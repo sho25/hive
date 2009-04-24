@@ -2365,7 +2365,7 @@ name|name
 argument_list|)
 return|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition    * - Alters existing content of the partition with the contents of loadPath.    * - If he partition does not exist - one is created    * - files in loadPath are moved into Hive. But the directory itself is not removed.    *    * @param loadPath Directory containing files to load into Table    * @param tableName name of table to be loaded.    * @param partSpec defines which partition needs to be loaded    * @param replace if true - replace files in the partition, otherwise add files to the partition    */
+comment|/**    * Load a directory into a Hive Table Partition    * - Alters existing content of the partition with the contents of loadPath.    * - If he partition does not exist - one is created    * - files in loadPath are moved into Hive. But the directory itself is not removed.    *    * @param loadPath Directory containing files to load into Table    * @param tableName name of table to be loaded.    * @param partSpec defines which partition needs to be loaded    * @param replace if true - replace files in the partition, otherwise add files to the partition    * @param tmpDirPath The temporary directory.    */
 specifier|public
 name|void
 name|loadPartition
@@ -2386,6 +2386,9 @@ name|partSpec
 parameter_list|,
 name|boolean
 name|replace
+parameter_list|,
+name|Path
+name|tmpDirPath
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2420,6 +2423,8 @@ operator|.
 name|replaceFiles
 argument_list|(
 name|loadPath
+argument_list|,
+name|tmpDirPath
 argument_list|)
 expr_stmt|;
 block|}
@@ -2434,7 +2439,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Load a directory into a Hive Table.    * - Alters existing content of table with the contents of loadPath.    * - If table does not exist - an exception is thrown    * - files in loadPath are moved into Hive. But the directory itself is not removed.    *    * @param loadPath Directory containing files to load into Table    * @param tableName name of table to be loaded.    * @param replace if true - replace files in the table, otherwise add files to table    */
+comment|/**    * Load a directory into a Hive Table.    * - Alters existing content of table with the contents of loadPath.    * - If table does not exist - an exception is thrown    * - files in loadPath are moved into Hive. But the directory itself is not removed.    *    * @param loadPath Directory containing files to load into Table    * @param tableName name of table to be loaded.    * @param replace if true - replace files in the table, otherwise add files to table    * @param tmpDirPath The temporary directory.    */
 specifier|public
 name|void
 name|loadTable
@@ -2447,6 +2452,9 @@ name|tableName
 parameter_list|,
 name|boolean
 name|replace
+parameter_list|,
+name|Path
+name|tmpDirPath
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2469,6 +2477,8 @@ operator|.
 name|replaceFiles
 argument_list|(
 name|loadPath
+argument_list|,
+name|tmpDirPath
 argument_list|)
 expr_stmt|;
 block|}
@@ -3696,7 +3706,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Replaces files in the partition with new data set specifed by srcf. Works by moving files    *    * @param srcf Files to be moved. Leaf Directories or Globbed File Paths    */
+comment|/**    * Replaces files in the partition with new data set specifed by srcf. Works by moving files    *    * @param srcf Files to be moved. Leaf Directories or Globbed File Paths    * @param dest The directory where the final data needs to go    * @param fs The filesystem handle    * @param tmppath Temporary directory    */
 specifier|protected
 name|void
 name|replaceFiles
@@ -3709,6 +3719,9 @@ name|destf
 parameter_list|,
 name|FileSystem
 name|fs
+parameter_list|,
+name|Path
+name|tmppath
 parameter_list|)
 throws|throws
 name|HiveException
@@ -3775,27 +3788,6 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|Random
-name|randGen
-init|=
-operator|new
-name|Random
-argument_list|()
-decl_stmt|;
-name|Path
-name|tmppath
-init|=
-operator|new
-name|Path
-argument_list|(
-literal|"/tmp/"
-operator|+
-name|randGen
-operator|.
-name|nextInt
-argument_list|()
-argument_list|)
-decl_stmt|;
 try|try
 block|{
 name|fs
