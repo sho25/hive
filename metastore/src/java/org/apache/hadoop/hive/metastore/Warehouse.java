@@ -1033,7 +1033,9 @@ name|name
 operator|.
 name|append
 argument_list|(
-literal|'/'
+name|Path
+operator|.
+name|SEPARATOR
 argument_list|)
 expr_stmt|;
 block|}

@@ -45,16 +45,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|AbstractMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|ArrayList
 import|;
 end_import
@@ -355,22 +345,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDeUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|Deserializer
 import|;
 end_import
@@ -419,9 +393,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|lazy
-operator|.
-name|LazySimpleSerDe
+name|SerDeUtils
 import|;
 end_import
 
@@ -500,20 +472,6 @@ operator|.
 name|mapred
 operator|.
 name|InputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|OutputFormat
 import|;
 end_import
 
@@ -2446,9 +2404,6 @@ argument_list|)
 expr_stmt|;
 name|Hive
 operator|.
-name|get
-argument_list|()
-operator|.
 name|replaceFiles
 argument_list|(
 name|srcf
@@ -2521,9 +2476,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|Hive
-operator|.
-name|get
-argument_list|()
 operator|.
 name|copyFiles
 argument_list|(
@@ -2953,7 +2905,7 @@ return|;
 block|}
 comment|/**    * Creates a partition name -> value spec map object    * @param tp Use the information from this partition.    * @return Partition name to value mapping.    */
 specifier|public
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
