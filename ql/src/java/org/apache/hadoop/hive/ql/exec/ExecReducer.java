@@ -1106,6 +1106,7 @@ argument_list|()
 index|]
 argument_list|)
 expr_stmt|;
+comment|// The tag is not used any more, we should remove it.
 name|row
 operator|.
 name|add
@@ -1155,6 +1156,11 @@ operator|.
 name|get
 argument_list|()
 index|]
+argument_list|,
+name|tag
+operator|.
+name|get
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

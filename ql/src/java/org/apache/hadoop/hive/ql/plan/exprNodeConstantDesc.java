@@ -81,6 +81,10 @@ name|TypeInfoFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * A constant expression.  */
+end_comment
+
 begin_class
 specifier|public
 class|class

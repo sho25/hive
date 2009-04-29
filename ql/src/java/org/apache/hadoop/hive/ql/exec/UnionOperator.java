@@ -146,6 +146,9 @@ name|row
 parameter_list|,
 name|ObjectInspector
 name|rowInspector
+parameter_list|,
+name|int
+name|tag
 parameter_list|)
 throws|throws
 name|HiveException

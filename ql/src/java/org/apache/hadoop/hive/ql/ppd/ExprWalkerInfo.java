@@ -336,7 +336,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 argument_list|>
 name|pushdownPreds
@@ -366,7 +366,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -424,7 +424,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -759,7 +759,7 @@ specifier|public
 name|void
 name|addFinalCandidate
 parameter_list|(
-name|exprNodeFuncDesc
+name|exprNodeDesc
 name|expr
 parameter_list|)
 block|{
@@ -794,7 +794,7 @@ argument_list|,
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 argument_list|()
 argument_list|)
@@ -810,7 +810,7 @@ operator|.
 name|add
 argument_list|(
 operator|(
-name|exprNodeFuncDesc
+name|exprNodeDesc
 operator|)
 name|expr
 operator|.
@@ -827,7 +827,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 argument_list|>
 name|getFinalCandidates
@@ -861,7 +861,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 argument_list|>
 name|e
@@ -877,7 +877,7 @@ control|)
 block|{
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 name|predList
 init|=

@@ -699,7 +699,7 @@ block|}
 comment|// combine all predicates into a single expression
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 name|preds
 init|=
@@ -714,7 +714,7 @@ name|Iterator
 argument_list|<
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 argument_list|>
 name|iterator
@@ -1822,7 +1822,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 argument_list|>
 name|e
@@ -1857,7 +1857,7 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|exprNodeFuncDesc
+name|exprNodeDesc
 name|n
 range|:
 name|e
@@ -2006,7 +2006,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeFuncDesc
+name|exprNodeDesc
 argument_list|>
 argument_list|>
 name|e

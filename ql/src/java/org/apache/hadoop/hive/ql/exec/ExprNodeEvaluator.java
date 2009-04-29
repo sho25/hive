@@ -51,24 +51,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|InspectableObject
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|ObjectInspector
 import|;
 end_import
@@ -79,32 +61,26 @@ specifier|abstract
 class|class
 name|ExprNodeEvaluator
 block|{
-comment|/**    * Evaluate the expression given the row and rowInspector.     * @param result   result.o and result.oi will be set inside the method.    */
+comment|/**    * Initialize should be called once and only once.    * Return the ObjectInspector for the return value, given the rowInspector.    */
 specifier|public
 specifier|abstract
-name|void
-name|evaluate
+name|ObjectInspector
+name|initialize
 parameter_list|(
-name|Object
-name|row
-parameter_list|,
 name|ObjectInspector
 name|rowInspector
-parameter_list|,
-name|InspectableObject
-name|result
 parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Metadata evaluation. Return the inspector for the expression, given the rowInspector.    * This method must return the same value as result.oi in evaluate(...) call with the same rowInspector.       */
+comment|/**    * Evaluate the expression given the row.    * This method should use the rowInspector passed in from initialize to     * inspect the row object.    * The return value will be inspected by the return value of initialize.     */
 specifier|public
 specifier|abstract
-name|ObjectInspector
-name|evaluateInspector
+name|Object
+name|evaluate
 parameter_list|(
-name|ObjectInspector
-name|rowInspector
+name|Object
+name|row
 parameter_list|)
 throws|throws
 name|HiveException

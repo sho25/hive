@@ -107,6 +107,11 @@ argument_list|(
 literal|"Operator Argument Type Mismatch"
 argument_list|)
 block|,
+name|INVALID_ARGUMENT_TYPE
+argument_list|(
+literal|"Argument Type Mismatch"
+argument_list|)
+block|,
 name|INVALID_JOIN_CONDITION_1
 argument_list|(
 literal|"Both Left and Right Aliases Encountered in Join"
