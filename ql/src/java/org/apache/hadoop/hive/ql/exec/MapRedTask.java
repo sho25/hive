@@ -289,6 +289,25 @@ name|out
 argument_list|)
 expr_stmt|;
 name|String
+name|isSilent
+init|=
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"test.silent"
+argument_list|)
+argument_list|)
+condition|?
+literal|"-silent"
+else|:
+literal|""
+decl_stmt|;
+name|String
 name|cmdLine
 init|=
 name|hadoopExec
@@ -307,6 +326,10 @@ name|planFile
 operator|.
 name|toString
 argument_list|()
+operator|+
+literal|" "
+operator|+
+name|isSilent
 operator|+
 literal|" "
 operator|+

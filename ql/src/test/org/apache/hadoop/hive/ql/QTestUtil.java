@@ -2657,13 +2657,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|SessionState
-operator|.
-name|start
-argument_list|(
-name|ss
-argument_list|)
-expr_stmt|;
 assert|assert
 name|ss
 operator|!=
