@@ -592,6 +592,44 @@ comment|// all strings but they may not be.
 comment|/*       case STRING: {         Text t = ((StringObjectInspector)oi).getPrimitiveWritableObject(o);         out.write(t.getBytes(), 0, t.getLength());         break;       }       */
 default|default:
 block|{
+if|if
+condition|(
+name|o
+operator|instanceof
+name|Text
+condition|)
+block|{
+comment|// This piece of code improves the performance because we don't need to
+comment|// convert Text to String then back to Text.  We should rely on the code
+comment|// block above when JoinOperator is fixed.
+name|Text
+name|t
+init|=
+operator|(
+name|Text
+operator|)
+name|o
+decl_stmt|;
+name|out
+operator|.
+name|write
+argument_list|(
+name|t
+operator|.
+name|getBytes
+argument_list|()
+argument_list|,
+literal|0
+argument_list|,
+name|t
+operator|.
+name|getLength
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|ByteBuffer
 name|b
 init|=
@@ -622,6 +660,7 @@ name|limit
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
