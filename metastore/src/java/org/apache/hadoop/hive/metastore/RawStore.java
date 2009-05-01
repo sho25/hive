@@ -395,7 +395,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|// TODO: add tests
 specifier|public
 specifier|abstract
 name|void
@@ -449,6 +448,25 @@ name|short
 name|max_parts
 parameter_list|)
 throws|throws
+name|MetaException
+function_decl|;
+specifier|public
+specifier|abstract
+name|void
+name|alterPartition
+parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|Partition
+name|new_part
+parameter_list|)
+throws|throws
+name|InvalidObjectException
+throws|,
 name|MetaException
 function_decl|;
 block|}

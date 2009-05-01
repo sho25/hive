@@ -535,6 +535,27 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * updates a partition to new partition    * @param dbName database of the old partition    * @param tblName table name of the old partition    * @param newPart new partition    * @throws InvalidOperationException if the old partition does not exist    * @throws MetaException if error in updating metadata    * @throws TException if error in communicating with metastore server    */
+specifier|public
+name|void
+name|alter_partition
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|Partition
+name|newPart
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 block|}
 end_interface
 
