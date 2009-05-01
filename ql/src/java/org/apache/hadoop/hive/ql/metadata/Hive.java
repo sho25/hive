@@ -3676,7 +3676,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Replaces files in the partition with new data set specifed by srcf. Works by moving files    *    * @param srcf Files to be moved. Leaf Directories or Globbed File Paths    * @param dest The directory where the final data needs to go    * @param fs The filesystem handle    * @param tmppath Temporary directory    */
+comment|/**    * Replaces files in the partition with new data set specifed by srcf. Works by moving files    *    * @param srcf Files to be moved. Leaf Directories or Globbed File Paths    * @param destf The directory where the final data needs to go    * @param fs The filesystem handle    * @param tmppath Temporary directory    */
 specifier|static
 specifier|protected
 name|void
