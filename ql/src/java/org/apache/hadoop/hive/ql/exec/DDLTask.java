@@ -803,23 +803,11 @@ comment|// Create the db
 name|Hive
 name|db
 decl_stmt|;
-name|FileSystem
-name|fs
-decl_stmt|;
 try|try
 block|{
 name|db
 operator|=
 name|Hive
-operator|.
-name|get
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-name|fs
-operator|=
-name|FileSystem
 operator|.
 name|get
 argument_list|(
@@ -942,8 +930,6 @@ name|msck
 argument_list|(
 name|db
 argument_list|,
-name|fs
-argument_list|,
 name|msckDesc
 argument_list|)
 return|;
@@ -967,8 +953,6 @@ return|return
 name|describeTable
 argument_list|(
 name|db
-argument_list|,
-name|fs
 argument_list|,
 name|descTbl
 argument_list|)
@@ -994,8 +978,6 @@ name|showTables
 argument_list|(
 name|db
 argument_list|,
-name|fs
-argument_list|,
 name|showTbls
 argument_list|)
 return|;
@@ -1019,8 +1001,6 @@ return|return
 name|showPartitions
 argument_list|(
 name|db
-argument_list|,
-name|fs
 argument_list|,
 name|showParts
 argument_list|)
@@ -1235,16 +1215,13 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * MetastoreCheck, see if the data in the metastore matches    * what is on the dfs.    * Current version checks for tables and partitions that    * are either missing on disk on in the metastore.    *     * @param db The database in question.    * @param fs FileSystem that will contain the file written.    * @param msckDesc Information about the tables and partitions    * we want to check for.    * @return Returns 0 when execution succeeds and above 0 if it fails.    */
+comment|/**    * MetastoreCheck, see if the data in the metastore matches    * what is on the dfs.    * Current version checks for tables and partitions that    * are either missing on disk on in the metastore.    *     * @param db The database in question.    * @param msckDesc Information about the tables and partitions    * we want to check for.    * @return Returns 0 when execution succeeds and above 0 if it fails.    */
 specifier|private
 name|int
 name|msck
 parameter_list|(
 name|Hive
 name|db
-parameter_list|,
-name|FileSystem
-name|fs
 parameter_list|,
 name|MsckDesc
 name|msckDesc
@@ -1266,8 +1243,6 @@ operator|new
 name|HiveMetaStoreChecker
 argument_list|(
 name|db
-argument_list|,
-name|fs
 argument_list|)
 decl_stmt|;
 name|checker
@@ -1339,6 +1314,19 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+name|FileSystem
+name|fs
+init|=
+name|msckDesc
+operator|.
+name|getResFile
+argument_list|()
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|resultOut
 operator|=
 operator|new
@@ -1579,16 +1567,13 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Write a list of partitions to a file.    *     * @param db The database in question.    * @param fs FileSystem that will contain the file written.    * @param showParts These are the partitions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of partitions to a file.    *     * @param db The database in question.    * @param showParts These are the partitions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showPartitions
 parameter_list|(
 name|Hive
 name|db
-parameter_list|,
-name|FileSystem
-name|fs
 parameter_list|,
 name|showPartitionsDesc
 name|showParts
@@ -1678,6 +1663,19 @@ expr_stmt|;
 comment|// write the results in the file
 try|try
 block|{
+name|FileSystem
+name|fs
+init|=
+name|showParts
+operator|.
+name|getResFile
+argument_list|()
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
@@ -1826,16 +1824,13 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write a list of the tables in the database to a file.    *     * @param db The database in question.    * @param fs FileSystem that will contain the file written.    * @param showTbls These are the tables we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of the tables in the database to a file.    *     * @param db The database in question.    * @param showTbls These are the tables we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showTables
 parameter_list|(
 name|Hive
 name|db
-parameter_list|,
-name|FileSystem
-name|fs
 parameter_list|,
 name|showTablesDesc
 name|showTbls
@@ -1910,6 +1905,19 @@ expr_stmt|;
 comment|// write the results in the file
 try|try
 block|{
+name|FileSystem
+name|fs
+init|=
+name|showTbls
+operator|.
+name|getResFile
+argument_list|()
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
@@ -2059,16 +2067,13 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write the description of a table to a file.    *     * @param db The database in question.    * @param fs FileSystem that will contain the file written.    * @param descTbl This is the table we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write the description of a table to a file.    *     * @param db The database in question.    * @param descTbl This is the table we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|describeTable
 parameter_list|(
 name|Hive
 name|db
-parameter_list|,
-name|FileSystem
-name|fs
 parameter_list|,
 name|descTableDesc
 name|descTbl
@@ -2147,6 +2152,19 @@ operator|==
 literal|null
 condition|)
 block|{
+name|FileSystem
+name|fs
+init|=
+name|descTbl
+operator|.
+name|getResFile
+argument_list|()
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
@@ -2231,6 +2249,19 @@ operator|==
 literal|null
 condition|)
 block|{
+name|FileSystem
+name|fs
+init|=
+name|descTbl
+operator|.
+name|getResFile
+argument_list|()
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
@@ -2424,6 +2455,19 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|FileSystem
+name|fs
+init|=
+name|descTbl
+operator|.
+name|getResFile
+argument_list|()
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|DataOutput
 name|outStream
 init|=

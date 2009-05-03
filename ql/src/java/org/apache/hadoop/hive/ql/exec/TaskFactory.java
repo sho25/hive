@@ -498,12 +498,12 @@ operator|.
 name|class
 condition|)
 block|{
-name|String
+name|boolean
 name|viachild
 init|=
 name|conf
 operator|.
-name|getVar
+name|getBoolVar
 argument_list|(
 name|HiveConf
 operator|.
@@ -543,11 +543,6 @@ literal|"local"
 argument_list|)
 operator|||
 name|viachild
-operator|.
-name|equals
-argument_list|(
-literal|"true"
-argument_list|)
 condition|)
 block|{
 name|ret

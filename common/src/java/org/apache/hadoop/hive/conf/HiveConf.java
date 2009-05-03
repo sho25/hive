@@ -283,7 +283,7 @@ name|SUBMITVIACHILD
 argument_list|(
 literal|"hive.exec.submitviachild"
 argument_list|,
-literal|"false"
+literal|false
 argument_list|)
 block|,
 name|SCRIPTERRORLIMIT
@@ -421,6 +421,14 @@ argument_list|(
 literal|"javax.jdo.option.ConnectionPassword"
 argument_list|,
 literal|""
+argument_list|)
+block|,
+comment|// CLI
+name|CLIIGNOREERRORS
+argument_list|(
+literal|"hive.cli.errors.ignore"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 comment|// Things we log in the jobconf
