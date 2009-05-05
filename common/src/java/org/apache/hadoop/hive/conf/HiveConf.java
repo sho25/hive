@@ -330,6 +330,13 @@ argument_list|,
 literal|999
 argument_list|)
 block|,
+name|PREEXECHOOKS
+argument_list|(
+literal|"hive.exec.pre.hooks"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// hadoop stuff
 name|HADOOPBIN
 argument_list|(

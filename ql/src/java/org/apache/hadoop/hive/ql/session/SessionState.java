@@ -1166,7 +1166,7 @@ name|LogHelper
 name|_console
 decl_stmt|;
 comment|/**    * initialize or retrieve console object for SessionState    */
-specifier|private
+specifier|public
 specifier|static
 name|LogHelper
 name|getConsole
