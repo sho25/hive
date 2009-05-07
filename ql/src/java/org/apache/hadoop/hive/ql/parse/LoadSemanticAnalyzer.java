@@ -1167,8 +1167,6 @@ operator|(
 name|ASTNode
 operator|)
 name|table_t
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|URI
