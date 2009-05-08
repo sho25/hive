@@ -178,7 +178,7 @@ name|String
 argument_list|,
 name|String
 argument_list|>
-name|getParameter
+name|getParameters
 parameter_list|()
 block|{
 if|if
@@ -240,6 +240,26 @@ name|getDataLocation
 argument_list|()
 return|;
 block|}
+block|}
+comment|/**    * Get partition entity.    */
+specifier|public
+name|Partition
+name|getPartition
+parameter_list|()
+block|{
+return|return
+name|p
+return|;
+block|}
+comment|/**    * Get table entity.    */
+specifier|public
+name|Table
+name|getTable
+parameter_list|()
+block|{
+return|return
+name|t
+return|;
 block|}
 comment|/**    * toString function.    */
 annotation|@

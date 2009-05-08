@@ -308,6 +308,26 @@ return|return
 literal|null
 return|;
 block|}
+comment|/**    * Get the partition associated with the entity.    */
+specifier|public
+name|Partition
+name|getPartition
+parameter_list|()
+block|{
+return|return
+name|p
+return|;
+block|}
+comment|/**    * Get the table associated with the entity.    */
+specifier|public
+name|Table
+name|getTable
+parameter_list|()
+block|{
+return|return
+name|t
+return|;
+block|}
 comment|/**    * toString function.    */
 specifier|public
 name|String
