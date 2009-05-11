@@ -522,6 +522,15 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
+name|void
+name|validate
+parameter_list|()
+throws|throws
+name|SemanticException
+block|{
+comment|// Implementations may choose to override this
+block|}
+specifier|public
 name|List
 argument_list|<
 name|Task

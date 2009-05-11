@@ -1081,6 +1081,12 @@ argument_list|(
 literal|"Semantic Analysis Completed"
 argument_list|)
 expr_stmt|;
+comment|// validate the plan
+name|sem
+operator|.
+name|validate
+argument_list|()
+expr_stmt|;
 name|plan
 operator|=
 operator|new

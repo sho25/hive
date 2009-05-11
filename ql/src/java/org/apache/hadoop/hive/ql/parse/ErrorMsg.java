@@ -302,6 +302,11 @@ argument_list|(
 literal|"Output Format must implement HiveOutputFormat, otherwise it should be either IgnoreKeyTextOutputFormat or SequenceFileOutputFormat"
 argument_list|)
 block|,
+name|NO_VALID_PARTN
+argument_list|(
+literal|"The query does not reference any valid partition. To run this query, set hive.mapred.mode=nonstrict"
+argument_list|)
+block|,
 name|NON_BUCKETED_TABLE
 argument_list|(
 literal|"Sampling Expression Needed for Non-Bucketed Table"
