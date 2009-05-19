@@ -1700,15 +1700,7 @@ name|hr
 argument_list|)
 expr_stmt|;
 comment|// System.out.println("Loading partition with spec: " + part_spec);
-name|db
-operator|.
-name|createPartition
-argument_list|(
-name|srcpart
-argument_list|,
-name|part_spec
-argument_list|)
-expr_stmt|;
+comment|//db.createPartition(srcpart, part_spec);
 name|fpath
 operator|=
 operator|new
@@ -1756,7 +1748,7 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|"' INTO TABLE srcpart PARTITION (ds='"
+literal|"' OVERWRITE INTO TABLE srcpart PARTITION (ds='"
 operator|+
 name|ds
 operator|+
