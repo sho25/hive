@@ -836,6 +836,8 @@ argument_list|(
 name|jc
 argument_list|,
 name|reporter
+argument_list|,
+name|rowObjectInspector
 argument_list|)
 expr_stmt|;
 name|rp
@@ -1240,6 +1242,8 @@ argument_list|(
 name|jc
 argument_list|,
 literal|null
+argument_list|,
+name|rowObjectInspector
 argument_list|)
 expr_stmt|;
 name|rp

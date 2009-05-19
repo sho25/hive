@@ -707,6 +707,8 @@ argument_list|(
 literal|null
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 for|for
@@ -1058,6 +1060,8 @@ argument_list|,
 name|Reporter
 operator|.
 name|NULL
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 comment|// evaluate on row
@@ -1357,6 +1361,8 @@ name|TestOperators
 operator|.
 name|class
 argument_list|)
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|)
@@ -1929,6 +1935,8 @@ operator|.
 name|initialize
 argument_list|(
 name|hconf
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|)

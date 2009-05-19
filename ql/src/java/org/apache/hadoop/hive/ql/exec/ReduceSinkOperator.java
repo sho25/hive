@@ -359,6 +359,10 @@ name|hconf
 parameter_list|,
 name|Reporter
 name|reporter
+parameter_list|,
+name|ObjectInspector
+index|[]
+name|inputObjInspector
 parameter_list|)
 throws|throws
 name|HiveException
@@ -370,6 +374,8 @@ argument_list|(
 name|hconf
 argument_list|,
 name|reporter
+argument_list|,
+name|inputObjInspector
 argument_list|)
 expr_stmt|;
 try|try
@@ -1070,10 +1076,14 @@ literal|null
 condition|?
 literal|0
 else|:
-name|o
+name|Utilities
 operator|.
 name|hashCode
-argument_list|()
+argument_list|(
+name|o
+argument_list|,
+name|keyObjectInspector
+argument_list|)
 operator|)
 expr_stmt|;
 block|}
