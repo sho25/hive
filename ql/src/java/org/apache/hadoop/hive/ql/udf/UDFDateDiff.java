@@ -193,6 +193,21 @@ name|Text
 name|dateString2
 parameter_list|)
 block|{
+if|if
+condition|(
+name|dateString1
+operator|==
+literal|null
+operator|||
+name|dateString2
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 try|try
 block|{
 comment|// NOTE: This implementation avoids the extra-second problem

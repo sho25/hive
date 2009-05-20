@@ -196,6 +196,17 @@ name|Text
 name|dateString
 parameter_list|)
 block|{
+if|if
+condition|(
+name|dateString
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 try|try
 block|{
 name|Date
