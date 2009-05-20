@@ -2042,13 +2042,10 @@ name|getTypeInfo
 argument_list|()
 operator|)
 operator|.
-name|getPrimitiveWritableClass
+name|getTypeName
 argument_list|()
 operator|.
-name|getName
-argument_list|()
-operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|funcText
 argument_list|)
