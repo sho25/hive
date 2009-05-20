@@ -108,7 +108,7 @@ specifier|private
 name|String
 name|replacementString
 init|=
-literal|null
+literal|""
 decl_stmt|;
 name|Text
 name|result
@@ -164,6 +164,10 @@ name|equals
 argument_list|(
 name|lastRegex
 argument_list|)
+operator|||
+name|p
+operator|==
+literal|null
 condition|)
 block|{
 name|lastRegex

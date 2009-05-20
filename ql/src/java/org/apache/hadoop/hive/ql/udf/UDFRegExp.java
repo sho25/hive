@@ -156,6 +156,10 @@ name|equals
 argument_list|(
 name|lastRegex
 argument_list|)
+operator|||
+name|p
+operator|==
+literal|null
 condition|)
 block|{
 name|lastRegex
