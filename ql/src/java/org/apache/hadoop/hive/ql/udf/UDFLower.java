@@ -121,7 +121,7 @@ operator|.
 name|toString
 argument_list|()
 operator|.
-name|toUpperCase
+name|toLowerCase
 argument_list|()
 argument_list|)
 expr_stmt|;
