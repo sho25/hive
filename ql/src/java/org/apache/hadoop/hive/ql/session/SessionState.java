@@ -1085,7 +1085,7 @@ name|getIsSilent
 argument_list|()
 condition|)
 block|{
-name|getOutStream
+name|getErrStream
 argument_list|()
 operator|.
 name|println
