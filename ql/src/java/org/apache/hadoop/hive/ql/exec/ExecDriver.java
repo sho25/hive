@@ -3678,8 +3678,6 @@ decl_stmt|;
 name|String
 name|newFile
 init|=
-literal|"file:"
-operator|+
 name|hiveScratchDir
 operator|+
 name|File
@@ -4014,8 +4012,6 @@ decl_stmt|;
 name|String
 name|newFile
 init|=
-literal|"file:"
-operator|+
 name|hiveScratchDir
 operator|+
 name|File
