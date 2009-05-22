@@ -297,34 +297,6 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|DataInputBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|DataOutputBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
 name|IOUtils
 import|;
 end_import
@@ -687,7 +659,7 @@ literal|null
 decl_stmt|;
 comment|// stores each cell's length of a column in one DataOutputBuffer element
 specifier|private
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 index|[]
 name|allCellValLenBuffer
 init|=
@@ -753,7 +725,7 @@ expr_stmt|;
 name|allCellValLenBuffer
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 index|[
 name|columnNumber
 index|]
@@ -772,7 +744,7 @@ parameter_list|(
 name|int
 name|columnValueLen
 parameter_list|,
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|colValLenBuffer
 parameter_list|,
 name|int
@@ -835,7 +807,7 @@ expr_stmt|;
 name|allCellValLenBuffer
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 index|[
 name|columnNumber
 index|]
@@ -913,7 +885,7 @@ name|i
 index|]
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 argument_list|()
 expr_stmt|;
 else|else
@@ -1002,7 +974,7 @@ name|i
 index|]
 argument_list|)
 expr_stmt|;
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|colRowsLenBuf
 init|=
 name|allCellValLenBuffer
@@ -1146,7 +1118,7 @@ name|Writable
 block|{
 comment|// used to load columns' value into memory
 specifier|private
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 index|[]
 name|loadedColumnsValueBuffer
 init|=
@@ -1182,11 +1154,11 @@ name|valDecompressor
 init|=
 literal|null
 decl_stmt|;
-name|DataInputBuffer
+name|HiveDataInputBuffer
 name|decompressBuffer
 init|=
 operator|new
-name|DataInputBuffer
+name|HiveDataInputBuffer
 argument_list|()
 decl_stmt|;
 name|CompressionInputStream
@@ -1349,7 +1321,7 @@ block|}
 name|loadedColumnsValueBuffer
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 index|[
 name|columnNumber
 operator|-
@@ -1423,7 +1395,7 @@ name|readIndex
 index|]
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 argument_list|()
 expr_stmt|;
 name|readIndex
@@ -1435,7 +1407,7 @@ specifier|public
 name|void
 name|setColumnValueBuffer
 parameter_list|(
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|valBuffer
 parameter_list|,
 name|int
@@ -1450,11 +1422,11 @@ operator|=
 name|valBuffer
 expr_stmt|;
 block|}
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|compressedData
 init|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 argument_list|()
 decl_stmt|;
 annotation|@
@@ -1538,7 +1510,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|valBuf
 init|=
 name|loadedColumnsValueBuffer
@@ -1679,7 +1651,7 @@ name|i
 operator|++
 control|)
 block|{
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|currentBuf
 init|=
 name|loadedColumnsValueBuffer
@@ -1913,7 +1885,7 @@ name|bufferedRecords
 init|=
 literal|0
 decl_stmt|;
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 index|[]
 name|compressionBuffer
 decl_stmt|;
@@ -1934,7 +1906,7 @@ name|ColumnBuffer
 index|[]
 name|columnBuffers
 decl_stmt|;
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|keyCompressionBuffer
 decl_stmt|;
 name|CompressionOutputStream
@@ -1972,11 +1944,11 @@ class|class
 name|ColumnBuffer
 block|{
 comment|// used for buffer a column's values
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|columnValBuffer
 decl_stmt|;
 comment|// used to store each value's length
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|valLenBuffer
 decl_stmt|;
 name|ColumnBuffer
@@ -1987,13 +1959,13 @@ block|{
 name|columnValBuffer
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 argument_list|()
 expr_stmt|;
 name|valLenBuffer
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 argument_list|()
 expr_stmt|;
 block|}
@@ -2600,7 +2572,7 @@ expr_stmt|;
 name|compressionBuffer
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 index|[
 name|columnNumber
 index|]
@@ -2642,7 +2614,7 @@ name|i
 index|]
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 argument_list|()
 expr_stmt|;
 name|deflateFilter
@@ -2693,7 +2665,7 @@ expr_stmt|;
 name|keyCompressionBuffer
 operator|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 argument_list|()
 expr_stmt|;
 name|keyDeflateFilter
@@ -2733,7 +2705,6 @@ return|;
 block|}
 comment|/** create a sync point */
 specifier|public
-specifier|synchronized
 name|void
 name|sync
 parameter_list|()
@@ -2789,7 +2760,7 @@ return|return
 name|conf
 return|;
 block|}
-specifier|synchronized
+specifier|private
 name|void
 name|checkAndWriteSync
 parameter_list|()
@@ -2825,7 +2796,6 @@ literal|0
 decl_stmt|;
 comment|/**      * append a row of values. Currently it only can accept<      * {@link BytesRefArrayWritable}. If its<code>size()</code> is less than the      * column number in the file, zero bytes are appended for the empty columns.      * If its size() is greater then the column number in the file, the exceeded      * columns' bytes are ignored.      *       * @param val      * @throws IOException      */
 specifier|public
-specifier|synchronized
 name|void
 name|append
 parameter_list|(
@@ -2984,7 +2954,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|synchronized
+specifier|private
 name|void
 name|flushRecords
 parameter_list|()
@@ -3031,7 +3001,7 @@ index|[
 name|columnIndex
 index|]
 decl_stmt|;
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|columnValue
 init|=
 name|currentBuf
@@ -3832,7 +3802,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-name|DataInputBuffer
+name|HiveDataInputBuffer
 index|[]
 name|colValLenBufferReadIn
 decl_stmt|;
@@ -3846,11 +3816,11 @@ specifier|private
 name|Decompressor
 name|keyDecompressor
 decl_stmt|;
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|keyDecompressedData
 init|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 argument_list|()
 decl_stmt|;
 comment|/** Create a new RCFile reader. */
@@ -4125,7 +4095,7 @@ block|}
 name|colValLenBufferReadIn
 operator|=
 operator|new
-name|DataInputBuffer
+name|HiveDataInputBuffer
 index|[
 name|columnNumber
 index|]
@@ -4174,7 +4144,7 @@ name|i
 index|]
 operator|=
 operator|new
-name|DataInputBuffer
+name|HiveDataInputBuffer
 argument_list|()
 expr_stmt|;
 block|}
@@ -5002,25 +4972,25 @@ name|compressedKeyLen
 init|=
 literal|0
 decl_stmt|;
-name|DataInputBuffer
+name|HiveDataInputBuffer
 name|keyDataIn
 init|=
 operator|new
-name|DataInputBuffer
+name|HiveDataInputBuffer
 argument_list|()
 decl_stmt|;
-name|DataInputBuffer
+name|HiveDataInputBuffer
 name|keyDecompressBuffer
 init|=
 operator|new
-name|DataInputBuffer
+name|HiveDataInputBuffer
 argument_list|()
 decl_stmt|;
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 name|keyTempBuffer
 init|=
 operator|new
-name|DataOutputBuffer
+name|HiveDataOutputBuffer
 argument_list|()
 decl_stmt|;
 name|KeyBuffer
@@ -5312,11 +5282,11 @@ decl_stmt|;
 comment|// use this buffer to hold column's cells value length for usages in
 comment|// getColumn(), instead of using colValLenBufferReadIn directly.
 specifier|private
-name|DataInputBuffer
+name|HiveDataInputBuffer
 name|fetchColumnTempBuf
 init|=
 operator|new
-name|DataInputBuffer
+name|HiveDataInputBuffer
 argument_list|()
 decl_stmt|;
 comment|/**      * Fetch all data in the buffer for a given column. This is useful for      * columnar operators, which perform operations on an array data of one      * column. It should be used together with {@link #nextColumnsBatch()}.      * Calling getColumn() with not change the result of      * {@link #next(LongWritable)} and      * {@link #getCurrentRow(BytesRefArrayWritable)}.      *       * @param columnID      * @throws IOException      */
