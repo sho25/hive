@@ -1971,15 +1971,6 @@ name|invalidReason
 argument_list|)
 throw|;
 block|}
-name|Utilities
-operator|.
-name|setMapRedWork
-argument_list|(
-name|job
-argument_list|,
-name|work
-argument_list|)
-expr_stmt|;
 name|String
 name|hiveScratchDir
 init|=
@@ -2185,6 +2176,15 @@ argument_list|,
 name|work
 argument_list|,
 name|hiveScratchDir
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|setMapRedWork
+argument_list|(
+name|job
+argument_list|,
+name|work
 argument_list|)
 expr_stmt|;
 comment|// remove the pwd from conf file so that job tracker doesn't show this logs
@@ -4045,7 +4045,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// toggle the work
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -4067,6 +4067,9 @@ name|put
 argument_list|(
 name|newPath
 operator|.
+name|toUri
+argument_list|()
+operator|.
 name|toString
 argument_list|()
 argument_list|,
@@ -4085,7 +4088,14 @@ argument_list|(
 name|emptyFile
 argument_list|)
 expr_stmt|;
-name|Map
+name|work
+operator|.
+name|setPathToAliases
+argument_list|(
+name|pathToAliases
+argument_list|)
+expr_stmt|;
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -4104,6 +4114,9 @@ name|put
 argument_list|(
 name|newPath
 operator|.
+name|toUri
+argument_list|()
+operator|.
 name|toString
 argument_list|()
 argument_list|,
@@ -4120,6 +4133,13 @@ operator|.
 name|remove
 argument_list|(
 name|emptyFile
+argument_list|)
+expr_stmt|;
+name|work
+operator|.
+name|setPathToPartitionInfo
+argument_list|(
+name|pathToPartitionInfo
 argument_list|)
 expr_stmt|;
 name|String
