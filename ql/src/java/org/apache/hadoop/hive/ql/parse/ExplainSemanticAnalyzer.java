@@ -177,13 +177,17 @@ name|analyzeInternal
 parameter_list|(
 name|ASTNode
 name|ast
-parameter_list|,
-name|Context
-name|ctx
 parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+name|ctx
+operator|.
+name|setExplain
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 comment|// Create a semantic analyzer for the query
 name|BaseSemanticAnalyzer
 name|sem
@@ -249,7 +253,9 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|getTmpFileName
+name|ctx
+operator|.
+name|getLocalTmpFileURI
 argument_list|()
 argument_list|)
 argument_list|)

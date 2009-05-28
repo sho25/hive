@@ -1430,13 +1430,32 @@ condition|)
 return|return
 literal|null
 return|;
-name|FileInputFormat
-operator|.
-name|setInputPaths
-argument_list|(
+comment|// not using FileInputFormat.setInputPaths() here because it forces a connection
+comment|// to the default file system - which may or may not be online during pure metadata
+comment|// operations
 name|job
+operator|.
+name|set
+argument_list|(
+literal|"mapred.input.dir"
 argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|StringUtils
+operator|.
+name|escapeString
+argument_list|(
 name|currPath
+operator|.
+name|toString
+argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|tableDesc
@@ -1945,6 +1964,16 @@ operator|.
 name|printError
 argument_list|(
 literal|"Failed with exception "
+operator|+
+name|e
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|":"
 operator|+
 name|e
 operator|.

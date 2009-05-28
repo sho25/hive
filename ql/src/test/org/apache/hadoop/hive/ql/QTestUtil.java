@@ -5309,11 +5309,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|ctx
-operator|.
-name|makeScratchDir
-argument_list|()
-expr_stmt|;
 while|while
 condition|(
 operator|(
@@ -5359,7 +5354,7 @@ argument_list|)
 expr_stmt|;
 name|ctx
 operator|.
-name|removeScratchDir
+name|clear
 argument_list|()
 expr_stmt|;
 return|return

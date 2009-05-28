@@ -174,9 +174,6 @@ name|analyzeInternal
 parameter_list|(
 name|ASTNode
 name|ast
-parameter_list|,
-name|Context
-name|ctx
 parameter_list|)
 throws|throws
 name|SemanticException

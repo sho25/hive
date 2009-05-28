@@ -310,17 +310,6 @@ parameter_list|()
 block|{
 try|try
 block|{
-comment|// Create a file system handle
-name|FileSystem
-name|fs
-init|=
-name|FileSystem
-operator|.
-name|get
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
 comment|// Do any hive related operations like moving tables and files
 comment|// to appropriate locations
 for|for
@@ -358,6 +347,16 @@ name|getSourceDir
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|FileSystem
+name|fs
+init|=
+name|sourcePath
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|lfd
@@ -366,7 +365,7 @@ name|getIsDfsDir
 argument_list|()
 condition|)
 block|{
-comment|// Just do a rename on the URIs
+comment|// Just do a rename on the URIs, they belong to the same FS
 name|String
 name|mesg
 init|=
@@ -416,6 +415,10 @@ argument_list|(
 name|sourcePath
 argument_list|)
 condition|)
+block|{
+if|if
+condition|(
+operator|!
 name|fs
 operator|.
 name|rename
@@ -424,15 +427,41 @@ name|sourcePath
 argument_list|,
 name|targetPath
 argument_list|)
-expr_stmt|;
-else|else
+condition|)
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unable to rename: "
+operator|+
+name|sourcePath
+operator|+
+literal|" to: "
+operator|+
+name|targetPath
+argument_list|)
+throw|;
+block|}
+elseif|else
+if|if
+condition|(
+operator|!
 name|fs
 operator|.
 name|mkdirs
 argument_list|(
 name|targetPath
 argument_list|)
-expr_stmt|;
+condition|)
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unable to make directory: "
+operator|+
+name|targetPath
+argument_list|)
+throw|;
 block|}
 else|else
 block|{
@@ -474,10 +503,7 @@ name|FileSystem
 operator|.
 name|getLocal
 argument_list|(
-name|fs
-operator|.
-name|getConf
-argument_list|()
+name|conf
 argument_list|)
 decl_stmt|;
 if|if
@@ -529,13 +555,27 @@ name|targetPath
 argument_list|)
 expr_stmt|;
 else|else
+block|{
+if|if
+condition|(
+operator|!
 name|dstFs
 operator|.
 name|mkdirs
 argument_list|(
 name|targetPath
 argument_list|)
-expr_stmt|;
+condition|)
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unable to make local directory: "
+operator|+
+name|targetPath
+argument_list|)
+throw|;
+block|}
 block|}
 else|else
 block|{
@@ -640,6 +680,9 @@ name|FileStatus
 argument_list|>
 name|files
 decl_stmt|;
+name|FileSystem
+name|fs
+decl_stmt|;
 try|try
 block|{
 name|fs
@@ -664,13 +707,7 @@ operator|.
 name|getDataLocation
 argument_list|()
 argument_list|,
-name|Hive
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getConf
-argument_list|()
+name|conf
 argument_list|)
 expr_stmt|;
 name|dirs

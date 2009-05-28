@@ -243,9 +243,12 @@ block|{
 name|OutputStream
 name|outS
 init|=
-name|FileSystem
+name|work
 operator|.
-name|get
+name|getResFile
+argument_list|()
+operator|.
+name|getFileSystem
 argument_list|(
 name|conf
 argument_list|)

@@ -2313,9 +2313,37 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
+comment|/** Move files before creating the partition since down stream processes check         *  for existence of partition in metadata before accessing the data. If partition        *  is created before data is moved, downstream waiting processes might move forward        *  with partial data        */
 name|FileSystem
 name|fs
+decl_stmt|;
+name|Path
+name|partPath
+decl_stmt|;
+comment|// check if partition exists without creating it
+name|Partition
+name|part
 init|=
+name|getPartition
+argument_list|(
+name|tbl
+argument_list|,
+name|partSpec
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|part
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Partition does not exist currently. The partition name is extrapolated from
+comment|// the table's location (even if the table is marked external)
+name|fs
+operator|=
 name|FileSystem
 operator|.
 name|get
@@ -2328,10 +2356,9 @@ argument_list|,
 name|getConf
 argument_list|()
 argument_list|)
-decl_stmt|;
-name|Path
+expr_stmt|;
 name|partPath
-init|=
+operator|=
 operator|new
 name|Path
 argument_list|(
@@ -2350,8 +2377,34 @@ argument_list|(
 name|partSpec
 argument_list|)
 argument_list|)
-decl_stmt|;
-comment|/** Move files before creating the partition since down stream processes check         *  for existence of partition in metadata before accessing the data. If partition        *  is created before data is moved, downstream waiting processes might move forward        *  with partial data        */
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Partition exists already. Get the path from the partition. This will
+comment|// get the default path for Hive created partitions or the external path
+comment|// when directly created by user
+name|partPath
+operator|=
+name|part
+operator|.
+name|getPath
+argument_list|()
+index|[
+literal|0
+index|]
+expr_stmt|;
+name|fs
+operator|=
+name|partPath
+operator|.
+name|getFileSystem
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|replace
@@ -2385,7 +2438,14 @@ name|fs
 argument_list|)
 expr_stmt|;
 block|}
-comment|// create a partition if it doesn't exist
+if|if
+condition|(
+name|part
+operator|==
+literal|null
+condition|)
+block|{
+comment|// create the partition if it didn't exist before
 name|getPartition
 argument_list|(
 name|tbl
@@ -2395,6 +2455,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -3819,9 +3880,9 @@ name|j
 operator|++
 control|)
 block|{
-name|boolean
-name|b
-init|=
+if|if
+condition|(
+operator|!
 name|fs
 operator|.
 name|rename
@@ -3851,23 +3912,28 @@ name|getName
 argument_list|()
 argument_list|)
 argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|debug
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
 argument_list|(
-literal|"Renaming:"
+literal|"Error moving: "
 operator|+
 name|items
 index|[
 name|j
 index|]
+operator|.
+name|getPath
+argument_list|()
 operator|+
-literal|",Status:"
+literal|" into: "
 operator|+
-name|b
+name|tmppath
 argument_list|)
-expr_stmt|;
+throw|;
+block|}
 block|}
 block|}
 comment|// point of no return
