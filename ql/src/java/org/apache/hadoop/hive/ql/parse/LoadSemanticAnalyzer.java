@@ -1163,6 +1163,8 @@ name|tableSpec
 argument_list|(
 name|db
 argument_list|,
+name|conf
+argument_list|,
 operator|(
 name|ASTNode
 operator|)

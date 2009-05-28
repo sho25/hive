@@ -622,6 +622,35 @@ argument_list|,
 literal|0
 argument_list|)
 block|,
+comment|// test mode in hive mode
+name|HIVETESTMODE
+argument_list|(
+literal|"hive.test.mode"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVETESTMODEPREFIX
+argument_list|(
+literal|"hive.test.mode.prefix"
+argument_list|,
+literal|"test_"
+argument_list|)
+block|,
+name|HIVETESTMODESAMPLEFREQ
+argument_list|(
+literal|"hive.test.mode.samplefreq"
+argument_list|,
+literal|32
+argument_list|)
+block|,
+name|HIVETESTMODENOSAMPLE
+argument_list|(
+literal|"hive.test.mode.nosamplelist"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// Optimizer
 name|HIVEOPTPPD
 argument_list|(
