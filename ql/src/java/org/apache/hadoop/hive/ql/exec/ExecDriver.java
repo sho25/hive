@@ -2915,6 +2915,7 @@ comment|// If started from main(), and isSilent is on, we should not output
 comment|// any logs.
 if|if
 condition|(
+operator|!
 name|isSilent
 condition|)
 block|{
