@@ -117,11 +117,6 @@ case|:
 case|case
 name|HiveParser
 operator|.
-name|TOK_CREATEEXTTABLE
-case|:
-case|case
-name|HiveParser
-operator|.
 name|TOK_DROPTABLE
 case|:
 case|case

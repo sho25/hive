@@ -49,6 +49,10 @@ name|createTableDesc
 name|createTblDesc
 decl_stmt|;
 specifier|private
+name|createTableLikeDesc
+name|createTblLikeDesc
+decl_stmt|;
+specifier|private
 name|dropTableDesc
 name|dropTblDesc
 decl_stmt|;
@@ -108,6 +112,21 @@ operator|.
 name|createTblDesc
 operator|=
 name|createTblDesc
+expr_stmt|;
+block|}
+comment|/**    * @param createTblLikeDesc create table dlike escriptor    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|createTableLikeDesc
+name|createTblLikeDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|createTblLikeDesc
+operator|=
+name|createTblLikeDesc
 expr_stmt|;
 block|}
 comment|/**    * @param dropTblDesc drop table descriptor    */
@@ -230,6 +249,39 @@ operator|.
 name|createTblDesc
 operator|=
 name|createTblDesc
+expr_stmt|;
+block|}
+comment|/**    * @return the createTblDesc    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Create Table Operator"
+argument_list|)
+specifier|public
+name|createTableLikeDesc
+name|getCreateTblLikeDesc
+parameter_list|()
+block|{
+return|return
+name|createTblLikeDesc
+return|;
+block|}
+comment|/**    * @param createTblDesc the createTblDesc to set    */
+specifier|public
+name|void
+name|setCreateTblLikeDesc
+parameter_list|(
+name|createTableLikeDesc
+name|createTblLikeDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|createTblLikeDesc
+operator|=
+name|createTblLikeDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the dropTblDesc    */
