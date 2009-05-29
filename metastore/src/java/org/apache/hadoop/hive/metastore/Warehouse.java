@@ -1149,6 +1149,9 @@ operator|)
 operator|.
 name|getName
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|name

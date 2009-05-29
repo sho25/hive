@@ -5123,6 +5123,9 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|val
 argument_list|)
