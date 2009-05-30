@@ -43,6 +43,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|security
+operator|.
+name|AccessControlException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -579,15 +589,15 @@ block|}
 block|}
 else|else
 block|{
-name|console
-operator|.
-name|printInfo
+throw|throw
+operator|new
+name|AccessControlException
 argument_list|(
 literal|"Unable to delete the existing destination directory: "
 operator|+
 name|targetPath
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
 block|}
 block|}
