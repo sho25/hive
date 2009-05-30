@@ -941,9 +941,6 @@ name|nullString
 operator|=
 literal|"\\N"
 expr_stmt|;
-name|internalInitialize
-argument_list|()
-expr_stmt|;
 block|}
 comment|/**    * Sets the internal separator patterns and creates the internal tokenizer.    */
 specifier|protected
