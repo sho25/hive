@@ -761,7 +761,7 @@ name|JAVA
 block|,
 name|WRITABLE
 block|}
-comment|/**    * Get the standard ObjectInspector for an ObjectInspector.    *     * The returned ObjectInspector can be used to inspect the standard object.    */
+comment|/**    * Get the corresponding standard ObjectInspector for an ObjectInspector.    *     * The returned ObjectInspector can be used to inspect the standard object.    */
 specifier|public
 specifier|static
 name|ObjectInspector
@@ -891,10 +891,15 @@ name|ObjectInspectorFactory
 operator|.
 name|getStandardListObjectInspector
 argument_list|(
+name|getStandardObjectInspector
+argument_list|(
 name|loi
 operator|.
 name|getListElementObjectInspector
 argument_list|()
+argument_list|,
+name|objectInspectorOption
+argument_list|)
 argument_list|)
 expr_stmt|;
 break|break;
@@ -917,15 +922,25 @@ name|ObjectInspectorFactory
 operator|.
 name|getStandardMapObjectInspector
 argument_list|(
+name|getStandardObjectInspector
+argument_list|(
 name|moi
 operator|.
 name|getMapKeyObjectInspector
 argument_list|()
 argument_list|,
+name|objectInspectorOption
+argument_list|)
+argument_list|,
+name|getStandardObjectInspector
+argument_list|(
 name|moi
 operator|.
 name|getMapValueObjectInspector
 argument_list|()
+argument_list|,
+name|objectInspectorOption
+argument_list|)
 argument_list|)
 expr_stmt|;
 break|break;
@@ -1013,10 +1028,15 @@ name|fieldObjectInspectors
 operator|.
 name|add
 argument_list|(
+name|getStandardObjectInspector
+argument_list|(
 name|f
 operator|.
 name|getFieldObjectInspector
 argument_list|()
+argument_list|,
+name|objectInspectorOption
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

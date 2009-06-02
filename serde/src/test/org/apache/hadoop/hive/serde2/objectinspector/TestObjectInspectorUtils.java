@@ -642,6 +642,10 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+name|ObjectInspectorUtils
+operator|.
+name|getStandardObjectInspector
+argument_list|(
 name|ObjectInspectorFactory
 operator|.
 name|getStandardListObjectInspector
@@ -659,6 +663,7 @@ operator|.
 name|ObjectInspectorOptions
 operator|.
 name|THRIFT
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|,

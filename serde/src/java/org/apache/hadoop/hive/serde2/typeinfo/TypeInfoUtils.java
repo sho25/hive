@@ -564,7 +564,7 @@ name|text
 decl_stmt|;
 specifier|public
 name|boolean
-name|isAlphaDigit
+name|isType
 decl_stmt|;
 specifier|public
 name|String
@@ -583,7 +583,33 @@ return|;
 block|}
 block|}
 empty_stmt|;
-comment|/**      * Tokenize the typeInfoString.      * The rule is simple: all consecutive alphadigits are in one token, and all       * other characters are one character per token.      *       * tokenize("map<int,string>") should return ["map","<","int",",","string",">"]      */
+specifier|private
+specifier|static
+name|boolean
+name|isTypeChar
+parameter_list|(
+name|char
+name|c
+parameter_list|)
+block|{
+return|return
+name|Character
+operator|.
+name|isLetterOrDigit
+argument_list|(
+name|c
+argument_list|)
+operator|||
+name|c
+operator|==
+literal|'_'
+operator|||
+name|c
+operator|==
+literal|'.'
+return|;
+block|}
+comment|/**      * Tokenize the typeInfoString.      * The rule is simple: all consecutive alphadigits and '_', '.' are in one      * token, and all other characters are one character per token.      *       * tokenize("map<int,string>") should return ["map","<","int",",","string",">"]      */
 specifier|private
 specifier|static
 name|ArrayList
@@ -642,9 +668,7 @@ name|length
 argument_list|()
 operator|||
 operator|!
-name|Character
-operator|.
-name|isLetterOrDigit
+name|isTypeChar
 argument_list|(
 name|typeInfoString
 operator|.
@@ -657,9 +681,7 @@ argument_list|)
 argument_list|)
 operator|||
 operator|!
-name|Character
-operator|.
-name|isLetterOrDigit
+name|isTypeChar
 argument_list|(
 name|typeInfoString
 operator|.
@@ -698,11 +720,9 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|isAlphaDigit
+name|isType
 operator|=
-name|Character
-operator|.
-name|isLetterOrDigit
+name|isTypeChar
 argument_list|(
 name|typeInfoString
 operator|.
@@ -1052,7 +1072,13 @@ literal|" of '"
 operator|+
 name|typeInfoString
 operator|+
-literal|"'"
+literal|"' but '"
+operator|+
+name|t
+operator|.
+name|text
+operator|+
+literal|"' is found."
 argument_list|)
 throw|;
 block|}
@@ -1073,7 +1099,7 @@ condition|(
 operator|!
 name|t
 operator|.
-name|isAlphaDigit
+name|isType
 operator|&&
 operator|!
 name|t
@@ -1104,7 +1130,13 @@ literal|" of '"
 operator|+
 name|typeInfoString
 operator|+
-literal|"'"
+literal|"' but '"
+operator|+
+name|t
+operator|.
+name|text
+operator|+
+literal|"' is found."
 argument_list|)
 throw|;
 block|}
@@ -1152,7 +1184,13 @@ literal|" of '"
 operator|+
 name|typeInfoString
 operator|+
-literal|"'"
+literal|"' but '"
+operator|+
+name|t
+operator|.
+name|text
+operator|+
+literal|"' is found."
 argument_list|)
 throw|;
 block|}

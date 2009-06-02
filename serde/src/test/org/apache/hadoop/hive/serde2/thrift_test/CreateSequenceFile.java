@@ -731,6 +731,8 @@ operator|*
 name|i
 operator|*
 name|i
+argument_list|,
+name|i
 argument_list|)
 argument_list|)
 expr_stmt|;
