@@ -282,7 +282,7 @@ name|RCFileOutputFormat
 extends|extends
 name|FileOutputFormat
 argument_list|<
-name|Void
+name|WritableComparable
 argument_list|,
 name|BytesRefArrayWritable
 argument_list|>
@@ -351,7 +351,7 @@ comment|/** {@inheritDoc} */
 specifier|public
 name|RecordWriter
 argument_list|<
-name|Void
+name|WritableComparable
 argument_list|,
 name|BytesRefArrayWritable
 argument_list|>
@@ -401,13 +401,13 @@ name|outputPath
 argument_list|)
 condition|)
 block|{
-throw|throw
-operator|new
-name|IOException
+name|fs
+operator|.
+name|mkdirs
 argument_list|(
-literal|"Output directory doesnt exist"
+name|outputPath
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 name|Path
 name|file
@@ -489,7 +489,7 @@ return|return
 operator|new
 name|RecordWriter
 argument_list|<
-name|Void
+name|WritableComparable
 argument_list|,
 name|BytesRefArrayWritable
 argument_list|>
@@ -519,7 +519,7 @@ specifier|public
 name|void
 name|write
 parameter_list|(
-name|Void
+name|WritableComparable
 name|key
 parameter_list|,
 name|BytesRefArrayWritable
