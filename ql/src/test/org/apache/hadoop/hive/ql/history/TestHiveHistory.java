@@ -61,23 +61,11 @@ end_import
 
 begin_import
 import|import
-name|java
+name|junit
 operator|.
-name|util
+name|framework
 operator|.
-name|TreeSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-operator|.
-name|Entry
+name|TestCase
 import|;
 end_import
 
@@ -151,6 +139,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|MetaStoreUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|Driver
@@ -173,7 +177,7 @@ name|history
 operator|.
 name|HiveHistory
 operator|.
-name|QueryInfo
+name|Keys
 import|;
 end_import
 
@@ -193,7 +197,7 @@ name|history
 operator|.
 name|HiveHistory
 operator|.
-name|Keys
+name|QueryInfo
 import|;
 end_import
 
@@ -297,35 +301,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|HiveInterface
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|mapred
 operator|.
 name|TextInputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
 import|;
 end_import
 
@@ -635,6 +613,10 @@ name|db
 operator|.
 name|dropTable
 argument_list|(
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+argument_list|,
 name|src
 argument_list|,
 literal|true
