@@ -476,6 +476,24 @@ name|getSCRProc
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|opRules
+operator|.
+name|put
+argument_list|(
+operator|new
+name|RuleRegExp
+argument_list|(
+literal|"R6"
+argument_list|,
+literal|"LIM%"
+argument_list|)
+argument_list|,
+name|OpProcFactory
+operator|.
+name|getLIMProc
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
 name|Dispatcher
 name|disp

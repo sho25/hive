@@ -553,6 +553,7 @@ argument_list|)
 expr_stmt|;
 comment|// script operator is a black-box to hive so no optimization here
 comment|// assuming that nothing can be pushed above the script op
+comment|// same with LIMIT op
 return|return
 literal|null
 return|;
@@ -2163,6 +2164,18 @@ specifier|public
 specifier|static
 name|NodeProcessor
 name|getSCRProc
+parameter_list|()
+block|{
+return|return
+operator|new
+name|ScriptPPD
+argument_list|()
+return|;
+block|}
+specifier|public
+specifier|static
+name|NodeProcessor
+name|getLIMProc
 parameter_list|()
 block|{
 return|return

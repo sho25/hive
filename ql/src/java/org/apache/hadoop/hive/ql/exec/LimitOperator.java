@@ -272,6 +272,15 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|String
+name|getName
+parameter_list|()
+block|{
+return|return
+literal|"LIM"
+return|;
+block|}
 block|}
 end_class
 
