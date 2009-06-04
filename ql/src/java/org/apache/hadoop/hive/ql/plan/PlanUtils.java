@@ -409,6 +409,8 @@ name|valueOf
 argument_list|(
 literal|1
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 return|;
 block|}
@@ -816,7 +818,7 @@ name|FieldSchema
 argument_list|>
 name|getFieldSchemasFromColumnList
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|exprNodeDesc
 argument_list|>

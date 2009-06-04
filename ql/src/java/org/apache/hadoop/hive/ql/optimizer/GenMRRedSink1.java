@@ -488,6 +488,15 @@ argument_list|,
 name|opMapTask
 argument_list|,
 name|ctx
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|false
+argument_list|,
+literal|false
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|currTask

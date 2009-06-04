@@ -307,6 +307,21 @@ argument_list|(
 literal|"The query does not reference any valid partition. To run this query, set hive.mapred.mode=nonstrict"
 argument_list|)
 block|,
+name|NO_OUTER_MAPJOIN
+argument_list|(
+literal|"Map Join cannot be performed with Outer join"
+argument_list|)
+block|,
+name|INVALID_MAPJOIN_HINT
+argument_list|(
+literal|"neither table specified as map-table"
+argument_list|)
+block|,
+name|INVALID_MAPJOIN_TABLE
+argument_list|(
+literal|"result of a union cannot be a map table"
+argument_list|)
+block|,
 name|NON_BUCKETED_TABLE
 argument_list|(
 literal|"Sampling Expression Needed for Non-Bucketed Table"
@@ -461,6 +476,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+specifier|public
 name|String
 name|getMsg
 parameter_list|(
@@ -575,6 +591,7 @@ name|reason
 argument_list|)
 return|;
 block|}
+specifier|public
 name|String
 name|getMsg
 parameter_list|()

@@ -145,13 +145,13 @@ name|FULL_OUTER_JOIN
 init|=
 literal|3
 decl_stmt|;
-comment|// alias to columns mapping
+comment|// alias to key mapping
 specifier|private
 name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|exprNodeDesc
 argument_list|>
@@ -159,11 +159,11 @@ argument_list|>
 name|exprs
 decl_stmt|;
 comment|// No outer join involved
-specifier|private
+specifier|protected
 name|boolean
 name|noOuterJoin
 decl_stmt|;
-specifier|private
+specifier|protected
 name|joinCond
 index|[]
 name|conds
@@ -180,7 +180,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|exprNodeDesc
 argument_list|>
@@ -224,7 +224,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|exprNodeDesc
 argument_list|>
@@ -259,7 +259,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|exprNodeDesc
 argument_list|>
@@ -296,7 +296,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|exprNodeDesc
 argument_list|>
@@ -364,7 +364,7 @@ name|Entry
 argument_list|<
 name|Byte
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|exprNodeDesc
 argument_list|>
@@ -484,7 +484,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|exprNodeDesc
 argument_list|>

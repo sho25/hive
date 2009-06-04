@@ -137,7 +137,7 @@ literal|1L
 decl_stmt|;
 specifier|public
 name|void
-name|initialize
+name|initializeOp
 parameter_list|(
 name|Configuration
 name|hconf
@@ -152,9 +152,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|super
-operator|.
-name|initialize
+name|initializeChildren
 argument_list|(
 name|hconf
 argument_list|,

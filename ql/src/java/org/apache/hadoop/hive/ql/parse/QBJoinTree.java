@@ -29,6 +29,16 @@ name|Vector
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
 begin_comment
 comment|/**  * Internal representation of the join tree  *  */
 end_comment
@@ -95,6 +105,18 @@ name|ASTNode
 argument_list|>
 argument_list|>
 name|filters
+decl_stmt|;
+comment|// user asked for map-side join
+specifier|private
+name|boolean
+name|mapSideJoin
+decl_stmt|;
+specifier|private
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|mapAliases
 decl_stmt|;
 comment|/**    * constructor     */
 specifier|public
@@ -375,6 +397,64 @@ operator|.
 name|filters
 operator|=
 name|filters
+expr_stmt|;
+block|}
+comment|/**    * @return the mapSidejoin    */
+specifier|public
+name|boolean
+name|isMapSideJoin
+parameter_list|()
+block|{
+return|return
+name|mapSideJoin
+return|;
+block|}
+comment|/**    * @param mapSidejoin the mapSidejoin to set    */
+specifier|public
+name|void
+name|setMapSideJoin
+parameter_list|(
+name|boolean
+name|mapSideJoin
+parameter_list|)
+block|{
+name|this
+operator|.
+name|mapSideJoin
+operator|=
+name|mapSideJoin
+expr_stmt|;
+block|}
+comment|/**    * @return the mapAliases    */
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getMapAliases
+parameter_list|()
+block|{
+return|return
+name|mapAliases
+return|;
+block|}
+comment|/**    * @param mapAliases the mapAliases to set    */
+specifier|public
+name|void
+name|setMapAliases
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|mapAliases
+parameter_list|)
+block|{
+name|this
+operator|.
+name|mapAliases
+operator|=
+name|mapAliases
 expr_stmt|;
 block|}
 block|}

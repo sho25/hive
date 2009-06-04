@@ -388,7 +388,7 @@ index|]
 decl_stmt|;
 specifier|public
 name|void
-name|initialize
+name|initializeOp
 parameter_list|(
 name|Configuration
 name|hconf
@@ -403,15 +403,11 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|super
+name|LOG
 operator|.
-name|initialize
+name|info
 argument_list|(
-name|hconf
-argument_list|,
-name|reporter
-argument_list|,
-name|inputObjInspector
+literal|"Initializing Self"
 argument_list|)
 expr_stmt|;
 try|try
@@ -655,6 +651,22 @@ expr_stmt|;
 name|firstRow
 operator|=
 literal|true
+expr_stmt|;
+name|initializeChildren
+argument_list|(
+name|hconf
+argument_list|,
+name|reporter
+argument_list|,
+name|inputObjInspector
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Initialization Done"
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch

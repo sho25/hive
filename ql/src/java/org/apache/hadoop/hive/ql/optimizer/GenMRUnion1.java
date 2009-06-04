@@ -734,17 +734,6 @@ name|uTask
 init|=
 literal|null
 decl_stmt|;
-name|pos
-operator|=
-name|UnionProcFactory
-operator|.
-name|getPositionParent
-argument_list|(
-name|union
-argument_list|,
-name|stack
-argument_list|)
-expr_stmt|;
 name|Operator
 argument_list|<
 name|?

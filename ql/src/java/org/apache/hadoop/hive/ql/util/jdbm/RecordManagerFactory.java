@@ -112,7 +112,7 @@ name|RecordManagerOptions
 operator|.
 name|PROVIDER_FACTORY
 argument_list|,
-literal|"jdbm.recman.Provider"
+literal|"org.apache.hadoop.hive.ql.util.jdbm.recman.Provider"
 argument_list|)
 expr_stmt|;
 try|try

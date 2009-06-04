@@ -708,7 +708,17 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-literal|null
+operator|new
+name|ObjectInspector
+index|[]
+block|{
+name|r
+index|[
+literal|0
+index|]
+operator|.
+name|oi
+block|}
 argument_list|)
 expr_stmt|;
 for|for
@@ -1061,7 +1071,17 @@ name|Reporter
 operator|.
 name|NULL
 argument_list|,
-literal|null
+operator|new
+name|ObjectInspector
+index|[]
+block|{
+name|r
+index|[
+literal|0
+index|]
+operator|.
+name|oi
+block|}
 argument_list|)
 expr_stmt|;
 comment|// evaluate on row
@@ -1364,7 +1384,17 @@ argument_list|)
 argument_list|,
 literal|null
 argument_list|,
-literal|null
+operator|new
+name|ObjectInspector
+index|[]
+block|{
+name|r
+index|[
+literal|0
+index|]
+operator|.
+name|oi
+block|}
 argument_list|)
 expr_stmt|;
 comment|// evaluate on row

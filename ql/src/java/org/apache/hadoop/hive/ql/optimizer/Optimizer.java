@@ -210,6 +210,15 @@ name|UnionProcessor
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
+name|MapJoinProcessor
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|/** 	 * invoke all the transformations one-by-one, and alter the query plan 	 * @return ParseContext 	 * @throws SemanticException 	 */
 specifier|public

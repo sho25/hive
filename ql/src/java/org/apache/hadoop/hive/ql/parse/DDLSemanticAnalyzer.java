@@ -4049,6 +4049,9 @@ name|ctx
 operator|.
 name|getResFile
 argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 operator|new
 name|tableDesc

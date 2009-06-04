@@ -338,7 +338,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Processor for the rule - table scan followed by reduce sink  */
+comment|/**  * Processor for the rule - union followed by reduce sink  */
 end_comment
 
 begin_class
@@ -629,6 +629,8 @@ argument_list|(
 name|ctx
 argument_list|,
 name|currTask
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|GenMapRedUtils
@@ -642,6 +644,15 @@ argument_list|,
 name|opMapTask
 argument_list|,
 name|ctx
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+literal|false
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
