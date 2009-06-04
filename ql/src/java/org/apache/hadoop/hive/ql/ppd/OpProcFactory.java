@@ -1138,6 +1138,20 @@ argument_list|,
 name|predicate
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|ewi
+operator|.
+name|isDeterministic
+argument_list|()
+condition|)
+block|{
+comment|/* predicate is not deterministic */
+return|return
+literal|null
+return|;
+block|}
 name|logExpr
 argument_list|(
 name|nd

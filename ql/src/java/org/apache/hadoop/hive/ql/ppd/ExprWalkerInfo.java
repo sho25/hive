@@ -199,24 +199,6 @@ name|exprNodeDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|exprNodeFuncDesc
-import|;
-end_import
-
 begin_comment
 comment|/**  * Context for Expression Walker for determining predicate pushdown candidates  * It contains a ExprInfo object for each expression that is processed.  */
 end_comment
@@ -350,6 +332,12 @@ argument_list|,
 name|ExprInfo
 argument_list|>
 name|exprInfoMap
+decl_stmt|;
+specifier|private
+name|boolean
+name|isDeterministic
+init|=
+literal|true
 decl_stmt|;
 specifier|public
 name|ExprWalkerInfo
@@ -928,6 +916,30 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+comment|/**    * sets the deterministic flag for this expression     * @param b deterministic or not    */
+specifier|public
+name|void
+name|setDeterministic
+parameter_list|(
+name|boolean
+name|b
+parameter_list|)
+block|{
+name|isDeterministic
+operator|=
+name|b
+expr_stmt|;
+block|}
+comment|/**    * @return whether this expression is deterministic or not    */
+specifier|public
+name|boolean
+name|isDeterministic
+parameter_list|()
+block|{
+return|return
+name|isDeterministic
+return|;
 block|}
 block|}
 end_class

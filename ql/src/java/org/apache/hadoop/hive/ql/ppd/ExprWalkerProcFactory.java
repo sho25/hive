@@ -742,6 +742,13 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+name|ctx
+operator|.
+name|setDeterministic
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 return|return
 literal|false
 return|;
@@ -1003,6 +1010,13 @@ name|setIsCandidate
 argument_list|(
 name|expr
 argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|ctx
+operator|.
+name|setDeterministic
+argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
