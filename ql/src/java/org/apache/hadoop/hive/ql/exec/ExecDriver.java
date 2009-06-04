@@ -2913,9 +2913,9 @@ expr_stmt|;
 block|}
 comment|// If started from main(), and isSilent is on, we should not output
 comment|// any logs.
+comment|// To turn the error log on, please set -Dtest.silent=false
 if|if
 condition|(
-operator|!
 name|isSilent
 condition|)
 block|{
