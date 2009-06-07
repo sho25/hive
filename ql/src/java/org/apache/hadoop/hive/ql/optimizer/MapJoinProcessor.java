@@ -2043,7 +2043,6 @@ argument_list|,
 name|mapJoinOp
 argument_list|)
 expr_stmt|;
-comment|// TODO: do as part of replaceParent
 name|mapJoinOp
 operator|.
 name|setChildOperators

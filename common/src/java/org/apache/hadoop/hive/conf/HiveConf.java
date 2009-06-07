@@ -544,13 +544,6 @@ argument_list|,
 literal|1000
 argument_list|)
 block|,
-name|HIVEMAPJOINNUMROWSCACHE
-argument_list|(
-literal|"hive.mapjoin.numrows"
-argument_list|,
-literal|1000
-argument_list|)
-block|,
 name|HIVEMAPJOINROWSIZE
 argument_list|(
 literal|"hive.mapjoin.size.key"

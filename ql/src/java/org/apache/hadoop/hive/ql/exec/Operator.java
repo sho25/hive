@@ -1906,7 +1906,7 @@ name|int
 index|[]
 name|childOperatorsTag
 decl_stmt|;
-comment|/**    * Replace one child with another at the same position.    * @param child     the old child    * @param newChild  the new child    */
+comment|/**    * Replace one child with another at the same position. The parent of the child is not changed    * @param child     the old child    * @param newChild  the new child    */
 specifier|public
 name|void
 name|replaceChild
@@ -1953,7 +1953,6 @@ argument_list|,
 name|newChild
 argument_list|)
 expr_stmt|;
-comment|// TODO: set parent for newChild
 block|}
 specifier|public
 name|void
@@ -2005,8 +2004,57 @@ argument_list|(
 name|childIndex
 argument_list|)
 expr_stmt|;
+name|int
+name|parentIndex
+init|=
+name|child
+operator|.
+name|getParentOperators
+argument_list|()
+operator|.
+name|indexOf
+argument_list|(
+name|this
+argument_list|)
+decl_stmt|;
+assert|assert
+name|parentIndex
+operator|!=
+operator|-
+literal|1
+assert|;
+if|if
+condition|(
+name|child
+operator|.
+name|getParentOperators
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|1
+condition|)
+name|child
+operator|.
+name|setParentOperators
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+else|else
+name|child
+operator|.
+name|getParentOperators
+argument_list|()
+operator|.
+name|remove
+argument_list|(
+name|parentIndex
+argument_list|)
+expr_stmt|;
 block|}
-comment|/**    * Replace one parent with another at the same position.    * @param parent     the old parent    * @param newParent  the new parent    */
+comment|/**    * Replace one parent with another at the same position. Chilren of the new parent are not updated    * @param parent     the old parent    * @param newParent  the new parent    */
 specifier|public
 name|void
 name|replaceParent
@@ -2053,7 +2101,6 @@ argument_list|,
 name|newParent
 argument_list|)
 expr_stmt|;
-comment|// TODO: set the child in newParent correctly
 block|}
 specifier|protected
 name|void
