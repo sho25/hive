@@ -554,13 +554,20 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-comment|// Don't throw an exception, just ignore and return
-return|return;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|e
+argument_list|)
+throw|;
 block|}
 block|}
 block|}
 else|else
 block|{
+comment|// Will come here if an Exception was thrown in map() or reduce().
+comment|// Hadoop always call close() even if an Exception was thrown in map() or reduce().
 try|try
 block|{
 name|outWriter

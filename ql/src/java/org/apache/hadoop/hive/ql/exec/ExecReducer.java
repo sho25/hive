@@ -704,7 +704,7 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|SerDeException
+name|Exception
 name|e
 parameter_list|)
 block|{
@@ -847,7 +847,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|HiveException
+name|Exception
 name|e
 parameter_list|)
 block|{
@@ -864,7 +864,9 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Reduce operator initialization failed"
+literal|"Reduce operator process failed"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
@@ -1012,7 +1014,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|SerDeException
+name|Exception
 name|e
 parameter_list|)
 block|{
@@ -1169,7 +1171,7 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|HiveException
+name|Exception
 name|e
 parameter_list|)
 block|{
@@ -1253,7 +1255,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|HiveException
+name|Exception
 name|e
 parameter_list|)
 block|{
@@ -1338,7 +1340,7 @@ return|return;
 block|}
 catch|catch
 parameter_list|(
-name|HiveException
+name|Exception
 name|e
 parameter_list|)
 block|{
