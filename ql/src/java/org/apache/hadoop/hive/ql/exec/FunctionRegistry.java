@@ -1622,6 +1622,15 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|registerGenericUDF
+argument_list|(
+literal|"coalesce"
+argument_list|,
+name|GenericUDFCoalesce
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 specifier|static
