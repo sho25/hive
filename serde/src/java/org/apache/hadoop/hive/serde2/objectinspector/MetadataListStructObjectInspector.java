@@ -140,27 +140,9 @@ name|MetadataListStructObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|public
-specifier|static
-name|MetadataListStructObjectInspector
-name|getInstance
-parameter_list|(
-name|int
-name|fields
-parameter_list|)
-block|{
-return|return
-name|getInstance
-argument_list|(
-name|ObjectInspectorUtils
-operator|.
-name|getIntegerArray
-argument_list|(
-name|fields
-argument_list|)
-argument_list|)
-return|;
-block|}
+comment|//  public static MetadataListStructObjectInspector getInstance(int fields) {
+comment|//    return getInstance(ObjectInspectorUtils.getIntegerArray(fields));
+comment|//  }
 specifier|public
 specifier|static
 name|MetadataListStructObjectInspector

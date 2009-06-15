@@ -772,6 +772,11 @@ name|initEvaluatorsAndReturnStruct
 argument_list|(
 name|keyEval
 argument_list|,
+name|conf
+operator|.
+name|getOutputKeyColumnNames
+argument_list|()
+argument_list|,
 name|rowInspector
 argument_list|)
 expr_stmt|;
@@ -780,6 +785,11 @@ operator|=
 name|initEvaluatorsAndReturnStruct
 argument_list|(
 name|valueEval
+argument_list|,
+name|conf
+operator|.
+name|getOutputValueColumnNames
+argument_list|()
 argument_list|,
 name|rowInspector
 argument_list|)

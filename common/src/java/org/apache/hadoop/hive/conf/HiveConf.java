@@ -1995,6 +1995,21 @@ argument_list|)
 throw|;
 block|}
 block|}
+specifier|public
+specifier|static
+name|String
+name|getColumnInternalName
+parameter_list|(
+name|int
+name|pos
+parameter_list|)
+block|{
+return|return
+literal|"_col"
+operator|+
+name|pos
+return|;
+block|}
 block|}
 end_class
 

@@ -1387,6 +1387,10 @@ name|getLazySimpleSerDeTableDesc
 argument_list|(
 name|PlanUtils
 operator|.
+name|sortFieldSchemas
+argument_list|(
+name|PlanUtils
+operator|.
 name|getFieldSchemasFromRowSchema
 argument_list|(
 name|mapJoin
@@ -1395,6 +1399,7 @@ name|getSchema
 argument_list|()
 argument_list|,
 literal|"temporarycol"
+argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;

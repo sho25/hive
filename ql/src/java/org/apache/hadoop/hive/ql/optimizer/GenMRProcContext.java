@@ -277,7 +277,7 @@ decl_stmt|;
 name|String
 name|currAliasId
 decl_stmt|;
-comment|/**      * @param currTask    the current task      * @param currTopOp   the current top operator being traversed      * @param currAliasId the current alias for the to operator      * @param inputs      the list of read entities      * @param outputs     the list of write entities      */
+comment|/**      * @param currTask    the current task      * @param currTopOp   the current top operator being traversed      * @param currAliasId the current alias for the to operator      */
 specifier|public
 name|GenMapRedCtx
 parameter_list|(

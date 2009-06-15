@@ -435,12 +435,10 @@ name|ObjectInspectorFactory
 operator|.
 name|getStandardStructObjectInspector
 argument_list|(
-name|ObjectInspectorUtils
+name|conf
 operator|.
-name|getIntegerArray
-argument_list|(
-name|totalSz
-argument_list|)
+name|getOutputColumnNames
+argument_list|()
 argument_list|,
 name|structFieldObjectInspectors
 argument_list|)

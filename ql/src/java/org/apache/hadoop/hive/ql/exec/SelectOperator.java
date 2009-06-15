@@ -346,6 +346,11 @@ name|initEvaluatorsAndReturnStruct
 argument_list|(
 name|eval
 argument_list|,
+name|conf
+operator|.
+name|getOutputColumnNames
+argument_list|()
+argument_list|,
 name|inputObjInspector
 index|[
 literal|0
