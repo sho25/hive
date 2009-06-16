@@ -847,7 +847,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|Throwable
 name|e
 parameter_list|)
 block|{
@@ -860,15 +860,31 @@ operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|OutOfMemoryError
+condition|)
+block|{
+comment|// Don't create a new object if we are already out of memory
+throw|throw
+operator|(
+name|OutOfMemoryError
+operator|)
+name|e
+throw|;
+block|}
+else|else
+block|{
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Reduce operator process failed"
-argument_list|,
-name|e
+literal|"Reduce operator initialization failed"
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 try|try
@@ -1171,7 +1187,7 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|Throwable
 name|e
 parameter_list|)
 block|{
@@ -1179,6 +1195,23 @@ name|abort
 operator|=
 literal|true
 expr_stmt|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|OutOfMemoryError
+condition|)
+block|{
+comment|// Don't create a new object if we are already out of memory
+throw|throw
+operator|(
+name|OutOfMemoryError
+operator|)
+name|e
+throw|;
+block|}
+else|else
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -1186,6 +1219,7 @@ argument_list|(
 name|e
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 specifier|private
@@ -1255,7 +1289,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|Throwable
 name|e
 parameter_list|)
 block|{
@@ -1268,6 +1302,23 @@ operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|OutOfMemoryError
+condition|)
+block|{
+comment|// Don't create a new object if we are already out of memory
+throw|throw
+operator|(
+name|OutOfMemoryError
+operator|)
+name|e
+throw|;
+block|}
+else|else
+block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -1277,6 +1328,7 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 try|try

@@ -779,7 +779,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|Throwable
 name|e
 parameter_list|)
 block|{
@@ -792,6 +792,23 @@ operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|OutOfMemoryError
+condition|)
+block|{
+comment|// Don't create a new object if we are already out of memory
+throw|throw
+operator|(
+name|OutOfMemoryError
+operator|)
+name|e
+throw|;
+block|}
+else|else
+block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -801,6 +818,7 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 try|try
@@ -831,7 +849,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|Throwable
 name|e
 parameter_list|)
 block|{
@@ -844,15 +862,36 @@ operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|OutOfMemoryError
+condition|)
+block|{
+comment|// Don't create a new object if we are already out of memory
+throw|throw
+operator|(
+name|OutOfMemoryError
+operator|)
+name|e
+throw|;
+block|}
+else|else
+block|{
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Map operator process failed"
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 specifier|public
@@ -895,7 +934,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|Throwable
 name|e
 parameter_list|)
 block|{
@@ -908,6 +947,23 @@ operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|OutOfMemoryError
+condition|)
+block|{
+comment|// Don't create a new object if we are already out of memory
+throw|throw
+operator|(
+name|OutOfMemoryError
+operator|)
+name|e
+throw|;
+block|}
+else|else
+block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -917,6 +973,7 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 comment|// detecting failed executions by exceptions thrown by the operator tree
