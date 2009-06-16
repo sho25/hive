@@ -575,6 +575,16 @@ operator|)
 literal|0.5
 argument_list|)
 block|,
+name|HIVEMAPAGGRHASHMINREDUCTION
+argument_list|(
+literal|"hive.map.aggr.hash.min.reduction"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.5
+argument_list|)
+block|,
 comment|// Default file format for CREATE TABLE statement
 comment|// Options: TextFile, SequenceFile
 name|HIVEDEFAULTFILEFORMAT

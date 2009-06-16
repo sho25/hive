@@ -717,6 +717,10 @@ specifier|transient
 name|long
 name|numRowsCompareHashAggr
 decl_stmt|;
+specifier|transient
+name|float
+name|minReductionHashAggr
+decl_stmt|;
 comment|/**    * This is used to store the position and field names for variable length fields.    **/
 class|class
 name|varLenFields
@@ -1611,6 +1615,21 @@ comment|// compare every groupbyMapAggrInterval rows
 name|numRowsCompareHashAggr
 operator|=
 name|groupbyMapAggrInterval
+expr_stmt|;
+name|minReductionHashAggr
+operator|=
+name|HiveConf
+operator|.
+name|getFloatVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEMAPAGGRHASHMINREDUCTION
+argument_list|)
 expr_stmt|;
 block|}
 comment|// init objectInspectors
@@ -2911,13 +2930,11 @@ expr_stmt|;
 comment|// map-side aggregation should reduce the entries by at-least half
 if|if
 condition|(
-operator|(
 name|numRowsHashTbl
-operator|*
-literal|2
-operator|)
 operator|>
 name|numRowsInput
+operator|*
+name|minReductionHashAggr
 condition|)
 block|{
 name|LOG
@@ -2931,6 +2948,20 @@ operator|+
 literal|" #total = "
 operator|+
 name|numRowsInput
+operator|+
+literal|" reduction = "
+operator|+
+literal|1.0
+operator|*
+operator|(
+name|numRowsHashTbl
+operator|/
+name|numRowsInput
+operator|)
+operator|+
+literal|" minReduction = "
+operator|+
+name|minReductionHashAggr
 argument_list|)
 expr_stmt|;
 name|flush
@@ -2944,6 +2975,7 @@ literal|false
 expr_stmt|;
 block|}
 else|else
+block|{
 name|LOG
 operator|.
 name|trace
@@ -2955,8 +2987,23 @@ operator|+
 literal|" #total = "
 operator|+
 name|numRowsInput
+operator|+
+literal|" reduction = "
+operator|+
+literal|1.0
+operator|*
+operator|(
+name|numRowsHashTbl
+operator|/
+name|numRowsInput
+operator|)
+operator|+
+literal|" minReduction = "
+operator|+
+name|minReductionHashAggr
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 try|try
