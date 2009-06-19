@@ -1085,7 +1085,12 @@ name|loi
 operator|.
 name|getPrimitiveWritableObject
 argument_list|(
+name|loi
+operator|.
+name|copyObject
+argument_list|(
 name|o
+argument_list|)
 argument_list|)
 expr_stmt|;
 break|break;
