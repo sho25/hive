@@ -19,26 +19,8 @@ name|exec
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveException
-import|;
-end_import
-
 begin_comment
-comment|/**                                                                                       * Generic exception class for Hive  */
+comment|/**                                                                                       * exception class, thrown when udf arguments have wrong types.  */
 end_comment
 
 begin_class
@@ -46,7 +28,7 @@ specifier|public
 class|class
 name|UDFArgumentTypeException
 extends|extends
-name|HiveException
+name|UDFArgumentException
 block|{
 name|int
 name|argumentId

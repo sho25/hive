@@ -117,7 +117,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentTypeException
+name|UDFArgumentException
 import|;
 end_import
 
@@ -696,7 +696,7 @@ return|return
 name|clone
 return|;
 block|}
-comment|/**    * Create a exprNodeGenericFuncDesc based on the genericUDFClass and the children    * parameters.    * @throws UDFArgumentTypeException    */
+comment|/**    * Create a exprNodeGenericFuncDesc based on the genericUDFClass and the children    * parameters.    * @throws UDFArgumentException    */
 specifier|public
 specifier|static
 name|exprNodeGenericFuncDesc
@@ -717,7 +717,7 @@ argument_list|>
 name|children
 parameter_list|)
 throws|throws
-name|UDFArgumentTypeException
+name|UDFArgumentException
 block|{
 name|ObjectInspector
 index|[]

@@ -107,6 +107,16 @@ argument_list|(
 literal|"Operator Argument Type Mismatch"
 argument_list|)
 block|,
+name|INVALID_ARGUMENT
+argument_list|(
+literal|"Wrong Arguments"
+argument_list|)
+block|,
+name|INVALID_ARGUMENT_LENGTH
+argument_list|(
+literal|"Arguments Length Mismatch"
+argument_list|)
+block|,
 name|INVALID_ARGUMENT_TYPE
 argument_list|(
 literal|"Argument Type Mismatch"
