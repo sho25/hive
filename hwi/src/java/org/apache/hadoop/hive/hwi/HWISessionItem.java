@@ -115,7 +115,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|cli
+name|ql
+operator|.
+name|processors
 operator|.
 name|SetProcessor
 import|;

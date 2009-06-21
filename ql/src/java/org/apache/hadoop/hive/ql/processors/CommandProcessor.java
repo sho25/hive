@@ -14,6 +14,8 @@ operator|.
 name|hive
 operator|.
 name|ql
+operator|.
+name|processors
 package|;
 end_package
 

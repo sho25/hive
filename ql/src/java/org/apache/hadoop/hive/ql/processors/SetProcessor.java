@@ -13,7 +13,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|cli
+name|ql
+operator|.
+name|processors
 package|;
 end_package
 
@@ -42,22 +44,6 @@ operator|.
 name|session
 operator|.
 name|SessionState
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|CommandProcessor
 import|;
 end_import
 
