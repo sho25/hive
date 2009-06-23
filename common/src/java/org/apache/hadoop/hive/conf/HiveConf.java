@@ -1939,6 +1939,17 @@ name|auxJars
 operator|=
 name|auxJars
 expr_stmt|;
+name|setVar
+argument_list|(
+name|this
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVEAUXJARS
+argument_list|,
+name|auxJars
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * @return the user name set in hadoop.job.ugi param or the current user from System    * @throws IOException    */
 specifier|public
