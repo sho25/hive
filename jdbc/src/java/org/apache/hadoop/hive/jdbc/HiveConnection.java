@@ -901,14 +901,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
+return|return
 operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+name|HiveDatabaseMetaData
+argument_list|()
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Connection#getTransactionIsolation()    */
 specifier|public
@@ -1133,6 +1130,10 @@ return|return
 operator|new
 name|HivePreparedStatement
 argument_list|(
+name|session
+argument_list|,
+name|client
+argument_list|,
 name|sql
 argument_list|)
 return|;
@@ -1155,6 +1156,10 @@ return|return
 operator|new
 name|HivePreparedStatement
 argument_list|(
+name|session
+argument_list|,
+name|client
+argument_list|,
 name|sql
 argument_list|)
 return|;
@@ -1224,14 +1229,17 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
+return|return
 operator|new
-name|SQLException
+name|HivePreparedStatement
 argument_list|(
-literal|"Method not supported"
+name|session
+argument_list|,
+name|client
+argument_list|,
+name|sql
 argument_list|)
-throw|;
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareStatement(java.lang.String, int, int, int)    */
 specifier|public

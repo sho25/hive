@@ -27,6 +27,16 @@ name|SQLException
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -38,6 +48,47 @@ name|sql
 operator|.
 name|ResultSetMetaData
 block|{
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|columnNames
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|columnTypes
+decl_stmt|;
+specifier|public
+name|HiveResultSetMetaData
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|columnNames
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|columnTypes
+parameter_list|)
+block|{
+name|this
+operator|.
+name|columnNames
+operator|=
+name|columnNames
+expr_stmt|;
+name|this
+operator|.
+name|columnTypes
+operator|=
+name|columnTypes
+expr_stmt|;
+block|}
 comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getCatalogName(int)    */
 specifier|public
 name|String
@@ -86,14 +137,12 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|columnNames
+operator|.
+name|size
+argument_list|()
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnDisplaySize(int)    */
 specifier|public
@@ -127,13 +176,16 @@ throws|throws
 name|SQLException
 block|{
 comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+return|return
+name|columnNames
+operator|.
+name|get
 argument_list|(
-literal|"Method not supported"
+name|column
+operator|-
+literal|1
 argument_list|)
-throw|;
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnName(int)    */
 specifier|public
@@ -146,14 +198,16 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+return|return
+name|columnNames
+operator|.
+name|get
 argument_list|(
-literal|"Method not supported"
+name|column
+operator|-
+literal|1
 argument_list|)
-throw|;
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnType(int)    */
 specifier|public
@@ -186,14 +240,16 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+return|return
+name|columnTypes
+operator|.
+name|get
 argument_list|(
-literal|"Method not supported"
+name|column
+operator|-
+literal|1
 argument_list|)
-throw|;
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getPrecision(int)    */
 specifier|public

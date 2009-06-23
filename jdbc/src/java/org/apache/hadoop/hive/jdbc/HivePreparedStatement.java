@@ -227,6 +227,22 @@ name|Calendar
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|HiveInterface
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -241,14 +257,38 @@ block|{
 name|String
 name|sql
 decl_stmt|;
+name|JdbcSessionState
+name|session
+decl_stmt|;
+name|HiveInterface
+name|client
+decl_stmt|;
 comment|/**    *    */
 specifier|public
 name|HivePreparedStatement
 parameter_list|(
+name|JdbcSessionState
+name|session
+parameter_list|,
+name|HiveInterface
+name|client
+parameter_list|,
 name|String
 name|sql
 parameter_list|)
 block|{
+name|this
+operator|.
+name|session
+operator|=
+name|session
+expr_stmt|;
+name|this
+operator|.
+name|client
+operator|=
+name|client
+expr_stmt|;
 name|this
 operator|.
 name|sql
@@ -282,13 +322,7 @@ throws|throws
 name|SQLException
 block|{
 comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+comment|//throw new SQLException("Method not supported");
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.PreparedStatement#execute()    */
 specifier|public
@@ -315,14 +349,40 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
+try|try
+block|{
+name|client
+operator|.
+name|execute
+argument_list|(
+name|sql
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+name|ex
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 throw|;
+block|}
+return|return
+operator|new
+name|HiveResultSet
+argument_list|(
+name|client
+argument_list|)
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.PreparedStatement#executeUpdate()    */
 specifier|public
@@ -2246,13 +2306,7 @@ throws|throws
 name|SQLException
 block|{
 comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+comment|//throw new SQLException("Method not supported");
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#setPoolable(boolean)    */
 specifier|public
@@ -2286,13 +2340,7 @@ throws|throws
 name|SQLException
 block|{
 comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+comment|// throw new SQLException("Method not supported");
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
 specifier|public

@@ -551,14 +551,13 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
+return|return
 operator|new
-name|SQLException
+name|String
 argument_list|(
-literal|"Method not supported"
+literal|"hive"
 argument_list|)
-throw|;
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDriverVersion()    */
 specifier|public
@@ -568,14 +567,13 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
+return|return
 operator|new
-name|SQLException
+name|String
 argument_list|(
-literal|"Method not supported"
+literal|"0"
 argument_list|)
-throw|;
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getExportedKeys(java.lang.String, java.lang.String, java.lang.String)    */
 specifier|public
@@ -758,14 +756,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|3
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getJDBCMinorVersion()    */
 specifier|public
@@ -775,14 +768,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|0
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxBinaryLiteralLength()    */
 specifier|public
@@ -2847,14 +2835,9 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsResultSetType(int)    */
 specifier|public
@@ -2867,14 +2850,9 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|true
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSavepoints()    */
 specifier|public
