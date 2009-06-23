@@ -296,6 +296,26 @@ name|class
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|taskvec
+operator|.
+name|add
+argument_list|(
+operator|new
+name|taskTuple
+argument_list|<
+name|ConditionalWork
+argument_list|>
+argument_list|(
+name|ConditionalWork
+operator|.
+name|class
+argument_list|,
+name|ConditionalTask
+operator|.
+name|class
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// we are taking this out to allow us to instantiate either MapRedTask or
 comment|// ExecDriver dynamically at run time based on configuration
 comment|// taskvec.add(new taskTuple<mapredWork>(mapredWork.class, ExecDriver.class));

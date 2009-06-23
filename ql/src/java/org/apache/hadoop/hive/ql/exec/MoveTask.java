@@ -278,16 +278,20 @@ try|try
 block|{
 comment|// Do any hive related operations like moving tables and files
 comment|// to appropriate locations
-for|for
-control|(
 name|loadFileDesc
 name|lfd
-range|:
+init|=
 name|work
 operator|.
 name|getLoadFileWork
 argument_list|()
-control|)
+decl_stmt|;
+if|if
+condition|(
+name|lfd
+operator|!=
+literal|null
+condition|)
 block|{
 name|Path
 name|targetPath
@@ -558,16 +562,20 @@ block|}
 block|}
 block|}
 comment|// Next we do this for tables and partitions
-for|for
-control|(
 name|loadTableDesc
 name|tbd
-range|:
+init|=
 name|work
 operator|.
 name|getLoadTableWork
 argument_list|()
-control|)
+decl_stmt|;
+if|if
+condition|(
+name|tbd
+operator|!=
+literal|null
+condition|)
 block|{
 name|String
 name|mesg
