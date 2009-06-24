@@ -505,6 +505,8 @@ name|retval
 operator|=
 name|allocNew
 argument_list|(
+literal|2
+operator|*
 name|size
 argument_list|,
 name|pageman
