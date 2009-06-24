@@ -706,7 +706,7 @@ name|preds
 init|=
 literal|null
 decl_stmt|;
-name|exprNodeFuncDesc
+name|exprNodeDesc
 name|condn
 init|=
 literal|null
@@ -760,9 +760,6 @@ condition|)
 block|{
 name|condn
 operator|=
-operator|(
-name|exprNodeFuncDesc
-operator|)
 name|preds
 operator|.
 name|get
@@ -1102,13 +1099,10 @@ argument_list|>
 operator|)
 name|nd
 decl_stmt|;
-name|exprNodeFuncDesc
+name|exprNodeDesc
 name|predicate
 init|=
-call|(
-name|exprNodeFuncDesc
-call|)
-argument_list|(
+operator|(
 operator|(
 operator|(
 name|FilterOperator
@@ -1118,7 +1112,7 @@ operator|)
 operator|.
 name|getConf
 argument_list|()
-argument_list|)
+operator|)
 operator|.
 name|getPredicate
 argument_list|()
