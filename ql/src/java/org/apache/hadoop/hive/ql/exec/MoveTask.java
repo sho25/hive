@@ -789,6 +789,9 @@ argument_list|)
 throw|;
 block|}
 comment|// Check if the file format of the file matches that of the table.
+name|boolean
+name|flag
+init|=
 name|HiveFileFormatUtils
 operator|.
 name|checkInputFormat
@@ -807,7 +810,19 @@ argument_list|()
 argument_list|,
 name|files
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|flag
+condition|)
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Wrong file format. Please check the file's format."
+argument_list|)
+throw|;
 block|}
 if|if
 condition|(
