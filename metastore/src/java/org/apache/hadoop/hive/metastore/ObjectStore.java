@@ -1781,6 +1781,7 @@ name|rollbackTransaction
 argument_list|()
 expr_stmt|;
 block|}
+block|}
 if|if
 condition|(
 name|db
@@ -1797,7 +1798,6 @@ operator|+
 name|name
 argument_list|)
 throw|;
-block|}
 block|}
 return|return
 name|db
