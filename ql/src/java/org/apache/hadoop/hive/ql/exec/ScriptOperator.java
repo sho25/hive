@@ -1545,6 +1545,21 @@ operator|!
 name|abort
 condition|)
 block|{
+if|if
+condition|(
+name|scriptError
+operator|!=
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|scriptError
+argument_list|)
+throw|;
+block|}
 comment|// everything ok. try normal shutdown
 try|try
 block|{
