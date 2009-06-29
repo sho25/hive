@@ -698,6 +698,13 @@ literal|1000
 argument_list|)
 argument_list|)
 block|,
+name|HIVESENDHEARTBEAT
+argument_list|(
+literal|"hive.heartbeat.interval"
+argument_list|,
+literal|1000
+argument_list|)
+block|,
 comment|// Optimizer
 name|HIVEOPTPPD
 argument_list|(

@@ -704,7 +704,13 @@ name|op
 operator|.
 name|initialize
 argument_list|(
-literal|null
+operator|new
+name|JobConf
+argument_list|(
+name|TestOperators
+operator|.
+name|class
+argument_list|)
 argument_list|,
 literal|null
 argument_list|,

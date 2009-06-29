@@ -91,6 +91,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|MapJoinOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|Operator
 import|;
 end_import
@@ -308,7 +326,15 @@ specifier|private
 name|UnionProcContext
 name|uCtx
 decl_stmt|;
-comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param aliasToPruner    *          partition pruner list    * @param aliasToSamplePruner    *          sample pruner list    * @param loadFileWork    *          list of destination files being loaded    * @param loadTableWork    *          list of destination tables being loaded    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    */
+specifier|private
+name|List
+argument_list|<
+name|MapJoinOperator
+argument_list|>
+name|listMapJoinOpsNoReducer
+decl_stmt|;
+comment|// list of map join operators with no reducer
+comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param aliasToPruner    *          partition pruner list    * @param aliasToSamplePruner    *          sample pruner list    * @param loadFileWork    *          list of destination files being loaded    * @param loadTableWork    *          list of destination tables being loaded    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer             */
 specifier|public
 name|ParseContext
 parameter_list|(
@@ -412,6 +438,12 @@ name|destTableId
 parameter_list|,
 name|UnionProcContext
 name|uCtx
+parameter_list|,
+name|List
+argument_list|<
+name|MapJoinOperator
+argument_list|>
+name|listMapJoinOpsNoReducer
 parameter_list|)
 block|{
 name|this
@@ -503,6 +535,12 @@ operator|.
 name|uCtx
 operator|=
 name|uCtx
+expr_stmt|;
+name|this
+operator|.
+name|listMapJoinOpsNoReducer
+operator|=
+name|listMapJoinOpsNoReducer
 expr_stmt|;
 block|}
 comment|/**    * @return the qb    */
@@ -999,6 +1037,38 @@ operator|.
 name|joinContext
 operator|=
 name|joinContext
+expr_stmt|;
+block|}
+comment|/**    * @return the listMapJoinOpsNoReducer    */
+specifier|public
+name|List
+argument_list|<
+name|MapJoinOperator
+argument_list|>
+name|getListMapJoinOpsNoReducer
+parameter_list|()
+block|{
+return|return
+name|listMapJoinOpsNoReducer
+return|;
+block|}
+comment|/**    * @param listMapJoinOpsNoReducer the listMapJoinOpsNoReducer to set    */
+specifier|public
+name|void
+name|setListMapJoinOpsNoReducer
+parameter_list|(
+name|List
+argument_list|<
+name|MapJoinOperator
+argument_list|>
+name|listMapJoinOpsNoReducer
+parameter_list|)
+block|{
+name|this
+operator|.
+name|listMapJoinOpsNoReducer
+operator|=
+name|listMapJoinOpsNoReducer
 expr_stmt|;
 block|}
 block|}
