@@ -137,6 +137,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|session
@@ -214,6 +232,10 @@ name|getJar
 argument_list|()
 decl_stmt|;
 name|String
+name|libJarsOption
+decl_stmt|;
+block|{
+name|String
 name|addedJars
 init|=
 name|ExecDriver
@@ -229,18 +251,17 @@ operator|.
 name|JAR
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|StringUtils
+name|conf
 operator|.
-name|isEmpty
+name|setVar
 argument_list|(
+name|ConfVars
+operator|.
+name|HIVEADDEDJARS
+argument_list|,
 name|addedJars
 argument_list|)
-condition|)
-block|{
-comment|// Add addedJars to auxJars
+expr_stmt|;
 name|String
 name|auxJars
 init|=
@@ -249,6 +270,17 @@ operator|.
 name|getAuxJars
 argument_list|()
 decl_stmt|;
+comment|// Put auxjars and addedjars together into libjars
+if|if
+condition|(
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
+name|addedJars
+argument_list|)
+condition|)
+block|{
 if|if
 condition|(
 name|StringUtils
@@ -259,31 +291,62 @@ name|auxJars
 argument_list|)
 condition|)
 block|{
-name|auxJars
+name|libJarsOption
 operator|=
-name|addedJars
+literal|" "
 expr_stmt|;
 block|}
 else|else
 block|{
-name|auxJars
+name|libJarsOption
 operator|=
+literal|" -libjars "
+operator|+
 name|auxJars
 operator|+
-literal|","
-operator|+
-name|addedJars
+literal|" "
 expr_stmt|;
 block|}
-name|conf
+block|}
+else|else
+block|{
+if|if
+condition|(
+name|StringUtils
 operator|.
-name|setAuxJars
+name|isEmpty
 argument_list|(
 name|auxJars
 argument_list|)
+condition|)
+block|{
+name|libJarsOption
+operator|=
+literal|" -libjars "
+operator|+
+name|addedJars
+operator|+
+literal|" "
 expr_stmt|;
 block|}
-comment|// Generate the hiveCOnfArgs after potentially adding the jars
+else|else
+block|{
+name|libJarsOption
+operator|=
+literal|" -libjars "
+operator|+
+name|addedJars
+operator|+
+literal|","
+operator|+
+name|auxJars
+operator|+
+literal|" "
+expr_stmt|;
+block|}
+block|}
+block|}
+comment|// Generate the hiveConfArgs after potentially adding the jars
 name|String
 name|hiveConfArgs
 init|=
@@ -294,40 +357,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|String
-name|auxJars
-init|=
-name|conf
-operator|.
-name|getAuxJars
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|StringUtils
-operator|.
-name|isEmpty
-argument_list|(
-name|auxJars
-argument_list|)
-condition|)
-block|{
-name|auxJars
-operator|=
-literal|" "
-expr_stmt|;
-block|}
-else|else
-block|{
-name|auxJars
-operator|=
-literal|" -libjars "
-operator|+
-name|auxJars
-operator|+
-literal|" "
-expr_stmt|;
-block|}
 name|mapredWork
 name|plan
 init|=
@@ -402,7 +431,7 @@ name|hadoopExec
 operator|+
 literal|" jar "
 operator|+
-name|auxJars
+name|libJarsOption
 operator|+
 literal|" "
 operator|+

@@ -164,9 +164,9 @@ name|?
 argument_list|>
 name|recordClass
 init|=
-name|Class
+name|job
 operator|.
-name|forName
+name|getClassByName
 argument_list|(
 name|className
 argument_list|)

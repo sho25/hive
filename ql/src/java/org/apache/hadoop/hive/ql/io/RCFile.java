@@ -4278,9 +4278,9 @@ name|?
 argument_list|>
 name|keyCls
 init|=
-name|Class
+name|conf
 operator|.
-name|forName
+name|getClassByName
 argument_list|(
 name|Text
 operator|.
@@ -4296,9 +4296,9 @@ name|?
 argument_list|>
 name|valCls
 init|=
-name|Class
+name|conf
 operator|.
-name|forName
+name|getClassByName
 argument_list|(
 name|Text
 operator|.

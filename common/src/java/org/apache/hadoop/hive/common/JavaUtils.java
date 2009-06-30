@@ -26,7 +26,7 @@ specifier|public
 class|class
 name|JavaUtils
 block|{
-comment|/**    * Standard way of getting classloader across all of Hive.    * Uses the context loader to get access to classpaths to auxiliary and jars    * added with 'add jar' command. Falls back to current classloader.    */
+comment|/**    * Standard way of getting classloader in Hive code (outside of Hadoop).    *     * Uses the context loader to get access to classpaths to auxiliary and jars    * added with 'add jar' command. Falls back to current classloader.    *     * In Hadoop-related code, we use Configuration.getClassLoader().    */
 specifier|public
 specifier|static
 name|ClassLoader

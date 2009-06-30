@@ -41,6 +41,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|net
+operator|.
+name|URLClassLoader
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -791,14 +801,9 @@ throw|;
 block|}
 name|sdclass
 operator|=
-name|MapOperator
+name|hconf
 operator|.
-name|class
-operator|.
-name|getClassLoader
-argument_list|()
-operator|.
-name|loadClass
+name|getClassByName
 argument_list|(
 name|className
 argument_list|)

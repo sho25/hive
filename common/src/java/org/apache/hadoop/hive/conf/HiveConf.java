@@ -494,6 +494,21 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// hive added files and jars
+name|HIVEADDEDFILES
+argument_list|(
+literal|"hive.added.files.path"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+name|HIVEADDEDJARS
+argument_list|(
+literal|"hive.added.jars.path"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// for hive script operator
 name|HIVETABLENAME
 argument_list|(
