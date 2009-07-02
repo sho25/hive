@@ -265,7 +265,7 @@ throw|throw
 operator|new
 name|UDFArgumentLengthException
 argument_list|(
-literal|"The functin SIZE only accepts 1 argument."
+literal|"The function SIZE only accepts 1 argument."
 argument_list|)
 throw|;
 block|}
