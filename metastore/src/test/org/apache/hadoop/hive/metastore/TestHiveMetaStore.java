@@ -3460,6 +3460,19 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+name|tbl3
+operator|.
+name|getParameters
+argument_list|()
+argument_list|,
+name|tbl2
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
 literal|"Use this for comments etc"
 argument_list|,
 name|tbl2
