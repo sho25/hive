@@ -520,6 +520,11 @@ specifier|private
 name|ObjectInspector
 name|cachedObjectInspector
 decl_stmt|;
+specifier|private
+name|boolean
+name|useJSONSerialize
+decl_stmt|;
+comment|// use json to serialize
 specifier|public
 name|String
 name|toString
@@ -1138,7 +1143,9 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-literal|"columns"
+name|Constants
+operator|.
+name|LIST_COLUMNS
 argument_list|)
 decl_stmt|;
 comment|// NOTE: if "columns.types" is missing, all columns will be of String type
@@ -1149,7 +1156,9 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-literal|"columns.types"
+name|Constants
+operator|.
+name|LIST_COLUMN_TYPES
 argument_list|)
 decl_stmt|;
 comment|// Parse the configuration parameters
@@ -1965,6 +1974,8 @@ name|Category
 operator|.
 name|PRIMITIVE
 argument_list|)
+operator|||
+name|useJSONSerialize
 operator|)
 condition|)
 block|{
@@ -2680,6 +2691,32 @@ name|getCategory
 argument_list|()
 argument_list|)
 throw|;
+block|}
+comment|/**    * @return the useJSONSerialize    */
+specifier|public
+name|boolean
+name|isUseJSONSerialize
+parameter_list|()
+block|{
+return|return
+name|useJSONSerialize
+return|;
+block|}
+comment|/**    * @param useJSONSerialize the useJSONSerialize to set    */
+specifier|public
+name|void
+name|setUseJSONSerialize
+parameter_list|(
+name|boolean
+name|useJSONSerialize
+parameter_list|)
+block|{
+name|this
+operator|.
+name|useJSONSerialize
+operator|=
+name|useJSONSerialize
+expr_stmt|;
 block|}
 block|}
 end_class

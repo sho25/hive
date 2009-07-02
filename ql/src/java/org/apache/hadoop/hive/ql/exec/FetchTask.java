@@ -696,6 +696,13 @@ argument_list|,
 name|mSerdeProp
 argument_list|)
 expr_stmt|;
+name|mSerde
+operator|.
+name|setUseJSONSerialize
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|ftOp
 operator|=
 operator|new

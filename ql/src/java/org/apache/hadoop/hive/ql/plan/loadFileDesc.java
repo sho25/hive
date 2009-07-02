@@ -31,16 +31,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -87,6 +77,10 @@ specifier|private
 name|String
 name|columns
 decl_stmt|;
+specifier|private
+name|String
+name|columnTypes
+decl_stmt|;
 specifier|public
 name|loadFileDesc
 parameter_list|()
@@ -109,6 +103,10 @@ parameter_list|,
 specifier|final
 name|String
 name|columns
+parameter_list|,
+specifier|final
+name|String
+name|columnTypes
 parameter_list|)
 block|{
 name|super
@@ -133,6 +131,12 @@ operator|.
 name|columns
 operator|=
 name|columns
+expr_stmt|;
+name|this
+operator|.
+name|columnTypes
+operator|=
+name|columnTypes
 expr_stmt|;
 block|}
 annotation|@
@@ -227,6 +231,32 @@ operator|.
 name|columns
 operator|=
 name|columns
+expr_stmt|;
+block|}
+comment|/**    * @return the columnTypes    */
+specifier|public
+name|String
+name|getColumnTypes
+parameter_list|()
+block|{
+return|return
+name|columnTypes
+return|;
+block|}
+comment|/**    * @param columnTypes the columnTypes to set    */
+specifier|public
+name|void
+name|setColumnTypes
+parameter_list|(
+name|String
+name|columnTypes
+parameter_list|)
+block|{
+name|this
+operator|.
+name|columnTypes
+operator|=
+name|columnTypes
 expr_stmt|;
 block|}
 block|}

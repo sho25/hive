@@ -301,24 +301,6 @@ name|ObjectInspector
 import|;
 end_import
 
-begin_import
-import|import
-name|com
-operator|.
-name|sun
-operator|.
-name|corba
-operator|.
-name|se
-operator|.
-name|pept
-operator|.
-name|encoding
-operator|.
-name|InputObject
-import|;
-end_import
-
 begin_comment
 comment|/**  * File Sink operator implementation  **/
 end_comment
