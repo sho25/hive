@@ -89,9 +89,11 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|typeinfo
+name|lazy
 operator|.
-name|StructTypeInfo
+name|objectinspector
+operator|.
+name|LazySimpleStructObjectInspector
 import|;
 end_import
 
@@ -107,9 +109,27 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|typeinfo
+name|objectinspector
 operator|.
-name|TypeInfo
+name|StructField
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|StructObjectInspector
 import|;
 end_import
 
@@ -128,7 +148,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyObject for storing a struct.  * The field of a struct can be primitive or non-primitive.  *  * LazyStruct does not deal with the case of a NULL struct. That is handled  * by LazySimpleStructObjectInspector.  */
+comment|/**  * LazyObject for storing a struct.  * The field of a struct can be primitive or non-primitive.  *  * LazyStruct does not deal with the case of a NULL struct. That is handled  * by the parent LazyObject.  */
 end_comment
 
 begin_class
@@ -137,6 +157,9 @@ class|class
 name|LazyStruct
 extends|extends
 name|LazyNonPrimitive
+argument_list|<
+name|LazySimpleStructObjectInspector
+argument_list|>
 block|{
 specifier|private
 specifier|static
@@ -174,17 +197,17 @@ name|boolean
 index|[]
 name|fieldInited
 decl_stmt|;
-comment|/**    * Construct a LazyStruct object with the TypeInfo.    * @param typeInfo  the TypeInfo representing the type of this LazyStruct.    */
+comment|/**    * Construct a LazyStruct object with the ObjectInspector.    */
 specifier|public
 name|LazyStruct
 parameter_list|(
-name|TypeInfo
-name|typeInfo
+name|LazySimpleStructObjectInspector
+name|oi
 parameter_list|)
 block|{
 name|super
 argument_list|(
-name|typeInfo
+name|oi
 argument_list|)
 expr_stmt|;
 block|}
@@ -229,21 +252,44 @@ name|extraFieldWarned
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * Parse the byte[] and fill each field.    * @param separator  The separator for delimiting the fields in the byte[]    * @param nullSequence  The sequence for the NULL value    * @param lastColumnTakesRest  Whether the additional fields should be all     *                             put into the last column in case the data     *                             contains more columns than the schema.      */
+comment|/**    * Parse the byte[] and fill each field.    */
 specifier|private
 name|void
 name|parse
-parameter_list|(
+parameter_list|()
+block|{
 name|byte
 name|separator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|,
+init|=
+name|oi
+operator|.
+name|getSeparator
+argument_list|()
+decl_stmt|;
 name|boolean
 name|lastColumnTakesRest
-parameter_list|)
-block|{
+init|=
+name|oi
+operator|.
+name|getLastColumnTakesRest
+argument_list|()
+decl_stmt|;
+name|boolean
+name|isEscaped
+init|=
+name|oi
+operator|.
+name|isEscaped
+argument_list|()
+decl_stmt|;
+name|byte
+name|escapeChar
+init|=
+name|oi
+operator|.
+name|getEscapeChar
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|fields
@@ -253,18 +299,20 @@ condition|)
 block|{
 name|List
 argument_list|<
-name|TypeInfo
+name|?
+extends|extends
+name|StructField
 argument_list|>
-name|fieldTypeInfos
+name|fieldRefs
 init|=
 operator|(
 operator|(
-name|StructTypeInfo
+name|StructObjectInspector
 operator|)
-name|typeInfo
+name|oi
 operator|)
 operator|.
-name|getAllStructFieldTypeInfos
+name|getAllStructFieldRefs
 argument_list|()
 decl_stmt|;
 name|fields
@@ -272,7 +320,7 @@ operator|=
 operator|new
 name|LazyObject
 index|[
-name|fieldTypeInfos
+name|fieldRefs
 operator|.
 name|size
 argument_list|()
@@ -304,12 +352,15 @@ name|LazyFactory
 operator|.
 name|createLazyObject
 argument_list|(
-name|fieldTypeInfos
+name|fieldRefs
 operator|.
 name|get
 argument_list|(
 name|i
 argument_list|)
+operator|.
+name|getFieldObjectInspector
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -477,9 +528,36 @@ operator|+
 literal|1
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isEscaped
+operator|&&
+name|bytes
+index|[
+name|fieldByteEnd
+index|]
+operator|==
+name|escapeChar
+operator|&&
+name|fieldByteEnd
+operator|+
+literal|1
+operator|<
+name|structByteEnd
+condition|)
+block|{
+comment|// ignore the char after escape_char
+name|fieldByteEnd
+operator|+=
+literal|2
+expr_stmt|;
+block|}
+else|else
+block|{
 name|fieldByteEnd
 operator|++
 expr_stmt|;
+block|}
 block|}
 comment|// Extra bytes at the end?
 if|if
@@ -557,22 +635,13 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**    * Get one field out of the struct.    *     * If the field is a primitive field, return the actual object.    * Otherwise return the LazyObject.  This is because PrimitiveObjectInspector    * does not have control over the object used by the user - the user simply    * directly use the Object instead of going through     * Object PrimitiveObjectInspector.get(Object).      *     * NOTE: separator and nullSequence has to be the same each time     * this method is called.  These two parameters are used only once to parse    * each record.    *     * @param fieldID  The field ID    * @param separator  The separator for delimiting the fields in the byte[]    * @param nullSequence  The sequence for null value    * @param lastColumnTakesRest  Whether the additional fields should be all     *                             put into the last column in case the data     *                             contains more columns than the schema.      * @return         The field as a LazyObject    */
+comment|/**    * Get one field out of the struct.    *     * If the field is a primitive field, return the actual object.    * Otherwise return the LazyObject.  This is because PrimitiveObjectInspector    * does not have control over the object used by the user - the user simply    * directly use the Object instead of going through     * Object PrimitiveObjectInspector.get(Object).      *     * @param fieldID  The field ID    * @return         The field as a LazyObject    */
 specifier|public
 name|Object
 name|getField
 parameter_list|(
 name|int
 name|fieldID
-parameter_list|,
-name|byte
-name|separator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|,
-name|boolean
-name|lastColumnTakesRest
 parameter_list|)
 block|{
 if|if
@@ -582,36 +651,33 @@ name|parsed
 condition|)
 block|{
 name|parse
-argument_list|(
-name|separator
-argument_list|,
-name|nullSequence
-argument_list|,
-name|lastColumnTakesRest
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 return|return
 name|uncheckedGetField
 argument_list|(
 name|fieldID
-argument_list|,
-name|nullSequence
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the field out of the row without checking parsed.    * This is called by both getField and getFieldsAsList.    * @param fieldID  The id of the field starting from 0.    * @param nullSequence  The sequence representing NULL value.    * @return  The value of the field     */
+comment|/**    * Get the field out of the row without checking parsed.    * This is called by both getField and getFieldsAsList.    * @param fieldID  The id of the field starting from 0.    * @param nullSequence  The sequence representing NULL value.    * @return  The value of the field    */
 specifier|private
 name|Object
 name|uncheckedGetField
 parameter_list|(
 name|int
 name|fieldID
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
+name|Text
+name|nullSequence
+init|=
+name|oi
+operator|.
+name|getNullSequence
+argument_list|()
+decl_stmt|;
 comment|// Test the length first so in most cases we avoid doing a byte[]
 comment|// comparison.
 name|int
@@ -736,23 +802,14 @@ name|Object
 argument_list|>
 name|cachedList
 decl_stmt|;
-comment|/**    * Get the values of the fields as an ArrayList.    * @param separator  The separator for delimiting the fields in the byte[]    * @param nullSequence         The sequence for the NULL value    * @param lastColumnTakesRest  Whether the additional fields should be all     *                             put into the last column in case the data     *                             contains more columns than the schema.      * @return The values of the fields as an ArrayList.    */
+comment|/**    * Get the values of the fields as an ArrayList.    * @return The values of the fields as an ArrayList.    */
 specifier|public
 name|ArrayList
 argument_list|<
 name|Object
 argument_list|>
 name|getFieldsAsList
-parameter_list|(
-name|byte
-name|separator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|,
-name|boolean
-name|lastColumnTakesRest
-parameter_list|)
+parameter_list|()
 block|{
 if|if
 condition|(
@@ -761,13 +818,7 @@ name|parsed
 condition|)
 block|{
 name|parse
-argument_list|(
-name|separator
-argument_list|,
-name|nullSequence
-argument_list|,
-name|lastColumnTakesRest
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 if|if
@@ -819,8 +870,6 @@ argument_list|(
 name|uncheckedGetField
 argument_list|(
 name|i
-argument_list|,
-name|nullSequence
 argument_list|)
 argument_list|)
 expr_stmt|;

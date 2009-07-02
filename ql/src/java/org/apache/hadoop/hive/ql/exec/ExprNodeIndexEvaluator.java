@@ -540,7 +540,7 @@ name|getMapKeyObjectInspector
 argument_list|()
 operator|)
 operator|.
-name|isWritable
+name|preferWritable
 argument_list|()
 condition|)
 block|{

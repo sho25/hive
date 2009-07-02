@@ -107,7 +107,7 @@ function_decl|;
 comment|/**    * Whether the ObjectInspector prefers to return a Primitive Writable Object    * instead of a Primitive Java Object.    * This can be useful for determining the most efficient way to getting    * data out of the Object.     */
 specifier|public
 name|boolean
-name|isWritable
+name|preferWritable
 parameter_list|()
 function_decl|;
 block|}

@@ -471,6 +471,26 @@ name|i
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|fieldData
+operator|!=
+literal|null
+condition|)
+block|{
+name|fieldData
+operator|=
+operator|(
+operator|(
+name|LazyPrimitive
+operator|)
+name|fieldData
+operator|)
+operator|.
+name|getWritableObject
+argument_list|()
+expr_stmt|;
+block|}
 name|assertEquals
 argument_list|(
 literal|"Field "

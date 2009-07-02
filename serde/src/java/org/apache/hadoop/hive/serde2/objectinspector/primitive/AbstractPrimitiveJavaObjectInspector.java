@@ -100,7 +100,7 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|isWritable
+name|preferWritable
 parameter_list|()
 block|{
 return|return

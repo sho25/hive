@@ -19,16 +19,60 @@ name|lazy
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|ObjectInspector
+import|;
+end_import
+
 begin_comment
 comment|/**  * LazyObject stores an object in a range of bytes in a byte[].  *   * A LazyObject can represent any primitive object or hierarchical object  * like array, map or struct.  */
 end_comment
 
-begin_interface
+begin_class
 specifier|public
-interface|interface
+specifier|abstract
+class|class
 name|LazyObject
+parameter_list|<
+name|OI
+extends|extends
+name|ObjectInspector
+parameter_list|>
 block|{
+name|OI
+name|oi
+decl_stmt|;
+comment|/**    * Create a LazyObject.    * @param oi  Derived classes can access meta information about this Lazy    *            Object (e.g, separator, nullSequence, escaper) from it.    */
+specifier|protected
+name|LazyObject
+parameter_list|(
+name|OI
+name|oi
+parameter_list|)
+block|{
+name|this
+operator|.
+name|oi
+operator|=
+name|oi
+expr_stmt|;
+block|}
 comment|/**    * Set the data for this LazyObject.    * We take ByteArrayRef instead of byte[] so that we will be able to drop    * the reference to byte[] by a single assignment.    * The ByteArrayRef object can be reused across multiple rows.    * @param bytes  The wrapper of the byte[].    * @param start  The start position inside the bytes.    * @param length The length of the data, starting from "start"    * @see ByteArrayRef    */
+specifier|public
+specifier|abstract
 name|void
 name|init
 parameter_list|(
@@ -44,12 +88,13 @@ parameter_list|)
 function_decl|;
 comment|/**    * If the LazyObject is a primitive Object, then deserialize it and return    * the actual primitive Object.    * Otherwise (array, map, struct), return this.     */
 specifier|public
+specifier|abstract
 name|Object
 name|getObject
 parameter_list|()
 function_decl|;
 block|}
-end_interface
+end_class
 
 end_unit
 

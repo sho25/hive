@@ -2245,7 +2245,7 @@ if|if
 condition|(
 name|soi
 operator|.
-name|isWritable
+name|preferWritable
 argument_list|()
 condition|)
 block|{

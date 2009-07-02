@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
 import|;
 end_import
@@ -61,9 +71,11 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|typeinfo
+name|lazy
 operator|.
-name|MapTypeInfo
+name|objectinspector
+operator|.
+name|LazyMapObjectInspector
 import|;
 end_import
 
@@ -79,9 +91,27 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|typeinfo
+name|objectinspector
 operator|.
-name|TypeInfo
+name|MapObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|PrimitiveObjectInspector
 import|;
 end_import
 
@@ -100,7 +130,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyMap stores a map of Primitive LazyObjects to LazyObjects.  * Note that the keys of the map cannot contain null.  *   * LazyMap does not deal with the case of a NULL map. That is handled  * by LazyMapObjectInspector.  */
+comment|/**  * LazyMap stores a map of Primitive LazyObjects to LazyObjects.  * Note that the keys of the map cannot contain null.  *   * LazyMap does not deal with the case of a NULL map. That is handled  * by the parent LazyObject.  */
 end_comment
 
 begin_class
@@ -109,6 +139,9 @@ class|class
 name|LazyMap
 extends|extends
 name|LazyNonPrimitive
+argument_list|<
+name|LazyMapObjectInspector
+argument_list|>
 block|{
 comment|/**    * Whether the data is already parsed or not.    */
 name|boolean
@@ -136,6 +169,8 @@ comment|/**    * The keys are stored in an array of LazyPrimitives.    */
 name|LazyPrimitive
 argument_list|<
 name|?
+argument_list|,
+name|?
 argument_list|>
 index|[]
 name|keyObjects
@@ -155,17 +190,17 @@ name|boolean
 index|[]
 name|valueInited
 decl_stmt|;
-comment|/**    * Construct a LazyMap object with the TypeInfo.    * @param typeInfo  the TypeInfo representing the type of this LazyMap.    */
+comment|/**    * Construct a LazyMap object with the ObjectInspector.    */
 specifier|protected
 name|LazyMap
 parameter_list|(
-name|TypeInfo
-name|typeInfo
+name|LazyMapObjectInspector
+name|oi
 parameter_list|)
 block|{
 name|super
 argument_list|(
-name|typeInfo
+name|oi
 argument_list|)
 expr_stmt|;
 block|}
@@ -241,6 +276,8 @@ operator|=
 operator|new
 name|LazyPrimitive
 argument_list|<
+name|?
+argument_list|,
 name|?
 argument_list|>
 index|[
@@ -366,25 +403,48 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Parse the byte[] and fill keyStart, keyEnd.    * @param itemSeparator     The separator between different entries.    * @param keyValueSeparator The separator between key and value.    * @param nullSequence      The byte sequence representing NULL.    */
+comment|/**    * Parse the byte[] and fill keyStart, keyEnd.    */
 specifier|private
 name|void
 name|parse
-parameter_list|(
-name|byte
-name|itemSeparator
-parameter_list|,
-name|byte
-name|keyValueSeparator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|)
+parameter_list|()
 block|{
 name|parsed
 operator|=
 literal|true
 expr_stmt|;
+name|byte
+name|itemSeparator
+init|=
+name|oi
+operator|.
+name|getItemSeparator
+argument_list|()
+decl_stmt|;
+name|byte
+name|keyValueSeparator
+init|=
+name|oi
+operator|.
+name|getKeyValueSeparator
+argument_list|()
+decl_stmt|;
+name|boolean
+name|isEscaped
+init|=
+name|oi
+operator|.
+name|isEscaped
+argument_list|()
+decl_stmt|;
+name|byte
+name|escapeChar
+init|=
+name|oi
+operator|.
+name|getEscapeChar
+argument_list|()
+decl_stmt|;
 comment|// empty array?
 if|if
 condition|(
@@ -546,9 +606,36 @@ operator|=
 name|elementByteEnd
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isEscaped
+operator|&&
+name|bytes
+index|[
+name|elementByteEnd
+index|]
+operator|==
+name|escapeChar
+operator|&&
+name|elementByteEnd
+operator|+
+literal|1
+operator|<
+name|arrayByteEnd
+condition|)
+block|{
+comment|// ignore the char after escape_char
+name|elementByteEnd
+operator|+=
+literal|2
+expr_stmt|;
+block|}
+else|else
+block|{
 name|elementByteEnd
 operator|++
 expr_stmt|;
+block|}
 block|}
 comment|// This makes sure we can use the same formula to compute the
 comment|// length of each value in the map.
@@ -596,20 +683,11 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Get the value in the map for the key.    *     * If there are multiple matches (which is possible in the serialized     * format), only the first one is returned.    *     * The most efficient way to get the value for the key is to serialize the     * key and then try to find it in the array.  We do linear search because in     * most cases, user only wants to get one or two values out of the map, and     * the cost of building up a HashMap is substantially higher.    *     * @param itemSeparator     The separator between different entries.    * @param keyValueSeparator The separator between key and value.    * @param nullSequence      The byte sequence representing NULL.    * @param key               The key object that we are looking for.    * @return The corresponding value object, or NULL if not found    */
+comment|/**    * Get the value in the map for the key.    *     * If there are multiple matches (which is possible in the serialized     * format), only the first one is returned.    *     * The most efficient way to get the value for the key is to serialize the     * key and then try to find it in the array.  We do linear search because in     * most cases, user only wants to get one or two values out of the map, and     * the cost of building up a HashMap is substantially higher.    *     * @param key               The key object that we are looking for.    * @return The corresponding value object, or NULL if not found    */
 specifier|public
 name|Object
 name|getMapValueElement
 parameter_list|(
-name|byte
-name|itemSeparator
-parameter_list|,
-name|byte
-name|keyValueSeparator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|,
 name|Object
 name|key
 parameter_list|)
@@ -621,13 +699,7 @@ name|parsed
 condition|)
 block|{
 name|parse
-argument_list|(
-name|itemSeparator
-argument_list|,
-name|keyValueSeparator
-argument_list|,
-name|nullSequence
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 comment|// search for the key
@@ -649,14 +721,14 @@ block|{
 name|LazyPrimitive
 argument_list|<
 name|?
+argument_list|,
+name|?
 argument_list|>
 name|lazyKeyI
 init|=
 name|uncheckedGetKey
 argument_list|(
 name|i
-argument_list|,
-name|nullSequence
 argument_list|)
 decl_stmt|;
 if|if
@@ -666,13 +738,13 @@ operator|==
 literal|null
 condition|)
 continue|continue;
-comment|// getObject() will convert LazyPrimitive to actual primitive objects.
+comment|// getWritableObject() will convert LazyPrimitive to actual primitive writable objects.
 name|Object
 name|keyI
 init|=
 name|lazyKeyI
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 decl_stmt|;
 if|if
@@ -699,8 +771,6 @@ init|=
 name|uncheckedGetValue
 argument_list|(
 name|i
-argument_list|,
-name|nullSequence
 argument_list|)
 decl_stmt|;
 return|return
@@ -728,11 +798,16 @@ name|uncheckedGetValue
 parameter_list|(
 name|int
 name|index
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
+name|Text
+name|nullSequence
+init|=
+name|oi
+operator|.
+name|getNullSequence
+argument_list|()
+decl_stmt|;
 name|int
 name|valueIBegin
 init|=
@@ -844,12 +919,12 @@ name|createLazyObject
 argument_list|(
 operator|(
 operator|(
-name|MapTypeInfo
+name|MapObjectInspector
 operator|)
-name|typeInfo
+name|oi
 operator|)
 operator|.
-name|getMapValueTypeInfo
+name|getMapValueObjectInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -881,16 +956,23 @@ specifier|private
 name|LazyPrimitive
 argument_list|<
 name|?
+argument_list|,
+name|?
 argument_list|>
 name|uncheckedGetKey
 parameter_list|(
 name|int
 name|index
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
+name|Text
+name|nullSequence
+init|=
+name|oi
+operator|.
+name|getNullSequence
+argument_list|()
+decl_stmt|;
 name|int
 name|keyIBegin
 init|=
@@ -998,17 +1080,17 @@ name|LazyFactory
 operator|.
 name|createLazyPrimitiveClass
 argument_list|(
+call|(
+name|PrimitiveObjectInspector
+call|)
+argument_list|(
 operator|(
-operator|(
-name|MapTypeInfo
+name|MapObjectInspector
 operator|)
-name|typeInfo
-operator|)
+name|oi
+argument_list|)
 operator|.
-name|getMapKeyTypeInfo
-argument_list|()
-operator|.
-name|getTypeName
+name|getMapKeyObjectInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1036,7 +1118,7 @@ index|]
 return|;
 block|}
 comment|/**    * cachedMap is reused for different calls to getMap().    * But each LazyMap has a separate cachedMap so we won't overwrite the    * data by accident.    */
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,
@@ -1044,7 +1126,7 @@ name|Object
 argument_list|>
 name|cachedMap
 decl_stmt|;
-comment|/**    * Return the map object representing this LazyMap.    * Note that the keyObjects will be Java primitive objects.    * @param itemSeparator     The separator between different entries.    * @param keyValueSeparator The separator between key and value.    * @param nullSequence      The byte sequence representing NULL.    * @return the map object    */
+comment|/**    * Return the map object representing this LazyMap.    * Note that the keyObjects will be Writable primitive objects.    * @return the map object    */
 specifier|public
 name|Map
 argument_list|<
@@ -1053,16 +1135,7 @@ argument_list|,
 name|Object
 argument_list|>
 name|getMap
-parameter_list|(
-name|byte
-name|itemSeparator
-parameter_list|,
-name|byte
-name|keyValueSeparator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|)
+parameter_list|()
 block|{
 if|if
 condition|(
@@ -1071,13 +1144,7 @@ name|parsed
 condition|)
 block|{
 name|parse
-argument_list|(
-name|itemSeparator
-argument_list|,
-name|keyValueSeparator
-argument_list|,
-name|nullSequence
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 if|if
@@ -1087,10 +1154,11 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// Use LinkedHashMap to provide deterministic order
 name|cachedMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,
@@ -1099,11 +1167,14 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
+else|else
+block|{
 name|cachedMap
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+block|}
 comment|// go through each element of the map
 for|for
 control|(
@@ -1123,14 +1194,14 @@ block|{
 name|LazyPrimitive
 argument_list|<
 name|?
+argument_list|,
+name|?
 argument_list|>
 name|lazyKey
 init|=
 name|uncheckedGetKey
 argument_list|(
 name|i
-argument_list|,
-name|nullSequence
 argument_list|)
 decl_stmt|;
 if|if
@@ -1170,8 +1241,6 @@ init|=
 name|uncheckedGetValue
 argument_list|(
 name|i
-argument_list|,
-name|nullSequence
 argument_list|)
 decl_stmt|;
 name|Object
@@ -1205,20 +1274,11 @@ return|return
 name|cachedMap
 return|;
 block|}
-comment|/**    * Get the size of the map represented by this LazyMap.    * @param itemSeparator     The separator between different entries.    * @param keyValueSeparator The separator between key and value.    * @param nullSequence      The byte sequence representing NULL.    * @return                  The size of the map, -1 for NULL map.    */
+comment|/**    * Get the size of the map represented by this LazyMap.    * @return                  The size of the map, -1 for NULL map.    */
 specifier|public
 name|int
 name|getMapSize
-parameter_list|(
-name|byte
-name|itemSeparator
-parameter_list|,
-name|byte
-name|keyValueSeparator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|)
+parameter_list|()
 block|{
 if|if
 condition|(
@@ -1227,13 +1287,7 @@ name|parsed
 condition|)
 block|{
 name|parse
-argument_list|(
-name|itemSeparator
-argument_list|,
-name|keyValueSeparator
-argument_list|,
-name|nullSequence
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 return|return

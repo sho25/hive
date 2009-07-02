@@ -61,9 +61,11 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|typeinfo
+name|lazy
 operator|.
-name|ListTypeInfo
+name|objectinspector
+operator|.
+name|LazyListObjectInspector
 import|;
 end_import
 
@@ -79,9 +81,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|typeinfo
+name|objectinspector
 operator|.
-name|TypeInfo
+name|ListObjectInspector
 import|;
 end_import
 
@@ -100,7 +102,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyArray stores an array of Lazy Objects.  *   * LazyArray does not deal with the case of a NULL array. That is handled  * by LazyArrayObjectInspector.  */
+comment|/**  * LazyArray stores an array of Lazy Objects.  *   * LazyArray does not deal with the case of a NULL array. That is handled  * by the parent LazyObject.  */
 end_comment
 
 begin_class
@@ -109,6 +111,9 @@ class|class
 name|LazyArray
 extends|extends
 name|LazyNonPrimitive
+argument_list|<
+name|LazyListObjectInspector
+argument_list|>
 block|{
 comment|/**    * Whether the data is already parsed or not.    */
 name|boolean
@@ -137,17 +142,17 @@ name|LazyObject
 index|[]
 name|arrayElements
 decl_stmt|;
-comment|/**    * Construct a LazyArray object with the TypeInfo.    * @param typeInfo  the TypeInfo representing the type of this LazyArray.    */
+comment|/**    * Construct a LazyArray object with the ObjectInspector.    * @param oi  the oi representing the type of this LazyArray as well as meta     *            information like separator etc.    */
 specifier|protected
 name|LazyArray
 parameter_list|(
-name|TypeInfo
-name|typeInfo
+name|LazyListObjectInspector
+name|oi
 parameter_list|)
 block|{
 name|super
 argument_list|(
-name|typeInfo
+name|oi
 argument_list|)
 expr_stmt|;
 block|}
@@ -185,7 +190,7 @@ literal|false
 expr_stmt|;
 block|}
 comment|/**    * Enlarge the size of arrays storing information for the elements inside     * the array.    */
-specifier|protected
+specifier|private
 name|void
 name|enlargeArrays
 parameter_list|()
@@ -280,18 +285,36 @@ comment|/**    * Parse the bytes and fill arrayLength and startPosition.    */
 specifier|private
 name|void
 name|parse
-parameter_list|(
-name|byte
-name|separator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|)
+parameter_list|()
 block|{
 name|parsed
 operator|=
 literal|true
 expr_stmt|;
+name|byte
+name|separator
+init|=
+name|oi
+operator|.
+name|getSeparator
+argument_list|()
+decl_stmt|;
+name|boolean
+name|isEscaped
+init|=
+name|oi
+operator|.
+name|isEscaped
+argument_list|()
+decl_stmt|;
+name|byte
+name|escapeChar
+init|=
+name|oi
+operator|.
+name|getEscapeChar
+argument_list|()
+decl_stmt|;
 comment|// empty array?
 if|if
 condition|(
@@ -398,9 +421,36 @@ operator|+
 literal|1
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isEscaped
+operator|&&
+name|bytes
+index|[
+name|elementByteEnd
+index|]
+operator|==
+name|escapeChar
+operator|&&
+name|elementByteEnd
+operator|+
+literal|1
+operator|<
+name|arrayByteEnd
+condition|)
+block|{
+comment|// ignore the char after escape_char
+name|elementByteEnd
+operator|+=
+literal|2
+expr_stmt|;
+block|}
+else|else
+block|{
 name|elementByteEnd
 operator|++
 expr_stmt|;
+block|}
 block|}
 comment|// Store arrayByteEnd+1 in startPosition[arrayLength]
 comment|// so that we can use the same formula to compute the length of
@@ -441,12 +491,6 @@ name|getListElementObject
 parameter_list|(
 name|int
 name|index
-parameter_list|,
-name|byte
-name|separator
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
 if|if
@@ -456,11 +500,7 @@ name|parsed
 condition|)
 block|{
 name|parse
-argument_list|(
-name|separator
-argument_list|,
-name|nullSequence
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 if|if
@@ -482,23 +522,26 @@ return|return
 name|uncheckedGetElement
 argument_list|(
 name|index
-argument_list|,
-name|nullSequence
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the element without checking parsed or out-of-bound index.    */
+comment|/**    * Get the element without checking out-of-bound index.    */
 specifier|private
 name|Object
 name|uncheckedGetElement
 parameter_list|(
 name|int
 name|index
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
+name|Text
+name|nullSequence
+init|=
+name|oi
+operator|.
+name|getNullSequence
+argument_list|()
+decl_stmt|;
 name|int
 name|elementLength
 init|=
@@ -600,12 +643,12 @@ name|createLazyObject
 argument_list|(
 operator|(
 operator|(
-name|ListTypeInfo
+name|ListObjectInspector
 operator|)
-name|typeInfo
+name|oi
 operator|)
 operator|.
-name|getListElementTypeInfo
+name|getListElementObjectInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -643,13 +686,7 @@ comment|/** Returns -1 for null array.    */
 specifier|public
 name|int
 name|getListLength
-parameter_list|(
-name|byte
-name|separator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|)
+parameter_list|()
 block|{
 if|if
 condition|(
@@ -658,11 +695,7 @@ name|parsed
 condition|)
 block|{
 name|parse
-argument_list|(
-name|separator
-argument_list|,
-name|nullSequence
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 return|return
@@ -683,13 +716,7 @@ argument_list|<
 name|Object
 argument_list|>
 name|getList
-parameter_list|(
-name|byte
-name|separator
-parameter_list|,
-name|Text
-name|nullSequence
-parameter_list|)
+parameter_list|()
 block|{
 if|if
 condition|(
@@ -698,11 +725,7 @@ name|parsed
 condition|)
 block|{
 name|parse
-argument_list|(
-name|separator
-argument_list|,
-name|nullSequence
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 if|if
@@ -766,8 +789,6 @@ argument_list|(
 name|uncheckedGetElement
 argument_list|(
 name|index
-argument_list|,
-name|nullSequence
 argument_list|)
 argument_list|)
 expr_stmt|;

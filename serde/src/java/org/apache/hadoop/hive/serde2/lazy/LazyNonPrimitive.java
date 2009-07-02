@@ -31,9 +31,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|typeinfo
+name|objectinspector
 operator|.
-name|TypeInfo
+name|ObjectInspector
 import|;
 end_import
 
@@ -46,8 +46,16 @@ specifier|public
 specifier|abstract
 class|class
 name|LazyNonPrimitive
-implements|implements
+parameter_list|<
+name|OI
+extends|extends
+name|ObjectInspector
+parameter_list|>
+extends|extends
 name|LazyObject
+argument_list|<
+name|OI
+argument_list|>
 block|{
 specifier|protected
 name|ByteArrayRef
@@ -61,22 +69,18 @@ specifier|protected
 name|int
 name|length
 decl_stmt|;
-comment|/**    * The TypeInfo for this LazyNonPrimitive.     */
-name|TypeInfo
-name|typeInfo
-decl_stmt|;
+comment|/**    * Create a LazyNonPrimitive object with the specified ObjectInspector.    * @param oi  The ObjectInspector would have to have a hierarchy of     *            LazyObjectInspectors with the leaf nodes being     *            WritableObjectInspectors.  It's used both for accessing the    *            type hierarchy of the complex object, as well as getting    *            meta information (separator, nullSequence, etc) when parsing    *            the lazy object.    */
 specifier|protected
 name|LazyNonPrimitive
 parameter_list|(
-name|TypeInfo
-name|typeInfo
+name|OI
+name|oi
 parameter_list|)
 block|{
-name|this
-operator|.
-name|typeInfo
-operator|=
-name|typeInfo
+name|super
+argument_list|(
+name|oi
+argument_list|)
 expr_stmt|;
 name|bytes
 operator|=

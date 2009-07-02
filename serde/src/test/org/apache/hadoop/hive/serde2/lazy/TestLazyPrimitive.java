@@ -97,6 +97,66 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazy
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|LazyPrimitiveObjectInspectorFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|ObjectInspectorFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|PrimitiveObjectInspectorFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|IntWritable
@@ -209,7 +269,11 @@ name|b
 init|=
 operator|new
 name|LazyByte
-argument_list|()
+argument_list|(
+name|LazyPrimitiveObjectInspectorFactory
+operator|.
+name|lazyByteObjectInspector
+argument_list|)
 decl_stmt|;
 name|initLazyObject
 argument_list|(
@@ -231,7 +295,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -264,7 +328,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -299,7 +363,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -334,7 +398,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -371,7 +435,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -409,7 +473,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -446,7 +510,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -486,7 +550,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -525,7 +589,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -553,7 +617,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -583,7 +647,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -613,7 +677,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -643,7 +707,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -673,7 +737,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -709,7 +773,11 @@ name|b
 init|=
 operator|new
 name|LazyShort
-argument_list|()
+argument_list|(
+name|LazyPrimitiveObjectInspectorFactory
+operator|.
+name|lazyShortObjectInspector
+argument_list|)
 decl_stmt|;
 name|initLazyObject
 argument_list|(
@@ -731,7 +799,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -764,7 +832,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -799,7 +867,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -834,7 +902,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -871,7 +939,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -909,7 +977,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -946,7 +1014,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -986,7 +1054,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1025,7 +1093,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1069,7 +1137,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1112,7 +1180,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1140,7 +1208,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1174,7 +1242,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1208,7 +1276,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1238,7 +1306,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1268,7 +1336,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1304,7 +1372,11 @@ name|b
 init|=
 operator|new
 name|LazyInteger
-argument_list|()
+argument_list|(
+name|LazyPrimitiveObjectInspectorFactory
+operator|.
+name|lazyIntObjectInspector
+argument_list|)
 decl_stmt|;
 name|initLazyObject
 argument_list|(
@@ -1326,7 +1398,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1359,7 +1431,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1394,7 +1466,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1429,7 +1501,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1466,7 +1538,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1504,7 +1576,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1541,7 +1613,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1581,7 +1653,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1620,7 +1692,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1664,7 +1736,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1707,7 +1779,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1761,7 +1833,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1814,7 +1886,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1842,7 +1914,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1886,7 +1958,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1930,7 +2002,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1960,7 +2032,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1990,7 +2062,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2026,7 +2098,11 @@ name|b
 init|=
 operator|new
 name|LazyLong
-argument_list|()
+argument_list|(
+name|LazyPrimitiveObjectInspectorFactory
+operator|.
+name|lazyLongObjectInspector
+argument_list|)
 decl_stmt|;
 name|initLazyObject
 argument_list|(
@@ -2048,7 +2124,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2081,7 +2157,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2116,7 +2192,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2151,7 +2227,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2188,7 +2264,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2226,7 +2302,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2263,7 +2339,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2303,7 +2379,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2342,7 +2418,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2386,7 +2462,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2429,7 +2505,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2483,7 +2559,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2536,7 +2612,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2608,7 +2684,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2679,7 +2755,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2707,7 +2783,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2769,7 +2845,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2831,7 +2907,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2861,7 +2937,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2891,7 +2967,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2927,7 +3003,11 @@ name|b
 init|=
 operator|new
 name|LazyDouble
-argument_list|()
+argument_list|(
+name|LazyPrimitiveObjectInspectorFactory
+operator|.
+name|lazyDoubleObjectInspector
+argument_list|)
 decl_stmt|;
 name|initLazyObject
 argument_list|(
@@ -2949,7 +3029,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2982,7 +3062,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3017,7 +3097,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3053,7 +3133,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3090,7 +3170,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3128,7 +3208,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3165,7 +3245,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3205,7 +3285,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3244,7 +3324,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3288,7 +3368,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3331,7 +3411,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3385,7 +3465,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3438,7 +3518,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3510,7 +3590,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3581,7 +3661,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3625,7 +3705,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3668,7 +3748,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3722,7 +3802,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3777,7 +3857,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3829,7 +3909,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3882,7 +3962,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3936,7 +4016,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3990,7 +4070,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4025,7 +4105,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4060,7 +4140,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4088,7 +4168,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4096,7 +4176,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4126,7 +4206,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4156,7 +4236,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4186,7 +4266,7 @@ name|assertNull
 argument_list|(
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4234,7 +4314,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4282,7 +4362,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4331,7 +4411,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4381,7 +4461,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4417,7 +4497,19 @@ name|b
 init|=
 operator|new
 name|LazyString
-argument_list|()
+argument_list|(
+name|LazyPrimitiveObjectInspectorFactory
+operator|.
+name|getLazyStringObjectInspector
+argument_list|(
+literal|false
+argument_list|,
+operator|(
+name|byte
+operator|)
+literal|0
+argument_list|)
+argument_list|)
 decl_stmt|;
 name|initLazyObject
 argument_list|(
@@ -4445,7 +4537,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4475,7 +4567,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4509,7 +4601,7 @@ argument_list|)
 argument_list|,
 name|b
 operator|.
-name|getObject
+name|getWritableObject
 argument_list|()
 argument_list|)
 expr_stmt|;

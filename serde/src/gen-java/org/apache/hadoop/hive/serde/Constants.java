@@ -194,6 +194,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|ESCAPE_CHAR
+init|=
+literal|"escape.delim"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|VOID_TYPE_NAME
 init|=
 literal|"void"
