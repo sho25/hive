@@ -204,6 +204,58 @@ literal|"TS"
 argument_list|)
 return|;
 block|}
+comment|// this 'neededColumnIDs' field is included in this operator class instead of
+comment|// its desc class.The reason is that 1)tableScanDesc can not be instantiated,
+comment|// and 2) it will fail some join and union queries if this is added forcibly
+comment|// into tableScanDesc
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|Integer
+argument_list|>
+name|neededColumnIDs
+decl_stmt|;
+specifier|public
+name|void
+name|setNeededColumnIDs
+parameter_list|(
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|Integer
+argument_list|>
+name|orign_columns
+parameter_list|)
+block|{
+name|this
+operator|.
+name|neededColumnIDs
+operator|=
+name|orign_columns
+expr_stmt|;
+block|}
+specifier|public
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|Integer
+argument_list|>
+name|getNeededColumnIDs
+parameter_list|()
+block|{
+return|return
+name|neededColumnIDs
+return|;
+block|}
 block|}
 end_class
 

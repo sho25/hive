@@ -611,6 +611,24 @@ name|getMapJoinProc
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|opRules
+operator|.
+name|put
+argument_list|(
+operator|new
+name|RuleRegExp
+argument_list|(
+literal|"R7"
+argument_list|,
+literal|"TS%"
+argument_list|)
+argument_list|,
+name|ColumnPrunerProcFactory
+operator|.
+name|getTableScanProc
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
 name|Dispatcher
 name|disp
