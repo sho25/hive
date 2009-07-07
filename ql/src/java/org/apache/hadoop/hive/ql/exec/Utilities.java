@@ -3702,6 +3702,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+else|else
+block|{
 name|String
 name|taskId
 init|=
@@ -3802,6 +3804,7 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
