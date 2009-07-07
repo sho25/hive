@@ -18988,7 +18988,7 @@ name|commonType
 operator|=
 name|FunctionRegistry
 operator|.
-name|getCommonClass
+name|getCommonClassForComparison
 argument_list|(
 name|a
 argument_list|,
