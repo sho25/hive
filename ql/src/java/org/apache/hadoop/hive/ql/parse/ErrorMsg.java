@@ -336,6 +336,11 @@ name|NON_BUCKETED_TABLE
 argument_list|(
 literal|"Sampling Expression Needed for Non-Bucketed Table"
 argument_list|)
+block|,
+name|NEED_PARTITION_ERROR
+argument_list|(
+literal|"need to specify partition columns because the destination table is partitioned."
+argument_list|)
 block|;
 specifier|private
 name|String
