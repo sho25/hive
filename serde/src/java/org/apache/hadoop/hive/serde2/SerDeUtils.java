@@ -1834,7 +1834,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|structFields
+name|o
 operator|==
 literal|null
 condition|)

@@ -319,6 +319,16 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+name|reflectionFields
+index|[
+name|i
+index|]
+operator|.
+name|setAccessible
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|fields
 operator|.
 name|add
@@ -497,6 +507,8 @@ operator|+
 literal|" "
 operator|+
 name|data
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
