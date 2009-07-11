@@ -1024,17 +1024,6 @@ literal|'-'
 operator|)
 expr_stmt|;
 block|}
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Column sort order = "
-operator|+
-name|columnSortOrder
-argument_list|)
-expr_stmt|;
 block|}
 annotation|@
 name|Override

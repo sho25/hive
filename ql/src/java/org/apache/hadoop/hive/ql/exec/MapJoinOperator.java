@@ -105,7 +105,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|ArrayList
 import|;
 end_import
 
@@ -1084,7 +1084,7 @@ operator|)
 name|posBigTable
 argument_list|,
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -1535,7 +1535,7 @@ argument_list|(
 name|keyMap
 argument_list|)
 decl_stmt|;
-name|Vector
+name|ArrayList
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -1556,7 +1556,7 @@ block|{
 name|res
 operator|=
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -1777,7 +1777,7 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-comment|// Add the value to the vector
+comment|// Add the value to the ArrayList
 name|storage
 operator|.
 name|get
@@ -1851,7 +1851,7 @@ argument_list|(
 name|pos
 argument_list|,
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
 name|ArrayList
 argument_list|<
