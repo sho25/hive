@@ -251,6 +251,10 @@ block|}
 block|}
 specifier|public
 name|QB
+parameter_list|()
+block|{     }
+specifier|public
+name|QB
 parameter_list|(
 name|String
 name|outer_id

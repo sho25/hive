@@ -192,6 +192,10 @@ specifier|private
 name|String
 name|dir
 decl_stmt|;
+specifier|public
+name|ConditionalResolverMergeFilesCtx
+parameter_list|()
+block|{       }
 comment|/**      * @param dir      */
 specifier|public
 name|ConditionalResolverMergeFilesCtx

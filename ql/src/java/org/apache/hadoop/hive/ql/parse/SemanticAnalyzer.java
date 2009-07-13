@@ -1861,7 +1861,7 @@ argument_list|>
 name|topSelOps
 decl_stmt|;
 specifier|private
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -2048,7 +2048,7 @@ expr_stmt|;
 name|opParseCtx
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -25602,7 +25602,7 @@ operator|.
 name|rootTasks
 condition|,
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<

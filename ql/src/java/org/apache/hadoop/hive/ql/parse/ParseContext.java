@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -265,7 +275,7 @@ argument_list|>
 name|topSelOps
 decl_stmt|;
 specifier|private
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -334,6 +344,10 @@ argument_list|>
 name|listMapJoinOpsNoReducer
 decl_stmt|;
 comment|// list of map join operators with no reducer
+specifier|public
+name|ParseContext
+parameter_list|()
+block|{     }
 comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param aliasToPruner    *          partition pruner list    * @param aliasToSamplePruner    *          sample pruner list    * @param loadFileWork    *          list of destination files being loaded    * @param loadTableWork    *          list of destination tables being loaded    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer             */
 specifier|public
 name|ParseContext
@@ -389,7 +403,7 @@ argument_list|>
 argument_list|>
 name|topSelOps
 parameter_list|,
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -813,7 +827,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the opParseCtx    */
 specifier|public
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -836,7 +850,7 @@ specifier|public
 name|void
 name|setOpParseCtx
 parameter_list|(
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<

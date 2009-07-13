@@ -33,6 +33,10 @@ name|RowResolver
 name|rr
 decl_stmt|;
 comment|// row resolver for the operator
+specifier|public
+name|OpParseContext
+parameter_list|()
+block|{     }
 comment|/**    * @param rr row resolver    */
 specifier|public
 name|OpParseContext

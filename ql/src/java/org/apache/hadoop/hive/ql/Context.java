@@ -324,6 +324,10 @@ literal|false
 decl_stmt|;
 specifier|public
 name|Context
+parameter_list|()
+block|{     }
+specifier|public
+name|Context
 parameter_list|(
 name|HiveConf
 name|conf

@@ -677,6 +677,10 @@ specifier|private
 name|boolean
 name|onlyContainsPartCols
 decl_stmt|;
+specifier|public
+name|PartitionPruner
+parameter_list|()
+block|{     }
 comment|/** Creates a new instance of PartitionPruner */
 specifier|public
 name|PartitionPruner
