@@ -4006,7 +4006,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|childColLists
+name|outputCols
 operator|.
 name|size
 argument_list|()
@@ -4018,7 +4018,7 @@ block|{
 name|String
 name|internalName
 init|=
-name|childColLists
+name|outputCols
 operator|.
 name|get
 argument_list|(

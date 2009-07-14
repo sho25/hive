@@ -721,11 +721,19 @@ literal|1000
 argument_list|)
 block|,
 comment|// Optimizer
+name|HIVEOPTCP
+argument_list|(
+literal|"hive.optimize.cp"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|// column pruner
 name|HIVEOPTPPD
 argument_list|(
 literal|"hive.optimize.ppd"
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 block|;
 comment|// predicate pushdown
