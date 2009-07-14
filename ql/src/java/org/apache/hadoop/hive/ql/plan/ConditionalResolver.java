@@ -19,6 +19,22 @@ name|plan
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
 begin_comment
 comment|/**  * Conditional task resolution interface. This is invoked at run time to get the task to invoke.   * Developers can plug in their own resolvers  */
 end_comment
@@ -33,6 +49,9 @@ specifier|public
 name|int
 name|getTaskId
 parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|,
 name|Object
 name|ctx
 parameter_list|)

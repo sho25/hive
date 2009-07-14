@@ -224,6 +224,8 @@ name|resolver
 operator|.
 name|getTaskId
 argument_list|(
+name|conf
+argument_list|,
 name|resolverCtx
 argument_list|)
 argument_list|)

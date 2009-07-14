@@ -1681,8 +1681,6 @@ argument_list|(
 operator|new
 name|ConditionalResolverMergeFilesCtx
 argument_list|(
-name|ctx
-argument_list|,
 name|listTasks
 argument_list|,
 name|fsOp

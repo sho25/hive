@@ -87,20 +87,6 @@ name|hadoop
 operator|.
 name|fs
 operator|.
-name|FsShell
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
 name|Path
 import|;
 end_import
@@ -139,24 +125,6 @@ name|Task
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|GenMRProcContext
-import|;
-end_import
-
 begin_comment
 comment|/**  * Conditional task resolution interface. This is invoked at run time to get the task to invoke.   * Developers can plug in their own resolvers  */
 end_comment
@@ -167,15 +135,35 @@ class|class
 name|ConditionalResolverMergeFiles
 implements|implements
 name|ConditionalResolver
+implements|,
+name|Serializable
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
+specifier|public
+name|ConditionalResolverMergeFiles
+parameter_list|()
+block|{     }
 specifier|public
 specifier|static
 class|class
 name|ConditionalResolverMergeFilesCtx
+implements|implements
+name|Serializable
 block|{
 specifier|private
-name|GenMRProcContext
-name|ctx
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
 decl_stmt|;
 name|List
 argument_list|<
@@ -195,14 +183,11 @@ decl_stmt|;
 specifier|public
 name|ConditionalResolverMergeFilesCtx
 parameter_list|()
-block|{       }
+block|{           }
 comment|/**      * @param dir      */
 specifier|public
 name|ConditionalResolverMergeFilesCtx
 parameter_list|(
-name|GenMRProcContext
-name|ctx
-parameter_list|,
 name|List
 argument_list|<
 name|Task
@@ -218,12 +203,6 @@ name|String
 name|dir
 parameter_list|)
 block|{
-name|this
-operator|.
-name|ctx
-operator|=
-name|ctx
-expr_stmt|;
 name|this
 operator|.
 name|listTasks
@@ -261,32 +240,6 @@ operator|.
 name|dir
 operator|=
 name|dir
-expr_stmt|;
-block|}
-comment|/**      * @return the ctx      */
-specifier|public
-name|GenMRProcContext
-name|getCtx
-parameter_list|()
-block|{
-return|return
-name|ctx
-return|;
-block|}
-comment|/**      * @param ctx the ctx to set      */
-specifier|public
-name|void
-name|setCtx
-parameter_list|(
-name|GenMRProcContext
-name|ctx
-parameter_list|)
-block|{
-name|this
-operator|.
-name|ctx
-operator|=
-name|ctx
 expr_stmt|;
 block|}
 comment|/**      * @return the listTasks      */
@@ -336,6 +289,9 @@ specifier|public
 name|int
 name|getTaskId
 parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|,
 name|Object
 name|objCtx
 parameter_list|)
@@ -356,24 +312,8 @@ operator|.
 name|getDir
 argument_list|()
 decl_stmt|;
-name|GenMRProcContext
-name|opProcCtx
-init|=
-name|ctx
-operator|.
-name|getCtx
-argument_list|()
-decl_stmt|;
 comment|// check if a map-reduce job is needed to merge the files
 comment|// If the current size is smaller than the target, merge
-name|HiveConf
-name|conf
-init|=
-name|opProcCtx
-operator|.
-name|getConf
-argument_list|()
-decl_stmt|;
 name|long
 name|trgtSize
 init|=
