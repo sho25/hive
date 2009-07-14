@@ -81,13 +81,23 @@ end_import
 
 begin_import
 import|import
-name|com
+name|java
 operator|.
-name|facebook
+name|util
 operator|.
-name|thrift
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|org
 operator|.
-name|*
+name|apache
+operator|.
+name|log4j
+operator|.
+name|Logger
 import|;
 end_import
 

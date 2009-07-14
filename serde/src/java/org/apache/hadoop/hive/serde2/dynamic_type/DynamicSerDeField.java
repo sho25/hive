@@ -37,9 +37,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -49,9 +49,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.

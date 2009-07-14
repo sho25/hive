@@ -477,9 +477,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -489,9 +489,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -503,9 +503,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -517,9 +517,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -531,9 +531,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -545,9 +545,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -559,9 +559,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -4041,6 +4041,20 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+block|}
+specifier|public
+name|String
+name|getCpuProfile
+parameter_list|(
+name|int
+name|profileDurationInSec
+parameter_list|)
+throws|throws
+name|TException
+block|{
+return|return
+literal|""
+return|;
 block|}
 block|}
 comment|/**    * @param args    */

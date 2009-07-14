@@ -21,9 +21,9 @@ end_package
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -33,9 +33,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -45,9 +45,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -59,9 +59,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -73,9 +73,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -189,9 +189,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -1281,32 +1281,26 @@ name|thrift_mode
 condition|)
 block|{
 name|field
-operator|.
-name|name
 operator|=
+operator|new
+name|TField
+argument_list|(
 name|mt
 operator|.
 name|name
-expr_stmt|;
-name|field
-operator|.
-name|type
-operator|=
+argument_list|,
 name|mt
 operator|.
 name|getType
 argument_list|()
-expr_stmt|;
-name|field
-operator|.
-name|id
-operator|=
+argument_list|,
 operator|(
 name|short
 operator|)
 name|mt
 operator|.
 name|fieldid
+argument_list|)
 expr_stmt|;
 name|oprot
 operator|.

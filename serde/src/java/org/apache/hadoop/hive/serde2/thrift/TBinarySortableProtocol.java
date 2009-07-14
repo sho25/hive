@@ -49,9 +49,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -61,9 +61,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -75,9 +75,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -194,6 +194,16 @@ operator|.
 name|getName
 argument_list|()
 argument_list|)
+decl_stmt|;
+specifier|static
+name|byte
+name|ORDERED_TYPE
+init|=
+operator|(
+name|byte
+operator|)
+operator|-
+literal|1
 decl_stmt|;
 comment|/**    * Factory for TBinarySortableProtocol objects    */
 specifier|public
@@ -1884,9 +1894,7 @@ block|}
 name|TField
 name|f
 init|=
-operator|new
-name|TField
-argument_list|()
+literal|null
 decl_stmt|;
 specifier|public
 name|TField
@@ -1897,11 +1905,20 @@ name|TException
 block|{
 comment|// slight hack to communicate to DynamicSerDe that the field ids are not being set but things are ordered.
 name|f
-operator|.
-name|type
 operator|=
+operator|new
+name|TField
+argument_list|(
+literal|""
+argument_list|,
+name|ORDERED_TYPE
+argument_list|,
+operator|(
+name|short
+operator|)
 operator|-
 literal|1
+argument_list|)
 expr_stmt|;
 return|return
 name|f
@@ -1950,9 +1967,7 @@ specifier|private
 name|TMap
 name|tmap
 init|=
-operator|new
-name|TMap
-argument_list|()
+literal|null
 decl_stmt|;
 comment|/**    * This method always return the same instance of TMap to avoid creating new instances.    * It is the responsibility of the caller to read the value before calling this method again.    */
 specifier|public
@@ -1966,11 +1981,17 @@ name|stackLevel
 operator|++
 expr_stmt|;
 name|tmap
-operator|.
-name|size
 operator|=
+operator|new
+name|TMap
+argument_list|(
+name|ORDERED_TYPE
+argument_list|,
+name|ORDERED_TYPE
+argument_list|,
 name|readI32
 argument_list|()
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -2007,9 +2028,7 @@ specifier|private
 name|TList
 name|tlist
 init|=
-operator|new
-name|TList
-argument_list|()
+literal|null
 decl_stmt|;
 comment|/**    * This method always return the same instance of TList to avoid creating new instances.    * It is the responsibility of the caller to read the value before calling this method again.    */
 specifier|public
@@ -2023,11 +2042,15 @@ name|stackLevel
 operator|++
 expr_stmt|;
 name|tlist
-operator|.
-name|size
 operator|=
+operator|new
+name|TList
+argument_list|(
+name|ORDERED_TYPE
+argument_list|,
 name|readI32
 argument_list|()
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -2064,9 +2087,7 @@ specifier|private
 name|TSet
 name|set
 init|=
-operator|new
-name|TSet
-argument_list|()
+literal|null
 decl_stmt|;
 comment|/**    * This method always return the same instance of TSet to avoid creating new instances.    * It is the responsibility of the caller to read the value before calling this method again.    */
 specifier|public
@@ -2080,11 +2101,15 @@ name|stackLevel
 operator|++
 expr_stmt|;
 name|set
-operator|.
-name|size
 operator|=
+operator|new
+name|TSet
+argument_list|(
+name|ORDERED_TYPE
+argument_list|,
 name|readI32
 argument_list|()
+argument_list|)
 expr_stmt|;
 if|if
 condition|(

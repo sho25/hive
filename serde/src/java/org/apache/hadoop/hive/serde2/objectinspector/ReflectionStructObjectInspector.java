@@ -263,10 +263,12 @@ name|Field
 index|[]
 name|reflectionFields
 init|=
-name|objectClass
+name|ObjectInspectorUtils
 operator|.
-name|getDeclaredFields
-argument_list|()
+name|getDeclaredNonStaticFields
+argument_list|(
+name|objectClass
+argument_list|)
 decl_stmt|;
 name|fields
 operator|=

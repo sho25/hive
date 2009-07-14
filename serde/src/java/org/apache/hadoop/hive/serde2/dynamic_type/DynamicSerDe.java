@@ -237,9 +237,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -251,9 +251,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -396,9 +396,21 @@ condition|)
 block|{
 name|protoName
 operator|=
-literal|"com.facebook.thrift.protocol.TBinaryProtocol"
+literal|"org.apache.thrift.protocol.TBinaryProtocol"
 expr_stmt|;
 block|}
+comment|// For backward compatibility
+name|protoName
+operator|=
+name|protoName
+operator|.
+name|replace
+argument_list|(
+literal|"com.facebook.thrift.protocol"
+argument_list|,
+literal|"org.apache.thrift.protocol"
+argument_list|)
+expr_stmt|;
 name|TProtocolFactory
 name|protFactory
 init|=

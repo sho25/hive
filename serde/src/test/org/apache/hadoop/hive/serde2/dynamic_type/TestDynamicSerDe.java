@@ -593,9 +593,9 @@ name|protocols
 operator|.
 name|add
 argument_list|(
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -627,9 +627,9 @@ name|protocols
 operator|.
 name|add
 argument_list|(
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -658,7 +658,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 comment|// TSimpleJSONProtocol does not support deserialization.
-comment|// protocols.add(com.facebook.thrift.protocol.TSimpleJSONProtocol.class.getName());
+comment|// protocols.add(org.apache.thrift.protocol.TSimpleJSONProtocol.class.getName());
 comment|// isBinaries.add(false);
 comment|// additionalParams.add(null);
 comment|// TCTLSeparatedProtocol is not done yet.
@@ -4615,7 +4615,7 @@ operator|new
 name|Properties
 argument_list|()
 decl_stmt|;
-comment|//      schema.setProperty(Constants.SERIALIZATION_FORMAT, com.facebook.thrift.protocol.TJSONProtocol.class.getName());
+comment|//      schema.setProperty(Constants.SERIALIZATION_FORMAT, org.apache.thrift.protocol.TJSONProtocol.class.getName());
 name|schema
 operator|.
 name|setProperty
@@ -4624,9 +4624,9 @@ name|Constants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.

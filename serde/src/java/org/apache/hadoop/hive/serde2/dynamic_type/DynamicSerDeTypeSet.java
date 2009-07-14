@@ -21,9 +21,9 @@ end_package
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -33,9 +33,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -45,9 +45,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -59,9 +59,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -73,9 +73,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -171,9 +171,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -486,9 +486,7 @@ comment|/** NOTE: Set is not supported by Hive yet.    *  The code uses ListObje
 name|TSet
 name|tset
 init|=
-operator|new
-name|TSet
-argument_list|()
+literal|null
 decl_stmt|;
 annotation|@
 name|Override
@@ -545,22 +543,20 @@ name|getElementType
 argument_list|()
 decl_stmt|;
 name|tset
-operator|.
-name|elemType
 operator|=
+operator|new
+name|TSet
+argument_list|(
 name|mt
 operator|.
 name|getType
 argument_list|()
-expr_stmt|;
-name|tset
-operator|.
-name|size
-operator|=
+argument_list|,
 name|set
 operator|.
 name|size
 argument_list|()
+argument_list|)
 expr_stmt|;
 name|oprot
 operator|.

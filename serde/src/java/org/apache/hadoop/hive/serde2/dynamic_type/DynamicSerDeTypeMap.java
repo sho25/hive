@@ -21,9 +21,9 @@ end_package
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -33,9 +33,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -45,9 +45,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -59,9 +59,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -73,9 +73,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -171,9 +171,9 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -587,9 +587,7 @@ block|}
 name|TMap
 name|serializeMap
 init|=
-operator|new
-name|TMap
-argument_list|()
+literal|null
 decl_stmt|;
 annotation|@
 name|Override
@@ -737,31 +735,25 @@ name|o
 argument_list|)
 decl_stmt|;
 name|serializeMap
-operator|.
-name|size
 operator|=
+operator|new
+name|TMap
+argument_list|(
+name|keyType
+operator|.
+name|getType
+argument_list|()
+argument_list|,
+name|valueType
+operator|.
+name|getType
+argument_list|()
+argument_list|,
 name|map
 operator|.
 name|size
 argument_list|()
-expr_stmt|;
-name|serializeMap
-operator|.
-name|keyType
-operator|=
-name|keyType
-operator|.
-name|getType
-argument_list|()
-expr_stmt|;
-name|serializeMap
-operator|.
-name|valueType
-operator|=
-name|valueType
-operator|.
-name|getType
-argument_list|()
+argument_list|)
 expr_stmt|;
 name|oprot
 operator|.

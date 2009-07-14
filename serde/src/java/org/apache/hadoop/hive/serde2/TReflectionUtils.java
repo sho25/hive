@@ -19,9 +19,9 @@ end_package
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|facebook
+name|apache
 operator|.
 name|thrift
 operator|.
@@ -76,7 +76,7 @@ name|Class
 operator|.
 name|forName
 argument_list|(
-literal|"com.facebook.thrift.protocol.TProtocol"
+literal|"org.apache.thrift.protocol.TProtocol"
 argument_list|)
 block|}
 expr_stmt|;

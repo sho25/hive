@@ -2518,10 +2518,12 @@ name|Field
 index|[]
 name|fArr
 init|=
-name|agg
+name|ObjectInspectorUtils
 operator|.
-name|getDeclaredFields
-argument_list|()
+name|getDeclaredNonStaticFields
+argument_list|(
+name|agg
+argument_list|)
 decl_stmt|;
 for|for
 control|(
