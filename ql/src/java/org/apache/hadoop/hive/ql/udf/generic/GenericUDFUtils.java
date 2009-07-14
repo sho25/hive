@@ -271,6 +271,26 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|/**    * Checks if b is the first byte of a UTF-8 character.    *     */
+specifier|public
+specifier|static
+name|boolean
+name|isUtfStartByte
+parameter_list|(
+name|byte
+name|b
+parameter_list|)
+block|{
+return|return
+operator|(
+name|b
+operator|&
+literal|0xC0
+operator|)
+operator|!=
+literal|0x80
+return|;
+block|}
 comment|/**    * This class helps to find the return ObjectInspector for a GenericUDF.    *     * In many cases like CASE and IF, the GenericUDF is returning a value out    * of several possibilities.  However these possibilities may not always     * have the same ObjectInspector.    *     * This class will help detect whether all possibilities have exactly the    * same ObjectInspector.  If not, then we need to convert the Objects to    * the same ObjectInspector.    *     * A special case is when some values are constant NULL. In this case we     * can use the same ObjectInspector.    */
 specifier|public
 specifier|static
