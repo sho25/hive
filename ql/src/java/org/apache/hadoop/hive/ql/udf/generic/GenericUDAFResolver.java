@@ -15,19 +15,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|udf
+operator|.
+name|generic
 package|;
 end_package
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
 
 begin_import
 import|import
@@ -84,93 +76,27 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Exception thrown by the UDF and UDAF method resolvers in case a unique method is not found.  *  */
+comment|/**  * A Generic User-defined aggregation function (GenericUDAF) for the use with   * Hive.  *   * GenericUDAFResolver is used at compile time.  We use GenericUDAFResolver to  * find out the GenericUDAFEvaluator for the parameter types.  *   */
 end_comment
 
-begin_class
+begin_interface
 specifier|public
-class|class
-name|AmbiguousMethodException
-extends|extends
-name|SemanticException
+interface|interface
+name|GenericUDAFResolver
 block|{
-comment|/**    *     */
-specifier|private
-specifier|static
-specifier|final
-name|long
-name|serialVersionUID
-init|=
-literal|1L
-decl_stmt|;
-comment|/**    * The UDF or UDAF class that has the ambiguity.    */
-name|Class
-argument_list|<
-name|?
-argument_list|>
-name|funcClass
-decl_stmt|;
-comment|/**    * The list of parameter types.    */
-name|List
-argument_list|<
-name|TypeInfo
-argument_list|>
-name|argTypeInfos
-decl_stmt|;
-comment|/**    * Constructor.    *     * @param funcClass The UDF or UDAF class.    * @param argTypeInfos The list of argument types that lead to an ambiguity.    */
-specifier|public
-name|AmbiguousMethodException
+comment|/** Get the evaluator for the parameter types.    *      *  The reason that this function returns an object instead of a class    *  is because it's possible that the object needs some configuration     *  (that can be serialized).  In that case the class of the object has     *  to implement the Serializable interface.  At execution time, we will     *  deserialize the object from the plan and use it to evaluate the    *  aggregations.    *      *  If the class of the object does not implement Serializable, then    *  we will create a new instance of the class at execution time.    *      *  @param parameters  The types of the parameters. We need the type     *         information to know which evaluator class to use.      */
+name|GenericUDAFEvaluator
+name|getEvaluator
 parameter_list|(
-name|Class
-argument_list|<
-name|?
-argument_list|>
-name|funcClass
-parameter_list|,
-name|List
-argument_list|<
 name|TypeInfo
-argument_list|>
-name|argTypeInfos
+index|[]
+name|parameters
 parameter_list|)
-block|{
-name|this
-operator|.
-name|funcClass
-operator|=
-name|funcClass
-expr_stmt|;
-name|this
-operator|.
-name|argTypeInfos
-operator|=
-name|argTypeInfos
-expr_stmt|;
+throws|throws
+name|SemanticException
+function_decl|;
 block|}
-name|Class
-argument_list|<
-name|?
-argument_list|>
-name|getFunctionClass
-parameter_list|()
-block|{
-return|return
-name|funcClass
-return|;
-block|}
-name|List
-argument_list|<
-name|TypeInfo
-argument_list|>
-name|getArgTypeList
-parameter_list|()
-block|{
-return|return
-name|argTypeInfos
-return|;
-block|}
-block|}
-end_class
+end_interface
 
 end_unit
 

@@ -31,9 +31,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
+name|parse
 operator|.
-name|HiveException
+name|SemanticException
 import|;
 end_import
 
@@ -46,7 +46,7 @@ specifier|public
 class|class
 name|UDFArgumentException
 extends|extends
-name|HiveException
+name|SemanticException
 block|{
 specifier|public
 name|UDFArgumentException

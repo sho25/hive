@@ -917,7 +917,7 @@ name|StructObjectInspector
 operator|)
 name|TypeInfoUtils
 operator|.
-name|getStandardObjectInspectorFromTypeInfo
+name|getStandardWritableObjectInspectorFromTypeInfo
 argument_list|(
 name|rowTypeInfo
 argument_list|)

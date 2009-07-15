@@ -181,7 +181,7 @@ begin_class
 specifier|public
 class|class
 name|LazySimpleStructObjectInspector
-implements|implements
+extends|extends
 name|StructObjectInspector
 block|{
 specifier|public

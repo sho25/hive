@@ -69,7 +69,7 @@ begin_class
 specifier|public
 class|class
 name|ReflectionStructObjectInspector
-implements|implements
+extends|extends
 name|StructObjectInspector
 block|{
 specifier|public

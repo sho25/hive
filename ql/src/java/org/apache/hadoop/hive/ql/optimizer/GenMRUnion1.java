@@ -834,7 +834,7 @@ name|tt_desc
 init|=
 name|PlanUtils
 operator|.
-name|getBinaryTableDesc
+name|getIntermediateFileTableDesc
 argument_list|(
 name|PlanUtils
 operator|.

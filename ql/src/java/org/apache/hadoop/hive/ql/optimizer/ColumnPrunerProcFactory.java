@@ -3071,7 +3071,7 @@ name|newValueTable
 init|=
 name|PlanUtils
 operator|.
-name|getLazySimpleSerDeTableDesc
+name|getReduceValueTableDesc
 argument_list|(
 name|PlanUtils
 operator|.
@@ -3755,7 +3755,7 @@ name|valueTableDesc
 init|=
 name|PlanUtils
 operator|.
-name|getLazySimpleSerDeTableDesc
+name|getMapJoinValueTableDesc
 argument_list|(
 name|PlanUtils
 operator|.

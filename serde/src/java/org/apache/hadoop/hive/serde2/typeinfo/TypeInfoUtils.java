@@ -1530,7 +1530,7 @@ comment|/**    * Returns the standard object inspector that can be used to trans
 specifier|public
 specifier|static
 name|ObjectInspector
-name|getStandardObjectInspectorFromTypeInfo
+name|getStandardWritableObjectInspectorFromTypeInfo
 parameter_list|(
 name|TypeInfo
 name|typeInfo
@@ -1591,7 +1591,7 @@ block|{
 name|ObjectInspector
 name|elementObjectInspector
 init|=
-name|getStandardObjectInspectorFromTypeInfo
+name|getStandardWritableObjectInspectorFromTypeInfo
 argument_list|(
 operator|(
 operator|(
@@ -1630,7 +1630,7 @@ decl_stmt|;
 name|ObjectInspector
 name|keyObjectInspector
 init|=
-name|getStandardObjectInspectorFromTypeInfo
+name|getStandardWritableObjectInspectorFromTypeInfo
 argument_list|(
 name|mapTypeInfo
 operator|.
@@ -1641,7 +1641,7 @@ decl_stmt|;
 name|ObjectInspector
 name|valueObjectInspector
 init|=
-name|getStandardObjectInspectorFromTypeInfo
+name|getStandardWritableObjectInspectorFromTypeInfo
 argument_list|(
 name|mapTypeInfo
 operator|.
@@ -1736,7 +1736,7 @@ name|fieldObjectInspectors
 operator|.
 name|add
 argument_list|(
-name|getStandardObjectInspectorFromTypeInfo
+name|getStandardWritableObjectInspectorFromTypeInfo
 argument_list|(
 name|fieldTypeInfos
 operator|.

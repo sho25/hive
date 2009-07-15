@@ -19,6 +19,24 @@ name|parse
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
 begin_comment
 comment|/**  * Exception from SemanticAnalyzer  */
 end_comment
@@ -28,7 +46,7 @@ specifier|public
 class|class
 name|SemanticException
 extends|extends
-name|Exception
+name|HiveException
 block|{
 specifier|private
 specifier|static

@@ -679,7 +679,7 @@ name|oi
 operator|=
 name|TypeInfoUtils
 operator|.
-name|getStandardObjectInspectorFromTypeInfo
+name|getStandardWritableObjectInspectorFromTypeInfo
 argument_list|(
 name|dataType
 argument_list|)

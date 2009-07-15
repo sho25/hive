@@ -85,7 +85,7 @@ begin_class
 specifier|public
 class|class
 name|StandardStructObjectInspector
-implements|implements
+extends|extends
 name|StructObjectInspector
 block|{
 specifier|public

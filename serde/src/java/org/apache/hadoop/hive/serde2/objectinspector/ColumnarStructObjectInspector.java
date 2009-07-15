@@ -106,7 +106,7 @@ end_comment
 begin_class
 class|class
 name|ColumnarStructObjectInspector
-implements|implements
+extends|extends
 name|StructObjectInspector
 block|{
 specifier|public

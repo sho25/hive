@@ -527,7 +527,7 @@ name|fI
 init|=
 name|FunctionRegistry
 operator|.
-name|getInfo
+name|getUDFInfo
 argument_list|(
 name|UDFClass
 argument_list|)

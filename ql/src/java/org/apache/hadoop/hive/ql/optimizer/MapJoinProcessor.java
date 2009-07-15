@@ -1986,7 +1986,7 @@ name|keyTableDesc
 init|=
 name|PlanUtils
 operator|.
-name|getLazySimpleSerDeTableDesc
+name|getMapJoinKeyTableDesc
 argument_list|(
 name|PlanUtils
 operator|.
@@ -2085,7 +2085,7 @@ name|valueTableDesc
 init|=
 name|PlanUtils
 operator|.
-name|getLazySimpleSerDeTableDesc
+name|getMapJoinValueTableDesc
 argument_list|(
 name|PlanUtils
 operator|.

@@ -47,7 +47,7 @@ begin_class
 specifier|public
 class|class
 name|UnionStructObjectInspector
-implements|implements
+extends|extends
 name|StructObjectInspector
 block|{
 specifier|public

@@ -1423,7 +1423,7 @@ name|tt_desc
 init|=
 name|PlanUtils
 operator|.
-name|getLazySimpleSerDeTableDesc
+name|getIntermediateFileTableDesc
 argument_list|(
 name|PlanUtils
 operator|.
