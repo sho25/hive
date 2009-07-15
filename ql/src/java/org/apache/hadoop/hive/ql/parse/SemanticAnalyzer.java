@@ -24106,6 +24106,47 @@ argument_list|(
 literal|"No need for sample filter"
 argument_list|)
 expr_stmt|;
+comment|// TODO sample predicate is not needed, but we are adding it anyway since
+comment|// input pruning is broken for subqueries. will remove this once we move
+comment|// compilation of sampling to use the operator tree
+name|exprNodeDesc
+name|samplePredicate
+init|=
+name|genSamplePredicate
+argument_list|(
+name|ts
+argument_list|,
+name|tabBucketCols
+argument_list|,
+name|colsEqual
+argument_list|,
+name|alias
+argument_list|,
+name|rwsch
+argument_list|,
+name|qb
+operator|.
+name|getMetaData
+argument_list|()
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+name|tableOp
+operator|=
+name|OperatorFactory
+operator|.
+name|getAndMakeChild
+argument_list|(
+operator|new
+name|filterDesc
+argument_list|(
+name|samplePredicate
+argument_list|)
+argument_list|,
+name|top
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{

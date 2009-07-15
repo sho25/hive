@@ -117,6 +117,10 @@ argument_list|(
 literal|"hive.ql.parse.SamplePruner"
 argument_list|)
 decl_stmt|;
+specifier|public
+name|SamplePruner
+parameter_list|()
+block|{        }
 comment|/**    * Constructs the SamplePruner given the table alias and the table sample    * 	    * @param alias The alias of the table specified in the query    * @param tableSample The parse infromation of the TABLESAMPLE clause    */
 specifier|public
 name|SamplePruner
