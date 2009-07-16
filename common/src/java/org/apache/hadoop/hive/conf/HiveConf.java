@@ -712,7 +712,7 @@ call|(
 name|long
 call|)
 argument_list|(
-literal|1000
+literal|256
 operator|*
 literal|1000
 operator|*
