@@ -697,9 +697,16 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVEMERGEMAPREDFILES
+argument_list|(
+literal|"hive.merge.mapredfiles"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEMERGEMAPFILESSIZE
 argument_list|(
-literal|"hive.merge.size.per.mapper"
+literal|"hive.merge.size.per.task"
 argument_list|,
 call|(
 name|long
