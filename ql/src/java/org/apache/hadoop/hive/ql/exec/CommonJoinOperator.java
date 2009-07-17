@@ -333,20 +333,6 @@ name|ObjectInspectorCopyOption
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Reporter
-import|;
-end_import
-
 begin_comment
 comment|/**  * Join operator implementation.  */
 end_comment
@@ -597,11 +583,6 @@ name|int
 name|totalSz
 decl_stmt|;
 comment|// total size of the composite object
-specifier|transient
-name|ObjectInspector
-name|joinOutputObjectInspector
-decl_stmt|;
-comment|// The OI for the output row
 comment|// keys are the column names. basically this maps the position of the column in
 comment|// the output of the CommonJoinOperator to the input columnInfo.
 specifier|transient
@@ -1247,19 +1228,12 @@ return|return
 name|joinOutputObjectInspector
 return|;
 block|}
-specifier|public
+specifier|protected
 name|void
 name|initializeOp
 parameter_list|(
 name|Configuration
 name|hconf
-parameter_list|,
-name|Reporter
-name|reporter
-parameter_list|,
-name|ObjectInspector
-index|[]
-name|inputObjInspector
 parameter_list|)
 throws|throws
 name|HiveException
@@ -1274,7 +1248,7 @@ operator|(
 operator|(
 name|StructObjectInspector
 operator|)
-name|inputObjInspector
+name|inputObjInspectors
 index|[
 literal|0
 index|]
@@ -1402,7 +1376,7 @@ name|getObjectInspectorsFromEvaluators
 argument_list|(
 name|joinValues
 argument_list|,
-name|inputObjInspector
+name|inputObjInspectors
 argument_list|)
 expr_stmt|;
 name|joinValuesStandardObjectInspectors
@@ -1584,7 +1558,7 @@ index|[
 name|totalSz
 index|]
 expr_stmt|;
-name|joinOutputObjectInspector
+name|outputObjInspector
 operator|=
 name|getJoinOutputObjectInspector
 argument_list|(
@@ -1605,7 +1579,7 @@ operator|(
 operator|(
 name|StructObjectInspector
 operator|)
-name|joinOutputObjectInspector
+name|outputObjInspector
 operator|)
 operator|.
 name|getTypeName
@@ -1938,7 +1912,7 @@ name|forward
 argument_list|(
 name|forwardCache
 argument_list|,
-name|joinOutputObjectInspector
+name|outputObjInspector
 argument_list|)
 expr_stmt|;
 block|}
