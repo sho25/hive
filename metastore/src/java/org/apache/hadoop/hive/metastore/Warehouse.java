@@ -368,7 +368,7 @@ throw|;
 block|}
 block|}
 comment|/**    * Helper function to convert IOException to MetaException    */
-specifier|private
+specifier|public
 name|FileSystem
 name|getFs
 parameter_list|(
