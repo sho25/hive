@@ -14,6 +14,8 @@ operator|.
 name|hive
 operator|.
 name|serde2
+operator|.
+name|thrift
 package|;
 end_package
 

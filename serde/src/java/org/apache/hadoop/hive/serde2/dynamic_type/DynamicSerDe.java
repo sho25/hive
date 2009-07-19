@@ -175,6 +175,24 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|thrift
+operator|.
+name|TReflectionUtils
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util

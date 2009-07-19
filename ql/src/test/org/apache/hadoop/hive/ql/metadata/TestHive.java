@@ -199,9 +199,7 @@ name|serde2
 operator|.
 name|thrift
 operator|.
-name|test
-operator|.
-name|Complex
+name|ThriftDeserializer
 import|;
 end_import
 
@@ -217,7 +215,11 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|ThriftDeserializer
+name|thrift
+operator|.
+name|test
+operator|.
+name|Complex
 import|;
 end_import
 

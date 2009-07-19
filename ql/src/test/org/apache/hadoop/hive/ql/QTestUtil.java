@@ -571,6 +571,8 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|thrift
+operator|.
 name|ThriftDeserializer
 import|;
 end_import
