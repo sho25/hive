@@ -1737,6 +1737,15 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|registerGenericUDF
+argument_list|(
+literal|"elt"
+argument_list|,
+name|GenericUDFElt
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 specifier|static
