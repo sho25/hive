@@ -135,6 +135,18 @@ name|exprNodeDesc
 name|clone
 parameter_list|()
 function_decl|;
+comment|// Cant use equals because the walker depends on them being object equal
+comment|// The default graph walker processes a node after its kids have been processed. That comparison needs
+comment|// object equality - isSame means that the objects are semantically equal.
+specifier|public
+specifier|abstract
+name|boolean
+name|isSame
+parameter_list|(
+name|Object
+name|o
+parameter_list|)
+function_decl|;
 specifier|public
 name|TypeInfo
 name|getTypeInfo

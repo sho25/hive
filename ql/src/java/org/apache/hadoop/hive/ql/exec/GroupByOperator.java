@@ -55,6 +55,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -632,6 +642,18 @@ index|[]
 argument_list|>
 name|hashAggregations
 decl_stmt|;
+comment|// Used by hash distinct aggregations when hashGrpKeyNotRedKey is true
+specifier|transient
+specifier|protected
+name|HashSet
+argument_list|<
+name|ArrayList
+argument_list|<
+name|Object
+argument_list|>
+argument_list|>
+name|keysCurrentGroup
+decl_stmt|;
 specifier|transient
 name|boolean
 name|firstRow
@@ -643,6 +665,17 @@ decl_stmt|;
 specifier|transient
 name|boolean
 name|hashAggr
+decl_stmt|;
+comment|// The reduction is happening on the reducer, and the grouping key and reduction keys are different.
+comment|// For example: select a, count(distinct b) from T group by a
+comment|// The data is sprayed by 'b' and the reducer is grouping it by 'a'
+specifier|transient
+name|boolean
+name|groupKeyIsNotReduceKey
+decl_stmt|;
+specifier|transient
+name|boolean
+name|firstRowInGroup
 decl_stmt|;
 specifier|transient
 name|long
@@ -1442,6 +1475,29 @@ name|ConfVars
 operator|.
 name|HIVEMAPAGGRHASHMINREDUCTION
 argument_list|)
+expr_stmt|;
+name|groupKeyIsNotReduceKey
+operator|=
+name|conf
+operator|.
+name|getGroupKeyNotReductionKey
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+name|groupKeyIsNotReduceKey
+condition|)
+name|keysCurrentGroup
+operator|=
+operator|new
+name|HashSet
+argument_list|<
+name|ArrayList
+argument_list|<
+name|Object
+argument_list|>
+argument_list|>
+argument_list|()
 expr_stmt|;
 block|}
 comment|// init objectInspectors
@@ -2349,6 +2405,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/*    * Update aggregations.     * If the aggregation is for distinct, in case of hash aggregation, the client tells us whether it is a new entry.    * For sort-based aggregations, the last row is compared with the current one to figure out whether it has changed.     * As a cleanup, the lastInvoke logic can be pushed in the caller, and this function can be independent of that. The    * client should always notify whether it is a different row or not.    *     * @param aggs the aggregations to be evaluated    * @param row  the row being processed    * @param rowInspector the inspector for the row    * @param hashAggr whether hash aggregation is being performed or not    * @param newEntryForHashAggr only valid if it is a hash aggregation, whether it is a new entry or not    */
 specifier|protected
 name|void
 name|updateAggregations
@@ -2367,7 +2424,7 @@ name|boolean
 name|hashAggr
 parameter_list|,
 name|boolean
-name|newEntry
+name|newEntryForHashAggr
 parameter_list|,
 name|Object
 index|[]
@@ -2465,7 +2522,7 @@ condition|)
 block|{
 if|if
 condition|(
-name|newEntry
+name|newEntryForHashAggr
 condition|)
 block|{
 name|aggregationEvaluators
@@ -2626,6 +2683,35 @@ block|}
 block|}
 specifier|public
 name|void
+name|startGroup
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+name|firstRowInGroup
+operator|=
+literal|true
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|endGroup
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+if|if
+condition|(
+name|groupKeyIsNotReduceKey
+condition|)
+name|keysCurrentGroup
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|void
 name|process
 parameter_list|(
 name|Object
@@ -2653,6 +2739,9 @@ comment|// Total number of input rows is needed for hash aggregation only
 if|if
 condition|(
 name|hashAggr
+operator|&&
+operator|!
+name|groupKeyIsNotReduceKey
 condition|)
 block|{
 name|numRowsInput
@@ -2849,6 +2938,10 @@ argument_list|,
 name|newKeys
 argument_list|)
 expr_stmt|;
+name|firstRowInGroup
+operator|=
+literal|false
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -3023,7 +3116,7 @@ init|=
 literal|null
 decl_stmt|;
 name|boolean
-name|newEntry
+name|newEntryForHashAggr
 init|=
 literal|false
 decl_stmt|;
@@ -3075,7 +3168,7 @@ argument_list|,
 name|aggs
 argument_list|)
 expr_stmt|;
-name|newEntry
+name|newEntryForHashAggr
 operator|=
 literal|true
 expr_stmt|;
@@ -3084,25 +3177,34 @@ operator|++
 expr_stmt|;
 comment|// new entry in the hash table
 block|}
-comment|// Update the aggs
-name|updateAggregations
-argument_list|(
-name|aggs
-argument_list|,
-name|row
-argument_list|,
-name|rowInspector
-argument_list|,
-literal|true
-argument_list|,
-name|newEntry
-argument_list|,
-literal|null
-argument_list|)
-expr_stmt|;
-comment|// based on used-specified parameters, check if the hash table needs to be flushed
+comment|// If the grouping key and the reduction key are different, a set of grouping keys for the current reduction key are maintained in keysCurrentGroup
+comment|// Peek into the set to find out if a new grouping key is seen for the given reduction key
 if|if
 condition|(
+name|groupKeyIsNotReduceKey
+condition|)
+block|{
+name|newEntryForHashAggr
+operator|=
+name|keysCurrentGroup
+operator|.
+name|add
+argument_list|(
+name|newDefaultKeys
+argument_list|)
+expr_stmt|;
+block|}
+comment|// based on used-specified parameters, check if the hash table needs to be flushed
+comment|// If the grouping key is not the same as reduction key, flushing can only happen at boundaries
+if|if
+condition|(
+operator|(
+operator|!
+name|groupKeyIsNotReduceKey
+operator|||
+name|firstRowInGroup
+operator|)
+operator|&&
 name|shouldBeFlushed
 argument_list|(
 name|newKeys
@@ -3115,6 +3217,22 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Update the aggs
+name|updateAggregations
+argument_list|(
+name|aggs
+argument_list|,
+name|row
+argument_list|,
+name|rowInspector
+argument_list|,
+literal|true
+argument_list|,
+name|newEntryForHashAggr
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
 block|}
 comment|// Non-hash aggregation
 specifier|private
