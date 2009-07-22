@@ -2343,6 +2343,8 @@ name|String
 argument_list|>
 name|res
 parameter_list|)
+throws|throws
+name|IOException
 block|{
 if|if
 condition|(

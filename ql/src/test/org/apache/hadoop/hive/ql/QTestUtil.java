@@ -1851,6 +1851,8 @@ block|,
 literal|"dest_g1"
 block|,
 literal|"dest_g2"
+block|,
+literal|"fetchtask_ioexception"
 block|}
 control|)
 block|{

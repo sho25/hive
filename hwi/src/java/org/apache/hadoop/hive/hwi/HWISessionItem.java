@@ -1427,6 +1427,8 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
+try|try
+block|{
 while|while
 condition|(
 name|qp
@@ -1469,6 +1471,35 @@ name|res
 operator|.
 name|clear
 argument_list|()
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|ex
+parameter_list|)
+block|{
+name|l4j
+operator|.
+name|error
+argument_list|(
+name|this
+operator|.
+name|getSessionName
+argument_list|()
+operator|+
+literal|" getting results "
+operator|+
+name|this
+operator|.
+name|getResultFile
+argument_list|()
+operator|+
+literal|" caused exception."
+argument_list|,
+name|ex
+argument_list|)
 expr_stmt|;
 block|}
 try|try

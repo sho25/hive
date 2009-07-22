@@ -1490,6 +1490,8 @@ specifier|public
 name|InspectableObject
 name|getNextRow
 parameter_list|()
+throws|throws
+name|IOException
 block|{
 try|try
 block|{
@@ -1623,9 +1625,13 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-return|return
-literal|null
-return|;
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+name|e
+argument_list|)
+throw|;
 block|}
 block|}
 comment|/**    * Clear the context, if anything needs to be done.    *     * @param ctx    *          fetch context    **/
