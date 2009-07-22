@@ -1762,7 +1762,9 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{}
+block|{
+comment|// Ignore this exception since validateInput is removed from hadoop in 0.18+.
+block|}
 block|}
 block|}
 specifier|private
