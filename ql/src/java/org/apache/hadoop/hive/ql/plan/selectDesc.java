@@ -358,6 +358,13 @@ operator|=
 name|colList
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"outputColumnNames"
+argument_list|)
 specifier|public
 name|java
 operator|.
