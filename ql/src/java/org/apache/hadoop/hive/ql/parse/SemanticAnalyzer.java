@@ -28960,6 +28960,11 @@ argument_list|(
 operator|new
 name|exprNodeFuncDesc
 argument_list|(
+name|to
+operator|.
+name|getTypeName
+argument_list|()
+argument_list|,
 name|typeInfoAccepted
 argument_list|,
 name|c

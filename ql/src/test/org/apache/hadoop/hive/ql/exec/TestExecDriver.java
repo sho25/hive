@@ -1178,6 +1178,10 @@ init|=
 operator|new
 name|exprNodeFuncDesc
 argument_list|(
+name|Constants
+operator|.
+name|DOUBLE_TYPE_NAME
+argument_list|,
 name|TypeInfoFactory
 operator|.
 name|doubleTypeInfo
@@ -1246,6 +1250,10 @@ init|=
 operator|new
 name|exprNodeFuncDesc
 argument_list|(
+name|Constants
+operator|.
+name|DOUBLE_TYPE_NAME
+argument_list|,
 name|TypeInfoFactory
 operator|.
 name|doubleTypeInfo
@@ -1308,6 +1316,8 @@ init|=
 operator|new
 name|exprNodeFuncDesc
 argument_list|(
+literal|"<"
+argument_list|,
 name|TypeInfoFactory
 operator|.
 name|booleanTypeInfo

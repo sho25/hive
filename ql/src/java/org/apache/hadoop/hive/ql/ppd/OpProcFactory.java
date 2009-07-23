@@ -827,6 +827,8 @@ operator|=
 operator|new
 name|exprNodeFuncDesc
 argument_list|(
+literal|"AND"
+argument_list|,
 name|TypeInfoFactory
 operator|.
 name|booleanTypeInfo

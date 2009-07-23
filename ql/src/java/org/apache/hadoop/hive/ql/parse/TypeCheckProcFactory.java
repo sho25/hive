@@ -2485,6 +2485,8 @@ init|=
 operator|new
 name|exprNodeFuncDesc
 argument_list|(
+name|udfName
+argument_list|,
 name|resultTypeInfo
 argument_list|,
 name|FunctionRegistry
