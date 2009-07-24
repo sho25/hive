@@ -1584,6 +1584,19 @@ operator|.
 name|CLOSE
 condition|)
 return|return;
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|id
+operator|+
+literal|" forwarded "
+operator|+
+name|cntr
+operator|+
+literal|" rows"
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|logStats
@@ -1711,6 +1724,21 @@ specifier|protected
 name|int
 index|[]
 name|childOperatorsTag
+decl_stmt|;
+comment|// counters for debugging
+specifier|transient
+specifier|private
+name|long
+name|cntr
+init|=
+literal|0
+decl_stmt|;
+specifier|transient
+specifier|private
+name|long
+name|nextCntr
+init|=
+literal|1
 decl_stmt|;
 comment|/**    * Replace one child with another at the same position. The parent of the child is not changed    * @param child     the old child    * @param newChild  the new child    */
 specifier|public
@@ -1908,6 +1936,33 @@ name|newParent
 argument_list|)
 expr_stmt|;
 block|}
+specifier|private
+name|long
+name|getNextCntr
+parameter_list|(
+name|long
+name|cntr
+parameter_list|)
+block|{
+comment|// A very simple counter to keep track of number of rows processed by an operator. It dumps
+comment|// every 1 million times, and quickly before that
+if|if
+condition|(
+name|cntr
+operator|>=
+literal|1000000
+condition|)
+return|return
+name|cntr
+operator|+
+literal|1000000
+return|;
+return|return
+literal|10
+operator|*
+name|cntr
+return|;
+block|}
 specifier|protected
 name|void
 name|forward
@@ -1921,6 +1976,46 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|cntr
+operator|++
+expr_stmt|;
+if|if
+condition|(
+name|cntr
+operator|==
+name|nextCntr
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|id
+operator|+
+literal|" forwarding "
+operator|+
+name|cntr
+operator|+
+literal|" rows"
+argument_list|)
+expr_stmt|;
+name|nextCntr
+operator|=
+name|getNextCntr
+argument_list|(
+name|cntr
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 comment|// For debugging purposes:
 comment|// System.out.println("" + this.getClass() + ": " + SerDeUtils.getJSONString(row, rowInspector));
 comment|// System.out.println("" + this.getClass() + ">> " + ObjectInspectorUtils.getObjectInspectorName(rowInspector));
