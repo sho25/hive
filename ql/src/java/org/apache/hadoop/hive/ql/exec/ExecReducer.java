@@ -33,6 +33,42 @@ begin_import
 import|import
 name|java
 operator|.
+name|lang
+operator|.
+name|management
+operator|.
+name|ManagementFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|lang
+operator|.
+name|management
+operator|.
+name|MemoryMXBean
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|lang
+operator|.
+name|management
+operator|.
+name|MemoryUsage
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|net
 operator|.
 name|URLClassLoader
@@ -405,6 +441,11 @@ argument_list|(
 literal|"ExecReducer"
 argument_list|)
 decl_stmt|;
+comment|// used to log memory usage periodically
+specifier|private
+name|MemoryMXBean
+name|memoryMXBean
+decl_stmt|;
 comment|// TODO: move to DynamicSerDe when it's ready
 specifier|private
 name|Deserializer
@@ -515,6 +556,29 @@ decl_stmt|;
 name|ObjectInspector
 name|keyObjectInspector
 decl_stmt|;
+comment|// Allocate the bean at the beginning -
+name|memoryMXBean
+operator|=
+name|ManagementFactory
+operator|.
+name|getMemoryMXBean
+argument_list|()
+expr_stmt|;
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"maximum memory = "
+operator|+
+name|memoryMXBean
+operator|.
+name|getHeapMemoryUsage
+argument_list|()
+operator|.
+name|getMax
+argument_list|()
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|l4j
@@ -1233,6 +1297,14 @@ argument_list|(
 name|tag
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|l4j
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|cntr
 operator|++
 expr_stmt|;
@@ -1243,6 +1315,17 @@ operator|==
 name|nextCntr
 condition|)
 block|{
+name|long
+name|used_memory
+init|=
+name|memoryMXBean
+operator|.
+name|getHeapMemoryUsage
+argument_list|()
+operator|.
+name|getUsed
+argument_list|()
+decl_stmt|;
 name|l4j
 operator|.
 name|info
@@ -1251,7 +1334,9 @@ literal|"ExecReducer: processing "
 operator|+
 name|cntr
 operator|+
-literal|" rows"
+literal|" rows: used memory = "
+operator|+
+name|used_memory
 argument_list|)
 expr_stmt|;
 name|nextCntr
@@ -1261,6 +1346,7 @@ argument_list|(
 name|cntr
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|reducer
 operator|.
@@ -1384,6 +1470,14 @@ name|endGroup
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|l4j
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|l4j
 operator|.
 name|info
@@ -1392,9 +1486,18 @@ literal|"ExecReducer: processed "
 operator|+
 name|cntr
 operator|+
-literal|" rows"
+literal|" rows: used memory = "
+operator|+
+name|memoryMXBean
+operator|.
+name|getHeapMemoryUsage
+argument_list|()
+operator|.
+name|getUsed
+argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|reducer
 operator|.
 name|close
