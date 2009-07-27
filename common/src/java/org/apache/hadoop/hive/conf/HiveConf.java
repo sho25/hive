@@ -524,6 +524,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVESCRIPTAUTOPROGRESS
+argument_list|(
+literal|"hive.script.auto.progress"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEMAPREDMODE
 argument_list|(
 literal|"hive.mapred.mode"
