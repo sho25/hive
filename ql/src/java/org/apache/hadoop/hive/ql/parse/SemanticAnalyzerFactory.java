@@ -177,6 +177,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_SHOWFUNCTIONS
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_SHOWPARTITIONS
 case|:
 return|return
