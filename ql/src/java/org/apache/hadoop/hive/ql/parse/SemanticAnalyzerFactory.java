@@ -196,6 +196,11 @@ name|HiveParser
 operator|.
 name|TOK_CREATEFUNCTION
 case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_DROPFUNCTION
+case|:
 return|return
 operator|new
 name|FunctionSemanticAnalyzer
