@@ -1657,11 +1657,8 @@ block|{
 comment|// negative number, flip all bits
 name|v
 operator|=
+operator|~
 name|v
-operator|^
-name|Integer
-operator|.
-name|MAX_VALUE
 expr_stmt|;
 block|}
 else|else
@@ -1772,11 +1769,8 @@ block|{
 comment|// negative number, flip all bits
 name|v
 operator|=
+operator|~
 name|v
-operator|^
-name|Long
-operator|.
-name|MAX_VALUE
 expr_stmt|;
 block|}
 else|else
@@ -3166,11 +3160,8 @@ block|{
 comment|// negative number, flip all bits
 name|v
 operator|=
+operator|~
 name|v
-operator|^
-name|Integer
-operator|.
-name|MAX_VALUE
 expr_stmt|;
 block|}
 else|else
@@ -3294,11 +3285,8 @@ block|{
 comment|// negative number, flip all bits
 name|v
 operator|=
+operator|~
 name|v
-operator|^
-name|Long
-operator|.
-name|MAX_VALUE
 expr_stmt|;
 block|}
 else|else

@@ -1345,6 +1345,10 @@ name|r
 operator|.
 name|nextFloat
 argument_list|()
+operator|*
+literal|10
+operator|-
+literal|5
 argument_list|)
 expr_stmt|;
 name|t
@@ -1365,6 +1369,10 @@ name|r
 operator|.
 name|nextDouble
 argument_list|()
+operator|*
+literal|10
+operator|-
+literal|5
 argument_list|)
 expr_stmt|;
 name|t
