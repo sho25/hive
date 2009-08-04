@@ -297,6 +297,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|plan
@@ -725,32 +741,18 @@ argument_list|,
 name|files
 argument_list|)
 expr_stmt|;
-comment|// workaround for hadoop-17 - jobclient only looks at commandlineconfig
-name|Configuration
-name|commandConf
-init|=
-name|JobClient
+name|ShimLoader
 operator|.
-name|getCommandLineConfig
+name|getHadoopShims
 argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|commandConf
-operator|!=
-literal|null
-condition|)
-block|{
-name|commandConf
 operator|.
-name|set
+name|setTmpFiles
 argument_list|(
 name|prop
 argument_list|,
 name|files
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 comment|/**    * Initialization when invoked from QL    */
@@ -3303,6 +3305,7 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
+comment|// see also - code in CliDriver.java
 name|ClassLoader
 name|loader
 init|=
