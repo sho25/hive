@@ -580,7 +580,12 @@ name|elementByteEnd
 operator|+
 literal|1
 expr_stmt|;
+name|elementByteEnd
+operator|++
+expr_stmt|;
 block|}
+else|else
+block|{
 comment|// Is this the first keyValueSeparator in this entry?
 if|if
 condition|(
@@ -588,10 +593,6 @@ name|keyValueSeparatorPosition
 operator|==
 operator|-
 literal|1
-operator|&&
-name|elementByteEnd
-operator|!=
-name|arrayByteEnd
 operator|&&
 name|bytes
 index|[
@@ -635,6 +636,7 @@ block|{
 name|elementByteEnd
 operator|++
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|// This makes sure we can use the same formula to compute the

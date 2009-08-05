@@ -527,7 +527,12 @@ name|fieldByteEnd
 operator|+
 literal|1
 expr_stmt|;
+name|fieldByteEnd
+operator|++
+expr_stmt|;
 block|}
+else|else
+block|{
 if|if
 condition|(
 name|isEscaped
@@ -557,6 +562,7 @@ block|{
 name|fieldByteEnd
 operator|++
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|// Extra bytes at the end?

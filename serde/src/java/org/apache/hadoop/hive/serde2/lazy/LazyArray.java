@@ -420,7 +420,12 @@ name|elementByteEnd
 operator|+
 literal|1
 expr_stmt|;
+name|elementByteEnd
+operator|++
+expr_stmt|;
 block|}
+else|else
+block|{
 if|if
 condition|(
 name|isEscaped
@@ -452,6 +457,7 @@ operator|++
 expr_stmt|;
 block|}
 block|}
+block|}
 comment|// Store arrayByteEnd+1 in startPosition[arrayLength]
 comment|// so that we can use the same formula to compute the length of
 comment|// each element in the array: startPosition[i+1] - startPosition[i] - 1
@@ -460,7 +466,9 @@ index|[
 name|arrayLength
 index|]
 operator|=
-name|elementByteEnd
+name|arrayByteEnd
+operator|+
+literal|1
 expr_stmt|;
 if|if
 condition|(
