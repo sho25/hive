@@ -440,7 +440,7 @@ name|fullSchema
 init|=
 name|client
 operator|.
-name|getSchema
+name|getThriftSchema
 argument_list|()
 decl_stmt|;
 name|List
