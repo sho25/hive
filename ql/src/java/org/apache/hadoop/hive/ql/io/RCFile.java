@@ -659,7 +659,7 @@ literal|null
 decl_stmt|;
 comment|// stores each cell's length of a column in one DataOutputBuffer element
 specifier|private
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 index|[]
 name|allCellValLenBuffer
 init|=
@@ -725,7 +725,7 @@ expr_stmt|;
 name|allCellValLenBuffer
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 index|[
 name|columnNumber
 index|]
@@ -744,7 +744,7 @@ parameter_list|(
 name|int
 name|columnValueLen
 parameter_list|,
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|colValLenBuffer
 parameter_list|,
 name|int
@@ -807,7 +807,7 @@ expr_stmt|;
 name|allCellValLenBuffer
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 index|[
 name|columnNumber
 index|]
@@ -885,7 +885,7 @@ name|i
 index|]
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 argument_list|()
 expr_stmt|;
 else|else
@@ -974,7 +974,7 @@ name|i
 index|]
 argument_list|)
 expr_stmt|;
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|colRowsLenBuf
 init|=
 name|allCellValLenBuffer
@@ -1118,7 +1118,7 @@ name|Writable
 block|{
 comment|// used to load columns' value into memory
 specifier|private
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 index|[]
 name|loadedColumnsValueBuffer
 init|=
@@ -1154,11 +1154,11 @@ name|valDecompressor
 init|=
 literal|null
 decl_stmt|;
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 name|decompressBuffer
 init|=
 operator|new
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 argument_list|()
 decl_stmt|;
 name|CompressionInputStream
@@ -1321,7 +1321,7 @@ block|}
 name|loadedColumnsValueBuffer
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 index|[
 name|columnNumber
 operator|-
@@ -1395,7 +1395,7 @@ name|readIndex
 index|]
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 argument_list|()
 expr_stmt|;
 name|readIndex
@@ -1407,7 +1407,7 @@ specifier|public
 name|void
 name|setColumnValueBuffer
 parameter_list|(
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|valBuffer
 parameter_list|,
 name|int
@@ -1422,11 +1422,11 @@ operator|=
 name|valBuffer
 expr_stmt|;
 block|}
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|compressedData
 init|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 argument_list|()
 decl_stmt|;
 annotation|@
@@ -1510,7 +1510,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|valBuf
 init|=
 name|loadedColumnsValueBuffer
@@ -1651,7 +1651,7 @@ name|i
 operator|++
 control|)
 block|{
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|currentBuf
 init|=
 name|loadedColumnsValueBuffer
@@ -1885,7 +1885,7 @@ name|bufferedRecords
 init|=
 literal|0
 decl_stmt|;
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 index|[]
 name|compressionBuffer
 decl_stmt|;
@@ -1906,7 +1906,7 @@ name|ColumnBuffer
 index|[]
 name|columnBuffers
 decl_stmt|;
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|keyCompressionBuffer
 decl_stmt|;
 name|CompressionOutputStream
@@ -1944,11 +1944,11 @@ class|class
 name|ColumnBuffer
 block|{
 comment|// used for buffer a column's values
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|columnValBuffer
 decl_stmt|;
 comment|// used to store each value's length
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|valLenBuffer
 decl_stmt|;
 name|ColumnBuffer
@@ -1959,13 +1959,13 @@ block|{
 name|columnValBuffer
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 argument_list|()
 expr_stmt|;
 name|valLenBuffer
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 argument_list|()
 expr_stmt|;
 block|}
@@ -2572,7 +2572,7 @@ expr_stmt|;
 name|compressionBuffer
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 index|[
 name|columnNumber
 index|]
@@ -2614,7 +2614,7 @@ name|i
 index|]
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 argument_list|()
 expr_stmt|;
 name|deflateFilter
@@ -2665,7 +2665,7 @@ expr_stmt|;
 name|keyCompressionBuffer
 operator|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 argument_list|()
 expr_stmt|;
 name|keyDeflateFilter
@@ -3001,7 +3001,7 @@ index|[
 name|columnIndex
 index|]
 decl_stmt|;
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|columnValue
 init|=
 name|currentBuf
@@ -3579,7 +3579,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 index|[]
 name|colValLenBufferReadIn
 decl_stmt|;
@@ -3593,11 +3593,11 @@ specifier|private
 name|Decompressor
 name|keyDecompressor
 decl_stmt|;
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|keyDecompressedData
 init|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 argument_list|()
 decl_stmt|;
 comment|/** Create a new RCFile reader. */
@@ -3919,7 +3919,7 @@ block|}
 name|colValLenBufferReadIn
 operator|=
 operator|new
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 index|[
 name|columnNumber
 index|]
@@ -3968,7 +3968,7 @@ name|i
 index|]
 operator|=
 operator|new
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 argument_list|()
 expr_stmt|;
 block|}
@@ -4796,25 +4796,25 @@ name|compressedKeyLen
 init|=
 literal|0
 decl_stmt|;
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 name|keyDataIn
 init|=
 operator|new
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 argument_list|()
 decl_stmt|;
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 name|keyDecompressBuffer
 init|=
 operator|new
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 argument_list|()
 decl_stmt|;
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 name|keyTempBuffer
 init|=
 operator|new
-name|HiveDataOutputBuffer
+name|NonSyncDataOutputBuffer
 argument_list|()
 decl_stmt|;
 name|KeyBuffer
@@ -5106,11 +5106,11 @@ decl_stmt|;
 comment|// use this buffer to hold column's cells value length for usages in
 comment|// getColumn(), instead of using colValLenBufferReadIn directly.
 specifier|private
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 name|fetchColumnTempBuf
 init|=
 operator|new
-name|HiveDataInputBuffer
+name|NonSyncDataInputBuffer
 argument_list|()
 decl_stmt|;
 comment|/**      * Fetch all data in the buffer for a given column. This is useful for      * columnar operators, which perform operations on an array data of one      * column. It should be used together with {@link #nextColumnsBatch()}.      * Calling getColumn() with not change the result of      * {@link #next(LongWritable)} and      * {@link #getCurrentRow(BytesRefArrayWritable)}.      *       * @param columnID      * @throws IOException      */

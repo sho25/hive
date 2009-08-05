@@ -19,11 +19,37 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
 operator|.
 name|io
 operator|.
-name|*
+name|NonSyncByteArrayInputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|io
+operator|.
+name|NonSyncByteArrayOutputStream
 import|;
 end_import
 
@@ -41,7 +67,7 @@ specifier|static
 class|class
 name|Input
 extends|extends
-name|ByteArrayInputStream
+name|NonSyncByteArrayInputStream
 block|{
 specifier|public
 name|byte
@@ -147,7 +173,7 @@ specifier|static
 class|class
 name|Output
 extends|extends
-name|ByteArrayOutputStream
+name|NonSyncByteArrayOutputStream
 block|{
 specifier|public
 name|byte
