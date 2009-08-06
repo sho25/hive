@@ -793,7 +793,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get the value object with the index without checking parsed.    * @param index  The index into the array starting from 0    * @param nullSequence  The byte sequence representing the NULL value    */
+comment|/**    * Get the value object with the index without checking parsed.    * @param index  The index into the array starting from 0    */
 specifier|private
 name|LazyObject
 name|uncheckedGetValue
@@ -953,7 +953,7 @@ name|index
 index|]
 return|;
 block|}
-comment|/**    * Get the key object with the index without checking parsed.    * @param index  The index into the array starting from 0    * @param nullSequence  The byte sequence representing the NULL value    */
+comment|/**    * Get the key object with the index without checking parsed.    * @param index  The index into the array starting from 0    */
 specifier|private
 name|LazyPrimitive
 argument_list|<

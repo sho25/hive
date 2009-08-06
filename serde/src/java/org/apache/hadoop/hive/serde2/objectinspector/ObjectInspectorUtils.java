@@ -3093,7 +3093,7 @@ argument_list|(
 name|o1
 argument_list|)
 argument_list|,
-name|loi1
+name|loi2
 operator|.
 name|getListLength
 argument_list|(
@@ -3168,7 +3168,7 @@ argument_list|(
 name|o1
 argument_list|)
 operator|-
-name|loi1
+name|loi2
 operator|.
 name|getListLength
 argument_list|(

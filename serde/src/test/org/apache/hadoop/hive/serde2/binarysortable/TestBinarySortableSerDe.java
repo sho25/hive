@@ -327,6 +327,7 @@ name|r
 return|;
 block|}
 specifier|public
+specifier|static
 name|String
 name|hexString
 parameter_list|(
@@ -1031,6 +1032,7 @@ name|t
 expr_stmt|;
 block|}
 block|}
+specifier|public
 specifier|static
 name|String
 name|getRandString
@@ -1096,6 +1098,7 @@ name|toString
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|List
 argument_list|<

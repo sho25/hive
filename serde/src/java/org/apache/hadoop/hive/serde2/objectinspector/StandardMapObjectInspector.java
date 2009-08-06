@@ -34,6 +34,7 @@ comment|/**  * StandardMapObjectInspector works on map data that is stored as a 
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|StandardMapObjectInspector
 implements|implements
