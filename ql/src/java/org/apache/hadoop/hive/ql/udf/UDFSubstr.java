@@ -45,6 +45,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|IntWritable
@@ -66,6 +84,39 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"substr,substring"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(str, pos[, len]) - returns the substring of str that"
+operator|+
+literal|" starts at pos and is of length len"
+argument_list|,
+name|extended
+operator|=
+literal|"pos is a 1-based index. If pos<0 the starting position is"
+operator|+
+literal|" determined by counting backwards from the end of str.\n"
+operator|+
+literal|"Example:\n "
+operator|+
+literal|"> SELECT _FUNC_('Facebook', 5) FROM src LIMIT 1;\n"
+operator|+
+literal|"  'book'\n"
+operator|+
+literal|"> SELECT _FUNC_('Facebook', -5) FROM src LIMIT 1;\n"
+operator|+
+literal|"  'ebook'\n"
+operator|+
+literal|"> SELECT _FUNC_('Facebook', 5, 1) FROM src LIMIT 1;\n"
+operator|+
+literal|"  'b'"
+argument_list|)
 specifier|public
 class|class
 name|UDFSubstr

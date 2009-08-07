@@ -157,6 +157,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|Text
@@ -164,6 +182,51 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"get_json_object"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(json_txt, path) - Extract a json object from path "
+argument_list|,
+name|extended
+operator|=
+literal|"Extract json object from a json string based on json path "
+operator|+
+literal|"specified, and return json string of the extracted json object. It "
+operator|+
+literal|"will return null if the input json string is invalid.\n"
+operator|+
+literal|"A limited version of JSONPath supported:\n"
+operator|+
+literal|"  $   : Root object\n"
+operator|+
+literal|"  .   : Child operator\n"
+operator|+
+literal|"  []  : Subscript operator for array\n"
+operator|+
+literal|"  *   : Wildcard for []\n"
+operator|+
+literal|"Syntax not supported that's worth noticing:\n"
+operator|+
+literal|"  ''  : Zero length string as key\n"
+operator|+
+literal|"  ..  : Recursive descent\n"
+operator|+
+literal|"&amp;#064;   : Current object/element\n"
+operator|+
+literal|"  ()  : Script expression\n"
+operator|+
+literal|"  ?() : Filter (script) expression.\n"
+operator|+
+literal|"  [,] : Union operator\n"
+operator|+
+literal|"  [start:end:step] : array slice operator\n"
+argument_list|)
 specifier|public
 class|class
 name|UDFJson

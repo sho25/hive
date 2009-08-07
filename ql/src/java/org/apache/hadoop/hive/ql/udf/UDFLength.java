@@ -49,6 +49,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|udf
 operator|.
 name|generic
@@ -86,6 +104,25 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"length"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(str) - Returns the length of str "
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_('Facebook') FROM src LIMIT 1;\n"
+operator|+
+literal|"  8"
+argument_list|)
 specifier|public
 class|class
 name|UDFLength

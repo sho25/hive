@@ -99,11 +99,66 @@ name|UDF
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
 begin_comment
 comment|/**  * UDF to extract specfic parts from URL For example,  * parse_url('http://facebook.com/path/p1.php?query=1', 'HOST') will return  * 'facebook.com' For example,  * parse_url('http://facebook.com/path/p1.php?query=1', 'PATH') will return  * '/path/p1.php' parse_url('http://facebook.com/path/p1.php?query=1', 'QUERY')  * will return 'query=1'  * parse_url('http://facebook.com/path/p1.php?query=1#Ref', 'REF') will return  * 'Ref' parse_url('http://facebook.com/path/p1.php?query=1#Ref', 'PROTOCOL')  * will return 'http' Possible values are  * HOST,PATH,QUERY,REF,PROTOCOL,AUTHORITY,FILE,USERINFO Also you can get a value  * of particular key in QUERY, using syntax QUERY:<KEY_NAME> eg: QUERY:k1.  */
 end_comment
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"parse_url"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(url, partToExtract[, key]) - extracts a part from a URL"
+argument_list|,
+name|extended
+operator|=
+literal|"Parts: HOST, PATH, QUERY, REF, PROTOCOL, AUTHORITY, FILE, "
+operator|+
+literal|"USERINFO\nkey specifies which query to extract\n"
+operator|+
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_('http://facebook.com/path/p1.php?query=1', "
+operator|+
+literal|"'HOST') FROM src LIMIT 1;\n"
+operator|+
+literal|"  'facebook.com'\n"
+operator|+
+literal|"> SELECT _FUNC_('http://facebook.com/path/p1.php?query=1', "
+operator|+
+literal|"'QUERY') FROM src LIMIT 1;\n"
+operator|+
+literal|"  'query=1'\n"
+operator|+
+literal|"> SELECT _FUNC_('http://facebook.com/path/p1.php?query=1', "
+operator|+
+literal|"'QUERY', 'query') FROM src LIMIT 1;\n"
+operator|+
+literal|"  '1'"
+argument_list|)
 specifier|public
 class|class
 name|UDFParseUrl

@@ -85,6 +85,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|io
@@ -108,6 +126,17 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"rand"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_([seed]) - Returns a pseudorandom number between 0 and 1"
+argument_list|)
 annotation|@
 name|UDFType
 argument_list|(

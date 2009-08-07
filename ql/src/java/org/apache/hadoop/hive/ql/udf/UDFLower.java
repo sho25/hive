@@ -45,6 +45,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|Text
@@ -76,6 +94,25 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"lower,lcase"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(str) - Returns str with all characters changed to lowercase"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_('Facebook') FROM src LIMIT 1;\n"
+operator|+
+literal|"  'facebook'"
+argument_list|)
 specifier|public
 class|class
 name|UDFLower

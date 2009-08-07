@@ -57,6 +57,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|io
@@ -112,6 +130,25 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"|"
+argument_list|,
+name|value
+operator|=
+literal|"a _FUNC_ b - Bitwise or"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n"
+operator|+
+literal|"> SELECT 3 _FUNC_ 5 FROM src LIMIT 1;\n"
+operator|+
+literal|"  7"
+argument_list|)
 specifier|public
 class|class
 name|UDFOPBitOr

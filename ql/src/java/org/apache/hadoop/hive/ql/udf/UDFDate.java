@@ -113,6 +113,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|Text
@@ -120,6 +138,27 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"to_date"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(expr) - Extracts the date part of the date or datetime "
+operator|+
+literal|"expression expr"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n "
+operator|+
+literal|"> SELECT _FUNC_('2009-30-07 04:17:52') FROM src LIMIT 1;\n"
+operator|+
+literal|"  '2009-30-07'"
+argument_list|)
 specifier|public
 class|class
 name|UDFDate

@@ -45,6 +45,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|IntWritable
@@ -80,6 +98,35 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"hex"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(n or str) - Convert the argument to hexadecimal "
+argument_list|,
+name|extended
+operator|=
+literal|"If the argument is a string, returns two hex digits for each "
+operator|+
+literal|"character in the string.\n"
+operator|+
+literal|"If the argument is a number, returns the hexadecimal representation.\n"
+operator|+
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_(17) FROM src LIMIT 1;\n"
+operator|+
+literal|"  'H1'\n"
+operator|+
+literal|"> SELECT _FUNC_('Facebook') FROM src LIMIT 1;\n"
+operator|+
+literal|"  '46616365626F6F6B'"
+argument_list|)
 specifier|public
 class|class
 name|UDFHex

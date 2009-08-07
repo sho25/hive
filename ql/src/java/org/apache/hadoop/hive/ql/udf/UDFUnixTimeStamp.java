@@ -113,6 +113,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|LongWritable
@@ -140,6 +158,23 @@ argument_list|(
 name|deterministic
 operator|=
 literal|false
+argument_list|)
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"unix_timestamp"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_([date[, pattern]]) - Returns the UNIX timestamp"
+argument_list|,
+name|extended
+operator|=
+literal|"Converts the current or specified time to number of seconds "
+operator|+
+literal|"since 1970-01-01."
 argument_list|)
 specifier|public
 class|class

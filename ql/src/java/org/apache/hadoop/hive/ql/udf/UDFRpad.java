@@ -45,6 +45,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|IntWritable
@@ -66,6 +84,35 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"rpad"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(str, len, pad) - Returns str, right-padded with pad to a "
+operator|+
+literal|"length of len"
+argument_list|,
+name|extended
+operator|=
+literal|"If str is longer than len, the return value is shortened to "
+operator|+
+literal|"len characters.\n"
+operator|+
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_('hi', 5, '??') FROM src LIMIT 1;\n"
+operator|+
+literal|"  'hi???'"
+operator|+
+literal|"> SELECT _FUNC_('hi', 1, '??') FROM src LIMIT 1;\n"
+operator|+
+literal|"  'h'"
+argument_list|)
 specifier|public
 class|class
 name|UDFRpad

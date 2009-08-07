@@ -113,6 +113,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|IntWritable
@@ -134,6 +152,29 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"year"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(date) - Returns the year of date"
+argument_list|,
+name|extended
+operator|=
+literal|"date is a string in the format of 'yyyy-MM-dd HH:mm:ss' or "
+operator|+
+literal|"'yyyy-MM-dd'.\n"
+operator|+
+literal|"Example:\n "
+operator|+
+literal|"> SELECT _FUNC_('2009-30-07', 1) FROM src LIMIT 1;\n"
+operator|+
+literal|"  2009"
+argument_list|)
 specifier|public
 class|class
 name|UDFYear

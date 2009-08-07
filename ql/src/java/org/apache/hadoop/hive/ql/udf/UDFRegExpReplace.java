@@ -45,6 +45,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|Text
@@ -76,6 +94,27 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"regexp_replace"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(str, regexp, rep) - replace all substrings of str that "
+operator|+
+literal|"match regexp with rep"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_('100-200', '(\\d+)', 'num') FROM src LIMIT 1;\n"
+operator|+
+literal|"  'num-num'"
+argument_list|)
 specifier|public
 class|class
 name|UDFRegExpReplace

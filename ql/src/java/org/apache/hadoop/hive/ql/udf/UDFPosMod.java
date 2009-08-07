@@ -57,6 +57,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|io
@@ -148,6 +166,17 @@ comment|/**  * class for computing positive modulo.  * Used for positive_mod com
 end_comment
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"pmod"
+argument_list|,
+name|value
+operator|=
+literal|"a _FUNC_ b - Compute the positive modulo"
+argument_list|)
 specifier|public
 class|class
 name|UDFPosMod

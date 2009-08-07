@@ -93,6 +93,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|IntWritable
@@ -114,6 +132,27 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"from_unixtime"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(unix_time, format) - returns unix_time in the specified "
+operator|+
+literal|"format"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_(0, 'yyyy-MM-dd HH:mm:ss') FROM src LIMIT 1;\n"
+operator|+
+literal|"  '1970-01-01 00:00:00'"
+argument_list|)
 specifier|public
 class|class
 name|UDFFromUnixTime

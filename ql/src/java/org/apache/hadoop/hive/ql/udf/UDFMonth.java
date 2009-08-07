@@ -113,6 +113,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|IntWritable
@@ -134,6 +152,25 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"month"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(date) - Returns the month of date"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_('2009-30-07') FROM src LIMIT 1;\n"
+operator|+
+literal|"  7"
+argument_list|)
 specifier|public
 class|class
 name|UDFMonth

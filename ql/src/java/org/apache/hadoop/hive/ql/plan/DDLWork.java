@@ -69,6 +69,10 @@ name|showFunctionsDesc
 name|showFuncsDesc
 decl_stmt|;
 specifier|private
+name|descFunctionDesc
+name|descFunctionDesc
+decl_stmt|;
+specifier|private
 name|showPartitionsDesc
 name|showPartsDesc
 decl_stmt|;
@@ -191,6 +195,21 @@ operator|.
 name|showFuncsDesc
 operator|=
 name|showFuncsDesc
+expr_stmt|;
+block|}
+comment|/**    * @param descFuncDesc    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|descFunctionDesc
+name|descFuncDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|descFunctionDesc
+operator|=
+name|descFuncDesc
 expr_stmt|;
 block|}
 comment|/**    * @param showPartsDesc    */
@@ -419,6 +438,23 @@ return|return
 name|showFuncsDesc
 return|;
 block|}
+comment|/**    * @return the descFuncDesc    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Show Function Operator"
+argument_list|)
+specifier|public
+name|descFunctionDesc
+name|getDescFunctionDesc
+parameter_list|()
+block|{
+return|return
+name|descFunctionDesc
+return|;
+block|}
 comment|/**    * @param showFuncsDesc the showFuncsDesc to set    */
 specifier|public
 name|void
@@ -433,6 +469,22 @@ operator|.
 name|showFuncsDesc
 operator|=
 name|showFuncsDesc
+expr_stmt|;
+block|}
+comment|/**    * @param showFuncsDesc the showFuncsDesc to set    */
+specifier|public
+name|void
+name|setDescFuncDesc
+parameter_list|(
+name|descFunctionDesc
+name|descFuncDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|descFunctionDesc
+operator|=
+name|descFuncDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the showPartsDesc    */

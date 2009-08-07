@@ -55,6 +55,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|IntWritable
@@ -76,6 +94,25 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"space"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(n) - returns n spaces"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n "
+operator|+
+literal|"> SELECT _FUNC_(2) FROM src LIMIT 1;\n"
+operator|+
+literal|"  '  '"
+argument_list|)
 specifier|public
 class|class
 name|UDFSpace

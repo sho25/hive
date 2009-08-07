@@ -87,6 +87,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -202,6 +220,27 @@ comment|/**  * Generic UDF for string function<code>LOCATE(substr, str)</code>,<
 end_comment
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"locate"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(substr, str[, pos]) - Returns the position of the first "
+operator|+
+literal|"occurance of substr in str after position pos"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_('bar', 'foobarbar', 5) FROM src LIMIT 1;\n"
+operator|+
+literal|"  7"
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFLocate

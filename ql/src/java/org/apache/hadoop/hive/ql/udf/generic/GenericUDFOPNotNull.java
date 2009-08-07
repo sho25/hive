@@ -69,6 +69,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -128,6 +146,17 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"isnotnull"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_ a - Returns true if a is not NULL and false otherwise"
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFOPNotNull

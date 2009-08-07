@@ -127,6 +127,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_DESCFUNCTION
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_MSCK
 case|:
 case|case

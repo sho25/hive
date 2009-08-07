@@ -103,6 +103,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|IntWritable
@@ -124,6 +142,33 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"datediff"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(date1, date2) - Returns the number of days between date1 "
+operator|+
+literal|"and date2"
+argument_list|,
+name|extended
+operator|=
+literal|"date1 and date2 are strings in the format "
+operator|+
+literal|"'yyyy-MM-dd HH:mm:ss' or 'yyyy-MM-dd'. The time parts are ignored."
+operator|+
+literal|"If date1 is earlier than date2, the result is negative.\n"
+operator|+
+literal|"Example:\n "
+operator|+
+literal|"> SELECT _FUNC_('2009-30-07', '2009-31-07') FROM src LIMIT 1;\n"
+operator|+
+literal|"  1"
+argument_list|)
 specifier|public
 class|class
 name|UDFDateDiff
