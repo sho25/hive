@@ -241,6 +241,10 @@ operator|.
 name|stringTypeInfo
 argument_list|,
 name|F1
+argument_list|,
+literal|""
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|exprNodeDesc
@@ -254,6 +258,10 @@ operator|.
 name|stringTypeInfo
 argument_list|,
 name|F2
+argument_list|,
+literal|""
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|exprNodeDesc
@@ -279,6 +287,8 @@ operator|new
 name|filterDesc
 argument_list|(
 name|filterExpr
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|Operator

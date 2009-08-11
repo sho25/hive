@@ -1169,6 +1169,10 @@ operator|.
 name|stringTypeInfo
 argument_list|,
 name|column
+argument_list|,
+literal|""
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1352,6 +1356,8 @@ operator|new
 name|filterDesc
 argument_list|(
 name|desc
+argument_list|,
+literal|false
 argument_list|)
 return|;
 block|}
@@ -2355,6 +2361,10 @@ name|VALUE
 operator|.
 name|toString
 argument_list|()
+argument_list|,
+literal|""
+argument_list|,
+literal|false
 argument_list|)
 argument_list|,
 literal|"0"
@@ -2694,6 +2704,10 @@ operator|.
 name|stringTypeInfo
 argument_list|,
 name|columnName
+argument_list|,
+literal|""
+argument_list|,
+literal|false
 argument_list|)
 return|;
 block|}

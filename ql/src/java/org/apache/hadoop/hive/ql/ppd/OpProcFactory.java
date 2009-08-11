@@ -907,6 +907,8 @@ operator|new
 name|filterDesc
 argument_list|(
 name|condn
+argument_list|,
+literal|false
 argument_list|)
 argument_list|,
 operator|new

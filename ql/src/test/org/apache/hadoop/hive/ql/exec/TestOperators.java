@@ -806,6 +806,8 @@ operator|new
 name|filterDesc
 argument_list|(
 name|func3
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 comment|// Configuration

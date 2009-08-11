@@ -749,8 +749,16 @@ literal|"hive.optimize.ppd"
 argument_list|,
 literal|true
 argument_list|)
-block|;
+block|,
 comment|// predicate pushdown
+name|HIVEOPTPPR
+argument_list|(
+literal|"hive.optimize.pruner"
+argument_list|,
+literal|true
+argument_list|)
+block|;
+comment|// partition pruner
 specifier|public
 specifier|final
 name|String

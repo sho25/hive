@@ -123,6 +123,26 @@ name|ql
 operator|.
 name|optimizer
 operator|.
+name|ppr
+operator|.
+name|PartitionPruner
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
 name|unionproc
 operator|.
 name|UnionProcessor
@@ -149,11 +169,6 @@ name|Transform
 argument_list|>
 name|transformations
 decl_stmt|;
-comment|/** 	 * empty constructor 	 */
-specifier|public
-name|Optimizer
-parameter_list|()
-block|{ 	}
 comment|/** 	 * create the list of transformations 	 * @param hiveConf  	 */
 specifier|public
 name|void
@@ -223,6 +238,32 @@ name|PredicatePushDown
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTPPR
+argument_list|)
+condition|)
+block|{
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
+name|PartitionPruner
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|transformations
 operator|.
@@ -243,7 +284,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** 	 * invoke all the transformations one-by-one, and alter the query plan 	 * @return ParseContext 	 * @throws SemanticException 	 */
+comment|/**    * invoke all the transformations one-by-one, and alter the query plan    * @return ParseContext    * @throws SemanticException    */
 specifier|public
 name|ParseContext
 name|optimize
@@ -271,7 +312,7 @@ return|return
 name|pctx
 return|;
 block|}
-comment|/** 	 * @return the pctx 	 */
+comment|/**    * @return the pctx    */
 specifier|public
 name|ParseContext
 name|getPctx
@@ -281,7 +322,7 @@ return|return
 name|pctx
 return|;
 block|}
-comment|/** 	 * @param pctx the pctx to set 	 */
+comment|/**    * @param pctx the pctx to set    */
 specifier|public
 name|void
 name|setPctx
