@@ -1809,6 +1809,22 @@ name|WriteEntity
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|Constants
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implementation of the semantic analyzer  */
 end_comment
@@ -16182,12 +16198,18 @@ name|getInternalName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|colTypes
-operator|=
-name|colTypes
-operator|.
-name|concat
-argument_list|(
+comment|// Replace VOID type with string when the output is a temp table or local files.
+comment|// A VOID type can be generated under the query:
+comment|//
+comment|//     select NULL from tt;
+comment|// or
+comment|//     insert overwrite local directory "abc" select NULL from tt;
+comment|//
+comment|// where there is no column type to which the NULL value should be converted.
+comment|//
+name|String
+name|tName
+init|=
 name|colInfo
 operator|.
 name|getType
@@ -16195,6 +16217,37 @@ argument_list|()
 operator|.
 name|getTypeName
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|tName
+operator|.
+name|equals
+argument_list|(
+name|Constants
+operator|.
+name|VOID_TYPE_NAME
+argument_list|)
+condition|)
+name|colTypes
+operator|=
+name|colTypes
+operator|.
+name|concat
+argument_list|(
+name|Constants
+operator|.
+name|STRING_TYPE_NAME
+argument_list|)
+expr_stmt|;
+else|else
+name|colTypes
+operator|=
+name|colTypes
+operator|.
+name|concat
+argument_list|(
+name|tName
 argument_list|)
 expr_stmt|;
 block|}
