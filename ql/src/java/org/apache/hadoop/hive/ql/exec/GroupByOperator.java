@@ -1354,7 +1354,7 @@ index|]
 operator|=
 name|agg
 operator|.
-name|createGenericUDAFEvaluator
+name|getGenericUDAFEvaluator
 argument_list|()
 expr_stmt|;
 block|}

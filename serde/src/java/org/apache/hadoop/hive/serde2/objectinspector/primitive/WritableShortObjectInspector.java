@@ -39,20 +39,6 @@ name|ShortWritable
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|LongWritable
-import|;
-end_import
-
 begin_comment
 comment|/**  * A WritableShortObjectInspector inspects a ShortWritable Object.  */
 end_comment
@@ -185,7 +171,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|Object
 name|set
 parameter_list|(
 name|Object
@@ -207,6 +193,9 @@ argument_list|(
 name|value
 argument_list|)
 expr_stmt|;
+return|return
+name|o
+return|;
 block|}
 block|}
 end_class

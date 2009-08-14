@@ -223,9 +223,7 @@ name|Override
 specifier|public
 name|List
 argument_list|<
-name|?
-extends|extends
-name|Node
+name|exprNodeDesc
 argument_list|>
 name|getChildren
 parameter_list|()

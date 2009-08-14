@@ -127,24 +127,6 @@ name|exprNodeFieldDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|exprNodeFuncDesc
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -201,26 +183,7 @@ name|desc
 argument_list|)
 return|;
 block|}
-comment|// Function node, e.g. an operator or a UDF node
-if|if
-condition|(
-name|desc
-operator|instanceof
-name|exprNodeFuncDesc
-condition|)
-block|{
-return|return
-operator|new
-name|ExprNodeFuncEvaluator
-argument_list|(
-operator|(
-name|exprNodeFuncDesc
-operator|)
-name|desc
-argument_list|)
-return|;
-block|}
-comment|// Generic Function node, e.g. CASE
+comment|// Generic Function node, e.g. CASE, an operator or a UDF node
 if|if
 condition|(
 name|desc

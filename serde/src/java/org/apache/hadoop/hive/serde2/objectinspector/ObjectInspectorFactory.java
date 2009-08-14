@@ -513,7 +513,9 @@ operator|.
 name|getName
 argument_list|()
 operator|+
-literal|": internal error."
+literal|" internal error:"
+operator|+
+name|t
 argument_list|)
 throw|;
 block|}

@@ -424,8 +424,23 @@ operator|.
 name|getParameterTypeInfos
 argument_list|(
 name|m
+argument_list|,
+name|pTypeInfos
+operator|.
+name|size
+argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|argumentTypeInfos
+operator|==
+literal|null
+condition|)
+block|{
+comment|// null means the method does not accept number of arguments passed.
+continue|continue;
+block|}
 name|boolean
 name|match
 init|=

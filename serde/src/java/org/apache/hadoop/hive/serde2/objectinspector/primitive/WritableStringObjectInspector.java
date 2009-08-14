@@ -212,7 +212,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|Object
 name|set
 parameter_list|(
 name|Object
@@ -245,11 +245,14 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
+return|return
+name|o
+return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|Object
 name|set
 parameter_list|(
 name|Object
@@ -282,6 +285,9 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
+return|return
+name|o
+return|;
 block|}
 block|}
 end_class
