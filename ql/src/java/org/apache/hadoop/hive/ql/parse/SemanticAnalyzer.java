@@ -17698,7 +17698,7 @@ name|deserializer
 operator|.
 name|initialize
 argument_list|(
-literal|null
+name|conf
 argument_list|,
 name|table_desc
 operator|.
