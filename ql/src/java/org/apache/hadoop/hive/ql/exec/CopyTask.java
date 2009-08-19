@@ -160,6 +160,14 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|public
+name|CopyTask
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
 name|int
 name|execute
 parameter_list|()

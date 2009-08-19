@@ -875,6 +875,22 @@ name|StringUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QueryPlan
+import|;
+end_import
+
 begin_comment
 comment|/**  * DDLTask implementation  *   **/
 end_comment
@@ -937,11 +953,22 @@ operator|.
 name|newLineCode
 decl_stmt|;
 specifier|public
+name|DDLTask
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
 name|void
 name|initialize
 parameter_list|(
 name|HiveConf
 name|conf
+parameter_list|,
+name|QueryPlan
+name|queryPlan
 parameter_list|)
 block|{
 name|super
@@ -949,6 +976,8 @@ operator|.
 name|initialize
 argument_list|(
 name|conf
+argument_list|,
+name|queryPlan
 argument_list|)
 expr_stmt|;
 name|this
