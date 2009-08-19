@@ -39,6 +39,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -565,6 +581,10 @@ specifier|private
 name|exprNodeDesc
 name|prunerExpr
 decl_stmt|;
+specifier|private
+name|HiveConf
+name|conf
+decl_stmt|;
 comment|// is set to true if the expression only contains partitioning columns and not any other column reference.
 comment|// This is used to optimize select * from table where ... scenario, when the where condition only references
 comment|// partitioning columns - the partitions are identified and streamed directly to the client without requiring
@@ -586,6 +606,9 @@ name|tableAlias
 parameter_list|,
 name|QBMetaData
 name|metaData
+parameter_list|,
+name|HiveConf
+name|conf
 parameter_list|)
 block|{
 name|this
@@ -616,6 +639,12 @@ operator|.
 name|prunerExpr
 operator|=
 literal|null
+expr_stmt|;
+name|this
+operator|.
+name|conf
+operator|=
+name|conf
 expr_stmt|;
 name|onlyContainsPartCols
 operator|=
@@ -2412,6 +2441,12 @@ argument_list|,
 name|this
 operator|.
 name|prunerExpr
+argument_list|,
+name|conf
+argument_list|,
+name|this
+operator|.
+name|tableAlias
 argument_list|)
 return|;
 block|}

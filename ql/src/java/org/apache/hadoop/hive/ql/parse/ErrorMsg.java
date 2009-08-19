@@ -609,6 +609,22 @@ block|}
 specifier|public
 name|String
 name|getMsg
+parameter_list|(
+name|String
+name|reason
+parameter_list|)
+block|{
+return|return
+name|mesg
+operator|+
+literal|" "
+operator|+
+name|reason
+return|;
+block|}
+specifier|public
+name|String
+name|getMsg
 parameter_list|()
 block|{
 return|return

@@ -1589,6 +1589,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|ppd
+operator|.
+name|PredicatePushDown
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -4843,6 +4861,8 @@ name|qb
 operator|.
 name|getMetaData
 argument_list|()
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// Pass each where clause to the pruner
@@ -5142,6 +5162,39 @@ operator|++
 expr_stmt|;
 block|}
 block|}
+comment|// Do old-style partition pruner check only if the new partition pruner
+comment|// is not enabled.
+if|if
+condition|(
+operator|!
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTPPD
+argument_list|)
+operator|||
+operator|!
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTPPR
+argument_list|)
+condition|)
+block|{
 for|for
 control|(
 name|String
@@ -5325,6 +5378,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 block|}
@@ -29630,7 +29684,7 @@ operator|.
 name|getQB
 argument_list|()
 expr_stmt|;
-comment|// Do any partition pruning
+comment|// Do any partition pruning using ASTPartitionPruner
 name|genPartitionPruners
 argument_list|(
 name|qb
