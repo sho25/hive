@@ -1137,6 +1137,39 @@ operator|.
 name|length
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|list
+operator|.
+name|length
+operator|==
+literal|1
+operator|&&
+name|list
+index|[
+literal|0
+index|]
+operator|==
+literal|""
+condition|)
+block|{
+comment|// this is the case when conf value is specified by with a empty string ""
+comment|// the is to select all columns by default
+name|result
+operator|.
+name|add
+argument_list|(
+operator|new
+name|Integer
+argument_list|(
+operator|-
+literal|1
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 for|for
 control|(
 name|int
@@ -1169,6 +1202,7 @@ index|]
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|result
