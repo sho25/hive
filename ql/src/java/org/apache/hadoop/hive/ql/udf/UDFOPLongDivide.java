@@ -179,24 +179,6 @@ name|LongWritable
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|NumericOpMethodResolver
-import|;
-end_import
-
 begin_class
 annotation|@
 name|description
@@ -207,7 +189,7 @@ literal|"/"
 argument_list|,
 name|value
 operator|=
-literal|"a _FUNC_ b - Divide a by b"
+literal|"a _FUNC_ b - Divide a by b rounded to the long integer"
 argument_list|,
 name|extended
 operator|=
@@ -215,11 +197,11 @@ literal|"Example:\n"
 operator|+
 literal|"> SELECT 3 _FUNC_ 2 FROM src LIMIT 1;\n"
 operator|+
-literal|"  1.5"
+literal|"  1"
 argument_list|)
 specifier|public
 class|class
-name|UDFOPDivide
+name|UDFOPLongDivide
 extends|extends
 name|UDF
 block|{
@@ -232,25 +214,25 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"org.apache.hadoop.hive.ql.udf.UDFOPDivide"
+literal|"org.apache.hadoop.hive.ql.udf.UDFOPLongDivide"
 argument_list|)
 decl_stmt|;
 specifier|protected
-name|DoubleWritable
-name|doubleWritable
+name|LongWritable
+name|longWritable
 init|=
 operator|new
-name|DoubleWritable
+name|LongWritable
 argument_list|()
 decl_stmt|;
 specifier|public
-name|DoubleWritable
+name|LongWritable
 name|evaluate
 parameter_list|(
-name|DoubleWritable
+name|LongWritable
 name|a
 parameter_list|,
-name|DoubleWritable
+name|LongWritable
 name|b
 parameter_list|)
 block|{
@@ -272,10 +254,13 @@ condition|)
 return|return
 literal|null
 return|;
-name|doubleWritable
+name|longWritable
 operator|.
 name|set
 argument_list|(
+operator|(
+name|long
+operator|)
 name|a
 operator|.
 name|get
@@ -288,7 +273,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
-name|doubleWritable
+name|longWritable
 return|;
 block|}
 block|}

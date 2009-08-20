@@ -1188,6 +1188,17 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
+literal|"div"
+argument_list|,
+name|UDFOPLongDivide
+operator|.
+name|class
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|registerUDF
+argument_list|(
 literal|"&"
 argument_list|,
 name|UDFOPBitAnd
