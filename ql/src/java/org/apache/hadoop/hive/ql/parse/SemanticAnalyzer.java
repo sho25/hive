@@ -29137,7 +29137,22 @@ argument_list|(
 name|rootTask
 argument_list|)
 expr_stmt|;
-comment|// For each operator, generate the counters
+comment|// For each operator, generate the counters if needed
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEJOBPROGRESS
+argument_list|)
+condition|)
 for|for
 control|(
 name|Task

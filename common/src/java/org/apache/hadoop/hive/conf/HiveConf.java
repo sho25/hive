@@ -748,6 +748,13 @@ argument_list|,
 literal|1000
 argument_list|)
 block|,
+name|HIVEJOBPROGRESS
+argument_list|(
+literal|"hive.task.progress"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Optimizer
 name|HIVEOPTCP
 argument_list|(

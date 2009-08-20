@@ -1207,6 +1207,13 @@ name|value
 argument_list|)
 expr_stmt|;
 comment|// Since this is a terminal operator, update counters explicitly - forward is not called
+if|if
+condition|(
+name|counterNameToEnum
+operator|!=
+literal|null
+condition|)
+block|{
 operator|++
 name|this
 operator|.
@@ -1236,6 +1243,7 @@ name|outputRows
 operator|=
 literal|0
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
