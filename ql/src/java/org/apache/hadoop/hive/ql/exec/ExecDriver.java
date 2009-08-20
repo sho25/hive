@@ -2396,7 +2396,7 @@ name|job
 operator|.
 name|setMapOutputValueClass
 argument_list|(
-name|Text
+name|BytesWritable
 operator|.
 name|class
 argument_list|)
