@@ -1461,6 +1461,13 @@ operator|.
 name|getChildren
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|children
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|int
@@ -1495,6 +1502,7 @@ block|{
 return|return
 literal|true
 return|;
+block|}
 block|}
 block|}
 comment|// Return false otherwise
