@@ -2103,7 +2103,7 @@ name|round
 argument_list|(
 name|rj
 operator|.
-name|mapProgress
+name|reduceProgress
 argument_list|()
 operator|*
 literal|100
