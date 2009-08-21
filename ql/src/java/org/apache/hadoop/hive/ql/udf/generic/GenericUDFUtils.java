@@ -97,6 +97,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -144,6 +154,42 @@ operator|.
 name|exec
 operator|.
 name|FunctionRegistry
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|UDFArgumentException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|UDFArgumentLengthException
 import|;
 end_import
 
@@ -864,6 +910,8 @@ name|ObjectInspector
 index|[]
 name|parameterOIs
 parameter_list|)
+throws|throws
+name|UDFArgumentException
 block|{
 name|this
 operator|.
@@ -936,6 +984,50 @@ condition|(
 name|isVariableLengthArgument
 condition|)
 block|{
+comment|// ConversionHelper can be called without method parameter length checkings
+comment|// for terminatePartial() and merge() calls.
+if|if
+condition|(
+name|parameterOIs
+operator|.
+name|length
+operator|<
+name|methodParameterTypes
+operator|.
+name|length
+operator|-
+literal|1
+condition|)
+block|{
+throw|throw
+operator|new
+name|UDFArgumentLengthException
+argument_list|(
+name|m
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" requires at least "
+operator|+
+operator|(
+name|methodParameterTypes
+operator|.
+name|length
+operator|-
+literal|1
+operator|)
+operator|+
+literal|" arguments but only "
+operator|+
+name|parameterOIs
+operator|.
+name|length
+operator|+
+literal|" are passed in."
+argument_list|)
+throw|;
+block|}
 comment|// Copy the first methodParameterTypes.length - 1 entries
 for|for
 control|(
@@ -1116,15 +1208,44 @@ block|}
 else|else
 block|{
 comment|// Normal case, the last parameter is a normal parameter.
-assert|assert
+comment|// ConversionHelper can be called without method parameter length checkings
+comment|// for terminatePartial() and merge() calls.
+if|if
+condition|(
 name|methodParameterTypes
 operator|.
 name|length
-operator|==
+operator|!=
 name|parameterOIs
 operator|.
 name|length
-assert|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|UDFArgumentLengthException
+argument_list|(
+name|m
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" requires "
+operator|+
+name|methodParameterTypes
+operator|.
+name|length
+operator|+
+literal|" arguments but "
+operator|+
+name|parameterOIs
+operator|.
+name|length
+operator|+
+literal|" are passed in."
+argument_list|)
+throw|;
+block|}
 for|for
 control|(
 name|int
