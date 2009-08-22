@@ -346,8 +346,22 @@ name|JdbcSessionState
 name|session
 decl_stmt|;
 specifier|private
+name|TTransport
+name|transport
+decl_stmt|;
+specifier|private
 name|HiveInterface
 name|client
+decl_stmt|;
+name|boolean
+name|isClosed
+init|=
+literal|true
+decl_stmt|;
+name|SQLWarning
+name|warningChain
+init|=
+literal|null
 decl_stmt|;
 specifier|private
 specifier|static
@@ -536,9 +550,8 @@ name|Exception
 name|e
 parameter_list|)
 block|{       }
-name|TTransport
 name|transport
-init|=
+operator|=
 operator|new
 name|TSocket
 argument_list|(
@@ -546,7 +559,7 @@ name|host
 argument_list|,
 name|port
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|TProtocol
 name|protocol
 init|=
@@ -570,6 +583,10 @@ name|open
 argument_list|()
 expr_stmt|;
 block|}
+name|isClosed
+operator|=
+literal|false
+expr_stmt|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Connection#clearWarnings()    */
 specifier|public
@@ -579,14 +596,12 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+name|this
+operator|.
+name|warningChain
+operator|=
+literal|null
+expr_stmt|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Connection#close()    */
 specifier|public
@@ -596,14 +611,27 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+try|try
+block|{
+if|if
+condition|(
+name|transport
+operator|!=
+literal|null
+condition|)
+name|transport
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|isClosed
+operator|=
+literal|true
+expr_stmt|;
+block|}
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Connection#commit()    */
 specifier|public
@@ -722,6 +750,17 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+if|if
+condition|(
+name|isClosed
+condition|)
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Can't create Statement, connection is closed"
+argument_list|)
+throw|;
 return|return
 operator|new
 name|HiveStatement
@@ -957,14 +996,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|warningChain
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Connection#isClosed()    */
 specifier|public
@@ -974,14 +1010,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|isClosed
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Connection#isReadOnly()    */
 specifier|public

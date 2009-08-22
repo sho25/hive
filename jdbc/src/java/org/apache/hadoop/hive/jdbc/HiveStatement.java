@@ -100,6 +100,30 @@ decl_stmt|;
 name|HiveInterface
 name|client
 decl_stmt|;
+comment|/**    * We need to keep a reference to the result set to support the following:    *<code>    * statement.execute(String sql);    * statement.getResultSet();    *</code>    */
+name|ResultSet
+name|resultSet
+init|=
+literal|null
+decl_stmt|;
+comment|/**    * The maximum number of rows this statement should return (0 => all rows)    */
+name|int
+name|maxRows
+init|=
+literal|0
+decl_stmt|;
+comment|/**    * Add SQLWarnings to the warningChain if needed    */
+name|SQLWarning
+name|warningChain
+init|=
+literal|null
+decl_stmt|;
+comment|/**    * Keep state so we can fail certain calls made after close();    */
+name|boolean
+name|isClosed
+init|=
+literal|false
+decl_stmt|;
 comment|/**    *    */
 specifier|public
 name|HiveStatement
@@ -186,14 +210,12 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+name|this
+operator|.
+name|warningChain
+operator|=
+literal|null
+expr_stmt|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#close()    */
 specifier|public
@@ -203,14 +225,19 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+comment|//TODO: how to properly shut down the client?
+name|client
+operator|=
+literal|null
+expr_stmt|;
+name|resultSet
+operator|=
+literal|null
+expr_stmt|;
+name|isClosed
+operator|=
+literal|true
+expr_stmt|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#execute(java.lang.String)    */
 specifier|public
@@ -223,8 +250,20 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
+name|ResultSet
+name|rs
+init|=
+name|executeQuery
+argument_list|(
+name|sql
+argument_list|)
+decl_stmt|;
+comment|//TODO: this should really check if there are results, but there's no easy
+comment|//way to do that without calling rs.next();
 return|return
-literal|true
+name|rs
+operator|!=
+literal|null
 return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#execute(java.lang.String, int)    */
@@ -327,8 +366,27 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
+if|if
+condition|(
+name|this
+operator|.
+name|isClosed
+condition|)
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Can't execute after statement has been closed"
+argument_list|)
+throw|;
 try|try
 block|{
+name|this
+operator|.
+name|resultSet
+operator|=
+literal|null
+expr_stmt|;
 name|client
 operator|.
 name|execute
@@ -354,12 +412,22 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-return|return
+name|this
+operator|.
+name|resultSet
+operator|=
 operator|new
 name|HiveResultSet
 argument_list|(
 name|client
+argument_list|,
+name|maxRows
 argument_list|)
+expr_stmt|;
+return|return
+name|this
+operator|.
+name|resultSet
 return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#executeUpdate(java.lang.String)    */
@@ -572,14 +640,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|maxRows
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#getMoreResults()    */
 specifier|public
@@ -643,14 +708,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|resultSet
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#getResultSetConcurrency()    */
 specifier|public
@@ -711,14 +773,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|0
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#getWarnings()    */
 specifier|public
@@ -728,14 +785,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|warningChain
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#isClosed()    */
 specifier|public
@@ -745,14 +799,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|isClosed
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#isPoolable()    */
 specifier|public
@@ -882,14 +933,25 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
+if|if
+condition|(
+name|max
+operator|<
+literal|0
+condition|)
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"max must be>= 0"
 argument_list|)
 throw|;
+name|this
+operator|.
+name|maxRows
+operator|=
+name|max
+expr_stmt|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Statement#setPoolable(boolean)    */
 specifier|public

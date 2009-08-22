@@ -57,6 +57,50 @@ name|SQLException
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|net
+operator|.
+name|URL
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|jar
+operator|.
+name|Manifest
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|jar
+operator|.
+name|Attributes
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -478,14 +522,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|"Hive"
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDatabaseProductVersion()    */
 specifier|public
@@ -495,14 +534,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|"0"
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDefaultTransactionIsolation()    */
 specifier|public
@@ -552,10 +586,13 @@ throws|throws
 name|SQLException
 block|{
 return|return
-operator|new
-name|String
+name|fetchManifestAttribute
 argument_list|(
-literal|"hive"
+name|Attributes
+operator|.
+name|Name
+operator|.
+name|IMPLEMENTATION_TITLE
 argument_list|)
 return|;
 block|}
@@ -568,10 +605,13 @@ throws|throws
 name|SQLException
 block|{
 return|return
-operator|new
-name|String
+name|fetchManifestAttribute
 argument_list|(
-literal|"0"
+name|Attributes
+operator|.
+name|Name
+operator|.
+name|IMPLEMENTATION_VERSION
 argument_list|)
 return|;
 block|}
@@ -1218,14 +1258,10 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+comment|//TODO: return empty result set here
+return|return
+literal|null
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getResultSetHoldability()    */
 specifier|public
@@ -2208,14 +2244,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsColumnAliasing()    */
 specifier|public
@@ -2605,14 +2636,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsMultipleTransactions()    */
 specifier|public
@@ -2879,14 +2905,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSchemasInIndexDefinitions()    */
 specifier|public
@@ -2947,14 +2968,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSelectForUpdate()    */
 specifier|public
@@ -3015,14 +3031,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSubqueriesInComparisons()    */
 specifier|public
@@ -3282,6 +3293,180 @@ argument_list|(
 literal|"Method not supported"
 argument_list|)
 throw|;
+block|}
+comment|/**    * Lazy-load manifest attributes as needed.    */
+specifier|private
+specifier|static
+name|Attributes
+name|manifestAttributes
+init|=
+literal|null
+decl_stmt|;
+comment|/**    * Loads the manifest attributes from the jar.    * @throws java.net.MalformedURLException    * @throws IOException    */
+specifier|private
+specifier|synchronized
+name|void
+name|loadManifestAttributes
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+if|if
+condition|(
+name|manifestAttributes
+operator|!=
+literal|null
+condition|)
+return|return;
+name|Class
+name|clazz
+init|=
+name|this
+operator|.
+name|getClass
+argument_list|()
+decl_stmt|;
+name|String
+name|classContainer
+init|=
+name|clazz
+operator|.
+name|getProtectionDomain
+argument_list|()
+operator|.
+name|getCodeSource
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+decl_stmt|;
+name|URL
+name|manifestUrl
+init|=
+operator|new
+name|URL
+argument_list|(
+literal|"jar:"
+operator|+
+name|classContainer
+operator|+
+literal|"!/META-INF/MANIFEST.MF"
+argument_list|)
+decl_stmt|;
+name|Manifest
+name|manifest
+init|=
+operator|new
+name|Manifest
+argument_list|(
+name|manifestUrl
+operator|.
+name|openStream
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|manifestAttributes
+operator|=
+name|manifest
+operator|.
+name|getMainAttributes
+argument_list|()
+expr_stmt|;
+block|}
+comment|/**    * Helper to initialize attributes and return one.    *    * @param attributeName    * @return    * @throws SQLException    */
+specifier|private
+name|String
+name|fetchManifestAttribute
+parameter_list|(
+name|Attributes
+operator|.
+name|Name
+name|attributeName
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+try|try
+block|{
+name|loadManifestAttributes
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Couldn't load manifest attributes."
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+return|return
+name|manifestAttributes
+operator|.
+name|getValue
+argument_list|(
+name|attributeName
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|void
+name|main
+parameter_list|(
+name|String
+index|[]
+name|args
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+name|HiveDatabaseMetaData
+name|meta
+init|=
+operator|new
+name|HiveDatabaseMetaData
+argument_list|()
+decl_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"DriverName: "
+operator|+
+name|meta
+operator|.
+name|getDriverName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"DriverVersion: "
+operator|+
+name|meta
+operator|.
+name|getDriverVersion
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class
