@@ -164,6 +164,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|SERIALIZATION_USE_JSON_OBJECTS
+init|=
+literal|"serialization.use.json.object"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|FIELD_DELIM
 init|=
 literal|"field.delim"

@@ -1491,6 +1491,10 @@ name|tabCode
 argument_list|,
 literal|"key,value"
 argument_list|)
+argument_list|,
+name|TextRecordReader
+operator|.
+name|class
 argument_list|)
 argument_list|,
 name|op3
@@ -2485,7 +2489,7 @@ name|Utilities
 operator|.
 name|tabCode
 argument_list|,
-literal|"tkey,tvalue"
+literal|"key,value"
 argument_list|)
 argument_list|,
 name|PlanUtils
@@ -2498,8 +2502,12 @@ name|Utilities
 operator|.
 name|tabCode
 argument_list|,
-literal|"key,value"
+literal|"tkey,tvalue"
 argument_list|)
+argument_list|,
+name|TextRecordReader
+operator|.
+name|class
 argument_list|)
 argument_list|,
 name|op1
@@ -3078,6 +3086,10 @@ name|tabCode
 argument_list|,
 literal|"tkey,tvalue"
 argument_list|)
+argument_list|,
+name|TextRecordReader
+operator|.
+name|class
 argument_list|)
 argument_list|,
 name|op1

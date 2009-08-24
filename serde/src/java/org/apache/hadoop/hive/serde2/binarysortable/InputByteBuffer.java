@@ -93,6 +93,21 @@ operator|=
 name|end
 expr_stmt|;
 block|}
+specifier|public
+specifier|final
+name|byte
+name|read
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+return|return
+name|read
+argument_list|(
+literal|false
+argument_list|)
+return|;
+block|}
 comment|/**    * Read one byte from the byte buffer.    * Final method to help inlining.    * @param invert whether we want to invert all the bits.     */
 specifier|public
 specifier|final
@@ -174,6 +189,16 @@ name|start
 operator|=
 name|position
 expr_stmt|;
+block|}
+specifier|public
+specifier|final
+name|int
+name|getEnd
+parameter_list|()
+block|{
+return|return
+name|end
+return|;
 block|}
 comment|/**    * Returns the underlying byte array.    */
 specifier|public

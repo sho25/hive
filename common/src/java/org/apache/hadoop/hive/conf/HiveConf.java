@@ -645,6 +645,21 @@ literal|"user.name"
 argument_list|)
 argument_list|)
 block|,
+comment|// Default serde and record reader for user scripts
+name|HIVESCRIPTSERDE
+argument_list|(
+literal|"hive.script.serde"
+argument_list|,
+literal|"org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
+argument_list|)
+block|,
+name|HIVESCRIPTRECORDREADER
+argument_list|(
+literal|"hive.script.recordreader"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.exec.TextRecordReader"
+argument_list|)
+block|,
 comment|// HWI
 name|HIVEHWILISTENHOST
 argument_list|(

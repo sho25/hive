@@ -1471,6 +1471,10 @@ argument_list|,
 name|scriptOutput
 argument_list|,
 name|scriptInput
+argument_list|,
+name|TextRecordReader
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 name|Operator

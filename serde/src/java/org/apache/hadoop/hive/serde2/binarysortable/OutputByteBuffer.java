@@ -62,6 +62,23 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
+specifier|public
+specifier|final
+name|void
+name|write
+parameter_list|(
+name|byte
+name|b
+parameter_list|)
+block|{
+name|write
+argument_list|(
+name|b
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * Write one byte to the byte buffer.    * Final method to help inlining.    * @param invert whether we want to invert all the bits.     */
 specifier|public
 specifier|final
