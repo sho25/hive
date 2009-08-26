@@ -1562,7 +1562,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|COMPRESSINTERMEDIATE
+name|COMPRESSRESULT
 argument_list|)
 argument_list|)
 argument_list|,
