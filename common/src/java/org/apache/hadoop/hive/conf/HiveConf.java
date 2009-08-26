@@ -523,6 +523,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVEADDEDARCHIVES
+argument_list|(
+literal|"hive.added.archives.path"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// for hive script operator
 name|HIVETABLENAME
 argument_list|(
