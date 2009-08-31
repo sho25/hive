@@ -185,7 +185,7 @@ name|description
 argument_list|(
 name|name
 operator|=
-literal|"/"
+literal|"div"
 argument_list|,
 name|value
 operator|=
