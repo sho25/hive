@@ -1889,7 +1889,7 @@ return|;
 block|}
 specifier|public
 name|void
-name|close
+name|closeOp
 parameter_list|(
 name|boolean
 name|abort
@@ -1911,13 +1911,6 @@ name|hTbl
 argument_list|)
 expr_stmt|;
 block|}
-name|super
-operator|.
-name|close
-argument_list|(
-name|abort
-argument_list|)
-expr_stmt|;
 block|}
 specifier|private
 name|void

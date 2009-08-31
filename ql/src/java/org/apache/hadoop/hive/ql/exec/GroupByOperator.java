@@ -4022,7 +4022,7 @@ block|}
 comment|/**    * We need to forward all the aggregations to children.    *     */
 specifier|public
 name|void
-name|close
+name|closeOp
 parameter_list|(
 name|boolean
 name|abort
@@ -4297,13 +4297,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|super
-operator|.
-name|close
-argument_list|(
-name|abort
-argument_list|)
-expr_stmt|;
 block|}
 comment|// Group by contains the columns needed - no need to aggregate from children
 specifier|public

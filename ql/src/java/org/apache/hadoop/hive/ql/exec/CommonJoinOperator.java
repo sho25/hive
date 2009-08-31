@@ -3625,7 +3625,7 @@ block|}
 comment|/**    * All done    *     */
 specifier|public
 name|void
-name|close
+name|closeOp
 parameter_list|(
 name|boolean
 name|abort
@@ -3638,13 +3638,6 @@ operator|.
 name|trace
 argument_list|(
 literal|"Join Op close"
-argument_list|)
-expr_stmt|;
-name|super
-operator|.
-name|close
-argument_list|(
-name|abort
 argument_list|)
 expr_stmt|;
 block|}

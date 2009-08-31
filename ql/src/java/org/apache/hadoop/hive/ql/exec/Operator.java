@@ -421,9 +421,16 @@ name|State
 block|{
 name|UNINIT
 block|,
+comment|// initialize() has not been called
 name|INIT
 block|,
+comment|// initialize() has been called and close() has not been called,
+comment|// or close() has been called but one of its parent is not closed.
 name|CLOSE
+comment|// all its parents operators are in state CLOSE and called close()
+comment|// to children. Note: close() being called and its state being CLOSE is
+comment|// difference since close() could be called but state is not CLOSE if
+comment|// one of its parent is not in state CLOSE..
 block|}
 empty_stmt|;
 specifier|transient
@@ -1657,6 +1664,66 @@ literal|"End group Done"
 argument_list|)
 expr_stmt|;
 block|}
+specifier|private
+name|boolean
+name|allInitializedParentsAreClosed
+parameter_list|()
+block|{
+if|if
+condition|(
+name|parentOperators
+operator|!=
+literal|null
+condition|)
+block|{
+for|for
+control|(
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|parent
+range|:
+name|parentOperators
+control|)
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+name|parent
+operator|.
+name|state
+operator|==
+name|State
+operator|.
+name|CLOSE
+operator|||
+name|parent
+operator|.
+name|state
+operator|==
+name|State
+operator|.
+name|UNINIT
+operator|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+block|}
+block|}
+return|return
+literal|true
+return|;
+block|}
+comment|// This close() function does not need to be synchronized
+comment|// since it is called by its parents' main thread, so no
+comment|// more than 1 thread should call this close() function.
 specifier|public
 name|void
 name|close
@@ -1676,6 +1743,31 @@ operator|.
 name|CLOSE
 condition|)
 return|return;
+comment|// check if all parents are finished
+if|if
+condition|(
+operator|!
+name|allInitializedParentsAreClosed
+argument_list|()
+condition|)
+return|return;
+comment|// set state as CLOSE as long as all parents are closed
+comment|// state == CLOSE doesn't mean all children are also in state CLOSE
+name|state
+operator|=
+name|State
+operator|.
+name|CLOSE
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|id
+operator|+
+literal|" finished. closing... "
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|counterNameToEnum
@@ -1718,6 +1810,12 @@ operator|+
 literal|" rows"
 argument_list|)
 expr_stmt|;
+comment|// call the operator specific close routine
+name|closeOp
+argument_list|(
+name|abort
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|logStats
@@ -1751,17 +1849,13 @@ name|abort
 argument_list|)
 expr_stmt|;
 block|}
-name|state
-operator|=
-name|State
-operator|.
-name|CLOSE
-expr_stmt|;
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Close done"
+name|id
+operator|+
+literal|" Close done"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1781,6 +1875,17 @@ name|e
 throw|;
 block|}
 block|}
+comment|/**    * Operator specific close routine. Operators which inherents this    * class should overwrite this funtion for their specific cleanup    * routine.    */
+specifier|protected
+name|void
+name|closeOp
+parameter_list|(
+name|boolean
+name|abort
+parameter_list|)
+throws|throws
+name|HiveException
+block|{   }
 comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed    *    * @param conf Configuration with with which job was submitted    * @param success whether the job was completed successfully or not    */
 specifier|public
 name|void
