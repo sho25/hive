@@ -470,6 +470,11 @@ specifier|private
 name|SessionState
 name|session
 decl_stmt|;
+comment|/**      * Flag that indicates whether the last executed command was a Hive query      */
+specifier|private
+name|boolean
+name|isHiveQuery
+decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
@@ -504,6 +509,10 @@ operator|.
 name|getName
 argument_list|()
 argument_list|)
+expr_stmt|;
+name|isHiveQuery
+operator|=
+literal|false
 expr_stmt|;
 name|SessionState
 name|session
@@ -656,6 +665,10 @@ operator|instanceof
 name|Driver
 condition|)
 block|{
+name|isHiveQuery
+operator|=
+literal|true
+expr_stmt|;
 name|ret
 operator|=
 name|driver
@@ -668,6 +681,10 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|isHiveQuery
+operator|=
+literal|false
+expr_stmt|;
 name|ret
 operator|=
 name|proc
@@ -880,6 +897,17 @@ name|HiveServerException
 throws|,
 name|TException
 block|{
+if|if
+condition|(
+operator|!
+name|isHiveQuery
+condition|)
+comment|// Return empty schema if the last command was not a Hive query
+return|return
+operator|new
+name|Schema
+argument_list|()
+return|;
 try|try
 block|{
 name|Schema
@@ -962,6 +990,17 @@ name|HiveServerException
 throws|,
 name|TException
 block|{
+if|if
+condition|(
+operator|!
+name|isHiveQuery
+condition|)
+comment|// Return empty schema if the last command was not a Hive query
+return|return
+operator|new
+name|Schema
+argument_list|()
+return|;
 try|try
 block|{
 name|Schema
@@ -1044,13 +1083,15 @@ name|HiveServerException
 throws|,
 name|TException
 block|{
-name|driver
-operator|.
-name|setMaxRows
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
+if|if
+condition|(
+operator|!
+name|isHiveQuery
+condition|)
+comment|// Return no results if the last command was not a Hive query
+return|return
+literal|""
+return|;
 name|Vector
 argument_list|<
 name|String
@@ -1064,6 +1105,13 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
+name|driver
+operator|.
+name|setMaxRows
+argument_list|(
+literal|1
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 if|if
@@ -1143,6 +1191,20 @@ name|numRows
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+operator|!
+name|isHiveQuery
+condition|)
+comment|// Return no results if the last command was not a Hive query
+return|return
+operator|new
+name|Vector
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+return|;
 name|Vector
 argument_list|<
 name|String
@@ -1207,6 +1269,20 @@ name|HiveServerException
 throws|,
 name|TException
 block|{
+if|if
+condition|(
+operator|!
+name|isHiveQuery
+condition|)
+comment|// Return no results if the last command was not a Hive query
+return|return
+operator|new
+name|Vector
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+return|;
 name|Vector
 argument_list|<
 name|String
