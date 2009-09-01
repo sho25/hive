@@ -1470,6 +1470,10 @@ literal|"cat"
 argument_list|,
 name|scriptOutput
 argument_list|,
+name|TextRecordWriter
+operator|.
+name|class
+argument_list|,
 name|scriptInput
 argument_list|,
 name|TextRecordReader

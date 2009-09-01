@@ -1479,6 +1479,10 @@ argument_list|,
 literal|"key,value"
 argument_list|)
 argument_list|,
+name|TextRecordWriter
+operator|.
+name|class
+argument_list|,
 name|PlanUtils
 operator|.
 name|getDefaultTableDesc
@@ -2492,6 +2496,10 @@ argument_list|,
 literal|"key,value"
 argument_list|)
 argument_list|,
+name|TextRecordWriter
+operator|.
+name|class
+argument_list|,
 name|PlanUtils
 operator|.
 name|getDefaultTableDesc
@@ -3073,6 +3081,10 @@ name|tabCode
 argument_list|,
 literal|"tkey,tvalue"
 argument_list|)
+argument_list|,
+name|TextRecordWriter
+operator|.
+name|class
 argument_list|,
 name|PlanUtils
 operator|.

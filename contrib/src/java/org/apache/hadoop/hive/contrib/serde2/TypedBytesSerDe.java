@@ -121,7 +121,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|contrib
 operator|.
 name|util
 operator|.
@@ -141,7 +141,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|contrib
 operator|.
 name|util
 operator|.
@@ -161,7 +161,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|contrib
 operator|.
 name|util
 operator|.
@@ -1209,8 +1209,6 @@ name|data
 operator|.
 name|getSize
 argument_list|()
-operator|-
-literal|1
 argument_list|)
 expr_stmt|;
 try|try

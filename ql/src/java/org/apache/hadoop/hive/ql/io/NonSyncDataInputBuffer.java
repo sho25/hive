@@ -117,6 +117,12 @@ decl_stmt|;
 name|byte
 index|[]
 name|buff
+init|=
+operator|new
+name|byte
+index|[
+literal|16
+index|]
 decl_stmt|;
 comment|/** Constructs a new empty buffer. */
 specifier|public

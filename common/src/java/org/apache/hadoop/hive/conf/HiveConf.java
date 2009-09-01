@@ -667,6 +667,13 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.exec.TextRecordReader"
 argument_list|)
 block|,
+name|HIVESCRIPTRECORDWRITER
+argument_list|(
+literal|"hive.script.recordwriter"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.exec.TextRecordWriter"
+argument_list|)
+block|,
 comment|// HWI
 name|HIVEHWILISTENHOST
 argument_list|(
