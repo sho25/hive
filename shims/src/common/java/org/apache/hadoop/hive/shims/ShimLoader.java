@@ -154,7 +154,7 @@ name|put
 argument_list|(
 literal|"0.17"
 argument_list|,
-literal|"org.apache.jetty.hive.shims.Jetty17Shims"
+literal|"org.apache.hadoop.hive.shims.Jetty17Shims"
 argument_list|)
 expr_stmt|;
 name|JETTY_SHIM_CLASSES
@@ -163,7 +163,7 @@ name|put
 argument_list|(
 literal|"0.18"
 argument_list|,
-literal|"org.apache.jetty.hive.shims.Jetty18Shims"
+literal|"org.apache.hadoop.hive.shims.Jetty18Shims"
 argument_list|)
 expr_stmt|;
 name|JETTY_SHIM_CLASSES
@@ -172,7 +172,7 @@ name|put
 argument_list|(
 literal|"0.19"
 argument_list|,
-literal|"org.apache.jetty.hive.shims.Jetty19Shims"
+literal|"org.apache.hadoop.hive.shims.Jetty19Shims"
 argument_list|)
 expr_stmt|;
 name|JETTY_SHIM_CLASSES
@@ -181,7 +181,7 @@ name|put
 argument_list|(
 literal|"0.20"
 argument_list|,
-literal|"org.apache.jetty.hive.shims.Jetty20Shims"
+literal|"org.apache.hadoop.hive.shims.Jetty20Shims"
 argument_list|)
 expr_stmt|;
 block|}
