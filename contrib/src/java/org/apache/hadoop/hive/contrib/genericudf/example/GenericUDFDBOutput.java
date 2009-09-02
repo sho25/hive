@@ -75,6 +75,60 @@ name|ql
 operator|.
 name|udf
 operator|.
+name|UDFType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|UDF
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
 name|generic
 operator|.
 name|*
@@ -278,6 +332,36 @@ comment|/** * GenericUDFDBOutput is designed to output data directly from Hive t
 end_comment
 
 begin_class
+annotation|@
+name|description
+argument_list|(
+name|name
+operator|=
+literal|"dboutput"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(jdbcstring,username,password,preparedstatement,[arguments]) - sends data to a jdbc driver"
+argument_list|,
+name|extended
+operator|=
+literal|"argument 0 is the JDBC connection string\n"
+operator|+
+literal|"argument 1 is the user name\n"
+operator|+
+literal|"argument 2 is the password\n"
+operator|+
+literal|"argument 3 is an SQL query to be used in the PreparedStatement\n"
+operator|+
+literal|"argument (4-n) The remaining arguments must be primitive and are passed to the PreparedStatement object\n"
+argument_list|)
+annotation|@
+name|UDFType
+argument_list|(
+name|deterministic
+operator|=
+literal|false
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFDBOutput
