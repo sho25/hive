@@ -213,7 +213,7 @@ name|Text
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * @param metadataTag    * @param objectTypeTag    * @param obj    */
+comment|/**    * @param metadataTag    * @param obj    */
 specifier|public
 name|MapJoinObjectValue
 parameter_list|(

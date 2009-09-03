@@ -409,7 +409,7 @@ return|return
 name|mapSideJoin
 return|;
 block|}
-comment|/**    * @param mapSidejoin the mapSidejoin to set    */
+comment|/**    * @param mapSideJoin the mapSidejoin to set    */
 specifier|public
 name|void
 name|setMapSideJoin

@@ -668,7 +668,7 @@ comment|// The object for storing row data
 name|LazyBinaryStruct
 name|cachedLazyBinaryStruct
 decl_stmt|;
-comment|/**    * Initialize the SerDe with configuration and table information    * @see SerDe#initialize(Configuration, Properties)    */
+comment|/**    * Initialize the SerDe with configuration and table information    */
 annotation|@
 name|Override
 specifier|public
@@ -840,7 +840,7 @@ name|columnTypes
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns the ObjectInspector for the row.    * @see Deserializer#getObjectInspector()    */
+comment|/**    * Returns the ObjectInspector for the row.    */
 annotation|@
 name|Override
 specifier|public
@@ -854,7 +854,7 @@ return|return
 name|cachedObjectInspector
 return|;
 block|}
-comment|/**    * Returns the Writable Class after serialization.    * @see Serializer#getSerializedClass()    */
+comment|/**    * Returns the Writable Class after serialization.    */
 annotation|@
 name|Override
 specifier|public
@@ -877,7 +877,7 @@ comment|// The wrapper for byte array
 name|ByteArrayRef
 name|byteArrayRef
 decl_stmt|;
-comment|/**    * Deserialize a table record to a lazybinary struct.    * @see Deserializer#deserialize(Writable)    */
+comment|/**    * Deserialize a table record to a lazybinary struct.    */
 annotation|@
 name|Override
 specifier|public
@@ -1049,7 +1049,7 @@ operator|.
 name|Output
 argument_list|()
 decl_stmt|;
-comment|/**    * Serialize an object to a byte buffer in a binary compact way.    * @see Serializer#serialize(Object, ObjectInspector)    */
+comment|/**    * Serialize an object to a byte buffer in a binary compact way.    */
 annotation|@
 name|Override
 specifier|public
@@ -1326,7 +1326,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * A recursive function that serialize an object to a byte buffer     * based on its object inspector.    * @param byteStream      the byte stream storing the serialization data    * @param obj             the object to serialize    * @param objInspector    the object inspector    * @see LazyBinaryUtils#checkObjectByteInfo(ObjectInspector, byte[], int, LazyBinaryUtils.RecordInfo) for    *      how the byte sizes of different object are decoded.      */
+comment|/**    * A recursive function that serialize an object to a byte buffer     * based on its object inspector.    * @param byteStream      the byte stream storing the serialization data    * @param obj             the object to serialize    * @param objInspector    the object inspector    */
 specifier|private
 name|void
 name|serialize

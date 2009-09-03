@@ -162,7 +162,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * class for computing positive modulo.  * Used for positive_mod command in Cli  * @ See {@link org.apache.hadoop.hive.ql.udf.UDFOPMod}  * @ See {@link org.apache.hadoop.hive.ql.exec.FunctionRegistry}  */
+comment|/**  * class for computing positive modulo.  * Used for positive_mod command in Cli  * See {org.apache.hadoop.hive.ql.udf.UDFOPMod}  * See {org.apache.hadoop.hive.ql.exec.FunctionRegistry}  */
 end_comment
 
 begin_class

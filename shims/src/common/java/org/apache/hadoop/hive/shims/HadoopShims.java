@@ -126,7 +126,7 @@ name|boolean
 name|usesJobShell
 parameter_list|()
 function_decl|;
-comment|/**    * Calls fs.deleteOnExit(path) if such a function exists.    *    * @returns true if the call was successful    */
+comment|/**    * Calls fs.deleteOnExit(path) if such a function exists.    *    * @return true if the call was successful    */
 specifier|public
 name|boolean
 name|fileSystemDeleteOnExit

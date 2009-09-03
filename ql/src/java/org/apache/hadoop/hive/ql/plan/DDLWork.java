@@ -306,7 +306,7 @@ return|return
 name|createTblLikeDesc
 return|;
 block|}
-comment|/**    * @param createTblDesc the createTblDesc to set    */
+comment|/**    * @param createTblLikeDesc the createTblDesc to set    */
 specifier|public
 name|void
 name|setCreateTblLikeDesc
@@ -471,7 +471,7 @@ operator|=
 name|showFuncsDesc
 expr_stmt|;
 block|}
-comment|/**    * @param showFuncsDesc the showFuncsDesc to set    */
+comment|/**    * @param descFuncDesc the showFuncsDesc to set    */
 specifier|public
 name|void
 name|setDescFuncDesc

@@ -518,7 +518,7 @@ operator|.
 name|VInt
 argument_list|()
 decl_stmt|;
-comment|/**    * Check a particular field and set its size and offset in bytes     * based on the field type and the bytes arrays.    *      * For void, boolean, byte, short, int, long, float and double,     * there is no offset and the size is fixed. For string, map,     * list, struct, the first four bytes are used to store the size.    * So the offset is 4 and the size is computed by concating the     * first four bytes together. The first four bytes are defined     * with respect to the offset in the bytes arrays.     *     * @param objectInspector   object inspector of the field    * @param bytes     bytes arrays store the table row    * @param offset    offset of this field    * @param recordInfo  modify this byteinfo object and return it    * @return size and offset in bytes of this field    */
+comment|/**    * Check a particular field and set its size and offset in bytes     * based on the field type and the bytes arrays.    *      * For void, boolean, byte, short, int, long, float and double,     * there is no offset and the size is fixed. For string, map,     * list, struct, the first four bytes are used to store the size.    * So the offset is 4 and the size is computed by concating the     * first four bytes together. The first four bytes are defined     * with respect to the offset in the bytes arrays.     *     * @param objectInspector   object inspector of the field    * @param bytes     bytes arrays store the table row    * @param offset    offset of this field    * @param recordInfo  modify this byteinfo object and return it    */
 specifier|public
 specifier|static
 name|void
@@ -779,7 +779,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    *  A zero-compressed encoded long    *  @see WritableUtils#readVLong(java.io.DataInput)    */
+comment|/**    *  A zero-compressed encoded long    */
 specifier|public
 specifier|static
 class|class
@@ -808,7 +808,7 @@ name|length
 decl_stmt|;
 block|}
 empty_stmt|;
-comment|/**    * Reads a zero-compressed encoded long from a byte array and returns it.    * @param bytes   the byte array    * @param offset  offset of the array to read from    * @param vlong   storing the deserialized long and its size in byte    * @see WritableUtils#readVLong(java.io.DataInput)    */
+comment|/**    * Reads a zero-compressed encoded long from a byte array and returns it.    * @param bytes   the byte array    * @param offset  offset of the array to read from    * @param vlong   storing the deserialized long and its size in byte    */
 specifier|public
 specifier|static
 name|void
@@ -940,7 +940,7 @@ name|i
 operator|)
 expr_stmt|;
 block|}
-comment|/**    *  A zero-compressed encoded integer    *  @see WritableUtils#readVInt(java.io.DataInput)    */
+comment|/**    *  A zero-compressed encoded integer    */
 specifier|public
 specifier|static
 class|class
@@ -969,7 +969,7 @@ name|length
 decl_stmt|;
 block|}
 empty_stmt|;
-comment|/**    * Reads a zero-compressed encoded int from a byte array and returns it.    * @param bytes   the byte array    * @param offset  offset of the array to read from    * @param vint    storing the deserialized int and its size in byte    * @see WritableUtils#readVInt(java.io.DataInput)    */
+comment|/**    * Reads a zero-compressed encoded int from a byte array and returns it.    * @param bytes   the byte array    * @param offset  offset of the array to read from    * @param vInt    storing the deserialized int and its size in byte    */
 specifier|public
 specifier|static
 name|void
@@ -1101,7 +1101,7 @@ name|i
 operator|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a zero-compressed encoded int to a byte array.    * @param byteStream   the byte array/stream    * @param i            the int    * @see LazyBinaryUtils#writeVLong(Output, long)    */
+comment|/**    * Writes a zero-compressed encoded int to a byte array.    * @param byteStream   the byte array/stream    * @param i            the int    */
 specifier|public
 specifier|static
 name|void
@@ -1122,7 +1122,7 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Write a zero-compressed encoded long to a byte array.    * @param byteStream   the byte array/stream    * @param l            the long    * @see WritableUtils#writeVLong(java.io.DataOutput, long)    */
+comment|/**    * Write a zero-compressed encoded long to a byte array.    * @param byteStream   the byte array/stream    * @param l            the long    */
 specifier|public
 specifier|static
 name|void

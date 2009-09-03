@@ -44,7 +44,7 @@ specifier|public
 interface|interface
 name|ConditionalResolver
 block|{
-comment|/** 	 * All conditional resolvers implement this interface 	 * @param pctx opaque context 	 * @return position of the task 	 */
+comment|/** 	 * All conditional resolvers implement this interface 	 * @param conf configuration 	 * @param ctx  opaque context 	 * @return position of the task 	 */
 specifier|public
 name|int
 name|getTaskId

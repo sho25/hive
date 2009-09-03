@@ -561,7 +561,7 @@ name|Driver
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Executes a query.      *      * @param query HiveQL query to execute      */
+comment|/**      * Executes a query.      *      * @param cmd HiveQL query to execute      */
 specifier|public
 name|void
 name|execute

@@ -571,7 +571,7 @@ return|return
 name|mapLocalWork
 return|;
 block|}
-comment|/**    * @param mapredLocalWork the mapredLocalWork to set    */
+comment|/**    * @param mapLocalWork the mapredLocalWork to set    */
 specifier|public
 name|void
 name|setMapLocalWork

@@ -617,7 +617,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**      * @param taskTmpDir      * @param tt_desc      * @param childSelect      * @param oldMapJoin      */
+comment|/**      * @param taskTmpDir      * @param tt_desc      * @param rootMapJoinOp      * @param oldMapJoin      */
 specifier|public
 name|GenMRMapJoinCtx
 parameter_list|(

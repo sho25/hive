@@ -276,7 +276,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An util class for various Hive file format tasks.  * {@link #registerOutputFormatSubstitute(Class, Class) and   * {@link #getOutputFormatSubstitute(Class)} are added for backward   * compatibility. They return the newly added HiveOutputFormat for the older   * ones.  *   */
+comment|/**  * An util class for various Hive file format tasks.  * registerOutputFormatSubstitute(Class, Class)   * getOutputFormatSubstitute(Class) are added for backward   * compatibility. They return the newly added HiveOutputFormat for the older   * ones.  *   */
 end_comment
 
 begin_class

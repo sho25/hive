@@ -3532,7 +3532,7 @@ decl_stmt|;
 name|MapJoinOperator
 name|currMapJoinOp
 decl_stmt|;
-comment|/**      * @param listMapJoins      */
+comment|/**      * @param listMapJoinsNoRed      */
 specifier|public
 name|MapJoinWalkerCtx
 parameter_list|(
@@ -3580,7 +3580,7 @@ return|return
 name|listMapJoinsNoRed
 return|;
 block|}
-comment|/**      * @param listMapJoins the listMapJoins to set      */
+comment|/**      * @param listMapJoinsNoRed the listMapJoins to set      */
 specifier|public
 name|void
 name|setListMapJoins

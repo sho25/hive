@@ -232,7 +232,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * This function will be called by GroupByOperator when it sees a new input row.    * @param agg  The object to store the aggregation result.      * @param parameterOIs  The row, can be inspected by the OIs passed in init().    */
+comment|/**    * This function will be called by GroupByOperator when it sees a new input row.    * @param agg  The object to store the aggregation result.      */
 specifier|public
 name|Object
 name|evaluate

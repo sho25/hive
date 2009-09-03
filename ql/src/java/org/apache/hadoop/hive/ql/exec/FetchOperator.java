@@ -1485,7 +1485,7 @@ return|return
 name|currRecReader
 return|;
 block|}
-comment|/**    * Get the next row. The fetch context is modified appropriately.    *     * @param ctx    *          fetch context    **/
+comment|/**    * Get the next row. The fetch context is modified appropriately.    *    **/
 specifier|public
 name|InspectableObject
 name|getNextRow
@@ -1634,7 +1634,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Clear the context, if anything needs to be done.    *     * @param ctx    *          fetch context    **/
+comment|/**    * Clear the context, if anything needs to be done.    *     **/
 specifier|public
 name|void
 name|clearFetchContext
