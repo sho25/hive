@@ -3324,11 +3324,6 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 throw|throw
 operator|new
 name|HiveException
@@ -3349,13 +3344,8 @@ name|argumentString
 operator|.
 name|toString
 argument_list|()
-operator|+
-literal|":"
-operator|+
+argument_list|,
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 throw|;
 block|}
