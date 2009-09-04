@@ -4067,6 +4067,13 @@ operator|.
 name|createMetaStoreClient
 argument_list|()
 expr_stmt|;
+name|threadLocalMSC
+operator|.
+name|set
+argument_list|(
+name|msc
+argument_list|)
+expr_stmt|;
 block|}
 return|return
 name|msc
