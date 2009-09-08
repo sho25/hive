@@ -1546,6 +1546,8 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
+literal|"Field size should be 8"
+argument_list|,
 literal|8
 argument_list|,
 name|fieldRefs
@@ -2354,6 +2356,8 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
+literal|"Field size should be 8"
+argument_list|,
 literal|8
 argument_list|,
 name|fieldRefs
@@ -2439,6 +2443,8 @@ block|}
 comment|// Serialize
 name|assertEquals
 argument_list|(
+literal|"Class of the serialized object should be BytesRefArrayWritable"
+argument_list|,
 name|BytesRefArrayWritable
 operator|.
 name|class
@@ -2694,6 +2700,8 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
+literal|"Field size should be 8"
+argument_list|,
 literal|8
 argument_list|,
 name|fieldRefs
@@ -2706,18 +2714,8 @@ for|for
 control|(
 name|int
 name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|fieldRefs
-operator|.
-name|size
-argument_list|()
-condition|;
-name|i
-operator|++
+range|:
+name|readCols
 control|)
 block|{
 name|Object
@@ -2778,6 +2776,8 @@ expr_stmt|;
 block|}
 name|assertEquals
 argument_list|(
+literal|"Class of the serialized object should be BytesRefArrayWritable"
+argument_list|,
 name|BytesRefArrayWritable
 operator|.
 name|class
