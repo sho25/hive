@@ -812,6 +812,17 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
+literal|"unhex"
+argument_list|,
+name|UDFUnhex
+operator|.
+name|class
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|registerUDF
+argument_list|(
 literal|"upper"
 argument_list|,
 name|UDFUpper
