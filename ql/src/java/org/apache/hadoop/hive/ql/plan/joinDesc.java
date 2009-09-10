@@ -187,6 +187,14 @@ name|FULL_OUTER_JOIN
 init|=
 literal|3
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|UNIQUE_JOIN
+init|=
+literal|4
+decl_stmt|;
 comment|// alias to key mapping
 specifier|private
 name|Map

@@ -31,6 +31,8 @@ block|,
 name|RIGHTOUTER
 block|,
 name|FULLOUTER
+block|,
+name|UNIQUE
 block|}
 end_enum
 
