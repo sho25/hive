@@ -88,6 +88,10 @@ specifier|private
 name|MsckDesc
 name|msckDesc
 decl_stmt|;
+specifier|private
+name|showTableStatusDesc
+name|showTblStatusDesc
+decl_stmt|;
 specifier|public
 name|DDLWork
 parameter_list|()
@@ -254,6 +258,21 @@ operator|.
 name|msckDesc
 operator|=
 name|checkDesc
+expr_stmt|;
+block|}
+comment|/**    * @param showTblStatusDesc show table status descriptor    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|showTableStatusDesc
+name|showTblStatusDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|showTblStatusDesc
+operator|=
+name|showTblStatusDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the createTblDesc    */
@@ -603,6 +622,32 @@ operator|.
 name|msckDesc
 operator|=
 name|msckDesc
+expr_stmt|;
+block|}
+comment|/**    * @return show table descriptor    */
+specifier|public
+name|showTableStatusDesc
+name|getShowTblStatusDesc
+parameter_list|()
+block|{
+return|return
+name|showTblStatusDesc
+return|;
+block|}
+comment|/**    * @param showTblStatusDesc show table descriptor    */
+specifier|public
+name|void
+name|setShowTblStatusDesc
+parameter_list|(
+name|showTableStatusDesc
+name|showTblStatusDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|showTblStatusDesc
+operator|=
+name|showTblStatusDesc
 expr_stmt|;
 block|}
 block|}

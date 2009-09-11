@@ -2077,7 +2077,7 @@ literal|".*"
 argument_list|)
 return|;
 block|}
-comment|/**    * returns all existing tables that match the given pattern. The matching occurs as per Java regular expressions    * @param tablePattern java re pattern    * @return list of table names    * @throws HiveException    */
+comment|/**    * returns all existing tables from default database which match the given    * pattern. The matching occurs as per Java regular expressions    *     * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
 specifier|public
 name|List
 argument_list|<
@@ -2091,13 +2091,8 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-try|try
-block|{
 return|return
-name|getMSC
-argument_list|()
-operator|.
-name|getTables
+name|getTablesForDb
 argument_list|(
 name|MetaStoreUtils
 operator|.
@@ -2107,23 +2102,8 @@ name|tablePattern
 argument_list|)
 return|;
 block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
-block|}
-comment|// for testing purposes
-specifier|protected
+comment|/**    * returns all existing tables from the given database which match the given    * pattern. The matching occurs as per Java regular expressions    *     * @param database    *          the database name    * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
+specifier|public
 name|List
 argument_list|<
 name|String

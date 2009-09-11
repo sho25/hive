@@ -41,6 +41,20 @@ name|hadoop
 operator|.
 name|fs
 operator|.
+name|FileStatus
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
 name|FileSystem
 import|;
 end_import
@@ -178,6 +192,15 @@ name|prop
 parameter_list|,
 name|String
 name|files
+parameter_list|)
+function_decl|;
+comment|/**    * return the last access time of the given file.    * @param file    * @return last access time. -1 if not supported.    */
+specifier|public
+name|long
+name|getAccessTime
+parameter_list|(
+name|FileStatus
+name|file
 parameter_list|)
 function_decl|;
 comment|/**    * Returns a shim to wrap MiniDFSCluster. This is necessary since this class    * was moved from org.apache.hadoop.dfs to org.apache.hadoop.hdfs    */
