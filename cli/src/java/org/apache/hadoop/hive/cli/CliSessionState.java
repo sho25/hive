@@ -126,24 +126,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
-name|CliSessionState
-parameter_list|(
-name|HiveConf
-name|conf
-parameter_list|,
-name|Hive
-name|db
-parameter_list|)
-block|{
-name|super
-argument_list|(
-name|conf
-argument_list|,
-name|db
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 end_class
 

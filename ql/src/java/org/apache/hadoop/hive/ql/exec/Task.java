@@ -359,24 +359,8 @@ name|conf
 operator|=
 name|conf
 expr_stmt|;
-name|SessionState
-name|ss
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-decl_stmt|;
 try|try
 block|{
-if|if
-condition|(
-name|ss
-operator|==
-literal|null
-condition|)
-block|{
-comment|// test case - no session setup perhaps
 name|db
 operator|=
 name|Hive
@@ -386,18 +370,6 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-comment|// normal case - session has handle to db
-name|db
-operator|=
-name|ss
-operator|.
-name|getDb
-argument_list|()
-expr_stmt|;
-block|}
 block|}
 catch|catch
 parameter_list|(
