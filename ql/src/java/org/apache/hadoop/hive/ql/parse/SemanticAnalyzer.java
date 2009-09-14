@@ -21821,6 +21821,9 @@ operator|)
 operator|.
 name|getText
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -23207,7 +23210,7 @@ if|if
 condition|(
 name|mapTbl
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|leftAlias
 argument_list|)
@@ -23232,7 +23235,7 @@ if|if
 condition|(
 name|mapTbl
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|rightAlias
 argument_list|)
