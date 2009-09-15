@@ -3488,6 +3488,43 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+try|try
+block|{
+comment|// create the destination if it does not exist
+if|if
+condition|(
+operator|!
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|destf
+argument_list|)
+condition|)
+name|fs
+operator|.
+name|mkdirs
+argument_list|(
+name|destf
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"copyFiles: error while checking/creating destination directory!!!"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 name|FileStatus
 index|[]
 name|srcs
@@ -3660,7 +3697,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"addFiles: error while moving files!!!"
+literal|"copyFiles: error while moving files!!!"
 argument_list|,
 name|e
 argument_list|)
