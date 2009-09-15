@@ -1012,6 +1012,20 @@ return|return
 name|taskCounters
 return|;
 block|}
+comment|/**    * Should be overridden to return the type of the specific task among    * the types in TaskType    *     * @return TaskTypeType.* or -1 if not overridden    */
+specifier|public
+name|int
+name|getType
+parameter_list|()
+block|{
+assert|assert
+literal|false
+assert|;
+return|return
+operator|-
+literal|1
+return|;
+block|}
 block|}
 end_class
 

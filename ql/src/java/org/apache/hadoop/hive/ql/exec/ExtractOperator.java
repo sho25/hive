@@ -79,6 +79,26 @@ name|extractDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|api
+operator|.
+name|OperatorType
+import|;
+end_import
+
 begin_comment
 comment|/**  * Extract operator implementation  * Extracts a subobject and passes that on.  **/
 end_comment
@@ -173,6 +193,17 @@ argument_list|,
 name|outputObjInspector
 argument_list|)
 expr_stmt|;
+block|}
+specifier|public
+name|int
+name|getType
+parameter_list|()
+block|{
+return|return
+name|OperatorType
+operator|.
+name|EXTRACT
+return|;
 block|}
 block|}
 end_class

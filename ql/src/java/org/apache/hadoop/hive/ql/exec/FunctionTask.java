@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URLClassLoader
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -67,9 +57,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|common
 operator|.
-name|HiveConf
+name|JavaUtils
 import|;
 end_import
 
@@ -83,9 +73,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
+name|conf
 operator|.
-name|JavaUtils
+name|HiveConf
 import|;
 end_import
 
@@ -174,6 +164,26 @@ operator|.
 name|plan
 operator|.
 name|dropFunctionDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|api
+operator|.
+name|StageType
 import|;
 end_import
 
@@ -655,6 +665,17 @@ operator|.
 name|getClassLoader
 argument_list|()
 argument_list|)
+return|;
+block|}
+specifier|public
+name|int
+name|getType
+parameter_list|()
+block|{
+return|return
+name|StageType
+operator|.
+name|FUNC
 return|;
 block|}
 block|}

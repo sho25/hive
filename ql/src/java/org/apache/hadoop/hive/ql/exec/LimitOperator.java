@@ -79,6 +79,26 @@ name|limitDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|api
+operator|.
+name|OperatorType
+import|;
+end_import
+
 begin_comment
 comment|/**  * Limit operator implementation  * Limits the number of rows to be passed on.  **/
 end_comment
@@ -190,6 +210,17 @@ parameter_list|()
 block|{
 return|return
 literal|"LIM"
+return|;
+block|}
+specifier|public
+name|int
+name|getType
+parameter_list|()
+block|{
+return|return
+name|OperatorType
+operator|.
+name|LIMIT
 return|;
 block|}
 block|}

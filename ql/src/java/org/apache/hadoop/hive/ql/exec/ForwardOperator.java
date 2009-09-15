@@ -65,6 +65,26 @@ name|forwardDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|api
+operator|.
+name|OperatorType
+import|;
+end_import
+
 begin_comment
 comment|/**  * Forward Operator  * Just forwards. Doesn't do anything itself.  **/
 end_comment
@@ -114,6 +134,17 @@ name|tag
 index|]
 argument_list|)
 expr_stmt|;
+block|}
+specifier|public
+name|int
+name|getType
+parameter_list|()
+block|{
+return|return
+name|OperatorType
+operator|.
+name|FORWARD
+return|;
 block|}
 block|}
 end_class

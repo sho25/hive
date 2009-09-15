@@ -179,24 +179,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
-operator|.
-name|SemanticException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|plan
 operator|.
 name|explain
@@ -299,7 +281,7 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|OutputCollector
+name|Counters
 import|;
 end_import
 
@@ -313,7 +295,7 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|Counters
+name|OutputCollector
 import|;
 end_import
 
@@ -3871,6 +3853,20 @@ name|counterNameToEnum
 operator|=
 name|counterNameToEnum
 expr_stmt|;
+block|}
+comment|/**    * Should be overridden to return the type of the specific operator among     * the types in OperatorType     *      * @return OperatorType.* or -1 if not overridden     */
+specifier|public
+name|int
+name|getType
+parameter_list|()
+block|{
+assert|assert
+literal|false
+assert|;
+return|return
+operator|-
+literal|1
+return|;
 block|}
 block|}
 end_class
