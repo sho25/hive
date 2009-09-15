@@ -377,6 +377,26 @@ operator|-
 literal|1
 return|;
 block|}
+specifier|public
+name|HadoopShims
+operator|.
+name|CombineFileInputFormatShim
+name|getCombineFileInputFormat
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
+specifier|public
+name|String
+name|getInputFormatClassName
+parameter_list|()
+block|{
+return|return
+literal|"org.apache.hadoop.hive.ql.io.HiveInputFormat"
+return|;
+block|}
 block|}
 end_class
 

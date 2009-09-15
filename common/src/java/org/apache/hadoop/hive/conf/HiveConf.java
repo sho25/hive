@@ -784,6 +784,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEINPUTFORMAT
+argument_list|(
+literal|"hive.input.format"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// Optimizer
 name|HIVEOPTCP
 argument_list|(
