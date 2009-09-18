@@ -598,7 +598,7 @@ name|HIVEMAPJOINCACHEROWS
 argument_list|(
 literal|"hive.mapjoin.cache.numrows"
 argument_list|,
-literal|10000
+literal|25000
 argument_list|)
 block|,
 name|HIVEGROUPBYMAPINTERVAL
