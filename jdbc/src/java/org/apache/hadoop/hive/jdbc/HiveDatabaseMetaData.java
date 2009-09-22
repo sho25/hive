@@ -61,6 +61,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|sql
+operator|.
+name|DatabaseMetaData
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|net
 operator|.
 name|URL
@@ -1322,14 +1332,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|DatabaseMetaData
+operator|.
+name|sqlStateSQL99
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSchemaTerm()    */
 specifier|public

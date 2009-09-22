@@ -1043,6 +1043,227 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
+name|testErrorMessages
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+name|String
+name|invalidSyntaxSQLState
+init|=
+literal|"42000"
+decl_stmt|;
+name|int
+name|parseErrorCode
+init|=
+literal|10
+decl_stmt|;
+comment|//These tests inherently cause exceptions to be written to the test output
+comment|//logs. This is undesirable, since you it might appear to someone looking
+comment|//at the test output logs as if something is failing when it isn't. Not sure
+comment|//how to get around that.
+name|doTestErrorCase
+argument_list|(
+literal|"SELECTT * FROM "
+operator|+
+name|tableName
+argument_list|,
+literal|"cannot recognize input 'SELECTT'"
+argument_list|,
+name|invalidSyntaxSQLState
+argument_list|,
+literal|11
+argument_list|)
+expr_stmt|;
+name|doTestErrorCase
+argument_list|(
+literal|"SELECT * FROM some_table_that_does_not_exist"
+argument_list|,
+literal|"Table not found"
+argument_list|,
+literal|"42S02"
+argument_list|,
+name|parseErrorCode
+argument_list|)
+expr_stmt|;
+name|doTestErrorCase
+argument_list|(
+literal|"drop table some_table_that_does_not_exist"
+argument_list|,
+literal|"Table not found"
+argument_list|,
+literal|"42S02"
+argument_list|,
+name|parseErrorCode
+argument_list|)
+expr_stmt|;
+name|doTestErrorCase
+argument_list|(
+literal|"SELECT invalid_column FROM "
+operator|+
+name|tableName
+argument_list|,
+literal|"Invalid Table Alias or Column Reference"
+argument_list|,
+name|invalidSyntaxSQLState
+argument_list|,
+name|parseErrorCode
+argument_list|)
+expr_stmt|;
+name|doTestErrorCase
+argument_list|(
+literal|"SELECT invalid_function(key) FROM "
+operator|+
+name|tableName
+argument_list|,
+literal|"Invalid Function"
+argument_list|,
+name|invalidSyntaxSQLState
+argument_list|,
+name|parseErrorCode
+argument_list|)
+expr_stmt|;
+comment|//TODO: execute errors like this currently don't return good messages (i.e.
+comment|//'Table already exists'). This is because the Driver class calls
+comment|//Task.executeTask() which swallows meaningful exceptions and returns a status
+comment|//code. This should be refactored.
+name|doTestErrorCase
+argument_list|(
+literal|"create table "
+operator|+
+name|tableName
+operator|+
+literal|" (key int, value string)"
+argument_list|,
+literal|"Query returned non-zero code: 9, cause: FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask"
+argument_list|,
+literal|"08S01"
+argument_list|,
+literal|9
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|doTestErrorCase
+parameter_list|(
+name|String
+name|sql
+parameter_list|,
+name|String
+name|expectedMessage
+parameter_list|,
+name|String
+name|expectedSQLState
+parameter_list|,
+name|int
+name|expectedErrorCode
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+name|Statement
+name|stmt
+init|=
+name|con
+operator|.
+name|createStatement
+argument_list|()
+decl_stmt|;
+name|boolean
+name|exceptionFound
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+name|sql
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|assertTrue
+argument_list|(
+literal|"Adequate error messaging not found for '"
+operator|+
+name|sql
+operator|+
+literal|"': "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|expectedMessage
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Expected SQLState not found for '"
+operator|+
+name|sql
+operator|+
+literal|"'"
+argument_list|,
+name|expectedSQLState
+argument_list|,
+name|e
+operator|.
+name|getSQLState
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Expected error code not found for '"
+operator|+
+name|sql
+operator|+
+literal|"'"
+argument_list|,
+name|expectedErrorCode
+argument_list|,
+name|e
+operator|.
+name|getErrorCode
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|exceptionFound
+operator|=
+literal|true
+expr_stmt|;
+block|}
+name|assertNotNull
+argument_list|(
+literal|"Exception should have been thrown for query: "
+operator|+
+name|sql
+argument_list|,
+name|exceptionFound
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|void
 name|testShowTables
 parameter_list|()
 throws|throws
@@ -1272,6 +1493,18 @@ argument_list|,
 name|meta
 operator|.
 name|getDatabaseProductVersion
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|DatabaseMetaData
+operator|.
+name|sqlStateSQL99
+argument_list|,
+name|meta
+operator|.
+name|getSQLStateType
 argument_list|()
 argument_list|)
 expr_stmt|;

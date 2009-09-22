@@ -311,23 +311,29 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|thrift
 operator|.
-name|hive
+name|transport
 operator|.
-name|conf
-operator|.
-name|HiveConf
+name|TTransportException
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|net
+name|apache
 operator|.
-name|URI
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|MetaException
 import|;
 end_import
 
@@ -371,7 +377,7 @@ name|URI_PREFIX
 init|=
 literal|"jdbc:hive://"
 decl_stmt|;
-comment|/**    * TODO: - throw more specific exception    *       - parse uri (use java.net.URI?)    */
+comment|/**    * TODO: - parse uri (use java.net.URI?)    */
 specifier|public
 name|HiveConnection
 parameter_list|(
@@ -382,7 +388,7 @@ name|Properties
 name|info
 parameter_list|)
 throws|throws
-name|Exception
+name|SQLException
 block|{
 name|session
 operator|=
@@ -423,6 +429,11 @@ argument_list|(
 name|session
 argument_list|)
 expr_stmt|;
+name|String
+name|originalUri
+init|=
+name|uri
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -436,11 +447,13 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|Exception
+name|SQLException
 argument_list|(
 literal|"Invalid URL: "
 operator|+
 name|uri
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -466,6 +479,8 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+try|try
+block|{
 name|client
 operator|=
 operator|new
@@ -474,6 +489,28 @@ operator|.
 name|HiveServerHandler
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Error accessing Hive metastore: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+literal|"08S01"
+argument_list|)
+throw|;
+block|}
 block|}
 else|else
 block|{
@@ -577,11 +614,39 @@ argument_list|(
 name|protocol
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|transport
 operator|.
 name|open
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|TTransportException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Could not establish connecton to "
+operator|+
+name|originalUri
+operator|+
+literal|": "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+literal|"08S01"
+argument_list|)
+throw|;
+block|}
 block|}
 name|isClosed
 operator|=

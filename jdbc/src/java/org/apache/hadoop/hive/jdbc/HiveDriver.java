@@ -249,8 +249,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-try|try
-block|{
 return|return
 operator|new
 name|HiveConnection
@@ -260,24 +258,6 @@ argument_list|,
 name|info
 argument_list|)
 return|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|ex
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-name|ex
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-throw|;
-block|}
 block|}
 comment|/**    * Returns the major version of this driver.    */
 specifier|public
