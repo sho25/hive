@@ -266,7 +266,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Parse Context: The current parse context. This is passed to the optimizer  * which then transforms the operator tree using the parse context. All the  * optimizations are performed sequentially and then the new parse context  * populated. Note that since the parse context contains the operator tree, it  * can be easily retrieved by the next optimization step or finally for task  * generation after the plan has been completely optimized.  *   **/
+comment|/**  * Parse Context: The current parse context. This is passed to the optimizer  * which then transforms the operator tree using the parse context. All the  * optimizations are performed sequentially and then the new parse context  * populated. Note that since the parse context contains the operator tree, it  * can be easily retrieved by the next optimization step or finally for task  * generation after the plan has been completely optimized.  *  **/
 end_comment
 
 begin_class
@@ -281,15 +281,6 @@ decl_stmt|;
 specifier|private
 name|ASTNode
 name|ast
-decl_stmt|;
-specifier|private
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|ASTPartitionPruner
-argument_list|>
-name|aliasToPruner
 decl_stmt|;
 specifier|private
 name|HashMap
@@ -427,8 +418,8 @@ decl_stmt|;
 specifier|public
 name|ParseContext
 parameter_list|()
-block|{     }
-comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param aliasToPruner    *          partition pruner list    * @param opToPartPruner    *          map from table scan operator to partition pruner    * @param aliasToSamplePruner    *          sample pruner list    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param joinContext context needed join processing (map join specifically)    * @param topToTable the top tables being processed    * @param loadTableWork    *          list of destination tables being loaded    * @param loadFileWork    *          list of destination files being loaded    * @param ctx parse context    * @param idToTableNameMap    * @param destTableId    * @param uCtx    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer    */
+block|{   }
+comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param opToPartPruner    *          map from table scan operator to partition pruner    * @param aliasToSamplePruner    *          sample pruner list    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param joinContext context needed join processing (map join specifically)    * @param topToTable the top tables being processed    * @param loadTableWork    *          list of destination tables being loaded    * @param loadFileWork    *          list of destination files being loaded    * @param ctx parse context    * @param idToTableNameMap    * @param destTableId    * @param uCtx    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer    */
 specifier|public
 name|ParseContext
 parameter_list|(
@@ -440,14 +431,6 @@ name|qb
 parameter_list|,
 name|ASTNode
 name|ast
-parameter_list|,
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|ASTPartitionPruner
-argument_list|>
-name|aliasToPruner
 parameter_list|,
 name|HashMap
 argument_list|<
@@ -573,12 +556,6 @@ operator|.
 name|ast
 operator|=
 name|ast
-expr_stmt|;
-name|this
-operator|.
-name|aliasToPruner
-operator|=
-name|aliasToPruner
 expr_stmt|;
 name|this
 operator|.
@@ -773,42 +750,6 @@ operator|.
 name|ast
 operator|=
 name|ast
-expr_stmt|;
-block|}
-comment|/**    * @return the aliasToPruner    */
-specifier|public
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|ASTPartitionPruner
-argument_list|>
-name|getAliasToPruner
-parameter_list|()
-block|{
-return|return
-name|aliasToPruner
-return|;
-block|}
-comment|/**    * @param aliasToPruner    *          the aliasToPruner to set    */
-specifier|public
-name|void
-name|setAliasToPruner
-parameter_list|(
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|ASTPartitionPruner
-argument_list|>
-name|aliasToPruner
-parameter_list|)
-block|{
-name|this
-operator|.
-name|aliasToPruner
-operator|=
-name|aliasToPruner
 expr_stmt|;
 block|}
 comment|/**    * @return the opToPartPruner    */

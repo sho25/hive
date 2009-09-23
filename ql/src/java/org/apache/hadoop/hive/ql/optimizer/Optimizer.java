@@ -169,7 +169,7 @@ name|Transform
 argument_list|>
 name|transformations
 decl_stmt|;
-comment|/** 	 * create the list of transformations 	 * @param hiveConf  	 */
+comment|/** 	 * create the list of transformations 	 * @param hiveConf 	 */
 specifier|public
 name|void
 name|initialize
@@ -238,22 +238,6 @@ name|PredicatePushDown
 argument_list|()
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|hiveConf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEOPTPPR
-argument_list|)
-condition|)
-block|{
 name|transformations
 operator|.
 name|add
@@ -263,7 +247,6 @@ name|PartitionPruner
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|transformations
 operator|.
