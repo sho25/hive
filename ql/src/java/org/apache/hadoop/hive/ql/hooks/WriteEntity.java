@@ -109,7 +109,7 @@ specifier|private
 name|String
 name|d
 decl_stmt|;
-comment|/**    * Constructor for a table.    *     * @param t Table that is written to.    */
+comment|/**    * Constructor for a table.    *    * @param t Table that is written to.    */
 specifier|public
 name|WriteEntity
 parameter_list|(
@@ -144,7 +144,7 @@ operator|.
 name|TABLE
 expr_stmt|;
 block|}
-comment|/**    * Constructor for a partition.    *     * @param p Partition that is written to.    */
+comment|/**    * Constructor for a partition.    *    * @param p Partition that is written to.    */
 specifier|public
 name|WriteEntity
 parameter_list|(
@@ -182,7 +182,7 @@ operator|.
 name|PARTITION
 expr_stmt|;
 block|}
-comment|/**    * Constructor for a file.    *     * @param d The name of the directory that is being written to.    * @param islocal Flag to decide whether this directory is local or in dfs.    */
+comment|/**    * Constructor for a file.    *    * @param d The name of the directory that is being written to.    * @param islocal Flag to decide whether this directory is local or in dfs.    */
 specifier|public
 name|WriteEntity
 parameter_list|(
@@ -348,7 +348,7 @@ operator|.
 name|getDbName
 argument_list|()
 operator|+
-literal|"/"
+literal|"@"
 operator|+
 name|t
 operator|.
@@ -364,14 +364,14 @@ operator|.
 name|getDbName
 argument_list|()
 operator|+
-literal|"/"
+literal|"@"
 operator|+
 name|t
 operator|.
 name|getName
 argument_list|()
 operator|+
-literal|"/"
+literal|"@"
 operator|+
 name|p
 operator|.

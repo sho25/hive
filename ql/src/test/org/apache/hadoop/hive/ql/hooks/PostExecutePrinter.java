@@ -82,15 +82,15 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of a pre execute hook that simply prints out its  * parameters to standard output.  */
+comment|/**  * Implementation of a post execute hook that simply prints out its  * parameters to standard output.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|PreExecutePrinter
+name|PostExecutePrinter
 implements|implements
-name|PreExecute
+name|PostExecute
 block|{
 annotation|@
 name|Override
@@ -145,7 +145,7 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"PREHOOK: query: "
+literal|"POSTHOOK: query: "
 operator|+
 name|sess
 operator|.
@@ -160,7 +160,7 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"PREHOOK: type: "
+literal|"POSTHOOK: type: "
 operator|+
 name|sess
 operator|.
@@ -181,7 +181,7 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"PREHOOK: Input: "
+literal|"POSTHOOK: Input: "
 operator|+
 name|re
 operator|.
@@ -202,7 +202,7 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"PREHOOK: Output: "
+literal|"POSTHOOK: Output: "
 operator|+
 name|we
 operator|.

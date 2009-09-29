@@ -559,7 +559,7 @@ operator|.
 name|Table
 name|tTable
 decl_stmt|;
-comment|/**    * Table (only used internally)    * @throws HiveException     *    */
+comment|/**    * Table (only used internally)    * @throws HiveException    *    */
 specifier|protected
 name|Table
 parameter_list|()
@@ -1289,7 +1289,7 @@ block|}
 block|}
 return|return;
 block|}
-comment|/**    * @param inputFormatClass     */
+comment|/**    * @param inputFormatClass    */
 specifier|public
 name|void
 name|setInputFormatClass
@@ -1323,7 +1323,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param class1     */
+comment|/**    * @param class1    */
 specifier|public
 name|void
 name|setOutputFormatClass
@@ -2290,7 +2290,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Returns a list of all the columns of the table (data columns + partition columns in that order.    *     * @return List<FieldSchema>    */
+comment|/**    * Returns a list of all the columns of the table (data columns + partition columns in that order.    *    * @return List<FieldSchema>    */
 specifier|public
 name|List
 argument_list|<
@@ -3049,6 +3049,76 @@ expr_stmt|;
 block|}
 return|return
 name|spec
+return|;
+block|}
+specifier|public
+name|Table
+name|copy
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+name|Table
+name|newTbl
+init|=
+operator|new
+name|Table
+argument_list|()
+decl_stmt|;
+name|newTbl
+operator|.
+name|schema
+operator|=
+name|this
+operator|.
+name|schema
+expr_stmt|;
+name|newTbl
+operator|.
+name|deserializer
+operator|=
+name|this
+operator|.
+name|deserializer
+expr_stmt|;
+comment|//TODO: convert to SerDeInfo format
+name|newTbl
+operator|.
+name|setTTable
+argument_list|(
+name|getTTable
+argument_list|()
+operator|.
+name|clone
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|newTbl
+operator|.
+name|uri
+operator|=
+name|this
+operator|.
+name|uri
+expr_stmt|;
+name|newTbl
+operator|.
+name|inputFormatClass
+operator|=
+name|this
+operator|.
+name|inputFormatClass
+expr_stmt|;
+name|newTbl
+operator|.
+name|outputFormatClass
+operator|=
+name|this
+operator|.
+name|outputFormatClass
+expr_stmt|;
+return|return
+name|newTbl
 return|;
 block|}
 block|}

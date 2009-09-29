@@ -351,6 +351,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|POSTEXECHOOKS
+argument_list|(
+literal|"hive.exec.post.hooks"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// hadoop stuff
 name|HADOOPBIN
 argument_list|(

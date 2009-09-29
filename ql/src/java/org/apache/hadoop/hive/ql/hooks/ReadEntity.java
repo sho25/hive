@@ -94,7 +94,7 @@ specifier|private
 name|Table
 name|t
 decl_stmt|;
-comment|/**    * Constructor.    *     * @param t The Table that the query reads from.    */
+comment|/**    * Constructor.    *    * @param t The Table that the query reads from.    */
 specifier|public
 name|ReadEntity
 parameter_list|(
@@ -115,7 +115,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * Constructor given a partiton.    *     * @param p The partition that the query reads from.    */
+comment|/**    * Constructor given a partiton.    *    * @param p The partition that the query reads from.    */
 specifier|public
 name|ReadEntity
 parameter_list|(
@@ -285,7 +285,7 @@ operator|.
 name|getDbName
 argument_list|()
 operator|+
-literal|"/"
+literal|"@"
 operator|+
 name|p
 operator|.
@@ -295,7 +295,7 @@ operator|.
 name|getName
 argument_list|()
 operator|+
-literal|"/"
+literal|"@"
 operator|+
 name|p
 operator|.
@@ -311,7 +311,7 @@ operator|.
 name|getDbName
 argument_list|()
 operator|+
-literal|"/"
+literal|"@"
 operator|+
 name|t
 operator|.

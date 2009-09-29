@@ -969,8 +969,44 @@ name|QueryPlan
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|hooks
+operator|.
+name|ReadEntity
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|hooks
+operator|.
+name|WriteEntity
+import|;
+end_import
+
 begin_comment
-comment|/**  * DDLTask implementation  *   **/
+comment|/**  * DDLTask implementation  *  **/
 end_comment
 
 begin_class
@@ -1489,7 +1525,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Add a partition to a table.    * @param db Database to add the partition to.    * @param addPartitionDesc Add this partition.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException     */
+comment|/**    * Add a partition to a table.    * @param db Database to add the partition to.    * @param addPartitionDesc Add this partition.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    */
 specifier|private
 name|int
 name|addPartition
@@ -1574,11 +1610,42 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|Partition
+name|part
+init|=
+name|db
+operator|.
+name|getPartition
+argument_list|(
+name|tbl
+argument_list|,
+name|addPartitionDesc
+operator|.
+name|getPartSpec
+argument_list|()
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
+name|work
+operator|.
+name|getOutputs
+argument_list|()
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|part
+argument_list|)
+argument_list|)
+expr_stmt|;
 return|return
 literal|0
 return|;
 block|}
-comment|/**    * MetastoreCheck, see if the data in the metastore matches    * what is on the dfs.    * Current version checks for tables and partitions that    * are either missing on disk on in the metastore.    *     * @param db The database in question.    * @param msckDesc Information about the tables and partitions    * we want to check for.    * @return Returns 0 when execution succeeds and above 0 if it fails.    */
+comment|/**    * MetastoreCheck, see if the data in the metastore matches    * what is on the dfs.    * Current version checks for tables and partitions that    * are either missing on disk on in the metastore.    *    * @param db The database in question.    * @param msckDesc Information about the tables and partitions    * we want to check for.    * @return Returns 0 when execution succeeds and above 0 if it fails.    */
 specifier|private
 name|int
 name|msck
@@ -1930,7 +1997,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Write a list of partitions to a file.    *     * @param db The database in question.    * @param showParts These are the partitions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of partitions to a file.    *    * @param db The database in question.    * @param showParts These are the partitions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showPartitions
@@ -2187,7 +2254,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write a list of the tables in the database to a file.    *     * @param db The database in question.    * @param showTbls These are the tables we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of the tables in the database to a file.    *    * @param db The database in question.    * @param showTbls These are the tables we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showTables
@@ -2430,7 +2497,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write a list of the user defined functions to a file.    *     * @param showFuncs are the functions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of the user defined functions to a file.    *    * @param showFuncs are the functions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showFunctions
@@ -2670,7 +2737,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Shows a description of a function.    *     * @param descFunc is the function we are describing    * @throws HiveException    */
+comment|/**    * Shows a description of a function.    *    * @param descFunc is the function we are describing    * @throws HiveException    */
 specifier|private
 name|int
 name|describeFunction
@@ -2977,7 +3044,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write the status of tables to a file.    *     * @param db  The database in question.    * @param showTblStatus tables we are interested in    * @return Return 0 when execution succeeds and above 0 if it fails.    */
+comment|/**    * Write the status of tables to a file.    *    * @param db  The database in question.    * @param showTblStatus tables we are interested in    * @return Return 0 when execution succeeds and above 0 if it fails.    */
 specifier|private
 name|int
 name|showTableStatus
@@ -3684,7 +3751,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write the description of a table to a file.    *     * @param db The database in question.    * @param descTbl This is the table we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write the description of a table to a file.    *    * @param db The database in question.    * @param descTbl This is the table we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|describeTable
@@ -5177,7 +5244,7 @@ name|terminator
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Alter a given table.    *     * @param db The database in question.    * @param alterTbl This is the table we're altering.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Alter a given table.    *    * @param db The database in question.    * @param alterTbl This is the table we're altering.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|alterTable
@@ -5209,6 +5276,14 @@ name|getOldName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|Table
+name|oldTbl
+init|=
+name|tbl
+operator|.
+name|copy
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|alterTbl
@@ -5222,6 +5297,7 @@ name|alterTableTypes
 operator|.
 name|RENAME
 condition|)
+block|{
 name|tbl
 operator|.
 name|getTTable
@@ -5235,6 +5311,7 @@ name|getNewName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -5923,11 +6000,42 @@ return|return
 literal|1
 return|;
 block|}
+comment|// This is kind of hacky - the read entity contains the old table, whereas the write entity
+comment|// contains the new table. This is needed for rename - both the old and the new table names are
+comment|// passed
+name|work
+operator|.
+name|getInputs
+argument_list|()
+operator|.
+name|add
+argument_list|(
+operator|new
+name|ReadEntity
+argument_list|(
+name|oldTbl
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|work
+operator|.
+name|getOutputs
+argument_list|()
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|tbl
+argument_list|)
+argument_list|)
+expr_stmt|;
 return|return
 literal|0
 return|;
 block|}
-comment|/**    * Drop a given table.    *     * @param db The database in question.    * @param dropTbl This is the table we're dropping.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Drop a given table.    *    * @param db The database in question.    * @param dropTbl This is the table we're dropping.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|dropTable
@@ -5941,6 +6049,40 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|// We need to fetch the table before it is dropped so that it can be passed to
+comment|// post-execution hook
+name|Table
+name|tbl
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|tbl
+operator|=
+name|db
+operator|.
+name|getTable
+argument_list|(
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+argument_list|,
+name|dropTbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InvalidTableException
+name|e
+parameter_list|)
+block|{
+comment|// drop table is idempotent
+block|}
 if|if
 condition|(
 name|dropTbl
@@ -5966,27 +6108,30 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|tbl
+operator|!=
+literal|null
+condition|)
+name|work
+operator|.
+name|getOutputs
+argument_list|()
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|tbl
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
 comment|// drop partitions in the list
-name|Table
-name|tbl
-init|=
-name|db
-operator|.
-name|getTable
-argument_list|(
-name|MetaStoreUtils
-operator|.
-name|DEFAULT_DATABASE_NAME
-argument_list|,
-name|dropTbl
-operator|.
-name|getTableName
-argument_list|()
-argument_list|)
-decl_stmt|;
 name|List
 argument_list|<
 name|Partition
@@ -6104,6 +6249,20 @@ argument_list|)
 expr_stmt|;
 comment|// drop data for the
 comment|// partition
+name|work
+operator|.
+name|getOutputs
+argument_list|()
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|partition
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 return|return
@@ -6172,7 +6331,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Create a new table.    *     * @param db The database in question.    * @param crtTbl This is the table we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Create a new table.    *    * @param db The database in question.    * @param crtTbl This is the table we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|createTable
@@ -6522,7 +6681,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * We use LazySimpleSerDe by default.      *       * If the user didn't specify a SerDe, and any of the columns are not simple types,       * we will have to use DynamicSerDe instead.      */
+comment|/**      * We use LazySimpleSerDe by default.      *      * If the user didn't specify a SerDe, and any of the columns are not simple types,      * we will have to use DynamicSerDe instead.      */
 if|if
 condition|(
 name|crtTbl
@@ -6936,11 +7095,25 @@ name|getIfNotExists
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|work
+operator|.
+name|getOutputs
+argument_list|()
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|tbl
+argument_list|)
+argument_list|)
+expr_stmt|;
 return|return
 literal|0
 return|;
 block|}
-comment|/**    * Create a new table like an existing table.    *     * @param db The database in question.    * @param crtTbl This is the table we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
+comment|/**    * Create a new table like an existing table.    *    * @param db The database in question.    * @param crtTbl This is the table we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|createTableLike
@@ -7073,6 +7246,20 @@ name|crtTbl
 operator|.
 name|getIfNotExists
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|work
+operator|.
+name|getOutputs
+argument_list|()
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|tbl
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return

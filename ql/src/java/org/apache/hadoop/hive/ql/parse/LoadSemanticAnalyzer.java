@@ -1383,6 +1383,12 @@ argument_list|(
 operator|new
 name|moveWork
 argument_list|(
+name|getInputs
+argument_list|()
+argument_list|,
+name|getOutputs
+argument_list|()
+argument_list|,
 name|loadTableWork
 argument_list|,
 literal|null
@@ -1408,6 +1414,12 @@ argument_list|(
 operator|new
 name|moveWork
 argument_list|(
+name|getInputs
+argument_list|()
+argument_list|,
+name|getOutputs
+argument_list|()
+argument_list|,
 name|loadTableWork
 argument_list|,
 literal|null

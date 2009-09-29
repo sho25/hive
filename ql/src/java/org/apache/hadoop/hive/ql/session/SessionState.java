@@ -206,7 +206,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * SessionState encapsulates common data associated with a session  *   * Also provides support for a thread static session object that can  * be accessed from any point in the code to interact with the user  * and to retrieve configuration information  */
+comment|/**  * SessionState encapsulates common data associated with a session  *  * Also provides support for a thread static session object that can  * be accessed from any point in the code to interact with the user  * and to retrieve configuration information  */
 end_comment
 
 begin_class
@@ -224,7 +224,7 @@ specifier|protected
 name|boolean
 name|isSilent
 decl_stmt|;
-comment|/*    *  HiveHistory Object     */
+comment|/*    *  HiveHistory Object    */
 specifier|protected
 name|HiveHistory
 name|hiveHist
@@ -241,6 +241,11 @@ decl_stmt|;
 specifier|public
 name|PrintStream
 name|err
+decl_stmt|;
+comment|/**    * type of the command    */
+specifier|private
+name|String
+name|commandType
 decl_stmt|;
 specifier|public
 name|HiveConf
@@ -724,7 +729,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * This class provides helper routines to emit informational and error messages to the user    * and log4j files while obeying the current session's verbosity levels.    *     * NEVER write directly to the SessionStates standard output other than to emit result data    * DO use printInfo and printError provided by LogHelper to emit non result data strings    *     * It is perfectly acceptable to have global static LogHelper objects (for example - once per module)    * LogHelper always emits info/error to current session as required.    */
+comment|/**    * This class provides helper routines to emit informational and error messages to the user    * and log4j files while obeying the current session's verbosity levels.    *    * NEVER write directly to the SessionStates standard output other than to emit result data    * DO use printInfo and printError provided by LogHelper to emit non result data strings    *    * It is perfectly acceptable to have global static LogHelper objects (for example - once per module)    * LogHelper always emits info/error to current session as required.    */
 specifier|public
 specifier|static
 class|class
@@ -2033,6 +2038,30 @@ name|t
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|public
+name|String
+name|getCommandType
+parameter_list|()
+block|{
+return|return
+name|commandType
+return|;
+block|}
+specifier|public
+name|void
+name|setCommandType
+parameter_list|(
+name|String
+name|commandType
+parameter_list|)
+block|{
+name|this
+operator|.
+name|commandType
+operator|=
+name|commandType
+expr_stmt|;
 block|}
 block|}
 end_class
