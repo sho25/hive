@@ -1494,6 +1494,17 @@ operator|*
 literal|1000
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Running ReporterTask every "
+operator|+
+name|notificationInterval
+operator|+
+literal|" seconds."
+argument_list|)
+expr_stmt|;
 name|rpTimer
 operator|=
 operator|new
@@ -1788,9 +1799,102 @@ name|e
 parameter_list|)
 block|{ }
 block|}
+else|else
+block|{
+comment|// Error already occurred, but we still want to get the
+comment|// error code of the child process if possible.
 try|try
 block|{
+comment|// Interrupt the current thread after 1 second
+specifier|final
+name|Thread
+name|mythread
+init|=
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+decl_stmt|;
+name|Timer
+name|timer
+init|=
+operator|new
+name|Timer
+argument_list|(
+literal|true
+argument_list|)
+decl_stmt|;
+name|timer
+operator|.
+name|schedule
+argument_list|(
+operator|new
+name|TimerTask
+argument_list|()
+block|{
+annotation|@
+name|Override
+specifier|public
+name|void
+name|run
+parameter_list|()
+block|{
+name|mythread
+operator|.
+name|interrupt
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+argument_list|,
+literal|1000
+argument_list|)
+expr_stmt|;
+comment|// Wait for the child process to finish
+name|int
+name|exitVal
+init|=
+name|scriptPid
+operator|.
+name|waitFor
+argument_list|()
+decl_stmt|;
+comment|// Cancel the timer
+name|timer
+operator|.
+name|cancel
+argument_list|()
+expr_stmt|;
+comment|// Output the exit code
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Script exited with code "
+operator|+
+name|exitVal
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|e
+parameter_list|)
+block|{
+comment|// Ignore
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Script has not exited yet. It will be killed."
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 comment|// try these best effort
+try|try
+block|{
 name|outThread
 operator|.
 name|join
@@ -1798,6 +1902,30 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Exception in closing outThread: "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+try|try
+block|{
 name|errThread
 operator|.
 name|join
@@ -1805,6 +1933,30 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Exception in closing errThread: "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+try|try
+block|{
 name|scriptPid
 operator|.
 name|destroy
@@ -1816,7 +1968,22 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{}
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Exception in destroying scriptPid: "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|super
 operator|.
 name|close
@@ -2069,6 +2236,13 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"ErrorStreamProcessor calling reporter.progress()"
+argument_list|)
+expr_stmt|;
 name|lastReportTime
 operator|=
 name|now
@@ -2812,6 +2986,13 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"ReporterTask calling reporter.progress()"
+argument_list|)
+expr_stmt|;
 name|rp
 operator|.
 name|progress
