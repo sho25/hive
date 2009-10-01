@@ -98,6 +98,13 @@ specifier|private
 name|String
 name|internalName
 decl_stmt|;
+specifier|private
+name|String
+name|alias
+init|=
+literal|null
+decl_stmt|;
+comment|// [optional] alias of the column (external name as seen by the users)
 comment|/**    * Store the alias of the table where available.    */
 specifier|private
 name|String
@@ -286,6 +293,28 @@ operator|+
 literal|": "
 operator|+
 name|type
+return|;
+block|}
+specifier|public
+name|void
+name|setAlias
+parameter_list|(
+name|String
+name|col_alias
+parameter_list|)
+block|{
+name|alias
+operator|=
+name|col_alias
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getAlias
+parameter_list|()
+block|{
+return|return
+name|alias
 return|;
 block|}
 block|}

@@ -433,11 +433,6 @@ return|;
 case|case
 name|HiveParser
 operator|.
-name|TOK_CREATETABLE
-case|:
-case|case
-name|HiveParser
-operator|.
 name|TOK_DROPTABLE
 case|:
 case|case

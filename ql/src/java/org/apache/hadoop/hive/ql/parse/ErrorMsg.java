@@ -395,6 +395,48 @@ name|NEED_PARTITION_ERROR
 argument_list|(
 literal|"need to specify partition columns because the destination table is partitioned."
 argument_list|)
+block|,
+name|CTAS_CTLT_COEXISTENCE
+argument_list|(
+literal|"Create table command does not allow LIKE and AS-SELECT in the same command"
+argument_list|)
+block|,
+name|CTAS_COLLST_COEXISTENCE
+argument_list|(
+literal|"Create table as select command cannot specify the list of columns for the target table."
+argument_list|)
+block|,
+name|CTLT_COLLST_COEXISTENCE
+argument_list|(
+literal|"Create table like command cannot specify the list of columns for the target table."
+argument_list|)
+block|,
+name|INVALID_SELECT_SCHEMA
+argument_list|(
+literal|"Cannot derive schema from the select-clause."
+argument_list|)
+block|,
+name|CTAS_PARCOL_COEXISTENCE
+argument_list|(
+literal|"CREATE-TABLE-AS-SELECT does not support partitioning in the target table."
+argument_list|)
+block|,
+name|CTAS_MULTI_LOADFILE
+argument_list|(
+literal|"CREATE-TABLE-AS-SELECT results in multiple file load."
+argument_list|)
+block|,
+name|CTAS_EXTTBL_COEXISTENCE
+argument_list|(
+literal|"CREATE-TABLE-AS-SELECT cannot create external table."
+argument_list|)
+block|,
+name|TABLE_ALREADY_EXISTS
+argument_list|(
+literal|"Table already exists:"
+argument_list|,
+literal|"42S02"
+argument_list|)
 block|;
 specifier|private
 name|String
