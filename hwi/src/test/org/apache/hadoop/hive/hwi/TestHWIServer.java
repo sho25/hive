@@ -231,7 +231,7 @@ name|webServer
 operator|.
 name|addWar
 argument_list|(
-literal|"../build/hive_hwi.war"
+literal|"../build/hwi/hive_hwi.war"
 argument_list|,
 literal|"/hwi"
 argument_list|)
