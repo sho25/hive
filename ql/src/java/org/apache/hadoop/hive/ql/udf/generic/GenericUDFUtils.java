@@ -1484,10 +1484,7 @@ if|if
 condition|(
 operator|!
 name|conversionNeeded
-condition|)
-block|{
-if|if
-condition|(
+operator|&&
 operator|!
 name|isVariableLengthArgument
 condition|)
@@ -1497,30 +1494,6 @@ comment|// just return what is passed in.
 return|return
 name|parameters
 return|;
-block|}
-elseif|else
-if|if
-condition|(
-name|methodParameterTypes
-operator|.
-name|length
-operator|==
-literal|1
-condition|)
-block|{
-comment|// no conversion needed, and variable-length argument with exact one argument
-comment|// just put the parameters in the array and return.
-name|convertedParameters
-index|[
-literal|0
-index|]
-operator|=
-name|parameters
-expr_stmt|;
-return|return
-name|convertedParameters
-return|;
-block|}
 block|}
 if|if
 condition|(
