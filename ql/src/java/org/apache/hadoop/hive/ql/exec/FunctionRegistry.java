@@ -1807,6 +1807,15 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|registerGenericUDF
+argument_list|(
+literal|"concat_ws"
+argument_list|,
+name|GenericUDFConcatWS
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 specifier|static
