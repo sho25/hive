@@ -625,7 +625,7 @@ expr_stmt|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Gets hive object for the current thread. If one is not initialized then a new one is created     * If the new configuration is different in metadata conf vars then a new one is created.    * @param c new Hive Configuration    * @return Hive object for current thread    * @throws HiveException    *    */
+comment|/**    * Gets hive object for the current thread. If one is not initialized then a new one is created    * If the new configuration is different in metadata conf vars then a new one is created.    * @param c new Hive Configuration    * @return Hive object for current thread    * @throws HiveException    *    */
 specifier|public
 specifier|static
 name|Hive
@@ -1169,7 +1169,7 @@ name|tbl
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Updates the existing table metadata with the new metadata.     * @param tblName name of the existing table    * @param newTbl new name of the table. could be the old name    * @throws InvalidOperationException if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Updates the existing table metadata with the new metadata.    * @param tblName name of the existing table    * @param newTbl new name of the table. could be the old name    * @throws InvalidOperationException if the changes in metadata is not acceptable    * @throws TException    */
 specifier|public
 name|void
 name|alterTable
@@ -1232,6 +1232,75 @@ operator|new
 name|HiveException
 argument_list|(
 literal|"Unable to alter table."
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * Updates the existing table metadata with the new metadata.    * @param tblName name of the existing table    * @param newTbl new name of the table. could be the old name    * @throws InvalidOperationException if the changes in metadata is not acceptable    * @throws TException    */
+specifier|public
+name|void
+name|alterPartition
+parameter_list|(
+name|String
+name|tblName
+parameter_list|,
+name|Partition
+name|newPart
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|HiveException
+block|{
+try|try
+block|{
+name|getMSC
+argument_list|()
+operator|.
+name|alter_partition
+argument_list|(
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+argument_list|,
+name|tblName
+argument_list|,
+name|newPart
+operator|.
+name|getTPartition
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unable to alter partition."
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|TException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unable to alter partition."
 argument_list|,
 name|e
 argument_list|)
@@ -1391,7 +1460,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Drops the table.     * @param tableName    * @param deleteData deletes the underlying data along with metadata    * @param ignoreUnknownTab an exception if thrown if this is falser and    * table doesn't exist    * @throws HiveException    */
+comment|/**    * Drops the table.    * @param tableName    * @param deleteData deletes the underlying data along with metadata    * @param ignoreUnknownTab an exception if thrown if this is falser and    * table doesn't exist    * @throws HiveException    */
 specifier|public
 name|void
 name|dropTable
@@ -1475,7 +1544,7 @@ name|conf
 operator|)
 return|;
 block|}
-comment|/**    * Returns metadata of the table.     * @param dbName the name of the database    * @param tableName the name of the table    * @return the table    * @exception HiveException if there's an internal error or if the     * table doesn't exist     */
+comment|/**    * Returns metadata of the table.    * @param dbName the name of the database    * @param tableName the name of the table    * @return the table    * @exception HiveException if there's an internal error or if the    * table doesn't exist    */
 specifier|public
 name|Table
 name|getTable
@@ -1504,7 +1573,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns metadata of the table    * @param dbName the name of the database    * @param tableName the name of the table    * @param throwException controls whether an exception is thrown     * or a returns a null    * @return the table or if throwException is false a null value.    * @throws HiveException    */
+comment|/**    * Returns metadata of the table    * @param dbName the name of the database    * @param tableName the name of the table    * @param throwException controls whether an exception is thrown    * or a returns a null    * @return the table or if throwException is false a null value.    * @throws HiveException    */
 specifier|public
 name|Table
 name|getTable
@@ -2077,7 +2146,7 @@ literal|".*"
 argument_list|)
 return|;
 block|}
-comment|/**    * returns all existing tables from default database which match the given    * pattern. The matching occurs as per Java regular expressions    *     * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
+comment|/**    * returns all existing tables from default database which match the given    * pattern. The matching occurs as per Java regular expressions    *    * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
 specifier|public
 name|List
 argument_list|<
@@ -2102,7 +2171,7 @@ name|tablePattern
 argument_list|)
 return|;
 block|}
-comment|/**    * returns all existing tables from the given database which match the given    * pattern. The matching occurs as per Java regular expressions    *     * @param database    *          the database name    * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
+comment|/**    * returns all existing tables from the given database which match the given    * pattern. The matching occurs as per Java regular expressions    *    * @param database    *          the database name    * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
 specifier|public
 name|List
 argument_list|<
@@ -2243,7 +2312,7 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
-comment|/** Move files before creating the partition since down stream processes check         *  for existence of partition in metadata before accessing the data. If partition        *  is created before data is moved, downstream waiting processes might move forward        *  with partial data        */
+comment|/** Move files before creating the partition since down stream processes check        *  for existence of partition in metadata before accessing the data. If partition        *  is created before data is moved, downstream waiting processes might move forward        *  with partial data        */
 name|FileSystem
 name|fs
 decl_stmt|;
@@ -2376,6 +2445,8 @@ literal|null
 condition|)
 block|{
 comment|// create the partition if it didn't exist before
+name|part
+operator|=
 name|getPartition
 argument_list|(
 name|tbl
@@ -2528,7 +2599,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates a partition     * @param tbl table for which partition needs to be created    * @param partSpec partition keys and their values    * @param location location of this partition    * @return created partition object    * @throws HiveException if table doesn't exist or partition already exists    */
+comment|/**    * Creates a partition    * @param tbl table for which partition needs to be created    * @param partSpec partition keys and their values    * @param location location of this partition    * @return created partition object    * @throws HiveException if table doesn't exist or partition already exists    */
 specifier|public
 name|Partition
 name|createPartition
@@ -4081,7 +4152,7 @@ name|conf
 argument_list|)
 return|;
 block|}
-comment|/**    *     * @return the metastore client for the current thread    * @throws MetaException    */
+comment|/**    *    * @return the metastore client for the current thread    * @throws MetaException    */
 specifier|private
 name|IMetaStoreClient
 name|getMSC

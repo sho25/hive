@@ -110,6 +110,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|DDL_TIME
+init|=
+literal|"transient_lastDdlTime"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|META_TABLE_COLUMNS
 init|=
 literal|"columns"

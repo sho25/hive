@@ -4016,6 +4016,8 @@ literal|"\\|\\(<string>.*/tmp/.*</string>\\)"
 operator|+
 literal|"\\|\\(<string>file:.*</string>\\)"
 operator|+
+literal|"\\|\\(<string>[0-9]\\{10\\}</string>\\)"
+operator|+
 literal|"\\|\\(<string>/.*/warehouse/.*</string>\\)\\)"
 expr_stmt|;
 name|cmdArray
@@ -4850,7 +4852,7 @@ operator|=
 operator|new
 name|String
 index|[
-literal|12
+literal|14
 index|]
 expr_stmt|;
 name|cmdArray
@@ -4928,6 +4930,20 @@ index|[
 literal|10
 index|]
 operator|=
+literal|"-I"
+expr_stmt|;
+name|cmdArray
+index|[
+literal|11
+index|]
+operator|=
+literal|"transient_lastDdlTime"
+expr_stmt|;
+name|cmdArray
+index|[
+literal|12
+index|]
+operator|=
 operator|(
 operator|new
 name|File
@@ -4945,7 +4961,7 @@ argument_list|()
 expr_stmt|;
 name|cmdArray
 index|[
-literal|11
+literal|13
 index|]
 operator|=
 operator|(
@@ -5049,6 +5065,20 @@ operator|+
 name|cmdArray
 index|[
 literal|11
+index|]
+operator|+
+literal|" "
+operator|+
+name|cmdArray
+index|[
+literal|12
+index|]
+operator|+
+literal|" "
+operator|+
+name|cmdArray
+index|[
+literal|13
 index|]
 argument_list|)
 expr_stmt|;
@@ -5337,7 +5367,7 @@ return|return
 name|qMap
 return|;
 block|}
-comment|/**    * QTRunner: Runnable class for running a a single query file    *     **/
+comment|/**    * QTRunner: Runnable class for running a a single query file    *    **/
 specifier|public
 specifier|static
 class|class
@@ -5441,7 +5471,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * executes a set of query files either in sequence or in parallel.    * Uses QTestUtil to do so    *    * @param qfiles array of input query files containing arbitrary number of hive queries    * @param resDirs array of output directories one corresponding to each input query file    * @param mt whether to run in multithreaded mode or not    * @return true if all the query files were executed successfully, else false    *    * In multithreaded mode each query file is run in a separate thread. the caller has to     * arrange that different query files do not collide (in terms of destination tables)    */
+comment|/**    * executes a set of query files either in sequence or in parallel.    * Uses QTestUtil to do so    *    * @param qfiles array of input query files containing arbitrary number of hive queries    * @param resDirs array of output directories one corresponding to each input query file    * @param mt whether to run in multithreaded mode or not    * @return true if all the query files were executed successfully, else false    *    * In multithreaded mode each query file is run in a separate thread. the caller has to    * arrange that different query files do not collide (in terms of destination tables)    */
 specifier|public
 specifier|static
 name|boolean
