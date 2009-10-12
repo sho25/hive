@@ -293,6 +293,13 @@ argument_list|,
 literal|100000
 argument_list|)
 block|,
+name|ALLOWPARTIALCONSUMP
+argument_list|(
+literal|"hive.exec.script.allow.partial.consumption"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|COMPRESSRESULT
 argument_list|(
 literal|"hive.exec.compress.output"
