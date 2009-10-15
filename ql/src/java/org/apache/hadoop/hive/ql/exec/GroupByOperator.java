@@ -3214,7 +3214,25 @@ name|newDefaultKeys
 argument_list|)
 expr_stmt|;
 block|}
-comment|// based on used-specified parameters, check if the hash table needs to be flushed
+comment|// Update the aggs
+name|updateAggregations
+argument_list|(
+name|aggs
+argument_list|,
+name|row
+argument_list|,
+name|rowInspector
+argument_list|,
+literal|true
+argument_list|,
+name|newEntryForHashAggr
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+comment|// We can only flush after the updateAggregations is done, or the potentially new entry "aggs"
+comment|// can be flushed out of the hash table.
+comment|// Based on user-specified parameters, check if the hash table needs to be flushed.
 comment|// If the grouping key is not the same as reduction key, flushing can only happen at boundaries
 if|if
 condition|(
@@ -3237,22 +3255,6 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Update the aggs
-name|updateAggregations
-argument_list|(
-name|aggs
-argument_list|,
-name|row
-argument_list|,
-name|rowInspector
-argument_list|,
-literal|true
-argument_list|,
-name|newEntryForHashAggr
-argument_list|,
-literal|null
-argument_list|)
-expr_stmt|;
 block|}
 comment|// Non-hash aggregation
 specifier|private
