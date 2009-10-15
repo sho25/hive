@@ -505,6 +505,22 @@ name|ClassNotFoundException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|FileUtils
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -969,7 +985,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * In Hive, when the user control-c's the command line, any running jobs    * spawned from that command line are best-effort killed.    *     * This static constructor registers a shutdown thread to iterate over all the    * running job kill URLs and do a get on them.    *     */
+comment|/**    * In Hive, when the user control-c's the command line, any running jobs    * spawned from that command line are best-effort killed.    *    * This static constructor registers a shutdown thread to iterate over all the    * running job kill URLs and do a get on them.    *    */
 static|static
 block|{
 if|if
@@ -2020,7 +2036,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Calculate the total size of input files.    * @param job the hadoop job conf.    * @return the total size in bytes.    * @throws IOException     */
+comment|/**    * Calculate the total size of input files.    * @param job the hadoop job conf.    * @return the total size in bytes.    * @throws IOException    */
 specifier|public
 name|long
 name|getTotalInputFileSize
@@ -4478,6 +4494,23 @@ argument_list|(
 name|newDir
 argument_list|)
 decl_stmt|;
+name|FileSystem
+name|fs
+init|=
+name|newPath
+operator|.
+name|getFileSystem
+argument_list|(
+name|job
+argument_list|)
+decl_stmt|;
+name|fs
+operator|.
+name|mkdirs
+argument_list|(
+name|newPath
+argument_list|)
+expr_stmt|;
 name|String
 name|newFile
 init|=
