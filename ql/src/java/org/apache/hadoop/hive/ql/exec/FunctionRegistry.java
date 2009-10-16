@@ -922,6 +922,17 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
+literal|"find_in_set"
+argument_list|,
+name|UDFFindInSet
+operator|.
+name|class
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|registerUDF
+argument_list|(
 literal|"like"
 argument_list|,
 name|UDFLike
