@@ -229,6 +229,7 @@ name|partitionsNotInMs
 expr_stmt|;
 block|}
 comment|/**    * A basic description of a partition that is     * missing from either the fs or the ms.    */
+specifier|public
 specifier|static
 class|class
 name|PartitionResult

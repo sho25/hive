@@ -74,7 +74,11 @@ specifier|private
 name|Path
 name|resFile
 decl_stmt|;
-comment|/**    * Description of a msck command.    * @param tableName Table to check, can be null.    * @param partSpecs Partition specification, can be null.     * @param resFile Where to save the output of the command    */
+specifier|private
+name|boolean
+name|repairPartitions
+decl_stmt|;
+comment|/**    * Description of a msck command.    * @param tableName Table to check, can be null.    * @param partSpecs Partition specification, can be null.     * @param resFile Where to save the output of the command    * @param repairPartitions remove stale / add new partitions found during the check    */
 specifier|public
 name|MsckDesc
 parameter_list|(
@@ -94,6 +98,9 @@ name|partSpecs
 parameter_list|,
 name|Path
 name|resFile
+parameter_list|,
+name|boolean
+name|repairPartitions
 parameter_list|)
 block|{
 name|super
@@ -116,6 +123,12 @@ operator|.
 name|resFile
 operator|=
 name|resFile
+expr_stmt|;
+name|this
+operator|.
+name|repairPartitions
+operator|=
+name|repairPartitions
 expr_stmt|;
 block|}
 comment|/**    * @return the table to check    */
@@ -210,6 +223,32 @@ operator|.
 name|resFile
 operator|=
 name|resFile
+expr_stmt|;
+block|}
+comment|/**    * @return remove stale / add new partitions found during the check    */
+specifier|public
+name|boolean
+name|isRepairPartitions
+parameter_list|()
+block|{
+return|return
+name|repairPartitions
+return|;
+block|}
+comment|/**    * @param remove stale / add new partitions found during the check    */
+specifier|public
+name|void
+name|setRepairPartitions
+parameter_list|(
+name|boolean
+name|repairPartitions
+parameter_list|)
+block|{
+name|this
+operator|.
+name|repairPartitions
+operator|=
+name|repairPartitions
 expr_stmt|;
 block|}
 block|}
