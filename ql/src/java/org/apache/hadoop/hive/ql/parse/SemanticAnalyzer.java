@@ -8347,7 +8347,7 @@ name|Constants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
-name|fieldDelim
+name|fieldEscape
 argument_list|)
 expr_stmt|;
 block|}
