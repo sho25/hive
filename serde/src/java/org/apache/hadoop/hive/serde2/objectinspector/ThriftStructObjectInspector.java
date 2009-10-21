@@ -38,11 +38,11 @@ name|name
 parameter_list|)
 block|{
 return|return
-literal|"__isset"
-operator|.
-name|equals
-argument_list|(
 name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"__isset"
 argument_list|)
 return|;
 block|}
