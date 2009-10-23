@@ -3945,6 +3945,8 @@ operator|+
 literal|"\n"
 argument_list|)
 expr_stmt|;
+comment|// Only print out one task because that's good enough for debugging.
+break|break;
 block|}
 block|}
 return|return;
