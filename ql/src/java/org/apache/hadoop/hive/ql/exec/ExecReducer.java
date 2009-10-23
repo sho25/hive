@@ -1329,14 +1329,14 @@ name|formatBinaryString
 argument_list|(
 name|valueWritable
 operator|.
-name|getBytes
+name|get
 argument_list|()
 argument_list|,
 literal|0
 argument_list|,
 name|valueWritable
 operator|.
-name|getLength
+name|getSize
 argument_list|()
 argument_list|)
 operator|+
