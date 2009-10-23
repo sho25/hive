@@ -187,6 +187,20 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|TaskCompletionEvent
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -341,6 +355,16 @@ specifier|public
 name|String
 name|getInputFormatClassName
 parameter_list|()
+function_decl|;
+comment|/**    * getTaskJobIDs returns an array of String with two elements. The first    * element is a string representing the task id and the second is a string    * representing the job id. This is necessary as TaskID and TaskAttemptID     * are not supported in Haddop 0.17    */
+specifier|public
+name|String
+index|[]
+name|getTaskJobIDs
+parameter_list|(
+name|TaskCompletionEvent
+name|t
+parameter_list|)
 function_decl|;
 specifier|public
 interface|interface
