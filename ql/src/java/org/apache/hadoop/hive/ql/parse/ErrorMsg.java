@@ -437,6 +437,13 @@ literal|"Table already exists:"
 argument_list|,
 literal|"42S02"
 argument_list|)
+block|,
+name|COLUMN_ALIAS_ALREADY_EXISTS
+argument_list|(
+literal|"Column alias already exists:"
+argument_list|,
+literal|"42S02"
+argument_list|)
 block|;
 specifier|private
 name|String
