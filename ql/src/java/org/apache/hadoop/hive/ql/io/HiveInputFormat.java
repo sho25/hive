@@ -1845,7 +1845,7 @@ literal|null
 condition|)
 name|HiveFileFormatUtils
 operator|.
-name|setReadColumnIDs
+name|appendReadColumnIDs
 argument_list|(
 name|jobConf
 argument_list|,
