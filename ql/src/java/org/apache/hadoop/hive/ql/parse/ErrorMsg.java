@@ -566,6 +566,20 @@ name|String
 name|mesg
 parameter_list|)
 block|{
+if|if
+condition|(
+name|mesg
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|GENERIC_ERROR
+operator|.
+name|getSQLState
+argument_list|()
+return|;
+block|}
 comment|//first see if there is a direct match
 name|ErrorMsg
 name|errorMsg
