@@ -263,6 +263,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|ColumnProjectionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|columnar
 operator|.
 name|BytesRefArrayWritable
@@ -3947,7 +3963,7 @@ name|Integer
 argument_list|>
 name|notSkipIDs
 init|=
-name|HiveFileFormatUtils
+name|ColumnProjectionUtils
 operator|.
 name|getReadColumnIDs
 argument_list|(
@@ -5678,6 +5694,8 @@ block|{
 name|currentValueBuffer
 argument_list|()
 expr_stmt|;
+comment|// do this only when not initialized, but we may need to find a way to
+comment|// tell the caller how to initialize the valid size
 name|ret
 operator|.
 name|resetValid
@@ -5685,7 +5703,6 @@ argument_list|(
 name|columnNumber
 argument_list|)
 expr_stmt|;
-comment|// do this only when not intialized
 block|}
 comment|// we do not use BytesWritable here to avoid the byte-copy from
 comment|// DataOutputStream to BytesWritable

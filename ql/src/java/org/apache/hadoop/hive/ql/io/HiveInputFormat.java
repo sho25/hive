@@ -479,6 +479,22 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|ColumnProjectionUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * HiveInputFormat is a parameterized InputFormat which looks at the path name and determine  * the correct InputFormat for that path name from mapredPlan.pathToPartitionInfo().  * It can be used to read files with different input format in the same map-reduce job.  */
 end_comment
@@ -1131,9 +1147,19 @@ name|inputFormatClassName
 argument_list|)
 throw|;
 block|}
-name|initColumnsNeeded
+comment|//clone a jobConf for setting needed columns for reading
+name|JobConf
+name|cloneJobConf
+init|=
+operator|new
+name|JobConf
 argument_list|(
 name|job
+argument_list|)
+decl_stmt|;
+name|initColumnsNeeded
+argument_list|(
+name|cloneJobConf
 argument_list|,
 name|inputFormatClass
 argument_list|,
@@ -1164,7 +1190,7 @@ name|getInputFormatFromCache
 argument_list|(
 name|inputFormatClass
 argument_list|,
-name|job
+name|cloneJobConf
 argument_list|)
 decl_stmt|;
 return|return
@@ -1177,7 +1203,7 @@ name|getRecordReader
 argument_list|(
 name|inputSplit
 argument_list|,
-name|job
+name|cloneJobConf
 argument_list|,
 name|reporter
 argument_list|)
@@ -1843,7 +1869,7 @@ name|list
 operator|!=
 literal|null
 condition|)
-name|HiveFileFormatUtils
+name|ColumnProjectionUtils
 operator|.
 name|appendReadColumnIDs
 argument_list|(
@@ -1853,7 +1879,7 @@ name|list
 argument_list|)
 expr_stmt|;
 else|else
-name|HiveFileFormatUtils
+name|ColumnProjectionUtils
 operator|.
 name|setFullyReadColumns
 argument_list|(
