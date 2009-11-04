@@ -1144,6 +1144,17 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
+literal|"weekofyear"
+argument_list|,
+name|UDFWeekOfYear
+operator|.
+name|class
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|registerUDF
+argument_list|(
 literal|"date_add"
 argument_list|,
 name|UDFDateAdd
