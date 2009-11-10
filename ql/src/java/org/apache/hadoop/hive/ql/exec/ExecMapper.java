@@ -901,6 +901,13 @@ operator|==
 literal|null
 condition|)
 block|{
+name|forwardOp
+operator|.
+name|close
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 break|break;
 block|}
 name|fetchOpRows

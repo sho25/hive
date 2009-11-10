@@ -33,6 +33,8 @@ block|,
 name|FULLOUTER
 block|,
 name|UNIQUE
+block|,
+name|LEFTSEMI
 block|}
 end_enum
 

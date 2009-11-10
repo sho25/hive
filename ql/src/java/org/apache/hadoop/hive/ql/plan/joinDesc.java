@@ -195,6 +195,14 @@ name|UNIQUE_JOIN
 init|=
 literal|4
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|LEFT_SEMI_JOIN
+init|=
+literal|5
+decl_stmt|;
 comment|// alias to key mapping
 specifier|private
 name|Map
