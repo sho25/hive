@@ -576,7 +576,7 @@ comment|// for outer joins, contains the
 comment|// potential nulls for the concerned
 comment|// aliases
 specifier|transient
-specifier|private
+specifier|protected
 name|ArrayList
 argument_list|<
 name|ArrayList
@@ -3648,7 +3648,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Forward a record of join results.    *     * @throws HiveException    */
+comment|/**    * Forward a record of join results.    *    * @throws HiveException    */
 specifier|public
 name|void
 name|endGroup
@@ -4130,7 +4130,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * All done    *     */
+comment|/**    * All done    *    */
 specifier|public
 name|void
 name|closeOp

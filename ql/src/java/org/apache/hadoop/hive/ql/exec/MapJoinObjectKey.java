@@ -205,21 +205,10 @@ name|Object
 argument_list|>
 name|obj
 decl_stmt|;
-specifier|transient
-name|Writable
-name|val
-decl_stmt|;
 specifier|public
 name|MapJoinObjectKey
 parameter_list|()
-block|{
-name|val
-operator|=
-operator|new
-name|BytesWritable
-argument_list|()
-expr_stmt|;
-block|}
+block|{   }
 comment|/**    * @param metadataTag    * @param obj    */
 specifier|public
 name|MapJoinObjectKey
@@ -245,12 +234,6 @@ operator|.
 name|obj
 operator|=
 name|obj
-expr_stmt|;
-name|val
-operator|=
-operator|new
-name|BytesWritable
-argument_list|()
 expr_stmt|;
 block|}
 specifier|public
