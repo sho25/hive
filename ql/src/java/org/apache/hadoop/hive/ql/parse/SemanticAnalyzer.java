@@ -31037,6 +31037,9 @@ argument_list|()
 operator|.
 name|getTableName
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 expr_stmt|;
 block|}
 name|lfd
