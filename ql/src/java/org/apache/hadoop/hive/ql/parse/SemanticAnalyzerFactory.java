@@ -510,6 +510,11 @@ name|HiveParser
 operator|.
 name|TOK_SHOWPARTITIONS
 case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_ALTERTABLE_FILEFORMAT
+case|:
 return|return
 operator|new
 name|DDLSemanticAnalyzer
