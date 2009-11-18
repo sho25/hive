@@ -21216,7 +21216,7 @@ return|return
 name|joinOp
 return|;
 block|}
-comment|/**    * Construct a selection operator for semijoin that filter out all fields other than the group by keys.    *     * @param fields list of fields need to be output    * @param input input operator    * @return the selection operator.    * @throws SemanticException    */
+comment|/**    * Construct a selection operator for semijoin that filter out all fields other than the group by keys.    *    * @param fields list of fields need to be output    * @param input input operator    * @return the selection operator.    * @throws SemanticException    */
 specifier|private
 name|Operator
 name|insertSelectForSemijoin
@@ -33241,7 +33241,7 @@ name|childTask
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Get the row resolver given an operator.     */
+comment|/**    * Get the row resolver given an operator.    */
 specifier|public
 name|RowResolver
 name|getRowResolver
@@ -33262,7 +33262,7 @@ name|getRR
 argument_list|()
 return|;
 block|}
-comment|/**    * Analyze the create table command. If it is a regular create-table or create-table-like     * statements, we create a DDLWork and return true. If it is a create-table-as-select, we get the    * necessary info such as the SerDe and Storage Format and put it in QB, and return false, indicating    * the rest of the semantic analyzer need to deal with the select statement with respect to the    * SerDe and Storage Format.    */
+comment|/**    * Analyze the create table command. If it is a regular create-table or create-table-like    * statements, we create a DDLWork and return true. If it is a create-table-as-select, we get the    * necessary info such as the SerDe and Storage Format and put it in QB, and return false, indicating    * the rest of the semantic analyzer need to deal with the select statement with respect to the    * SerDe and Storage Format.    */
 specifier|private
 name|ASTNode
 name|analyzeCreateTable

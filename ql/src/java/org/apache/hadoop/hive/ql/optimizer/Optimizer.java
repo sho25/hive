@@ -253,7 +253,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|UnionProcessor
+name|MapJoinProcessor
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -262,7 +262,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|MapJoinProcessor
+name|UnionProcessor
 argument_list|()
 argument_list|)
 expr_stmt|;
