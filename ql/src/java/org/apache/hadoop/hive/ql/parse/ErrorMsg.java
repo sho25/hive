@@ -444,6 +444,41 @@ literal|"Column alias already exists:"
 argument_list|,
 literal|"42S02"
 argument_list|)
+block|,
+name|UDTF_MULTIPLE_EXPR
+argument_list|(
+literal|"Only a single expression in the SELECT clause is supported with UDTF's"
+argument_list|)
+block|,
+name|UDTF_REQUIRE_AS
+argument_list|(
+literal|"UDTF's require an AS clause"
+argument_list|)
+block|,
+name|UDTF_NO_GROUP_BY
+argument_list|(
+literal|"GROUP BY is not supported with a UDTF in the SELECT clause"
+argument_list|)
+block|,
+name|UDTF_NO_SORT_BY
+argument_list|(
+literal|"SORT BY is not supported with a UDTF in the SELECT clause"
+argument_list|)
+block|,
+name|UDTF_NO_CLUSTER_BY
+argument_list|(
+literal|"CLUSTER BY is not supported with a UDTF in the SELECT clause"
+argument_list|)
+block|,
+name|UDTF_NO_DISTRIBUTE_BY
+argument_list|(
+literal|"DISTRUBTE BY is not supported with a UDTF in the SELECT clause"
+argument_list|)
+block|,
+name|UDTF_INVALID_LOCATION
+argument_list|(
+literal|"UDTF's are not supported outside the SELECT clause, nor nested in expressions"
+argument_list|)
 block|;
 specifier|private
 name|String

@@ -642,6 +642,14 @@ operator|)
 literal|0.5
 argument_list|)
 block|,
+comment|// for hive udtf operator
+name|HIVEUDTFAUTOPROGRESS
+argument_list|(
+literal|"hive.udtf.auto.progress"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Default file format for CREATE TABLE statement
 comment|// Options: TextFile, SequenceFile
 name|HIVEDEFAULTFILEFORMAT

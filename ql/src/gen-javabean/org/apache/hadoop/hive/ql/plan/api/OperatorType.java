@@ -195,6 +195,14 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
+name|int
+name|UDTF
+init|=
+literal|13
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
 name|IntRangeSet
 name|VALID_VALUES
 init|=
@@ -226,6 +234,8 @@ argument_list|,
 name|REDUCESINK
 argument_list|,
 name|UNION
+argument_list|,
+name|UDTF
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -338,6 +348,13 @@ argument_list|(
 name|UNION
 argument_list|,
 literal|"UNION"
+argument_list|)
+expr_stmt|;
+name|put
+argument_list|(
+name|UDTF
+argument_list|,
+literal|"UDTF"
 argument_list|)
 expr_stmt|;
 block|}
