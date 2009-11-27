@@ -111,6 +111,12 @@ name|Object
 name|getObject
 parameter_list|()
 function_decl|;
+specifier|public
+specifier|abstract
+name|int
+name|hashCode
+parameter_list|()
+function_decl|;
 block|}
 end_class
 

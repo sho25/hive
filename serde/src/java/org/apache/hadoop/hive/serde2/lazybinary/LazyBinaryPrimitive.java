@@ -140,6 +140,24 @@ name|toString
 argument_list|()
 return|;
 block|}
+specifier|public
+name|int
+name|hashCode
+parameter_list|()
+block|{
+return|return
+name|data
+operator|==
+literal|null
+condition|?
+literal|0
+else|:
+name|data
+operator|.
+name|hashCode
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 
