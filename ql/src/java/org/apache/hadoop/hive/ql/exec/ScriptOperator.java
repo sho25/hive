@@ -1896,6 +1896,8 @@ name|scriptPid
 operator|!=
 literal|null
 condition|)
+name|exitVal
+operator|=
 name|scriptPid
 operator|.
 name|waitFor
