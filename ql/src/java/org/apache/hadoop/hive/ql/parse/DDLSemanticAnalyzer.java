@@ -3185,7 +3185,7 @@ block|{
 name|String
 name|funcNames
 init|=
-name|unescapeSQLString
+name|stripQuotes
 argument_list|(
 name|ast
 operator|.
@@ -3291,6 +3291,8 @@ condition|)
 block|{
 name|funcName
 operator|=
+name|stripQuotes
+argument_list|(
 name|ast
 operator|.
 name|getChild
@@ -3300,6 +3302,7 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+argument_list|)
 expr_stmt|;
 name|isExtended
 operator|=
@@ -3319,6 +3322,8 @@ condition|)
 block|{
 name|funcName
 operator|=
+name|stripQuotes
+argument_list|(
 name|ast
 operator|.
 name|getChild
@@ -3328,6 +3333,7 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+argument_list|)
 expr_stmt|;
 name|isExtended
 operator|=
