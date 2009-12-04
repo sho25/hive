@@ -365,6 +365,14 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|EXECPARALLEL
+argument_list|(
+literal|"hive.exec.parallel"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// parallel query launching
 comment|// hadoop stuff
 name|HADOOPBIN
 argument_list|(

@@ -630,6 +630,15 @@ name|reduceProgress
 init|=
 literal|0
 decl_stmt|;
+specifier|public
+specifier|static
+name|Random
+name|randGen
+init|=
+operator|new
+name|Random
+argument_list|()
+decl_stmt|;
 comment|/**    * Constructor when invoked from QL    */
 specifier|public
 name|ExecDriver
@@ -1038,7 +1047,7 @@ block|}
 comment|/**    * A list of the currently running jobs spawned in this Hive instance that is    * used to kill all running jobs in the event of an unexpected shutdown -    * i.e., the JVM shuts down while there are still jobs running.    */
 specifier|public
 specifier|static
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1046,6 +1055,10 @@ name|String
 argument_list|>
 name|runningJobKillURIs
 init|=
+name|Collections
+operator|.
+name|synchronizedMap
+argument_list|(
 operator|new
 name|HashMap
 argument_list|<
@@ -1054,6 +1067,7 @@ argument_list|,
 name|String
 argument_list|>
 argument_list|()
+argument_list|)
 decl_stmt|;
 comment|/**    * In Hive, when the user control-c's the command line, any running jobs    * spawned from that command line are best-effort killed.    *    * This static constructor registers a shutdown thread to iterate over all the    * running job kill URLs and do a get on them.    *    */
 static|static
@@ -1095,6 +1109,11 @@ specifier|public
 name|void
 name|run
 parameter_list|()
+block|{
+synchronized|synchronized
+init|(
+name|runningJobKillURIs
+init|)
 block|{
 for|for
 control|(
@@ -1224,6 +1243,7 @@ name|e
 argument_list|)
 expr_stmt|;
 comment|// do nothing
+block|}
 block|}
 block|}
 block|}
@@ -1567,6 +1587,11 @@ expr_stmt|;
 name|String
 name|report
 init|=
+literal|" "
+operator|+
+name|getId
+argument_list|()
+operator|+
 literal|" map = "
 operator|+
 name|this
@@ -3002,6 +3027,54 @@ name|success
 init|=
 literal|false
 decl_stmt|;
+name|boolean
+name|noName
+init|=
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|job
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HADOOPJOBNAME
+argument_list|)
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|noName
+condition|)
+block|{
+comment|// This is for a special case to ensure unit tests pass
+name|HiveConf
+operator|.
+name|setVar
+argument_list|(
+name|job
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HADOOPJOBNAME
+argument_list|,
+literal|"JOB"
+operator|+
+name|randGen
+operator|.
+name|nextInt
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 try|try
 block|{
 name|addInputPaths
@@ -3236,6 +3309,11 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
 name|String
 name|mesg
 init|=
