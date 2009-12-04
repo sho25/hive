@@ -2910,6 +2910,11 @@ name|getConf
 argument_list|()
 argument_list|,
 name|alias_id
+argument_list|,
+name|parseCtx
+operator|.
+name|getPrunedPartitions
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

@@ -515,6 +515,11 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_FILEFORMAT
 case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_ALTERTABLE_CLUSTER_SORT
+case|:
 return|return
 operator|new
 name|DDLSemanticAnalyzer

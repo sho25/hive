@@ -673,6 +673,10 @@ name|keysCurrentGroup
 decl_stmt|;
 specifier|transient
 name|boolean
+name|bucketGroup
+decl_stmt|;
+specifier|transient
+name|boolean
 name|firstRow
 decl_stmt|;
 specifier|transient
@@ -1477,6 +1481,13 @@ name|roi
 argument_list|)
 expr_stmt|;
 block|}
+name|bucketGroup
+operator|=
+name|conf
+operator|.
+name|getBucketGroup
+argument_list|()
+expr_stmt|;
 name|aggregationsParametersLastInvoke
 operator|=
 operator|new
@@ -1504,6 +1515,8 @@ operator|.
 name|Mode
 operator|.
 name|HASH
+operator|||
+name|bucketGroup
 condition|)
 block|{
 name|aggregations
@@ -1752,16 +1765,7 @@ comment|// estimate the number of hash table entries based on the size of each e
 comment|// is not known, estimate that based on the number of entries
 if|if
 condition|(
-name|conf
-operator|.
-name|getMode
-argument_list|()
-operator|==
-name|groupByDesc
-operator|.
-name|Mode
-operator|.
-name|HASH
+name|hashAggr
 condition|)
 name|computeMaxEntriesHashAggr
 argument_list|(

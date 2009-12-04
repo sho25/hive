@@ -1558,7 +1558,12 @@ name|getBucketCols
 parameter_list|()
 block|{
 return|return
-name|table
+name|this
+operator|.
+name|tPartition
+operator|.
+name|getSd
+argument_list|()
 operator|.
 name|getBucketCols
 argument_list|()

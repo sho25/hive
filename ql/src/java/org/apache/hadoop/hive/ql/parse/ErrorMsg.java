@@ -276,6 +276,11 @@ argument_list|(
 literal|"Duplicate column names"
 argument_list|)
 block|,
+name|INVALID_BUCKET_NUMBER
+argument_list|(
+literal|"Bucket number should be bigger than zero"
+argument_list|)
+block|,
 name|COLUMN_REPEATED_IN_CLUSTER_SORT
 argument_list|(
 literal|"Same column cannot appear in cluster and sort by"
