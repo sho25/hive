@@ -279,6 +279,15 @@ operator|.
 name|add
 argument_list|(
 operator|new
+name|SamplePruner
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
 name|MapJoinProcessor
 argument_list|()
 argument_list|)

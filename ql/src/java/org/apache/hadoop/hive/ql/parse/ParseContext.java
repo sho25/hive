@@ -293,6 +293,26 @@ name|UnionProcContext
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|filterDesc
+operator|.
+name|sampleDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * Parse Context: The current parse context. This is passed to the optimizer  * which then transforms the operator tree using the parse context. All the  * optimizations are performed sequentially and then the new parse context  * populated. Note that since the parse context contains the operator tree, it  * can be easily retrieved by the next optimization step or finally for task  * generation after the plan has been completely optimized.  *  **/
 end_comment
@@ -322,11 +342,11 @@ decl_stmt|;
 specifier|private
 name|HashMap
 argument_list|<
-name|String
+name|TableScanOperator
 argument_list|,
-name|SamplePruner
+name|sampleDesc
 argument_list|>
-name|aliasToSamplePruner
+name|opToSamplePruner
 decl_stmt|;
 specifier|private
 name|HashMap
@@ -468,7 +488,7 @@ specifier|public
 name|ParseContext
 parameter_list|()
 block|{   }
-comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param opToPartPruner    *          map from table scan operator to partition pruner    * @param aliasToSamplePruner    *          sample pruner list    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param joinContext context needed join processing (map join specifically)    * @param topToTable the top tables being processed    * @param loadTableWork    *          list of destination tables being loaded    * @param loadFileWork    *          list of destination files being loaded    * @param ctx parse context    * @param idToTableNameMap    * @param destTableId    * @param uCtx    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer    */
+comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param opToPartPruner    *          map from table scan operator to partition pruner    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param joinContext context needed join processing (map join specifically)    * @param topToTable the top tables being processed    * @param loadTableWork    *          list of destination tables being loaded    * @param loadFileWork    *          list of destination files being loaded    * @param ctx parse context    * @param idToTableNameMap    * @param destTableId    * @param uCtx    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer    * @param opToSamplePruner operator to sample pruner map    */
 specifier|public
 name|ParseContext
 parameter_list|(
@@ -488,14 +508,6 @@ argument_list|,
 name|exprNodeDesc
 argument_list|>
 name|opToPartPruner
-parameter_list|,
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|SamplePruner
-argument_list|>
-name|aliasToSamplePruner
 parameter_list|,
 name|HashMap
 argument_list|<
@@ -605,6 +617,14 @@ argument_list|,
 name|PrunedPartitionList
 argument_list|>
 name|prunedPartitions
+parameter_list|,
+name|HashMap
+argument_list|<
+name|TableScanOperator
+argument_list|,
+name|sampleDesc
+argument_list|>
+name|opToSamplePruner
 parameter_list|)
 block|{
 name|this
@@ -630,12 +650,6 @@ operator|.
 name|opToPartPruner
 operator|=
 name|opToPartPruner
-expr_stmt|;
-name|this
-operator|.
-name|aliasToSamplePruner
-operator|=
-name|aliasToSamplePruner
 expr_stmt|;
 name|this
 operator|.
@@ -742,6 +756,12 @@ operator|.
 name|prunedPartitions
 operator|=
 name|prunedPartitions
+expr_stmt|;
+name|this
+operator|.
+name|opToSamplePruner
+operator|=
+name|opToSamplePruner
 expr_stmt|;
 block|}
 comment|/**    * @return the qb    */
@@ -918,42 +938,6 @@ operator|.
 name|topToTable
 operator|=
 name|topToTable
-expr_stmt|;
-block|}
-comment|/**    * @return the aliasToSamplePruner    */
-specifier|public
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|SamplePruner
-argument_list|>
-name|getAliasToSamplePruner
-parameter_list|()
-block|{
-return|return
-name|aliasToSamplePruner
-return|;
-block|}
-comment|/**    * @param aliasToSamplePruner    *          the aliasToSamplePruner to set    */
-specifier|public
-name|void
-name|setAliasToSamplePruner
-parameter_list|(
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|SamplePruner
-argument_list|>
-name|aliasToSamplePruner
-parameter_list|)
-block|{
-name|this
-operator|.
-name|aliasToSamplePruner
-operator|=
-name|aliasToSamplePruner
 expr_stmt|;
 block|}
 comment|/**    * @return the topOps    */
@@ -1336,6 +1320,42 @@ operator|.
 name|hasNonPartCols
 return|;
 block|}
+comment|/**    * @return the opToSamplePruner    */
+specifier|public
+name|HashMap
+argument_list|<
+name|TableScanOperator
+argument_list|,
+name|sampleDesc
+argument_list|>
+name|getOpToSamplePruner
+parameter_list|()
+block|{
+return|return
+name|opToSamplePruner
+return|;
+block|}
+comment|/**    * @param opToSamplePruner    *          the opToSamplePruner to set    */
+specifier|public
+name|void
+name|setOpToSamplePruner
+parameter_list|(
+name|HashMap
+argument_list|<
+name|TableScanOperator
+argument_list|,
+name|sampleDesc
+argument_list|>
+name|opToSamplePruner
+parameter_list|)
+block|{
+name|this
+operator|.
+name|opToSamplePruner
+operator|=
+name|opToSamplePruner
+expr_stmt|;
+block|}
 comment|/**    * @return the groupOpToInputTables    */
 specifier|public
 name|Map
@@ -1393,7 +1413,7 @@ return|return
 name|prunedPartitions
 return|;
 block|}
-comment|/**    * @param prunedPartitions     */
+comment|/**    * @param prunedPartitions    */
 specifier|public
 name|void
 name|setPrunedPartitions
