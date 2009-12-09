@@ -8921,11 +8921,8 @@ name|TypeInfoUtils
 operator|.
 name|getTypeInfoFromTypeString
 argument_list|(
-name|DDLSemanticAnalyzer
-operator|.
-name|getTypeName
+name|getTypeStringFromAST
 argument_list|(
-operator|(
 operator|(
 name|ASTNode
 operator|)
@@ -8935,10 +8932,6 @@ name|getChild
 argument_list|(
 literal|1
 argument_list|)
-operator|)
-operator|.
-name|getType
-argument_list|()
 argument_list|)
 argument_list|)
 argument_list|,
