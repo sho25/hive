@@ -115,6 +115,15 @@ name|WEAK_REF_CACHE
 init|=
 literal|"weak"
 decl_stmt|;
+comment|/**      * Disable cache.      */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|NO_CACHE
+init|=
+literal|"nocache"
+decl_stmt|;
 block|}
 end_class
 
