@@ -574,6 +574,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVESCRIPTIDENVVAR
+argument_list|(
+literal|"hive.script.operator.id.env.var"
+argument_list|,
+literal|"HIVE_SCRIPT_OPERATOR_ID"
+argument_list|)
+block|,
 name|HIVEMAPREDMODE
 argument_list|(
 literal|"hive.mapred.mode"
