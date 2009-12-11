@@ -295,6 +295,24 @@ name|StructField
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|StructObjectInspector
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -360,6 +378,12 @@ specifier|transient
 name|AutoProgressor
 name|autoProgressor
 decl_stmt|;
+specifier|transient
+name|boolean
+name|closeCalled
+init|=
+literal|false
+decl_stmt|;
 specifier|protected
 name|void
 name|initializeOp
@@ -372,7 +396,7 @@ name|HiveException
 block|{
 name|conf
 operator|.
-name|getUDTF
+name|getGenericUDTF
 argument_list|()
 operator|.
 name|setCollector
@@ -444,7 +468,7 @@ name|inputFields
 operator|.
 name|get
 argument_list|(
-literal|0
+name|i
 argument_list|)
 operator|.
 name|getFieldObjectInspector
@@ -462,12 +486,12 @@ name|size
 argument_list|()
 index|]
 expr_stmt|;
-name|ObjectInspector
+name|StructObjectInspector
 name|udtfOutputOI
 init|=
 name|conf
 operator|.
-name|getUDTF
+name|getGenericUDTF
 argument_list|()
 operator|.
 name|initialize
@@ -475,60 +499,11 @@ argument_list|(
 name|udtfInputOIs
 argument_list|)
 decl_stmt|;
-comment|// The output of this operator should be a struct, so create appropriate OI
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-name|colNames
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
-name|ArrayList
-argument_list|<
-name|ObjectInspector
-argument_list|>
-name|colOIs
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|ObjectInspector
-argument_list|>
-argument_list|()
-decl_stmt|;
-name|colNames
-operator|.
-name|add
-argument_list|(
-name|conf
-operator|.
-name|getOutputColName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|colOIs
-operator|.
-name|add
-argument_list|(
-name|udtfOutputOI
-argument_list|)
-expr_stmt|;
+comment|// Since we're passing the object output by the UDTF directly to the next
+comment|// operator, we can use the same OI.
 name|outputObjInspector
 operator|=
-name|ObjectInspectorFactory
-operator|.
-name|getStandardStructObjectInspector
-argument_list|(
-name|colNames
-argument_list|,
-name|colOIs
-argument_list|)
+name|udtfOutputOI
 expr_stmt|;
 comment|// Set up periodic progress reporting in case the UDTF doesn't output rows
 comment|// for a while
@@ -664,7 +639,7 @@ expr_stmt|;
 block|}
 name|conf
 operator|.
-name|getUDTF
+name|getGenericUDTF
 argument_list|()
 operator|.
 name|process
@@ -673,7 +648,7 @@ name|objToSendToUDTF
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * forwardUDTFOutput is typically called indirectly by the GenericUDTF when    * the GenericUDTF has generated output data that should be passed on to the    * next operator(s) in the DAG.    *    * @param o    * @throws HiveException    */
+comment|/**    * forwardUDTFOutput is typically called indirectly by the GenericUDTF when    * the GenericUDTF has generated output rows that should be passed on to the    * next operator(s) in the DAG.    *    * @param o    * @throws HiveException    */
 specifier|public
 name|void
 name|forwardUDTFOutput
@@ -684,18 +659,23 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// Now that we have the data from the UDTF, repack it into an object[] as
-comment|// the output should be inspectable by a struct OI
-name|forwardObj
-index|[
-literal|0
-index|]
-operator|=
-name|o
-expr_stmt|;
+if|if
+condition|(
+name|closeCalled
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"UDTF's should not output rows on close"
+argument_list|)
+throw|;
+block|}
+comment|// Since the output of the UDTF is a struct, we can just forward that
 name|forward
 argument_list|(
-name|forwardObj
+name|o
 argument_list|,
 name|outputObjInspector
 argument_list|)
@@ -731,9 +711,13 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|closeCalled
+operator|=
+literal|true
+expr_stmt|;
 name|conf
 operator|.
-name|getUDTF
+name|getGenericUDTF
 argument_list|()
 operator|.
 name|close

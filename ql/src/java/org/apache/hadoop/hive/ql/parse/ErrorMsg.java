@@ -484,6 +484,31 @@ name|UDTF_INVALID_LOCATION
 argument_list|(
 literal|"UDTF's are not supported outside the SELECT clause, nor nested in expressions"
 argument_list|)
+block|,
+name|UDTF_LATERAL_VIEW
+argument_list|(
+literal|"UDTF's cannot be in a select expression when there is a lateral view"
+argument_list|)
+block|,
+name|UDTF_ALIAS_MISMATCH
+argument_list|(
+literal|"The number of aliases supplied in the AS clause does not match the number of columns output by the UDTF"
+argument_list|)
+block|,
+name|LATERAL_VIEW_WITH_JOIN
+argument_list|(
+literal|"Join with a lateral view is not supported"
+argument_list|)
+block|,
+name|LATERAL_VIEW_INVALID_CHILD
+argument_list|(
+literal|"Lateral view AST with invalid child"
+argument_list|)
+block|,
+name|INVALID_AS
+argument_list|(
+literal|"AS clause has an invalid number of aliases"
+argument_list|)
 block|;
 specifier|private
 name|String

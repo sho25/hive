@@ -203,6 +203,14 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
+name|int
+name|LATERALVIEWJOIN
+init|=
+literal|14
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
 name|IntRangeSet
 name|VALID_VALUES
 init|=
@@ -236,6 +244,8 @@ argument_list|,
 name|UNION
 argument_list|,
 name|UDTF
+argument_list|,
+name|LATERALVIEWJOIN
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -355,6 +365,13 @@ argument_list|(
 name|UDTF
 argument_list|,
 literal|"UDTF"
+argument_list|)
+expr_stmt|;
+name|put
+argument_list|(
+name|LATERALVIEWJOIN
+argument_list|,
+literal|"LATERALVIEWJOIN"
 argument_list|)
 expr_stmt|;
 block|}
