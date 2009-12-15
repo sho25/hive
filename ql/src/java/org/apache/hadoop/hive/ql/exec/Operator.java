@@ -783,7 +783,7 @@ init|=
 operator|new
 name|ObjectInspector
 index|[
-name|Byte
+name|Short
 operator|.
 name|MAX_VALUE
 index|]
@@ -1089,7 +1089,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Initializes operators only if all parents have been initialized.    * Calls operator specific initializer which then initializes child ops.    *     * @param hconf    * @param inputOIs input object inspector array indexes by tag id. null value is ignored.    * @throws HiveException    */
+comment|/**    * Initializes operators only if all parents have been initialized.    * Calls operator specific initializer which then initializes child ops.    *    * @param hconf    * @param inputOIs input object inspector array indexes by tag id. null value is ignored.    * @throws HiveException    */
 specifier|public
 name|void
 name|initialize
@@ -2965,7 +2965,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Initialize an array of ExprNodeEvaluator and put the return values into a     * StructObjectInspector with integer field names.    */
+comment|/**    * Initialize an array of ExprNodeEvaluator and put the return values into a    * StructObjectInspector with integer field names.    */
 specifier|protected
 specifier|static
 name|StructObjectInspector
@@ -3935,7 +3935,7 @@ operator|=
 name|counterNameToEnum
 expr_stmt|;
 block|}
-comment|/**    * Should be overridden to return the type of the specific operator among     * the types in OperatorType     *      * @return OperatorType.* or -1 if not overridden     */
+comment|/**    * Should be overridden to return the type of the specific operator among     * the types in OperatorType     *     * @return OperatorType.* or -1 if not overridden     */
 specifier|public
 name|int
 name|getType
