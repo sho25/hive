@@ -917,14 +917,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|true
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see java.sql.Connection#getCatalog()    */
 specifier|public

@@ -79,14 +79,14 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+return|return
+name|getConnection
 argument_list|(
-literal|"Method not supported"
+literal|""
+argument_list|,
+literal|""
 argument_list|)
-throw|;
+return|;
 block|}
 comment|/* (non-Javadoc)    * @see javax.sql.DataSource#getConnection(java.lang.String, java.lang.String)    */
 specifier|public

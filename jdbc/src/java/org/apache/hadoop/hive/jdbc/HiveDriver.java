@@ -231,6 +231,8 @@ operator|.
 name|matches
 argument_list|(
 name|URL_PREFIX
+operator|+
+literal|".*"
 argument_list|,
 name|url
 argument_list|)
