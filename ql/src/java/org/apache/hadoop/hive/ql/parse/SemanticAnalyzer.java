@@ -29842,6 +29842,33 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|num
+operator|>
+name|den
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|BUCKETED_NUMBERATOR_BIGGER_DENOMINATOR
+operator|.
+name|getMsg
+argument_list|()
+operator|+
+literal|" "
+operator|+
+name|tab
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+throw|;
+block|}
 comment|// check if a predicate is needed
 comment|// predicate is needed if either input pruning is not enough
 comment|// or if input pruning is not possible
@@ -30040,15 +30067,19 @@ name|num
 operator|==
 name|den
 operator|||
+operator|(
 name|den
-operator|<=
+operator|%
 name|numBuckets
-operator|&&
+operator|==
+literal|0
+operator|||
 name|numBuckets
 operator|%
 name|den
 operator|==
 literal|0
+operator|)
 operator|)
 condition|)
 block|{

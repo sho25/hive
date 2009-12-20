@@ -396,6 +396,11 @@ argument_list|(
 literal|"Sampling Expression Needed for Non-Bucketed Table"
 argument_list|)
 block|,
+name|BUCKETED_NUMBERATOR_BIGGER_DENOMINATOR
+argument_list|(
+literal|"Numberator should not be bigger than denaminator in sample clause for Table"
+argument_list|)
+block|,
 name|NEED_PARTITION_ERROR
 argument_list|(
 literal|"need to specify partition columns because the destination table is partitioned."
