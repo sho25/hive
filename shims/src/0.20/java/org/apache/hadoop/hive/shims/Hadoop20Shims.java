@@ -1191,13 +1191,11 @@ index|[
 name|pos
 index|]
 operator|.
-name|toString
+name|toUri
 argument_list|()
 operator|.
-name|substring
-argument_list|(
-literal|5
-argument_list|)
+name|getPath
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
