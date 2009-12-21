@@ -1682,6 +1682,17 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|srcs
+operator|.
+name|length
+operator|==
+literal|0
+condition|)
+return|return
+literal|null
+return|;
 return|return
 name|srcs
 index|[

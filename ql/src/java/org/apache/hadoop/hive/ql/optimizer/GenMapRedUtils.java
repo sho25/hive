@@ -3277,6 +3277,13 @@ range|:
 name|paths
 control|)
 block|{
+if|if
+condition|(
+name|p
+operator|==
+literal|null
+condition|)
+continue|continue;
 name|String
 name|path
 init|=
