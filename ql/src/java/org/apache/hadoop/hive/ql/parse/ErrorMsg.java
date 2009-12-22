@@ -411,6 +411,11 @@ argument_list|(
 literal|"Create table command does not allow LIKE and AS-SELECT in the same command"
 argument_list|)
 block|,
+name|LINES_TERMINATED_BY_NON_NEWLINE
+argument_list|(
+literal|"LINES TERMINATED BY only supports newline '\\n' right now"
+argument_list|)
+block|,
 name|CTAS_COLLST_COEXISTENCE
 argument_list|(
 literal|"Create table as select command cannot specify the list of columns for the target table."
