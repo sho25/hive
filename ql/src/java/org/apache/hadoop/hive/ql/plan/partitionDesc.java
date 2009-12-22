@@ -1182,6 +1182,16 @@ operator|.
 name|clone
 argument_list|()
 expr_stmt|;
+comment|// The partition spec is not present
+if|if
+condition|(
+name|this
+operator|.
+name|partSpec
+operator|!=
+literal|null
+condition|)
+block|{
 name|ret
 operator|.
 name|partSpec
@@ -1210,6 +1220,7 @@ operator|.
 name|partSpec
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|ret
 return|;

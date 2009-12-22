@@ -1106,6 +1106,23 @@ argument_list|(
 name|key
 argument_list|)
 expr_stmt|;
+comment|// Partitions do not exist for this table
+if|if
+condition|(
+name|partSpec
+operator|==
+literal|null
+condition|)
+name|partValues
+index|[
+name|i
+index|]
+operator|=
+operator|new
+name|Text
+argument_list|()
+expr_stmt|;
+else|else
 name|partValues
 index|[
 name|i
