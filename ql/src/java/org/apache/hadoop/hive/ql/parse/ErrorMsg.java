@@ -510,6 +510,11 @@ argument_list|(
 literal|"Lateral view AST with invalid child"
 argument_list|)
 block|,
+name|OUTPUT_SPECIFIED_MULTIPLE_TIMES
+argument_list|(
+literal|"The same output cannot be present multiple times: "
+argument_list|)
+block|,
 name|INVALID_AS
 argument_list|(
 literal|"AS clause has an invalid number of aliases"

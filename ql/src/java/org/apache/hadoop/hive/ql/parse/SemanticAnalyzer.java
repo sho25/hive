@@ -3338,7 +3338,7 @@ return|return
 name|expr
 return|;
 block|}
-comment|/**    * Goes though the tabref tree and finds the alias for the table. Once found,    * it records the table name-> alias association in aliasToTabs. It also makes    * an association from the alias to the table AST in parse info.    *     * @return the alias of the table    */
+comment|/**    * Goes though the tabref tree and finds the alias for the table. Once found,    * it records the table name-> alias association in aliasToTabs. It also makes    * an association from the alias to the table AST in parse info.    *    * @return the alias of the table    */
 specifier|private
 name|String
 name|processTable
@@ -3933,7 +3933,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Given the AST with TOK_JOIN as the root, get all the aliases for the tables    * or subqueries in the join.    *     * @param qb    * @param join    * @throws SemanticException    */
+comment|/**    * Given the AST with TOK_JOIN as the root, get all the aliases for the tables    * or subqueries in the join.    *    * @param qb    * @param join    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -4122,7 +4122,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Given the AST with TOK_LATERAL_VIEW as the root, get the alias for the    * table or subquery in the lateral view and also make a mapping from the    * alias to all the lateral view AST's    *     * @param qb    * @param lateralView    * @return the alias for the table/subquery    * @throws SemanticException    */
+comment|/**    * Given the AST with TOK_LATERAL_VIEW as the root, get the alias for the    * table or subquery in the lateral view and also make a mapping from the    * alias to all the lateral view AST's    *    * @param qb    * @param lateralView    * @return the alias for the table/subquery    * @throws SemanticException    */
 specifier|private
 name|String
 name|processLateralView
@@ -4257,7 +4257,7 @@ return|return
 name|alias
 return|;
 block|}
-comment|/**    * Phase 1: (including, but not limited to):    *     * 1. Gets all the aliases for all the tables / subqueries and makes the    *    appropriate mapping in aliasToTabs, aliasToSubq    * 2. Gets the location of the destination and names the clase "inclause" + i    * 3. Creates a map from a string representation of an aggregation tree to the    *    actual aggregation AST    * 4. Creates a mapping from the clause name to the select expression AST in    *    destToSelExpr    * 5. Creates a mapping from a table alias to the lateral view AST's in     *    aliasToLateralViews    *        * @param ast    * @param qb    * @param ctx_1    * @throws SemanticException    */
+comment|/**    * Phase 1: (including, but not limited to):    *    * 1. Gets all the aliases for all the tables / subqueries and makes the    *    appropriate mapping in aliasToTabs, aliasToSubq    * 2. Gets the location of the destination and names the clase "inclause" + i    * 3. Creates a map from a string representation of an aggregation tree to the    *    actual aggregation AST    * 4. Creates a mapping from the clause name to the select expression AST in    *    destToSelExpr    * 5. Creates a mapping from a table alias to the lateral view AST's in    *    aliasToLateralViews    *    * @param ast    * @param qb    * @param ctx_1    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -17680,6 +17680,9 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
 name|outputs
 operator|.
 name|add
@@ -17690,7 +17693,26 @@ argument_list|(
 name|dest_tab
 argument_list|)
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|OUTPUT_SPECIFIED_MULTIPLE_TIMES
+operator|.
+name|getMsg
+argument_list|(
+name|dest_tab
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+argument_list|)
+throw|;
+block|}
 break|break;
 block|}
 case|case
@@ -17809,6 +17831,9 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
 name|outputs
 operator|.
 name|add
@@ -17819,7 +17844,33 @@ argument_list|(
 name|dest_part
 argument_list|)
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|OUTPUT_SPECIFIED_MULTIPLE_TIMES
+operator|.
+name|getMsg
+argument_list|(
+name|dest_tab
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|"@"
+operator|+
+name|dest_part
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+argument_list|)
+throw|;
+block|}
 break|break;
 block|}
 case|case
@@ -18330,6 +18381,9 @@ name|colTypes
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
 name|outputs
 operator|.
 name|add
@@ -18343,7 +18397,23 @@ operator|!
 name|isDfsDir
 argument_list|)
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|OUTPUT_SPECIFIED_MULTIPLE_TIMES
+operator|.
+name|getMsg
+argument_list|(
+name|destStr
+argument_list|)
+argument_list|)
+throw|;
+block|}
 break|break;
 block|}
 default|default:
@@ -30932,7 +31002,7 @@ return|return
 name|bodyOpInfo
 return|;
 block|}
-comment|/**    * Generates the operator DAG needed to implement lateral views and attaches    * it to the TS operator.    *     * @param aliasToOpInfo A mapping from a table alias to the TS operator. This    *                      function replaces the operator mapping as necessary    * @param qb    * @throws SemanticException    */
+comment|/**    * Generates the operator DAG needed to implement lateral views and attaches    * it to the TS operator.    *    * @param aliasToOpInfo A mapping from a table alias to the TS operator. This    *                      function replaces the operator mapping as necessary    * @param qb    * @throws SemanticException    */
 name|void
 name|genLateralViewPlans
 parameter_list|(
@@ -31224,7 +31294,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * A helper function that gets all the columns and respective aliases in the    * source and puts them into dest. It renames the internal names of the     * columns based on getColumnInternalName(position).    *     * Note that this helper method relies on RowResolver.getColumnInfos()    * returning the columns in the same order as they will be passed in the     * operator DAG.    *     * @param source    * @param dest    * @param outputColNames - a list to which the new internal column names will    *                         be added, in the same order as in the dest row    *                         resolver    */
+comment|/**    * A helper function that gets all the columns and respective aliases in the    * source and puts them into dest. It renames the internal names of the    * columns based on getColumnInternalName(position).    *    * Note that this helper method relies on RowResolver.getColumnInfos()    * returning the columns in the same order as they will be passed in the    * operator DAG.    *    * @param source    * @param dest    * @param outputColNames - a list to which the new internal column names will    *                         be added, in the same order as in the dest row    *                         resolver    */
 specifier|private
 name|void
 name|LVmergeRowResolvers
