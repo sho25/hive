@@ -28481,6 +28481,25 @@ name|rightalias
 argument_list|)
 decl_stmt|;
 comment|// make sure the schemas of both sides are the same
+if|if
+condition|(
+name|leftmap
+operator|.
+name|size
+argument_list|()
+operator|!=
+name|rightmap
+operator|.
+name|size
+argument_list|()
+condition|)
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Schema of both sides of union should match."
+argument_list|)
+throw|;
 for|for
 control|(
 name|Map
