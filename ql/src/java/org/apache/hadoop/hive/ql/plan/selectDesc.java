@@ -411,6 +411,35 @@ operator|=
 name|outputColumnNames
 expr_stmt|;
 block|}
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"SELECT * "
+argument_list|)
+specifier|public
+name|String
+name|explainNoCompute
+parameter_list|()
+block|{
+if|if
+condition|(
+name|isSelStarNoCompute
+argument_list|()
+condition|)
+block|{
+return|return
+literal|"(no compute)"
+return|;
+block|}
+else|else
+block|{
+return|return
+literal|null
+return|;
+block|}
+block|}
 comment|/**    * @return the selectStar    */
 specifier|public
 name|boolean
