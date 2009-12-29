@@ -81,6 +81,8 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|persistence
+operator|.
 name|HashMapWrapper
 import|;
 end_import

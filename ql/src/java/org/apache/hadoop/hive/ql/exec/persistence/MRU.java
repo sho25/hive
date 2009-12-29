@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|persistence
 package|;
 end_package
 
@@ -32,6 +34,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|persistence
 operator|.
 name|DCLLItem
 import|;

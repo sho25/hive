@@ -616,6 +616,13 @@ argument_list|,
 literal|1000
 argument_list|)
 block|,
+name|HIVEJOINCACHESIZE
+argument_list|(
+literal|"hive.join.cache.size"
+argument_list|,
+literal|25000
+argument_list|)
+block|,
 name|HIVEMAPJOINROWSIZE
 argument_list|(
 literal|"hive.mapjoin.size.key"

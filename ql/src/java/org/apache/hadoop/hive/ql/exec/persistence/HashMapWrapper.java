@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|persistence
 package|;
 end_package
 
@@ -187,6 +189,8 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|persistence
+operator|.
 name|MRU
 import|;
 end_import
@@ -204,6 +208,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|persistence
 operator|.
 name|DCLLItem
 import|;
@@ -387,6 +393,12 @@ expr_stmt|;
 name|this
 operator|.
 name|recman
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|tmpFile
 operator|=
 literal|null
 expr_stmt|;
@@ -923,8 +935,6 @@ block|}
 else|else
 block|{
 comment|// for items inserted into persistent hash table, we don't put it into MRU
-try|try
-block|{
 if|if
 condition|(
 name|pHash
@@ -932,20 +942,80 @@ operator|==
 literal|null
 condition|)
 block|{
+name|pHash
+operator|=
+name|getPersistentHash
+argument_list|()
+expr_stmt|;
+block|}
+try|try
+block|{
+name|pHash
+operator|.
+name|put
+argument_list|(
+name|key
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+name|recman
+operator|.
+name|commit
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+name|e
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+block|}
+block|}
+comment|/**    * Get the persistent hash table.    * @return persistent hash table    * @throws HiveException    */
+specifier|private
+name|HTree
+name|getPersistentHash
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+try|try
+block|{
 comment|// Create a temporary file for the page manager to hold persistent data.
-comment|// Delete it if the JVM terminate normally.
-comment|// Caveat: it won't be deleted if JVM is killed by 'kill -9'.
 if|if
 condition|(
 name|tmpFile
 operator|!=
 literal|null
 condition|)
+block|{
 name|tmpFile
 operator|.
 name|delete
 argument_list|()
 expr_stmt|;
+block|}
 name|tmpFile
 operator|=
 name|File
@@ -955,8 +1025,28 @@ argument_list|(
 literal|"HashMapWrapper"
 argument_list|,
 literal|".tmp"
+argument_list|,
+operator|new
+name|File
+argument_list|(
+literal|"/tmp"
+argument_list|)
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"HashMapWrapper created temp file "
+operator|+
+name|tmpFile
+operator|.
+name|getAbsolutePath
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// Delete the temp file if the JVM terminate normally through Hadoop job kill command.
+comment|// Caveat: it won't be deleted if JVM is killed by 'kill -9'.
 name|tmpFile
 operator|.
 name|deleteOnExit
@@ -1014,21 +1104,6 @@ name|recman
 argument_list|)
 expr_stmt|;
 block|}
-name|pHash
-operator|.
-name|put
-argument_list|(
-name|key
-argument_list|,
-name|value
-argument_list|)
-expr_stmt|;
-name|recman
-operator|.
-name|commit
-argument_list|()
-expr_stmt|;
-block|}
 catch|catch
 parameter_list|(
 name|Exception
@@ -1053,8 +1128,9 @@ name|e
 argument_list|)
 throw|;
 block|}
-block|}
-block|}
+return|return
+name|pHash
+return|;
 block|}
 comment|/**    * Clean up the hash table. All elements in the main memory hash table will be removed, and    * the persistent hash table will be destroyed (temporary file will be deleted).    */
 specifier|public
@@ -1164,22 +1240,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-block|}
-block|}
-comment|/**    * There will be no more put to the hash map before it is destroyed or cleared.     * This is used to optimize MRU list maintenance cost.    */
-specifier|public
-name|void
-name|noMorePut
-parameter_list|()
-block|{
-if|if
-condition|(
-name|pHash
-operator|==
-literal|null
-condition|)
-block|{
-comment|// all data in main memory, no need MRU
 block|}
 block|}
 comment|/**    * Get a list of all keys in the hash map.    * @return    */
