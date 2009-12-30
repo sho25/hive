@@ -373,6 +373,13 @@ literal|false
 argument_list|)
 block|,
 comment|// parallel query launching
+name|HIVESPECULATIVEEXECREDUCERS
+argument_list|(
+literal|"hive.mapred.reduce.tasks.speculative.execution"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// hadoop stuff
 name|HADOOPBIN
 argument_list|(
@@ -435,6 +442,13 @@ argument_list|(
 literal|"mapred.job.name"
 argument_list|,
 literal|null
+argument_list|)
+block|,
+name|HADOOPSPECULATIVEEXECREDUCERS
+argument_list|(
+literal|"mapred.reduce.tasks.speculative.execution"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 comment|// MetaStore stuff.
