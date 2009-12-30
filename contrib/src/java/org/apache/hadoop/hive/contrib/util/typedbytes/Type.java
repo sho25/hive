@@ -99,7 +99,7 @@ argument_list|)
 block|,
 name|ENDOFRECORD
 argument_list|(
-literal|100
+literal|177
 argument_list|)
 block|,
 comment|// low-level codes (> 200):
