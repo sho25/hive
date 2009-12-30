@@ -785,7 +785,7 @@ name|DefaultExprProcessor
 operator|.
 name|getFuncExprNodeDesc
 argument_list|(
-literal|"&&"
+literal|"and"
 argument_list|,
 name|func1
 argument_list|,

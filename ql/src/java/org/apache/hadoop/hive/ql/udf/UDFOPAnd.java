@@ -103,7 +103,7 @@ name|description
 argument_list|(
 name|name
 operator|=
-literal|"and,&&"
+literal|"and"
 argument_list|,
 name|value
 operator|=
