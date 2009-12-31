@@ -33862,6 +33862,11 @@ operator|.
 name|getWork
 argument_list|()
 decl_stmt|;
+name|work
+operator|.
+name|deriveExplainAttributes
+argument_list|()
+expr_stmt|;
 name|HashMap
 argument_list|<
 name|String
