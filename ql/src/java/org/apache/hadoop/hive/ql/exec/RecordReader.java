@@ -41,6 +41,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -81,6 +91,9 @@ name|in
 parameter_list|,
 name|Configuration
 name|conf
+parameter_list|,
+name|Properties
+name|tbl
 parameter_list|)
 throws|throws
 name|IOException
