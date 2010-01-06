@@ -924,6 +924,21 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
+comment|// check if any operator had a fatal error or early exit during execution
+if|if
+condition|(
+name|forwardOp
+operator|.
+name|getDone
+argument_list|()
+condition|)
+block|{
+name|done
+operator|=
+literal|true
+expr_stmt|;
+break|break;
+block|}
 block|}
 if|if
 condition|(

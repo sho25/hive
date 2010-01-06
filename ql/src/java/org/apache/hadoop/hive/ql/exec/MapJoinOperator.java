@@ -557,6 +557,22 @@ argument_list|>
 argument_list|>
 name|mapJoinTables
 decl_stmt|;
+specifier|transient
+specifier|static
+specifier|final
+specifier|private
+name|String
+index|[]
+name|fatalErrMsg
+init|=
+block|{
+literal|null
+block|,
+comment|// counter value 0 means no error
+literal|"Mapside join size exceeds hive.mapjoin.maxsize. Please increase that or remove the mapjoin hint."
+comment|// counter value 1
+block|}
+decl_stmt|;
 specifier|public
 specifier|static
 class|class
@@ -682,6 +698,10 @@ specifier|transient
 name|int
 name|heartbeatInterval
 decl_stmt|;
+specifier|transient
+name|int
+name|maxMapJoinSize
+decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
@@ -722,6 +742,21 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVESENDHEARTBEAT
+argument_list|)
+expr_stmt|;
+name|maxMapJoinSize
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEMAXMAPJOINSIZE
 argument_list|)
 expr_stmt|;
 name|joinKeys
@@ -1084,6 +1119,44 @@ expr_stmt|;
 block|}
 annotation|@
 name|Override
+specifier|protected
+name|void
+name|fatalErrorMessage
+parameter_list|(
+name|StringBuffer
+name|errMsg
+parameter_list|,
+name|long
+name|counterCode
+parameter_list|)
+block|{
+name|errMsg
+operator|.
+name|append
+argument_list|(
+literal|"Operator "
+operator|+
+name|getOperatorId
+argument_list|()
+operator|+
+literal|" (id="
+operator|+
+name|id
+operator|+
+literal|"): "
+operator|+
+name|fatalErrMsg
+index|[
+operator|(
+name|int
+operator|)
+name|counterCode
+index|]
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -1273,7 +1346,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|// Send some status perodically
+comment|// Send some status periodically
 name|numMapRowsRead
 operator|++
 expr_stmt|;
@@ -1300,6 +1373,48 @@ operator|.
 name|progress
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+operator|(
+name|numMapRowsRead
+operator|>
+name|maxMapJoinSize
+operator|)
+operator|&&
+operator|(
+name|reporter
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|counterNameToEnum
+operator|!=
+literal|null
+operator|)
+condition|)
+block|{
+comment|// update counter
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Too many rows in map join tables. Fatal error counter will be incremented!!"
+argument_list|)
+expr_stmt|;
+name|incrCounter
+argument_list|(
+name|fatalErrorCntr
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+name|fatalError
+operator|=
+literal|true
+expr_stmt|;
+return|return;
+block|}
 name|HashMapWrapper
 argument_list|<
 name|MapJoinObjectKey

@@ -851,6 +851,13 @@ argument_list|,
 literal|1000
 argument_list|)
 block|,
+name|HIVEMAXMAPJOINSIZE
+argument_list|(
+literal|"hive.mapjoin.maxsize"
+argument_list|,
+literal|100000
+argument_list|)
+block|,
 name|HIVEJOBPROGRESS
 argument_list|(
 literal|"hive.task.progress"
