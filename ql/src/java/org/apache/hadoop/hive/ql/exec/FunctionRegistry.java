@@ -920,6 +920,15 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+name|registerGenericUDF
+argument_list|(
+literal|"field"
+argument_list|,
+name|GenericUDFField
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 name|registerUDF
 argument_list|(
 literal|"find_in_set"
