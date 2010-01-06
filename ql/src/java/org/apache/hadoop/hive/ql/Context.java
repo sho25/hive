@@ -800,6 +800,31 @@ name|e
 argument_list|)
 throw|;
 block|}
+catch|catch
+parameter_list|(
+name|IllegalArgumentException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Error while making MR scratch "
+operator|+
+literal|"directory - check filesystem config ("
+operator|+
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|+
+literal|")"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 return|return
 name|MRScratchDir
@@ -837,6 +862,31 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|IllegalArgumentException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Error while making local scratch "
+operator|+
+literal|"directory - check filesystem config ("
+operator|+
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|+
+literal|")"
+argument_list|,
 name|e
 argument_list|)
 throw|;
