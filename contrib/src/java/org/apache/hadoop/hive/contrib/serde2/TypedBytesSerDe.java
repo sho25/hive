@@ -748,7 +748,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TypedBytesSerDe uses typed bytes to serialize/deserialize.  *   * More info on the typedbytes stuff that Dumbo uses.  * http://issues.apache.org/jira/browse/HADOOP-1722   * A fast python decoder for this, which is apparently 25% faster than the python version is available at  * http://github.com/klbostee/ctypedbytes/tree/master   */
+comment|/**  * TypedBytesSerDe uses typed bytes to serialize/deserialize.  *  * More info on the typedbytes stuff that Dumbo uses.  * http://issues.apache.org/jira/browse/HADOOP-1722  * A fast python decoder for this, which is apparently 25% faster than the python version is available at  * http://github.com/klbostee/ctypedbytes/tree/master  */
 end_comment
 
 begin_class
@@ -1827,17 +1827,6 @@ name|serializeBytesWritable
 return|;
 block|}
 specifier|private
-name|byte
-index|[]
-name|tmpByteArr
-init|=
-operator|new
-name|byte
-index|[
-literal|1
-index|]
-decl_stmt|;
-specifier|private
 name|void
 name|serializeField
 parameter_list|(
@@ -1948,7 +1937,7 @@ name|ByteObjectInspector
 operator|)
 name|poi
 decl_stmt|;
-name|BytesWritable
+name|ByteWritable
 name|r
 init|=
 name|reuse
@@ -1956,35 +1945,24 @@ operator|==
 literal|null
 condition|?
 operator|new
-name|BytesWritable
+name|ByteWritable
 argument_list|()
 else|:
 operator|(
-name|BytesWritable
+name|ByteWritable
 operator|)
 name|reuse
 decl_stmt|;
-name|tmpByteArr
-index|[
-literal|0
-index|]
-operator|=
+name|r
+operator|.
+name|set
+argument_list|(
 name|boi
 operator|.
 name|get
 argument_list|(
 name|o
 argument_list|)
-expr_stmt|;
-name|r
-operator|.
-name|set
-argument_list|(
-name|tmpByteArr
-argument_list|,
-literal|0
-argument_list|,
-literal|1
 argument_list|)
 expr_stmt|;
 name|tbOut
