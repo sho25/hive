@@ -450,18 +450,14 @@ argument_list|)
 decl_stmt|;
 comment|/**    * The mapping from expression function names to expression classes.    */
 specifier|static
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
 name|FunctionInfo
 argument_list|>
 name|mFunctions
-decl_stmt|;
-static|static
-block|{
-name|mFunctions
-operator|=
+init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
@@ -470,7 +466,9 @@ argument_list|,
 name|FunctionInfo
 argument_list|>
 argument_list|()
-expr_stmt|;
+decl_stmt|;
+static|static
+block|{
 name|registerUDF
 argument_list|(
 literal|"concat"
@@ -4163,6 +4161,17 @@ parameter_list|)
 block|{
 if|if
 condition|(
+literal|null
+operator|==
+name|genericUDF
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+if|if
+condition|(
 name|genericUDF
 operator|instanceof
 name|GenericUDFBridge
@@ -4197,8 +4206,6 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-else|else
-block|{
 return|return
 operator|(
 name|GenericUDF
@@ -4216,7 +4223,6 @@ literal|null
 argument_list|)
 return|;
 block|}
-block|}
 comment|/**    * Create a copy of an existing GenericUDTF.    */
 specifier|public
 specifier|static
@@ -4227,6 +4233,17 @@ name|GenericUDTF
 name|genericUDTF
 parameter_list|)
 block|{
+if|if
+condition|(
+literal|null
+operator|==
+name|genericUDTF
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 return|return
 operator|(
 name|GenericUDTF

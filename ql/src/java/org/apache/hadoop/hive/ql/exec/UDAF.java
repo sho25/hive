@@ -19,6 +19,24 @@ name|exec
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|UDFType
+import|;
+end_import
+
 begin_comment
 comment|//import org.apache.hadoop.hive.serde.ReflectionSerDe;
 end_comment
