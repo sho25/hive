@@ -986,7 +986,7 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
 name|org
 operator|.
 name|apache
@@ -996,6 +996,24 @@ operator|.
 name|util
 operator|.
 name|StringUtils
+operator|.
+name|stringifyException
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|join
 import|;
 end_import
 
@@ -1424,8 +1442,6 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -1455,8 +1471,6 @@ argument_list|()
 argument_list|,
 literal|"\n"
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -1467,8 +1481,6 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -1498,8 +1510,6 @@ argument_list|()
 argument_list|,
 literal|"\n"
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -2321,8 +2331,6 @@ name|info
 argument_list|(
 literal|"show partitions: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -2352,8 +2360,6 @@ name|info
 argument_list|(
 literal|"show partitions: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -2578,8 +2584,6 @@ name|warn
 argument_list|(
 literal|"show table: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -2602,8 +2606,6 @@ name|warn
 argument_list|(
 literal|"show table: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -2818,8 +2820,6 @@ name|warn
 argument_list|(
 literal|"show function: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -2842,8 +2842,6 @@ name|warn
 argument_list|(
 literal|"show function: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -3014,7 +3012,48 @@ name|descFunc
 operator|.
 name|isExtended
 argument_list|()
-operator|&&
+condition|)
+block|{
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|synonyms
+init|=
+name|FunctionRegistry
+operator|.
+name|getFunctionSynonyms
+argument_list|(
+name|funcName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|synonyms
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|outStream
+operator|.
+name|writeBytes
+argument_list|(
+literal|"\nSynonyms: "
+operator|+
+name|join
+argument_list|(
+name|synonyms
+argument_list|,
+literal|", "
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|desc
 operator|.
 name|extended
@@ -3047,6 +3086,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 else|else
 block|{
 if|if
@@ -3060,9 +3100,11 @@ name|outStream
 operator|.
 name|writeBytes
 argument_list|(
-literal|"There is no documentation for function "
+literal|"There is no documentation for function '"
 operator|+
 name|funcName
+operator|+
+literal|"'"
 argument_list|)
 expr_stmt|;
 block|}
@@ -3072,11 +3114,11 @@ name|outStream
 operator|.
 name|writeBytes
 argument_list|(
-literal|"Function "
+literal|"Function '"
 operator|+
 name|funcName
 operator|+
-literal|" does not exist."
+literal|"' does not exist."
 argument_list|)
 expr_stmt|;
 block|}
@@ -3111,8 +3153,6 @@ name|warn
 argument_list|(
 literal|"describe function: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -3135,8 +3175,6 @@ name|warn
 argument_list|(
 literal|"describe function: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -3879,8 +3917,6 @@ name|info
 argument_list|(
 literal|"show table status: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -3903,8 +3939,6 @@ name|info
 argument_list|(
 literal|"show table status: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -4210,8 +4244,6 @@ name|info
 argument_list|(
 literal|"describe table: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -4234,8 +4266,6 @@ name|info
 argument_list|(
 literal|"describe table: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -4703,8 +4733,6 @@ name|info
 argument_list|(
 literal|"describe table: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -4727,8 +4755,6 @@ name|info
 argument_list|(
 literal|"describe table: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -6648,8 +6674,6 @@ operator|.
 name|getMessage
 argument_list|()
 argument_list|,
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -6704,8 +6728,6 @@ operator|.
 name|getMessage
 argument_list|()
 argument_list|,
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -6755,8 +6777,6 @@ name|info
 argument_list|(
 literal|"alter table: "
 operator|+
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -7990,8 +8010,6 @@ operator|.
 name|getMessage
 argument_list|()
 argument_list|,
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
