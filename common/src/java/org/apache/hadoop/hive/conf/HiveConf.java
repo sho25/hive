@@ -755,10 +755,8 @@ name|System
 operator|.
 name|getenv
 argument_list|(
-literal|"HIVE_HOME"
+literal|"HWI_WAR_FILE"
 argument_list|)
-operator|+
-literal|"/lib/hive_hwi.war"
 argument_list|)
 block|,
 comment|// mapper/reducer memory in local mode
