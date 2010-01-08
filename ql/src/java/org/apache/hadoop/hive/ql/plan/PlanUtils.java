@@ -489,7 +489,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    * and column names (comma separated string).    */
+comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    * and column names (comma separated string).    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -513,7 +513,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor of given serde with the separatorCode    * and column names (comma separated string).    */
+comment|/**    * Generate the table descriptor of given serde with the separatorCode    * and column names (comma separated string).    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -547,7 +547,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    * and column names (comma separated string), and whether the last column should take    * the rest of the line.    */
+comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    * and column names (comma separated string), and whether the last column should take    * the rest of the line.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -576,7 +576,7 @@ name|lastColumnTakesRestOfTheLine
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor of the serde specified with the separatorCode    * and column names (comma separated string), and whether the last column should take    * the rest of the line.    */
+comment|/**    * Generate the table descriptor of the serde specified with the separatorCode    * and column names (comma separated string), and whether the last column should take    * the rest of the line.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -615,7 +615,7 @@ name|lastColumnTakesRestOfTheLine
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    * and column names (comma separated string), and whether the last column should take    * the rest of the line.    */
+comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    * and column names (comma separated string), and whether the last column should take    * the rest of the line.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -1144,7 +1144,7 @@ return|return
 name|ret
 return|;
 block|}
-comment|/**     * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode.    * MetaDataTypedColumnsetSerDe is used because LazySimpleSerDe does not support a table    * with a single column "col" with type "array<string>".    */
+comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode.    * MetaDataTypedColumnsetSerDe is used because LazySimpleSerDe does not support a table    * with a single column "col" with type "array<string>".    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -1193,7 +1193,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor for reduce key.    */
+comment|/**    * Generate the table descriptor for reduce key.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -1260,7 +1260,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor for Map-side join key.    */
+comment|/**    * Generate the table descriptor for Map-side join key.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -1320,7 +1320,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor for Map-side join key.    */
+comment|/**    * Generate the table descriptor for Map-side join key.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -1380,7 +1380,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor for intermediate files.    */
+comment|/**    * Generate the table descriptor for intermediate files.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -1444,7 +1444,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**     * Generate the table descriptor for intermediate files.    */
+comment|/**    * Generate the table descriptor for intermediate files.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -1508,7 +1508,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**     * Convert the ColumnList to FieldSchema list.    */
+comment|/**    * Convert the ColumnList to FieldSchema list.    */
 specifier|public
 specifier|static
 name|List
@@ -1608,7 +1608,7 @@ return|return
 name|schemas
 return|;
 block|}
-comment|/**     * Convert the ColumnList to FieldSchema list.    */
+comment|/**    * Convert the ColumnList to FieldSchema list.    */
 specifier|public
 specifier|static
 name|List
@@ -1692,7 +1692,7 @@ return|return
 name|schemas
 return|;
 block|}
-comment|/**     * Convert the RowSchema to FieldSchema list.    */
+comment|/**    * Convert the RowSchema to FieldSchema list.    */
 specifier|public
 specifier|static
 name|List
@@ -1728,7 +1728,7 @@ name|fieldPrefix
 argument_list|)
 return|;
 block|}
-comment|/**     * Convert the ColumnInfo to FieldSchema.    */
+comment|/**    * Convert the ColumnInfo to FieldSchema.    */
 specifier|public
 specifier|static
 name|List
@@ -1747,6 +1747,31 @@ name|String
 name|fieldPrefix
 parameter_list|)
 block|{
+if|if
+condition|(
+operator|(
+name|cols
+operator|==
+literal|null
+operator|)
+operator|||
+operator|(
+name|cols
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+operator|)
+condition|)
+return|return
+operator|new
+name|ArrayList
+argument_list|<
+name|FieldSchema
+argument_list|>
+argument_list|()
+return|;
 name|List
 argument_list|<
 name|FieldSchema
@@ -1911,7 +1936,7 @@ return|return
 name|schema
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param outputColumnNames The output columns names    * @param tag       The tag for this reducesink    * @param partitionCols The columns for partitioning.    * @param numReducers  The number of reducers, set to -1 for automatic inference     *                     based on input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param outputColumnNames The output columns names    * @param tag       The tag for this reducesink    * @param partitionCols The columns for partitioning.    * @param numReducers  The number of reducers, set to -1 for automatic inference    *                     based on input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|reduceSinkDesc
@@ -2163,7 +2188,7 @@ name|valueTable
 argument_list|)
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param outputColumnNames The output columns names    * @param tag       The tag for this reducesink    * @param numPartitionFields  The first numPartitionFields of keyCols will be partition columns.    *                  If numPartitionFields=-1, then partition randomly.    * @param numReducers  The number of reducers, set to -1 for automatic inference     *                     based on input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param outputColumnNames The output columns names    * @param tag       The tag for this reducesink    * @param numPartitionFields  The first numPartitionFields of keyCols will be partition columns.    *                  If numPartitionFields=-1, then partition randomly.    * @param numReducers  The number of reducers, set to -1 for automatic inference    *                     based on input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|reduceSinkDesc
