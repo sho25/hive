@@ -67,7 +67,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|ObjectInputStream
+name|DataInputStream
 import|;
 end_import
 
@@ -77,7 +77,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|ObjectOutputStream
+name|DataOutputStream
 import|;
 end_import
 
@@ -370,6 +370,11 @@ name|ObjectInspector
 name|standardOI
 decl_stmt|;
 comment|// object inspector for the row
+specifier|private
+name|ArrayList
+name|dummyRow
+decl_stmt|;
+comment|// representing empty row (no columns since value art is null)
 specifier|public
 name|RowContainer
 parameter_list|()
@@ -481,6 +486,16 @@ operator|.
 name|standardOI
 operator|=
 literal|null
+expr_stmt|;
+name|this
+operator|.
+name|dummyRow
+operator|=
+operator|new
+name|ArrayList
+argument_list|(
+literal|0
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -866,7 +881,7 @@ name|offset
 init|=
 name|rFile
 operator|.
-name|getFilePointer
+name|length
 argument_list|()
 decl_stmt|;
 name|long
@@ -1020,7 +1035,7 @@ assert|;
 name|ByteArrayOutputStream
 name|baos
 decl_stmt|;
-name|ObjectOutputStream
+name|DataOutputStream
 name|oos
 decl_stmt|;
 try|try
@@ -1034,7 +1049,7 @@ expr_stmt|;
 name|oos
 operator|=
 operator|new
-name|ObjectOutputStream
+name|DataOutputStream
 argument_list|(
 name|baos
 argument_list|)
@@ -1049,6 +1064,19 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
+comment|// if serde or OI is null, meaning the join value is null, we don't need
+comment|// to serialize anything to disk, just need to keep the length.
+if|if
+condition|(
+name|serde
+operator|!=
+literal|null
+operator|&&
+name|standardOI
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|int
@@ -1088,6 +1116,7 @@ argument_list|(
 name|oos
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|oos
 operator|.
@@ -1137,7 +1166,7 @@ block|{
 name|ByteArrayInputStream
 name|bais
 decl_stmt|;
-name|ObjectInputStream
+name|DataInputStream
 name|ois
 decl_stmt|;
 try|try
@@ -1153,7 +1182,7 @@ expr_stmt|;
 name|ois
 operator|=
 operator|new
-name|ObjectInputStream
+name|DataInputStream
 argument_list|(
 name|bais
 argument_list|)
@@ -1193,6 +1222,8 @@ index|[
 name|sz
 index|]
 decl_stmt|;
+comment|// if serde or OI is null, meaning the join value is null, we don't need
+comment|// to serialize anything to disk, just need to keep the length.
 for|for
 control|(
 name|int
@@ -1207,6 +1238,17 @@ condition|;
 operator|++
 name|i
 control|)
+block|{
+if|if
+condition|(
+name|serde
+operator|!=
+literal|null
+operator|&&
+name|standardOI
+operator|!=
+literal|null
+condition|)
 block|{
 name|Writable
 name|val
@@ -1255,6 +1297,20 @@ operator|.
 name|WRITABLE
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|ret
+index|[
+name|i
+index|]
+operator|=
+operator|(
+name|Row
+operator|)
+name|dummyRow
+expr_stmt|;
+block|}
 block|}
 return|return
 name|ret
@@ -1307,6 +1363,10 @@ operator|=
 literal|0
 expr_stmt|;
 name|numBlocks
+operator|=
+literal|0
+expr_stmt|;
+name|pBlock
 operator|=
 literal|0
 expr_stmt|;

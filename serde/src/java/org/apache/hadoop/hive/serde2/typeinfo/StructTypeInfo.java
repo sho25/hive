@@ -325,7 +325,7 @@ name|STRUCT
 return|;
 block|}
 specifier|public
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -337,7 +337,7 @@ name|allStructFieldNames
 return|;
 block|}
 specifier|public
-name|List
+name|ArrayList
 argument_list|<
 name|TypeInfo
 argument_list|>
