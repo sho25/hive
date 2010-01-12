@@ -10982,8 +10982,13 @@ literal|2
 operator|)
 decl_stmt|;
 comment|// EXPR AS (ALIAS,...) parses, but is only allowed for UDTF's
+comment|// This check is not needed and invalid when there is a transform b/c the
+comment|// AST's are slightly different.
 if|if
 condition|(
+operator|!
+name|isInTransform
+operator|&&
 operator|!
 name|isUDTF
 operator|&&
