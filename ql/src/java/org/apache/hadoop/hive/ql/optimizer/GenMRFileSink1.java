@@ -2486,24 +2486,27 @@ name|ctx
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO: merge the currTask with mapTask in GenMRUnion1 so that we will
-comment|// always seen 1 mapTask (which is equals to currTask). After doing this
-comment|// the block should be removed.
-if|if
-condition|(
-name|ret
-operator|&&
+comment|// mapTask and currTask should be merged by and join/union operator
+comment|// (e.g., GenMRUnion1j) which has multiple topOps.
+assert|assert
 name|mapTask
-operator|!=
+operator|==
 name|currTask
-condition|)
+operator|:
+literal|"mapTask.id = "
+operator|+
+name|mapTask
+operator|.
+name|getId
+argument_list|()
+operator|+
+literal|"; currTask.id = "
+operator|+
 name|currTask
 operator|.
-name|removeDependentTask
-argument_list|(
-name|mvTask
-argument_list|)
-expr_stmt|;
+name|getId
+argument_list|()
+assert|;
 block|}
 return|return
 name|dest
