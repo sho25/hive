@@ -1001,6 +1001,7 @@ literal|null
 operator|)
 operator|)
 operator|||
+operator|(
 name|parseCtx
 operator|.
 name|getConf
@@ -1014,6 +1015,24 @@ name|ConfVars
 operator|.
 name|HIVEMERGEMAPREDFILES
 argument_list|)
+operator|&&
+operator|(
+operator|(
+operator|(
+name|mapredWork
+operator|)
+name|currTask
+operator|.
+name|getWork
+argument_list|()
+operator|)
+operator|.
+name|getReducer
+argument_list|()
+operator|!=
+literal|null
+operator|)
+operator|)
 condition|)
 name|chDir
 operator|=
@@ -2467,9 +2486,16 @@ name|ctx
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO: merge the currTask with mapTask in GenMRUnion1 so that we will
+comment|// always seen 1 mapTask (which is equals to currTask). After doing this
+comment|// the block should be removed.
 if|if
 condition|(
 name|ret
+operator|&&
+name|mapTask
+operator|!=
+name|currTask
 condition|)
 name|currTask
 operator|.
