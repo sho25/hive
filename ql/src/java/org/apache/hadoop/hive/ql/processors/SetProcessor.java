@@ -268,6 +268,11 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
+name|void
+name|init
+parameter_list|()
+block|{   }
+specifier|public
 name|int
 name|run
 parameter_list|(

@@ -2758,6 +2758,11 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+name|drv
+operator|.
+name|init
+argument_list|()
+expr_stmt|;
 name|pd
 operator|=
 operator|new

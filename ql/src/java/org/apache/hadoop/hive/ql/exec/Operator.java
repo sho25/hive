@@ -464,6 +464,17 @@ operator|++
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+specifier|static
+name|void
+name|resetId
+parameter_list|()
+block|{
+name|seqId
+operator|=
+literal|0
+expr_stmt|;
+block|}
 comment|/**    * Create an operator with a reporter.    * @param reporter Used to report progress of certain operators.    */
 specifier|public
 name|Operator

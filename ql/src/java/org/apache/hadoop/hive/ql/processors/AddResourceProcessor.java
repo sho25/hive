@@ -137,6 +137,11 @@ name|LOG
 argument_list|)
 decl_stmt|;
 specifier|public
+name|void
+name|init
+parameter_list|()
+block|{   }
+specifier|public
 name|int
 name|run
 parameter_list|(
