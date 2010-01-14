@@ -134,7 +134,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The class implements the method resolution for overloaded comparison operators. The  * resolution logic is as follows:  * 1. The resolver first tries to find an exact parameter match.  * 2. If 1 fails and any of the parameters is a date, it converts the other to the date.  * 3. If 1 and 3 fail then it returns the evaluate(Double, Double) method.  */
+comment|/**  * The class implements the method resolution for operators like   * (><<=>= =<>). The resolution logic is as follows:  * 1. If one of the parameters is null, then it resolves to  *    evaluate(Double, Double)  * 2. If both of the parameters are of type T, then it resolves to   *    evaluate(T, T)  * 3. If 1 and 2 fails then it resolves to evaluate(Double, Double).  */
 end_comment
 
 begin_class

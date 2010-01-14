@@ -217,6 +217,7 @@ literal|"> SELECT 3 _FUNC_ 2 FROM src LIMIT 1;\n"
 operator|+
 literal|"  1.5"
 argument_list|)
+comment|/**  * Note that in SQL, the return type of divide is not necessarily the same   * as the parameters. For example, 3 / 2 = 1.5, not 1. To follow SQL, we always  * return a double for divide.  */
 specifier|public
 class|class
 name|UDFOPDivide

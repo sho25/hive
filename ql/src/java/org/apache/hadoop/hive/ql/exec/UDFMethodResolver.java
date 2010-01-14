@@ -81,6 +81,8 @@ name|argClasses
 parameter_list|)
 throws|throws
 name|AmbiguousMethodException
+throws|,
+name|UDFArgumentException
 function_decl|;
 block|}
 end_interface
