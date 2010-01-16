@@ -463,6 +463,17 @@ operator|.
 name|COPY
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getName
+parameter_list|()
+block|{
+return|return
+literal|"COPY"
+return|;
+block|}
 block|}
 end_class
 

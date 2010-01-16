@@ -94,13 +94,6 @@ name|listWorks
 expr_stmt|;
 block|}
 comment|/**    * @return the listWorks    */
-annotation|@
-name|explain
-argument_list|(
-name|displayName
-operator|=
-literal|"list of dependent Tasks"
-argument_list|)
 specifier|public
 name|List
 argument_list|<

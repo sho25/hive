@@ -863,6 +863,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|queryPlan
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|job
@@ -1352,12 +1354,15 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Starting Job = "
-operator|+
+name|ExecDriver
+operator|.
+name|getJobEndMsg
+argument_list|(
 name|rj
 operator|.
 name|getJobID
 argument_list|()
+argument_list|)
 operator|+
 literal|", Tracking URL = "
 operator|+
@@ -2659,6 +2664,10 @@ name|int
 name|execute
 parameter_list|()
 block|{
+name|success
+operator|=
+literal|true
+expr_stmt|;
 try|try
 block|{
 name|setNumberOfReducers
@@ -3477,12 +3486,13 @@ block|}
 name|String
 name|statusMesg
 init|=
-literal|"Ended Job = "
-operator|+
+name|getJobEndMsg
+argument_list|(
 name|rj
 operator|.
 name|getJobID
 argument_list|()
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
@@ -3824,6 +3834,38 @@ return|return
 operator|(
 name|returnVal
 operator|)
+return|;
+block|}
+comment|/**    * this msg pattern is used to track when a job is started    * @param jobId    * @return    */
+specifier|public
+specifier|static
+name|String
+name|getJobStartMsg
+parameter_list|(
+name|String
+name|jobId
+parameter_list|)
+block|{
+return|return
+literal|"Starting Job = "
+operator|+
+name|jobId
+return|;
+block|}
+comment|/**    * this msg pattern is used to track when a job is successfully done.    * @param jobId    * @return    */
+specifier|public
+specifier|static
+name|String
+name|getJobEndMsg
+parameter_list|(
+name|String
+name|jobId
+parameter_list|)
+block|{
+return|return
+literal|"Ended Job = "
+operator|+
+name|jobId
 return|;
 block|}
 specifier|private
@@ -5967,6 +6009,17 @@ return|return
 name|StageType
 operator|.
 name|MAPRED
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getName
+parameter_list|()
+block|{
+return|return
+literal|"EXEC"
 return|;
 block|}
 block|}

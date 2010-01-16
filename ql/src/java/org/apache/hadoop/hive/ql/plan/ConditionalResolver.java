@@ -21,6 +21,26 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -35,6 +55,24 @@ name|HiveConf
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Task
+import|;
+end_import
+
 begin_comment
 comment|/**  * Conditional task resolution interface. This is invoked at run time to get the task to invoke.   * Developers can plug in their own resolvers  */
 end_comment
@@ -46,8 +84,16 @@ name|ConditionalResolver
 block|{
 comment|/** 	 * All conditional resolvers implement this interface 	 * @param conf configuration 	 * @param ctx  opaque context 	 * @return position of the task 	 */
 specifier|public
-name|int
-name|getTaskId
+name|List
+argument_list|<
+name|Task
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+argument_list|>
+name|getTasks
 parameter_list|(
 name|HiveConf
 name|conf
