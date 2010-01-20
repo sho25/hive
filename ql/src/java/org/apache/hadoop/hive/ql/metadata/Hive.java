@@ -1846,6 +1846,24 @@ argument_list|(
 name|tTable
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|table
+operator|.
+name|isView
+argument_list|()
+condition|)
+block|{
+comment|// Skip the rest, which isn't relevant for a view.
+name|table
+operator|.
+name|checkValidity
+argument_list|()
+expr_stmt|;
+return|return
+name|table
+return|;
+block|}
 name|table
 operator|.
 name|setInputFormatClass

@@ -88,6 +88,14 @@ name|String
 argument_list|>
 name|parameters
 decl_stmt|;
+specifier|private
+name|String
+name|viewOriginalText
+decl_stmt|;
+specifier|private
+name|String
+name|viewExpandedText
+decl_stmt|;
 specifier|public
 name|MTable
 parameter_list|()
@@ -130,6 +138,12 @@ argument_list|,
 name|String
 argument_list|>
 name|parameters
+parameter_list|,
+name|String
+name|viewOriginalText
+parameter_list|,
+name|String
+name|viewExpandedText
 parameter_list|)
 block|{
 name|this
@@ -186,6 +200,18 @@ operator|.
 name|parameters
 operator|=
 name|parameters
+expr_stmt|;
+name|this
+operator|.
+name|viewOriginalText
+operator|=
+name|viewOriginalText
+expr_stmt|;
+name|this
+operator|.
+name|viewExpandedText
+operator|=
+name|viewExpandedText
 expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */
@@ -306,6 +332,58 @@ operator|.
 name|parameters
 operator|=
 name|parameters
+expr_stmt|;
+block|}
+comment|/**    * @return the original view text, or null if this table is not a view    */
+specifier|public
+name|String
+name|getViewOriginalText
+parameter_list|()
+block|{
+return|return
+name|viewOriginalText
+return|;
+block|}
+comment|/**    * @param viewOriginalText the original view text to set    */
+specifier|public
+name|void
+name|setViewOriginalText
+parameter_list|(
+name|String
+name|viewOriginalText
+parameter_list|)
+block|{
+name|this
+operator|.
+name|viewOriginalText
+operator|=
+name|viewOriginalText
+expr_stmt|;
+block|}
+comment|/**    * @return the expanded view text, or null if this table is not a view    */
+specifier|public
+name|String
+name|getViewExpandedText
+parameter_list|()
+block|{
+return|return
+name|viewExpandedText
+return|;
+block|}
+comment|/**    * @param viewExpandedText the expanded view text to set    */
+specifier|public
+name|void
+name|setViewExpandedText
+parameter_list|(
+name|String
+name|viewExpandedText
+parameter_list|)
+block|{
+name|this
+operator|.
+name|viewExpandedText
+operator|=
+name|viewExpandedText
 expr_stmt|;
 block|}
 comment|/**    * @return the owner    */

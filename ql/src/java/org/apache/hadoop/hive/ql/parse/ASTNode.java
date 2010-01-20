@@ -86,6 +86,10 @@ name|CommonTree
 implements|implements
 name|Node
 block|{
+specifier|private
+name|ASTNodeOrigin
+name|origin
+decl_stmt|;
 specifier|public
 name|ASTNode
 parameter_list|()
@@ -202,6 +206,32 @@ operator|.
 name|toString
 argument_list|()
 return|;
+block|}
+comment|/**    * @return information about the object from which this ASTNode    * originated, or null if this ASTNode was not expanded from    * an object reference    */
+specifier|public
+name|ASTNodeOrigin
+name|getOrigin
+parameter_list|()
+block|{
+return|return
+name|origin
+return|;
+block|}
+comment|/**    * Tag this ASTNode with information about the object from which this    * node originated.    */
+specifier|public
+name|void
+name|setOrigin
+parameter_list|(
+name|ASTNodeOrigin
+name|origin
+parameter_list|)
+block|{
+name|this
+operator|.
+name|origin
+operator|=
+name|origin
+expr_stmt|;
 block|}
 specifier|public
 name|String

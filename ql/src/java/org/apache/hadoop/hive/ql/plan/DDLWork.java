@@ -99,6 +99,10 @@ name|createTableLikeDesc
 name|createTblLikeDesc
 decl_stmt|;
 specifier|private
+name|createViewDesc
+name|createVwDesc
+decl_stmt|;
+specifier|private
 name|dropTableDesc
 name|dropTblDesc
 decl_stmt|;
@@ -255,7 +259,7 @@ operator|=
 name|createTblDesc
 expr_stmt|;
 block|}
-comment|/**    * @param createTblLikeDesc create table dlike escriptor    */
+comment|/**    * @param createTblLikeDesc create table like descriptor    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -287,6 +291,40 @@ operator|.
 name|createTblLikeDesc
 operator|=
 name|createTblLikeDesc
+expr_stmt|;
+block|}
+comment|/**    * @param createVwDesc create view descriptor    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|Set
+argument_list|<
+name|ReadEntity
+argument_list|>
+name|inputs
+parameter_list|,
+name|Set
+argument_list|<
+name|WriteEntity
+argument_list|>
+name|outputs
+parameter_list|,
+name|createViewDesc
+name|createVwDesc
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|inputs
+argument_list|,
+name|outputs
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|createVwDesc
+operator|=
+name|createVwDesc
 expr_stmt|;
 block|}
 comment|/**    * @param dropTblDesc drop table descriptor    */
@@ -658,6 +696,39 @@ operator|.
 name|createTblLikeDesc
 operator|=
 name|createTblLikeDesc
+expr_stmt|;
+block|}
+comment|/**    * @return the createTblDesc    */
+annotation|@
+name|explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Create View Operator"
+argument_list|)
+specifier|public
+name|createViewDesc
+name|getCreateViewDesc
+parameter_list|()
+block|{
+return|return
+name|createVwDesc
+return|;
+block|}
+comment|/**    * @param createVwDesc the createViewDesc to set    */
+specifier|public
+name|void
+name|setCreateViewDesc
+parameter_list|(
+name|createViewDesc
+name|createVwDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|createVwDesc
+operator|=
+name|createVwDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the dropTblDesc    */

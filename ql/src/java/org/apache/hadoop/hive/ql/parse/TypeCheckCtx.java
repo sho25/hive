@@ -53,6 +53,11 @@ specifier|private
 name|RowResolver
 name|inputRR
 decl_stmt|;
+comment|/**    * Receives translations which will need to be applied during unparse.    */
+specifier|private
+name|UnparseTranslator
+name|unparseTranslator
+decl_stmt|;
 comment|/**    * Potential typecheck error reason.    */
 specifier|private
 name|String
@@ -104,6 +109,32 @@ parameter_list|()
 block|{
 return|return
 name|inputRR
+return|;
+block|}
+comment|/**    * @param unparseTranslator the unparseTranslator to set    */
+specifier|public
+name|void
+name|setUnparseTranslator
+parameter_list|(
+name|UnparseTranslator
+name|unparseTranslator
+parameter_list|)
+block|{
+name|this
+operator|.
+name|unparseTranslator
+operator|=
+name|unparseTranslator
+expr_stmt|;
+block|}
+comment|/**    * @return the unparseTranslator    */
+specifier|public
+name|UnparseTranslator
+name|getUnparseTranslator
+parameter_list|()
+block|{
+return|return
+name|unparseTranslator
 return|;
 block|}
 comment|/**    * @param error the error to set    */

@@ -78,6 +78,19 @@ literal|"}"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
+name|String
+name|LINE_SEP
+init|=
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"line.separator"
+argument_list|)
+decl_stmt|;
+specifier|public
+specifier|static
 name|String
 name|escapeString
 parameter_list|(
@@ -464,6 +477,27 @@ operator|.
 name|toString
 argument_list|()
 operator|)
+return|;
+block|}
+comment|/**    * Regenerate an identifier as part of unparsing it back to SQL text.    */
+specifier|public
+specifier|static
+name|String
+name|unparseIdentifier
+parameter_list|(
+name|String
+name|identifier
+parameter_list|)
+block|{
+comment|// In the future, if we support arbitrary characters in
+comment|// identifiers, then we'll need to escape any backticks
+comment|// in identifier by doubling them up.
+return|return
+literal|"`"
+operator|+
+name|identifier
+operator|+
+literal|"`"
 return|;
 block|}
 block|}

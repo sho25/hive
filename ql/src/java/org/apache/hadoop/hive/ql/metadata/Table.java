@@ -1067,10 +1067,17 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"atleast one column must be specified for the table"
+literal|"at least one column must be specified for the table"
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+operator|!
+name|isView
+argument_list|()
+condition|)
+block|{
 if|if
 condition|(
 literal|null
@@ -1118,6 +1125,7 @@ argument_list|(
 literal|"must specify an OutputFormat class"
 argument_list|)
 throw|;
+block|}
 block|}
 name|Iterator
 argument_list|<
@@ -2931,6 +2939,109 @@ argument_list|()
 operator|.
 name|getSortCols
 argument_list|()
+return|;
+block|}
+comment|/**    * @return the original view text, or null if this table is not a view    */
+specifier|public
+name|String
+name|getViewOriginalText
+parameter_list|()
+block|{
+return|return
+name|getTTable
+argument_list|()
+operator|.
+name|getViewOriginalText
+argument_list|()
+return|;
+block|}
+comment|/**    * @param viewOriginalText the original view text to set    */
+specifier|public
+name|void
+name|setViewOriginalText
+parameter_list|(
+name|String
+name|viewOriginalText
+parameter_list|)
+block|{
+name|getTTable
+argument_list|()
+operator|.
+name|setViewOriginalText
+argument_list|(
+name|viewOriginalText
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * @return the expanded view text, or null if this table is not a view    */
+specifier|public
+name|String
+name|getViewExpandedText
+parameter_list|()
+block|{
+return|return
+name|getTTable
+argument_list|()
+operator|.
+name|getViewExpandedText
+argument_list|()
+return|;
+block|}
+comment|/**    * @param viewExpandedText the expanded view text to set    */
+specifier|public
+name|void
+name|setViewExpandedText
+parameter_list|(
+name|String
+name|viewExpandedText
+parameter_list|)
+block|{
+name|getTTable
+argument_list|()
+operator|.
+name|setViewExpandedText
+argument_list|(
+name|viewExpandedText
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * @return whether this table is actually a view    */
+specifier|public
+name|boolean
+name|isView
+parameter_list|()
+block|{
+comment|// either both attributes (expandedText and originalText) should
+comment|// be set, or neither
+name|boolean
+name|hasExpandedText
+init|=
+operator|(
+name|getViewExpandedText
+argument_list|()
+operator|!=
+literal|null
+operator|)
+decl_stmt|;
+name|boolean
+name|hasOriginalText
+init|=
+operator|(
+name|getViewOriginalText
+argument_list|()
+operator|!=
+literal|null
+operator|)
+decl_stmt|;
+assert|assert
+operator|(
+name|hasExpandedText
+operator|==
+name|hasOriginalText
+operator|)
+assert|;
+return|return
+name|hasExpandedText
 return|;
 block|}
 comment|/**    * Creates a partition name -> value spec map object    * @param tp Use the information from this partition.    * @return Partition name to value mapping.    */
