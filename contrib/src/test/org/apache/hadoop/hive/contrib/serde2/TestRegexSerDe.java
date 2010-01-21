@@ -25,17 +25,17 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
+name|Properties
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|junit
 operator|.
-name|util
+name|framework
 operator|.
-name|Properties
+name|TestCase
 import|;
 end_import
 
@@ -152,16 +152,6 @@ operator|.
 name|io
 operator|.
 name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
 import|;
 end_import
 

@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Example Reducer (WordCount).   */
+comment|/**  * Example Reducer (WordCount).  */
 end_comment
 
 begin_class

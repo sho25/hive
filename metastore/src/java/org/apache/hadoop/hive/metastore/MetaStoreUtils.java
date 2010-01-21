@@ -551,7 +551,7 @@ name|DEFAULT_DATABASE_NAME
 init|=
 literal|"default"
 decl_stmt|;
-comment|/**    * printStackTrace    *    * Helper function to print an exception stack trace to the log and not stderr    *    * @param e the exception    *    */
+comment|/**    * printStackTrace    *     * Helper function to print an exception stack trace to the log and not stderr    *     * @param e    *          the exception    *     */
 specifier|static
 specifier|public
 name|void
@@ -836,7 +836,9 @@ operator|.
 name|STRING_TYPE_NAME
 argument_list|)
 expr_stmt|;
-comment|// default partition key
+comment|// default
+comment|// partition
+comment|// key
 name|tTable
 operator|.
 name|getPartitionKeys
@@ -860,7 +862,7 @@ return|return
 name|tTable
 return|;
 block|}
-comment|/**    * recursiveDelete    *    * just recursively deletes a dir - you'd think Java would have something to do this??    *    * @param f - the file/dir to delete    * @exception IOException propogate f.delete() exceptions    *    */
+comment|/**    * recursiveDelete    *     * just recursively deletes a dir - you'd think Java would have something to    * do this??    *     * @param f    *          - the file/dir to delete    * @exception IOException    *              propogate f.delete() exceptions    *     */
 specifier|static
 specifier|public
 name|void
@@ -927,7 +929,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *    * Get the Deserializer for a table given its name and properties.    *    * @param conf hadoop config    * @param schema the properties to use to instantiate the deserializer    * @return the Deserializer    * @exception MetaException if any problems instantiating the Deserializer    *    * todo - this should move somewhere into serde.jar    *    */
+comment|/**    * getDeserializer    *     * Get the Deserializer for a table given its name and properties.    *     * @param conf    *          hadoop config    * @param schema    *          the properties to use to instantiate the deserializer    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *     *              todo - this should move somewhere into serde.jar    *     */
 specifier|static
 specifier|public
 name|Deserializer
@@ -977,9 +979,6 @@ name|lib
 argument_list|)
 decl_stmt|;
 operator|(
-operator|(
-name|Deserializer
-operator|)
 name|deserializer
 operator|)
 operator|.
@@ -1051,7 +1050,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *    * Get the Deserializer for a table.    *    * @param conf - hadoop config    * @param table the table    * @return the Deserializer    * @exception MetaException if any problems instantiating the Deserializer    *    * todo - this should move somewhere into serde.jar    *    */
+comment|/**    * getDeserializer    *     * Get the Deserializer for a table.    *     * @param conf    *          - hadoop config    * @param table    *          the table    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *     *              todo - this should move somewhere into serde.jar    *     */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1189,7 +1188,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *    * Get the Deserializer for a partition.    *    * @param conf - hadoop config    * @param partition the partition    * @return the Deserializer    * @exception MetaException if any problems instantiating the Deserializer    *    */
+comment|/**    * getDeserializer    *     * Get the Deserializer for a partition.    *     * @param conf    *          - hadoop config    * @param partition    *          the partition    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *     */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1601,7 +1600,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * validateName    *    * Checks the name conforms to our standars which are: "[a-zA-z_0-9]+".    * checks this is just characters and numbers and _     *    * @param name the name to validate    * @return true or false depending on conformance    * @exception MetaException if it doesn't match the pattern.    */
+comment|/**    * validateName    *     * Checks the name conforms to our standars which are: "[a-zA-z_0-9]+". checks    * this is just characters and numbers and _    *     * @param name    *          the name to validate    * @return true or false depending on conformance    * @exception MetaException    *              if it doesn't match the pattern.    */
 specifier|static
 specifier|public
 name|boolean
@@ -1678,9 +1677,11 @@ name|getName
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 return|return
 literal|true
@@ -2031,7 +2032,9 @@ operator|.
 name|STRING_TYPE_NAME
 argument_list|)
 expr_stmt|;
-comment|// default partition key
+comment|// default
+comment|// partition
+comment|// key
 name|t
 operator|.
 name|getPartitionKeys
@@ -3138,7 +3141,8 @@ literal|"string"
 argument_list|)
 expr_stmt|;
 comment|// These 3 types are not supported yet.
-comment|// We should define a complex type date in thrift that contains a single int member, and DynamicSerDe
+comment|// We should define a complex type date in thrift that contains a single int
+comment|// member, and DynamicSerDe
 comment|// should convert it to date type at runtime.
 name|typeToThriftTypeMap
 operator|.
@@ -3204,7 +3208,7 @@ literal|"timestamp"
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Convert type to ThriftType.  We do that by tokenizing the type and convert each token.    */
+comment|/**    * Convert type to ThriftType. We do that by tokenizing the type and convert    * each token.    */
 specifier|public
 specifier|static
 name|String
@@ -3336,7 +3340,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**     * Convert FieldSchemas to Thrift DDL + column names and column types    *     * @param structName The name of the table    * @param fieldSchemas List of fields along with their schemas    * @return String containing "Thrift DDL#comma-separated-column-names#colon-separated-columntypes    *         Example: "struct result { a string, map<int,string> b}#a,b#string:map<int,string>"    */
+comment|/**    * Convert FieldSchemas to Thrift DDL + column names and column types    *     * @param structName    *          The name of the table    * @param fieldSchemas    *          List of fields along with their schemas    * @return String containing "Thrift    *         DDL#comma-separated-column-names#colon-separated-columntypes    *         Example:    *         "struct result { a string, map<int,string> b}#a,b#string:map<int,string>"    */
 specifier|public
 specifier|static
 name|String
@@ -3481,7 +3485,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/** Convert FieldSchemas to Thrift DDL.    */
+comment|/**    * Convert FieldSchemas to Thrift DDL.    */
 specifier|public
 specifier|static
 name|String
@@ -4409,7 +4413,7 @@ return|return
 name|schema
 return|;
 block|}
-comment|/** Convert FieldSchemas to columnNames.    */
+comment|/**    * Convert FieldSchemas to columnNames.    */
 specifier|public
 specifier|static
 name|String
@@ -4485,7 +4489,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/** Convert FieldSchemas to columnTypes.    */
+comment|/**    * Convert FieldSchemas to columnTypes.    */
 specifier|public
 specifier|static
 name|String
@@ -4626,7 +4630,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Catches exceptions that can't be handled and bundles them to MetaException    * @param e    * @throws MetaException    */
+comment|/**    * Catches exceptions that can't be handled and bundles them to MetaException    *     * @param e    * @throws MetaException    */
 specifier|static
 name|void
 name|logAndThrowMetaException
@@ -5072,7 +5076,7 @@ return|return
 name|str_fields
 return|;
 block|}
-comment|/**    * Convert TypeInfo to FieldSchema.     */
+comment|/**    * Convert TypeInfo to FieldSchema.    */
 specifier|public
 specifier|static
 name|FieldSchema

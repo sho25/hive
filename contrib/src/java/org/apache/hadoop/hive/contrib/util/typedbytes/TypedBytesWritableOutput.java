@@ -361,7 +361,7 @@ decl_stmt|;
 specifier|private
 name|TypedBytesWritableOutput
 parameter_list|()
-block|{}
+block|{   }
 specifier|private
 name|void
 name|setTypedBytesOutput
@@ -386,6 +386,8 @@ operator|new
 name|ThreadLocal
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|protected
 specifier|synchronized
 name|Object
@@ -400,7 +402,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link TypedBytesOutput}.    *     * @param out typed bytes output object    * @return typed bytes writable output corresponding to the supplied    *         {@link TypedBytesOutput}.    */
+comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link TypedBytesOutput}.    *     * @param out    *          typed bytes output object    * @return typed bytes writable output corresponding to the supplied    *         {@link TypedBytesOutput}.    */
 specifier|public
 specifier|static
 name|TypedBytesWritableOutput
@@ -432,7 +434,7 @@ return|return
 name|bout
 return|;
 block|}
-comment|/**    * Get a thread-local typed bytes writable output for the supplied    * {@link DataOutput}.    *     * @param out data output object    * @return typed bytes writable output corresponding to the supplied    *         {@link DataOutput}.    */
+comment|/**    * Get a thread-local typed bytes writable output for the supplied    * {@link DataOutput}.    *     * @param out    *          data output object    * @return typed bytes writable output corresponding to the supplied    *         {@link DataOutput}.    */
 specifier|public
 specifier|static
 name|TypedBytesWritableOutput

@@ -301,6 +301,7 @@ name|Path
 name|whRoot
 decl_stmt|;
 specifier|private
+specifier|final
 name|Configuration
 name|conf
 decl_stmt|;
@@ -417,7 +418,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Hadoop File System reverse lookups paths with raw ip addresses    * The File System URI always contains the canonical DNS name of the    * Namenode. Subsequently, operations on paths with raw ip addresses    * cause an exception since they don't match the file system URI.    *    * This routine solves this problem by replacing the scheme and authority    * of a path with the scheme and authority of the FileSystem that it    * maps to.    *    * @param path Path to be canonicalized    * @return Path with canonical scheme and authority    */
+comment|/**    * Hadoop File System reverse lookups paths with raw ip addresses The File    * System URI always contains the canonical DNS name of the Namenode.    * Subsequently, operations on paths with raw ip addresses cause an exception    * since they don't match the file system URI.    *     * This routine solves this problem by replacing the scheme and authority of a    * path with the scheme and authority of the FileSystem that it maps to.    *     * @param path    *          Path to be canonicalized    * @return Path with canonical scheme and authority    */
 specifier|public
 name|Path
 name|getDnsPath
@@ -468,7 +469,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-comment|/**    * Resolve the configured warehouse root dir with respect to the configuration    * This involves opening the FileSystem corresponding to the warehouse root dir    * (but that should be ok given that this is only called during DDL statements    * for non-external tables).    */
+comment|/**    * Resolve the configured warehouse root dir with respect to the configuration    * This involves opening the FileSystem corresponding to the warehouse root    * dir (but that should be ok given that this is only called during DDL    * statements for non-external tables).    */
 specifier|private
 name|Path
 name|getWhRoot
@@ -800,7 +801,7 @@ block|{
 return|return
 literal|true
 return|;
-comment|//ok even if there is not data
+comment|// ok even if there is not data
 block|}
 catch|catch
 parameter_list|(
@@ -1529,7 +1530,8 @@ name|isEmpty
 argument_list|()
 condition|)
 do|;
-comment|// reverse the list since we checked the part from leaf dir to table's base dir
+comment|// reverse the list since we checked the part from leaf dir to table's base
+comment|// dir
 for|for
 control|(
 name|int

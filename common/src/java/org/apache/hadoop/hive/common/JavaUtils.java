@@ -18,7 +18,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Collection of Java class loading/reflection related utilities common across Hive  */
+comment|/**  * Collection of Java class loading/reflection related utilities common across  * Hive  */
 end_comment
 
 begin_class

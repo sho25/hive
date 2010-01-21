@@ -180,14 +180,14 @@ name|void
 name|shutdown
 parameter_list|()
 function_decl|;
-comment|/**    * Opens a new one or the one already created    * Every call of this function must have corresponding commit or rollback function call    * @return an active transaction    */
+comment|/**    * Opens a new one or the one already created Every call of this function must    * have corresponding commit or rollback function call    *     * @return an active transaction    */
 specifier|public
 specifier|abstract
 name|boolean
 name|openTransaction
 parameter_list|()
 function_decl|;
-comment|/**    * if this is the commit of the first open call then an actual commit is called.     * @return true or false    */
+comment|/**    * if this is the commit of the first open call then an actual commit is    * called.    *     * @return true or false    */
 specifier|public
 specifier|abstract
 name|boolean

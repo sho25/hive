@@ -163,7 +163,17 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
 import|;
 end_import
 
@@ -180,6 +190,24 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|MetaException
 import|;
 end_import
 
@@ -229,7 +257,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|HiveServer
+name|HiveInterface
 import|;
 end_import
 
@@ -245,21 +273,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|HiveInterface
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|protocol
-operator|.
-name|TProtocol
+name|HiveServer
 import|;
 end_import
 
@@ -274,6 +288,20 @@ operator|.
 name|protocol
 operator|.
 name|TBinaryProtocol
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocol
 import|;
 end_import
 
@@ -316,24 +344,6 @@ operator|.
 name|transport
 operator|.
 name|TTransportException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|MetaException
 import|;
 end_import
 
@@ -541,11 +551,6 @@ argument_list|(
 literal|":"
 argument_list|)
 decl_stmt|;
-name|String
-name|databasename
-init|=
-literal|"default"
-decl_stmt|;
 name|int
 name|port
 init|=
@@ -561,13 +566,6 @@ index|]
 decl_stmt|;
 try|try
 block|{
-name|databasename
-operator|=
-name|parts
-index|[
-literal|1
-index|]
-expr_stmt|;
 name|port
 operator|=
 name|Integer
@@ -653,7 +651,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#clearWarnings()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#clearWarnings()    */
 specifier|public
 name|void
 name|clearWarnings
@@ -661,14 +659,12 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-name|this
-operator|.
 name|warningChain
 operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#close()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#close()    */
 specifier|public
 name|void
 name|close
@@ -684,11 +680,13 @@ name|transport
 operator|!=
 literal|null
 condition|)
+block|{
 name|transport
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 finally|finally
 block|{
@@ -698,7 +696,7 @@ literal|true
 expr_stmt|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#commit()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#commit()    */
 specifier|public
 name|void
 name|commit
@@ -715,7 +713,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#createArrayOf(java.lang.String, java.lang.Object[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#createArrayOf(java.lang.String,    * java.lang.Object[])    */
 specifier|public
 name|Array
 name|createArrayOf
@@ -739,7 +737,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#createBlob()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#createBlob()    */
 specifier|public
 name|Blob
 name|createBlob
@@ -756,7 +754,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#createClob()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#createClob()    */
 specifier|public
 name|Clob
 name|createClob
@@ -773,7 +771,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#createNClob()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#createNClob()    */
 specifier|public
 name|NClob
 name|createNClob
@@ -790,7 +788,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#createSQLXML()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#createSQLXML()    */
 specifier|public
 name|SQLXML
 name|createSQLXML
@@ -807,7 +805,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/**    * Creates a Statement object for sending SQL statements to the database.    *    * @throws SQLException if a database access error occurs.    * @see java.sql.Connection#createStatement()    */
+comment|/**    * Creates a Statement object for sending SQL statements to the database.    *     * @throws SQLException    *           if a database access error occurs.    * @see java.sql.Connection#createStatement()    */
 specifier|public
 name|Statement
 name|createStatement
@@ -819,6 +817,7 @@ if|if
 condition|(
 name|isClosed
 condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
@@ -826,6 +825,7 @@ argument_list|(
 literal|"Can't create Statement, connection is closed"
 argument_list|)
 throw|;
+block|}
 return|return
 operator|new
 name|HiveStatement
@@ -836,7 +836,7 @@ name|client
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#createStatement(int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#createStatement(int, int)    */
 specifier|public
 name|Statement
 name|createStatement
@@ -859,7 +859,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#createStatement(int, int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#createStatement(int, int, int)    */
 specifier|public
 name|Statement
 name|createStatement
@@ -885,7 +885,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#createStruct(java.lang.String, java.lang.Object[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#createStruct(java.lang.String, java.lang.Object[])    */
 specifier|public
 name|Struct
 name|createStruct
@@ -909,7 +909,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#getAutoCommit()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#getAutoCommit()    */
 specifier|public
 name|boolean
 name|getAutoCommit
@@ -921,7 +921,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#getCatalog()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#getCatalog()    */
 specifier|public
 name|String
 name|getCatalog
@@ -938,7 +938,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#getClientInfo()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#getClientInfo()    */
 specifier|public
 name|Properties
 name|getClientInfo
@@ -955,7 +955,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#getClientInfo(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#getClientInfo(java.lang.String)    */
 specifier|public
 name|String
 name|getClientInfo
@@ -975,7 +975,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#getHoldability()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#getHoldability()    */
 specifier|public
 name|int
 name|getHoldability
@@ -992,7 +992,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#getMetaData()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#getMetaData()    */
 specifier|public
 name|DatabaseMetaData
 name|getMetaData
@@ -1006,7 +1006,7 @@ name|HiveDatabaseMetaData
 argument_list|()
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#getTransactionIsolation()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#getTransactionIsolation()    */
 specifier|public
 name|int
 name|getTransactionIsolation
@@ -1023,7 +1023,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#getTypeMap()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#getTypeMap()    */
 specifier|public
 name|Map
 argument_list|<
@@ -1048,7 +1048,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#getWarnings()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#getWarnings()    */
 specifier|public
 name|SQLWarning
 name|getWarnings
@@ -1057,12 +1057,10 @@ throws|throws
 name|SQLException
 block|{
 return|return
-name|this
-operator|.
 name|warningChain
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#isClosed()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#isClosed()    */
 specifier|public
 name|boolean
 name|isClosed
@@ -1074,7 +1072,7 @@ return|return
 name|isClosed
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#isReadOnly()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#isReadOnly()    */
 specifier|public
 name|boolean
 name|isReadOnly
@@ -1091,7 +1089,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#isValid(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#isValid(int)    */
 specifier|public
 name|boolean
 name|isValid
@@ -1111,7 +1109,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#nativeSQL(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#nativeSQL(java.lang.String)    */
 specifier|public
 name|String
 name|nativeSQL
@@ -1131,7 +1129,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareCall(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#prepareCall(java.lang.String)    */
 specifier|public
 name|CallableStatement
 name|prepareCall
@@ -1151,7 +1149,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareCall(java.lang.String, int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#prepareCall(java.lang.String, int, int)    */
 specifier|public
 name|CallableStatement
 name|prepareCall
@@ -1177,7 +1175,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareCall(java.lang.String, int, int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#prepareCall(java.lang.String, int, int, int)    */
 specifier|public
 name|CallableStatement
 name|prepareCall
@@ -1206,7 +1204,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareStatement(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#prepareStatement(java.lang.String)    */
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -1229,7 +1227,7 @@ name|sql
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareStatement(java.lang.String, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#prepareStatement(java.lang.String, int)    */
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -1255,7 +1253,7 @@ name|sql
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareStatement(java.lang.String, int[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#prepareStatement(java.lang.String, int[])    */
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -1279,7 +1277,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareStatement(java.lang.String, java.lang.String[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#prepareStatement(java.lang.String,    * java.lang.String[])    */
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -1303,7 +1301,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareStatement(java.lang.String, int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#prepareStatement(java.lang.String, int, int)    */
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -1332,7 +1330,7 @@ name|sql
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#prepareStatement(java.lang.String, int, int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#prepareStatement(java.lang.String, int, int, int)    */
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -1361,7 +1359,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#releaseSavepoint(java.sql.Savepoint)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#releaseSavepoint(java.sql.Savepoint)    */
 specifier|public
 name|void
 name|releaseSavepoint
@@ -1381,7 +1379,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#rollback()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#rollback()    */
 specifier|public
 name|void
 name|rollback
@@ -1398,7 +1396,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#rollback(java.sql.Savepoint)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#rollback(java.sql.Savepoint)    */
 specifier|public
 name|void
 name|rollback
@@ -1418,7 +1416,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setAutoCommit(boolean)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setAutoCommit(boolean)    */
 specifier|public
 name|void
 name|setAutoCommit
@@ -1438,7 +1436,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setCatalog(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setCatalog(java.lang.String)    */
 specifier|public
 name|void
 name|setCatalog
@@ -1458,7 +1456,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setClientInfo(java.util.Properties)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setClientInfo(java.util.Properties)    */
 specifier|public
 name|void
 name|setClientInfo
@@ -1480,7 +1478,7 @@ literal|null
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setClientInfo(java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setClientInfo(java.lang.String, java.lang.String)    */
 specifier|public
 name|void
 name|setClientInfo
@@ -1505,7 +1503,7 @@ literal|null
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setHoldability(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setHoldability(int)    */
 specifier|public
 name|void
 name|setHoldability
@@ -1525,7 +1523,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setReadOnly(boolean)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setReadOnly(boolean)    */
 specifier|public
 name|void
 name|setReadOnly
@@ -1545,7 +1543,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setSavepoint()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setSavepoint()    */
 specifier|public
 name|Savepoint
 name|setSavepoint
@@ -1562,7 +1560,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setSavepoint(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setSavepoint(java.lang.String)    */
 specifier|public
 name|Savepoint
 name|setSavepoint
@@ -1582,7 +1580,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setTransactionIsolation(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setTransactionIsolation(int)    */
 specifier|public
 name|void
 name|setTransactionIsolation
@@ -1602,7 +1600,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Connection#setTypeMap(java.util.Map)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Connection#setTypeMap(java.util.Map)    */
 specifier|public
 name|void
 name|setTypeMap
@@ -1630,7 +1628,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -1653,7 +1651,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
 specifier|public
 parameter_list|<
 name|T

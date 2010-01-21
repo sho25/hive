@@ -125,7 +125,7 @@ decl_stmt|;
 specifier|private
 name|TypedBytesInput
 parameter_list|()
-block|{}
+block|{   }
 specifier|private
 name|void
 name|setDataInput
@@ -150,6 +150,8 @@ operator|new
 name|ThreadLocal
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|protected
 specifier|synchronized
 name|Object
@@ -164,7 +166,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Get a thread-local typed bytes input for the supplied {@link DataInput}.    * @param in data input object    * @return typed bytes input corresponding to the supplied {@link DataInput}.    */
+comment|/**    * Get a thread-local typed bytes input for the supplied {@link DataInput}.    *     * @param in    *          data input object    * @return typed bytes input corresponding to the supplied {@link DataInput}.    */
 specifier|public
 specifier|static
 name|TypedBytesInput
@@ -211,7 +213,7 @@ operator|=
 name|in
 expr_stmt|;
 block|}
-comment|/**    * Reads a typed bytes sequence and converts it to a Java object. The first     * byte is interpreted as a type code, and then the right number of     * subsequent bytes are read depending on the obtained type.    * @return the obtained object or null when the end of the file is reached    * @throws IOException    */
+comment|/**    * Reads a typed bytes sequence and converts it to a Java object. The first    * byte is interpreted as a type code, and then the right number of subsequent    * bytes are read depending on the obtained type.    *     * @return the obtained object or null when the end of the file is reached    * @throws IOException    */
 specifier|public
 name|Object
 name|read
@@ -766,7 +768,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Reads a type byte and returns the corresponding {@link Type}.    * @return the obtained Type or null when the end of the file is reached    * @throws IOException    */
+comment|/**    * Reads a type byte and returns the corresponding {@link Type}.    *     * @return the obtained Type or null when the end of the file is reached    * @throws IOException    */
 specifier|public
 name|Type
 name|readType
@@ -829,7 +831,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Skips a type byte.    * @return true iff the end of the file was not reached    * @throws IOException    */
+comment|/**    * Skips a type byte.    *     * @return true iff the end of the file was not reached    * @throws IOException    */
 specifier|public
 name|boolean
 name|skipType
@@ -859,7 +861,7 @@ literal|false
 return|;
 block|}
 block|}
-comment|/**    * Reads the bytes following a<code>Type.BYTES</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the bytes following a<code>Type.BYTES</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -897,7 +899,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.BYTES</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.BYTES</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1023,7 +1025,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the byte following a<code>Type.BYTE</code> code.    * @return the obtained byte    * @throws IOException    */
+comment|/**    * Reads the byte following a<code>Type.BYTE</code> code.    *     * @return the obtained byte    * @throws IOException    */
 specifier|public
 name|byte
 name|readByte
@@ -1038,7 +1040,7 @@ name|readByte
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw byte following a<code>Type.BYTE</code> code.    * @return the obtained byte    * @throws IOException    */
+comment|/**    * Reads the raw byte following a<code>Type.BYTE</code> code.    *     * @return the obtained byte    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1086,7 +1088,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the boolean following a<code>Type.BOOL</code> code.    * @return the obtained boolean    * @throws IOException    */
+comment|/**    * Reads the boolean following a<code>Type.BOOL</code> code.    *     * @return the obtained boolean    * @throws IOException    */
 specifier|public
 name|boolean
 name|readBool
@@ -1101,7 +1103,7 @@ name|readBoolean
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.BOOL</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.BOOL</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1149,7 +1151,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the integer following a<code>Type.INT</code> code.    * @return the obtained integer    * @throws IOException    */
+comment|/**    * Reads the integer following a<code>Type.INT</code> code.    *     * @return the obtained integer    * @throws IOException    */
 specifier|public
 name|int
 name|readInt
@@ -1164,7 +1166,7 @@ name|readInt
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the short following a<code>Type.SHORT</code> code.    * @return the obtained short    * @throws IOException    */
+comment|/**    * Reads the short following a<code>Type.SHORT</code> code.    *     * @return the obtained short    * @throws IOException    */
 specifier|public
 name|short
 name|readShort
@@ -1179,7 +1181,7 @@ name|readShort
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.INT</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.INT</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1227,7 +1229,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the long following a<code>Type.LONG</code> code.    * @return the obtained long    * @throws IOException    */
+comment|/**    * Reads the long following a<code>Type.LONG</code> code.    *     * @return the obtained long    * @throws IOException    */
 specifier|public
 name|long
 name|readLong
@@ -1242,7 +1244,7 @@ name|readLong
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.LONG</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.LONG</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1290,7 +1292,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the float following a<code>Type.FLOAT</code> code.    * @return the obtained float    * @throws IOException    */
+comment|/**    * Reads the float following a<code>Type.FLOAT</code> code.    *     * @return the obtained float    * @throws IOException    */
 specifier|public
 name|float
 name|readFloat
@@ -1305,7 +1307,7 @@ name|readFloat
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.FLOAT</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.FLOAT</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1353,7 +1355,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the double following a<code>Type.DOUBLE</code> code.    * @return the obtained double    * @throws IOException    */
+comment|/**    * Reads the double following a<code>Type.DOUBLE</code> code.    *     * @return the obtained double    * @throws IOException    */
 specifier|public
 name|double
 name|readDouble
@@ -1368,7 +1370,7 @@ name|readDouble
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.DOUBLE</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.DOUBLE</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1416,7 +1418,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the string following a<code>Type.STRING</code> code.    * @return the obtained string    * @throws IOException    */
+comment|/**    * Reads the string following a<code>Type.STRING</code> code.    *     * @return the obtained string    * @throws IOException    */
 specifier|public
 name|String
 name|readString
@@ -1433,7 +1435,7 @@ name|in
 argument_list|)
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.STRING</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.STRING</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1559,7 +1561,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the vector following a<code>Type.VECTOR</code> code.    * @return the obtained vector    * @throws IOException    */
+comment|/**    * Reads the vector following a<code>Type.VECTOR</code> code.    *     * @return the obtained vector    * @throws IOException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1615,7 +1617,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.VECTOR</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.VECTOR</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1735,7 +1737,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the header following a<code>Type.VECTOR</code> code.    * @return the number of elements in the vector    * @throws IOException    */
+comment|/**    * Reads the header following a<code>Type.VECTOR</code> code.    *     * @return the number of elements in the vector    * @throws IOException    */
 specifier|public
 name|int
 name|readVectorHeader
@@ -1750,7 +1752,7 @@ name|readInt
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the list following a<code>Type.LIST</code> code.    * @return the obtained list    * @throws IOException    */
+comment|/**    * Reads the list following a<code>Type.LIST</code> code.    *     * @return the obtained list    * @throws IOException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1800,7 +1802,7 @@ return|return
 name|list
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.LIST</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.LIST</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1883,7 +1885,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the map following a<code>Type.MAP</code> code.    * @return the obtained map    * @throws IOException    */
+comment|/**    * Reads the map following a<code>Type.MAP</code> code.    *     * @return the obtained map    * @throws IOException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1950,7 +1952,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.MAP</code> code.    * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.MAP</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -2078,7 +2080,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the header following a<code>Type.MAP</code> code.    * @return the number of key-value pairs in the map    * @throws IOException    */
+comment|/**    * Reads the header following a<code>Type.MAP</code> code.    *     * @return the number of key-value pairs in the map    * @throws IOException    */
 specifier|public
 name|int
 name|readMapHeader

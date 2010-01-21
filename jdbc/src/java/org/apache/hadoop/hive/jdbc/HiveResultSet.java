@@ -203,7 +203,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Calendar
+name|ArrayList
 import|;
 end_import
 
@@ -213,7 +213,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
+name|Calendar
 import|;
 end_import
 
@@ -233,7 +233,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|Map
 import|;
 end_import
 
@@ -244,6 +244,20 @@ operator|.
 name|util
 operator|.
 name|Properties
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
 import|;
 end_import
 
@@ -293,24 +307,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde2
-operator|.
-name|dynamic_type
-operator|.
-name|DynamicSerDe
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde
 operator|.
 name|Constants
@@ -325,9 +321,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
+name|hive
 operator|.
-name|Configuration
+name|serde2
+operator|.
+name|dynamic_type
+operator|.
+name|DynamicSerDe
 import|;
 end_import
 
@@ -440,8 +440,6 @@ name|client
 operator|=
 name|client
 expr_stmt|;
-name|this
-operator|.
 name|row
 operator|=
 operator|new
@@ -579,6 +577,7 @@ name|pos
 operator|!=
 literal|0
 condition|)
+block|{
 name|serDDL
 operator|=
 name|serDDL
@@ -588,6 +587,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|columnTypes
 operator|.
 name|add
@@ -673,6 +673,7 @@ argument_list|)
 expr_stmt|;
 block|}
 else|else
+block|{
 name|serDDL
 operator|=
 operator|new
@@ -681,6 +682,7 @@ argument_list|(
 literal|"struct result { string empty }"
 argument_list|)
 expr_stmt|;
+block|}
 name|ds
 operator|=
 operator|new
@@ -821,7 +823,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#absolute(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#absolute(int)    */
 specifier|public
 name|boolean
 name|absolute
@@ -841,7 +843,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#afterLast()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#afterLast()    */
 specifier|public
 name|void
 name|afterLast
@@ -858,7 +860,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#beforeFirst()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#beforeFirst()    */
 specifier|public
 name|void
 name|beforeFirst
@@ -875,7 +877,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#cancelRowUpdates()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#cancelRowUpdates()    */
 specifier|public
 name|void
 name|cancelRowUpdates
@@ -892,7 +894,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#clearWarnings()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#clearWarnings()    */
 specifier|public
 name|void
 name|clearWarnings
@@ -905,7 +907,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#close()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#close()    */
 specifier|public
 name|void
 name|close
@@ -922,7 +924,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#deleteRow()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#deleteRow()    */
 specifier|public
 name|void
 name|deleteRow
@@ -939,7 +941,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#findColumn(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#findColumn(java.lang.String)    */
 specifier|public
 name|int
 name|findColumn
@@ -959,7 +961,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#first()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#first()    */
 specifier|public
 name|boolean
 name|first
@@ -976,7 +978,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getArray(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getArray(int)    */
 specifier|public
 name|Array
 name|getArray
@@ -996,7 +998,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getArray(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getArray(java.lang.String)    */
 specifier|public
 name|Array
 name|getArray
@@ -1016,7 +1018,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getAsciiStream(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getAsciiStream(int)    */
 specifier|public
 name|InputStream
 name|getAsciiStream
@@ -1036,7 +1038,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getAsciiStream(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getAsciiStream(java.lang.String)    */
 specifier|public
 name|InputStream
 name|getAsciiStream
@@ -1056,7 +1058,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBigDecimal(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBigDecimal(int)    */
 specifier|public
 name|BigDecimal
 name|getBigDecimal
@@ -1076,7 +1078,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBigDecimal(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBigDecimal(java.lang.String)    */
 specifier|public
 name|BigDecimal
 name|getBigDecimal
@@ -1096,7 +1098,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBigDecimal(int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBigDecimal(int, int)    */
 specifier|public
 name|BigDecimal
 name|getBigDecimal
@@ -1119,7 +1121,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBigDecimal(java.lang.String, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBigDecimal(java.lang.String, int)    */
 specifier|public
 name|BigDecimal
 name|getBigDecimal
@@ -1142,7 +1144,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBinaryStream(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBinaryStream(int)    */
 specifier|public
 name|InputStream
 name|getBinaryStream
@@ -1162,7 +1164,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBinaryStream(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBinaryStream(java.lang.String)    */
 specifier|public
 name|InputStream
 name|getBinaryStream
@@ -1182,7 +1184,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBlob(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBlob(int)    */
 specifier|public
 name|Blob
 name|getBlob
@@ -1202,7 +1204,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBlob(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBlob(java.lang.String)    */
 specifier|public
 name|Blob
 name|getBlob
@@ -1222,7 +1224,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBoolean(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBoolean(int)    */
 specifier|public
 name|boolean
 name|getBoolean
@@ -1279,7 +1281,7 @@ literal|" to boolean"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBoolean(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBoolean(java.lang.String)    */
 specifier|public
 name|boolean
 name|getBoolean
@@ -1299,7 +1301,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getByte(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getByte(int)    */
 specifier|public
 name|byte
 name|getByte
@@ -1354,7 +1356,7 @@ literal|" to byte"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getByte(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getByte(java.lang.String)    */
 specifier|public
 name|byte
 name|getByte
@@ -1374,7 +1376,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBytes(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBytes(int)    */
 specifier|public
 name|byte
 index|[]
@@ -1395,7 +1397,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getBytes(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getBytes(java.lang.String)    */
 specifier|public
 name|byte
 index|[]
@@ -1416,7 +1418,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getCharacterStream(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getCharacterStream(int)    */
 specifier|public
 name|Reader
 name|getCharacterStream
@@ -1436,7 +1438,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getCharacterStream(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getCharacterStream(java.lang.String)    */
 specifier|public
 name|Reader
 name|getCharacterStream
@@ -1456,7 +1458,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getClob(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getClob(int)    */
 specifier|public
 name|Clob
 name|getClob
@@ -1476,7 +1478,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getClob(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getClob(java.lang.String)    */
 specifier|public
 name|Clob
 name|getClob
@@ -1496,7 +1498,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getConcurrency()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getConcurrency()    */
 specifier|public
 name|int
 name|getConcurrency
@@ -1513,7 +1515,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getCursorName()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getCursorName()    */
 specifier|public
 name|String
 name|getCursorName
@@ -1530,7 +1532,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getDate(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getDate(int)    */
 specifier|public
 name|Date
 name|getDate
@@ -1555,9 +1557,11 @@ name|obj
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 try|try
 block|{
 return|return
@@ -1596,7 +1600,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getDate(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getDate(java.lang.String)    */
 specifier|public
 name|Date
 name|getDate
@@ -1616,7 +1620,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getDate(int, java.util.Calendar)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getDate(int, java.util.Calendar)    */
 specifier|public
 name|Date
 name|getDate
@@ -1639,7 +1643,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getDate(java.lang.String, java.util.Calendar)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getDate(java.lang.String, java.util.Calendar)    */
 specifier|public
 name|Date
 name|getDate
@@ -1662,7 +1666,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getDouble(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getDouble(int)    */
 specifier|public
 name|double
 name|getDouble
@@ -1739,7 +1743,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getDouble(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getDouble(java.lang.String)    */
 specifier|public
 name|double
 name|getDouble
@@ -1759,7 +1763,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getFetchDirection()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getFetchDirection()    */
 specifier|public
 name|int
 name|getFetchDirection
@@ -1776,7 +1780,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getFetchSize()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getFetchSize()    */
 specifier|public
 name|int
 name|getFetchSize
@@ -1793,7 +1797,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getFloat(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getFloat(int)    */
 specifier|public
 name|float
 name|getFloat
@@ -1870,7 +1874,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getFloat(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getFloat(java.lang.String)    */
 specifier|public
 name|float
 name|getFloat
@@ -1889,7 +1893,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getHoldability()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getHoldability()    */
 specifier|public
 name|int
 name|getHoldability
@@ -1906,7 +1910,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getInt(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getInt(int)    */
 specifier|public
 name|int
 name|getInt
@@ -1983,7 +1987,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getInt(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getInt(java.lang.String)    */
 specifier|public
 name|int
 name|getInt
@@ -2003,7 +2007,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getLong(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getLong(int)    */
 specifier|public
 name|long
 name|getLong
@@ -2080,7 +2084,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getLong(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getLong(java.lang.String)    */
 specifier|public
 name|long
 name|getLong
@@ -2100,7 +2104,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getMetaData()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getMetaData()    */
 specifier|public
 name|ResultSetMetaData
 name|getMetaData
@@ -2118,7 +2122,7 @@ name|columnTypes
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getNCharacterStream(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getNCharacterStream(int)    */
 specifier|public
 name|Reader
 name|getNCharacterStream
@@ -2138,7 +2142,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getNCharacterStream(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getNCharacterStream(java.lang.String)    */
 specifier|public
 name|Reader
 name|getNCharacterStream
@@ -2158,7 +2162,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getNClob(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getNClob(int)    */
 specifier|public
 name|NClob
 name|getNClob
@@ -2178,7 +2182,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getNClob(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getNClob(java.lang.String)    */
 specifier|public
 name|NClob
 name|getNClob
@@ -2198,7 +2202,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getNString(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getNString(int)    */
 specifier|public
 name|String
 name|getNString
@@ -2218,7 +2222,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getNString(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getNString(java.lang.String)    */
 specifier|public
 name|String
 name|getNString
@@ -2238,7 +2242,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getObject(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getObject(int)    */
 specifier|public
 name|Object
 name|getObject
@@ -2286,8 +2290,6 @@ throw|;
 block|}
 try|try
 block|{
-name|this
-operator|.
 name|wasNull
 operator|=
 literal|false
@@ -2305,12 +2307,12 @@ argument_list|)
 operator|==
 literal|null
 condition|)
-name|this
-operator|.
+block|{
 name|wasNull
 operator|=
 literal|true
 expr_stmt|;
+block|}
 return|return
 name|row
 operator|.
@@ -2340,7 +2342,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getObject(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getObject(java.lang.String)    */
 specifier|public
 name|Object
 name|getObject
@@ -2360,7 +2362,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getObject(int, java.util.Map)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getObject(int, java.util.Map)    */
 specifier|public
 name|Object
 name|getObject
@@ -2391,7 +2393,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getObject(java.lang.String, java.util.Map)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getObject(java.lang.String, java.util.Map)    */
 specifier|public
 name|Object
 name|getObject
@@ -2422,7 +2424,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getRef(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getRef(int)    */
 specifier|public
 name|Ref
 name|getRef
@@ -2442,7 +2444,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getRef(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getRef(java.lang.String)    */
 specifier|public
 name|Ref
 name|getRef
@@ -2462,7 +2464,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getRow()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getRow()    */
 specifier|public
 name|int
 name|getRow
@@ -2479,7 +2481,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getRowId(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getRowId(int)    */
 specifier|public
 name|RowId
 name|getRowId
@@ -2499,7 +2501,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getRowId(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getRowId(java.lang.String)    */
 specifier|public
 name|RowId
 name|getRowId
@@ -2519,7 +2521,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getSQLXML(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getSQLXML(int)    */
 specifier|public
 name|SQLXML
 name|getSQLXML
@@ -2539,7 +2541,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getSQLXML(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getSQLXML(java.lang.String)    */
 specifier|public
 name|SQLXML
 name|getSQLXML
@@ -2559,7 +2561,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getShort(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getShort(int)    */
 specifier|public
 name|short
 name|getShort
@@ -2636,7 +2638,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getShort(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getShort(java.lang.String)    */
 specifier|public
 name|short
 name|getShort
@@ -2656,7 +2658,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getStatement()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getStatement()    */
 specifier|public
 name|Statement
 name|getStatement
@@ -2673,7 +2675,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/**    * @param columnIndex - the first column is 1, the second is 2, ...    * @see java.sql.ResultSet#getString(int)    */
+comment|/**    * @param columnIndex    *          - the first column is 1, the second is 2, ...    * @see java.sql.ResultSet#getString(int)    */
 specifier|public
 name|String
 name|getString
@@ -2699,9 +2701,11 @@ name|obj
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
 name|obj
 operator|.
@@ -2709,7 +2713,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getString(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getString(java.lang.String)    */
 specifier|public
 name|String
 name|getString
@@ -2729,7 +2733,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getTime(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getTime(int)    */
 specifier|public
 name|Time
 name|getTime
@@ -2749,7 +2753,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getTime(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getTime(java.lang.String)    */
 specifier|public
 name|Time
 name|getTime
@@ -2769,7 +2773,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getTime(int, java.util.Calendar)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getTime(int, java.util.Calendar)    */
 specifier|public
 name|Time
 name|getTime
@@ -2792,7 +2796,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getTime(java.lang.String, java.util.Calendar)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getTime(java.lang.String, java.util.Calendar)    */
 specifier|public
 name|Time
 name|getTime
@@ -2815,7 +2819,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getTimestamp(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getTimestamp(int)    */
 specifier|public
 name|Timestamp
 name|getTimestamp
@@ -2835,7 +2839,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getTimestamp(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getTimestamp(java.lang.String)    */
 specifier|public
 name|Timestamp
 name|getTimestamp
@@ -2855,7 +2859,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getTimestamp(int, java.util.Calendar)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getTimestamp(int, java.util.Calendar)    */
 specifier|public
 name|Timestamp
 name|getTimestamp
@@ -2878,7 +2882,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getTimestamp(java.lang.String, java.util.Calendar)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getTimestamp(java.lang.String, java.util.Calendar)    */
 specifier|public
 name|Timestamp
 name|getTimestamp
@@ -2901,7 +2905,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getType()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getType()    */
 specifier|public
 name|int
 name|getType
@@ -2918,7 +2922,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getURL(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getURL(int)    */
 specifier|public
 name|URL
 name|getURL
@@ -2938,7 +2942,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getURL(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getURL(java.lang.String)    */
 specifier|public
 name|URL
 name|getURL
@@ -2958,7 +2962,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getUnicodeStream(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getUnicodeStream(int)    */
 specifier|public
 name|InputStream
 name|getUnicodeStream
@@ -2978,7 +2982,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getUnicodeStream(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getUnicodeStream(java.lang.String)    */
 specifier|public
 name|InputStream
 name|getUnicodeStream
@@ -2998,7 +3002,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#getWarnings()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#getWarnings()    */
 specifier|public
 name|SQLWarning
 name|getWarnings
@@ -3010,7 +3014,7 @@ return|return
 name|warningChain
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#insertRow()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#insertRow()    */
 specifier|public
 name|void
 name|insertRow
@@ -3027,7 +3031,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#isAfterLast()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#isAfterLast()    */
 specifier|public
 name|boolean
 name|isAfterLast
@@ -3044,7 +3048,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#isBeforeFirst()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#isBeforeFirst()    */
 specifier|public
 name|boolean
 name|isBeforeFirst
@@ -3061,7 +3065,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#isClosed()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#isClosed()    */
 specifier|public
 name|boolean
 name|isClosed
@@ -3078,7 +3082,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#isFirst()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#isFirst()    */
 specifier|public
 name|boolean
 name|isFirst
@@ -3095,7 +3099,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#isLast()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#isLast()    */
 specifier|public
 name|boolean
 name|isLast
@@ -3112,7 +3116,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#last()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#last()    */
 specifier|public
 name|boolean
 name|last
@@ -3129,7 +3133,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#moveToCurrentRow()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#moveToCurrentRow()    */
 specifier|public
 name|void
 name|moveToCurrentRow
@@ -3146,7 +3150,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#moveToInsertRow()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#moveToInsertRow()    */
 specifier|public
 name|void
 name|moveToInsertRow
@@ -3163,7 +3167,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/**    * Moves the cursor down one row from its current position.    *    * @see java.sql.ResultSet#next()    * @throws SQLException if a database access error occurs.    */
+comment|/**    * Moves the cursor down one row from its current position.    *     * @see java.sql.ResultSet#next()    * @throws SQLException    *           if a database access error occurs.    */
 specifier|public
 name|boolean
 name|next
@@ -3173,23 +3177,19 @@ name|SQLException
 block|{
 if|if
 condition|(
-name|this
-operator|.
 name|maxRows
 operator|>
 literal|0
 operator|&&
-name|this
-operator|.
 name|rowsFetched
 operator|>=
-name|this
-operator|.
 name|maxRows
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|String
 name|row_str
 init|=
@@ -3207,8 +3207,6 @@ operator|.
 name|fetchOne
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|rowsFetched
 operator|++
 expr_stmt|;
@@ -3282,7 +3280,7 @@ literal|""
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#previous()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#previous()    */
 specifier|public
 name|boolean
 name|previous
@@ -3299,7 +3297,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#refreshRow()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#refreshRow()    */
 specifier|public
 name|void
 name|refreshRow
@@ -3316,7 +3314,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#relative(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#relative(int)    */
 specifier|public
 name|boolean
 name|relative
@@ -3336,7 +3334,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#rowDeleted()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#rowDeleted()    */
 specifier|public
 name|boolean
 name|rowDeleted
@@ -3353,7 +3351,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#rowInserted()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#rowInserted()    */
 specifier|public
 name|boolean
 name|rowInserted
@@ -3370,7 +3368,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#rowUpdated()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#rowUpdated()    */
 specifier|public
 name|boolean
 name|rowUpdated
@@ -3387,7 +3385,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#setFetchDirection(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#setFetchDirection(int)    */
 specifier|public
 name|void
 name|setFetchDirection
@@ -3407,7 +3405,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#setFetchSize(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#setFetchSize(int)    */
 specifier|public
 name|void
 name|setFetchSize
@@ -3427,7 +3425,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateArray(int, java.sql.Array)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateArray(int, java.sql.Array)    */
 specifier|public
 name|void
 name|updateArray
@@ -3450,7 +3448,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateArray(java.lang.String, java.sql.Array)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateArray(java.lang.String, java.sql.Array)    */
 specifier|public
 name|void
 name|updateArray
@@ -3473,7 +3471,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateAsciiStream(int, java.io.InputStream)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateAsciiStream(int, java.io.InputStream)    */
 specifier|public
 name|void
 name|updateAsciiStream
@@ -3496,7 +3494,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateAsciiStream(java.lang.String, java.io.InputStream)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateAsciiStream(java.lang.String,    * java.io.InputStream)    */
 specifier|public
 name|void
 name|updateAsciiStream
@@ -3519,7 +3517,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateAsciiStream(int, java.io.InputStream, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateAsciiStream(int, java.io.InputStream, int)    */
 specifier|public
 name|void
 name|updateAsciiStream
@@ -3545,7 +3543,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateAsciiStream(java.lang.String, java.io.InputStream, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateAsciiStream(java.lang.String,    * java.io.InputStream, int)    */
 specifier|public
 name|void
 name|updateAsciiStream
@@ -3571,7 +3569,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateAsciiStream(int, java.io.InputStream, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateAsciiStream(int, java.io.InputStream, long)    */
 specifier|public
 name|void
 name|updateAsciiStream
@@ -3597,7 +3595,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateAsciiStream(java.lang.String, java.io.InputStream, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateAsciiStream(java.lang.String,    * java.io.InputStream, long)    */
 specifier|public
 name|void
 name|updateAsciiStream
@@ -3623,7 +3621,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBigDecimal(int, java.math.BigDecimal)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBigDecimal(int, java.math.BigDecimal)    */
 specifier|public
 name|void
 name|updateBigDecimal
@@ -3646,7 +3644,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBigDecimal(java.lang.String, java.math.BigDecimal)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBigDecimal(java.lang.String,    * java.math.BigDecimal)    */
 specifier|public
 name|void
 name|updateBigDecimal
@@ -3669,7 +3667,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBinaryStream(int, java.io.InputStream)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBinaryStream(int, java.io.InputStream)    */
 specifier|public
 name|void
 name|updateBinaryStream
@@ -3692,7 +3690,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBinaryStream(java.lang.String, java.io.InputStream)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBinaryStream(java.lang.String,    * java.io.InputStream)    */
 specifier|public
 name|void
 name|updateBinaryStream
@@ -3715,7 +3713,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBinaryStream(int, java.io.InputStream, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBinaryStream(int, java.io.InputStream, int)    */
 specifier|public
 name|void
 name|updateBinaryStream
@@ -3741,7 +3739,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBinaryStream(java.lang.String, java.io.InputStream, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBinaryStream(java.lang.String,    * java.io.InputStream, int)    */
 specifier|public
 name|void
 name|updateBinaryStream
@@ -3767,7 +3765,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBinaryStream(int, java.io.InputStream, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBinaryStream(int, java.io.InputStream, long)    */
 specifier|public
 name|void
 name|updateBinaryStream
@@ -3793,7 +3791,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBinaryStream(java.lang.String, java.io.InputStream, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBinaryStream(java.lang.String,    * java.io.InputStream, long)    */
 specifier|public
 name|void
 name|updateBinaryStream
@@ -3819,7 +3817,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBlob(int, java.sql.Blob)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBlob(int, java.sql.Blob)    */
 specifier|public
 name|void
 name|updateBlob
@@ -3842,7 +3840,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBlob(java.lang.String, java.sql.Blob)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBlob(java.lang.String, java.sql.Blob)    */
 specifier|public
 name|void
 name|updateBlob
@@ -3865,7 +3863,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBlob(int, java.io.InputStream)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBlob(int, java.io.InputStream)    */
 specifier|public
 name|void
 name|updateBlob
@@ -3888,7 +3886,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBlob(java.lang.String, java.io.InputStream)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBlob(java.lang.String, java.io.InputStream)    */
 specifier|public
 name|void
 name|updateBlob
@@ -3911,7 +3909,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBlob(int, java.io.InputStream, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBlob(int, java.io.InputStream, long)    */
 specifier|public
 name|void
 name|updateBlob
@@ -3937,7 +3935,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBlob(java.lang.String, java.io.InputStream, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBlob(java.lang.String, java.io.InputStream,    * long)    */
 specifier|public
 name|void
 name|updateBlob
@@ -3963,7 +3961,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBoolean(int, boolean)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBoolean(int, boolean)    */
 specifier|public
 name|void
 name|updateBoolean
@@ -3986,7 +3984,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBoolean(java.lang.String, boolean)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBoolean(java.lang.String, boolean)    */
 specifier|public
 name|void
 name|updateBoolean
@@ -4009,7 +4007,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateByte(int, byte)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateByte(int, byte)    */
 specifier|public
 name|void
 name|updateByte
@@ -4032,7 +4030,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateByte(java.lang.String, byte)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateByte(java.lang.String, byte)    */
 specifier|public
 name|void
 name|updateByte
@@ -4055,7 +4053,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBytes(int, byte[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBytes(int, byte[])    */
 specifier|public
 name|void
 name|updateBytes
@@ -4079,7 +4077,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateBytes(java.lang.String, byte[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateBytes(java.lang.String, byte[])    */
 specifier|public
 name|void
 name|updateBytes
@@ -4103,7 +4101,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateCharacterStream(int, java.io.Reader)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateCharacterStream(int, java.io.Reader)    */
 specifier|public
 name|void
 name|updateCharacterStream
@@ -4126,7 +4124,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateCharacterStream(java.lang.String, java.io.Reader)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateCharacterStream(java.lang.String,    * java.io.Reader)    */
 specifier|public
 name|void
 name|updateCharacterStream
@@ -4149,7 +4147,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateCharacterStream(int, java.io.Reader, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateCharacterStream(int, java.io.Reader, int)    */
 specifier|public
 name|void
 name|updateCharacterStream
@@ -4175,7 +4173,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateCharacterStream(java.lang.String, java.io.Reader, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateCharacterStream(java.lang.String,    * java.io.Reader, int)    */
 specifier|public
 name|void
 name|updateCharacterStream
@@ -4201,7 +4199,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateCharacterStream(int, java.io.Reader, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateCharacterStream(int, java.io.Reader, long)    */
 specifier|public
 name|void
 name|updateCharacterStream
@@ -4227,7 +4225,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateCharacterStream(java.lang.String, java.io.Reader, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateCharacterStream(java.lang.String,    * java.io.Reader, long)    */
 specifier|public
 name|void
 name|updateCharacterStream
@@ -4253,7 +4251,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateClob(int, java.sql.Clob)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateClob(int, java.sql.Clob)    */
 specifier|public
 name|void
 name|updateClob
@@ -4276,7 +4274,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateClob(java.lang.String, java.sql.Clob)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateClob(java.lang.String, java.sql.Clob)    */
 specifier|public
 name|void
 name|updateClob
@@ -4299,7 +4297,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateClob(int, java.io.Reader)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateClob(int, java.io.Reader)    */
 specifier|public
 name|void
 name|updateClob
@@ -4322,7 +4320,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateClob(java.lang.String, java.io.Reader)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateClob(java.lang.String, java.io.Reader)    */
 specifier|public
 name|void
 name|updateClob
@@ -4345,7 +4343,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateClob(int, java.io.Reader, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateClob(int, java.io.Reader, long)    */
 specifier|public
 name|void
 name|updateClob
@@ -4371,7 +4369,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateClob(java.lang.String, java.io.Reader, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateClob(java.lang.String, java.io.Reader, long)    */
 specifier|public
 name|void
 name|updateClob
@@ -4397,7 +4395,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateDate(int, java.sql.Date)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateDate(int, java.sql.Date)    */
 specifier|public
 name|void
 name|updateDate
@@ -4420,7 +4418,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateDate(java.lang.String, java.sql.Date)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateDate(java.lang.String, java.sql.Date)    */
 specifier|public
 name|void
 name|updateDate
@@ -4443,7 +4441,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateDouble(int, double)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateDouble(int, double)    */
 specifier|public
 name|void
 name|updateDouble
@@ -4466,7 +4464,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateDouble(java.lang.String, double)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateDouble(java.lang.String, double)    */
 specifier|public
 name|void
 name|updateDouble
@@ -4489,7 +4487,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateFloat(int, float)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateFloat(int, float)    */
 specifier|public
 name|void
 name|updateFloat
@@ -4512,7 +4510,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateFloat(java.lang.String, float)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateFloat(java.lang.String, float)    */
 specifier|public
 name|void
 name|updateFloat
@@ -4535,7 +4533,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateInt(int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateInt(int, int)    */
 specifier|public
 name|void
 name|updateInt
@@ -4558,7 +4556,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateInt(java.lang.String, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateInt(java.lang.String, int)    */
 specifier|public
 name|void
 name|updateInt
@@ -4581,7 +4579,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateLong(int, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateLong(int, long)    */
 specifier|public
 name|void
 name|updateLong
@@ -4604,7 +4602,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateLong(java.lang.String, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateLong(java.lang.String, long)    */
 specifier|public
 name|void
 name|updateLong
@@ -4627,7 +4625,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNCharacterStream(int, java.io.Reader)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNCharacterStream(int, java.io.Reader)    */
 specifier|public
 name|void
 name|updateNCharacterStream
@@ -4650,7 +4648,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNCharacterStream(java.lang.String, java.io.Reader)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNCharacterStream(java.lang.String,    * java.io.Reader)    */
 specifier|public
 name|void
 name|updateNCharacterStream
@@ -4673,7 +4671,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNCharacterStream(int, java.io.Reader, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNCharacterStream(int, java.io.Reader, long)    */
 specifier|public
 name|void
 name|updateNCharacterStream
@@ -4699,7 +4697,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNCharacterStream(java.lang.String, java.io.Reader, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNCharacterStream(java.lang.String,    * java.io.Reader, long)    */
 specifier|public
 name|void
 name|updateNCharacterStream
@@ -4725,7 +4723,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNClob(int, java.sql.NClob)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNClob(int, java.sql.NClob)    */
 specifier|public
 name|void
 name|updateNClob
@@ -4748,7 +4746,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNClob(java.lang.String, java.sql.NClob)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNClob(java.lang.String, java.sql.NClob)    */
 specifier|public
 name|void
 name|updateNClob
@@ -4771,7 +4769,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNClob(int, java.io.Reader)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNClob(int, java.io.Reader)    */
 specifier|public
 name|void
 name|updateNClob
@@ -4794,7 +4792,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNClob(java.lang.String, java.io.Reader)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNClob(java.lang.String, java.io.Reader)    */
 specifier|public
 name|void
 name|updateNClob
@@ -4817,7 +4815,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNClob(int, java.io.Reader, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNClob(int, java.io.Reader, long)    */
 specifier|public
 name|void
 name|updateNClob
@@ -4843,7 +4841,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNClob(java.lang.String, java.io.Reader, long)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNClob(java.lang.String, java.io.Reader, long)    */
 specifier|public
 name|void
 name|updateNClob
@@ -4869,7 +4867,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNString(int, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNString(int, java.lang.String)    */
 specifier|public
 name|void
 name|updateNString
@@ -4892,7 +4890,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNString(java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNString(java.lang.String, java.lang.String)    */
 specifier|public
 name|void
 name|updateNString
@@ -4915,7 +4913,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNull(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNull(int)    */
 specifier|public
 name|void
 name|updateNull
@@ -4935,7 +4933,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateNull(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateNull(java.lang.String)    */
 specifier|public
 name|void
 name|updateNull
@@ -4955,7 +4953,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateObject(int, java.lang.Object)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateObject(int, java.lang.Object)    */
 specifier|public
 name|void
 name|updateObject
@@ -4978,7 +4976,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateObject(java.lang.String, java.lang.Object)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateObject(java.lang.String, java.lang.Object)    */
 specifier|public
 name|void
 name|updateObject
@@ -5001,7 +4999,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateObject(int, java.lang.Object, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateObject(int, java.lang.Object, int)    */
 specifier|public
 name|void
 name|updateObject
@@ -5027,7 +5025,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateObject(java.lang.String, java.lang.Object, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateObject(java.lang.String, java.lang.Object,    * int)    */
 specifier|public
 name|void
 name|updateObject
@@ -5053,7 +5051,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateRef(int, java.sql.Ref)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateRef(int, java.sql.Ref)    */
 specifier|public
 name|void
 name|updateRef
@@ -5076,7 +5074,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateRef(java.lang.String, java.sql.Ref)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateRef(java.lang.String, java.sql.Ref)    */
 specifier|public
 name|void
 name|updateRef
@@ -5099,7 +5097,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateRow()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateRow()    */
 specifier|public
 name|void
 name|updateRow
@@ -5116,7 +5114,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateRowId(int, java.sql.RowId)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateRowId(int, java.sql.RowId)    */
 specifier|public
 name|void
 name|updateRowId
@@ -5139,7 +5137,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateRowId(java.lang.String, java.sql.RowId)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateRowId(java.lang.String, java.sql.RowId)    */
 specifier|public
 name|void
 name|updateRowId
@@ -5162,7 +5160,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateSQLXML(int, java.sql.SQLXML)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateSQLXML(int, java.sql.SQLXML)    */
 specifier|public
 name|void
 name|updateSQLXML
@@ -5185,7 +5183,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateSQLXML(java.lang.String, java.sql.SQLXML)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateSQLXML(java.lang.String, java.sql.SQLXML)    */
 specifier|public
 name|void
 name|updateSQLXML
@@ -5208,7 +5206,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateShort(int, short)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateShort(int, short)    */
 specifier|public
 name|void
 name|updateShort
@@ -5231,7 +5229,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateShort(java.lang.String, short)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateShort(java.lang.String, short)    */
 specifier|public
 name|void
 name|updateShort
@@ -5254,7 +5252,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateString(int, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateString(int, java.lang.String)    */
 specifier|public
 name|void
 name|updateString
@@ -5277,7 +5275,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateString(java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateString(java.lang.String, java.lang.String)    */
 specifier|public
 name|void
 name|updateString
@@ -5300,7 +5298,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateTime(int, java.sql.Time)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateTime(int, java.sql.Time)    */
 specifier|public
 name|void
 name|updateTime
@@ -5323,7 +5321,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateTime(java.lang.String, java.sql.Time)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateTime(java.lang.String, java.sql.Time)    */
 specifier|public
 name|void
 name|updateTime
@@ -5346,7 +5344,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateTimestamp(int, java.sql.Timestamp)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateTimestamp(int, java.sql.Timestamp)    */
 specifier|public
 name|void
 name|updateTimestamp
@@ -5369,7 +5367,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#updateTimestamp(java.lang.String, java.sql.Timestamp)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#updateTimestamp(java.lang.String,    * java.sql.Timestamp)    */
 specifier|public
 name|void
 name|updateTimestamp
@@ -5392,7 +5390,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSet#wasNull()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSet#wasNull()    */
 specifier|public
 name|boolean
 name|wasNull
@@ -5401,12 +5399,10 @@ throws|throws
 name|SQLException
 block|{
 return|return
-name|this
-operator|.
 name|wasNull
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -5429,7 +5425,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
 specifier|public
 parameter_list|<
 name|T

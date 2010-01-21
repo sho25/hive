@@ -19,15 +19,35 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|net
+operator|.
+name|URI
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
 operator|.
 name|hadoop
 operator|.
-name|fs
+name|conf
 operator|.
-name|Path
+name|Configuration
 import|;
 end_import
 
@@ -53,29 +73,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
+name|fs
 operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URI
+name|Path
 import|;
 end_import
 
@@ -88,7 +88,7 @@ specifier|public
 class|class
 name|FileUtils
 block|{
-comment|/**    * Variant of Path.makeQualified that qualifies the input    * path against the default file system indicated by the     * configuration    *    * This does not require a FileSystem handle in most cases    * - only requires the Filesystem URI. This saves the cost    * of opening the Filesystem - which can involve RPCs - as    * well as cause errors    *    * @param path path to be fully qualified    * @param conf Configuration file    * @return path qualified relative to default file system    */
+comment|/**    * Variant of Path.makeQualified that qualifies the input path against the    * default file system indicated by the configuration    *     * This does not require a FileSystem handle in most cases - only requires the    * Filesystem URI. This saves the cost of opening the Filesystem - which can    * involve RPCs - as well as cause errors    *     * @param path    *          path to be fully qualified    * @param conf    *          Configuration file    * @return path qualified relative to default file system    */
 specifier|public
 specifier|static
 name|Path
@@ -182,9 +182,11 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 name|path
 return|;
+block|}
 if|if
 condition|(
 name|scheme

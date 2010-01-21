@@ -301,9 +301,6 @@ name|type
 operator|.
 name|code
 operator|==
-operator|(
-name|int
-operator|)
 name|bytes
 index|[
 literal|0
@@ -320,6 +317,8 @@ literal|null
 return|;
 block|}
 comment|/** Generate a suitable string representation. */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

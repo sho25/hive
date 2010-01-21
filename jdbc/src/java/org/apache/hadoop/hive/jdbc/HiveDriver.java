@@ -23,7 +23,7 @@ name|java
 operator|.
 name|sql
 operator|.
-name|*
+name|Connection
 import|;
 end_import
 
@@ -33,7 +33,17 @@ name|java
 operator|.
 name|sql
 operator|.
-name|DriverManager
+name|DriverPropertyInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|SQLException
 import|;
 end_import
 
@@ -214,7 +224,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Checks whether a given url is in a valid format.    *    * The current uri format is:    * jdbc:hive://[host[:port]]    *    * jdbc:hive://                 - run in embedded mode    * jdbc:hive://localhost        - connect to localhost default port (10000)    * jdbc:hive://localhost:5050   - connect to localhost port 5050    *    * TODO: - write a better regex.    *       - decide on uri format    */
+comment|/**    * Checks whether a given url is in a valid format.    *     * The current uri format is: jdbc:hive://[host[:port]]    *     * jdbc:hive:// - run in embedded mode jdbc:hive://localhost - connect to    * localhost default port (10000) jdbc:hive://localhost:5050 - connect to    * localhost port 5050    *     * TODO: - write a better regex. - decide on uri format    */
 specifier|public
 name|boolean
 name|acceptsURL
@@ -470,7 +480,7 @@ return|return
 name|JDBC_COMPLIANT
 return|;
 block|}
-comment|/**    * Takes a url in the form of jdbc:hive://[hostname]:[port]/[db_name] and parses it.    * Everything after jdbc:hive// is optional.    *    * @param url    * @param defaults    * @return    * @throws java.sql.SQLException    */
+comment|/**    * Takes a url in the form of jdbc:hive://[hostname]:[port]/[db_name] and    * parses it. Everything after jdbc:hive// is optional.    *     * @param url    * @param defaults    * @return    * @throws java.sql.SQLException    */
 specifier|private
 name|Properties
 name|parseURL
@@ -544,9 +554,11 @@ operator|.
 name|length
 argument_list|()
 condition|)
+block|{
 return|return
 name|urlProps
 return|;
+block|}
 comment|// [hostname]:[port]/[db_name]
 name|String
 name|connectionInfo

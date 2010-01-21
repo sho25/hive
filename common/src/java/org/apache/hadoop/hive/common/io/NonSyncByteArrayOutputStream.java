@@ -111,6 +111,8 @@ name|count
 return|;
 block|}
 comment|/**    * {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|reset
@@ -156,6 +158,8 @@ name|length
 expr_stmt|;
 block|}
 comment|/**    * {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|write
@@ -225,6 +229,7 @@ operator|)
 operator|>
 name|temp
 condition|)
+block|{
 name|newLen
 operator|=
 name|buf
@@ -233,6 +238,7 @@ name|length
 operator|<<
 literal|1
 expr_stmt|;
+block|}
 name|byte
 name|newbuf
 index|[]
@@ -268,6 +274,8 @@ name|newLen
 return|;
 block|}
 comment|/**    * {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|write
@@ -370,6 +378,8 @@ name|len
 expr_stmt|;
 block|}
 comment|/**    * {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeTo

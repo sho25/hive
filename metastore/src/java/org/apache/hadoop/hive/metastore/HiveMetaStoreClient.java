@@ -471,6 +471,7 @@ name|metastoreUris
 index|[]
 decl_stmt|;
 specifier|private
+specifier|final
 name|boolean
 name|standAloneClient
 init|=
@@ -540,7 +541,8 @@ condition|(
 name|localMetaStore
 condition|)
 block|{
-comment|// instantiate the metastore server handler directly instead of connecting through the network
+comment|// instantiate the metastore server handler directly instead of connecting
+comment|// through the network
 name|client
 operator|=
 operator|new
@@ -553,8 +555,6 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|open
 operator|=
 literal|true
@@ -610,8 +610,6 @@ argument_list|(
 literal|","
 argument_list|)
 decl_stmt|;
-name|this
-operator|.
 name|metastoreUris
 operator|=
 operator|new
@@ -668,8 +666,6 @@ literal|" does not have a scheme"
 argument_list|)
 throw|;
 block|}
-name|this
-operator|.
 name|metastoreUris
 index|[
 name|i
@@ -724,8 +720,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|this
-operator|.
 name|metastoreUris
 operator|=
 operator|new
@@ -736,8 +730,6 @@ index|]
 expr_stmt|;
 try|try
 block|{
-name|this
-operator|.
 name|metastoreUris
 index|[
 literal|0
@@ -792,13 +784,11 @@ argument_list|)
 throw|;
 block|}
 comment|// finally open the store
-name|this
-operator|.
 name|open
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * @param dbname    * @param tbl_name    * @param new_tbl    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#alter_table(java.lang.String, java.lang.String, org.apache.hadoop.hive.metastore.api.Table)    */
+comment|/**    * @param dbname    * @param tbl_name    * @param new_tbl    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#alter_table(java.lang.String,    *      java.lang.String, org.apache.hadoop.hive.metastore.api.Table)    */
 specifier|public
 name|void
 name|alter_table
@@ -843,8 +833,6 @@ control|(
 name|URI
 name|store
 range|:
-name|this
-operator|.
 name|metastoreUris
 control|)
 block|{
@@ -994,8 +982,6 @@ operator|<
 name|retries
 operator|&&
 operator|!
-name|this
-operator|.
 name|open
 condition|;
 operator|++
@@ -1042,7 +1028,7 @@ parameter_list|(
 name|InterruptedException
 name|ignore
 parameter_list|)
-block|{ }
+block|{         }
 block|}
 block|}
 if|if
@@ -1108,7 +1094,7 @@ name|TException
 name|e
 parameter_list|)
 block|{
-comment|//TODO:pc cleanup the exceptions
+comment|// TODO:pc cleanup the exceptions
 name|LOG
 operator|.
 name|error
@@ -1126,7 +1112,7 @@ name|getStackTrace
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//throw new RuntimeException(e.getMessage());
+comment|// throw new RuntimeException(e.getMessage());
 block|}
 block|}
 block|}
@@ -1215,7 +1201,7 @@ name|new_part
 argument_list|)
 return|;
 block|}
-comment|/**    * @param table_name    * @param db_name    * @param part_vals    * @return the appended partition    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String, java.lang.String, java.util.List)    */
+comment|/**    * @param table_name    * @param db_name    * @param part_vals    * @return the appended partition    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
 specifier|public
 name|Partition
 name|appendPartition
@@ -1254,7 +1240,7 @@ name|part_vals
 argument_list|)
 return|;
 block|}
-comment|/**    * @param name    * @param location_uri    * @return true or false    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_database(java.lang.String, java.lang.String)    */
+comment|/**    * @param name    * @param location_uri    * @return true or false    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_database(java.lang.String,    *      java.lang.String)    */
 specifier|public
 name|boolean
 name|createDatabase
@@ -1358,7 +1344,7 @@ name|name
 argument_list|)
 return|;
 block|}
-comment|/**    * @param tbl_name    * @param db_name    * @param part_vals    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String, java.lang.String, java.util.List, boolean)    */
+comment|/**    * @param tbl_name    * @param db_name    * @param part_vals    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String,    *      java.lang.String, java.util.List, boolean)    */
 specifier|public
 name|boolean
 name|dropPartition
@@ -1395,7 +1381,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData delete the underlying data or just delete the table in metadata    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String, java.lang.String, java.util.List, boolean)    */
+comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData    *          delete the underlying data or just delete the table in metadata    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String,    *      java.lang.String, java.util.List, boolean)    */
 specifier|public
 name|boolean
 name|dropPartition
@@ -1437,7 +1423,7 @@ name|deleteData
 argument_list|)
 return|;
 block|}
-comment|/**    * @param name    * @param dbname    * @throws NoSuchObjectException    * @throws ExistingDependentsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_table(java.lang.String, java.lang.String, boolean)    */
+comment|/**    * @param name    * @param dbname    * @throws NoSuchObjectException    * @throws ExistingDependentsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_table(java.lang.String,    *      java.lang.String, boolean)    */
 specifier|public
 name|void
 name|dropTable
@@ -1467,7 +1453,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param dbname    * @param name    * @param deleteData delete the underlying data or just delete the table in metadata    * @throws NoSuchObjectException    * @throws ExistingDependentsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_table(java.lang.String, java.lang.String, boolean)    */
+comment|/**    * @param dbname    * @param name    * @param deleteData    *          delete the underlying data or just delete the table in metadata    * @throws NoSuchObjectException    * @throws ExistingDependentsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_table(java.lang.String,    *      java.lang.String, boolean)    */
 specifier|public
 name|void
 name|dropTable
@@ -1653,7 +1639,7 @@ name|name
 argument_list|)
 return|;
 block|}
-comment|/**    * @param tbl_name    * @param db_name    * @param part_vals    * @return the partition    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String, java.lang.String, java.util.List)    */
+comment|/**    * @param tbl_name    * @param db_name    * @param part_vals    * @return the partition    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
 specifier|public
 name|Partition
 name|getPartition
@@ -1688,7 +1674,7 @@ name|part_vals
 argument_list|)
 return|;
 block|}
-comment|/**    * @param name    * @param dbname    * @return the table    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @throws NoSuchObjectException     * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_table(java.lang.String, java.lang.String)    */
+comment|/**    * @param name    * @param dbname    * @return the table    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @throws NoSuchObjectException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_table(java.lang.String,    *      java.lang.String)    */
 specifier|public
 name|Table
 name|getTable
@@ -1950,7 +1936,7 @@ name|newPart
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_fields(java.lang.String, java.lang.String)    */
+comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_fields(java.lang.String,    *      java.lang.String)    */
 specifier|public
 name|List
 argument_list|<
@@ -1984,7 +1970,7 @@ name|tableName
 argument_list|)
 return|;
 block|}
-comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_schema(java.lang.String, java.lang.String)    */
+comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_schema(java.lang.String,    *      java.lang.String)    */
 specifier|public
 name|List
 argument_list|<

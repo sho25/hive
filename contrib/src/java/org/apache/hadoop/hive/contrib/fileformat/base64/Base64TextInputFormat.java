@@ -57,6 +57,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|codec
+operator|.
+name|binary
+operator|.
+name|Base64
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -235,24 +251,8 @@ name|TextInputFormat
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|codec
-operator|.
-name|binary
-operator|.
-name|Base64
-import|;
-end_import
-
 begin_comment
-comment|/**  * FileInputFormat for base64 encoded text files.  *   * Each line is a base64-encoded record.  * The key is a LongWritable which is the offset.  * The value is a BytesWritable containing the base64-decoded bytes.  *   * This class accepts a configurable parameter:  * "base64.text.input.format.signature"  *   * The UTF-8 encoded signature will be compared with the beginning  * of each decoded bytes.  If they don't match, the record is discarded.  * If they match, the signature is stripped off the data.  */
+comment|/**  * FileInputFormat for base64 encoded text files.  *   * Each line is a base64-encoded record. The key is a LongWritable which is the  * offset. The value is a BytesWritable containing the base64-decoded bytes.  *   * This class accepts a configurable parameter:  * "base64.text.input.format.signature"  *   * The UTF-8 encoded signature will be compared with the beginning of each  * decoded bytes. If they don't match, the record is discarded. If they match,  * the signature is stripped off the data.  */
 end_comment
 
 begin_class
@@ -497,7 +497,9 @@ condition|;
 operator|++
 name|i
 control|)
+block|{
 empty_stmt|;
+block|}
 comment|// return the row only if it's not corrupted
 if|if
 condition|(
@@ -543,6 +545,7 @@ index|[]
 name|signature
 decl_stmt|;
 specifier|private
+specifier|final
 name|Base64
 name|base64
 init|=

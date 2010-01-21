@@ -58,7 +58,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This is a simple UDAF that calculates average.  *   * It should be very easy to follow and can be used as an example  * for writing new UDAFs.  *    * Note that Hive internally uses a different mechanism (called  * GenericUDAF) to implement built-in aggregation functions, which  * are harder to program but more efficient.  *   */
+comment|/**  * This is a simple UDAF that calculates average.  *   * It should be very easy to follow and can be used as an example for writing  * new UDAFs.  *   * Note that Hive internally uses a different mechanism (called GenericUDAF) to  * implement built-in aggregation functions, which are harder to program but  * more efficient.  *   */
 end_comment
 
 begin_class
@@ -68,7 +68,7 @@ name|UDAFExampleAvg
 extends|extends
 name|UDAF
 block|{
-comment|/**    * The internal state of an aggregation for average.    *     * Note that this is only needed if the internal state cannot be    * represented by a primitive.    *     * The internal state can also contains fields with types like    * ArrayList<String> and HashMap<String,Double> if needed.     */
+comment|/**    * The internal state of an aggregation for average.    *     * Note that this is only needed if the internal state cannot be represented    * by a primitive.    *     * The internal state can also contains fields with types like    * ArrayList<String> and HashMap<String,Double> if needed.    */
 specifier|public
 specifier|static
 class|class
@@ -83,7 +83,7 @@ name|double
 name|mSum
 decl_stmt|;
 block|}
-comment|/**    * The actual class for doing the aggregation.    * Hive will automatically look for all internal classes of the UDAF    * that implements UDAFEvaluator.      */
+comment|/**    * The actual class for doing the aggregation. Hive will automatically look    * for all internal classes of the UDAF that implements UDAFEvaluator.    */
 specifier|public
 specifier|static
 class|class
@@ -130,7 +130,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-comment|/**      * Iterate through one row of original data.      *       * The number and type of arguments need to the same as we call      * this UDAF from Hive command line.      *       * This function should always return true.      */
+comment|/**      * Iterate through one row of original data.      *       * The number and type of arguments need to the same as we call this UDAF      * from Hive command line.      *       * This function should always return true.      */
 specifier|public
 name|boolean
 name|iterate
@@ -162,7 +162,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**      * Terminate a partial aggregation and return the state.      * If the state is a primitive, just return primitive Java classes      * like Integer or String.      */
+comment|/**      * Terminate a partial aggregation and return the state. If the state is a      * primitive, just return primitive Java classes like Integer or String.      */
 specifier|public
 name|UDAFAvgState
 name|terminatePartial
@@ -181,7 +181,7 @@ else|:
 name|state
 return|;
 block|}
-comment|/**      * Merge with a partial aggregation.      *       * This function should always have a single argument which has      * the same type as the return value of terminatePartial().        */
+comment|/**      * Merge with a partial aggregation.      *       * This function should always have a single argument which has the same      * type as the return value of terminatePartial().      */
 specifier|public
 name|boolean
 name|merge

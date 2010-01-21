@@ -378,7 +378,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * RegexSerDe uses regular expression (regex) to serialize/deserialize.  *   * It can deserialize the data using regex and extracts groups as columns.  * It can also serialize the row object using a format string.  *   * In deserialization stage, if a row does not match the regex, then all  * columns in the row will be NULL.  If a row matches the regex but has  * less than expected groups, the missing groups will be NULL.  If a row  * matches the regex but has more than expected groups, the additional   * groups are just ignored.  *   * In serialization stage, it uses java string formatter to format the  * columns into a row.  If the output type of the column in a query is   * not a string, it will be automatically converted to String by Hive.  *   * For the format of the format String, please refer to   * {@link http://java.sun.com/j2se/1.5.0/docs/api/java/util/Formatter.html#syntax}  *   * NOTE: Obviously, all columns have to be strings.  * Users can use "CAST(a AS INT)" to convert columns to other types.  *   * NOTE: This implementation is using String, and javaStringObjectInspector.  * A more efficient implementation should use UTF-8 encoded Text and   * writableStringObjectInspector.  We should switch to that when we have a   * UTF-8 based Regex library.    */
+comment|/**  * RegexSerDe uses regular expression (regex) to serialize/deserialize.  *   * It can deserialize the data using regex and extracts groups as columns. It  * can also serialize the row object using a format string.  *   * In deserialization stage, if a row does not match the regex, then all columns  * in the row will be NULL. If a row matches the regex but has less than  * expected groups, the missing groups will be NULL. If a row matches the regex  * but has more than expected groups, the additional groups are just ignored.  *   * In serialization stage, it uses java string formatter to format the columns  * into a row. If the output type of the column in a query is not a string, it  * will be automatically converted to String by Hive.  *   * For the format of the format String, please refer to {@link http  * ://java.sun.com/j2se/1.5.0/docs/api/java/util/Formatter.html#syntax}  *   * NOTE: Obviously, all columns have to be strings. Users can use  * "CAST(a AS INT)" to convert columns to other types.  *   * NOTE: This implementation is using String, and javaStringObjectInspector. A  * more efficient implementation should use UTF-8 encoded Text and  * writableStringObjectInspector. We should switch to that when we have a UTF-8  * based Regex library.  */
 end_comment
 
 begin_class
@@ -1060,9 +1060,12 @@ argument_list|)
 throw|;
 block|}
 comment|// Get all the fields out.
-comment|// NOTE: The correct way to get fields out of the row is to use objInspector.
-comment|// The obj can be a Java ArrayList, or a Java class, or a byte[] or whatever.
-comment|// The only way to access the data inside the obj is through ObjectInspector.
+comment|// NOTE: The correct way to get fields out of the row is to use
+comment|// objInspector.
+comment|// The obj can be a Java ArrayList, or a Java class, or a byte[] or
+comment|// whatever.
+comment|// The only way to access the data inside the obj is through
+comment|// ObjectInspector.
 name|StructObjectInspector
 name|outputRowOI
 init|=
@@ -1168,7 +1171,8 @@ name|StringObjectInspector
 operator|)
 name|fieldOI
 decl_stmt|;
-comment|// Convert the field to Java class String, because objects of String type can be
+comment|// Convert the field to Java class String, because objects of String type
+comment|// can be
 comment|// stored in String, Text, or some other classes.
 name|outputFields
 index|[

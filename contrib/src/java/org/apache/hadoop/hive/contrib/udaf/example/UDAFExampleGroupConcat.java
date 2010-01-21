@@ -78,7 +78,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This is a simple UDAF that concatenates all arguments from  * different rows into a single string.  *   * It should be very easy to follow and can be used as an example  * for writing new UDAFs.  *    * Note that Hive internally uses a different mechanism (called  * GenericUDAF) to implement built-in aggregation functions, which  * are harder to program but more efficient.  */
+comment|/**  * This is a simple UDAF that concatenates all arguments from different rows  * into a single string.  *   * It should be very easy to follow and can be used as an example for writing  * new UDAFs.  *   * Note that Hive internally uses a different mechanism (called GenericUDAF) to  * implement built-in aggregation functions, which are harder to program but  * more efficient.  */
 end_comment
 
 begin_class
@@ -88,7 +88,7 @@ name|UDAFExampleGroupConcat
 extends|extends
 name|UDAF
 block|{
-comment|/**    * The actual class for doing the aggregation.    * Hive will automatically look for all internal classes of the UDAF    * that implements UDAFEvaluator.    */
+comment|/**    * The actual class for doing the aggregation. Hive will automatically look    * for all internal classes of the UDAF that implements UDAFEvaluator.    */
 specifier|public
 specifier|static
 class|class
@@ -131,7 +131,7 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Iterate through one row of original data.      *       * This UDF accepts arbitrary number of String arguments, so we use      * String[].  If it only accepts a single String, then we should use      * a single String argument.      *       * This function should always return true.      */
+comment|/**      * Iterate through one row of original data.      *       * This UDF accepts arbitrary number of String arguments, so we use      * String[]. If it only accepts a single String, then we should use a single      * String argument.      *       * This function should always return true.      */
 specifier|public
 name|boolean
 name|iterate
@@ -157,29 +157,17 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|String
+name|element
+range|:
 name|o
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|sb
 operator|.
 name|append
 argument_list|(
-name|o
-index|[
-name|i
-index|]
+name|element
 argument_list|)
 expr_stmt|;
 block|}
@@ -211,7 +199,7 @@ return|return
 name|data
 return|;
 block|}
-comment|/**      * Merge with a partial aggregation.      *       * This function should always have a single argument which has      * the same type as the return value of terminatePartial().      *       * This function should always return true.      */
+comment|/**      * Merge with a partial aggregation.      *       * This function should always have a single argument which has the same      * type as the return value of terminatePartial().      *       * This function should always return true.      */
 specifier|public
 name|boolean
 name|merge

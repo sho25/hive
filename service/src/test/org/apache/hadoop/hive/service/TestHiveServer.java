@@ -19,7 +19,41 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
 import|;
 end_import
 
@@ -39,11 +73,17 @@ end_import
 
 begin_import
 import|import
-name|junit
+name|org
 operator|.
-name|framework
+name|apache
 operator|.
-name|TestCase
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
 import|;
 end_import
 
@@ -93,9 +133,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|service
+name|serde
 operator|.
-name|HiveInterface
+name|Constants
 import|;
 end_import
 
@@ -109,9 +149,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|service
+name|serde2
 operator|.
-name|HiveClient
+name|dynamic_type
+operator|.
+name|DynamicSerDe
 import|;
 end_import
 
@@ -123,25 +165,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
+name|io
 operator|.
-name|service
-operator|.
-name|HiveServer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|protocol
-operator|.
-name|TProtocol
+name|BytesWritable
 import|;
 end_import
 
@@ -156,6 +182,20 @@ operator|.
 name|protocol
 operator|.
 name|TBinaryProtocol
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocol
 import|;
 end_import
 
@@ -187,84 +227,6 @@ name|TTransport
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|dynamic_type
-operator|.
-name|DynamicSerDe
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde
-operator|.
-name|Constants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|BytesWritable
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -293,6 +255,7 @@ init|=
 literal|10000
 decl_stmt|;
 specifier|private
+specifier|final
 name|Path
 name|dataFilePath
 decl_stmt|;
@@ -304,6 +267,7 @@ init|=
 literal|"testhivedrivertable"
 decl_stmt|;
 specifier|private
+specifier|final
 name|HiveConf
 name|conf
 decl_stmt|;
@@ -397,11 +361,15 @@ argument_list|(
 literal|"true"
 argument_list|)
 condition|)
+block|{
 name|standAloneServer
 operator|=
 literal|true
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|setUp
@@ -479,6 +447,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|tearDown
@@ -865,7 +835,7 @@ operator|+
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Command not part of HiveQL -  verify no results
+comment|// Command not part of HiveQL - verify no results
 name|client
 operator|.
 name|execute
@@ -979,14 +949,11 @@ operator|+
 literal|" limit 10"
 argument_list|)
 expr_stmt|;
-name|String
-name|row
-init|=
 name|client
 operator|.
 name|fetchOne
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 comment|// Re-execute command not part of HiveQL - verify still no results
 name|client
 operator|.
@@ -1538,7 +1505,8 @@ operator|+
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|//client.execute("select key, count(1) from " + tableName + " where key> 10 group by key");
+comment|// client.execute("select key, count(1) from " + tableName +
+comment|// " where key> 10 group by key");
 name|String
 name|sql
 init|=
@@ -1668,6 +1636,7 @@ name|pos
 operator|!=
 literal|0
 condition|)
+block|{
 name|serDDL
 operator|=
 name|serDDL
@@ -1677,6 +1646,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|serDDL
 operator|=
 name|serDDL
@@ -1844,7 +1814,7 @@ argument_list|,
 literal|238
 argument_list|)
 expr_stmt|;
-comment|// TODO: serde doesn't like underscore  -- struct result { string _c0}
+comment|// TODO: serde doesn't like underscore -- struct result { string _c0}
 name|sql
 operator|=
 literal|"select count(1) as c from "
@@ -1907,6 +1877,7 @@ name|pos
 operator|!=
 literal|0
 condition|)
+block|{
 name|serDDL
 operator|=
 name|serDDL
@@ -1916,6 +1887,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|serDDL
 operator|=
 name|serDDL

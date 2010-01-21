@@ -21,9 +21,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|*
+name|ArrayList
 import|;
 end_import
 
@@ -33,7 +33,17 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|ListIterator
 import|;
 end_import
 
@@ -47,7 +57,77 @@ name|commons
 operator|.
 name|cli2
 operator|.
-name|*
+name|Argument
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|cli2
+operator|.
+name|CommandLine
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|cli2
+operator|.
+name|Group
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|cli2
+operator|.
+name|Option
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|cli2
+operator|.
+name|OptionException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|cli2
+operator|.
+name|WriteableCommandLine
 import|;
 end_import
 
@@ -155,9 +235,9 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|cli2
+name|logging
 operator|.
-name|OptionException
+name|Log
 import|;
 end_import
 
@@ -171,23 +251,7 @@ name|commons
 operator|.
 name|logging
 operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
+name|LogFactory
 import|;
 end_import
 
@@ -215,6 +279,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|Parser
 name|parser
 init|=
@@ -223,6 +288,7 @@ name|Parser
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|Option
 name|confOptions
 decl_stmt|,
@@ -234,7 +300,7 @@ name|fileOption
 decl_stmt|,
 name|isHelpOption
 decl_stmt|;
-comment|/**     * shameless cloned from hadoop streaming    * take in multiple -hiveconf x=y parameters    */
+comment|/**    * shameless cloned from hadoop streaming take in multiple -hiveconf x=y    * parameters    */
 class|class
 name|MultiPropertyOption
 extends|extends
@@ -282,6 +348,8 @@ operator|=
 name|optionString
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|canProcess
@@ -315,6 +383,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|process
@@ -628,6 +698,7 @@ name|longName
 operator|!=
 literal|null
 condition|)
+block|{
 name|dob
 operator|=
 name|dob
@@ -637,6 +708,7 @@ argument_list|(
 name|longName
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|dob
 operator|.
@@ -668,7 +740,7 @@ operator|new
 name|ArgumentBuilder
 argument_list|()
 decl_stmt|;
-comment|//-e
+comment|// -e
 name|execOption
 operator|=
 name|createOptionWithArg
@@ -697,7 +769,7 @@ name|create
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//-f
+comment|// -f
 name|fileOption
 operator|=
 name|createOptionWithArg
@@ -937,15 +1009,12 @@ name|CliSessionState
 name|ss
 parameter_list|)
 block|{
-name|HiveConf
-name|hconf
-init|=
 name|ss
 operator|.
 name|getConf
 argument_list|()
-decl_stmt|;
-comment|//-S
+expr_stmt|;
+comment|// -S
 name|ss
 operator|.
 name|setIsSilent
@@ -958,7 +1027,7 @@ name|isSilentOption
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//-e
+comment|// -e
 name|ss
 operator|.
 name|execString
@@ -973,7 +1042,7 @@ argument_list|(
 name|execOption
 argument_list|)
 expr_stmt|;
-comment|//-f
+comment|// -f
 name|ss
 operator|.
 name|fileName

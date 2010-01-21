@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Interface for Alter Table and Alter Partition code   */
+comment|/**  * Interface for Alter Table and Alter Partition code  */
 end_comment
 
 begin_interface
@@ -96,7 +96,7 @@ name|AlterHandler
 extends|extends
 name|Configurable
 block|{
-comment|/**    * handles alter table    * @param msdb      object to get metadata    * @param wh TODO    * @param dbname    database of the table being altered    * @param name      original name of the table being altered. same as     *<i>newTable.tableName</i> if alter op is not a rename.    * @param newTable  new table object    * @throws InvalidOperationException  thrown if the newTable object is invalid    * @throws MetaException              thrown if there is any other erro     */
+comment|/**    * handles alter table    *     * @param msdb    *          object to get metadata    * @param wh    *          TODO    * @param dbname    *          database of the table being altered    * @param name    *          original name of the table being altered. same as    *<i>newTable.tableName</i> if alter op is not a rename.    * @param newTable    *          new table object    * @throws InvalidOperationException    *           thrown if the newTable object is invalid    * @throws MetaException    *           thrown if there is any other erro    */
 specifier|public
 specifier|abstract
 name|void

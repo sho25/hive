@@ -59,16 +59,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Vector
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -164,7 +154,7 @@ operator|=
 name|client
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#addBatch(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#addBatch(java.lang.String)    */
 specifier|public
 name|void
 name|addBatch
@@ -184,7 +174,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#cancel()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#cancel()    */
 specifier|public
 name|void
 name|cancel
@@ -201,7 +191,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#clearBatch()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#clearBatch()    */
 specifier|public
 name|void
 name|clearBatch
@@ -218,7 +208,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#clearWarnings()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#clearWarnings()    */
 specifier|public
 name|void
 name|clearWarnings
@@ -226,14 +216,12 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-name|this
-operator|.
 name|warningChain
 operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#close()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#close()    */
 specifier|public
 name|void
 name|close
@@ -241,7 +229,7 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|//TODO: how to properly shut down the client?
+comment|// TODO: how to properly shut down the client?
 name|client
 operator|=
 literal|null
@@ -255,7 +243,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#execute(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#execute(java.lang.String)    */
 specifier|public
 name|boolean
 name|execute
@@ -274,15 +262,15 @@ argument_list|(
 name|sql
 argument_list|)
 decl_stmt|;
-comment|//TODO: this should really check if there are results, but there's no easy
-comment|//way to do that without calling rs.next();
+comment|// TODO: this should really check if there are results, but there's no easy
+comment|// way to do that without calling rs.next();
 return|return
 name|rs
 operator|!=
 literal|null
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#execute(java.lang.String, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#execute(java.lang.String, int)    */
 specifier|public
 name|boolean
 name|execute
@@ -305,7 +293,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#execute(java.lang.String, int[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#execute(java.lang.String, int[])    */
 specifier|public
 name|boolean
 name|execute
@@ -329,7 +317,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#execute(java.lang.String, java.lang.String[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#execute(java.lang.String, java.lang.String[])    */
 specifier|public
 name|boolean
 name|execute
@@ -353,7 +341,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#executeBatch()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#executeBatch()    */
 specifier|public
 name|int
 index|[]
@@ -371,7 +359,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#executeQuery(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#executeQuery(java.lang.String)    */
 specifier|public
 name|ResultSet
 name|executeQuery
@@ -384,10 +372,9 @@ name|SQLException
 block|{
 if|if
 condition|(
-name|this
-operator|.
 name|isClosed
 condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
@@ -395,10 +382,9 @@ argument_list|(
 literal|"Can't execute after statement has been closed"
 argument_list|)
 throw|;
+block|}
 try|try
 block|{
-name|this
-operator|.
 name|resultSet
 operator|=
 literal|null
@@ -457,8 +443,6 @@ literal|"08S01"
 argument_list|)
 throw|;
 block|}
-name|this
-operator|.
 name|resultSet
 operator|=
 operator|new
@@ -470,12 +454,10 @@ name|maxRows
 argument_list|)
 expr_stmt|;
 return|return
-name|this
-operator|.
 name|resultSet
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#executeUpdate(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#executeUpdate(java.lang.String)    */
 specifier|public
 name|int
 name|executeUpdate
@@ -521,7 +503,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#executeUpdate(java.lang.String, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#executeUpdate(java.lang.String, int)    */
 specifier|public
 name|int
 name|executeUpdate
@@ -544,7 +526,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#executeUpdate(java.lang.String, int[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#executeUpdate(java.lang.String, int[])    */
 specifier|public
 name|int
 name|executeUpdate
@@ -568,7 +550,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#executeUpdate(java.lang.String, java.lang.String[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#executeUpdate(java.lang.String, java.lang.String[])    */
 specifier|public
 name|int
 name|executeUpdate
@@ -592,7 +574,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getConnection()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getConnection()    */
 specifier|public
 name|Connection
 name|getConnection
@@ -609,7 +591,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getFetchDirection()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getFetchDirection()    */
 specifier|public
 name|int
 name|getFetchDirection
@@ -626,7 +608,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getFetchSize()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getFetchSize()    */
 specifier|public
 name|int
 name|getFetchSize
@@ -643,7 +625,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getGeneratedKeys()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getGeneratedKeys()    */
 specifier|public
 name|ResultSet
 name|getGeneratedKeys
@@ -660,7 +642,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getMaxFieldSize()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getMaxFieldSize()    */
 specifier|public
 name|int
 name|getMaxFieldSize
@@ -677,7 +659,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getMaxRows()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getMaxRows()    */
 specifier|public
 name|int
 name|getMaxRows
@@ -686,12 +668,10 @@ throws|throws
 name|SQLException
 block|{
 return|return
-name|this
-operator|.
 name|maxRows
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getMoreResults()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getMoreResults()    */
 specifier|public
 name|boolean
 name|getMoreResults
@@ -708,7 +688,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getMoreResults(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getMoreResults(int)    */
 specifier|public
 name|boolean
 name|getMoreResults
@@ -728,7 +708,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getQueryTimeout()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getQueryTimeout()    */
 specifier|public
 name|int
 name|getQueryTimeout
@@ -745,7 +725,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getResultSet()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getResultSet()    */
 specifier|public
 name|ResultSet
 name|getResultSet
@@ -754,12 +734,10 @@ throws|throws
 name|SQLException
 block|{
 return|return
-name|this
-operator|.
 name|resultSet
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getResultSetConcurrency()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getResultSetConcurrency()    */
 specifier|public
 name|int
 name|getResultSetConcurrency
@@ -776,7 +754,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getResultSetHoldability()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getResultSetHoldability()    */
 specifier|public
 name|int
 name|getResultSetHoldability
@@ -793,7 +771,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getResultSetType()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getResultSetType()    */
 specifier|public
 name|int
 name|getResultSetType
@@ -810,7 +788,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getUpdateCount()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getUpdateCount()    */
 specifier|public
 name|int
 name|getUpdateCount
@@ -822,7 +800,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#getWarnings()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getWarnings()    */
 specifier|public
 name|SQLWarning
 name|getWarnings
@@ -831,12 +809,10 @@ throws|throws
 name|SQLException
 block|{
 return|return
-name|this
-operator|.
 name|warningChain
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#isClosed()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#isClosed()    */
 specifier|public
 name|boolean
 name|isClosed
@@ -845,12 +821,10 @@ throws|throws
 name|SQLException
 block|{
 return|return
-name|this
-operator|.
 name|isClosed
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#isPoolable()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#isPoolable()    */
 specifier|public
 name|boolean
 name|isPoolable
@@ -867,7 +841,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#setCursorName(java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setCursorName(java.lang.String)    */
 specifier|public
 name|void
 name|setCursorName
@@ -887,7 +861,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#setEscapeProcessing(boolean)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setEscapeProcessing(boolean)    */
 specifier|public
 name|void
 name|setEscapeProcessing
@@ -907,7 +881,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#setFetchDirection(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setFetchDirection(int)    */
 specifier|public
 name|void
 name|setFetchDirection
@@ -927,7 +901,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#setFetchSize(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setFetchSize(int)    */
 specifier|public
 name|void
 name|setFetchSize
@@ -947,7 +921,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#setMaxFieldSize(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setMaxFieldSize(int)    */
 specifier|public
 name|void
 name|setMaxFieldSize
@@ -967,7 +941,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#setMaxRows(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setMaxRows(int)    */
 specifier|public
 name|void
 name|setMaxRows
@@ -984,6 +958,7 @@ name|max
 operator|<
 literal|0
 condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
@@ -991,14 +966,13 @@ argument_list|(
 literal|"max must be>= 0"
 argument_list|)
 throw|;
-name|this
-operator|.
+block|}
 name|maxRows
 operator|=
 name|max
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#setPoolable(boolean)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setPoolable(boolean)    */
 specifier|public
 name|void
 name|setPoolable
@@ -1018,7 +992,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Statement#setQueryTimeout(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setQueryTimeout(int)    */
 specifier|public
 name|void
 name|setQueryTimeout
@@ -1038,7 +1012,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -1061,7 +1035,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
 specifier|public
 parameter_list|<
 name|T

@@ -81,18 +81,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|mortbay
-operator|.
-name|jetty
-operator|.
-name|Server
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|apache
 operator|.
 name|hadoop
@@ -122,7 +110,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This is the entry point for HWI. A web server is invoked in the same manner as the hive CLI.   * Rather then opening a command line session a web server is started and a web application to work with   * hive is started.  */
+comment|/**  * This is the entry point for HWI. A web server is invoked in the same manner  * as the hive CLI. Rather then opening a command line session a web server is  * started and a web application to work with hive is started.  */
 end_comment
 
 begin_class
@@ -155,11 +143,12 @@ name|Server
 name|webServer
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 index|[]
 name|args
 decl_stmt|;
-comment|/** 	   * 	   * @param args These are the command line arguments. Usually -hiveconf. 	   * @throws java.io.IOException 	   */
+comment|/**    *     * @param args    *          These are the command line arguments. Usually -hiveconf.    * @throws java.io.IOException    */
 specifier|public
 name|HWIServer
 parameter_list|(
@@ -177,7 +166,7 @@ operator|=
 name|args
 expr_stmt|;
 block|}
-comment|/** 	   * This method initialized the internal Jetty Servlet Engine. It adds the hwi 	   * context path. 	   * @throws java.io.IOException Port already in use, bad bind etc. 	   */
+comment|/**    * This method initialized the internal Jetty Servlet Engine. It adds the hwi    * context path.    *     * @throws java.io.IOException    *           Port already in use, bad bind etc.    */
 specifier|public
 name|void
 name|start
@@ -366,7 +355,7 @@ argument_list|,
 literal|"/hwi"
 argument_list|)
 expr_stmt|;
-comment|/*The command line args may be used by multiple components. Rather by setting 	     * these as a system property we avoid having to specifically pass them 	     */
+comment|/*      * The command line args may be used by multiple components. Rather by      * setting these as a system property we avoid having to specifically pass      * them      */
 name|StringBuffer
 name|sb
 init|=
@@ -376,29 +365,17 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|String
+name|arg
+range|:
 name|args
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|sb
 operator|.
 name|append
 argument_list|(
-name|args
-index|[
-name|i
-index|]
+name|arg
 operator|+
 literal|" "
 argument_list|)
@@ -508,7 +485,7 @@ name|ie
 throw|;
 block|}
 block|}
-comment|/** 	 *  	 * @param args 	 *            as of now no arguments are supported 	 * @throws java.lang.Exception  	 * Could be thrown if due to issues with Jetty or bad configuration options 	 *  	 */
+comment|/**    *     * @param args    *          as of now no arguments are supported    * @throws java.lang.Exception    *           Could be thrown if due to issues with Jetty or bad configuration    *           options    *     */
 specifier|public
 specifier|static
 name|void
@@ -543,7 +520,7 @@ name|start
 argument_list|()
 expr_stmt|;
 block|}
-comment|/** 	 * Shut  down the running HWI Server 	 * @throws Exception Running Thread.stop() can and probably will throw this 	 */
+comment|/**    * Shut down the running HWI Server    *     * @throws Exception    *           Running Thread.stop() can and probably will throw this    */
 specifier|public
 name|void
 name|stop

@@ -101,7 +101,7 @@ decl_stmt|;
 specifier|private
 name|TypedBytesRecordInput
 parameter_list|()
-block|{}
+block|{   }
 specifier|private
 name|void
 name|setTypedBytesInput
@@ -126,6 +126,8 @@ operator|new
 name|ThreadLocal
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|protected
 specifier|synchronized
 name|Object
@@ -140,7 +142,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Get a thread-local typed bytes record input for the supplied    * {@link TypedBytesInput}.    *     * @param in typed bytes input object    * @return typed bytes record input corresponding to the supplied    *         {@link TypedBytesInput}.    */
+comment|/**    * Get a thread-local typed bytes record input for the supplied    * {@link TypedBytesInput}.    *     * @param in    *          typed bytes input object    * @return typed bytes record input corresponding to the supplied    *         {@link TypedBytesInput}.    */
 specifier|public
 specifier|static
 name|TypedBytesRecordInput
@@ -172,7 +174,7 @@ return|return
 name|bin
 return|;
 block|}
-comment|/**    * Get a thread-local typed bytes record input for the supplied    * {@link DataInput}.    *     * @param in data input object    * @return typed bytes record input corresponding to the supplied    *         {@link DataInput}.    */
+comment|/**    * Get a thread-local typed bytes record input for the supplied    * {@link DataInput}.    *     * @param in    *          data input object    * @return typed bytes record input corresponding to the supplied    *         {@link DataInput}.    */
 specifier|public
 specifier|static
 name|TypedBytesRecordInput
@@ -484,7 +486,7 @@ name|tag
 parameter_list|)
 throws|throws
 name|IOException
-block|{}
+block|{   }
 specifier|public
 name|void
 name|endVector
@@ -494,7 +496,7 @@ name|tag
 parameter_list|)
 throws|throws
 name|IOException
-block|{}
+block|{   }
 specifier|public
 name|void
 name|endMap
@@ -504,7 +506,7 @@ name|tag
 parameter_list|)
 throws|throws
 name|IOException
-block|{}
+block|{   }
 specifier|private
 specifier|static
 specifier|final

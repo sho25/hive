@@ -39,16 +39,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -71,7 +61,19 @@ name|util
 operator|.
 name|regex
 operator|.
-name|*
+name|Matcher
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Pattern
 import|;
 end_import
 
@@ -114,26 +116,6 @@ operator|.
 name|conf
 operator|.
 name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|contrib
-operator|.
-name|serde2
-operator|.
-name|s3
-operator|.
-name|S3LogStruct
 import|;
 end_import
 
@@ -283,16 +265,6 @@ name|Writable
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|text
-operator|.
-name|SimpleDateFormat
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -331,9 +303,6 @@ operator|.
 name|getStackTrace
 argument_list|()
 decl_stmt|;
-name|String
-name|className
-init|=
 name|sTrace
 index|[
 literal|0
@@ -341,12 +310,14 @@ index|]
 operator|.
 name|getClassName
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 block|}
 specifier|private
 name|ObjectInspector
 name|cachedObjectInspector
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -362,7 +333,9 @@ parameter_list|()
 throws|throws
 name|SerDeException
 block|{   }
-comment|// This regex is a bit lax in order to compensate for lack of any escaping done by Amazon S3 ... for example useragent string can have double quotes inside!
+comment|// This regex is a bit lax in order to compensate for lack of any escaping
+comment|// done by Amazon S3 ... for example useragent string can have double quotes
+comment|// inside!
 specifier|static
 name|Pattern
 name|regexpat
@@ -374,8 +347,9 @@ argument_list|(
 literal|"(\\S+) (\\S+) \\[(.*?)\\] (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) \"(.+)\" (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) \"(.*)\" \"(.*)\""
 argument_list|)
 decl_stmt|;
-comment|//static Pattern regexrid = Pattern.compile("x-id=([-0-9a-f]{36})");
-comment|//static SimpleDateFormat dateparser = new SimpleDateFormat("dd/MMM/yyyy:hh:mm:ss ZZZZZ");
+comment|// static Pattern regexrid = Pattern.compile("x-id=([-0-9a-f]{36})");
+comment|// static SimpleDateFormat dateparser = new
+comment|// SimpleDateFormat("dd/MMM/yyyy:hh:mm:ss ZZZZZ");
 name|S3LogStruct
 name|deserializeCache
 init|=
@@ -447,10 +421,13 @@ argument_list|)
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 else|else
+block|{
 return|return
 name|Integer
 operator|.
@@ -459,6 +436,7 @@ argument_list|(
 name|s
 argument_list|)
 return|;
+block|}
 block|}
 specifier|public
 specifier|static
@@ -551,9 +529,10 @@ name|t
 operator|++
 argument_list|)
 expr_stmt|;
-comment|// Should we convert the datetime to the format Hive understands by default - either yyyy-mm-dd HH:MM:SS or seconds since epoch?
-comment|//Date d = dateparser.parse(c.rdatetime);
-comment|//c.rdatetimeepoch = d.getTime() / 1000;
+comment|// Should we convert the datetime to the format Hive understands by default
+comment|// - either yyyy-mm-dd HH:MM:SS or seconds since epoch?
+comment|// Date d = dateparser.parse(c.rdatetime);
+comment|// c.rdatetimeepoch = d.getTime() / 1000;
 name|c
 operator|.
 name|rip
@@ -626,8 +605,8 @@ name|t
 operator|++
 argument_list|)
 expr_stmt|;
-comment|//    System.err.println(c.requesturi);
-comment|/*// Zemanta specific data extractor     try {       Matcher m2 = regexrid.matcher(c.requesturi);       m2.find();       c.rid = m2.group(1);     } catch (Exception e) {       c.rid = null;     }   */
+comment|// System.err.println(c.requesturi);
+comment|/*      * // Zemanta specific data extractor try { Matcher m2 =      * regexrid.matcher(c.requesturi); m2.find(); c.rid = m2.group(1); } catch      * (Exception e) { c.rid = null; }      */
 name|c
 operator|.
 name|httpstatus
@@ -934,11 +913,15 @@ operator|new
 name|Properties
 argument_list|()
 decl_stmt|;
-comment|// Some nasty examples that show how S3 log format is broken ... and to test the regex
+comment|// Some nasty examples that show how S3 log format is broken ... and to
+comment|// test the regex
 comment|// These are all sourced from genuine S3 logs
-comment|//Text sample = new Text("04ff331638adc13885d6c42059584deabbdeabcd55bf0bee491172a79a87b196 img.zemanta.com [09/Apr/2009:22:00:07 +0000] 190.225.84.114 65a011a29cdf8ec533ec3d1ccaae921c F4FC3FEAD8C00024 REST.GET.OBJECT pixy.gif \"GET /pixy.gif?x-id=23d25db1-160b-48bb-a932-e7dc1e88c321 HTTP/1.1\" 304 - - 828 3 - \"http://www.viamujer.com/2009/03/horoscopo-acuario-abril-mayo-y-junio-2009/\" \"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)\"");
-comment|//Text sample = new Text("04ff331638adc13885d6c42059584deabbdeabcd55bf0bee491172a79a87b196 img.zemanta.com [09/Apr/2009:22:19:49 +0000] 60.28.204.7 65a011a29cdf8ec533ec3d1ccaae921c 7D87B6835125671E REST.GET.OBJECT pixy.gif \"GET /pixy.gif?x-id=b50a4544-938b-4a63-992c-721d1a644b28 HTTP/1.1\" 200 - 828 828 4 3 \"\" \"ZhuaXia.com\"");
-comment|//Text sample = new Text("04ff331638adc13885d6c42059584deabbdeabcd55bf0bee491172a79a87b196 static.zemanta.com [09/Apr/2009:23:12:39 +0000] 65.94.12.181 65a011a29cdf8ec533ec3d1ccaae921c EEE6FFE9B9F9EA29 REST.HEAD.OBJECT readside/loader.js%22+defer%3D%22defer \"HEAD /readside/loader.js\"+defer=\"defer HTTP/1.0\" 403 AccessDenied 231 - 7 - \"-\" \"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)\"");
+comment|// Text sample = new
+comment|// Text("04ff331638adc13885d6c42059584deabbdeabcd55bf0bee491172a79a87b196 img.zemanta.com [09/Apr/2009:22:00:07 +0000] 190.225.84.114 65a011a29cdf8ec533ec3d1ccaae921c F4FC3FEAD8C00024 REST.GET.OBJECT pixy.gif \"GET /pixy.gif?x-id=23d25db1-160b-48bb-a932-e7dc1e88c321 HTTP/1.1\" 304 - - 828 3 - \"http://www.viamujer.com/2009/03/horoscopo-acuario-abril-mayo-y-junio-2009/\" \"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)\"");
+comment|// Text sample = new
+comment|// Text("04ff331638adc13885d6c42059584deabbdeabcd55bf0bee491172a79a87b196 img.zemanta.com [09/Apr/2009:22:19:49 +0000] 60.28.204.7 65a011a29cdf8ec533ec3d1ccaae921c 7D87B6835125671E REST.GET.OBJECT pixy.gif \"GET /pixy.gif?x-id=b50a4544-938b-4a63-992c-721d1a644b28 HTTP/1.1\" 200 - 828 828 4 3 \"\" \"ZhuaXia.com\"");
+comment|// Text sample = new
+comment|// Text("04ff331638adc13885d6c42059584deabbdeabcd55bf0bee491172a79a87b196 static.zemanta.com [09/Apr/2009:23:12:39 +0000] 65.94.12.181 65a011a29cdf8ec533ec3d1ccaae921c EEE6FFE9B9F9EA29 REST.HEAD.OBJECT readside/loader.js%22+defer%3D%22defer \"HEAD /readside/loader.js\"+defer=\"defer HTTP/1.0\" 403 AccessDenied 231 - 7 - \"-\" \"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)\"");
 name|Text
 name|sample
 init|=
@@ -1067,6 +1050,7 @@ name|fieldData
 operator|==
 literal|null
 condition|)
+block|{
 name|System
 operator|.
 name|err
@@ -1076,7 +1060,9 @@ argument_list|(
 literal|"null"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|System
 operator|.
 name|err
@@ -1089,6 +1075,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch

@@ -14,7 +14,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Represents an authenticated user. This class is stored in the users session. It is also used  * as a key for the HiveSessionManager  */
+comment|/**  * Represents an authenticated user. This class is stored in the users session.  * It is also used as a key for the HiveSessionManager  */
 end_comment
 
 begin_class
@@ -36,7 +36,7 @@ decl_stmt|;
 specifier|public
 name|HWIAuth
 parameter_list|()
-block|{  	}
+block|{    }
 specifier|public
 name|String
 name|getUser
@@ -87,7 +87,7 @@ operator|=
 name|groups
 expr_stmt|;
 block|}
-comment|/** 	 * HWIAuth is used in SortedSets(s) the compartTo method is required 	 * @return chained call to String.compareTo based on user property 	 */
+comment|/**    * HWIAuth is used in SortedSets(s) the compartTo method is required    *     * @return chained call to String.compareTo based on user property    */
 specifier|public
 name|int
 name|compareTo
@@ -139,13 +139,11 @@ argument_list|()
 operator|.
 name|compareTo
 argument_list|(
-name|this
-operator|.
 name|user
 argument_list|)
 return|;
 block|}
-comment|/** HWIAuth is used in Map(s) the hashCode method is required 	 * @see java.lang.Object#hashCode() 	 */
+comment|/**    * HWIAuth is used in Map(s) the hashCode method is required    *     * @see java.lang.Object#hashCode()    */
 annotation|@
 name|Override
 specifier|public
@@ -189,7 +187,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**  	 * HWIAuth is used in Map(s) the equals method is required 	 * @see java.lang.Object#equals(java.lang.Object) 	 */
+comment|/**    * HWIAuth is used in Map(s) the equals method is required    *     * @see java.lang.Object#equals(java.lang.Object)    */
 annotation|@
 name|Override
 specifier|public
@@ -206,18 +204,22 @@ name|this
 operator|==
 name|obj
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 name|obj
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -227,9 +229,11 @@ operator|instanceof
 name|HWIAuth
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|HWIAuth
 name|other
 init|=
@@ -253,9 +257,11 @@ name|user
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 elseif|else
 if|if
@@ -270,9 +276,11 @@ operator|.
 name|user
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 literal|true
 return|;

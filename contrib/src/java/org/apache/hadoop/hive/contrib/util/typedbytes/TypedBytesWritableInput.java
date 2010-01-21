@@ -354,7 +354,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Provides functionality for reading typed bytes as Writable objects.  *  * @see TypedBytesInput  */
+comment|/**  * Provides functionality for reading typed bytes as Writable objects.  *   * @see TypedBytesInput  */
 end_comment
 
 begin_class
@@ -407,6 +407,8 @@ operator|new
 name|ThreadLocal
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|protected
 specifier|synchronized
 name|Object
@@ -421,7 +423,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link TypedBytesInput}.    *    * @param in typed bytes input object    * @return typed bytes writable input corresponding to the supplied    *         {@link TypedBytesInput}.    */
+comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link TypedBytesInput}.    *     * @param in    *          typed bytes input object    * @return typed bytes writable input corresponding to the supplied    *         {@link TypedBytesInput}.    */
 specifier|public
 specifier|static
 name|TypedBytesWritableInput
@@ -453,7 +455,7 @@ return|return
 name|bin
 return|;
 block|}
-comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link DataInput}.    *    * @param in data input object    * @return typed bytes writable input corresponding to the supplied    *         {@link DataInput}.    */
+comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link DataInput}.    *     * @param in    *          data input object    * @return typed bytes writable input corresponding to the supplied    *         {@link DataInput}.    */
 specifier|public
 specifier|static
 name|TypedBytesWritableInput

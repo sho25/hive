@@ -212,7 +212,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Hive specific implementation of alter   */
+comment|/**  * Hive specific implementation of alter  */
 end_comment
 
 begin_class
@@ -266,8 +266,6 @@ name|Configuration
 name|conf
 parameter_list|)
 block|{
-name|this
-operator|.
 name|hiveConf
 operator|=
 name|conf
@@ -627,7 +625,13 @@ argument_list|()
 argument_list|)
 operator|==
 literal|0
-comment|// and user didn't change the default location
+comment|// and
+comment|// user
+comment|// didn't
+comment|// change
+comment|// the
+comment|// default
+comment|// location
 operator|||
 name|StringUtils
 operator|.
@@ -642,7 +646,8 @@ name|getLocation
 argument_list|()
 argument_list|)
 operator|)
-comment|// or new location is empty
+comment|// or new location
+comment|// is empty
 operator|&&
 operator|!
 name|oldt
@@ -656,8 +661,11 @@ literal|"EXTERNAL"
 argument_list|)
 condition|)
 block|{
-comment|// and table is not an external table
-comment|// that means user is asking metastore to move data to new location corresponding to the new name
+comment|// and table is
+comment|// not an external
+comment|// table
+comment|// that means user is asking metastore to move data to new location
+comment|// corresponding to the new name
 comment|// get new location
 name|newTblLoc
 operator|=
@@ -703,7 +711,8 @@ name|moveData
 operator|=
 literal|true
 expr_stmt|;
-comment|// check that destination does not exist otherwise we will be overwriting data
+comment|// check that destination does not exist otherwise we will be
+comment|// overwriting data
 name|srcPath
 operator|=
 operator|new
@@ -771,7 +780,8 @@ argument_list|(
 name|srcPath
 argument_list|)
 expr_stmt|;
-comment|// check that src exists and also checks permissions necessary
+comment|// check that src exists and also checks
+comment|// permissions necessary
 if|if
 condition|(
 name|destFs

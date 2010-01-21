@@ -111,22 +111,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde
-operator|.
-name|Constants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|metastore
 operator|.
 name|api
@@ -312,6 +296,22 @@ operator|.
 name|api
 operator|.
 name|Type
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|Constants
 import|;
 end_import
 
@@ -523,7 +523,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * tests create table and partition and tries to drop the table without droppping the partition    * @throws Exception     */
+comment|/**    * tests create table and partition and tries to drop the table without    * droppping the partition    *     * @throws Exception    */
 specifier|public
 name|void
 name|testPartition
@@ -1086,8 +1086,6 @@ name|FileSystem
 operator|.
 name|get
 argument_list|(
-name|this
-operator|.
 name|hiveConf
 argument_list|)
 decl_stmt|;
@@ -1149,7 +1147,8 @@ name|partPath
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// add the partition again so that drop table with a partition can be tested
+comment|// add the partition again so that drop table with a partition can be
+comment|// tested
 name|retp
 operator|=
 name|client
@@ -1195,8 +1194,8 @@ argument_list|,
 name|ret
 argument_list|)
 expr_stmt|;
-comment|//recreate table as external, drop partition and it should
-comment|//still exist
+comment|// recreate table as external, drop partition and it should
+comment|// still exist
 name|tbl
 operator|.
 name|setParameters

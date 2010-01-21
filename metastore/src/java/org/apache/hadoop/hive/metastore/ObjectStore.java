@@ -590,7 +590,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is the interface between the application logic and the database store that  * contains the objects.   * Refrain putting any logic in mode.M* objects or in this file as former could be auto  * generated and this class would need to be made into a interface that can read both  * from a database and a filestore.  */
+comment|/**  * This class is the interface between the application logic and the database  * store that contains the objects. Refrain putting any logic in mode.M* objects  * or in this file as former could be auto generated and this class would need  * to be made into a interface that can read both from a database and a  * filestore.  */
 end_comment
 
 begin_class
@@ -602,19 +602,6 @@ name|RawStore
 implements|,
 name|Configurable
 block|{
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"nls"
-argument_list|)
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|JPOX_CONFIG
-init|=
-literal|"jpox.properties"
-decl_stmt|;
 specifier|private
 specifier|static
 name|Properties
@@ -699,7 +686,7 @@ decl_stmt|;
 specifier|public
 name|ObjectStore
 parameter_list|()
-block|{}
+block|{   }
 specifier|public
 name|Configuration
 name|getConf
@@ -722,8 +709,6 @@ name|Configuration
 name|conf
 parameter_list|)
 block|{
-name|this
-operator|.
 name|hiveConf
 operator|=
 name|conf
@@ -771,8 +756,6 @@ name|ClassLoader
 name|classLoader
 decl_stmt|;
 block|{
-name|this
-operator|.
 name|classLoader
 operator|=
 name|Thread
@@ -785,15 +768,11 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|this
-operator|.
 name|classLoader
 operator|==
 literal|null
 condition|)
 block|{
-name|this
-operator|.
 name|classLoader
 operator|=
 name|ObjectStore
@@ -836,13 +815,15 @@ name|pm
 operator|!=
 literal|null
 condition|)
+block|{
 name|isInitialized
 operator|=
 literal|true
 expr_stmt|;
+block|}
 return|return;
 block|}
-comment|/**    * Properties specified in hive-default.xml override the properties specified in    * jpox.properties.    */
+comment|/**    * Properties specified in hive-default.xml override the properties specified    * in jpox.properties.    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1044,6 +1025,7 @@ operator|.
 name|varname
 argument_list|)
 condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -1061,6 +1043,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -1227,21 +1210,17 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Opens a new one or the one already created    * Every call of this function must have corresponding commit or rollback function call    * @return an active transaction    */
+comment|/**    * Opens a new one or the one already created Every call of this function must    * have corresponding commit or rollback function call    *     * @return an active transaction    */
 specifier|public
 name|boolean
 name|openTransaction
 parameter_list|()
 block|{
-name|this
-operator|.
 name|openTrasactionCalls
 operator|++
 expr_stmt|;
 if|if
 condition|(
-name|this
-operator|.
 name|openTrasactionCalls
 operator|==
 literal|1
@@ -1268,7 +1247,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// something is wrong since openTransactionCalls is greater than 1 but currentTransaction is not active
+comment|// something is wrong since openTransactionCalls is greater than 1 but
+comment|// currentTransaction is not active
 assert|assert
 operator|(
 operator|(
@@ -1293,7 +1273,7 @@ name|isActive
 argument_list|()
 return|;
 block|}
-comment|/**    * if this is the commit of the first open call then an actual commit is called.     * @return Always returns true    */
+comment|/**    * if this is the commit of the first open call then an actual commit is    * called.    *     * @return Always returns true    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1306,8 +1286,6 @@ parameter_list|()
 block|{
 assert|assert
 operator|(
-name|this
-operator|.
 name|openTrasactionCalls
 operator|>=
 literal|1
@@ -1332,16 +1310,12 @@ literal|"mismatching open and close calls or rollback was called in the same tra
 argument_list|)
 throw|;
 block|}
-name|this
-operator|.
 name|openTrasactionCalls
 operator|--
 expr_stmt|;
 if|if
 condition|(
 operator|(
-name|this
-operator|.
 name|openTrasactionCalls
 operator|==
 literal|0
@@ -1369,7 +1343,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * @return true if there is an active transaction. If the current transaction is either    * committed or rolled back it returns false    */
+comment|/**    * @return true if there is an active transaction. If the current transaction    *         is either committed or rolled back it returns false    */
 specifier|public
 name|boolean
 name|isActiveTransaction
@@ -1381,9 +1355,11 @@ name|currentTransaction
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 name|currentTransaction
 operator|.
@@ -1399,8 +1375,6 @@ parameter_list|()
 block|{
 if|if
 condition|(
-name|this
-operator|.
 name|openTrasactionCalls
 operator|<
 literal|1
@@ -1408,8 +1382,6 @@ condition|)
 block|{
 return|return;
 block|}
-name|this
-operator|.
 name|openTrasactionCalls
 operator|=
 literal|0
@@ -1884,14 +1856,15 @@ argument_list|(
 name|db
 argument_list|)
 expr_stmt|;
-comment|//StringIdentity id = new StringIdentity(MDatabase.class, dbname);
-comment|//MDatabase db = (MDatabase) pm.getObjectById(id);
+comment|// StringIdentity id = new StringIdentity(MDatabase.class, dbname);
+comment|// MDatabase db = (MDatabase) pm.getObjectById(id);
 if|if
 condition|(
 name|db
 operator|!=
 literal|null
 condition|)
+block|{
 name|pm
 operator|.
 name|deletePersistent
@@ -1899,6 +1872,7 @@ argument_list|(
 name|db
 argument_list|)
 expr_stmt|;
+block|}
 name|commited
 operator|=
 name|commitTransaction
@@ -2784,7 +2758,8 @@ operator|.
 name|toLowerCase
 argument_list|()
 expr_stmt|;
-comment|// Take the pattern and split it on the | to get all the composing patterns
+comment|// Take the pattern and split it on the | to get all the composing
+comment|// patterns
 name|String
 index|[]
 name|subpatterns
@@ -3101,9 +3076,11 @@ name|mtbl
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
 operator|new
 name|Table
@@ -3192,9 +3169,11 @@ name|tbl
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|MDatabase
 name|mdb
 init|=
@@ -3204,8 +3183,6 @@ try|try
 block|{
 name|mdb
 operator|=
-name|this
-operator|.
 name|getMDatabase
 argument_list|(
 name|tbl
@@ -3646,6 +3623,7 @@ name|ms
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|MetaException
@@ -3653,6 +3631,7 @@ argument_list|(
 literal|"Invalid SerDeInfo object"
 argument_list|)
 throw|;
+block|}
 return|return
 operator|new
 name|SerDeInfo
@@ -3690,6 +3669,7 @@ name|ms
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|MetaException
@@ -3697,6 +3677,7 @@ argument_list|(
 literal|"Invalid SerDeInfo object"
 argument_list|)
 throw|;
+block|}
 return|return
 operator|new
 name|MSerDeInfo
@@ -3736,9 +3717,11 @@ name|msd
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
 operator|new
 name|StorageDescriptor
@@ -3820,9 +3803,11 @@ name|sd
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
 operator|new
 name|MStorageDescriptor
@@ -3976,8 +3961,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|openTransaction
 argument_list|()
 expr_stmt|;
@@ -3986,8 +3969,6 @@ name|part
 init|=
 name|convertToPart
 argument_list|(
-name|this
-operator|.
 name|getMPartition
 argument_list|(
 name|dbName
@@ -3998,8 +3979,6 @@ name|part_vals
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|this
-operator|.
 name|commitTransaction
 argument_list|()
 expr_stmt|;
@@ -4058,8 +4037,6 @@ expr_stmt|;
 name|MTable
 name|mtbl
 init|=
-name|this
-operator|.
 name|getMTable
 argument_list|(
 name|dbName
@@ -4083,7 +4060,8 @@ return|return
 literal|null
 return|;
 block|}
-comment|// Change the query to use part_vals instead of the name which is redundant
+comment|// Change the query to use part_vals instead of the name which is
+comment|// redundant
 name|String
 name|name
 init|=
@@ -4396,8 +4374,6 @@ expr_stmt|;
 name|MPartition
 name|part
 init|=
-name|this
-operator|.
 name|getMPartition
 argument_list|(
 name|dbName
@@ -4413,6 +4389,7 @@ name|part
 operator|!=
 literal|null
 condition|)
+block|{
 name|pm
 operator|.
 name|deletePersistent
@@ -4420,6 +4397,7 @@ argument_list|(
 name|part
 argument_list|)
 expr_stmt|;
+block|}
 name|success
 operator|=
 name|commitTransaction
@@ -4462,8 +4440,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|openTransaction
 argument_list|()
 expr_stmt|;
@@ -4475,8 +4451,6 @@ name|parts
 init|=
 name|convertToParts
 argument_list|(
-name|this
-operator|.
 name|listMPartitions
 argument_list|(
 name|dbName
@@ -4487,8 +4461,6 @@ name|max
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|this
-operator|.
 name|commitTransaction
 argument_list|()
 expr_stmt|;
@@ -4542,8 +4514,6 @@ name|parts
 operator|.
 name|add
 argument_list|(
-name|this
-operator|.
 name|convertToPart
 argument_list|(
 name|mp
@@ -4555,7 +4525,7 @@ return|return
 name|parts
 return|;
 block|}
-comment|//TODO:pc implement max
+comment|// TODO:pc implement max
 specifier|public
 name|List
 argument_list|<
@@ -4940,8 +4910,6 @@ block|}
 name|MTable
 name|oldt
 init|=
-name|this
-operator|.
 name|getMTable
 argument_list|(
 name|dbname
@@ -5182,6 +5150,7 @@ operator|.
 name|getCreateTime
 argument_list|()
 condition|)
+block|{
 name|oldp
 operator|.
 name|setCreateTime
@@ -5192,6 +5161,7 @@ name|getCreateTime
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|newp
@@ -5204,6 +5174,7 @@ operator|.
 name|getLastAccessTime
 argument_list|()
 condition|)
+block|{
 name|oldp
 operator|.
 name|setLastAccessTime
@@ -5214,6 +5185,7 @@ name|getLastAccessTime
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// commit the changes
 name|success
 operator|=

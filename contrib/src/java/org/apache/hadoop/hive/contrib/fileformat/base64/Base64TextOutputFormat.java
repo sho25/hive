@@ -218,7 +218,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * FileOutputFormat for base64 encoded text files.  *   * Each line is a base64-encoded record.  * The key is a LongWritable which is the offset.  * The value is a BytesWritable containing the base64-decoded bytes.  *   * This class accepts a configurable parameter:  * "base64.text.output.format.signature"  *   * The UTF-8 encoded signature will be prepended to each BytesWritable  * before we do base64 encoding.  */
+comment|/**  * FileOutputFormat for base64 encoded text files.  *   * Each line is a base64-encoded record. The key is a LongWritable which is the  * offset. The value is a BytesWritable containing the base64-decoded bytes.  *   * This class accepts a configurable parameter:  * "base64.text.output.format.signature"  *   * The UTF-8 encoded signature will be prepended to each BytesWritable before we  * do base64 encoding.  */
 end_comment
 
 begin_class
@@ -495,6 +495,7 @@ index|[]
 name|signature
 decl_stmt|;
 specifier|private
+specifier|final
 name|Base64
 name|base64
 init|=

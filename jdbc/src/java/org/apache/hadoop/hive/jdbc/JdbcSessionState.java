@@ -27,11 +27,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|conf
 operator|.
-name|session
-operator|.
-name|SessionState
+name|HiveConf
 import|;
 end_import
 
@@ -45,9 +43,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|ql
 operator|.
-name|HiveConf
+name|session
+operator|.
+name|SessionState
 import|;
 end_import
 

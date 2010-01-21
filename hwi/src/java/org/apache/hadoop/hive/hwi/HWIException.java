@@ -50,7 +50,7 @@ name|arg0
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Wrap an Exception in HWIException  */
+comment|/** Wrap an Exception in HWIException */
 specifier|public
 name|HWIException
 parameter_list|(
@@ -64,7 +64,7 @@ name|arg0
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Specify an error String and wrap an Exception in HWIException  */
+comment|/** Specify an error String and wrap an Exception in HWIException */
 specifier|public
 name|HWIException
 parameter_list|(

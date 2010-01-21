@@ -62,7 +62,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * After getting a contextInitialized event this component starts an  * instance of the HiveSessionManager.  *  */
+comment|/**  * After getting a contextInitialized event this component starts an instance of  * the HiveSessionManager.  *   */
 end_comment
 
 begin_class
@@ -94,7 +94,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/**    * The Hive Web Interface manages multiple hive sessions. This event is used to    * start a Runnable, HiveSessionManager as a thread inside the servlet     * container.     * @param sce An event fired by the servlet context on startup    */
+comment|/**    * The Hive Web Interface manages multiple hive sessions. This event is used    * to start a Runnable, HiveSessionManager as a thread inside the servlet    * container.    *     * @param sce    *          An event fired by the servlet context on startup    */
 specifier|public
 name|void
 name|contextInitialized
@@ -163,7 +163,7 @@ literal|"HWISessionManager placed in application context."
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**       * When the Hive Web Interface is closing we locate the Runnable       * HiveSessionManager and set it's internal goOn variable to false. This      * should allow the application to gracefully shutdown.      * @param sce An event fired by the servlet context on context shutdown      */
+comment|/**    * When the Hive Web Interface is closing we locate the Runnable    * HiveSessionManager and set it's internal goOn variable to false. This    * should allow the application to gracefully shutdown.    *     * @param sce    *          An event fired by the servlet context on context shutdown    */
 specifier|public
 name|void
 name|contextDestroyed

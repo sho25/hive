@@ -23,47 +23,7 @@ name|java
 operator|.
 name|sql
 operator|.
-name|SQLException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
 name|Connection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|ResultSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Statement
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|DriverManager
 import|;
 end_import
 
@@ -83,6 +43,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|DriverManager
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|DriverPropertyInfo
 import|;
 end_import
@@ -93,7 +63,37 @@ name|java
 operator|.
 name|sql
 operator|.
+name|ResultSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|ResultSetMetaData
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|SQLException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|Statement
 import|;
 end_import
 
@@ -176,10 +176,12 @@ init|=
 literal|"testHiveDriverPartitionedTable"
 decl_stmt|;
 specifier|private
+specifier|final
 name|HiveConf
 name|conf
 decl_stmt|;
 specifier|private
+specifier|final
 name|Path
 name|dataFilePath
 decl_stmt|;
@@ -615,19 +617,15 @@ name|Exception
 block|{
 name|doTestSelectAll
 argument_list|(
-name|this
-operator|.
 name|tableName
 argument_list|,
 operator|-
 literal|1
 argument_list|)
 expr_stmt|;
-comment|// tests not setting maxRows  (return all)
+comment|// tests not setting maxRows (return all)
 name|doTestSelectAll
 argument_list|(
-name|this
-operator|.
 name|tableName
 argument_list|,
 literal|0
@@ -645,25 +643,23 @@ name|Exception
 block|{
 name|doTestSelectAll
 argument_list|(
-name|this
-operator|.
 name|partitionedTableName
 argument_list|,
 operator|-
 literal|1
 argument_list|)
 expr_stmt|;
-comment|// tests not setting maxRows  (return all)
+comment|// tests not setting maxRows
+comment|// (return all)
 name|doTestSelectAll
 argument_list|(
-name|this
-operator|.
 name|partitionedTableName
 argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
-comment|// tests setting maxRows to 0 (return all)
+comment|// tests setting maxRows to 0
+comment|// (return all)
 block|}
 specifier|public
 specifier|final
@@ -675,8 +671,6 @@ name|Exception
 block|{
 name|doTestSelectAll
 argument_list|(
-name|this
-operator|.
 name|tableName
 argument_list|,
 literal|100
@@ -711,6 +705,7 @@ name|maxRows
 operator|>=
 literal|0
 condition|)
+block|{
 name|stmt
 operator|.
 name|setMaxRows
@@ -718,7 +713,8 @@ argument_list|(
 name|maxRows
 argument_list|)
 expr_stmt|;
-comment|//JDBC says that 0 means return all, which is the default
+block|}
+comment|// JDBC says that 0 means return all, which is the default
 name|int
 name|expectedMaxRows
 init|=
@@ -874,8 +870,8 @@ operator|.
 name|clearWarnings
 argument_list|()
 expr_stmt|;
-comment|//verifying that method is supported
-comment|//System.out.println(res.getString(1) + " " + res.getString(2));
+comment|// verifying that method is supported
+comment|// System.out.println(res.getString(1) + " " + res.getString(2));
 name|assertEquals
 argument_list|(
 literal|"getInt and getString don't align for the same result value"
@@ -1008,7 +1004,7 @@ operator|.
 name|clearWarnings
 argument_list|()
 expr_stmt|;
-comment|//verifying that method is supported
+comment|// verifying that method is supported
 name|assertNull
 argument_list|(
 literal|"No warnings should be found on connection"
@@ -1024,7 +1020,7 @@ operator|.
 name|clearWarnings
 argument_list|()
 expr_stmt|;
-comment|//verifying that method is supported
+comment|// verifying that method is supported
 name|stmt
 operator|.
 name|close
@@ -1058,10 +1054,11 @@ name|parseErrorCode
 init|=
 literal|10
 decl_stmt|;
-comment|//These tests inherently cause exceptions to be written to the test output
-comment|//logs. This is undesirable, since you it might appear to someone looking
-comment|//at the test output logs as if something is failing when it isn't. Not sure
-comment|//how to get around that.
+comment|// These tests inherently cause exceptions to be written to the test output
+comment|// logs. This is undesirable, since you it might appear to someone looking
+comment|// at the test output logs as if something is failing when it isn't. Not
+comment|// sure
+comment|// how to get around that.
 name|doTestErrorCase
 argument_list|(
 literal|"SELECTT * FROM "
@@ -1123,10 +1120,11 @@ argument_list|,
 name|parseErrorCode
 argument_list|)
 expr_stmt|;
-comment|//TODO: execute errors like this currently don't return good messages (i.e.
-comment|//'Table already exists'). This is because the Driver class calls
-comment|//Task.executeTask() which swallows meaningful exceptions and returns a status
-comment|//code. This should be refactored.
+comment|// TODO: execute errors like this currently don't return good messages (i.e.
+comment|// 'Table already exists'). This is because the Driver class calls
+comment|// Task.executeTask() which swallows meaningful exceptions and returns a
+comment|// status
+comment|// code. This should be refactored.
 name|doTestErrorCase
 argument_list|(
 literal|"create table "
@@ -1333,10 +1331,12 @@ literal|1
 argument_list|)
 argument_list|)
 condition|)
+block|{
 name|testTableExists
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 name|assertTrue
 argument_list|(
@@ -1590,7 +1590,7 @@ operator|+
 name|tableName
 argument_list|)
 decl_stmt|;
-comment|//creating a table with tinyint is failing currently so not including
+comment|// creating a table with tinyint is failing currently so not including
 name|res
 operator|=
 name|stmt

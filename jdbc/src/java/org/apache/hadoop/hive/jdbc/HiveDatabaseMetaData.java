@@ -21,9 +21,39 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|net
+operator|.
+name|URL
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|sql
 operator|.
 name|Connection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|DatabaseMetaData
 import|;
 end_import
 
@@ -61,38 +91,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
-operator|.
-name|DatabaseMetaData
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URL
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|jar
-operator|.
-name|Manifest
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|jar
@@ -105,9 +103,11 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|IOException
+name|jar
+operator|.
+name|Manifest
 import|;
 end_import
 
@@ -129,7 +129,7 @@ parameter_list|()
 block|{
 comment|// TODO Auto-generated constructor stub
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#allProceduresAreCallable()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#allProceduresAreCallable()    */
 specifier|public
 name|boolean
 name|allProceduresAreCallable
@@ -146,7 +146,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#allTablesAreSelectable()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#allTablesAreSelectable()    */
 specifier|public
 name|boolean
 name|allTablesAreSelectable
@@ -163,7 +163,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#autoCommitFailureClosesAllResultSets()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#autoCommitFailureClosesAllResultSets()    */
 specifier|public
 name|boolean
 name|autoCommitFailureClosesAllResultSets
@@ -180,7 +180,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#dataDefinitionCausesTransactionCommit()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#dataDefinitionCausesTransactionCommit()    */
 specifier|public
 name|boolean
 name|dataDefinitionCausesTransactionCommit
@@ -197,7 +197,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#dataDefinitionIgnoredInTransactions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#dataDefinitionIgnoredInTransactions()    */
 specifier|public
 name|boolean
 name|dataDefinitionIgnoredInTransactions
@@ -214,7 +214,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#deletesAreDetected(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#deletesAreDetected(int)    */
 specifier|public
 name|boolean
 name|deletesAreDetected
@@ -234,7 +234,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#doesMaxRowSizeIncludeBlobs()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#doesMaxRowSizeIncludeBlobs()    */
 specifier|public
 name|boolean
 name|doesMaxRowSizeIncludeBlobs
@@ -251,7 +251,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getAttributes(java.lang.String, java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getAttributes(java.lang.String,    * java.lang.String, java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getAttributes
@@ -280,7 +280,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getBestRowIdentifier(java.lang.String, java.lang.String, java.lang.String, int, boolean)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getBestRowIdentifier(java.lang.String,    * java.lang.String, java.lang.String, int, boolean)    */
 specifier|public
 name|ResultSet
 name|getBestRowIdentifier
@@ -312,7 +312,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getCatalogSeparator()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getCatalogSeparator()    */
 specifier|public
 name|String
 name|getCatalogSeparator
@@ -329,7 +329,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getCatalogTerm()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getCatalogTerm()    */
 specifier|public
 name|String
 name|getCatalogTerm
@@ -346,7 +346,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getCatalogs()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getCatalogs()    */
 specifier|public
 name|ResultSet
 name|getCatalogs
@@ -363,7 +363,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getClientInfoProperties()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getClientInfoProperties()    */
 specifier|public
 name|ResultSet
 name|getClientInfoProperties
@@ -380,7 +380,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getColumnPrivileges(java.lang.String, java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getColumnPrivileges(java.lang.String,    * java.lang.String, java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getColumnPrivileges
@@ -409,7 +409,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getColumns(java.lang.String, java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getColumns(java.lang.String,    * java.lang.String, java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getColumns
@@ -438,7 +438,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getConnection()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getConnection()    */
 specifier|public
 name|Connection
 name|getConnection
@@ -455,7 +455,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getCrossReference(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getCrossReference(java.lang.String,    * java.lang.String, java.lang.String, java.lang.String, java.lang.String,    * java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getCrossReference
@@ -490,7 +490,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDatabaseMajorVersion()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getDatabaseMajorVersion()    */
 specifier|public
 name|int
 name|getDatabaseMajorVersion
@@ -507,7 +507,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDatabaseMinorVersion()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getDatabaseMinorVersion()    */
 specifier|public
 name|int
 name|getDatabaseMinorVersion
@@ -524,7 +524,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDatabaseProductName()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getDatabaseProductName()    */
 specifier|public
 name|String
 name|getDatabaseProductName
@@ -536,7 +536,7 @@ return|return
 literal|"Hive"
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDatabaseProductVersion()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getDatabaseProductVersion()    */
 specifier|public
 name|String
 name|getDatabaseProductVersion
@@ -548,7 +548,7 @@ return|return
 literal|"0"
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDefaultTransactionIsolation()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getDefaultTransactionIsolation()    */
 specifier|public
 name|int
 name|getDefaultTransactionIsolation
@@ -565,7 +565,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDriverMajorVersion()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getDriverMajorVersion()    */
 specifier|public
 name|int
 name|getDriverMajorVersion
@@ -576,7 +576,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDriverMinorVersion()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getDriverMinorVersion()    */
 specifier|public
 name|int
 name|getDriverMinorVersion
@@ -587,7 +587,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDriverName()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getDriverName()    */
 specifier|public
 name|String
 name|getDriverName
@@ -606,7 +606,7 @@ name|IMPLEMENTATION_TITLE
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getDriverVersion()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getDriverVersion()    */
 specifier|public
 name|String
 name|getDriverVersion
@@ -625,7 +625,7 @@ name|IMPLEMENTATION_VERSION
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getExportedKeys(java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getExportedKeys(java.lang.String,    * java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getExportedKeys
@@ -651,7 +651,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getExtraNameCharacters()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getExtraNameCharacters()    */
 specifier|public
 name|String
 name|getExtraNameCharacters
@@ -668,7 +668,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getFunctionColumns(java.lang.String, java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getFunctionColumns(java.lang.String,    * java.lang.String, java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getFunctionColumns
@@ -697,7 +697,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getFunctions(java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getFunctions(java.lang.String,    * java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getFunctions
@@ -723,7 +723,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getIdentifierQuoteString()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getIdentifierQuoteString()    */
 specifier|public
 name|String
 name|getIdentifierQuoteString
@@ -740,7 +740,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getImportedKeys(java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getImportedKeys(java.lang.String,    * java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getImportedKeys
@@ -766,7 +766,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getIndexInfo(java.lang.String, java.lang.String, java.lang.String, boolean, boolean)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getIndexInfo(java.lang.String,    * java.lang.String, java.lang.String, boolean, boolean)    */
 specifier|public
 name|ResultSet
 name|getIndexInfo
@@ -798,7 +798,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getJDBCMajorVersion()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getJDBCMajorVersion()    */
 specifier|public
 name|int
 name|getJDBCMajorVersion
@@ -810,7 +810,7 @@ return|return
 literal|3
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getJDBCMinorVersion()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getJDBCMinorVersion()    */
 specifier|public
 name|int
 name|getJDBCMinorVersion
@@ -822,7 +822,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxBinaryLiteralLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxBinaryLiteralLength()    */
 specifier|public
 name|int
 name|getMaxBinaryLiteralLength
@@ -839,7 +839,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxCatalogNameLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxCatalogNameLength()    */
 specifier|public
 name|int
 name|getMaxCatalogNameLength
@@ -856,7 +856,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxCharLiteralLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxCharLiteralLength()    */
 specifier|public
 name|int
 name|getMaxCharLiteralLength
@@ -873,7 +873,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxColumnNameLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxColumnNameLength()    */
 specifier|public
 name|int
 name|getMaxColumnNameLength
@@ -890,7 +890,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxColumnsInGroupBy()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxColumnsInGroupBy()    */
 specifier|public
 name|int
 name|getMaxColumnsInGroupBy
@@ -907,7 +907,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxColumnsInIndex()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxColumnsInIndex()    */
 specifier|public
 name|int
 name|getMaxColumnsInIndex
@@ -924,7 +924,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxColumnsInOrderBy()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxColumnsInOrderBy()    */
 specifier|public
 name|int
 name|getMaxColumnsInOrderBy
@@ -941,7 +941,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxColumnsInSelect()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxColumnsInSelect()    */
 specifier|public
 name|int
 name|getMaxColumnsInSelect
@@ -958,7 +958,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxColumnsInTable()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxColumnsInTable()    */
 specifier|public
 name|int
 name|getMaxColumnsInTable
@@ -975,7 +975,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxConnections()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxConnections()    */
 specifier|public
 name|int
 name|getMaxConnections
@@ -992,7 +992,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxCursorNameLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxCursorNameLength()    */
 specifier|public
 name|int
 name|getMaxCursorNameLength
@@ -1009,7 +1009,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxIndexLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxIndexLength()    */
 specifier|public
 name|int
 name|getMaxIndexLength
@@ -1026,7 +1026,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxProcedureNameLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxProcedureNameLength()    */
 specifier|public
 name|int
 name|getMaxProcedureNameLength
@@ -1043,7 +1043,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxRowSize()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxRowSize()    */
 specifier|public
 name|int
 name|getMaxRowSize
@@ -1060,7 +1060,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxSchemaNameLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxSchemaNameLength()    */
 specifier|public
 name|int
 name|getMaxSchemaNameLength
@@ -1077,7 +1077,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxStatementLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxStatementLength()    */
 specifier|public
 name|int
 name|getMaxStatementLength
@@ -1094,7 +1094,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxStatements()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxStatements()    */
 specifier|public
 name|int
 name|getMaxStatements
@@ -1111,7 +1111,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxTableNameLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxTableNameLength()    */
 specifier|public
 name|int
 name|getMaxTableNameLength
@@ -1128,7 +1128,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxTablesInSelect()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxTablesInSelect()    */
 specifier|public
 name|int
 name|getMaxTablesInSelect
@@ -1145,7 +1145,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getMaxUserNameLength()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getMaxUserNameLength()    */
 specifier|public
 name|int
 name|getMaxUserNameLength
@@ -1162,7 +1162,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getNumericFunctions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getNumericFunctions()    */
 specifier|public
 name|String
 name|getNumericFunctions
@@ -1179,7 +1179,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getPrimaryKeys(java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getPrimaryKeys(java.lang.String,    * java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getPrimaryKeys
@@ -1205,7 +1205,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getProcedureColumns(java.lang.String, java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getProcedureColumns(java.lang.String,    * java.lang.String, java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getProcedureColumns
@@ -1234,7 +1234,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getProcedureTerm()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getProcedureTerm()    */
 specifier|public
 name|String
 name|getProcedureTerm
@@ -1251,7 +1251,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getProcedures(java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getProcedures(java.lang.String,    * java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getProcedures
@@ -1268,12 +1268,12 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|//TODO: return empty result set here
+comment|// TODO: return empty result set here
 return|return
 literal|null
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getResultSetHoldability()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getResultSetHoldability()    */
 specifier|public
 name|int
 name|getResultSetHoldability
@@ -1290,7 +1290,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getRowIdLifetime()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getRowIdLifetime()    */
 specifier|public
 name|RowIdLifetime
 name|getRowIdLifetime
@@ -1307,7 +1307,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSQLKeywords()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getSQLKeywords()    */
 specifier|public
 name|String
 name|getSQLKeywords
@@ -1324,7 +1324,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSQLStateType()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getSQLStateType()    */
 specifier|public
 name|int
 name|getSQLStateType
@@ -1338,7 +1338,7 @@ operator|.
 name|sqlStateSQL99
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSchemaTerm()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getSchemaTerm()    */
 specifier|public
 name|String
 name|getSchemaTerm
@@ -1355,7 +1355,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSchemas()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getSchemas()    */
 specifier|public
 name|ResultSet
 name|getSchemas
@@ -1372,7 +1372,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSchemas(java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getSchemas(java.lang.String,    * java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getSchemas
@@ -1395,7 +1395,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSearchStringEscape()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getSearchStringEscape()    */
 specifier|public
 name|String
 name|getSearchStringEscape
@@ -1412,7 +1412,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getStringFunctions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getStringFunctions()    */
 specifier|public
 name|String
 name|getStringFunctions
@@ -1429,7 +1429,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSuperTables(java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getSuperTables(java.lang.String,    * java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getSuperTables
@@ -1455,7 +1455,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSuperTypes(java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getSuperTypes(java.lang.String,    * java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getSuperTypes
@@ -1481,7 +1481,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getSystemFunctions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getSystemFunctions()    */
 specifier|public
 name|String
 name|getSystemFunctions
@@ -1498,7 +1498,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getTablePrivileges(java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getTablePrivileges(java.lang.String,    * java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getTablePrivileges
@@ -1524,7 +1524,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getTableTypes()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getTableTypes()    */
 specifier|public
 name|ResultSet
 name|getTableTypes
@@ -1541,7 +1541,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getTables(java.lang.String, java.lang.String, java.lang.String, java.lang.String[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getTables(java.lang.String,    * java.lang.String, java.lang.String, java.lang.String[])    */
 specifier|public
 name|ResultSet
 name|getTables
@@ -1571,7 +1571,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getTimeDateFunctions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getTimeDateFunctions()    */
 specifier|public
 name|String
 name|getTimeDateFunctions
@@ -1588,7 +1588,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getTypeInfo()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getTypeInfo()    */
 specifier|public
 name|ResultSet
 name|getTypeInfo
@@ -1605,7 +1605,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getUDTs(java.lang.String, java.lang.String, java.lang.String, int[])    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getUDTs(java.lang.String, java.lang.String,    * java.lang.String, int[])    */
 specifier|public
 name|ResultSet
 name|getUDTs
@@ -1635,7 +1635,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getURL()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getURL()    */
 specifier|public
 name|String
 name|getURL
@@ -1652,7 +1652,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getUserName()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getUserName()    */
 specifier|public
 name|String
 name|getUserName
@@ -1669,7 +1669,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#getVersionColumns(java.lang.String, java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#getVersionColumns(java.lang.String,    * java.lang.String, java.lang.String)    */
 specifier|public
 name|ResultSet
 name|getVersionColumns
@@ -1695,7 +1695,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#insertsAreDetected(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#insertsAreDetected(int)    */
 specifier|public
 name|boolean
 name|insertsAreDetected
@@ -1715,7 +1715,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#isCatalogAtStart()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#isCatalogAtStart()    */
 specifier|public
 name|boolean
 name|isCatalogAtStart
@@ -1732,7 +1732,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#isReadOnly()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#isReadOnly()    */
 specifier|public
 name|boolean
 name|isReadOnly
@@ -1749,7 +1749,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#locatorsUpdateCopy()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#locatorsUpdateCopy()    */
 specifier|public
 name|boolean
 name|locatorsUpdateCopy
@@ -1766,7 +1766,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#nullPlusNonNullIsNull()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#nullPlusNonNullIsNull()    */
 specifier|public
 name|boolean
 name|nullPlusNonNullIsNull
@@ -1783,7 +1783,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#nullsAreSortedAtEnd()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#nullsAreSortedAtEnd()    */
 specifier|public
 name|boolean
 name|nullsAreSortedAtEnd
@@ -1800,7 +1800,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#nullsAreSortedAtStart()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#nullsAreSortedAtStart()    */
 specifier|public
 name|boolean
 name|nullsAreSortedAtStart
@@ -1817,7 +1817,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#nullsAreSortedHigh()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#nullsAreSortedHigh()    */
 specifier|public
 name|boolean
 name|nullsAreSortedHigh
@@ -1834,7 +1834,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#nullsAreSortedLow()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#nullsAreSortedLow()    */
 specifier|public
 name|boolean
 name|nullsAreSortedLow
@@ -1851,7 +1851,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#othersDeletesAreVisible(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#othersDeletesAreVisible(int)    */
 specifier|public
 name|boolean
 name|othersDeletesAreVisible
@@ -1871,7 +1871,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#othersInsertsAreVisible(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#othersInsertsAreVisible(int)    */
 specifier|public
 name|boolean
 name|othersInsertsAreVisible
@@ -1891,7 +1891,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#othersUpdatesAreVisible(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#othersUpdatesAreVisible(int)    */
 specifier|public
 name|boolean
 name|othersUpdatesAreVisible
@@ -1911,7 +1911,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#ownDeletesAreVisible(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#ownDeletesAreVisible(int)    */
 specifier|public
 name|boolean
 name|ownDeletesAreVisible
@@ -1931,7 +1931,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#ownInsertsAreVisible(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#ownInsertsAreVisible(int)    */
 specifier|public
 name|boolean
 name|ownInsertsAreVisible
@@ -1951,7 +1951,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#ownUpdatesAreVisible(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#ownUpdatesAreVisible(int)    */
 specifier|public
 name|boolean
 name|ownUpdatesAreVisible
@@ -1971,7 +1971,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#storesLowerCaseIdentifiers()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#storesLowerCaseIdentifiers()    */
 specifier|public
 name|boolean
 name|storesLowerCaseIdentifiers
@@ -1988,7 +1988,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#storesLowerCaseQuotedIdentifiers()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#storesLowerCaseQuotedIdentifiers()    */
 specifier|public
 name|boolean
 name|storesLowerCaseQuotedIdentifiers
@@ -2005,7 +2005,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#storesMixedCaseIdentifiers()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#storesMixedCaseIdentifiers()    */
 specifier|public
 name|boolean
 name|storesMixedCaseIdentifiers
@@ -2022,7 +2022,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#storesMixedCaseQuotedIdentifiers()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#storesMixedCaseQuotedIdentifiers()    */
 specifier|public
 name|boolean
 name|storesMixedCaseQuotedIdentifiers
@@ -2039,7 +2039,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#storesUpperCaseIdentifiers()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#storesUpperCaseIdentifiers()    */
 specifier|public
 name|boolean
 name|storesUpperCaseIdentifiers
@@ -2056,7 +2056,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#storesUpperCaseQuotedIdentifiers()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#storesUpperCaseQuotedIdentifiers()    */
 specifier|public
 name|boolean
 name|storesUpperCaseQuotedIdentifiers
@@ -2073,7 +2073,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsANSI92EntryLevelSQL()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsANSI92EntryLevelSQL()    */
 specifier|public
 name|boolean
 name|supportsANSI92EntryLevelSQL
@@ -2090,7 +2090,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsANSI92FullSQL()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsANSI92FullSQL()    */
 specifier|public
 name|boolean
 name|supportsANSI92FullSQL
@@ -2107,7 +2107,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsANSI92IntermediateSQL()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsANSI92IntermediateSQL()    */
 specifier|public
 name|boolean
 name|supportsANSI92IntermediateSQL
@@ -2124,7 +2124,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsAlterTableWithAddColumn()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsAlterTableWithAddColumn()    */
 specifier|public
 name|boolean
 name|supportsAlterTableWithAddColumn
@@ -2141,7 +2141,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsAlterTableWithDropColumn()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsAlterTableWithDropColumn()    */
 specifier|public
 name|boolean
 name|supportsAlterTableWithDropColumn
@@ -2158,7 +2158,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsBatchUpdates()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsBatchUpdates()    */
 specifier|public
 name|boolean
 name|supportsBatchUpdates
@@ -2175,7 +2175,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsCatalogsInDataManipulation()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsCatalogsInDataManipulation()    */
 specifier|public
 name|boolean
 name|supportsCatalogsInDataManipulation
@@ -2192,7 +2192,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsCatalogsInIndexDefinitions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsCatalogsInIndexDefinitions()    */
 specifier|public
 name|boolean
 name|supportsCatalogsInIndexDefinitions
@@ -2209,7 +2209,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsCatalogsInPrivilegeDefinitions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsCatalogsInPrivilegeDefinitions()    */
 specifier|public
 name|boolean
 name|supportsCatalogsInPrivilegeDefinitions
@@ -2226,7 +2226,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsCatalogsInProcedureCalls()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsCatalogsInProcedureCalls()    */
 specifier|public
 name|boolean
 name|supportsCatalogsInProcedureCalls
@@ -2243,7 +2243,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsCatalogsInTableDefinitions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsCatalogsInTableDefinitions()    */
 specifier|public
 name|boolean
 name|supportsCatalogsInTableDefinitions
@@ -2255,7 +2255,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsColumnAliasing()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsColumnAliasing()    */
 specifier|public
 name|boolean
 name|supportsColumnAliasing
@@ -2272,7 +2272,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsConvert()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsConvert()    */
 specifier|public
 name|boolean
 name|supportsConvert
@@ -2289,7 +2289,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsConvert(int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsConvert(int, int)    */
 specifier|public
 name|boolean
 name|supportsConvert
@@ -2312,7 +2312,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsCoreSQLGrammar()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsCoreSQLGrammar()    */
 specifier|public
 name|boolean
 name|supportsCoreSQLGrammar
@@ -2329,7 +2329,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsCorrelatedSubqueries()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsCorrelatedSubqueries()    */
 specifier|public
 name|boolean
 name|supportsCorrelatedSubqueries
@@ -2346,7 +2346,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsDataDefinitionAndDataManipulationTransactions()    */
+comment|/*    * (non-Javadoc)    *     * @see    * java.sql.DatabaseMetaData#supportsDataDefinitionAndDataManipulationTransactions    * ()    */
 specifier|public
 name|boolean
 name|supportsDataDefinitionAndDataManipulationTransactions
@@ -2363,7 +2363,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsDataManipulationTransactionsOnly()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsDataManipulationTransactionsOnly()    */
 specifier|public
 name|boolean
 name|supportsDataManipulationTransactionsOnly
@@ -2380,7 +2380,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsDifferentTableCorrelationNames()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsDifferentTableCorrelationNames()    */
 specifier|public
 name|boolean
 name|supportsDifferentTableCorrelationNames
@@ -2397,7 +2397,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsExpressionsInOrderBy()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsExpressionsInOrderBy()    */
 specifier|public
 name|boolean
 name|supportsExpressionsInOrderBy
@@ -2414,7 +2414,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsExtendedSQLGrammar()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsExtendedSQLGrammar()    */
 specifier|public
 name|boolean
 name|supportsExtendedSQLGrammar
@@ -2431,7 +2431,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsFullOuterJoins()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsFullOuterJoins()    */
 specifier|public
 name|boolean
 name|supportsFullOuterJoins
@@ -2448,7 +2448,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsGetGeneratedKeys()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsGetGeneratedKeys()    */
 specifier|public
 name|boolean
 name|supportsGetGeneratedKeys
@@ -2465,7 +2465,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsGroupBy()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsGroupBy()    */
 specifier|public
 name|boolean
 name|supportsGroupBy
@@ -2482,7 +2482,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsGroupByBeyondSelect()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsGroupByBeyondSelect()    */
 specifier|public
 name|boolean
 name|supportsGroupByBeyondSelect
@@ -2499,7 +2499,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsGroupByUnrelated()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsGroupByUnrelated()    */
 specifier|public
 name|boolean
 name|supportsGroupByUnrelated
@@ -2516,7 +2516,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsIntegrityEnhancementFacility()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsIntegrityEnhancementFacility()    */
 specifier|public
 name|boolean
 name|supportsIntegrityEnhancementFacility
@@ -2533,7 +2533,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsLikeEscapeClause()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsLikeEscapeClause()    */
 specifier|public
 name|boolean
 name|supportsLikeEscapeClause
@@ -2550,7 +2550,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsLimitedOuterJoins()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsLimitedOuterJoins()    */
 specifier|public
 name|boolean
 name|supportsLimitedOuterJoins
@@ -2567,7 +2567,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsMinimumSQLGrammar()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsMinimumSQLGrammar()    */
 specifier|public
 name|boolean
 name|supportsMinimumSQLGrammar
@@ -2584,7 +2584,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsMixedCaseIdentifiers()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsMixedCaseIdentifiers()    */
 specifier|public
 name|boolean
 name|supportsMixedCaseIdentifiers
@@ -2601,7 +2601,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsMixedCaseQuotedIdentifiers()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsMixedCaseQuotedIdentifiers()    */
 specifier|public
 name|boolean
 name|supportsMixedCaseQuotedIdentifiers
@@ -2618,7 +2618,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsMultipleOpenResults()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsMultipleOpenResults()    */
 specifier|public
 name|boolean
 name|supportsMultipleOpenResults
@@ -2635,7 +2635,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsMultipleResultSets()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsMultipleResultSets()    */
 specifier|public
 name|boolean
 name|supportsMultipleResultSets
@@ -2647,7 +2647,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsMultipleTransactions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsMultipleTransactions()    */
 specifier|public
 name|boolean
 name|supportsMultipleTransactions
@@ -2664,7 +2664,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsNamedParameters()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsNamedParameters()    */
 specifier|public
 name|boolean
 name|supportsNamedParameters
@@ -2681,7 +2681,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsNonNullableColumns()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsNonNullableColumns()    */
 specifier|public
 name|boolean
 name|supportsNonNullableColumns
@@ -2698,7 +2698,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsOpenCursorsAcrossCommit()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsOpenCursorsAcrossCommit()    */
 specifier|public
 name|boolean
 name|supportsOpenCursorsAcrossCommit
@@ -2715,7 +2715,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsOpenCursorsAcrossRollback()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsOpenCursorsAcrossRollback()    */
 specifier|public
 name|boolean
 name|supportsOpenCursorsAcrossRollback
@@ -2732,7 +2732,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsOpenStatementsAcrossCommit()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsOpenStatementsAcrossCommit()    */
 specifier|public
 name|boolean
 name|supportsOpenStatementsAcrossCommit
@@ -2749,7 +2749,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsOpenStatementsAcrossRollback()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsOpenStatementsAcrossRollback()    */
 specifier|public
 name|boolean
 name|supportsOpenStatementsAcrossRollback
@@ -2766,7 +2766,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsOrderByUnrelated()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsOrderByUnrelated()    */
 specifier|public
 name|boolean
 name|supportsOrderByUnrelated
@@ -2783,7 +2783,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsOuterJoins()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsOuterJoins()    */
 specifier|public
 name|boolean
 name|supportsOuterJoins
@@ -2800,7 +2800,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsPositionedDelete()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsPositionedDelete()    */
 specifier|public
 name|boolean
 name|supportsPositionedDelete
@@ -2817,7 +2817,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsPositionedUpdate()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsPositionedUpdate()    */
 specifier|public
 name|boolean
 name|supportsPositionedUpdate
@@ -2834,7 +2834,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsResultSetConcurrency(int, int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsResultSetConcurrency(int, int)    */
 specifier|public
 name|boolean
 name|supportsResultSetConcurrency
@@ -2857,7 +2857,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsResultSetHoldability(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsResultSetHoldability(int)    */
 specifier|public
 name|boolean
 name|supportsResultSetHoldability
@@ -2872,7 +2872,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsResultSetType(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsResultSetType(int)    */
 specifier|public
 name|boolean
 name|supportsResultSetType
@@ -2887,7 +2887,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSavepoints()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSavepoints()    */
 specifier|public
 name|boolean
 name|supportsSavepoints
@@ -2904,7 +2904,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSchemasInDataManipulation()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSchemasInDataManipulation()    */
 specifier|public
 name|boolean
 name|supportsSchemasInDataManipulation
@@ -2916,7 +2916,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSchemasInIndexDefinitions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSchemasInIndexDefinitions()    */
 specifier|public
 name|boolean
 name|supportsSchemasInIndexDefinitions
@@ -2933,7 +2933,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSchemasInPrivilegeDefinitions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSchemasInPrivilegeDefinitions()    */
 specifier|public
 name|boolean
 name|supportsSchemasInPrivilegeDefinitions
@@ -2950,7 +2950,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSchemasInProcedureCalls()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSchemasInProcedureCalls()    */
 specifier|public
 name|boolean
 name|supportsSchemasInProcedureCalls
@@ -2967,7 +2967,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSchemasInTableDefinitions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSchemasInTableDefinitions()    */
 specifier|public
 name|boolean
 name|supportsSchemasInTableDefinitions
@@ -2979,7 +2979,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSelectForUpdate()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSelectForUpdate()    */
 specifier|public
 name|boolean
 name|supportsSelectForUpdate
@@ -2996,7 +2996,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsStatementPooling()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsStatementPooling()    */
 specifier|public
 name|boolean
 name|supportsStatementPooling
@@ -3013,7 +3013,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsStoredFunctionsUsingCallSyntax()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsStoredFunctionsUsingCallSyntax()    */
 specifier|public
 name|boolean
 name|supportsStoredFunctionsUsingCallSyntax
@@ -3030,7 +3030,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsStoredProcedures()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsStoredProcedures()    */
 specifier|public
 name|boolean
 name|supportsStoredProcedures
@@ -3042,7 +3042,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSubqueriesInComparisons()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSubqueriesInComparisons()    */
 specifier|public
 name|boolean
 name|supportsSubqueriesInComparisons
@@ -3059,7 +3059,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSubqueriesInExists()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSubqueriesInExists()    */
 specifier|public
 name|boolean
 name|supportsSubqueriesInExists
@@ -3076,7 +3076,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSubqueriesInIns()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSubqueriesInIns()    */
 specifier|public
 name|boolean
 name|supportsSubqueriesInIns
@@ -3093,7 +3093,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsSubqueriesInQuantifieds()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsSubqueriesInQuantifieds()    */
 specifier|public
 name|boolean
 name|supportsSubqueriesInQuantifieds
@@ -3110,7 +3110,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsTableCorrelationNames()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsTableCorrelationNames()    */
 specifier|public
 name|boolean
 name|supportsTableCorrelationNames
@@ -3127,7 +3127,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsTransactionIsolationLevel(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsTransactionIsolationLevel(int)    */
 specifier|public
 name|boolean
 name|supportsTransactionIsolationLevel
@@ -3147,7 +3147,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsTransactions()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsTransactions()    */
 specifier|public
 name|boolean
 name|supportsTransactions
@@ -3164,7 +3164,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsUnion()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsUnion()    */
 specifier|public
 name|boolean
 name|supportsUnion
@@ -3181,7 +3181,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#supportsUnionAll()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#supportsUnionAll()    */
 specifier|public
 name|boolean
 name|supportsUnionAll
@@ -3198,7 +3198,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#updatesAreDetected(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#updatesAreDetected(int)    */
 specifier|public
 name|boolean
 name|updatesAreDetected
@@ -3218,7 +3218,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#usesLocalFilePerTable()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#usesLocalFilePerTable()    */
 specifier|public
 name|boolean
 name|usesLocalFilePerTable
@@ -3235,7 +3235,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.DatabaseMetaData#usesLocalFiles()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.DatabaseMetaData#usesLocalFiles()    */
 specifier|public
 name|boolean
 name|usesLocalFiles
@@ -3252,7 +3252,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -3275,7 +3275,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
 specifier|public
 parameter_list|<
 name|T
@@ -3309,7 +3309,7 @@ name|manifestAttributes
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * Loads the manifest attributes from the jar.    * @throws java.net.MalformedURLException    * @throws IOException    */
+comment|/**    * Loads the manifest attributes from the jar.    *     * @throws java.net.MalformedURLException    * @throws IOException    */
 specifier|private
 specifier|synchronized
 name|void
@@ -3324,7 +3324,9 @@ name|manifestAttributes
 operator|!=
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|Class
 name|clazz
 init|=
@@ -3383,7 +3385,7 @@ name|getMainAttributes
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Helper to initialize attributes and return one.    *    * @param attributeName    * @return    * @throws SQLException    */
+comment|/**    * Helper to initialize attributes and return one.    *     * @param attributeName    * @return    * @throws SQLException    */
 specifier|private
 name|String
 name|fetchManifestAttribute

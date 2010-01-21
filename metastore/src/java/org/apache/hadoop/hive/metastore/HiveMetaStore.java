@@ -45,18 +45,6 @@ name|util
 operator|.
 name|regex
 operator|.
-name|Matcher
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
 name|Pattern
 import|;
 end_import
@@ -166,6 +154,24 @@ operator|.
 name|api
 operator|.
 name|ConfigValSecurityException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Constants
 import|;
 end_import
 
@@ -503,60 +509,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|Constants
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|facebook
-operator|.
-name|fb303
-operator|.
-name|FacebookBase
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|facebook
-operator|.
-name|fb303
-operator|.
-name|FacebookService
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|facebook
-operator|.
-name|fb303
-operator|.
-name|fb_status
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|thrift
 operator|.
 name|TException
@@ -647,6 +599,42 @@ name|TTransportFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|facebook
+operator|.
+name|fb303
+operator|.
+name|FacebookBase
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|facebook
+operator|.
+name|fb303
+operator|.
+name|FacebookService
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|facebook
+operator|.
+name|fb303
+operator|.
+name|fb_status
+import|;
+end_import
+
 begin_comment
 comment|/**  * TODO:pc remove application logic to a separate interface.  */
 end_comment
@@ -699,16 +687,19 @@ name|String
 name|rawStoreClassName
 decl_stmt|;
 specifier|private
+specifier|final
 name|HiveConf
 name|hiveConf
 decl_stmt|;
-comment|// stores datastore (jpox) properties, right now they come from jpox.properties
+comment|// stores datastore (jpox) properties,
+comment|// right now they come from jpox.properties
 specifier|private
 name|Warehouse
 name|wh
 decl_stmt|;
 comment|// hdfs warehouse
 specifier|private
+specifier|final
 name|ThreadLocal
 argument_list|<
 name|RawStore
@@ -719,6 +710,8 @@ operator|new
 name|ThreadLocal
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|protected
 specifier|synchronized
 name|Object
@@ -755,6 +748,8 @@ operator|new
 name|ThreadLocal
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|protected
 specifier|synchronized
 name|Object
@@ -956,7 +951,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**        * @return        * @throws MetaException        */
+comment|/**      * @return      * @throws MetaException      */
 specifier|private
 name|RawStore
 name|getMS
@@ -1033,7 +1028,7 @@ return|return
 name|ms
 return|;
 block|}
-comment|/**        * create default database if it doesn't exist        * @throws MetaException        */
+comment|/**      * create default database if it doesn't exist      *       * @throws MetaException      */
 specifier|private
 name|void
 name|createDefaultDB
@@ -1305,8 +1300,6 @@ name|AlreadyExistsException
 throws|,
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"create_database"
@@ -1408,8 +1401,6 @@ name|NoSuchObjectException
 throws|,
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_database"
@@ -1442,8 +1433,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"drop_database"
@@ -1558,8 +1547,6 @@ parameter_list|()
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_databases"
@@ -1592,8 +1579,6 @@ name|MetaException
 throws|,
 name|InvalidObjectException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"create_type"
@@ -1638,7 +1623,7 @@ literal|" already exists"
 argument_list|)
 throw|;
 block|}
-comment|//TODO:pc Validation of types should be done by clients or here????
+comment|// TODO:pc Validation of types should be done by clients or here????
 return|return
 name|getMS
 argument_list|()
@@ -1659,8 +1644,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_type"
@@ -1693,8 +1676,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"drop_type"
@@ -1733,8 +1714,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_type_all"
@@ -1768,8 +1747,6 @@ name|MetaException
 throws|,
 name|InvalidObjectException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"create_table"
@@ -2196,8 +2173,6 @@ name|NoSuchObjectException
 throws|,
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"drop_table"
@@ -2399,7 +2374,7 @@ comment|// ok even if the data is not deleted
 block|}
 block|}
 block|}
-comment|/**        * Is this an external table?        * @param table Check if this table is external.        * @return True if the table is external, otherwise false.        */
+comment|/**      * Is this an external table?      *       * @param table      *          Check if this table is external.      * @return True if the table is external, otherwise false.      */
 specifier|private
 name|boolean
 name|isExternal
@@ -2472,8 +2447,6 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_table"
@@ -2549,8 +2522,6 @@ name|NoSuchObjectException
 throws|,
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"set_table_parameters"
@@ -2593,8 +2564,6 @@ name|AlreadyExistsException
 throws|,
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"append_partition"
@@ -2776,8 +2745,6 @@ expr_stmt|;
 name|Partition
 name|old_part
 init|=
-name|this
-operator|.
 name|get_partition
 argument_list|(
 name|part
@@ -2964,8 +2931,6 @@ name|InvalidObjectException
 throws|,
 name|AlreadyExistsException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"add_partition"
@@ -3041,8 +3006,6 @@ range|:
 name|parts
 control|)
 block|{
-name|this
-operator|.
 name|add_partition
 argument_list|(
 name|part
@@ -3097,8 +3060,6 @@ name|AlreadyExistsException
 throws|,
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"add_partition"
@@ -3144,8 +3105,6 @@ expr_stmt|;
 name|Partition
 name|old_part
 init|=
-name|this
-operator|.
 name|get_partition
 argument_list|(
 name|part
@@ -3450,8 +3409,6 @@ name|MetaException
 throws|,
 name|TException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"drop_partition"
@@ -3501,8 +3458,6 @@ expr_stmt|;
 name|Partition
 name|part
 init|=
-name|this
-operator|.
 name|get_partition
 argument_list|(
 name|db_name
@@ -3689,8 +3644,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_partition"
@@ -3740,8 +3693,6 @@ name|NoSuchObjectException
 throws|,
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_partitions"
@@ -3789,8 +3740,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_partition_names"
@@ -3839,8 +3788,6 @@ name|MetaException
 throws|,
 name|TException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"alter_partition"
@@ -3942,8 +3889,6 @@ name|IndexAlreadyExistsException
 throws|,
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"create_index"
@@ -3965,8 +3910,6 @@ parameter_list|()
 throws|throws
 name|TException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"getVersion"
@@ -3999,8 +3942,6 @@ name|InvalidOperationException
 throws|,
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"alter_table"
@@ -4078,8 +4019,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_tables"
@@ -4128,8 +4067,6 @@ name|UnknownTableException
 throws|,
 name|UnknownDBException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_fields"
@@ -4172,8 +4109,6 @@ try|try
 block|{
 name|tbl
 operator|=
-name|this
-operator|.
 name|get_table
 argument_list|(
 name|db
@@ -4222,6 +4157,7 @@ if|if
 condition|(
 name|isNative
 condition|)
+block|{
 return|return
 name|tbl
 operator|.
@@ -4231,6 +4167,7 @@ operator|.
 name|getCols
 argument_list|()
 return|;
+block|}
 else|else
 block|{
 try|try
@@ -4242,8 +4179,6 @@ name|MetaStoreUtils
 operator|.
 name|getDeserializer
 argument_list|(
-name|this
-operator|.
 name|hiveConf
 argument_list|,
 name|tbl
@@ -4286,7 +4221,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**        * Return the schema of the table. This function includes partition columns        * in addition to the regular columns.        * @param db Name of the database        * @param tableName Name of the table        * @return List of columns, each column is a FieldSchema structure        * @throws MetaException        * @throws UnknownTableException        * @throws UnknownDBException        */
+comment|/**      * Return the schema of the table. This function includes partition columns      * in addition to the regular columns.      *       * @param db      *          Name of the database      * @param tableName      *          Name of the table      * @return List of columns, each column is a FieldSchema structure      * @throws MetaException      * @throws UnknownTableException      * @throws UnknownDBException      */
 specifier|public
 name|List
 argument_list|<
@@ -4307,8 +4242,6 @@ name|UnknownTableException
 throws|,
 name|UnknownDBException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_schema"
@@ -4351,8 +4284,6 @@ try|try
 block|{
 name|tbl
 operator|=
-name|this
-operator|.
 name|get_table
 argument_list|(
 name|db
@@ -4384,8 +4315,6 @@ name|FieldSchema
 argument_list|>
 name|fieldSchemas
 init|=
-name|this
-operator|.
 name|get_fields
 argument_list|(
 name|db
@@ -4424,7 +4353,8 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// Combine the column field schemas and the partition keys to create the whole schema
+comment|// Combine the column field schemas and the partition keys to create the
+comment|// whole schema
 name|fieldSchemas
 operator|.
 name|addAll
@@ -4454,7 +4384,7 @@ return|return
 literal|""
 return|;
 block|}
-comment|/**        * Returns the value of the given configuration variable name. If the        * configuration variable with the given name doesn't exist, or if there         * were an exception thrown while retrieving the variable, or if name is         * null, defaultValue is returned.        */
+comment|/**      * Returns the value of the given configuration variable name. If the      * configuration variable with the given name doesn't exist, or if there      * were an exception thrown while retrieving the variable, or if name is      * null, defaultValue is returned.      */
 specifier|public
 name|String
 name|get_config_value
@@ -4470,8 +4400,6 @@ name|TException
 throws|,
 name|ConfigValSecurityException
 block|{
-name|this
-operator|.
 name|incrementCounter
 argument_list|(
 literal|"get_config_value"

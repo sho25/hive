@@ -19,17 +19,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|sql
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde
-operator|.
-name|Constants
+name|ResultSetMetaData
 import|;
 end_import
 
@@ -40,16 +34,6 @@ operator|.
 name|sql
 operator|.
 name|SQLException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|ResultSetMetaData
 import|;
 end_import
 
@@ -70,6 +54,22 @@ operator|.
 name|util
 operator|.
 name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|Constants
 import|;
 end_import
 
@@ -125,7 +125,7 @@ operator|=
 name|columnTypes
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getCatalogName(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getCatalogName(int)    */
 specifier|public
 name|String
 name|getCatalogName
@@ -145,7 +145,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnClassName(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnClassName(int)    */
 specifier|public
 name|String
 name|getColumnClassName
@@ -165,7 +165,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnCount()    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnCount()    */
 specifier|public
 name|int
 name|getColumnCount
@@ -180,7 +180,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnDisplaySize(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnDisplaySize(int)    */
 specifier|public
 name|int
 name|getColumnDisplaySize
@@ -248,7 +248,7 @@ literal|32
 return|;
 block|}
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnLabel(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnLabel(int)    */
 specifier|public
 name|String
 name|getColumnLabel
@@ -271,7 +271,7 @@ literal|1
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnName(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnName(int)    */
 specifier|public
 name|String
 name|getColumnName
@@ -293,7 +293,7 @@ literal|1
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnType(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnType(int)    */
 specifier|public
 name|int
 name|getColumnType
@@ -310,6 +310,7 @@ name|columnTypes
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
@@ -317,6 +318,7 @@ argument_list|(
 literal|"Could not determine column type name for ResultSet"
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|column
@@ -330,6 +332,7 @@ operator|.
 name|size
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
@@ -339,6 +342,7 @@ operator|+
 name|column
 argument_list|)
 throw|;
+block|}
 comment|// we need to convert the thrift type to the SQL type
 name|String
 name|type
@@ -353,7 +357,7 @@ literal|1
 argument_list|)
 decl_stmt|;
 comment|// we need to convert the thrift type to the SQL type
-comment|//TODO: this would be better handled in an enum
+comment|// TODO: this would be better handled in an enum
 if|if
 condition|(
 literal|"string"
@@ -363,11 +367,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Types
 operator|.
 name|VARCHAR
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -378,11 +384,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Types
 operator|.
 name|BOOLEAN
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -393,11 +401,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Types
 operator|.
 name|DOUBLE
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -408,11 +418,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Types
 operator|.
 name|TINYINT
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -423,11 +435,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Types
 operator|.
 name|INTEGER
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -438,11 +452,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Types
 operator|.
 name|BIGINT
 return|;
+block|}
 throw|throw
 operator|new
 name|SQLException
@@ -453,7 +469,7 @@ name|type
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getColumnTypeName(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnTypeName(int)    */
 specifier|public
 name|String
 name|getColumnTypeName
@@ -470,6 +486,7 @@ name|columnTypes
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
@@ -477,6 +494,7 @@ argument_list|(
 literal|"Could not determine column type name for ResultSet"
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|column
@@ -490,6 +508,7 @@ operator|.
 name|size
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
@@ -499,8 +518,9 @@ operator|+
 name|column
 argument_list|)
 throw|;
+block|}
 comment|// we need to convert the thrift type to the SQL type name
-comment|//TODO: this would be better handled in an enum
+comment|// TODO: this would be better handled in an enum
 name|String
 name|type
 init|=
@@ -522,11 +542,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Constants
 operator|.
 name|STRING_TYPE_NAME
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -537,11 +559,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Constants
 operator|.
 name|DOUBLE_TYPE_NAME
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -552,11 +576,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Constants
 operator|.
 name|BOOLEAN_TYPE_NAME
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -567,11 +593,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Constants
 operator|.
 name|TINYINT_TYPE_NAME
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -582,11 +610,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Constants
 operator|.
 name|INT_TYPE_NAME
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -597,11 +627,13 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
+block|{
 return|return
 name|Constants
 operator|.
 name|BIGINT_TYPE_NAME
 return|;
+block|}
 throw|throw
 operator|new
 name|SQLException
@@ -612,7 +644,7 @@ name|type
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getPrecision(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getPrecision(int)    */
 specifier|public
 name|int
 name|getPrecision
@@ -634,16 +666,18 @@ argument_list|(
 name|column
 argument_list|)
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
-comment|//Do we have a precision limit?
+comment|// Do we have a precision limit?
+block|}
 return|return
 literal|0
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getScale(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getScale(int)    */
 specifier|public
 name|int
 name|getScale
@@ -665,16 +699,18 @@ argument_list|(
 name|column
 argument_list|)
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
-comment|//Do we have a scale limit?
+comment|// Do we have a scale limit?
+block|}
 return|return
 literal|0
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getSchemaName(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getSchemaName(int)    */
 specifier|public
 name|String
 name|getSchemaName
@@ -694,7 +730,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#getTableName(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getTableName(int)    */
 specifier|public
 name|String
 name|getTableName
@@ -714,7 +750,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#isAutoIncrement(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isAutoIncrement(int)    */
 specifier|public
 name|boolean
 name|isAutoIncrement
@@ -730,7 +766,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#isCaseSensitive(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isCaseSensitive(int)    */
 specifier|public
 name|boolean
 name|isCaseSensitive
@@ -750,7 +786,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#isCurrency(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isCurrency(int)    */
 specifier|public
 name|boolean
 name|isCurrency
@@ -766,7 +802,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#isDefinitelyWritable(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isDefinitelyWritable(int)    */
 specifier|public
 name|boolean
 name|isDefinitelyWritable
@@ -786,7 +822,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#isNullable(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isNullable(int)    */
 specifier|public
 name|int
 name|isNullable
@@ -804,7 +840,7 @@ operator|.
 name|columnNullable
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#isReadOnly(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isReadOnly(int)    */
 specifier|public
 name|boolean
 name|isReadOnly
@@ -824,7 +860,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#isSearchable(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isSearchable(int)    */
 specifier|public
 name|boolean
 name|isSearchable
@@ -844,7 +880,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#isSigned(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isSigned(int)    */
 specifier|public
 name|boolean
 name|isSigned
@@ -864,7 +900,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.ResultSetMetaData#isWritable(int)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isWritable(int)    */
 specifier|public
 name|boolean
 name|isWritable
@@ -884,7 +920,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -907,7 +943,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/* (non-Javadoc)    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
 specifier|public
 parameter_list|<
 name|T

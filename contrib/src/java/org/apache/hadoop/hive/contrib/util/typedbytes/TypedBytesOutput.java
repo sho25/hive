@@ -137,7 +137,7 @@ decl_stmt|;
 specifier|private
 name|TypedBytesOutput
 parameter_list|()
-block|{}
+block|{   }
 specifier|private
 name|void
 name|setDataOutput
@@ -162,6 +162,8 @@ operator|new
 name|ThreadLocal
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|protected
 specifier|synchronized
 name|Object
@@ -176,7 +178,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Get a thread-local typed bytes output for the supplied {@link DataOutput}.    *     * @param out data output object    * @return typed bytes output corresponding to the supplied     * {@link DataOutput}.    */
+comment|/**    * Get a thread-local typed bytes output for the supplied {@link DataOutput}.    *     * @param out    *          data output object    * @return typed bytes output corresponding to the supplied {@link DataOutput}    *         .    */
 specifier|public
 specifier|static
 name|TypedBytesOutput
@@ -223,7 +225,7 @@ operator|=
 name|out
 expr_stmt|;
 block|}
-comment|/**    * Writes a Java object as a typed bytes sequence.    *     * @param obj the object to be written    * @throws IOException    */
+comment|/**    * Writes a Java object as a typed bytes sequence.    *     * @param obj    *          the object to be written    * @throws IOException    */
 specifier|public
 name|void
 name|write
@@ -436,7 +438,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Writes a raw sequence of typed bytes.    *     * @param bytes the bytes to be written    * @throws IOException    */
+comment|/**    * Writes a raw sequence of typed bytes.    *     * @param bytes    *          the bytes to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeRaw
@@ -456,7 +458,7 @@ name|bytes
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a raw sequence of typed bytes.    *     * @param bytes the bytes to be written    * @param offset an offset in the given array    * @param length number of bytes from the given array to write    * @throws IOException    */
+comment|/**    * Writes a raw sequence of typed bytes.    *     * @param bytes    *          the bytes to be written    * @param offset    *          an offset in the given array    * @param length    *          number of bytes from the given array to write    * @throws IOException    */
 specifier|public
 name|void
 name|writeRaw
@@ -486,7 +488,7 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a bytes array as a typed bytes sequence, using a given typecode.    *     * @param bytes the bytes array to be written    * @param code the typecode to use    * @throws IOException    */
+comment|/**    * Writes a bytes array as a typed bytes sequence, using a given typecode.    *     * @param bytes    *          the bytes array to be written    * @param code    *          the typecode to use    * @throws IOException    */
 specifier|public
 name|void
 name|writeBytes
@@ -525,7 +527,7 @@ name|bytes
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a bytes array as a typed bytes sequence.    *     * @param bytes the bytes array to be written    * @throws IOException    */
+comment|/**    * Writes a bytes array as a typed bytes sequence.    *     * @param bytes    *          the bytes array to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeBytes
@@ -549,7 +551,7 @@ name|code
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a byte as a typed bytes sequence.    *     * @param b the byte to be written    * @throws IOException    */
+comment|/**    * Writes a byte as a typed bytes sequence.    *     * @param b    *          the byte to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeByte
@@ -579,7 +581,7 @@ name|b
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a boolean as a typed bytes sequence.    *     * @param b the boolean to be written    * @throws IOException    */
+comment|/**    * Writes a boolean as a typed bytes sequence.    *     * @param b    *          the boolean to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeBool
@@ -609,7 +611,7 @@ name|b
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes an integer as a typed bytes sequence.    *     * @param i the integer to be written    * @throws IOException    */
+comment|/**    * Writes an integer as a typed bytes sequence.    *     * @param i    *          the integer to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeInt
@@ -639,7 +641,7 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a long as a typed bytes sequence.    *     * @param l the long to be written    * @throws IOException    */
+comment|/**    * Writes a long as a typed bytes sequence.    *     * @param l    *          the long to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeLong
@@ -669,7 +671,7 @@ name|l
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a float as a typed bytes sequence.    *     * @param f the float to be written    * @throws IOException    */
+comment|/**    * Writes a float as a typed bytes sequence.    *     * @param f    *          the float to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeFloat
@@ -699,7 +701,7 @@ name|f
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a double as a typed bytes sequence.    *     * @param d the double to be written    * @throws IOException    */
+comment|/**    * Writes a double as a typed bytes sequence.    *     * @param d    *          the double to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeDouble
@@ -729,7 +731,7 @@ name|d
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a short as a typed bytes sequence.    *     * @param s the short to be written    * @throws IOException    */
+comment|/**    * Writes a short as a typed bytes sequence.    *     * @param s    *          the short to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeShort
@@ -759,7 +761,7 @@ name|s
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a string as a typed bytes sequence.    *     * @param s the string to be written    * @throws IOException    */
+comment|/**    * Writes a string as a typed bytes sequence.    *     * @param s    *          the string to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeString
@@ -791,7 +793,7 @@ name|s
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a vector as a typed bytes sequence.    *     * @param vector the vector to be written    * @throws IOException    */
+comment|/**    * Writes a vector as a typed bytes sequence.    *     * @param vector    *          the vector to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeVector
@@ -825,7 +827,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Writes a vector header.    *     * @param length the number of elements in the vector    * @throws IOException    */
+comment|/**    * Writes a vector header.    *     * @param length    *          the number of elements in the vector    * @throws IOException    */
 specifier|public
 name|void
 name|writeVectorHeader
@@ -855,7 +857,7 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a list as a typed bytes sequence.    *     * @param list the list to be written    * @throws IOException    */
+comment|/**    * Writes a list as a typed bytes sequence.    *     * @param list    *          the list to be written    * @throws IOException    */
 specifier|public
 name|void
 name|writeList
@@ -927,7 +929,7 @@ name|code
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a map as a typed bytes sequence.    *     * @param map the map to be written    * @throws IOException    */
+comment|/**    * Writes a map as a typed bytes sequence.    *     * @param map    *          the map to be written    * @throws IOException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -988,7 +990,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Writes a map header.    *     * @param length the number of key-value pairs in the map    * @throws IOException    */
+comment|/**    * Writes a map header.    *     * @param length    *          the number of key-value pairs in the map    * @throws IOException    */
 specifier|public
 name|void
 name|writeMapHeader

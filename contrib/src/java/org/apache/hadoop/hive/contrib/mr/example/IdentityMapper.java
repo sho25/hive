@@ -76,7 +76,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Example Mapper (Identity).   */
+comment|/**  * Example Mapper (Identity).  */
 end_comment
 
 begin_class

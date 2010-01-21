@@ -38,7 +38,7 @@ specifier|public
 interface|interface
 name|Reducer
 block|{
-comment|/**    * Reduce.    *     * Note that it is assumed that the key is the first column.  Additionally, the key    * will be repeated as the first column in the records[] array.    *     * @param key key (first column) for this set of records.    * @param records Iterator of records for this key.  Note that the first column of record will also be the key.    * @param output    * @throws Exception    */
+comment|/**    * Reduce.    *     * Note that it is assumed that the key is the first column. Additionally, the    * key will be repeated as the first column in the records[] array.    *     * @param key    *          key (first column) for this set of records.    * @param records    *          Iterator of records for this key. Note that the first column of    *          record will also be the key.    * @param output    * @throws Exception    */
 name|void
 name|reduce
 parameter_list|(

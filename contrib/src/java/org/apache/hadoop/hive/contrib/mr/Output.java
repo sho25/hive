@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Collects output.  *   * It's the responsibility of the caller to ensure the output  * is in the correct format (contains the correct number of columns, etc.)  */
+comment|/**  * Collects output.  *   * It's the responsibility of the caller to ensure the output is in the correct  * format (contains the correct number of columns, etc.)  */
 end_comment
 
 begin_interface

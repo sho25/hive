@@ -63,9 +63,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
+name|hive
 operator|.
-name|Writable
+name|ql
+operator|.
+name|exec
+operator|.
+name|RecordWriter
 import|;
 end_import
 
@@ -91,13 +95,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
+name|io
 operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|RecordWriter
+name|Writable
 import|;
 end_import
 

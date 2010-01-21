@@ -37,24 +37,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|SessionState
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -73,9 +55,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
+name|session
 operator|.
-name|Hive
+name|SessionState
 import|;
 end_import
 

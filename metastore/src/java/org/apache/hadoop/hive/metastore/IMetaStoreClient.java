@@ -238,7 +238,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TODO Unnecessary when the server sides for both dbstore and filestore are merged  */
+comment|/**  * TODO Unnecessary when the server sides for both dbstore and filestore are  * merged  */
 end_comment
 
 begin_interface
@@ -273,7 +273,7 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Drop the table.    * @param tableName The table to drop    * @param deleteData Should we delete the underlying data    * @throws MetaException Could not drop table properly.    * @throws UnknownTableException The table wasn't found.    * @throws TException A thrift communication error occurred    * @throws NoSuchObjectException The table wasn't found.    */
+comment|/**    * Drop the table.    *     * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @throws MetaException    *           Could not drop table properly.    * @throws UnknownTableException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           The table wasn't found.    */
 specifier|public
 name|void
 name|dropTable
@@ -293,7 +293,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Drop the table.    * @param dbname The database for this table    * @param tableName The table to drop    * @throws MetaException Could not drop table properly.    * @throws NoSuchObjectException The table wasn't found.    * @throws TException A thrift communication error occurred    * @throws ExistingDependentsException    */
+comment|/**    * Drop the table.    *     * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws ExistingDependentsException    */
 specifier|public
 name|void
 name|dropTable
@@ -317,8 +317,9 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|//public void createTable(String tableName, Properties schema) throws MetaException, UnknownTableException,
-comment|//  TException;
+comment|// public void createTable(String tableName, Properties schema) throws
+comment|// MetaException, UnknownTableException,
+comment|// TException;
 specifier|public
 name|boolean
 name|tableExists
@@ -333,7 +334,7 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Get a table object.     * @param tableName Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException Could not fetch the table    * @throws TException A thrift communication error occurred     * @throws NoSuchObjectException In case the table wasn't found.    */
+comment|/**    * Get a table object.    *     * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
 specifier|public
 name|Table
 name|getTable
@@ -348,7 +349,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get a table object.     * @param dbName The database the table is located in.    * @param tableName Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException Could not fetch the table    * @throws TException A thrift communication error occurred     * @throws NoSuchObjectException In case the table wasn't found.    */
+comment|/**    * Get a table object.    *     * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
 specifier|public
 name|Table
 name|getTable
@@ -366,7 +367,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * @param tableName    * @param dbName    * @param partVals    * @return the partition object    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String, java.lang.String, java.util.List)    */
+comment|/**    * @param tableName    * @param dbName    * @param partVals    * @return the partition object    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
 specifier|public
 name|Partition
 name|appendPartition
@@ -392,7 +393,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Add a partition to the table.    * @param partition The partition to add    * @return The partition added    * @throws InvalidObjectException Could not find table to add to    * @throws AlreadyExistsException Partition already exists    * @throws MetaException Could not add partition    * @throws TException Thrift exception    */
+comment|/**    * Add a partition to the table.    *     * @param partition    *          The partition to add    * @return The partition added    * @throws InvalidObjectException    *           Could not find table to add to    * @throws AlreadyExistsException    *           Partition already exists    * @throws MetaException    *           Could not add partition    * @throws TException    *           Thrift exception    */
 specifier|public
 name|Partition
 name|add_partition
@@ -409,7 +410,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param tblName    * @param dbName    * @param partVals    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String, java.lang.String, java.util.List)    */
+comment|/**    * @param tblName    * @param dbName    * @param partVals    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
 specifier|public
 name|Partition
 name|getPartition
@@ -544,7 +545,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData delete the underlying data or just delete the table in metadata    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String, java.lang.String, java.util.List, boolean)    */
+comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData    *          delete the underlying data or just delete the table in metadata    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String,    *      java.lang.String, java.util.List, boolean)    */
 specifier|public
 name|boolean
 name|dropPartition
@@ -571,7 +572,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * updates a partition to new partition    * @param dbName database of the old partition    * @param tblName table name of the old partition    * @param newPart new partition    * @throws InvalidOperationException if the old partition does not exist    * @throws MetaException if error in updating metadata    * @throws TException if error in communicating with metastore server    */
+comment|/**    * updates a partition to new partition    *     * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
 specifier|public
 name|void
 name|alter_partition
@@ -592,7 +593,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_fields(java.lang.String, java.lang.String)    */
+comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_fields(java.lang.String,    *      java.lang.String)    */
 specifier|public
 name|List
 argument_list|<
@@ -615,7 +616,7 @@ name|UnknownTableException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_schema(java.lang.String, java.lang.String)    */
+comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_schema(java.lang.String,    *      java.lang.String)    */
 specifier|public
 name|List
 argument_list|<
@@ -638,7 +639,7 @@ name|UnknownTableException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * @param name name of the configuration property to get the value of    * @param defaultValue the value to return if property with the given name doesn't exist    * @return    * @throws TException    * @throws ConfigValSecurityException     */
+comment|/**    * @param name    *          name of the configuration property to get the value of    * @param defaultValue    *          the value to return if property with the given name doesn't exist    * @return    * @throws TException    * @throws ConfigValSecurityException    */
 specifier|public
 name|String
 name|getConfigValue

@@ -34,7 +34,8 @@ specifier|public
 name|String
 name|rdatetime
 decl_stmt|;
-comment|//  public Long rdatetimeepoch;     //  The format Hive understands by default, should we convert?
+comment|// public Long rdatetimeepoch; // The format Hive understands by default,
+comment|// should we convert?
 specifier|public
 name|String
 name|rip
@@ -91,7 +92,7 @@ specifier|public
 name|String
 name|useragent
 decl_stmt|;
-comment|//  public String rid;  // Specific Zemanta use
+comment|// public String rid; // Specific Zemanta use
 block|}
 end_class
 

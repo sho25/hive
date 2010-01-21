@@ -121,7 +121,7 @@ decl_stmt|;
 specifier|private
 name|TypedBytesRecordOutput
 parameter_list|()
-block|{}
+block|{   }
 specifier|private
 name|void
 name|setTypedBytesOutput
@@ -146,6 +146,8 @@ operator|new
 name|ThreadLocal
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|protected
 specifier|synchronized
 name|Object
@@ -160,7 +162,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Get a thread-local typed bytes record input for the supplied    * {@link TypedBytesOutput}.    *     * @param out typed bytes output object    * @return typed bytes record output corresponding to the supplied    *         {@link TypedBytesOutput}.    */
+comment|/**    * Get a thread-local typed bytes record input for the supplied    * {@link TypedBytesOutput}.    *     * @param out    *          typed bytes output object    * @return typed bytes record output corresponding to the supplied    *         {@link TypedBytesOutput}.    */
 specifier|public
 specifier|static
 name|TypedBytesRecordOutput
@@ -192,7 +194,7 @@ return|return
 name|bout
 return|;
 block|}
-comment|/**    * Get a thread-local typed bytes record output for the supplied    * {@link DataOutput}.    *     * @param out data output object    * @return typed bytes record output corresponding to the supplied    *         {@link DataOutput}.    */
+comment|/**    * Get a thread-local typed bytes record output for the supplied    * {@link DataOutput}.    *     * @param out    *          data output object    * @return typed bytes record output corresponding to the supplied    *         {@link DataOutput}.    */
 specifier|public
 specifier|static
 name|TypedBytesRecordOutput
@@ -516,7 +518,7 @@ name|tag
 parameter_list|)
 throws|throws
 name|IOException
-block|{}
+block|{   }
 specifier|public
 name|void
 name|endMap
@@ -529,7 +531,7 @@ name|tag
 parameter_list|)
 throws|throws
 name|IOException
-block|{}
+block|{   }
 block|}
 end_class
 

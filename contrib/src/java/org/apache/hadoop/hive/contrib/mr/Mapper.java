@@ -28,7 +28,7 @@ specifier|public
 interface|interface
 name|Mapper
 block|{
-comment|/**    * Maps a single row into an intermediate rows.     *     * @param record input record    * @param output collect mapped rows.    * @throws Exception on error    */
+comment|/**    * Maps a single row into an intermediate rows.    *     * @param record    *          input record    * @param output    *          collect mapped rows.    * @throws Exception    *           on error    */
 name|void
 name|map
 parameter_list|(

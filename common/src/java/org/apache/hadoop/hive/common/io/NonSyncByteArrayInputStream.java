@@ -106,28 +106,20 @@ name|int
 name|length
 parameter_list|)
 block|{
-name|this
-operator|.
 name|buf
 operator|=
 name|input
 expr_stmt|;
-name|this
-operator|.
 name|count
 operator|=
 name|start
 operator|+
 name|length
 expr_stmt|;
-name|this
-operator|.
 name|mark
 operator|=
 name|start
 expr_stmt|;
-name|this
-operator|.
 name|pos
 operator|=
 name|start
@@ -152,6 +144,8 @@ name|count
 return|;
 block|}
 comment|/**    * {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|read
@@ -179,6 +173,8 @@ literal|1
 return|;
 block|}
 comment|/**    * {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|read
@@ -296,6 +292,8 @@ name|len
 return|;
 block|}
 comment|/**    * {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|long
 name|skip
@@ -340,6 +338,8 @@ name|n
 return|;
 block|}
 comment|/**    * {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|available
