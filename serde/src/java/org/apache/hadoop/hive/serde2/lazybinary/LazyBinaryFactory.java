@@ -300,7 +300,7 @@ specifier|public
 class|class
 name|LazyBinaryFactory
 block|{
-comment|/**    * Create a lazy binary primitive class given the type name.     */
+comment|/**    * Create a lazy binary primitive class given the type name.    */
 specifier|public
 specifier|static
 name|LazyBinaryPrimitive

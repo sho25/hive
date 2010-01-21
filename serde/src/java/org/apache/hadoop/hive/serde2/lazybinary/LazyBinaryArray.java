@@ -182,7 +182,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryArray is serialized as follows:  *             start  A     b   b   b   b         b   b end  * bytes[] ->    |--------|---|---|---|---| ... |---|---|  *   * Section A is the null-bytes. Suppose the list has  * N elements, then there are (N+7)/8 bytes used as null-bytes.  * Each bit corresponds to an element and it indicates whether   * that element is null (0) or not null (1).  *   * After A, all b(s) represent the elements of the list.   * Each of them is again a LazyBinaryObject.  *  */
+comment|/**  * LazyBinaryArray is serialized as follows: start A b b b b b b end bytes[] ->  * |--------|---|---|---|---| ... |---|---|  *   * Section A is the null-bytes. Suppose the list has N elements, then there are  * (N+7)/8 bytes used as null-bytes. Each bit corresponds to an element and it  * indicates whether that element is null (0) or not null (1).  *   * After A, all b(s) represent the elements of the list. Each of them is again a  * LazyBinaryObject.  *   */
 end_comment
 
 begin_class
@@ -201,13 +201,13 @@ name|parsed
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * The length of the array.    * Only valid when the data is parsed.    */
+comment|/**    * The length of the array. Only valid when the data is parsed.    */
 name|int
 name|arraySize
 init|=
 literal|0
 decl_stmt|;
-comment|/**    * The start positions and lengths of array elements.    * Only valid when the data is parsed.    */
+comment|/**    * The start positions and lengths of array elements. Only valid when the data    * is parsed.    */
 name|int
 index|[]
 name|elementStart
@@ -221,17 +221,17 @@ name|boolean
 index|[]
 name|elementInited
 decl_stmt|;
-comment|/**    * Whether an element is null or not.    * Because length is 0 does not means the field is null.    * In particular, a 0-length string is not null.    */
+comment|/**    * Whether an element is null or not. Because length is 0 does not means the    * field is null. In particular, a 0-length string is not null.    */
 name|boolean
 index|[]
 name|elementIsNull
 decl_stmt|;
-comment|/**    * The elements of the array. Note that we call     * arrayElements[i].init(bytes, begin, length)     * only when that element is accessed.    */
+comment|/**    * The elements of the array. Note that we call arrayElements[i].init(bytes,    * begin, length) only when that element is accessed.    */
 name|LazyBinaryObject
 index|[]
 name|arrayElements
 decl_stmt|;
-comment|/**    * Construct a LazyBinaryArray object with the ObjectInspector.    * @param oi  the oi representing the type of this LazyBinaryArray    */
+comment|/**    * Construct a LazyBinaryArray object with the ObjectInspector.    *     * @param oi    *          the oi representing the type of this LazyBinaryArray    */
 specifier|protected
 name|LazyBinaryArray
 parameter_list|(
@@ -245,7 +245,7 @@ name|oi
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the row data for this LazyBinaryArray.    * @see LazyObject#init(ByteArrayRef, int, int)    */
+comment|/**    * Set the row data for this LazyBinaryArray.    *     * @see LazyObject#init(ByteArrayRef, int, int)    */
 annotation|@
 name|Override
 specifier|public
@@ -278,7 +278,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**    * Enlarge the size of arrays storing information for the elements inside     * the array.    */
+comment|/**    * Enlarge the size of arrays storing information for the elements inside the    * array.    */
 specifier|private
 name|void
 name|adjustArraySize
@@ -360,7 +360,7 @@ operator|.
 name|RecordInfo
 argument_list|()
 decl_stmt|;
-comment|/**    * Parse the bytes and fill elementStart, elementLength,    * elementInited and elementIsNull.    */
+comment|/**    * Parse the bytes and fill elementStart, elementLength, elementInited and    * elementIsNull.    */
 specifier|private
 name|void
 name|parse
@@ -595,7 +595,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**   * Returns the actual primitive object at the index position   * inside the array represented by this LazyBinaryObject.   */
+comment|/**    * Returns the actual primitive object at the index position inside the array    * represented by this LazyBinaryObject.    */
 specifier|public
 name|Object
 name|getListElementObject
@@ -636,7 +636,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**   * Get the element without checking out-of-bound index.   * @param index  index to the array element   */
+comment|/**    * Get the element without checking out-of-bound index.    *     * @param index    *          index to the array element    */
 specifier|private
 name|Object
 name|uncheckedGetElement
@@ -695,9 +695,6 @@ operator|.
 name|createLazyBinaryObject
 argument_list|(
 operator|(
-operator|(
-name|LazyBinaryListObjectInspector
-operator|)
 name|oi
 operator|)
 operator|.
@@ -738,7 +735,7 @@ name|getObject
 argument_list|()
 return|;
 block|}
-comment|/**    * Returns the array size.   */
+comment|/**    * Returns the array size.    */
 specifier|public
 name|int
 name|getListLength
@@ -758,14 +755,14 @@ return|return
 name|arraySize
 return|;
 block|}
-comment|/**    * cachedList is reused every time getList is called.   * Different LazyBianryArray instances cannot share    * the same cachedList.    */
+comment|/**    * cachedList is reused every time getList is called. Different    * LazyBianryArray instances cannot share the same cachedList.    */
 name|ArrayList
 argument_list|<
 name|Object
 argument_list|>
 name|cachedList
 decl_stmt|;
-comment|/** Returns the List of actual primitive objects.   *  Returns null for null array.   */
+comment|/**    * Returns the List of actual primitive objects. Returns null for null array.    */
 specifier|public
 name|List
 argument_list|<

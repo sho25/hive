@@ -56,7 +56,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryObject stores an object in a binary format in a byte[].  * For example, a double takes four bytes.  *   * A LazyBinaryObject can represent any primitive object or hierarchical object  * like string, list, map or struct.  */
+comment|/**  * LazyBinaryObject stores an object in a binary format in a byte[]. For  * example, a double takes four bytes.  *   * A LazyBinaryObject can represent any primitive object or hierarchical object  * like string, list, map or struct.  */
 end_comment
 
 begin_class
@@ -73,7 +73,7 @@ block|{
 name|OI
 name|oi
 decl_stmt|;
-comment|/**    * Create a LazyBinaryObject.    * @param oi  Derived classes can access meta information about this Lazy    *            Binary Object (e.g, length, null-bits) from it.    */
+comment|/**    * Create a LazyBinaryObject.    *     * @param oi    *          Derived classes can access meta information about this Lazy Binary    *          Object (e.g, length, null-bits) from it.    */
 specifier|protected
 name|LazyBinaryObject
 parameter_list|(
@@ -88,7 +88,7 @@ operator|=
 name|oi
 expr_stmt|;
 block|}
-comment|/**    * Set the data for this LazyBinaryObject.    * We take ByteArrayRef instead of byte[] so that we will be able to drop    * the reference to byte[] by a single assignment.    * The ByteArrayRef object can be reused across multiple rows.    *     * Never call this function if the object represent a null!!!    *     * @param bytes  The wrapper of the byte[].    * @param start  The start position inside the bytes.    * @param length The length of the data, starting from "start"    * @see ByteArrayRef    */
+comment|/**    * Set the data for this LazyBinaryObject. We take ByteArrayRef instead of    * byte[] so that we will be able to drop the reference to byte[] by a single    * assignment. The ByteArrayRef object can be reused across multiple rows.    *     * Never call this function if the object represent a null!!!    *     * @param bytes    *          The wrapper of the byte[].    * @param start    *          The start position inside the bytes.    * @param length    *          The length of the data, starting from "start"    * @see ByteArrayRef    */
 specifier|public
 specifier|abstract
 name|void
@@ -104,13 +104,15 @@ name|int
 name|length
 parameter_list|)
 function_decl|;
-comment|/**    * If the LazyBinaryObject is a primitive Object, then deserialize it and return    * the actual primitive Object.    * Otherwise (string, list, map, struct), return this.     */
+comment|/**    * If the LazyBinaryObject is a primitive Object, then deserialize it and    * return the actual primitive Object. Otherwise (string, list, map, struct),    * return this.    */
 specifier|public
 specifier|abstract
 name|Object
 name|getObject
 parameter_list|()
 function_decl|;
+annotation|@
+name|Override
 specifier|public
 specifier|abstract
 name|int

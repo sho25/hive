@@ -92,7 +92,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryObject for integer which is serialized as VInt  * @see LazyBinaryUtils#readVInt(byte[], int, VInt)   */
+comment|/**  * LazyBinaryObject for integer which is serialized as VInt  *   * @see LazyBinaryUtils#readVInt(byte[], int, VInt)  */
 end_comment
 
 begin_class
@@ -150,7 +150,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    *  The reusable vInt for decoding the integer    */
+comment|/**    * The reusable vInt for decoding the integer    */
 name|VInt
 name|vInt
 init|=

@@ -155,22 +155,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|Deserializer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|SerDe
 import|;
 end_import
@@ -612,7 +596,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The LazyBinarySerDe class combines the lazy property of   * LazySimpleSerDe class and the binary property of BinarySortable  * class. Lazy means a field is not deserialized until required.   * Binary means a field is serialized in binary compact format.    */
+comment|/**  * The LazyBinarySerDe class combines the lazy property of LazySimpleSerDe class  * and the binary property of BinarySortable class. Lazy means a field is not  * deserialized until required. Binary means a field is serialized in binary  * compact format.  */
 end_comment
 
 begin_class
@@ -645,7 +629,7 @@ name|LazyBinarySerDe
 parameter_list|()
 throws|throws
 name|SerDeException
-block|{       }
+block|{   }
 name|List
 argument_list|<
 name|String
@@ -928,9 +912,11 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 comment|// For backward-compatibility with hadoop 0.17
 name|byteArrayRef
 operator|.
@@ -982,9 +968,11 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|byteArrayRef
 operator|.
 name|setData
@@ -1142,7 +1130,7 @@ name|nullMapKey
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * Serialize a struct object without writing the byte size.     * This function is shared by both row serialization and    * struct serialization.    *     * @param byteStream      the byte stream storing the serialization data    * @param obj             the struct object to serialize    * @param objInspector    the struct object inspector    */
+comment|/**    * Serialize a struct object without writing the byte size. This function is    * shared by both row serialization and struct serialization.    *     * @param byteStream    *          the byte stream storing the serialization data    * @param obj    *          the struct object to serialize    * @param objInspector    *          the struct object inspector    */
 specifier|private
 name|void
 name|serializeStruct
@@ -1164,8 +1152,10 @@ literal|null
 operator|==
 name|obj
 condition|)
+block|{
 return|return;
-comment|/*       * Interleave serializing one null byte and 8 struct fields      * in each round, in order to support data deserialization      * with different table schemas      */
+block|}
+comment|/*      * Interleave serializing one null byte and 8 struct fields in each round,      * in order to support data deserialization with different table schemas      */
 name|List
 argument_list|<
 name|?
@@ -1326,7 +1316,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * A recursive function that serialize an object to a byte buffer     * based on its object inspector.    * @param byteStream      the byte stream storing the serialization data    * @param obj             the object to serialize    * @param objInspector    the object inspector    */
+comment|/**    * A recursive function that serialize an object to a byte buffer based on its    * object inspector.    *     * @param byteStream    *          the byte stream storing the serialization data    * @param obj    *          the object to serialize    * @param objInspector    *          the object inspector    */
 specifier|private
 name|void
 name|serialize
@@ -1348,7 +1338,9 @@ literal|null
 operator|==
 name|obj
 condition|)
+block|{
 return|return;
+block|}
 switch|switch
 condition|(
 name|objInspector
@@ -1387,14 +1379,6 @@ case|case
 name|BOOLEAN
 case|:
 block|{
-name|BooleanObjectInspector
-name|boi
-init|=
-operator|(
-name|BooleanObjectInspector
-operator|)
-name|poi
-decl_stmt|;
 name|boolean
 name|v
 init|=
@@ -1898,7 +1882,7 @@ name|getListElementObjectInspector
 argument_list|()
 decl_stmt|;
 comment|// 1/ reserve spaces for the byte size of the list
-comment|//    which is a integer and takes four bytes
+comment|// which is a integer and takes four bytes
 name|int
 name|byteSizeStart
 init|=
@@ -2216,7 +2200,7 @@ name|obj
 argument_list|)
 decl_stmt|;
 comment|// 1/ reserve spaces for the byte size of the map
-comment|//    which is a integer and takes four bytes
+comment|// which is a integer and takes four bytes
 name|int
 name|byteSizeStart
 init|=
@@ -2555,7 +2539,7 @@ name|STRUCT
 case|:
 block|{
 comment|// 1/ reserve spaces for the byte size of the struct
-comment|//    which is a integer and takes four bytes
+comment|// which is a integer and takes four bytes
 name|int
 name|byteSizeStart
 init|=

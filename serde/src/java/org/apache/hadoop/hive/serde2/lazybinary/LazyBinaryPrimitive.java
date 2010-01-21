@@ -52,7 +52,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Defines a LazyBinaryPrimitive.   *   * data will be initialized to corresponding types in   * different LazyBinary primitive classes. For example, data will  * be a BooleanWritable in the LazyBinaryBoolean class.  *   * There is no null flag any more,   *  */
+comment|/**  * Defines a LazyBinaryPrimitive.  *   * data will be initialized to corresponding types in different LazyBinary  * primitive classes. For example, data will be a BooleanWritable in the  * LazyBinaryBoolean class.  *   * There is no null flag any more,  *   */
 end_comment
 
 begin_class
@@ -109,7 +109,9 @@ block|}
 name|T
 name|data
 decl_stmt|;
-comment|/**    * Returns the primitive object represented by this LazyBinaryObject.    * This is useful because it can make sure we have "null" for null objects.    */
+comment|/**    * Returns the primitive object represented by this LazyBinaryObject. This is    * useful because it can make sure we have "null" for null objects.    */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|getObject
@@ -128,6 +130,8 @@ return|return
 name|data
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -140,6 +144,8 @@ name|toString
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode

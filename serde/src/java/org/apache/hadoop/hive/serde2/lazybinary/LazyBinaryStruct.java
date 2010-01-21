@@ -172,7 +172,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryStruct is serialized as follows:  *            start A       B      A      B     A       B   end  * bytes[] ->    |-----|---------|--- ... ---|-----|---------|  *   * Section A is one null-byte, corresponding to eight struct fields in Section B.   * Each bit indicates whether the corresponding field is null (0) or not null (1).  * Each field is a LazyBinaryObject.   *   * Following B, there is another section A and B. This pattern repeats until the   * all struct fields are serialized.  */
+comment|/**  * LazyBinaryStruct is serialized as follows: start A B A B A B end bytes[] ->  * |-----|---------|--- ... ---|-----|---------|  *   * Section A is one null-byte, corresponding to eight struct fields in Section  * B. Each bit indicates whether the corresponding field is null (0) or not null  * (1). Each field is a LazyBinaryObject.  *   * Following B, there is another section A and B. This pattern repeats until the  * all struct fields are serialized.  */
 end_comment
 
 begin_class
@@ -216,12 +216,12 @@ name|boolean
 index|[]
 name|fieldInited
 decl_stmt|;
-comment|/**    * Whether a field is null or not.    * Because length is 0 does not means the field is null.    * In particular, a 0-length string is not null.    */
+comment|/**    * Whether a field is null or not. Because length is 0 does not means the    * field is null. In particular, a 0-length string is not null.    */
 name|boolean
 index|[]
 name|fieldIsNull
 decl_stmt|;
-comment|/**    * The start positions and lengths of struct fields.    * Only valid when the data is parsed.    */
+comment|/**    * The start positions and lengths of struct fields. Only valid when the data    * is parsed.    */
 name|int
 index|[]
 name|fieldStart
@@ -295,7 +295,7 @@ name|extraFieldWarned
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * Parse the byte[] and fill fieldStart, fieldLength,     * fieldInited and fieldIsNull.    */
+comment|/**    * Parse the byte[] and fill fieldStart, fieldLength, fieldInited and    * fieldIsNull.    */
 specifier|private
 name|void
 name|parse
@@ -416,7 +416,7 @@ name|length
 index|]
 expr_stmt|;
 block|}
-comment|/**      * Please note that one null byte is followed by eight fields,      * then more null byte and fields.       */
+comment|/**      * Please note that one null byte is followed by eight fields, then more      * null byte and fields.      */
 name|int
 name|fieldId
 init|=
@@ -567,9 +567,11 @@ name|lastFieldByteEnd
 operator|<=
 name|structByteEnd
 condition|)
+block|{
 name|fieldId
 operator|++
 expr_stmt|;
+block|}
 comment|// next byte is a null byte if there are more bytes to go
 if|if
 condition|(
@@ -687,7 +689,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**    * Get one field out of the struct.    *     * If the field is a primitive field, return the actual object.    * Otherwise return the LazyObject.  This is because PrimitiveObjectInspector    * does not have control over the object used by the user - the user simply    * directly use the Object instead of going through     * Object PrimitiveObjectInspector.get(Object).      *     * @param fieldID  The field ID    * @return         The field as a LazyObject    */
+comment|/**    * Get one field out of the struct.    *     * If the field is a primitive field, return the actual object. Otherwise    * return the LazyObject. This is because PrimitiveObjectInspector does not    * have control over the object used by the user - the user simply directly    * use the Object instead of going through Object    * PrimitiveObjectInspector.get(Object).    *     * @param fieldID    *          The field ID    * @return The field as a LazyObject    */
 specifier|public
 name|Object
 name|getField
@@ -713,7 +715,7 @@ name|fieldID
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the field out of the row without checking parsed.    * This is called by both getField and getFieldsAsList.    * @param fieldID  The id of the field starting from 0.    * @return  The value of the field    */
+comment|/**    * Get the field out of the row without checking parsed. This is called by    * both getField and getFieldsAsList.    *     * @param fieldID    *          The id of the field starting from 0.    * @return The value of the field    */
 specifier|private
 name|Object
 name|uncheckedGetField
@@ -789,7 +791,7 @@ name|Object
 argument_list|>
 name|cachedList
 decl_stmt|;
-comment|/**    * Get the values of the fields as an ArrayList.    * @return The values of the fields as an ArrayList.    */
+comment|/**    * Get the values of the fields as an ArrayList.    *     * @return The values of the fields as an ArrayList.    */
 specifier|public
 name|ArrayList
 argument_list|<

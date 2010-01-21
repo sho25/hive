@@ -92,7 +92,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryObject for long which stores as VLong.  * @see LazyBinaryUtils#readVLong(byte[], int, VLong)  */
+comment|/**  * LazyBinaryObject for long which stores as VLong.  *   * @see LazyBinaryUtils#readVLong(byte[], int, VLong)  */
 end_comment
 
 begin_class
@@ -150,7 +150,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    *  The reusable vLong for decoding the long    */
+comment|/**    * The reusable vLong for decoding the long    */
 name|VLong
 name|vLong
 init|=

@@ -27,20 +27,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
-operator|.
-name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|serde2
@@ -71,8 +57,22 @@ name|WritableStringObjectInspector
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|Text
+import|;
+end_import
+
 begin_comment
-comment|/**  * The serialization of LazyBinaryString is very simple:  *             start             A                end  * bytes[] ->    |---------------------------------|  *   * Section A is just an array of bytes which are exactly  * the Text contained in this object.  *   */
+comment|/**  * The serialization of LazyBinaryString is very simple: start A end bytes[] ->  * |---------------------------------|  *   * Section A is just an array of bytes which are exactly the Text contained in  * this object.  *   */
 end_comment
 
 begin_class

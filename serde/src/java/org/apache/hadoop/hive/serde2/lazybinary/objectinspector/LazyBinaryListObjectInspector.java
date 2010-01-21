@@ -63,7 +63,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|StandardListObjectInspector
+name|ObjectInspector
 import|;
 end_import
 
@@ -81,7 +81,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
+name|StandardListObjectInspector
 import|;
 end_import
 

@@ -104,7 +104,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspector for LazyBinaryStruct  * @see LazyBinaryStruct  */
+comment|/**  * ObjectInspector for LazyBinaryStruct  *   * @see LazyBinaryStruct  */
 end_comment
 
 begin_class

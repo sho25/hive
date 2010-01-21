@@ -107,42 +107,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|lazy
-operator|.
-name|LazyObject
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|lazy
-operator|.
-name|LazyPrimitive
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|lazybinary
 operator|.
 name|LazyBinaryUtils
@@ -228,7 +192,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryMap is serialized as follows:  *             start  A     b   c   b   c         b   c end  * bytes[] ->    |--------|---|---|---|---| ... |---|---|  *   * Section A is the null-bytes. Suppose the map has  * N key-value pairs, then there are (N*2+7)/8 bytes used as null-bytes.  * Each bit corresponds to a key or a value and it indicates whether   * that key or value is null (0) or not null (1).  *   * After A, all the bytes are actual serialized data of the map,  * which are key-value pairs. b represent the keys and c represent  * the values. Each of them is again a LazyBinaryObject.  *    */
+comment|/**  * LazyBinaryMap is serialized as follows: start A b c b c b c end bytes[] ->  * |--------|---|---|---|---| ... |---|---|  *   * Section A is the null-bytes. Suppose the map has N key-value pairs, then  * there are (N*2+7)/8 bytes used as null-bytes. Each bit corresponds to a key  * or a value and it indicates whether that key or value is null (0) or not null  * (1).  *   * After A, all the bytes are actual serialized data of the map, which are  * key-value pairs. b represent the keys and c represent the values. Each of  * them is again a LazyBinaryObject.  *   */
 end_comment
 
 begin_class
@@ -262,13 +226,13 @@ comment|/**    * Whether the data is already parsed or not.    */
 name|boolean
 name|parsed
 decl_stmt|;
-comment|/**    * The size of the map.    * Only valid when the data is parsed.    * -1 when the map is NULL.    */
+comment|/**    * The size of the map. Only valid when the data is parsed. -1 when the map is    * NULL.    */
 name|int
 name|mapSize
 init|=
 literal|0
 decl_stmt|;
-comment|/**    * The beginning position and length of key[i] and value[i].    * Only valid when the data is parsed.    */
+comment|/**    * The beginning position and length of key[i] and value[i]. Only valid when    * the data is parsed.    */
 name|int
 index|[]
 name|keyStart
@@ -294,7 +258,7 @@ name|boolean
 index|[]
 name|valueInited
 decl_stmt|;
-comment|/**    * Whether valueObjects[i]/keyObjects[i] is null or not    * This could not be inferred from the length of the object.    * In particular, a 0-length string is not null.    */
+comment|/**    * Whether valueObjects[i]/keyObjects[i] is null or not This could not be    * inferred from the length of the object. In particular, a 0-length string is    * not null.    */
 name|boolean
 index|[]
 name|keyIsNull
@@ -313,7 +277,7 @@ argument_list|>
 index|[]
 name|keyObjects
 decl_stmt|;
-comment|/**    * The values are stored in an array of LazyObjects.    * value[index] will start from KeyEnd[index] + 1,    * and ends before KeyStart[index+1] - 1.    */
+comment|/**    * The values are stored in an array of LazyObjects. value[index] will start    * from KeyEnd[index] + 1, and ends before KeyStart[index+1] - 1.    */
 name|LazyBinaryObject
 index|[]
 name|valueObjects
@@ -331,7 +295,7 @@ name|oi
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the row data for this LazyBinaryMap.    * @see LazyBinaryObject#init(ByteArrayRef, int, int)    */
+comment|/**    * Set the row data for this LazyBinaryMap.    *     * @see LazyBinaryObject#init(ByteArrayRef, int, int)    */
 annotation|@
 name|Override
 specifier|public
@@ -364,7 +328,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**    * Adjust the size of arrays:     * keyStart, keyLength    * valueStart, valueLength    * keyInited, keyIsNull    * valueInited, valueIsNull    */
+comment|/**    * Adjust the size of arrays: keyStart, keyLength valueStart, valueLength    * keyInited, keyIsNull valueInited, valueIsNull    */
 specifier|protected
 name|void
 name|adjustArraySize
@@ -496,7 +460,7 @@ operator|.
 name|RecordInfo
 argument_list|()
 decl_stmt|;
-comment|/**    * Parse the byte[] and fill keyStart, keyLength, keyIsNull     * valueStart, valueLength and valueIsNull    */
+comment|/**    * Parse the byte[] and fill keyStart, keyLength, keyIsNull valueStart,    * valueLength and valueIsNull    */
 specifier|private
 name|void
 name|parse
@@ -860,7 +824,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**    * Get the value object with the index without checking parsed.    * @param index  The index into the array starting from 0    */
+comment|/**    * Get the value object with the index without checking parsed.    *     * @param index    *          The index into the array starting from 0    */
 specifier|private
 name|LazyBinaryObject
 name|uncheckedGetValue
@@ -956,7 +920,7 @@ name|index
 index|]
 return|;
 block|}
-comment|/**    * Get the value in the map for the key.    *     * If there are multiple matches (which is possible in the serialized     * format), only the first one is returned.    *     * The most efficient way to get the value for the key is to serialize the     * key and then try to find it in the array.  We do linear search because in     * most cases, user only wants to get one or two values out of the map, and     * the cost of building up a HashMap is substantially higher.    *     * @param key   The key object that we are looking for.    * @return The corresponding value object, or NULL if not found    */
+comment|/**    * Get the value in the map for the key.    *     * If there are multiple matches (which is possible in the serialized format),    * only the first one is returned.    *     * The most efficient way to get the value for the key is to serialize the key    * and then try to find it in the array. We do linear search because in most    * cases, user only wants to get one or two values out of the map, and the    * cost of building up a HashMap is substantially higher.    *     * @param key    *          The key object that we are looking for.    * @return The corresponding value object, or NULL if not found    */
 specifier|public
 name|Object
 name|getMapValueElement
@@ -1010,8 +974,11 @@ name|lazyKeyI
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
-comment|// getWritableObject() will convert LazyPrimitive to actual primitive writable objects.
+block|}
+comment|// getWritableObject() will convert LazyPrimitive to actual primitive
+comment|// writable objects.
 name|Object
 name|keyI
 init|=
@@ -1026,7 +993,9 @@ name|keyI
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 if|if
 condition|(
 name|keyI
@@ -1064,7 +1033,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get the key object with the index without checking parsed.    * @param index  The index into the array starting from 0    */
+comment|/**    * Get the key object with the index without checking parsed.    *     * @param index    *          The index into the array starting from 0    */
 specifier|private
 name|LazyBinaryPrimitive
 argument_list|<
@@ -1169,7 +1138,7 @@ name|index
 index|]
 return|;
 block|}
-comment|/**    * cachedMap is reused for different calls to getMap().    * But each LazyBinaryMap has a separate cachedMap so we won't overwrite the    * data by accident.    */
+comment|/**    * cachedMap is reused for different calls to getMap(). But each LazyBinaryMap    * has a separate cachedMap so we won't overwrite the data by accident.    */
 name|LinkedHashMap
 argument_list|<
 name|Object
@@ -1178,7 +1147,7 @@ name|Object
 argument_list|>
 name|cachedMap
 decl_stmt|;
-comment|/**    * Return the map object representing this LazyBinaryMap.    * Note that the keyObjects will be Writable primitive objects.    * @return the map object    */
+comment|/**    * Return the map object representing this LazyBinaryMap. Note that the    * keyObjects will be Writable primitive objects.    *     * @return the map object    */
 specifier|public
 name|Map
 argument_list|<
@@ -1262,7 +1231,9 @@ name|lazyKey
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 name|Object
 name|key
 init|=
@@ -1326,7 +1297,7 @@ return|return
 name|cachedMap
 return|;
 block|}
-comment|/**    * Get the size of the map represented by this LazyBinaryMap.    * @return  The size of the map    */
+comment|/**    * Get the size of the map represented by this LazyBinaryMap.    *     * @return The size of the map    */
 specifier|public
 name|int
 name|getMapSize
