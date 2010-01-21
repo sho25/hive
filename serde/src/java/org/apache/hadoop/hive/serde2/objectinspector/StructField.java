@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * StructField is an empty interface.  *   * Classes implementing this interface are considered to represent   * a field of a struct for this serde package.  */
+comment|/**  * StructField is an empty interface.  *   * Classes implementing this interface are considered to represent a field of a  * struct for this serde package.  */
 end_comment
 
 begin_interface
@@ -28,7 +28,7 @@ specifier|public
 interface|interface
 name|StructField
 block|{
-comment|/**    * Get the name of the field.  The name should be always in lower-case.    */
+comment|/**    * Get the name of the field. The name should be always in lower-case.    */
 name|String
 name|getFieldName
 parameter_list|()

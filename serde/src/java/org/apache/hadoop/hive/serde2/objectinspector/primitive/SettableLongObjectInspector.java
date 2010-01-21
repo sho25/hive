@@ -32,7 +32,7 @@ name|SettableLongObjectInspector
 extends|extends
 name|LongObjectInspector
 block|{
-comment|/**    * Set the object with the value. Return the object that has the new value.    *     * In most cases the returned value should be the same as o, but in case     * o is unmodifiable, this will return a new object with new value.        */
+comment|/**    * Set the object with the value. Return the object that has the new value.    *     * In most cases the returned value should be the same as o, but in case o is    * unmodifiable, this will return a new object with new value.    */
 specifier|public
 name|Object
 name|set

@@ -127,26 +127,6 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|AbstractPrimitiveWritableObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|primitive
-operator|.
 name|BooleanObjectInspector
 import|;
 end_import
@@ -360,7 +340,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector instances.  *   * SerDe classes should call the static functions in this library to create an ObjectInspector  * to return to the caller of SerDe2.getObjectInspector().   */
+comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector  * instances.  *   * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  */
 end_comment
 
 begin_class
@@ -385,7 +365,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/**    * This enum controls how we copy primitive objects.    *     * DEFAULT means choosing the most efficient way between JAVA and WRITABLE.     * JAVA means converting all primitive objects to java primitive objects.    * WRITABLE means converting all primitive objects to writable objects.     *    */
+comment|/**    * This enum controls how we copy primitive objects.    *     * DEFAULT means choosing the most efficient way between JAVA and WRITABLE.    * JAVA means converting all primitive objects to java primitive objects.    * WRITABLE means converting all primitive objects to writable objects.    *     */
 specifier|public
 enum|enum
 name|ObjectInspectorCopyOption
@@ -1248,6 +1228,7 @@ name|i
 operator|>
 literal|0
 condition|)
+block|{
 name|sb
 operator|.
 name|append
@@ -1255,6 +1236,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|sb
 operator|.
 name|append
@@ -1570,7 +1552,7 @@ return|return
 name|r
 return|;
 block|}
-comment|/**    * Get the class names of the ObjectInspector hierarchy. Mainly used for debugging.     */
+comment|/**    * Get the class names of the ObjectInspector hierarchy. Mainly used for    * debugging.    */
 specifier|public
 specifier|static
 name|String
@@ -2109,9 +2091,6 @@ name|r
 operator|*
 literal|31
 operator|+
-operator|(
-name|int
-operator|)
 name|t
 operator|.
 name|getBytes
@@ -2161,7 +2140,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Compare two arrays of objects with their respective arrays of ObjectInspectors.    */
+comment|/**    * Compare two arrays of objects with their respective arrays of    * ObjectInspectors.    */
 specifier|public
 specifier|static
 name|int
@@ -3064,9 +3043,11 @@ name|r
 operator|!=
 literal|0
 condition|)
+block|{
 return|return
 name|r
 return|;
+block|}
 block|}
 return|return
 name|fields1
@@ -3177,9 +3158,11 @@ name|r
 operator|!=
 literal|0
 condition|)
+block|{
 return|return
 name|r
 return|;
+block|}
 block|}
 return|return
 name|loi1

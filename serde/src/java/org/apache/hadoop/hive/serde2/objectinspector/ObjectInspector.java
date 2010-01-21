@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * ObjectInspector helps us to look into the internal structure of a complex  * object.  *  * A (probably configured) ObjectInspector instance stands for a specific type  * and a specific way to store the data of that type in the memory.  *   * For native java Object, we can directly access the internal structure through   * member fields and methods.  ObjectInspector is a way to delegate that functionality  * away from the Object, so that we have more control on the behavior of those actions.  *   * An efficient implementation of ObjectInspector should rely on factory, so that we can   * make sure the same ObjectInspector only has one instance.  That also makes sure  * hashCode() and equals() methods of java.lang.Object directly works for ObjectInspector  * as well.    */
+comment|/**  * ObjectInspector helps us to look into the internal structure of a complex  * object.  *   * A (probably configured) ObjectInspector instance stands for a specific type  * and a specific way to store the data of that type in the memory.  *   * For native java Object, we can directly access the internal structure through  * member fields and methods. ObjectInspector is a way to delegate that  * functionality away from the Object, so that we have more control on the  * behavior of those actions.  *   * An efficient implementation of ObjectInspector should rely on factory, so  * that we can make sure the same ObjectInspector only has one instance. That  * also makes sure hashCode() and equals() methods of java.lang.Object directly  * works for ObjectInspector as well.  */
 end_comment
 
 begin_interface
@@ -42,13 +42,13 @@ block|,
 name|STRUCT
 block|}
 empty_stmt|;
-comment|/**    * Returns the name of the data type that is inspected by this ObjectInspector.    * This is used to display the type information to the user.    *     * For primitive types, the type name is standardized.    * For other types, the type name can be something like "list<int>", "map<int,string>",    * java class names, or user-defined type names similar to typedef.     */
+comment|/**    * Returns the name of the data type that is inspected by this    * ObjectInspector. This is used to display the type information to the user.    *     * For primitive types, the type name is standardized. For other types, the    * type name can be something like "list<int>", "map<int,string>", java class    * names, or user-defined type names similar to typedef.    */
 specifier|public
 name|String
 name|getTypeName
 parameter_list|()
 function_decl|;
-comment|/**    * An ObjectInspector must inherit from one of the following interfaces    * if getCategory() returns:    * PRIMITIVE:  PrimitiveObjectInspector     * LIST:       ListObjectInspector     * MAP:        MapObjectInspector     * STRUCT:     StructObjectInspector     */
+comment|/**    * An ObjectInspector must inherit from one of the following interfaces if    * getCategory() returns: PRIMITIVE: PrimitiveObjectInspector LIST:    * ListObjectInspector MAP: MapObjectInspector STRUCT: StructObjectInspector    */
 specifier|public
 name|Category
 name|getCategory

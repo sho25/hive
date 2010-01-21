@@ -44,7 +44,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An AbstractJavaPrimitiveObjectInspector for a Java object.   */
+comment|/**  * An AbstractJavaPrimitiveObjectInspector for a Java object.  */
 end_comment
 
 begin_class

@@ -51,18 +51,6 @@ name|lang
 operator|.
 name|reflect
 operator|.
-name|Modifier
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|lang
-operator|.
-name|reflect
-operator|.
 name|ParameterizedType
 import|;
 end_import
@@ -121,18 +109,6 @@ end_import
 
 begin_import
 import|import
-name|javax
-operator|.
-name|swing
-operator|.
-name|event
-operator|.
-name|ListSelectionEvent
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -186,7 +162,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector instances.  *   * SerDe classes should call the static functions in this library to create an ObjectInspector  * to return to the caller of SerDe2.getObjectInspector().  *   * The reason of having caches here is that ObjectInspector is because ObjectInspectors do  * not have an internal state - so ObjectInspectors with the same construction parameters should  * result in exactly the same ObjectInspector.  */
+comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector  * instances.  *   * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  *   * The reason of having caches here is that ObjectInspector is because  * ObjectInspectors do not have an internal state - so ObjectInspectors with the  * same construction parameters should result in exactly the same  * ObjectInspector.  */
 end_comment
 
 begin_class
@@ -194,7 +170,7 @@ specifier|public
 class|class
 name|ObjectInspectorFactory
 block|{
-comment|/**    * ObjectInspectorOptions describes what ObjectInspector to use.     * JAVA is to use pure JAVA reflection. THRIFT is to use JAVA reflection and filter out __isset fields.    * New ObjectInspectorOptions can be added here when available.    *     * We choose to use a single HashMap objectInspectorCache to cache all situations for efficiency and code     * simplicity.  And we don't expect a case that a user need to create 2 or more different types of     * ObjectInspectors for the same Java type.    */
+comment|/**    * ObjectInspectorOptions describes what ObjectInspector to use. JAVA is to    * use pure JAVA reflection. THRIFT is to use JAVA reflection and filter out    * __isset fields. New ObjectInspectorOptions can be added here when    * available.    *     * We choose to use a single HashMap objectInspectorCache to cache all    * situations for efficiency and code simplicity. And we don't expect a case    * that a user need to create 2 or more different types of ObjectInspectors    * for the same Java type.    */
 specifier|public
 enum|enum
 name|ObjectInspectorOptions
@@ -482,7 +458,8 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|// Otherwise convert t to RawType so we will fall into the following if block.
+comment|// Otherwise convert t to RawType so we will fall into the following if
+comment|// block.
 name|t
 operator|=
 name|pt
@@ -686,7 +663,8 @@ literal|": internal error."
 argument_list|)
 throw|;
 block|}
-comment|// put it into the cache BEFORE it is initialized to make sure we can catch recursive types.
+comment|// put it into the cache BEFORE it is initialized to make sure we can catch
+comment|// recursive types.
 name|objectInspectorCache
 operator|.
 name|put

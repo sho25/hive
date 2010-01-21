@@ -49,7 +49,7 @@ interface|interface
 name|VoidObjectInspector
 extends|extends
 name|PrimitiveObjectInspector
-block|{    }
+block|{  }
 end_interface
 
 end_unit

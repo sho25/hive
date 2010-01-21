@@ -34,7 +34,7 @@ name|Object
 name|create
 parameter_list|()
 function_decl|;
-comment|/**    * Modify the value of a field.  Returns the struct.    */
+comment|/**    * Modify the value of a field. Returns the struct.    */
 specifier|public
 specifier|abstract
 name|Object

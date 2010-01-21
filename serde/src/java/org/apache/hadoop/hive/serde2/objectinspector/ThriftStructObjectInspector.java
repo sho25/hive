@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects, instead  * of directly creating an instance of this class.   */
+comment|/**  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -29,6 +29,8 @@ name|ThriftStructObjectInspector
 extends|extends
 name|ReflectionStructObjectInspector
 block|{
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|shouldIgnoreField

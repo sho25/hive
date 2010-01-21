@@ -39,26 +39,8 @@ name|List
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ObjectInspector
-import|;
-end_import
-
 begin_comment
-comment|/**  * DefaultListObjectInspector works on list data that is stored as a Java List or Java Array object.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects, instead  * of directly creating an instance of this class.   */
+comment|/**  * DefaultListObjectInspector works on list data that is stored as a Java List  * or Java Array object.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -71,7 +53,7 @@ block|{
 name|ObjectInspector
 name|listElementObjectInspector
 decl_stmt|;
-comment|/** Call ObjectInspectorFactory.getStandardListObjectInspector instead.    */
+comment|/**    * Call ObjectInspectorFactory.getStandardListObjectInspector instead.    */
 specifier|protected
 name|StandardListObjectInspector
 parameter_list|(
@@ -322,9 +304,11 @@ name|data
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 comment|// We support both List<Object> and Object[]
 comment|// so we have to do differently.
 if|if
@@ -404,7 +388,7 @@ operator|+
 literal|">"
 return|;
 block|}
-comment|///////////////////////////////
+comment|// /////////////////////////////
 comment|// SettableListObjectInspector
 annotation|@
 name|Override

@@ -106,7 +106,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * StructObjectInspector works on struct data that is stored as a Java List or Java Array object.  * Basically, the fields are stored sequentially in the List object.  *   * The names of the struct fields and the internal structure of the struct fields are specified in   * the ctor of the StructObjectInspector.  *   */
+comment|/**  * StructObjectInspector works on struct data that is stored as a Java List or  * Java Array object. Basically, the fields are stored sequentially in the List  * object.  *   * The names of the struct fields and the internal structure of the struct  * fields are specified in the ctor of the StructObjectInspector.  *   */
 end_comment
 
 begin_class
@@ -140,9 +140,9 @@ name|MetadataListStructObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|//  public static MetadataListStructObjectInspector getInstance(int fields) {
-comment|//    return getInstance(ObjectInspectorUtils.getIntegerArray(fields));
-comment|//  }
+comment|// public static MetadataListStructObjectInspector getInstance(int fields) {
+comment|// return getInstance(ObjectInspectorUtils.getIntegerArray(fields));
+comment|// }
 specifier|public
 specifier|static
 name|MetadataListStructObjectInspector
@@ -278,6 +278,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Get col object out
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|getStructFieldData
@@ -320,6 +322,8 @@ argument_list|)
 return|;
 block|}
 comment|// Get col object out
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<

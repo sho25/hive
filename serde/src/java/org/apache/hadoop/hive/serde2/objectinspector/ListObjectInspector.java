@@ -43,7 +43,7 @@ name|getListElementObjectInspector
 parameter_list|()
 function_decl|;
 comment|// ** Methods that need a data object **
-comment|/** returns null for null list, out-of-the-range index.    */
+comment|/**    * returns null for null list, out-of-the-range index.    */
 specifier|public
 name|Object
 name|getListElement
@@ -55,7 +55,7 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/** returns -1 for data = null.    */
+comment|/**    * returns -1 for data = null.    */
 specifier|public
 name|int
 name|getListLength
@@ -64,7 +64,7 @@ name|Object
 name|data
 parameter_list|)
 function_decl|;
-comment|/** returns null for data = null.    *      *  Note: This method should not return a List object that is reused by the     *  same ListObjectInspector, because it's possible that the same     *  ListObjectInspector will be used in multiple places in the code.    *      *  However it's OK if the List object is part of the Object data.    */
+comment|/**    * returns null for data = null.    *     * Note: This method should not return a List object that is reused by the    * same ListObjectInspector, because it's possible that the same    * ListObjectInspector will be used in multiple places in the code.    *     * However it's OK if the List object is part of the Object data.    */
 specifier|public
 name|List
 argument_list|<

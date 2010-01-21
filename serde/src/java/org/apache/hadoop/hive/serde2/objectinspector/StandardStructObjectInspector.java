@@ -78,7 +78,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ListStructObjectInspector works on struct data that is stored as a Java List or Java Array object.  * Basically, the fields are stored sequentially in the List object.  *   * The names of the struct fields and the internal structure of the struct fields are specified in   * the ctor of the StructObjectInspector.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects, instead  * of directly creating an instance of this class.   */
+comment|/**  * ListStructObjectInspector works on struct data that is stored as a Java List  * or Java Array object. Basically, the fields are stored sequentially in the  * List object.  *   * The names of the struct fields and the internal structure of the struct  * fields are specified in the ctor of the StructObjectInspector.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -187,6 +187,8 @@ return|return
 name|fieldObjectInspector
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -224,7 +226,7 @@ name|this
 argument_list|)
 return|;
 block|}
-comment|/** Call ObjectInspectorFactory.getStandardListObjectInspector instead.    */
+comment|/**    * Call ObjectInspectorFactory.getStandardListObjectInspector instead.    */
 specifier|protected
 name|StandardStructObjectInspector
 parameter_list|(
@@ -447,6 +449,8 @@ name|STRUCT
 return|;
 block|}
 comment|// Without Data
+annotation|@
+name|Override
 specifier|public
 name|StructField
 name|getStructFieldRef
@@ -466,6 +470,8 @@ name|fields
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -486,6 +492,8 @@ init|=
 literal|false
 decl_stmt|;
 comment|// With Data
+annotation|@
+name|Override
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -721,6 +729,8 @@ return|;
 block|}
 block|}
 annotation|@
+name|Override
+annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
@@ -809,7 +819,7 @@ return|return
 name|list
 return|;
 block|}
-comment|///////////////////////////////
+comment|// /////////////////////////////
 comment|// SettableStructObjectInspector
 annotation|@
 name|Override

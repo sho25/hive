@@ -487,9 +487,6 @@ name|outputOI
 operator|.
 name|create
 argument_list|(
-operator|(
-name|int
-operator|)
 literal|0
 argument_list|)
 expr_stmt|;
@@ -592,9 +589,6 @@ name|outputOI
 operator|.
 name|create
 argument_list|(
-operator|(
-name|long
-operator|)
 literal|0
 argument_list|)
 expr_stmt|;
@@ -697,9 +691,6 @@ name|outputOI
 operator|.
 name|create
 argument_list|(
-operator|(
-name|float
-operator|)
 literal|0
 argument_list|)
 expr_stmt|;
@@ -802,9 +793,6 @@ name|outputOI
 operator|.
 name|create
 argument_list|(
-operator|(
-name|double
-operator|)
 literal|0
 argument_list|)
 expr_stmt|;
@@ -862,7 +850,7 @@ return|;
 block|}
 block|}
 block|}
-comment|/**    * A helper class to convert any primitive to Text.     */
+comment|/**    * A helper class to convert any primitive to Text.    */
 specifier|public
 specifier|static
 class|class
@@ -1301,7 +1289,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * A helper class to convert any primitive to String.     */
+comment|/**    * A helper class to convert any primitive to String.    */
 specifier|public
 specifier|static
 class|class

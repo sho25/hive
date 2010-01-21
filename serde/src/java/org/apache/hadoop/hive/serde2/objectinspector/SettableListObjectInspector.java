@@ -26,7 +26,7 @@ name|SettableListObjectInspector
 extends|extends
 name|ListObjectInspector
 block|{
-comment|/**    * Create a list with the given size. All elements will be null.    *     * NOTE: This is different from ArrayList constructor where the argument    * is capacity.  We decided to have size here to allow creation of Java    * array.     */
+comment|/**    * Create a list with the given size. All elements will be null.    *     * NOTE: This is different from ArrayList constructor where the argument is    * capacity. We decided to have size here to allow creation of Java array.    */
 name|Object
 name|create
 parameter_list|(
@@ -48,7 +48,7 @@ name|Object
 name|element
 parameter_list|)
 function_decl|;
-comment|/**    * Resize the list. Returns the list.    * If the new size is bigger than the current size, new elements will    * be null.  If the new size is smaller than the current size, elements    * at the end are truncated.    */
+comment|/**    * Resize the list. Returns the list. If the new size is bigger than the    * current size, new elements will be null. If the new size is smaller than    * the current size, elements at the end are truncated.    */
 name|Object
 name|resize
 parameter_list|(

@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * StandardMapObjectInspector works on map data that is stored as a Java Map object.  * Note: the key object of the map must support equals and hashCode by itself.  *   * We also plan to have a GeneralMapObjectInspector which can work on map with   * key objects that does not support equals and hashCode.  That will require us to   * store InspectableObject as the key, which will have overridden equals and hashCode   * methods.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects, instead  * of directly creating an instance of this class.   */
+comment|/**  * StandardMapObjectInspector works on map data that is stored as a Java Map  * object. Note: the key object of the map must support equals and hashCode by  * itself.  *   * We also plan to have a GeneralMapObjectInspector which can work on map with  * key objects that does not support equals and hashCode. That will require us  * to store InspectableObject as the key, which will have overridden equals and  * hashCode methods.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -56,7 +56,7 @@ decl_stmt|;
 name|ObjectInspector
 name|mapValueObjectInspector
 decl_stmt|;
-comment|/** Call ObjectInspectorFactory.getStandardMapObjectInspector instead.    */
+comment|/**    * Call ObjectInspectorFactory.getStandardMapObjectInspector instead.    */
 specifier|protected
 name|StandardMapObjectInspector
 parameter_list|(
@@ -122,9 +122,11 @@ name|key
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|Map
 argument_list|<
 name|?
@@ -166,10 +168,12 @@ name|data
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 name|Map
 argument_list|<
 name|?
@@ -214,9 +218,11 @@ name|data
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|Map
 argument_list|<
 name|?
@@ -288,7 +294,7 @@ operator|+
 literal|">"
 return|;
 block|}
-comment|///////////////////////////////
+comment|// /////////////////////////////
 comment|// SettableMapObjectInspector
 annotation|@
 name|Override

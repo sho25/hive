@@ -44,7 +44,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An AbstractWritablePrimitiveObjectInspector for a Writable object.   */
+comment|/**  * An AbstractWritablePrimitiveObjectInspector for a Writable object.  */
 end_comment
 
 begin_class

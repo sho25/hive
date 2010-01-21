@@ -37,16 +37,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
 import|;
 end_import
@@ -217,26 +207,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorUtils
-operator|.
-name|ObjectInspectorCopyOption
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|PrimitiveObjectInspector
 operator|.
 name|PrimitiveCategory
@@ -342,7 +312,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector instances.  *   * SerDe classes should call the static functions in this library to create an ObjectInspector  * to return to the caller of SerDe2.getObjectInspector().   */
+comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector  * instances.  *   * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  */
 end_comment
 
 begin_class
@@ -380,7 +350,7 @@ operator|.
 name|PrimitiveCategory
 name|primitiveCategory
 decl_stmt|;
-comment|/**      * primitiveJavaType refers to java types like int, double, etc.       */
+comment|/**      * primitiveJavaType refers to java types like int, double, etc.      */
 specifier|public
 name|Class
 argument_list|<
@@ -388,7 +358,7 @@ name|?
 argument_list|>
 name|primitiveJavaType
 decl_stmt|;
-comment|/**      * primitiveJavaClass refers to java classes like Integer, Double, String etc.      */
+comment|/**      * primitiveJavaClass refers to java classes like Integer, Double, String      * etc.      */
 specifier|public
 name|Class
 argument_list|<
@@ -396,7 +366,7 @@ name|?
 argument_list|>
 name|primitiveJavaClass
 decl_stmt|;
-comment|/**      * writableClass refers to hadoop Writable classes like IntWritable, DoubleWritable, Text etc.       */
+comment|/**      * writableClass refers to hadoop Writable classes like IntWritable,      * DoubleWritable, Text etc.      */
 specifier|public
 name|Class
 argument_list|<
@@ -444,20 +414,14 @@ name|primitiveCategory
 operator|=
 name|primitiveCategory
 expr_stmt|;
-name|this
-operator|.
 name|primitiveJavaType
 operator|=
 name|primitiveType
 expr_stmt|;
-name|this
-operator|.
 name|primitiveJavaClass
 operator|=
 name|javaClass
 expr_stmt|;
-name|this
-operator|.
 name|primitiveWritableClass
 operator|=
 name|hiveClass
@@ -1046,7 +1010,7 @@ name|unknownTypeEntry
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Return Whether the class is a Java Primitive type or a Java Primitive class.     */
+comment|/**    * Return Whether the class is a Java Primitive type or a Java Primitive    * class.    */
 specifier|public
 specifier|static
 name|Class
@@ -1084,7 +1048,7 @@ operator|.
 name|primitiveJavaClass
 return|;
 block|}
-comment|/**    * Whether the class is a Java Primitive type or a Java Primitive class.     */
+comment|/**    * Whether the class is a Java Primitive type or a Java Primitive class.    */
 specifier|public
 specifier|static
 name|boolean
@@ -1117,7 +1081,7 @@ operator|!=
 literal|null
 return|;
 block|}
-comment|/**    * Whether the class is a Java Primitive type.     */
+comment|/**    * Whether the class is a Java Primitive type.    */
 specifier|public
 specifier|static
 name|boolean
@@ -1141,7 +1105,7 @@ operator|!=
 literal|null
 return|;
 block|}
-comment|/**    * Whether the class is a Java Primitive class.     */
+comment|/**    * Whether the class is a Java Primitive class.    */
 specifier|public
 specifier|static
 name|boolean
@@ -1165,7 +1129,7 @@ operator|!=
 literal|null
 return|;
 block|}
-comment|/**    * Whether the class is a Hive Primitive Writable class.     */
+comment|/**    * Whether the class is a Hive Primitive Writable class.    */
 specifier|public
 specifier|static
 name|boolean
@@ -1189,7 +1153,7 @@ operator|!=
 literal|null
 return|;
 block|}
-comment|/**    * Get the typeName from a Java Primitive Type or Java PrimitiveClass.     */
+comment|/**    * Get the typeName from a Java Primitive Type or Java PrimitiveClass.    */
 specifier|public
 specifier|static
 name|String
@@ -1241,7 +1205,7 @@ operator|.
 name|typeName
 return|;
 block|}
-comment|/**    * Get the typeName from a Primitive Writable Class.     */
+comment|/**    * Get the typeName from a Primitive Writable Class.    */
 specifier|public
 specifier|static
 name|String
@@ -1276,7 +1240,7 @@ operator|.
 name|typeName
 return|;
 block|}
-comment|/**    * Get the typeName from a Java Primitive Type or Java PrimitiveClass.     */
+comment|/**    * Get the typeName from a Java Primitive Type or Java PrimitiveClass.    */
 specifier|public
 specifier|static
 name|PrimitiveTypeEntry
@@ -1295,7 +1259,7 @@ name|category
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the TypeEntry for a Java Primitive Type or Java PrimitiveClass.     */
+comment|/**    * Get the TypeEntry for a Java Primitive Type or Java PrimitiveClass.    */
 specifier|public
 specifier|static
 name|PrimitiveTypeEntry
@@ -1339,7 +1303,7 @@ return|return
 name|t
 return|;
 block|}
-comment|/**    * Get the TypeEntry for a Java Primitive Type or Java PrimitiveClass.     */
+comment|/**    * Get the TypeEntry for a Java Primitive Type or Java PrimitiveClass.    */
 specifier|public
 specifier|static
 name|PrimitiveTypeEntry
@@ -1361,7 +1325,7 @@ name|clazz
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the TypeEntry for a Java Primitive Type or Java PrimitiveClass.     */
+comment|/**    * Get the TypeEntry for a Java Primitive Type or Java PrimitiveClass.    */
 specifier|public
 specifier|static
 name|PrimitiveTypeEntry
@@ -1383,7 +1347,7 @@ name|clazz
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the TypeEntry for a Primitive Writable Class.     */
+comment|/**    * Get the TypeEntry for a Primitive Writable Class.    */
 specifier|public
 specifier|static
 name|PrimitiveTypeEntry
@@ -1405,7 +1369,7 @@ name|clazz
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the TypeEntry for a Primitive Writable Class.     */
+comment|/**    * Get the TypeEntry for a Primitive Writable Class.    */
 specifier|public
 specifier|static
 name|PrimitiveTypeEntry
@@ -1424,7 +1388,7 @@ name|typeName
 argument_list|)
 return|;
 block|}
-comment|/**    * Compare 2 primitive objects. Conversion not allowed.    * Note that NULL does not equal to NULL according to SQL standard.    */
+comment|/**    * Compare 2 primitive objects. Conversion not allowed. Note that NULL does    * not equal to NULL according to SQL standard.    */
 specifier|public
 specifier|static
 name|boolean
@@ -1453,9 +1417,11 @@ name|o2
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 name|oi1
@@ -1740,7 +1706,7 @@ literal|false
 return|;
 block|}
 block|}
-comment|/** Convert a primitive object to double.    */
+comment|/**    * Convert a primitive object to double.    */
 specifier|public
 specifier|static
 name|double
@@ -1924,7 +1890,7 @@ argument_list|()
 throw|;
 block|}
 block|}
-comment|/**    * Compare 2 Primitive Objects with their Object Inspector, conversions allowed.    * Note that NULL does not equal to NULL according to SQL standard.    */
+comment|/**    * Compare 2 Primitive Objects with their Object Inspector, conversions    * allowed. Note that NULL does not equal to NULL according to SQL standard.    */
 specifier|public
 specifier|static
 name|boolean
@@ -1953,9 +1919,11 @@ name|o2
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 name|oi1
@@ -2012,7 +1980,7 @@ literal|false
 return|;
 block|}
 block|}
-comment|/**    * Get the boolean value out of a primitive object.    * Note that NullPointerException will be thrown if o is null.    * Note that NumberFormatException will be thrown if o is not a valid number.    */
+comment|/**    * Get the boolean value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * NumberFormatException will be thrown if o is not a valid number.    */
 specifier|public
 specifier|static
 name|boolean
@@ -2295,7 +2263,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get the byte value out of a primitive object.     * Note that NullPointerException will be thrown if o is null.    * Note that NumberFormatException will be thrown if o is not a valid number.    */
+comment|/**    * Get the byte value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * NumberFormatException will be thrown if o is not a valid number.    */
 specifier|public
 specifier|static
 name|byte
@@ -2322,7 +2290,7 @@ name|oi
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the short value out of a primitive object.     * Note that NullPointerException will be thrown if o is null.    * Note that NumberFormatException will be thrown if o is not a valid number.    */
+comment|/**    * Get the short value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * NumberFormatException will be thrown if o is not a valid number.    */
 specifier|public
 specifier|static
 name|short
@@ -2349,7 +2317,7 @@ name|oi
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the integer value out of a primitive object.    * Note that NullPointerException will be thrown if o is null.    * Note that NumberFormatException will be thrown if o is not a valid number.    */
+comment|/**    * Get the integer value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * NumberFormatException will be thrown if o is not a valid number.    */
 specifier|public
 specifier|static
 name|int
@@ -2636,7 +2604,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get the long value out of a primitive object.     * Note that NullPointerException will be thrown if o is null.    * Note that NumberFormatException will be thrown if o is not a valid number.    */
+comment|/**    * Get the long value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * NumberFormatException will be thrown if o is not a valid number.    */
 specifier|public
 specifier|static
 name|long
@@ -2920,7 +2888,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get the double value out of a primitive object.     * Note that NullPointerException will be thrown if o is null.    * Note that NumberFormatException will be thrown if o is not a valid number.    */
+comment|/**    * Get the double value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * NumberFormatException will be thrown if o is not a valid number.    */
 specifier|public
 specifier|static
 name|double
@@ -3157,7 +3125,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get the float value out of a primitive object.     * Note that NullPointerException will be thrown if o is null.    * Note that NumberFormatException will be thrown if o is not a valid number.    */
+comment|/**    * Get the float value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * NumberFormatException will be thrown if o is not a valid number.    */
 specifier|public
 specifier|static
 name|float
@@ -3184,7 +3152,7 @@ name|oi
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the String value out of a primitive object.     * Note that NullPointerException will be thrown if o is null.    * Note that NumberFormatException will be thrown if o is not a valid number.    */
+comment|/**    * Get the String value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * NumberFormatException will be thrown if o is not a valid number.    */
 specifier|public
 specifier|static
 name|String

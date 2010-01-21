@@ -76,7 +76,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ReflectionStructObjectInspector works on struct data that is stored as a native Java object.  * It will drill down into the Java class to get the fields and construct ObjectInspectors for   * the fields, if they are not specified.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects, instead  * of directly creating an instance of this class.   *  */
+comment|/**  * ReflectionStructObjectInspector works on struct data that is stored as a  * native Java object. It will drill down into the Java class to get the fields  * and construct ObjectInspectors for the fields, if they are not specified.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  *   */
 end_comment
 
 begin_class
@@ -148,6 +148,8 @@ return|return
 name|fieldObjectInspector
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -196,11 +198,11 @@ name|getName
 argument_list|()
 return|;
 block|}
-comment|/**    * This method is only intended to be used by the Utilities class in this package.    * This creates an uninitialized ObjectInspector so the Utilities class can put it into    * a cache before it initializes when it might look up the cache for member fields that    * might be of the same type (e.g. recursive type like linked list and trees).    */
+comment|/**    * This method is only intended to be used by the Utilities class in this    * package. This creates an uninitialized ObjectInspector so the Utilities    * class can put it into a cache before it initializes when it might look up    * the cache for member fields that might be of the same type (e.g. recursive    * type like linked list and trees).    */
 name|ReflectionStructObjectInspector
 parameter_list|()
 block|{   }
-comment|/**    * This method is only intended to be used by Utilities class in this package.    * The reason that this method is not recursive by itself is because we want to allow    * recursive types.    */
+comment|/**    * This method is only intended to be used by Utilities class in this package.    * The reason that this method is not recursive by itself is because we want    * to allow recursive types.    */
 name|void
 name|init
 parameter_list|(
@@ -373,6 +375,8 @@ literal|false
 return|;
 block|}
 comment|// Without Data
+annotation|@
+name|Override
 specifier|public
 name|StructField
 name|getStructFieldRef
@@ -392,6 +396,8 @@ name|fields
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -407,6 +413,8 @@ name|fields
 return|;
 block|}
 comment|// With Data
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|getStructFieldData
@@ -505,6 +513,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<

@@ -38,7 +38,7 @@ implements|implements
 name|ObjectInspector
 block|{
 comment|// ** Methods that does not need a data object **
-comment|/** Returns all the fields.     */
+comment|/**    * Returns all the fields.    */
 specifier|abstract
 specifier|public
 name|List
@@ -50,7 +50,7 @@ argument_list|>
 name|getAllStructFieldRefs
 parameter_list|()
 function_decl|;
-comment|/** Look up a field.    */
+comment|/**    * Look up a field.    */
 specifier|abstract
 specifier|public
 name|StructField
@@ -61,7 +61,7 @@ name|fieldName
 parameter_list|)
 function_decl|;
 comment|// ** Methods that need a data object **
-comment|/** returns null for data = null.    */
+comment|/**    * returns null for data = null.    */
 specifier|abstract
 specifier|public
 name|Object
@@ -74,7 +74,7 @@ name|StructField
 name|fieldRef
 parameter_list|)
 function_decl|;
-comment|/** returns null for data = null.    */
+comment|/**    * returns null for data = null.    */
 specifier|abstract
 specifier|public
 name|List
@@ -87,6 +87,8 @@ name|Object
 name|data
 parameter_list|)
 function_decl|;
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -152,6 +154,7 @@ name|i
 operator|>
 literal|0
 condition|)
+block|{
 name|sb
 operator|.
 name|append
@@ -159,6 +162,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|sb
 operator|.
 name|append

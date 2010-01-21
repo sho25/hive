@@ -289,7 +289,7 @@ name|input
 return|;
 block|}
 block|}
-comment|/**    * Returns a converter that converts objects from one OI to another OI.    * The returned (converted) object belongs to this converter, so that it can be reused    * across different calls.    */
+comment|/**    * Returns a converter that converts objects from one OI to another OI. The    * returned (converted) object belongs to this converter, so that it can be    * reused across different calls.    */
 specifier|public
 specifier|static
 name|Converter
@@ -302,7 +302,8 @@ name|ObjectInspector
 name|outputOI
 parameter_list|)
 block|{
-comment|// If the inputOI is the same as the outputOI, just return an IdentityConverter.
+comment|// If the inputOI is the same as the outputOI, just return an
+comment|// IdentityConverter.
 if|if
 condition|(
 name|inputOI
@@ -1239,7 +1240,7 @@ comment|// So it's not safe to use the same key/valueConverter to convert multip
 comment|// key/values.
 comment|// NOTE: This code tries to get all key-value pairs out of the map.
 comment|// It's not very efficient. The more efficient way should be to let MapOI
-comment|// return an Iterator.  This is currently not supported by MapOI yet.
+comment|// return an Iterator. This is currently not supported by MapOI yet.
 name|Map
 argument_list|<
 name|?

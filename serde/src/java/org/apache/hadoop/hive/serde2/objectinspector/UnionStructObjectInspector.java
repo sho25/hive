@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UnionStructObjectInspector unions several struct data into a single struct.  * Basically, the fields of these structs are put together sequentially into a single struct.  *   * The object that can be acceptable by this ObjectInspector is a List of objects, each of  * which can be inspected by the ObjectInspector provided in the ctor of UnionStructObjectInspector.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects, instead  * of directly creating an instance of this class.   */
+comment|/**  * UnionStructObjectInspector unions several struct data into a single struct.  * Basically, the fields of these structs are put together sequentially into a  * single struct.  *   * The object that can be acceptable by this ObjectInspector is a List of  * objects, each of which can be inspected by the ObjectInspector provided in  * the ctor of UnionStructObjectInspector.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -288,6 +288,8 @@ argument_list|)
 return|;
 block|}
 comment|// Without Data
+annotation|@
+name|Override
 specifier|public
 name|StructField
 name|getStructFieldRef
@@ -307,6 +309,8 @@ name|fields
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -322,6 +326,8 @@ name|fields
 return|;
 block|}
 comment|// With Data
+annotation|@
+name|Override
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -466,6 +472,8 @@ name|structField
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 annotation|@
 name|SuppressWarnings
 argument_list|(

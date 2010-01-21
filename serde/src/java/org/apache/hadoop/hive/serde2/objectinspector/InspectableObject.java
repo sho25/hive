@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Simple wrapper of object with ObjectInspector.  *   * TODO: we need to redefine the hashCode and equals methods, so that  * it can be put into a HashMap as a key.  *   * This class also serves as a facility for a function that returns  * both an object and an ObjectInspector.  */
+comment|/**  * Simple wrapper of object with ObjectInspector.  *   * TODO: we need to redefine the hashCode and equals methods, so that it can be  * put into a HashMap as a key.  *   * This class also serves as a facility for a function that returns both an  * object and an ObjectInspector.  */
 end_comment
 
 begin_class

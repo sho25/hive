@@ -62,7 +62,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An AbstractPrimitiveObjectInspector is based on ObjectInspectorUtils.PrimitiveTypeEntry.   */
+comment|/**  * An AbstractPrimitiveObjectInspector is based on  * ObjectInspectorUtils.PrimitiveTypeEntry.  */
 end_comment
 
 begin_class
@@ -91,7 +91,7 @@ operator|=
 name|typeEntry
 expr_stmt|;
 block|}
-comment|/**    * Return the associated Java primitive class for this primitive ObjectInspector.    */
+comment|/**    * Return the associated Java primitive class for this primitive    * ObjectInspector.    */
 annotation|@
 name|Override
 specifier|public
@@ -108,7 +108,7 @@ operator|.
 name|primitiveJavaClass
 return|;
 block|}
-comment|/**    * Return the associated primitive category for this primitive ObjectInspector.    */
+comment|/**    * Return the associated primitive category for this primitive    * ObjectInspector.    */
 annotation|@
 name|Override
 specifier|public
@@ -122,7 +122,7 @@ operator|.
 name|primitiveCategory
 return|;
 block|}
-comment|/**    * Return the associated primitive Writable class for this primitive ObjectInspector.    */
+comment|/**    * Return the associated primitive Writable class for this primitive    * ObjectInspector.    */
 annotation|@
 name|Override
 specifier|public
