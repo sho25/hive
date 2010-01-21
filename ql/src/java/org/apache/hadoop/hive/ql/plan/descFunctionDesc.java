@@ -153,7 +153,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * @param name of the function to describe    */
+comment|/**    * @param name    *          of the function to describe    */
 specifier|public
 name|descFunctionDesc
 parameter_list|(
@@ -203,7 +203,7 @@ return|return
 name|name
 return|;
 block|}
-comment|/**    * @param name is the function name    */
+comment|/**    * @param name    *          is the function name    */
 specifier|public
 name|void
 name|setName
@@ -253,7 +253,7 @@ name|getName
 argument_list|()
 return|;
 block|}
-comment|/**    * @param resFile the resFile to set    */
+comment|/**    * @param resFile    *          the resFile to set    */
 specifier|public
 name|void
 name|setResFile

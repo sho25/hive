@@ -108,7 +108,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * base class for operator graph walker  * this class takes list of starting ops and walks them one by one. it maintains list of walked  * operators (dispatchedList) and a list of operators that are discovered but not yet dispatched  */
+comment|/**  * base class for operator graph walker this class takes list of starting ops  * and walks them one by one. it maintains list of walked operators  * (dispatchedList) and a list of operators that are discovered but not yet  * dispatched  */
 end_comment
 
 begin_class
@@ -126,6 +126,7 @@ argument_list|>
 name|opStack
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|Node
@@ -140,6 +141,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|Set
 argument_list|<
 name|Node
@@ -154,6 +156,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|Node
@@ -172,10 +175,11 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|Dispatcher
 name|dispatcher
 decl_stmt|;
-comment|/**    * Constructor    * @param disp dispatcher to call for each op encountered    */
+comment|/**    * Constructor    *     * @param disp    *          dispatcher to call for each op encountered    */
 specifier|public
 name|DefaultGraphWalker
 parameter_list|(
@@ -183,8 +187,6 @@ name|Dispatcher
 name|disp
 parameter_list|)
 block|{
-name|this
-operator|.
 name|dispatcher
 operator|=
 name|disp
@@ -228,7 +230,7 @@ name|keySet
 argument_list|()
 return|;
 block|}
-comment|/**    * Dispatch the current operator    * @param nd node being walked    * @param ndStack stack of nodes encountered    * @throws SemanticException    */
+comment|/**    * Dispatch the current operator    *     * @param nd    *          node being walked    * @param ndStack    *          stack of nodes encountered    * @throws SemanticException    */
 specifier|public
 name|void
 name|dispatch
@@ -330,7 +332,7 @@ name|retVal
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * starting point for walking    * @throws SemanticException    */
+comment|/**    * starting point for walking    *     * @throws SemanticException    */
 specifier|public
 name|void
 name|startWalking
@@ -408,7 +410,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * walk the current operator and its descendants    * @param nd current operator in the graph    * @throws SemanticException    */
+comment|/**    * walk the current operator and its descendants    *     * @param nd    *          current operator in the graph    * @throws SemanticException    */
 specifier|public
 name|void
 name|walk
@@ -433,6 +435,7 @@ operator|.
 name|peek
 argument_list|()
 condition|)
+block|{
 name|opStack
 operator|.
 name|push
@@ -440,6 +443,7 @@ argument_list|(
 name|nd
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|(
@@ -474,10 +478,12 @@ argument_list|(
 name|nd
 argument_list|)
 condition|)
+block|{
 comment|// sanity check
 assert|assert
 literal|false
 assert|;
+block|}
 name|dispatch
 argument_list|(
 name|nd

@@ -25,16 +25,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|DataInput
 import|;
 end_import
@@ -46,6 +36,16 @@ operator|.
 name|io
 operator|.
 name|DataOutput
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|File
 import|;
 end_import
 
@@ -95,59 +95,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-operator|.
-name|Entry
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
 import|;
 end_import
 
@@ -239,42 +187,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|tableDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|partitionDesc
 import|;
 end_import
@@ -287,121 +199,11 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
+name|hive
 operator|.
-name|Writable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|shims
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|WritableComparable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputSplit
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|JobConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|JobConfigurable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|RecordReader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Reporter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|FileInputFormat
+name|ShimLoader
 import|;
 end_import
 
@@ -449,11 +251,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
+name|io
 operator|.
-name|shims
-operator|.
-name|ShimLoader
+name|Writable
 import|;
 end_import
 
@@ -465,14 +265,70 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|util
+name|io
 operator|.
-name|ReflectionUtils
+name|WritableComparable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|InputSplit
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|RecordReader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|Reporter
 import|;
 end_import
 
 begin_comment
-comment|/**  * CombineHiveInputFormat is a parameterized InputFormat which looks at the path name and determine  * the correct InputFormat for that path name from mapredPlan.pathToPartitionInfo().  * It can be used to read files with different input format in the same map-reduce job.  */
+comment|/**  * CombineHiveInputFormat is a parameterized InputFormat which looks at the path  * name and determine the correct InputFormat for that path name from  * mapredPlan.pathToPartitionInfo(). It can be used to read files with different  * input format in the same map-reduce job.  */
 end_comment
 
 begin_class
@@ -509,7 +365,7 @@ argument_list|(
 literal|"org.apache.hadoop.hive.ql.io.CombineHiveInputFormat"
 argument_list|)
 decl_stmt|;
-comment|/**    * CombineHiveInputSplit encapsulates an InputSplit with its corresponding inputFormatClassName.    * A CombineHiveInputSplit comprises of multiple chunks from different files. Since, they belong    * to a single directory, there is a single inputformat for all the chunks.    */
+comment|/**    * CombineHiveInputSplit encapsulates an InputSplit with its corresponding    * inputFormatClassName. A CombineHiveInputSplit comprises of multiple chunks    * from different files. Since, they belong to a single directory, there is a    * single inputformat for all the chunks.    */
 specifier|public
 specifier|static
 class|class
@@ -607,7 +463,8 @@ operator|.
 name|getPathToPartitionInfo
 argument_list|()
 decl_stmt|;
-comment|// extract all the inputFormatClass names for each chunk in the CombinedSplit.
+comment|// extract all the inputFormatClass names for each chunk in the
+comment|// CombinedSplit.
 name|Path
 index|[]
 name|ipaths
@@ -715,13 +572,15 @@ expr_stmt|;
 continue|continue;
 block|}
 block|}
-comment|// create a new InputFormat instance if this is the first time to see this class
+comment|// create a new InputFormat instance if this is the first time to see
+comment|// this class
 if|if
 condition|(
 name|i
 operator|==
 literal|0
 condition|)
+block|{
 name|inputFormatClassName
 operator|=
 name|part
@@ -732,7 +591,9 @@ operator|.
 name|getName
 argument_list|()
 expr_stmt|;
+block|}
 else|else
+block|{
 assert|assert
 name|inputFormatClassName
 operator|.
@@ -747,6 +608,7 @@ name|getName
 argument_list|()
 argument_list|)
 assert|;
+block|}
 block|}
 block|}
 block|}
@@ -808,7 +670,7 @@ name|getLength
 argument_list|()
 return|;
 block|}
-comment|/** Returns an array containing the startoffsets of the files in the split*/
+comment|/** Returns an array containing the startoffsets of the files in the split */
 specifier|public
 name|long
 index|[]
@@ -822,7 +684,7 @@ name|getStartOffsets
 argument_list|()
 return|;
 block|}
-comment|/** Returns an array containing the lengths of the files in the split*/
+comment|/** Returns an array containing the lengths of the files in the split */
 specifier|public
 name|long
 index|[]
@@ -934,6 +796,8 @@ argument_list|()
 return|;
 block|}
 comment|/**      * Prints this obejct as a string.      */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -1049,7 +913,8 @@ operator|.
 name|getPathToPartitionInfo
 argument_list|()
 decl_stmt|;
-comment|// extract all the inputFormatClass names for each chunk in the CombinedSplit.
+comment|// extract all the inputFormatClass names for each chunk in the
+comment|// CombinedSplit.
 name|partitionDesc
 name|part
 init|=
@@ -1093,6 +958,7 @@ name|part
 operator|==
 literal|null
 condition|)
+block|{
 name|part
 operator|=
 name|getPartitionDescFromPath
@@ -1107,7 +973,9 @@ literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// create a new InputFormat instance if this is the first time to see this class
+block|}
+comment|// create a new InputFormat instance if this is the first time to see
+comment|// this class
 name|inputFormatClassName
 operator|=
 name|part
@@ -1129,6 +997,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Create Hive splits based on CombineFileSplit    */
+annotation|@
+name|Override
 specifier|public
 name|InputSplit
 index|[]
@@ -1194,7 +1064,8 @@ name|InputSplit
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// combine splits only from same tables. Do not combine splits from multiple tables.
+comment|// combine splits only from same tables. Do not combine splits from multiple
+comment|// tables.
 name|Path
 index|[]
 name|paths
@@ -1208,19 +1079,10 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|Path
+name|path
+range|:
 name|paths
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|LOG
@@ -1229,10 +1091,7 @@ name|info
 argument_list|(
 literal|"CombineHiveInputSplit creating pool for "
 operator|+
-name|paths
-index|[
-name|i
-index|]
+name|path
 argument_list|)
 expr_stmt|;
 name|combine
@@ -1244,10 +1103,7 @@ argument_list|,
 operator|new
 name|CombineFilter
 argument_list|(
-name|paths
-index|[
-name|i
-index|]
+name|path
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1256,10 +1112,6 @@ name|InputSplitShim
 index|[]
 name|iss
 init|=
-operator|(
-name|InputSplitShim
-index|[]
-operator|)
 name|combine
 operator|.
 name|getSplits
@@ -1324,7 +1176,9 @@ index|]
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a generic Hive RecordReader than can iterate over all chunks in     * a CombinedFileSplit    */
+comment|/**    * Create a generic Hive RecordReader than can iterate over all chunks in a    * CombinedFileSplit    */
+annotation|@
+name|Override
 specifier|public
 name|RecordReader
 name|getRecordReader
@@ -1535,7 +1389,7 @@ parameter_list|(
 name|URISyntaxException
 name|e2
 parameter_list|)
-block|{}
+block|{       }
 block|}
 throw|throw
 operator|new
@@ -1559,6 +1413,7 @@ implements|implements
 name|PathFilter
 block|{
 specifier|private
+specifier|final
 name|String
 name|pString
 decl_stmt|;
@@ -1615,6 +1470,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

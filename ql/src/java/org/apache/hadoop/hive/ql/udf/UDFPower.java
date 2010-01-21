@@ -155,7 +155,7 @@ specifier|public
 name|UDFPower
 parameter_list|()
 block|{   }
-comment|/**    * Raise a to the power of b.     */
+comment|/**    * Raise a to the power of b.    */
 specifier|public
 name|DoubleWritable
 name|evaluate

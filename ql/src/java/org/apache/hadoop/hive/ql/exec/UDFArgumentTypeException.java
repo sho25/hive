@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**                                                                                       * exception class, thrown when udf arguments have wrong types.  */
+comment|/**  * exception class, thrown when udf arguments have wrong types.  */
 end_comment
 
 begin_class

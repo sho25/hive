@@ -676,7 +676,9 @@ argument_list|,
 name|joinOp
 argument_list|)
 condition|)
+block|{
 return|return;
+block|}
 name|String
 name|baseTmpDir
 init|=
@@ -876,6 +878,7 @@ argument_list|(
 name|alias
 argument_list|)
 condition|)
+block|{
 name|smallKeysMap
 operator|.
 name|put
@@ -892,6 +895,7 @@ name|src2
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|skewJoinJobResultsDir
 operator|.
@@ -1146,24 +1150,20 @@ name|tableDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// used for create mapJoinDesc, should be in order
+comment|// used for
+comment|// create
+comment|// mapJoinDesc,
+comment|// should
+comment|// be in
+comment|// order
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|Byte
+name|tag
+range|:
 name|tags
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
-comment|// fill with null, otherwise we will expect NPE
+block|{
 name|newJoinValueTblDesc
 operator|.
 name|add
@@ -1171,6 +1171,7 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|int
@@ -1357,7 +1358,7 @@ name|getTypeString
 argument_list|()
 expr_stmt|;
 block|}
-comment|//we are putting join keys at last part of the spilled table
+comment|// we are putting join keys at last part of the spilled table
 for|for
 control|(
 name|int
@@ -1490,7 +1491,7 @@ name|colTypes
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//construct value table Desc
+comment|// construct value table Desc
 name|String
 name|valueColNames
 init|=
@@ -2040,7 +2041,9 @@ name|j
 operator|==
 name|i
 condition|)
+block|{
 continue|continue;
+block|}
 name|Byte
 name|small_alias
 init|=
@@ -2179,6 +2182,7 @@ name|childOp
 range|:
 name|childOps
 control|)
+block|{
 name|childOp
 operator|.
 name|replaceParent
@@ -2188,6 +2192,7 @@ argument_list|,
 name|mapJoinOp
 argument_list|)
 expr_stmt|;
+block|}
 name|mapJoinOp
 operator|.
 name|setChildOperators
@@ -2405,6 +2410,7 @@ operator|.
 name|getListTasks
 argument_list|()
 control|)
+block|{
 for|for
 control|(
 name|Task
@@ -2417,6 +2423,7 @@ name|oldChild
 range|:
 name|oldChildTasks
 control|)
+block|{
 name|tsk
 operator|.
 name|addDependentTask
@@ -2424,6 +2431,8 @@ argument_list|(
 name|oldChild
 argument_list|)
 expr_stmt|;
+block|}
+block|}
 block|}
 return|return;
 block|}
@@ -2457,9 +2466,11 @@ operator|.
 name|HIVESKEWJOIN
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -2471,9 +2482,11 @@ operator|.
 name|isNoOuterJoin
 argument_list|()
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|byte
 name|pos
 init|=
@@ -2499,9 +2512,11 @@ name|tag
 operator|!=
 name|pos
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|pos
 operator|++
 expr_stmt|;

@@ -507,7 +507,8 @@ specifier|private
 name|int
 name|blockSize
 decl_stmt|;
-comment|// number of objects in the block before it is spilled to disk
+comment|// number of objects in the block before it is spilled
+comment|// to disk
 specifier|private
 name|int
 name|numFlushedBlocks
@@ -541,7 +542,7 @@ specifier|private
 name|int
 name|readBlockSize
 decl_stmt|;
-comment|//size of current read block
+comment|// size of current read block
 specifier|private
 name|int
 name|addCursor
@@ -573,7 +574,8 @@ name|firstCalled
 init|=
 literal|false
 decl_stmt|;
-comment|//once called first, it will never be able to write again.
+comment|// once called first, it will never be able to
+comment|// write again.
 name|int
 name|acutalSplitNum
 init|=
@@ -597,7 +599,7 @@ name|rr
 init|=
 literal|null
 decl_stmt|;
-comment|//record reader
+comment|// record reader
 name|RecordWriter
 name|rw
 init|=
@@ -630,7 +632,7 @@ name|val
 init|=
 literal|null
 decl_stmt|;
-comment|//cached to use serialize data
+comment|// cached to use serialize data
 name|JobConf
 name|jobCloneUsingLocalFs
 init|=
@@ -909,6 +911,7 @@ name|numFlushedBlocks
 operator|==
 literal|1
 condition|)
+block|{
 name|currentWriteBlock
 operator|=
 operator|(
@@ -921,6 +924,7 @@ index|[
 name|blockSize
 index|]
 expr_stmt|;
+block|}
 block|}
 name|currentWriteBlock
 index|[
@@ -966,9 +970,11 @@ name|size
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 try|try
 block|{
 name|firstCalled
@@ -976,7 +982,8 @@ operator|=
 literal|true
 expr_stmt|;
 comment|// when we reach here, we must have some data already (because size>0).
-comment|// We need to see if there are any data flushed into file system. If not, we can
+comment|// We need to see if there are any data flushed into file system. If not,
+comment|// we can
 comment|// directly read from the current write block. Otherwise, we need to read
 comment|// from the beginning of the underlying file.
 name|this
@@ -1058,6 +1065,7 @@ name|inputFormat
 operator|==
 literal|null
 condition|)
+block|{
 name|inputFormat
 operator|=
 operator|(
@@ -1080,6 +1088,7 @@ argument_list|,
 name|jobCloneUsingLocalFs
 argument_list|)
 expr_stmt|;
+block|}
 name|HiveConf
 operator|.
 name|setVar
@@ -1204,6 +1213,7 @@ condition|(
 operator|!
 name|firstCalled
 condition|)
+block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -1211,15 +1221,18 @@ argument_list|(
 literal|"Call first() then call next()."
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|size
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 if|if
 condition|(
 name|tblDesc
@@ -1478,6 +1491,7 @@ name|keyObject
 operator|!=
 literal|null
 condition|)
+block|{
 name|suffix
 operator|=
 literal|"."
@@ -1491,6 +1505,7 @@ argument_list|()
 operator|+
 name|suffix
 expr_stmt|;
+block|}
 while|while
 condition|(
 literal|true
@@ -1530,7 +1545,9 @@ if|if
 condition|(
 name|success
 condition|)
+block|{
 break|break;
+block|}
 name|LOG
 operator|.
 name|debug
@@ -1564,7 +1581,8 @@ name|getAbsolutePath
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Delete the temp file if the JVM terminate normally through Hadoop job kill command.
+comment|// Delete the temp file if the JVM terminate normally through Hadoop job
+comment|// kill command.
 comment|// Caveat: it won't be deleted if JVM is killed by 'kill -9'.
 name|parentFile
 operator|.
@@ -1794,12 +1812,14 @@ name|this
 operator|.
 name|currentWriteBlock
 condition|)
+block|{
 name|this
 operator|.
 name|addCursor
 operator|=
 literal|0
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|numFlushedBlocks
@@ -1836,7 +1856,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Get the number of elements in the RowContainer.    * @return number of elements in the RowContainer    */
+comment|/**    * Get the number of elements in the RowContainer.    *     * @return number of elements in the RowContainer    */
 specifier|public
 name|int
 name|size
@@ -1871,9 +1891,11 @@ name|numFlushedBlocks
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 try|try
 block|{
 if|if
@@ -1882,6 +1904,7 @@ name|val
 operator|==
 literal|null
 condition|)
+block|{
 name|val
 operator|=
 name|serde
@@ -1892,6 +1915,7 @@ operator|.
 name|newInstance
 argument_list|()
 expr_stmt|;
+block|}
 name|boolean
 name|nextSplit
 init|=
@@ -1988,7 +2012,7 @@ operator|.
 name|acutalSplitNum
 condition|)
 block|{
-comment|//open record reader to read next split
+comment|// open record reader to read next split
 name|rr
 operator|=
 name|inputFormat
@@ -2104,6 +2128,7 @@ name|addCursor
 operator|>
 literal|0
 condition|)
+block|{
 name|this
 operator|.
 name|spillBlock
@@ -2115,6 +2140,7 @@ argument_list|,
 name|addCursor
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|tempOutPath
@@ -2134,7 +2160,9 @@ argument_list|(
 literal|""
 argument_list|)
 condition|)
+block|{
 return|return;
+block|}
 name|this
 operator|.
 name|closeWriter
@@ -2258,6 +2286,7 @@ name|rw
 operator|!=
 literal|null
 condition|)
+block|{
 name|rw
 operator|.
 name|close
@@ -2265,17 +2294,20 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|rr
 operator|!=
 literal|null
 condition|)
+block|{
 name|rr
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2356,7 +2388,9 @@ operator|.
 name|exists
 argument_list|()
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 name|file
@@ -2378,30 +2412,20 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|File
+name|file2
+range|:
 name|files
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
+block|{
 name|deleteLocalFile
 argument_list|(
-name|files
-index|[
-name|i
-index|]
+name|file2
 argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|boolean
 name|deleteSuccess
@@ -2416,6 +2440,7 @@ condition|(
 operator|!
 name|deleteSuccess
 condition|)
+block|{
 name|LOG
 operator|.
 name|error
@@ -2428,6 +2453,7 @@ name|getAbsolutePath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch

@@ -238,7 +238,7 @@ name|defaultFormat
 argument_list|)
 return|;
 block|}
-comment|/**    * Convert UnixTime to a string format.    * @param unixtime  The number of seconds from 1970-01-01 00:00:00    * @param format See http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html    * @return a String in the format specified.    */
+comment|/**    * Convert UnixTime to a string format.    *     * @param unixtime    *          The number of seconds from 1970-01-01 00:00:00    * @param format    *          See    *          http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat    *          .html    * @return a String in the format specified.    */
 specifier|public
 name|Text
 name|evaluate
@@ -277,7 +277,7 @@ name|format
 argument_list|)
 return|;
 block|}
-comment|/**    * Convert UnixTime to a string format.    * @param unixtime  The number of seconds from 1970-01-01 00:00:00    * @param format See http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html    * @return a String in the format specified.    */
+comment|/**    * Convert UnixTime to a string format.    *     * @param unixtime    *          The number of seconds from 1970-01-01 00:00:00    * @param format    *          See    *          http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat    *          .html    * @return a String in the format specified.    */
 specifier|public
 name|Text
 name|evaluate
@@ -307,9 +307,6 @@ block|}
 return|return
 name|eval
 argument_list|(
-operator|(
-name|long
-operator|)
 name|unixtime
 operator|.
 name|get
@@ -319,7 +316,7 @@ name|format
 argument_list|)
 return|;
 block|}
-comment|/**    * Internal evaluation function given the seconds from 1970-01-01 00:00:00    * and the output text format.    * @param unixtime seconds of type long from 1970-01-01 00:00:00    * @param format display format. See http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html    * @return elapsed time in the given format.    */
+comment|/**    * Internal evaluation function given the seconds from 1970-01-01 00:00:00 and    * the output text format.    *     * @param unixtime    *          seconds of type long from 1970-01-01 00:00:00    * @param format    *          display format. See    *          http://java.sun.com/j2se/1.4.2/docs/api/java/text    *          /SimpleDateFormat.html    * @return elapsed time in the given format.    */
 specifier|private
 name|Text
 name|eval

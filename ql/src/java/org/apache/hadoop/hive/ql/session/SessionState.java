@@ -25,7 +25,37 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|PrintStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|net
+operator|.
+name|URL
 import|;
 end_import
 
@@ -35,7 +65,71 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|Calendar
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|GregorianCalendar
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
 import|;
 end_import
 
@@ -73,69 +167,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|log4j
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URL
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|conf
 operator|.
 name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|Hive
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveException
 import|;
 end_import
 
@@ -197,16 +233,26 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
+name|log4j
 operator|.
-name|lang
+name|LogManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
 operator|.
-name|StringUtils
+name|apache
+operator|.
+name|log4j
+operator|.
+name|PropertyConfigurator
 import|;
 end_import
 
 begin_comment
-comment|/**  * SessionState encapsulates common data associated with a session  *  * Also provides support for a thread static session object that can  * be accessed from any point in the code to interact with the user  * and to retrieve configuration information  */
+comment|/**  * SessionState encapsulates common data associated with a session  *   * Also provides support for a thread static session object that can be accessed  * from any point in the code to interact with the user and to retrieve  * configuration information  */
 end_comment
 
 begin_class
@@ -224,7 +270,7 @@ specifier|protected
 name|boolean
 name|isSilent
 decl_stmt|;
-comment|/*    *  HiveHistory Object    */
+comment|/*    * HiveHistory Object    */
 specifier|protected
 name|HiveHistory
 name|hiveHist
@@ -401,7 +447,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-comment|/**    * Singleton Session object per thread.    *    **/
+comment|/**    * Singleton Session object per thread.    *     **/
 specifier|private
 specifier|static
 name|ThreadLocal
@@ -476,7 +522,7 @@ name|ss
 operator|)
 return|;
 block|}
-comment|/**    * set current session to existing session object    * if a thread is running multiple sessions - it must call this method with the new    * session object when switching from one session to another    */
+comment|/**    * set current session to existing session object if a thread is running    * multiple sessions - it must call this method with the new session object    * when switching from one session to another    */
 specifier|public
 specifier|static
 name|SessionState
@@ -571,7 +617,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**    * get hiveHitsory object which does structured logging    * @return The hive history object    */
+comment|/**    * get hiveHitsory object which does structured logging    *     * @return The hive history object    */
 specifier|public
 name|HiveHistory
 name|getHiveHistory
@@ -729,7 +775,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * This class provides helper routines to emit informational and error messages to the user    * and log4j files while obeying the current session's verbosity levels.    *    * NEVER write directly to the SessionStates standard output other than to emit result data    * DO use printInfo and printError provided by LogHelper to emit non result data strings    *    * It is perfectly acceptable to have global static LogHelper objects (for example - once per module)    * LogHelper always emits info/error to current session as required.    */
+comment|/**    * This class provides helper routines to emit informational and error    * messages to the user and log4j files while obeying the current session's    * verbosity levels.    *     * NEVER write directly to the SessionStates standard output other than to    * emit result data DO use printInfo and printError provided by LogHelper to    * emit non result data strings    *     * It is perfectly acceptable to have global static LogHelper objects (for    * example - once per module) LogHelper always emits info/error to current    * session as required.    */
 specifier|public
 specifier|static
 class|class
@@ -1101,9 +1147,11 @@ argument_list|)
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|newFile
 return|;
+block|}
 else|else
 block|{
 name|console
@@ -1696,6 +1744,7 @@ literal|null
 return|;
 block|}
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|ResourceType
@@ -1795,7 +1844,9 @@ name|fnlVal
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 block|}
 name|resource_map
 operator|.
@@ -1865,9 +1916,11 @@ argument_list|,
 name|value
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 return|return
 operator|(

@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class implements the context information that is used for typechecking phase  * in query compilation.  */
+comment|/**  * This class implements the context information that is used for typechecking  * phase in query compilation.  */
 end_comment
 
 begin_class
@@ -48,7 +48,7 @@ name|TypeCheckCtx
 implements|implements
 name|NodeProcessorCtx
 block|{
-comment|/**    * The row resolver of the previous operator. This field is used to generate expression    * descriptors from the expression ASTs.    */
+comment|/**    * The row resolver of the previous operator. This field is used to generate    * expression descriptors from the expression ASTs.    */
 specifier|private
 name|RowResolver
 name|inputRR
@@ -63,7 +63,7 @@ specifier|private
 name|String
 name|error
 decl_stmt|;
-comment|/**    * Constructor.    *     * @param inputRR The input row resolver of the previous operator.    */
+comment|/**    * Constructor.    *     * @param inputRR    *          The input row resolver of the previous operator.    */
 specifier|public
 name|TypeCheckCtx
 parameter_list|(
@@ -71,21 +71,17 @@ name|RowResolver
 name|inputRR
 parameter_list|)
 block|{
-name|this
-operator|.
 name|setInputRR
 argument_list|(
 name|inputRR
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|error
 operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * @param inputRR the inputRR to set    */
+comment|/**    * @param inputRR    *          the inputRR to set    */
 specifier|public
 name|void
 name|setInputRR
@@ -111,7 +107,7 @@ return|return
 name|inputRR
 return|;
 block|}
-comment|/**    * @param unparseTranslator the unparseTranslator to set    */
+comment|/**    * @param unparseTranslator    *          the unparseTranslator to set    */
 specifier|public
 name|void
 name|setUnparseTranslator
@@ -137,7 +133,7 @@ return|return
 name|unparseTranslator
 return|;
 block|}
-comment|/**    * @param error the error to set    */
+comment|/**    * @param error    *          the error to set    */
 specifier|public
 name|void
 name|setError

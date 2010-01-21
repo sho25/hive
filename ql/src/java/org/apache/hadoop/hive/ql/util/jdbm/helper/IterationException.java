@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Iteration exception.  *  * @author<a href="boisvert@intalio.com">Alex Boisvert</a>  * @version $Revision: 1.2 $  */
+comment|/**  * Iteration exception.  *   * @author<a href="boisvert@intalio.com">Alex Boisvert</a>  * @version $Revision: 1.2 $  */
 end_comment
 
 begin_class
@@ -38,7 +38,7 @@ name|IterationException
 extends|extends
 name|WrappedRuntimeException
 block|{
-comment|/**      * Construct a new iteration exception wrapping an underlying exception      * and providing a message.      *      * @param message The exception message      * @param except The underlying exception      */
+comment|/**    * Construct a new iteration exception wrapping an underlying exception and    * providing a message.    *     * @param message    *          The exception message    * @param except    *          The underlying exception    */
 specifier|public
 name|IterationException
 parameter_list|(
@@ -57,7 +57,7 @@ name|except
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Construct a new iteration exception with a message.      *      * @param message The exception message      */
+comment|/**    * Construct a new iteration exception with a message.    *     * @param message    *          The exception message    */
 specifier|public
 name|IterationException
 parameter_list|(
@@ -73,7 +73,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Construct a new iteration exception wrapping an underlying exception.      *      * @param except The underlying exception      */
+comment|/**    * Construct a new iteration exception wrapping an underlying exception.    *     * @param except    *          The underlying exception    */
 specifier|public
 name|IterationException
 parameter_list|(

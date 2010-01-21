@@ -112,7 +112,7 @@ name|GenMapRedWalker
 extends|extends
 name|DefaultGraphWalker
 block|{
-comment|/**    * constructor of the walker - the dispatcher is passed    * @param disp the dispatcher to be called for each node visited    */
+comment|/**    * constructor of the walker - the dispatcher is passed    *     * @param disp    *          the dispatcher to be called for each node visited    */
 specifier|public
 name|GenMapRedWalker
 parameter_list|(
@@ -126,7 +126,7 @@ name|disp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Walk the given operator    * @param nd operator being walked    */
+comment|/**    * Walk the given operator    *     * @param nd    *          operator being walked    */
 annotation|@
 name|Override
 specifier|public
@@ -210,11 +210,13 @@ name|ch
 range|:
 name|children
 control|)
+block|{
 name|walk
 argument_list|(
 name|ch
 argument_list|)
 expr_stmt|;
+block|}
 comment|// done with this operator
 name|opStack
 operator|.

@@ -256,7 +256,7 @@ specifier|public
 name|UDFToByte
 parameter_list|()
 block|{   }
-comment|/**    * Convert from void to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The void value to convert    * @return Byte    */
+comment|/**    * Convert from void to a byte. This is called for CAST(... AS TINYINT)    *     * @param i    *          The void value to convert    * @return Byte    */
 specifier|public
 name|ByteWritable
 name|evaluate
@@ -269,7 +269,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert from boolean to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The boolean value to convert    * @return Byte    */
+comment|/**    * Convert from boolean to a byte. This is called for CAST(... AS TINYINT)    *     * @param i    *          The boolean value to convert    * @return Byte    */
 specifier|public
 name|ByteWritable
 name|evaluate
@@ -316,7 +316,7 @@ name|byteWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from short to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The short value to convert    * @return Byte    */
+comment|/**    * Convert from short to a byte. This is called for CAST(... AS TINYINT)    *     * @param i    *          The short value to convert    * @return Byte    */
 specifier|public
 name|ByteWritable
 name|evaluate
@@ -356,7 +356,7 @@ name|byteWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from integer to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The integer value to convert    * @return Byte    */
+comment|/**    * Convert from integer to a byte. This is called for CAST(... AS TINYINT)    *     * @param i    *          The integer value to convert    * @return Byte    */
 specifier|public
 name|ByteWritable
 name|evaluate
@@ -396,7 +396,7 @@ name|byteWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from long to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The long value to convert    * @return Byte    */
+comment|/**    * Convert from long to a byte. This is called for CAST(... AS TINYINT)    *     * @param i    *          The long value to convert    * @return Byte    */
 specifier|public
 name|ByteWritable
 name|evaluate
@@ -436,7 +436,7 @@ name|byteWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from float to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The float value to convert    * @return Byte    */
+comment|/**    * Convert from float to a byte. This is called for CAST(... AS TINYINT)    *     * @param i    *          The float value to convert    * @return Byte    */
 specifier|public
 name|ByteWritable
 name|evaluate
@@ -476,7 +476,7 @@ name|byteWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from double to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The double value to convert    * @return Byte    */
+comment|/**    * Convert from double to a byte. This is called for CAST(... AS TINYINT)    *     * @param i    *          The double value to convert    * @return Byte    */
 specifier|public
 name|ByteWritable
 name|evaluate
@@ -516,7 +516,7 @@ name|byteWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from string to a byte. This is called for CAST(... AS TINYINT)    *    * @param i The string value to convert    * @return Byte    */
+comment|/**    * Convert from string to a byte. This is called for CAST(... AS TINYINT)    *     * @param i    *          The string value to convert    * @return Byte    */
 specifier|public
 name|ByteWritable
 name|evaluate

@@ -74,7 +74,7 @@ block|}
 specifier|public
 name|JavaTestObjFlatFileInputFormat
 parameter_list|()
-block|{    }
+block|{   }
 block|}
 end_class
 

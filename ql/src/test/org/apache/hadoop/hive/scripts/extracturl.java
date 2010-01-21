@@ -23,7 +23,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|BufferedReader
 import|;
 end_import
 
@@ -31,9 +31,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|HashMap
+name|InputStreamReader
 import|;
 end_import
 

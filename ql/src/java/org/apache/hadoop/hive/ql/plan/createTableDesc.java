@@ -964,7 +964,7 @@ return|return
 name|sortCols
 return|;
 block|}
-comment|/**    * @param sortCols the sortCols to set    */
+comment|/**    * @param sortCols    *          the sortCols to set    */
 specifier|public
 name|void
 name|setSortCols
@@ -983,7 +983,7 @@ operator|=
 name|sortCols
 expr_stmt|;
 block|}
-comment|/** 	 * @return the serDeName 	 */
+comment|/**    * @return the serDeName    */
 annotation|@
 name|explain
 argument_list|(
@@ -1000,7 +1000,7 @@ return|return
 name|serName
 return|;
 block|}
-comment|/** 	 * @param serName the serName to set 	 */
+comment|/**    * @param serName    *          the serName to set    */
 specifier|public
 name|void
 name|setSerName
@@ -1016,7 +1016,7 @@ operator|=
 name|serName
 expr_stmt|;
 block|}
-comment|/** 	 * @return the serDe properties 	 */
+comment|/**    * @return the serDe properties    */
 annotation|@
 name|explain
 argument_list|(
@@ -1038,7 +1038,7 @@ return|return
 name|mapProp
 return|;
 block|}
-comment|/** 	 * @param mapProp the map properties to set 	 */
+comment|/**    * @param mapProp    *          the map properties to set    */
 specifier|public
 name|void
 name|setMapProp

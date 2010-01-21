@@ -23,19 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|lang
-operator|.
-name|Class
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|io
 operator|.
-name|*
+name|Serializable
 import|;
 end_import
 
@@ -76,7 +66,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation for ColumnInfo which contains the internal name for the   * column (the one that is used by the operator to access the column) and  * the type (identified by a java class).  **/
+comment|/**  * Implementation for ColumnInfo which contains the internal name for the column  * (the one that is used by the operator to access the column) and the type  * (identified by a java class).  **/
 end_comment
 
 begin_class
@@ -104,7 +94,8 @@ name|alias
 init|=
 literal|null
 decl_stmt|;
-comment|// [optional] alias of the column (external name as seen by the users)
+comment|// [optional] alias of the column (external name
+comment|// as seen by the users)
 comment|/**    * Store the alias of the table where available.    */
 specifier|private
 name|String
@@ -265,8 +256,6 @@ name|getTabAlias
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|tabAlias
 return|;
 block|}
@@ -276,12 +265,12 @@ name|getIsPartitionCol
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|isPartitionCol
 return|;
 block|}
 comment|/**    * Returns the string representation of the ColumnInfo.    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

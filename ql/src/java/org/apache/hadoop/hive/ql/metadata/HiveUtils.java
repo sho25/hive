@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * General collection of helper functions  *  */
+comment|/**  * General collection of helper functions  *   */
 end_comment
 
 begin_class

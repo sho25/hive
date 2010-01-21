@@ -136,7 +136,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A global compressor/decompressor pool used to save and reuse   * (possibly native) compression/decompression codecs.  */
+comment|/**  * A global compressor/decompressor pool used to save and reuse (possibly  * native) compression/decompression codecs.  */
 end_comment
 
 begin_class
@@ -159,7 +159,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * A global compressor pool used to save the expensive     * construction/destruction of (possibly native) decompression codecs.    */
+comment|/**    * A global compressor pool used to save the expensive    * construction/destruction of (possibly native) decompression codecs.    */
 specifier|private
 specifier|static
 specifier|final
@@ -192,7 +192,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * A global decompressor pool used to save the expensive     * construction/destruction of (possibly native) decompression codecs.    */
+comment|/**    * A global decompressor pool used to save the expensive    * construction/destruction of (possibly native) decompression codecs.    */
 specifier|private
 specifier|static
 specifier|final
@@ -444,7 +444,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Get a {@link Compressor} for the given {@link CompressionCodec} from the     * pool or a new one.    *    * @param codec the<code>CompressionCodec</code> for which to get the     *<code>Compressor</code>    * @return<code>Compressor</code> for the given     *<code>CompressionCodec</code> from the pool or a new one    */
+comment|/**    * Get a {@link Compressor} for the given {@link CompressionCodec} from the    * pool or a new one.    *     * @param codec    *          the<code>CompressionCodec</code> for which to get the    *<code>Compressor</code>    * @return<code>Compressor</code> for the given<code>CompressionCodec</code>    *         from the pool or a new one    */
 specifier|public
 specifier|static
 name|Compressor
@@ -457,9 +457,6 @@ block|{
 name|Compressor
 name|compressor
 init|=
-operator|(
-name|Compressor
-operator|)
 name|borrow
 argument_list|(
 name|compressorPool
@@ -506,7 +503,7 @@ return|return
 name|compressor
 return|;
 block|}
-comment|/**    * Get a {@link Decompressor} for the given {@link CompressionCodec} from the    * pool or a new one.    *      * @param codec the<code>CompressionCodec</code> for which to get the     *<code>Decompressor</code>    * @return<code>Decompressor</code> for the given     *<code>CompressionCodec</code> the pool or a new one    */
+comment|/**    * Get a {@link Decompressor} for the given {@link CompressionCodec} from the    * pool or a new one.    *     * @param codec    *          the<code>CompressionCodec</code> for which to get the    *<code>Decompressor</code>    * @return<code>Decompressor</code> for the given    *<code>CompressionCodec</code> the pool or a new one    */
 specifier|public
 specifier|static
 name|Decompressor
@@ -519,9 +516,6 @@ block|{
 name|Decompressor
 name|decompressor
 init|=
-operator|(
-name|Decompressor
-operator|)
 name|borrow
 argument_list|(
 name|decompressorPool
@@ -568,7 +562,7 @@ return|return
 name|decompressor
 return|;
 block|}
-comment|/**    * Return the {@link Compressor} to the pool.    *     * @param compressor the<code>Compressor</code> to be returned to the pool    */
+comment|/**    * Return the {@link Compressor} to the pool.    *     * @param compressor    *          the<code>Compressor</code> to be returned to the pool    */
 specifier|public
 specifier|static
 name|void
@@ -600,7 +594,7 @@ name|compressor
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Return the {@link Decompressor} to the pool.    *     * @param decompressor the<code>Decompressor</code> to be returned to the     *                     pool    */
+comment|/**    * Return the {@link Decompressor} to the pool.    *     * @param decompressor    *          the<code>Decompressor</code> to be returned to the pool    */
 specifier|public
 specifier|static
 name|void

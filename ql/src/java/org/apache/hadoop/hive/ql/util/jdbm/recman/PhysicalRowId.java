@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  A physical rowid is nothing else than a pointer to a physical location  *  in a file - a (block, offset) tuple.  *<P>  *<B>Note</B>: The fact that the offset is modelled as a short limits   *  the block size to 32k.  */
+comment|/**  * A physical rowid is nothing else than a pointer to a physical location in a  * file - a (block, offset) tuple.  *<P>  *<B>Note</B>: The fact that the offset is modelled as a short limits the block  * size to 32k.  */
 end_comment
 
 begin_class
@@ -74,7 +74,7 @@ decl_stmt|;
 name|short
 name|pos
 decl_stmt|;
-comment|/**      *  Constructs a physical rowid from the indicated data starting at      *  the indicated position.      */
+comment|/**    * Constructs a physical rowid from the indicated data starting at the    * indicated position.    */
 name|PhysicalRowId
 parameter_list|(
 name|BlockIo

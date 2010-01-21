@@ -25,7 +25,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|IOException
 import|;
 end_import
 
@@ -57,18 +57,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|lang
-operator|.
-name|management
-operator|.
-name|MemoryUsage
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|net
 operator|.
 name|URLClassLoader
@@ -81,35 +69,27 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|ArrayList
 import|;
 end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
+name|java
 operator|.
 name|util
 operator|.
-name|ReflectionUtils
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Iterator
 import|;
 end_import
 
@@ -153,27 +133,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|exec
 operator|.
-name|mapredWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|ExecMapper
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|tableDesc
+name|reportStats
 import|;
 end_import
 
@@ -207,11 +171,27 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|plan
 operator|.
-name|ExecMapper
+name|mapredWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
 operator|.
-name|reportStats
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|tableDesc
 import|;
 end_import
 
@@ -359,9 +339,79 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
+name|mapred
 operator|.
-name|Writable
+name|JobConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|MapReduceBase
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|OutputCollector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|Reducer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|Reporter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|ReflectionUtils
 import|;
 end_import
 
@@ -454,6 +504,7 @@ decl_stmt|;
 comment|// Input value serde needs to be an array to support different SerDe
 comment|// for different tags
 specifier|private
+specifier|final
 name|SerDe
 index|[]
 name|inputValueDeserializer
@@ -528,6 +579,8 @@ name|tableDesc
 index|[]
 name|valueTableDesc
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|configure
@@ -689,7 +742,8 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// clear out any parents as reducer is the root
+comment|// clear out any parents as reducer is the
+comment|// root
 name|isTagged
 operator|=
 name|gWork
@@ -921,7 +975,7 @@ name|e
 argument_list|)
 throw|;
 block|}
-comment|//initialize reduce operator tree
+comment|// initialize reduce operator tree
 try|try
 block|{
 name|l4j
@@ -990,6 +1044,7 @@ name|Object
 name|keyObject
 decl_stmt|;
 specifier|private
+specifier|final
 name|Object
 index|[]
 name|valueObject
@@ -1154,7 +1209,7 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|//the first group
+comment|// the first group
 name|groupKey
 operator|=
 operator|new
@@ -1287,7 +1342,7 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
-comment|//System.err.print(who.getHo().toString());
+comment|// System.err.print(who.getHo().toString());
 try|try
 block|{
 name|valueObject
@@ -1508,7 +1563,8 @@ name|long
 name|cntr
 parameter_list|)
 block|{
-comment|// A very simple counter to keep track of number of rows processed by the reducer. It dumps
+comment|// A very simple counter to keep track of number of rows processed by the
+comment|// reducer. It dumps
 comment|// every 1 million times, and quickly before that
 if|if
 condition|(
@@ -1516,17 +1572,21 @@ name|cntr
 operator|>=
 literal|1000000
 condition|)
+block|{
 return|return
 name|cntr
 operator|+
 literal|1000000
 return|;
+block|}
 return|return
 literal|10
 operator|*
 name|cntr
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close

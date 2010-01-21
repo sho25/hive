@@ -65,24 +65,6 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|PreOrderWalker
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
 name|DefaultRuleDispatcher
 import|;
 end_import
@@ -119,24 +101,6 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Node
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
 name|GraphWalker
 import|;
 end_import
@@ -155,7 +119,43 @@ name|ql
 operator|.
 name|lib
 operator|.
+name|Node
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lib
+operator|.
 name|NodeProcessor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lib
+operator|.
+name|PreOrderWalker
 import|;
 end_import
 
@@ -207,6 +207,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|Transform
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|ParseContext
@@ -231,26 +249,8 @@ name|SemanticException
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|Transform
-import|;
-end_import
-
 begin_comment
-comment|/**  * Implementation of the union processor. This can be enhanced later on.  * Currently, it does the following:  *   Identify if both the subqueries of UNION are map-only.  *   Store that fact in the unionDesc/UnionOperator.  *   If either of the sub-query involves a map-reduce job, a FS is introduced on top of the UNION.  *   This can be later optimized to clone all the operators above the UNION.   * The parse Context is not changed.  */
+comment|/**  * Implementation of the union processor. This can be enhanced later on.  * Currently, it does the following: Identify if both the subqueries of UNION  * are map-only. Store that fact in the unionDesc/UnionOperator. If either of  * the sub-query involves a map-reduce job, a FS is introduced on top of the  * UNION. This can be later optimized to clone all the operators above the  * UNION.  *   * The parse Context is not changed.  */
 end_comment
 
 begin_class
@@ -264,8 +264,8 @@ comment|/**    * empty constructor    */
 specifier|public
 name|UnionProcessor
 parameter_list|()
-block|{ }
-comment|/**    * Transform the query tree. For each union, store the fact whether both the    * sub-queries are map-only    * @param pCtx the current parse context    */
+block|{   }
+comment|/**    * Transform the query tree. For each union, store the fact whether both the    * sub-queries are map-only    *     * @param pCtx    *          the current parse context    */
 specifier|public
 name|ParseContext
 name|transform
@@ -276,7 +276,8 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack.
+comment|// create a walker which walks the tree in a DFS manner while maintaining
+comment|// the operator stack.
 name|Map
 argument_list|<
 name|Rule
@@ -382,7 +383,8 @@ name|getMapJoinUnion
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor for the matching rule and passes the context along
+comment|// The dispatcher fires the processor for the matching rule and passes the
+comment|// context along
 name|UnionProcContext
 name|uCtx
 init|=

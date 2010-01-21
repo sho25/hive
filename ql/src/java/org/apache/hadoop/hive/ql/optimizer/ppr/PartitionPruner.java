@@ -179,6 +179,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|FunctionRegistry
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|lib
 operator|.
 name|DefaultGraphWalker
@@ -537,24 +555,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|FunctionRegistry
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde2
 operator|.
 name|objectinspector
@@ -638,7 +638,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The transformation step that does partition pruning.  *  */
+comment|/**  * The transformation step that does partition pruning.  *   */
 end_comment
 
 begin_class
@@ -662,7 +662,7 @@ argument_list|(
 literal|"hive.ql.optimizer.ppr.PartitionPruner"
 argument_list|)
 decl_stmt|;
-comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.optimizer.Transform#transform(org.apache.hadoop.hive.ql.parse.ParseContext)    */
+comment|/*    * (non-Javadoc)    *     * @see    * org.apache.hadoop.hive.ql.optimizer.Transform#transform(org.apache.hadoop    * .hive.ql.parse.ParseContext)    */
 annotation|@
 name|Override
 specifier|public
@@ -723,7 +723,8 @@ name|getFilterProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=
@@ -799,7 +800,7 @@ return|return
 name|pctx
 return|;
 block|}
-comment|/**    * Find out whether the condition only contains partitioned columns. Note that if the table    * is not partitioned, the function always returns true.    * condition.    *    * @param tab    the table object    * @param expr   the pruner expression for the table    */
+comment|/**    * Find out whether the condition only contains partitioned columns. Note that    * if the table is not partitioned, the function always returns true.    * condition.    *     * @param tab    *          the table object    * @param expr    *          the pruner expression for the table    */
 specifier|public
 specifier|static
 name|boolean
@@ -826,9 +827,11 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 name|expr
@@ -883,9 +886,11 @@ name|getGenericUDF
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 comment|// All columns of the expression must be parttioned columns
 name|List
 argument_list|<
@@ -938,16 +943,18 @@ name|i
 argument_list|)
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 block|}
 return|return
 literal|true
 return|;
 block|}
-comment|/**    * Get the partition list for the table that satisfies the partition pruner    * condition.    *    * @param tab    the table object for the alias    * @param prunerExpr  the pruner expression for the alias    * @param conf   for checking whether "strict" mode is on.    * @param alias  for generating error message only.    * @return the partition list for the table that satisfies the partition pruner condition.    * @throws HiveException    */
+comment|/**    * Get the partition list for the table that satisfies the partition pruner    * condition.    *     * @param tab    *          the table object for the alias    * @param prunerExpr    *          the pruner expression for the alias    * @param conf    *          for checking whether "strict" mode is on.    * @param alias    *          for generating error message only.    * @return the partition list for the table that satisfies the partition    *         pruner condition.    * @throws HiveException    */
 specifier|public
 specifier|static
 name|PrunedPartitionList
@@ -1020,6 +1027,7 @@ name|prunerExpr
 operator|!=
 literal|null
 condition|)
+block|{
 name|key
 operator|=
 name|key
@@ -1029,6 +1037,7 @@ operator|.
 name|getExprString
 argument_list|()
 expr_stmt|;
+block|}
 name|PrunedPartitionList
 name|ret
 init|=
@@ -1045,9 +1054,11 @@ name|ret
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|ret
 return|;
+block|}
 name|LinkedHashSet
 argument_list|<
 name|Partition
@@ -1313,7 +1324,8 @@ argument_list|(
 name|ois
 argument_list|)
 decl_stmt|;
-comment|// If the "strict" mode is on, we have to provide partition pruner for each table.
+comment|// If the "strict" mode is on, we have to provide partition pruner for
+comment|// each table.
 if|if
 condition|(
 literal|"strict"

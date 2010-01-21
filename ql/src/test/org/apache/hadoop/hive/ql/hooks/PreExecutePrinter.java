@@ -37,20 +37,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|security
-operator|.
-name|UserGroupInformation
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|ql
@@ -81,8 +67,22 @@ name|LogHelper
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|security
+operator|.
+name|UserGroupInformation
+import|;
+end_import
+
 begin_comment
-comment|/**  * Implementation of a pre execute hook that simply prints out its  * parameters to standard output.  */
+comment|/**  * Implementation of a pre execute hook that simply prints out its parameters to  * standard output.  */
 end_comment
 
 begin_class
@@ -133,7 +133,9 @@ name|console
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 name|sess

@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Base class for processing operators which is no-op. The specific processors can register their own context with  * the dispatcher.  */
+comment|/**  * Base class for processing operators which is no-op. The specific processors  * can register their own context with the dispatcher.  */
 end_comment
 
 begin_interface
@@ -56,7 +56,7 @@ specifier|public
 interface|interface
 name|NodeProcessor
 block|{
-comment|/**    * generic process for all ops that don't have specific implementations    * @param nd operator to process    * @param procCtx operator processor context    * @param nodeOutputs A variable argument list of outputs from other nodes in the walk    * @return Object to be returned by the process call    * @throws SemanticException    */
+comment|/**    * generic process for all ops that don't have specific implementations    *     * @param nd    *          operator to process    * @param procCtx    *          operator processor context    * @param nodeOutputs    *          A variable argument list of outputs from other nodes in the walk    * @return Object to be returned by the process call    * @throws SemanticException    */
 specifier|public
 name|Object
 name|process

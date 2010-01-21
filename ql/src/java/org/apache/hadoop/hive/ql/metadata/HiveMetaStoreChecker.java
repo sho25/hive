@@ -165,6 +165,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|MetaStoreUtils
@@ -249,22 +265,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|thrift
 operator|.
 name|TException
@@ -272,7 +272,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Verify that the information in the metastore matches what  * is on the filesystem. Return a CheckResult object  * containing lists of missing and any unexpected tables and partitions.  */
+comment|/**  * Verify that the information in the metastore matches what is on the  * filesystem. Return a CheckResult object containing lists of missing and any  * unexpected tables and partitions.  */
 end_comment
 
 begin_class
@@ -296,10 +296,12 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|Hive
 name|hive
 decl_stmt|;
 specifier|private
+specifier|final
 name|HiveConf
 name|conf
 decl_stmt|;
@@ -319,8 +321,6 @@ name|hive
 operator|=
 name|hive
 expr_stmt|;
-name|this
-operator|.
 name|conf
 operator|=
 name|hive
@@ -329,7 +329,7 @@ name|getConf
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Check the metastore for inconsistencies, data missing in either the    * metastore or on the dfs.    *     * @param dbName    *          name of the database, if not specified the default will be used.    * @param tableName    *          Table we want to run the check for. If null we'll check all the    *          tables in the database.    * @param partitions List of partition name value pairs,     * if null or empty check all partitions    * @param result Fill this with the results of the check     * @throws HiveException Failed to get required information     * from the metastore.    * @throws IOException Most likely filesystem related    */
+comment|/**    * Check the metastore for inconsistencies, data missing in either the    * metastore or on the dfs.    *     * @param dbName    *          name of the database, if not specified the default will be used.    * @param tableName    *          Table we want to run the check for. If null we'll check all the    *          tables in the database.    * @param partitions    *          List of partition name value pairs, if null or empty check all    *          partitions    * @param result    *          Fill this with the results of the check    * @throws HiveException    *           Failed to get required information from the metastore.    * @throws IOException    *           Most likely filesystem related    */
 specifier|public
 name|void
 name|checkMetastore
@@ -553,7 +553,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Check for table directories that aren't in the metastore.    * @param dbName Name of the database    * @param tables List of table names    * @param result Add any found tables to this    * @throws HiveException Failed to get required information     * from the metastore.    * @throws IOException Most likely filesystem related    * @throws MetaException Failed to get required information     * from the metastore.    * @throws NoSuchObjectException Failed to get required information     * from the metastore.    * @throws TException Thrift communication error.    */
+comment|/**    * Check for table directories that aren't in the metastore.    *     * @param dbName    *          Name of the database    * @param tables    *          List of table names    * @param result    *          Add any found tables to this    * @throws HiveException    *           Failed to get required information from the metastore.    * @throws IOException    *           Most likely filesystem related    * @throws MetaException    *           Failed to get required information from the metastore.    * @throws NoSuchObjectException    *           Failed to get required information from the metastore.    * @throws TException    *           Thrift communication error.    */
 name|void
 name|findUnknownTables
 parameter_list|(
@@ -749,7 +749,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Check the metastore for inconsistencies, data missing in either the    * metastore or on the dfs.    *     * @param dbName Name of the database    * @param tableName Name of the table    * @param partitions Partitions to check, if null or empty    * get all the partitions.    * @param result Result object    * @throws HiveException Failed to get required information     * from the metastore.    * @throws IOException Most likely filesystem related    * @throws MetaException Failed to get required information     * from the metastore.    */
+comment|/**    * Check the metastore for inconsistencies, data missing in either the    * metastore or on the dfs.    *     * @param dbName    *          Name of the database    * @param tableName    *          Name of the table    * @param partitions    *          Partitions to check, if null or empty get all the partitions.    * @param result    *          Result object    * @throws HiveException    *           Failed to get required information from the metastore.    * @throws IOException    *           Most likely filesystem related    * @throws MetaException    *           Failed to get required information from the metastore.    */
 name|void
 name|checkTable
 parameter_list|(
@@ -868,8 +868,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|//we're interested in specific partitions,
-comment|//don't check for any others
+comment|// we're interested in specific partitions,
+comment|// don't check for any others
 name|findUnknownPartitions
 operator|=
 literal|false
@@ -970,7 +970,7 @@ name|result
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Check the metastore for inconsistencies, data missing in either the    * metastore or on the dfs.    *     * @param table Table to check    * @param parts Partitions to check    * @param result Result object    * @param findUnknownPartitions Should we try to find unknown partitions?    * @throws IOException Could not get information from filesystem    * @throws HiveException Could not create Partition object    */
+comment|/**    * Check the metastore for inconsistencies, data missing in either the    * metastore or on the dfs.    *     * @param table    *          Table to check    * @param parts    *          Partitions to check    * @param result    *          Result object    * @param findUnknownPartitions    *          Should we try to find unknown partitions?    * @throws IOException    *           Could not get information from filesystem    * @throws HiveException    *           Could not create Partition object    */
 name|void
 name|checkTable
 parameter_list|(
@@ -1067,7 +1067,7 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|//most likely the user specified an invalid partition
+comment|// most likely the user specified an invalid partition
 continue|continue;
 block|}
 name|Path
@@ -1197,7 +1197,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Find partitions on the fs that are    * unknown to the metastore    * @param table Table where the partitions would be located    * @param partPaths Paths of the partitions the ms knows about    * @param result Result object     * @throws IOException Thrown if we fail at fetching listings from    * the fs.    */
+comment|/**    * Find partitions on the fs that are unknown to the metastore    *     * @param table    *          Table where the partitions would be located    * @param partPaths    *          Paths of the partitions the ms knows about    * @param result    *          Result object    * @throws IOException    *           Thrown if we fail at fetching listings from the fs.    */
 name|void
 name|findUnknownPartitions
 parameter_list|(
@@ -1340,7 +1340,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Get the partition name from the path.    *     * @param tablePath Path of the table.    * @param partitionPath Path of the partition.    * @return Partition name, for example partitiondate=2008-01-01    */
+comment|/**    * Get the partition name from the path.    *     * @param tablePath    *          Path of the table.    * @param partitionPath    *          Path of the partition.    * @return Partition name, for example partitiondate=2008-01-01    */
 specifier|private
 name|String
 name|getPartitionName
@@ -1420,7 +1420,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Recursive method to get the leaf directories of a base path.    * Example:    * base/dir1/dir2    * base/dir3    *     * This will return dir2 and dir3 but not dir1.    *     * @param basePath Start directory    * @param allDirs This set will contain the leaf paths at the end.    * @throws IOException Thrown if we can't get lists from the fs.    */
+comment|/**    * Recursive method to get the leaf directories of a base path. Example:    * base/dir1/dir2 base/dir3    *     * This will return dir2 and dir3 but not dir1.    *     * @param basePath    *          Start directory    * @param allDirs    *          This set will contain the leaf paths at the end.    * @throws IOException    *           Thrown if we can't get lists from the fs.    */
 specifier|private
 name|void
 name|getAllLeafDirs

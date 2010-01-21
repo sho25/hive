@@ -62,7 +62,7 @@ decl_stmt|;
 specifier|public
 name|copyWork
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|copyWork
 parameter_list|(
@@ -101,8 +101,6 @@ name|getFromPath
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|fromPath
 return|;
 block|}
@@ -135,8 +133,6 @@ name|getToPath
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|toPath
 return|;
 block|}

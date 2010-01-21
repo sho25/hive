@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  Class describing a page that holds data.  */
+comment|/**  * Class describing a page that holds data.  */
 end_comment
 
 begin_class
@@ -82,7 +82,7 @@ operator|-
 name|O_DATA
 argument_list|)
 decl_stmt|;
-comment|/**      *  Constructs a data page view from the indicated block.      */
+comment|/**    * Constructs a data page view from the indicated block.    */
 name|DataPage
 parameter_list|(
 name|BlockIo
@@ -95,7 +95,7 @@ name|block
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Factory method to create or return a data page for the      *  indicated block.      */
+comment|/**    * Factory method to create or return a data page for the indicated block.    */
 specifier|static
 name|DataPage
 name|getDataPageView
@@ -122,13 +122,16 @@ name|view
 operator|instanceof
 name|DataPage
 condition|)
+block|{
 return|return
 operator|(
 name|DataPage
 operator|)
 name|view
 return|;
+block|}
 else|else
+block|{
 return|return
 operator|new
 name|DataPage
@@ -136,6 +139,7 @@ argument_list|(
 name|block
 argument_list|)
 return|;
+block|}
 block|}
 comment|/** Returns the first rowid's offset */
 name|short
@@ -172,6 +176,7 @@ name|value
 operator|<
 name|O_DATA
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -183,6 +188,7 @@ operator|+
 literal|" too small"
 argument_list|)
 throw|;
+block|}
 name|block
 operator|.
 name|writeShort

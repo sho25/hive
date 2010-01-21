@@ -35,47 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
 import|;
 end_import
 
@@ -104,24 +64,6 @@ operator|.
 name|exec
 operator|.
 name|JoinOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|MapJoinOperator
 import|;
 end_import
 
@@ -234,7 +176,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of rule-based join table reordering optimization. User passes  * hints to specify which tables are to be streamed and they are moved to have  * largest tag so that they are processed last.  * In future, once statistics are implemented, this transformation can also be  * done based on costs.  */
+comment|/**  * Implementation of rule-based join table reordering optimization. User passes  * hints to specify which tables are to be streamed and they are moved to have  * largest tag so that they are processed last. In future, once statistics are  * implemented, this transformation can also be done based on costs.  */
 end_comment
 
 begin_class
@@ -244,7 +186,7 @@ name|JoinReorder
 implements|implements
 name|Transform
 block|{
-comment|/**    * Estimate the size of the output based on the STREAMTABLE hints. To do so    * the whole tree is traversed. Possible sizes:    *   0: the operator and its subtree don't contain any big tables    *   1: the subtree of the operator contains a big table    *   2: the operator is a big table    *    * @param operator  The operator which output size is to be estimated    * @param bigTables Set of tables that should be streamed    * @return The estimated size - 0 (no streamed tables), 1 (streamed tables in    * subtree) or 2 (a streamed table)    */
+comment|/**    * Estimate the size of the output based on the STREAMTABLE hints. To do so    * the whole tree is traversed. Possible sizes: 0: the operator and its    * subtree don't contain any big tables 1: the subtree of the operator    * contains a big table 2: the operator is a big table    *     * @param operator    *          The operator which output size is to be estimated    * @param bigTables    *          Set of tables that should be streamed    * @return The estimated size - 0 (no streamed tables), 1 (streamed tables in    *         subtree) or 2 (a streamed table)    */
 specifier|private
 name|int
 name|getOutputSize
@@ -407,7 +349,7 @@ return|return
 name|maxSize
 return|;
 block|}
-comment|/**    * Find all big tables from STREAMTABLE hints    *    * @param joinCtx The join context    * @return Set of all big tables    */
+comment|/**    * Find all big tables from STREAMTABLE hints    *     * @param joinCtx    *          The join context    * @return Set of all big tables    */
 specifier|private
 name|Set
 argument_list|<
@@ -472,7 +414,7 @@ return|return
 name|bigTables
 return|;
 block|}
-comment|/**    * Reorder the tables in a join operator appropriately (by reordering the tags    * of the reduces sinks)    *    * @param joinOp The join operator to be processed    * @param bigTables Set of all big tables    */
+comment|/**    * Reorder the tables in a join operator appropriately (by reordering the tags    * of the reduces sinks)    *     * @param joinOp    *          The join operator to be processed    * @param bigTables    *          Set of all big tables    */
 specifier|private
 name|void
 name|reorder
@@ -682,7 +624,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Transform the query tree. For each join, check which reduce sink will    * output the biggest result (based on STREAMTABLE hints) and give it the    * biggest tag so that it gets streamed.    *    * @param pactx current parse context    */
+comment|/**    * Transform the query tree. For each join, check which reduce sink will    * output the biggest result (based on STREAMTABLE hints) and give it the    * biggest tag so that it gets streamed.    *     * @param pactx    *          current parse context    */
 specifier|public
 name|ParseContext
 name|transform

@@ -31,24 +31,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|exprNodeDesc
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -189,7 +171,7 @@ decl_stmt|;
 specifier|public
 name|mapJoinDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|mapJoinDesc
 parameter_list|(
@@ -486,7 +468,7 @@ return|return
 name|keys
 return|;
 block|}
-comment|/**    * @param keys the keys to set    */
+comment|/**    * @param keys    *          the keys to set    */
 specifier|public
 name|void
 name|setKeys
@@ -527,7 +509,7 @@ return|return
 name|posBigTable
 return|;
 block|}
-comment|/**    * @param posBigTable the position of the big table not in memory    */
+comment|/**    * @param posBigTable    *          the position of the big table not in memory    */
 specifier|public
 name|void
 name|setPosBigTable
@@ -553,7 +535,7 @@ return|return
 name|keyTblDesc
 return|;
 block|}
-comment|/**    * @param keyTblDesc the keyTblDesc to set    */
+comment|/**    * @param keyTblDesc    *          the keyTblDesc to set    */
 specifier|public
 name|void
 name|setKeyTblDesc
@@ -582,7 +564,7 @@ return|return
 name|valueTblDescs
 return|;
 block|}
-comment|/**    * @param valueTblDescs the valueTblDescs to set    */
+comment|/**    * @param valueTblDescs    *          the valueTblDescs to set    */
 specifier|public
 name|void
 name|setValueTblDescs

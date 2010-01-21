@@ -169,6 +169,7 @@ operator|.
 name|HIVESKEWJOIN
 argument_list|)
 condition|)
+block|{
 name|resolvers
 operator|.
 name|add
@@ -178,6 +179,7 @@ name|SkewJoinResolver
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/**    * invoke all the resolvers one-by-one, and alter the physical plan    *     * @return PhysicalContext    * @throws HiveException    */
 specifier|public
@@ -194,6 +196,7 @@ name|r
 range|:
 name|resolvers
 control|)
+block|{
 name|pctx
 operator|=
 name|r
@@ -203,6 +206,7 @@ argument_list|(
 name|pctx
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|pctx
 return|;

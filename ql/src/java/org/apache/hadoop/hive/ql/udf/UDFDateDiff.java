@@ -193,6 +193,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|SimpleDateFormat
 name|formatter
 init|=
@@ -226,7 +227,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Calculate the difference in the number of days.    * The time part of the string will be ignored.    * If dateString1 is earlier than dateString2, then the result can be negative.     *     * @param dateString1 the date string in the format of "yyyy-MM-dd HH:mm:ss" or "yyyy-MM-dd".    * @param dateString2 the date string in the format of "yyyy-MM-dd HH:mm:ss" or "yyyy-MM-dd".    * @return the difference in days.    */
+comment|/**    * Calculate the difference in the number of days. The time part of the string    * will be ignored. If dateString1 is earlier than dateString2, then the    * result can be negative.    *     * @param dateString1    *          the date string in the format of "yyyy-MM-dd HH:mm:ss" or    *          "yyyy-MM-dd".    * @param dateString2    *          the date string in the format of "yyyy-MM-dd HH:mm:ss" or    *          "yyyy-MM-dd".    * @return the difference in days.    */
 specifier|public
 name|IntWritable
 name|evaluate

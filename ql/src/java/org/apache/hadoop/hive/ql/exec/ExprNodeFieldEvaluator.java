@@ -89,24 +89,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|InspectableObject
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|ListObjectInspector
 import|;
 end_import
@@ -184,7 +166,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This Evaluator can evaluate s.f for s as both struct and list of struct.  * If s is struct, then s.f is the field.  * If s is list of struct, then s.f is the list of struct field.     */
+comment|/**  * This Evaluator can evaluate s.f for s as both struct and list of struct. If s  * is struct, then s.f is the field. If s is list of struct, then s.f is the  * list of struct field.  */
 end_comment
 
 begin_class

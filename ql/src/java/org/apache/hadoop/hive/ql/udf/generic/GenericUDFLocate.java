@@ -216,7 +216,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Generic UDF for string function<code>LOCATE(substr, str)</code>,<code>LOCATE(substr, str, start)</code>.  * This mimcs the function from MySQL  * http://dev.mysql.com/doc/refman/5.1/en/string-functions.html#function_locate  *<pre>   * usage:  * LOCATE(substr, str)  * LOCATE(substr, str, start)  *</pre><p>  */
+comment|/**  * Generic UDF for string function<code>LOCATE(substr, str)</code>,  *<code>LOCATE(substr, str, start)</code>. This mimcs the function from MySQL  * http://dev.mysql.com/doc/refman/5.1/en/string-functions.html#function_locate  *   *<pre>  * usage:  * LOCATE(substr, str)  * LOCATE(substr, str, start)  *</pre>  *<p>  */
 end_comment
 
 begin_class
@@ -509,9 +509,11 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|Text
 name|subtext
 init|=

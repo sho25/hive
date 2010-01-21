@@ -379,7 +379,7 @@ specifier|protected
 name|String
 name|operatorId
 decl_stmt|;
-comment|/**    * List of counter names associated with the operator    * It contains the following default counters    *   NUM_INPUT_ROWS    *   NUM_OUTPUT_ROWS    *   TIME_TAKEN    * Individual operators can add to this list via addToCounterNames methods    */
+comment|/**    * List of counter names associated with the operator It contains the    * following default counters NUM_INPUT_ROWS NUM_OUTPUT_ROWS TIME_TAKEN    * Individual operators can add to this list via addToCounterNames methods    */
 specifier|protected
 name|ArrayList
 argument_list|<
@@ -387,7 +387,7 @@ name|String
 argument_list|>
 name|counterNames
 decl_stmt|;
-comment|/**    * Each operator has its own map of its counter names to disjoint    * ProgressCounter - it is populated at compile time and is read in    * at run-time while extracting the operator specific counts    */
+comment|/**    * Each operator has its own map of its counter names to disjoint    * ProgressCounter - it is populated at compile time and is read in at    * run-time while extracting the operator specific counts    */
 specifier|protected
 name|HashMap
 argument_list|<
@@ -402,9 +402,12 @@ specifier|static
 name|int
 name|seqId
 decl_stmt|;
-comment|// It can be optimized later so that an operator operator (init/close) is performed
-comment|// only after that operation has been performed on all the parents. This will require
-comment|// initializing the whole tree in all the mappers (which might be required for mappers
+comment|// It can be optimized later so that an operator operator (init/close) is
+comment|// performed
+comment|// only after that operation has been performed on all the parents. This will
+comment|// require
+comment|// initializing the whole tree in all the mappers (which might be required for
+comment|// mappers
 comment|// spanning multiple files anyway, in future)
 specifier|public
 specifier|static
@@ -441,7 +444,8 @@ name|fatalError
 init|=
 literal|false
 decl_stmt|;
-comment|// fatalError is shared acorss all operators
+comment|// fatalError is shared acorss
+comment|// all operators
 static|static
 block|{
 name|seqId
@@ -475,7 +479,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-comment|/**    * Create an operator with a reporter.    * @param reporter Used to report progress of certain operators.    */
+comment|/**    * Create an operator with a reporter.    *     * @param reporter    *          Used to report progress of certain operators.    */
 specifier|public
 name|Operator
 parameter_list|(
@@ -815,7 +819,7 @@ specifier|protected
 name|ObjectInspector
 name|outputObjInspector
 decl_stmt|;
-comment|/**    * A map of output column name to input expression map. This is used by optimizer    * and built during semantic analysis    * contains only key elements for reduce sink and group by op    */
+comment|/**    * A map of output column name to input expression map. This is used by    * optimizer and built during semantic analysis contains only key elements for    * reduce sink and group by op    */
 specifier|protected
 specifier|transient
 name|Map
@@ -841,7 +845,7 @@ operator|=
 name|id
 expr_stmt|;
 block|}
-comment|/**    * This function is not named getId(), to make sure java serialization    * does NOT serialize it.  Some TestParse tests will fail if we serialize    * this field, since the Operator ID will change based on the number of    * query tests.    */
+comment|/**    * This function is not named getId(), to make sure java serialization does    * NOT serialize it. Some TestParse tests will fail if we serialize this    * field, since the Operator ID will change based on the number of query    * tests.    */
 specifier|public
 name|String
 name|getIdentifier
@@ -870,7 +874,9 @@ name|childOperators
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Operator
@@ -914,7 +920,9 @@ name|childOperators
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Operator
@@ -958,7 +966,9 @@ name|childOperators
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Operator
@@ -1060,7 +1070,7 @@ name|ret
 operator|)
 return|;
 block|}
-comment|/**    * checks whether all parent operators are initialized or not    * @return true if there are no parents or all parents are initialized. false otherwise    */
+comment|/**    * checks whether all parent operators are initialized or not    *     * @return true if there are no parents or all parents are initialized. false    *         otherwise    */
 specifier|protected
 name|boolean
 name|areAllParentsInitialized
@@ -1110,7 +1120,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Initializes operators only if all parents have been initialized.    * Calls operator specific initializer which then initializes child ops.    *    * @param hconf    * @param inputOIs input object inspector array indexes by tag id. null value is ignored.    * @throws HiveException    */
+comment|/**    * Initializes operators only if all parents have been initialized. Calls    * operator specific initializer which then initializes child ops.    *     * @param hconf    * @param inputOIs    *          input object inspector array indexes by tag id. null value is    *          ignored.    * @throws HiveException    */
 specifier|public
 name|void
 name|initialize
@@ -1171,7 +1181,8 @@ operator|=
 name|inputOIs
 expr_stmt|;
 block|}
-comment|// initialize structure to maintain child op info. operator tree changes while
+comment|// initialize structure to maintain child op info. operator tree changes
+comment|// while
 comment|// initializing so this need to be done here instead of initialize() method
 if|if
 condition|(
@@ -1387,7 +1398,7 @@ name|hconf
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Calls initialize on each of the children with outputObjetInspector as the output row format    */
+comment|/**    * Calls initialize on each of the children with outputObjetInspector as the    * output row format    */
 specifier|protected
 name|void
 name|initializeChildren
@@ -1497,7 +1508,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Collects all the parent's output object inspectors and calls actual initialization method    * @param hconf    * @param inputOI OI of the row that this parent will pass to this op    * @param parentId parent operator id    * @throws HiveException    */
+comment|/**    * Collects all the parent's output object inspectors and calls actual    * initialization method    *     * @param hconf    * @param inputOI    *          OI of the row that this parent will pass to this op    * @param parentId    *          parent operator id    * @throws HiveException    */
 specifier|private
 name|void
 name|initialize
@@ -1544,7 +1555,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Process the row.    * @param row  The object representing the row.    * @param tag  The tag of the row usually means which parent this row comes from.    *             Rows with the same tag should have exactly the same rowInspector all the time.    */
+comment|/**    * Process the row.    *     * @param row    *          The object representing the row.    * @param tag    *          The tag of the row usually means which parent this row comes from.    *          Rows with the same tag should have exactly the same rowInspector    *          all the time.    */
 specifier|public
 specifier|abstract
 name|void
@@ -1559,7 +1570,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Process the row.    * @param row  The object representing the row.    * @param tag  The tag of the row usually means which parent this row comes from.    *             Rows with the same tag should have exactly the same rowInspector all the time.    */
+comment|/**    * Process the row.    *     * @param row    *          The object representing the row.    * @param tag    *          The tag of the row usually means which parent this row comes from.    *          Rows with the same tag should have exactly the same rowInspector    *          all the time.    */
 specifier|public
 name|void
 name|process
@@ -1577,7 +1588,9 @@ if|if
 condition|(
 name|fatalError
 condition|)
+block|{
 return|return;
+block|}
 name|preProcessCounter
 argument_list|()
 expr_stmt|;
@@ -1613,12 +1626,16 @@ name|childOperators
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 name|fatalError
 condition|)
+block|{
 return|return;
+block|}
 name|LOG
 operator|.
 name|debug
@@ -1638,11 +1655,13 @@ name|op
 range|:
 name|childOperators
 control|)
+block|{
 name|op
 operator|.
 name|startGroup
 argument_list|()
 expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|debug
@@ -1672,12 +1691,16 @@ name|childOperators
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 name|fatalError
 condition|)
+block|{
 return|return;
+block|}
 name|LOG
 operator|.
 name|debug
@@ -1697,11 +1720,13 @@ name|op
 range|:
 name|childOperators
 control|)
+block|{
 name|op
 operator|.
 name|endGroup
 argument_list|()
 expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|debug
@@ -1788,7 +1813,9 @@ name|State
 operator|.
 name|CLOSE
 condition|)
+block|{
 return|return;
+block|}
 comment|// check if all parents are finished
 if|if
 condition|(
@@ -1796,7 +1823,9 @@ operator|!
 name|allInitializedParentsAreClosed
 argument_list|()
 condition|)
+block|{
 return|return;
+block|}
 comment|// set state as CLOSE as long as all parents are closed
 comment|// state == CLOSE doesn't mean all children are also in state CLOSE
 name|state
@@ -1873,7 +1902,9 @@ name|childOperators
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Operator
@@ -1921,7 +1952,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Operator specific close routine. Operators which inherents this    * class should overwrite this funtion for their specific cleanup    * routine.    */
+comment|/**    * Operator specific close routine. Operators which inherents this class    * should overwrite this funtion for their specific cleanup routine.    */
 specifier|protected
 name|void
 name|closeOp
@@ -1932,7 +1963,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{   }
-comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed    *    * @param conf Configuration with with which job was submitted    * @param success whether the job was completed successfully or not    */
+comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed    *     * @param conf    *          Configuration with with which job was submitted    * @param success    *          whether the job was completed successfully or not    */
 specifier|public
 name|void
 name|jobClose
@@ -1952,7 +1983,9 @@ name|childOperators
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Operator
@@ -1977,7 +2010,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    *  Cache childOperators in an array for faster access. childOperatorsArray is accessed    *  per row, so it's important to make the access efficient.    */
+comment|/**    * Cache childOperators in an array for faster access. childOperatorsArray is    * accessed per row, so it's important to make the access efficient.    */
 specifier|transient
 specifier|protected
 name|Operator
@@ -2012,7 +2045,7 @@ name|nextCntr
 init|=
 literal|1
 decl_stmt|;
-comment|/**    * Replace one child with another at the same position. The parent of the child is not changed    * @param child     the old child    * @param newChild  the new child    */
+comment|/**    * Replace one child with another at the same position. The parent of the    * child is not changed    *     * @param child    *          the old child    * @param newChild    *          the new child    */
 specifier|public
 name|void
 name|replaceChild
@@ -2098,11 +2131,14 @@ argument_list|()
 operator|==
 literal|1
 condition|)
+block|{
 name|childOperators
 operator|=
 literal|null
 expr_stmt|;
+block|}
 else|else
+block|{
 name|childOperators
 operator|.
 name|remove
@@ -2110,6 +2146,7 @@ argument_list|(
 name|childIndex
 argument_list|)
 expr_stmt|;
+block|}
 name|int
 name|parentIndex
 init|=
@@ -2141,6 +2178,7 @@ argument_list|()
 operator|==
 literal|1
 condition|)
+block|{
 name|child
 operator|.
 name|setParentOperators
@@ -2148,7 +2186,9 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|child
 operator|.
 name|getParentOperators
@@ -2160,7 +2200,8 @@ name|parentIndex
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Replace one parent with another at the same position. Chilren of the new parent are not updated    * @param parent     the old parent    * @param newParent  the new parent    */
+block|}
+comment|/**    * Replace one parent with another at the same position. Chilren of the new    * parent are not updated    *     * @param parent    *          the old parent    * @param newParent    *          the new parent    */
 specifier|public
 name|void
 name|replaceParent
@@ -2216,7 +2257,8 @@ name|long
 name|cntr
 parameter_list|)
 block|{
-comment|// A very simple counter to keep track of number of rows processed by an operator. It dumps
+comment|// A very simple counter to keep track of number of rows processed by an
+comment|// operator. It dumps
 comment|// every 1 million times, and quickly before that
 if|if
 condition|(
@@ -2224,11 +2266,13 @@ name|cntr
 operator|>=
 literal|1000000
 condition|)
+block|{
 return|return
 name|cntr
 operator|+
 literal|1000000
 return|;
+block|}
 return|return
 literal|10
 operator|*
@@ -2321,8 +2365,10 @@ expr_stmt|;
 block|}
 block|}
 comment|// For debugging purposes:
-comment|// System.out.println("" + this.getClass() + ": " + SerDeUtils.getJSONString(row, rowInspector));
-comment|// System.out.println("" + this.getClass() + ">> " + ObjectInspectorUtils.getObjectInspectorName(rowInspector));
+comment|// System.out.println("" + this.getClass() + ": " +
+comment|// SerDeUtils.getJSONString(row, rowInspector));
+comment|// System.out.println("" + this.getClass() + ">> " +
+comment|// ObjectInspectorUtils.getObjectInspectorName(rowInspector));
 if|if
 condition|(
 name|childOperatorsArray
@@ -2578,7 +2624,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Implements the getName function for the Node Interface.    * @return the name of the operator    */
+comment|/**    * Implements the getName function for the Node Interface.    *     * @return the name of the operator    */
 specifier|public
 name|String
 name|getName
@@ -2592,7 +2638,7 @@ literal|"OP"
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns a map of output column name to input expression map    * Note that currently it returns only key columns for ReduceSink and GroupBy operators    * @return null if the operator doesn't change columns    */
+comment|/**    * Returns a map of output column name to input expression map Note that    * currently it returns only key columns for ReduceSink and GroupBy operators    *     * @return null if the operator doesn't change columns    */
 specifier|public
 name|Map
 argument_list|<
@@ -2734,9 +2780,11 @@ name|id
 argument_list|)
 argument_list|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|seenOpts
 operator|.
 name|add
@@ -3894,7 +3942,7 @@ name|Long
 argument_list|>
 name|counters
 decl_stmt|;
-comment|/**    * keeps track of unique ProgressCounter enums used    * this value is used at compile time while assigning ProgressCounter    * enums to counter names    */
+comment|/**    * keeps track of unique ProgressCounter enums used this value is used at    * compile time while assigning ProgressCounter enums to counter names    */
 specifier|private
 specifier|static
 name|int
@@ -4004,6 +4052,7 @@ name|counterNameToEnum
 operator|!=
 literal|null
 condition|)
+block|{
 name|totalTime
 operator|+=
 operator|(
@@ -4016,7 +4065,8 @@ name|beginTime
 operator|)
 expr_stmt|;
 block|}
-comment|/**    * this is called in operators in map or reduce tasks    * @param name    * @param amount    */
+block|}
+comment|/**    * this is called in operators in map or reduce tasks    *     * @param name    * @param amount    */
 specifier|protected
 name|void
 name|incrCounter
@@ -4050,13 +4100,15 @@ argument_list|(
 name|counterName
 argument_list|)
 decl_stmt|;
-comment|// Currently, we maintain fixed number of counters per plan - in case of a bigger tree, we may run out of them
+comment|// Currently, we maintain fixed number of counters per plan - in case of a
+comment|// bigger tree, we may run out of them
 if|if
 condition|(
 name|pc
 operator|==
 literal|null
 condition|)
+block|{
 name|LOG
 operator|.
 name|warn
@@ -4066,6 +4118,7 @@ operator|+
 name|counterName
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -4073,6 +4126,7 @@ name|reporter
 operator|!=
 literal|null
 condition|)
+block|{
 name|reporter
 operator|.
 name|incrCounter
@@ -4082,6 +4136,7 @@ argument_list|,
 name|amount
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|public
 name|ArrayList
@@ -4169,7 +4224,7 @@ return|return
 name|counters
 return|;
 block|}
-comment|/**    * called in ExecDriver.progress periodically    * @param ctrs counters from the running job    */
+comment|/**    * called in ExecDriver.progress periodically    *     * @param ctrs    *          counters from the running job    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -4202,14 +4257,17 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
-comment|// For some old unit tests, the counters will not be populated. Eventually, the old tests should be removed
+comment|// For some old unit tests, the counters will not be populated. Eventually,
+comment|// the old tests should be removed
 if|if
 condition|(
 name|counterNameToEnum
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Map
@@ -4289,7 +4347,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Recursively check this operator and its descendants to see if the    * fatal error counter is set to non-zero.    * @param ctrs    */
+comment|/**    * Recursively check this operator and its descendants to see if the fatal    * error counter is set to non-zero.    *     * @param ctrs    */
 specifier|public
 name|boolean
 name|checkFatalErrors
@@ -4307,9 +4365,11 @@ name|counterNameToEnum
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|String
 name|counterName
 init|=
@@ -4332,13 +4392,15 @@ argument_list|(
 name|counterName
 argument_list|)
 decl_stmt|;
-comment|// Currently, we maintain fixed number of counters per plan - in case of a bigger tree, we may run out of them
+comment|// Currently, we maintain fixed number of counters per plan - in case of a
+comment|// bigger tree, we may run out of them
 if|if
 condition|(
 name|pc
 operator|==
 literal|null
 condition|)
+block|{
 name|LOG
 operator|.
 name|warn
@@ -4348,6 +4410,7 @@ operator|+
 name|counterName
 argument_list|)
 expr_stmt|;
+block|}
 else|else
 block|{
 name|long
@@ -4373,9 +4436,11 @@ name|value
 operator|!=
 literal|0
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 block|}
 if|if
 condition|(
@@ -4426,7 +4491,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**     * Get the fatal error message based on counter's code.    * @param errMsg error message should be appended to this output parameter.    * @param counterValue input counter code.    */
+comment|/**    * Get the fatal error message based on counter's code.    *     * @param errMsg    *          error message should be appended to this output parameter.    * @param counterValue    *          input counter code.    */
 specifier|protected
 name|void
 name|fatalErrorMessage
@@ -4450,7 +4515,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-comment|/**    * Called only in SemanticAnalyzer after all operators have added their    * own set of counter names    */
+comment|/**    * Called only in SemanticAnalyzer after all operators have added their own    * set of counter names    */
 specifier|public
 name|void
 name|assignCounterNameToEnum
@@ -4489,8 +4554,10 @@ operator|++
 name|lastEnumUsed
 expr_stmt|;
 comment|// TODO Hack for hadoop-0.17
-comment|// Currently, only maximum number of 'totalNumCntrs' can be used. If you want
-comment|// to add more counters, increase the number of counters in ProgressCounter
+comment|// Currently, only maximum number of 'totalNumCntrs' can be used. If you
+comment|// want
+comment|// to add more counters, increase the number of counters in
+comment|// ProgressCounter
 if|if
 condition|(
 name|lastEnumUsed
@@ -4661,7 +4728,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/*    * By default, the list is empty - if an operator wants to add more counters, it should override this method    * and provide the new list.     */
+comment|/*    * By default, the list is empty - if an operator wants to add more counters,    * it should override this method and provide the new list.    */
 specifier|private
 name|List
 argument_list|<
@@ -4708,7 +4775,7 @@ operator|=
 name|counterNameToEnum
 expr_stmt|;
 block|}
-comment|/**    * Should be overridden to return the type of the specific operator among     * the types in OperatorType     *     * @return OperatorType.* or -1 if not overridden     */
+comment|/**    * Should be overridden to return the type of the specific operator among the    * types in OperatorType    *     * @return OperatorType.* or -1 if not overridden    */
 specifier|public
 name|int
 name|getType

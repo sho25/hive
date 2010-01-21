@@ -21,37 +21,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|net
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|Partition
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|Table
+name|URI
 import|;
 end_import
 
@@ -67,16 +41,42 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|net
+name|apache
 operator|.
-name|URI
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Partition
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Table
 import|;
 end_import
 
 begin_comment
-comment|/**  * This class encapsulates the information on the partition and  * tables that are read by the query.  */
+comment|/**  * This class encapsulates the information on the partition and tables that are  * read by the query.  */
 end_comment
 
 begin_class
@@ -86,15 +86,17 @@ name|ReadEntity
 block|{
 comment|/**    * The partition. This is null for a non partitioned table.    */
 specifier|private
+specifier|final
 name|Partition
 name|p
 decl_stmt|;
 comment|/**    * The table.    */
 specifier|private
+specifier|final
 name|Table
 name|t
 decl_stmt|;
-comment|/**    * Constructor.    *    * @param t The Table that the query reads from.    */
+comment|/**    * Constructor.    *     * @param t    *          The Table that the query reads from.    */
 specifier|public
 name|ReadEntity
 parameter_list|(
@@ -108,14 +110,12 @@ name|t
 operator|=
 name|t
 expr_stmt|;
-name|this
-operator|.
 name|p
 operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * Constructor given a partiton.    *    * @param p The partition that the query reads from.    */
+comment|/**    * Constructor given a partiton.    *     * @param p    *          The partition that the query reads from.    */
 specifier|public
 name|ReadEntity
 parameter_list|(
@@ -123,8 +123,6 @@ name|Partition
 name|p
 parameter_list|)
 block|{
-name|this
-operator|.
 name|t
 operator|=
 name|p
@@ -337,9 +335,11 @@ name|o
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 name|o
@@ -371,9 +371,11 @@ operator|)
 return|;
 block|}
 else|else
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 comment|/**    * Hashcode function.    */
 annotation|@

@@ -21,6 +21,30 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Matcher
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Pattern
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -111,30 +135,6 @@ name|Text
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Pattern
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Matcher
-import|;
-end_import
-
 begin_class
 annotation|@
 name|description
@@ -179,6 +179,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|Text
 name|lastLikePattern
 init|=
@@ -223,6 +224,7 @@ operator|.
 name|COMPLEX
 decl_stmt|;
 specifier|private
+specifier|final
 name|Text
 name|simplePattern
 init|=
@@ -231,6 +233,7 @@ name|Text
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|BooleanWritable
 name|result
 init|=
@@ -416,7 +419,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * Parses the likePattern. Based on it is a simple pattern     * or not, the function might change two member variables.     * {@link #type} will be changed to the corresponding     * pattern type; {@link #simplePattern} will record     * the string in it for later pattern matching if it     * is a simple pattern.    *<p>    * Examples:     *<blockquote><pre>    * parseSimplePattern("%abc%") changes {@link #type} to PatternType.MIDDLE    * and changes {@link #simplePattern} to "abc"    * parseSimplePattern("%ab_c%") changes {@link #type} to PatternType.COMPLEX    * and does not change {@link #simplePattern}    *</pre></blockquote>    *     * @param likePattern the input LIKE query pattern    */
+comment|/**    * Parses the likePattern. Based on it is a simple pattern or not, the    * function might change two member variables. {@link #type} will be changed    * to the corresponding pattern type; {@link #simplePattern} will record the    * string in it for later pattern matching if it is a simple pattern.    *<p>    * Examples:<blockquote>    *     *<pre>    * parseSimplePattern("%abc%") changes {@link #type} to PatternType.MIDDLE    * and changes {@link #simplePattern} to "abc"    * parseSimplePattern("%ab_c%") changes {@link #type} to PatternType.COMPLEX    * and does not change {@link #simplePattern}    *</pre>    *     *</blockquote>    *     * @param likePattern    *          the input LIKE query pattern    */
 specifier|private
 name|void
 name|parseSimplePattern
@@ -887,6 +890,7 @@ name|PatternType
 operator|.
 name|COMPLEX
 condition|)
+block|{
 name|p
 operator|=
 name|Pattern
@@ -899,6 +903,7 @@ name|strLikePattern
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

@@ -384,7 +384,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Compute the variance. This class is extended by:  *   GenericUDAFVarianceSample  *   GenericUDAFStd  *   GenericUDAFStdSample  *  */
+comment|/**  * Compute the variance. This class is extended by: GenericUDAFVarianceSample  * GenericUDAFStd GenericUDAFStdSample  *   */
 end_comment
 
 begin_class
@@ -562,7 +562,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Evaluate the variance using the following modification of the formula from    * The Art of Computer Programming, vol. 2, p. 232:    *       *   variance = variance1 + variance2 + n*alpha^2 + m*betha^2    *       * where:    *   - variance is sum[x-avg^2] (this is actually n times the variance) and is    *   updated at every step.    *   - n is the count of elements in chunk1    *   - m is the count of elements in chunk2    *   - alpha = avg-a    *   - betha = avg-b    *   - avg is the the average of all elements from both chunks    *   - a is the average of elements in chunk1    *   - b is the average of elements in chunk2    *     */
+comment|/**    * Evaluate the variance using the following modification of the formula from    * The Art of Computer Programming, vol. 2, p. 232:    *     * variance = variance1 + variance2 + n*alpha^2 + m*betha^2    *     * where: - variance is sum[x-avg^2] (this is actually n times the variance)    * and is updated at every step. - n is the count of elements in chunk1 - m is    * the count of elements in chunk2 - alpha = avg-a - betha = avg-b - avg is    * the the average of all elements from both chunks - a is the average of    * elements in chunk1 - b is the average of elements in chunk2    *     */
 specifier|public
 specifier|static
 class|class
@@ -644,13 +644,13 @@ if|if
 condition|(
 name|mode
 operator|==
-name|mode
+name|Mode
 operator|.
 name|PARTIAL1
 operator|||
 name|mode
 operator|==
-name|mode
+name|Mode
 operator|.
 name|COMPLETE
 condition|)
@@ -741,13 +741,13 @@ if|if
 condition|(
 name|mode
 operator|==
-name|mode
+name|Mode
 operator|.
 name|PARTIAL1
 operator|||
 name|mode
 operator|==
-name|mode
+name|Mode
 operator|.
 name|PARTIAL2
 condition|)
@@ -1045,9 +1045,6 @@ name|getDouble
 argument_list|(
 name|p
 argument_list|,
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|inputOI
 argument_list|)
 decl_stmt|;
@@ -1060,7 +1057,8 @@ operator|!=
 literal|0
 condition|)
 block|{
-comment|// if count==0 => the variance is going to be 0
+comment|// if count==0 => the variance is going to be
+comment|// 0
 comment|// after 1 iteration
 name|double
 name|alpha

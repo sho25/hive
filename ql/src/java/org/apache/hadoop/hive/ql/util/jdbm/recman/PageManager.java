@@ -33,12 +33,12 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|IOException
 import|;
 end_import
 
 begin_comment
-comment|/**  *  This class manages the linked lists of pages that make up a file.  */
+comment|/**  * This class manages the linked lists of pages that make up a file.  */
 end_comment
 
 begin_class
@@ -60,7 +60,7 @@ specifier|private
 name|BlockIo
 name|headerBuf
 decl_stmt|;
-comment|/**      *  Creates a new page manager using the indicated record file.      */
+comment|/**    * Creates a new page manager using the indicated record file.    */
 name|PageManager
 parameter_list|(
 name|RecordFile
@@ -97,6 +97,7 @@ argument_list|)
 operator|==
 literal|0
 condition|)
+block|{
 name|header
 operator|=
 operator|new
@@ -107,7 +108,9 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|header
 operator|=
 operator|new
@@ -119,7 +122,8 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Allocates a page of the indicated type. Returns recid of the      *  page.      */
+block|}
+comment|/**    * Allocates a page of the indicated type. Returns recid of the page.    */
 name|long
 name|allocate
 parameter_list|(
@@ -137,6 +141,7 @@ name|Magic
 operator|.
 name|FREE_PAGE
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -144,6 +149,7 @@ argument_list|(
 literal|"allocate of free page?"
 argument_list|)
 throw|;
+block|}
 comment|// do we have something on the free list?
 name|long
 name|retval
@@ -206,11 +212,13 @@ name|retval
 operator|==
 literal|0
 condition|)
+block|{
 comment|// very new file - allocate record #1
 name|retval
 operator|=
 literal|1
 expr_stmt|;
+block|}
 name|header
 operator|.
 name|setLastOf
@@ -320,6 +328,7 @@ name|oldLast
 operator|==
 literal|0
 condition|)
+block|{
 comment|// This was the first one of this type
 name|header
 operator|.
@@ -330,6 +339,7 @@ argument_list|,
 name|retval
 argument_list|)
 expr_stmt|;
+block|}
 name|header
 operator|.
 name|setLastOf
@@ -403,7 +413,7 @@ return|return
 name|retval
 return|;
 block|}
-comment|/**      *  Frees a page of the indicated type.      */
+comment|/**    * Frees a page of the indicated type.    */
 name|void
 name|free
 parameter_list|(
@@ -424,6 +434,7 @@ name|Magic
 operator|.
 name|FREE_PAGE
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -431,12 +442,14 @@ argument_list|(
 literal|"free free page?"
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|recid
 operator|==
 literal|0
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -444,6 +457,7 @@ argument_list|(
 literal|"free header page?"
 argument_list|)
 throw|;
+block|}
 comment|// get the page and read next and previous pointers
 name|BlockIo
 name|buf
@@ -642,7 +656,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      *  Returns the page following the indicated block      */
+comment|/**    * Returns the page following the indicated block    */
 name|long
 name|getNext
 parameter_list|(
@@ -684,7 +698,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      *  Returns the page before the indicated block      */
+comment|/**    * Returns the page before the indicated block    */
 name|long
 name|getPrev
 parameter_list|(
@@ -726,7 +740,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      *  Returns the first page on the indicated list.      */
+comment|/**    * Returns the first page on the indicated list.    */
 name|long
 name|getFirst
 parameter_list|(
@@ -745,7 +759,7 @@ name|type
 argument_list|)
 return|;
 block|}
-comment|/**      *  Returns the last page on the indicated list.      */
+comment|/**    * Returns the last page on the indicated list.    */
 name|long
 name|getLast
 parameter_list|(
@@ -764,7 +778,7 @@ name|type
 argument_list|)
 return|;
 block|}
-comment|/**      *  Commit all pending (in-memory) data by flushing the page manager.      *  This forces a flush of all outstanding blocks (this it's an implicit      *  {@link RecordFile#commit} as well).      */
+comment|/**    * Commit all pending (in-memory) data by flushing the page manager. This    * forces a flush of all outstanding blocks (this it's an implicit    * {@link RecordFile#commit} as well).    */
 name|void
 name|commit
 parameter_list|()
@@ -805,7 +819,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Flushes the page manager. This forces a flush of all outstanding      *  blocks (this it's an implicit {@link RecordFile#commit} as well).      */
+comment|/**    * Flushes the page manager. This forces a flush of all outstanding blocks    * (this it's an implicit {@link RecordFile#commit} as well).    */
 name|void
 name|rollback
 parameter_list|()
@@ -846,6 +860,7 @@ argument_list|)
 operator|==
 literal|0
 condition|)
+block|{
 name|header
 operator|=
 operator|new
@@ -856,7 +871,9 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|header
 operator|=
 operator|new
@@ -868,7 +885,8 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Closes the page manager. This flushes the page manager and releases      *  the lock on the header.      */
+block|}
+comment|/**    * Closes the page manager. This flushes the page manager and releases the    * lock on the header.    */
 name|void
 name|close
 parameter_list|()
@@ -900,7 +918,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**      *  Returns the file header.      */
+comment|/**    * Returns the file header.    */
 name|FileHeader
 name|getFileHeader
 parameter_list|()

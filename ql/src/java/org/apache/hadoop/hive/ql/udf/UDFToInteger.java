@@ -256,7 +256,7 @@ specifier|public
 name|UDFToInteger
 parameter_list|()
 block|{   }
-comment|/**    * Convert from void to an integer. This is called for CAST(... AS INT)    *    * @param i The void value to convert    * @return Integer    */
+comment|/**    * Convert from void to an integer. This is called for CAST(... AS INT)    *     * @param i    *          The void value to convert    * @return Integer    */
 specifier|public
 name|IntWritable
 name|evaluate
@@ -269,7 +269,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert from boolean to an integer. This is called for CAST(... AS INT)    *    * @param i The boolean value to convert    * @return IntWritable    */
+comment|/**    * Convert from boolean to an integer. This is called for CAST(... AS INT)    *     * @param i    *          The boolean value to convert    * @return IntWritable    */
 specifier|public
 name|IntWritable
 name|evaluate
@@ -310,7 +310,7 @@ name|intWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from byte to an integer. This is called for CAST(... AS INT)    *    * @param i The byte value to convert    * @return IntWritable    */
+comment|/**    * Convert from byte to an integer. This is called for CAST(... AS INT)    *     * @param i    *          The byte value to convert    * @return IntWritable    */
 specifier|public
 name|IntWritable
 name|evaluate
@@ -336,9 +336,6 @@ name|intWritable
 operator|.
 name|set
 argument_list|(
-operator|(
-name|int
-operator|)
 name|i
 operator|.
 name|get
@@ -350,7 +347,7 @@ name|intWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from short to an integer. This is called for CAST(... AS INT)    *    * @param i The short value to convert    * @return IntWritable    */
+comment|/**    * Convert from short to an integer. This is called for CAST(... AS INT)    *     * @param i    *          The short value to convert    * @return IntWritable    */
 specifier|public
 name|IntWritable
 name|evaluate
@@ -376,9 +373,6 @@ name|intWritable
 operator|.
 name|set
 argument_list|(
-operator|(
-name|int
-operator|)
 name|i
 operator|.
 name|get
@@ -390,7 +384,7 @@ name|intWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from long to an integer. This is called for CAST(... AS INT)    *    * @param i The long value to convert    * @return IntWritable    */
+comment|/**    * Convert from long to an integer. This is called for CAST(... AS INT)    *     * @param i    *          The long value to convert    * @return IntWritable    */
 specifier|public
 name|IntWritable
 name|evaluate
@@ -430,7 +424,7 @@ name|intWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from float to an integer. This is called for CAST(... AS INT)    *    * @param i The float value to convert    * @return IntWritable    */
+comment|/**    * Convert from float to an integer. This is called for CAST(... AS INT)    *     * @param i    *          The float value to convert    * @return IntWritable    */
 specifier|public
 name|IntWritable
 name|evaluate
@@ -470,7 +464,7 @@ name|intWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from double to an integer. This is called for CAST(... AS INT)    *    * @param i The double value to convert    * @return IntWritable    */
+comment|/**    * Convert from double to an integer. This is called for CAST(... AS INT)    *     * @param i    *          The double value to convert    * @return IntWritable    */
 specifier|public
 name|IntWritable
 name|evaluate
@@ -510,7 +504,7 @@ name|intWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from string to an integer. This is called for CAST(... AS INT)    *    * @param i The string value to convert    * @return IntWritable    */
+comment|/**    * Convert from string to an integer. This is called for CAST(... AS INT)    *     * @param i    *          The string value to convert    * @return IntWritable    */
 specifier|public
 name|IntWritable
 name|evaluate

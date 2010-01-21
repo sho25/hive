@@ -180,6 +180,8 @@ name|Object
 index|[]
 name|output
 decl_stmt|;
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -329,6 +331,8 @@ name|hconf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -462,6 +466,8 @@ literal|"SEL"
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

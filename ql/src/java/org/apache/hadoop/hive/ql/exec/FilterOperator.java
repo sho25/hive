@@ -249,6 +249,8 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -276,8 +278,6 @@ operator|.
 name|HIVESENDHEARTBEAT
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|conditionEvaluator
 operator|=
 name|ExprNodeEvaluatorFactory
@@ -337,6 +337,8 @@ name|hconf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -454,7 +456,8 @@ expr_stmt|;
 name|consecutiveFails
 operator|++
 expr_stmt|;
-comment|// In case of a lot of consecutive failures, send a heartbeat in order to avoid timeout
+comment|// In case of a lot of consecutive failures, send a heartbeat in order to
+comment|// avoid timeout
 if|if
 condition|(
 operator|(
@@ -473,11 +476,13 @@ operator|!=
 literal|null
 operator|)
 condition|)
+block|{
 name|reporter
 operator|.
 name|progress
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * @return the name of the operator    */
@@ -496,6 +501,8 @@ literal|"FIL"
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

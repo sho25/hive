@@ -372,8 +372,6 @@ index|]
 operator|=
 name|r
 expr_stmt|;
-name|this
-operator|.
 name|forward
 argument_list|(
 name|forwardObj

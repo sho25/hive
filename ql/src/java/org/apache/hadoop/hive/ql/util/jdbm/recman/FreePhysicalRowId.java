@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  This class extends the physical rowid with a size value to indicated  *  the size of a free rowid on the free rowid list.  */
+comment|/**  * This class extends the physical rowid with a size value to indicated the size  * of a free rowid on the free rowid list.  */
 end_comment
 
 begin_class
@@ -61,7 +61,7 @@ name|Magic
 operator|.
 name|SZ_INT
 decl_stmt|;
-comment|/**      *  Constructs a physical rowid from the indicated data starting at      *  the indicated position.      */
+comment|/**    * Constructs a physical rowid from the indicated data starting at the    * indicated position.    */
 name|FreePhysicalRowId
 parameter_list|(
 name|BlockIo

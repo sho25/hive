@@ -22,7 +22,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  Doubly circular linked list item.  */
+comment|/**  * Doubly circular linked list item.  */
 end_comment
 
 begin_class
@@ -46,7 +46,7 @@ operator|=
 name|this
 expr_stmt|;
 block|}
-comment|/**    * Get the next item.    * @return the next item.    */
+comment|/**    * Get the next item.    *     * @return the next item.    */
 specifier|public
 name|DCLLItem
 name|getNext
@@ -56,7 +56,7 @@ return|return
 name|next
 return|;
 block|}
-comment|/**    * Get the previous item.    * @return the previous item.    */
+comment|/**    * Get the previous item.    *     * @return the previous item.    */
 specifier|public
 name|DCLLItem
 name|getPrev
@@ -66,7 +66,7 @@ return|return
 name|prev
 return|;
 block|}
-comment|/**    * Set the next item as itm.    * @param itm the item to be set as next.    */
+comment|/**    * Set the next item as itm.    *     * @param itm    *          the item to be set as next.    */
 specifier|public
 name|void
 name|setNext
@@ -80,7 +80,7 @@ operator|=
 name|itm
 expr_stmt|;
 block|}
-comment|/**    * Set the previous item as itm    * @param itm the item to be set as previous.    */
+comment|/**    * Set the previous item as itm    *     * @param itm    *          the item to be set as previous.    */
 specifier|public
 name|void
 name|setPrev
@@ -104,30 +104,22 @@ name|next
 operator|.
 name|prev
 operator|=
-name|this
-operator|.
 name|prev
 expr_stmt|;
 name|prev
 operator|.
 name|next
 operator|=
-name|this
-operator|.
 name|next
 expr_stmt|;
-name|this
-operator|.
 name|prev
 operator|=
-name|this
-operator|.
 name|next
 operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * Add v as the previous of the current list item.    * @param v inserted item.    */
+comment|/**    * Add v as the previous of the current list item.    *     * @param v    *          inserted item.    */
 specifier|public
 name|void
 name|insertBefore
@@ -136,8 +128,6 @@ name|DCLLItem
 name|v
 parameter_list|)
 block|{
-name|this
-operator|.
 name|prev
 operator|.
 name|next
@@ -148,8 +138,6 @@ name|v
 operator|.
 name|prev
 operator|=
-name|this
-operator|.
 name|prev
 expr_stmt|;
 name|v
@@ -158,14 +146,12 @@ name|next
 operator|=
 name|this
 expr_stmt|;
-name|this
-operator|.
 name|prev
 operator|=
 name|v
 expr_stmt|;
 block|}
-comment|/**    * Add v as the previous of the current list item.    * @param v inserted item.    */
+comment|/**    * Add v as the previous of the current list item.    *     * @param v    *          inserted item.    */
 specifier|public
 name|void
 name|insertAfter
@@ -174,8 +160,6 @@ name|DCLLItem
 name|v
 parameter_list|)
 block|{
-name|this
-operator|.
 name|next
 operator|.
 name|prev
@@ -186,8 +170,6 @@ name|v
 operator|.
 name|next
 operator|=
-name|this
-operator|.
 name|next
 expr_stmt|;
 name|v
@@ -196,8 +178,6 @@ name|prev
 operator|=
 name|this
 expr_stmt|;
-name|this
-operator|.
 name|next
 operator|=
 name|v

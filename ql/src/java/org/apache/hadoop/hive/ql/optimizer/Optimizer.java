@@ -67,6 +67,46 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|ppr
+operator|.
+name|PartitionPruner
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|unionproc
+operator|.
+name|UnionProcessor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|ParseContext
@@ -109,46 +149,6 @@ name|PredicatePushDown
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|ppr
-operator|.
-name|PartitionPruner
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|unionproc
-operator|.
-name|UnionProcessor
-import|;
-end_import
-
 begin_comment
 comment|/**  * Implementation of the optimizer  */
 end_comment
@@ -169,7 +169,7 @@ name|Transform
 argument_list|>
 name|transformations
 decl_stmt|;
-comment|/** 	 * create the list of transformations 	 * @param hiveConf 	 */
+comment|/**    * create the list of transformations    *     * @param hiveConf    */
 specifier|public
 name|void
 name|initialize
@@ -311,7 +311,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * invoke all the transformations one-by-one, and alter the query plan    * @return ParseContext    * @throws SemanticException    */
+comment|/**    * invoke all the transformations one-by-one, and alter the query plan    *     * @return ParseContext    * @throws SemanticException    */
 specifier|public
 name|ParseContext
 name|optimize
@@ -326,6 +326,7 @@ name|t
 range|:
 name|transformations
 control|)
+block|{
 name|pctx
 operator|=
 name|t
@@ -335,6 +336,7 @@ argument_list|(
 name|pctx
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|pctx
 return|;
@@ -349,7 +351,7 @@ return|return
 name|pctx
 return|;
 block|}
-comment|/**    * @param pctx the pctx to set    */
+comment|/**    * @param pctx    *          the pctx to set    */
 specifier|public
 name|void
 name|setPctx

@@ -343,28 +343,29 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**    * The evaluators for the key columns.    * Key columns decide the sort order on the reducer side.    * Key columns are passed to the reducer in the "key".    */
+comment|/**    * The evaluators for the key columns. Key columns decide the sort order on    * the reducer side. Key columns are passed to the reducer in the "key".    */
 specifier|transient
 specifier|protected
 name|ExprNodeEvaluator
 index|[]
 name|keyEval
 decl_stmt|;
-comment|/**    * The evaluators for the value columns.    * Value columns are passed to reducer in the "value".     */
+comment|/**    * The evaluators for the value columns. Value columns are passed to reducer    * in the "value".    */
 specifier|transient
 specifier|protected
 name|ExprNodeEvaluator
 index|[]
 name|valueEval
 decl_stmt|;
-comment|/**    * The evaluators for the partition columns (CLUSTER BY or DISTRIBUTE BY in Hive language).    * Partition columns decide the reducer that the current row goes to.    * Partition columns are not passed to reducer.    */
+comment|/**    * The evaluators for the partition columns (CLUSTER BY or DISTRIBUTE BY in    * Hive language). Partition columns decide the reducer that the current row    * goes to. Partition columns are not passed to reducer.    */
 specifier|transient
 specifier|protected
 name|ExprNodeEvaluator
 index|[]
 name|partitionEval
 decl_stmt|;
-comment|// TODO: we use MetadataTypedColumnsetSerDe for now, till DynamicSerDe is ready
+comment|// TODO: we use MetadataTypedColumnsetSerDe for now, till DynamicSerDe is
+comment|// ready
 specifier|transient
 name|Serializer
 name|keySerializer
@@ -392,6 +393,8 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -720,6 +723,8 @@ specifier|transient
 name|Random
 name|random
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -1060,8 +1065,10 @@ operator|==
 literal|0
 condition|)
 block|{
-comment|// If no partition cols, just distribute the data uniformly to provide better
-comment|// load balance.  If the requirement is to have a single reducer, we should set
+comment|// If no partition cols, just distribute the data uniformly to provide
+comment|// better
+comment|// load balance. If the requirement is to have a single reducer, we
+comment|// should set
 comment|// the number of reducers to 1.
 comment|// Use a constant seed to make the code deterministic.
 if|if
@@ -1226,7 +1233,8 @@ argument_list|,
 name|value
 argument_list|)
 expr_stmt|;
-comment|// Since this is a terminal operator, update counters explicitly - forward is not called
+comment|// Since this is a terminal operator, update counters explicitly -
+comment|// forward is not called
 if|if
 condition|(
 name|counterNameToEnum
@@ -1235,14 +1243,10 @@ literal|null
 condition|)
 block|{
 operator|++
-name|this
-operator|.
 name|outputRows
 expr_stmt|;
 if|if
 condition|(
-name|this
-operator|.
 name|outputRows
 operator|%
 literal|1000
@@ -1257,8 +1261,6 @@ argument_list|,
 name|outputRows
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|outputRows
 operator|=
 literal|0
@@ -1283,6 +1285,8 @@ throw|;
 block|}
 block|}
 comment|/**    * @return the name of the operator    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getName
@@ -1296,6 +1300,8 @@ literal|"RS"
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

@@ -31,26 +31,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -70,7 +50,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * All member variables should have a setters and getters of the form  * get<member name> and set<member name> or else they won't be recreated  * properly at run time.  *   */
+comment|/**  * All member variables should have a setters and getters of the form get<member  * name> and set<member name> or else they won't be recreated properly at run  * time.  *   */
 end_comment
 
 begin_class
@@ -102,7 +82,7 @@ decl_stmt|;
 specifier|public
 name|udtfDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|udtfDesc
 parameter_list|(
@@ -124,8 +104,6 @@ name|getGenericUDTF
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|genericUDTF
 return|;
 block|}
@@ -158,8 +136,6 @@ name|getUDTFName
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|genericUDTF
 operator|.
 name|toString

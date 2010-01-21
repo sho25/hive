@@ -60,7 +60,8 @@ specifier|public
 name|forwardDesc
 parameter_list|()
 block|{
-comment|// throw new RuntimeException("This class does not need to be instantiated");
+comment|// throw new
+comment|// RuntimeException("This class does not need to be instantiated");
 block|}
 block|}
 end_class

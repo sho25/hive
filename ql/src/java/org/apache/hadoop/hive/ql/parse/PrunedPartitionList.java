@@ -74,13 +74,14 @@ name|unknownPartns
 decl_stmt|;
 comment|// denied partitions - do not satisfy the partition criteria
 specifier|private
+specifier|final
 name|Set
 argument_list|<
 name|Partition
 argument_list|>
 name|deniedPartns
 decl_stmt|;
-comment|/**    * @param confirmedPartns  confirmed paritions    * @param unknownPartns    unknown partitions    */
+comment|/**    * @param confirmedPartns    *          confirmed paritions    * @param unknownPartns    *          unknown partitions    */
 specifier|public
 name|PrunedPartitionList
 parameter_list|(
@@ -122,7 +123,7 @@ operator|=
 name|deniedPartns
 expr_stmt|;
 block|}
-comment|/**    * get confirmed partitions    * @return confirmedPartns  confirmed paritions    */
+comment|/**    * get confirmed partitions    *     * @return confirmedPartns confirmed paritions    */
 specifier|public
 name|Set
 argument_list|<
@@ -135,7 +136,7 @@ return|return
 name|confirmedPartns
 return|;
 block|}
-comment|/**    * get unknown partitions    * @return unknownPartns  unknown paritions    */
+comment|/**    * get unknown partitions    *     * @return unknownPartns unknown paritions    */
 specifier|public
 name|Set
 argument_list|<
@@ -148,7 +149,7 @@ return|return
 name|unknownPartns
 return|;
 block|}
-comment|/**    * get denied partitions    * @return deniedPartns  denied paritions    */
+comment|/**    * get denied partitions    *     * @return deniedPartns denied paritions    */
 specifier|public
 name|Set
 argument_list|<
@@ -161,7 +162,7 @@ return|return
 name|deniedPartns
 return|;
 block|}
-comment|/**    * set confirmed partitions    * @param confirmedPartns  confirmed paritions    */
+comment|/**    * set confirmed partitions    *     * @param confirmedPartns    *          confirmed paritions    */
 specifier|public
 name|void
 name|setConfirmedPartns
@@ -180,7 +181,7 @@ operator|=
 name|confirmedPartns
 expr_stmt|;
 block|}
-comment|/**    * set unknown partitions    * @param unknownPartns    unknown partitions    */
+comment|/**    * set unknown partitions    *     * @param unknownPartns    *          unknown partitions    */
 specifier|public
 name|void
 name|setUnknownPartns

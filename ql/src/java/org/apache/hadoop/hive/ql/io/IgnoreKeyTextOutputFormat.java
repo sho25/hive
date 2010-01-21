@@ -142,10 +142,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class replaces key with null before feeding the<key, value>   * to TextOutputFormat.RecordWriter.  *   * @deprecated use {@link HiveIgnoreKeyTextOutputFormat} instead}  */
+comment|/**  * This class replaces key with null before feeding the<key, value> to  * TextOutputFormat.RecordWriter.  *   * @deprecated use {@link HiveIgnoreKeyTextOutputFormat} instead}  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|IgnoreKeyTextOutputFormat
@@ -188,6 +190,7 @@ name|V
 argument_list|>
 block|{
 specifier|private
+specifier|final
 name|RecordWriter
 argument_list|<
 name|K
@@ -262,6 +265,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|RecordWriter
 argument_list|<

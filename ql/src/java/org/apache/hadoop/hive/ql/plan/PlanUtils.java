@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|*
+name|Serializable
 import|;
 end_import
 
@@ -33,9 +33,97 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|*
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Comparator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Vector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
 import|;
 end_import
 
@@ -159,6 +247,24 @@ name|ql
 operator|.
 name|io
 operator|.
+name|HiveOutputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
 name|IgnoreKeyTextOutputFormat
 import|;
 end_import
@@ -209,27 +315,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|lazy
-operator|.
-name|LazySimpleSerDe
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|lazybinary
-operator|.
-name|LazyBinarySerDe
+name|Deserializer
 import|;
 end_import
 
@@ -275,6 +361,56 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazy
+operator|.
+name|LazySimpleSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazybinary
+operator|.
+name|LazyBinarySerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|InputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapred
 operator|.
 name|SequenceFileInputFormat
@@ -306,82 +442,6 @@ operator|.
 name|mapred
 operator|.
 name|TextInputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|Deserializer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|HiveOutputFormat
 import|;
 end_import
 
@@ -489,7 +549,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    * and column names (comma separated string).    */
+comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode and column names (comma separated string).    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -513,7 +573,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * Generate the table descriptor of given serde with the separatorCode    * and column names (comma separated string).    */
+comment|/**    * Generate the table descriptor of given serde with the separatorCode and    * column names (comma separated string).    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -547,7 +607,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    * and column names (comma separated string), and whether the last column should take    * the rest of the line.    */
+comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode and column names (comma separated string), and whether the    * last column should take the rest of the line.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -576,7 +636,7 @@ name|lastColumnTakesRestOfTheLine
 argument_list|)
 return|;
 block|}
-comment|/**    * Generate the table descriptor of the serde specified with the separatorCode    * and column names (comma separated string), and whether the last column should take    * the rest of the line.    */
+comment|/**    * Generate the table descriptor of the serde specified with the separatorCode    * and column names (comma separated string), and whether the last column    * should take the rest of the line.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -615,7 +675,7 @@ name|lastColumnTakesRestOfTheLine
 argument_list|)
 return|;
 block|}
-comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode    * and column names (comma separated string), and whether the last column should take    * the rest of the line.    */
+comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode and column names (comma separated string), and whether the    * last column should take the rest of the line.    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -760,6 +820,7 @@ name|ctrlaCode
 argument_list|)
 argument_list|)
 condition|)
+block|{
 name|properties
 operator|.
 name|setProperty
@@ -771,12 +832,14 @@ argument_list|,
 name|separatorCode
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|columnTypes
 operator|!=
 literal|null
 condition|)
+block|{
 name|properties
 operator|.
 name|setProperty
@@ -788,6 +851,7 @@ argument_list|,
 name|columnTypes
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|lastColumnTakesRestOfTheLine
@@ -805,13 +869,16 @@ literal|"true"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// It is not a very clean way, and should be modified later - due to compatiblity reasons,
-comment|// user sees the results as json for custom scripts and has no way for specifying that.
+comment|// It is not a very clean way, and should be modified later - due to
+comment|// compatiblity reasons,
+comment|// user sees the results as json for custom scripts and has no way for
+comment|// specifying that.
 comment|// Right now, it is hard-coded in the code
 if|if
 condition|(
 name|useJSONForLazy
 condition|)
+block|{
 name|properties
 operator|.
 name|setProperty
@@ -823,6 +890,7 @@ argument_list|,
 literal|"true"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 operator|new
 name|tableDesc
@@ -938,6 +1006,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|separatorCode
 operator|=
 name|crtTblDesc
@@ -945,6 +1014,7 @@ operator|.
 name|getFieldDelim
 argument_list|()
 expr_stmt|;
+block|}
 name|ret
 operator|=
 name|getTableDesc
@@ -980,6 +1050,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|properties
 operator|.
 name|setProperty
@@ -994,6 +1065,7 @@ name|getCollItemDelim
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|crtTblDesc
@@ -1003,6 +1075,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|properties
 operator|.
 name|setProperty
@@ -1017,6 +1090,7 @@ name|getMapKeyDelim
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|crtTblDesc
@@ -1026,6 +1100,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|properties
 operator|.
 name|setProperty
@@ -1040,6 +1115,7 @@ name|getFieldEscape
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|crtTblDesc
@@ -1049,6 +1125,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|properties
 operator|.
 name|setProperty
@@ -1063,7 +1140,9 @@ name|getLineDelim
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// replace the default input& output file format with those found in crtTblDesc
+block|}
+comment|// replace the default input& output file format with those found in
+comment|// crtTblDesc
 name|Class
 name|c1
 init|=
@@ -1144,7 +1223,7 @@ return|return
 name|ret
 return|;
 block|}
-comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the separatorCode.    * MetaDataTypedColumnsetSerDe is used because LazySimpleSerDe does not support a table    * with a single column "col" with type "array<string>".    */
+comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode. MetaDataTypedColumnsetSerDe is used because LazySimpleSerDe    * does not support a table with a single column "col" with type    * "array<string>".    */
 specifier|public
 specifier|static
 name|tableDesc
@@ -1764,6 +1843,7 @@ operator|==
 literal|0
 operator|)
 condition|)
+block|{
 return|return
 operator|new
 name|ArrayList
@@ -1772,6 +1852,7 @@ name|FieldSchema
 argument_list|>
 argument_list|()
 return|;
+block|}
 name|List
 argument_list|<
 name|FieldSchema
@@ -1936,7 +2017,7 @@ return|return
 name|schema
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param outputColumnNames The output columns names    * @param tag       The tag for this reducesink    * @param partitionCols The columns for partitioning.    * @param numReducers  The number of reducers, set to -1 for automatic inference    *                     based on input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    *     * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param partitionCols    *          The columns for partitioning.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|reduceSinkDesc
@@ -2183,12 +2264,14 @@ name|numReducers
 argument_list|,
 name|keyTable
 argument_list|,
-comment|// Revert to DynamicSerDe: getBinaryTableDesc(getFieldSchemasFromColumnList(valueCols, "reducesinkvalue")));
+comment|// Revert to DynamicSerDe:
+comment|// getBinaryTableDesc(getFieldSchemasFromColumnList(valueCols,
+comment|// "reducesinkvalue")));
 name|valueTable
 argument_list|)
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    * @param keyCols   The columns to be stored in the key    * @param valueCols The columns to be stored in the value    * @param outputColumnNames The output columns names    * @param tag       The tag for this reducesink    * @param numPartitionFields  The first numPartitionFields of keyCols will be partition columns.    *                  If numPartitionFields=-1, then partition randomly.    * @param numReducers  The number of reducers, set to -1 for automatic inference    *                     based on input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    *     * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param numPartitionFields    *          The first numPartitionFields of keyCols will be partition columns.    *          If numPartitionFields=-1, then partition randomly.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|reduceSinkDesc

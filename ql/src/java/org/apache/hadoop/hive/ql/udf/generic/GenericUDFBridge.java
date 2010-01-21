@@ -95,24 +95,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|AmbiguousMethodException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|FunctionRegistry
 import|;
 end_import
@@ -300,7 +282,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDFBridge encapsulates UDF to provide the same interface as  * GenericUDF.  *   * Note that GenericUDFBridge implements Serializable because the name of  * the UDF class needs to be serialized with the plan.  *   */
+comment|/**  * GenericUDFBridge encapsulates UDF to provide the same interface as  * GenericUDF.  *   * Note that GenericUDFBridge implements Serializable because the name of the  * UDF class needs to be serialized with the plan.  *   */
 end_comment
 
 begin_class
@@ -333,7 +315,7 @@ comment|/**    * The name of the UDF.    */
 name|String
 name|udfName
 decl_stmt|;
-comment|/**    * Whether the UDF is an operator or not.    * This controls how the display string is generated.     */
+comment|/**    * Whether the UDF is an operator or not. This controls how the display string    * is generated.    */
 name|boolean
 name|isOperator
 decl_stmt|;
@@ -346,7 +328,7 @@ name|UDF
 argument_list|>
 name|udfClass
 decl_stmt|;
-comment|/**    * Greate a new GenericUDFBridge object.    * @param udfName     The name of the corresponding udf.    * @param isOperator    * @param udfClass    */
+comment|/**    * Greate a new GenericUDFBridge object.    *     * @param udfName    *          The name of the corresponding udf.    * @param isOperator    * @param udfClass    */
 specifier|public
 name|GenericUDFBridge
 parameter_list|(
@@ -476,7 +458,7 @@ specifier|transient
 name|Method
 name|udfMethod
 decl_stmt|;
-comment|/**    * Helper to convert the parameters before passing to udfMethod.      */
+comment|/**    * Helper to convert the parameters before passing to udfMethod.    */
 specifier|transient
 name|ConversionHelper
 name|conversionHelper
@@ -539,19 +521,10 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|ObjectInspector
+name|argument
+range|:
 name|arguments
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|argumentTypeInfos
@@ -562,10 +535,7 @@ name|TypeInfoUtils
 operator|.
 name|getTypeInfoFromObjectInspector
 argument_list|(
-name|arguments
-index|[
-name|i
-index|]
+name|argument
 argument_list|)
 argument_list|)
 expr_stmt|;

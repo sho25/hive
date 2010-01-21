@@ -133,24 +133,6 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazyByte
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|lazy
-operator|.
 name|LazyShort
 import|;
 end_import
@@ -274,7 +256,7 @@ specifier|public
 name|UDFToShort
 parameter_list|()
 block|{   }
-comment|/**    * Convert from void to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The void value to convert    * @return ShortWritable    */
+comment|/**    * Convert from void to a short. This is called for CAST(... AS SMALLINT)    *     * @param i    *          The void value to convert    * @return ShortWritable    */
 specifier|public
 name|ShortWritable
 name|evaluate
@@ -287,7 +269,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert from boolean to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The boolean value to convert    * @return ShortWritable    */
+comment|/**    * Convert from boolean to a short. This is called for CAST(... AS SMALLINT)    *     * @param i    *          The boolean value to convert    * @return ShortWritable    */
 specifier|public
 name|ShortWritable
 name|evaluate
@@ -334,7 +316,7 @@ name|shortWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from byte to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The byte value to convert    * @return ShortWritable    */
+comment|/**    * Convert from byte to a short. This is called for CAST(... AS SMALLINT)    *     * @param i    *          The byte value to convert    * @return ShortWritable    */
 specifier|public
 name|ShortWritable
 name|evaluate
@@ -360,9 +342,6 @@ name|shortWritable
 operator|.
 name|set
 argument_list|(
-operator|(
-name|short
-operator|)
 name|i
 operator|.
 name|get
@@ -374,7 +353,7 @@ name|shortWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from integer to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The integer value to convert    * @return ShortWritable    */
+comment|/**    * Convert from integer to a short. This is called for CAST(... AS SMALLINT)    *     * @param i    *          The integer value to convert    * @return ShortWritable    */
 specifier|public
 name|ShortWritable
 name|evaluate
@@ -414,7 +393,7 @@ name|shortWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from long to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The long value to convert    * @return ShortWritable    */
+comment|/**    * Convert from long to a short. This is called for CAST(... AS SMALLINT)    *     * @param i    *          The long value to convert    * @return ShortWritable    */
 specifier|public
 name|ShortWritable
 name|evaluate
@@ -454,7 +433,7 @@ name|shortWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from float to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The float value to convert    * @return ShortWritable    */
+comment|/**    * Convert from float to a short. This is called for CAST(... AS SMALLINT)    *     * @param i    *          The float value to convert    * @return ShortWritable    */
 specifier|public
 name|ShortWritable
 name|evaluate
@@ -494,7 +473,7 @@ name|shortWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from double to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The double value to convert    * @return ShortWritable    */
+comment|/**    * Convert from double to a short. This is called for CAST(... AS SMALLINT)    *     * @param i    *          The double value to convert    * @return ShortWritable    */
 specifier|public
 name|ShortWritable
 name|evaluate
@@ -534,7 +513,7 @@ name|shortWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from string to a short. This is called for CAST(... AS SMALLINT)    *    * @param i The string value to convert    * @return ShortWritable    */
+comment|/**    * Convert from string to a short. This is called for CAST(... AS SMALLINT)    *     * @param i    *          The string value to convert    * @return ShortWritable    */
 specifier|public
 name|ShortWritable
 name|evaluate

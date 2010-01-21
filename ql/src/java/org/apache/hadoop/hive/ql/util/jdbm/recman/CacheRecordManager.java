@@ -29,6 +29,26 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Enumeration
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -179,28 +199,8 @@ name|WrappedRuntimeException
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Enumeration
-import|;
-end_import
-
 begin_comment
-comment|/**  *  A RecordManager wrapping and caching another RecordManager.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: CacheRecordManager.java,v 1.9 2005/06/25 23:12:32 doomdark Exp $  */
+comment|/**  * A RecordManager wrapping and caching another RecordManager.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: CacheRecordManager.java,v 1.9 2005/06/25 23:12:32 doomdark Exp  *          $  */
 end_comment
 
 begin_class
@@ -210,17 +210,17 @@ name|CacheRecordManager
 implements|implements
 name|RecordManager
 block|{
-comment|/**      * Wrapped RecordManager      */
+comment|/**    * Wrapped RecordManager    */
 specifier|protected
 name|RecordManager
 name|_recman
 decl_stmt|;
-comment|/**      * Cache for underlying RecordManager      */
+comment|/**    * Cache for underlying RecordManager    */
 specifier|protected
 name|CachePolicy
 name|_cache
 decl_stmt|;
-comment|/**      * Construct a CacheRecordManager wrapping another RecordManager and      * using a given cache policy.      *      * @param recman Wrapped RecordManager      * @param cache Cache policy      */
+comment|/**    * Construct a CacheRecordManager wrapping another RecordManager and using a    * given cache policy.    *     * @param recman    *          Wrapped RecordManager    * @param cache    *          Cache policy    */
 specifier|public
 name|CacheRecordManager
 parameter_list|(
@@ -279,7 +279,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Get the underlying Record Manager.      *      * @return underlying RecordManager or null if CacheRecordManager has      *         been closed.       */
+comment|/**    * Get the underlying Record Manager.    *     * @return underlying RecordManager or null if CacheRecordManager has been    *         closed.    */
 specifier|public
 name|RecordManager
 name|getRecordManager
@@ -289,7 +289,7 @@ return|return
 name|_recman
 return|;
 block|}
-comment|/**      * Get the underlying cache policy      *      * @return underlying CachePolicy or null if CacheRecordManager has      *         been closed.       */
+comment|/**    * Get the underlying cache policy    *     * @return underlying CachePolicy or null if CacheRecordManager has been    *         closed.    */
 specifier|public
 name|CachePolicy
 name|getCachePolicy
@@ -299,7 +299,7 @@ return|return
 name|_cache
 return|;
 block|}
-comment|/**      *  Inserts a new record using a custom serializer.      *      *  @param obj the object for the new record.      *  @return the rowid for the new record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Inserts a new record using a custom serializer.    *     * @param obj    *          the object for the new record.    * @return the rowid for the new record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 name|long
 name|insert
@@ -321,7 +321,7 @@ name|INSTANCE
 argument_list|)
 return|;
 block|}
-comment|/**      *  Inserts a new record using a custom serializer.      *      *  @param obj the object for the new record.      *  @param serializer a custom serializer      *  @return the rowid for the new record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Inserts a new record using a custom serializer.    *     * @param obj    *          the object for the new record.    * @param serializer    *          a custom serializer    * @return the rowid for the new record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|long
@@ -395,7 +395,7 @@ return|return
 name|recid
 return|;
 block|}
-comment|/**      *  Deletes a record.      *      *  @param recid the rowid for the record that should be deleted.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Deletes a record.    *     * @param recid    *          the rowid for the record that should be deleted.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -429,7 +429,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Updates a record using standard Java serialization.      *      *  @param recid the recid for the record that is to be updated.      *  @param obj the new object for the record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Updates a record using standard Java serialization.    *     * @param recid    *          the recid for the record that is to be updated.    * @param obj    *          the new object for the record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 name|void
 name|update
@@ -455,7 +455,7 @@ name|INSTANCE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Updates a record using a custom serializer.      *      *  @param recid the recid for the record that is to be updated.      *  @param obj the new object for the record.      *  @param serializer a custom serializer      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Updates a record using a custom serializer.    *     * @param recid    *          the recid for the record that is to be updated.    * @param obj    *          the new object for the record.    * @param serializer    *          a custom serializer    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -572,7 +572,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      *  Fetches a record using standard Java serialization.      *      *  @param recid the recid for the record that must be fetched.      *  @return the object contained in the record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Fetches a record using standard Java serialization.    *     * @param recid    *          the recid for the record that must be fetched.    * @return the object contained in the record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 name|Object
 name|fetch
@@ -594,7 +594,7 @@ name|INSTANCE
 argument_list|)
 return|;
 block|}
-comment|/**      *  Fetches a record using a custom serializer.      *      *  @param recid the recid for the record that must be fetched.      *  @param serializer a custom serializer      *  @return the object contained in the record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Fetches a record using a custom serializer.    *     * @param recid    *          the recid for the record that must be fetched.    * @param serializer    *          a custom serializer    * @return the object contained in the record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|Object
@@ -701,7 +701,7 @@ operator|.
 name|_obj
 return|;
 block|}
-comment|/**      *  Closes the record manager.      *      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Closes the record manager.    *     * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -730,7 +730,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**      *  Returns the number of slots available for "root" rowids. These slots      *  can be used to store special rowids, like rowids that point to      *  other rowids. Root rowids are useful for bootstrapping access to      *  a set of data.      */
+comment|/**    * Returns the number of slots available for "root" rowids. These slots can be    * used to store special rowids, like rowids that point to other rowids. Root    * rowids are useful for bootstrapping access to a set of data.    */
 specifier|public
 specifier|synchronized
 name|int
@@ -747,7 +747,7 @@ name|getRootCount
 argument_list|()
 return|;
 block|}
-comment|/**      *  Returns the indicated root rowid.      *      *  @see #getRootCount      */
+comment|/**    * Returns the indicated root rowid.    *     * @see #getRootCount    */
 specifier|public
 specifier|synchronized
 name|long
@@ -771,7 +771,7 @@ name|id
 argument_list|)
 return|;
 block|}
-comment|/**      *  Sets the indicated root rowid.      *      *  @see #getRootCount      */
+comment|/**    * Sets the indicated root rowid.    *     * @see #getRootCount    */
 specifier|public
 specifier|synchronized
 name|void
@@ -799,7 +799,7 @@ name|rowid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Commit (make persistent) all changes since beginning of transaction.      */
+comment|/**    * Commit (make persistent) all changes since beginning of transaction.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -820,7 +820,7 @@ name|commit
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Rollback (cancel) all changes since beginning of transaction.      */
+comment|/**    * Rollback (cancel) all changes since beginning of transaction.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -845,7 +845,7 @@ name|removeAll
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Obtain the record id of a named object. Returns 0 if named object      * doesn't exist.      */
+comment|/**    * Obtain the record id of a named object. Returns 0 if named object doesn't    * exist.    */
 specifier|public
 specifier|synchronized
 name|long
@@ -869,7 +869,7 @@ name|name
 argument_list|)
 return|;
 block|}
-comment|/**      * Set the record id of a named object.      */
+comment|/**    * Set the record id of a named object.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -897,7 +897,7 @@ name|recid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Check if RecordManager has been closed.  If so, throw an      * IllegalStateException      */
+comment|/**    * Check if RecordManager has been closed. If so, throw an    * IllegalStateException    */
 specifier|private
 name|void
 name|checkIfClosed
@@ -921,7 +921,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Update all dirty cache objects to the underlying RecordManager.      */
+comment|/**    * Update all dirty cache objects to the underlying RecordManager.    */
 specifier|protected
 name|void
 name|updateCacheEntries
@@ -1045,7 +1045,7 @@ name|CacheListener
 implements|implements
 name|CachePolicyListener
 block|{
-comment|/** Notification that cache is evicting an object          *          * @arg obj object evited from cache          *          */
+comment|/**      * Notification that cache is evicting an object      *       * @arg obj object evited from cache      *       */
 specifier|public
 name|void
 name|cacheObjectEvicted

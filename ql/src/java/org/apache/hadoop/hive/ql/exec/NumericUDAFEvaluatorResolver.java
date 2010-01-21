@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
-operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -86,7 +76,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Resolver for Numeric UDAFs like sum and avg. If the input argument is string or date,  * the resolver returns the evaluator whose iterate function operates on doubles.  */
+comment|/**  * Resolver for Numeric UDAFs like sum and avg. If the input argument is string  * or date, the resolver returns the evaluator whose iterate function operates  * on doubles.  */
 end_comment
 
 begin_class
@@ -115,7 +105,7 @@ name|udafClass
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.exec.UDAFMethodResolver#getEvaluatorClass(java.util.List)    */
+comment|/*    * (non-Javadoc)    *     * @see    * org.apache.hadoop.hive.ql.exec.UDAFMethodResolver#getEvaluatorClass(java    * .util.List)    */
 annotation|@
 name|Override
 specifier|public
@@ -136,7 +126,8 @@ parameter_list|)
 throws|throws
 name|AmbiguousMethodException
 block|{
-comment|// Go through the argClasses and for any string, void or date time, start looking for doubles
+comment|// Go through the argClasses and for any string, void or date time, start
+comment|// looking for doubles
 name|ArrayList
 argument_list|<
 name|TypeInfo

@@ -25,7 +25,7 @@ name|java
 operator|.
 name|text
 operator|.
-name|SimpleDateFormat
+name|ParseException
 import|;
 end_import
 
@@ -35,17 +35,7 @@ name|java
 operator|.
 name|text
 operator|.
-name|ParseException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|TimeZone
+name|SimpleDateFormat
 import|;
 end_import
 
@@ -199,8 +189,9 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|//  For now, we just use the default time zone.
+comment|// For now, we just use the default time zone.
 specifier|private
+specifier|final
 name|SimpleDateFormat
 name|formatter
 init|=
@@ -221,7 +212,7 @@ specifier|public
 name|UDFUnixTimeStamp
 parameter_list|()
 block|{   }
-comment|/**    * Return current UnixTime.    * @return long Number of seconds from 1970-01-01 00:00:00    */
+comment|/**    * Return current UnixTime.    *     * @return long Number of seconds from 1970-01-01 00:00:00    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -250,7 +241,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Convert time string to UnixTime.    * @param dateText Time string in format yyyy-MM-dd HH:mm:ss    * @return long Number of seconds from 1970-01-01 00:00:00    */
+comment|/**    * Convert time string to UnixTime.    *     * @param dateText    *          Time string in format yyyy-MM-dd HH:mm:ss    * @return long Number of seconds from 1970-01-01 00:00:00    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -275,9 +266,6 @@ block|{
 name|Date
 name|date
 init|=
-operator|(
-name|Date
-operator|)
 name|formatter
 operator|.
 name|parse
@@ -322,7 +310,7 @@ operator|new
 name|Text
 argument_list|()
 decl_stmt|;
-comment|/**    * Convert time string to UnixTime with user defined pattern.    * @param dateText Time string in format patternstring    * @param patternText Time patterns string supported by SimpleDateFormat    * @return long Number of seconds from 1970-01-01 00:00:00    */
+comment|/**    * Convert time string to UnixTime with user defined pattern.    *     * @param dateText    *          Time string in format patternstring    * @param patternText    *          Time patterns string supported by SimpleDateFormat    * @return long Number of seconds from 1970-01-01 00:00:00    */
 specifier|public
 name|LongWritable
 name|evaluate

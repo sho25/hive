@@ -258,6 +258,7 @@ name|ObjectInspector
 name|returnOI
 decl_stmt|;
 specifier|private
+specifier|final
 name|IntWritable
 name|result
 init|=

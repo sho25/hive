@@ -268,8 +268,6 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|this
-operator|.
 name|handleSkewJoin
 condition|)
 block|{
@@ -290,6 +288,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -331,10 +331,12 @@ name|alias
 argument_list|)
 operator|)
 condition|)
+block|{
 name|nextSz
 operator|=
 name|joinEmitInterval
 expr_stmt|;
+block|}
 name|ArrayList
 argument_list|<
 name|Object
@@ -362,10 +364,9 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|this
-operator|.
 name|handleSkewJoin
 condition|)
+block|{
 name|skewJoinKeyContext
 operator|.
 name|handleSkew
@@ -373,6 +374,7 @@ argument_list|(
 name|tag
 argument_list|)
 expr_stmt|;
+block|}
 comment|// number of rows for the key in the given table
 name|int
 name|sz
@@ -404,9 +406,11 @@ operator|==
 name|joinEmitInterval
 condition|)
 block|{
-comment|// The input is sorted by alias, so if we are already in the last join operand,
+comment|// The input is sorted by alias, so if we are already in the last join
+comment|// operand,
 comment|// we can emit some results now.
-comment|// Note this has to be done before adding the current row to the storage,
+comment|// Note this has to be done before adding the current row to the
+comment|// storage,
 comment|// to preserve the correctness for outer joins.
 name|checkAndGenObject
 argument_list|()
@@ -432,7 +436,8 @@ operator|==
 name|nextSz
 condition|)
 block|{
-comment|// Output a warning if we reached at least 1000 rows for a join operand
+comment|// Output a warning if we reached at least 1000 rows for a join
+comment|// operand
 comment|// We won't output a warning for the last join operand since the size
 comment|// will never goes to joinEmitInterval.
 name|StructObjectInspector
@@ -535,6 +540,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType
@@ -546,7 +553,9 @@ operator|.
 name|JOIN
 return|;
 block|}
-comment|/**    * All done    *    */
+comment|/**    * All done    *     */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|closeOp
@@ -559,8 +568,6 @@ name|HiveException
 block|{
 if|if
 condition|(
-name|this
-operator|.
 name|handleSkewJoin
 condition|)
 block|{
@@ -597,8 +604,6 @@ name|HiveException
 block|{
 if|if
 condition|(
-name|this
-operator|.
 name|handleSkewJoin
 condition|)
 block|{
@@ -622,8 +627,6 @@ block|{
 name|String
 name|specPath
 init|=
-name|this
-operator|.
 name|conf
 operator|.
 name|getBigKeysDirMap
@@ -671,7 +674,9 @@ name|j
 operator|==
 name|i
 condition|)
+block|{
 continue|continue;
+block|}
 name|specPath
 operator|=
 name|getConf
@@ -716,7 +721,7 @@ condition|(
 name|success
 condition|)
 block|{
-comment|//move up files
+comment|// move up files
 for|for
 control|(
 name|int
@@ -735,8 +740,6 @@ block|{
 name|String
 name|specPath
 init|=
-name|this
-operator|.
 name|conf
 operator|.
 name|getBigKeysDirMap
@@ -780,7 +783,9 @@ name|j
 operator|==
 name|i
 condition|)
+block|{
 continue|continue;
+block|}
 name|specPath
 operator|=
 name|getConf
@@ -952,7 +957,9 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Forward a record of join results.    *    * @throws HiveException    */
+comment|/**    * Forward a record of join results.    *     * @throws HiveException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|endGroup
@@ -960,11 +967,9 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-comment|//if this is a skew key, we need to handle it in a separate map reduce job.
+comment|// if this is a skew key, we need to handle it in a separate map reduce job.
 if|if
 condition|(
-name|this
-operator|.
 name|handleSkewJoin
 operator|&&
 name|skewJoinKeyContext

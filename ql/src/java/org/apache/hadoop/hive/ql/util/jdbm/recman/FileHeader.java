@@ -27,8 +27,18 @@ name|recman
 package|;
 end_package
 
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
 begin_comment
-comment|/**  *  This class represents a file header. It is a 1:1 representation of  *  the data that appears in block 0 of a file.  */
+comment|/**  * This class represents a file header. It is a 1:1 representation of the data  * that appears in block 0 of a file.  */
 end_comment
 
 begin_class
@@ -80,6 +90,7 @@ operator|)
 decl_stmt|;
 comment|// my block
 specifier|private
+specifier|final
 name|BlockIo
 name|block
 decl_stmt|;
@@ -101,7 +112,7 @@ name|Magic
 operator|.
 name|SZ_LONG
 decl_stmt|;
-comment|/**      *  Constructs a FileHeader object from a block.      *      *  @param block The block that contains the file header      *  @param isNew If true, the file header is for a new file.      *  @throws IOException if the block is too short to keep the file      *          header.      */
+comment|/**    * Constructs a FileHeader object from a block.    *     * @param block    *          The block that contains the file header    * @param isNew    *          If true, the file header is for a new file.    * @throws IOException    *           if the block is too short to keep the file header.    */
 name|FileHeader
 parameter_list|(
 name|BlockIo
@@ -121,6 +132,7 @@ if|if
 condition|(
 name|isNew
 condition|)
+block|{
 name|block
 operator|.
 name|writeShort
@@ -132,6 +144,7 @@ operator|.
 name|FILE_HEADER
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -139,6 +152,7 @@ operator|!
 name|magicOk
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -154,7 +168,8 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-comment|/** Returns true if the magic corresponds with the fileHeader magic.  */
+block|}
+comment|/** Returns true if the magic corresponds with the fileHeader magic. */
 specifier|private
 name|boolean
 name|magicOk
@@ -252,7 +267,7 @@ operator|)
 argument_list|)
 return|;
 block|}
-comment|/**      *  Returns the first block of the indicated list      */
+comment|/**    * Returns the first block of the indicated list    */
 name|long
 name|getFirstOf
 parameter_list|(
@@ -272,7 +287,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      *  Sets the first block of the indicated list      */
+comment|/**    * Sets the first block of the indicated list    */
 name|void
 name|setFirstOf
 parameter_list|(
@@ -296,7 +311,7 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Returns the last block of the indicated list      */
+comment|/**    * Returns the last block of the indicated list    */
 name|long
 name|getLastOf
 parameter_list|(
@@ -316,7 +331,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      *  Sets the last block of the indicated list      */
+comment|/**    * Sets the last block of the indicated list    */
 name|void
 name|setLastOf
 parameter_list|(
@@ -340,7 +355,7 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Returns the indicated root rowid. A root rowid is a special rowid      *  that needs to be kept between sessions. It could conceivably be      *  stored in a special file, but as a large amount of space in the      *  block header is wasted anyway, it's more useful to store it where      *  it belongs.      *      *  @see #NROOTS      */
+comment|/**    * Returns the indicated root rowid. A root rowid is a special rowid that    * needs to be kept between sessions. It could conceivably be stored in a    * special file, but as a large amount of space in the block header is wasted    * anyway, it's more useful to store it where it belongs.    *     * @see #NROOTS    */
 name|long
 name|getRoot
 parameter_list|(
@@ -360,7 +375,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      *  Sets the indicated root rowid.      *      *  @see #getRoot      *  @see #NROOTS      */
+comment|/**    * Sets the indicated root rowid.    *     * @see #getRoot    * @see #NROOTS    */
 name|void
 name|setRoot
 parameter_list|(

@@ -120,6 +120,7 @@ extends|extends
 name|UDF
 block|{
 specifier|private
+specifier|final
 name|Text
 name|result
 init|=

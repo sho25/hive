@@ -216,7 +216,7 @@ decl_stmt|;
 name|String
 name|afterCol
 decl_stmt|;
-comment|/**    * @param tblName table name    * @param oldColName  old column name    * @param newColName  new column name    * @param newComment     * @param newType     */
+comment|/**    * @param tblName    *          table name    * @param oldColName    *          old column name    * @param newColName    *          new column name    * @param newComment    * @param newType    */
 specifier|public
 name|alterTableDesc
 parameter_list|(
@@ -245,8 +245,6 @@ block|{
 name|super
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|oldName
 operator|=
 name|tblName
@@ -263,14 +261,10 @@ name|newColName
 operator|=
 name|newColName
 expr_stmt|;
-name|this
-operator|.
 name|newColType
 operator|=
 name|newType
 expr_stmt|;
-name|this
-operator|.
 name|newColComment
 operator|=
 name|newComment
@@ -287,8 +281,6 @@ name|afterCol
 operator|=
 name|afterCol
 expr_stmt|;
-name|this
-operator|.
 name|op
 operator|=
 name|alterTableTypes
@@ -296,7 +288,7 @@ operator|.
 name|RENAMECOLUMN
 expr_stmt|;
 block|}
-comment|/**    * @param oldName old name of the table    * @param newName new name of the table    */
+comment|/**    * @param oldName    *          old name of the table    * @param newName    *          new name of the table    */
 specifier|public
 name|alterTableDesc
 parameter_list|(
@@ -326,7 +318,7 @@ operator|=
 name|newName
 expr_stmt|;
 block|}
-comment|/**    * @param name name of the table    * @param newCols new columns to be added    */
+comment|/**    * @param name    *          name of the table    * @param newCols    *          new columns to be added    */
 specifier|public
 name|alterTableDesc
 parameter_list|(
@@ -343,14 +335,10 @@ name|alterTableTypes
 name|alterType
 parameter_list|)
 block|{
-name|this
-operator|.
 name|op
 operator|=
 name|alterType
 expr_stmt|;
-name|this
-operator|.
 name|oldName
 operator|=
 name|name
@@ -362,7 +350,7 @@ operator|=
 name|newCols
 expr_stmt|;
 block|}
-comment|/**    * @param alterType type of alter op    */
+comment|/**    * @param alterType    *          type of alter op    */
 specifier|public
 name|alterTableDesc
 parameter_list|(
@@ -370,14 +358,12 @@ name|alterTableTypes
 name|alterType
 parameter_list|)
 block|{
-name|this
-operator|.
 name|op
 operator|=
 name|alterType
 expr_stmt|;
 block|}
-comment|/**    *     * @param name name of the table    * @param inputFormat new table input format    * @param outputFormat new table output format     */
+comment|/**    *     * @param name    *          name of the table    * @param inputFormat    *          new table input format    * @param outputFormat    *          new table output format    */
 specifier|public
 name|alterTableDesc
 parameter_list|(
@@ -397,16 +383,12 @@ block|{
 name|super
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|op
 operator|=
 name|alterTableTypes
 operator|.
 name|ADDFILEFORMAT
 expr_stmt|;
-name|this
-operator|.
 name|oldName
 operator|=
 name|name
@@ -452,34 +434,24 @@ argument_list|>
 name|sortCols
 parameter_list|)
 block|{
-name|this
-operator|.
 name|oldName
 operator|=
 name|tableName
 expr_stmt|;
-name|this
-operator|.
 name|op
 operator|=
 name|alterTableTypes
 operator|.
 name|ADDCLUSTERSORTCOLUMN
 expr_stmt|;
-name|this
-operator|.
 name|numberBuckets
 operator|=
 name|numBuckets
 expr_stmt|;
-name|this
-operator|.
 name|bucketColumns
 operator|=
 name|bucketCols
 expr_stmt|;
-name|this
-operator|.
 name|sortColumns
 operator|=
 name|sortCols
@@ -502,7 +474,7 @@ return|return
 name|oldName
 return|;
 block|}
-comment|/**    * @param oldName the oldName to set    */
+comment|/**    * @param oldName    *          the oldName to set    */
 specifier|public
 name|void
 name|setOldName
@@ -535,7 +507,7 @@ return|return
 name|newName
 return|;
 block|}
-comment|/**    * @param newName the newName to set    */
+comment|/**    * @param newName    *          the newName to set    */
 specifier|public
 name|void
 name|setNewName
@@ -601,7 +573,7 @@ return|return
 literal|"unknown"
 return|;
 block|}
-comment|/**    * @param op the op to set    */
+comment|/**    * @param op    *          the op to set    */
 specifier|public
 name|void
 name|setOp
@@ -655,7 +627,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * @param newCols the newCols to set    */
+comment|/**    * @param newCols    *          the newCols to set    */
 specifier|public
 name|void
 name|setNewCols
@@ -691,7 +663,7 @@ return|return
 name|serdeName
 return|;
 block|}
-comment|/**    * @param serdeName the serdeName to set    */
+comment|/**    * @param serdeName    *          the serdeName to set    */
 specifier|public
 name|void
 name|setSerdeName
@@ -729,7 +701,7 @@ return|return
 name|props
 return|;
 block|}
-comment|/**    * @param props the props to set    */
+comment|/**    * @param props    *          the props to set    */
 specifier|public
 name|void
 name|setProps
@@ -767,7 +739,7 @@ return|return
 name|inputFormat
 return|;
 block|}
-comment|/**    * @param inputFormat the input format to set    */
+comment|/**    * @param inputFormat    *          the input format to set    */
 specifier|public
 name|void
 name|setInputFormat
@@ -800,7 +772,7 @@ return|return
 name|outputFormat
 return|;
 block|}
-comment|/**    * @param outputFormat the output format to set    */
+comment|/**    * @param outputFormat    *          the output format to set    */
 specifier|public
 name|void
 name|setOutputFormat
@@ -816,7 +788,7 @@ operator|=
 name|outputFormat
 expr_stmt|;
 block|}
-comment|/** 	 * @return the number of buckets 	 */
+comment|/**    * @return the number of buckets    */
 specifier|public
 name|int
 name|getNumberBuckets
@@ -826,7 +798,7 @@ return|return
 name|numberBuckets
 return|;
 block|}
-comment|/** 	 * @param numberBuckets the number of buckets to set 	 */
+comment|/**    * @param numberBuckets    *          the number of buckets to set    */
 specifier|public
 name|void
 name|setNumberBuckets
@@ -842,7 +814,7 @@ operator|=
 name|numberBuckets
 expr_stmt|;
 block|}
-comment|/** 	 * @return the bucket columns 	 */
+comment|/**    * @return the bucket columns    */
 specifier|public
 name|List
 argument_list|<
@@ -855,7 +827,7 @@ return|return
 name|bucketColumns
 return|;
 block|}
-comment|/** 	 * @param bucketColumns the bucket columns to set 	 */
+comment|/**    * @param bucketColumns    *          the bucket columns to set    */
 specifier|public
 name|void
 name|setBucketColumns
@@ -874,7 +846,7 @@ operator|=
 name|bucketColumns
 expr_stmt|;
 block|}
-comment|/** 	 * @return the sort columns 	 */
+comment|/**    * @return the sort columns    */
 specifier|public
 name|List
 argument_list|<
@@ -887,7 +859,7 @@ return|return
 name|sortColumns
 return|;
 block|}
-comment|/** 	 * @param sortColumns the sort columns to set 	 */
+comment|/**    * @param sortColumns    *          the sort columns to set    */
 specifier|public
 name|void
 name|setSortColumns
@@ -906,7 +878,7 @@ operator|=
 name|sortColumns
 expr_stmt|;
 block|}
-comment|/**  * @return old column name  */
+comment|/**    * @return old column name    */
 specifier|public
 name|String
 name|getOldColName
@@ -916,7 +888,7 @@ return|return
 name|oldColName
 return|;
 block|}
-comment|/**    * @param oldColName the old column name    */
+comment|/**    * @param oldColName    *          the old column name    */
 specifier|public
 name|void
 name|setOldColName
@@ -942,7 +914,7 @@ return|return
 name|newColName
 return|;
 block|}
-comment|/**    * @param newColName the new column name    */
+comment|/**    * @param newColName    *          the new column name    */
 specifier|public
 name|void
 name|setNewColName
@@ -968,7 +940,7 @@ return|return
 name|newColType
 return|;
 block|}
-comment|/**    * @param newType new column's type    */
+comment|/**    * @param newType    *          new column's type    */
 specifier|public
 name|void
 name|setNewColType
@@ -977,8 +949,6 @@ name|String
 name|newType
 parameter_list|)
 block|{
-name|this
-operator|.
 name|newColType
 operator|=
 name|newType
@@ -994,7 +964,7 @@ return|return
 name|newColComment
 return|;
 block|}
-comment|/**    * @param newComment new column's comment    */
+comment|/**    * @param newComment    *          new column's comment    */
 specifier|public
 name|void
 name|setNewColComment
@@ -1003,8 +973,6 @@ name|String
 name|newComment
 parameter_list|)
 block|{
-name|this
-operator|.
 name|newColComment
 operator|=
 name|newComment
@@ -1020,7 +988,7 @@ return|return
 name|first
 return|;
 block|}
-comment|/**    * @param first set the column to position 0    */
+comment|/**    * @param first    *          set the column to position 0    */
 specifier|public
 name|void
 name|setFirst
@@ -1046,7 +1014,7 @@ return|return
 name|afterCol
 return|;
 block|}
-comment|/**    * @param afterCol set the column's after position    */
+comment|/**    * @param afterCol    *          set the column's after position    */
 specifier|public
 name|void
 name|setAfterCol

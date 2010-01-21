@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A random dimension is an abstract dimension.  * It is implicitly associated with every row in data and has a random value  *  **/
+comment|/**  * A random dimension is an abstract dimension. It is implicitly associated with  * every row in data and has a random value  *   **/
 end_comment
 
 begin_class
@@ -67,6 +67,8 @@ name|Random
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode

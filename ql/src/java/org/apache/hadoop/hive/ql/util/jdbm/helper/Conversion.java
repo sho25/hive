@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Miscelaneous conversion utility methods.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Conversion.java,v 1.3 2002/05/31 06:33:20 boisvert Exp $  */
+comment|/**  * Miscelaneous conversion utility methods.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Conversion.java,v 1.3 2002/05/31 06:33:20 boisvert Exp $  */
 end_comment
 
 begin_class
@@ -36,7 +36,7 @@ specifier|public
 class|class
 name|Conversion
 block|{
-comment|/**      * Convert a string into a byte array.      */
+comment|/**    * Convert a string into a byte array.    */
 specifier|public
 specifier|static
 name|byte
@@ -84,7 +84,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Convert a byte into a byte array.      */
+comment|/**    * Convert a byte into a byte array.    */
 specifier|public
 specifier|static
 name|byte
@@ -121,7 +121,7 @@ name|n
 block|}
 return|;
 block|}
-comment|/**      * Convert a short into a byte array.      */
+comment|/**    * Convert a short into a byte array.    */
 specifier|public
 specifier|static
 name|byte
@@ -172,7 +172,7 @@ return|return
 name|key
 return|;
 block|}
-comment|/**      * Convert an int into a byte array.      */
+comment|/**    * Convert an int into a byte array.    */
 specifier|public
 specifier|static
 name|byte
@@ -215,7 +215,7 @@ return|return
 name|key
 return|;
 block|}
-comment|/**      * Convert a long into a byte array.      */
+comment|/**    * Convert a long into a byte array.    */
 specifier|public
 specifier|static
 name|byte
@@ -258,7 +258,7 @@ return|return
 name|key
 return|;
 block|}
-comment|/**      * Convert a byte array (encoded as UTF-8) into a String      */
+comment|/**    * Convert a byte array (encoded as UTF-8) into a String    */
 specifier|public
 specifier|static
 name|String
@@ -307,7 +307,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Convert a byte array into an integer (signed 32-bit) value.      */
+comment|/**    * Convert a byte array into an integer (signed 32-bit) value.    */
 specifier|public
 specifier|static
 name|int
@@ -341,7 +341,7 @@ return|return
 name|value
 return|;
 block|}
-comment|/**      * Convert a byte array into a long (signed 64-bit) value.      */
+comment|/**    * Convert a byte array into a long (signed 64-bit) value.    */
 specifier|public
 specifier|static
 name|long
@@ -627,7 +627,7 @@ name|val
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Test static methods      */
+comment|/**    * Test static methods    */
 specifier|public
 specifier|static
 name|void
@@ -646,9 +646,6 @@ name|buf
 operator|=
 name|convertToByteArray
 argument_list|(
-operator|(
-name|int
-operator|)
 literal|5
 argument_list|)
 expr_stmt|;
@@ -670,9 +667,6 @@ name|buf
 operator|=
 name|convertToByteArray
 argument_list|(
-operator|(
-name|int
-operator|)
 operator|-
 literal|1
 argument_list|)
@@ -695,9 +689,6 @@ name|buf
 operator|=
 name|convertToByteArray
 argument_list|(
-operator|(
-name|int
-operator|)
 literal|22111000
 argument_list|)
 expr_stmt|;
@@ -719,9 +710,6 @@ name|buf
 operator|=
 name|convertToByteArray
 argument_list|(
-operator|(
-name|long
-operator|)
 literal|5L
 argument_list|)
 expr_stmt|;
@@ -743,9 +731,6 @@ name|buf
 operator|=
 name|convertToByteArray
 argument_list|(
-operator|(
-name|long
-operator|)
 operator|-
 literal|1L
 argument_list|)
@@ -768,9 +753,6 @@ name|buf
 operator|=
 name|convertToByteArray
 argument_list|(
-operator|(
-name|long
-operator|)
 literal|1112223334445556667L
 argument_list|)
 expr_stmt|;

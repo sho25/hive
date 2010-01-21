@@ -148,7 +148,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Compute the sample standard deviation by extending GenericUDAFVariance and   * overriding the terminate() method of the evaluator.  *  */
+comment|/**  * Compute the sample standard deviation by extending GenericUDAFVariance and  * overriding the terminate() method of the evaluator.  *   */
 end_comment
 
 begin_class
@@ -311,7 +311,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Compute the sample standard deviation by extending     * GenericUDAFVarianceEvaluator and overriding the terminate() method of the    * evaluator     */
+comment|/**    * Compute the sample standard deviation by extending    * GenericUDAFVarianceEvaluator and overriding the terminate() method of the    * evaluator    */
 specifier|public
 specifier|static
 class|class

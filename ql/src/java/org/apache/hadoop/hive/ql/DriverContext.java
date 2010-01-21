@@ -129,12 +129,10 @@ name|getRunnable
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|runnable
 return|;
 block|}
-comment|/**    * Checks if a task can be launched    *     * @param tsk the task to be checked     * @return    true if the task is launchable, false otherwise    */
+comment|/**    * Checks if a task can be launched    *     * @param tsk    *          the task to be checked    * @return true if the task is launchable, false otherwise    */
 specifier|public
 specifier|static
 name|boolean
@@ -149,7 +147,8 @@ argument_list|>
 name|tsk
 parameter_list|)
 block|{
-comment|// A launchable task is one that hasn't been queued, hasn't been initialized, and is runnable.
+comment|// A launchable task is one that hasn't been queued, hasn't been
+comment|// initialized, and is runnable.
 return|return
 operator|!
 name|tsk

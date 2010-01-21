@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
+name|ArrayList
 import|;
 end_import
 
@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|Arrays
 import|;
 end_import
 
@@ -289,24 +289,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
-operator|.
-name|HiveUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|plan
 operator|.
 name|exprNodeColumnDesc
@@ -413,9 +395,67 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|generic
+operator|.
+name|GenericUDF
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde
 operator|.
 name|Constants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|ObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|ObjectInspector
+operator|.
+name|Category
 import|;
 end_import
 
@@ -527,84 +567,8 @@ name|TypeInfoFactory
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|UDFOPPositive
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|generic
-operator|.
-name|GenericUDF
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ObjectInspector
-operator|.
-name|Category
-import|;
-end_import
-
 begin_comment
-comment|/**  * The Factory for creating typecheck processors. The typecheck processors are used to  * processes the syntax trees for expressions and convert them into expression Node  * Descriptor trees. They also introduce the correct conversion functions to do proper  * implicit conversion.  */
+comment|/**  * The Factory for creating typecheck processors. The typecheck processors are  * used to processes the syntax trees for expressions and convert them into  * expression Node Descriptor trees. They also introduce the correct conversion  * functions to do proper implicit conversion.  */
 end_comment
 
 begin_class
@@ -630,7 +594,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/**    * Function to do groupby subexpression elimination. This is called by all the processors initially.    * As an example, consider the query    *   select a+b, count(1) from T group by a+b;    * Then a+b is already precomputed in the group by operators key, so we substitute a+b in the select    * list with the internal column name of the a+b expression that appears in the in input row resolver.    *     * @param nd The node that is being inspected.    * @param procCtx The processor context.    *     * @return exprNodeColumnDesc.    */
+comment|/**    * Function to do groupby subexpression elimination. This is called by all the    * processors initially. As an example, consider the query select a+b,    * count(1) from T group by a+b; Then a+b is already precomputed in the group    * by operators key, so we substitute a+b in the select list with the internal    * column name of the a+b expression that appears in the in input row    * resolver.    *     * @param nd    *          The node that is being inspected.    * @param procCtx    *          The processor context.    *     * @return exprNodeColumnDesc.    */
 specifier|public
 specifier|static
 name|exprNodeDesc
@@ -645,10 +609,12 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|//  We recursively create the exprNodeDesc.  Base cases:  when we encounter
-comment|//  a column ref, we convert that into an exprNodeColumnDesc;  when we encounter
-comment|//  a constant, we convert that into an exprNodeConstantDesc.  For others we just
-comment|//  build the exprNodeFuncDesc with recursively built children.
+comment|// We recursively create the exprNodeDesc. Base cases: when we encounter
+comment|// a column ref, we convert that into an exprNodeColumnDesc; when we
+comment|// encounter
+comment|// a constant, we convert that into an exprNodeConstantDesc. For others we
+comment|// just
+comment|// build the exprNodeFuncDesc with recursively built children.
 name|ASTNode
 name|expr
 init|=
@@ -678,7 +644,7 @@ name|desc
 init|=
 literal|null
 decl_stmt|;
-comment|//  If the current subExpression is pre-calculated, as in Group-By etc.
+comment|// If the current subExpression is pre-calculated, as in Group-By etc.
 name|ColumnInfo
 name|colInfo
 init|=
@@ -820,7 +786,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get NullExprProcessor.    * @return NullExprProcessor.    */
+comment|/**    * Factory method to get NullExprProcessor.    *     * @return NullExprProcessor.    */
 specifier|public
 specifier|static
 name|NullExprProcessor
@@ -1005,7 +971,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get NumExprProcessor.    * @return NumExprProcessor.    */
+comment|/**    * Factory method to get NumExprProcessor.    *     * @return NumExprProcessor.    */
 specifier|public
 specifier|static
 name|NumExprProcessor
@@ -1172,7 +1138,8 @@ argument_list|)
 expr_stmt|;
 break|break;
 default|default:
-comment|// HiveParser.identifier | HiveParse.KW_IF | HiveParse.KW_LEFT | HiveParse.KW_RIGHT
+comment|// HiveParser.identifier | HiveParse.KW_IF | HiveParse.KW_LEFT |
+comment|// HiveParse.KW_RIGHT
 name|str
 operator|=
 name|BaseSemanticAnalyzer
@@ -1200,7 +1167,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get StrExprProcessor.    * @return StrExprProcessor.    */
+comment|/**    * Factory method to get StrExprProcessor.    *     * @return StrExprProcessor.    */
 specifier|public
 specifier|static
 name|StrExprProcessor
@@ -1357,7 +1324,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get BoolExprProcessor.    * @return BoolExprProcessor.    */
+comment|/**    * Factory method to get BoolExprProcessor.    *     * @return BoolExprProcessor.    */
 specifier|public
 specifier|static
 name|BoolExprProcessor
@@ -1697,7 +1664,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Factory method to get ColumnExprProcessor.    * @return ColumnExprProcessor.    */
+comment|/**    * Factory method to get ColumnExprProcessor.    *     * @return ColumnExprProcessor.    */
 specifier|public
 specifier|static
 name|ColumnExprProcessor
@@ -1952,10 +1919,13 @@ condition|(
 operator|!
 name|isFunction
 condition|)
+block|{
 return|return
 literal|false
 return|;
-comment|// children is always one less than the expr.getChildCount(), since the latter contains function name.
+block|}
+comment|// children is always one less than the expr.getChildCount(), since the
+comment|// latter contains function name.
 assert|assert
 operator|(
 name|children
@@ -1981,9 +1951,11 @@ argument_list|()
 operator|!=
 literal|1
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|String
 name|funcText
 init|=
@@ -2014,10 +1986,13 @@ name|funcText
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
-comment|// return true when the child type and the conversion target type is the same
+block|}
+comment|// return true when the child type and the conversion target type is the
+comment|// same
 return|return
 operator|(
 operator|(
@@ -2066,7 +2041,8 @@ operator|!
 name|isFunction
 condition|)
 block|{
-comment|// For operator, the function name is the operator text, unless it's in our special dictionary
+comment|// For operator, the function name is the operator text, unless it's in
+comment|// our special dictionary
 if|if
 condition|(
 name|expr
@@ -2108,7 +2084,8 @@ block|}
 block|}
 else|else
 block|{
-comment|// For TOK_FUNCTION, the function name is stored in the first child, unless it's in our
+comment|// For TOK_FUNCTION, the function name is stored in the first child,
+comment|// unless it's in our
 comment|// special dictionary.
 assert|assert
 operator|(
@@ -2199,7 +2176,7 @@ name|funcText
 argument_list|)
 return|;
 block|}
-comment|/**      * Get the exprNodeDesc      * @param name      * @param children      * @return The expression node descriptor      * @throws UDFArgumentException       */
+comment|/**      * Get the exprNodeDesc      *       * @param name      * @param children      * @return The expression node descriptor      * @throws UDFArgumentException      */
 specifier|public
 specifier|static
 name|exprNodeDesc
@@ -2261,7 +2238,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * This function create an ExprNodeDesc for a UDF function given the children (arguments).      * It will insert implicit type conversion functions if necessary.       * @throws UDFArgumentException       */
+comment|/**      * This function create an ExprNodeDesc for a UDF function given the      * children (arguments). It will insert implicit type conversion functions      * if necessary.      *       * @throws UDFArgumentException      */
 specifier|public
 specifier|static
 name|exprNodeDesc
@@ -2437,7 +2414,7 @@ literal|"."
 argument_list|)
 condition|)
 block|{
-comment|// "." :  FIELD Expression
+comment|// "." : FIELD Expression
 assert|assert
 operator|(
 name|children
@@ -2933,6 +2910,7 @@ if|if
 condition|(
 name|isFunction
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -2955,7 +2933,9 @@ argument_list|)
 argument_list|)
 argument_list|)
 throw|;
+block|}
 else|else
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -2966,13 +2946,11 @@ name|INVALID_FUNCTION
 operator|.
 name|getMsg
 argument_list|(
-operator|(
-name|ASTNode
-operator|)
 name|expr
 argument_list|)
 argument_list|)
 throw|;
+block|}
 block|}
 if|if
 condition|(
@@ -3002,7 +2980,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Detect UDTF's in nested SELECT, GROUP BY, etc as they aren't supported
+comment|// Detect UDTF's in nested SELECT, GROUP BY, etc as they aren't
+comment|// supported
 if|if
 condition|(
 name|fi
@@ -3199,7 +3178,8 @@ block|}
 block|}
 block|}
 comment|// UDFOPPositive is a no-op.
-comment|// However, we still create it, and then remove it here, to make sure we only allow
+comment|// However, we still create it, and then remove it here, to make sure we
+comment|// only allow
 comment|// "+" for numeric types.
 if|if
 condition|(
@@ -3380,7 +3360,7 @@ decl_stmt|;
 name|String
 name|tableAlias
 init|=
-name|SemanticAnalyzer
+name|BaseSemanticAnalyzer
 operator|.
 name|unescapeIdentifier
 argument_list|(
@@ -3742,7 +3722,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Factory method to get DefaultExprProcessor.    * @return DefaultExprProcessor.    */
+comment|/**    * Factory method to get DefaultExprProcessor.    *     * @return DefaultExprProcessor.    */
 specifier|public
 specifier|static
 name|DefaultExprProcessor

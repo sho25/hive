@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  Class describing a page that holds logical rowids that were freed. Note  *  that the methods have *physical* rowids in their signatures - this is  *  because logical and physical rowids are internally the same, only their  *  external representation (i.e. in the client API) differs.  */
+comment|/**  * Class describing a page that holds logical rowids that were freed. Note that  * the methods have *physical* rowids in their signatures - this is because  * logical and physical rowids are internally the same, only their external  * representation (i.e. in the client API) differs.  */
 end_comment
 
 begin_class
@@ -99,7 +99,7 @@ index|[
 name|ELEMS_PER_PAGE
 index|]
 decl_stmt|;
-comment|/**      *  Constructs a data page view from the indicated block.      */
+comment|/**    * Constructs a data page view from the indicated block.    */
 name|FreeLogicalRowIdPage
 parameter_list|(
 name|BlockIo
@@ -112,7 +112,7 @@ name|block
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Factory method to create or return a data page for the      *  indicated block.      */
+comment|/**    * Factory method to create or return a data page for the indicated block.    */
 specifier|static
 name|FreeLogicalRowIdPage
 name|getFreeLogicalRowIdPageView
@@ -139,13 +139,16 @@ name|view
 operator|instanceof
 name|FreeLogicalRowIdPage
 condition|)
+block|{
 return|return
 operator|(
 name|FreeLogicalRowIdPage
 operator|)
 name|view
 return|;
+block|}
 else|else
+block|{
 return|return
 operator|new
 name|FreeLogicalRowIdPage
@@ -153,6 +156,7 @@ argument_list|(
 name|block
 argument_list|)
 return|;
+block|}
 block|}
 comment|/** Returns the number of free rowids */
 name|short
@@ -311,6 +315,7 @@ index|]
 operator|==
 literal|null
 condition|)
+block|{
 name|slots
 index|[
 name|slot
@@ -327,6 +332,7 @@ name|slot
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 empty_stmt|;
 return|return
 name|slots
@@ -361,7 +367,7 @@ operator|)
 argument_list|)
 return|;
 block|}
-comment|/**      *  Returns first free slot, -1 if no slots are available      */
+comment|/**    * Returns first free slot, -1 if no slots are available    */
 name|int
 name|getFirstFree
 parameter_list|()
@@ -388,16 +394,18 @@ argument_list|(
 name|i
 argument_list|)
 condition|)
+block|{
 return|return
 name|i
 return|;
+block|}
 block|}
 return|return
 operator|-
 literal|1
 return|;
 block|}
-comment|/**      *  Returns first allocated slot, -1 if no slots are available.      */
+comment|/**    * Returns first allocated slot, -1 if no slots are available.    */
 name|int
 name|getFirstAllocated
 parameter_list|()
@@ -424,9 +432,11 @@ argument_list|(
 name|i
 argument_list|)
 condition|)
+block|{
 return|return
 name|i
 return|;
+block|}
 block|}
 return|return
 operator|-

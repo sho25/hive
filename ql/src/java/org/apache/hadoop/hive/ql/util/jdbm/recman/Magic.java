@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  This interface contains magic cookies.  */
+comment|/**  * This interface contains magic cookies.  */
 end_comment
 
 begin_interface
@@ -83,7 +83,7 @@ name|NLISTS
 init|=
 literal|5
 decl_stmt|;
-comment|/**      *  Maximum number of blocks in a file, leaving room for a 16 bit      *  offset encoded within a long.      */
+comment|/**    * Maximum number of blocks in a file, leaving room for a 16 bit offset    * encoded within a long.    */
 name|long
 name|MAX_BLOCKS
 init|=

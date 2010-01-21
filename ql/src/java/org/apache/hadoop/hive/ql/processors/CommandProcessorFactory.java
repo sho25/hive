@@ -25,15 +25,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|hive
+name|lang
 operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|SessionState
+name|StringUtils
 import|;
 end_import
 
@@ -59,11 +55,15 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
+name|hadoop
 operator|.
-name|lang
+name|hive
 operator|.
-name|StringUtils
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
 import|;
 end_import
 

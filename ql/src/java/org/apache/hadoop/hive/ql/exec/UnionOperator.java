@@ -214,7 +214,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Union Operator  * Just forwards. Doesn't do anything itself.  **/
+comment|/**  * Union Operator Just forwards. Doesn't do anything itself.  **/
 end_comment
 
 begin_class
@@ -264,7 +264,9 @@ name|Object
 argument_list|>
 name|outputRow
 decl_stmt|;
-comment|/** UnionOperator will transform the input rows if the inputObjInspectors    *  from different parents are different.    *  If one parent has exactly the same ObjectInspector as the output    *  ObjectInspector, then we don't need to do transformation for that parent.    *  This information is recorded in needsTransform[].    */
+comment|/**    * UnionOperator will transform the input rows if the inputObjInspectors from    * different parents are different. If one parent has exactly the same    * ObjectInspector as the output ObjectInspector, then we don't need to do    * transformation for that parent. This information is recorded in    * needsTransform[].    */
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -616,7 +618,8 @@ name|p
 operator|++
 control|)
 block|{
-comment|// Testing using != is good enough, because we use ObjectInspectorFactory to
+comment|// Testing using != is good enough, because we use ObjectInspectorFactory
+comment|// to
 comment|// create ObjectInspectors.
 name|needsTransform
 index|[
@@ -809,6 +812,8 @@ literal|"UNION"
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

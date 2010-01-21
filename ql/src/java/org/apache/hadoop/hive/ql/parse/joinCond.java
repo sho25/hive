@@ -19,34 +19,6 @@ name|parse
 package|;
 end_package
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Vector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|joinDesc
-import|;
-end_import
-
 begin_comment
 comment|/**  * Join conditions Descriptor implementation.  *   */
 end_comment
@@ -75,7 +47,7 @@ decl_stmt|;
 specifier|public
 name|joinCond
 parameter_list|()
-block|{  }
+block|{   }
 specifier|public
 name|joinCond
 parameter_list|(
@@ -108,7 +80,7 @@ operator|=
 name|joinType
 expr_stmt|;
 block|}
-comment|/**    * Constructor for a UNIQUEJOIN cond    *     * @param p true if table is preserved, false otherwise    */
+comment|/**    * Constructor for a UNIQUEJOIN cond    *     * @param p    *          true if table is preserved, false otherwise    */
 specifier|public
 name|joinCond
 parameter_list|(
@@ -116,8 +88,6 @@ name|boolean
 name|p
 parameter_list|)
 block|{
-name|this
-operator|.
 name|joinType
 operator|=
 name|org
@@ -136,8 +106,6 @@ name|joinType
 operator|.
 name|UNIQUE
 expr_stmt|;
-name|this
-operator|.
 name|preserved
 operator|=
 name|p

@@ -460,6 +460,7 @@ name|length
 operator|>
 literal|0
 condition|)
+block|{
 name|resTsks
 operator|.
 name|add
@@ -470,6 +471,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch

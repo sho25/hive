@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  Class describing a page that holds physical rowids that were freed.  */
+comment|/**  * Class describing a page that holds physical rowids that were freed.  */
 end_comment
 
 begin_class
@@ -89,7 +89,7 @@ index|[
 name|ELEMS_PER_PAGE
 index|]
 decl_stmt|;
-comment|/**      *  Constructs a data page view from the indicated block.      */
+comment|/**    * Constructs a data page view from the indicated block.    */
 name|FreePhysicalRowIdPage
 parameter_list|(
 name|BlockIo
@@ -102,7 +102,7 @@ name|block
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Factory method to create or return a data page for the      *  indicated block.      */
+comment|/**    * Factory method to create or return a data page for the indicated block.    */
 specifier|static
 name|FreePhysicalRowIdPage
 name|getFreePhysicalRowIdPageView
@@ -129,13 +129,16 @@ name|view
 operator|instanceof
 name|FreePhysicalRowIdPage
 condition|)
+block|{
 return|return
 operator|(
 name|FreePhysicalRowIdPage
 operator|)
 name|view
 return|;
+block|}
 else|else
+block|{
 return|return
 operator|new
 name|FreePhysicalRowIdPage
@@ -143,6 +146,7 @@ argument_list|(
 name|block
 argument_list|)
 return|;
+block|}
 block|}
 comment|/** Returns the number of free rowids */
 name|short
@@ -290,6 +294,7 @@ index|]
 operator|==
 literal|null
 condition|)
+block|{
 name|slots
 index|[
 name|slot
@@ -306,6 +311,7 @@ name|slot
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 empty_stmt|;
 return|return
 name|slots
@@ -339,7 +345,7 @@ operator|)
 argument_list|)
 return|;
 block|}
-comment|/**       *  Returns first free slot, -1 if no slots are available      */
+comment|/**    * Returns first free slot, -1 if no slots are available    */
 name|int
 name|getFirstFree
 parameter_list|()
@@ -366,16 +372,18 @@ argument_list|(
 name|i
 argument_list|)
 condition|)
+block|{
 return|return
 name|i
 return|;
+block|}
 block|}
 return|return
 operator|-
 literal|1
 return|;
 block|}
-comment|/**       *  Returns first slot with available size>= indicated size,        *  or -1 if no slots are available.      **/
+comment|/**    * Returns first slot with available size>= indicated size, or -1 if no slots    * are available.    **/
 name|int
 name|getFirstLargerThan
 parameter_list|(
@@ -415,9 +423,11 @@ argument_list|()
 operator|>=
 name|size
 condition|)
+block|{
 return|return
 name|i
 return|;
+block|}
 block|}
 return|return
 operator|-

@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**                                                                                       * exception class, thrown when udf argument have something wrong.  */
+comment|/**  * exception class, thrown when udf argument have something wrong.  */
 end_comment
 
 begin_class

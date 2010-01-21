@@ -120,7 +120,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UDF to extract a specific group identified by a java regex.  * Note that if a regexp has a backslash ('\'), then need to specify '\\'  * For example, regexp_extract('100-200', '(\\d+)-(\\d+)', 1) will return '100'  */
+comment|/**  * UDF to extract a specific group identified by a java regex. Note that if a  * regexp has a backslash ('\'), then need to specify '\\' For example,  * regexp_extract('100-200', '(\\d+)-(\\d+)', 1) will return '100'  */
 end_comment
 
 begin_class

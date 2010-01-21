@@ -23,16 +23,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|DataInput
 import|;
 end_import
@@ -43,7 +33,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
+name|File
 import|;
 end_import
 
@@ -61,29 +51,19 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|net
 operator|.
 name|URI
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URISyntaxException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Random
 import|;
 end_import
 
@@ -99,6 +79,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Random
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|antlr
@@ -106,50 +96,6 @@ operator|.
 name|runtime
 operator|.
 name|TokenRewriteStream
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|FileSystem
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
 import|;
 end_import
 
@@ -203,9 +149,23 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|util
+name|fs
 operator|.
-name|StringUtils
+name|FileSystem
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
 import|;
 end_import
 
@@ -225,8 +185,38 @@ name|FileUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|StringUtils
+import|;
+end_import
+
 begin_comment
-comment|/**  * Context for Semantic Analyzers.  * Usage:  * not reusable - construct a new one for each query  * should call clear() at end of use to remove temporary folders  */
+comment|/**  * Context for Semantic Analyzers. Usage: not reusable - construct a new one for  * each query should call clear() at end of use to remove temporary folders  */
 end_comment
 
 begin_class
@@ -284,6 +274,7 @@ name|Path
 name|localScratchDir
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|Path
@@ -341,7 +332,7 @@ decl_stmt|;
 specifier|public
 name|Context
 parameter_list|()
-block|{     }
+block|{   }
 specifier|public
 name|Context
 parameter_list|(
@@ -384,7 +375,7 @@ name|getPath
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Set the context on whether the current query is an explain query    * @param value true if the query is an explain query, false if not    */
+comment|/**    * Set the context on whether the current query is an explain query    *     * @param value    *          true if the query is an explain query, false if not    */
 specifier|public
 name|void
 name|setExplain
@@ -398,7 +389,7 @@ operator|=
 name|value
 expr_stmt|;
 block|}
-comment|/**    * Find out whether the current query is an explain query    * @return true if the query is an explain query, false if not    */
+comment|/**    * Find out whether the current query is an explain query    *     * @return true if the query is an explain query, false if not    */
 specifier|public
 name|boolean
 name|getExplain
@@ -488,7 +479,7 @@ break|break;
 block|}
 block|}
 block|}
-comment|/**    * Make a tmp directory for MR intermediate data    * If URI/Scheme are not supplied - those implied by the default filesystem    * will be used (which will typically correspond to hdfs instance on hadoop cluster)    */
+comment|/**    * Make a tmp directory for MR intermediate data If URI/Scheme are not    * supplied - those implied by the default filesystem will be used (which will    * typically correspond to hdfs instance on hadoop cluster)    */
 specifier|private
 name|void
 name|makeMRScratchDir
@@ -585,7 +576,7 @@ return|return;
 block|}
 block|}
 block|}
-comment|/**    * Make a tmp directory on specified URI    * Currently will use the same path as implied by SCRATCHDIR config variable    */
+comment|/**    * Make a tmp directory on specified URI Currently will use the same path as    * implied by SCRATCHDIR config variable    */
 specifier|private
 name|Path
 name|makeExternalScratchDir
@@ -693,7 +684,7 @@ return|;
 block|}
 block|}
 block|}
-comment|/**    * Get a tmp directory on specified URI    * Will check if this has already been made    * (either via MR or Local FileSystem or some other external URI    */
+comment|/**    * Get a tmp directory on specified URI Will check if this has already been    * made (either via MR or Local FileSystem or some other external URI    */
 specifier|private
 name|String
 name|getExternalScratchDir
@@ -934,6 +925,7 @@ name|localScratchDir
 operator|!=
 literal|null
 condition|)
+block|{
 name|FileSystem
 operator|.
 name|getLocal
@@ -948,6 +940,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1055,7 +1048,7 @@ operator|++
 argument_list|)
 return|;
 block|}
-comment|/**    * check if path is tmp path. the assumption is that all uri's relative    * to scratchdir are temporary    * @return true if a uri is a temporary uri for map-reduce intermediate    *         data, false otherwise    */
+comment|/**    * check if path is tmp path. the assumption is that all uri's relative to    * scratchdir are temporary    *     * @return true if a uri is a temporary uri for map-reduce intermediate data,    *         false otherwise    */
 specifier|public
 name|boolean
 name|isMRTmpFileURI
@@ -1078,7 +1071,7 @@ literal|1
 operator|)
 return|;
 block|}
-comment|/**    * Get a path to store map-reduce intermediate data in    * @return next available path for map-red intermediate data    */
+comment|/**    * Get a path to store map-reduce intermediate data in    *     * @return next available path for map-red intermediate data    */
 specifier|public
 name|String
 name|getMRTmpFileURI
@@ -1092,7 +1085,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Get a tmp path on local host to store intermediate data    * @return next available tmp path on local fs    */
+comment|/**    * Get a tmp path on local host to store intermediate data    *     * @return next available tmp path on local fs    */
 specifier|public
 name|String
 name|getLocalTmpFileURI
@@ -1106,7 +1099,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Get a path to store tmp data destined for external URI    * @param extURI external URI to which the tmp data has to be     *               eventually moved    * @return next available tmp path on the file system corresponding    *              extURI    */
+comment|/**    * Get a path to store tmp data destined for external URI    *     * @param extURI    *          external URI to which the tmp data has to be eventually moved    * @return next available tmp path on the file system corresponding extURI    */
 specifier|public
 name|String
 name|getExternalTmpFileURI
@@ -1135,7 +1128,7 @@ return|return
 name|resFile
 return|;
 block|}
-comment|/**    * @param resFile the resFile to set    */
+comment|/**    * @param resFile    *          the resFile to set    */
 specifier|public
 name|void
 name|setResFile
@@ -1173,7 +1166,7 @@ return|return
 name|resDir
 return|;
 block|}
-comment|/**    * @param resDir the resDir to set    */
+comment|/**    * @param resDir    *          the resDir to set    */
 specifier|public
 name|void
 name|setResDir
@@ -1345,9 +1338,11 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 if|if
 condition|(
 name|resFile
@@ -1356,9 +1351,6 @@ literal|null
 condition|)
 block|{
 return|return
-operator|(
-name|DataInput
-operator|)
 name|resFile
 operator|.
 name|getFileSystem
@@ -1436,6 +1428,7 @@ name|resFS
 range|:
 name|resDirFS
 control|)
+block|{
 if|if
 condition|(
 operator|!
@@ -1444,6 +1437,7 @@ operator|.
 name|isDir
 argument_list|()
 condition|)
+block|{
 name|resDirPaths
 index|[
 name|pos
@@ -1455,19 +1449,20 @@ operator|.
 name|getPath
 argument_list|()
 expr_stmt|;
+block|}
+block|}
 if|if
 condition|(
 name|pos
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
-operator|(
-name|DataInput
-operator|)
 name|resFs
 operator|.
 name|open
@@ -1565,10 +1560,8 @@ operator|!=
 literal|null
 operator|)
 condition|)
+block|{
 return|return
-operator|(
-name|DataInput
-operator|)
 name|resFs
 operator|.
 name|open
@@ -1580,6 +1573,7 @@ operator|++
 index|]
 argument_list|)
 return|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1665,7 +1659,7 @@ name|str2
 argument_list|)
 return|;
 block|}
-comment|/**    * Set the token rewrite stream being used to parse the current top-level SQL    * statement.  Note that this should<b>not</b> be used for other parsing    * activities; for example, when we encounter a reference to a view, we    * switch to a new stream for parsing the stored view definition from the    * catalog, but we don't clobber the top-level stream in the context.    *    * @param tokenRewriteStream the stream being used    */
+comment|/**    * Set the token rewrite stream being used to parse the current top-level SQL    * statement. Note that this should<b>not</b> be used for other parsing    * activities; for example, when we encounter a reference to a view, we switch    * to a new stream for parsing the stored view definition from the catalog,    * but we don't clobber the top-level stream in the context.    *     * @param tokenRewriteStream    *          the stream being used    */
 specifier|public
 name|void
 name|setTokenRewriteStream
@@ -1690,7 +1684,7 @@ operator|=
 name|tokenRewriteStream
 expr_stmt|;
 block|}
-comment|/**    * @return the token rewrite stream being used to parse the current    * top-level SQL statement, or null if it isn't available    * (e.g. for parser tests)    */
+comment|/**    * @return the token rewrite stream being used to parse the current top-level    *         SQL statement, or null if it isn't available (e.g. for parser    *         tests)    */
 specifier|public
 name|TokenRewriteStream
 name|getTokenRewriteStream

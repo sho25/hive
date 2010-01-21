@@ -213,6 +213,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|SimpleDateFormat
 name|formatter
 init|=
@@ -223,6 +224,7 @@ literal|"yyyy-MM-dd"
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|Calendar
 name|calendar
 init|=
@@ -249,7 +251,7 @@ specifier|public
 name|UDFDateAdd
 parameter_list|()
 block|{   }
-comment|/**    * Add a number of days to the date.     * The time part of the string will be ignored.    *     * NOTE: This is a subset of what MySQL offers as:    * http://dev.mysql.com/doc/refman/5.1/en/date-and-time-functions.html#function_date-add    *     * @param dateString1 the date string in the format of "yyyy-MM-dd HH:mm:ss" or "yyyy-MM-dd".    * @param days The number of days to add.    * @return the date in the format of "yyyy-MM-dd".    */
+comment|/**    * Add a number of days to the date. The time part of the string will be    * ignored.    *     * NOTE: This is a subset of what MySQL offers as:    * http://dev.mysql.com/doc/refman    * /5.1/en/date-and-time-functions.html#function_date-add    *     * @param dateString1    *          the date string in the format of "yyyy-MM-dd HH:mm:ss" or    *          "yyyy-MM-dd".    * @param days    *          The number of days to add.    * @return the date in the format of "yyyy-MM-dd".    */
 specifier|public
 name|Text
 name|evaluate

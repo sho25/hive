@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *   * This class stores all the information specified in the TABLESAMPLE clause. e.g.   * for the clause "FROM t TABLESAMPLE(1 OUT OF 2 ON c1) it will store the numerator  * 1, the denominator 2 and the list of expressions(in this case c1) in the appropriate  * fields. The afore-mentioned sampling clause causes the 1st bucket to be picked out of  * the 2 buckets created by hashing on c1.  *  */
+comment|/**  *   * This class stores all the information specified in the TABLESAMPLE clause.  * e.g. for the clause "FROM t TABLESAMPLE(1 OUT OF 2 ON c1) it will store the  * numerator 1, the denominator 2 and the list of expressions(in this case c1)  * in the appropriate fields. The afore-mentioned sampling clause causes the 1st  * bucket to be picked out of the 2 buckets created by hashing on c1.  *   */
 end_comment
 
 begin_class
@@ -48,7 +48,7 @@ specifier|private
 name|int
 name|denominator
 decl_stmt|;
-comment|/**    * The list of expressions following ON part of the TABLESAMPLE clause. This list is    * empty in case there are no expressions such as in the clause    * "FROM t TABLESAMPLE(1 OUT OF 2)". For this expression the sampling is done    * on the tables clustering column(as specified when the table was created). In case    * the table does not have any clustering column, the usage of a table sample clause    * without an ON part is disallowed by the compiler    */
+comment|/**    * The list of expressions following ON part of the TABLESAMPLE clause. This    * list is empty in case there are no expressions such as in the clause    * "FROM t TABLESAMPLE(1 OUT OF 2)". For this expression the sampling is done    * on the tables clustering column(as specified when the table was created).    * In case the table does not have any clustering column, the usage of a table    * sample clause without an ON part is disallowed by the compiler    */
 specifier|private
 name|ArrayList
 argument_list|<
@@ -61,7 +61,7 @@ specifier|private
 name|boolean
 name|inputPruning
 decl_stmt|;
-comment|/**    * Constructs the TableSample given the numerator, denominator and the list of    * ON clause expressions    *     * @param num The numerator    * @param den The denominator    * @param exprs The list of expressions in the ON part of the TABLESAMPLE clause    */
+comment|/**    * Constructs the TableSample given the numerator, denominator and the list of    * ON clause expressions    *     * @param num    *          The numerator    * @param den    *          The denominator    * @param exprs    *          The list of expressions in the ON part of the TABLESAMPLE clause    */
 specifier|public
 name|TableSample
 parameter_list|(
@@ -78,8 +78,6 @@ argument_list|>
 name|exprs
 parameter_list|)
 block|{
-name|this
-operator|.
 name|numerator
 operator|=
 name|Integer
@@ -92,8 +90,6 @@ operator|.
 name|intValue
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|denominator
 operator|=
 name|Integer
@@ -123,20 +119,14 @@ name|int
 name|den
 parameter_list|)
 block|{
-name|this
-operator|.
 name|numerator
 operator|=
 name|num
 expr_stmt|;
-name|this
-operator|.
 name|denominator
 operator|=
 name|den
 expr_stmt|;
-name|this
-operator|.
 name|exprs
 operator|=
 literal|null
@@ -149,12 +139,10 @@ name|getNumerator
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|numerator
 return|;
 block|}
-comment|/**    * Sets the numerator    *     * @param num The numerator    */
+comment|/**    * Sets the numerator    *     * @param num    *          The numerator    */
 specifier|public
 name|void
 name|setNumerator
@@ -163,8 +151,6 @@ name|int
 name|num
 parameter_list|)
 block|{
-name|this
-operator|.
 name|numerator
 operator|=
 name|num
@@ -177,12 +163,10 @@ name|getDenominator
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|denominator
 return|;
 block|}
-comment|/**    * Sets the denominator    *     * @param den The denominator    */
+comment|/**    * Sets the denominator    *     * @param den    *          The denominator    */
 specifier|public
 name|void
 name|setDenominator
@@ -191,8 +175,6 @@ name|int
 name|den
 parameter_list|)
 block|{
-name|this
-operator|.
 name|denominator
 operator|=
 name|den
@@ -208,12 +190,10 @@ name|getExprs
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|exprs
 return|;
 block|}
-comment|/**    * Sets the expression list    *     * @param exprs The expression list    */
+comment|/**    * Sets the expression list    *     * @param exprs    *          The expression list    */
 specifier|public
 name|void
 name|setExprs
@@ -239,12 +219,10 @@ name|getInputPruning
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|inputPruning
 return|;
 block|}
-comment|/**    * Sets the flag that indicates whether input pruning is possible or not    *     * @param inputPruning true if input pruning is possible    */
+comment|/**    * Sets the flag that indicates whether input pruning is possible or not    *     * @param inputPruning    *          true if input pruning is possible    */
 specifier|public
 name|void
 name|setInputPruning

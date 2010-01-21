@@ -78,7 +78,7 @@ specifier|private
 name|boolean
 name|repairPartitions
 decl_stmt|;
-comment|/**    * Description of a msck command.    * @param tableName Table to check, can be null.    * @param partSpecs Partition specification, can be null.     * @param resFile Where to save the output of the command    * @param repairPartitions remove stale / add new partitions found during the check    */
+comment|/**    * Description of a msck command.    *     * @param tableName    *          Table to check, can be null.    * @param partSpecs    *          Partition specification, can be null.    * @param resFile    *          Where to save the output of the command    * @param repairPartitions    *          remove stale / add new partitions found during the check    */
 specifier|public
 name|MsckDesc
 parameter_list|(
@@ -112,8 +112,6 @@ name|tableName
 operator|=
 name|tableName
 expr_stmt|;
-name|this
-operator|.
 name|partitionSpec
 operator|=
 name|partSpecs
@@ -141,7 +139,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**    * @param tableName the table to check    */
+comment|/**    * @param tableName    *          the table to check    */
 specifier|public
 name|void
 name|setTableName
@@ -175,7 +173,7 @@ return|return
 name|partitionSpec
 return|;
 block|}
-comment|/**    * @param partitionSpec partitions to check.    */
+comment|/**    * @param partitionSpec    *          partitions to check.    */
 specifier|public
 name|void
 name|setPartitionSpec
@@ -209,7 +207,7 @@ return|return
 name|resFile
 return|;
 block|}
-comment|/**    * @param resFile file to save command output to    */
+comment|/**    * @param resFile    *          file to save command output to    */
 specifier|public
 name|void
 name|setResFile
@@ -235,7 +233,7 @@ return|return
 name|repairPartitions
 return|;
 block|}
-comment|/**    * @param remove stale / add new partitions found during the check    */
+comment|/**    * @param remove    *          stale / add new partitions found during the check    */
 specifier|public
 name|void
 name|setRepairPartitions

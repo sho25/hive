@@ -44,10 +44,13 @@ specifier|public
 class|class
 name|TaskHandle
 block|{
-comment|// The eventual goal is to monitor the progress of all the tasks, not only the map reduce task.
-comment|// The execute() method of the tasks will return immediately, and return a task specific handle to
+comment|// The eventual goal is to monitor the progress of all the tasks, not only the
+comment|// map reduce task.
+comment|// The execute() method of the tasks will return immediately, and return a
+comment|// task specific handle to
 comment|// monitor the progress of that task.
-comment|// Right now, the behavior is kind of broken, ExecDriver's execute method calls progress - instead it should
+comment|// Right now, the behavior is kind of broken, ExecDriver's execute method
+comment|// calls progress - instead it should
 comment|// be invoked by Driver
 specifier|public
 name|Counters

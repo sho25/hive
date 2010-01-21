@@ -57,20 +57,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|mapred
-operator|.
-name|InputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|ql
@@ -112,6 +98,20 @@ operator|.
 name|serde2
 operator|.
 name|Deserializer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|InputFormat
 import|;
 end_import
 
@@ -174,7 +174,7 @@ decl_stmt|;
 specifier|public
 name|tableDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|tableDesc
 parameter_list|(
@@ -212,8 +212,6 @@ name|Properties
 name|properties
 parameter_list|)
 block|{
-name|this
-operator|.
 name|deserializerClass
 operator|=
 name|serdeClass
@@ -224,8 +222,6 @@ name|inputFileFormatClass
 operator|=
 name|inputFileFormatClass
 expr_stmt|;
-name|this
-operator|.
 name|outputFileFormatClass
 operator|=
 name|HiveFileFormatUtils
@@ -241,8 +237,6 @@ name|properties
 operator|=
 name|properties
 expr_stmt|;
-name|this
-operator|.
 name|serdeClassName
 operator|=
 name|properties
@@ -277,8 +271,6 @@ name|getDeserializerClass
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|deserializerClass
 return|;
 block|}
@@ -296,8 +288,6 @@ argument_list|>
 name|serdeClass
 parameter_list|)
 block|{
-name|this
-operator|.
 name|deserializerClass
 operator|=
 name|serdeClass
@@ -314,8 +304,6 @@ name|getInputFileFormatClass
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|inputFileFormatClass
 return|;
 block|}
@@ -330,8 +318,6 @@ block|{
 name|Deserializer
 name|de
 init|=
-name|this
-operator|.
 name|deserializerClass
 operator|.
 name|newInstance
@@ -382,8 +368,6 @@ name|getOutputFileFormatClass
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|outputFileFormatClass
 return|;
 block|}
@@ -432,8 +416,6 @@ name|getProperties
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|properties
 return|;
 block|}
@@ -471,12 +453,10 @@ name|getSerdeClassName
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|serdeClassName
 return|;
 block|}
-comment|/**    * @param serdeClassName the serde Class Name to set    */
+comment|/**    * @param serdeClassName    *          the serde Class Name to set    */
 specifier|public
 name|void
 name|setSerdeClassName
@@ -505,8 +485,6 @@ name|getTableName
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|properties
 operator|.
 name|getProperty
@@ -569,6 +547,8 @@ name|getName
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|clone

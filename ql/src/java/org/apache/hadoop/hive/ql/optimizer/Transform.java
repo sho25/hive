@@ -56,7 +56,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Optimizer interface. All the rule-based optimizations implement this interface. All the transformations are invoked sequentially. They take the current  * parse context (which contains the operator tree among other things), perform all the optimizations, and then return the updated parse context.  */
+comment|/**  * Optimizer interface. All the rule-based optimizations implement this  * interface. All the transformations are invoked sequentially. They take the  * current parse context (which contains the operator tree among other things),  * perform all the optimizations, and then return the updated parse context.  */
 end_comment
 
 begin_interface
@@ -64,7 +64,7 @@ specifier|public
 interface|interface
 name|Transform
 block|{
-comment|/** 	 * All transformation steps implement this interface 	 * @param pctx input parse context 	 * @return ParseContext 	 * @throws SemanticException 	 */
+comment|/**    * All transformation steps implement this interface    *     * @param pctx    *          input parse context    * @return ParseContext    * @throws SemanticException    */
 specifier|public
 name|ParseContext
 name|transform

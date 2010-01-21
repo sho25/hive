@@ -469,6 +469,8 @@ name|finalPath
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -836,6 +838,8 @@ block|}
 name|Writable
 name|recordValue
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -849,7 +853,8 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// Since File Sink is a terminal operator, forward is not called - so, maintain the number of output rows explicitly
+comment|// Since File Sink is a terminal operator, forward is not called - so,
+comment|// maintain the number of output rows explicitly
 if|if
 condition|(
 name|counterNameToEnum
@@ -858,14 +863,10 @@ literal|null
 condition|)
 block|{
 operator|++
-name|this
-operator|.
 name|outputRows
 expr_stmt|;
 if|if
 condition|(
-name|this
-operator|.
 name|outputRows
 operator|%
 literal|1000
@@ -880,8 +881,6 @@ argument_list|,
 name|outputRows
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|outputRows
 operator|=
 literal|0
@@ -896,11 +895,13 @@ name|reporter
 operator|!=
 literal|null
 condition|)
+block|{
 name|reporter
 operator|.
 name|progress
 argument_list|()
 expr_stmt|;
+block|}
 comment|// user SerDe to serialize r, and write it out
 name|recordValue
 operator|=
@@ -1030,7 +1031,8 @@ block|}
 else|else
 block|{
 comment|// Will come here if an Exception was thrown in map() or reduce().
-comment|// Hadoop always call close() even if an Exception was thrown in map() or reduce().
+comment|// Hadoop always call close() even if an Exception was thrown in map() or
+comment|// reduce().
 try|try
 block|{
 name|outWriter
@@ -1045,6 +1047,7 @@ condition|(
 operator|!
 name|autoDelete
 condition|)
+block|{
 name|fs
 operator|.
 name|delete
@@ -1054,6 +1057,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1070,6 +1074,8 @@ block|}
 block|}
 block|}
 comment|/**    * @return the name of the operator    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getName
@@ -1322,6 +1328,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

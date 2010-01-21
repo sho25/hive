@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|*
+name|Serializable
 import|;
 end_import
 
@@ -33,9 +33,23 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|*
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
 import|;
 end_import
 
@@ -129,20 +143,6 @@ name|ObjectInspectorUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
 begin_comment
 comment|/**  * Buffers rows emitted by other operators  **/
 end_comment
@@ -184,6 +184,8 @@ specifier|transient
 name|int
 name|maxSize
 decl_stmt|;
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -226,6 +228,8 @@ name|firstRow
 init|=
 literal|true
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -257,8 +261,6 @@ operator|=
 literal|false
 expr_stmt|;
 comment|// Get the standard ObjectInspector of the row
-name|this
-operator|.
 name|standardRowInspector
 operator|=
 name|ObjectInspectorUtils

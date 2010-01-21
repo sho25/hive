@@ -48,7 +48,7 @@ specifier|public
 interface|interface
 name|Collector
 block|{
-comment|/**    * Other classes will call collect() with the data that it has.    * @param input    */
+comment|/**    * Other classes will call collect() with the data that it has.    *     * @param input    */
 name|void
 name|collect
 parameter_list|(

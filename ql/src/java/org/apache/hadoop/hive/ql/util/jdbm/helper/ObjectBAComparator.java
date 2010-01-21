@@ -58,7 +58,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Comparator for objects which have been serialized into byte arrays.  * In effect, it wraps another Comparator which compares object and provides  * transparent deserialization from byte array to object.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: ObjectBAComparator.java,v 1.1 2002/05/31 06:33:20 boisvert Exp $  */
+comment|/**  * Comparator for objects which have been serialized into byte arrays. In  * effect, it wraps another Comparator which compares object and provides  * transparent deserialization from byte array to object.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: ObjectBAComparator.java,v 1.1 2002/05/31 06:33:20 boisvert Exp  *          $  */
 end_comment
 
 begin_class
@@ -71,7 +71,7 @@ name|Comparator
 implements|,
 name|Serializable
 block|{
-comment|/**      * Version id for serialization.      */
+comment|/**    * Version id for serialization.    */
 specifier|final
 specifier|static
 name|long
@@ -79,12 +79,13 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * Wrapped comparator.      */
+comment|/**    * Wrapped comparator.    */
 specifier|private
+specifier|final
 name|Comparator
 name|_comparator
 decl_stmt|;
-comment|/**      * Construct an ObjectByteArrayComparator which wraps an Object Comparator.      *      * @param comparator Object comparator.      */
+comment|/**    * Construct an ObjectByteArrayComparator which wraps an Object Comparator.    *     * @param comparator    *          Object comparator.    */
 specifier|public
 name|ObjectBAComparator
 parameter_list|(
@@ -112,7 +113,7 @@ operator|=
 name|comparator
 expr_stmt|;
 block|}
-comment|/**      * Compare two objects.      *      * @param obj1 First object      * @param obj2 Second object      * @return 1 if obj1> obj2, 0 if obj1 == obj2, -1 if obj1< obj2      */
+comment|/**    * Compare two objects.    *     * @param obj1    *          First object    * @param obj2    *          Second object    * @return 1 if obj1> obj2, 0 if obj1 == obj2, -1 if obj1< obj2    */
 specifier|public
 name|int
 name|compare
@@ -222,7 +223,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Compare two byte arrays.      */
+comment|/**    * Compare two byte arrays.    */
 specifier|public
 specifier|static
 name|int

@@ -65,7 +65,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|Text
+name|IntWritable
 import|;
 end_import
 
@@ -79,7 +79,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|IntWritable
+name|Text
 import|;
 end_import
 
@@ -122,6 +122,7 @@ extends|extends
 name|UDF
 block|{
 specifier|private
+specifier|final
 name|IntWritable
 name|result
 init|=

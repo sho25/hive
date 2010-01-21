@@ -59,11 +59,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde2
+name|ql
 operator|.
-name|typeinfo
+name|exec
 operator|.
-name|TypeInfo
+name|Utilities
 import|;
 end_import
 
@@ -77,11 +77,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|serde2
 operator|.
-name|exec
+name|typeinfo
 operator|.
-name|Utilities
+name|TypeInfo
 import|;
 end_import
 
@@ -108,7 +108,8 @@ decl_stmt|;
 name|String
 name|fieldName
 decl_stmt|;
-comment|// Used to support a.b where a is a list of struct that contains a field called b.
+comment|// Used to support a.b where a is a list of struct that contains a field
+comment|// called b.
 comment|// a.b will return an array that contains field b of all elements of array a.
 name|Boolean
 name|isList
@@ -116,7 +117,7 @@ decl_stmt|;
 specifier|public
 name|exprNodeFieldDesc
 parameter_list|()
-block|{}
+block|{   }
 specifier|public
 name|exprNodeFieldDesc
 parameter_list|(
@@ -199,8 +200,6 @@ name|getDesc
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|desc
 return|;
 block|}
@@ -225,8 +224,6 @@ name|getFieldName
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|fieldName
 return|;
 block|}
@@ -277,8 +274,6 @@ name|toString
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|desc
 operator|.
 name|toString
@@ -286,8 +281,6 @@ argument_list|()
 operator|+
 literal|"."
 operator|+
-name|this
-operator|.
 name|fieldName
 return|;
 block|}
@@ -306,8 +299,6 @@ name|getExprString
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|desc
 operator|.
 name|getExprString
@@ -315,11 +306,11 @@ argument_list|()
 operator|+
 literal|"."
 operator|+
-name|this
-operator|.
 name|fieldName
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -347,6 +338,7 @@ name|desc
 operator|!=
 literal|null
 condition|)
+block|{
 name|colList
 operator|=
 name|Utilities
@@ -361,6 +353,7 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|colList
 return|;
@@ -376,20 +369,12 @@ return|return
 operator|new
 name|exprNodeFieldDesc
 argument_list|(
-name|this
-operator|.
 name|typeInfo
 argument_list|,
-name|this
-operator|.
 name|desc
 argument_list|,
-name|this
-operator|.
 name|fieldName
 argument_list|,
-name|this
-operator|.
 name|isList
 argument_list|)
 return|;
@@ -413,9 +398,11 @@ operator|instanceof
 name|exprNodeFieldDesc
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|exprNodeFieldDesc
 name|dest
 init|=
@@ -437,9 +424,11 @@ name|getTypeInfo
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -475,9 +464,11 @@ name|getDesc
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 literal|true
 return|;

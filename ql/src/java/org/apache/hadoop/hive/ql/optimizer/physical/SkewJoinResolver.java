@@ -324,7 +324,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of PhysicalPlanResolver. It iterator each task with a rule  * dispatcher for its reducer operator tree, for task with join op in reducer, it  * will try to add a conditional task associated a list of skew join tasks.  */
+comment|/**  * An implementation of PhysicalPlanResolver. It iterator each task with a rule  * dispatcher for its reducer operator tree, for task with join op in reducer,  * it will try to add a conditional task associated a list of skew join tasks.  */
 end_comment
 
 begin_class
@@ -419,8 +419,6 @@ block|{
 name|super
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|physicalContext
 operator|=
 name|context
@@ -493,9 +491,11 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|SkewJoinProcCtx
 name|skewJoinProcContext
 init|=
@@ -504,8 +504,6 @@ name|SkewJoinProcCtx
 argument_list|(
 name|task
 argument_list|,
-name|this
-operator|.
 name|physicalContext
 operator|.
 name|getParseContext
@@ -547,7 +545,8 @@ name|getJoinProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest
+comment|// matching rule and passes the context along
 name|Dispatcher
 name|disp
 init|=
@@ -643,7 +642,7 @@ name|physicalContext
 expr_stmt|;
 block|}
 block|}
-comment|/**    * A container of current task and parse context.     */
+comment|/**    * A container of current task and parse context.    */
 specifier|public
 specifier|static
 class|class
@@ -679,8 +678,6 @@ name|ParseContext
 name|parseCtx
 parameter_list|)
 block|{
-name|this
-operator|.
 name|currentTask
 operator|=
 name|task

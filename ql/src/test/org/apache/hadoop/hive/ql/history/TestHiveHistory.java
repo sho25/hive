@@ -356,6 +356,8 @@ name|FileSystem
 name|fs
 decl_stmt|;
 comment|/*    * intialize the tables    */
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|setUp
@@ -690,13 +692,10 @@ name|void
 name|testSimpleQuery
 parameter_list|()
 block|{
-name|LineageInfo
-name|lep
-init|=
 operator|new
 name|LineageInfo
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 try|try
 block|{
 comment|// NOTE: It is critical to do this here so that log4j is reinitialized

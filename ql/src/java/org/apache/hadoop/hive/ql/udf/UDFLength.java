@@ -130,6 +130,7 @@ extends|extends
 name|UDF
 block|{
 specifier|private
+specifier|final
 name|IntWritable
 name|result
 init|=

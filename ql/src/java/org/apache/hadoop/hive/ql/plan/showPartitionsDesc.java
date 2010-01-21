@@ -107,7 +107,7 @@ return|return
 name|schema
 return|;
 block|}
-comment|/**    * @param tabName Name of the table whose partitions need to be listed    * @param resFile File to store the results in    */
+comment|/**    * @param tabName    *          Name of the table whose partitions need to be listed    * @param resFile    *          File to store the results in    */
 specifier|public
 name|showPartitionsDesc
 parameter_list|(
@@ -148,7 +148,7 @@ return|return
 name|tabName
 return|;
 block|}
-comment|/**    * @param tabName the table whose partitions have to be listed    */
+comment|/**    * @param tabName    *          the table whose partitions have to be listed    */
 specifier|public
 name|void
 name|setTabName
@@ -198,7 +198,7 @@ name|getName
 argument_list|()
 return|;
 block|}
-comment|/**    * @param resFile the results file to be used to return the results    */
+comment|/**    * @param resFile    *          the results file to be used to return the results    */
 specifier|public
 name|void
 name|setResFile

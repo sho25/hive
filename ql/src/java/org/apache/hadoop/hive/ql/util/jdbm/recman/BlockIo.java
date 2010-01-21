@@ -33,12 +33,32 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|ObjectInput
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|ObjectOutput
 import|;
 end_import
 
 begin_comment
-comment|/**  *  This class wraps a page-sized byte array and provides methods  *  to read and write data to and from it. The readers and writers  *  are just the ones that the rest of the toolkit needs, nothing else.  *  Values written are compatible with java.io routines.  *  *  @see java.io.DataInput  *  @see java.io.DataOutput  */
+comment|/**  * This class wraps a page-sized byte array and provides methods to read and  * write data to and from it. The readers and writers are just the ones that the  * rest of the toolkit needs, nothing else. Values written are compatible with  * java.io routines.  *   * @see java.io.DataInput  * @see java.io.DataOutput  */
 end_comment
 
 begin_class
@@ -93,14 +113,14 @@ name|transactionCount
 init|=
 literal|0
 decl_stmt|;
-comment|/**      * Default constructor for serialization      */
+comment|/**    * Default constructor for serialization    */
 specifier|public
 name|BlockIo
 parameter_list|()
 block|{
 comment|// empty
 block|}
-comment|/**      *  Constructs a new BlockIo instance working on the indicated      *  buffer.      */
+comment|/**    * Constructs a new BlockIo instance working on the indicated buffer.    */
 name|BlockIo
 parameter_list|(
 name|long
@@ -118,6 +138,7 @@ name|blockId
 operator|>
 literal|10000000000L
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -127,6 +148,7 @@ operator|+
 name|blockId
 argument_list|)
 throw|;
+block|}
 name|this
 operator|.
 name|blockId
@@ -140,7 +162,7 @@ operator|=
 name|data
 expr_stmt|;
 block|}
-comment|/**      *  Returns the underlying array      */
+comment|/**    * Returns the underlying array    */
 name|byte
 index|[]
 name|getData
@@ -150,7 +172,7 @@ return|return
 name|data
 return|;
 block|}
-comment|/**      *  Sets the block number. Should only be called by RecordFile.      */
+comment|/**    * Sets the block number. Should only be called by RecordFile.    */
 name|void
 name|setBlockId
 parameter_list|(
@@ -163,6 +185,7 @@ condition|(
 name|isInTransaction
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -170,6 +193,7 @@ argument_list|(
 literal|"BlockId assigned for transaction block"
 argument_list|)
 throw|;
+block|}
 comment|// removeme for production version
 if|if
 condition|(
@@ -177,6 +201,7 @@ name|id
 operator|>
 literal|10000000000L
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -186,12 +211,13 @@ operator|+
 name|id
 argument_list|)
 throw|;
+block|}
 name|blockId
 operator|=
 name|id
 expr_stmt|;
 block|}
-comment|/**      *  Returns the block number.      */
+comment|/**    * Returns the block number.    */
 name|long
 name|getBlockId
 parameter_list|()
@@ -200,7 +226,7 @@ return|return
 name|blockId
 return|;
 block|}
-comment|/**      *  Returns the current view of the block.      */
+comment|/**    * Returns the current view of the block.    */
 specifier|public
 name|BlockView
 name|getView
@@ -210,7 +236,7 @@ return|return
 name|view
 return|;
 block|}
-comment|/**      *  Sets the current view of the block.      */
+comment|/**    * Sets the current view of the block.    */
 specifier|public
 name|void
 name|setView
@@ -226,7 +252,7 @@ operator|=
 name|view
 expr_stmt|;
 block|}
-comment|/**      *  Sets the dirty flag      */
+comment|/**    * Sets the dirty flag    */
 name|void
 name|setDirty
 parameter_list|()
@@ -236,7 +262,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**      *  Clears the dirty flag      */
+comment|/**    * Clears the dirty flag    */
 name|void
 name|setClean
 parameter_list|()
@@ -246,7 +272,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**      *  Returns true if the dirty flag is set.      */
+comment|/**    * Returns true if the dirty flag is set.    */
 name|boolean
 name|isDirty
 parameter_list|()
@@ -255,7 +281,7 @@ return|return
 name|dirty
 return|;
 block|}
-comment|/**      *  Returns true if the block is still dirty with respect to the      *  transaction log.      */
+comment|/**    * Returns true if the block is still dirty with respect to the transaction    * log.    */
 name|boolean
 name|isInTransaction
 parameter_list|()
@@ -266,7 +292,7 @@ operator|!=
 literal|0
 return|;
 block|}
-comment|/**      *  Increments transaction count for this block, to signal that this      *  block is in the log but not yet in the data file. The method also      *  takes a snapshot so that the data may be modified in new transactions.      */
+comment|/**    * Increments transaction count for this block, to signal that this block is    * in the log but not yet in the data file. The method also takes a snapshot    * so that the data may be modified in new transactions.    */
 specifier|synchronized
 name|void
 name|incrementTransactionCount
@@ -280,7 +306,7 @@ name|setClean
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      *  Decrements transaction count for this block, to signal that this      *  block has been written from the log to the data file.      */
+comment|/**    * Decrements transaction count for this block, to signal that this block has    * been written from the log to the data file.    */
 specifier|synchronized
 name|void
 name|decrementTransactionCount
@@ -295,6 +321,7 @@ name|transactionCount
 operator|<
 literal|0
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -308,7 +335,8 @@ literal|" below zero!"
 argument_list|)
 throw|;
 block|}
-comment|/**      *  Reads a byte from the indicated position      */
+block|}
+comment|/**    * Reads a byte from the indicated position    */
 specifier|public
 name|byte
 name|readByte
@@ -324,7 +352,7 @@ name|pos
 index|]
 return|;
 block|}
-comment|/**      *  Writes a byte to the indicated position      */
+comment|/**    * Writes a byte to the indicated position    */
 specifier|public
 name|void
 name|writeByte
@@ -347,7 +375,7 @@ name|setDirty
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      *  Reads a short from the indicated position      */
+comment|/**    * Reads a short from the indicated position    */
 specifier|public
 name|short
 name|readShort
@@ -399,7 +427,7 @@ operator|)
 argument_list|)
 return|;
 block|}
-comment|/**      *  Writes a short to the indicated position      */
+comment|/**    * Writes a short to the indicated position    */
 specifier|public
 name|void
 name|writeShort
@@ -455,7 +483,7 @@ name|setDirty
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      *  Reads an int from the indicated position      */
+comment|/**    * Reads an int from the indicated position    */
 specifier|public
 name|int
 name|readInt
@@ -467,10 +495,7 @@ block|{
 return|return
 operator|(
 operator|(
-call|(
-name|int
-call|)
-argument_list|(
+operator|(
 name|data
 index|[
 name|pos
@@ -479,16 +504,13 @@ literal|0
 index|]
 operator|&
 literal|0xff
-argument_list|)
+operator|)
 operator|<<
 literal|24
 operator|)
 operator||
 operator|(
-call|(
-name|int
-call|)
-argument_list|(
+operator|(
 name|data
 index|[
 name|pos
@@ -497,16 +519,13 @@ literal|1
 index|]
 operator|&
 literal|0xff
-argument_list|)
+operator|)
 operator|<<
 literal|16
 operator|)
 operator||
 operator|(
-call|(
-name|int
-call|)
-argument_list|(
+operator|(
 name|data
 index|[
 name|pos
@@ -515,16 +534,13 @@ literal|2
 index|]
 operator|&
 literal|0xff
-argument_list|)
+operator|)
 operator|<<
 literal|8
 operator|)
 operator||
 operator|(
-call|(
-name|int
-call|)
-argument_list|(
+operator|(
 name|data
 index|[
 name|pos
@@ -533,14 +549,14 @@ literal|3
 index|]
 operator|&
 literal|0xff
-argument_list|)
+operator|)
 operator|<<
 literal|0
 operator|)
 operator|)
 return|;
 block|}
-comment|/**      *  Writes an int to the indicated position      */
+comment|/**    * Writes an int to the indicated position    */
 specifier|public
 name|void
 name|writeInt
@@ -636,7 +652,7 @@ name|setDirty
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      *  Reads a long from the indicated position      */
+comment|/**    * Reads a long from the indicated position    */
 specifier|public
 name|long
 name|readLong
@@ -782,9 +798,9 @@ operator|&
 literal|0xffffffff
 operator|)
 return|;
-comment|/* Original version by Alex Boisvert.  Might be faster on 64-bit JVMs.         return             (((long)(data[pos+0]& 0xff)<< 56) |              ((long)(data[pos+1]& 0xff)<< 48) |              ((long)(data[pos+2]& 0xff)<< 40) |              ((long)(data[pos+3]& 0xff)<< 32) |              ((long)(data[pos+4]& 0xff)<< 24) |              ((long)(data[pos+5]& 0xff)<< 16) |              ((long)(data[pos+6]& 0xff)<<  8) |              ((long)(data[pos+7]& 0xff)<<  0));         */
+comment|/*      * Original version by Alex Boisvert. Might be faster on 64-bit JVMs. return      * (((long)(data[pos+0]& 0xff)<< 56) | ((long)(data[pos+1]& 0xff)<< 48)      * | ((long)(data[pos+2]& 0xff)<< 40) | ((long)(data[pos+3]& 0xff)<< 32)      * | ((long)(data[pos+4]& 0xff)<< 24) | ((long)(data[pos+5]& 0xff)<< 16)      * | ((long)(data[pos+6]& 0xff)<< 8) | ((long)(data[pos+7]& 0xff)<< 0));      */
 block|}
-comment|/**      *  Writes a long to the indicated position      */
+comment|/**    * Writes a long to the indicated position    */
 specifier|public
 name|void
 name|writeLong
@@ -961,6 +977,8 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|// overrides java.lang.Object
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

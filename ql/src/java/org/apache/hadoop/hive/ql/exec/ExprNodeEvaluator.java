@@ -61,7 +61,7 @@ specifier|abstract
 class|class
 name|ExprNodeEvaluator
 block|{
-comment|/**    * Initialize should be called once and only once.    * Return the ObjectInspector for the return value, given the rowInspector.    */
+comment|/**    * Initialize should be called once and only once. Return the ObjectInspector    * for the return value, given the rowInspector.    */
 specifier|public
 specifier|abstract
 name|ObjectInspector
@@ -73,7 +73,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Evaluate the expression given the row.    * This method should use the rowInspector passed in from initialize to     * inspect the row object.    * The return value will be inspected by the return value of initialize.     */
+comment|/**    * Evaluate the expression given the row. This method should use the    * rowInspector passed in from initialize to inspect the row object. The    * return value will be inspected by the return value of initialize.    */
 specifier|public
 specifier|abstract
 name|Object

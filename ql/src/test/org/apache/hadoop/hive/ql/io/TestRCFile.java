@@ -167,7 +167,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDeException
+name|ColumnProjectionUtils
 import|;
 end_import
 
@@ -183,7 +183,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|ColumnProjectionUtils
+name|SerDeException
 import|;
 end_import
 
@@ -1647,6 +1647,7 @@ name|i
 operator|==
 literal|0
 condition|)
+block|{
 name|assertEquals
 argument_list|(
 literal|"Field "
@@ -1661,7 +1662,9 @@ name|j
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|assertEquals
 argument_list|(
 literal|"Field "
@@ -1676,6 +1679,7 @@ name|j
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|reader

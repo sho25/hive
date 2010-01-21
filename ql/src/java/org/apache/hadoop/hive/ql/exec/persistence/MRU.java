@@ -21,28 +21,8 @@ name|persistence
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|persistence
-operator|.
-name|DCLLItem
-import|;
-end_import
-
 begin_comment
-comment|/**  *  An MRU (Most Recently Used) cache implementation.  *  This implementation maintains a doubly circular linked list and it can be used  *  with an auxiliary data structure such as a HashMap to locate the item quickly.  */
+comment|/**  * An MRU (Most Recently Used) cache implementation. This implementation  * maintains a doubly circular linked list and it can be used with an auxiliary  * data structure such as a HashMap to locate the item quickly.  */
 end_comment
 
 begin_class
@@ -86,7 +66,7 @@ return|return
 name|item
 return|;
 block|}
-comment|/**    * Remove a item from the MRU list.    * @param v linked list item.      */
+comment|/**    * Remove a item from the MRU list.    *     * @param v    *          linked list item.    */
 specifier|public
 name|void
 name|remove
@@ -101,7 +81,9 @@ name|v
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 name|v
@@ -144,7 +126,7 @@ name|remove
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Get the most recently used.    * @return the most recently used item.    */
+comment|/**    * Get the most recently used.    *     * @return the most recently used item.    */
 specifier|public
 name|T
 name|head
@@ -154,7 +136,7 @@ return|return
 name|head
 return|;
 block|}
-comment|/**    * Get the least recently used.    * @return the least recently used item.    */
+comment|/**    * Get the least recently used.    *     * @return the least recently used item.    */
 specifier|public
 name|T
 name|tail
@@ -170,7 +152,7 @@ name|getPrev
 argument_list|()
 return|;
 block|}
-comment|/**    * Insert a new item as the head    * @param v the new linked list item to be added to the head.    */
+comment|/**    * Insert a new item as the head    *     * @param v    *          the new linked list item to be added to the head.    */
 specifier|private
 name|void
 name|addToHead
@@ -206,7 +188,7 @@ name|v
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Move an existing item to the head.     * @param v the linked list item to be moved to the head.    */
+comment|/**    * Move an existing item to the head.    *     * @param v    *          the linked list item to be moved to the head.    */
 specifier|public
 name|void
 name|moveToHead
@@ -247,7 +229,7 @@ name|v
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Clear all elements in the MRU list.    * This is not very efficient (linear) since it will call remove() to every item in the list.    */
+comment|/**    * Clear all elements in the MRU list. This is not very efficient (linear)    * since it will call remove() to every item in the list.    */
 specifier|public
 name|void
 name|clear

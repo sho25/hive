@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Base class of numeric UDAFs like sum and avg which need a NumericUDAFEvaluatorResolver.  */
+comment|/**  * Base class of numeric UDAFs like sum and avg which need a  * NumericUDAFEvaluatorResolver.  */
 end_comment
 
 begin_class

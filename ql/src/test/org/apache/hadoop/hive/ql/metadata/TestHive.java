@@ -177,6 +177,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|serde
+operator|.
+name|Constants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|lazy
@@ -220,22 +236,6 @@ operator|.
 name|test
 operator|.
 name|Complex
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde
-operator|.
-name|Constants
 import|;
 end_import
 
@@ -328,6 +328,8 @@ specifier|private
 name|FileSystem
 name|fs
 decl_stmt|;
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|setUp
@@ -362,8 +364,6 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-name|this
-operator|.
 name|hm
 operator|=
 name|Hive
@@ -410,6 +410,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|tearDown
@@ -483,8 +485,6 @@ literal|"table_for_testtable"
 decl_stmt|;
 try|try
 block|{
-name|this
-operator|.
 name|hm
 operator|.
 name|dropTable
@@ -731,7 +731,8 @@ argument_list|(
 literal|10
 argument_list|)
 expr_stmt|;
-comment|// set output format parameters (these are not supported by QL but only for demo purposes)
+comment|// set output format parameters (these are not supported by QL but only
+comment|// for demo purposes)
 name|tbl
 operator|.
 name|setSerdeParam
@@ -944,7 +945,8 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// now that URI is set correctly, set the original table's uri and then compare the two tables
+comment|// now that URI is set correctly, set the original table's uri and then
+comment|// compare the two tables
 name|tbl
 operator|.
 name|setDataLocation
@@ -1133,7 +1135,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Tests create and fetch of a thrift based table    * @throws Throwable     */
+comment|/**    * Tests create and fetch of a thrift based table    *     * @throws Throwable    */
 specifier|public
 name|void
 name|testThriftTable
@@ -1150,8 +1152,6 @@ try|try
 block|{
 try|try
 block|{
-name|this
-operator|.
 name|hm
 operator|.
 name|dropTable
@@ -1429,7 +1429,8 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// now that URI is set correctly, set the original table's uri and then compare the two tables
+comment|// now that URI is set correctly, set the original table's uri and then
+comment|// compare the two tables
 name|tbl
 operator|.
 name|setDataLocation
@@ -1864,7 +1865,7 @@ literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//also test getting a table from a specific db
+comment|// also test getting a table from a specific db
 name|Table
 name|table1
 init|=
@@ -1905,7 +1906,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//and test dropping this specific table
+comment|// and test dropping this specific table
 name|hm
 operator|.
 name|dropTable

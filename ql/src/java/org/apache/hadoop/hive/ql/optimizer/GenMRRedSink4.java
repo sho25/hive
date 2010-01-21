@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|Map
+name|Serializable
 import|;
 end_import
 
@@ -45,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Stack
+name|Map
 import|;
 end_import
 
@@ -53,9 +53,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|Serializable
+name|Stack
 import|;
 end_import
 
@@ -125,24 +125,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
-operator|.
-name|mapredWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|lib
 operator|.
 name|Node
@@ -197,24 +179,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
-operator|.
-name|SemanticException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|optimizer
 operator|.
 name|GenMRProcContext
@@ -237,7 +201,25 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ParseContext
+name|SemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|mapredWork
 import|;
 end_import
 
@@ -256,7 +238,7 @@ specifier|public
 name|GenMRRedSink4
 parameter_list|()
 block|{   }
-comment|/**    * Reduce Scan encountered     * @param nd the reduce sink operator encountered    * @param opProcCtx context    */
+comment|/**    * Reduce Scan encountered    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -296,15 +278,13 @@ name|GenMRProcContext
 operator|)
 name|opProcCtx
 decl_stmt|;
-name|ParseContext
-name|parseCtx
-init|=
 name|ctx
 operator|.
 name|getParseCtx
 argument_list|()
-decl_stmt|;
-comment|// map-join consisted on a bunch of map-only jobs, and it has been split after the mapjoin
+expr_stmt|;
+comment|// map-join consisted on a bunch of map-only jobs, and it has been split
+comment|// after the mapjoin
 name|Operator
 argument_list|<
 name|?
@@ -446,6 +426,7 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 name|GenMapRedUtils
 operator|.
 name|initMapJoinPlan
@@ -465,7 +446,9 @@ literal|1
 argument_list|)
 expr_stmt|;
 comment|// When mapjoin is followed by a multi-table insert
+block|}
 else|else
+block|{
 name|GenMapRedUtils
 operator|.
 name|splitPlan
@@ -476,7 +459,9 @@ name|ctx
 argument_list|)
 expr_stmt|;
 block|}
-comment|// There is a join after mapjoin. One of the branches of mapjoin has already been initialized.
+block|}
+comment|// There is a join after mapjoin. One of the branches of mapjoin has already
+comment|// been initialized.
 comment|// Initialize the current branch, and join with the original plan.
 else|else
 block|{

@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This class manages the linked lists of logical rowid pages.  */
+comment|/**  * This class manages the linked lists of logical rowid pages.  */
 end_comment
 
 begin_class
@@ -48,18 +48,21 @@ name|LogicalRowIdManager
 block|{
 comment|// our record file and associated page manager
 specifier|private
+specifier|final
 name|RecordFile
 name|file
 decl_stmt|;
 specifier|private
+specifier|final
 name|PageManager
 name|pageman
 decl_stmt|;
 specifier|private
+specifier|final
 name|FreeLogicalRowIdPageManager
 name|freeman
 decl_stmt|;
-comment|/**      *  Creates a log rowid manager using the indicated record file and      *  page manager      */
+comment|/**    * Creates a log rowid manager using the indicated record file and page    * manager    */
 name|LogicalRowIdManager
 parameter_list|(
 name|RecordFile
@@ -83,8 +86,6 @@ name|pageman
 operator|=
 name|pageman
 expr_stmt|;
-name|this
-operator|.
 name|freeman
 operator|=
 operator|new
@@ -96,7 +97,7 @@ name|pageman
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Creates a new logical rowid pointing to the indicated physical      *  id      */
+comment|/**    * Creates a new logical rowid pointing to the indicated physical id    */
 name|Location
 name|insert
 parameter_list|(
@@ -215,7 +216,7 @@ return|return
 name|retval
 return|;
 block|}
-comment|/**      *  Releases the indicated logical rowid.      */
+comment|/**    * Releases the indicated logical rowid.    */
 name|void
 name|delete
 parameter_list|(
@@ -233,7 +234,7 @@ name|rowid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Updates the mapping      *      *  @param rowid The logical rowid      *  @param loc The physical rowid      */
+comment|/**    * Updates the mapping    *     * @param rowid    *          The logical rowid    * @param loc    *          The physical rowid    */
 name|void
 name|update
 parameter_list|(
@@ -310,7 +311,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Returns a mapping      *      *  @param rowid The logical rowid      *  @return The physical rowid      */
+comment|/**    * Returns a mapping    *     * @param rowid    *          The logical rowid    * @return The physical rowid    */
 name|Location
 name|fetch
 parameter_list|(

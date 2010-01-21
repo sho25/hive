@@ -241,6 +241,7 @@ extends|extends
 name|TestCase
 block|{
 specifier|private
+specifier|final
 name|Configuration
 name|conf
 init|=
@@ -299,6 +300,7 @@ if|if
 condition|(
 name|local
 condition|)
+block|{
 name|fs
 operator|=
 name|FileSystem
@@ -308,7 +310,9 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|fs
 operator|=
 name|FileSystem
@@ -318,6 +322,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+block|}
 name|conf
 operator|.
 name|setInt
@@ -360,8 +365,6 @@ operator|+
 literal|"/mapred"
 argument_list|)
 decl_stmt|;
-name|this
-operator|.
 name|testRCFile
 operator|=
 operator|new
@@ -372,8 +375,6 @@ argument_list|,
 literal|"test_rcfile"
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|testSeqFile
 operator|=
 operator|new
@@ -387,8 +388,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|this
-operator|.
 name|testRCFile
 operator|=
 operator|new
@@ -399,8 +398,6 @@ operator|+
 literal|"-rcfile"
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|testSeqFile
 operator|=
 operator|new
@@ -425,8 +422,6 @@ name|fs
 operator|.
 name|delete
 argument_list|(
-name|this
-operator|.
 name|testSeqFile
 argument_list|,
 literal|true
@@ -440,8 +435,6 @@ name|println
 argument_list|(
 literal|"RCFile:"
 operator|+
-name|this
-operator|.
 name|testRCFile
 operator|.
 name|toString
@@ -456,8 +449,6 @@ name|println
 argument_list|(
 literal|"SequenceFile:"
 operator|+
-name|this
-operator|.
 name|testSeqFile
 operator|.
 name|toString
@@ -849,8 +840,6 @@ name|randColLenGenerator
 operator|.
 name|nextInt
 argument_list|(
-name|this
-operator|.
 name|columnMaxSize
 argument_list|)
 argument_list|)
@@ -880,6 +869,7 @@ condition|;
 name|j
 operator|++
 control|)
+block|{
 name|row
 index|[
 name|i
@@ -890,11 +880,10 @@ index|]
 operator|=
 name|getRandomChar
 argument_list|(
-name|this
-operator|.
 name|randomCharGenerator
 argument_list|)
 expr_stmt|;
+block|}
 name|bytes
 operator|.
 name|get
@@ -968,25 +957,16 @@ name|b
 operator|>
 literal|90
 condition|)
+block|{
 name|b
 operator|+=
 literal|7
 expr_stmt|;
+block|}
 return|return
 name|b
 return|;
 block|}
-specifier|private
-specifier|static
-name|String
-name|usage
-init|=
-literal|"Usage: PerformTestRCFileAndSeqFile "
-operator|+
-literal|"[-count N]"
-operator|+
-literal|" [file]"
-decl_stmt|;
 specifier|public
 specifier|static
 name|void
@@ -1241,8 +1221,6 @@ name|fs
 argument_list|,
 name|rowCount
 argument_list|,
-name|this
-operator|.
 name|testSeqFile
 argument_list|,
 name|columnNum
@@ -1265,8 +1243,6 @@ name|fs
 operator|.
 name|getFileStatus
 argument_list|(
-name|this
-operator|.
 name|testSeqFile
 argument_list|)
 operator|.
@@ -1354,6 +1330,7 @@ name|rowCount
 operator|!=
 name|readRows
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -1361,6 +1338,7 @@ argument_list|(
 literal|"Compare read and write row count error."
 argument_list|)
 throw|;
+block|}
 name|assertEquals
 argument_list|(
 literal|""
@@ -1386,8 +1364,6 @@ name|fs
 argument_list|,
 name|rowCount
 argument_list|,
-name|this
-operator|.
 name|testSeqFile
 argument_list|)
 expr_stmt|;
@@ -1448,6 +1424,7 @@ name|rowCount
 operator|!=
 name|readRows
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -1455,6 +1432,7 @@ argument_list|(
 literal|"Compare read and write row count error."
 argument_list|)
 throw|;
+block|}
 name|assertEquals
 argument_list|(
 literal|""
@@ -1480,8 +1458,6 @@ name|fs
 argument_list|,
 name|rowCount
 argument_list|,
-name|this
-operator|.
 name|testSeqFile
 argument_list|)
 expr_stmt|;
@@ -1540,6 +1516,7 @@ name|rowCount
 operator|!=
 name|readRows
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -1547,6 +1524,7 @@ argument_list|(
 literal|"Compare read and write row count error."
 argument_list|)
 throw|;
+block|}
 name|assertEquals
 argument_list|(
 literal|""
@@ -1570,8 +1548,6 @@ name|fs
 argument_list|,
 name|rowCount
 argument_list|,
-name|this
-operator|.
 name|testSeqFile
 argument_list|)
 expr_stmt|;
@@ -1687,6 +1663,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|reader
 operator|.
 name|next
@@ -1696,6 +1673,7 @@ argument_list|,
 name|val
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|public
 name|int
@@ -1737,8 +1715,6 @@ condition|(
 name|chechCorrect
 condition|)
 block|{
-name|this
-operator|.
 name|resetRandomGenerators
 argument_list|()
 expr_stmt|;
@@ -1857,8 +1833,6 @@ condition|(
 name|chechCorrect
 condition|)
 block|{
-name|this
-operator|.
 name|nextRandomRow
 argument_list|(
 name|checkBytes
@@ -1895,6 +1869,7 @@ condition|(
 operator|!
 name|ok
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -1902,6 +1877,7 @@ argument_list|(
 literal|"Compare read and write error."
 argument_list|)
 throw|;
+block|}
 name|actualReadCount
 operator|++
 expr_stmt|;
@@ -1950,8 +1926,6 @@ condition|(
 name|chechCorrect
 condition|)
 block|{
-name|this
-operator|.
 name|resetRandomGenerators
 argument_list|()
 expr_stmt|;
@@ -2084,8 +2058,6 @@ condition|(
 name|chechCorrect
 condition|)
 block|{
-name|this
-operator|.
 name|nextRandomRow
 argument_list|(
 name|checkBytes
@@ -2147,6 +2119,7 @@ condition|(
 operator|!
 name|ok
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -2154,6 +2127,7 @@ argument_list|(
 literal|"Compare read and write error."
 argument_list|)
 throw|;
+block|}
 name|actualReadCount
 operator|++
 expr_stmt|;
@@ -2202,8 +2176,6 @@ condition|(
 name|chechCorrect
 condition|)
 block|{
-name|this
-operator|.
 name|resetRandomGenerators
 argument_list|()
 expr_stmt|;
@@ -2287,8 +2259,6 @@ condition|(
 name|chechCorrect
 condition|)
 block|{
-name|this
-operator|.
 name|nextRandomRow
 argument_list|(
 name|checkBytes
@@ -2313,6 +2283,7 @@ condition|(
 operator|!
 name|ok
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -2320,6 +2291,7 @@ argument_list|(
 literal|"Compare read and write error."
 argument_list|)
 throw|;
+block|}
 name|actualReadCount
 operator|++
 expr_stmt|;

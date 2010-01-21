@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Callback interface between {@link CachePolicy} and a Cache implementation  * to notify about cached object eviction.  *<p>  * Note that<code>CachePolicy</code> implementations typically use  *<em>object equality</em> when removing listeners, so concrete  * implementations of this interface should also pay attention to  * their {@link Object#equals(Object)} and {@link Object#hashCode()}  * methods.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: CachePolicyListener.java,v 1.3 2003/11/01 13:25:41 dranatunga Exp $  */
+comment|/**  * Callback interface between {@link CachePolicy} and a Cache implementation to  * notify about cached object eviction.  *<p>  * Note that<code>CachePolicy</code> implementations typically use  *<em>object equality</em> when removing listeners, so concrete implementations  * of this interface should also pay attention to their  * {@link Object#equals(Object)} and {@link Object#hashCode()} methods.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: CachePolicyListener.java,v 1.3 2003/11/01 13:25:41 dranatunga  *          Exp $  */
 end_comment
 
 begin_interface
@@ -36,7 +36,7 @@ specifier|public
 interface|interface
 name|CachePolicyListener
 block|{
-comment|/**      * Notification that the cache this listener is attached to is evicting      * the object indicated.      *      * @param obj object being evited from cache      * @throws CacheEvictionException if this listener encountered problems      *     while preparing for the specified object's eviction. For example,      *     a listener may try to persist the object to disk, and encounter      *     an<code>IOException</code>.      */
+comment|/**    * Notification that the cache this listener is attached to is evicting the    * object indicated.    *     * @param obj    *          object being evited from cache    * @throws CacheEvictionException    *           if this listener encountered problems while preparing for the    *           specified object's eviction. For example, a listener may try to    *           persist the object to disk, and encounter an    *<code>IOException</code>.    */
 specifier|public
 name|void
 name|cacheObjectEvicted

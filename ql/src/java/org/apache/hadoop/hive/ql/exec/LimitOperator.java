@@ -100,7 +100,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Limit operator implementation  * Limits the number of rows to be passed on.  **/
+comment|/**  * Limit operator implementation Limits the number of rows to be passed on.  **/
 end_comment
 
 begin_class
@@ -133,6 +133,8 @@ specifier|protected
 name|int
 name|currCount
 decl_stmt|;
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -162,6 +164,8 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -197,12 +201,16 @@ operator|++
 expr_stmt|;
 block|}
 else|else
+block|{
 name|setDone
 argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getName
@@ -212,6 +220,8 @@ return|return
 literal|"LIM"
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

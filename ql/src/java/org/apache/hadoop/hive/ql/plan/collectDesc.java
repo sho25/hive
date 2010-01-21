@@ -57,7 +57,7 @@ decl_stmt|;
 specifier|public
 name|collectDesc
 parameter_list|()
-block|{}
+block|{   }
 specifier|public
 name|collectDesc
 parameter_list|(
@@ -79,8 +79,6 @@ name|getBufferSize
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|bufferSize
 return|;
 block|}

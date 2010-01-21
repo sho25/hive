@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  This is a marker interface that is implemented by classes that  *  interpret blocks of data by pretending to be an overlay.  *  *  @see BlockIo#setView  */
+comment|/**  * This is a marker interface that is implemented by classes that interpret  * blocks of data by pretending to be an overlay.  *   * @see BlockIo#setView  */
 end_comment
 
 begin_interface

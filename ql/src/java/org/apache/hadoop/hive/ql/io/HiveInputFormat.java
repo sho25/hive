@@ -63,29 +63,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|net
-operator|.
-name|URLClassLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Arrays
 import|;
 end_import
 
@@ -287,7 +267,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|partitionDesc
 import|;
 end_import
 
@@ -301,11 +281,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|serde2
 operator|.
-name|plan
-operator|.
-name|partitionDesc
+name|ColumnProjectionUtils
 import|;
 end_import
 
@@ -364,6 +342,20 @@ operator|.
 name|mapred
 operator|.
 name|FileInputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|FileSplit
 import|;
 end_import
 
@@ -459,44 +451,14 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|mapred
-operator|.
-name|FileSplit
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|util
 operator|.
 name|ReflectionUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|ColumnProjectionUtils
-import|;
-end_import
-
 begin_comment
-comment|/**  * HiveInputFormat is a parameterized InputFormat which looks at the path name and determine  * the correct InputFormat for that path name from mapredPlan.pathToPartitionInfo().  * It can be used to read files with different input format in the same map-reduce job.  */
+comment|/**  * HiveInputFormat is a parameterized InputFormat which looks at the path name  * and determine the correct InputFormat for that path name from  * mapredPlan.pathToPartitionInfo(). It can be used to read files with different  * input format in the same map-reduce job.  */
 end_comment
 
 begin_class
@@ -535,7 +497,7 @@ argument_list|(
 literal|"org.apache.hadoop.hive.ql.io.HiveInputFormat"
 argument_list|)
 decl_stmt|;
-comment|/**    * HiveInputSplit encapsulates an InputSplit with its corresponding inputFormatClass.    * The reason that it derives from FileSplit is to make sure "map.input.file" in MapTask.    */
+comment|/**    * HiveInputSplit encapsulates an InputSplit with its corresponding    * inputFormatClass. The reason that it derives from FileSplit is to make sure    * "map.input.file" in MapTask.    */
 specifier|public
 specifier|static
 class|class
@@ -637,6 +599,8 @@ return|return
 name|inputFormatClassName
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Path
 name|getPath
@@ -670,6 +634,8 @@ argument_list|)
 return|;
 block|}
 comment|/** The position of the first byte in the file to process. */
+annotation|@
+name|Override
 specifier|public
 name|long
 name|getStart
@@ -698,6 +664,8 @@ return|return
 literal|0
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -714,6 +682,8 @@ name|toString
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|long
 name|getLength
@@ -752,6 +722,8 @@ return|return
 name|r
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 index|[]
@@ -767,6 +739,8 @@ name|getLocations
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readFields
@@ -845,6 +819,8 @@ name|readUTF
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|write
@@ -1147,7 +1123,7 @@ name|inputFormatClassName
 argument_list|)
 throw|;
 block|}
-comment|//clone a jobConf for setting needed columns for reading
+comment|// clone a jobConf for setting needed columns for reading
 name|JobConf
 name|cloneJobConf
 init|=
@@ -1337,7 +1313,8 @@ argument_list|,
 name|dir
 argument_list|)
 decl_stmt|;
-comment|// create a new InputFormat instance if this is the first time to see this class
+comment|// create a new InputFormat instance if this is the first time to see this
+comment|// class
 name|Class
 name|inputFormatClass
 init|=
@@ -1505,7 +1482,8 @@ argument_list|,
 name|dir
 argument_list|)
 decl_stmt|;
-comment|// create a new InputFormat instance if this is the first time to see this class
+comment|// create a new InputFormat instance if this is the first time to see this
+comment|// class
 name|InputFormat
 name|inputFormat
 init|=
@@ -1658,11 +1636,13 @@ name|mrwork
 operator|==
 literal|null
 condition|)
+block|{
 name|init
 argument_list|(
 name|job
 argument_list|)
 expr_stmt|;
+block|}
 name|ArrayList
 argument_list|<
 name|String
@@ -1770,6 +1750,7 @@ name|val
 range|:
 name|list
 control|)
+block|{
 name|aliases
 operator|.
 name|add
@@ -1777,6 +1758,7 @@ argument_list|(
 name|val
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 for|for
@@ -1839,6 +1821,7 @@ name|list
 operator|!=
 literal|null
 condition|)
+block|{
 name|ColumnProjectionUtils
 operator|.
 name|appendReadColumnIDs
@@ -1848,7 +1831,9 @@ argument_list|,
 name|list
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|ColumnProjectionUtils
 operator|.
 name|setFullyReadColumns
@@ -1856,6 +1841,7 @@ argument_list|(
 name|jobConf
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

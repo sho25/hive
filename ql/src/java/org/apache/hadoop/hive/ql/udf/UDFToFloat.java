@@ -238,7 +238,7 @@ specifier|public
 name|UDFToFloat
 parameter_list|()
 block|{   }
-comment|/**    * Convert from void to a float. This is called for CAST(... AS FLOAT)    *    * @param i The void value to convert    * @return FloatWritable    */
+comment|/**    * Convert from void to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The void value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -251,7 +251,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert from boolean to a float. This is called for CAST(... AS FLOAT)    *    * @param i The boolean value to convert    * @return FloatWritable    */
+comment|/**    * Convert from boolean to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The boolean value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -298,7 +298,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from byte to a float. This is called for CAST(... AS FLOAT)    *    * @param i The byte value to convert    * @return FloatWritable    */
+comment|/**    * Convert from byte to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The byte value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -324,9 +324,6 @@ name|floatWritable
 operator|.
 name|set
 argument_list|(
-operator|(
-name|float
-operator|)
 name|i
 operator|.
 name|get
@@ -338,7 +335,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from short to a float. This is called for CAST(... AS FLOAT)    *    * @param i The short value to convert    * @return FloatWritable    */
+comment|/**    * Convert from short to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The short value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -364,9 +361,6 @@ name|floatWritable
 operator|.
 name|set
 argument_list|(
-operator|(
-name|float
-operator|)
 name|i
 operator|.
 name|get
@@ -378,7 +372,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from integer to a float. This is called for CAST(... AS FLOAT)    *    * @param i The integer value to convert    * @return FloatWritable    */
+comment|/**    * Convert from integer to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The integer value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -404,9 +398,6 @@ name|floatWritable
 operator|.
 name|set
 argument_list|(
-operator|(
-name|float
-operator|)
 name|i
 operator|.
 name|get
@@ -418,7 +409,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from long to a float. This is called for CAST(... AS FLOAT)    *    * @param i The long value to convert    * @return FloatWritable    */
+comment|/**    * Convert from long to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The long value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -444,9 +435,6 @@ name|floatWritable
 operator|.
 name|set
 argument_list|(
-operator|(
-name|float
-operator|)
 name|i
 operator|.
 name|get
@@ -458,7 +446,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from double to a float. This is called for CAST(... AS FLOAT)    *    * @param i The double value to convert    * @return FloatWritable    */
+comment|/**    * Convert from double to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The double value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -498,7 +486,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from string to a float. This is called for CAST(... AS FLOAT)    *    * @param i The string value to convert    * @return FloatWritable    */
+comment|/**    * Convert from string to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The string value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate

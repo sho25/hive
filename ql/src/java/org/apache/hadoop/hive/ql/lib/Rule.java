@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Rule interface for Operators  * Used in operator dispatching to dispatch process/visitor functions for operators  */
+comment|/**  * Rule interface for Operators Used in operator dispatching to dispatch  * process/visitor functions for operators  */
 end_comment
 
 begin_interface
@@ -56,7 +56,7 @@ specifier|public
 interface|interface
 name|Rule
 block|{
-comment|/**    * @return the cost of the rule - the lower the cost, the better the rule matches    * @throws SemanticException    */
+comment|/**    * @return the cost of the rule - the lower the cost, the better the rule    *         matches    * @throws SemanticException    */
 specifier|public
 name|int
 name|cost

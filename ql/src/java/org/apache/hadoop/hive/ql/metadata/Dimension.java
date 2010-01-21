@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Hive consists of a fixed, well defined set of Dimensions.  * Each dimension has a type and id. Dimensions link columns in different tables  *  */
+comment|/**  * Hive consists of a fixed, well defined set of Dimensions. Each dimension has  * a type and id. Dimensions link columns in different tables  *   */
 end_comment
 
 begin_class
@@ -52,14 +52,10 @@ name|String
 name|id
 parameter_list|)
 block|{
-name|this
-operator|.
 name|dimensionType
 operator|=
 name|t
 expr_stmt|;
-name|this
-operator|.
 name|dimensionId
 operator|=
 name|id
@@ -74,8 +70,6 @@ name|getDimensionType
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|dimensionType
 return|;
 block|}
@@ -85,8 +79,6 @@ name|getDimensionId
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|dimensionId
 return|;
 block|}
@@ -109,18 +101,22 @@ argument_list|(
 name|o
 argument_list|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 name|o
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 name|o
@@ -138,8 +134,6 @@ name|o
 decl_stmt|;
 return|return
 operator|(
-name|this
-operator|.
 name|dimensionId
 operator|.
 name|equals
@@ -150,8 +144,6 @@ name|dimensionId
 argument_list|)
 operator|&&
 operator|(
-name|this
-operator|.
 name|dimensionType
 operator|==
 name|d
@@ -180,8 +172,6 @@ block|{
 return|return
 literal|"Type="
 operator|+
-name|this
-operator|.
 name|dimensionType
 operator|.
 name|getName
@@ -191,8 +181,6 @@ literal|","
 operator|+
 literal|"Id="
 operator|+
-name|this
-operator|.
 name|dimensionId
 return|;
 block|}
@@ -222,8 +210,6 @@ name|result
 operator|+
 operator|(
 operator|(
-name|this
-operator|.
 name|dimensionId
 operator|==
 literal|null
@@ -231,8 +217,6 @@ operator|)
 condition|?
 literal|0
 else|:
-name|this
-operator|.
 name|dimensionId
 operator|.
 name|hashCode
@@ -247,8 +231,6 @@ name|result
 operator|+
 operator|(
 operator|(
-name|this
-operator|.
 name|dimensionType
 operator|==
 literal|null
@@ -256,8 +238,6 @@ operator|)
 condition|?
 literal|0
 else|:
-name|this
-operator|.
 name|dimensionType
 operator|.
 name|hashCode
@@ -277,15 +257,11 @@ name|o
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|dimensionType
 operator|.
 name|hashCode
 argument_list|()
 operator|^
-name|this
-operator|.
 name|dimensionId
 operator|.
 name|hashCode

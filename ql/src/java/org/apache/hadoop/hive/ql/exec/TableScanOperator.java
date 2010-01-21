@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Table Scan Operator  * If the data is coming from the map-reduce framework, just forward it.  * This will be needed as part of local work when data is not being read as part of map-reduce framework  **/
+comment|/**  * Table Scan Operator If the data is coming from the map-reduce framework, just  * forward it. This will be needed as part of local work when data is not being  * read as part of map-reduce framework  **/
 end_comment
 
 begin_class
@@ -109,7 +109,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**    * Currently, the table scan operator does not do anything special other than just forwarding the row. Since the     * table data is always read as part of the map-reduce framework by the mapper. But, this assumption is not true,    * i.e table data is not only read by the mapper, this operator will be enhanced to read the table.    **/
+comment|/**    * Currently, the table scan operator does not do anything special other than    * just forwarding the row. Since the table data is always read as part of the    * map-reduce framework by the mapper. But, this assumption is not true, i.e    * table data is not only read by the mapper, this operator will be enhanced    * to read the table.    **/
 annotation|@
 name|Override
 specifier|public
@@ -136,7 +136,9 @@ index|]
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * The operator name for this operator type. This is used to construct the rule for an operator    * @return the operator name    **/
+comment|/**    * The operator name for this operator type. This is used to construct the    * rule for an operator    *     * @return the operator name    **/
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getName
@@ -179,8 +181,6 @@ argument_list|>
 name|orign_columns
 parameter_list|)
 block|{
-name|this
-operator|.
 name|neededColumnIDs
 operator|=
 name|orign_columns
@@ -202,6 +202,8 @@ return|return
 name|neededColumnIDs
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

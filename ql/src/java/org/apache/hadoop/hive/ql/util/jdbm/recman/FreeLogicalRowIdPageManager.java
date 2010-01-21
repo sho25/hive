@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This class manages free Logical rowid pages and provides methods  *  to free and allocate Logical rowids on a high level.  */
+comment|/**  * This class manages free Logical rowid pages and provides methods to free and  * allocate Logical rowids on a high level.  */
 end_comment
 
 begin_class
@@ -48,15 +48,17 @@ name|FreeLogicalRowIdPageManager
 block|{
 comment|// our record file
 specifier|private
+specifier|final
 name|RecordFile
 name|file
 decl_stmt|;
 comment|// our page manager
 specifier|private
+specifier|final
 name|PageManager
 name|pageman
 decl_stmt|;
-comment|/**      *  Creates a new instance using the indicated record file and      *  page manager.      */
+comment|/**    * Creates a new instance using the indicated record file and page manager.    */
 name|FreeLogicalRowIdPageManager
 parameter_list|(
 name|RecordFile
@@ -81,7 +83,7 @@ operator|=
 name|pageman
 expr_stmt|;
 block|}
-comment|/**      *  Returns a free Logical rowid, or      *  null if nothing was found.      */
+comment|/**    * Returns a free Logical rowid, or null if nothing was found.    */
 name|Location
 name|get
 parameter_list|()
@@ -212,6 +214,7 @@ argument_list|)
 expr_stmt|;
 block|}
 else|else
+block|{
 name|file
 operator|.
 name|release
@@ -224,6 +227,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|retval
 return|;
@@ -249,7 +253,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**      *  Puts the indicated rowid on the free list      */
+comment|/**    * Puts the indicated rowid on the free list    */
 name|void
 name|put
 parameter_list|(

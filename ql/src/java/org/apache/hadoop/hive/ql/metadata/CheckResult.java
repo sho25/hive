@@ -113,7 +113,7 @@ return|return
 name|tablesNotOnFs
 return|;
 block|}
-comment|/**    * @param tablesNotOnFs a list of tables not found on the filesystem.    */
+comment|/**    * @param tablesNotOnFs    *          a list of tables not found on the filesystem.    */
 specifier|public
 name|void
 name|setTablesNotOnFs
@@ -145,7 +145,7 @@ return|return
 name|tablesNotInMs
 return|;
 block|}
-comment|/**    * @param tablesNotInMs a list of tables not found in the metastore.    */
+comment|/**    * @param tablesNotInMs    *          a list of tables not found in the metastore.    */
 specifier|public
 name|void
 name|setTablesNotInMs
@@ -177,7 +177,7 @@ return|return
 name|partitionsNotOnFs
 return|;
 block|}
-comment|/**    * @param partitionsNotOnFs a list of partitions not found on the fs    */
+comment|/**    * @param partitionsNotOnFs    *          a list of partitions not found on the fs    */
 specifier|public
 name|void
 name|setPartitionsNotOnFs
@@ -209,7 +209,7 @@ return|return
 name|partitionsNotInMs
 return|;
 block|}
-comment|/**    * @param partitionsNotInMs a list of partitions not found in the metastore    */
+comment|/**    * @param partitionsNotInMs    *          a list of partitions not found in the metastore    */
 specifier|public
 name|void
 name|setPartitionsNotInMs
@@ -228,7 +228,7 @@ operator|=
 name|partitionsNotInMs
 expr_stmt|;
 block|}
-comment|/**    * A basic description of a partition that is     * missing from either the fs or the ms.    */
+comment|/**    * A basic description of a partition that is missing from either the fs or    * the ms.    */
 specifier|public
 specifier|static
 class|class
@@ -257,7 +257,7 @@ return|return
 name|partitionName
 return|;
 block|}
-comment|/**      * @param partitionName name of partition      */
+comment|/**      * @param partitionName      *          name of partition      */
 specifier|public
 name|void
 name|setPartitionName
@@ -283,7 +283,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**      * @param tableName table name      */
+comment|/**      * @param tableName      *          table name      */
 specifier|public
 name|void
 name|setTableName
@@ -299,6 +299,8 @@ operator|=
 name|tableName
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

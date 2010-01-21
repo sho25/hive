@@ -238,7 +238,7 @@ specifier|public
 name|UDFToDouble
 parameter_list|()
 block|{   }
-comment|/**    * Convert from void to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The void value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from void to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The void value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -251,7 +251,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The boolean value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The boolean value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -292,7 +292,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The byte value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The byte value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -329,7 +329,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from short to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The short value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from short to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The short value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -366,7 +366,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from integer to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The integer value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from integer to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The integer value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -403,7 +403,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from long to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The long value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from long to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The long value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -440,7 +440,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from float to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The float value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from float to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The float value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -477,7 +477,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from string to a double. This is called for CAST(... AS DOUBLE)    *    * @param i The string value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from string to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The string value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate

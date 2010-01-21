@@ -47,6 +47,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Properties
 import|;
 end_import
@@ -63,11 +73,47 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|HashSet
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
 import|;
 end_import
 
@@ -147,9 +193,9 @@ name|util
 operator|.
 name|jdbm
 operator|.
-name|htree
+name|helper
 operator|.
-name|HTree
+name|FastIterator
 import|;
 end_import
 
@@ -169,100 +215,14 @@ name|util
 operator|.
 name|jdbm
 operator|.
-name|helper
+name|htree
 operator|.
-name|FastIterator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|persistence
-operator|.
-name|MRU
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|persistence
-operator|.
-name|DCLLItem
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|HTree
 import|;
 end_import
 
 begin_comment
-comment|/**  * Simple wrapper for persistent Hashmap implementing only the put/get/remove/clear interface.  * The main memory hash table acts as a cache and all put/get will operate on it first. If the  * size of the main memory hash table exceeds a certain threshold, new elements will go into  * the persistent hash table.  */
+comment|/**  * Simple wrapper for persistent Hashmap implementing only the  * put/get/remove/clear interface. The main memory hash table acts as a cache  * and all put/get will operate on it first. If the size of the main memory hash  * table exceeds a certain threshold, new elements will go into the persistent  * hash table.  */
 end_comment
 
 begin_class
@@ -305,7 +265,8 @@ specifier|private
 name|int
 name|threshold
 decl_stmt|;
-comment|// threshold to put data into persistent hash table instead
+comment|// threshold to put data into persistent hash table
+comment|// instead
 specifier|private
 name|HashMap
 argument_list|<
@@ -330,7 +291,8 @@ specifier|private
 name|File
 name|tmpFile
 decl_stmt|;
-comment|// temp file holding the persistent data from record manager.
+comment|// temp file holding the persistent data from record
+comment|// manager.
 specifier|private
 name|MRU
 argument_list|<
@@ -339,7 +301,7 @@ argument_list|>
 name|MRUList
 decl_stmt|;
 comment|// MRU cache entry
-comment|/**    * Doubly linked list of value items.    * Note: this is only used along with memory hash table. Persistent hash stores the value directory.    */
+comment|/**    * Doubly linked list of value items. Note: this is only used along with    * memory hash table. Persistent hash stores the value directory.    */
 class|class
 name|MRUItem
 extends|extends
@@ -370,7 +332,7 @@ name|v
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Constructor.    * @param threshold User specified threshold to store new values into persistent storage.    */
+comment|/**    * Constructor.    *     * @param threshold    *          User specified threshold to store new values into persistent    *          storage.    */
 specifier|public
 name|HashMapWrapper
 parameter_list|(
@@ -433,7 +395,7 @@ name|THRESHOLD
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Get the value based on the key. We try to get it from the main memory hash table first.    * If it is not there we will look up the persistent hash table. This function also guarantees    * if any item is found given a key, it is available in main memory HashMap. So mutating the     * returned value will be reflected (saved) in HashMapWrapper.    * @param key    * @return Value corresponding to the key. If the key is not found, return null.    */
+comment|/**    * Get the value based on the key. We try to get it from the main memory hash    * table first. If it is not there we will look up the persistent hash table.    * This function also guarantees if any item is found given a key, it is    * available in main memory HashMap. So mutating the returned value will be    * reflected (saved) in HashMapWrapper.    *     * @param key    * @return Value corresponding to the key. If the key is not found, return    *         null.    */
 specifier|public
 name|V
 name|get
@@ -671,7 +633,7 @@ return|return
 name|value
 return|;
 block|}
-comment|/**    * Put the key value pair in the hash table. It will first try to     * put it into the main memory hash table. If the size exceeds the    * threshold, it will put it into the persistent hash table.    * @param key    * @param value    * @throws HiveException    */
+comment|/**    * Put the key value pair in the hash table. It will first try to put it into    * the main memory hash table. If the size exceeds the threshold, it will put    * it into the persistent hash table.    *     * @param key    * @param value    * @throws HiveException    */
 specifier|public
 name|void
 name|put
@@ -748,6 +710,7 @@ argument_list|(
 name|value
 argument_list|)
 condition|)
+block|{
 name|LOG
 operator|.
 name|error
@@ -755,6 +718,7 @@ argument_list|(
 literal|"HashMapWrapper.put() reuse MRUItem inconsistency [1]."
 argument_list|)
 expr_stmt|;
+block|}
 assert|assert
 operator|(
 name|mHash
@@ -907,6 +871,7 @@ argument_list|(
 name|value
 argument_list|)
 condition|)
+block|{
 name|LOG
 operator|.
 name|error
@@ -914,6 +879,7 @@ argument_list|(
 literal|"HashMapWrapper.put() reuse MRUItem inconsistency [2]."
 argument_list|)
 expr_stmt|;
+block|}
 assert|assert
 operator|(
 name|mHash
@@ -934,7 +900,8 @@ assert|;
 block|}
 else|else
 block|{
-comment|// for items inserted into persistent hash table, we don't put it into MRU
+comment|// for items inserted into persistent hash table, we don't put it into
+comment|// MRU
 if|if
 condition|(
 name|pHash
@@ -992,7 +959,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Get the persistent hash table.    * @return persistent hash table    * @throws HiveException    */
+comment|/**    * Get the persistent hash table.    *     * @return persistent hash table    * @throws HiveException    */
 specifier|private
 name|HTree
 name|getPersistentHash
@@ -1045,7 +1012,8 @@ name|getAbsolutePath
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Delete the temp file if the JVM terminate normally through Hadoop job kill command.
+comment|// Delete the temp file if the JVM terminate normally through Hadoop job
+comment|// kill command.
 comment|// Caveat: it won't be deleted if JVM is killed by 'kill -9'.
 name|tmpFile
 operator|.
@@ -1132,7 +1100,7 @@ return|return
 name|pHash
 return|;
 block|}
-comment|/**    * Clean up the hash table. All elements in the main memory hash table will be removed, and    * the persistent hash table will be destroyed (temporary file will be deleted).    */
+comment|/**    * Clean up the hash table. All elements in the main memory hash table will be    * removed, and the persistent hash table will be destroyed (temporary file    * will be deleted).    */
 specifier|public
 name|void
 name|clear
@@ -1162,7 +1130,7 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Remove one key-value pairs from the hash table based on the given key. If the pairs are    * removed from the main memory hash table, pairs in the persistent hash table will not be    * moved to the main memory hash table. Future inserted elements will go into the main memory    * hash table though.    * @param key    * @throws HiveException    */
+comment|/**    * Remove one key-value pairs from the hash table based on the given key. If    * the pairs are removed from the main memory hash table, pairs in the    * persistent hash table will not be moved to the main memory hash table.    * Future inserted elements will go into the main memory hash table though.    *     * @param key    * @throws HiveException    */
 specifier|public
 name|void
 name|remove
@@ -1242,7 +1210,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Get a list of all keys in the hash map.    * @return    */
+comment|/**    * Get a list of all keys in the hash map.    *     * @return    */
 specifier|public
 name|Set
 argument_list|<
@@ -1329,6 +1297,7 @@ operator|)
 operator|!=
 literal|null
 condition|)
+block|{
 name|ret
 operator|.
 name|add
@@ -1336,6 +1305,7 @@ argument_list|(
 name|k
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch
@@ -1355,7 +1325,7 @@ return|return
 name|ret
 return|;
 block|}
-comment|/**    * Get the main memory cache capacity.     * @return the maximum number of items can be put into main memory HashMap cache.    */
+comment|/**    * Get the main memory cache capacity.    *     * @return the maximum number of items can be put into main memory HashMap    *         cache.    */
 specifier|public
 name|int
 name|cacheSize
@@ -1365,7 +1335,7 @@ return|return
 name|threshold
 return|;
 block|}
-comment|/**    * Close the persistent hash table and clean it up.    * @throws HiveException    */
+comment|/**    * Close the persistent hash table and clean it up.    *     * @throws HiveException    */
 specifier|public
 name|void
 name|close
@@ -1388,11 +1358,13 @@ name|recman
 operator|!=
 literal|null
 condition|)
+block|{
 name|recman
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

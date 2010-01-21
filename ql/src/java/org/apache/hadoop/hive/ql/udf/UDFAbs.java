@@ -132,6 +132,7 @@ extends|extends
 name|UDF
 block|{
 specifier|private
+specifier|final
 name|DoubleWritable
 name|resultDouble
 init|=
@@ -140,6 +141,7 @@ name|DoubleWritable
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|LongWritable
 name|resultLong
 init|=
@@ -148,6 +150,7 @@ name|LongWritable
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|IntWritable
 name|resultInt
 init|=

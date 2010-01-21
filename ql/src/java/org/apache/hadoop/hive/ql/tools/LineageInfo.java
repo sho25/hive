@@ -147,6 +147,24 @@ name|ql
 operator|.
 name|lib
 operator|.
+name|GraphWalker
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lib
+operator|.
 name|Node
 import|;
 end_import
@@ -166,24 +184,6 @@ operator|.
 name|lib
 operator|.
 name|NodeProcessor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
-name|GraphWalker
 import|;
 end_import
 
@@ -314,7 +314,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *   * This class prints out the lineage info.   * It takes sql as input and prints lineage info.  * Currently this prints only input and output tables for a given sql.   *  Later we can expand to add join tables etc.  *  */
+comment|/**  *   * This class prints out the lineage info. It takes sql as input and prints  * lineage info. Currently this prints only input and output tables for a given  * sql. Later we can expand to add join tables etc.  *   */
 end_comment
 
 begin_class
@@ -352,7 +352,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    *     * @return java.util.TreeSet     */
+comment|/**    *     * @return java.util.TreeSet    */
 specifier|public
 name|TreeSet
 argument_list|<
@@ -478,7 +478,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    *  parses given query and gets the lineage info.    * @param query    * @throws ParseException    */
+comment|/**    * parses given query and gets the lineage info.    *     * @param query    * @throws ParseException    */
 specifier|public
 name|void
 name|getLineageInfo
@@ -491,7 +491,7 @@ name|ParseException
 throws|,
 name|SemanticException
 block|{
-comment|/*      *  Get the AST tree      */
+comment|/*      * Get the AST tree      */
 name|ParseDriver
 name|pd
 init|=
@@ -554,7 +554,8 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack. The dispatcher
+comment|// create a walker which walks the tree in a DFS manner while maintaining
+comment|// the operator stack. The dispatcher
 comment|// generates the plan from the operator tree
 name|Map
 argument_list|<
@@ -573,7 +574,8 @@ name|NodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=

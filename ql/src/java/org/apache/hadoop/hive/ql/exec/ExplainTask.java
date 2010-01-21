@@ -247,6 +247,8 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|execute
@@ -902,7 +904,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// If this is an operator then we need to call the plan generation on the conf and then
+comment|// If this is an operator then we need to call the plan generation on the
+comment|// conf and then
 comment|// the children
 if|if
 condition|(
@@ -1375,7 +1378,8 @@ name|getId
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Start by getting the work part of the task and call the output plan for the work
+comment|// Start by getting the work part of the task and call the output plan for
+comment|// the work
 name|outputPlan
 argument_list|(
 name|task
@@ -1495,6 +1499,7 @@ block|}
 block|}
 block|}
 specifier|private
+specifier|final
 name|Set
 argument_list|<
 name|Task
@@ -1551,7 +1556,9 @@ argument_list|(
 name|task
 argument_list|)
 condition|)
+block|{
 return|return;
+block|}
 name|dependeciesTaskSet
 operator|.
 name|add
@@ -1605,6 +1612,7 @@ if|if
 condition|(
 name|rootTskCandidate
 condition|)
+block|{
 name|out
 operator|.
 name|print
@@ -1612,6 +1620,7 @@ argument_list|(
 literal|" is a root stage"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -2119,6 +2128,8 @@ argument_list|)
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

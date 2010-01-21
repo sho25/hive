@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Table Scan Descriptor  * Currently, data is only read from a base source as part of map-reduce framework. So, nothing is stored in the   * descriptor. But, more things will be added here as table scan is invoked as part of local work.  **/
+comment|/**  * Table Scan Descriptor Currently, data is only read from a base source as part  * of map-reduce framework. So, nothing is stored in the descriptor. But, more  * things will be added here as table scan is invoked as part of local work.  **/
 end_comment
 
 begin_class
@@ -67,7 +67,7 @@ argument_list|)
 specifier|public
 name|tableScanDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|tableScanDesc
 parameter_list|(

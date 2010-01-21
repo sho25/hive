@@ -187,14 +187,17 @@ name|BytesRefArrayWritable
 argument_list|>
 block|{
 specifier|private
+specifier|final
 name|Reader
 name|in
 decl_stmt|;
 specifier|private
+specifier|final
 name|long
 name|start
 decl_stmt|;
 specifier|private
+specifier|final
 name|long
 name|end
 decl_stmt|;
@@ -286,6 +289,7 @@ operator|.
 name|getPosition
 argument_list|()
 condition|)
+block|{
 name|in
 operator|.
 name|sync
@@ -297,6 +301,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// sync to start
+block|}
 name|this
 operator|.
 name|start
@@ -407,9 +412,11 @@ condition|(
 operator|!
 name|more
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|long
 name|pos
 init|=
@@ -503,9 +510,11 @@ condition|(
 operator|!
 name|more
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|long
 name|pos
 init|=

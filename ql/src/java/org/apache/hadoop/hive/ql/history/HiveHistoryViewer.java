@@ -65,7 +65,7 @@ name|history
 operator|.
 name|HiveHistory
 operator|.
-name|QueryInfo
+name|Keys
 import|;
 end_import
 
@@ -85,7 +85,7 @@ name|history
 operator|.
 name|HiveHistory
 operator|.
-name|Keys
+name|QueryInfo
 import|;
 end_import
 
@@ -158,6 +158,7 @@ name|sessionId
 decl_stmt|;
 comment|// Job Hash Map
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -177,6 +178,7 @@ argument_list|()
 decl_stmt|;
 comment|// Task Hash Map
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String

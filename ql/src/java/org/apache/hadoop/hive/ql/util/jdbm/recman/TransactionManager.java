@@ -33,7 +33,57 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|File
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|FileInputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|FileOutputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|ObjectInputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|ObjectOutputStream
 import|;
 end_import
 
@@ -43,12 +93,42 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Comparator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TreeSet
 import|;
 end_import
 
 begin_comment
-comment|/**  *  This class manages the transaction log that belongs to every  *  {@link RecordFile}. The transaction log is either clean, or  *  in progress. In the latter case, the transaction manager  *  takes care of a roll forward.  *<p>  *  Implementation note: this is a proof-of-concept implementation  *  which hasn't been optimized for speed. For instance, all sorts  *  of streams are created for every transaction.  */
+comment|/**  * This class manages the transaction log that belongs to every  * {@link RecordFile}. The transaction log is either clean, or in progress. In  * the latter case, the transaction manager takes care of a roll forward.  *<p>  * Implementation note: this is a proof-of-concept implementation which hasn't  * been optimized for speed. For instance, all sorts of streams are created for  * every transaction.  */
 end_comment
 
 begin_comment
@@ -66,6 +146,7 @@ class|class
 name|TransactionManager
 block|{
 specifier|private
+specifier|final
 name|RecordFile
 name|owner
 decl_stmt|;
@@ -78,7 +159,7 @@ specifier|private
 name|ObjectOutputStream
 name|oos
 decl_stmt|;
-comment|/**       * By default, we keep 10 transactions in the log file before      * synchronizing it with the main database file.      */
+comment|/**    * By default, we keep 10 transactions in the log file before synchronizing it    * with the main database file.    */
 specifier|static
 specifier|final
 name|int
@@ -86,14 +167,14 @@ name|DEFAULT_TXNS_IN_LOG
 init|=
 literal|10
 decl_stmt|;
-comment|/**       * Maximum number of transactions before the log file is      * synchronized with the main database file.      */
+comment|/**    * Maximum number of transactions before the log file is synchronized with the    * main database file.    */
 specifier|private
 name|int
 name|_maxTxns
 init|=
 name|DEFAULT_TXNS_IN_LOG
 decl_stmt|;
-comment|/**      * In-core copy of transactions. We could read everything back from      * the log file, but the RecordFile needs to keep the dirty blocks in      * core anyway, so we might as well point to them and spare us a lot      * of hassle.      */
+comment|/**    * In-core copy of transactions. We could read everything back from the log    * file, but the RecordFile needs to keep the dirty blocks in core anyway, so    * we might as well point to them and spare us a lot of hassle.    */
 specifier|private
 name|ArrayList
 index|[]
@@ -125,7 +206,7 @@ specifier|private
 name|String
 name|logFileName
 decl_stmt|;
-comment|/**      *  Instantiates a transaction manager instance. If recovery      *  needs to be performed, it is done.      *      *  @param owner the RecordFile instance that owns this transaction mgr.      */
+comment|/**    * Instantiates a transaction manager instance. If recovery needs to be    * performed, it is done.    *     * @param owner    *          the RecordFile instance that owns this transaction mgr.    */
 name|TransactionManager
 parameter_list|(
 name|RecordFile
@@ -151,7 +232,7 @@ name|open
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Synchronize log file data with the main database file.      *<p>      * After this call, the main database file is guaranteed to be       * consistent and guaranteed to be the only file needed for       * backup purposes.      */
+comment|/**    * Synchronize log file data with the main database file.    *<p>    * After this call, the main database file is guaranteed to be consistent and    * guaranteed to be the only file needed for backup purposes.    */
 specifier|public
 name|void
 name|synchronizeLog
@@ -163,7 +244,7 @@ name|synchronizeLogFromMemory
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Set the maximum number of transactions to record in      * the log (and keep in memory) before the log is      * synchronized with the main database file.      *<p>      * This method must be called while there are no      * pending transactions in the log.      */
+comment|/**    * Set the maximum number of transactions to record in the log (and keep in    * memory) before the log is synchronized with the main database file.    *<p>    * This method must be called while there are no pending transactions in the    * log.    */
 specifier|public
 name|void
 name|setMaximumTransactionsInLog
@@ -218,7 +299,7 @@ name|maxTxns
 index|]
 expr_stmt|;
 block|}
-comment|/** Builds logfile name  */
+comment|/** Builds logfile name */
 specifier|private
 name|String
 name|makeLogName
@@ -289,7 +370,9 @@ index|]
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 comment|// Add each block to the blockList, replacing the old copy of this
 comment|// block if necessary, thus avoiding writing the same block twice
 for|for
@@ -344,16 +427,13 @@ block|{
 name|writtenBlocks
 operator|++
 expr_stmt|;
-name|boolean
-name|result
-init|=
 name|blockList
 operator|.
 name|add
 argument_list|(
 name|block
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 block|}
 name|numBlocks
 operator|++
@@ -467,7 +547,9 @@ operator|.
 name|exists
 argument_list|()
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 name|logFile
@@ -516,6 +598,7 @@ name|Magic
 operator|.
 name|LOGFILE_HEADER
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -523,6 +606,7 @@ argument_list|(
 literal|"Bad magic on log file"
 argument_list|)
 throw|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -814,7 +898,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      *  Starts a transaction. This can block if all slots have been filled      *  with full transactions, waiting for the synchronization thread to      *  clean out slots.      */
+comment|/**    * Starts a transaction. This can block if all slots have been filled with    * full transactions, waiting for the synchronization thread to clean out    * slots.    */
 name|void
 name|start
 parameter_list|()
@@ -849,7 +933,7 @@ name|ArrayList
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      *  Indicates the block is part of the transaction.      */
+comment|/**    * Indicates the block is part of the transaction.    */
 name|void
 name|add
 parameter_list|(
@@ -875,7 +959,7 @@ name|block
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Commits the transaction to the log file.      */
+comment|/**    * Commits the transaction to the log file.    */
 name|void
 name|commit
 parameter_list|()
@@ -942,7 +1026,7 @@ name|sync
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      *  Shutdowns the transaction manager. Resynchronizes outstanding      *  logs.      */
+comment|/**    * Shutdowns the transaction manager. Resynchronizes outstanding logs.    */
 name|void
 name|shutdown
 parameter_list|()
@@ -956,7 +1040,7 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      *  Closes open files.      */
+comment|/**    * Closes open files.    */
 specifier|private
 name|void
 name|close
@@ -998,7 +1082,9 @@ name|oos
 operator|!=
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 name|logFileName
@@ -1026,7 +1112,7 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Force closing the file without synchronizing pending transaction data.      * Used for testing purposes only.      */
+comment|/**    * Force closing the file without synchronizing pending transaction data. Used    * for testing purposes only.    */
 name|void
 name|forceClose
 parameter_list|()
@@ -1052,7 +1138,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**      * Use the disk-based transaction log to synchronize the data file.      * Outstanding memory logs are discarded because they are believed      * to be inconsistent.      */
+comment|/**    * Use the disk-based transaction log to synchronize the data file.    * Outstanding memory logs are discarded because they are believed to be    * inconsistent.    */
 name|void
 name|synchronizeLogFromDisk
 parameter_list|()
@@ -1086,7 +1172,9 @@ index|]
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 name|discardBlocks
 argument_list|(
 name|txns
@@ -1110,7 +1198,7 @@ name|open
 argument_list|()
 expr_stmt|;
 block|}
-comment|/** INNER CLASS.      *  Comparator class for use by the tree set used to store the blocks      *  to write for this transaction.  The BlockIo objects are ordered by      *  their blockIds.      */
+comment|/**    * INNER CLASS. Comparator class for use by the tree set used to store the    * blocks to write for this transaction. The BlockIo objects are ordered by    * their blockIds.    */
 specifier|public
 specifier|static
 class|class
@@ -1199,6 +1287,8 @@ return|return
 name|result
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals

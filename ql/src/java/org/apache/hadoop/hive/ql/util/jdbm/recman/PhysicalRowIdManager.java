@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This class manages physical row ids, and their data.  */
+comment|/**  * This class manages physical row ids, and their data.  */
 end_comment
 
 begin_class
@@ -48,18 +48,21 @@ name|PhysicalRowIdManager
 block|{
 comment|// The file we're talking to and the associated page manager.
 specifier|private
+specifier|final
 name|RecordFile
 name|file
 decl_stmt|;
 specifier|private
+specifier|final
 name|PageManager
 name|pageman
 decl_stmt|;
 specifier|private
+specifier|final
 name|FreePhysicalRowIdPageManager
 name|freeman
 decl_stmt|;
-comment|/**      *  Creates a new rowid manager using the indicated record file.      *  and page manager.      */
+comment|/**    * Creates a new rowid manager using the indicated record file. and page    * manager.    */
 name|PhysicalRowIdManager
 parameter_list|(
 name|RecordFile
@@ -77,14 +80,10 @@ name|file
 operator|=
 name|file
 expr_stmt|;
-name|this
-operator|.
 name|pageman
 operator|=
 name|pageManager
 expr_stmt|;
-name|this
-operator|.
 name|freeman
 operator|=
 operator|new
@@ -96,7 +95,7 @@ name|pageman
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Inserts a new record. Returns the new physical rowid.      */
+comment|/**    * Inserts a new record. Returns the new physical rowid.    */
 name|Location
 name|insert
 parameter_list|(
@@ -136,7 +135,7 @@ return|return
 name|retval
 return|;
 block|}
-comment|/**      *  Updates an existing record. Returns the possibly changed      *  physical rowid.      */
+comment|/**    * Updates an existing record. Returns the possibly changed physical rowid.    */
 name|Location
 name|update
 parameter_list|(
@@ -241,7 +240,7 @@ return|return
 name|rowid
 return|;
 block|}
-comment|/**      *  Deletes a record.      */
+comment|/**    * Deletes a record.    */
 name|void
 name|delete
 parameter_list|(
@@ -257,7 +256,7 @@ name|rowid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Retrieves a record.      */
+comment|/**    * Retrieves a record.    */
 name|byte
 index|[]
 name|fetch
@@ -473,7 +472,7 @@ return|return
 name|retval
 return|;
 block|}
-comment|/**      *  Allocate a new rowid with the indicated size.      */
+comment|/**    * Allocate a new rowid with the indicated size.    */
 specifier|private
 name|Location
 name|alloc
@@ -522,7 +521,7 @@ return|return
 name|retval
 return|;
 block|}
-comment|/**      *  Allocates a new rowid. The second parameter is there to      *  allow for a recursive call - it indicates where the search      *  should start.      */
+comment|/**    * Allocates a new rowid. The second parameter is there to allow for a    * recursive call - it indicates where the search should start.    */
 specifier|private
 name|Location
 name|allocNew
@@ -1069,15 +1068,12 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 name|DataPage
-name|curPage
-init|=
-name|DataPage
 operator|.
 name|getDataPageView
 argument_list|(
 name|curBlock
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|RecordHeader
 name|hdr
 init|=
@@ -1125,7 +1121,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Writes out data to a rowid. Assumes that any resizing has been      *  done.      */
+comment|/**    * Writes out data to a rowid. Assumes that any resizing has been done.    */
 specifier|private
 name|void
 name|write

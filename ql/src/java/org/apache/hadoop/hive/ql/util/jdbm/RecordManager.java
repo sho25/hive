@@ -58,7 +58,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  An interface to manages records, which are uninterpreted blobs of data.  *<p>  *  The set of record operations is simple: fetch, insert, update and delete.  *  Each record is identified using a "rowid" and contains a byte[] data block.  *  Rowids are returned on inserts and you can store them someplace safe  *  to be able to get  back to them.  Data blocks can be as long as you wish,  *  and may have lengths different from the original when updating.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: RecordManager.java,v 1.3 2005/06/25 23:12:31 doomdark Exp $  */
+comment|/**  * An interface to manages records, which are uninterpreted blobs of data.  *<p>  * The set of record operations is simple: fetch, insert, update and delete.  * Each record is identified using a "rowid" and contains a byte[] data block.  * Rowids are returned on inserts and you can store them someplace safe to be  * able to get back to them. Data blocks can be as long as you wish, and may  * have lengths different from the original when updating.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: RecordManager.java,v 1.3 2005/06/25 23:12:31 doomdark Exp $  */
 end_comment
 
 begin_interface
@@ -66,7 +66,7 @@ specifier|public
 interface|interface
 name|RecordManager
 block|{
-comment|/**      * Reserved slot for name directory.      */
+comment|/**    * Reserved slot for name directory.    */
 specifier|public
 specifier|static
 specifier|final
@@ -75,7 +75,7 @@ name|NAME_DIRECTORY_ROOT
 init|=
 literal|0
 decl_stmt|;
-comment|/**      *  Inserts a new record using standard java object serialization.      *      *  @param obj the object for the new record.      *  @return the rowid for the new record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Inserts a new record using standard java object serialization.    *     * @param obj    *          the object for the new record.    * @return the rowid for the new record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|abstract
 name|long
@@ -87,7 +87,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Inserts a new record using a custom serializer.      *      *  @param obj the object for the new record.      *  @param serializer a custom serializer      *  @return the rowid for the new record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Inserts a new record using a custom serializer.    *     * @param obj    *          the object for the new record.    * @param serializer    *          a custom serializer    * @return the rowid for the new record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|abstract
 name|long
@@ -102,7 +102,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Deletes a record.      *      *  @param recid the rowid for the record that should be deleted.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Deletes a record.    *     * @param recid    *          the rowid for the record that should be deleted.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|abstract
 name|void
@@ -114,7 +114,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Updates a record using standard java object serialization.      *      *  @param recid the recid for the record that is to be updated.      *  @param obj the new object for the record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Updates a record using standard java object serialization.    *     * @param recid    *          the recid for the record that is to be updated.    * @param obj    *          the new object for the record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|abstract
 name|void
@@ -129,7 +129,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Updates a record using a custom serializer.      *      *  @param recid the recid for the record that is to be updated.      *  @param obj the new object for the record.      *  @param serializer a custom serializer      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Updates a record using a custom serializer.    *     * @param recid    *          the recid for the record that is to be updated.    * @param obj    *          the new object for the record.    * @param serializer    *          a custom serializer    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|abstract
 name|void
@@ -147,7 +147,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Fetches a record using standard java object serialization.      *      *  @param recid the recid for the record that must be fetched.      *  @return the object contained in the record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Fetches a record using standard java object serialization.    *     * @param recid    *          the recid for the record that must be fetched.    * @return the object contained in the record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|abstract
 name|Object
@@ -159,7 +159,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Fetches a record using a custom serializer.      *      *  @param recid the recid for the record that must be fetched.      *  @param serializer a custom serializer      *  @return the object contained in the record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Fetches a record using a custom serializer.    *     * @param recid    *          the recid for the record that must be fetched.    * @param serializer    *          a custom serializer    * @return the object contained in the record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|abstract
 name|Object
@@ -174,7 +174,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Closes the record manager.      *      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Closes the record manager.    *     * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|abstract
 name|void
@@ -183,14 +183,14 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Returns the number of slots available for "root" rowids. These slots      *  can be used to store special rowids, like rowids that point to      *  other rowids. Root rowids are useful for bootstrapping access to      *  a set of data.      */
+comment|/**    * Returns the number of slots available for "root" rowids. These slots can be    * used to store special rowids, like rowids that point to other rowids. Root    * rowids are useful for bootstrapping access to a set of data.    */
 specifier|public
 specifier|abstract
 name|int
 name|getRootCount
 parameter_list|()
 function_decl|;
-comment|/**      *  Returns the indicated root rowid.      *      *  @see #getRootCount      */
+comment|/**    * Returns the indicated root rowid.    *     * @see #getRootCount    */
 specifier|public
 specifier|abstract
 name|long
@@ -202,7 +202,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Sets the indicated root rowid.      *      *  @see #getRootCount      */
+comment|/**    * Sets the indicated root rowid.    *     * @see #getRootCount    */
 specifier|public
 specifier|abstract
 name|void
@@ -217,7 +217,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Commit (make persistent) all changes since beginning of transaction.      */
+comment|/**    * Commit (make persistent) all changes since beginning of transaction.    */
 specifier|public
 specifier|abstract
 name|void
@@ -226,7 +226,7 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Rollback (cancel) all changes since beginning of transaction.      */
+comment|/**    * Rollback (cancel) all changes since beginning of transaction.    */
 specifier|public
 specifier|abstract
 name|void
@@ -235,7 +235,7 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Obtain the record id of a named object. Returns 0 if named object      * doesn't exist.      */
+comment|/**    * Obtain the record id of a named object. Returns 0 if named object doesn't    * exist.    */
 specifier|public
 specifier|abstract
 name|long
@@ -247,7 +247,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Set the record id of a named object.      */
+comment|/**    * Set the record id of a named object.    */
 specifier|public
 specifier|abstract
 name|void

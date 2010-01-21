@@ -76,7 +76,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Generic User-defined aggregation function (GenericUDAF) for the use with   * Hive.  *   * New GenericUDAF classes need to inherit from this GenericUDAF class.  *   * The GenericUDAF are superior to normal UDAFs in the following ways:  * 1. It can accept arguments of complex types, and return complex types.  * 2. It can accept variable length of arguments.  * 3. It can accept an infinite number of function signature - for example,   *    it's easy to write a GenericUDAF that accepts array<int>,   *    array<array<int>> and so on (arbitrary levels of nesting).  */
+comment|/**  * A Generic User-defined aggregation function (GenericUDAF) for the use with  * Hive.  *   * New GenericUDAF classes need to inherit from this GenericUDAF class.  *   * The GenericUDAF are superior to normal UDAFs in the following ways: 1. It can  * accept arguments of complex types, and return complex types. 2. It can accept  * variable length of arguments. 3. It can accept an infinite number of function  * signature - for example, it's easy to write a GenericUDAF that accepts  * array<int>, array<array<int>> and so on (arbitrary levels of nesting).  */
 end_comment
 
 begin_class
@@ -97,16 +97,16 @@ specifier|public
 enum|enum
 name|Mode
 block|{
-comment|/** PARTIAL1: from original data to partial aggregation data: iterate() and terminatePartial() will be called */
+comment|/**      * PARTIAL1: from original data to partial aggregation data: iterate() and      * terminatePartial() will be called      */
 name|PARTIAL1
 block|,
-comment|/** PARTIAL2: from partial aggregation data to partial aggregation data: merge() and terminatePartial() will be called */
+comment|/**      * PARTIAL2: from partial aggregation data to partial aggregation data:      * merge() and terminatePartial() will be called      */
 name|PARTIAL2
 block|,
-comment|/** FINAL: from partial aggregation to full aggregation: merge() and terminate() will be called */
+comment|/**      * FINAL: from partial aggregation to full aggregation: merge() and      * terminate() will be called      */
 name|FINAL
 block|,
-comment|/** COMPLETE: from original data directly to full aggregation: iterate() and terminate() will be called */
+comment|/**      * COMPLETE: from original data directly to full aggregation: iterate() and      * terminate() will be called      */
 name|COMPLETE
 block|}
 empty_stmt|;
@@ -118,7 +118,7 @@ specifier|public
 name|GenericUDAFEvaluator
 parameter_list|()
 block|{   }
-comment|/** Initialize the evaluator.    *  @param m  The mode of aggregation.    *  @param parameters  The ObjectInspector for the parameters:    *    In PARTIAL1 and COMPLETE mode, the parameters are original data;    *    In PARTIAL2 and FINAL mode, the parameters are just partial aggregations (in that case, the array will always have a single element).    *  @return  The ObjectInspector for the return value.    *    In PARTIAL1 and PARTIAL2 mode, the ObjectInspector for the return value of terminatePartial() call;    *    In FINAL and COMPLETE mode, the ObjectInspector for the return value of terminate() call.    *        *  NOTE: We need ObjectInspector[] (in addition to the TypeInfo[] in GenericUDAFResolver) for 2 reasons:    *  1. ObjectInspector contains more information than TypeInfo;      *     and GenericUDAFEvaluator.init at execution time.    *  2. We call GenericUDAFResolver.getEvaluator at compilation time,     */
+comment|/**    * Initialize the evaluator.    *     * @param m    *          The mode of aggregation.    * @param parameters    *          The ObjectInspector for the parameters: In PARTIAL1 and COMPLETE    *          mode, the parameters are original data; In PARTIAL2 and FINAL    *          mode, the parameters are just partial aggregations (in that case,    *          the array will always have a single element).    * @return The ObjectInspector for the return value. In PARTIAL1 and PARTIAL2    *         mode, the ObjectInspector for the return value of    *         terminatePartial() call; In FINAL and COMPLETE mode, the    *         ObjectInspector for the return value of terminate() call.    *     *         NOTE: We need ObjectInspector[] (in addition to the TypeInfo[] in    *         GenericUDAFResolver) for 2 reasons: 1. ObjectInspector contains    *         more information than TypeInfo; and GenericUDAFEvaluator.init at    *         execution time. 2. We call GenericUDAFResolver.getEvaluator at    *         compilation time,    */
 specifier|public
 name|ObjectInspector
 name|init
@@ -143,7 +143,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**     * The interface for a class that is used to store the aggregation result    * during the process of aggregation.    *     * We split this piece of data out because there can be millions of instances    * of this Aggregation in hash-based aggregation process, and it's very    * important to conserve memory.    *     * In the future, we may completely hide this class inside the Evaluator and    * use integer numbers to identify which aggregation we are looking at.    */
+comment|/**    * The interface for a class that is used to store the aggregation result    * during the process of aggregation.    *     * We split this piece of data out because there can be millions of instances    * of this Aggregation in hash-based aggregation process, and it's very    * important to conserve memory.    *     * In the future, we may completely hide this class inside the Evaluator and    * use integer numbers to identify which aggregation we are looking at.    */
 specifier|public
 specifier|static
 interface|interface
@@ -159,7 +159,7 @@ parameter_list|()
 throws|throws
 name|HiveException
 function_decl|;
-comment|/** Reset the aggregation. This is useful if we want to reuse the same aggregation.    */
+comment|/**    * Reset the aggregation. This is useful if we want to reuse the same    * aggregation.    */
 specifier|public
 specifier|abstract
 name|void
@@ -171,7 +171,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * This function will be called by GroupByOperator when it sees a new input row.    * @param agg  The object to store the aggregation result.      * @param parameters  The row, can be inspected by the OIs passed in init().    */
+comment|/**    * This function will be called by GroupByOperator when it sees a new input    * row.    *     * @param agg    *          The object to store the aggregation result.    * @param parameters    *          The row, can be inspected by the OIs passed in init().    */
 specifier|public
 name|void
 name|aggregate
@@ -232,7 +232,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * This function will be called by GroupByOperator when it sees a new input row.    * @param agg  The object to store the aggregation result.      */
+comment|/**    * This function will be called by GroupByOperator when it sees a new input    * row.    *     * @param agg    *          The object to store the aggregation result.    */
 specifier|public
 name|Object
 name|evaluate
@@ -275,7 +275,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/** Iterate through original data.    *  @param parameters  The objects of parameters.    */
+comment|/**    * Iterate through original data.    *     * @param parameters    *          The objects of parameters.    */
 specifier|public
 specifier|abstract
 name|void
@@ -291,7 +291,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/** Get partial aggregation result.    *  @return partial aggregation result.    */
+comment|/**    * Get partial aggregation result.    *     * @return partial aggregation result.    */
 specifier|public
 specifier|abstract
 name|Object
@@ -303,7 +303,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/** Merge with partial aggregation result.    *  NOTE: null might be passed in case there is no input data.    *  @param partial  The partial aggregation result.    */
+comment|/**    * Merge with partial aggregation result. NOTE: null might be passed in case    * there is no input data.    *     * @param partial    *          The partial aggregation result.    */
 specifier|public
 specifier|abstract
 name|void
@@ -318,7 +318,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/** Get final aggregation result.    *  @return final aggregation result.    */
+comment|/**    * Get final aggregation result.    *     * @return final aggregation result.    */
 specifier|public
 specifier|abstract
 name|Object

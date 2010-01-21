@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -51,19 +41,11 @@ end_import
 
 begin_import
 import|import
-name|org
+name|junit
 operator|.
-name|apache
+name|framework
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveException
+name|TestCase
 import|;
 end_import
 
@@ -84,6 +66,24 @@ operator|.
 name|persistence
 operator|.
 name|HashMapWrapper
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
 import|;
 end_import
 
@@ -846,7 +846,8 @@ argument_list|(
 literal|3000
 argument_list|)
 expr_stmt|;
-comment|// System.out.println("putting (" + k + ", " + v);// uncomment this for debugging
+comment|// System.out.println("putting (" + k + ", " + v);// uncomment this
+comment|// for debugging
 name|wrapper
 operator|.
 name|put

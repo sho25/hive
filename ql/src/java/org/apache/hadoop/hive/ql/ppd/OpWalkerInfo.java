@@ -150,8 +150,9 @@ name|OpWalkerInfo
 implements|implements
 name|NodeProcessorCtx
 block|{
-comment|/**    * Operator to Pushdown Predicates Map. This keeps track of the final pushdown predicates    * for each operator as you walk the Op Graph from child to parent    */
+comment|/**    * Operator to Pushdown Predicates Map. This keeps track of the final pushdown    * predicates for each operator as you walk the Op Graph from child to parent    */
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|Operator
@@ -166,6 +167,7 @@ argument_list|>
 name|opToPushdownPredMap
 decl_stmt|;
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|Operator
@@ -202,8 +204,6 @@ name|opToParseCtxMap
 operator|=
 name|opToParseCtxMap
 expr_stmt|;
-name|this
-operator|.
 name|opToPushdownPredMap
 operator|=
 operator|new

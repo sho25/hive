@@ -141,9 +141,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|primitive
-operator|.
-name|BooleanObjectInspector
+name|PrimitiveObjectInspector
 import|;
 end_import
 
@@ -161,12 +159,14 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|PrimitiveObjectInspector
+name|primitive
+operator|.
+name|BooleanObjectInspector
 import|;
 end_import
 
 begin_comment
-comment|/**  * IF(expr1,expr2,expr3)<br>  * If expr1 is TRUE (expr1<> 0 and expr1<> NULL) then IF() returns expr2; otherwise it returns expr3.   * IF() returns a numeric or string value, depending on the context in which it is used.   */
+comment|/**  * IF(expr1,expr2,expr3)<br>  * If expr1 is TRUE (expr1<> 0 and expr1<> NULL) then IF() returns expr2;  * otherwise it returns expr3. IF() returns a numeric or string value, depending  * on the context in which it is used.  */
 end_comment
 
 begin_class
@@ -198,8 +198,6 @@ parameter_list|)
 throws|throws
 name|UDFArgumentException
 block|{
-name|this
-operator|.
 name|argumentOIs
 operator|=
 name|arguments

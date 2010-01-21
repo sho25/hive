@@ -25,7 +25,47 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Vector
 import|;
 end_import
 
@@ -94,7 +134,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the Row Resolver  *  **/
+comment|/**  * Implementation of the Row Resolver  *   **/
 end_comment
 
 begin_class
@@ -103,10 +143,12 @@ class|class
 name|RowResolver
 block|{
 specifier|private
+specifier|final
 name|RowSchema
 name|rowSchema
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -121,6 +163,7 @@ argument_list|>
 name|rslvMap
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -381,7 +424,7 @@ operator|!=
 literal|null
 return|;
 block|}
-comment|/**    * Gets the column Info to tab_alias.col_alias type of a column reference. I the tab_alias is not    * provided as can be the case with an non aliased column, this function looks up the column in all    * the table aliases in  this row resolver and returns the match. It also throws an exception if     * the column is found in multiple table aliases. If no match is found a null values is returned.    *     * This allows us to interpret both select t.c1 type of references and select c1 kind of refereneces.    * The later kind are what we call non aliased column references in the query.    *     * @param tab_alias The table alias to match (this is null if the column reference is non aliased)    * @param col_alias The column name that is being searched for    * @return ColumnInfo    * @throws SemanticException    */
+comment|/**    * Gets the column Info to tab_alias.col_alias type of a column reference. I    * the tab_alias is not provided as can be the case with an non aliased    * column, this function looks up the column in all the table aliases in this    * row resolver and returns the match. It also throws an exception if the    * column is found in multiple table aliases. If no match is found a null    * values is returned.    *     * This allows us to interpret both select t.c1 type of references and select    * c1 kind of refereneces. The later kind are what we call non aliased column    * references in the query.    *     * @param tab_alias    *          The table alias to match (this is null if the column reference is    *          non aliased)    * @param col_alias    *          The column name that is being searched for    * @return ColumnInfo    * @throws SemanticException    */
 specifier|public
 name|ColumnInfo
 name|get
@@ -504,9 +547,6 @@ name|col_alias
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-operator|(
-name|String
-operator|)
 name|cmapEnt
 operator|.
 name|getKey
@@ -537,9 +577,6 @@ literal|true
 expr_stmt|;
 name|ret
 operator|=
-operator|(
-name|ColumnInfo
-operator|)
 name|cmapEnt
 operator|.
 name|getValue
@@ -720,6 +757,8 @@ return|return
 name|isExprResolver
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -758,9 +797,6 @@ block|{
 name|String
 name|tab
 init|=
-operator|(
-name|String
-operator|)
 name|e
 operator|.
 name|getKey
@@ -783,14 +819,6 @@ name|ColumnInfo
 argument_list|>
 name|f_map
 init|=
-operator|(
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|ColumnInfo
-argument_list|>
-operator|)
 name|e
 operator|.
 name|getValue
@@ -802,6 +830,7 @@ name|f_map
 operator|!=
 literal|null
 condition|)
+block|{
 for|for
 control|(
 name|Map
@@ -826,9 +855,6 @@ name|append
 argument_list|(
 literal|"("
 operator|+
-operator|(
-name|String
-operator|)
 name|entry
 operator|.
 name|getKey
@@ -847,6 +873,7 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|sb
 operator|.

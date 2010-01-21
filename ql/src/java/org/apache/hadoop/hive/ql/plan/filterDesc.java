@@ -69,14 +69,6 @@ specifier|private
 name|int
 name|denominator
 decl_stmt|;
-comment|// buckets columns for the table
-specifier|private
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|tabBucketCols
-decl_stmt|;
 comment|// Input files can be pruned
 specifier|private
 name|boolean
@@ -119,12 +111,6 @@ name|denominator
 expr_stmt|;
 name|this
 operator|.
-name|tabBucketCols
-operator|=
-name|tabBucketCols
-expr_stmt|;
-name|this
-operator|.
 name|inputPruning
 operator|=
 name|inputPruning
@@ -136,8 +122,6 @@ name|getNumerator
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|numerator
 return|;
 block|}
@@ -147,8 +131,6 @@ name|getDenominator
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|denominator
 return|;
 block|}
@@ -198,7 +180,7 @@ decl_stmt|;
 specifier|public
 name|filterDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|filterDesc
 parameter_list|(
@@ -234,8 +216,6 @@ name|isSamplingPred
 operator|=
 name|isSamplingPred
 expr_stmt|;
-name|this
-operator|.
 name|sampleDescr
 operator|=
 literal|null
@@ -312,8 +292,6 @@ name|getPredicate
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|predicate
 return|;
 block|}
@@ -362,8 +340,6 @@ name|getIsSamplingPred
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|isSamplingPred
 return|;
 block|}
@@ -400,8 +376,6 @@ name|getSampleDescr
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|sampleDescr
 return|;
 block|}

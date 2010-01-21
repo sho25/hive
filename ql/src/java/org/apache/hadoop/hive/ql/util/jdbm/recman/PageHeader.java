@@ -27,8 +27,18 @@ name|recman
 package|;
 end_package
 
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
 begin_comment
-comment|/**  *  This class represents a page header. It is the common superclass for  *  all different page views.  */
+comment|/**  * This class represents a page header. It is the common superclass for all  * different page views.  */
 end_comment
 
 begin_class
@@ -89,7 +99,7 @@ specifier|protected
 name|BlockIo
 name|block
 decl_stmt|;
-comment|/**      *  Constructs a PageHeader object from a block      *      *  @param block The block that contains the file header      *  @throws IOException if the block is too short to keep the file      *          header.      */
+comment|/**    * Constructs a PageHeader object from a block    *     * @param block    *          The block that contains the file header    * @throws IOException    *           if the block is too short to keep the file header.    */
 specifier|protected
 name|PageHeader
 parameter_list|(
@@ -108,6 +118,7 @@ operator|!
 name|magicOk
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -126,7 +137,8 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-comment|/**      *  Constructs a new PageHeader of the indicated type. Used for newly      *  created pages.      */
+block|}
+comment|/**    * Constructs a new PageHeader of the indicated type. Used for newly created    * pages.    */
 name|PageHeader
 parameter_list|(
 name|BlockIo
@@ -147,7 +159,7 @@ name|type
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Factory method to create or return a page header for the      *  indicated block.      */
+comment|/**    * Factory method to create or return a page header for the indicated block.    */
 specifier|static
 name|PageHeader
 name|getView
@@ -174,13 +186,16 @@ name|view
 operator|instanceof
 name|PageHeader
 condition|)
+block|{
 return|return
 operator|(
 name|PageHeader
 operator|)
 name|view
 return|;
+block|}
 else|else
+block|{
 return|return
 operator|new
 name|PageHeader
@@ -188,6 +203,7 @@ argument_list|(
 name|block
 argument_list|)
 return|;
+block|}
 block|}
 specifier|private
 name|void
@@ -211,7 +227,7 @@ name|this
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Returns true if the magic corresponds with the fileHeader magic.      */
+comment|/**    * Returns true if the magic corresponds with the fileHeader magic.    */
 specifier|private
 name|boolean
 name|magicOk
@@ -243,7 +259,7 @@ name|FREEPHYSIDS_PAGE
 operator|)
 return|;
 block|}
-comment|/**      *  For paranoia mode      */
+comment|/**    * For paranoia mode    */
 specifier|protected
 name|void
 name|paranoiaMagicOk
@@ -255,6 +271,7 @@ operator|!
 name|magicOk
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -265,6 +282,7 @@ name|getMagic
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 comment|/** Returns the magic code */
 name|short

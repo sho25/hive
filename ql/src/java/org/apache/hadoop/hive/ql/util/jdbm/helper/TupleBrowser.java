@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Browser to traverse a collection of tuples.  The browser allows for  * forward and reverse order traversal.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: TupleBrowser.java,v 1.2 2001/05/19 14:02:00 boisvert Exp $  */
+comment|/**  * Browser to traverse a collection of tuples. The browser allows for forward  * and reverse order traversal.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: TupleBrowser.java,v 1.2 2001/05/19 14:02:00 boisvert Exp $  */
 end_comment
 
 begin_class
@@ -47,7 +47,7 @@ specifier|abstract
 class|class
 name|TupleBrowser
 block|{
-comment|/**      * Get the next tuple.      *      * @param tuple Tuple into which values are copied.      * @return True if values have been copied in tuple, or false if there is      *         no next tuple.      */
+comment|/**    * Get the next tuple.    *     * @param tuple    *          Tuple into which values are copied.    * @return True if values have been copied in tuple, or false if there is no    *         next tuple.    */
 specifier|public
 specifier|abstract
 name|boolean
@@ -59,7 +59,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Get the previous tuple.      *      * @param tuple Tuple into which values are copied.      * @return True if values have been copied in tuple, or false if there is      *         no previous tuple.      */
+comment|/**    * Get the previous tuple.    *     * @param tuple    *          Tuple into which values are copied.    * @return True if values have been copied in tuple, or false if there is no    *         previous tuple.    */
 specifier|public
 specifier|abstract
 name|boolean

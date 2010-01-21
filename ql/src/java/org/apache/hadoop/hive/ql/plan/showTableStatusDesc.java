@@ -161,7 +161,7 @@ operator|=
 name|pattern
 expr_stmt|;
 block|}
-comment|/**    * @param resFile    * @param dbName data base name    * @param pattern names of tables to show    * @param part partition specification    */
+comment|/**    * @param resFile    * @param dbName    *          data base name    * @param pattern    *          names of tables to show    * @param part    *          partition specification    */
 specifier|public
 name|showTableStatusDesc
 parameter_list|(
@@ -346,7 +346,7 @@ return|return
 name|partSpec
 return|;
 block|}
-comment|/**    * @param partSpec the partSpec to set    */
+comment|/**    * @param partSpec    *          the partSpec to set    */
 specifier|public
 name|void
 name|setPartSpecs

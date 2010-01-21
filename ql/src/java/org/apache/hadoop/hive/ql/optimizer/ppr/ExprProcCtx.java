@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The processor context for partition pruner. This contains the table  * alias that is being currently processed.  */
+comment|/**  * The processor context for partition pruner. This contains the table alias  * that is being currently processed.  */
 end_comment
 
 begin_class
@@ -71,8 +71,6 @@ name|tabAlias
 operator|=
 name|tabAlias
 expr_stmt|;
-name|this
-operator|.
 name|hasNonPartCols
 operator|=
 literal|false
@@ -108,8 +106,6 @@ name|getHasNonPartCols
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|hasNonPartCols
 return|;
 block|}
@@ -121,8 +117,6 @@ name|boolean
 name|val
 parameter_list|)
 block|{
-name|this
-operator|.
 name|hasNonPartCols
 operator|=
 name|val

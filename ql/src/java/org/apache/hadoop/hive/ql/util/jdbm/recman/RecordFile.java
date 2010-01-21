@@ -33,7 +33,27 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|File
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|RandomAccessFile
 import|;
 end_import
 
@@ -43,12 +63,32 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedList
 import|;
 end_import
 
 begin_comment
-comment|/**  *  This class represents a random access file as a set of fixed size  *  records. Each record has a physical record number, and records are  *  cached in order to improve access.  *<p>  *  The set of dirty records on the in-use list constitutes a transaction.  *  Later on, we will send these records to some recovery thingy.  */
+comment|/**  * This class represents a random access file as a set of fixed size records.  * Each record has a physical record number, and records are cached in order to  * improve access.  *<p>  * The set of dirty records on the in-use list constitutes a transaction. Later  * on, we will send these records to some recovery thingy.  */
 end_comment
 
 begin_class
@@ -116,7 +156,7 @@ name|BLOCK_SIZE
 init|=
 literal|8192
 decl_stmt|;
-comment|//4096;
+comment|// 4096;
 comment|/** The extension of a record file */
 specifier|final
 specifier|static
@@ -147,7 +187,7 @@ specifier|final
 name|String
 name|fileName
 decl_stmt|;
-comment|/**      *  Creates a new object on the indicated filename. The file is      *  opened in read/write mode.      *      *  @param fileName the name of the file to open or create, without      *         an extension.      *  @throws IOException whenever the creation of the underlying      *          RandomAccessFile throws it.      */
+comment|/**    * Creates a new object on the indicated filename. The file is opened in    * read/write mode.    *     * @param fileName    *          the name of the file to open or create, without an extension.    * @throws IOException    *           whenever the creation of the underlying RandomAccessFile throws    *           it.    */
 name|RecordFile
 parameter_list|(
 name|String
@@ -183,7 +223,7 @@ name|this
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Creates a new object on the indicated filename. The file is      *  opened in read/write mode.      *      *  @param fileName the name of the file to open or create, without      *         an extension.      *  @throws IOException whenever the creation of the underlying      *          RandomAccessFile throws it.      */
+comment|/**    * Creates a new object on the indicated filename. The file is opened in    * read/write mode.    *     * @param fileName    *          the name of the file to open or create, without an extension.    * @throws IOException    *           whenever the creation of the underlying RandomAccessFile throws    *           it.    */
 name|RecordFile
 parameter_list|(
 name|File
@@ -192,8 +232,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|this
-operator|.
 name|fileName
 operator|=
 name|file
@@ -222,7 +260,7 @@ name|this
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Returns the file name.      */
+comment|/**    * Returns the file name.    */
 name|String
 name|getFileName
 parameter_list|()
@@ -231,7 +269,7 @@ return|return
 name|fileName
 return|;
 block|}
-comment|/**      *  Disables transactions: doesn't sync and doesn't use the      *  transaction manager.      */
+comment|/**    * Disables transactions: doesn't sync and doesn't use the transaction    * manager.    */
 name|void
 name|disableTransactions
 parameter_list|()
@@ -241,7 +279,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**      *  Gets a block from the file. The returned byte array is      *  the in-memory copy of the record, and thus can be written      *  (and subsequently released with a dirty flag in order to      *  write the block back).      *      *  @param blockid The record number to retrieve.      */
+comment|/**    * Gets a block from the file. The returned byte array is the in-memory copy    * of the record, and thus can be written (and subsequently released with a    * dirty flag in order to write the block back).    *     * @param blockid    *          The record number to retrieve.    */
 name|BlockIo
 name|get
 parameter_list|(
@@ -510,7 +548,7 @@ return|return
 name|node
 return|;
 block|}
-comment|/**      *  Releases a block.      *      *  @param blockid The record number to release.      *  @param isDirty If true, the block was modified since the get().      */
+comment|/**    * Releases a block.    *     * @param blockid    *          The record number to release.    * @param isDirty    *          If true, the block was modified since the get().    */
 name|void
 name|release
 parameter_list|(
@@ -546,6 +584,7 @@ name|node
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -557,6 +596,7 @@ operator|+
 literal|" on release"
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 operator|!
@@ -567,18 +607,20 @@ argument_list|()
 operator|&&
 name|isDirty
 condition|)
+block|{
 name|node
 operator|.
 name|setDirty
 argument_list|()
 expr_stmt|;
+block|}
 name|release
 argument_list|(
 name|node
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Releases a block.      *      *  @param block The block to release.      */
+comment|/**    * Releases a block.    *     * @param block    *          The block to release.    */
 name|void
 name|release
 parameter_list|(
@@ -659,7 +701,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      *  Discards a block (will not write the block even if it's dirty)      *      *  @param block The block to discard.      */
+comment|/**    * Discards a block (will not write the block even if it's dirty)    *     * @param block    *          The block to discard.    */
 name|void
 name|discard
 parameter_list|(
@@ -687,9 +729,9 @@ name|key
 argument_list|)
 expr_stmt|;
 comment|// note: block not added to free list on purpose, because
-comment|//       it's considered invalid
+comment|// it's considered invalid
 block|}
-comment|/**      *  Commits the current transaction by flushing all dirty buffers      *  to disk.      */
+comment|/**    * Commits the current transaction by flushing all dirty buffers to disk.    */
 name|void
 name|commit
 parameter_list|()
@@ -739,7 +781,7 @@ literal|")"
 argument_list|)
 throw|;
 block|}
-comment|//  System.out.println("committing...");
+comment|// System.out.println("committing...");
 if|if
 condition|(
 name|dirty
@@ -887,7 +929,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**      *  Rollback the current transaction by discarding all dirty buffers      */
+comment|/**    * Rollback the current transaction by discarding all dirty buffers    */
 name|void
 name|rollback
 parameter_list|()
@@ -930,7 +972,7 @@ literal|")"
 argument_list|)
 throw|;
 block|}
-comment|//  System.out.println("rollback...");
+comment|// System.out.println("rollback...");
 name|dirty
 operator|.
 name|clear
@@ -978,7 +1020,7 @@ throw|;
 block|}
 empty_stmt|;
 block|}
-comment|/**      *  Commits and closes file.      */
+comment|/**    * Commits and closes file.    */
 name|void
 name|close
 parameter_list|()
@@ -1129,7 +1171,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**      * Force closing the file and underlying transaction manager.      * Used for testing purposed only.      */
+comment|/**    * Force closing the file and underlying transaction manager. Used for testing    * purposed only.    */
 name|void
 name|forceClose
 parameter_list|()
@@ -1147,7 +1189,7 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      *  Prints contents of a list      */
+comment|/**    * Prints contents of a list    */
 specifier|private
 name|void
 name|showList
@@ -1192,7 +1234,7 @@ operator|++
 expr_stmt|;
 block|}
 block|}
-comment|/**      *  Returns a new node. The node is retrieved (and removed)      *  from the released list or created new.      */
+comment|/**    * Returns a new node. The node is retrieved (and removed) from the released    * list or created new.    */
 specifier|private
 name|BlockIo
 name|getNewNode
@@ -1234,6 +1276,7 @@ name|retval
 operator|==
 literal|null
 condition|)
+block|{
 name|retval
 operator|=
 operator|new
@@ -1248,6 +1291,7 @@ name|BLOCK_SIZE
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 name|retval
 operator|.
 name|setBlockId
@@ -1266,7 +1310,7 @@ return|return
 name|retval
 return|;
 block|}
-comment|/**      *  Synchs a node to disk. This is called by the transaction manager's      *  synchronization code.      */
+comment|/**    * Synchs a node to disk. This is called by the transaction manager's    * synchronization code.    */
 name|void
 name|synch
 parameter_list|(
@@ -1318,7 +1362,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      *  Releases a node from the transaction list, if it was sitting      *  there.      *      *  @param recycle true if block data can be reused      */
+comment|/**    * Releases a node from the transaction list, if it was sitting there.    *     * @param recycle    *          true if block data can be reused    */
 name|void
 name|releaseFromTransaction
 parameter_list|(
@@ -1368,7 +1412,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      *  Synchronizes the file.      */
+comment|/**    * Synchronizes the file.    */
 name|void
 name|sync
 parameter_list|()
@@ -1384,7 +1428,7 @@ name|sync
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Utility method: Read a block from a RandomAccessFile      */
+comment|/**    * Utility method: Read a block from a RandomAccessFile    */
 specifier|private
 specifier|static
 name|void

@@ -385,44 +385,8 @@ name|exprNodeGenericFuncDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|UDFOPAnd
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|UDFType
-import|;
-end_import
-
 begin_comment
-comment|/**  * Expression factory for predicate pushdown processing.   * Each processor determines whether the expression is a possible candidate  * for predicate pushdown optimization for the given operator  */
+comment|/**  * Expression factory for predicate pushdown processing. Each processor  * determines whether the expression is a possible candidate for predicate  * pushdown optimization for the given operator  */
 end_comment
 
 begin_class
@@ -549,7 +513,8 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// means that expression can't be pushed either because it is value in group by
+comment|// means that expression can't be pushed either because it is value in
+comment|// group by
 name|ctx
 operator|.
 name|setIsCandidate
@@ -602,9 +567,11 @@ name|colAlias
 operator|==
 literal|null
 condition|)
+block|{
 assert|assert
 literal|false
 assert|;
+block|}
 name|ctx
 operator|.
 name|addAlias
@@ -769,7 +736,8 @@ argument_list|(
 name|ch
 argument_list|)
 expr_stmt|;
-comment|// need to iterate through all children even if one is found to be not a candidate
+comment|// need to iterate through all children even if one is found to be not a
+comment|// candidate
 comment|// in case if the other children could be individually pushed up
 if|if
 condition|(
@@ -833,7 +801,7 @@ name|isCandidate
 return|;
 block|}
 block|}
-comment|/**    * If all children are candidates and refer only to one table alias then this expr is a candidate    * else it is not a candidate but its children could be final candidates    */
+comment|/**    * If all children are candidates and refer only to one table alias then this    * expr is a candidate else it is not a candidate but its children could be    * final candidates    */
 specifier|public
 specifier|static
 class|class
@@ -1019,7 +987,8 @@ argument_list|(
 name|ch
 argument_list|)
 expr_stmt|;
-comment|// need to iterate through all children even if one is found to be not a candidate
+comment|// need to iterate through all children even if one is found to be not a
+comment|// candidate
 comment|// in case if the other children could be individually pushed up
 if|if
 condition|(
@@ -1065,7 +1034,9 @@ condition|(
 operator|!
 name|isCandidate
 condition|)
+block|{
 break|break;
+block|}
 block|}
 name|ctx
 operator|.
@@ -1249,7 +1220,7 @@ name|preds
 argument_list|)
 return|;
 block|}
-comment|/**    * Extracts pushdown predicates from the given list of predicate expression    * @param opContext operator context used for resolving column references    * @param op operator of the predicates being processed    * @param preds    * @return The expression walker information    * @throws SemanticException    */
+comment|/**    * Extracts pushdown predicates from the given list of predicate expression    *     * @param opContext    *          operator context used for resolving column references    * @param op    *          operator of the predicates being processed    * @param preds    * @return The expression walker information    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|ExprWalkerInfo
@@ -1292,7 +1263,8 @@ name|op
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack. The dispatcher
+comment|// create a walker which walks the tree in a DFS manner while maintaining
+comment|// the operator stack. The dispatcher
 comment|// generates the plan from the operator tree
 name|Map
 argument_list|<
@@ -1380,7 +1352,8 @@ name|getGenericFuncProcessor
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=
@@ -1442,9 +1415,6 @@ name|clonedPreds
 operator|.
 name|add
 argument_list|(
-operator|(
-name|exprNodeDesc
-operator|)
 name|node
 operator|.
 name|clone
@@ -1489,7 +1459,7 @@ return|return
 name|exprContext
 return|;
 block|}
-comment|/**    * Walks through the top AND nodes and determine which of them are final candidates    */
+comment|/**    * Walks through the top AND nodes and determine which of them are final    * candidates    */
 specifier|private
 specifier|static
 name|void
@@ -1531,7 +1501,8 @@ name|expr
 argument_list|)
 condition|)
 block|{
-comment|// If the operator is AND, we need to determine if any of the children are final candidates.
+comment|// If the operator is AND, we need to determine if any of the children are
+comment|// final candidates.
 for|for
 control|(
 name|Node

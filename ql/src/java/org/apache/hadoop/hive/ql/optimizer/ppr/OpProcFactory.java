@@ -186,7 +186,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Operator factory for partition pruning processing of operator graph  * We find all the filter operators that appear just beneath the table scan  * operators. We then pass the filter to the partition pruner to construct  * a pruner for that table alias and store a mapping from the table scan   * operator to that pruner. We call that pruner later during plan generation.  */
+comment|/**  * Operator factory for partition pruning processing of operator graph We find  * all the filter operators that appear just beneath the table scan operators.  * We then pass the filter to the partition pruner to construct a pruner for  * that table alias and store a mapping from the table scan operator to that  * pruner. We call that pruner later during plan generation.  */
 end_comment
 
 begin_class
@@ -194,7 +194,7 @@ specifier|public
 class|class
 name|OpProcFactory
 block|{
-comment|/**    * Determines the partition pruner for the filter. This is called only when the filter    * follows a table scan operator.    */
+comment|/**    * Determines the partition pruner for the filter. This is called only when    * the filter follows a table scan operator.    */
 specifier|public
 specifier|static
 class|class
@@ -340,9 +340,11 @@ operator|.
 name|getIsSamplingPred
 argument_list|()
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 comment|// ignore the predicate in case it is not a sampling predicate
 if|if
 condition|(

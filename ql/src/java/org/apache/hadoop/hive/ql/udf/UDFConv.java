@@ -89,20 +89,6 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|LongWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
 name|Text
 import|;
 end_import
@@ -144,6 +130,7 @@ extends|extends
 name|UDF
 block|{
 specifier|private
+specifier|final
 name|Text
 name|result
 init|=
@@ -152,6 +139,7 @@ name|Text
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|value
@@ -162,7 +150,7 @@ index|[
 literal|64
 index|]
 decl_stmt|;
-comment|/**    * Divide x by m as if x is an unsigned 64-bit integer.    * Examples:    *   unsignedLongDiv(-1, 2) == Long.MAX_VALUE    *   unsignedLongDiv(6, 3) == 2    *   unsignedLongDiv(0, 5) == 0    *      * @param x is treated as unsigned    * @param m is treated as signed    */
+comment|/**    * Divide x by m as if x is an unsigned 64-bit integer. Examples:    * unsignedLongDiv(-1, 2) == Long.MAX_VALUE unsignedLongDiv(6, 3) == 2    * unsignedLongDiv(0, 5) == 0    *     * @param x    *          is treated as unsigned    * @param m    *          is treated as signed    */
 specifier|private
 name|long
 name|unsignedLongDiv
@@ -233,7 +221,7 @@ operator|/
 name|m
 return|;
 block|}
-comment|/**    * Decode val into value[]    *     * @param val is treated as an unsigned 64-bit integer    * @param radix must be between MIN_RADIX and MAX_RADIX    */
+comment|/**    * Decode val into value[]    *     * @param val    *          is treated as an unsigned 64-bit integer    * @param radix    *          must be between MIN_RADIX and MAX_RADIX    */
 specifier|private
 name|void
 name|decode
@@ -308,7 +296,7 @@ name|q
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Convert value[] into a long. On overflow, return -1 (as mySQL does). If a    * negative digit is found, ignore the suffix starting there.    *     * @param radix must be between MIN_RADIX and MAX_RADIX    * @return the result should be treated as an unsigned 64-bit integer.    */
+comment|/**    * Convert value[] into a long. On overflow, return -1 (as mySQL does). If a    * negative digit is found, ignore the suffix starting there.    *     * @param radix    *          must be between MIN_RADIX and MAX_RADIX    * @return the result should be treated as an unsigned 64-bit integer.    */
 specifier|private
 name|long
 name|encode
@@ -335,7 +323,8 @@ argument_list|,
 name|radix
 argument_list|)
 decl_stmt|;
-comment|// Possible overflow once val
+comment|// Possible overflow once
+comment|// val
 comment|// exceeds this value
 for|for
 control|(
@@ -409,7 +398,7 @@ return|return
 name|val
 return|;
 block|}
-comment|/**    * Convert the bytes in value[] to the corresponding chars.    *     * @param radix must be between MIN_RADIX and MAX_RADIX    * @param fromPos is the first nonzero element    */
+comment|/**    * Convert the bytes in value[] to the corresponding chars.    *     * @param radix    *          must be between MIN_RADIX and MAX_RADIX    * @param fromPos    *          is the first nonzero element    */
 specifier|private
 name|void
 name|byte2char
@@ -465,7 +454,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Convert the chars in value[] to the corresponding integers. Convert invalid    * characters to -1.    *     * @param radix must be between MIN_RADIX and MAX_RADIX    * @param fromPos is the first nonzero element    */
+comment|/**    * Convert the chars in value[] to the corresponding integers. Convert invalid    * characters to -1.    *     * @param radix    *          must be between MIN_RADIX and MAX_RADIX    * @param fromPos    *          is the first nonzero element    */
 specifier|private
 name|void
 name|char2byte
@@ -516,7 +505,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Convert numbers between different number bases. If toBase>0 the result is     * unsigned, otherwise it is signed.    *     */
+comment|/**    * Convert numbers between different number bases. If toBase>0 the result is    * unsigned, otherwise it is signed.    *     */
 specifier|public
 name|Text
 name|evaluate
@@ -798,7 +787,9 @@ condition|;
 name|first
 operator|++
 control|)
+block|{
 empty_stmt|;
+block|}
 name|byte2char
 argument_list|(
 name|Math

@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Interface that encapsulates the evaluation logic of a UDAF. One evaluator is needed  * for every overloaded form of a UDAF .e.g max and min UDAFs would have evaluators for  * integer, string and other types. On the other hand avg would have an evaluator only  * for the double type.  */
+comment|/**  * Interface that encapsulates the evaluation logic of a UDAF. One evaluator is  * needed for every overloaded form of a UDAF .e.g max and min UDAFs would have  * evaluators for integer, string and other types. On the other hand avg would  * have an evaluator only for the double type.  */
 end_comment
 
 begin_interface

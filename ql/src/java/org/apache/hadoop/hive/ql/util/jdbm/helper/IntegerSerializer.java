@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Optimized serializer for integers.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: IntegerSerializer.java,v 1.2 2003/09/21 15:47:00 boisvert Exp $  */
+comment|/**  * Optimized serializer for integers.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: IntegerSerializer.java,v 1.2 2003/09/21 15:47:00 boisvert Exp $  */
 end_comment
 
 begin_class
@@ -58,14 +58,14 @@ operator|new
 name|IntegerSerializer
 argument_list|()
 decl_stmt|;
-comment|/**      * Construct an IntegerSerializer.      */
+comment|/**    * Construct an IntegerSerializer.    */
 specifier|public
 name|IntegerSerializer
 parameter_list|()
 block|{
 comment|// no op
 block|}
-comment|/**      * Serialize the content of an object into a byte array.      *      * @param obj Object to serialize      * @return a byte array representing the object's state      */
+comment|/**    * Serialize the content of an object into a byte array.    *     * @param obj    *          Object to serialize    * @return a byte array representing the object's state    */
 specifier|public
 name|byte
 index|[]
@@ -97,7 +97,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Deserialize the content of an object from a byte array.      *      * @param serialized Byte array representation of the object      * @return deserialized object      */
+comment|/**    * Deserialize the content of an object from a byte array.    *     * @param serialized    *          Byte array representation of the object    * @return deserialized object    */
 specifier|public
 name|Object
 name|deserialize

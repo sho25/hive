@@ -968,15 +968,15 @@ name|Mode
 operator|.
 name|HASH
 condition|)
+block|{
 return|return;
+block|}
 name|Set
 argument_list|<
 name|String
 argument_list|>
 name|tblNames
 init|=
-name|this
-operator|.
 name|pGraphContext
 operator|.
 name|getGroupOpToInputTables
@@ -1000,7 +1000,9 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 return|return;
+block|}
 name|boolean
 name|bucketGroupBy
 init|=
@@ -1170,7 +1172,9 @@ argument_list|(
 name|udf
 argument_list|)
 condition|)
+block|{
 return|return;
+block|}
 name|groupByKeys
 operator|.
 name|addAll
@@ -1198,7 +1202,9 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|String
@@ -1215,8 +1221,6 @@ name|Serializable
 argument_list|>
 name|topOp
 init|=
-name|this
-operator|.
 name|pGraphContext
 operator|.
 name|getTopOps
@@ -1261,8 +1265,6 @@ decl_stmt|;
 name|Table
 name|destTable
 init|=
-name|this
-operator|.
 name|pGraphContext
 operator|.
 name|getTopToTable
@@ -1279,7 +1281,9 @@ name|destTable
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 operator|!
@@ -1332,7 +1336,9 @@ condition|(
 operator|!
 name|bucketGroupBy
 condition|)
+block|{
 return|return;
+block|}
 block|}
 else|else
 block|{
@@ -1351,8 +1357,6 @@ name|prune
 argument_list|(
 name|destTable
 argument_list|,
-name|this
-operator|.
 name|pGraphContext
 operator|.
 name|getOpToPartPruner
@@ -1363,8 +1367,6 @@ argument_list|(
 name|ts
 argument_list|)
 argument_list|,
-name|this
-operator|.
 name|pGraphContext
 operator|.
 name|getConf
@@ -1372,8 +1374,6 @@ argument_list|()
 argument_list|,
 name|table
 argument_list|,
-name|this
-operator|.
 name|pGraphContext
 operator|.
 name|getPrunedPartitions
@@ -1512,7 +1512,9 @@ condition|(
 operator|!
 name|bucketGroupBy
 condition|)
+block|{
 return|return;
+block|}
 block|}
 block|}
 block|}
@@ -1605,7 +1607,8 @@ block|{
 comment|// check sort columns, if groupByCols is a prefix subset of sort
 comment|// columns, we will use sorted group by. For example, if data is sorted
 comment|// by column a, b, c, and a query wants to group by b,a, we will use
-comment|// sorted group by. But if the query wants to groupby b,c, then sorted group by can not be used.
+comment|// sorted group by. But if the query wants to groupby b,c, then sorted
+comment|// group by can not be used.
 name|int
 name|num
 init|=
@@ -1649,9 +1652,11 @@ operator|-
 literal|1
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 return|return
 literal|true
@@ -1711,9 +1716,11 @@ operator|.
 name|size
 argument_list|()
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 for|for
 control|(
 name|int
@@ -1752,9 +1759,11 @@ argument_list|(
 name|tblCol
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 return|return
 literal|true

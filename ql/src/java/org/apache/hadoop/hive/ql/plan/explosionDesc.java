@@ -62,7 +62,7 @@ decl_stmt|;
 specifier|public
 name|explosionDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|explosionDesc
 parameter_list|(
@@ -94,8 +94,6 @@ name|getFieldName
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|fieldName
 return|;
 block|}
@@ -121,8 +119,6 @@ name|getPosition
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|position
 return|;
 block|}

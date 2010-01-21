@@ -37,9 +37,7 @@ name|antlr
 operator|.
 name|runtime
 operator|.
-name|tree
-operator|.
-name|CommonTree
+name|Token
 import|;
 end_import
 
@@ -51,7 +49,9 @@ name|antlr
 operator|.
 name|runtime
 operator|.
-name|Token
+name|tree
+operator|.
+name|CommonTree
 import|;
 end_import
 
@@ -74,7 +74,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * @author athusoo  *  */
+comment|/**  * @author athusoo  *   */
 end_comment
 
 begin_class
@@ -93,8 +93,8 @@ decl_stmt|;
 specifier|public
 name|ASTNode
 parameter_list|()
-block|{     }
-comment|/**    * Constructor    * @param t Token for the CommonTree Node    */
+block|{   }
+comment|/**    * Constructor    *     * @param t    *          Token for the CommonTree Node    */
 specifier|public
 name|ASTNode
 parameter_list|(
@@ -108,7 +108,7 @@ name|t
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.lib.Node#getChildren()    */
+comment|/*    * (non-Javadoc)    *     * @see org.apache.hadoop.hive.ql.lib.Node#getChildren()    */
 specifier|public
 name|Vector
 argument_list|<
@@ -182,7 +182,7 @@ return|return
 name|ret_vec
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.lib.Node#getName()    */
+comment|/*    * (non-Javadoc)    *     * @see org.apache.hadoop.hive.ql.lib.Node#getName()    */
 specifier|public
 name|String
 name|getName
@@ -207,7 +207,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * @return information about the object from which this ASTNode    * originated, or null if this ASTNode was not expanded from    * an object reference    */
+comment|/**    * @return information about the object from which this ASTNode originated, or    *         null if this ASTNode was not expanded from an object reference    */
 specifier|public
 name|ASTNodeOrigin
 name|getOrigin
@@ -217,7 +217,7 @@ return|return
 name|origin
 return|;
 block|}
-comment|/**    * Tag this ASTNode with information about the object from which this    * node originated.    */
+comment|/**    * Tag this ASTNode with information about the object from which this node    * originated.    */
 specifier|public
 name|void
 name|setOrigin
@@ -256,8 +256,6 @@ name|sb
 operator|.
 name|append
 argument_list|(
-name|this
-operator|.
 name|toString
 argument_list|()
 argument_list|)

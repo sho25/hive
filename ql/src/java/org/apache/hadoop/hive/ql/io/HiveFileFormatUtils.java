@@ -87,20 +87,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|fs
 operator|.
 name|FileStatus
@@ -387,22 +373,8 @@ name|TextInputFormat
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-import|;
-end_import
-
 begin_comment
-comment|/**  * An util class for various Hive file format tasks.  * registerOutputFormatSubstitute(Class, Class)   * getOutputFormatSubstitute(Class) are added for backward   * compatibility. They return the newly added HiveOutputFormat for the older   * ones.  *   */
+comment|/**  * An util class for various Hive file format tasks.  * registerOutputFormatSubstitute(Class, Class) getOutputFormatSubstitute(Class)  * are added for backward compatibility. They return the newly added  * HiveOutputFormat for the older ones.  *   */
 end_comment
 
 begin_class
@@ -559,6 +531,7 @@ argument_list|(
 name|origin
 argument_list|)
 condition|)
+block|{
 return|return
 operator|(
 name|Class
@@ -570,6 +543,7 @@ argument_list|>
 operator|)
 name|origin
 return|;
+block|}
 name|Class
 argument_list|<
 name|?
@@ -1075,9 +1049,11 @@ if|if
 condition|(
 name|result
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 return|return
 literal|true

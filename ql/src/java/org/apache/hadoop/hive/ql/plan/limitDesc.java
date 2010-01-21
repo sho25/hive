@@ -58,7 +58,7 @@ decl_stmt|;
 specifier|public
 name|limitDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|limitDesc
 parameter_list|(
@@ -80,8 +80,6 @@ name|getLimit
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|limit
 return|;
 block|}

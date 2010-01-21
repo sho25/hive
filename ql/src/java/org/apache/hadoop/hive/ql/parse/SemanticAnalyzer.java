@@ -991,24 +991,6 @@ name|ql
 operator|.
 name|optimizer
 operator|.
-name|MapJoinFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
 name|GenMRFileSink1
 import|;
 end_import
@@ -1228,26 +1210,6 @@ operator|.
 name|GenMRProcContext
 operator|.
 name|GenMapRedCtx
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|physical
-operator|.
-name|GenMRSkewJoinProcessor
 import|;
 end_import
 
@@ -1615,26 +1577,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
-operator|.
-name|sampleDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|forwardDesc
 import|;
 end_import
@@ -1924,6 +1866,26 @@ operator|.
 name|plan
 operator|.
 name|unionDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|filterDesc
+operator|.
+name|sampleDesc
 import|;
 end_import
 
@@ -2367,6 +2329,7 @@ argument_list|>
 name|joinContext
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|TableScanOperator
@@ -2434,6 +2397,7 @@ name|ASTNode
 name|viewSelect
 decl_stmt|;
 specifier|private
+specifier|final
 name|UnparseTranslator
 name|unparseTranslator
 decl_stmt|;
@@ -2463,8 +2427,6 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|opToPartPruner
 operator|=
 operator|new
@@ -2476,8 +2438,6 @@ name|exprNodeDesc
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|opToSamplePruner
 operator|=
 operator|new
@@ -2489,8 +2449,6 @@ name|sampleDesc
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|topOps
 operator|=
 operator|new
@@ -2507,8 +2465,6 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|topSelOps
 operator|=
 operator|new
@@ -2525,8 +2481,6 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|loadTableWork
 operator|=
 operator|new
@@ -2536,8 +2490,6 @@ name|loadTableDesc
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|loadFileWork
 operator|=
 operator|new
@@ -2585,20 +2537,14 @@ name|Table
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destTableId
 operator|=
 literal|1
 expr_stmt|;
-name|this
-operator|.
 name|uCtx
 operator|=
 literal|null
 expr_stmt|;
-name|this
-operator|.
 name|listMapJoinOpsNoReducer
 operator|=
 operator|new
@@ -2608,8 +2554,6 @@ name|MapJoinOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|groupOpToInputTables
 operator|=
 operator|new
@@ -2654,42 +2598,30 @@ operator|.
 name|reset
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|loadTableWork
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|loadFileWork
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|topOps
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|topSelOps
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destTableId
 operator|=
 literal|1
 expr_stmt|;
-name|this
-operator|.
 name|idToTableNameMap
 operator|.
 name|clear
@@ -2707,29 +2639,21 @@ name|uCtx
 operator|=
 literal|null
 expr_stmt|;
-name|this
-operator|.
 name|joinContext
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|opParseCtx
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|groupOpToInputTables
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|prunedPartitions
 operator|.
 name|clear
@@ -2821,8 +2745,6 @@ operator|.
 name|getIdToTableNameMap
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|uCtx
 operator|=
 name|pctx
@@ -2830,8 +2752,6 @@ operator|.
 name|getUCtx
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|listMapJoinOpsNoReducer
 operator|=
 name|pctx
@@ -2846,8 +2766,6 @@ operator|.
 name|getQB
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|groupOpToInputTables
 operator|=
 name|pctx
@@ -2855,8 +2773,6 @@ operator|.
 name|getGroupOpToInputTables
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|prunedPartitions
 operator|=
 name|pctx
@@ -3217,7 +3133,7 @@ return|return
 name|aggregationTrees
 return|;
 block|}
-comment|/**    * DFS-scan the expressionTree to find all aggregation subtrees and put them    * in aggregations.    *    * @param expressionTree    * @param aggregations    *          the key to the HashTable is the toStringTree() representation of    *          the aggregation subtree.    */
+comment|/**    * DFS-scan the expressionTree to find all aggregation subtrees and put them    * in aggregations.    *     * @param expressionTree    * @param aggregations    *          the key to the HashTable is the toStringTree() representation of    *          the aggregation subtree.    */
 specifier|private
 name|void
 name|doPhase1GetAllAggregations
@@ -3503,7 +3419,7 @@ return|return
 name|expr
 return|;
 block|}
-comment|/**    * Goes though the tabref tree and finds the alias for the table. Once found,    * it records the table name-> alias association in aliasToTabs. It also makes    * an association from the alias to the table AST in parse info.    *    * @return the alias of the table    */
+comment|/**    * Goes though the tabref tree and finds the alias for the table. Once found,    * it records the table name-> alias association in aliasToTabs. It also makes    * an association from the alias to the table AST in parse info.    *     * @return the alias of the table    */
 specifier|private
 name|String
 name|processTable
@@ -4169,14 +4085,16 @@ operator|.
 name|TOK_UNIQUEJOIN
 operator|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 return|return
 literal|false
 return|;
 block|}
-comment|/**    * Given the AST with TOK_JOIN as the root, get all the aliases for the tables    * or subqueries in the join.    *    * @param qb    * @param join    * @throws SemanticException    */
+comment|/**    * Given the AST with TOK_JOIN as the root, get all the aliases for the tables    * or subqueries in the join.    *     * @param qb    * @param join    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -4229,6 +4147,7 @@ name|HiveParser
 operator|.
 name|TOK_UNIQUEJOIN
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -4236,6 +4155,7 @@ argument_list|(
 literal|"Join with multiple children"
 argument_list|)
 throw|;
+block|}
 for|for
 control|(
 name|int
@@ -4365,7 +4285,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Given the AST with TOK_LATERAL_VIEW as the root, get the alias for the    * table or subquery in the lateral view and also make a mapping from the    * alias to all the lateral view AST's    *    * @param qb    * @param lateralView    * @return the alias for the table/subquery    * @throws SemanticException    */
+comment|/**    * Given the AST with TOK_LATERAL_VIEW as the root, get the alias for the    * table or subquery in the lateral view and also make a mapping from the    * alias to all the lateral view AST's    *     * @param qb    * @param lateralView    * @return the alias for the table/subquery    * @throws SemanticException    */
 specifier|private
 name|String
 name|processLateralView
@@ -4500,7 +4420,7 @@ return|return
 name|alias
 return|;
 block|}
-comment|/**    * Phase 1: (including, but not limited to):    *    * 1. Gets all the aliases for all the tables / subqueries and makes the    *    appropriate mapping in aliasToTabs, aliasToSubq    * 2. Gets the location of the destination and names the clase "inclause" + i    * 3. Creates a map from a string representation of an aggregation tree to the    *    actual aggregation AST    * 4. Creates a mapping from the clause name to the select expression AST in    *    destToSelExpr    * 5. Creates a mapping from a table alias to the lateral view AST's in    *    aliasToLateralViews    *    * @param ast    * @param qb    * @param ctx_1    * @throws SemanticException    */
+comment|/**    * Phase 1: (including, but not limited to):    *     * 1. Gets all the aliases for all the tables / subqueries and makes the    * appropriate mapping in aliasToTabs, aliasToSubq 2. Gets the location of the    * destination and names the clase "inclause" + i 3. Creates a map from a    * string representation of an aggregation tree to the actual aggregation AST    * 4. Creates a mapping from the clause name to the select expression AST in    * destToSelExpr 5. Creates a mapping from a table alias to the lateral view    * AST's in aliasToLateralViews    *     * @param ast    * @param qb    * @param ctx_1    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -4620,6 +4540,7 @@ name|HiveParser
 operator|.
 name|TOK_HINTLIST
 condition|)
+block|{
 name|qbp
 operator|.
 name|setHints
@@ -4635,6 +4556,7 @@ literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|LinkedHashMap
 argument_list|<
 name|String
@@ -4773,6 +4695,7 @@ operator|.
 name|TOK_TMP_FILE
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -4787,6 +4710,7 @@ name|ast
 argument_list|)
 argument_list|)
 throw|;
+block|}
 block|}
 name|qbp
 operator|.
@@ -4827,6 +4751,7 @@ name|child_count
 operator|!=
 literal|1
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -4836,6 +4761,7 @@ operator|+
 name|child_count
 argument_list|)
 throw|;
+block|}
 comment|// Check if this is a subquery / lateral view
 name|ASTNode
 name|frm
@@ -4970,7 +4896,8 @@ name|HiveParser
 operator|.
 name|TOK_DISTRIBUTEBY
 case|:
-comment|// Get the distribute by  aliases - these are aliased to the entries in the
+comment|// Get the distribute by aliases - these are aliased to the entries in
+comment|// the
 comment|// select list
 name|qbp
 operator|.
@@ -5263,7 +5190,8 @@ name|HiveParser
 operator|.
 name|TOK_UNION
 case|:
-comment|// currently, we dont support subq1 union subq2 - the user has to explicitly say:
+comment|// currently, we dont support subq1 union subq2 - the user has to
+comment|// explicitly say:
 comment|// select * from (subq1 union subq2) subqalias
 if|if
 condition|(
@@ -5273,6 +5201,7 @@ operator|.
 name|getIsSubQ
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -5285,6 +5214,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 default|default:
 name|skipRecursion
 operator|=
@@ -5469,8 +5399,6 @@ try|try
 block|{
 name|tab
 operator|=
-name|this
-operator|.
 name|db
 operator|.
 name|getTable
@@ -5548,6 +5476,7 @@ name|getInputFormatClass
 argument_list|()
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -5570,6 +5499,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 throw|;
+block|}
 name|qb
 operator|.
 name|getMetaData
@@ -5679,8 +5609,6 @@ init|=
 operator|new
 name|tableSpec
 argument_list|(
-name|this
-operator|.
 name|db
 argument_list|,
 name|conf
@@ -5728,6 +5656,7 @@ name|getOutputFormatClass
 argument_list|()
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -5742,6 +5671,7 @@ name|ast
 argument_list|)
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|ts
@@ -5951,7 +5881,8 @@ name|HiveException
 name|e
 parameter_list|)
 block|{
-comment|// Has to use full name to make sure it does not conflict with org.apache.commons.lang.StringUtils
+comment|// Has to use full name to make sure it does not conflict with
+comment|// org.apache.commons.lang.StringUtils
 name|LOG
 operator|.
 name|error
@@ -6285,6 +6216,7 @@ name|s
 range|:
 name|list
 control|)
+block|{
 if|if
 condition|(
 name|s
@@ -6294,9 +6226,12 @@ argument_list|(
 name|elem
 argument_list|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
+block|}
 return|return
 literal|false
 return|;
@@ -6411,6 +6346,7 @@ argument_list|(
 name|tableOrCol
 argument_list|)
 condition|)
+block|{
 name|leftAliases
 operator|.
 name|add
@@ -6418,6 +6354,7 @@ argument_list|(
 name|tableOrCol
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -6443,6 +6380,7 @@ argument_list|(
 name|tableOrCol
 argument_list|)
 condition|)
+block|{
 name|rightAliases
 operator|.
 name|add
@@ -6451,10 +6389,13 @@ name|tableOrCol
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 else|else
 block|{
-comment|// We don't support columns without table prefix in JOIN condition right now.
-comment|// We need to pass Metadata here to know which table the column belongs to.
+comment|// We don't support columns without table prefix in JOIN condition right
+comment|// now.
+comment|// We need to pass Metadata here to know which table the column belongs
+comment|// to.
 throw|throw
 operator|new
 name|SemanticException
@@ -6481,7 +6422,8 @@ name|HiveParser
 operator|.
 name|Identifier
 case|:
-comment|// it may be a field name, return the identifier and let the caller decide whether it is or not
+comment|// it may be a field name, return the identifier and let the caller decide
+comment|// whether it is or not
 if|if
 condition|(
 name|fields
@@ -6513,9 +6455,6 @@ name|unparseTranslator
 operator|.
 name|addIdentifierTranslation
 argument_list|(
-operator|(
-name|ASTNode
-operator|)
 name|condn
 argument_list|)
 expr_stmt|;
@@ -6569,6 +6508,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|parseJoinCondPopulateAlias
 argument_list|(
 name|joinTree
@@ -6590,6 +6530,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 break|break;
 default|default:
 comment|// This is an operator - so check whether it is unary or binary operator
@@ -6602,6 +6543,7 @@ argument_list|()
 operator|==
 literal|1
 condition|)
+block|{
 name|parseJoinCondPopulateAlias
 argument_list|(
 name|joinTree
@@ -6623,6 +6565,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -6642,7 +6585,8 @@ name|fields1
 init|=
 literal|null
 decl_stmt|;
-comment|// if it is a dot operator, remember the field name of the rhs of the left semijoin
+comment|// if it is a dot operator, remember the field name of the rhs of the
+comment|// left semijoin
 if|if
 condition|(
 name|joinTree
@@ -6828,6 +6772,7 @@ expr_stmt|;
 block|}
 block|}
 else|else
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -6847,6 +6792,7 @@ operator|+
 literal|" children"
 argument_list|)
 throw|;
+block|}
 break|break;
 block|}
 block|}
@@ -6901,6 +6847,7 @@ operator|!=
 literal|0
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -6915,6 +6862,7 @@ name|condn
 argument_list|)
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|rightAliases
@@ -6982,6 +6930,7 @@ name|s
 range|:
 name|leftAliases
 control|)
+block|{
 if|if
 condition|(
 operator|!
@@ -6992,6 +6941,7 @@ argument_list|(
 name|s
 argument_list|)
 condition|)
+block|{
 name|leftSrc
 operator|.
 name|add
@@ -7000,7 +6950,10 @@ name|s
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+block|}
 else|else
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -7016,7 +6969,8 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-comment|/**    * Parse the join condition.    * If the condition is a join condition, throw an error if it is not an equality. Otherwise, break it into left and    * right expressions and store in the join tree.    * If the condition is a join filter, add it to the filter list of join tree.  The join condition can contains conditions    * on both the left and tree trees and filters on either. Currently, we only support equi-joins, so we throw an error    * if the condition involves both subtrees and is not a equality. Also, we only support AND i.e ORs are not supported    * currently as their semantics are not very clear, may lead to data explosion and there is no usecase.    * @param joinTree  jointree to be populated    * @param joinCond  join condition    * @param leftSrc   left sources    * @throws SemanticException    */
+block|}
+comment|/**    * Parse the join condition. If the condition is a join condition, throw an    * error if it is not an equality. Otherwise, break it into left and right    * expressions and store in the join tree. If the condition is a join filter,    * add it to the filter list of join tree. The join condition can contains    * conditions on both the left and tree trees and filters on either.    * Currently, we only support equi-joins, so we throw an error if the    * condition involves both subtrees and is not a equality. Also, we only    * support AND i.e ORs are not supported currently as their semantics are not    * very clear, may lead to data explosion and there is no usecase.    *     * @param joinTree    *          jointree to be populated    * @param joinCond    *          join condition    * @param leftSrc    *          left sources    * @throws SemanticException    */
 specifier|private
 name|void
 name|parseJoinCondition
@@ -7042,7 +6996,9 @@ name|joinCond
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 switch|switch
 condition|(
 name|joinCond
@@ -7265,6 +7221,7 @@ literal|0
 operator|)
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -7279,6 +7236,7 @@ name|joinCond
 argument_list|)
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|leftCondAl1
@@ -7320,6 +7278,7 @@ literal|0
 operator|)
 operator|)
 condition|)
+block|{
 name|joinTree
 operator|.
 name|getFilters
@@ -7335,6 +7294,7 @@ argument_list|(
 name|joinCond
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -7416,6 +7376,7 @@ literal|0
 operator|)
 operator|)
 condition|)
+block|{
 name|joinTree
 operator|.
 name|getFilters
@@ -7431,6 +7392,7 @@ argument_list|(
 name|joinCond
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -7480,6 +7442,7 @@ argument_list|()
 operator|!=
 literal|0
 condition|)
+block|{
 name|joinTree
 operator|.
 name|getFilters
@@ -7495,7 +7458,9 @@ argument_list|(
 name|joinCond
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|joinTree
 operator|.
 name|getFilters
@@ -7511,6 +7476,7 @@ argument_list|(
 name|joinCond
 argument_list|)
 expr_stmt|;
+block|}
 break|break;
 default|default:
 name|boolean
@@ -7669,6 +7635,7 @@ condition|;
 name|ci
 operator|++
 control|)
+block|{
 name|parseJoinCondPopulateAlias
 argument_list|(
 name|joinTree
@@ -7704,6 +7671,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 name|boolean
 name|leftAliasNull
 init|=
@@ -7778,6 +7746,7 @@ operator|&&
 operator|!
 name|rightAliasNull
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -7792,11 +7761,13 @@ name|joinCond
 argument_list|)
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 operator|!
 name|leftAliasNull
 condition|)
+block|{
 name|joinTree
 operator|.
 name|getFilters
@@ -7812,7 +7783,9 @@ argument_list|(
 name|joinCond
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|joinTree
 operator|.
 name|getFilters
@@ -7828,6 +7801,7 @@ argument_list|(
 name|joinCond
 argument_list|)
 expr_stmt|;
+block|}
 break|break;
 block|}
 block|}
@@ -7933,7 +7907,7 @@ name|input
 argument_list|)
 return|;
 block|}
-comment|/**    * create a filter plan. The condition and the inputs are specified.    * @param qb current query block    * @param condn The condition to be resolved    * @param input the input operator    */
+comment|/**    * create a filter plan. The condition and the inputs are specified.    *     * @param qb    *          current query block    * @param condn    *          The condition to be resolved    * @param input    *          the input operator    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -8087,6 +8061,7 @@ argument_list|(
 name|tabAlias
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -8101,6 +8076,7 @@ name|sel
 argument_list|)
 argument_list|)
 throw|;
+block|}
 comment|// TODO: Have to put in the support for AS clause
 name|Pattern
 name|regex
@@ -8475,9 +8451,11 @@ name|ss
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 name|cmd
 return|;
+block|}
 comment|// for local mode - replace any references to packaged files by name with
 comment|// the reference to the original file path
 if|if
@@ -9215,6 +9193,7 @@ argument_list|(
 name|name
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -9229,6 +9208,7 @@ name|name
 argument_list|)
 argument_list|)
 throw|;
+block|}
 name|nameSet
 operator|.
 name|add
@@ -9349,10 +9329,12 @@ name|HiveParser
 operator|.
 name|TOK_ALIASLIST
 condition|)
+block|{
 name|outputColNames
 operator|=
 literal|true
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -9365,10 +9347,12 @@ name|HiveParser
 operator|.
 name|TOK_TABCOLLIST
 condition|)
+block|{
 name|outputColSchemas
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 comment|// If column type is not specified, use a string
 if|if
@@ -10026,6 +10010,7 @@ argument_list|()
 operator|>
 literal|0
 condition|)
+block|{
 name|inInfo
 operator|=
 name|getTableDescFromSerDe
@@ -10065,7 +10050,9 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|inInfo
 operator|=
 name|PlanUtils
@@ -10098,6 +10085,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|trfm
@@ -10112,6 +10100,7 @@ argument_list|()
 operator|>
 literal|0
 condition|)
+block|{
 name|outInfo
 operator|=
 name|getTableDescFromSerDe
@@ -10151,9 +10140,13 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-comment|// This is for backward compatibility. If the user did not specify the output column list, we assume that there are 2 columns: key and value.
-comment|// However, if the script outputs: col1, col2, col3 seperated by TAB, the requirement is: key is col and value is (col2 TAB col3)
+comment|// This is for backward compatibility. If the user did not specify the
+comment|// output column list, we assume that there are 2 columns: key and value.
+comment|// However, if the script outputs: col1, col2, col3 seperated by TAB, the
+comment|// requirement is: key is col and value is (col2 TAB col3)
+block|}
 else|else
+block|{
 name|outInfo
 operator|=
 name|PlanUtils
@@ -10184,6 +10177,7 @@ argument_list|,
 name|defaultOutputCols
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Output record readers
 name|Class
 argument_list|<
@@ -10310,6 +10304,7 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 name|name
 operator|=
 name|conf
@@ -10323,7 +10318,9 @@ operator|.
 name|HIVESCRIPTRECORDREADER
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|name
 operator|=
 name|unescapeSQLString
@@ -10339,6 +10336,7 @@ name|getText
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 try|try
 block|{
 return|return
@@ -10407,6 +10405,7 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 name|name
 operator|=
 name|conf
@@ -10420,7 +10419,9 @@ operator|.
 name|HIVESCRIPTRECORDWRITER
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|name
 operator|=
 name|unescapeSQLString
@@ -10436,6 +10437,7 @@ name|getText
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 try|try
 block|{
 return|return
@@ -10477,7 +10479,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * This function is a wrapper of parseInfo.getGroupByForClause which automatically    * translates SELECT DISTINCT a,b,c to SELECT a,b,c GROUP BY a,b,c.    */
+comment|/**    * This function is a wrapper of parseInfo.getGroupByForClause which    * automatically translates SELECT DISTINCT a,b,c to SELECT a,b,c GROUP BY    * a,b,c.    */
 specifier|static
 name|List
 argument_list|<
@@ -10964,7 +10966,7 @@ return|return
 name|colRef
 return|;
 block|}
-comment|/**    * Returns whether the pattern is a regex expression (instead of a normal string).    * Normal string is a string with all alphabets/digits and "_".    */
+comment|/**    * Returns whether the pattern is a regex expression (instead of a normal    * string). Normal string is a string with all alphabets/digits and "_".    */
 specifier|private
 specifier|static
 name|boolean
@@ -11646,9 +11648,6 @@ condition|)
 block|{
 name|exprList
 operator|=
-operator|(
-name|ASTNode
-operator|)
 name|udtfExpr
 expr_stmt|;
 block|}
@@ -12590,7 +12589,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Returns the GenericUDAFEvaluator for the aggregation.    * This is called once for each GroupBy aggregation.    */
+comment|/**    * Returns the GenericUDAFEvaluator for the aggregation. This is called once    * for each GroupBy aggregation.    */
 specifier|static
 name|GenericUDAFEvaluator
 name|getGenericUDAFEvaluator
@@ -12680,7 +12679,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Returns the GenericUDAFInfo struct for the aggregation.    * @param aggName  The name of the UDAF.    * @param aggParameters  The exprNodeDesc of the original parameters    * @param aggTree   The ASTNode node of the UDAF in the query.    * @return GenericUDAFInfo    * @throws SemanticException when the UDAF is not found or has problems.    */
+comment|/**    * Returns the GenericUDAFInfo struct for the aggregation.    *     * @param aggName    *          The name of the UDAF.    * @param aggParameters    *          The exprNodeDesc of the original parameters    * @param aggTree    *          The ASTNode node of the UDAF in the query.    * @return GenericUDAFInfo    * @throws SemanticException    *           when the UDAF is not found or has problems.    */
 specifier|static
 name|GenericUDAFInfo
 name|getGenericUDAFInfo
@@ -12904,7 +12903,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Generate the GroupByOperator for the Query Block (parseInfo.getXXX(dest)).    * The new GroupByOperator will be a child of the reduceSinkOperatorInfo.    *    * @param mode The mode of the aggregation (PARTIAL1 or COMPLETE)    * @param genericUDAFEvaluators  If not null, this function will store the mapping    *            from Aggregation StringTree to the genericUDAFEvaluator in this parameter,    *            so it can be used in the next-stage GroupBy aggregations.    * @return the new GroupByOperator    */
+comment|/**    * Generate the GroupByOperator for the Query Block (parseInfo.getXXX(dest)).    * The new GroupByOperator will be a child of the reduceSinkOperatorInfo.    *     * @param mode    *          The mode of the aggregation (PARTIAL1 or COMPLETE)    * @param genericUDAFEvaluators    *          If not null, this function will store the mapping from Aggregation    *          StringTree to the genericUDAFEvaluator in this parameter, so it    *          can be used in the next-stage GroupBy aggregations.    * @return the new GroupByOperator    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -13521,7 +13520,8 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// Save the evaluator so that it can be used by the next-stage GroupByOperators
+comment|// Save the evaluator so that it can be used by the next-stage
+comment|// GroupByOperators
 if|if
 condition|(
 name|genericUDAFEvaluators
@@ -13592,7 +13592,7 @@ return|return
 name|op
 return|;
 block|}
-comment|/**    * Generate the GroupByOperator for the Query Block (parseInfo.getXXX(dest)).    * The new GroupByOperator will be a child of the reduceSinkOperatorInfo.    *    * @param mode The mode of the aggregation (MERGEPARTIAL, PARTIAL2)    * @param genericUDAFEvaluators  The mapping from Aggregation StringTree to the    *            genericUDAFEvaluator.    * @param distPartAggr partial aggregation for distincts    * @return the new GroupByOperator    */
+comment|/**    * Generate the GroupByOperator for the Query Block (parseInfo.getXXX(dest)).    * The new GroupByOperator will be a child of the reduceSinkOperatorInfo.    *     * @param mode    *          The mode of the aggregation (MERGEPARTIAL, PARTIAL2)    * @param genericUDAFEvaluators    *          The mapping from Aggregation StringTree to the    *          genericUDAFEvaluator.    * @param distPartAggr    *          partial aggregation for distincts    * @return the new GroupByOperator    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -13954,12 +13954,16 @@ name|exprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// If the function is distinct, partial aggregartion has not been done on the client side.
-comment|// If distPartAgg is set, the client is letting us know that partial aggregation has not been done.
+comment|// If the function is distinct, partial aggregartion has not been done on
+comment|// the client side.
+comment|// If distPartAgg is set, the client is letting us know that partial
+comment|// aggregation has not been done.
 comment|// For eg: select a, count(b+c), count(distinct d+e) group by a
-comment|// For count(b+c), if partial aggregation has been performed, then we directly look for count(b+c).
+comment|// For count(b+c), if partial aggregation has been performed, then we
+comment|// directly look for count(b+c).
 comment|// Otherwise, we look for b+c.
-comment|// For distincts, partial aggregation is never performed on the client side, so always look for the parameters: d+e
+comment|// For distincts, partial aggregation is never performed on the client
+comment|// side, so always look for the parameters: d+e
 name|boolean
 name|partialAggDone
 init|=
@@ -14436,7 +14440,7 @@ return|return
 name|op
 return|;
 block|}
-comment|/**    * Generate the map-side GroupByOperator for the Query Block (qb.getParseInfo().getXXX(dest)).    * The new GroupByOperator will be a child of the inputOperatorInfo.    *    * @param mode The mode of the aggregation (HASH)    * @param genericUDAFEvaluators  If not null, this function will store the mapping    *            from Aggregation StringTree to the genericUDAFEvaluator in this parameter,    *            so it can be used in the next-stage GroupBy aggregations.    * @return the new GroupByOperator    */
+comment|/**    * Generate the map-side GroupByOperator for the Query Block    * (qb.getParseInfo().getXXX(dest)). The new GroupByOperator will be a child    * of the inputOperatorInfo.    *     * @param mode    *          The mode of the aggregation (HASH)    * @param genericUDAFEvaluators    *          If not null, this function will store the mapping from Aggregation    *          StringTree to the genericUDAFEvaluator in this parameter, so it    *          can be used in the next-stage GroupBy aggregations.    * @return the new GroupByOperator    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -14930,15 +14934,6 @@ name|exprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
-argument_list|<
-name|Class
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-name|aggClasses
-init|=
 operator|new
 name|ArrayList
 argument_list|<
@@ -14948,7 +14943,7 @@ name|?
 argument_list|>
 argument_list|>
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 comment|// 0 is the function name
 for|for
 control|(
@@ -15129,7 +15124,8 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// Save the evaluator so that it can be used by the next-stage GroupByOperators
+comment|// Save the evaluator so that it can be used by the next-stage
+comment|// GroupByOperators
 if|if
 condition|(
 name|genericUDAFEvaluators
@@ -15200,7 +15196,7 @@ return|return
 name|op
 return|;
 block|}
-comment|/**    * Generate the ReduceSinkOperator for the Group By Query Block (qb.getPartInfo().getXXX(dest)).    * The new ReduceSinkOperator will be a child of inputOperatorInfo.    *    * It will put all Group By keys and the distinct field (if any) in the map-reduce sort key,    * and all other fields in the map-reduce value.    *    * @param numPartitionFields  the number of fields for map-reduce partitioning.    *      This is usually the number of fields in the Group By keys.    * @return the new ReduceSinkOperator.    * @throws SemanticException    */
+comment|/**    * Generate the ReduceSinkOperator for the Group By Query Block    * (qb.getPartInfo().getXXX(dest)). The new ReduceSinkOperator will be a child    * of inputOperatorInfo.    *     * It will put all Group By keys and the distinct field (if any) in the    * map-reduce sort key, and all other fields in the map-reduce value.    *     * @param numPartitionFields    *          the number of fields for map-reduce partitioning. This is usually    *          the number of fields in the Group By keys.    * @return the new ReduceSinkOperator.    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -16009,9 +16005,6 @@ argument_list|(
 literal|""
 argument_list|,
 operator|(
-operator|(
-name|ASTNode
-operator|)
 name|entry
 operator|.
 name|getValue
@@ -16094,7 +16087,7 @@ return|return
 name|rsOp
 return|;
 block|}
-comment|/**    * Generate the second ReduceSinkOperator for the Group By Plan (parseInfo.getXXX(dest)).    * The new ReduceSinkOperator will be a child of groupByOperatorInfo.    *    * The second ReduceSinkOperator will put the group by keys in the map-reduce sort    * key, and put the partial aggregation results in the map-reduce value.    *    * @param numPartitionFields the number of fields in the map-reduce partition key.    *     This should always be the same as the number of Group By keys.  We should be    *     able to remove this parameter since in this phase there is no distinct any more.    * @return the new ReduceSinkOperator.    * @throws SemanticException    */
+comment|/**    * Generate the second ReduceSinkOperator for the Group By Plan    * (parseInfo.getXXX(dest)). The new ReduceSinkOperator will be a child of    * groupByOperatorInfo.    *     * The second ReduceSinkOperator will put the group by keys in the map-reduce    * sort key, and put the partial aggregation results in the map-reduce value.    *     * @param numPartitionFields    *          the number of fields in the map-reduce partition key. This should    *          always be the same as the number of Group By keys. We should be    *          able to remove this parameter since in this phase there is no    *          distinct any more.    * @return the new ReduceSinkOperator.    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -16565,7 +16558,7 @@ return|return
 name|rsOp
 return|;
 block|}
-comment|/**    * Generate the second GroupByOperator for the Group By Plan (parseInfo.getXXX(dest)).    * The new GroupByOperator will do the second aggregation based on the partial aggregation    * results.    *    * @param mode the mode of aggregation (FINAL)    * @param genericUDAFEvaluators  The mapping from Aggregation StringTree to the    *            genericUDAFEvaluator.    * @return the new GroupByOperator    * @throws SemanticException    */
+comment|/**    * Generate the second GroupByOperator for the Group By Plan    * (parseInfo.getXXX(dest)). The new GroupByOperator will do the second    * aggregation based on the partial aggregation results.    *     * @param mode    *          the mode of aggregation (FINAL)    * @param genericUDAFEvaluators    *          The mapping from Aggregation StringTree to the    *          genericUDAFEvaluator.    * @return the new GroupByOperator    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -17213,7 +17206,7 @@ return|return
 name|op
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using a single map-reduce job (3 operators will be    * inserted):    *    * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) SortGroupBy (keys = (KEY.0,KEY.1), aggregations =    * (count_distinct(KEY.2), sum(VALUE.0), count(VALUE.1))) Select (final    * selects)    *    * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *    * Generate a Group-By plan using 1 map-reduce job.    * Spray by the group by key, and sort by the distinct key (if any), and    * compute aggregates   *    * The agggregation evaluation functions are as follows:    *   Partitioning Key:    *      grouping key    *    *   Sorting Key:    *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Reducer: iterate/merge    *   (mode = COMPLETE)    **/
+comment|/**    * Generate a Group-By plan using a single map-reduce job (3 operators will be    * inserted):    *     * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) SortGroupBy (keys = (KEY.0,KEY.1), aggregations =    * (count_distinct(KEY.2), sum(VALUE.0), count(VALUE.1))) Select (final    * selects)    *     * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *     *           Generate a Group-By plan using 1 map-reduce job. Spray by the    *           group by key, and sort by the distinct key (if any), and compute    *           aggregates * The agggregation evaluation functions are as    *           follows: Partitioning Key: grouping key    *     *           Sorting Key: grouping key if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Reducer: iterate/merge (mode = COMPLETE)    **/
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -17273,10 +17266,12 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 name|numReducers
 operator|=
 literal|1
 expr_stmt|;
+block|}
 comment|// ////// 1. Generate ReduceSinkOperator
 name|Operator
 name|reduceSinkOperatorInfo
@@ -17389,7 +17384,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Generate a Multi Group-By plan using a 2 map-reduce jobs.    * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *    * Generate a Group-By plan using a 2 map-reduce jobs.    * Spray by the distinct key in hope of getting a uniform distribution, and compute partial aggregates    * by the grouping key.    * Evaluate partial aggregates first, and spray by the grouping key to compute actual    * aggregates in the second phase.    * The agggregation evaluation functions are as follows:    *   Partitioning Key:    *     distinct key    *    *   Sorting Key:    *     distinct key    *    *   Reducer: iterate/terminatePartial    *   (mode = PARTIAL1)    *    *   STAGE 2    *    *   Partitioning Key:    *      grouping key    *    *   Sorting Key:    *      grouping key    *    *   Reducer: merge/terminate    *   (mode = FINAL)    */
+comment|/**    * Generate a Multi Group-By plan using a 2 map-reduce jobs.    *     * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *     *           Generate a Group-By plan using a 2 map-reduce jobs. Spray by the    *           distinct key in hope of getting a uniform distribution, and    *           compute partial aggregates by the grouping key. Evaluate partial    *           aggregates first, and spray by the grouping key to compute actual    *           aggregates in the second phase. The agggregation evaluation    *           functions are as follows: Partitioning Key: distinct key    *     *           Sorting Key: distinct key    *     *           Reducer: iterate/terminatePartial (mode = PARTIAL1)    *     *           STAGE 2    *     *           Partitioning Key: grouping key    *     *           Sorting Key: grouping key    *     *           Reducer: merge/terminate (mode = FINAL)    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -17524,7 +17519,7 @@ return|return
 name|groupByOperatorInfo2
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs (5 operators will be    * inserted):    *    * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) NOTE: If DISTINCT_EXP is null, partition by rand() SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (count_distinct(KEY.2), sum(VALUE.0),    * count(VALUE.1))) ReduceSink ( keys = (0,1), values=(2,3,4)) SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (sum(VALUE.0), sum(VALUE.1),    * sum(VALUE.2))) Select (final selects)    *    * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *    * Generate a Group-By plan using a 2 map-reduce jobs.    * Spray by the grouping key and distinct key (or a random number, if no distinct is    * present) in hope of getting a uniform distribution, and compute partial aggregates    * grouped by the reduction key (grouping key + distinct key).    * Evaluate partial aggregates first, and spray by the grouping key to compute actual    * aggregates in the second phase.    * The agggregation evaluation functions are as follows:    *   Partitioning Key:    *      random() if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Sorting Key:    *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Reducer: iterate/terminatePartial    *   (mode = PARTIAL1)    *    *   STAGE 2    *    *   Partitioning Key:    *      grouping key    *    *   Sorting Key:    *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Reducer: merge/terminate    *   (mode = FINAL)    */
+comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs (5 operators will be    * inserted):    *     * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) NOTE: If DISTINCT_EXP is null, partition by rand() SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (count_distinct(KEY.2), sum(VALUE.0),    * count(VALUE.1))) ReduceSink ( keys = (0,1), values=(2,3,4)) SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (sum(VALUE.0), sum(VALUE.1),    * sum(VALUE.2))) Select (final selects)    *     * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *     *           Generate a Group-By plan using a 2 map-reduce jobs. Spray by the    *           grouping key and distinct key (or a random number, if no distinct    *           is present) in hope of getting a uniform distribution, and    *           compute partial aggregates grouped by the reduction key (grouping    *           key + distinct key). Evaluate partial aggregates first, and spray    *           by the grouping key to compute actual aggregates in the second    *           phase. The agggregation evaluation functions are as follows:    *           Partitioning Key: random() if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Sorting Key: grouping key if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Reducer: iterate/terminatePartial (mode = PARTIAL1)    *     *           STAGE 2    *     *           Partitioning Key: grouping key    *     *           Sorting Key: grouping key if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Reducer: merge/terminate (mode = FINAL)    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -17555,9 +17550,11 @@ name|getParseInfo
 argument_list|()
 decl_stmt|;
 comment|// ////// 1. Generate ReduceSinkOperator
-comment|// There is a special case when we want the rows to be randomly distributed to
-comment|// reducers for load balancing problem.  That happens when there is no DISTINCT
-comment|// operator.  We set the numPartitionColumns to -1 for this purpose.  This is
+comment|// There is a special case when we want the rows to be randomly distributed
+comment|// to
+comment|// reducers for load balancing problem. That happens when there is no
+comment|// DISTINCT
+comment|// operator. We set the numPartitionColumns to -1 for this purpose. This is
 comment|// captured by WritableComparableHiveObject.hashCode() function.
 name|Operator
 name|reduceSinkOperatorInfo
@@ -17661,10 +17658,12 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 name|numReducers
 operator|=
 literal|1
 expr_stmt|;
+block|}
 comment|// ////// 3. Generate ReduceSinkOperator2
 name|Operator
 name|reduceSinkOperatorInfo2
@@ -17751,9 +17750,11 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 name|qb
@@ -17768,14 +17769,16 @@ argument_list|)
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 literal|true
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using 1 map-reduce job.    * First perform a map-side partial aggregation (to reduce the amount of data), at this    * point of time, we may turn off map-side partial aggregation based on its performance.    * Then spray by the group by key, and sort by the distinct key (if any), and    * compute aggregates based on actual aggregates    *    * The agggregation evaluation functions are as follows:    *   Mapper: iterate/terminatePartial    *   (mode = HASH)    *    *   Partitioning Key:    *      grouping key    *    *   Sorting Key:    *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Reducer: iterate/terminate if DISTINCT    *            merge/terminate if NO DISTINCT    *   (mode = MERGEPARTIAL)    */
+comment|/**    * Generate a Group-By plan using 1 map-reduce job. First perform a map-side    * partial aggregation (to reduce the amount of data), at this point of time,    * we may turn off map-side partial aggregation based on its performance. Then    * spray by the group by key, and sort by the distinct key (if any), and    * compute aggregates based on actual aggregates    *     * The agggregation evaluation functions are as follows: Mapper:    * iterate/terminatePartial (mode = HASH)    *     * Partitioning Key: grouping key    *     * Sorting Key: grouping key if no DISTINCT grouping + distinct key if    * DISTINCT    *     * Reducer: iterate/terminate if DISTINCT merge/terminate if NO DISTINCT (mode    * = MERGEPARTIAL)    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -17846,16 +17849,12 @@ argument_list|,
 name|genericUDAFEvaluators
 argument_list|)
 decl_stmt|;
-name|this
-operator|.
 name|groupOpToInputTables
 operator|.
 name|put
 argument_list|(
 name|groupByOperatorInfo
 argument_list|,
-name|this
-operator|.
 name|opParseCtx
 operator|.
 name|get
@@ -17876,7 +17875,8 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-comment|// Optimize the scenario when there are no grouping keys - only 1 reducer is needed
+comment|// Optimize the scenario when there are no grouping keys - only 1 reducer is
+comment|// needed
 name|List
 argument_list|<
 name|ASTNode
@@ -17897,10 +17897,12 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 name|numReducers
 operator|=
 literal|1
 expr_stmt|;
+block|}
 comment|// ////// Generate ReduceSink Operator
 name|Operator
 name|reduceSinkOperatorInfo
@@ -17923,9 +17925,12 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
-comment|// This is a 1-stage map-reduce processing of the groupby. Tha map-side aggregates was just used to
-comment|// reduce output data. In case of distincts, partial results are not used, and so iterate is again
-comment|// invoked on the reducer. In case of non-distincts, partial results are used, and merge is invoked
+comment|// This is a 1-stage map-reduce processing of the groupby. Tha map-side
+comment|// aggregates was just used to
+comment|// reduce output data. In case of distincts, partial results are not used,
+comment|// and so iterate is again
+comment|// invoked on the reducer. In case of non-distincts, partial results are
+comment|// used, and merge is invoked
 comment|// on the reducer.
 return|return
 name|genGroupByPlanGroupByOperator1
@@ -17948,7 +17953,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs.    * However, only 1 group-by plan is generated if the query involves no grouping key and    * no distincts. In that case, the plan is same as generated by genGroupByPlanMapAggr1MR.    * Otherwise, the following plan is generated:    * First perform a map side partial aggregation (to reduce the amount of data). Then    * spray by the grouping key and distinct key (or a random number, if no distinct is    * present) in hope of getting a uniform distribution, and compute partial aggregates    * grouped by the reduction key (grouping key + distinct key).    * Evaluate partial aggregates first, and spray by the grouping key to compute actual    * aggregates in the second phase.    * The agggregation evaluation functions are as follows:    *   Mapper: iterate/terminatePartial    *   (mode = HASH)    *    *   Partitioning Key:    *      random() if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Sorting Key:    *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Reducer: iterate/terminatePartial if DISTINCT    *            merge/terminatePartial if NO DISTINCT    *   (mode = MERGEPARTIAL)    *    *   STAGE 2    *    *   Partitioining Key:    *      grouping key    *    *   Sorting Key:    *      grouping key if no DISTINCT    *      grouping + distinct key if DISTINCT    *    *   Reducer: merge/terminate    *   (mode = FINAL)    */
+comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs. However, only 1    * group-by plan is generated if the query involves no grouping key and no    * distincts. In that case, the plan is same as generated by    * genGroupByPlanMapAggr1MR. Otherwise, the following plan is generated: First    * perform a map side partial aggregation (to reduce the amount of data). Then    * spray by the grouping key and distinct key (or a random number, if no    * distinct is present) in hope of getting a uniform distribution, and compute    * partial aggregates grouped by the reduction key (grouping key + distinct    * key). Evaluate partial aggregates first, and spray by the grouping key to    * compute actual aggregates in the second phase. The agggregation evaluation    * functions are as follows: Mapper: iterate/terminatePartial (mode = HASH)    *     * Partitioning Key: random() if no DISTINCT grouping + distinct key if    * DISTINCT    *     * Sorting Key: grouping key if no DISTINCT grouping + distinct key if    * DISTINCT    *     * Reducer: iterate/terminatePartial if DISTINCT merge/terminatePartial if NO    * DISTINCT (mode = MERGEPARTIAL)    *     * STAGE 2    *     * Partitioining Key: grouping key    *     * Sorting Key: grouping key if no DISTINCT grouping + distinct key if    * DISTINCT    *     * Reducer: merge/terminate (mode = FINAL)    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -18019,16 +18024,12 @@ argument_list|,
 name|genericUDAFEvaluators
 argument_list|)
 decl_stmt|;
-name|this
-operator|.
 name|groupOpToInputTables
 operator|.
 name|put
 argument_list|(
 name|groupByOperatorInfo
 argument_list|,
-name|this
-operator|.
 name|opParseCtx
 operator|.
 name|get
@@ -18043,7 +18044,8 @@ name|getTableNames
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Optimize the scenario when there are no grouping keys and no distinct - 2 map-reduce jobs are not needed
+comment|// Optimize the scenario when there are no grouping keys and no distinct - 2
+comment|// map-reduce jobs are not needed
 comment|// For eg: select count(1) from T where t.ds = ....
 if|if
 condition|(
@@ -18141,11 +18143,13 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 name|numReducers
 operator|=
 literal|1
 expr_stmt|;
-comment|// //////  Generate ReduceSinkOperator2
+block|}
+comment|// ////// Generate ReduceSinkOperator2
 name|Operator
 name|reduceSinkOperatorInfo2
 init|=
@@ -18268,11 +18272,6 @@ argument_list|(
 name|dest
 argument_list|)
 decl_stmt|;
-name|Table
-name|dest_tab
-init|=
-literal|null
-decl_stmt|;
 switch|switch
 condition|(
 name|dest_type
@@ -18287,8 +18286,6 @@ operator|.
 name|DEST_TABLE
 case|:
 block|{
-name|dest_tab
-operator|=
 name|qb
 operator|.
 name|getMetaData
@@ -18307,8 +18304,6 @@ operator|.
 name|DEST_PARTITION
 case|:
 block|{
-name|dest_tab
-operator|=
 name|qb
 operator|.
 name|getMetaData
@@ -18437,7 +18432,7 @@ argument_list|(
 name|dest
 argument_list|)
 expr_stmt|;
-comment|//check for partition
+comment|// check for partition
 name|List
 argument_list|<
 name|FieldSchema
@@ -18507,8 +18502,6 @@ argument_list|(
 name|dest_tab
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|idToTableNameMap
 operator|.
 name|put
@@ -18517,8 +18510,6 @@ name|String
 operator|.
 name|valueOf
 argument_list|(
-name|this
-operator|.
 name|destTableId
 argument_list|)
 argument_list|,
@@ -18530,18 +18521,12 @@ argument_list|)
 expr_stmt|;
 name|currentTableId
 operator|=
-name|this
-operator|.
 name|destTableId
 expr_stmt|;
-name|this
-operator|.
 name|destTableId
 operator|++
 expr_stmt|;
 comment|// Create the work for moving the table
-name|this
-operator|.
 name|loadTableWork
 operator|.
 name|add
@@ -18663,8 +18648,6 @@ argument_list|(
 name|dest_tab
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|idToTableNameMap
 operator|.
 name|put
@@ -18673,8 +18656,6 @@ name|String
 operator|.
 name|valueOf
 argument_list|(
-name|this
-operator|.
 name|destTableId
 argument_list|)
 argument_list|,
@@ -18686,17 +18667,11 @@ argument_list|)
 expr_stmt|;
 name|currentTableId
 operator|=
-name|this
-operator|.
 name|destTableId
 expr_stmt|;
-name|this
-operator|.
 name|destTableId
 operator|++
 expr_stmt|;
-name|this
-operator|.
 name|loadTableWork
 operator|.
 name|add
@@ -18894,7 +18869,8 @@ operator|.
 name|getColumnInfos
 argument_list|()
 decl_stmt|;
-comment|// CTAS case: the file output format and serde are defined by the create table command
+comment|// CTAS case: the file output format and serde are defined by the create
+comment|// table command
 comment|// rather than taking the default value
 name|List
 argument_list|<
@@ -18918,6 +18894,7 @@ name|tblDesc
 operator|!=
 literal|null
 condition|)
+block|{
 name|field_schemas
 operator|=
 operator|new
@@ -18927,6 +18904,7 @@ name|FieldSchema
 argument_list|>
 argument_list|()
 expr_stmt|;
+block|}
 name|boolean
 name|first
 init|=
@@ -19086,14 +19064,16 @@ name|getInternalName
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Replace VOID type with string when the output is a temp table or local files.
+comment|// Replace VOID type with string when the output is a temp table or
+comment|// local files.
 comment|// A VOID type can be generated under the query:
 comment|//
-comment|//     select NULL from tt;
+comment|// select NULL from tt;
 comment|// or
-comment|//     insert overwrite local directory "abc" select NULL from tt;
+comment|// insert overwrite local directory "abc" select NULL from tt;
 comment|//
-comment|// where there is no column type to which the NULL value should be converted.
+comment|// where there is no column type to which the NULL value should be
+comment|// converted.
 comment|//
 name|String
 name|tName
@@ -19117,6 +19097,7 @@ operator|.
 name|VOID_TYPE_NAME
 argument_list|)
 condition|)
+block|{
 name|colTypes
 operator|=
 name|colTypes
@@ -19128,7 +19109,9 @@ operator|.
 name|STRING_TYPE_NAME
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|colTypes
 operator|=
 name|colTypes
@@ -19139,6 +19122,7 @@ name|tName
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 comment|// update the create table descriptor with the resulting schema.
 if|if
 condition|(
@@ -19146,6 +19130,7 @@ name|tblDesc
 operator|!=
 literal|null
 condition|)
+block|{
 name|tblDesc
 operator|.
 name|setCols
@@ -19153,6 +19138,7 @@ argument_list|(
 name|field_schemas
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -19164,8 +19150,6 @@ name|destStr
 argument_list|)
 condition|)
 block|{
-name|this
-operator|.
 name|idToTableNameMap
 operator|.
 name|put
@@ -19174,8 +19158,6 @@ name|String
 operator|.
 name|valueOf
 argument_list|(
-name|this
-operator|.
 name|destTableId
 argument_list|)
 argument_list|,
@@ -19184,12 +19166,8 @@ argument_list|)
 expr_stmt|;
 name|currentTableId
 operator|=
-name|this
-operator|.
 name|destTableId
 expr_stmt|;
-name|this
-operator|.
 name|destTableId
 operator|++
 expr_stmt|;
@@ -19208,8 +19186,6 @@ operator|.
 name|DEST_DFS_FILE
 operator|)
 decl_stmt|;
-name|this
-operator|.
 name|loadFileWork
 operator|.
 name|add
@@ -19405,6 +19381,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|vecCol
 operator|.
 name|add
@@ -19443,6 +19420,7 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -19532,7 +19510,7 @@ return|return
 name|output
 return|;
 block|}
-comment|/**    * Generate the conversion SelectOperator that converts the columns into    * the types that are expected by the table_desc.    */
+comment|/**    * Generate the conversion SelectOperator that converts the columns into the    * types that are expected by the table_desc.    */
 name|Operator
 name|genConversionSelectOperator
 parameter_list|(
@@ -19729,7 +19707,8 @@ argument_list|(
 name|columnNumber
 argument_list|)
 decl_stmt|;
-comment|// MetadataTypedColumnsetSerDe does not need type conversions because it does
+comment|// MetadataTypedColumnsetSerDe does not need type conversions because it
+comment|// does
 comment|// the conversion to String by itself.
 name|boolean
 name|isMetaDataSerDe
@@ -19841,7 +19820,8 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-comment|// LazySimpleSerDe can convert any types to String type using JSON-format.
+comment|// LazySimpleSerDe can convert any types to String type using
+comment|// JSON-format.
 if|if
 condition|(
 operator|!
@@ -20137,8 +20117,10 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|// A map-only job can be optimized - instead of converting it to a map-reduce job, we can have another map
-comment|// job to do the same to avoid the cost of sorting in the map-reduce phase. A better approach would be to
+comment|// A map-only job can be optimized - instead of converting it to a
+comment|// map-reduce job, we can have another map
+comment|// job to do the same to avoid the cost of sorting in the map-reduce phase.
+comment|// A better approach would be to
 comment|// write into a local file and then have a map-only job.
 comment|// Add the limit operator to get the value fields
 name|RowResolver
@@ -20747,8 +20729,10 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|// A map-only job can be optimized - instead of converting it to a map-reduce job, we can have another map
-comment|// job to do the same to avoid the cost of sorting in the map-reduce phase. A better approach would be to
+comment|// A map-only job can be optimized - instead of converting it to a
+comment|// map-reduce job, we can have another map
+comment|// job to do the same to avoid the cost of sorting in the map-reduce phase.
+comment|// A better approach would be to
 comment|// write into a local file and then have a map-only job.
 comment|// Add the limit operator to get the value fields
 name|Operator
@@ -20771,9 +20755,11 @@ condition|(
 operator|!
 name|extraMRStep
 condition|)
+block|{
 return|return
 name|curr
 return|;
+block|}
 comment|// Create a reduceSink operator followed by another limit
 name|curr
 operator|=
@@ -20839,7 +20825,8 @@ name|getRR
 argument_list|()
 decl_stmt|;
 comment|// First generate the expression for the partition and sort keys
-comment|// The cluster by clause / distribute by clause has the aliases for partition function
+comment|// The cluster by clause / distribute by clause has the aliases for
+comment|// partition function
 name|ASTNode
 name|partitionExprs
 init|=
@@ -21043,6 +21030,7 @@ name|limit
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -21057,6 +21045,7 @@ name|sortExprs
 argument_list|)
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 name|ArrayList
@@ -21344,6 +21333,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputColumns
 operator|.
 name|add
@@ -21354,6 +21344,7 @@ name|i
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|Operator
 name|interim
 init|=
@@ -21753,10 +21744,12 @@ name|input
 operator|==
 literal|null
 condition|)
+block|{
 name|input
 operator|=
 name|left
 expr_stmt|;
+block|}
 name|ArrayList
 argument_list|<
 name|exprNodeDesc
@@ -22660,6 +22653,7 @@ argument_list|(
 literal|"strict"
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -22672,6 +22666,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 name|ReduceSinkOperator
 name|rsOp
@@ -22812,6 +22807,7 @@ name|cond
 range|:
 name|filter
 control|)
+block|{
 name|joinOp
 operator|=
 name|genFilterPlan
@@ -22823,6 +22819,7 @@ argument_list|,
 name|joinOp
 argument_list|)
 expr_stmt|;
+block|}
 name|joinSrcOp
 operator|=
 name|genJoinReduceSinkChild
@@ -22862,7 +22859,8 @@ name|omitOpts
 init|=
 literal|null
 decl_stmt|;
-comment|// set of input to the join that should be omitted by the output
+comment|// set of input to the join that should be
+comment|// omitted by the output
 name|int
 name|pos
 init|=
@@ -22896,7 +22894,8 @@ argument_list|(
 name|src
 argument_list|)
 decl_stmt|;
-comment|// for left-semi join, generate an additional selection& group-by operator before ReduceSink
+comment|// for left-semi join, generate an additional selection& group-by
+comment|// operator before ReduceSink
 name|ArrayList
 argument_list|<
 name|ASTNode
@@ -22952,7 +22951,8 @@ argument_list|,
 name|srcOp
 argument_list|)
 expr_stmt|;
-comment|// generate a groupby operator (HASH mode) for a map-side partial aggregation for semijoin
+comment|// generate a groupby operator (HASH mode) for a map-side partial
+comment|// aggregation for semijoin
 name|srcOp
 operator|=
 name|genMapGroupByForSemijoin
@@ -23049,7 +23049,7 @@ return|return
 name|joinOp
 return|;
 block|}
-comment|/**    * Construct a selection operator for semijoin that filter out all fields other than the group by keys.    *    * @param fields list of fields need to be output    * @param input input operator    * @return the selection operator.    * @throws SemanticException    */
+comment|/**    * Construct a selection operator for semijoin that filter out all fields    * other than the group by keys.    *     * @param fields    *          list of fields need to be output    * @param input    *          input operator    * @return the selection operator.    * @throws SemanticException    */
 specifier|private
 name|Operator
 name|insertSelectForSemijoin
@@ -23207,7 +23207,13 @@ name|ASTNode
 argument_list|>
 name|fields
 parameter_list|,
-comment|// the ASTNode of the join key "tab.col"
+comment|// the
+comment|// ASTNode
+comment|// of
+comment|// the
+comment|// join
+comment|// key
+comment|// "tab.col"
 name|Operator
 name|inputOperatorInfo
 parameter_list|,
@@ -23295,14 +23301,11 @@ name|exprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|QBParseInfo
-name|parseInfo
-init|=
 name|qb
 operator|.
 name|getParseInfo
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|groupByOutputRowResolver
 operator|.
 name|setIsExprResolver
@@ -23310,7 +23313,9 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// join keys should only be columns but not be expressions
+comment|// join keys should only
+comment|// be columns but not be
+comment|// expressions
 for|for
 control|(
 name|int
@@ -23464,361 +23469,6 @@ argument_list|)
 expr_stmt|;
 return|return
 name|op
-return|;
-block|}
-specifier|private
-name|Operator
-name|genReduceSinkForSemijoin
-parameter_list|(
-name|QB
-name|qb
-parameter_list|,
-name|ArrayList
-argument_list|<
-name|ASTNode
-argument_list|>
-name|fields
-parameter_list|,
-comment|// semijoin key for the rhs table
-name|Operator
-name|inputOperatorInfo
-parameter_list|)
-throws|throws
-name|SemanticException
-block|{
-name|RowResolver
-name|reduceSinkInputRowResolver
-init|=
-name|opParseCtx
-operator|.
-name|get
-argument_list|(
-name|inputOperatorInfo
-argument_list|)
-operator|.
-name|getRR
-argument_list|()
-decl_stmt|;
-name|QBParseInfo
-name|parseInfo
-init|=
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-decl_stmt|;
-name|RowResolver
-name|reduceSinkOutputRowResolver
-init|=
-operator|new
-name|RowResolver
-argument_list|()
-decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|exprNodeDesc
-argument_list|>
-name|colExprMap
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|exprNodeDesc
-argument_list|>
-argument_list|()
-decl_stmt|;
-name|ArrayList
-argument_list|<
-name|exprNodeDesc
-argument_list|>
-name|reduceKeys
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|exprNodeDesc
-argument_list|>
-argument_list|()
-decl_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|outputColumnNames
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
-name|reduceSinkOutputRowResolver
-operator|.
-name|setIsExprResolver
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
-comment|// Pre-compute group-by keys and store in reduceKeys
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|fields
-operator|.
-name|size
-argument_list|()
-condition|;
-operator|++
-name|i
-control|)
-block|{
-comment|// based on the input row resolver, resolve the column names and construct expression node descriptors
-name|ASTNode
-name|colName
-init|=
-name|fields
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-decl_stmt|;
-name|exprNodeDesc
-name|inputExpr
-init|=
-name|genExprNodeDesc
-argument_list|(
-name|colName
-argument_list|,
-name|reduceSinkInputRowResolver
-argument_list|)
-decl_stmt|;
-name|reduceKeys
-operator|.
-name|add
-argument_list|(
-name|inputExpr
-argument_list|)
-expr_stmt|;
-comment|// create new ColumnInfos for the groupby columns and put them into the output row resolver
-if|if
-condition|(
-name|reduceSinkOutputRowResolver
-operator|.
-name|get
-argument_list|(
-literal|""
-argument_list|,
-name|colName
-operator|.
-name|toStringTree
-argument_list|()
-argument_list|)
-operator|==
-literal|null
-condition|)
-block|{
-name|outputColumnNames
-operator|.
-name|add
-argument_list|(
-name|getColumnInternalName
-argument_list|(
-name|reduceKeys
-operator|.
-name|size
-argument_list|()
-operator|-
-literal|1
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|String
-name|field
-init|=
-name|Utilities
-operator|.
-name|ReduceField
-operator|.
-name|KEY
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|"."
-operator|+
-name|getColumnInternalName
-argument_list|(
-name|reduceKeys
-operator|.
-name|size
-argument_list|()
-operator|-
-literal|1
-argument_list|)
-decl_stmt|;
-name|ColumnInfo
-name|colInfo1
-init|=
-operator|new
-name|ColumnInfo
-argument_list|(
-name|field
-argument_list|,
-name|reduceKeys
-operator|.
-name|get
-argument_list|(
-name|reduceKeys
-operator|.
-name|size
-argument_list|()
-operator|-
-literal|1
-argument_list|)
-operator|.
-name|getTypeInfo
-argument_list|()
-argument_list|,
-literal|null
-argument_list|,
-literal|false
-argument_list|)
-decl_stmt|;
-name|reduceSinkOutputRowResolver
-operator|.
-name|put
-argument_list|(
-literal|""
-argument_list|,
-name|colName
-operator|.
-name|toStringTree
-argument_list|()
-argument_list|,
-name|colInfo1
-argument_list|)
-expr_stmt|;
-name|colExprMap
-operator|.
-name|put
-argument_list|(
-name|colInfo1
-operator|.
-name|getInternalName
-argument_list|()
-argument_list|,
-name|inputExpr
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|ErrorMsg
-operator|.
-name|DUPLICATE_GROUPBY_KEY
-operator|.
-name|getMsg
-argument_list|()
-argument_list|)
-throw|;
-block|}
-block|}
-comment|// SEMIJOIN HAS NO AGGREGATIONS, and we don't really use reduce values, so leave it as an empty list
-name|ArrayList
-argument_list|<
-name|exprNodeDesc
-argument_list|>
-name|reduceValues
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|exprNodeDesc
-argument_list|>
-argument_list|()
-decl_stmt|;
-name|int
-name|numPartitionFields
-init|=
-name|fields
-operator|.
-name|size
-argument_list|()
-decl_stmt|;
-comment|// finally generate the ReduceSink operator
-name|ReduceSinkOperator
-name|rsOp
-init|=
-operator|(
-name|ReduceSinkOperator
-operator|)
-name|putOpInsertMap
-argument_list|(
-name|OperatorFactory
-operator|.
-name|getAndMakeChild
-argument_list|(
-name|PlanUtils
-operator|.
-name|getReduceSinkDesc
-argument_list|(
-name|reduceKeys
-argument_list|,
-name|reduceValues
-argument_list|,
-name|outputColumnNames
-argument_list|,
-literal|true
-argument_list|,
-operator|-
-literal|1
-argument_list|,
-name|numPartitionFields
-argument_list|,
-operator|-
-literal|1
-argument_list|)
-argument_list|,
-operator|new
-name|RowSchema
-argument_list|(
-name|reduceSinkOutputRowResolver
-operator|.
-name|getColumnInfos
-argument_list|()
-argument_list|)
-argument_list|,
-name|inputOperatorInfo
-argument_list|)
-argument_list|,
-name|reduceSinkOutputRowResolver
-argument_list|)
-decl_stmt|;
-name|rsOp
-operator|.
-name|setColumnExprMap
-argument_list|(
-name|colExprMap
-argument_list|)
-expr_stmt|;
-return|return
-name|rsOp
 return|;
 block|}
 specifier|private
@@ -24283,7 +23933,7 @@ return|return
 name|joinOp
 return|;
 block|}
-comment|/**    * Extract the filters from the join condition and push them on top of the source operators. This procedure    * traverses the query tree recursively,    */
+comment|/**    * Extract the filters from the join condition and push them on top of the    * source operators. This procedure traverses the query tree recursively,    */
 specifier|private
 name|void
 name|pushJoinFilters
@@ -24328,6 +23978,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|pushJoinFilters
 argument_list|(
 name|qb
@@ -24340,6 +23991,7 @@ argument_list|,
 name|map
 argument_list|)
 expr_stmt|;
+block|}
 name|int
 name|pos
 init|=
@@ -24393,6 +24045,7 @@ name|cond
 range|:
 name|filter
 control|)
+block|{
 name|srcOp
 operator|=
 name|genFilterPlan
@@ -24404,6 +24057,7 @@ argument_list|,
 name|srcOp
 argument_list|)
 expr_stmt|;
+block|}
 name|map
 operator|.
 name|put
@@ -24577,6 +24231,7 @@ argument_list|(
 name|tblName
 argument_list|)
 condition|)
+block|{
 name|cols
 operator|.
 name|add
@@ -24584,6 +24239,7 @@ argument_list|(
 name|tblName
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -25561,6 +25217,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|leftAliases
 index|[
 name|i
@@ -25571,6 +25228,7 @@ index|[
 name|i
 index|]
 expr_stmt|;
+block|}
 name|leftAliases
 index|[
 name|leftChildAliases
@@ -25595,11 +25253,13 @@ argument_list|)
 expr_stmt|;
 block|}
 else|else
+block|{
 assert|assert
 operator|(
 literal|false
 operator|)
 assert|;
+block|}
 if|if
 condition|(
 operator|(
@@ -25719,6 +25379,7 @@ name|children
 operator|==
 literal|null
 condition|)
+block|{
 name|children
 operator|=
 operator|new
@@ -25727,6 +25388,7 @@ index|[
 literal|2
 index|]
 expr_stmt|;
+block|}
 name|children
 index|[
 literal|1
@@ -25762,9 +25424,11 @@ expr_stmt|;
 block|}
 block|}
 else|else
+block|{
 assert|assert
 literal|false
 assert|;
+block|}
 name|Vector
 argument_list|<
 name|Vector
@@ -25909,6 +25573,7 @@ argument_list|()
 operator|==
 literal|1
 condition|)
+block|{
 name|joinTree
 operator|.
 name|setLeftAlias
@@ -25921,7 +25586,9 @@ literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// check the hints to see if the user has specified a map-side join. This will be removed later on, once the cost-based
+block|}
+comment|// check the hints to see if the user has specified a map-side join. This
+comment|// will be removed later on, once the cost-based
 comment|// infrastructure is in place
 if|if
 condition|(
@@ -25991,10 +25658,12 @@ argument_list|(
 name|leftAlias
 argument_list|)
 condition|)
+block|{
 name|mapTable
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 for|for
 control|(
@@ -26016,10 +25685,12 @@ argument_list|(
 name|rightAlias
 argument_list|)
 condition|)
+block|{
 name|mapTable
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -26283,6 +25954,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|rightAliases
 index|[
 name|i
@@ -26293,6 +25965,7 @@ index|[
 name|i
 index|]
 expr_stmt|;
+block|}
 for|for
 control|(
 name|int
@@ -26309,6 +25982,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|rightAliases
 index|[
 name|i
@@ -26323,6 +25997,7 @@ index|[
 name|i
 index|]
 expr_stmt|;
+block|}
 name|target
 operator|.
 name|setRightAliases
@@ -26382,6 +26057,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|baseSrc
 index|[
 name|i
@@ -26392,6 +26068,7 @@ index|[
 name|i
 index|]
 expr_stmt|;
+block|}
 for|for
 control|(
 name|int
@@ -26408,6 +26085,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|baseSrc
 index|[
 name|i
@@ -26424,6 +26102,7 @@ index|[
 name|i
 index|]
 expr_stmt|;
+block|}
 name|target
 operator|.
 name|setBaseSrc
@@ -26461,6 +26140,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|expr
 operator|.
 name|add
@@ -26478,6 +26158,7 @@ literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|Vector
 argument_list|<
 name|Vector
@@ -26508,6 +26189,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|filter
 operator|.
 name|add
@@ -26525,6 +26207,7 @@ literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|node
@@ -26581,6 +26264,7 @@ argument_list|()
 operator|==
 name|node
 condition|)
+block|{
 name|qb
 operator|.
 name|setQbJoinTree
@@ -26591,7 +26275,9 @@ name|getJoinSrc
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|parent
 operator|.
 name|setJoinSrc
@@ -26602,6 +26288,7 @@ name|getJoinSrc
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|node
@@ -26614,6 +26301,7 @@ operator|.
 name|getNoOuterJoin
 argument_list|()
 condition|)
+block|{
 name|target
 operator|.
 name|setNoOuterJoin
@@ -26621,7 +26309,9 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|target
 operator|.
 name|setNoOuterJoin
@@ -26629,6 +26319,7 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|node
@@ -26641,6 +26332,7 @@ operator|.
 name|getNoSemiJoin
 argument_list|()
 condition|)
+block|{
 name|target
 operator|.
 name|setNoSemiJoin
@@ -26648,7 +26340,9 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|target
 operator|.
 name|setNoSemiJoin
@@ -26656,6 +26350,7 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 name|target
 operator|.
 name|mergeRHSSemijoin
@@ -26721,6 +26416,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|newCondns
 index|[
 name|i
@@ -26731,6 +26427,7 @@ index|[
 name|i
 index|]
 expr_stmt|;
+block|}
 for|for
 control|(
 name|int
@@ -26763,6 +26460,7 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 name|nodeCondn
 operator|.
 name|setLeft
@@ -26770,7 +26468,9 @@ argument_list|(
 name|pos
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|nodeCondn
 operator|.
 name|setLeft
@@ -26783,6 +26483,7 @@ operator|+
 name|targetCondnsSize
 argument_list|)
 expr_stmt|;
+block|}
 name|nodeCondn
 operator|.
 name|setRight
@@ -26847,6 +26548,7 @@ operator|.
 name|getMapAliases
 argument_list|()
 control|)
+block|{
 if|if
 condition|(
 operator|!
@@ -26857,6 +26559,7 @@ argument_list|(
 name|mapTbl
 argument_list|)
 condition|)
+block|{
 name|mapAliases
 operator|.
 name|add
@@ -26864,6 +26567,8 @@ argument_list|(
 name|mapTbl
 argument_list|)
 expr_stmt|;
+block|}
+block|}
 name|target
 operator|.
 name|setMapAliases
@@ -26904,10 +26609,12 @@ name|leftAlias
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 name|Vector
 argument_list|<
 name|ASTNode
@@ -26963,6 +26670,7 @@ literal|0
 expr_stmt|;
 block|}
 else|else
+block|{
 for|for
 control|(
 name|int
@@ -27022,6 +26730,7 @@ expr_stmt|;
 break|break;
 block|}
 block|}
+block|}
 if|if
 condition|(
 operator|(
@@ -27042,10 +26751,12 @@ name|size
 argument_list|()
 operator|)
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 for|for
 control|(
 name|int
@@ -27063,6 +26774,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 if|if
 condition|(
 operator|!
@@ -27089,10 +26801,13 @@ name|toStringTree
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
+block|}
 return|return
 name|res
 return|;
@@ -27120,9 +26835,11 @@ name|target
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|int
 name|res
 init|=
@@ -27230,6 +26947,7 @@ if|if
 condition|(
 name|merged
 condition|)
+block|{
 name|root
 operator|=
 name|qb
@@ -27237,6 +26955,7 @@ operator|.
 name|getQbJoinTree
 argument_list|()
 expr_stmt|;
+block|}
 else|else
 block|{
 name|parent
@@ -27525,9 +27244,11 @@ argument_list|()
 operator|<=
 literal|1
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|List
 argument_list|<
 name|exprNodeDesc
@@ -27552,11 +27273,6 @@ range|:
 name|ks
 control|)
 block|{
-name|Operator
-name|curr
-init|=
-name|input
-decl_stmt|;
 comment|// If a filter is present, common processing is not possible
 if|if
 condition|(
@@ -27569,9 +27285,11 @@ argument_list|)
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 if|if
 condition|(
 name|qbp
@@ -27598,9 +27316,11 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 comment|// All distinct expressions must be the same
 name|ASTNode
 name|value
@@ -27618,9 +27338,11 @@ name|value
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|List
 argument_list|<
 name|exprNodeDesc
@@ -27742,9 +27464,11 @@ operator|.
 name|size
 argument_list|()
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 for|for
 control|(
 name|int
@@ -27783,9 +27507,11 @@ name|pos
 argument_list|)
 argument_list|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 block|}
 block|}
 block|}
@@ -28293,9 +28019,6 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-name|String
-name|aggName
-init|=
 name|value
 operator|.
 name|getChild
@@ -28305,7 +28028,7 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 comment|// 0 is the function name
 for|for
 control|(
@@ -28570,7 +28293,8 @@ name|getClauseNames
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// For multi-group by with the same distinct, we ignore all user hints currently. It doesnt matter whether he has asked to do
+comment|// For multi-group by with the same distinct, we ignore all user hints
+comment|// currently. It doesnt matter whether he has asked to do
 comment|// map-side aggregation or not. Map side aggregation is turned off
 name|boolean
 name|optimizeMultiGroupBy
@@ -28591,9 +28315,12 @@ name|curr
 init|=
 literal|null
 decl_stmt|;
-comment|// If there are multiple group-bys, map-side aggregation is turned off, there are no filters
-comment|// and there is a single distinct, optimize that. Spray initially by the distinct key,
-comment|// no computation at the mapper. Have multiple group by operators at the reducer - and then
+comment|// If there are multiple group-bys, map-side aggregation is turned off,
+comment|// there are no filters
+comment|// and there is a single distinct, optimize that. Spray initially by the
+comment|// distinct key,
+comment|// no computation at the mapper. Have multiple group by operators at the
+comment|// reducer - and then
 comment|// proceed
 if|if
 condition|(
@@ -28812,7 +28539,8 @@ operator|>
 literal|0
 condition|)
 block|{
-comment|// insert a select operator here used by the ColumnPruner to reduce the data to shuffle
+comment|// insert a select operator here used by the ColumnPruner to reduce
+comment|// the data to shuffle
 name|curr
 operator|=
 name|insertSelectAllPlanForGroupBy
@@ -28859,6 +28587,7 @@ argument_list|(
 literal|"false"
 argument_list|)
 condition|)
+block|{
 name|curr
 operator|=
 name|genGroupByPlanMapAggr1MR
@@ -28870,7 +28599,9 @@ argument_list|,
 name|curr
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|curr
 operator|=
 name|genGroupByPlanMapAggr2MR
@@ -28882,6 +28613,7 @@ argument_list|,
 name|curr
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -28902,6 +28634,7 @@ argument_list|(
 literal|"true"
 argument_list|)
 condition|)
+block|{
 name|curr
 operator|=
 name|genGroupByPlan2MR
@@ -28913,7 +28646,9 @@ argument_list|,
 name|curr
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|curr
 operator|=
 name|genGroupByPlan1MR
@@ -28925,6 +28660,7 @@ argument_list|,
 name|curr
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|curr
 operator|=
@@ -29004,10 +28740,12 @@ argument_list|)
 operator|!=
 literal|null
 condition|)
+block|{
 name|numReducers
 operator|=
 literal|1
 expr_stmt|;
+block|}
 name|curr
 operator|=
 name|genReduceSinkPlan
@@ -29037,7 +28775,8 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// In case of order by, only 1 reducer is used, so no need of another shuffle
+comment|// In case of order by, only 1 reducer is used, so no need of
+comment|// another shuffle
 name|curr
 operator|=
 name|genLimitMapRedPlan
@@ -29120,10 +28859,12 @@ argument_list|)
 operator|==
 literal|null
 condition|)
+block|{
 name|extraMRStep
 operator|=
 literal|false
 expr_stmt|;
+block|}
 name|curr
 operator|=
 name|genLimitMapRedPlan
@@ -29168,7 +28909,8 @@ name|curr
 argument_list|)
 expr_stmt|;
 block|}
-comment|// change curr ops row resolver's tab aliases to query alias if it exists
+comment|// change curr ops row resolver's tab aliases to query alias if it
+comment|// exists
 if|if
 condition|(
 name|qb
@@ -29316,7 +29058,8 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|// Currently, the unions are not merged - each union has only 2 parents. So, a n-way union will lead to (n-1) union operators.
+comment|// Currently, the unions are not merged - each union has only 2 parents. So,
+comment|// a n-way union will lead to (n-1) union operators.
 comment|// This can be easily merged into 1 union
 name|RowResolver
 name|leftRR
@@ -29387,6 +29130,7 @@ operator|.
 name|size
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -29394,6 +29138,7 @@ argument_list|(
 literal|"Schema of both sides of union should match."
 argument_list|)
 throw|;
+block|}
 for|for
 control|(
 name|Map
@@ -29995,7 +29740,7 @@ name|unionoutRR
 argument_list|)
 return|;
 block|}
-comment|/**    * Generates the sampling predicate from the TABLESAMPLE clause information. This function uses the    * bucket column list to decide the expression inputs to the predicate hash function in case useBucketCols    * is set to true, otherwise the expression list stored in the TableSample is used. The bucket columns of    * the table are used to generate this predicate in case no expressions are provided on the TABLESAMPLE    * clause and the table has clustering columns defined in it's metadata.    * The predicate created has the following structure:    *    *     ((hash(expressions)& Integer.MAX_VALUE) % denominator) == numerator    *    * @param ts TABLESAMPLE clause information    * @param bucketCols The clustering columns of the table    * @param useBucketCols Flag to indicate whether the bucketCols should be used as input to the hash    *                      function    * @param alias The alias used for the table in the row resolver    * @param rwsch The row resolver used to resolve column references    * @param qbm The metadata information for the query block which is used to resolve unaliased columns    * @param planExpr The plan tree for the expression. If the user specified this, the parse expressions are not used    * @return exprNodeDesc    * @exception SemanticException    */
+comment|/**    * Generates the sampling predicate from the TABLESAMPLE clause information.    * This function uses the bucket column list to decide the expression inputs    * to the predicate hash function in case useBucketCols is set to true,    * otherwise the expression list stored in the TableSample is used. The bucket    * columns of the table are used to generate this predicate in case no    * expressions are provided on the TABLESAMPLE clause and the table has    * clustering columns defined in it's metadata. The predicate created has the    * following structure:    *     * ((hash(expressions)& Integer.MAX_VALUE) % denominator) == numerator    *     * @param ts    *          TABLESAMPLE clause information    * @param bucketCols    *          The clustering columns of the table    * @param useBucketCols    *          Flag to indicate whether the bucketCols should be used as input to    *          the hash function    * @param alias    *          The alias used for the table in the row resolver    * @param rwsch    *          The row resolver used to resolve column references    * @param qbm    *          The metadata information for the query block which is used to    *          resolve unaliased columns    * @param planExpr    *          The plan tree for the expression. If the user specified this, the    *          parse expressions are not used    * @return exprNodeDesc    * @exception SemanticException    */
 specifier|private
 name|exprNodeDesc
 name|genSamplePredicate
@@ -30110,6 +29855,7 @@ name|planExpr
 operator|!=
 literal|null
 condition|)
+block|{
 name|args
 operator|.
 name|add
@@ -30117,6 +29863,7 @@ argument_list|(
 name|planExpr
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -30416,8 +30163,6 @@ name|Serializable
 argument_list|>
 name|top
 init|=
-name|this
-operator|.
 name|topOps
 operator|.
 name|get
@@ -30433,8 +30178,6 @@ name|Serializable
 argument_list|>
 name|dummySel
 init|=
-name|this
-operator|.
 name|topSelOps
 operator|.
 name|get
@@ -30448,10 +30191,12 @@ name|dummySel
 operator|!=
 literal|null
 condition|)
+block|{
 name|top
 operator|=
 name|dummySel
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|top
@@ -30600,7 +30345,8 @@ operator|+
 name|part_col
 argument_list|)
 expr_stmt|;
-comment|// TODO: use the right type by calling part_col.getType() instead of String.class
+comment|// TODO: use the right type by calling part_col.getType() instead of
+comment|// String.class
 name|rwsch
 operator|.
 name|put
@@ -30659,9 +30405,8 @@ argument_list|,
 name|rwsch
 argument_list|)
 expr_stmt|;
-comment|// Add this to the list of top operators - we always start from a table scan
-name|this
-operator|.
+comment|// Add this to the list of top operators - we always start from a table
+comment|// scan
 name|topOps
 operator|.
 name|put
@@ -30672,8 +30417,6 @@ name|top
 argument_list|)
 expr_stmt|;
 comment|// Add a mapping from the table scan operator to Table
-name|this
-operator|.
 name|topToTable
 operator|.
 name|put
@@ -31066,7 +30809,8 @@ operator|)
 operator|)
 condition|)
 block|{
-comment|// input pruning is enough; add the filter for the optimizer to use it later
+comment|// input pruning is enough; add the filter for the optimizer to use it
+comment|// later
 name|LOG
 operator|.
 name|info
@@ -31253,6 +30997,7 @@ name|unSampleTbl
 range|:
 name|unSampleTbls
 control|)
+block|{
 if|if
 condition|(
 name|tabName
@@ -31262,10 +31007,13 @@ argument_list|(
 name|unSampleTbl
 argument_list|)
 condition|)
+block|{
 name|unsample
 operator|=
 literal|true
 expr_stmt|;
+block|}
+block|}
 if|if
 condition|(
 operator|!
@@ -31844,7 +31592,8 @@ name|qb
 argument_list|)
 expr_stmt|;
 block|}
-comment|// if any filters are present in the join tree, push them on top of the table
+comment|// if any filters are present in the join tree, push them on top of the
+comment|// table
 name|pushJoinFilters
 argument_list|(
 name|qb
@@ -31868,6 +31617,7 @@ argument_list|)
 expr_stmt|;
 block|}
 else|else
+block|{
 comment|// Now if there are more than 1 sources then we have a join case
 comment|// later we can extend this to the union all case as well
 name|srcOpInfo
@@ -31883,6 +31633,7 @@ operator|.
 name|next
 argument_list|()
 expr_stmt|;
+block|}
 name|Operator
 name|bodyOpInfo
 init|=
@@ -31915,7 +31666,7 @@ return|return
 name|bodyOpInfo
 return|;
 block|}
-comment|/**    * Generates the operator DAG needed to implement lateral views and attaches    * it to the TS operator.    *    * @param aliasToOpInfo A mapping from a table alias to the TS operator. This    *                      function replaces the operator mapping as necessary    * @param qb    * @throws SemanticException    */
+comment|/**    * Generates the operator DAG needed to implement lateral views and attaches    * it to the TS operator.    *     * @param aliasToOpInfo    *          A mapping from a table alias to the TS operator. This function    *          replaces the operator mapping as necessary    * @param qb    * @throws SemanticException    */
 name|void
 name|genLateralViewPlans
 parameter_list|(
@@ -32023,7 +31774,7 @@ comment|// There are 2 paths from the TS operator (or a previous LVJ operator)
 comment|// to the same LateralViewJoinOperator.
 comment|// TS -> SelectOperator(*) -> LateralViewJoinOperator
 comment|// TS -> SelectOperator (gets cols for UDTF) -> UDTFOperator0
-comment|//    -> LateralViewJoinOperator
+comment|// -> LateralViewJoinOperator
 comment|// The order in which the two paths are added is important. The
 comment|// lateral view join operator depends on having the select operator
 comment|// give it the row first.
@@ -32207,7 +31958,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * A helper function that gets all the columns and respective aliases in the    * source and puts them into dest. It renames the internal names of the    * columns based on getColumnInternalName(position).    *    * Note that this helper method relies on RowResolver.getColumnInfos()    * returning the columns in the same order as they will be passed in the    * operator DAG.    *    * @param source    * @param dest    * @param outputColNames - a list to which the new internal column names will    *                         be added, in the same order as in the dest row    *                         resolver    */
+comment|/**    * A helper function that gets all the columns and respective aliases in the    * source and puts them into dest. It renames the internal names of the    * columns based on getColumnInternalName(position).    *     * Note that this helper method relies on RowResolver.getColumnInfos()    * returning the columns in the same order as they will be passed in the    * operator DAG.    *     * @param source    * @param dest    * @param outputColNames    *          - a list to which the new internal column names will be added, in    *          the same order as in the dest row resolver    */
 specifier|private
 name|void
 name|LVmergeRowResolvers
@@ -32328,133 +32079,6 @@ name|newCol
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-specifier|private
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-name|getReduceSink
-parameter_list|(
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-name|top
-parameter_list|)
-block|{
-if|if
-condition|(
-name|top
-operator|.
-name|getClass
-argument_list|()
-operator|==
-name|ReduceSinkOperator
-operator|.
-name|class
-condition|)
-block|{
-comment|// Get the operator following the reduce sink
-assert|assert
-operator|(
-name|top
-operator|.
-name|getChildOperators
-argument_list|()
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|1
-operator|)
-assert|;
-return|return
-name|top
-return|;
-block|}
-name|List
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-argument_list|>
-name|childOps
-init|=
-name|top
-operator|.
-name|getChildOperators
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|childOps
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|childOps
-operator|.
-name|size
-argument_list|()
-condition|;
-operator|++
-name|i
-control|)
-block|{
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-name|reducer
-init|=
-name|getReduceSink
-argument_list|(
-name|childOps
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|reducer
-operator|!=
-literal|null
-condition|)
-block|{
-return|return
-name|reducer
-return|;
-block|}
-block|}
-return|return
-literal|null
-return|;
 block|}
 annotation|@
 name|SuppressWarnings
@@ -32594,16 +32218,6 @@ name|Table
 name|tab
 init|=
 operator|(
-operator|(
-name|Map
-operator|.
-name|Entry
-argument_list|<
-name|String
-argument_list|,
-name|Table
-argument_list|>
-operator|)
 name|iter
 operator|.
 name|next
@@ -32784,7 +32398,8 @@ name|HiveException
 name|e
 parameter_list|)
 block|{
-comment|// Has to use full name to make sure it does not conflict with org.apache.commons.lang.StringUtils
+comment|// Has to use full name to make sure it does not conflict with
+comment|// org.apache.commons.lang.StringUtils
 name|LOG
 operator|.
 name|error
@@ -32818,7 +32433,8 @@ name|e
 argument_list|)
 throw|;
 block|}
-comment|// If there is any unknown partition, create a map-reduce job for the filter to prune correctly
+comment|// If there is any unknown partition, create a map-reduce job for
+comment|// the filter to prune correctly
 if|if
 condition|(
 name|partsList
@@ -32994,8 +32610,6 @@ name|get
 argument_list|(
 name|fetch
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 expr_stmt|;
@@ -33041,6 +32655,7 @@ operator|!=
 literal|1
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -33053,6 +32668,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 name|String
 name|cols
 init|=
@@ -33191,8 +32807,6 @@ name|get
 argument_list|(
 name|fetch
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 expr_stmt|;
@@ -33204,21 +32818,13 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// First we generate the move work as this needs to be made dependent on all
-comment|// the tasks that have a file sink operation
-name|List
-argument_list|<
-name|moveWork
-argument_list|>
-name|mv
-init|=
 operator|new
 name|ArrayList
 argument_list|<
 name|moveWork
 argument_list|>
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 for|for
 control|(
 name|loadTableDesc
@@ -33226,6 +32832,7 @@ name|ltd
 range|:
 name|loadTableWork
 control|)
+block|{
 name|mvTask
 operator|.
 name|add
@@ -33248,12 +32855,11 @@ argument_list|,
 literal|false
 argument_list|)
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|boolean
 name|oneLoadFile
 init|=
@@ -33280,7 +32886,8 @@ operator|(
 name|oneLoadFile
 operator|)
 assert|;
-comment|// should not have more than 1 load file for CTAS
+comment|// should not have more than 1 load file for
+comment|// CTAS
 comment|// make the movetask's destination directory the table's destination.
 name|String
 name|location
@@ -33394,8 +33001,6 @@ argument_list|,
 literal|false
 argument_list|)
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 argument_list|)
@@ -33447,8 +33052,6 @@ argument_list|()
 condition|,
 name|mvTask
 condition|,
-name|this
-operator|.
 name|rootTasks
 condition|,
 operator|new
@@ -33470,7 +33073,8 @@ condition|,
 name|outputs
 argument_list|)
 decl_stmt|;
-comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack.
+comment|// create a walker which walks the tree in a DFS manner while maintaining
+comment|// the operator stack.
 comment|// The dispatcher generates the plan from the operator tree
 name|Map
 argument_list|<
@@ -33746,7 +33350,8 @@ name|getMapJoin
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=
@@ -33788,8 +33393,6 @@ name|topNodes
 operator|.
 name|addAll
 argument_list|(
-name|this
-operator|.
 name|topOps
 operator|.
 name|values
@@ -33805,7 +33408,8 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// reduce sink does not have any kids - since the plan by now has been broken up into multiple
+comment|// reduce sink does not have any kids - since the plan by now has been
+comment|// broken up into multiple
 comment|// tasks, iterate over all tasks.
 comment|// For each task, go over all operators recursively
 for|for
@@ -33820,11 +33424,13 @@ name|rootTask
 range|:
 name|rootTasks
 control|)
+block|{
 name|breakTaskTree
 argument_list|(
 name|rootTask
 argument_list|)
 expr_stmt|;
+block|}
 comment|// For each task, set the key descriptor for the reducer
 for|for
 control|(
@@ -33838,11 +33444,13 @@ name|rootTask
 range|:
 name|rootTasks
 control|)
+block|{
 name|setKeyDescTaskTree
 argument_list|(
 name|rootTask
 argument_list|)
 expr_stmt|;
+block|}
 name|PhysicalContext
 name|physicalContext
 init|=
@@ -33893,6 +33501,7 @@ operator|.
 name|HIVEJOBPROGRESS
 argument_list|)
 condition|)
+block|{
 for|for
 control|(
 name|Task
@@ -33905,11 +33514,14 @@ name|rootTask
 range|:
 name|rootTasks
 control|)
+block|{
 name|generateCountersTask
 argument_list|(
 name|rootTask
 argument_list|)
 expr_stmt|;
+block|}
+block|}
 if|if
 condition|(
 name|qb
@@ -33932,7 +33544,8 @@ argument_list|(
 name|crtTblDesc
 argument_list|)
 expr_stmt|;
-comment|// Clear the output for CTAS since we don't need the output from the mapredWork, the
+comment|// Clear the output for CTAS since we don't need the output from the
+comment|// mapredWork, the
 comment|// DDLWork at the tail of the chain will have the output
 name|getOutputs
 argument_list|()
@@ -33964,12 +33577,11 @@ argument_list|,
 name|crtTblDesc
 argument_list|)
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 decl_stmt|;
-comment|// find all leaf tasks and make the DDLTask as a dependent task of all of them
+comment|// find all leaf tasks and make the DDLTask as a dependent task of all of
+comment|// them
 name|HashSet
 argument_list|<
 name|Task
@@ -34323,11 +33935,13 @@ name|tsk
 range|:
 name|listTasks
 control|)
+block|{
 name|generateCountersTask
 argument_list|(
 name|tsk
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// Start the counters from scratch - a hack for hadoop 17.
 name|Operator
@@ -34344,7 +33958,9 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Task
@@ -34360,11 +33976,13 @@ operator|.
 name|getChildTasks
 argument_list|()
 control|)
+block|{
 name|generateCountersTask
 argument_list|(
 name|childTask
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|private
 name|void
@@ -34393,7 +34011,9 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Operator
@@ -34409,11 +34029,13 @@ operator|.
 name|getChildOperators
 argument_list|()
 control|)
+block|{
 name|generateCountersOperator
 argument_list|(
 name|child
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// loop over all the tasks recursviely
 specifier|private
@@ -34478,6 +34100,7 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 for|for
 control|(
 name|Operator
@@ -34499,6 +34122,7 @@ argument_list|(
 name|op
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 elseif|else
@@ -34542,11 +34166,13 @@ name|tsk
 range|:
 name|listTasks
 control|)
+block|{
 name|breakTaskTree
 argument_list|(
 name|tsk
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -34557,7 +34183,9 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Task
@@ -34573,11 +34201,13 @@ operator|.
 name|getChildTasks
 argument_list|()
 control|)
+block|{
 name|breakTaskTree
 argument_list|(
 name|childTask
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// loop over all the operators recursviely
 specifier|private
@@ -34599,6 +34229,7 @@ name|topOp
 operator|instanceof
 name|ReduceSinkOperator
 condition|)
+block|{
 name|topOp
 operator|.
 name|setChildOperators
@@ -34606,6 +34237,7 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|topOp
@@ -34615,7 +34247,9 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Operator
@@ -34631,11 +34265,13 @@ operator|.
 name|getChildOperators
 argument_list|()
 control|)
+block|{
 name|breakOperatorTree
 argument_list|(
 name|op
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// loop over all the tasks recursviely
 specifier|private
@@ -34708,6 +34344,7 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 for|for
 control|(
 name|Operator
@@ -34723,6 +34360,7 @@ operator|.
 name|values
 argument_list|()
 control|)
+block|{
 name|GenMapRedUtils
 operator|.
 name|setKeyAndValueDesc
@@ -34732,6 +34370,8 @@ argument_list|,
 name|op
 argument_list|)
 expr_stmt|;
+block|}
+block|}
 block|}
 elseif|else
 if|if
@@ -34774,11 +34414,13 @@ name|tsk
 range|:
 name|listTasks
 control|)
+block|{
 name|setKeyDescTaskTree
 argument_list|(
 name|tsk
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -34789,7 +34431,9 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Task
@@ -34805,11 +34449,13 @@ operator|.
 name|getChildTasks
 argument_list|()
 control|)
+block|{
 name|setKeyDescTaskTree
 argument_list|(
 name|childTask
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|SuppressWarnings
@@ -34933,7 +34579,9 @@ operator|)
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 block|}
 comment|// analyze create view command
 if|if
@@ -35026,7 +34674,7 @@ argument_list|)
 expr_stmt|;
 comment|// Since we're only creating a view (not executing it), we
 comment|// don't need to optimize or translate the plan (and in fact, those
-comment|// procedures can interfere with the view creation).  So
+comment|// procedures can interfere with the view creation). So
 comment|// skip the rest of this method.
 name|ctx
 operator|.
@@ -35597,7 +35245,7 @@ return|return
 name|fieldSchemas
 return|;
 block|}
-comment|/**    * Generates an expression node descriptor for the expression passed in the arguments. This    * function uses the row resolver and the metadata information that are passed as arguments    * to resolve the column names to internal names.    * @param expr The expression    * @param input The row resolver    * @return exprNodeDesc    * @throws SemanticException    */
+comment|/**    * Generates an expression node descriptor for the expression passed in the    * arguments. This function uses the row resolver and the metadata information    * that are passed as arguments to resolve the column names to internal names.    *     * @param expr    *          The expression    * @param input    *          The row resolver    * @return exprNodeDesc    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -35616,11 +35264,13 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|//  We recursively create the exprNodeDesc.  Base cases:  when we encounter
-comment|//  a column ref, we convert that into an exprNodeColumnDesc;  when we encounter
-comment|//  a constant, we convert that into an exprNodeConstantDesc.  For others we just
-comment|//  build the exprNodeFuncDesc with recursively built children.
-comment|//  If the current subExpression is pre-calculated, as in Group-By etc.
+comment|// We recursively create the exprNodeDesc. Base cases: when we encounter
+comment|// a column ref, we convert that into an exprNodeColumnDesc; when we
+comment|// encounter
+comment|// a constant, we convert that into an exprNodeConstantDesc. For others we
+comment|// just
+comment|// build the exprNodeFuncDesc with recursively built children.
+comment|// If the current subExpression is pre-calculated, as in Group-By etc.
 name|ColumnInfo
 name|colInfo
 init|=
@@ -35686,7 +35336,8 @@ argument_list|(
 name|unparseTranslator
 argument_list|)
 expr_stmt|;
-comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack. The dispatcher
+comment|// create a walker which walks the tree in a DFS manner while maintaining
+comment|// the operator stack. The dispatcher
 comment|// generates the plan from the operator tree
 name|Map
 argument_list|<
@@ -35851,7 +35502,8 @@ name|getColumnExprProcessor
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=
@@ -36142,7 +35794,7 @@ return|return
 name|desc
 return|;
 block|}
-comment|/**    * Gets the table Alias for the column from the column name. This function throws    * and exception in case the same column name is present in multiple table. The exception    * message indicates that the ambiguity could not be resolved.    *    * @param qbm The metadata where the function looks for the table alias    * @param colName The name of the non aliased column    * @param pt The parse tree corresponding to the column(this is used for error reporting)    * @return String    * @throws SemanticException    */
+comment|/**    * Gets the table Alias for the column from the column name. This function    * throws and exception in case the same column name is present in multiple    * table. The exception message indicates that the ambiguity could not be    * resolved.    *     * @param qbm    *          The metadata where the function looks for the table alias    * @param colName    *          The name of the non aliased column    * @param pt    *          The parse tree corresponding to the column(this is used for error    *          reporting)    * @return String    * @throws SemanticException    */
 specifier|static
 name|String
 name|getTabAliasForCol
@@ -36255,6 +35907,8 @@ return|return
 name|tabAlias
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|validate
@@ -36276,11 +35930,13 @@ name|rootTask
 range|:
 name|rootTasks
 control|)
+block|{
 name|validate
 argument_list|(
 name|rootTask
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|private
 name|void
@@ -36312,17 +35968,11 @@ name|ExecDriver
 operator|)
 condition|)
 block|{
-name|mapredWork
-name|work
-init|=
-operator|(
-name|mapredWork
-operator|)
 name|task
 operator|.
 name|getWork
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 comment|// If the plan does not contain any path, an empty file
 comment|// will be added by ExecDriver at execute time
 block|}
@@ -36335,7 +35985,9 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Task
@@ -36351,11 +36003,13 @@ operator|.
 name|getChildTasks
 argument_list|()
 control|)
+block|{
 name|validate
 argument_list|(
 name|childTask
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/**    * Get the row resolver given an operator.    */
 specifier|public
@@ -36378,7 +36032,7 @@ name|getRR
 argument_list|()
 return|;
 block|}
-comment|/**    * Analyze the create table command. If it is a regular create-table or create-table-like    * statements, we create a DDLWork and return true. If it is a create-table-as-select, we get the    * necessary info such as the SerDe and Storage Format and put it in QB, and return false, indicating    * the rest of the semantic analyzer need to deal with the select statement with respect to the    * SerDe and Storage Format.    */
+comment|/**    * Analyze the create table command. If it is a regular create-table or    * create-table-like statements, we create a DDLWork and return true. If it is    * a create-table-as-select, we get the necessary info such as the SerDe and    * Storage Format and put it in QB, and return false, indicating the rest of    * the semantic analyzer need to deal with the select statement with respect    * to the SerDe and Storage Format.    */
 specifier|private
 name|ASTNode
 name|analyzeCreateTable
@@ -36539,7 +36193,7 @@ name|CTLT
 init|=
 literal|1
 decl_stmt|;
-comment|// CREATE TABLE LIKE ...      (CTLT)
+comment|// CREATE TABLE LIKE ... (CTLT)
 specifier|final
 name|int
 name|CTAS
@@ -36637,7 +36291,7 @@ operator|.
 name|getChildCount
 argument_list|()
 decl_stmt|;
-comment|/* Check the 1st-level children and do simple semantic checks:      * 1) CTLT and CTAS should not coexists.      * 2) CTLT or CTAS should not coexists with column list (target table schema).      * 3) CTAS does not support partitioning (for now).      */
+comment|/*      * Check the 1st-level children and do simple semantic checks: 1) CTLT and      * CTAS should not coexists. 2) CTLT or CTAS should not coexists with column      * list (target table schema). 3) CTAS does not support partitioning (for      * now).      */
 for|for
 control|(
 name|int
@@ -36963,6 +36617,7 @@ argument_list|()
 operator|==
 literal|2
 condition|)
+block|{
 name|numBuckets
 operator|=
 operator|(
@@ -36985,6 +36640,7 @@ operator|.
 name|intValue
 argument_list|()
 expr_stmt|;
+block|}
 else|else
 block|{
 name|sortCols
@@ -37510,8 +37166,6 @@ name|String
 argument_list|>
 name|tables
 init|=
-name|this
-operator|.
 name|db
 operator|.
 name|getTablesByPattern
@@ -37697,8 +37351,6 @@ block|{
 name|Table
 name|tab
 init|=
-name|this
-operator|.
 name|db
 operator|.
 name|getTable
@@ -38054,8 +37706,10 @@ throws|throws
 name|SemanticException
 block|{
 comment|// no duplicate column names
-comment|// currently, it is a simple n*n algorithm - this can be optimized later if need be
-comment|// but it should not be a major bottleneck as the number of columns are anyway not so big
+comment|// currently, it is a simple n*n algorithm - this can be optimized later if
+comment|// need be
+comment|// but it should not be a major bottleneck as the number of columns are
+comment|// anyway not so big
 name|Iterator
 argument_list|<
 name|FieldSchema
@@ -38135,6 +37789,7 @@ argument_list|(
 name|oldColName
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -38149,6 +37804,7 @@ name|oldColName
 argument_list|)
 argument_list|)
 throw|;
+block|}
 block|}
 name|colNames
 operator|.
@@ -38281,6 +37937,7 @@ name|replaced
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -38293,6 +37950,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -38422,6 +38080,7 @@ condition|(
 operator|!
 name|found
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -38434,6 +38093,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 if|if
@@ -38534,6 +38194,7 @@ condition|(
 operator|!
 name|found
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -38546,6 +38207,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 if|if
@@ -38631,6 +38293,7 @@ argument_list|(
 name|colName
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -38643,6 +38306,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 block|}

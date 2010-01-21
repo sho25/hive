@@ -89,6 +89,38 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|Context
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -181,6 +213,44 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|Table
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|unionproc
+operator|.
+name|UnionProcContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|exprNodeDesc
@@ -235,76 +305,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Context
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|Table
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|unionproc
-operator|.
-name|UnionProcContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|plan
 operator|.
 name|filterDesc
@@ -314,7 +314,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Parse Context: The current parse context. This is passed to the optimizer  * which then transforms the operator tree using the parse context. All the  * optimizations are performed sequentially and then the new parse context  * populated. Note that since the parse context contains the operator tree, it  * can be easily retrieved by the next optimization step or finally for task  * generation after the plan has been completely optimized.  *  **/
+comment|/**  * Parse Context: The current parse context. This is passed to the optimizer  * which then transforms the operator tree using the parse context. All the  * optimizations are performed sequentially and then the new parse context  * populated. Note that since the parse context contains the operator tree, it  * can be easily retrieved by the next optimization step or finally for task  * generation after the plan has been completely optimized.  *   **/
 end_comment
 
 begin_class
@@ -454,7 +454,9 @@ name|MapJoinOperator
 argument_list|>
 name|listMapJoinOpsNoReducer
 decl_stmt|;
-comment|// list of map join operators with no reducer
+comment|// list of map join
+comment|// operators with no
+comment|// reducer
 specifier|private
 name|Map
 argument_list|<
@@ -476,9 +478,12 @@ name|PrunedPartitionList
 argument_list|>
 name|prunedPartitions
 decl_stmt|;
-comment|// is set to true if the expression only contains partitioning columns and not any other column reference.
-comment|// This is used to optimize select * from table where ... scenario, when the where condition only references
-comment|// partitioning columns - the partitions are identified and streamed directly to the client without requiring
+comment|// is set to true if the expression only contains partitioning columns and not
+comment|// any other column reference.
+comment|// This is used to optimize select * from table where ... scenario, when the
+comment|// where condition only references
+comment|// partitioning columns - the partitions are identified and streamed directly
+comment|// to the client without requiring
 comment|// a map-reduce job
 specifier|private
 name|boolean
@@ -488,7 +493,7 @@ specifier|public
 name|ParseContext
 parameter_list|()
 block|{   }
-comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param opToPartPruner    *          map from table scan operator to partition pruner    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param joinContext context needed join processing (map join specifically)    * @param topToTable the top tables being processed    * @param loadTableWork    *          list of destination tables being loaded    * @param loadFileWork    *          list of destination files being loaded    * @param ctx parse context    * @param idToTableNameMap    * @param destTableId    * @param uCtx    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer    * @param opToSamplePruner operator to sample pruner map    */
+comment|/**    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param opToPartPruner    *          map from table scan operator to partition pruner    * @param topOps    *          list of operators for the top query    * @param topSelOps    *          list of operators for the selects introduced for column pruning    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param joinContext    *          context needed join processing (map join specifically)    * @param topToTable    *          the top tables being processed    * @param loadTableWork    *          list of destination tables being loaded    * @param loadFileWork    *          list of destination files being loaded    * @param ctx    *          parse context    * @param idToTableNameMap    * @param destTableId    * @param uCtx    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer    * @param opToSamplePruner    *          operator to sample pruner map    */
 specifier|public
 name|ParseContext
 parameter_list|(
@@ -723,8 +728,6 @@ name|listMapJoinOpsNoReducer
 operator|=
 name|listMapJoinOpsNoReducer
 expr_stmt|;
-name|this
-operator|.
 name|hasNonPartCols
 operator|=
 literal|false
@@ -1239,7 +1242,7 @@ return|return
 name|joinContext
 return|;
 block|}
-comment|/**    * @param joinContext the joinContext to set    */
+comment|/**    * @param joinContext    *          the joinContext to set    */
 specifier|public
 name|void
 name|setJoinContext
@@ -1273,7 +1276,7 @@ return|return
 name|listMapJoinOpsNoReducer
 return|;
 block|}
-comment|/**    * @param listMapJoinOpsNoReducer the listMapJoinOpsNoReducer to set    */
+comment|/**    * @param listMapJoinOpsNoReducer    *          the listMapJoinOpsNoReducer to set    */
 specifier|public
 name|void
 name|setListMapJoinOpsNoReducer
@@ -1292,7 +1295,7 @@ operator|=
 name|listMapJoinOpsNoReducer
 expr_stmt|;
 block|}
-comment|/**    * Sets the hasNonPartCols flag    * @param val    */
+comment|/**    * Sets the hasNonPartCols flag    *     * @param val    */
 specifier|public
 name|void
 name|setHasNonPartCols
@@ -1301,8 +1304,6 @@ name|boolean
 name|val
 parameter_list|)
 block|{
-name|this
-operator|.
 name|hasNonPartCols
 operator|=
 name|val
@@ -1315,8 +1316,6 @@ name|getHasNonPartCols
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|hasNonPartCols
 return|;
 block|}

@@ -85,16 +85,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|InputStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|Serializable
 import|;
 end_import
@@ -412,6 +402,7 @@ name|SERIALIZE_ERRORS
 block|}
 specifier|transient
 specifier|private
+specifier|final
 name|LongWritable
 name|deserialize_error_count
 init|=
@@ -421,6 +412,7 @@ argument_list|()
 decl_stmt|;
 specifier|transient
 specifier|private
+specifier|final
 name|LongWritable
 name|serialize_error_count
 init|=
@@ -485,7 +477,8 @@ specifier|transient
 name|AutoProgressor
 name|autoProgressor
 decl_stmt|;
-comment|// first row - the process should only be started if necessary, as it may conflict with some
+comment|// first row - the process should only be started if necessary, as it may
+comment|// conflict with some
 comment|// of the user assumptions.
 specifier|transient
 name|boolean
@@ -655,16 +648,6 @@ name|String
 argument_list|>
 name|en
 init|=
-operator|(
-name|Map
-operator|.
-name|Entry
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-operator|)
 name|it
 operator|.
 name|next
@@ -673,15 +656,13 @@ decl_stmt|;
 name|String
 name|name
 init|=
-operator|(
-name|String
-operator|)
 name|en
 operator|.
 name|getKey
 argument_list|()
 decl_stmt|;
-comment|//String value = (String)en.getValue(); // does not apply variable expansion
+comment|// String value = (String)en.getValue(); // does not apply variable
+comment|// expansion
 name|String
 name|value
 init|=
@@ -711,7 +692,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Maps a relative pathname to an absolute pathname using the    * PATH enviroment.    */
+comment|/**    * Maps a relative pathname to an absolute pathname using the PATH enviroment.    */
 specifier|public
 class|class
 name|PathFinder
@@ -728,7 +709,7 @@ name|String
 name|fileSep
 decl_stmt|;
 comment|// the file seperator in a directory
-comment|/**      * Construct a PathFinder object using the path from      * the specified system environment variable.      */
+comment|/**      * Construct a PathFinder object using the path from the specified system      * environment variable.      */
 specifier|public
 name|PathFinder
 parameter_list|(
@@ -782,7 +763,7 @@ operator|+
 name|pathenv
 expr_stmt|;
 block|}
-comment|/**      * Returns the full path name of this file if it is listed in the      * path      */
+comment|/**      * Returns the full path name of this file if it is listed in the path      */
 specifier|public
 name|File
 name|getAbsolutePath
@@ -903,7 +884,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|//
-comment|// see if the filename matches and  we can read it
+comment|// see if the filename matches and we can read it
 comment|//
 if|if
 condition|(
@@ -928,7 +909,7 @@ parameter_list|(
 name|Exception
 name|exp
 parameter_list|)
-block|{ }
+block|{         }
 name|classvalue
 operator|=
 name|classvalue
@@ -949,6 +930,8 @@ literal|null
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -1156,6 +1139,8 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -1402,7 +1387,8 @@ name|alias
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// Create an environment variable that uniquely identifies this script operator
+comment|// Create an environment variable that uniquely identifies this script
+comment|// operator
 name|String
 name|idEnvVarName
 init|=
@@ -1422,8 +1408,6 @@ decl_stmt|;
 name|String
 name|idEnvVarVal
 init|=
-name|this
-operator|.
 name|getOperatorId
 argument_list|()
 decl_stmt|;
@@ -1841,6 +1825,8 @@ throw|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -1888,11 +1874,13 @@ name|scriptOutWriter
 operator|!=
 literal|null
 condition|)
+block|{
 name|scriptOutWriter
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1949,6 +1937,7 @@ name|scriptPid
 operator|!=
 literal|null
 condition|)
+block|{
 name|exitVal
 operator|=
 name|scriptPid
@@ -1956,6 +1945,7 @@ operator|.
 name|waitFor
 argument_list|()
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|exitVal
@@ -2012,7 +2002,7 @@ parameter_list|(
 name|InterruptedException
 name|e
 parameter_list|)
-block|{ }
+block|{       }
 block|}
 else|else
 block|{
@@ -2077,11 +2067,13 @@ name|scriptPid
 operator|!=
 literal|null
 condition|)
+block|{
 name|scriptPid
 operator|.
 name|waitFor
 argument_list|()
 expr_stmt|;
+block|}
 comment|// Cancel the timer
 name|timer
 operator|.
@@ -2124,6 +2116,7 @@ name|outThread
 operator|!=
 literal|null
 condition|)
+block|{
 name|outThread
 operator|.
 name|join
@@ -2131,6 +2124,7 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2161,6 +2155,7 @@ name|errThread
 operator|!=
 literal|null
 condition|)
+block|{
 name|errThread
 operator|.
 name|join
@@ -2168,6 +2163,7 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2198,11 +2194,13 @@ name|scriptPid
 operator|!=
 literal|null
 condition|)
+block|{
 name|scriptPid
 operator|.
 name|destroy
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2351,7 +2349,7 @@ name|close
 parameter_list|()
 block|{     }
 block|}
-comment|/**    * The processor for stderr stream.    *    * TODO: In the future when we move to hadoop 0.18 and above, we should borrow the logic    * from HadoopStreaming: PipeMapRed.java MRErrorThread to support counters and status    * updates.    */
+comment|/**    * The processor for stderr stream.    *     * TODO: In the future when we move to hadoop 0.18 and above, we should borrow    * the logic from HadoopStreaming: PipeMapRed.java MRErrorThread to support    * counters and status updates.    */
 class|class
 name|ErrorStreamProcessor
 implements|implements
@@ -2364,6 +2362,7 @@ init|=
 literal|0
 decl_stmt|;
 specifier|private
+specifier|final
 name|long
 name|maxBytes
 decl_stmt|;
@@ -2382,9 +2381,6 @@ name|this
 operator|.
 name|maxBytes
 operator|=
-operator|(
-name|long
-operator|)
 name|maxBytes
 expr_stmt|;
 name|lastReportTime
@@ -2421,6 +2417,7 @@ name|line
 operator|instanceof
 name|Text
 condition|)
+block|{
 name|len
 operator|=
 operator|(
@@ -2433,6 +2430,7 @@ operator|.
 name|getLength
 argument_list|()
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -2440,6 +2438,7 @@ name|line
 operator|instanceof
 name|BytesWritable
 condition|)
+block|{
 name|len
 operator|=
 operator|(
@@ -2452,7 +2451,9 @@ operator|.
 name|getSize
 argument_list|()
 expr_stmt|;
-comment|// Report progress for each stderr line, but no more frequently than once per minute.
+block|}
+comment|// Report progress for each stderr line, but no more frequently than once
+comment|// per minute.
 name|long
 name|now
 init|=
@@ -2616,6 +2617,8 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run
@@ -2752,7 +2755,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    *  Wrap the script in a wrapper that allows admins to control    **/
+comment|/**    * Wrap the script in a wrapper that allows admins to control    **/
 specifier|protected
 name|String
 index|[]
@@ -3182,6 +3185,8 @@ return|return
 literal|"SCR"
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

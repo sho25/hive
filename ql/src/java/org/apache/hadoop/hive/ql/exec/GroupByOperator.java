@@ -23,76 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
-operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|io
 operator|.
 name|Serializable
@@ -115,9 +45,127 @@ begin_import
 import|import
 name|java
 operator|.
-name|lang
+name|util
 operator|.
-name|IllegalAccessException
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
 import|;
 end_import
 
@@ -136,6 +184,24 @@ operator|.
 name|metadata
 operator|.
 name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|OpParseContext
 import|;
 end_import
 
@@ -210,6 +276,48 @@ operator|.
 name|api
 operator|.
 name|OperatorType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|generic
+operator|.
+name|GenericUDAFEvaluator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|generic
+operator|.
+name|GenericUDAFEvaluator
+operator|.
+name|AggregationBuffer
 import|;
 end_import
 
@@ -333,69 +441,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
-name|ql
+name|serde2
 operator|.
-name|parse
+name|typeinfo
 operator|.
-name|OpParseContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|generic
-operator|.
-name|GenericUDAFEvaluator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|generic
-operator|.
-name|GenericUDAFEvaluator
-operator|.
-name|AggregationBuffer
+name|PrimitiveTypeInfo
 import|;
 end_import
 
@@ -425,71 +477,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|PrimitiveTypeInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
 import|;
 end_import
 
@@ -589,7 +579,8 @@ index|[]
 index|[]
 name|aggregationParameterObjects
 decl_stmt|;
-comment|// In the future, we may allow both count(DISTINCT a) and sum(DISTINCT a) in the same SQL clause,
+comment|// In the future, we may allow both count(DISTINCT a) and sum(DISTINCT a) in
+comment|// the same SQL clause,
 comment|// so aggregationIsDistinct is a boolean array instead of a single number.
 specifier|transient
 specifier|protected
@@ -617,7 +608,8 @@ name|String
 argument_list|>
 name|fieldNames
 decl_stmt|;
-comment|// Used by sort-based GroupBy: Mode = COMPLETE, PARTIAL1, PARTIAL2, MERGEPARTIAL
+comment|// Used by sort-based GroupBy: Mode = COMPLETE, PARTIAL1, PARTIAL2,
+comment|// MERGEPARTIAL
 specifier|transient
 specifier|protected
 name|ArrayList
@@ -687,7 +679,8 @@ specifier|transient
 name|boolean
 name|hashAggr
 decl_stmt|;
-comment|// The reduction is happening on the reducer, and the grouping key and reduction keys are different.
+comment|// The reduction is happening on the reducer, and the grouping key and
+comment|// reduction keys are different.
 comment|// For example: select a, count(distinct b) from T group by a
 comment|// The data is sprayed by 'b' and the reducer is grouping it by 'a'
 specifier|transient
@@ -734,7 +727,7 @@ specifier|transient
 name|StructObjectInspector
 name|currentKeyObjectInspector
 decl_stmt|;
-comment|/**    * This is used to store the position and field names for variable length fields.    **/
+comment|/**    * This is used to store the position and field names for variable length    * fields.    **/
 class|class
 name|varLenFields
 block|{
@@ -793,7 +786,8 @@ return|;
 block|}
 block|}
 empty_stmt|;
-comment|// for these positions, some variable primitive type (String) is used, so size cannot be estimated. sample it at runtime.
+comment|// for these positions, some variable primitive type (String) is used, so size
+comment|// cannot be estimated. sample it at runtime.
 specifier|transient
 name|List
 argument_list|<
@@ -801,7 +795,8 @@ name|Integer
 argument_list|>
 name|keyPositionsSize
 decl_stmt|;
-comment|// for these positions, some variable primitive type (String) is used for the aggregation classes
+comment|// for these positions, some variable primitive type (String) is used for the
+comment|// aggregation classes
 specifier|transient
 name|List
 argument_list|<
@@ -829,6 +824,8 @@ specifier|transient
 name|int
 name|numEntriesHashTable
 decl_stmt|;
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -1404,19 +1401,10 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|ExprNodeEvaluator
+name|keyField
+range|:
 name|keyFields
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|objectInspectors
@@ -1616,6 +1604,7 @@ if|if
 condition|(
 name|groupKeyIsNotReduceKey
 condition|)
+block|{
 name|keysCurrentGroup
 operator|=
 operator|new
@@ -1628,6 +1617,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 name|fieldNames
 operator|=
@@ -1761,24 +1751,27 @@ name|firstRow
 operator|=
 literal|true
 expr_stmt|;
-comment|// estimate the number of hash table entries based on the size of each entry. Since the size of a entry
+comment|// estimate the number of hash table entries based on the size of each
+comment|// entry. Since the size of a entry
 comment|// is not known, estimate that based on the number of entries
 if|if
 condition|(
 name|hashAggr
 condition|)
+block|{
 name|computeMaxEntriesHashAggr
 argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
+block|}
 name|initializeChildren
 argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Estimate the number of entries in map-side hash table.     * The user can specify the total amount of memory to be used by the map-side hash. By default, all available    * memory is used. The size of each row is estimated, rather crudely, and the number of entries are figure out    * based on that.     * @return number of entries that can fit in hash table - useful for map-side aggregation only    **/
+comment|/**    * Estimate the number of entries in map-side hash table. The user can specify    * the total amount of memory to be used by the map-side hash. By default, all    * available memory is used. The size of each row is estimated, rather    * crudely, and the number of entries are figure out based on that.    *     * @return number of entries that can fit in hash table - useful for map-side    *         aggregation only    **/
 specifier|private
 name|void
 name|computeMaxEntriesHashAggr
@@ -1853,7 +1846,7 @@ name|javaSizeUnknownType
 init|=
 literal|256
 decl_stmt|;
-comment|/**    * The size of the element at position 'pos' is returned, if possible.     * If the datatype is of variable length, STRING, a list of such key positions is maintained, and the size for such positions is    * then actually calculated at runtime.    * @param pos the position of the key    * @param c   the type of the key    * @return the size of this datatype    **/
+comment|/**    * The size of the element at position 'pos' is returned, if possible. If the    * datatype is of variable length, STRING, a list of such key positions is    * maintained, and the size for such positions is then actually calculated at    * runtime.    *     * @param pos    *          the position of the key    * @param c    *          the type of the key    * @return the size of this datatype    **/
 specifier|private
 name|int
 name|getSize
@@ -1926,7 +1919,7 @@ return|;
 block|}
 block|}
 block|}
-comment|/**    * The size of the element at position 'pos' is returned, if possible.     * If the field is of variable length, STRING, a list of such field names for the field position is maintained, and the size     * for such positions is then actually calculated at runtime.    * @param pos the position of the key    * @param c   the type of the key    * @param f   the field to be added    * @return the size of this datatype    **/
+comment|/**    * The size of the element at position 'pos' is returned, if possible. If the    * field is of variable length, STRING, a list of such field names for the    * field position is maintained, and the size for such positions is then    * actually calculated at runtime.    *     * @param pos    *          the position of the key    * @param c    *          the type of the key    * @param f    *          the field to be added    * @return the size of this datatype    **/
 specifier|private
 name|int
 name|getSize
@@ -2034,9 +2027,11 @@ literal|0
 argument_list|)
 argument_list|)
 condition|)
+block|{
 return|return
 name|javaSizePrimitiveType
 return|;
+block|}
 if|if
 condition|(
 name|c
@@ -2094,7 +2089,9 @@ argument_list|()
 operator|==
 name|pos
 condition|)
+block|{
 break|break;
+block|}
 block|}
 if|if
 condition|(
@@ -2147,7 +2144,7 @@ return|return
 name|javaSizeUnknownType
 return|;
 block|}
-comment|/**    * @param pos position of the key    * @param typeinfo type of the input    * @return the size of this datatype    **/
+comment|/**    * @param pos    *          position of the key    * @param typeinfo    *          type of the input    * @return the size of this datatype    **/
 specifier|private
 name|int
 name|getSize
@@ -2165,6 +2162,7 @@ name|typeInfo
 operator|instanceof
 name|PrimitiveTypeInfo
 condition|)
+block|{
 return|return
 name|getSize
 argument_list|(
@@ -2181,6 +2179,7 @@ name|getPrimitiveCategory
 argument_list|()
 argument_list|)
 return|;
+block|}
 return|return
 name|javaSizeUnknownType
 return|;
@@ -2194,7 +2193,8 @@ throws|throws
 name|HiveException
 block|{
 comment|// estimate the size of each entry -
-comment|// a datatype with unknown size (String/Struct etc. - is assumed to be 256 bytes for now).
+comment|// a datatype with unknown size (String/Struct etc. - is assumed to be 256
+comment|// bytes for now).
 comment|// 64 bytes is the overhead for a reference
 name|fixedRowSize
 operator|=
@@ -2211,7 +2211,8 @@ operator|.
 name|getKeys
 argument_list|()
 decl_stmt|;
-comment|// Go over all the keys and get the size of the fields of fixed length. Keep track of the variable length keys
+comment|// Go over all the keys and get the size of the fields of fixed length. Keep
+comment|// track of the variable length keys
 for|for
 control|(
 name|int
@@ -2229,6 +2230,7 @@ condition|;
 name|pos
 operator|++
 control|)
+block|{
 name|fixedRowSize
 operator|+=
 name|getSize
@@ -2246,7 +2248,9 @@ name|getTypeInfo
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Go over all the aggregation classes and and get the size of the fields of fixed length. Keep track of the variable length
+block|}
+comment|// Go over all the aggregation classes and and get the size of the fields of
+comment|// fixed length. Keep track of the variable length
 comment|// fields in these aggregation classes.
 for|for
 control|(
@@ -2423,7 +2427,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/*    * Update aggregations.     * If the aggregation is for distinct, in case of hash aggregation, the client tells us whether it is a new entry.    * For sort-based aggregations, the last row is compared with the current one to figure out whether it has changed.     * As a cleanup, the lastInvoke logic can be pushed in the caller, and this function can be independent of that. The    * client should always notify whether it is a different row or not.    *     * @param aggs the aggregations to be evaluated    * @param row  the row being processed    * @param rowInspector the inspector for the row    * @param hashAggr whether hash aggregation is being performed or not    * @param newEntryForHashAggr only valid if it is a hash aggregation, whether it is a new entry or not    */
+comment|/*    * Update aggregations. If the aggregation is for distinct, in case of hash    * aggregation, the client tells us whether it is a new entry. For sort-based    * aggregations, the last row is compared with the current one to figure out    * whether it has changed. As a cleanup, the lastInvoke logic can be pushed in    * the caller, and this function can be independent of that. The client should    * always notify whether it is a different row or not.    *     * @param aggs the aggregations to be evaluated    *     * @param row the row being processed    *     * @param rowInspector the inspector for the row    *     * @param hashAggr whether hash aggregation is being performed or not    *     * @param newEntryForHashAggr only valid if it is a hash aggregation, whether    * it is a new entry or not    */
 specifier|protected
 name|void
 name|updateAggregations
@@ -2699,6 +2703,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|startGroup
@@ -2711,6 +2717,8 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|endGroup
@@ -2722,12 +2730,16 @@ if|if
 condition|(
 name|groupKeyIsNotReduceKey
 condition|)
+block|{
 name|keysCurrentGroup
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -2937,6 +2949,7 @@ if|if
 condition|(
 name|hashAggr
 condition|)
+block|{
 name|processHashAggr
 argument_list|(
 name|row
@@ -2946,7 +2959,9 @@ argument_list|,
 name|newKeys
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|processAggr
 argument_list|(
 name|row
@@ -2956,6 +2971,7 @@ argument_list|,
 name|newKeys
 argument_list|)
 expr_stmt|;
+block|}
 name|firstRowInGroup
 operator|=
 literal|false
@@ -3128,7 +3144,7 @@ literal|false
 decl_stmt|;
 name|KeyWrapper
 parameter_list|()
-block|{}
+block|{     }
 specifier|public
 name|KeyWrapper
 parameter_list|(
@@ -3177,19 +3193,17 @@ name|hashcode
 operator|=
 name|hashcode
 expr_stmt|;
-name|this
-operator|.
 name|keys
 operator|=
 name|copiedKeys
 expr_stmt|;
-name|this
-operator|.
 name|copy
 operator|=
 name|inHashMap
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -3199,6 +3213,8 @@ return|return
 name|hashcode
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -3227,6 +3243,7 @@ condition|(
 operator|!
 name|copy
 condition|)
+block|{
 return|return
 name|ObjectInspectorUtils
 operator|.
@@ -3243,7 +3260,9 @@ argument_list|)
 operator|==
 literal|0
 return|;
+block|}
 else|else
+block|{
 return|return
 name|ObjectInspectorUtils
 operator|.
@@ -3260,6 +3279,7 @@ argument_list|)
 operator|==
 literal|0
 return|;
+block|}
 block|}
 block|}
 name|KeyWrapper
@@ -3309,7 +3329,7 @@ operator|.
 name|hashCode
 argument_list|()
 expr_stmt|;
-comment|//use this to probe the hashmap
+comment|// use this to probe the hashmap
 name|keyProber
 operator|.
 name|keys
@@ -3392,8 +3412,11 @@ operator|++
 expr_stmt|;
 comment|// new entry in the hash table
 block|}
-comment|// If the grouping key and the reduction key are different, a set of grouping keys for the current reduction key are maintained in keysCurrentGroup
-comment|// Peek into the set to find out if a new grouping key is seen for the given reduction key
+comment|// If the grouping key and the reduction key are different, a set of
+comment|// grouping keys for the current reduction key are maintained in
+comment|// keysCurrentGroup
+comment|// Peek into the set to find out if a new grouping key is seen for the given
+comment|// reduction key
 if|if
 condition|(
 name|groupKeyIsNotReduceKey
@@ -3405,6 +3428,7 @@ name|newDefaultKeys
 operator|==
 literal|null
 condition|)
+block|{
 name|newDefaultKeys
 operator|=
 name|deepCopyElements
@@ -3418,6 +3442,7 @@ operator|.
 name|WRITABLE
 argument_list|)
 expr_stmt|;
+block|}
 name|newEntryForHashAggr
 operator|=
 name|keysCurrentGroup
@@ -3444,10 +3469,13 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// We can only flush after the updateAggregations is done, or the potentially new entry "aggs"
+comment|// We can only flush after the updateAggregations is done, or the
+comment|// potentially new entry "aggs"
 comment|// can be flushed out of the hash table.
-comment|// Based on user-specified parameters, check if the hash table needs to be flushed.
-comment|// If the grouping key is not the same as reduction key, flushing can only happen at boundaries
+comment|// Based on user-specified parameters, check if the hash table needs to be
+comment|// flushed.
+comment|// If the grouping key is not the same as reduction key, flushing can only
+comment|// happen at boundaries
 if|if
 condition|(
 operator|(
@@ -3532,6 +3560,7 @@ operator|&&
 operator|!
 name|keysAreEqual
 condition|)
+block|{
 name|forward
 argument_list|(
 name|currentKeys
@@ -3539,6 +3568,7 @@ argument_list|,
 name|aggregations
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Need to update the keys?
 if|if
 condition|(
@@ -3607,6 +3637,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|aggregationsParametersLastInvoke
 index|[
 name|i
@@ -3614,6 +3645,7 @@ index|]
 operator|=
 literal|null
 expr_stmt|;
+block|}
 block|}
 name|aggs
 operator|=
@@ -3640,7 +3672,7 @@ name|lastInvoke
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Based on user-parameters, should the hash table be flushed.    * @param newKeys keys for the row under consideration    **/
+comment|/**    * Based on user-parameters, should the hash table be flushed.    *     * @param newKeys    *          keys for the row under consideration    **/
 specifier|private
 name|boolean
 name|shouldBeFlushed
@@ -3660,7 +3692,8 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-comment|// The fixed size for the aggregation class is already known. Get the variable portion of the size every NUMROWSESTIMATESIZE rows.
+comment|// The fixed size for the aggregation class is already known. Get the
+comment|// variable portion of the size every NUMROWSESTIMATESIZE rows.
 if|if
 condition|(
 operator|(
@@ -3767,6 +3800,7 @@ argument_list|()
 operator|>
 literal|0
 condition|)
+block|{
 name|aggs
 operator|=
 name|hashAggregations
@@ -3776,6 +3810,7 @@ argument_list|(
 name|newKeys
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|varLenFields
@@ -3820,6 +3855,7 @@ name|f
 range|:
 name|fieldsVarLen
 control|)
+block|{
 name|totalVariableSize
 operator|+=
 operator|(
@@ -3837,6 +3873,7 @@ operator|.
 name|length
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -3865,9 +3902,6 @@ operator|(
 name|fixedRowSize
 operator|+
 operator|(
-operator|(
-name|int
-operator|)
 name|totalVariableSize
 operator|/
 name|numEntriesVarSize
@@ -3896,9 +3930,11 @@ name|numEntries
 operator|>=
 name|numEntriesHashTable
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 return|return
 literal|false
 return|;
@@ -4248,6 +4284,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * We need to forward all the aggregations to children.    *     */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|closeOp
@@ -4285,7 +4323,8 @@ operator|=
 literal|false
 expr_stmt|;
 comment|// There is no grouping key - simulate a null row
-comment|// This is based on the assumption that a null row is ignored by aggregation functions
+comment|// This is based on the assumption that a null row is ignored by
+comment|// aggregation functions
 for|for
 control|(
 name|int
@@ -4498,7 +4537,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// The GroupByOperator is not initialized, which means there is no data
+comment|// The GroupByOperator is not initialized, which means there is no
+comment|// data
 comment|// (since we initialize the operators when we see the first record).
 comment|// Just do nothing here.
 block|}
@@ -4578,6 +4618,7 @@ name|key
 range|:
 name|keys
 control|)
+block|{
 name|colLists
 operator|=
 name|Utilities
@@ -4592,6 +4633,7 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|ArrayList
 argument_list|<
 name|aggregationDesc
@@ -4629,6 +4671,7 @@ name|param
 range|:
 name|params
 control|)
+block|{
 name|colLists
 operator|=
 name|Utilities
@@ -4643,6 +4686,7 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|colLists
@@ -4664,6 +4708,8 @@ literal|"GBY"
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

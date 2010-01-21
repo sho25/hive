@@ -105,7 +105,7 @@ decl_stmt|;
 specifier|public
 name|loadTableDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|loadTableDesc
 parameter_list|(
@@ -245,8 +245,6 @@ name|getTmpDir
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|tmpDir
 return|;
 block|}
@@ -259,8 +257,6 @@ name|String
 name|tmp
 parameter_list|)
 block|{
-name|this
-operator|.
 name|tmpDir
 operator|=
 name|tmp
@@ -279,8 +275,6 @@ name|getTable
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|table
 return|;
 block|}
@@ -330,8 +324,6 @@ name|getPartitionSpec
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|partitionSpec
 return|;
 block|}

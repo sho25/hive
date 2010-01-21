@@ -112,7 +112,7 @@ decl_stmt|;
 specifier|public
 name|explainWork
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|explainWork
 parameter_list|(

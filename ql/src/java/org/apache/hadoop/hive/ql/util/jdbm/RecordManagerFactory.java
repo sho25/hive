@@ -31,7 +31,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
+name|File
 import|;
 end_import
 
@@ -41,7 +41,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
+name|IOException
 import|;
 end_import
 
@@ -56,7 +56,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This is the factory class to use for instantiating {@link RecordManager}  * instances.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: RecordManagerFactory.java,v 1.2 2005/06/25 23:12:31 doomdark Exp $  */
+comment|/**  * This is the factory class to use for instantiating {@link RecordManager}  * instances.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: RecordManagerFactory.java,v 1.2 2005/06/25 23:12:31 doomdark  *          Exp $  */
 end_comment
 
 begin_class
@@ -65,7 +65,7 @@ specifier|final
 class|class
 name|RecordManagerFactory
 block|{
-comment|/**      * Create a record manager.      *      * @param name Name of the record file.      * @throws IOException if an I/O related exception occurs while creating      *                    or opening the record manager.      * @throws UnsupportedOperationException if some options are not supported by the      *                                      implementation.      * @throws IllegalArgumentException if some options are invalid.      */
+comment|/**    * Create a record manager.    *     * @param name    *          Name of the record file.    * @throws IOException    *           if an I/O related exception occurs while creating or opening the    *           record manager.    * @throws UnsupportedOperationException    *           if some options are not supported by the implementation.    * @throws IllegalArgumentException    *           if some options are invalid.    */
 specifier|public
 specifier|static
 name|RecordManager
@@ -88,7 +88,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Create a record manager.      *      * @param name Name of the record file.      * @param options Record manager options.      * @throws IOException if an I/O related exception occurs while creating      *                    or opening the record manager.      * @throws UnsupportedOperationException if some options are not supported by the      *                                      implementation.      * @throws IllegalArgumentException if some options are invalid.      */
+comment|/**    * Create a record manager.    *     * @param name    *          Name of the record file.    * @param options    *          Record manager options.    * @throws IOException    *           if an I/O related exception occurs while creating or opening the    *           record manager.    * @throws UnsupportedOperationException    *           if some options are not supported by the implementation.    * @throws IllegalArgumentException    *           if some options are invalid.    */
 specifier|public
 specifier|static
 name|RecordManager

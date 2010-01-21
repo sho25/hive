@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * ASTNodeOrigin contains contextual information about the object from whose  * definition a particular ASTNode originated.  For example, suppose a view v  * is defined as<code>select x+1 as y from t</code>, and we're processing a  * query<code>select v1.y from v as v1</code>, and there's a type-checking  * problem with the expression<code>x+1</code> due to an ALTER TABLE on t  * subsequent to the creation of v.  Then, when reporting the error, we want to  * provide the parser location with respect to the definition of v (rather than  * with respect to the top-level query, since that represents a completely  * different "parser coordinate system").  *  *<p>  *  * So, when expanding the definition of v while analyzing the top-level query,  * we tag each ASTNode with a reference to an ASTNodeOrign describing v  * and its usage within the query.  */
+comment|/**  * ASTNodeOrigin contains contextual information about the object from whose  * definition a particular ASTNode originated. For example, suppose a view v is  * defined as<code>select x+1 as y from t</code>, and we're processing a query  *<code>select v1.y from v as v1</code>, and there's a type-checking problem  * with the expression<code>x+1</code> due to an ALTER TABLE on t subsequent to  * the creation of v. Then, when reporting the error, we want to provide the  * parser location with respect to the definition of v (rather than with respect  * to the top-level query, since that represents a completely different  * "parser coordinate system").  *   *<p>  *   * So, when expanding the definition of v while analyzing the top-level query,  * we tag each ASTNode with a reference to an ASTNodeOrign describing v and its  * usage within the query.  */
 end_comment
 
 begin_class
@@ -103,7 +103,7 @@ operator|=
 name|usageNode
 expr_stmt|;
 block|}
-comment|/**    * @return the type of the object from which an ASTNode originated,    * e.g. "view".    */
+comment|/**    * @return the type of the object from which an ASTNode originated, e.g.    *         "view".    */
 specifier|public
 name|String
 name|getObjectType
@@ -113,7 +113,7 @@ return|return
 name|objectType
 return|;
 block|}
-comment|/**    * @return the name of the object from which an ASTNode originated,    * e.g. "v".    */
+comment|/**    * @return the name of the object from which an ASTNode originated, e.g. "v".    */
 specifier|public
 name|String
 name|getObjectName
@@ -123,7 +123,7 @@ return|return
 name|objectName
 return|;
 block|}
-comment|/**    * @return the definition of the object from which an ASTNode originated,    * e.g.<code>select x+1 as y from t</code>.    */
+comment|/**    * @return the definition of the object from which an ASTNode originated, e.g.    *<code>select x+1 as y from t</code>.    */
 specifier|public
 name|String
 name|getObjectDefinition
@@ -133,7 +133,7 @@ return|return
 name|objectDefinition
 return|;
 block|}
-comment|/**    * @return the alias of the object from which an ASTNode originated,    * e.g. "v1" (this can help with debugging context-dependent expansions)    */
+comment|/**    * @return the alias of the object from which an ASTNode originated, e.g. "v1"    *         (this can help with debugging context-dependent expansions)    */
 specifier|public
 name|String
 name|getUsageAlias
@@ -143,7 +143,7 @@ return|return
 name|usageAlias
 return|;
 block|}
-comment|/**    * @return the expression node triggering usage of an object from which an    * ASTNode originated, e.g.<code>v as v1</code> (this can help with    * debugging context-dependent expansions)    */
+comment|/**    * @return the expression node triggering usage of an object from which an    *         ASTNode originated, e.g.<code>v as v1</code> (this can help with    *         debugging context-dependent expansions)    */
 specifier|public
 name|ASTNode
 name|getUsageNode

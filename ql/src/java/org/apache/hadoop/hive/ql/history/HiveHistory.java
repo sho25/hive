@@ -35,7 +35,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|FileInputStream
+name|File
 import|;
 end_import
 
@@ -45,7 +45,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
+name|FileInputStream
 import|;
 end_import
 
@@ -358,6 +358,7 @@ literal|null
 decl_stmt|;
 comment|// Job Hash Map
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -377,6 +378,7 @@ argument_list|()
 decl_stmt|;
 comment|// Task Hash Map
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -634,7 +636,7 @@ argument_list|(
 name|line
 argument_list|)
 expr_stmt|;
-comment|//if it does not end with " then it is line continuation
+comment|// if it does not end with " then it is line continuation
 if|if
 condition|(
 operator|!
@@ -982,7 +984,7 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-comment|//Create directory
+comment|// Create directory
 name|File
 name|f
 init|=
@@ -1188,7 +1190,9 @@ name|histStream
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|StringBuffer
 name|sb
 init|=
@@ -1339,7 +1343,9 @@ name|ss
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|QueryInfo
 name|ji
 init|=
@@ -1431,7 +1437,9 @@ name|ji
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|ji
 operator|.
 name|hm
@@ -1490,7 +1498,9 @@ name|ti
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|ti
 operator|.
 name|hm
@@ -1565,7 +1575,9 @@ name|ti
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|StringBuilder
 name|sb
 init|=
@@ -1692,6 +1704,7 @@ argument_list|()
 operator|>
 literal|0
 condition|)
+block|{
 name|sb1
 operator|.
 name|append
@@ -1699,6 +1712,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|sb1
 operator|.
 name|append
@@ -1821,6 +1835,7 @@ argument_list|()
 operator|>
 literal|0
 condition|)
+block|{
 name|taskInfoMap
 operator|.
 name|get
@@ -1845,6 +1860,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|public
 name|void
@@ -1922,7 +1938,9 @@ name|ji
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|log
 argument_list|(
 name|RecordTypes
@@ -1969,7 +1987,9 @@ name|ss
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|TaskInfo
 name|ti
 init|=
@@ -2109,7 +2129,9 @@ name|ti
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|log
 argument_list|(
 name|RecordTypes
@@ -2167,7 +2189,9 @@ name|ti
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|log
 argument_list|(
 name|RecordTypes
@@ -2243,7 +2267,7 @@ name|ctrmap
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the table to id map    * @param map    */
+comment|/**    * Set the table to id map    *     * @param map    */
 specifier|public
 name|void
 name|setIdToTableMap
@@ -2262,7 +2286,7 @@ operator|=
 name|map
 expr_stmt|;
 block|}
-comment|/**    *  Returns table name for the counter name    * @param name    * @return tableName    */
+comment|/**    * Returns table name for the counter name    *     * @param name    * @return tableName    */
 name|String
 name|getRowCountTableName
 parameter_list|(
@@ -2276,9 +2300,11 @@ name|idToTableMap
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|Matcher
 name|m
 init|=

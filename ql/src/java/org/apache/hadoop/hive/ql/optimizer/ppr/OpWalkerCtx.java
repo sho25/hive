@@ -100,8 +100,9 @@ specifier|private
 name|boolean
 name|hasNonPartCols
 decl_stmt|;
-comment|/**    * Map from tablescan operator to partition pruning predicate    * that is initialized from the ParseContext    */
+comment|/**    * Map from tablescan operator to partition pruning predicate that is    * initialized from the ParseContext    */
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|TableScanOperator
@@ -129,8 +130,6 @@ name|opToPartPruner
 operator|=
 name|opToPartPruner
 expr_stmt|;
-name|this
-operator|.
 name|hasNonPartCols
 operator|=
 literal|false
@@ -147,8 +146,6 @@ name|getOpToPartPruner
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|opToPartPruner
 return|;
 block|}

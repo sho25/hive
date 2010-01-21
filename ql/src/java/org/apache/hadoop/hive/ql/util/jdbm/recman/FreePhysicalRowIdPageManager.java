@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This class manages free physical rowid pages and provides methods  *  to free and allocate physical rowids on a high level.  */
+comment|/**  * This class manages free physical rowid pages and provides methods to free and  * allocate physical rowids on a high level.  */
 end_comment
 
 begin_class
@@ -56,7 +56,7 @@ specifier|protected
 name|PageManager
 name|_pageman
 decl_stmt|;
-comment|/**      *  Creates a new instance using the indicated record file and      *  page manager.      */
+comment|/**    * Creates a new instance using the indicated record file and page manager.    */
 name|FreePhysicalRowIdPageManager
 parameter_list|(
 name|RecordFile
@@ -77,7 +77,7 @@ operator|=
 name|pageman
 expr_stmt|;
 block|}
-comment|/**      *  Returns a free physical rowid of the indicated size, or      *  null if nothing was found.      */
+comment|/**    * Returns a free physical rowid of the indicated size, or null if nothing was    * found.    */
 name|Location
 name|get
 parameter_list|(
@@ -167,9 +167,6 @@ name|slot
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|int
-name|slotsize
-init|=
 name|fp
 operator|.
 name|get
@@ -179,7 +176,7 @@ argument_list|)
 operator|.
 name|getSize
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|fp
 operator|.
 name|free
@@ -265,7 +262,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**      *  Puts the indicated rowid on the free list      */
+comment|/**    * Puts the indicated rowid on the free list    */
 name|void
 name|put
 parameter_list|(

@@ -78,7 +78,7 @@ decl_stmt|;
 specifier|public
 name|fileSinkDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|fileSinkDesc
 parameter_list|(
@@ -157,8 +157,6 @@ name|compressed
 operator|=
 name|compressed
 expr_stmt|;
-name|this
-operator|.
 name|destTableId
 operator|=
 literal|0
@@ -181,8 +179,6 @@ name|getDirName
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|dirName
 return|;
 block|}
@@ -215,8 +211,6 @@ name|getTableInfo
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|tableInfo
 return|;
 block|}
@@ -315,8 +309,6 @@ name|String
 name|intermediateCompressorCodec
 parameter_list|)
 block|{
-name|this
-operator|.
 name|compressCodec
 operator|=
 name|intermediateCompressorCodec
@@ -339,8 +331,6 @@ name|String
 name|intermediateCompressType
 parameter_list|)
 block|{
-name|this
-operator|.
 name|compressType
 operator|=
 name|intermediateCompressType

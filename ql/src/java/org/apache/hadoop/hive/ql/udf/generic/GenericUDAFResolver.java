@@ -33,24 +33,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
-operator|.
-name|HiveException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|parse
 operator|.
 name|SemanticException
@@ -76,7 +58,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Generic User-defined aggregation function (GenericUDAF) for the use with   * Hive.  *   * GenericUDAFResolver is used at compile time.  We use GenericUDAFResolver to  * find out the GenericUDAFEvaluator for the parameter types.  *   */
+comment|/**  * A Generic User-defined aggregation function (GenericUDAF) for the use with  * Hive.  *   * GenericUDAFResolver is used at compile time. We use GenericUDAFResolver to  * find out the GenericUDAFEvaluator for the parameter types.  *   */
 end_comment
 
 begin_interface
@@ -84,7 +66,7 @@ specifier|public
 interface|interface
 name|GenericUDAFResolver
 block|{
-comment|/** Get the evaluator for the parameter types.    *      *  The reason that this function returns an object instead of a class    *  is because it's possible that the object needs some configuration     *  (that can be serialized).  In that case the class of the object has     *  to implement the Serializable interface.  At execution time, we will     *  deserialize the object from the plan and use it to evaluate the    *  aggregations.    *      *  If the class of the object does not implement Serializable, then    *  we will create a new instance of the class at execution time.    *      *  @param parameters  The types of the parameters. We need the type     *         information to know which evaluator class to use.      */
+comment|/**    * Get the evaluator for the parameter types.    *     * The reason that this function returns an object instead of a class is    * because it's possible that the object needs some configuration (that can be    * serialized). In that case the class of the object has to implement the    * Serializable interface. At execution time, we will deserialize the object    * from the plan and use it to evaluate the aggregations.    *     * If the class of the object does not implement Serializable, then we will    * create a new instance of the class at execution time.    *     * @param parameters    *          The types of the parameters. We need the type information to know    *          which evaluator class to use.    */
 name|GenericUDAFEvaluator
 name|getEvaluator
 parameter_list|(

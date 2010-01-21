@@ -125,10 +125,12 @@ class|class
 name|FunctionInfo
 block|{
 specifier|private
+specifier|final
 name|boolean
 name|isNative
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|displayName
 decl_stmt|;
@@ -240,7 +242,7 @@ operator|=
 name|genericUDTF
 expr_stmt|;
 block|}
-comment|/**    * Get a new GenericUDF object for the function.     */
+comment|/**    * Get a new GenericUDF object for the function.    */
 specifier|public
 name|GenericUDF
 name|getGenericUDF
@@ -267,7 +269,7 @@ name|genericUDF
 argument_list|)
 return|;
 block|}
-comment|/**    * Get a new GenericUDTF object for the function.     */
+comment|/**    * Get a new GenericUDTF object for the function.    */
 specifier|public
 name|GenericUDTF
 name|getGenericUDTF
@@ -294,7 +296,7 @@ name|genericUDTF
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the GenericUDAFResolver object for the function.     */
+comment|/**    * Get the GenericUDAFResolver object for the function.    */
 specifier|public
 name|GenericUDAFResolver
 name|getGenericUDAFResolver
@@ -402,7 +404,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get the display name for this function.    * This should be transfered into exprNodeGenericUDFDesc, and will be     * used as the first parameter to GenericUDF.getDisplayName() call, instead    * of hard-coding the function name.  This will solve the problem of     * displaying only one name when a udf is registered under 2 names.    */
+comment|/**    * Get the display name for this function. This should be transfered into    * exprNodeGenericUDFDesc, and will be used as the first parameter to    * GenericUDF.getDisplayName() call, instead of hard-coding the function name.    * This will solve the problem of displaying only one name when a udf is    * registered under 2 names.    */
 specifier|public
 name|String
 name|getDisplayName

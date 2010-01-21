@@ -362,7 +362,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * At runtime in Join, we output big keys in one table into one corresponding  * directories, and all same keys in other tables into different dirs(one for  * each table). The directories will look like:  *<ul>  *<li>  * dir-T1-bigkeys(containing big keys in T1), dir-T2-keys(containing keys which  * is big in T1),dir-T3-keys(containing keys which is big in T1), ...  *<li>  * dir-T1-keys(containing keys which is big in T2), dir-T2-bigkeys(containing  * big keys in T2),dir-T3-keys(containing keys which is big in T2), ...  *<li>  * dir-T1-keys(containing keys which is big in T3), dir-T2-keys(containing big  * keys in T3),dir-T3-bigkeys(containing keys which is big in T3), ... .....  *</ul>  *   *<p>  * For each skew key, we first write all values to a local tmp file. At the time  * of ending the current group, the local tmp file will be uploaded to hdfs.  * Right now, we use one file per skew key.  *   *<p>  * For more info, please see  * https://issues.apache.org/jira/browse/HIVE-964.  *   */
+comment|/**  * At runtime in Join, we output big keys in one table into one corresponding  * directories, and all same keys in other tables into different dirs(one for  * each table). The directories will look like:  *<ul>  *<li>  * dir-T1-bigkeys(containing big keys in T1), dir-T2-keys(containing keys which  * is big in T1),dir-T3-keys(containing keys which is big in T1), ...  *<li>  * dir-T1-keys(containing keys which is big in T2), dir-T2-bigkeys(containing  * big keys in T2),dir-T3-keys(containing keys which is big in T2), ...  *<li>  * dir-T1-keys(containing keys which is big in T3), dir-T2-keys(containing big  * keys in T3),dir-T3-bigkeys(containing keys which is big in T3), ... .....  *</ul>  *   *<p>  * For each skew key, we first write all values to a local tmp file. At the time  * of ending the current group, the local tmp file will be uploaded to hdfs.  * Right now, we use one file per skew key.  *   *<p>  * For more info, please see https://issues.apache.org/jira/browse/HIVE-964.  *   */
 end_comment
 
 begin_class
@@ -476,6 +476,7 @@ name|String
 name|taskId
 decl_stmt|;
 specifier|private
+specifier|final
 name|CommonJoinOperator
 argument_list|<
 name|?
@@ -485,10 +486,12 @@ argument_list|>
 name|joinOp
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 name|numAliases
 decl_stmt|;
 specifier|private
+specifier|final
 name|joinDesc
 name|conf
 decl_stmt|;
@@ -510,16 +513,12 @@ name|joinOp
 operator|=
 name|joinOp
 expr_stmt|;
-name|this
-operator|.
 name|numAliases
 operator|=
 name|joinOp
 operator|.
 name|numAliases
 expr_stmt|;
-name|this
-operator|.
 name|conf
 operator|=
 name|joinOp
@@ -657,8 +656,6 @@ init|=
 operator|(
 name|StructObjectInspector
 operator|)
-name|this
-operator|.
 name|joinOp
 operator|.
 name|inputObjInspectors
@@ -854,8 +851,6 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|joinOp
 operator|.
 name|handleSkewJoin
@@ -867,8 +862,6 @@ block|}
 name|tableDesc
 name|valTblDesc
 init|=
-name|this
-operator|.
 name|joinOp
 operator|.
 name|getSpillTableDesc
@@ -895,6 +888,7 @@ name|valTblDesc
 operator|!=
 literal|null
 condition|)
+block|{
 name|valColNames
 operator|=
 name|Utilities
@@ -907,6 +901,7 @@ name|getProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|StructObjectInspector
 name|structTblValInpector
 init|=
@@ -916,8 +911,6 @@ name|getStandardStructObjectInspector
 argument_list|(
 name|valColNames
 argument_list|,
-name|this
-operator|.
 name|joinOp
 operator|.
 name|joinValuesStandardObjectInspectors
@@ -1174,7 +1167,9 @@ operator|)
 operator|==
 name|currBigKeyTag
 condition|)
+block|{
 continue|continue;
+block|}
 name|RowContainer
 argument_list|<
 name|ArrayList
@@ -1420,6 +1415,7 @@ operator|instanceof
 name|List
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -1427,6 +1423,7 @@ argument_list|(
 literal|"Bug in handle skew key in a seperate job."
 argument_list|)
 throw|;
+block|}
 name|skewKeyInCurrentGroup
 operator|=
 literal|true
@@ -1524,7 +1521,9 @@ operator|)
 name|bigKeyTbl
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 try|try
 block|{
 name|String
@@ -1594,7 +1593,9 @@ operator|)
 operator|==
 name|bigKeyTbl
 condition|)
+block|{
 continue|continue;
+block|}
 name|specPath
 operator|=
 name|conf
@@ -1736,7 +1737,9 @@ operator|||
 operator|!
 name|existing
 condition|)
+block|{
 continue|continue;
+block|}
 name|String
 name|specPath
 init|=
@@ -1786,7 +1789,9 @@ name|smallKeyTbl
 operator|==
 name|bigKeyTbl
 condition|)
+block|{
 continue|continue;
+block|}
 name|specPath
 operator|=
 name|conf
@@ -1909,9 +1914,11 @@ condition|(
 operator|!
 name|ignoreNonExisting
 condition|)
+block|{
 throw|throw
 name|e
 throw|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1931,7 +1938,9 @@ argument_list|)
 operator|&&
 name|ignoreNonExisting
 condition|)
+block|{
 return|return;
+block|}
 throw|throw
 name|e
 throw|;

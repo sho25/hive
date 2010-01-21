@@ -21,6 +21,26 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -52,26 +72,6 @@ operator|.
 name|hooks
 operator|.
 name|WriteEntity
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
 import|;
 end_import
 
@@ -191,7 +191,7 @@ operator|=
 name|outputs
 expr_stmt|;
 block|}
-comment|/**    * @param alterTblDesc alter table descriptor    */
+comment|/**    * @param alterTblDesc    *          alter table descriptor    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -225,7 +225,7 @@ operator|=
 name|alterTblDesc
 expr_stmt|;
 block|}
-comment|/**    * @param createTblDesc create table descriptor    */
+comment|/**    * @param createTblDesc    *          create table descriptor    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -259,7 +259,7 @@ operator|=
 name|createTblDesc
 expr_stmt|;
 block|}
-comment|/**    * @param createTblLikeDesc create table like descriptor    */
+comment|/**    * @param createTblLikeDesc    *          create table like descriptor    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -293,7 +293,7 @@ operator|=
 name|createTblLikeDesc
 expr_stmt|;
 block|}
-comment|/**    * @param createVwDesc create view descriptor    */
+comment|/**    * @param createVwDesc    *          create view descriptor    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -327,7 +327,7 @@ operator|=
 name|createVwDesc
 expr_stmt|;
 block|}
-comment|/**    * @param dropTblDesc drop table descriptor    */
+comment|/**    * @param dropTblDesc    *          drop table descriptor    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -490,8 +490,6 @@ argument_list|,
 name|outputs
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|descFunctionDesc
 operator|=
 name|descFuncDesc
@@ -531,7 +529,7 @@ operator|=
 name|showPartsDesc
 expr_stmt|;
 block|}
-comment|/**    * @param addPartitionDesc information about the partitions    * we want to add.    */
+comment|/**    * @param addPartitionDesc    *          information about the partitions we want to add.    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -591,14 +589,12 @@ argument_list|,
 name|outputs
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|msckDesc
 operator|=
 name|checkDesc
 expr_stmt|;
 block|}
-comment|/**    * @param showTblStatusDesc show table status descriptor    */
+comment|/**    * @param showTblStatusDesc    *          show table status descriptor    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -649,7 +645,7 @@ return|return
 name|createTblDesc
 return|;
 block|}
-comment|/**    * @param createTblDesc the createTblDesc to set    */
+comment|/**    * @param createTblDesc    *          the createTblDesc to set    */
 specifier|public
 name|void
 name|setCreateTblDesc
@@ -682,7 +678,7 @@ return|return
 name|createTblLikeDesc
 return|;
 block|}
-comment|/**    * @param createTblLikeDesc the createTblDesc to set    */
+comment|/**    * @param createTblLikeDesc    *          the createTblDesc to set    */
 specifier|public
 name|void
 name|setCreateTblLikeDesc
@@ -715,7 +711,7 @@ return|return
 name|createVwDesc
 return|;
 block|}
-comment|/**    * @param createVwDesc the createViewDesc to set    */
+comment|/**    * @param createVwDesc    *          the createViewDesc to set    */
 specifier|public
 name|void
 name|setCreateViewDesc
@@ -748,7 +744,7 @@ return|return
 name|dropTblDesc
 return|;
 block|}
-comment|/**    * @param dropTblDesc the dropTblDesc to set    */
+comment|/**    * @param dropTblDesc    *          the dropTblDesc to set    */
 specifier|public
 name|void
 name|setDropTblDesc
@@ -781,7 +777,7 @@ return|return
 name|alterTblDesc
 return|;
 block|}
-comment|/**    * @param alterTblDesc the alterTblDesc to set    */
+comment|/**    * @param alterTblDesc    *          the alterTblDesc to set    */
 specifier|public
 name|void
 name|setAlterTblDesc
@@ -814,7 +810,7 @@ return|return
 name|showTblsDesc
 return|;
 block|}
-comment|/**    * @param showTblsDesc the showTblsDesc to set    */
+comment|/**    * @param showTblsDesc    *          the showTblsDesc to set    */
 specifier|public
 name|void
 name|setShowTblsDesc
@@ -864,7 +860,7 @@ return|return
 name|descFunctionDesc
 return|;
 block|}
-comment|/**    * @param showFuncsDesc the showFuncsDesc to set    */
+comment|/**    * @param showFuncsDesc    *          the showFuncsDesc to set    */
 specifier|public
 name|void
 name|setShowFuncsDesc
@@ -880,7 +876,7 @@ operator|=
 name|showFuncsDesc
 expr_stmt|;
 block|}
-comment|/**    * @param descFuncDesc the showFuncsDesc to set    */
+comment|/**    * @param descFuncDesc    *          the showFuncsDesc to set    */
 specifier|public
 name|void
 name|setDescFuncDesc
@@ -889,8 +885,6 @@ name|descFunctionDesc
 name|descFuncDesc
 parameter_list|)
 block|{
-name|this
-operator|.
 name|descFunctionDesc
 operator|=
 name|descFuncDesc
@@ -913,7 +907,7 @@ return|return
 name|showPartsDesc
 return|;
 block|}
-comment|/**    * @param showPartsDesc the showPartsDesc to set    */
+comment|/**    * @param showPartsDesc    *          the showPartsDesc to set    */
 specifier|public
 name|void
 name|setShowPartsDesc
@@ -946,7 +940,7 @@ return|return
 name|descTblDesc
 return|;
 block|}
-comment|/**    * @param descTblDesc the descTblDesc to set    */
+comment|/**    * @param descTblDesc    *          the descTblDesc to set    */
 specifier|public
 name|void
 name|setDescTblDesc
@@ -962,7 +956,7 @@ operator|=
 name|descTblDesc
 expr_stmt|;
 block|}
-comment|/**    * @return information about the partitions    * we want to add.    */
+comment|/**    * @return information about the partitions we want to add.    */
 specifier|public
 name|AddPartitionDesc
 name|getAddPartitionDesc
@@ -972,7 +966,7 @@ return|return
 name|addPartitionDesc
 return|;
 block|}
-comment|/**    * @param addPartitionDesc information about the partitions    * we want to add.    */
+comment|/**    * @param addPartitionDesc    *          information about the partitions we want to add.    */
 specifier|public
 name|void
 name|setAddPartitionDesc
@@ -998,7 +992,7 @@ return|return
 name|msckDesc
 return|;
 block|}
-comment|/**    * @param msckDesc metastore check description    */
+comment|/**    * @param msckDesc    *          metastore check description    */
 specifier|public
 name|void
 name|setMsckDesc
@@ -1024,7 +1018,7 @@ return|return
 name|showTblStatusDesc
 return|;
 block|}
-comment|/**    * @param showTblStatusDesc show table descriptor    */
+comment|/**    * @param showTblStatusDesc    *          show table descriptor    */
 specifier|public
 name|void
 name|setShowTblStatusDesc

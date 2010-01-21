@@ -213,6 +213,8 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isMapRedTask
@@ -230,6 +232,7 @@ name|task
 range|:
 name|listTasks
 control|)
+block|{
 if|if
 condition|(
 name|task
@@ -237,13 +240,18 @@ operator|.
 name|isMapRedTask
 argument_list|()
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
+block|}
 return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|hasReduce
@@ -261,6 +269,7 @@ name|task
 range|:
 name|listTasks
 control|)
+block|{
 if|if
 condition|(
 name|task
@@ -268,13 +277,18 @@ operator|.
 name|hasReduce
 argument_list|()
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
+block|}
 return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -348,8 +362,6 @@ name|tsk
 argument_list|)
 condition|)
 block|{
-name|this
-operator|.
 name|driverContext
 operator|.
 name|getRunnable
@@ -425,8 +437,7 @@ argument_list|(
 name|child
 argument_list|)
 condition|)
-name|this
-operator|.
+block|{
 name|driverContext
 operator|.
 name|addToRunnable
@@ -437,12 +448,11 @@ expr_stmt|;
 block|}
 block|}
 block|}
+block|}
 elseif|else
 if|if
 condition|(
 operator|!
-name|this
-operator|.
 name|driverContext
 operator|.
 name|getRunnable
@@ -454,8 +464,6 @@ name|tsk
 argument_list|)
 condition|)
 block|{
-name|this
-operator|.
 name|driverContext
 operator|.
 name|addToRunnable
@@ -479,7 +487,7 @@ return|return
 name|resolver
 return|;
 block|}
-comment|/**    * @param resolver the resolver to set    */
+comment|/**    * @param resolver    *          the resolver to set    */
 specifier|public
 name|void
 name|setResolver
@@ -506,6 +514,8 @@ name|resolverCtx
 return|;
 block|}
 comment|// used to determine whether child tasks can be run.
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|done
@@ -527,8 +537,6 @@ argument_list|>
 argument_list|>
 name|parentTasks
 init|=
-name|this
-operator|.
 name|getParentTasks
 argument_list|()
 decl_stmt|;
@@ -551,6 +559,7 @@ name|par
 range|:
 name|parentTasks
 control|)
+block|{
 name|ret
 operator|=
 name|ret
@@ -560,6 +569,7 @@ operator|.
 name|done
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 name|List
 argument_list|<
@@ -576,18 +586,20 @@ if|if
 condition|(
 name|resolved
 condition|)
+block|{
 name|retTasks
 operator|=
-name|this
-operator|.
 name|resTasks
 expr_stmt|;
+block|}
 else|else
+block|{
 name|retTasks
 operator|=
 name|getListTasks
 argument_list|()
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|ret
@@ -609,6 +621,7 @@ name|tsk
 range|:
 name|retTasks
 control|)
+block|{
 name|ret
 operator|=
 name|ret
@@ -619,11 +632,12 @@ name|done
 argument_list|()
 expr_stmt|;
 block|}
+block|}
 return|return
 name|ret
 return|;
 block|}
-comment|/**    * @param resolverCtx the resolverCtx to set    */
+comment|/**    * @param resolverCtx    *          the resolverCtx to set    */
 specifier|public
 name|void
 name|setResolverCtx
@@ -657,7 +671,7 @@ return|return
 name|listTasks
 return|;
 block|}
-comment|/**    * @param listTasks the listTasks to set    */
+comment|/**    * @param listTasks    *          the listTasks to set    */
 specifier|public
 name|void
 name|setListTasks
@@ -681,6 +695,8 @@ operator|=
 name|listTasks
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType
@@ -704,6 +720,8 @@ literal|"CONDITION"
 return|;
 block|}
 comment|/**    * Add a dependent task on the current conditional task. The task will not be    * a direct child of conditional task. Actually it will be added as child task    * of associated tasks.    *     * @return true if the task got added false if it already existed    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|addDependentTask
@@ -724,8 +742,6 @@ literal|false
 decl_stmt|;
 if|if
 condition|(
-name|this
-operator|.
 name|getListTasks
 argument_list|()
 operator|!=
@@ -742,8 +758,6 @@ name|Serializable
 argument_list|>
 name|tsk
 range|:
-name|this
-operator|.
 name|getListTasks
 argument_list|()
 control|)

@@ -116,6 +116,7 @@ extends|extends
 name|UDF
 block|{
 specifier|private
+specifier|final
 name|Text
 name|result
 init|=
@@ -123,7 +124,7 @@ operator|new
 name|Text
 argument_list|()
 decl_stmt|;
-comment|/**    * Reverse a portion of an array in-place.    *     * @param arr The array where the data will be reversed.     * @param first The beginning of the portion (inclusive).    * @param last The end of the portion (inclusive).    */
+comment|/**    * Reverse a portion of an array in-place.    *     * @param arr    *          The array where the data will be reversed.    * @param first    *          The beginning of the portion (inclusive).    * @param last    *          The end of the portion (inclusive).    */
 specifier|private
 name|void
 name|reverse

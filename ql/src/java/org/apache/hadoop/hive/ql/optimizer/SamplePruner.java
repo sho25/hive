@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedHashMap
+name|HashMap
 import|;
 end_import
 
@@ -45,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -105,11 +105,45 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|conf
+name|ql
 operator|.
-name|HiveConf
+name|exec
+operator|.
+name|FilterOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|TableScanOperator
 import|;
 end_import
 
@@ -287,9 +321,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|optimizer
+name|metadata
 operator|.
-name|Transform
+name|Partition
 import|;
 end_import
 
@@ -341,42 +375,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
-operator|.
-name|TableScanOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|FilterOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|plan
 operator|.
 name|filterDesc
@@ -403,40 +401,8 @@ name|sampleDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|Partition
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|Path
-import|;
-end_import
-
 begin_comment
-comment|/**  * The transformation step that does sample pruning.  *  */
+comment|/**  * The transformation step that does sample pruning.  *   */
 end_comment
 
 begin_class
@@ -531,7 +497,7 @@ argument_list|(
 literal|"hive.ql.optimizer.SamplePruner"
 argument_list|)
 decl_stmt|;
-comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.optimizer.Transform#transform(org.apache.hadoop.hive.ql.parse.ParseContext)    */
+comment|/*    * (non-Javadoc)    *     * @see    * org.apache.hadoop.hive.ql.optimizer.Transform#transform(org.apache.hadoop    * .hive.ql.parse.ParseContext)    */
 annotation|@
 name|Override
 specifier|public
@@ -590,7 +556,8 @@ name|getFilterProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=
@@ -725,9 +692,11 @@ operator|.
 name|getInputPruning
 argument_list|()
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 assert|assert
 name|stack
 operator|.
@@ -834,7 +803,7 @@ name|DefaultPPR
 argument_list|()
 return|;
 block|}
-comment|/**    * Prunes to get all the files in the partition that satisfy the TABLESAMPLE clause    *    * @param part The partition to prune    * @return Path[]    * @throws SemanticException    */
+comment|/**    * Prunes to get all the files in the partition that satisfy the TABLESAMPLE    * clause    *     * @param part    *          The partition to prune    * @return Path[]    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

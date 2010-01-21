@@ -201,22 +201,8 @@ name|IntWritable
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Text
-import|;
-end_import
-
 begin_comment
-comment|/**  * Generic UDF for string function<code>ELT(N,str1,str2,str3,...)</code>.  * This mimics the function from MySQL  * http://dev.mysql.com/doc/refman/5.1/en/string-functions.html#function_elt  *   * @see org.apache.hadoop.hive.ql.udf.generic.GenericUDF  */
+comment|/**  * Generic UDF for string function<code>ELT(N,str1,str2,str3,...)</code>. This  * mimics the function from MySQL  * http://dev.mysql.com/doc/refman/5.1/en/string-functions.html#function_elt  *   * @see org.apache.hadoop.hive.ql.udf.generic.GenericUDF  */
 end_comment
 
 begin_class
@@ -513,13 +499,12 @@ name|arguments
 operator|.
 name|length
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
-operator|(
-name|Text
-operator|)
 name|converters
 index|[
 name|index

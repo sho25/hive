@@ -149,6 +149,86 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|persistence
+operator|.
+name|HashMapWrapper
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|persistence
+operator|.
+name|MapJoinObjectKey
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|persistence
+operator|.
+name|MapJoinObjectValue
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|persistence
+operator|.
+name|RowContainer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -367,86 +447,6 @@ name|ReflectionUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|persistence
-operator|.
-name|MapJoinObjectKey
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|persistence
-operator|.
-name|MapJoinObjectValue
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|persistence
-operator|.
-name|HashMapWrapper
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|persistence
-operator|.
-name|RowContainer
-import|;
-end_import
-
 begin_comment
 comment|/**  * Map side Join operator implementation.  */
 end_comment
@@ -583,7 +583,9 @@ literal|null
 block|,
 comment|// counter value 0 means no error
 literal|"Mapside join size exceeds hive.mapjoin.maxsize. Please increase that or remove the mapjoin hint."
-comment|// counter value 1
+comment|// counter
+comment|// value
+comment|// 1
 block|}
 decl_stmt|;
 specifier|public
@@ -884,6 +886,7 @@ condition|;
 name|pos
 operator|++
 control|)
+block|{
 name|metadataValueTag
 index|[
 name|pos
@@ -892,6 +895,7 @@ operator|=
 operator|-
 literal|1
 expr_stmt|;
+block|}
 name|mapJoinTables
 operator|=
 operator|new
@@ -939,7 +943,9 @@ name|pos
 operator|==
 name|posBigTable
 condition|)
+block|{
 continue|continue;
+block|}
 name|int
 name|cacheSize
 init|=
@@ -1287,10 +1293,12 @@ name|alias
 argument_list|)
 operator|)
 condition|)
+block|{
 name|nextSz
 operator|=
 name|joinEmitInterval
 expr_stmt|;
+block|}
 comment|// compute keys and values as StandardObjects
 name|ArrayList
 argument_list|<
@@ -1461,11 +1469,13 @@ operator|!=
 literal|null
 operator|)
 condition|)
+block|{
 name|reporter
 operator|.
 name|progress
 argument_list|()
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|(
@@ -1565,8 +1575,6 @@ name|res
 operator|=
 name|getRowContainer
 argument_list|(
-name|this
-operator|.
 name|hconf
 argument_list|,
 operator|(
@@ -1606,9 +1614,12 @@ argument_list|(
 name|value
 argument_list|)
 expr_stmt|;
-comment|// If key already exists, HashMapWrapper.get() guarantees it is already in main memory HashMap
-comment|// cache. So just replacing the object value should update the HashMapWrapper. This will save
-comment|// the cost of constructing the new key/object and deleting old one and inserting the new one.
+comment|// If key already exists, HashMapWrapper.get() guarantees it is
+comment|// already in main memory HashMap
+comment|// cache. So just replacing the object value should update the
+comment|// HashMapWrapper. This will save
+comment|// the cost of constructing the new key/object and deleting old one
+comment|// and inserting the new one.
 if|if
 condition|(
 name|hashTable
@@ -1769,8 +1780,6 @@ name|valueObj
 operator|.
 name|setConf
 argument_list|(
-name|this
-operator|.
 name|hconf
 argument_list|)
 expr_stmt|;
@@ -1887,9 +1896,6 @@ decl_stmt|;
 name|MapJoinObjectValue
 name|o
 init|=
-operator|(
-name|MapJoinObjectValue
-operator|)
 name|mapJoinTables
 operator|.
 name|get
@@ -1913,6 +1919,7 @@ if|if
 condition|(
 name|noOuterJoin
 condition|)
+block|{
 name|storage
 operator|.
 name|put
@@ -1922,7 +1929,9 @@ argument_list|,
 name|emptyList
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|storage
 operator|.
 name|put
@@ -1938,6 +1947,7 @@ argument_list|()
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -1978,6 +1988,7 @@ name|pos
 range|:
 name|order
 control|)
+block|{
 if|if
 condition|(
 name|pos
@@ -1987,6 +1998,7 @@ argument_list|()
 operator|!=
 name|tag
 condition|)
+block|{
 name|storage
 operator|.
 name|put
@@ -1996,6 +2008,8 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2017,6 +2031,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|closeOp
@@ -2052,7 +2068,9 @@ name|abort
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Implements the getName function for the Node Interface.    * @return the name of the operator    */
+comment|/**    * Implements the getName function for the Node Interface.    *     * @return the name of the operator    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getName
@@ -2062,6 +2080,8 @@ return|return
 literal|"MAPJOIN"
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

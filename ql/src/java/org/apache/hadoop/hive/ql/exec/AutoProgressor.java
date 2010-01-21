@@ -82,7 +82,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * AutoProgressor periodically sends updates to the job tracker so that  * it doesn't consider this task attempt dead if there is a long period of  * inactivity.  */
+comment|/**  * AutoProgressor periodically sends updates to the job tracker so that it  * doesn't consider this task attempt dead if there is a long period of  * inactivity.  */
 end_comment
 
 begin_class
@@ -152,12 +152,14 @@ name|rp
 operator|!=
 literal|null
 condition|)
+block|{
 name|this
 operator|.
 name|rp
 operator|=
 name|rp
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override

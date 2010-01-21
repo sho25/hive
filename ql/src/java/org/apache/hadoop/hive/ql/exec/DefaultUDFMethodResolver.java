@@ -60,7 +60,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The default UDF Method resolver. This resolver is used for resolving the UDF method that is to be  * used for evaluation given the list of the argument types. The getEvalMethod goes through all the  * evaluate methods and returns the one that matches the argument signature or is the closest match.  * Closest match is defined as the one that requires the least number of arguments to be converted.  * In case more than one matches are found, the method throws an ambiguous method exception.  */
+comment|/**  * The default UDF Method resolver. This resolver is used for resolving the UDF  * method that is to be used for evaluation given the list of the argument  * types. The getEvalMethod goes through all the evaluate methods and returns  * the one that matches the argument signature or is the closest match. Closest  * match is defined as the one that requires the least number of arguments to be  * converted. In case more than one matches are found, the method throws an  * ambiguous method exception.  */
 end_comment
 
 begin_class
@@ -72,6 +72,7 @@ name|UDFMethodResolver
 block|{
 comment|/**    * The class of the UDF.    */
 specifier|private
+specifier|final
 name|Class
 argument_list|<
 name|?
@@ -80,7 +81,7 @@ name|UDF
 argument_list|>
 name|udfClass
 decl_stmt|;
-comment|/**    * Constructor.    * This constructor sets the resolver to be used for comparison operators.    * See {@link UDFMethodResolver}    */
+comment|/**    * Constructor. This constructor sets the resolver to be used for comparison    * operators. See {@link UDFMethodResolver}    */
 specifier|public
 name|DefaultUDFMethodResolver
 parameter_list|(
@@ -100,7 +101,7 @@ operator|=
 name|udfClass
 expr_stmt|;
 block|}
-comment|/**    * Gets the evaluate method for the UDF given the parameter types.    *     * @param argClasses The list of the argument types that need to matched with the evaluate    *                   function signature.    */
+comment|/**    * Gets the evaluate method for the UDF given the parameter types.    *     * @param argClasses    *          The list of the argument types that need to matched with the    *          evaluate function signature.    */
 annotation|@
 name|Override
 specifier|public

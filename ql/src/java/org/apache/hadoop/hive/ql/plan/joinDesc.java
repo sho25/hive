@@ -31,125 +31,11 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Utilities
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|HiveSequenceFileOutputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|exprNodeDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|lazybinary
-operator|.
-name|LazyBinarySerDe
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|TypeInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|SequenceFileInputFormat
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
 operator|.
 name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
 import|;
 end_import
 
@@ -257,7 +143,7 @@ name|LEFT_SEMI_JOIN
 init|=
 literal|5
 decl_stmt|;
-comment|//used to handle skew join
+comment|// used to handle skew join
 specifier|private
 name|boolean
 name|handleSkewJoin
@@ -316,7 +202,7 @@ argument_list|>
 argument_list|>
 name|exprs
 decl_stmt|;
-comment|//used for create joinOutputObjectInspector
+comment|// used for create joinOutputObjectInspector
 specifier|protected
 name|java
 operator|.
@@ -365,7 +251,7 @@ decl_stmt|;
 specifier|public
 name|joinDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|joinDesc
 parameter_list|(
@@ -548,8 +434,6 @@ name|getExprs
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|exprs
 return|;
 block|}
@@ -580,8 +464,6 @@ argument_list|>
 name|reversed_Exprs
 parameter_list|)
 block|{
-name|this
-operator|.
 name|reversedExprs
 operator|=
 name|reversed_Exprs
@@ -835,8 +717,6 @@ name|getNoOuterJoin
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|noOuterJoin
 return|;
 block|}
@@ -922,8 +802,6 @@ name|getConds
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|conds
 return|;
 block|}
@@ -955,7 +833,7 @@ return|return
 name|tagOrder
 return|;
 block|}
-comment|/**    * The order in which tables should be processed when joining    *     * @param tagOrder Array of tags    */
+comment|/**    * The order in which tables should be processed when joining    *     * @param tagOrder    *          Array of tags    */
 specifier|public
 name|void
 name|setTagOrder
@@ -988,7 +866,7 @@ return|return
 name|handleSkewJoin
 return|;
 block|}
-comment|/**    * set to handle skew join in this join op    * @param handleSkewJoin    */
+comment|/**    * set to handle skew join in this join op    *     * @param handleSkewJoin    */
 specifier|public
 name|void
 name|setHandleSkewJoin
@@ -1019,7 +897,7 @@ return|return
 name|bigKeysDirMap
 return|;
 block|}
-comment|/**    * set the mapping from tbl to dir for big keys    * @param bigKeysDirMap    */
+comment|/**    * set the mapping from tbl to dir for big keys    *     * @param bigKeysDirMap    */
 specifier|public
 name|void
 name|setBigKeysDirMap
@@ -1060,7 +938,7 @@ return|return
 name|smallKeysDirMap
 return|;
 block|}
-comment|/**    * set the mapping from tbl to dir for small keys    * @param bigKeysDirMap    */
+comment|/**    * set the mapping from tbl to dir for small keys    *     * @param bigKeysDirMap    */
 specifier|public
 name|void
 name|setSmallKeysDirMap
@@ -1096,7 +974,7 @@ return|return
 name|skewKeyDefinition
 return|;
 block|}
-comment|/**    * set skew key definition    * @param skewKeyDefinition    */
+comment|/**    * set skew key definition    *     * @param skewKeyDefinition    */
 specifier|public
 name|void
 name|setSkewKeyDefinition
@@ -1127,7 +1005,7 @@ return|return
 name|skewKeysValuesTables
 return|;
 block|}
-comment|/**    * @param skewKeysValuesTable set the table desc for storing skew keys and their corresponding value;    */
+comment|/**    * @param skewKeysValuesTable    *          set the table desc for storing skew keys and their corresponding    *          value;    */
 specifier|public
 name|void
 name|setSkewKeysValuesTables
@@ -1204,9 +1082,11 @@ name|joinDesc
 operator|.
 name|RIGHT_OUTER_JOIN
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 return|return
 literal|true
@@ -1220,8 +1100,6 @@ name|tableDesc
 name|keyTblDesc
 parameter_list|)
 block|{
-name|this
-operator|.
 name|keyTableDesc
 operator|=
 name|keyTblDesc

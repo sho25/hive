@@ -45,16 +45,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Calendar
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Date
 import|;
 end_import
@@ -183,6 +173,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|SimpleDateFormat
 name|formatter
 init|=
@@ -203,7 +194,7 @@ specifier|public
 name|UDFDate
 parameter_list|()
 block|{   }
-comment|/**    * Get the date part of a date time string.    *     * @param dateString the date string in the format of "yyyy-MM-dd HH:mm:ss" or "yyyy-MM-dd".    * @return the date in the format of "yyyy-MM-dd".    */
+comment|/**    * Get the date part of a date time string.    *     * @param dateString    *          the date string in the format of "yyyy-MM-dd HH:mm:ss" or    *          "yyyy-MM-dd".    * @return the date in the format of "yyyy-MM-dd".    */
 specifier|public
 name|Text
 name|evaluate

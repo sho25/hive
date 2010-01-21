@@ -100,7 +100,7 @@ decl_stmt|;
 specifier|public
 name|selectDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|selectDesc
 parameter_list|(
@@ -318,8 +318,6 @@ name|getColList
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|colList
 return|;
 block|}
@@ -450,7 +448,7 @@ return|return
 name|selectStar
 return|;
 block|}
-comment|/**    * @param selectStar the selectStar to set    */
+comment|/**    * @param selectStar    *          the selectStar to set    */
 specifier|public
 name|void
 name|setSelectStar
@@ -476,7 +474,7 @@ return|return
 name|selStarNoCompute
 return|;
 block|}
-comment|/**    * @param selStarNoCompute the selStarNoCompute to set    */
+comment|/**    * @param selStarNoCompute    *          the selStarNoCompute to set    */
 specifier|public
 name|void
 name|setSelStarNoCompute

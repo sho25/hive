@@ -155,7 +155,7 @@ specifier|public
 name|UDFExp
 parameter_list|()
 block|{   }
-comment|/**    * Raise e (the base of natural logarithm) to the power of a.     */
+comment|/**    * Raise e (the base of natural logarithm) to the power of a.    */
 specifier|public
 name|DoubleWritable
 name|evaluate

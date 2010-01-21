@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  The data that comes at the start of a record of data. It stores   *  both the current size and the avaliable size for the record - the latter  *  can be bigger than the former, which allows the record to grow without  *  needing to be moved and which allows the system to put small records  *  in larger free spots.  */
+comment|/**  * The data that comes at the start of a record of data. It stores both the  * current size and the avaliable size for the record - the latter can be bigger  * than the former, which allows the record to grow without needing to be moved  * and which allows the system to put small records in larger free spots.  */
 end_comment
 
 begin_class
@@ -55,7 +55,8 @@ name|Magic
 operator|.
 name|SZ_INT
 decl_stmt|;
-comment|// int availableSize
+comment|// int
+comment|// availableSize
 specifier|static
 specifier|final
 name|int
@@ -69,14 +70,16 @@ name|SZ_INT
 decl_stmt|;
 comment|// my block and the position within the block
 specifier|private
+specifier|final
 name|BlockIo
 name|block
 decl_stmt|;
 specifier|private
+specifier|final
 name|short
 name|pos
 decl_stmt|;
-comment|/**      *  Constructs a record header from the indicated data starting at      *  the indicated position.      */
+comment|/**    * Constructs a record header from the indicated data starting at the    * indicated position.    */
 name|RecordHeader
 parameter_list|(
 name|BlockIo
@@ -110,6 +113,7 @@ operator|-
 name|SIZE
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|Error
@@ -128,6 +132,7 @@ operator|+
 literal|")"
 argument_list|)
 throw|;
+block|}
 block|}
 comment|/** Returns the current size */
 name|int
@@ -202,6 +207,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// overrides java.lang.Object
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

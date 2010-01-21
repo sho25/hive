@@ -351,6 +351,8 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|execute
@@ -480,6 +482,7 @@ argument_list|,
 name|targetPath
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -494,6 +497,7 @@ name|targetPath
 argument_list|)
 throw|;
 block|}
+block|}
 elseif|else
 if|if
 condition|(
@@ -505,6 +509,7 @@ argument_list|(
 name|targetPath
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -514,6 +519,7 @@ operator|+
 name|targetPath
 argument_list|)
 throw|;
+block|}
 block|}
 else|else
 block|{
@@ -597,6 +603,7 @@ argument_list|(
 name|sourcePath
 argument_list|)
 condition|)
+block|{
 name|fs
 operator|.
 name|copyToLocalFile
@@ -606,6 +613,7 @@ argument_list|,
 name|targetPath
 argument_list|)
 expr_stmt|;
+block|}
 else|else
 block|{
 if|if
@@ -618,6 +626,7 @@ argument_list|(
 name|targetPath
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -627,6 +636,7 @@ operator|+
 name|targetPath
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 else|else
@@ -846,7 +856,8 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// We only check one file, so exit the loop when we have at least one.
+comment|// We only check one file, so exit the loop when we have at least
+comment|// one.
 if|if
 condition|(
 name|files
@@ -856,7 +867,9 @@ argument_list|()
 operator|>
 literal|0
 condition|)
+block|{
 break|break;
+block|}
 block|}
 block|}
 catch|catch
@@ -903,6 +916,7 @@ condition|(
 operator|!
 name|flag
 condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -910,6 +924,7 @@ argument_list|(
 literal|"Wrong file format. Please check the file's format."
 argument_list|)
 throw|;
+block|}
 block|}
 if|if
 condition|(
@@ -969,6 +984,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|work
 operator|.
 name|getOutputs
@@ -983,6 +999,7 @@ name|table
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -1068,6 +1085,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|work
 operator|.
 name|getOutputs
@@ -1082,6 +1100,7 @@ name|partn
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 return|return
@@ -1142,9 +1161,11 @@ name|tbd
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|loadFileDesc
 name|lfd
 init|=
@@ -1173,14 +1194,18 @@ literal|false
 return|;
 block|}
 else|else
+block|{
 return|return
 literal|true
 return|;
+block|}
 block|}
 return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

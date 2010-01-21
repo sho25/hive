@@ -78,7 +78,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Serialization-related utility methods.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Serialization.java,v 1.1 2002/05/31 06:33:20 boisvert Exp $  */
+comment|/**  * Serialization-related utility methods.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Serialization.java,v 1.1 2002/05/31 06:33:20 boisvert Exp $  */
 end_comment
 
 begin_class
@@ -87,7 +87,7 @@ specifier|final
 class|class
 name|Serialization
 block|{
-comment|/**      * Serialize the object into a byte array.      */
+comment|/**    * Serialize the object into a byte array.    */
 specifier|public
 specifier|static
 name|byte
@@ -139,7 +139,7 @@ name|toByteArray
 argument_list|()
 return|;
 block|}
-comment|/**      * Deserialize an object from a byte array      */
+comment|/**    * Deserialize an object from a byte array    */
 specifier|public
 specifier|static
 name|Object

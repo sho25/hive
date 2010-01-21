@@ -25,7 +25,27 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|DataInput
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|DataOutput
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
 import|;
 end_import
 
@@ -98,9 +118,6 @@ name|IOException
 block|{
 name|value
 operator|=
-operator|(
-name|int
-operator|)
 name|in
 operator|.
 name|readByte
@@ -157,8 +174,6 @@ block|{
 name|int
 name|thisValue
 init|=
-name|this
-operator|.
 name|value
 decl_stmt|;
 name|int
@@ -194,6 +209,8 @@ operator|)
 operator|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -230,27 +247,33 @@ name|this
 operator|==
 name|that
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
-name|this
-operator|.
 name|value
 operator|==
 name|that
 operator|.
 name|value
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 else|else
+block|{
 return|return
 literal|false
 return|;
 block|}
+block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -283,6 +306,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**      * Compare the buffers in serialized form.      */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -308,7 +333,7 @@ name|int
 name|l2
 parameter_list|)
 block|{
-comment|/** ok - we are implementing a dummy byte           int a = b1[s1]& 0xff;           int b = b2[s1]& 0xff;           if(a!=b)           return a -b;       */
+comment|/**        * ok - we are implementing a dummy byte int a = b1[s1]& 0xff; int b =        * b2[s1]& 0xff; if(a!=b) return a -b;        */
 return|return
 literal|0
 return|;

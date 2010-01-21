@@ -35,6 +35,18 @@ name|lang
 operator|.
 name|ref
 operator|.
+name|Reference
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|lang
+operator|.
+name|ref
+operator|.
 name|ReferenceQueue
 import|;
 end_import
@@ -55,31 +67,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|lang
-operator|.
-name|ref
-operator|.
-name|Reference
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|Enumeration
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
 import|;
 end_import
 
@@ -93,8 +83,18 @@ name|HashMap
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
 begin_comment
-comment|/**  * Wraps a deterministic cache policy with a<q>Level-2</q> cache based on  * J2SE's {@link SoftReference soft references}. Soft references allow  * this cache to keep references to objects until the memory they occupy  * is required elsewhere.  *<p>  * Since the {@link CachePolicy} interface requires an event be fired  * when an object is evicted, and the event contains the actual object,  * this class cannot be a stand-alone implementation of  *<code>CachePolicy</code>. This limitation arises because Java References  * does not support notification before references are cleared; nor do  * they support reaching soft referents. Therefore, this wrapper cache  * aggressively notifies evictions: events are fired when the objects are  * evicted from the internal cache. Consequently, the soft cache may return  * a non-null object when<code>get( )</code> is called, even if that  * object was said to have been evicted.  *<p>  * The current implementation uses a hash structure for its internal key  * to value mappings.  *<p>  * Note: this component's publicly exposed methods are not threadsafe;  * potentially concurrent code should synchronize on the cache instance.  *  * @author<a href="mailto:dranatunga@users.sourceforge.net">Dilum Ranatunga</a>  * @version $Id: SoftCache.java,v 1.1 2003/11/01 13:29:27 dranatunga Exp $  */
+comment|/**  * Wraps a deterministic cache policy with a<q>Level-2</q> cache based on  * J2SE's {@link SoftReference soft references}. Soft references allow this  * cache to keep references to objects until the memory they occupy is required  * elsewhere.  *<p>  * Since the {@link CachePolicy} interface requires an event be fired when an  * object is evicted, and the event contains the actual object, this class  * cannot be a stand-alone implementation of<code>CachePolicy</code>. This  * limitation arises because Java References does not support notification  * before references are cleared; nor do they support reaching soft referents.  * Therefore, this wrapper cache aggressively notifies evictions: events are  * fired when the objects are evicted from the internal cache. Consequently, the  * soft cache may return a non-null object when<code>get( )</code> is called,  * even if that object was said to have been evicted.  *<p>  * The current implementation uses a hash structure for its internal key to  * value mappings.  *<p>  * Note: this component's publicly exposed methods are not threadsafe;  * potentially concurrent code should synchronize on the cache instance.  *   * @author<a href="mailto:dranatunga@users.sourceforge.net">Dilum Ranatunga</a>  * @version $Id: SoftCache.java,v 1.1 2003/11/01 13:29:27 dranatunga Exp $  */
 end_comment
 
 begin_class
@@ -139,7 +139,7 @@ specifier|final
 name|Map
 name|_cacheMap
 decl_stmt|;
-comment|/**      * Creates a soft-reference based L2 cache with a {@link MRU} cache as      * the internal (L1) cache. The soft reference cache uses the      * default load capacity of 1.5f, which is intended to sacrifice some      * performance for space. This compromise is reasonable, since all      * {@link #get(Object) get( )s} first try the L1 cache anyway. The      * internal MRU is given a capacity of 128 elements.      */
+comment|/**    * Creates a soft-reference based L2 cache with a {@link MRU} cache as the    * internal (L1) cache. The soft reference cache uses the default load    * capacity of 1.5f, which is intended to sacrifice some performance for    * space. This compromise is reasonable, since all {@link #get(Object) get(    * )s} first try the L1 cache anyway. The internal MRU is given a capacity of    * 128 elements.    */
 specifier|public
 name|SoftCache
 parameter_list|()
@@ -154,7 +154,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Creates a soft-reference based L2 cache wrapping the specified      * L1 cache.      *      * @param internal non null internal cache.      * @throws NullPointerException if the internal cache is null.      */
+comment|/**    * Creates a soft-reference based L2 cache wrapping the specified L1 cache.    *     * @param internal    *          non null internal cache.    * @throws NullPointerException    *           if the internal cache is null.    */
 specifier|public
 name|SoftCache
 parameter_list|(
@@ -172,7 +172,7 @@ name|internal
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Creates a soft-reference based L2 cache wrapping the specified      * L1 cache. This constructor is somewhat implementation-specific,      * so users are encouraged to use {@link #SoftCache(CachePolicy)}      * instead.      *      * @param loadFactor load factor that the soft cache's hash structure      *        should use.      * @param internal non null internal cache.      * @throws IllegalArgumentException if the load factor is nonpositive.      * @throws NullPointerException if the internal cache is null.      */
+comment|/**    * Creates a soft-reference based L2 cache wrapping the specified L1 cache.    * This constructor is somewhat implementation-specific, so users are    * encouraged to use {@link #SoftCache(CachePolicy)} instead.    *     * @param loadFactor    *          load factor that the soft cache's hash structure should use.    * @param internal    *          non null internal cache.    * @throws IllegalArgumentException    *           if the load factor is nonpositive.    * @throws NullPointerException    *           if the internal cache is null.    */
 specifier|public
 name|SoftCache
 parameter_list|(
@@ -217,7 +217,7 @@ name|loadFactor
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Adds the specified value to the cache under the specified key. Note      * that the object is added to both this and the internal cache.      * @param key the (non-null) key to store the object under      * @param value the (non-null) object to place in the cache      * @throws CacheEvictionException exception that the internal cache      *         would have experienced while evicting an object it currently      *         cached.      */
+comment|/**    * Adds the specified value to the cache under the specified key. Note that    * the object is added to both this and the internal cache.    *     * @param key    *          the (non-null) key to store the object under    * @param value    *          the (non-null) object to place in the cache    * @throws CacheEvictionException    *           exception that the internal cache would have experienced while    *           evicting an object it currently cached.    */
 specifier|public
 name|void
 name|put
@@ -292,7 +292,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Gets the object cached under the specified key.      *<p>      * The cache is looked up in the following manner:      *<ol>      *<li>The internal (L1) cache is checked. If the object is found, it is      *     returned.</li>      *<li>This (L2) cache is checked. If the object is not found, then      *     the caller is informed that the object is inaccessible.</li>      *<li>Since the object exists in L2, but not in L1, the object is      *     readded to L1 using {@link CachePolicy#put(Object, Object)}.</li>      *<li>If the readding succeeds, the value is returned to caller.</li>      *<li>If a cache eviction exception is encountered instead, we      *     remove the object from L2 and behave as if the object was      *     inaccessible.</li>      *</ol>      * @param key the key that the object was stored under.      * @return the object stored under the key specified; null if the      *         object is not (nolonger) accessible via this cache.      */
+comment|/**    * Gets the object cached under the specified key.    *<p>    * The cache is looked up in the following manner:    *<ol>    *<li>The internal (L1) cache is checked. If the object is found, it is    * returned.</li>    *<li>This (L2) cache is checked. If the object is not found, then the caller    * is informed that the object is inaccessible.</li>    *<li>Since the object exists in L2, but not in L1, the object is readded to    * L1 using {@link CachePolicy#put(Object, Object)}.</li>    *<li>If the readding succeeds, the value is returned to caller.</li>    *<li>If a cache eviction exception is encountered instead, we remove the    * object from L2 and behave as if the object was inaccessible.</li>    *</ol>    *     * @param key    *          the key that the object was stored under.    * @return the object stored under the key specified; null if the object is    *         not (nolonger) accessible via this cache.    */
 specifier|public
 name|Object
 name|get
@@ -406,7 +406,7 @@ return|return
 name|value
 return|;
 block|}
-comment|/**      * Removes any object stored under the key specified. Note that the      * object is removed from both this (L2) and the internal (L1)      * cache.      * @param key the key whose object should be removed      */
+comment|/**    * Removes any object stored under the key specified. Note that the object is    * removed from both this (L2) and the internal (L1) cache.    *     * @param key    *          the key whose object should be removed    */
 specifier|public
 name|void
 name|remove
@@ -430,7 +430,7 @@ name|key
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Removes all objects in this (L2) and its internal (L1) cache.      */
+comment|/**    * Removes all objects in this (L2) and its internal (L1) cache.    */
 specifier|public
 name|void
 name|removeAll
@@ -447,7 +447,7 @@ name|removeAll
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Gets all the objects stored by the internal (L1) cache.      * @return an enumeration of objects in internal cache.      */
+comment|/**    * Gets all the objects stored by the internal (L1) cache.    *     * @return an enumeration of objects in internal cache.    */
 specifier|public
 name|Enumeration
 name|elements
@@ -460,7 +460,7 @@ name|elements
 argument_list|()
 return|;
 block|}
-comment|/**      * Adds the specified listener to this cache. Note that the events      * fired by this correspond to the<em>internal</em> cache's events.      * @param listener the (non-null) listener to add to this policy      * @throws IllegalArgumentException if listener is null.      */
+comment|/**    * Adds the specified listener to this cache. Note that the events fired by    * this correspond to the<em>internal</em> cache's events.    *     * @param listener    *          the (non-null) listener to add to this policy    * @throws IllegalArgumentException    *           if listener is null.    */
 specifier|public
 name|void
 name|addListener
@@ -479,7 +479,7 @@ name|listener
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Removes a listener that was added earlier.      * @param listener the listener to remove.      */
+comment|/**    * Removes a listener that was added earlier.    *     * @param listener    *          the listener to remove.    */
 specifier|public
 name|void
 name|removeListener
@@ -496,7 +496,7 @@ name|listener
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Cleans the mapping structure of any obsolete entries. This is usually      * called before insertions and lookups on the mapping structure. The      * runtime of this is usually very small, but it can be as expensive as      * n * log(n) if a large number of soft references were recently cleared.      */
+comment|/**    * Cleans the mapping structure of any obsolete entries. This is usually    * called before insertions and lookups on the mapping structure. The runtime    * of this is usually very small, but it can be as expensive as n * log(n) if    * a large number of soft references were recently cleared.    */
 specifier|private
 specifier|final
 name|void
@@ -547,7 +547,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Value objects we keep in the internal map. This contains the key in      * addition to the value, because polling for cleared references      * returns these instances, and having access to their corresponding      * keys drastically improves the performance of removing the pair      * from the map (see {@link SoftCache#removeClearedEntries()}.)      */
+comment|/**    * Value objects we keep in the internal map. This contains the key in    * addition to the value, because polling for cleared references returns these    * instances, and having access to their corresponding keys drastically    * improves the performance of removing the pair from the map (see    * {@link SoftCache#removeClearedEntries()}.)    */
 specifier|private
 specifier|static
 class|class
@@ -560,7 +560,7 @@ specifier|final
 name|Object
 name|_key
 decl_stmt|;
-comment|/**          * Constructor that uses<code>value</code> as the soft          * reference's referent.          */
+comment|/**      * Constructor that uses<code>value</code> as the soft reference's      * referent.      */
 specifier|public
 name|Entry
 parameter_list|(
@@ -586,7 +586,7 @@ operator|=
 name|key
 expr_stmt|;
 block|}
-comment|/**          * Gets the key          * @return the key associated with this value.          */
+comment|/**      * Gets the key      *       * @return the key associated with this value.      */
 specifier|final
 name|Object
 name|getKey
@@ -596,7 +596,7 @@ return|return
 name|_key
 return|;
 block|}
-comment|/**          * Gets the value          * @return the value; null if it is no longer accessible          */
+comment|/**      * Gets the value      *       * @return the value; null if it is no longer accessible      */
 specifier|final
 name|Object
 name|getValue

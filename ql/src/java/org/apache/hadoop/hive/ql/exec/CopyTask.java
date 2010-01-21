@@ -39,7 +39,7 @@ name|hadoop
 operator|.
 name|fs
 operator|.
-name|Path
+name|FileStatus
 import|;
 end_import
 
@@ -81,7 +81,25 @@ name|hadoop
 operator|.
 name|fs
 operator|.
-name|FileStatus
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|LoadSemanticAnalyzer
 import|;
 end_import
 
@@ -131,24 +149,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|LoadSemanticAnalyzer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|util
 operator|.
 name|StringUtils
@@ -187,6 +187,8 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|execute
@@ -377,7 +379,8 @@ name|toPath
 argument_list|,
 literal|false
 argument_list|,
-comment|// delete source
+comment|// delete
+comment|// source
 literal|true
 argument_list|,
 comment|// overwrite destination
@@ -452,6 +455,8 @@ operator|)
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  Class describing a page that holds translations from physical rowids  *  to logical rowids. In fact, the page just holds physical rowids - the  *  page's block is the block for the logical rowid, the offset serve  *  as offset for the rowids.  */
+comment|/**  * Class describing a page that holds translations from physical rowids to  * logical rowids. In fact, the page just holds physical rowids - the page's  * block is the block for the logical rowid, the offset serve as offset for the  * rowids.  */
 end_comment
 
 begin_class
@@ -78,7 +78,7 @@ index|[
 name|ELEMS_PER_PAGE
 index|]
 decl_stmt|;
-comment|/**      *  Constructs a data page view from the indicated block.      */
+comment|/**    * Constructs a data page view from the indicated block.    */
 name|TranslationPage
 parameter_list|(
 name|BlockIo
@@ -91,7 +91,7 @@ name|block
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Factory method to create or return a data page for the      *  indicated block.      */
+comment|/**    * Factory method to create or return a data page for the indicated block.    */
 specifier|static
 name|TranslationPage
 name|getTranslationPageView
@@ -118,13 +118,16 @@ name|view
 operator|instanceof
 name|TranslationPage
 condition|)
+block|{
 return|return
 operator|(
 name|TranslationPage
 operator|)
 name|view
 return|;
+block|}
 else|else
+block|{
 return|return
 operator|new
 name|TranslationPage
@@ -132,6 +135,7 @@ argument_list|(
 name|block
 argument_list|)
 return|;
+block|}
 block|}
 comment|/** Returns the value of the indicated rowid on the page */
 name|PhysicalRowId
@@ -163,6 +167,7 @@ index|]
 operator|==
 literal|null
 condition|)
+block|{
 name|slots
 index|[
 name|slot
@@ -176,6 +181,7 @@ argument_list|,
 name|offset
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|slots
 index|[

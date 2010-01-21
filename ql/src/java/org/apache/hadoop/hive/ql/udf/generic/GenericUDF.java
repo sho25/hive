@@ -94,7 +94,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Generic User-defined function (GenericUDF) for the use with Hive.  *   * New GenericUDF classes need to inherit from this GenericUDF class.  *   * The GenericUDF are superior to normal UDFs in the following ways:  * 1. It can accept arguments of complex types, and return complex types.  * 2. It can accept variable length of arguments.  * 3. It can accept an infinite number of function signature - for example,   *    it's easy to write a GenericUDF that accepts array<int>,   *    array<array<int>> and so on (arbitrary levels of nesting).  * 4. It can do short-circuit evaluations using DeferedObject.    */
+comment|/**  * A Generic User-defined function (GenericUDF) for the use with Hive.  *   * New GenericUDF classes need to inherit from this GenericUDF class.  *   * The GenericUDF are superior to normal UDFs in the following ways: 1. It can  * accept arguments of complex types, and return complex types. 2. It can accept  * variable length of arguments. 3. It can accept an infinite number of function  * signature - for example, it's easy to write a GenericUDF that accepts  * array<int>, array<array<int>> and so on (arbitrary levels of nesting). 4. It  * can do short-circuit evaluations using DeferedObject.  */
 end_comment
 
 begin_class
@@ -110,7 +110,7 @@ specifier|abstract
 class|class
 name|GenericUDF
 block|{
-comment|/**    * A Defered Object allows us to do lazy-evaluation    * and short-circuiting.    * GenericUDF use DeferedObject to pass arguments.    */
+comment|/**    * A Defered Object allows us to do lazy-evaluation and short-circuiting.    * GenericUDF use DeferedObject to pass arguments.    */
 specifier|public
 specifier|static
 interface|interface
@@ -130,7 +130,7 @@ specifier|public
 name|GenericUDF
 parameter_list|()
 block|{   }
-comment|/**    * Initialize this GenericUDF. This will be called once and only once per    * GenericUDF instance.    *     * @param arguments     The ObjectInspector for the arguments    * @throws UDFArgumentException    *                      Thrown when arguments have wrong types, wrong length, etc.    * @return              The ObjectInspector for the return value    */
+comment|/**    * Initialize this GenericUDF. This will be called once and only once per    * GenericUDF instance.    *     * @param arguments    *          The ObjectInspector for the arguments    * @throws UDFArgumentException    *           Thrown when arguments have wrong types, wrong length, etc.    * @return The ObjectInspector for the return value    */
 specifier|public
 specifier|abstract
 name|ObjectInspector
@@ -143,7 +143,7 @@ parameter_list|)
 throws|throws
 name|UDFArgumentException
 function_decl|;
-comment|/**    * Evaluate the GenericUDF with the arguments.    * @param arguments  The arguments as DeferedObject, use DeferedObject.get() to    *                   get the actual argument Object.  The Objects can be inspected    *                   by the ObjectInspectors passed in the initialize call.    * @return The     */
+comment|/**    * Evaluate the GenericUDF with the arguments.    *     * @param arguments    *          The arguments as DeferedObject, use DeferedObject.get() to get the    *          actual argument Object. The Objects can be inspected by the    *          ObjectInspectors passed in the initialize call.    * @return The    */
 specifier|public
 specifier|abstract
 name|Object

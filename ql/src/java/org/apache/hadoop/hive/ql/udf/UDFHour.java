@@ -203,6 +203,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|SimpleDateFormat
 name|formatter1
 init|=
@@ -213,6 +214,7 @@ literal|"yyyy-MM-dd HH:mm:ss"
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|SimpleDateFormat
 name|formatter2
 init|=
@@ -223,6 +225,7 @@ literal|"HH:mm:ss"
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|Calendar
 name|calendar
 init|=
@@ -242,7 +245,7 @@ specifier|public
 name|UDFHour
 parameter_list|()
 block|{   }
-comment|/**    * Get the hour from a date string.    *     * @param dateString the dateString in the format of "yyyy-MM-dd HH:mm:ss" or "yyyy-MM-dd".    * @return an int from 0 to 23. null if the dateString is not a valid date string.    */
+comment|/**    * Get the hour from a date string.    *     * @param dateString    *          the dateString in the format of "yyyy-MM-dd HH:mm:ss" or    *          "yyyy-MM-dd".    * @return an int from 0 to 23. null if the dateString is not a valid date    *         string.    */
 specifier|public
 name|IntWritable
 name|evaluate

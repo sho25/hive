@@ -211,20 +211,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|TextOutputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|thrift
 operator|.
 name|TException
@@ -253,24 +239,28 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|dbName
 init|=
 literal|"dbname"
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|tableName
 init|=
 literal|"tablename"
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|partDateName
 init|=
 literal|"partdate"
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|partCityName
 init|=
@@ -1081,7 +1071,7 @@ name|isEmpty
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//create a new external table
+comment|// create a new external table
 name|hive
 operator|.
 name|dropTable
@@ -1107,7 +1097,7 @@ argument_list|(
 name|table
 argument_list|)
 expr_stmt|;
-comment|//should return all ok
+comment|// should return all ok
 name|result
 operator|=
 operator|new

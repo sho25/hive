@@ -99,7 +99,7 @@ decl_stmt|;
 specifier|public
 name|exprNodeDesc
 parameter_list|()
-block|{}
+block|{   }
 specifier|public
 name|exprNodeDesc
 parameter_list|(
@@ -129,6 +129,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 specifier|abstract
 name|exprNodeDesc
@@ -136,7 +138,8 @@ name|clone
 parameter_list|()
 function_decl|;
 comment|// Cant use equals because the walker depends on them being object equal
-comment|// The default graph walker processes a node after its kids have been processed. That comparison needs
+comment|// The default graph walker processes a node after its kids have been
+comment|// processed. That comparison needs
 comment|// object equality - isSame means that the objects are semantically equal.
 specifier|public
 specifier|abstract
@@ -153,8 +156,6 @@ name|getTypeInfo
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|typeInfo
 return|;
 block|}

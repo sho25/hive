@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Interface used to provide a serialization mechanism other than a class' normal  * serialization.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Serializer.java,v 1.1 2003/03/21 02:48:42 boisvert Exp $  */
+comment|/**  * Interface used to provide a serialization mechanism other than a class'  * normal serialization.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Serializer.java,v 1.1 2003/03/21 02:48:42 boisvert Exp $  */
 end_comment
 
 begin_interface
@@ -58,7 +58,7 @@ name|Serializer
 extends|extends
 name|Serializable
 block|{
-comment|/**      * Serialize the content of an object into a byte array.      *      * @param obj Object to serialize      * @return a byte array representing the object's state      */
+comment|/**    * Serialize the content of an object into a byte array.    *     * @param obj    *          Object to serialize    * @return a byte array representing the object's state    */
 specifier|public
 name|byte
 index|[]
@@ -70,7 +70,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Deserialize the content of an object from a byte array.      *      * @param serialized Byte array representation of the object      * @return deserialized object      */
+comment|/**    * Deserialize the content of an object from a byte array.    *     * @param serialized    *          Byte array representation of the object    * @return deserialized object    */
 specifier|public
 name|Object
 name|deserialize

@@ -216,7 +216,7 @@ specifier|static
 class|class
 name|ExprInfo
 block|{
-comment|/** true if expr rooted at this node doesn't contain more than one table alias */
+comment|/**      * true if expr rooted at this node doesn't contain more than one table      * alias      */
 specifier|public
 name|boolean
 name|isCandidate
@@ -230,7 +230,7 @@ name|alias
 init|=
 literal|null
 decl_stmt|;
-comment|/** new expr for this expression.*/
+comment|/** new expr for this expression. */
 specifier|public
 name|exprNodeDesc
 name|convertedExpr
@@ -240,7 +240,7 @@ decl_stmt|;
 specifier|public
 name|ExprInfo
 parameter_list|()
-block|{}
+block|{     }
 specifier|public
 name|ExprInfo
 parameter_list|(
@@ -266,8 +266,6 @@ name|alias
 operator|=
 name|alias
 expr_stmt|;
-name|this
-operator|.
 name|convertedExpr
 operator|=
 name|replacedNode
@@ -310,8 +308,9 @@ name|toRR
 init|=
 literal|null
 decl_stmt|;
-comment|/**    *  this map contains a expr infos. Each key is a node in the expression tree and the     * information for each node is the value which is used while walking the tree by     * its parent    */
+comment|/**    * this map contains a expr infos. Each key is a node in the expression tree    * and the information for each node is the value which is used while walking    * the tree by its parent    */
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|String
@@ -323,8 +322,9 @@ argument_list|>
 argument_list|>
 name|pushdownPreds
 decl_stmt|;
-comment|/**    *  Values the expression sub-trees (predicates) that can be pushed down for root     * expression tree. Since there can be more than one alias in an expression tree,     * this is a map from the alias to predicates.    */
+comment|/**    * Values the expression sub-trees (predicates) that can be pushed down for    * root expression tree. Since there can be more than one alias in an    * expression tree, this is a map from the alias to predicates.    */
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|exprNodeDesc
@@ -343,8 +343,6 @@ specifier|public
 name|ExprWalkerInfo
 parameter_list|()
 block|{
-name|this
-operator|.
 name|pushdownPreds
 operator|=
 operator|new
@@ -359,8 +357,6 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|exprInfoMap
 operator|=
 operator|new
@@ -401,8 +397,6 @@ name|toRR
 operator|=
 name|toRR
 expr_stmt|;
-name|this
-operator|.
 name|pushdownPreds
 operator|=
 operator|new
@@ -417,8 +411,6 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|exprInfoMap
 operator|=
 operator|new
@@ -456,7 +448,7 @@ return|return
 name|toRR
 return|;
 block|}
-comment|/**    * @return converted expression for give node. If there is none then returns null.    */
+comment|/**    * @return converted expression for give node. If there is none then returns    *         null.    */
 specifier|public
 name|exprNodeDesc
 name|getConvertedNode
@@ -481,16 +473,18 @@ name|ei
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
 name|ei
 operator|.
 name|convertedExpr
 return|;
 block|}
-comment|/**    * adds a replacement node for this expression    * @param oldNode original node    * @param newNode new node    */
+comment|/**    * adds a replacement node for this expression    *     * @param oldNode    *          original node    * @param newNode    *          new node    */
 specifier|public
 name|void
 name|addConvertedNode
@@ -563,7 +557,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns true if the specified expression is pushdown candidate else false    * @param expr    * @return true or false    */
+comment|/**    * Returns true if the specified expression is pushdown candidate else false    *     * @param expr    * @return true or false    */
 specifier|public
 name|boolean
 name|isCandidate
@@ -588,16 +582,18 @@ name|ei
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 name|ei
 operator|.
 name|isCandidate
 return|;
 block|}
-comment|/**    * Marks the specified expr to the specified value    * @param expr    * @param b can    */
+comment|/**    * Marks the specified expr to the specified value    *     * @param expr    * @param b    *          can    */
 specifier|public
 name|void
 name|setIsCandidate
@@ -649,7 +645,7 @@ operator|=
 name|b
 expr_stmt|;
 block|}
-comment|/**    * Returns the alias of the specified expr    * @param expr    * @return The alias of the expression    */
+comment|/**    * Returns the alias of the specified expr    *     * @param expr    * @return The alias of the expression    */
 specifier|public
 name|String
 name|getAlias
@@ -674,16 +670,18 @@ name|ei
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
 name|ei
 operator|.
 name|alias
 return|;
 block|}
-comment|/**    * Adds the specified alias to the specified expr    * @param expr    * @param alias    */
+comment|/**    * Adds the specified alias to the specified expr    *     * @param expr    * @param alias    */
 specifier|public
 name|void
 name|addAlias
@@ -701,7 +699,9 @@ name|alias
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|ExprInfo
 name|ei
 init|=
@@ -742,7 +742,7 @@ operator|=
 name|alias
 expr_stmt|;
 block|}
-comment|/**    * Adds the specified expr as the top-most pushdown expr (ie all its children can be pushed)    * @param expr    */
+comment|/**    * Adds the specified expr as the top-most pushdown expr (ie all its children    * can be pushed)    *     * @param expr    */
 specifier|public
 name|void
 name|addFinalCandidate
@@ -754,8 +754,6 @@ block|{
 name|String
 name|alias
 init|=
-name|this
-operator|.
 name|getAlias
 argument_list|(
 name|expr
@@ -797,9 +795,6 @@ argument_list|)
 operator|.
 name|add
 argument_list|(
-operator|(
-name|exprNodeDesc
-operator|)
 name|expr
 operator|.
 name|clone
@@ -807,7 +802,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns the list of pushdown expressions for each alias that appear in the current operator's    * RowResolver. The exprs in each list can be combined using conjunction (AND)    * @return the map of alias to a list of pushdown predicates    */
+comment|/**    * Returns the list of pushdown expressions for each alias that appear in the    * current operator's RowResolver. The exprs in each list can be combined    * using conjunction (AND)    *     * @return the map of alias to a list of pushdown predicates    */
 specifier|public
 name|Map
 argument_list|<
@@ -825,7 +820,7 @@ return|return
 name|pushdownPreds
 return|;
 block|}
-comment|/**    * Merges the specified pushdown predicates with the current class    * @param ewi ExpressionWalkerInfo    */
+comment|/**    * Merges the specified pushdown predicates with the current class    *     * @param ewi    *          ExpressionWalkerInfo    */
 specifier|public
 name|void
 name|merge
@@ -840,7 +835,9 @@ name|ewi
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Entry
@@ -917,7 +914,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * sets the deterministic flag for this expression     * @param b deterministic or not    */
+comment|/**    * sets the deterministic flag for this expression    *     * @param b    *          deterministic or not    */
 specifier|public
 name|void
 name|setDeterministic

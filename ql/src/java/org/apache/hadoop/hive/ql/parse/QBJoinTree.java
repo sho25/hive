@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|ArrayList
 import|;
 end_import
 
@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|HashMap
 import|;
 end_import
 
@@ -55,7 +55,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|Vector
 import|;
 end_import
 
@@ -72,7 +72,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Internal representation of the join tree  *  */
+comment|/**  * Internal representation of the join tree  *   */
 end_comment
 
 begin_class
@@ -120,8 +120,10 @@ specifier|private
 name|boolean
 name|noSemiJoin
 decl_stmt|;
-comment|// keeps track of the right-hand-side table name of the left-semi-join, and its list of join keys
+comment|// keeps track of the right-hand-side table name of the left-semi-join, and
+comment|// its list of join keys
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -175,7 +177,7 @@ name|String
 argument_list|>
 name|streamAliases
 decl_stmt|;
-comment|/**    * constructor     */
+comment|/**    * constructor    */
 specifier|public
 name|QBJoinTree
 parameter_list|()
@@ -207,7 +209,7 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * returns left alias if any - this is used for merging later on    * @return left alias if any    */
+comment|/**    * returns left alias if any - this is used for merging later on    *     * @return left alias if any    */
 specifier|public
 name|String
 name|getLeftAlias
@@ -217,7 +219,7 @@ return|return
 name|leftAlias
 return|;
 block|}
-comment|/**    * set left alias for the join expression    * @param leftAlias String    */
+comment|/**    * set left alias for the join expression    *     * @param leftAlias    *          String    */
 specifier|public
 name|void
 name|setLeftAlias
@@ -457,8 +459,6 @@ name|boolean
 name|semi
 parameter_list|)
 block|{
-name|this
-operator|.
 name|noSemiJoin
 operator|=
 name|semi
@@ -480,7 +480,7 @@ return|return
 name|filters
 return|;
 block|}
-comment|/**    * @param filters the filters to set    */
+comment|/**    * @param filters    *          the filters to set    */
 specifier|public
 name|void
 name|setFilters
@@ -512,7 +512,7 @@ return|return
 name|mapSideJoin
 return|;
 block|}
-comment|/**    * @param mapSideJoin the mapSidejoin to set    */
+comment|/**    * @param mapSideJoin    *          the mapSidejoin to set    */
 specifier|public
 name|void
 name|setMapSideJoin
@@ -541,7 +541,7 @@ return|return
 name|mapAliases
 return|;
 block|}
-comment|/**    * @param mapAliases the mapAliases to set    */
+comment|/**    * @param mapAliases    *          the mapAliases to set    */
 specifier|public
 name|void
 name|setMapAliases
@@ -590,7 +590,7 @@ operator|=
 name|streamAliases
 expr_stmt|;
 block|}
-comment|/**    * Insert only a key to the semijoin table name to column names map.     * @param alias table name alias.    */
+comment|/**    * Insert only a key to the semijoin table name to column names map.    *     * @param alias    *          table name alias.    */
 specifier|public
 name|void
 name|addRHSSemijoin
@@ -621,7 +621,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Remeber the mapping of table alias to set of columns.    * @param alias    * @param columns    */
+comment|/**    * Remeber the mapping of table alias to set of columns.    *     * @param alias    * @param columns    */
 specifier|public
 name|void
 name|addRHSSemijoinColumns
@@ -677,7 +677,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Remeber the mapping of table alias to set of columns.    * @param alias    * @param columns    */
+comment|/**    * Remeber the mapping of table alias to set of columns.    *     * @param alias    * @param columns    */
 specifier|public
 name|void
 name|addRHSSemijoinColumns
@@ -766,7 +766,7 @@ name|alias
 argument_list|)
 return|;
 block|}
-comment|/**    * Merge the rhs tables from another join tree.    * @param src the source join tree    */
+comment|/**    * Merge the rhs tables from another join tree.    *     * @param src    *          the source join tree    */
 specifier|public
 name|void
 name|mergeRHSSemijoin
@@ -810,8 +810,6 @@ name|ASTNode
 argument_list|>
 name|value
 init|=
-name|this
-operator|.
 name|rhsSemijoin
 operator|.
 name|get
@@ -826,8 +824,6 @@ operator|==
 literal|null
 condition|)
 block|{
-name|this
-operator|.
 name|rhsSemijoin
 operator|.
 name|put

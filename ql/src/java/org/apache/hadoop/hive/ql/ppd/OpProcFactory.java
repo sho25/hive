@@ -482,7 +482,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Operator factory for predicate pushdown processing of operator graph  * Each operator determines the pushdown predicates by walking the expression tree.  * Each operator merges its own pushdown predicates with those of its children  * Finally the TableScan operator gathers all the predicates and inserts a filter operator   * after itself.  * TODO: Further optimizations  *   1) Multi-insert case  *   2) Create a filter operator for those predicates that couldn't be pushed to the previous   *      operators in the data flow  *   3) Merge multiple sequential filter predicates into so that plans are more readable  *   4) Remove predicates from filter operators that have been pushed. Currently these pushed  *      predicates are evaluated twice.  */
+comment|/**  * Operator factory for predicate pushdown processing of operator graph Each  * operator determines the pushdown predicates by walking the expression tree.  * Each operator merges its own pushdown predicates with those of its children  * Finally the TableScan operator gathers all the predicates and inserts a  * filter operator after itself. TODO: Further optimizations 1) Multi-insert  * case 2) Create a filter operator for those predicates that couldn't be pushed  * to the previous operators in the data flow 3) Merge multiple sequential  * filter predicates into so that plans are more readable 4) Remove predicates  * from filter operators that have been pushed. Currently these pushed  * predicates are evaluated twice.  */
 end_comment
 
 begin_class
@@ -490,7 +490,7 @@ specifier|public
 class|class
 name|OpProcFactory
 block|{
-comment|/**    * Processor for Script Operator    * Prevents any predicates being pushed    */
+comment|/**    * Processor for Script Operator Prevents any predicates being pushed    */
 specifier|public
 specifier|static
 class|class
@@ -559,7 +559,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Combines predicates of its child into a single expression and adds a filter op as new child    */
+comment|/**    * Combines predicates of its child into a single expression and adds a filter    * op as new child    */
 specifier|public
 specifier|static
 class|class
@@ -671,7 +671,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Determines the push down predicates in its where expression and then combines it with    * the push down predicates that are passed from its children    */
+comment|/**    * Determines the push down predicates in its where expression and then    * combines it with the push down predicates that are passed from its children    */
 specifier|public
 specifier|static
 class|class
@@ -820,6 +820,7 @@ argument_list|()
 operator|==
 literal|1
 condition|)
+block|{
 name|createFilter
 argument_list|(
 name|op
@@ -852,6 +853,7 @@ argument_list|,
 name|owi
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|null
 return|;
@@ -891,7 +893,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Determines predicates for which alias can be pushed to it's parents.    * See the comments for getQualifiedAliases function    */
+comment|/**    * Determines predicates for which alias can be pushed to it's parents. See    * the comments for getQualifiedAliases function    */
 specifier|public
 specifier|static
 class|class
@@ -998,7 +1000,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**      * Figures out the aliases for whom it is safe to push predicates based on ANSI SQL semantics      * For inner join, all predicates for all aliases can be pushed      * For full outer join, none of the predicates can be pushed as that would limit the number of       *   rows for join      * For left outer join, all the predicates on the left side aliases can be pushed up      * For right outer join, all the predicates on the right side aliases can be pushed up      * Joins chain containing both left and right outer joins are treated as full outer join.      * TODO: further optimization opportunity for the case a.c1 = b.c1 and b.c2 = c.c2      *   a and b are first joined and then the result with c. But the second join op currently       *   treats a and b as separate aliases and thus disallowing predicate expr containing both       *   tables a and b (such as a.c3 +  a.c4> 20). Such predicates also can be pushed just above      *   the second join and below the first join      *        * @param op Join Operator      * @param rr Row resolver      * @return set of qualified aliases       */
+comment|/**      * Figures out the aliases for whom it is safe to push predicates based on      * ANSI SQL semantics For inner join, all predicates for all aliases can be      * pushed For full outer join, none of the predicates can be pushed as that      * would limit the number of rows for join For left outer join, all the      * predicates on the left side aliases can be pushed up For right outer      * join, all the predicates on the right side aliases can be pushed up Joins      * chain containing both left and right outer joins are treated as full      * outer join. TODO: further optimization opportunity for the case a.c1 =      * b.c1 and b.c2 = c.c2 a and b are first joined and then the result with c.      * But the second join op currently treats a and b as separate aliases and      * thus disallowing predicate expr containing both tables a and b (such as      * a.c3 + a.c4> 20). Such predicates also can be pushed just above the      * second join and below the first join      *       * @param op      *          Join Operator      * @param rr      *          Row resolver      * @return set of qualified aliases      */
 specifier|private
 name|Set
 argument_list|<
@@ -1120,6 +1122,7 @@ argument_list|()
 operator|<
 name|loj
 condition|)
+block|{
 name|loj
 operator|=
 name|jc
@@ -1127,6 +1130,7 @@ operator|.
 name|getLeft
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -1150,6 +1154,7 @@ argument_list|()
 operator|>
 name|roj
 condition|)
+block|{
 name|roj
 operator|=
 name|jc
@@ -1157,6 +1162,7 @@ operator|.
 name|getRight
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 block|}
 if|if
@@ -1176,9 +1182,11 @@ operator|-
 literal|1
 operator|)
 condition|)
+block|{
 return|return
 name|aliases
 return|;
+block|}
 for|for
 control|(
 name|Entry
@@ -1216,6 +1224,7 @@ argument_list|()
 operator|<=
 name|loj
 condition|)
+block|{
 name|aliases
 operator|.
 name|addAll
@@ -1226,6 +1235,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -1245,6 +1255,7 @@ argument_list|()
 operator|>=
 name|roj
 condition|)
+block|{
 name|aliases
 operator|.
 name|addAll
@@ -1255,6 +1266,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -1293,7 +1305,7 @@ name|aliases
 return|;
 block|}
 block|}
-comment|/**    * Processor for ReduceSink operator.    *    */
+comment|/**    * Processor for ReduceSink operator.    *     */
 specifier|public
 specifier|static
 class|class
@@ -1600,7 +1612,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Take current operators pushdown predicates and merges them with children's pushdown predicates      * @param nd current operator      * @param owi operator context during this walk      * @param ewi pushdown predicates (part of expression walker info)      * @param aliases aliases that this operator can pushdown. null means that all aliases can be pushed down      * @param ignoreAliases       * @throws SemanticException       */
+comment|/**      * Take current operators pushdown predicates and merges them with      * children's pushdown predicates      *       * @param nd      *          current operator      * @param owi      *          operator context during this walk      * @param ewi      *          pushdown predicates (part of expression walker info)      * @param aliases      *          aliases that this operator can pushdown. null means that all      *          aliases can be pushed down      * @param ignoreAliases      * @throws SemanticException      */
 specifier|protected
 name|void
 name|mergeWithChildrenPred
@@ -1765,7 +1777,8 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// e.getKey() (alias) can be null in case of constant expressions. see input8.q
+comment|// e.getKey() (alias) can be null in case of constant expressions. see
+comment|// input8.q
 name|ExprWalkerInfo
 name|extractPushdownPreds
 init|=
@@ -1985,9 +1998,6 @@ name|children
 operator|.
 name|add
 argument_list|(
-operator|(
-name|exprNodeDesc
-operator|)
 name|preds
 operator|.
 name|get
@@ -2021,9 +2031,11 @@ name|condn
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 comment|// add new filter op
 name|List
 argument_list|<

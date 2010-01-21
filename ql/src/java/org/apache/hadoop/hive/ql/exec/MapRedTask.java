@@ -220,7 +220,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Alternate implementation (to ExecDriver) of spawning a mapreduce task that runs it from  * a separate jvm. The primary issue with this is the inability to control logging from  * a separate jvm in a consistent manner  **/
+comment|/**  * Alternate implementation (to ExecDriver) of spawning a mapreduce task that  * runs it from a separate jvm. The primary issue with this is the inability to  * control logging from a separate jvm in a consistent manner  **/
 end_comment
 
 begin_class
@@ -277,6 +277,8 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|execute
@@ -662,19 +664,10 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|int
-name|k
-init|=
-literal|0
-init|;
-name|k
-operator|<
+name|String
+name|element
+range|:
 name|HIVE_SYS_PROP
-operator|.
-name|length
-condition|;
-name|k
-operator|++
 control|)
 block|{
 if|if
@@ -683,10 +676,7 @@ name|p
 operator|.
 name|containsKey
 argument_list|(
-name|HIVE_SYS_PROP
-index|[
-name|k
-index|]
+name|element
 argument_list|)
 condition|)
 block|{
@@ -696,10 +686,7 @@ name|append
 argument_list|(
 literal|" -D"
 operator|+
-name|HIVE_SYS_PROP
-index|[
-name|k
-index|]
+name|element
 operator|+
 literal|"="
 operator|+
@@ -707,10 +694,7 @@ name|p
 operator|.
 name|getProperty
 argument_list|(
-name|HIVE_SYS_PROP
-index|[
-name|k
-index|]
+name|element
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1061,6 +1045,8 @@ operator|!=
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

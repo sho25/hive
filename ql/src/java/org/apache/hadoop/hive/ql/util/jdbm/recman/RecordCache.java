@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This interface is used for synchronization.  *<p>  *  RecordManager ensures that the cache has the up-to-date information  *  by way of an invalidation protocol.  */
+comment|/**  * This interface is used for synchronization.  *<p>  * RecordManager ensures that the cache has the up-to-date information by way of  * an invalidation protocol.  */
 end_comment
 
 begin_interface
@@ -46,7 +46,7 @@ specifier|public
 interface|interface
 name|RecordCache
 block|{
-comment|/**      * Notification to flush content related to a given record.      */
+comment|/**    * Notification to flush content related to a given record.    */
 specifier|public
 name|void
 name|flush
@@ -57,7 +57,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Notification to flush data all of records.      */
+comment|/**    * Notification to flush data all of records.    */
 specifier|public
 name|void
 name|flushAll
@@ -65,7 +65,7 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Notification to invalidate content related to given record.      */
+comment|/**    * Notification to invalidate content related to given record.    */
 specifier|public
 name|void
 name|invalidate
@@ -76,7 +76,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Notification to invalidate content of all records.      */
+comment|/**    * Notification to invalidate content of all records.    */
 specifier|public
 name|void
 name|invalidateAll

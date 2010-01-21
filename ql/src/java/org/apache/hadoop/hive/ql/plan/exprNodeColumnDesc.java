@@ -120,7 +120,7 @@ decl_stmt|;
 specifier|public
 name|exprNodeColumnDesc
 parameter_list|()
-block|{}
+block|{   }
 specifier|public
 name|exprNodeColumnDesc
 parameter_list|(
@@ -215,8 +215,6 @@ name|getColumn
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|column
 return|;
 block|}
@@ -241,8 +239,6 @@ name|getTabAlias
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|tabAlias
 return|;
 block|}
@@ -267,8 +263,6 @@ name|getIsParititonCol
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|isPartitionCol
 return|;
 block|}
@@ -287,6 +281,8 @@ operator|=
 name|isPartitionCol
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -319,6 +315,8 @@ name|getColumn
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -362,20 +360,12 @@ return|return
 operator|new
 name|exprNodeColumnDesc
 argument_list|(
-name|this
-operator|.
 name|typeInfo
 argument_list|,
-name|this
-operator|.
 name|column
 argument_list|,
-name|this
-operator|.
 name|tabAlias
 argument_list|,
-name|this
-operator|.
 name|isPartitionCol
 argument_list|)
 return|;
@@ -399,9 +389,11 @@ operator|instanceof
 name|exprNodeColumnDesc
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|exprNodeColumnDesc
 name|dest
 init|=
@@ -423,9 +415,11 @@ name|getColumn
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -439,9 +433,11 @@ name|getTypeInfo
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 literal|true
 return|;

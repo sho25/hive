@@ -21,19 +21,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|net
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|Table
+name|URI
 import|;
 end_import
 
@@ -57,16 +49,24 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|net
+name|apache
 operator|.
-name|URI
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Table
 import|;
 end_import
 
 begin_comment
-comment|/**  * This class encapsulates an object that is being written to  * by the query. This object may be a table, partition, dfs  * directory or a local directory.  */
+comment|/**  * This class encapsulates an object that is being written to by the query. This  * object may be a table, partition, dfs directory or a local directory.  */
 end_comment
 
 begin_class
@@ -96,20 +96,23 @@ name|typ
 decl_stmt|;
 comment|/**    * The table. This is null if this is a directory.    */
 specifier|private
+specifier|final
 name|Table
 name|t
 decl_stmt|;
 comment|/**    * The partition.This is null if this object is not a partition.    */
 specifier|private
+specifier|final
 name|Partition
 name|p
 decl_stmt|;
 comment|/**    * The directory if this is a directory.    */
 specifier|private
+specifier|final
 name|String
 name|d
 decl_stmt|;
-comment|/**    * Constructor for a table.    *    * @param t Table that is written to.    */
+comment|/**    * Constructor for a table.    *     * @param t    *          Table that is written to.    */
 specifier|public
 name|WriteEntity
 parameter_list|(
@@ -117,14 +120,10 @@ name|Table
 name|t
 parameter_list|)
 block|{
-name|this
-operator|.
 name|d
 operator|=
 literal|null
 expr_stmt|;
-name|this
-operator|.
 name|p
 operator|=
 literal|null
@@ -135,8 +134,6 @@ name|t
 operator|=
 name|t
 expr_stmt|;
-name|this
-operator|.
 name|typ
 operator|=
 name|Type
@@ -144,7 +141,7 @@ operator|.
 name|TABLE
 expr_stmt|;
 block|}
-comment|/**    * Constructor for a partition.    *    * @param p Partition that is written to.    */
+comment|/**    * Constructor for a partition.    *     * @param p    *          Partition that is written to.    */
 specifier|public
 name|WriteEntity
 parameter_list|(
@@ -152,8 +149,6 @@ name|Partition
 name|p
 parameter_list|)
 block|{
-name|this
-operator|.
 name|d
 operator|=
 literal|null
@@ -164,8 +159,6 @@ name|p
 operator|=
 name|p
 expr_stmt|;
-name|this
-operator|.
 name|t
 operator|=
 name|p
@@ -173,8 +166,6 @@ operator|.
 name|getTable
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|typ
 operator|=
 name|Type
@@ -182,7 +173,7 @@ operator|.
 name|PARTITION
 expr_stmt|;
 block|}
-comment|/**    * Constructor for a file.    *    * @param d The name of the directory that is being written to.    * @param islocal Flag to decide whether this directory is local or in dfs.    */
+comment|/**    * Constructor for a file.    *     * @param d    *          The name of the directory that is being written to.    * @param islocal    *          Flag to decide whether this directory is local or in dfs.    */
 specifier|public
 name|WriteEntity
 parameter_list|(
@@ -199,14 +190,10 @@ name|d
 operator|=
 name|d
 expr_stmt|;
-name|this
-operator|.
 name|p
 operator|=
 literal|null
 expr_stmt|;
-name|this
-operator|.
 name|t
 operator|=
 literal|null
@@ -216,8 +203,6 @@ condition|(
 name|islocal
 condition|)
 block|{
-name|this
-operator|.
 name|typ
 operator|=
 name|Type
@@ -227,8 +212,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|this
-operator|.
 name|typ
 operator|=
 name|Type
@@ -263,12 +246,14 @@ name|Type
 operator|.
 name|TABLE
 condition|)
+block|{
 return|return
 name|t
 operator|.
 name|getDataLocation
 argument_list|()
 return|;
+block|}
 if|if
 condition|(
 name|typ
@@ -277,12 +262,14 @@ name|Type
 operator|.
 name|PARTITION
 condition|)
+block|{
 return|return
 name|p
 operator|.
 name|getDataLocation
 argument_list|()
 return|;
+block|}
 if|if
 condition|(
 name|typ
@@ -297,6 +284,7 @@ name|Type
 operator|.
 name|LOCAL_DIR
 condition|)
+block|{
 return|return
 operator|new
 name|URI
@@ -304,6 +292,7 @@ argument_list|(
 name|d
 argument_list|)
 return|;
+block|}
 return|return
 literal|null
 return|;
@@ -329,6 +318,8 @@ name|t
 return|;
 block|}
 comment|/**    * toString function.    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -401,9 +392,11 @@ name|o
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 name|o
@@ -435,9 +428,11 @@ operator|)
 return|;
 block|}
 else|else
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 comment|/**    * Hashcode function.    */
 annotation|@

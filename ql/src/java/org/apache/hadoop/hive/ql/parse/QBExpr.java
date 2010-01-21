@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the query block expression  *  **/
+comment|/**  * Implementation of the query block expression  *   **/
 end_comment
 
 begin_class
@@ -148,8 +148,6 @@ name|QB
 name|qb
 parameter_list|)
 block|{
-name|this
-operator|.
 name|opcode
 operator|=
 name|Opcode
@@ -233,8 +231,6 @@ name|QBExpr
 name|qbexpr
 parameter_list|)
 block|{
-name|this
-operator|.
 name|qbexpr1
 operator|=
 name|qbexpr
@@ -248,8 +244,6 @@ name|QBExpr
 name|qbexpr
 parameter_list|)
 block|{
-name|this
-operator|.
 name|qbexpr2
 operator|=
 name|qbexpr
@@ -261,8 +255,6 @@ name|getQB
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|qb
 return|;
 block|}

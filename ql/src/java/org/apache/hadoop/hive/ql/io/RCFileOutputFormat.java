@@ -348,6 +348,8 @@ argument_list|)
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|RecordWriter
 argument_list|<
@@ -618,6 +620,7 @@ argument_list|(
 literal|""
 argument_list|)
 condition|)
+block|{
 name|cols
 operator|=
 operator|new
@@ -626,7 +629,9 @@ index|[
 literal|0
 index|]
 expr_stmt|;
+block|}
 else|else
+block|{
 name|cols
 operator|=
 name|StringUtils
@@ -638,6 +643,7 @@ argument_list|,
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|RCFileOutputFormat
 operator|.
 name|setColumnNumber

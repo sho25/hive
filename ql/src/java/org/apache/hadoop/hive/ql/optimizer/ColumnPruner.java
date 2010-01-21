@@ -209,7 +209,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Node
+name|GraphWalker
 import|;
 end_import
 
@@ -227,7 +227,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|Node
 import|;
 end_import
 
@@ -335,30 +335,12 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|RowResolver
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
 name|SemanticException
 import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of one of the rule-based optimization steps. ColumnPruner gets the current operator tree. The \  * tree is traversed to find out the columns used   * for all the base tables. If all the columns for a table are not used, a select is pushed on top of that table   * (to select only those columns). Since this   * changes the row resolver, the tree is built again. This can be optimized later to patch the tree.   */
+comment|/**  * Implementation of one of the rule-based optimization steps. ColumnPruner gets  * the current operator tree. The \ tree is traversed to find out the columns  * used for all the base tables. If all the columns for a table are not used, a  * select is pushed on top of that table (to select only those columns). Since  * this changes the row resolver, the tree is built again. This can be optimized  * later to patch the tree.  */
 end_comment
 
 begin_class
@@ -396,59 +378,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * update the map between operator and row resolver    * @param op operator being inserted    * @param rr row resolver of the operator    * @return    */
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"nls"
-argument_list|)
-specifier|private
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-name|putOpInsertMap
-parameter_list|(
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-name|op
-parameter_list|,
-name|RowResolver
-name|rr
-parameter_list|)
-block|{
-name|OpParseContext
-name|ctx
-init|=
-operator|new
-name|OpParseContext
-argument_list|(
-name|rr
-argument_list|)
-decl_stmt|;
-name|pGraphContext
-operator|.
-name|getOpParseCtx
-argument_list|()
-operator|.
-name|put
-argument_list|(
-name|op
-argument_list|,
-name|ctx
-argument_list|)
-expr_stmt|;
-return|return
-name|op
-return|;
-block|}
-comment|/**    * Transform the query tree. For each table under consideration, check if all columns are needed. If not,     * only select the operators needed at the beginning and proceed     * @param pactx the current parse context    */
+comment|/**    * Transform the query tree. For each table under consideration, check if all    * columns are needed. If not, only select the operators needed at the    * beginning and proceed    *     * @param pactx    *          the current parse context    */
 specifier|public
 name|ParseContext
 name|transform
@@ -459,14 +389,10 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|this
-operator|.
 name|pGraphContext
 operator|=
 name|pactx
 expr_stmt|;
-name|this
-operator|.
 name|opToParseCtxMap
 operator|=
 name|pGraphContext
@@ -484,7 +410,8 @@ argument_list|(
 name|opToParseCtxMap
 argument_list|)
 decl_stmt|;
-comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack. The dispatcher
+comment|// create a walker which walks the tree in a DFS manner while maintaining
+comment|// the operator stack. The dispatcher
 comment|// generates the plan from the operator tree
 name|Map
 argument_list|<
@@ -629,7 +556,8 @@ name|getTableScanProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=
@@ -695,7 +623,7 @@ return|return
 name|pGraphContext
 return|;
 block|}
-comment|/**    * Walks the op tree in post order fashion (skips selects with file sink or script op children)    */
+comment|/**    * Walks the op tree in post order fashion (skips selects with file sink or    * script op children)    */
 specifier|public
 specifier|static
 class|class
@@ -741,7 +669,8 @@ argument_list|(
 name|nd
 argument_list|)
 expr_stmt|;
-comment|// no need to go further down for a select op with a file sink or script child
+comment|// no need to go further down for a select op with a file sink or script
+comment|// child
 comment|// since all cols are needed for these ops
 if|if
 condition|(
@@ -775,10 +704,12 @@ operator|instanceof
 name|ScriptOperator
 operator|)
 condition|)
+block|{
 name|walkChildren
 operator|=
 literal|false
 expr_stmt|;
+block|}
 block|}
 block|}
 if|if

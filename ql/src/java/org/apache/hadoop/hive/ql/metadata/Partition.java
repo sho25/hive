@@ -363,34 +363,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
-operator|.
-name|Writable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|WritableComparable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|mapred
 operator|.
 name|InputFormat
@@ -597,7 +569,7 @@ name|tp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Create partition object with the given info.    * @param tbl Table the partition will be in.    * @param partSpec Partition specifications.    * @param location Location of the partition, relative to the table.    * @throws HiveException Thrown if we could not create the partition.    */
+comment|/**    * Create partition object with the given info.    *     * @param tbl    *          Table the partition will be in.    * @param partSpec    *          Partition specifications.    * @param location    *          Location of the partition, relative to the table.    * @throws HiveException    *           Thrown if we could not create the partition.    */
 specifier|public
 name|Partition
 parameter_list|(
@@ -745,7 +717,7 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-comment|//replace with THRIFT-138
+comment|// replace with THRIFT-138
 name|TMemoryBuffer
 name|buffer
 init|=
@@ -855,7 +827,7 @@ name|tpart
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Initializes this object with the given variables    * @param tbl Table the partition belongs to    * @param tp Thrift Partition object    * @throws HiveException Thrown if we cannot initialize the partition    */
+comment|/**    * Initializes this object with the given variables    *     * @param tbl    *          Table the partition belongs to    * @param tp    *          Thrift Partition object    * @throws HiveException    *           Thrown if we cannot initialize the partition    */
 specifier|private
 name|void
 name|initialize
@@ -1140,7 +1112,7 @@ return|return
 name|deserializer
 return|;
 block|}
-comment|/**    * @param schema the schema to set    */
+comment|/**    * @param schema    *          the schema to set    */
 specifier|public
 name|void
 name|setSchema
@@ -1163,27 +1135,20 @@ parameter_list|()
 block|{
 if|if
 condition|(
-name|this
-operator|.
 name|schema
 operator|==
 literal|null
 condition|)
-name|this
-operator|.
+block|{
 name|schema
 operator|=
 name|MetaStoreUtils
 operator|.
 name|getSchema
 argument_list|(
-name|this
-operator|.
 name|getTPartition
 argument_list|()
 argument_list|,
-name|this
-operator|.
 name|getTable
 argument_list|()
 operator|.
@@ -1191,9 +1156,8 @@ name|getTTable
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
-name|this
-operator|.
 name|schema
 return|;
 block|}
@@ -1227,13 +1191,9 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|,
-name|this
-operator|.
 name|getTPartition
 argument_list|()
 argument_list|,
-name|this
-operator|.
 name|getTable
 argument_list|()
 operator|.
@@ -1304,8 +1264,6 @@ argument_list|>
 name|class1
 parameter_list|)
 block|{
-name|this
-operator|.
 name|outputFormatClass
 operator|=
 name|HiveFileFormatUtils
@@ -1535,7 +1493,7 @@ return|return
 name|outputFormatClass
 return|;
 block|}
-comment|/**    * The number of buckets is a property of the partition. However - internally we are just    * storing it as a property of the table as a short term measure.    */
+comment|/**    * The number of buckets is a property of the partition. However - internally    * we are just storing it as a property of the table as a short term measure.    */
 specifier|public
 name|int
 name|getBucketCount
@@ -1547,7 +1505,7 @@ operator|.
 name|getNumBuckets
 argument_list|()
 return|;
-comment|/*       TODO: Keeping this code around for later use when we will support       sampling on tables which are not created with CLUSTERED INTO clause        // read from table meta data       int numBuckets = this.table.getNumBuckets();       if (numBuckets == -1) {         // table meta data does not have bucket information         // check if file system has multiple buckets(files) in this partition         String pathPattern = this.partPath.toString() + "/*";         try {           FileSystem fs = FileSystem.get(this.table.getDataLocation(), Hive.get().getConf());           FileStatus srcs[] = fs.globStatus(new Path(pathPattern));           numBuckets = srcs.length;         }         catch (Exception e) {           throw new RuntimeException("Cannot get bucket count for table " + this.table.getName(), e);         }       }       return numBuckets;      */
+comment|/*      * TODO: Keeping this code around for later use when we will support      * sampling on tables which are not created with CLUSTERED INTO clause      *       * // read from table meta data int numBuckets = this.table.getNumBuckets();      * if (numBuckets == -1) { // table meta data does not have bucket      * information // check if file system has multiple buckets(files) in this      * partition String pathPattern = this.partPath.toString() + "/*"; try {      * FileSystem fs = FileSystem.get(this.table.getDataLocation(),      * Hive.get().getConf()); FileStatus srcs[] = fs.globStatus(new      * Path(pathPattern)); numBuckets = srcs.length; } catch (Exception e) {      * throw new RuntimeException("Cannot get bucket count for table " +      * this.table.getName(), e); } } return numBuckets;      */
 block|}
 specifier|public
 name|List
@@ -1558,8 +1516,6 @@ name|getBucketCols
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|tPartition
 operator|.
 name|getSd
@@ -1570,7 +1526,7 @@ argument_list|()
 return|;
 block|}
 comment|/**    * mapping from bucket number to bucket path    */
-comment|//TODO: add test case and clean it up
+comment|// TODO: add test case and clean it up
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1690,9 +1646,11 @@ name|length
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
 name|srcs
 index|[
@@ -2163,7 +2121,8 @@ name|MetaException
 name|e
 parameter_list|)
 block|{
-comment|// ignore as we most probably in an exception path already otherwise this error wouldn't occur
+comment|// ignore as we most probably in an exception path already otherwise this
+comment|// error wouldn't occur
 block|}
 return|return
 name|table
@@ -2200,7 +2159,7 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * getProperty    *    */
+comment|/**    * getProperty    *     */
 specifier|public
 name|String
 name|getProperty
@@ -2229,9 +2188,11 @@ name|params
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
 name|params
 operator|.

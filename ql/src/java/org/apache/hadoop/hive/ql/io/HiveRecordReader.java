@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -34,20 +44,6 @@ operator|.
 name|exec
 operator|.
 name|ExecMapper
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|RecordReader
 import|;
 end_import
 
@@ -81,11 +77,15 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|io
+name|apache
 operator|.
-name|IOException
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|RecordReader
 import|;
 end_import
 
@@ -111,6 +111,7 @@ name|V
 argument_list|>
 block|{
 specifier|private
+specifier|final
 name|RecordReader
 name|recordReader
 decl_stmt|;
@@ -219,9 +220,11 @@ operator|.
 name|getDone
 argument_list|()
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 name|recordReader
 operator|.

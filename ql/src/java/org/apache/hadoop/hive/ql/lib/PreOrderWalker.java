@@ -21,86 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Stack
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|lang
-operator|.
-name|Object
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -118,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * base class for operator graph walker  * this class takes list of starting ops and walks them one by one.  */
+comment|/**  * base class for operator graph walker this class takes list of starting ops  * and walks them one by one.  */
 end_comment
 
 begin_class
@@ -128,8 +48,8 @@ name|PreOrderWalker
 extends|extends
 name|DefaultGraphWalker
 block|{
-comment|/*     * Since the operator tree is a DAG, nodes with mutliple parents will be visited more than once.    * This can be made configurable.    */
-comment|/**    * Constructor    * @param disp dispatcher to call for each op encountered    */
+comment|/*    * Since the operator tree is a DAG, nodes with mutliple parents will be    * visited more than once. This can be made configurable.    */
+comment|/**    * Constructor    *     * @param disp    *          dispatcher to call for each op encountered    */
 specifier|public
 name|PreOrderWalker
 parameter_list|(
@@ -143,7 +63,9 @@ name|disp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * walk the current operator and its descendants    * @param nd current operator in the graph    * @throws SemanticException    */
+comment|/**    * walk the current operator and its descendants    *     * @param nd    *          current operator in the graph    * @throws SemanticException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|walk
@@ -178,6 +100,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 for|for
 control|(
 name|Node
@@ -188,11 +111,14 @@ operator|.
 name|getChildren
 argument_list|()
 control|)
+block|{
 name|walk
 argument_list|(
 name|n
 argument_list|)
 expr_stmt|;
+block|}
+block|}
 name|opStack
 operator|.
 name|pop

@@ -26,7 +26,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Standard options for RecordManager.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: RecordManagerOptions.java,v 1.1 2002/05/31 06:33:20 boisvert Exp $  */
+comment|/**  * Standard options for RecordManager.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: RecordManagerOptions.java,v 1.1 2002/05/31 06:33:20 boisvert  *          Exp $  */
 end_comment
 
 begin_class
@@ -34,7 +34,7 @@ specifier|public
 class|class
 name|RecordManagerOptions
 block|{
-comment|/**      * Option to create a thread-safe record manager.      */
+comment|/**    * Option to create a thread-safe record manager.    */
 specifier|public
 specifier|static
 specifier|final
@@ -43,7 +43,7 @@ name|PROVIDER_FACTORY
 init|=
 literal|"jdbm.provider"
 decl_stmt|;
-comment|/**      * Option to create a thread-safe record manager.      */
+comment|/**    * Option to create a thread-safe record manager.    */
 specifier|public
 specifier|static
 specifier|final
@@ -52,7 +52,7 @@ name|THREAD_SAFE
 init|=
 literal|"jdbm.threadSafe"
 decl_stmt|;
-comment|/**      * Option to automatically commit data after each operation.      */
+comment|/**    * Option to automatically commit data after each operation.    */
 specifier|public
 specifier|static
 specifier|final
@@ -61,7 +61,7 @@ name|AUTO_COMMIT
 init|=
 literal|"jdbm.autoCommit"
 decl_stmt|;
-comment|/**      * Option to disable transaction (to increase performance at the cost of      * potential data loss).      */
+comment|/**    * Option to disable transaction (to increase performance at the cost of    * potential data loss).    */
 specifier|public
 specifier|static
 specifier|final
@@ -70,7 +70,7 @@ name|DISABLE_TRANSACTIONS
 init|=
 literal|"jdbm.disableTransactions"
 decl_stmt|;
-comment|/**      * Cache type.      */
+comment|/**    * Cache type.    */
 specifier|public
 specifier|static
 specifier|final
@@ -79,7 +79,7 @@ name|CACHE_TYPE
 init|=
 literal|"jdbm.cache.type"
 decl_stmt|;
-comment|/**      * Cache size (when applicable)      */
+comment|/**    * Cache size (when applicable)    */
 specifier|public
 specifier|static
 specifier|final
@@ -88,7 +88,7 @@ name|CACHE_SIZE
 init|=
 literal|"jdbm.cache.size"
 decl_stmt|;
-comment|/**      * Use normal (strong) object references for the record cache.      */
+comment|/**    * Use normal (strong) object references for the record cache.    */
 specifier|public
 specifier|static
 specifier|final
@@ -97,7 +97,7 @@ name|NORMAL_CACHE
 init|=
 literal|"normal"
 decl_stmt|;
-comment|/**      * Use soft references {$link java.lang.ref.SoftReference} for the record      * cache instead of the default normal object references.      *<p>      * Soft references are cleared at the discretion of the garbage collector      * in response to memory demand.      */
+comment|/**    * Use soft references {$link java.lang.ref.SoftReference} for the record    * cache instead of the default normal object references.    *<p>    * Soft references are cleared at the discretion of the garbage collector in    * response to memory demand.    */
 specifier|public
 specifier|static
 specifier|final
@@ -106,7 +106,7 @@ name|SOFT_REF_CACHE
 init|=
 literal|"soft"
 decl_stmt|;
-comment|/**      * Use weak references {$link java.lang.ref.WeakReference} for the record      * cache instead of the default normal object references.      *<p>      * Weak references do not prevent their referents from being made      * finalizable, finalized, and then reclaimed.      */
+comment|/**    * Use weak references {$link java.lang.ref.WeakReference} for the record    * cache instead of the default normal object references.    *<p>    * Weak references do not prevent their referents from being made finalizable,    * finalized, and then reclaimed.    */
 specifier|public
 specifier|static
 specifier|final
@@ -115,7 +115,7 @@ name|WEAK_REF_CACHE
 init|=
 literal|"weak"
 decl_stmt|;
-comment|/**      * Disable cache.      */
+comment|/**    * Disable cache.    */
 specifier|public
 specifier|static
 specifier|final

@@ -190,7 +190,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The reason that we list evaluate methods with all numeric types is for   * better performance; otherwise a single method that takes (Number a, Number b)  * and use a.doubleValue() == b.doubleValue() is enough.  */
+comment|/**  * The reason that we list evaluate methods with all numeric types is for better  * performance; otherwise a single method that takes (Number a, Number b) and  * use a.doubleValue() == b.doubleValue() is enough.  */
 end_comment
 
 begin_class
@@ -256,8 +256,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -314,8 +312,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -375,8 +371,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -436,8 +430,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -497,8 +489,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -558,8 +548,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -605,6 +593,8 @@ return|return
 name|r
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -619,8 +609,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if

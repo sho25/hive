@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** HiveKey is a simple wrapper on Text which allows us to set the hashCode easily.  *  hashCode is used for hadoop partitioner.  */
+comment|/**  * HiveKey is a simple wrapper on Text which allows us to set the hashCode  * easily. hashCode is used for hadoop partitioner.  */
 end_comment
 
 begin_class
@@ -90,8 +90,6 @@ name|int
 name|myHashCode
 parameter_list|)
 block|{
-name|this
-operator|.
 name|hashCodeValid
 operator|=
 literal|true
@@ -103,6 +101,8 @@ operator|=
 name|myHashCode
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -151,6 +151,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**      * Compare the buffers in serialized form.      */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare

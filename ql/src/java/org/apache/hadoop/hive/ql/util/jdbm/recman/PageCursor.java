@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This class provides a cursor that can follow lists of pages  *  bi-directionally.  */
+comment|/**  * This class provides a cursor that can follow lists of pages bi-directionally.  */
 end_comment
 
 begin_class
@@ -55,7 +55,7 @@ decl_stmt|;
 name|short
 name|type
 decl_stmt|;
-comment|/**      *  Constructs a page cursor that starts at the indicated block.      */
+comment|/**    * Constructs a page cursor that starts at the indicated block.    */
 name|PageCursor
 parameter_list|(
 name|PageManager
@@ -78,7 +78,7 @@ operator|=
 name|current
 expr_stmt|;
 block|}
-comment|/**      *  Constructs a page cursor that starts at the first block      *  of the indicated list.      */
+comment|/**    * Constructs a page cursor that starts at the first block of the indicated    * list.    */
 name|PageCursor
 parameter_list|(
 name|PageManager
@@ -103,7 +103,7 @@ operator|=
 name|type
 expr_stmt|;
 block|}
-comment|/**      *  Returns the current value of the cursor.      */
+comment|/**    * Returns the current value of the cursor.    */
 name|long
 name|getCurrent
 parameter_list|()
@@ -114,7 +114,7 @@ return|return
 name|current
 return|;
 block|}
-comment|/**      *  Returns the next value of the cursor      */
+comment|/**    * Returns the next value of the cursor    */
 name|long
 name|next
 parameter_list|()
@@ -127,6 +127,7 @@ name|current
 operator|==
 literal|0
 condition|)
+block|{
 name|current
 operator|=
 name|pageman
@@ -136,7 +137,9 @@ argument_list|(
 name|type
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|current
 operator|=
 name|pageman
@@ -146,11 +149,12 @@ argument_list|(
 name|current
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|current
 return|;
 block|}
-comment|/**      *  Returns the previous value of the cursor      */
+comment|/**    * Returns the previous value of the cursor    */
 name|long
 name|prev
 parameter_list|()

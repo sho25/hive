@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -120,6 +110,7 @@ extends|extends
 name|UDF
 block|{
 specifier|private
+specifier|final
 name|Text
 name|result
 init|=

@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Exception thrown by the UDF and UDAF method resolvers in case a unique method is not found.  *  */
+comment|/**  * Exception thrown by the UDF and UDAF method resolvers in case a unique method  * is not found.  *   */
 end_comment
 
 begin_class
@@ -81,7 +81,7 @@ name|TypeInfo
 argument_list|>
 name|argTypeInfos
 decl_stmt|;
-comment|/**    * Constructor.    *     * @param funcClass The UDF or UDAF class.    * @param argTypeInfos The list of argument types that lead to an ambiguity.    */
+comment|/**    * Constructor.    *     * @param funcClass    *          The UDF or UDAF class.    * @param argTypeInfos    *          The list of argument types that lead to an ambiguity.    */
 specifier|public
 name|AmbiguousMethodException
 parameter_list|(

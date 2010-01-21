@@ -136,7 +136,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Conditional task resolution interface. This is invoked at run time to get the task to invoke.   * Developers can plug in their own resolvers  */
+comment|/**  * Conditional task resolution interface. This is invoked at run time to get the  * task to invoke. Developers can plug in their own resolvers  */
 end_comment
 
 begin_class
@@ -159,7 +159,7 @@ decl_stmt|;
 specifier|public
 name|ConditionalResolverMergeFiles
 parameter_list|()
-block|{     }
+block|{   }
 specifier|public
 specifier|static
 class|class
@@ -193,7 +193,7 @@ decl_stmt|;
 specifier|public
 name|ConditionalResolverMergeFilesCtx
 parameter_list|()
-block|{           }
+block|{     }
 comment|/**      * @param dir      */
 specifier|public
 name|ConditionalResolverMergeFilesCtx
@@ -236,7 +236,7 @@ return|return
 name|dir
 return|;
 block|}
-comment|/**      * @param dir the dir to set      */
+comment|/**      * @param dir      *          the dir to set      */
 specifier|public
 name|void
 name|setDir
@@ -270,7 +270,7 @@ return|return
 name|listTasks
 return|;
 block|}
-comment|/**      * @param listTasks the listTasks to set      */
+comment|/**      * @param listTasks      *          the listTasks to set      */
 specifier|public
 name|void
 name|setListTasks
@@ -448,6 +448,7 @@ name|fStat
 range|:
 name|fStats
 control|)
+block|{
 name|totalSz
 operator|+=
 name|fStat
@@ -455,6 +456,7 @@ operator|.
 name|getLen
 argument_list|()
 expr_stmt|;
+block|}
 name|long
 name|currAvgSz
 init|=

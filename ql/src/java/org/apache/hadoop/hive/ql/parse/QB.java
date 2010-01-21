@@ -25,7 +25,17 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -35,15 +45,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|hive
+name|logging
 operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|QBParseInfo
+name|Log
 import|;
 end_import
 
@@ -53,15 +59,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|hive
+name|logging
 operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|QBMetaData
+name|LogFactory
 import|;
 end_import
 
@@ -83,36 +85,8 @@ name|createTableDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
 begin_comment
-comment|/**  * Implementation of the query block  *  **/
+comment|/**  * Implementation of the query block  *   **/
 end_comment
 
 begin_class
@@ -134,12 +108,14 @@ literal|"hive.ql.parse.QB"
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 name|numJoins
 init|=
 literal|0
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 name|numGbys
 init|=
@@ -201,7 +177,8 @@ name|tblDesc
 init|=
 literal|null
 decl_stmt|;
-comment|// table descriptor of the final results
+comment|// table descriptor of the final
+comment|// results
 specifier|public
 name|void
 name|print
@@ -277,7 +254,7 @@ block|}
 specifier|public
 name|QB
 parameter_list|()
-block|{     }
+block|{   }
 specifier|public
 name|QB
 parameter_list|(
@@ -344,8 +321,6 @@ operator|new
 name|QBMetaData
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|id
 operator|=
 operator|(
@@ -449,9 +424,11 @@ argument_list|)
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 return|return
 literal|false
 return|;

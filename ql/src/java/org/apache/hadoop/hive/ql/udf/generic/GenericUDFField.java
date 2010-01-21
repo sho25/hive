@@ -203,6 +203,8 @@ name|GenericUDFField
 extends|extends
 name|GenericUDF
 block|{
+annotation|@
+name|Override
 specifier|public
 name|ObjectInspector
 name|initialize
@@ -319,6 +321,7 @@ name|writableIntObjectInspector
 return|;
 block|}
 specifier|private
+specifier|final
 name|IntWritable
 name|r
 init|=

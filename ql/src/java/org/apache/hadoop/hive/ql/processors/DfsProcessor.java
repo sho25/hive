@@ -161,6 +161,7 @@ name|LOG
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|FsShell
 name|dfs
 decl_stmt|;

@@ -78,7 +78,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A bucket is a placeholder for multiple (key, value) pairs.  Buckets  * are used to store collisions (same hash value) at all levels of an  * H*tree.  *  * There are two types of buckets: leaf and non-leaf.  *  * Non-leaf buckets are buckets which hold collisions which happen  * when the H*tree is not fully expanded.   Keys in a non-leaf buckets  * can have different hash codes.  Non-leaf buckets are limited to an  * arbitrary size.  When this limit is reached, the H*tree should create  * a new Directory page and distribute keys of the non-leaf buckets into  * the newly created Directory.  *  * A leaf bucket is a bucket which contains keys which all have  * the same<code>hashCode()</code>.  Leaf buckets stand at the  * bottom of an H*tree because the hashing algorithm cannot further  * discriminate between different keys based on their hash code.  *  *  @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  *  @version $Id: HashBucket.java,v 1.2 2005/06/25 23:12:32 doomdark Exp $  */
+comment|/**  * A bucket is a placeholder for multiple (key, value) pairs. Buckets are used  * to store collisions (same hash value) at all levels of an H*tree.  *   * There are two types of buckets: leaf and non-leaf.  *   * Non-leaf buckets are buckets which hold collisions which happen when the  * H*tree is not fully expanded. Keys in a non-leaf buckets can have different  * hash codes. Non-leaf buckets are limited to an arbitrary size. When this  * limit is reached, the H*tree should create a new Directory page and  * distribute keys of the non-leaf buckets into the newly created Directory.  *   * A leaf bucket is a bucket which contains keys which all have the same  *<code>hashCode()</code>. Leaf buckets stand at the bottom of an H*tree  * because the hashing algorithm cannot further discriminate between different  * keys based on their hash code.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: HashBucket.java,v 1.2 2005/06/25 23:12:32 doomdark Exp $  */
 end_comment
 
 begin_class
@@ -97,7 +97,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * The maximum number of elements (key, value) a non-leaf bucket      * can contain.      */
+comment|/**    * The maximum number of elements (key, value) a non-leaf bucket can contain.    */
 specifier|public
 specifier|static
 specifier|final
@@ -106,29 +106,29 @@ name|OVERFLOW_SIZE
 init|=
 literal|8
 decl_stmt|;
-comment|/**      * Depth of this bucket.      */
+comment|/**    * Depth of this bucket.    */
 specifier|private
 name|int
 name|_depth
 decl_stmt|;
-comment|/**      * Keys in this bucket.  Keys are ordered to match their respective      * value in<code>_values</code>.      */
+comment|/**    * Keys in this bucket. Keys are ordered to match their respective value in    *<code>_values</code>.    */
 specifier|private
 name|ArrayList
 name|_keys
 decl_stmt|;
-comment|/**      * Values in this bucket.  Values are ordered to match their respective      * key in<code>_keys</code>.      */
+comment|/**    * Values in this bucket. Values are ordered to match their respective key in    *<code>_keys</code>.    */
 specifier|private
 name|ArrayList
 name|_values
 decl_stmt|;
-comment|/**      * Public constructor for serialization.      */
+comment|/**    * Public constructor for serialization.    */
 specifier|public
 name|HashBucket
 parameter_list|()
 block|{
 comment|// empty
 block|}
-comment|/**      * Construct a bucket with a given depth level.  Depth level is the      * number of<code>HashDirectory</code> above this bucket.      */
+comment|/**    * Construct a bucket with a given depth level. Depth level is the number of    *<code>HashDirectory</code> above this bucket.    */
 specifier|public
 name|HashBucket
 parameter_list|(
@@ -180,7 +180,7 @@ name|OVERFLOW_SIZE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Returns the number of elements contained in this bucket.      */
+comment|/**    * Returns the number of elements contained in this bucket.    */
 specifier|public
 name|int
 name|getElementCount
@@ -193,7 +193,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      * Returns whether or not this bucket is a "leaf bucket".      */
+comment|/**    * Returns whether or not this bucket is a "leaf bucket".    */
 specifier|public
 name|boolean
 name|isLeaf
@@ -209,7 +209,7 @@ name|MAX_DEPTH
 operator|)
 return|;
 block|}
-comment|/**      * Returns true if bucket can accept at least one more element.      */
+comment|/**    * Returns true if bucket can accept at least one more element.    */
 specifier|public
 name|boolean
 name|hasRoom
@@ -241,7 +241,7 @@ operator|)
 return|;
 block|}
 block|}
-comment|/**      * Add an element (key, value) to this bucket.  If an existing element      * has the same key, it is replaced silently.      *      * @return Object which was previously associated with the given key      *          or<code>null</code> if no association existed.      */
+comment|/**    * Add an element (key, value) to this bucket. If an existing element has the    * same key, it is replaced silently.    *     * @return Object which was previously associated with the given key or    *<code>null</code> if no association existed.    */
 specifier|public
 name|Object
 name|addElement
@@ -317,7 +317,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**      * Remove an element, given a specific key.      *      * @param key Key of the element to remove      *      * @return Removed element value, or<code>null</code> if not found      */
+comment|/**    * Remove an element, given a specific key.    *     * @param key    *          Key of the element to remove    *     * @return Removed element value, or<code>null</code> if not found    */
 specifier|public
 name|Object
 name|removeElement
@@ -380,7 +380,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**      * Returns the value associated with a given key.  If the given key      * is not found in this bucket, returns<code>null</code>.      */
+comment|/**    * Returns the value associated with a given key. If the given key is not    * found in this bucket, returns<code>null</code>.    */
 specifier|public
 name|Object
 name|getValue
@@ -424,29 +424,25 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**      * Obtain keys contained in this buckets.  Keys are ordered to match      * their values, which be be obtained by calling<code>getValues()</code>.      *      * As an optimization, the Vector returned is the instance member      * of this class.  Please don't modify outside the scope of this class.      */
+comment|/**    * Obtain keys contained in this buckets. Keys are ordered to match their    * values, which be be obtained by calling<code>getValues()</code>.    *     * As an optimization, the Vector returned is the instance member of this    * class. Please don't modify outside the scope of this class.    */
 name|ArrayList
 name|getKeys
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|_keys
 return|;
 block|}
-comment|/**      * Obtain values contained in this buckets.  Values are ordered to match      * their keys, which be be obtained by calling<code>getKeys()</code>.      *      * As an optimization, the Vector returned is the instance member      * of this class.  Please don't modify outside the scope of this class.      */
+comment|/**    * Obtain values contained in this buckets. Values are ordered to match their    * keys, which be be obtained by calling<code>getKeys()</code>.    *     * As an optimization, the Vector returned is the instance member of this    * class. Please don't modify outside the scope of this class.    */
 name|ArrayList
 name|getValues
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|_values
 return|;
 block|}
-comment|/**      * Implement Externalizable interface.      */
+comment|/**    * Implement Externalizable interface.    */
 specifier|public
 name|void
 name|writeExternal
@@ -538,7 +534,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Implement Externalizable interface.      */
+comment|/**    * Implement Externalizable interface.    */
 specifier|public
 name|void
 name|readExternal
@@ -650,6 +646,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

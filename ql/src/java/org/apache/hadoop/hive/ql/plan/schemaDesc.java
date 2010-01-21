@@ -51,7 +51,7 @@ decl_stmt|;
 specifier|public
 name|schemaDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|schemaDesc
 parameter_list|(
@@ -73,8 +73,6 @@ name|getSchema
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|schema
 return|;
 block|}

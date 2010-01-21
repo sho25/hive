@@ -51,7 +51,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**    * Key columns are passed to reducer in the "key".     */
+comment|/**    * Key columns are passed to reducer in the "key".    */
 specifier|private
 name|java
 operator|.
@@ -78,7 +78,7 @@ name|String
 argument_list|>
 name|outputKeyColumnNames
 decl_stmt|;
-comment|/**    * Value columns are passed to reducer in the "value".     */
+comment|/**    * Value columns are passed to reducer in the "value".    */
 specifier|private
 name|java
 operator|.
@@ -105,7 +105,7 @@ name|String
 argument_list|>
 name|outputValueColumnNames
 decl_stmt|;
-comment|/**     * Describe how to serialize the key.    */
+comment|/**    * Describe how to serialize the key.    */
 specifier|private
 name|tableDesc
 name|keySerializeInfo
@@ -139,7 +139,7 @@ decl_stmt|;
 specifier|public
 name|reduceSinkDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|reduceSinkDesc
 parameter_list|(
@@ -234,8 +234,6 @@ name|outputKeyColumnNames
 operator|=
 name|outputKeyColumnNames
 expr_stmt|;
-name|this
-operator|.
 name|outputValueColumnNames
 operator|=
 name|outputValueolumnNames
@@ -383,8 +381,6 @@ name|getKeyCols
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|keyCols
 return|;
 block|}
@@ -431,8 +427,6 @@ name|getValueCols
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|valueCols
 return|;
 block|}
@@ -479,8 +473,6 @@ name|getPartitionCols
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|partitionCols
 return|;
 block|}
@@ -520,8 +512,6 @@ name|getTag
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|tag
 return|;
 block|}
@@ -540,15 +530,13 @@ operator|=
 name|tag
 expr_stmt|;
 block|}
-comment|/**    * Returns the number of reducers for the map-reduce job.    * -1 means to decide the number of reducers at runtime. This enables Hive to estimate     * the number of reducers based on the map-reduce input data size, which is only     * available right before we start the map-reduce job.        */
+comment|/**    * Returns the number of reducers for the map-reduce job. -1 means to decide    * the number of reducers at runtime. This enables Hive to estimate the number    * of reducers based on the map-reduce input data size, which is only    * available right before we start the map-reduce job.    */
 specifier|public
 name|int
 name|getNumReducers
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|numReducers
 return|;
 block|}
@@ -615,7 +603,7 @@ operator|=
 name|valueSerializeInfo
 expr_stmt|;
 block|}
-comment|/**    * Returns the sort order of the key columns.    * @return null, which means ascending order for all key columns,    *   or a String of the same length as key columns, that consists of only     *   "+" (ascending order) and "-" (descending order).     */
+comment|/**    * Returns the sort order of the key columns.    *     * @return null, which means ascending order for all key columns, or a String    *         of the same length as key columns, that consists of only "+"    *         (ascending order) and "-" (descending order).    */
 annotation|@
 name|explain
 argument_list|(

@@ -33,7 +33,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
+name|File
 import|;
 end_import
 
@@ -43,7 +43,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
+name|IOException
 import|;
 end_import
 
@@ -140,7 +140,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Provider of the default RecordManager implementation.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Provider.java,v 1.3 2005/06/25 23:12:32 doomdark Exp $  */
+comment|/**  * Provider of the default RecordManager implementation.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Provider.java,v 1.3 2005/06/25 23:12:32 doomdark Exp $  */
 end_comment
 
 begin_class
@@ -151,7 +151,7 @@ name|Provider
 implements|implements
 name|RecordManagerProvider
 block|{
-comment|/**      * Create a default implementation record manager.      *      * @param name Name of the record file.      * @param options Record manager options.      * @throws IOException if an I/O related exception occurs while creating      *                    or opening the record manager.      * @throws UnsupportedOperationException if some options are not supported by the      *                                      implementation.      * @throws IllegalArgumentException if some options are invalid.      */
+comment|/**    * Create a default implementation record manager.    *     * @param name    *          Name of the record file.    * @param options    *          Record manager options.    * @throws IOException    *           if an I/O related exception occurs while creating or opening the    *           record manager.    * @throws UnsupportedOperationException    *           if some options are not supported by the implementation.    * @throws IllegalArgumentException    *           if some options are invalid.    */
 specifier|public
 name|RecordManager
 name|createRecordManager

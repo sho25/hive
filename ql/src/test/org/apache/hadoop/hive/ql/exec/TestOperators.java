@@ -447,20 +447,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
-operator|.
-name|Writable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|mapred
 operator|.
 name|JobConf
@@ -480,6 +466,8 @@ name|InspectableObject
 index|[]
 name|r
 decl_stmt|;
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|setUp
@@ -977,7 +965,7 @@ name|PASSED
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|/*       for(Enum e: results.keySet()) {         System.out.println(e.toString() + ":" + results.get(e));       }       */
+comment|/*        * for(Enum e: results.keySet()) { System.out.println(e.toString() + ":" +        * results.get(e)); }        */
 name|System
 operator|.
 name|out
@@ -1127,6 +1115,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputCols
 operator|.
 name|add
@@ -1136,6 +1125,7 @@ operator|+
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 name|selectDesc
 name|selectCtx
 init|=
@@ -1170,9 +1160,11 @@ name|selectCtx
 argument_list|)
 expr_stmt|;
 comment|// fileSinkOperator to dump the output of the select
-comment|//fileSinkDesc fsd = new fileSinkDesc ("file:///tmp" + File.separator + System.getProperty("user.name") + File.separator + "TestFileSinkOperator",
-comment|//                                     Utilities.defaultTd, false);
-comment|//Operator<fileSinkDesc> flop = OperatorFactory.getAndMakeChild(fsd, op);
+comment|// fileSinkDesc fsd = new fileSinkDesc ("file:///tmp" + File.separator +
+comment|// System.getProperty("user.name") + File.separator +
+comment|// "TestFileSinkOperator",
+comment|// Utilities.defaultTd, false);
+comment|// Operator<fileSinkDesc> flop = OperatorFactory.getAndMakeChild(fsd, op);
 name|op
 operator|.
 name|initialize
@@ -1385,6 +1377,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputCols
 operator|.
 name|add
@@ -1394,6 +1387,7 @@ operator|+
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 name|selectDesc
 name|selectCtx
 init|=
@@ -2199,9 +2193,6 @@ name|mo
 operator|.
 name|process
 argument_list|(
-operator|(
-name|Writable
-operator|)
 name|tw
 argument_list|)
 expr_stmt|;

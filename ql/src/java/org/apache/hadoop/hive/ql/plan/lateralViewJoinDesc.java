@@ -71,7 +71,7 @@ decl_stmt|;
 specifier|public
 name|lateralViewJoinDesc
 parameter_list|()
-block|{    }
+block|{   }
 specifier|public
 name|lateralViewJoinDesc
 parameter_list|(
@@ -123,8 +123,6 @@ name|getOutputInternalColNames
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|outputInternalColNames
 return|;
 block|}

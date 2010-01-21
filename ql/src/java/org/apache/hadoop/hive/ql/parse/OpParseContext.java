@@ -36,8 +36,8 @@ comment|// row resolver for the operator
 specifier|public
 name|OpParseContext
 parameter_list|()
-block|{     }
-comment|/**    * @param rr row resolver    */
+block|{   }
+comment|/**    * @param rr    *          row resolver    */
 specifier|public
 name|OpParseContext
 parameter_list|(
@@ -62,7 +62,7 @@ return|return
 name|rr
 return|;
 block|}
-comment|/**    * @param rr the row resolver to set    */
+comment|/**    * @param rr    *          the row resolver to set    */
 specifier|public
 name|void
 name|setRR

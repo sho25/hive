@@ -380,6 +380,8 @@ name|nextCntr
 init|=
 literal|1
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|configure
@@ -708,7 +710,8 @@ literal|" initialized"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// defer processing of map local operators to first row if in case there is no input (??)
+comment|// defer processing of map local operators to first row if in case there
+comment|// is no input (??)
 block|}
 catch|catch
 parameter_list|(
@@ -924,7 +927,8 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
-comment|// check if any operator had a fatal error or early exit during execution
+comment|// check if any operator had a fatal error or early exit during
+comment|// execution
 if|if
 condition|(
 name|forwardOp
@@ -1024,13 +1028,16 @@ operator|.
 name|getDone
 argument_list|()
 condition|)
+block|{
 name|done
 operator|=
 literal|true
 expr_stmt|;
+block|}
 else|else
 block|{
-comment|// Since there is no concept of a group, we don't invoke startGroup/endGroup for a mapper
+comment|// Since there is no concept of a group, we don't invoke
+comment|// startGroup/endGroup for a mapper
 name|mo
 operator|.
 name|process
@@ -1149,7 +1156,8 @@ name|long
 name|cntr
 parameter_list|)
 block|{
-comment|// A very simple counter to keep track of number of rows processed by the reducer. It dumps
+comment|// A very simple counter to keep track of number of rows processed by the
+comment|// reducer. It dumps
 comment|// every 1 million times, and quickly before that
 if|if
 condition|(
@@ -1157,17 +1165,21 @@ name|cntr
 operator|>=
 literal|1000000
 condition|)
+block|{
 return|return
 name|cntr
 operator|+
 literal|1000000
 return|;
+block|}
 return|return
 literal|10
 operator|*
 name|cntr
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -1426,8 +1438,6 @@ control|)
 block|{
 if|if
 condition|(
-name|this
-operator|.
 name|rp
 operator|!=
 literal|null

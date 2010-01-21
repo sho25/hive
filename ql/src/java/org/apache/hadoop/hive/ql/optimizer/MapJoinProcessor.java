@@ -213,24 +213,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FunctionRegistry
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|ReduceSinkOperator
 import|;
 end_import
@@ -322,6 +304,24 @@ operator|.
 name|lib
 operator|.
 name|GraphWalker
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lib
+operator|.
+name|Node
 import|;
 end_import
 
@@ -535,24 +535,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
-operator|.
-name|TypeCheckProcFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|plan
 operator|.
 name|PlanUtils
@@ -592,6 +574,24 @@ operator|.
 name|plan
 operator|.
 name|exprNodeDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|joinDesc
 import|;
 end_import
 
@@ -667,62 +667,8 @@ name|tableDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|joinDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|TypeInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
-name|Node
-import|;
-end_import
-
 begin_comment
-comment|/**  * Implementation of one of the rule-based map join optimization. User passes hints to specify map-joins and during this optimization,  * all user specified map joins are converted to MapJoins - the reduce sink operator above the join are converted to map sink operators.  * In future, once statistics are implemented, this transformation can also be done based on costs.  */
+comment|/**  * Implementation of one of the rule-based map join optimization. User passes  * hints to specify map-joins and during this optimization, all user specified  * map joins are converted to MapJoins - the reduce sink operator above the join  * are converted to map sink operators. In future, once statistics are  * implemented, this transformation can also be done based on costs.  */
 end_comment
 
 begin_class
@@ -797,7 +743,7 @@ return|return
 name|op
 return|;
 block|}
-comment|/**    * convert a regular join to a a map-side join.     * @param op join operator    * @param qbJoin qb join tree    * @param mapJoinPos position of the source to be read as part of map-reduce framework. All other sources are cached in memory    */
+comment|/**    * convert a regular join to a a map-side join.    *     * @param op    *          join operator    * @param qbJoin    *          qb join tree    * @param mapJoinPos    *          position of the source to be read as part of map-reduce framework.    *          All other sources are cached in memory    */
 specifier|private
 name|MapJoinOperator
 name|convertMapJoin
@@ -878,6 +824,7 @@ name|joinDesc
 operator|.
 name|FULL_OUTER_JOIN
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -890,6 +837,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 operator|(
@@ -912,6 +860,7 @@ operator|!=
 name|mapJoinPos
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -924,6 +873,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 operator|(
@@ -946,6 +896,7 @@ operator|!=
 name|mapJoinPos
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -958,6 +909,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 name|RowResolver
 name|oldOutputRS
@@ -1041,7 +993,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// Walk over all the sources (which are guaranteed to be reduce sink operators).
+comment|// Walk over all the sources (which are guaranteed to be reduce sink
+comment|// operators).
 comment|// The join outputs a concatenation of all the inputs.
 name|QBJoinTree
 name|leftSrc
@@ -1138,7 +1091,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|//      assert mapJoinPos == 0;
+comment|// assert mapJoinPos == 0;
 name|Operator
 argument_list|<
 name|?
@@ -1299,7 +1252,7 @@ name|pos
 operator|++
 expr_stmt|;
 block|}
-comment|//get the join keys from old parent ReduceSink operators
+comment|// get the join keys from old parent ReduceSink operators
 for|for
 control|(
 name|pos
@@ -1527,7 +1480,9 @@ name|oldValueInfo
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 name|String
 name|outputCol
 init|=
@@ -1703,6 +1658,7 @@ name|o
 range|:
 name|newParentOps
 control|)
+block|{
 name|newPar
 index|[
 name|pos
@@ -1711,6 +1667,7 @@ index|]
 operator|=
 name|o
 expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|exprNodeDesc
@@ -1956,7 +1913,8 @@ argument_list|(
 name|colExprMap
 argument_list|)
 expr_stmt|;
-comment|// change the children of the original join operator to point to the map join operator
+comment|// change the children of the original join operator to point to the map
+comment|// join operator
 name|List
 argument_list|<
 name|Operator
@@ -1985,6 +1943,7 @@ name|childOp
 range|:
 name|childOps
 control|)
+block|{
 name|childOp
 operator|.
 name|replaceParent
@@ -1994,6 +1953,7 @@ argument_list|,
 name|mapJoinOp
 argument_list|)
 expr_stmt|;
+block|}
 name|mapJoinOp
 operator|.
 name|setChildOperators
@@ -2070,7 +2030,8 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// create a dummy select - This select is needed by the walker to split the mapJoin later on
+comment|// create a dummy select - This select is needed by the walker to split the
+comment|// mapJoin later on
 name|RowResolver
 name|inputRR
 init|=
@@ -2376,7 +2337,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Is it a map-side join.     * @param op join operator    * @param qbJoin qb join tree    * @return -1 if it cannot be converted to a map-side join, position of the map join node otherwise    */
+comment|/**    * Is it a map-side join.    *     * @param op    *          join operator    * @param qbJoin    *          qb join tree    * @return -1 if it cannot be converted to a map-side join, position of the    *         map join node otherwise    */
 specifier|private
 name|int
 name|mapSideJoin
@@ -2410,7 +2371,8 @@ init|=
 literal|0
 decl_stmt|;
 comment|// In a map-side join, exactly one table is not present in memory.
-comment|// The client provides the list of tables which can be cached in memory via a hint.
+comment|// The client provides the list of tables which can be cached in memory
+comment|// via a hint.
 if|if
 condition|(
 name|joinTree
@@ -2420,10 +2382,12 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|mapJoinPos
 operator|=
 name|pos
 expr_stmt|;
+block|}
 for|for
 control|(
 name|String
@@ -2462,10 +2426,12 @@ name|mapJoinPos
 operator|>=
 literal|0
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 name|mapJoinPos
 operator|=
 name|pos
@@ -2476,7 +2442,8 @@ name|pos
 operator|++
 expr_stmt|;
 block|}
-comment|// All tables are to be cached - this is not possible. In future, we can support this by randomly
+comment|// All tables are to be cached - this is not possible. In future, we can
+comment|// support this by randomly
 comment|// leaving some table from the list of tables to be cached
 if|if
 condition|(
@@ -2485,6 +2452,7 @@ operator|==
 operator|-
 literal|1
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -2509,11 +2477,12 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+block|}
 return|return
 name|mapJoinPos
 return|;
 block|}
-comment|/**    * Transform the query tree. For each join, check if it is a map-side join (user specified). If yes,     * convert it to a map-side join.    * @param pactx current parse context    */
+comment|/**    * Transform the query tree. For each join, check if it is a map-side join    * (user specified). If yes, convert it to a map-side join.    *     * @param pactx    *          current parse context    */
 specifier|public
 name|ParseContext
 name|transform
@@ -2524,8 +2493,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|this
-operator|.
 name|pGraphContext
 operator|=
 name|pactx
@@ -2719,7 +2686,8 @@ name|MapJoinOperator
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack.
+comment|// create a walker which walks the tree in a DFS manner while maintaining
+comment|// the operator stack.
 comment|// The dispatcher generates the plan from the operator tree
 name|Map
 argument_list|<
@@ -2838,7 +2806,8 @@ name|getMapJoinDefault
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=
@@ -3045,9 +3014,11 @@ name|mapJoin
 argument_list|)
 operator|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|List
 argument_list|<
 name|MapJoinOperator
@@ -3065,6 +3036,7 @@ name|listMapJoinsNoRed
 operator|==
 literal|null
 condition|)
+block|{
 name|listMapJoinsNoRed
 operator|=
 operator|new
@@ -3074,6 +3046,7 @@ name|MapJoinOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
+block|}
 name|listMapJoinsNoRed
 operator|.
 name|add
@@ -3159,6 +3132,7 @@ name|listRejectedMapJoins
 operator|==
 literal|null
 condition|)
+block|{
 name|listRejectedMapJoins
 operator|=
 operator|new
@@ -3168,6 +3142,7 @@ name|MapJoinOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
+block|}
 name|listRejectedMapJoins
 operator|.
 name|add
@@ -3312,14 +3287,10 @@ name|listMapJoinsNoRed
 operator|=
 name|listMapJoinsNoRed
 expr_stmt|;
-name|this
-operator|.
 name|currMapJoinOp
 operator|=
 literal|null
 expr_stmt|;
-name|this
-operator|.
 name|listRejectedMapJoins
 operator|=
 operator|new
@@ -3343,7 +3314,7 @@ return|return
 name|listMapJoinsNoRed
 return|;
 block|}
-comment|/**      * @param listMapJoinsNoRed the listMapJoins to set      */
+comment|/**      * @param listMapJoinsNoRed      *          the listMapJoins to set      */
 specifier|public
 name|void
 name|setListMapJoins
@@ -3372,7 +3343,7 @@ return|return
 name|currMapJoinOp
 return|;
 block|}
-comment|/**      * @param currMapJoinOp the currMapJoinOp to set      */
+comment|/**      * @param currMapJoinOp      *          the currMapJoinOp to set      */
 specifier|public
 name|void
 name|setCurrMapJoinOp
@@ -3401,7 +3372,7 @@ return|return
 name|listRejectedMapJoins
 return|;
 block|}
-comment|/**      * @param listRejectedMapJoins the listRejectedMapJoins to set      */
+comment|/**      * @param listRejectedMapJoins      *          the listRejectedMapJoins to set      */
 specifier|public
 name|void
 name|setListRejectedMapJoins

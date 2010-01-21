@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|*
+name|ByteArrayOutputStream
 import|;
 end_import
 
@@ -35,7 +35,47 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
 import|;
 end_import
 
@@ -102,8 +142,8 @@ name|String
 name|command
 decl_stmt|;
 comment|// map side work
-comment|//   use LinkedHashMap to make sure the iteration order is
-comment|//   deterministic, to ease testing
+comment|// use LinkedHashMap to make sure the iteration order is
+comment|// deterministic, to ease testing
 specifier|private
 name|LinkedHashMap
 argument_list|<
@@ -185,8 +225,6 @@ specifier|public
 name|mapredWork
 parameter_list|()
 block|{
-name|this
-operator|.
 name|aliasToPartnInfo
 operator|=
 operator|new
@@ -321,8 +359,6 @@ name|mapLocalWork
 operator|=
 name|mapLocalWork
 expr_stmt|;
-name|this
-operator|.
 name|aliasToPartnInfo
 operator|=
 operator|new
@@ -341,8 +377,6 @@ name|getCommand
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|command
 return|;
 block|}
@@ -387,8 +421,6 @@ name|getPathToAliases
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|pathToAliases
 return|;
 block|}
@@ -438,8 +470,6 @@ name|getPathToPartitionInfo
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|pathToPartitionInfo
 return|;
 block|}
@@ -479,7 +509,7 @@ return|return
 name|aliasToPartnInfo
 return|;
 block|}
-comment|/**    * @param aliasToPartnInfo the aliasToPartnInfo to set    */
+comment|/**    * @param aliasToPartnInfo    *          the aliasToPartnInfo to set    */
 specifier|public
 name|void
 name|setAliasToPartnInfo
@@ -523,8 +553,6 @@ name|getAliasToWork
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|aliasToWork
 return|;
 block|}
@@ -571,7 +599,7 @@ return|return
 name|mapLocalWork
 return|;
 block|}
-comment|/**    * @param mapLocalWork the mapredLocalWork to set    */
+comment|/**    * @param mapLocalWork    *          the mapredLocalWork to set    */
 specifier|public
 name|void
 name|setMapLocalWork
@@ -594,8 +622,6 @@ name|getKeyDesc
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|keyDesc
 return|;
 block|}
@@ -662,8 +688,6 @@ name|getReducer
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|reducer
 return|;
 block|}
@@ -686,15 +710,13 @@ operator|=
 name|reducer
 expr_stmt|;
 block|}
-comment|/**    * If the number of reducers is -1, the runtime will automatically     * figure it out by input data size.    *     * The number of reducers will be a positive number only in case the    * target table is bucketed into N buckets (through CREATE TABLE).    * This feature is not supported yet, so the number of reducers will     * always be -1 for now.    */
+comment|/**    * If the number of reducers is -1, the runtime will automatically figure it    * out by input data size.    *     * The number of reducers will be a positive number only in case the target    * table is bucketed into N buckets (through CREATE TABLE). This feature is    * not supported yet, so the number of reducers will always be -1 for now.    */
 specifier|public
 name|Integer
 name|getNumReduceTasks
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|numReduceTasks
 return|;
 block|}
@@ -745,8 +767,6 @@ name|String
 argument_list|>
 name|curAliases
 init|=
-name|this
-operator|.
 name|pathToAliases
 operator|.
 name|get
@@ -763,8 +783,6 @@ condition|)
 block|{
 assert|assert
 operator|(
-name|this
-operator|.
 name|pathToPartitionInfo
 operator|.
 name|get
@@ -784,8 +802,6 @@ name|String
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|pathToAliases
 operator|.
 name|put
@@ -795,8 +811,6 @@ argument_list|,
 name|curAliases
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|pathToPartitionInfo
 operator|.
 name|put
@@ -811,8 +825,6 @@ else|else
 block|{
 assert|assert
 operator|(
-name|this
-operator|.
 name|pathToPartitionInfo
 operator|.
 name|get
@@ -866,8 +878,6 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|this
-operator|.
 name|aliasToWork
 operator|.
 name|get
@@ -888,8 +898,6 @@ name|alias
 argument_list|)
 throw|;
 block|}
-name|this
-operator|.
 name|aliasToWork
 operator|.
 name|put
@@ -987,7 +995,7 @@ operator|)
 return|;
 block|}
 comment|// non bean
-comment|/**    * For each map side operator - stores the alias the operator is working on behalf    * of in the operator runtime state. This is used by reducesink operator - but could    * be useful for debugging as well.    */
+comment|/**    * For each map side operator - stores the alias the operator is working on    * behalf of in the operator runtime state. This is used by reducesink    * operator - but could be useful for debugging as well.    */
 specifier|private
 name|void
 name|setAliases
@@ -998,16 +1006,12 @@ control|(
 name|String
 name|oneAlias
 range|:
-name|this
-operator|.
 name|aliasToWork
 operator|.
 name|keySet
 argument_list|()
 control|)
 block|{
-name|this
-operator|.
 name|aliasToWork
 operator|.
 name|get
@@ -1030,8 +1034,6 @@ parameter_list|()
 block|{
 if|if
 condition|(
-name|this
-operator|.
 name|pathToPartitionInfo
 operator|==
 literal|null
@@ -1051,8 +1053,6 @@ name|partitionDesc
 argument_list|>
 name|entry
 range|:
-name|this
-operator|.
 name|pathToPartitionInfo
 operator|.
 name|entrySet
@@ -1100,8 +1100,6 @@ name|getNeedsTagging
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|needsTagging
 return|;
 block|}

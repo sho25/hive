@@ -101,42 +101,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|JoinOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|MapJoinOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|Operator
 import|;
 end_import
@@ -279,6 +243,7 @@ implements|implements
 name|NodeProcessorCtx
 block|{
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|Operator
@@ -296,6 +261,7 @@ argument_list|>
 name|prunedColLists
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|Operator
@@ -310,6 +276,7 @@ argument_list|>
 name|opToParseCtxMap
 decl_stmt|;
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|CommonJoinOperator
@@ -362,8 +329,6 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|opToParseCtxMap
 operator|=
 name|opToParseContextMap
@@ -477,7 +442,7 @@ return|return
 name|prunedColLists
 return|;
 block|}
-comment|/**    * Creates the list of internal column names(these names are used in the RowResolver and    * are different from the external column names) that are needed in the subtree. These columns     * eventually have to be selected from the table scan.    *     * @param curOp The root of the operator subtree.    * @return List<String> of the internal column names.    * @throws SemanticException    */
+comment|/**    * Creates the list of internal column names(these names are used in the    * RowResolver and are different from the external column names) that are    * needed in the subtree. These columns eventually have to be selected from    * the table scan.    *     * @param curOp    *          The root of the operator subtree.    * @return List<String> of the internal column names.    * @throws SemanticException    */
 specifier|public
 name|List
 argument_list|<
@@ -565,9 +530,6 @@ name|joinPrunedColLists
 operator|.
 name|get
 argument_list|(
-operator|(
-name|CommonJoinOperator
-operator|)
 name|child
 argument_list|)
 operator|.
@@ -616,7 +578,7 @@ return|return
 name|colList
 return|;
 block|}
-comment|/**    * Creates the list of internal column names from select expressions in a select operator.    * This function is used for the select operator instead of the genColLists function (which is    * used by the rest of the operators).    *     * @param op The select operator.    * @return List<String> of the internal column names.    */
+comment|/**    * Creates the list of internal column names from select expressions in a    * select operator. This function is used for the select operator instead of    * the genColLists function (which is used by the rest of the operators).    *     * @param op    *          The select operator.    * @return List<String> of the internal column names.    */
 specifier|public
 name|List
 argument_list|<
@@ -667,6 +629,7 @@ name|expr
 range|:
 name|exprList
 control|)
+block|{
 name|cols
 operator|=
 name|Utilities
@@ -681,11 +644,12 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|cols
 return|;
 block|}
-comment|/**    * Creates the list of internal column names for select * expressions.    *     * @param op The select operator.    * @param colList The list of internal column names returned by the children of the select operator.    * @return List<String> of the internal column names.    */
+comment|/**    * Creates the list of internal column names for select * expressions.    *     * @param op    *          The select operator.    * @param colList    *          The list of internal column names returned by the children of the    *          select operator.    * @return List<String> of the internal column names.    */
 specifier|public
 name|List
 argument_list|<
@@ -754,8 +718,10 @@ operator|.
 name|getColList
 argument_list|()
 decl_stmt|;
-comment|// The colList is the output columns used by child operators, they are different
-comment|// from input columns of the current operator. we need to find out which input columns are used.
+comment|// The colList is the output columns used by child operators, they are
+comment|// different
+comment|// from input columns of the current operator. we need to find out which
+comment|// input columns are used.
 name|ArrayList
 argument_list|<
 name|String

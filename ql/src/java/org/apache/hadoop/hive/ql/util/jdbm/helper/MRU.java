@@ -58,7 +58,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  MRU - Most Recently Used cache policy.  *  *  Methods are *not* synchronized, so no concurrent access is allowed.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: MRU.java,v 1.8 2005/06/25 23:12:31 doomdark Exp $  */
+comment|/**  * MRU - Most Recently Used cache policy.  *   * Methods are *not* synchronized, so no concurrent access is allowed.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: MRU.java,v 1.8 2005/06/25 23:12:31 doomdark Exp $  */
 end_comment
 
 begin_class
@@ -76,19 +76,19 @@ operator|new
 name|Hashtable
 argument_list|()
 decl_stmt|;
-comment|/**      * Maximum number of objects in the cache.      */
+comment|/**    * Maximum number of objects in the cache.    */
 name|int
 name|_max
 decl_stmt|;
-comment|/**      * Beginning of linked-list of cache elements.  First entry is element      * which has been used least recently.      */
+comment|/**    * Beginning of linked-list of cache elements. First entry is element which    * has been used least recently.    */
 name|CacheEntry
 name|_first
 decl_stmt|;
-comment|/**      * End of linked-list of cache elements.  Last entry is element      * which has been used most recently.      */
+comment|/**    * End of linked-list of cache elements. Last entry is element which has been    * used most recently.    */
 name|CacheEntry
 name|_last
 decl_stmt|;
-comment|/**      * Cache eviction listeners      */
+comment|/**    * Cache eviction listeners    */
 name|Vector
 name|listeners
 init|=
@@ -96,7 +96,7 @@ operator|new
 name|Vector
 argument_list|()
 decl_stmt|;
-comment|/**      * Construct an MRU with a given maximum number of objects.      */
+comment|/**    * Construct an MRU with a given maximum number of objects.    */
 specifier|public
 name|MRU
 parameter_list|(
@@ -124,7 +124,7 @@ operator|=
 name|max
 expr_stmt|;
 block|}
-comment|/**      * Place an object in the cache.      */
+comment|/**    * Place an object in the cache.    */
 specifier|public
 name|void
 name|put
@@ -236,7 +236,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Obtain an object in the cache      */
+comment|/**    * Obtain an object in the cache    */
 specifier|public
 name|Object
 name|get
@@ -284,7 +284,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**      * Remove an object from the cache      */
+comment|/**    * Remove an object from the cache    */
 specifier|public
 name|void
 name|remove
@@ -330,7 +330,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Remove all objects from the cache      */
+comment|/**    * Remove all objects from the cache    */
 specifier|public
 name|void
 name|removeAll
@@ -351,7 +351,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**      * Enumerate elements' values in the cache      */
+comment|/**    * Enumerate elements' values in the cache    */
 specifier|public
 name|Enumeration
 name|elements
@@ -368,7 +368,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Add a listener to this cache policy      *      * @param listener Listener to add to this policy      */
+comment|/**    * Add a listener to this cache policy    *     * @param listener    *          Listener to add to this policy    */
 specifier|public
 name|void
 name|addListener
@@ -412,7 +412,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Remove a listener from this cache policy      *      * @param listener Listener to remove from this policy      */
+comment|/**    * Remove a listener from this cache policy    *     * @param listener    *          Listener to remove from this policy    */
 specifier|public
 name|void
 name|removeListener
@@ -429,7 +429,7 @@ name|listener
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Add a CacheEntry.  Entry goes at the end of the list.      */
+comment|/**    * Add a CacheEntry. Entry goes at the end of the list.    */
 specifier|protected
 name|void
 name|addEntry
@@ -476,7 +476,7 @@ name|entry
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Remove a CacheEntry from linked list      */
+comment|/**    * Remove a CacheEntry from linked list    */
 specifier|protected
 name|void
 name|removeEntry
@@ -576,7 +576,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Place entry at the end of linked list -- Most Recently Used      */
+comment|/**    * Place entry at the end of linked list -- Most Recently Used    */
 specifier|protected
 name|void
 name|touchEntry
@@ -605,7 +605,7 @@ name|entry
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Purge least recently used object from the cache      *      * @return recyclable CacheEntry      */
+comment|/**    * Purge least recently used object from the cache    *     * @return recyclable CacheEntry    */
 specifier|protected
 name|CacheEntry
 name|purgeEntry
@@ -820,7 +820,7 @@ block|}
 end_class
 
 begin_comment
-comment|/**  * Enumeration wrapper to return actual user objects instead of  * CacheEntries.  */
+comment|/**  * Enumeration wrapper to return actual user objects instead of CacheEntries.  */
 end_comment
 
 begin_class

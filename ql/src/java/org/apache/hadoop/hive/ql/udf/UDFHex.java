@@ -134,6 +134,7 @@ extends|extends
 name|UDF
 block|{
 specifier|private
+specifier|final
 name|Text
 name|result
 init|=
@@ -257,9 +258,6 @@ block|}
 return|return
 name|evaluate
 argument_list|(
-operator|(
-name|long
-operator|)
 name|n
 operator|.
 name|get

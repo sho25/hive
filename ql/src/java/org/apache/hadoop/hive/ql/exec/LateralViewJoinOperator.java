@@ -25,26 +25,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|ArrayList
 import|;
 end_import
@@ -55,35 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|List
 import|;
 end_import
 
@@ -210,7 +162,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The lateral view join operator is used to implement the lateral view  * functionality. This operator was implemented with the following  * operator DAG in mind. For a query such as  *   * SELECT pageid, adid.* FROM example_table LATERAL VIEW explode(adid_list) AS adid  *   * The top of the operator tree will look similar to  *   *           [Table Scan]  *              /   \  *   [Select](*)    [Select](adid_list)  *            |      |  *            |     [UDTF] (explode)  *            \     /  *      [Lateral View Join]  *               |  *               |  *      [Select] (pageid, adid.*)  *               |  *              ....  *   * Rows from the table scan operator are first sent to two select operators.  * The select operator on the left picks all the columns while the select  * operator on the right picks only the columns needed by the UDTF.  *   * The output of select in the left branch and output of the UDTF in the right   * branch are then sent to the lateral view join (LVJ). In most cases, the UDTF  * will generate> 1 row for every row received from the TS, while the left  * select operator will generate only one. For each row output from the TS,  * the LVJ outputs all possible rows that can be created by joining the row from  * the left select and one of the rows output from the UDTF.  *   * Additional lateral views can be supported by adding a similar DAG after the  * previous LVJ operator.  */
+comment|/**  * The lateral view join operator is used to implement the lateral view  * functionality. This operator was implemented with the following operator DAG  * in mind. For a query such as  *   * SELECT pageid, adid.* FROM example_table LATERAL VIEW explode(adid_list) AS  * adid  *   * The top of the operator tree will look similar to  *   * [Table Scan] / \ [Select](*) [Select](adid_list) | | | [UDTF] (explode) \ /  * [Lateral View Join] | | [Select] (pageid, adid.*) | ....  *   * Rows from the table scan operator are first sent to two select operators. The  * select operator on the left picks all the columns while the select operator  * on the right picks only the columns needed by the UDTF.  *   * The output of select in the left branch and output of the UDTF in the right  * branch are then sent to the lateral view join (LVJ). In most cases, the UDTF  * will generate> 1 row for every row received from the TS, while the left  * select operator will generate only one. For each row output from the TS, the  * LVJ outputs all possible rows that can be created by joining the row from the  * left select and one of the rows output from the UDTF.  *   * Additional lateral views can be supported by adding a similar DAG after the  * previous LVJ operator.  */
 end_comment
 
 begin_class

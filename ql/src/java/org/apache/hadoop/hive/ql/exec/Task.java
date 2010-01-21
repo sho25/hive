@@ -25,7 +25,17 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
 import|;
 end_import
 
@@ -35,7 +45,75 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Vector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
 import|;
 end_import
 
@@ -190,34 +268,6 @@ operator|.
 name|util
 operator|.
 name|StringUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
 import|;
 end_import
 
@@ -479,7 +529,7 @@ name|LOG
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * This method is called in the Driver on every task. It updates counters    * and calls execute(), which is overridden in each task    * @return return value of execute()    */
+comment|/**    * This method is called in the Driver on every task. It updates counters and    * calls execute(), which is overridden in each task    *     * @return return value of execute()    */
 specifier|public
 name|int
 name|executeTask
@@ -569,14 +619,14 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * This method is overridden in each Task.    * TODO execute should return a TaskHandle.    * @return status of executing the task    */
+comment|/**    * This method is overridden in each Task. TODO execute should return a    * TaskHandle.    *     * @return status of executing the task    */
 specifier|protected
 specifier|abstract
 name|int
 name|execute
 parameter_list|()
 function_decl|;
-comment|/**    * Update the progress of the task within taskHandle and also    * dump the progress information to the history file    * @param taskHandle task handle returned by execute    * @throws IOException     */
+comment|/**    * Update the progress of the task within taskHandle and also dump the    * progress information to the history file    *     * @param taskHandle    *          task handle returned by execute    * @throws IOException    */
 specifier|public
 name|void
 name|progress
@@ -705,7 +755,7 @@ return|return
 name|parentTasks
 return|;
 block|}
-comment|/**    * Add a dependent task on the current task. Return if the dependency already existed or is this a new one    * @return true if the task got added false if it already existed    */
+comment|/**    * Add a dependent task on the current task. Return if the dependency already    * existed or is this a new one    *     * @return true if the task got added false if it already existed    */
 specifier|public
 name|boolean
 name|addDependentTask
@@ -830,7 +880,7 @@ return|return
 name|ret
 return|;
 block|}
-comment|/**    * remove the dependent task    * @param dependent the task to remove    */
+comment|/**    * remove the dependent task    *     * @param dependent    *          the task to remove    */
 specifier|public
 name|void
 name|removeDependentTask
@@ -895,6 +945,7 @@ name|this
 argument_list|)
 operator|)
 condition|)
+block|{
 name|dependent
 operator|.
 name|getParentTasks
@@ -905,6 +956,7 @@ argument_list|(
 name|this
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|public
@@ -1136,7 +1188,7 @@ return|return
 name|taskCounters
 return|;
 block|}
-comment|/**    * Should be overridden to return the type of the specific task among    * the types in TaskType    *     * @return TaskTypeType.* or -1 if not overridden    */
+comment|/**    * Should be overridden to return the type of the specific task among the    * types in TaskType    *     * @return TaskTypeType.* or -1 if not overridden    */
 specifier|public
 name|int
 name|getType

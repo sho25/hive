@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|Properties
 import|;
 end_import
 
@@ -86,9 +86,11 @@ argument_list|(
 literal|"true"
 argument_list|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 name|value
@@ -105,9 +107,11 @@ argument_list|(
 literal|"false"
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 throw|throw
 operator|new
 name|IllegalArgumentException

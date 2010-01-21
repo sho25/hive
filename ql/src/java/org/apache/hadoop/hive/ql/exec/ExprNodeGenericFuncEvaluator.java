@@ -121,20 +121,6 @@ name|ObjectInspector
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|ReflectionUtils
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -422,8 +408,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|this
-operator|.
 name|rowObject
 operator|=
 name|row

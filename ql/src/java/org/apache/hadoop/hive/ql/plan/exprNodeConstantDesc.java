@@ -109,7 +109,7 @@ decl_stmt|;
 specifier|public
 name|exprNodeConstantDesc
 parameter_list|()
-block|{}
+block|{   }
 specifier|public
 name|exprNodeConstantDesc
 parameter_list|(
@@ -176,11 +176,11 @@ name|getValue
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|value
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -271,12 +271,8 @@ return|return
 operator|new
 name|exprNodeConstantDesc
 argument_list|(
-name|this
-operator|.
 name|typeInfo
 argument_list|,
-name|this
-operator|.
 name|value
 argument_list|)
 return|;
@@ -300,9 +296,11 @@ operator|instanceof
 name|exprNodeConstantDesc
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|exprNodeConstantDesc
 name|dest
 init|=
@@ -324,9 +322,11 @@ name|getTypeInfo
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -340,9 +340,11 @@ name|getValue
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 literal|true
 return|;

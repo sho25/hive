@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Contains the information needed to add a partition.   */
+comment|/**  * Contains the information needed to add a partition.  */
 end_comment
 
 begin_class
@@ -55,7 +55,7 @@ name|String
 argument_list|>
 name|partSpec
 decl_stmt|;
-comment|/**    * @param dbName database to add to.    * @param tableName table to add to.    * @param partSpec partition specification.    * @param location partition location, relative to table location.     */
+comment|/**    * @param dbName    *          database to add to.    * @param tableName    *          table to add to.    * @param partSpec    *          partition specification.    * @param location    *          partition location, relative to table location.    */
 specifier|public
 name|AddPartitionDesc
 parameter_list|(
@@ -115,7 +115,7 @@ return|return
 name|dbName
 return|;
 block|}
-comment|/**    * @param dbName database name    */
+comment|/**    * @param dbName    *          database name    */
 specifier|public
 name|void
 name|setDbName
@@ -141,7 +141,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**    * @param tableName the table we're going to add the partitions to.    */
+comment|/**    * @param tableName    *          the table we're going to add the partitions to.    */
 specifier|public
 name|void
 name|setTableName
@@ -167,7 +167,7 @@ return|return
 name|location
 return|;
 block|}
-comment|/**    * @param location location of partition in relation to table    */
+comment|/**    * @param location    *          location of partition in relation to table    */
 specifier|public
 name|void
 name|setLocation
@@ -198,7 +198,7 @@ return|return
 name|partSpec
 return|;
 block|}
-comment|/**    * @param partSpec partition specification    */
+comment|/**    * @param partSpec    *          partition specification    */
 specifier|public
 name|void
 name|setPartSpec

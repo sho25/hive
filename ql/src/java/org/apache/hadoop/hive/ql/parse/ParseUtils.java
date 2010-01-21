@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Library of utility functions used in the parse code  *  */
+comment|/**  * Library of utility functions used in the parse code  *   */
 end_comment
 
 begin_class
@@ -28,7 +28,7 @@ specifier|public
 class|class
 name|ParseUtils
 block|{
-comment|/**    * Tests whether the parse tree node is a join token    *     * @param node The parse tree node    * @return boolean    */
+comment|/**    * Tests whether the parse tree node is a join token    *     * @param node    *          The parse tree node    * @return boolean    */
 specifier|public
 specifier|static
 name|boolean
@@ -96,14 +96,16 @@ operator|.
 name|TOK_FULLOUTERJOIN
 operator|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 return|return
 literal|false
 return|;
 block|}
-comment|/**    * Performs a descent of the leftmost branch of a tree, stopping    * when either a node with a non-null token is found or the leaf    * level is encountered.    *    * @param tree candidate node from which to start searching    *    * @return node at which descent stopped    */
+comment|/**    * Performs a descent of the leftmost branch of a tree, stopping when either a    * node with a non-null token is found or the leaf level is encountered.    *     * @param tree    *          candidate node from which to start searching    *     * @return node at which descent stopped    */
 specifier|public
 specifier|static
 name|ASTNode

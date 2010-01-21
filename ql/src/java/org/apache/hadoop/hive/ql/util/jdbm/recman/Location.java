@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * This class represents a location within a file. Both physical and  * logical rowids are based on locations internally - this version is  * used when there is no file block to back the location's data.  */
+comment|/**  * This class represents a location within a file. Both physical and logical  * rowids are based on locations internally - this version is used when there is  * no file block to back the location's data.  */
 end_comment
 
 begin_class
@@ -37,14 +37,16 @@ class|class
 name|Location
 block|{
 specifier|private
+specifier|final
 name|long
 name|block
 decl_stmt|;
 specifier|private
+specifier|final
 name|short
 name|offset
 decl_stmt|;
-comment|/**      * Creates a location from a (block, offset) tuple.      */
+comment|/**    * Creates a location from a (block, offset) tuple.    */
 name|Location
 parameter_list|(
 name|long
@@ -67,15 +69,13 @@ operator|=
 name|offset
 expr_stmt|;
 block|}
-comment|/**      * Creates a location from a combined block/offset long, as      * used in the external representation of logical rowids.      *       * @see #toLong()      */
+comment|/**    * Creates a location from a combined block/offset long, as used in the    * external representation of logical rowids.    *     * @see #toLong()    */
 name|Location
 parameter_list|(
 name|long
 name|blockOffset
 parameter_list|)
 block|{
-name|this
-operator|.
 name|offset
 operator|=
 call|(
@@ -87,8 +87,6 @@ operator|&
 literal|0xffff
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|block
 operator|=
 name|blockOffset
@@ -96,7 +94,7 @@ operator|>>
 literal|16
 expr_stmt|;
 block|}
-comment|/**      * Creates a location based on the data of the physical rowid.      */
+comment|/**    * Creates a location based on the data of the physical rowid.    */
 name|Location
 parameter_list|(
 name|PhysicalRowId
@@ -118,7 +116,7 @@ name|getOffset
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Returns the file block of the location      */
+comment|/**    * Returns the file block of the location    */
 name|long
 name|getBlock
 parameter_list|()
@@ -127,7 +125,7 @@ return|return
 name|block
 return|;
 block|}
-comment|/**      * Returns the offset within the block of the location      */
+comment|/**    * Returns the offset within the block of the location    */
 name|short
 name|getOffset
 parameter_list|()
@@ -136,7 +134,7 @@ return|return
 name|offset
 return|;
 block|}
-comment|/**      * Returns the external representation of a location when used      * as a logical rowid, which combines the block and the offset      * in a single long.      */
+comment|/**    * Returns the external representation of a location when used as a logical    * rowid, which combines the block and the offset in a single long.    */
 name|long
 name|toLong
 parameter_list|()
@@ -148,13 +146,12 @@ operator|<<
 literal|16
 operator|)
 operator|+
-operator|(
-name|long
-operator|)
 name|offset
 return|;
 block|}
 comment|// overrides of java.lang.Object
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -176,9 +173,11 @@ operator|instanceof
 name|Location
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|Location
 name|ol
 init|=
@@ -201,6 +200,8 @@ operator|==
 name|offset
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

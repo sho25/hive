@@ -48,7 +48,7 @@ specifier|public
 interface|interface
 name|PhysicalPlanResolver
 block|{
-comment|/**    * All physical plan resolvers have to implement this entry method.    * @param pctx    * @return    */
+comment|/**    * All physical plan resolvers have to implement this entry method.    *     * @param pctx    * @return    */
 specifier|public
 name|PhysicalContext
 name|resolve

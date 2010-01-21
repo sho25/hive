@@ -123,26 +123,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|generic
-operator|.
-name|GenericUDF
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde
 operator|.
 name|Constants
@@ -222,7 +202,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Mimics oracle's function translate(str1, str2, str3)   */
+comment|/**  * Mimics oracle's function translate(str1, str2, str3)  */
 end_comment
 
 begin_class
@@ -422,8 +402,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|this
-operator|.
 name|argumentOIs
 operator|=
 name|arguments
@@ -435,6 +413,7 @@ name|writableStringObjectInspector
 return|;
 block|}
 specifier|private
+specifier|final
 name|Text
 name|resultText
 init|=
@@ -487,9 +466,11 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|String
 name|exprString
 init|=
@@ -660,7 +641,9 @@ name|i
 index|]
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 name|seen
 operator|.
 name|add
@@ -755,6 +738,7 @@ index|]
 operator|!=
 literal|0
 condition|)
+block|{
 name|result
 index|[
 name|pos
@@ -766,6 +750,7 @@ index|[
 name|i
 index|]
 expr_stmt|;
+block|}
 block|}
 name|resultText
 operator|.

@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Serializer for byte arrays -- simple returns the byte array itself.  No actual  * serialization is performed.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: ByteArraySerializer.java,v 1.1 2003/03/21 02:48:42 boisvert Exp $  */
+comment|/**  * Serializer for byte arrays -- simple returns the byte array itself. No actual  * serialization is performed.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: ByteArraySerializer.java,v 1.1 2003/03/21 02:48:42 boisvert Exp  *          $  */
 end_comment
 
 begin_class
@@ -49,7 +49,7 @@ name|ByteArraySerializer
 implements|implements
 name|Serializer
 block|{
-comment|/**      * Version id for serialization.      */
+comment|/**    * Version id for serialization.    */
 specifier|final
 specifier|static
 name|long
@@ -57,7 +57,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * Static instance.      */
+comment|/**    * Static instance.    */
 specifier|public
 specifier|static
 specifier|final
@@ -68,7 +68,7 @@ operator|new
 name|ByteArraySerializer
 argument_list|()
 decl_stmt|;
-comment|/**       * Serialize the content of an object into a byte array.      *      * @param obj Object to serialize      * @return a byte array representing the object's state      *      */
+comment|/**    * Serialize the content of an object into a byte array.    *     * @param obj    *          Object to serialize    * @return a byte array representing the object's state    *     */
 specifier|public
 name|byte
 index|[]
@@ -88,7 +88,7 @@ operator|)
 name|obj
 return|;
 block|}
-comment|/**      * Deserialize the content of an object from a byte array.      *      * @param serialized Byte array representation of the object      * @return deserialized object      *      */
+comment|/**    * Deserialize the content of an object from a byte array.    *     * @param serialized    *          Byte array representation of the object    * @return deserialized object    *     */
 specifier|public
 name|Object
 name|deserialize

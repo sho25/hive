@@ -21,36 +21,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|antlr
-operator|.
-name|runtime
-operator|.
-name|TokenRewriteStream
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveUtils
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -76,6 +46,36 @@ operator|.
 name|util
 operator|.
 name|TreeMap
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|antlr
+operator|.
+name|runtime
+operator|.
+name|TokenRewriteStream
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveUtils
 import|;
 end_import
 
@@ -137,7 +137,7 @@ return|return
 name|enabled
 return|;
 block|}
-comment|/**    * Register a translation to be performed as part of unparse.    *    * @param node source node whose subtree is to be replaced    *    * @param replacementText text to use as replacement    */
+comment|/**    * Register a translation to be performed as part of unparse.    *     * @param node    *          source node whose subtree is to be replaced    *     * @param replacementText    *          text to use as replacement    */
 name|void
 name|addTranslation
 parameter_list|(
@@ -206,7 +206,7 @@ name|replacementText
 operator|=
 name|replacementText
 expr_stmt|;
-comment|// Sanity check:  no overlap with regions already being expanded
+comment|// Sanity check: no overlap with regions already being expanded
 assert|assert
 operator|(
 name|tokenStopIndex
@@ -277,7 +277,7 @@ name|replacementText
 argument_list|)
 condition|)
 block|{
-comment|// exact match for existing mapping:  somebody is doing something
+comment|// exact match for existing mapping: somebody is doing something
 comment|// redundant, but we'll let it pass
 return|return;
 block|}
@@ -323,7 +323,7 @@ name|tokenStopIndex
 operator|)
 assert|;
 block|}
-comment|// It's all good:  create a new entry in the map
+comment|// It's all good: create a new entry in the map
 name|translations
 operator|.
 name|put
@@ -334,7 +334,7 @@ name|translation
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Register a translation for an identifier.    *    * @param node source node (which must be an identifier) to be replaced    */
+comment|/**    * Register a translation for an identifier.    *     * @param node    *          source node (which must be an identifier) to be replaced    */
 name|void
 name|addIdentifierTranslation
 parameter_list|(
@@ -399,7 +399,7 @@ name|replacementText
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Apply translations on the given token stream.    *    * @param tokenRewriteStream rewrite-capable stream    */
+comment|/**    * Apply translations on the given token stream.    *     * @param tokenRewriteStream    *          rewrite-capable stream    */
 name|void
 name|applyTranslation
 parameter_list|(
@@ -462,6 +462,8 @@ decl_stmt|;
 name|String
 name|replacementText
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

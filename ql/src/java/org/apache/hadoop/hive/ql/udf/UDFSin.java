@@ -155,7 +155,7 @@ specifier|public
 name|UDFSin
 parameter_list|()
 block|{   }
-comment|/**    * Take Sine of a.     */
+comment|/**    * Take Sine of a.    */
 specifier|public
 name|DoubleWritable
 name|evaluate

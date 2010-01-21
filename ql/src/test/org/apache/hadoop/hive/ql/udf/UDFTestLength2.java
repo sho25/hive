@@ -37,36 +37,8 @@ name|UDF
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|IntWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Text
-import|;
-end_import
-
 begin_comment
-comment|/**  * A UDF for testing, which evaluates the length of a string.  * This UDF uses Java Primitive classes for parameters.  */
+comment|/**  * A UDF for testing, which evaluates the length of a string. This UDF uses Java  * Primitive classes for parameters.  */
 end_comment
 
 begin_class

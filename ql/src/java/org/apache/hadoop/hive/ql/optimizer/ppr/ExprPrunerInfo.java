@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The processor context for partition pruner. This contains the table  * alias that is being currently processed.  */
+comment|/**  * The processor context for partition pruner. This contains the table alias  * that is being currently processed.  */
 end_comment
 
 begin_class

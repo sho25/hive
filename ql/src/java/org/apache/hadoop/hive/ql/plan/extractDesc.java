@@ -58,7 +58,7 @@ decl_stmt|;
 specifier|public
 name|extractDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|extractDesc
 parameter_list|(
@@ -80,8 +80,6 @@ name|getCol
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|col
 return|;
 block|}

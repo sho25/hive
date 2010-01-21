@@ -37,9 +37,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|security
+name|hive
 operator|.
-name|UserGroupInformation
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
 import|;
 end_import
 
@@ -51,18 +55,14 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
+name|security
 operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|SessionState
+name|UserGroupInformation
 import|;
 end_import
 
 begin_comment
-comment|/**  * The pre execute hook interface. A list of such hooks can  * be configured to be called after compilation and before   * execution.  */
+comment|/**  * The pre execute hook interface. A list of such hooks can be configured to be  * called after compilation and before execution.  */
 end_comment
 
 begin_interface
@@ -70,7 +70,7 @@ specifier|public
 interface|interface
 name|PreExecute
 block|{
-comment|/**    * The run command that is called just before the execution of the    * query.    *     * @param sess The session state.    * @param inputs The set of input tables and partitions.    * @param outputs The set of output tables, partitions, local and hdfs directories.    * @param ugi The user group security information.    */
+comment|/**    * The run command that is called just before the execution of the query.    *     * @param sess    *          The session state.    * @param inputs    *          The set of input tables and partitions.    * @param outputs    *          The set of output tables, partitions, local and hdfs directories.    * @param ugi    *          The user group security information.    */
 specifier|public
 name|void
 name|run

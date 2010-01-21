@@ -25,25 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|*
+name|HashMap
 import|;
 end_import
 
@@ -75,8 +57,44 @@ name|LogFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Partition
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Table
+import|;
+end_import
+
 begin_comment
-comment|/**  * Implementation of the metadata information related to a query block  *  **/
+comment|/**  * Implementation of the metadata information related to a query block  *   **/
 end_comment
 
 begin_class
@@ -133,6 +151,7 @@ init|=
 literal|5
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -142,6 +161,7 @@ argument_list|>
 name|aliasToTable
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -151,6 +171,7 @@ argument_list|>
 name|nameToDestTable
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -160,6 +181,7 @@ argument_list|>
 name|nameToDestPartition
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -169,6 +191,7 @@ argument_list|>
 name|nameToDestFile
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -204,8 +227,6 @@ specifier|public
 name|QBMetaData
 parameter_list|()
 block|{
-name|this
-operator|.
 name|aliasToTable
 operator|=
 operator|new
@@ -217,8 +238,6 @@ name|Table
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|nameToDestTable
 operator|=
 operator|new
@@ -230,8 +249,6 @@ name|Table
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|nameToDestPartition
 operator|=
 operator|new
@@ -243,8 +260,6 @@ name|Partition
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|nameToDestFile
 operator|=
 operator|new
@@ -256,8 +271,6 @@ name|String
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|nameToDestType
 operator|=
 operator|new
@@ -270,8 +283,10 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
-comment|// All getXXX needs toLowerCase() because they are directly called from SemanticAnalyzer
-comment|// All setXXX does not need it because they are called from QB which already lowercases
+comment|// All getXXX needs toLowerCase() because they are directly called from
+comment|// SemanticAnalyzer
+comment|// All setXXX does not need it because they are called from QB which already
+comment|// lowercases
 comment|// the aliases.
 specifier|public
 name|HashMap
@@ -296,8 +311,6 @@ name|alias
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|aliasToTable
 operator|.
 name|get
@@ -320,8 +333,6 @@ name|Table
 name|tab
 parameter_list|)
 block|{
-name|this
-operator|.
 name|aliasToTable
 operator|.
 name|put
@@ -343,8 +354,6 @@ name|Table
 name|tab
 parameter_list|)
 block|{
-name|this
-operator|.
 name|nameToDestType
 operator|.
 name|put
@@ -359,8 +368,6 @@ name|DEST_TABLE
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|nameToDestTable
 operator|.
 name|put
@@ -382,8 +389,6 @@ name|Partition
 name|part
 parameter_list|)
 block|{
-name|this
-operator|.
 name|nameToDestType
 operator|.
 name|put
@@ -398,8 +403,6 @@ name|DEST_PARTITION
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|nameToDestPartition
 operator|.
 name|put
@@ -424,8 +427,6 @@ name|boolean
 name|isDfsFile
 parameter_list|)
 block|{
-name|this
-operator|.
 name|nameToDestType
 operator|.
 name|put
@@ -449,8 +450,6 @@ name|DEST_LOCAL_FILE
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|nameToDestFile
 operator|.
 name|put
@@ -470,8 +469,6 @@ name|alias
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|nameToDestType
 operator|.
 name|get
@@ -492,8 +489,6 @@ name|alias
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|nameToDestTable
 operator|.
 name|get
@@ -514,8 +509,6 @@ name|alias
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|nameToDestPartition
 operator|.
 name|get
@@ -536,8 +529,6 @@ name|alias
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|nameToDestFile
 operator|.
 name|get
@@ -558,8 +549,6 @@ name|alias
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|aliasToTable
 operator|.
 name|get

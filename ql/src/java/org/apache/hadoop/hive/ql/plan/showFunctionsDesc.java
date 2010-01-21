@@ -126,7 +126,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * @param pattern names of tables to show    */
+comment|/**    * @param pattern    *          names of tables to show    */
 specifier|public
 name|showFunctionsDesc
 parameter_list|(
@@ -167,7 +167,7 @@ return|return
 name|pattern
 return|;
 block|}
-comment|/**    * @param pattern the pattern to set    */
+comment|/**    * @param pattern    *          the pattern to set    */
 specifier|public
 name|void
 name|setPattern
@@ -217,7 +217,7 @@ name|getName
 argument_list|()
 return|;
 block|}
-comment|/**    * @param resFile the resFile to set    */
+comment|/**    * @param resFile    *          the resFile to set    */
 specifier|public
 name|void
 name|setResFile

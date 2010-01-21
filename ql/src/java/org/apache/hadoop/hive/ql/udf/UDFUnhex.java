@@ -65,34 +65,6 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|IntWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|LongWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
 name|Text
 import|;
 end_import
@@ -147,7 +119,7 @@ name|UDFUnhex
 extends|extends
 name|UDF
 block|{
-comment|/**    * Convert every two hex digits in s into     *     */
+comment|/**    * Convert every two hex digits in s into    *     */
 specifier|public
 name|Text
 name|evaluate
@@ -167,7 +139,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|//append a leading 0 if needed
+comment|// append a leading 0 if needed
 name|String
 name|str
 decl_stmt|;
@@ -182,6 +154,7 @@ literal|2
 operator|==
 literal|1
 condition|)
+block|{
 name|str
 operator|=
 literal|"0"
@@ -191,7 +164,9 @@ operator|.
 name|toString
 argument_list|()
 expr_stmt|;
+block|}
 else|else
+block|{
 name|str
 operator|=
 name|s
@@ -199,6 +174,7 @@ operator|.
 name|toString
 argument_list|()
 expr_stmt|;
+block|}
 name|byte
 index|[]
 name|result
@@ -272,7 +248,7 @@ name|NumberFormatException
 name|e
 parameter_list|)
 block|{
-comment|//invalid character present, return null
+comment|// invalid character present, return null
 return|return
 literal|null
 return|;

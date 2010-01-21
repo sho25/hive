@@ -33,7 +33,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
+name|File
 import|;
 end_import
 
@@ -43,7 +43,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
+name|IOException
 import|;
 end_import
 
@@ -105,7 +105,7 @@ name|jdbm
 operator|.
 name|helper
 operator|.
-name|Serializer
+name|DefaultSerializer
 import|;
 end_import
 
@@ -127,12 +127,12 @@ name|jdbm
 operator|.
 name|helper
 operator|.
-name|DefaultSerializer
+name|Serializer
 import|;
 end_import
 
 begin_comment
-comment|/**  *  This class manages records, which are uninterpreted blobs of data. The  *  set of operations is simple and straightforward: you communicate with  *  the class using long "rowids" and byte[] data blocks. Rowids are returned  *  on inserts and you can stash them away someplace safe to be able to get  *  back to them. Data blocks can be as long as you wish, and may have  *  lengths different from the original when updating.  *<p>  *  Operations are synchronized, so that only one of them will happen  *  concurrently even if you hammer away from multiple threads. Operations  *  are made atomic by keeping a transaction log which is recovered after  *  a crash, so the operations specified by this interface all have ACID  *  properties.  *<p>  *  You identify a file by just the name. The package attaches<tt>.db</tt>  *  for the database file, and<tt>.lg</tt> for the transaction log. The  *  transaction log is synchronized regularly and then restarted, so don't  *  worry if you see the size going up and down.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: BaseRecordManager.java,v 1.8 2005/06/25 23:12:32 doomdark Exp $  */
+comment|/**  * This class manages records, which are uninterpreted blobs of data. The set of  * operations is simple and straightforward: you communicate with the class  * using long "rowids" and byte[] data blocks. Rowids are returned on inserts  * and you can stash them away someplace safe to be able to get back to them.  * Data blocks can be as long as you wish, and may have lengths different from  * the original when updating.  *<p>  * Operations are synchronized, so that only one of them will happen  * concurrently even if you hammer away from multiple threads. Operations are  * made atomic by keeping a transaction log which is recovered after a crash, so  * the operations specified by this interface all have ACID properties.  *<p>  * You identify a file by just the name. The package attaches<tt>.db</tt> for  * the database file, and<tt>.lg</tt> for the transaction log. The transaction  * log is synchronized regularly and then restarted, so don't worry if you see  * the size going up and down.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @author<a href="cg@cdegroot.com">Cees de Groot</a>  * @version $Id: BaseRecordManager.java,v 1.8 2005/06/25 23:12:32 doomdark Exp $  */
 end_comment
 
 begin_class
@@ -143,27 +143,29 @@ name|BaseRecordManager
 implements|implements
 name|RecordManager
 block|{
-comment|/**      * Underlying record file.      */
+comment|/**    * Underlying record file.    */
 specifier|private
 name|RecordFile
 name|_file
 decl_stmt|;
-comment|/**      * Physical row identifier manager.      */
+comment|/**    * Physical row identifier manager.    */
 specifier|private
+specifier|final
 name|PhysicalRowIdManager
 name|_physMgr
 decl_stmt|;
-comment|/**      * Logigal to Physical row identifier manager.      */
+comment|/**    * Logigal to Physical row identifier manager.    */
 specifier|private
+specifier|final
 name|LogicalRowIdManager
 name|_logMgr
 decl_stmt|;
-comment|/**      * Page manager.      */
+comment|/**    * Page manager.    */
 specifier|private
 name|PageManager
 name|_pageman
 decl_stmt|;
-comment|/**      * Reserved slot for name directory.      */
+comment|/**    * Reserved slot for name directory.    */
 specifier|public
 specifier|static
 specifier|final
@@ -172,7 +174,7 @@ name|NAME_DIRECTORY_ROOT
 init|=
 literal|0
 decl_stmt|;
-comment|/**      * Static debugging flag      */
+comment|/**    * Static debugging flag    */
 specifier|public
 specifier|static
 specifier|final
@@ -181,12 +183,12 @@ name|DEBUG
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * Directory of named JDBMHashtables.  This directory is a persistent      * directory, stored as a Hashtable.  It can be retrived by using      * the NAME_DIRECTORY_ROOT.      */
+comment|/**    * Directory of named JDBMHashtables. This directory is a persistent    * directory, stored as a Hashtable. It can be retrived by using the    * NAME_DIRECTORY_ROOT.    */
 specifier|private
 name|Map
 name|_nameDirectory
 decl_stmt|;
-comment|/**      *  Creates a record manager for the indicated file      *      *  @throws IOException when the file cannot be opened or is not      *          a valid file content-wise.      */
+comment|/**    * Creates a record manager for the indicated file    *     * @throws IOException    *           when the file cannot be opened or is not a valid file    *           content-wise.    */
 specifier|public
 name|BaseRecordManager
 parameter_list|(
@@ -233,7 +235,7 @@ name|_pageman
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Creates a record manager for the indicated file      *      *  @throws IOException when the file cannot be opened or is not      *          a valid file content-wise.      */
+comment|/**    * Creates a record manager for the indicated file    *     * @throws IOException    *           when the file cannot be opened or is not a valid file    *           content-wise.    */
 specifier|public
 name|BaseRecordManager
 parameter_list|(
@@ -280,7 +282,7 @@ name|_pageman
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Get the underlying Transaction Manager      */
+comment|/**    * Get the underlying Transaction Manager    */
 specifier|public
 specifier|synchronized
 name|TransactionManager
@@ -296,7 +298,7 @@ operator|.
 name|txnMgr
 return|;
 block|}
-comment|/**      *  Switches off transactioning for the record manager. This means      *  that a) a transaction log is not kept, and b) writes aren't      *  synch'ed after every update. This is useful when batch inserting      *  into a new database.      *<p>      *  Only call this method directly after opening the file, otherwise      *  the results will be undefined.      */
+comment|/**    * Switches off transactioning for the record manager. This means that a) a    * transaction log is not kept, and b) writes aren't synch'ed after every    * update. This is useful when batch inserting into a new database.    *<p>    * Only call this method directly after opening the file, otherwise the    * results will be undefined.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -312,7 +314,7 @@ name|disableTransactions
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      *  Closes the record manager.      *      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Closes the record manager.    *     * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -343,7 +345,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**      *  Inserts a new record using standard java object serialization.      *      *  @param obj the object for the new record.      *  @return the rowid for the new record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Inserts a new record using standard java object serialization.    *     * @param obj    *          the object for the new record.    * @return the rowid for the new record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 name|long
 name|insert
@@ -365,7 +367,7 @@ name|INSTANCE
 argument_list|)
 return|;
 block|}
-comment|/**      *  Inserts a new record using a custom serializer.      *      *  @param obj the object for the new record.      *  @param serializer a custom serializer      *  @return the rowid for the new record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Inserts a new record using a custom serializer.    *     * @param obj    *          the object for the new record.    * @param serializer    *          a custom serializer    * @return the rowid for the new record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|long
@@ -456,7 +458,7 @@ return|return
 name|recid
 return|;
 block|}
-comment|/**      *  Deletes a record.      *      *  @param recid the rowid for the record that should be deleted.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Deletes a record.    *     * @param recid    *          the rowid for the record that should be deleted.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -539,7 +541,7 @@ name|logRowId
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Updates a record using standard java object serialization.      *      *  @param recid the recid for the record that is to be updated.      *  @param obj the new object for the record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Updates a record using standard java object serialization.    *     * @param recid    *          the recid for the record that is to be updated.    * @param obj    *          the new object for the record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 name|void
 name|update
@@ -565,7 +567,7 @@ name|INSTANCE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Updates a record using a custom serializer.      *      *  @param recid the recid for the record that is to be updated.      *  @param obj the new object for the record.      *  @param serializer a custom serializer      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Updates a record using a custom serializer.    *     * @param recid    *          the recid for the record that is to be updated.    * @param obj    *          the new object for the record.    * @param serializer    *          a custom serializer    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -696,7 +698,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      *  Fetches a record using standard java object serialization.      *      *  @param recid the recid for the record that must be fetched.      *  @return the object contained in the record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Fetches a record using standard java object serialization.    *     * @param recid    *          the recid for the record that must be fetched.    * @return the object contained in the record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 name|Object
 name|fetch
@@ -718,7 +720,7 @@ name|INSTANCE
 argument_list|)
 return|;
 block|}
-comment|/**      *  Fetches a record using a custom serializer.      *      *  @param recid the recid for the record that must be fetched.      *  @param serializer a custom serializer      *  @return the object contained in the record.      *  @throws IOException when one of the underlying I/O operations fails.      */
+comment|/**    * Fetches a record using a custom serializer.    *     * @param recid    *          the recid for the record that must be fetched.    * @param serializer    *          a custom serializer    * @return the object contained in the record.    * @throws IOException    *           when one of the underlying I/O operations fails.    */
 specifier|public
 specifier|synchronized
 name|Object
@@ -807,7 +809,7 @@ name|data
 argument_list|)
 return|;
 block|}
-comment|/**      *  Returns the number of slots available for "root" rowids. These slots      *  can be used to store special rowids, like rowids that point to      *  other rowids. Root rowids are useful for bootstrapping access to      *  a set of data.      */
+comment|/**    * Returns the number of slots available for "root" rowids. These slots can be    * used to store special rowids, like rowids that point to other rowids. Root    * rowids are useful for bootstrapping access to a set of data.    */
 specifier|public
 name|int
 name|getRootCount
@@ -819,7 +821,7 @@ operator|.
 name|NROOTS
 return|;
 block|}
-comment|/**      *  Returns the indicated root rowid.      *      *  @see #getRootCount      */
+comment|/**    * Returns the indicated root rowid.    *     * @see #getRootCount    */
 specifier|public
 specifier|synchronized
 name|long
@@ -846,7 +848,7 @@ name|id
 argument_list|)
 return|;
 block|}
-comment|/**      *  Sets the indicated root rowid.      *      *  @see #getRootCount      */
+comment|/**    * Sets the indicated root rowid.    *     * @see #getRootCount    */
 specifier|public
 specifier|synchronized
 name|void
@@ -877,7 +879,7 @@ name|rowid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Obtain the record id of a named object. Returns 0 if named object      * doesn't exist.      */
+comment|/**    * Obtain the record id of a named object. Returns 0 if named object doesn't    * exist.    */
 specifier|public
 name|long
 name|getNamedObject
@@ -928,7 +930,7 @@ name|longValue
 argument_list|()
 return|;
 block|}
-comment|/**      * Set the record id of a named object.      */
+comment|/**    * Set the record id of a named object.    */
 specifier|public
 name|void
 name|setNamedObject
@@ -989,7 +991,7 @@ name|nameDirectory
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Commit (make persistent) all changes since beginning of transaction.      */
+comment|/**    * Commit (make persistent) all changes since beginning of transaction.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -1007,7 +1009,7 @@ name|commit
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Rollback (cancel) all changes since beginning of transaction.      */
+comment|/**    * Rollback (cancel) all changes since beginning of transaction.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -1025,7 +1027,7 @@ name|rollback
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Load name directory      */
+comment|/**    * Load name directory    */
 specifier|private
 name|Map
 name|getNameDirectory
@@ -1128,7 +1130,7 @@ name|_nameDirectory
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Check if RecordManager has been closed.  If so, throw an      * IllegalStateException.      */
+comment|/**    * Check if RecordManager has been closed. If so, throw an    * IllegalStateException.    */
 specifier|private
 name|void
 name|checkIfClosed

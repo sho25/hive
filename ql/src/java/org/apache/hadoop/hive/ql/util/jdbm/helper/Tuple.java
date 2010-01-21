@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Tuple consisting of a key-value pair.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Tuple.java,v 1.2 2001/05/19 14:02:00 boisvert Exp $  */
+comment|/**  * Tuple consisting of a key-value pair.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: Tuple.java,v 1.2 2001/05/19 14:02:00 boisvert Exp $  */
 end_comment
 
 begin_class
@@ -37,24 +37,24 @@ specifier|final
 class|class
 name|Tuple
 block|{
-comment|/**      * Key      */
+comment|/**    * Key    */
 specifier|private
 name|Object
 name|_key
 decl_stmt|;
-comment|/**      * Value      */
+comment|/**    * Value    */
 specifier|private
 name|Object
 name|_value
 decl_stmt|;
-comment|/**      * Construct an empty Tuple.      */
+comment|/**    * Construct an empty Tuple.    */
 specifier|public
 name|Tuple
 parameter_list|()
 block|{
 comment|// empty
 block|}
-comment|/**      * Construct a Tuple.      *      * @param key The key.      * @param value The value.      */
+comment|/**    * Construct a Tuple.    *     * @param key    *          The key.    * @param value    *          The value.    */
 specifier|public
 name|Tuple
 parameter_list|(
@@ -74,7 +74,7 @@ operator|=
 name|value
 expr_stmt|;
 block|}
-comment|/**      * Get the key.      */
+comment|/**    * Get the key.    */
 specifier|public
 name|Object
 name|getKey
@@ -84,7 +84,7 @@ return|return
 name|_key
 return|;
 block|}
-comment|/**      * Set the key.      */
+comment|/**    * Set the key.    */
 specifier|public
 name|void
 name|setKey
@@ -98,7 +98,7 @@ operator|=
 name|key
 expr_stmt|;
 block|}
-comment|/**      * Get the value.      */
+comment|/**    * Get the value.    */
 specifier|public
 name|Object
 name|getValue
@@ -108,7 +108,7 @@ return|return
 name|_value
 return|;
 block|}
-comment|/**      * Set the value.      */
+comment|/**    * Set the value.    */
 specifier|public
 name|void
 name|setValue

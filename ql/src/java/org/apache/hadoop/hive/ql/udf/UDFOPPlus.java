@@ -162,7 +162,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The reason that we list evaluate methods with all numeric types is for   * both better performance and type checking (so we know int + int is still an int   * instead of a double); otherwise a single method that takes (Number a, Number b)  * and use a.doubleValue() == b.doubleValue() is enough.  *   * The case of int + double will be handled by implicit type casting using   * UDFRegistry.implicitConvertable method.   */
+comment|/**  * The reason that we list evaluate methods with all numeric types is for both  * better performance and type checking (so we know int + int is still an int  * instead of a double); otherwise a single method that takes (Number a, Number  * b) and use a.doubleValue() == b.doubleValue() is enough.  *   * The case of int + double will be handled by implicit type casting using  * UDFRegistry.implicitConvertable method.  */
 end_comment
 
 begin_class
@@ -212,7 +212,8 @@ name|ByteWritable
 name|b
 parameter_list|)
 block|{
-comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":" + b);
+comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":"
+comment|// + b);
 if|if
 condition|(
 operator|(
@@ -227,9 +228,11 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|byteWritable
 operator|.
 name|set
@@ -267,7 +270,8 @@ name|ShortWritable
 name|b
 parameter_list|)
 block|{
-comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":" + b);
+comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":"
+comment|// + b);
 if|if
 condition|(
 operator|(
@@ -282,9 +286,11 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|shortWritable
 operator|.
 name|set
@@ -322,7 +328,8 @@ name|IntWritable
 name|b
 parameter_list|)
 block|{
-comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":" + b);
+comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":"
+comment|// + b);
 if|if
 condition|(
 operator|(
@@ -337,17 +344,16 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|intWritable
 operator|.
 name|set
 argument_list|(
-call|(
-name|int
-call|)
-argument_list|(
+operator|(
 name|a
 operator|.
 name|get
@@ -357,7 +363,7 @@ name|b
 operator|.
 name|get
 argument_list|()
-argument_list|)
+operator|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -377,7 +383,8 @@ name|LongWritable
 name|b
 parameter_list|)
 block|{
-comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":" + b);
+comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":"
+comment|// + b);
 if|if
 condition|(
 operator|(
@@ -392,9 +399,11 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|longWritable
 operator|.
 name|set
@@ -427,7 +436,8 @@ name|FloatWritable
 name|b
 parameter_list|)
 block|{
-comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":" + b);
+comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":"
+comment|// + b);
 if|if
 condition|(
 operator|(
@@ -442,9 +452,11 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|floatWritable
 operator|.
 name|set
@@ -477,7 +489,8 @@ name|DoubleWritable
 name|b
 parameter_list|)
 block|{
-comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":" + b);
+comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() + ":"
+comment|// + b);
 if|if
 condition|(
 operator|(
@@ -492,9 +505,11 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|doubleWritable
 operator|.
 name|set

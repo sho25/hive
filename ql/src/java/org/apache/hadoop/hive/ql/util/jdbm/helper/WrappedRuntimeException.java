@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A run-time exception that wraps another exception. The printed stack  * trace will be that of the wrapped exception.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: WrappedRuntimeException.java,v 1.1 2002/05/31 06:33:20 boisvert Exp $  */
+comment|/**  * A run-time exception that wraps another exception. The printed stack trace  * will be that of the wrapped exception.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: WrappedRuntimeException.java,v 1.1 2002/05/31 06:33:20 boisvert  *          Exp $  */
 end_comment
 
 begin_class
@@ -58,13 +58,13 @@ name|WrappedRuntimeException
 extends|extends
 name|RuntimeException
 block|{
-comment|/**      * The underlying exception.      */
+comment|/**    * The underlying exception.    */
 specifier|private
 specifier|final
 name|Exception
 name|_except
 decl_stmt|;
-comment|/**      * Constructs a new runtime exception based on a checked exception.      *      * @param message The error message      * @param except The checked exception      */
+comment|/**    * Constructs a new runtime exception based on a checked exception.    *     * @param message    *          The error message    * @param except    *          The checked exception    */
 specifier|public
 name|WrappedRuntimeException
 parameter_list|(
@@ -124,7 +124,7 @@ name|except
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Constructs a new runtime exception based on a checked exception.      *      * @param except The checked exception      */
+comment|/**    * Constructs a new runtime exception based on a checked exception.    *     * @param except    *          The checked exception    */
 specifier|public
 name|WrappedRuntimeException
 parameter_list|(
@@ -191,7 +191,7 @@ name|except
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Returns the exception wrapped by this runtime exception.      *      * @return The exception wrapped by this runtime exception      */
+comment|/**    * Returns the exception wrapped by this runtime exception.    *     * @return The exception wrapped by this runtime exception    */
 specifier|public
 name|Exception
 name|getException
@@ -201,6 +201,8 @@ return|return
 name|_except
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|printStackTrace
@@ -228,6 +230,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|printStackTrace
@@ -262,6 +266,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|printStackTrace

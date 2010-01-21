@@ -387,80 +387,8 @@ name|exprNodeNullDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|UDFOPAnd
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|UDFOPOr
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|UDFOPNot
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|UDFType
-import|;
-end_import
-
 begin_comment
-comment|/**  * Expression processor factory for partition pruning. Each processor tries  * to convert the expression subtree into a partition pruning expression.  * This expression is then used to figure out whether a particular partition  * should be scanned or not.  */
+comment|/**  * Expression processor factory for partition pruning. Each processor tries to  * convert the expression subtree into a partition pruning expression. This  * expression is then used to figure out whether a particular partition should  * be scanned or not.  */
 end_comment
 
 begin_class
@@ -542,6 +470,7 @@ operator|.
 name|getIsParititonCol
 argument_list|()
 condition|)
+block|{
 name|newcd
 operator|=
 name|cd
@@ -549,6 +478,7 @@ operator|.
 name|clone
 argument_list|()
 expr_stmt|;
+block|}
 else|else
 block|{
 name|newcd
@@ -577,7 +507,7 @@ name|newcd
 return|;
 block|}
 block|}
-comment|/**    * If all children are candidates and refer only to one table alias then this expr is a candidate    * else it is not a candidate but its children could be final candidates    */
+comment|/**    * If all children are candidates and refer only to one table alias then this    * expr is a candidate else it is not a candidate but its children could be    * final candidates    */
 specifier|public
 specifier|static
 class|class
@@ -638,9 +568,12 @@ name|fd
 argument_list|)
 condition|)
 block|{
-comment|// do nothing because "And" and "Or" and "Not" supports null value evaluation
-comment|// NOTE: In the future all UDFs that treats null value as UNKNOWN (both in parameters and return
-comment|// values) should derive from a common base class UDFNullAsUnknown, so instead of listing the classes
+comment|// do nothing because "And" and "Or" and "Not" supports null value
+comment|// evaluation
+comment|// NOTE: In the future all UDFs that treats null value as UNKNOWN (both
+comment|// in parameters and return
+comment|// values) should derive from a common base class UDFNullAsUnknown, so
+comment|// instead of listing the classes
 comment|// here we would test whether a class is derived from that base class.
 block|}
 elseif|else
@@ -713,6 +646,7 @@ if|if
 condition|(
 name|unknown
 condition|)
+block|{
 name|newfd
 operator|=
 operator|new
@@ -726,6 +660,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 else|else
 block|{
 comment|// Create the list of children
@@ -875,10 +810,12 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 name|unknown
 operator|=
 literal|true
 expr_stmt|;
+block|}
 name|left_nd
 operator|=
 name|child_nd
@@ -946,7 +883,7 @@ name|newnd
 return|;
 block|}
 block|}
-comment|/**    * Processor for constants and null expressions. For such expressions    * the processor simply clones the exprNodeDesc and returns it.    */
+comment|/**    * Processor for constants and null expressions. For such expressions the    * processor simply clones the exprNodeDesc and returns it.    */
 specifier|public
 specifier|static
 class|class
@@ -985,6 +922,7 @@ name|nd
 operator|instanceof
 name|exprNodeConstantDesc
 condition|)
+block|{
 return|return
 operator|(
 operator|(
@@ -996,6 +934,7 @@ operator|.
 name|clone
 argument_list|()
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1003,6 +942,7 @@ name|nd
 operator|instanceof
 name|exprNodeNullDesc
 condition|)
+block|{
 return|return
 operator|(
 operator|(
@@ -1014,6 +954,7 @@ operator|.
 name|clone
 argument_list|()
 return|;
+block|}
 assert|assert
 operator|(
 literal|false
@@ -1072,7 +1013,7 @@ name|ColumnExprProcessor
 argument_list|()
 return|;
 block|}
-comment|/**    * Generates the partition pruner for the expression tree    * @param tabAlias The table alias of the partition table that is being considered for pruning    * @param pred The predicate from which the partition pruner needs to be generated     * @return hasNonPartCols returns true/false depending upon whether this pred has a non partition column    * @throws SemanticException    */
+comment|/**    * Generates the partition pruner for the expression tree    *     * @param tabAlias    *          The table alias of the partition table that is being considered    *          for pruning    * @param pred    *          The predicate from which the partition pruner needs to be    *          generated    * @return hasNonPartCols returns true/false depending upon whether this pred    *         has a non partition column    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|exprNodeDesc
@@ -1100,7 +1041,8 @@ argument_list|(
 name|tabAlias
 argument_list|)
 decl_stmt|;
-comment|// create a walker which walks the tree in a DFS manner while maintaining the operator stack. The dispatcher
+comment|// create a walker which walks the tree in a DFS manner while maintaining
+comment|// the operator stack. The dispatcher
 comment|// generates the plan from the operator tree
 name|Map
 argument_list|<
@@ -1188,7 +1130,8 @@ name|getGenericFuncProcessor
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=

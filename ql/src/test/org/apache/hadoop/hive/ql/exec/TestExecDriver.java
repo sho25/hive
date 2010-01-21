@@ -528,7 +528,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Mimics the actual query compiler in generating end to end plans and testing them out  *  */
+comment|/**  * Mimics the actual query compiler in generating end to end plans and testing  * them out  *   */
 end_comment
 
 begin_class
@@ -1606,6 +1606,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputColumns
 operator|.
 name|add
@@ -1615,6 +1616,7 @@ operator|+
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 comment|// map-side work
 name|Operator
 argument_list|<
@@ -1821,6 +1823,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputColumns
 operator|.
 name|add
@@ -1830,6 +1833,7 @@ operator|+
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 comment|// map-side work
 name|Operator
 argument_list|<
@@ -2070,6 +2074,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputColumns
 operator|.
 name|add
@@ -2079,6 +2084,7 @@ operator|+
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 comment|// map-side work
 name|Operator
 argument_list|<
@@ -2424,6 +2430,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputColumns
 operator|.
 name|add
@@ -2433,6 +2440,7 @@ operator|+
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 name|Operator
 argument_list|<
 name|reduceSinkDesc
@@ -2756,6 +2764,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputColumns
 operator|.
 name|add
@@ -2765,6 +2774,7 @@ operator|+
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 name|Operator
 argument_list|<
 name|reduceSinkDesc
@@ -3010,6 +3020,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputColumns
 operator|.
 name|add
@@ -3019,6 +3030,7 @@ operator|+
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 name|Operator
 argument_list|<
 name|reduceSinkDesc

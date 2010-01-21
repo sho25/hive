@@ -134,7 +134,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Base class for numeric operators like +, -, / etc. All these operators  * share a common method resolver (NumericOpMethodResolver).  */
+comment|/**  * Base class for numeric operators like +, -, / etc. All these operators share  * a common method resolver (NumericOpMethodResolver).  */
 end_comment
 
 begin_class

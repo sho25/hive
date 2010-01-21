@@ -231,20 +231,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|cli
@@ -282,24 +268,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-operator|.
-name|ConfVars
 import|;
 end_import
 
@@ -651,6 +619,20 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
+name|MiniMRCluster
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|SequenceFileInputFormat
 import|;
 end_import
@@ -689,20 +671,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|MiniMRCluster
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|thrift
 operator|.
 name|protocol
@@ -721,6 +689,7 @@ name|String
 name|testWarehouse
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|tmpdir
 init|=
@@ -732,6 +701,7 @@ literal|"test.tmp.dir"
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|Path
 name|tmppath
 init|=
@@ -742,18 +712,22 @@ name|tmpdir
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|testFiles
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|outDir
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|logDir
 decl_stmt|;
 specifier|private
+specifier|final
 name|TreeMap
 argument_list|<
 name|String
@@ -763,6 +737,7 @@ argument_list|>
 name|qMap
 decl_stmt|;
 specifier|private
+specifier|final
 name|LinkedList
 argument_list|<
 name|String
@@ -778,6 +753,7 @@ name|Hive
 name|db
 decl_stmt|;
 specifier|private
+specifier|final
 name|HiveConf
 name|conf
 decl_stmt|;
@@ -848,27 +824,15 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|File
+name|file
+range|:
 name|files
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 if|if
 condition|(
-name|files
-index|[
-name|i
-index|]
+name|file
 operator|.
 name|isDirectory
 argument_list|()
@@ -876,19 +840,13 @@ condition|)
 block|{
 name|deleteDirectory
 argument_list|(
-name|files
-index|[
-name|i
-index|]
+name|file
 argument_list|)
 expr_stmt|;
 block|}
 else|else
 block|{
-name|files
-index|[
-name|i
-index|]
+name|file
 operator|.
 name|delete
 argument_list|()
@@ -961,28 +919,16 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|FileStatus
+name|file
+range|:
 name|files
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|String
 name|name
 init|=
-name|files
-index|[
-name|i
-index|]
+name|file
 operator|.
 name|getPath
 argument_list|()
@@ -993,10 +939,7 @@ decl_stmt|;
 name|Path
 name|dfs_path
 init|=
-name|files
-index|[
-name|i
-index|]
+name|file
 operator|.
 name|getPath
 argument_list|()
@@ -1027,10 +970,7 @@ continue|continue;
 block|}
 if|if
 condition|(
-name|files
-index|[
-name|i
-index|]
+name|file
 operator|.
 name|isDir
 argument_list|()
@@ -1129,27 +1069,15 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|File
+name|file
+range|:
 name|files
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|normalizeNames
 argument_list|(
-name|files
-index|[
-name|i
-index|]
+name|file
 argument_list|)
 expr_stmt|;
 block|}
@@ -2051,7 +1979,7 @@ name|hr
 argument_list|)
 expr_stmt|;
 comment|// System.out.println("Loading partition with spec: " + part_spec);
-comment|//db.createPartition(srcpart, part_spec);
+comment|// db.createPartition(srcpart, part_spec);
 name|fpath
 operator|=
 operator|new
@@ -2089,7 +2017,7 @@ name|fpath
 operator|=
 name|newfpath
 expr_stmt|;
-comment|//db.loadPartition(fpath, srcpart.getName(), part_spec, true);
+comment|// db.loadPartition(fpath, srcpart.getName(), part_spec, true);
 name|runLoadCmd
 argument_list|(
 literal|"LOAD DATA INPATH '"
@@ -2137,7 +2065,8 @@ argument_list|(
 literal|"CREATE TABLE srcbucket(key int, value string) CLUSTERED BY (key) INTO 2 BUCKETS STORED AS TEXTFILE"
 argument_list|)
 expr_stmt|;
-comment|//db.createTable("srcbucket", cols, null, TextInputFormat.class, IgnoreKeyTextOutputFormat.class, 2, bucketCols);
+comment|// db.createTable("srcbucket", cols, null, TextInputFormat.class,
+comment|// IgnoreKeyTextOutputFormat.class, 2, bucketCols);
 name|srcTables
 operator|.
 name|add
@@ -2211,7 +2140,8 @@ argument_list|(
 literal|"CREATE TABLE srcbucket2(key int, value string) CLUSTERED BY (key) INTO 4 BUCKETS STORED AS TEXTFILE"
 argument_list|)
 expr_stmt|;
-comment|//db.createTable("srcbucket", cols, null, TextInputFormat.class, IgnoreKeyTextOutputFormat.class, 2, bucketCols);
+comment|// db.createTable("srcbucket", cols, null, TextInputFormat.class,
+comment|// IgnoreKeyTextOutputFormat.class, 2, bucketCols);
 name|srcTables
 operator|.
 name|add
@@ -2523,7 +2453,7 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-comment|//db.loadTable(newfpath, "src", false);
+comment|// db.loadTable(newfpath, "src", false);
 name|runLoadCmd
 argument_list|(
 literal|"LOAD DATA INPATH '"
@@ -2570,7 +2500,7 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-comment|//db.loadTable(newfpath, "src1", false);
+comment|// db.loadTable(newfpath, "src1", false);
 name|runLoadCmd
 argument_list|(
 literal|"LOAD DATA INPATH '"
@@ -2617,7 +2547,7 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-comment|//db.loadTable(newfpath, "src_sequencefile", true);
+comment|// db.loadTable(newfpath, "src_sequencefile", true);
 name|runLoadCmd
 argument_list|(
 literal|"LOAD DATA INPATH '"
@@ -2664,7 +2594,7 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-comment|//db.loadTable(newfpath, "src_thrift", true);
+comment|// db.loadTable(newfpath, "src_thrift", true);
 name|runLoadCmd
 argument_list|(
 literal|"LOAD DATA INPATH '"
@@ -2711,7 +2641,7 @@ argument_list|,
 name|newfpath
 argument_list|)
 expr_stmt|;
-comment|//db.loadTable(newfpath, "src_json", false);
+comment|// db.loadTable(newfpath, "src_json", false);
 name|runLoadCmd
 argument_list|(
 literal|"LOAD DATA INPATH '"
@@ -3209,10 +3139,12 @@ operator|==
 operator|-
 literal|1
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 name|String
 name|q1
 init|=
@@ -5326,7 +5258,7 @@ return|return
 name|qMap
 return|;
 block|}
-comment|/**    * QTRunner: Runnable class for running a a single query file    *    **/
+comment|/**    * QTRunner: Runnable class for running a a single query file    *     **/
 specifier|public
 specifier|static
 class|class
@@ -5335,10 +5267,12 @@ implements|implements
 name|Runnable
 block|{
 specifier|private
+specifier|final
 name|QTestUtil
 name|qt
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|fname
 decl_stmt|;
@@ -5430,7 +5364,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * executes a set of query files either in sequence or in parallel.    * Uses QTestUtil to do so    *    * @param qfiles array of input query files containing arbitrary number of hive queries    * @param resDirs array of output directories one corresponding to each input query file    * @param mt whether to run in multithreaded mode or not    * @return true if all the query files were executed successfully, else false    *    * In multithreaded mode each query file is run in a separate thread. the caller has to    * arrange that different query files do not collide (in terms of destination tables)    */
+comment|/**    * executes a set of query files either in sequence or in parallel. Uses    * QTestUtil to do so    *     * @param qfiles    *          array of input query files containing arbitrary number of hive    *          queries    * @param resDirs    *          array of output directories one corresponding to each input query    *          file    * @param mt    *          whether to run in multithreaded mode or not    * @return true if all the query files were executed successfully, else false    *     *         In multithreaded mode each query file is run in a separate thread.    *         the caller has to arrange that different query files do not collide    *         (in terms of destination tables)    */
 specifier|public
 specifier|static
 name|boolean

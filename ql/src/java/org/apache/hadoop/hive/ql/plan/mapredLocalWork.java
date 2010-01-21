@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|*
+name|Serializable
 import|;
 end_import
 
@@ -33,9 +33,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|*
+name|LinkedHashMap
 import|;
 end_import
 
@@ -105,7 +105,7 @@ decl_stmt|;
 specifier|public
 name|mapredLocalWork
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|mapredLocalWork
 parameter_list|(
@@ -220,7 +220,7 @@ return|return
 name|aliasToFetchWork
 return|;
 block|}
-comment|/**    * @param aliasToFetchWork the aliasToFetchWork to set    */
+comment|/**    * @param aliasToFetchWork    *          the aliasToFetchWork to set    */
 specifier|public
 name|void
 name|setAliasToFetchWork

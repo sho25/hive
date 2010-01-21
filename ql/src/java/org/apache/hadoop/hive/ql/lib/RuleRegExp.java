@@ -72,7 +72,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Rule interface for Nodes  * Used in Node dispatching to dispatch process/visitor functions for Nodes  */
+comment|/**  * Rule interface for Nodes Used in Node dispatching to dispatch process/visitor  * functions for Nodes  */
 end_comment
 
 begin_class
@@ -83,14 +83,16 @@ implements|implements
 name|Rule
 block|{
 specifier|private
+specifier|final
 name|String
 name|ruleName
 decl_stmt|;
 specifier|private
+specifier|final
 name|Pattern
 name|pattern
 decl_stmt|;
-comment|/**    * The rule specified by the regular expression. Note that, the regular expression is specified in terms of Node    * name. For eg: TS.*RS -> means TableScan Node followed by anything any number of times followed by ReduceSink    * @param ruleName name of the rule    * @param regExp regular expression for the rule    **/
+comment|/**    * The rule specified by the regular expression. Note that, the regular    * expression is specified in terms of Node name. For eg: TS.*RS -> means    * TableScan Node followed by anything any number of times followed by    * ReduceSink    *     * @param ruleName    *          name of the rule    * @param regExp    *          regular expression for the rule    **/
 specifier|public
 name|RuleRegExp
 parameter_list|(
@@ -117,7 +119,7 @@ name|regExp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * This function returns the cost of the rule for the specified stack. Lower the cost, the better the rule is matched    * @param stack Node stack encountered so far    * @return cost of the function    * @throws SemanticException    */
+comment|/**    * This function returns the cost of the rule for the specified stack. Lower    * the cost, the better the rule is matched    *     * @param stack    *          Node stack encountered so far    * @return cost of the function    * @throws SemanticException    */
 specifier|public
 name|int
 name|cost
@@ -204,6 +206,7 @@ operator|.
 name|matches
 argument_list|()
 condition|)
+block|{
 return|return
 name|m
 operator|.
@@ -213,6 +216,7 @@ operator|.
 name|length
 argument_list|()
 return|;
+block|}
 block|}
 return|return
 operator|-

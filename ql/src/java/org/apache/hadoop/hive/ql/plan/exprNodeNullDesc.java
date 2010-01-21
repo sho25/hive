@@ -154,9 +154,11 @@ operator|instanceof
 name|exprNodeNullDesc
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -175,9 +177,11 @@ name|getTypeInfo
 argument_list|()
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 literal|true
 return|;

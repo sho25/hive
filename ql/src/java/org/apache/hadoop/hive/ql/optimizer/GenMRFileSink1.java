@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|List
+name|Serializable
 import|;
 end_import
 
@@ -55,7 +55,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Stack
+name|List
 import|;
 end_import
 
@@ -63,9 +63,25 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|Serializable
+name|Stack
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
 import|;
 end_import
 
@@ -81,11 +97,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|optimizer
-operator|.
-name|GenMRProcContext
-operator|.
-name|GenMRMapJoinCtx
+name|Context
 import|;
 end_import
 
@@ -157,6 +169,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|MapJoinOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|MoveTask
 import|;
 end_import
@@ -193,24 +223,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MapJoinOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|OperatorFactory
 import|;
 end_import
@@ -229,7 +241,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|ReduceSinkOperator
+name|RowSchema
 import|;
 end_import
 
@@ -247,7 +259,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|RowSchema
+name|Task
 import|;
 end_import
 
@@ -301,43 +313,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Task
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|Utilities
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|mapredWork
 import|;
 end_import
 
@@ -407,6 +383,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|GenMRProcContext
+operator|.
+name|GenMRMapJoinCtx
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|ParseContext
@@ -427,7 +423,7 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|SemanticAnalyzer
+name|RowResolver
 import|;
 end_import
 
@@ -445,7 +441,7 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|RowResolver
+name|SemanticAnalyzer
 import|;
 end_import
 
@@ -500,26 +496,6 @@ operator|.
 name|plan
 operator|.
 name|ConditionalResolverMergeFiles
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|ConditionalResolverMergeFiles
-operator|.
-name|ConditionalResolverMergeFilesCtx
 import|;
 end_import
 
@@ -663,7 +639,43 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|mapredWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|moveWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|partitionDesc
 import|;
 end_import
 
@@ -735,7 +747,9 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|ConditionalResolverMergeFiles
+operator|.
+name|ConditionalResolverMergeFilesCtx
 import|;
 end_import
 
@@ -757,38 +771,6 @@ name|TypeInfoFactory
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|Context
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
 begin_comment
 comment|/**  * Processor for the rule - table scan followed by reduce sink  */
 end_comment
@@ -804,7 +786,7 @@ specifier|public
 name|GenMRFileSink1
 parameter_list|()
 block|{   }
-comment|/**    * File Sink Operator encountered     * @param nd the file sink operator encountered    * @param opProcCtx context    */
+comment|/**    * File Sink Operator encountered    *     * @param nd    *          the file sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -902,7 +884,8 @@ operator|.
 name|getMvTask
 argument_list|()
 decl_stmt|;
-comment|// In case of unions or map-joins, it is possible that the file has already been seen.
+comment|// In case of unions or map-joins, it is possible that the file has
+comment|// already been seen.
 comment|// So, no need to attempt to merge the files again.
 if|if
 condition|(
@@ -924,9 +907,6 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-operator|(
-name|FileSinkOperator
-operator|)
 name|nd
 argument_list|)
 operator|)
@@ -964,7 +944,8 @@ name|isLocal
 argument_list|()
 condition|)
 block|{
-comment|// There are separate configuration parameters to control whether to merge for a map-only job
+comment|// There are separate configuration parameters to control whether to
+comment|// merge for a map-only job
 comment|// or for a map-reduce job
 if|if
 condition|(
@@ -1034,10 +1015,12 @@ literal|null
 operator|)
 operator|)
 condition|)
+block|{
 name|chDir
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -1251,6 +1234,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|outputColumns
 operator|.
 name|add
@@ -1263,6 +1247,7 @@ name|i
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|reduceSinkDesc
 name|rsDesc
 init|=
@@ -1293,12 +1278,6 @@ operator|-
 literal|1
 argument_list|)
 decl_stmt|;
-name|ReduceSinkOperator
-name|rsOp
-init|=
-operator|(
-name|ReduceSinkOperator
-operator|)
 name|OperatorFactory
 operator|.
 name|getAndMakeChild
@@ -1309,7 +1288,7 @@ name|fsRS
 argument_list|,
 name|ts_op
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|mapredWork
 name|cplan
 init|=
@@ -1926,6 +1905,7 @@ operator|.
 name|getListTasks
 argument_list|()
 control|)
+block|{
 name|tsk
 operator|.
 name|addDependentTask
@@ -1933,6 +1913,7 @@ argument_list|(
 name|mvTask
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private
@@ -1998,6 +1979,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|srcDir
 operator|=
 name|mvWork
@@ -2008,6 +1990,7 @@ operator|.
 name|getSourceDir
 argument_list|()
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -2018,6 +2001,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|srcDir
 operator|=
 name|mvWork
@@ -2028,6 +2012,7 @@ operator|.
 name|getSourceDir
 argument_list|()
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|(
@@ -2051,9 +2036,11 @@ argument_list|()
 argument_list|)
 operator|)
 condition|)
+block|{
 return|return
 name|mvTsk
 return|;
+block|}
 block|}
 return|return
 literal|null
@@ -2118,9 +2105,11 @@ operator|instanceof
 name|MapJoinOperator
 operator|)
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|GenMRProcContext
 name|ctx
 init|=
@@ -2146,6 +2135,7 @@ name|seenFSOps
 operator|==
 literal|null
 condition|)
+block|{
 name|seenFSOps
 operator|=
 operator|new
@@ -2155,6 +2145,7 @@ name|FileSinkOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -2165,6 +2156,7 @@ argument_list|(
 name|fsOp
 argument_list|)
 condition|)
+block|{
 name|seenFSOps
 operator|.
 name|add
@@ -2172,6 +2164,7 @@ argument_list|(
 name|fsOp
 argument_list|)
 expr_stmt|;
+block|}
 name|ctx
 operator|.
 name|setSeenFileSinkOps
@@ -2249,11 +2242,6 @@ name|tmpDir
 argument_list|)
 expr_stmt|;
 block|}
-name|boolean
-name|ret
-init|=
-literal|false
-decl_stmt|;
 name|Task
 argument_list|<
 name|?
@@ -2269,6 +2257,7 @@ condition|(
 operator|!
 name|chDir
 condition|)
+block|{
 name|mvTask
 operator|=
 name|findMoveTask
@@ -2281,6 +2270,7 @@ argument_list|,
 name|fsOp
 argument_list|)
 expr_stmt|;
+block|}
 name|Operator
 argument_list|<
 name|?
@@ -2364,8 +2354,7 @@ name|mvTask
 operator|!=
 literal|null
 condition|)
-name|ret
-operator|=
+block|{
 name|currTask
 operator|.
 name|addDependentTask
@@ -2373,7 +2362,9 @@ argument_list|(
 name|mvTask
 argument_list|)
 expr_stmt|;
-comment|// In case of multi-table insert, the path to alias mapping is needed for all the sources. Since there is no
+block|}
+comment|// In case of multi-table insert, the path to alias mapping is needed for
+comment|// all the sources. Since there is no
 comment|// reducer, treat it as a plan with null reducer
 comment|// If it is a map-only job, the task needs to be processed
 if|if

@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Comparator for java.lang.Long objects.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: LongComparator.java,v 1.4 2002/05/31 06:33:20 boisvert Exp $  */
+comment|/**  * Comparator for java.lang.Long objects.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: LongComparator.java,v 1.4 2002/05/31 06:33:20 boisvert Exp $  */
 end_comment
 
 begin_class
@@ -61,7 +61,7 @@ name|Comparator
 implements|,
 name|Serializable
 block|{
-comment|/**      * Version id for serialization.      */
+comment|/**    * Version id for serialization.    */
 specifier|final
 specifier|static
 name|long
@@ -69,7 +69,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * Compare two objects.      *      * @param obj1 First object      * @param obj2 Second object      * @return a positive integer if obj1> obj2, 0 if obj1 == obj2,      *         and a negative integer if obj1< obj2      */
+comment|/**    * Compare two objects.    *     * @param obj1    *          First object    * @param obj2    *          Second object    * @return a positive integer if obj1> obj2, 0 if obj1 == obj2, and a    *         negative integer if obj1< obj2    */
 specifier|public
 name|int
 name|compare

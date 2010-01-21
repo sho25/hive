@@ -111,6 +111,7 @@ implements|implements
 name|DataInput
 block|{
 specifier|private
+specifier|final
 name|NonSyncByteArrayInputStream
 name|buffer
 decl_stmt|;
@@ -235,7 +236,7 @@ name|getLength
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads bytes from the source stream into the byte array<code>buffer</code>.    * The number of bytes actually read is returned.    *     * @param buffer    *          the buffer to read bytes into    * @return the number of bytes actually read or -1 if end of stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *    */
+comment|/**    * Reads bytes from the source stream into the byte array<code>buffer</code>.    * The number of bytes actually read is returned.    *     * @param buffer    *          the buffer to read bytes into    * @return the number of bytes actually read or -1 if end of stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
 annotation|@
 name|Override
 specifier|public
@@ -418,9 +419,11 @@ operator|==
 operator|-
 literal|1
 condition|)
+block|{
 return|return
 name|bytesRead
 return|;
+block|}
 name|offset
 operator|+=
 name|bytesRead
@@ -1458,9 +1461,11 @@ operator|)
 operator|<
 literal|'\u0080'
 condition|)
+block|{
 name|s
 operator|++
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1486,11 +1491,13 @@ name|count
 operator|>=
 name|utfSize
 condition|)
+block|{
 throw|throw
 operator|new
 name|UTFDataFormatException
 argument_list|()
 throw|;
+block|}
 name|int
 name|b
 init|=
@@ -1510,11 +1517,13 @@ operator|)
 operator|!=
 literal|0x80
 condition|)
+block|{
 throw|throw
 operator|new
 name|UTFDataFormatException
 argument_list|()
 throw|;
+block|}
 name|out
 index|[
 name|s
@@ -1563,11 +1572,13 @@ literal|1
 operator|>=
 name|utfSize
 condition|)
+block|{
 throw|throw
 operator|new
 name|UTFDataFormatException
 argument_list|()
 throw|;
+block|}
 name|int
 name|b
 init|=
@@ -1608,11 +1619,13 @@ operator|!=
 literal|0x80
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|UTFDataFormatException
 argument_list|()
 throw|;
+block|}
 name|out
 index|[
 name|s

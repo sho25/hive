@@ -25,17 +25,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|*
+name|Serializable
 import|;
 end_import
 
@@ -55,11 +45,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
+name|hadoop
 operator|.
-name|logging
+name|conf
 operator|.
-name|*
+name|Configuration
 import|;
 end_import
 
@@ -73,7 +63,7 @@ name|hadoop
 operator|.
 name|fs
 operator|.
-name|*
+name|FSDataOutputStream
 import|;
 end_import
 
@@ -85,9 +75,23 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|record
+name|fs
 operator|.
-name|*
+name|FileSystem
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
 import|;
 end_import
 
@@ -101,21 +105,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|*
+name|Writable
 import|;
 end_import
 
@@ -131,7 +121,7 @@ name|io
 operator|.
 name|serializer
 operator|.
-name|*
+name|JavaSerialization
 import|;
 end_import
 
@@ -143,9 +133,11 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
+name|io
 operator|.
-name|*
+name|serializer
+operator|.
+name|Serializer
 import|;
 end_import
 
@@ -157,9 +149,11 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|util
+name|io
 operator|.
-name|ReflectionUtils
+name|serializer
+operator|.
+name|WritableSerialization
 import|;
 end_import
 
@@ -169,9 +163,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|thrift
+name|hadoop
 operator|.
-name|*
+name|mapred
+operator|.
+name|FileInputFormat
 import|;
 end_import
 
@@ -181,11 +177,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|thrift
+name|hadoop
 operator|.
-name|transport
+name|mapred
 operator|.
-name|*
+name|InputSplit
 import|;
 end_import
 
@@ -195,11 +191,39 @@ name|org
 operator|.
 name|apache
 operator|.
-name|thrift
+name|hadoop
 operator|.
-name|protocol
+name|mapred
 operator|.
-name|*
+name|JobConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|RecordReader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|Reporter
 import|;
 end_import
 
@@ -1076,7 +1100,7 @@ block|}
 finally|finally
 block|{     }
 block|}
-comment|/*   public void testFlatFileInputThrift() throws Exception {     Configuration conf;     JobConf job ;     FileSystem fs;     Path dir ;     Path file;     Reporter reporter;     FSDataOutputStream ds;      try {       //       // create job and filesystem and reporter and such.       //       conf = new Configuration();       job = new JobConf(conf);       fs = FileSystem.getLocal(conf);       dir = new Path(System.getProperty("test.data.dir",".") + "/mapred");       file = new Path(dir, "test.txt");       reporter = Reporter.NULL;       fs.delete(dir, true);        job.setClass(FlatFileInputFormat.SerializationContextFromConf.SerializationImplKey,                    org.apache.hadoop.contrib.serialization.thrift.ThriftSerialization.class,                    org.apache.hadoop.io.serializer.Serialization.class);              job.setClass(FlatFileInputFormat.SerializationContextFromConf.SerializationSubclassKey,                    FlatFileThriftTestObj.class, TBase.class);              //       // Write some data out to a flat file       //       FileInputFormat.setInputPaths(job, dir);       ds = fs.create(file);       Serializer serializer = new ThriftSerialization().getSerializer(TBase.class);        // construct some data and write it       serializer.open(ds);       for (int i = 0; i< 10; i++) {         serializer.serialize(new FlatFileThriftTestObj("Hello World! " + String.valueOf(i), i));       }       serializer.close();        //       // Construct the reader       //       FileInputFormat<Void, FlatFileInputFormat.RowContainer<TBase>> format =         new FlatFileInputFormat<TBase>();       InputSplit[] splits = format.getSplits(job, 1);        // construct the record reader       RecordReader<Void, FlatFileInputFormat.RowContainer<TBase>> reader =         format.getRecordReader(splits[0], job, reporter);        // create key/value       Void key = reader.createKey();       FlatFileInputFormat.RowContainer<TBase> value = reader.createValue();              //       // read back the data using the FlatFileRecordReader       //       int count = 0;       while (reader.next(key, value)) {         assertTrue(key == null);         assertTrue(((FlatFileThriftTestObj)value.row).s.equals("Hello World! " +String.valueOf(count)));         assertTrue(((FlatFileThriftTestObj)value.row).num == count);         count++;       }       reader.close();      } catch(Exception e) {       System.err.println("caught: " + e);       e.printStackTrace();     } finally {     }    }   */
+comment|/*    * public void testFlatFileInputThrift() throws Exception { Configuration    * conf; JobConf job ; FileSystem fs; Path dir ; Path file; Reporter reporter;    * FSDataOutputStream ds;    *     * try { // // create job and filesystem and reporter and such. // conf = new    * Configuration(); job = new JobConf(conf); fs = FileSystem.getLocal(conf);    * dir = new Path(System.getProperty("test.data.dir",".") + "/mapred"); file =    * new Path(dir, "test.txt"); reporter = Reporter.NULL; fs.delete(dir, true);    *     * job.setClass(FlatFileInputFormat.SerializationContextFromConf.    * SerializationImplKey,    * org.apache.hadoop.contrib.serialization.thrift.ThriftSerialization.class,    * org.apache.hadoop.io.serializer.Serialization.class);    *     * job.setClass(FlatFileInputFormat.SerializationContextFromConf.    * SerializationSubclassKey, FlatFileThriftTestObj.class, TBase.class);    *     * // // Write some data out to a flat file //    * FileInputFormat.setInputPaths(job, dir); ds = fs.create(file); Serializer    * serializer = new ThriftSerialization().getSerializer(TBase.class);    *     * // construct some data and write it serializer.open(ds); for (int i = 0; i    *< 10; i++) { serializer.serialize(new FlatFileThriftTestObj("Hello World! "    * + String.valueOf(i), i)); } serializer.close();    *     * // // Construct the reader // FileInputFormat<Void,    * FlatFileInputFormat.RowContainer<TBase>> format = new    * FlatFileInputFormat<TBase>(); InputSplit[] splits = format.getSplits(job,    * 1);    *     * // construct the record reader RecordReader<Void,    * FlatFileInputFormat.RowContainer<TBase>> reader =    * format.getRecordReader(splits[0], job, reporter);    *     * // create key/value Void key = reader.createKey();    * FlatFileInputFormat.RowContainer<TBase> value = reader.createValue();    *     * // // read back the data using the FlatFileRecordReader // int count = 0;    * while (reader.next(key, value)) { assertTrue(key == null);    * assertTrue(((FlatFileThriftTestObj)value.row).s.equals("Hello World! "    * +String.valueOf(count))); assertTrue(((FlatFileThriftTestObj)value.row).num    * == count); count++; } reader.close();    *     * } catch(Exception e) { System.err.println("caught: " + e);    * e.printStackTrace(); } finally { }    *     * }    */
 specifier|public
 specifier|static
 name|void
@@ -1103,7 +1127,7 @@ operator|.
 name|testFlatFileInputRecord
 argument_list|()
 expr_stmt|;
-comment|//    new TestFlatFileInputFormat().testFlatFileInputThrift();
+comment|// new TestFlatFileInputFormat().testFlatFileInputThrift();
 block|}
 block|}
 end_class

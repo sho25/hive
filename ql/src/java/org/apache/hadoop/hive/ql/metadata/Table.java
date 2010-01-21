@@ -185,6 +185,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|JavaUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|MetaStoreUtils
@@ -441,22 +457,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|JavaUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|Writable
@@ -492,7 +492,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Hive Table: is a fundamental unit of data in Hive that shares a common schema/DDL  */
+comment|/**  * A Hive Table: is a fundamental unit of data in Hive that shares a common  * schema/DDL  */
 end_comment
 
 begin_class
@@ -559,14 +559,14 @@ operator|.
 name|Table
 name|tTable
 decl_stmt|;
-comment|/**    * Table (only used internally)    * @throws HiveException    *    */
+comment|/**    * Table (only used internally)    *     * @throws HiveException    *     */
 specifier|protected
 name|Table
 parameter_list|()
 throws|throws
 name|HiveException
 block|{   }
-comment|/**    * Table    *    * Create a TableMetaInfo object presumably with the intent of saving it to the metastore    *    * @param name the name of this table in the metadb    * @param schema an object that represents the schema that this SerDe must know    * @param deserializer a Class to be used for deserializing the data    * @param dataLocation where is the table ? (e.g., dfs://hadoop001.sf2p.facebook.com:9000/user/facebook/warehouse/example) NOTE: should not be hardcoding this, but ok for now    *    * @exception HiveException on internal error. Note not possible now, but in the future reserve the right to throw an exception    */
+comment|/**    * Table    *     * Create a TableMetaInfo object presumably with the intent of saving it to    * the metastore    *     * @param name    *          the name of this table in the metadb    * @param schema    *          an object that represents the schema that this SerDe must know    * @param deserializer    *          a Class to be used for deserializing the data    * @param dataLocation    *          where is the table ? (e.g.,    *          dfs://hadoop001.sf2p.facebook.com:9000/    *          user/facebook/warehouse/example) NOTE: should not be hardcoding    *          this, but ok for now    *     * @exception HiveException    *              on internal error. Note not possible now, but in the future    *              reserve the right to throw an exception    */
 specifier|public
 name|Table
 parameter_list|(
@@ -622,9 +622,7 @@ name|deserializer
 operator|=
 name|deserializer
 expr_stmt|;
-comment|//TODO: convert to SerDeInfo format
-name|this
-operator|.
+comment|// TODO: convert to SerDeInfo format
 name|getTTable
 argument_list|()
 operator|.
@@ -717,7 +715,8 @@ operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|)
 expr_stmt|;
-comment|// We have to use MetadataTypedColumnsetSerDe because LazySimpleSerDe does not
+comment|// We have to use MetadataTypedColumnsetSerDe because LazySimpleSerDe does
+comment|// not
 comment|// support a table with no columns.
 name|getSerdeInfo
 argument_list|()
@@ -926,8 +925,6 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|,
-name|this
-operator|.
 name|getTTable
 argument_list|()
 argument_list|)
@@ -978,8 +975,6 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|,
-name|this
-operator|.
 name|getTTable
 argument_list|()
 argument_list|)
@@ -1207,6 +1202,7 @@ argument_list|(
 name|oldColName
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -1218,6 +1214,7 @@ operator|+
 literal|" in the table definition."
 argument_list|)
 throw|;
+block|}
 block|}
 name|colNames
 operator|.
@@ -1282,6 +1279,7 @@ name|toLowerCase
 argument_list|()
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -1293,6 +1291,7 @@ operator|+
 literal|" conflicts with table columns."
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 return|return;
@@ -1343,8 +1342,6 @@ argument_list|>
 name|class1
 parameter_list|)
 block|{
-name|this
-operator|.
 name|outputFormatClass
 operator|=
 name|HiveFileFormatUtils
@@ -1544,6 +1541,7 @@ name|spec
 operator|!=
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -1553,10 +1551,13 @@ operator|+
 name|spec
 argument_list|)
 throw|;
+block|}
 else|else
+block|{
 return|return
 literal|true
 return|;
+block|}
 block|}
 if|if
 condition|(
@@ -1657,7 +1658,7 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * getProperty    *    */
+comment|/**    * getProperty    *     */
 specifier|public
 name|String
 name|getProperty
@@ -1814,7 +1815,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * @param schema the schema to set    */
+comment|/**    * @param schema    *          the schema to set    */
 specifier|public
 name|void
 name|setSchema
@@ -1830,7 +1831,7 @@ operator|=
 name|schema
 expr_stmt|;
 block|}
-comment|/**    * @param deserializer the deserializer to set    */
+comment|/**    * @param deserializer    *          the deserializer to set    */
 specifier|public
 name|void
 name|setDeserializer
@@ -1846,6 +1847,8 @@ operator|=
 name|deserializer
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -1950,7 +1953,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|//TODO merge this with getBucketCols function
+comment|// TODO merge this with getBucketCols function
 specifier|public
 name|String
 name|getBucketingDimensionId
@@ -2040,7 +2043,7 @@ return|return
 name|tTable
 return|;
 block|}
-comment|/**    * @param table the tTable to set    */
+comment|/**    * @param table    *          the tTable to set    */
 specifier|protected
 name|void
 name|setTTable
@@ -2131,6 +2134,7 @@ argument_list|(
 name|col
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -2142,6 +2146,7 @@ operator|+
 literal|" is not part of the table columns"
 argument_list|)
 throw|;
+block|}
 block|}
 name|getTTable
 argument_list|()
@@ -2242,6 +2247,7 @@ if|if
 condition|(
 name|isNative
 condition|)
+block|{
 return|return
 name|getTTable
 argument_list|()
@@ -2252,6 +2258,7 @@ operator|.
 name|getCols
 argument_list|()
 return|;
+block|}
 else|else
 block|{
 try|try
@@ -2298,7 +2305,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Returns a list of all the columns of the table (data columns + partition columns in that order.    *    * @return List<FieldSchema>    */
+comment|/**    * Returns a list of all the columns of the table (data columns + partition    * columns in that order.    *     * @return List<FieldSchema>    */
 specifier|public
 name|List
 argument_list|<
@@ -2389,7 +2396,7 @@ name|getNumBuckets
 argument_list|()
 return|;
 block|}
-comment|/**    * Replaces files in the partition with new data set specified by srcf. Works by moving files    * @param srcf Files to be replaced. Leaf directories or globbed file paths    * @param tmpd Temporary directory    */
+comment|/**    * Replaces files in the partition with new data set specified by srcf. Works    * by moving files    *     * @param srcf    *          Files to be replaced. Leaf directories or globbed file paths    * @param tmpd    *          Temporary directory    */
 specifier|protected
 name|void
 name|replaceFiles
@@ -2465,7 +2472,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Inserts files specified into the partition. Works by moving files    * @param srcf Files to be moved. Leaf directories or globbed file paths    */
+comment|/**    * Inserts files specified into the partition. Works by moving files    *     * @param srcf    *          Files to be moved. Leaf directories or globbed file paths    */
 specifier|protected
 name|void
 name|copyFiles
@@ -2955,7 +2962,7 @@ name|getViewOriginalText
 argument_list|()
 return|;
 block|}
-comment|/**    * @param viewOriginalText the original view text to set    */
+comment|/**    * @param viewOriginalText    *          the original view text to set    */
 specifier|public
 name|void
 name|setViewOriginalText
@@ -2987,7 +2994,7 @@ name|getViewExpandedText
 argument_list|()
 return|;
 block|}
-comment|/**    * @param viewExpandedText the expanded view text to set    */
+comment|/**    * @param viewExpandedText    *          the expanded view text to set    */
 specifier|public
 name|void
 name|setViewExpandedText
@@ -3044,7 +3051,7 @@ return|return
 name|hasExpandedText
 return|;
 block|}
-comment|/**    * Creates a partition name -> value spec map object    * @param tp Use the information from this partition.    * @return Partition name to value mapping.    */
+comment|/**    * Creates a partition name -> value spec map object    *     * @param tp    *          Use the information from this partition.    * @return Partition name to value mapping.    */
 specifier|public
 name|LinkedHashMap
 argument_list|<
@@ -3180,19 +3187,15 @@ name|newTbl
 operator|.
 name|schema
 operator|=
-name|this
-operator|.
 name|schema
 expr_stmt|;
 name|newTbl
 operator|.
 name|deserializer
 operator|=
-name|this
-operator|.
 name|deserializer
 expr_stmt|;
-comment|//TODO: convert to SerDeInfo format
+comment|// TODO: convert to SerDeInfo format
 name|newTbl
 operator|.
 name|setTTable
@@ -3208,24 +3211,18 @@ name|newTbl
 operator|.
 name|uri
 operator|=
-name|this
-operator|.
 name|uri
 expr_stmt|;
 name|newTbl
 operator|.
 name|inputFormatClass
 operator|=
-name|this
-operator|.
 name|inputFormatClass
 expr_stmt|;
 name|newTbl
 operator|.
 name|outputFormatClass
 operator|=
-name|this
-operator|.
 name|outputFormatClass
 expr_stmt|;
 return|return

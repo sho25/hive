@@ -407,6 +407,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|SessionState
 operator|.
 name|get
@@ -428,6 +429,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 switch|switch
 condition|(
 name|tree

@@ -51,7 +51,7 @@ decl_stmt|;
 specifier|public
 name|loadDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|loadDesc
 parameter_list|(
@@ -84,8 +84,6 @@ name|getSourceDir
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|sourceDir
 return|;
 block|}
@@ -98,8 +96,6 @@ name|String
 name|source
 parameter_list|)
 block|{
-name|this
-operator|.
 name|sourceDir
 operator|=
 name|source

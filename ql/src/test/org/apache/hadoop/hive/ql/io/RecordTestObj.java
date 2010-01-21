@@ -145,7 +145,7 @@ decl_stmt|;
 specifier|public
 name|RecordTestObj
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|RecordTestObj
 parameter_list|(
@@ -216,7 +216,9 @@ literal|null
 operator|==
 name|rti
 condition|)
+block|{
 return|return;
+block|}
 name|_rio_rtiFilter
 operator|=
 name|rti
@@ -238,7 +240,9 @@ literal|null
 operator|==
 name|_rio_rtiFilter
 condition|)
+block|{
 return|return;
+block|}
 comment|// we may already have done this
 if|if
 condition|(
@@ -246,7 +250,9 @@ literal|null
 operator|!=
 name|_rio_rtiFilterFields
 condition|)
+block|{
 return|return;
+block|}
 name|int
 name|_rio_i
 decl_stmt|,
@@ -484,6 +490,8 @@ operator|=
 name|num
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|serialize
@@ -608,6 +616,8 @@ name|_rio_tag
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|deserialize
@@ -820,6 +830,8 @@ name|_rio_tag
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compareTo
@@ -879,9 +891,11 @@ name|_rio_ret
 operator|!=
 literal|0
 condition|)
+block|{
 return|return
 name|_rio_ret
 return|;
+block|}
 name|_rio_ret
 operator|=
 operator|(
@@ -915,13 +929,17 @@ name|_rio_ret
 operator|!=
 literal|0
 condition|)
-return|return
-name|_rio_ret
-return|;
+block|{
 return|return
 name|_rio_ret
 return|;
 block|}
+return|return
+name|_rio_ret
+return|;
+block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -985,9 +1003,11 @@ condition|(
 operator|!
 name|_rio_ret
 condition|)
+block|{
 return|return
 name|_rio_ret
 return|;
+block|}
 name|_rio_ret
 operator|=
 operator|(
@@ -1003,13 +1023,17 @@ condition|(
 operator|!
 name|_rio_ret
 condition|)
-return|return
-name|_rio_ret
-return|;
+block|{
 return|return
 name|_rio_ret
 return|;
 block|}
+return|return
+name|_rio_ret
+return|;
+block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|clone
@@ -1028,22 +1052,20 @@ name|_rio_other
 operator|.
 name|s
 operator|=
-name|this
-operator|.
 name|s
 expr_stmt|;
 name|_rio_other
 operator|.
 name|num
 operator|=
-name|this
-operator|.
 name|num
 expr_stmt|;
 return|return
 name|_rio_other
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -1626,6 +1648,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare

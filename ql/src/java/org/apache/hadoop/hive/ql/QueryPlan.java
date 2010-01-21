@@ -413,18 +413,22 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|queryString
 decl_stmt|;
 specifier|private
+specifier|final
 name|BaseSemanticAnalyzer
 name|plan
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|queryId
 decl_stmt|;
 specifier|private
+specifier|final
 name|org
 operator|.
 name|apache
@@ -443,6 +447,7 @@ name|Query
 name|query
 decl_stmt|;
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|String
@@ -457,6 +462,7 @@ argument_list|>
 name|counters
 decl_stmt|;
 specifier|private
+specifier|final
 name|Set
 argument_list|<
 name|String
@@ -464,15 +470,12 @@ argument_list|>
 name|done
 decl_stmt|;
 specifier|private
+specifier|final
 name|Set
 argument_list|<
 name|String
 argument_list|>
 name|started
-decl_stmt|;
-specifier|private
-name|boolean
-name|add
 decl_stmt|;
 specifier|public
 name|QueryPlan
@@ -496,8 +499,6 @@ name|plan
 operator|=
 name|plan
 expr_stmt|;
-name|this
-operator|.
 name|queryId
 operator|=
 name|makeQueryId
@@ -527,8 +528,6 @@ name|query
 operator|.
 name|setQueryId
 argument_list|(
-name|this
-operator|.
 name|queryId
 argument_list|)
 expr_stmt|;
@@ -696,7 +695,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * generate the operator graph and operator list for the given task based on    * the operators corresponding to that task    * @param task   api.Task which needs its operator graph populated    * @param topOps the set of top operators from which the operator graph for the task    *               is hanging    */
+comment|/**    * generate the operator graph and operator list for the given task based on    * the operators corresponding to that task    *     * @param task    *          api.Task which needs its operator graph populated    * @param topOps    *          the set of top operators from which the operator graph for the    *          task is hanging    */
 specifier|private
 name|void
 name|populateOperatorGraph
@@ -1878,7 +1877,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * From the counters extracted via extractCounters(), update the counters    * in the query plan    */
+comment|/**    * From the counters extracted via extractCounters(), update the counters in    * the query plan    */
 specifier|private
 name|void
 name|updateCountersInQueryPlan
@@ -1923,6 +1922,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 for|for
 control|(
 name|org
@@ -2133,7 +2133,8 @@ name|getOperatorList
 argument_list|()
 control|)
 block|{
-comment|// if the task has started, all operators within the task have started
+comment|// if the task has started, all operators within the task have
+comment|// started
 name|op
 operator|.
 name|setStarted
@@ -2180,6 +2181,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -4595,7 +4597,7 @@ argument_list|(
 name|buf
 argument_list|)
 return|;
-comment|//return getQueryPlan().toString();
+comment|// return getQueryPlan().toString();
 block|}
 specifier|public
 name|void

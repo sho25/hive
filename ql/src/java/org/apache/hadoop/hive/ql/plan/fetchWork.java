@@ -63,24 +63,6 @@ name|Path
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|tableDesc
-import|;
-end_import
-
 begin_class
 annotation|@
 name|explain
@@ -139,7 +121,7 @@ decl_stmt|;
 specifier|public
 name|fetchWork
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|fetchWork
 parameter_list|(
@@ -280,7 +262,7 @@ operator|=
 name|format
 expr_stmt|;
 block|}
-comment|/** 	 * @return the tblDir 	 */
+comment|/**    * @return the tblDir    */
 specifier|public
 name|String
 name|getTblDir
@@ -304,7 +286,7 @@ name|tblDir
 argument_list|)
 return|;
 block|}
-comment|/** 	 * @param tblDir the tblDir to set 	 */
+comment|/**    * @param tblDir    *          the tblDir to set    */
 specifier|public
 name|void
 name|setTblDir
@@ -320,7 +302,7 @@ operator|=
 name|tblDir
 expr_stmt|;
 block|}
-comment|/** 	 * @return the tblDesc 	 */
+comment|/**    * @return the tblDesc    */
 specifier|public
 name|tableDesc
 name|getTblDesc
@@ -330,7 +312,7 @@ return|return
 name|tblDesc
 return|;
 block|}
-comment|/** 	 * @param tblDesc the tblDesc to set 	 */
+comment|/**    * @param tblDesc    *          the tblDesc to set    */
 specifier|public
 name|void
 name|setTblDesc
@@ -346,7 +328,7 @@ operator|=
 name|tblDesc
 expr_stmt|;
 block|}
-comment|/** 	 * @return the partDir 	 */
+comment|/**    * @return the partDir    */
 specifier|public
 name|List
 argument_list|<
@@ -397,9 +379,11 @@ name|paths
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|List
 argument_list|<
 name|String
@@ -420,6 +404,7 @@ name|path
 range|:
 name|paths
 control|)
+block|{
 name|pathsStr
 operator|.
 name|add
@@ -430,6 +415,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|pathsStr
 return|;
@@ -455,9 +441,11 @@ name|paths
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|List
 argument_list|<
 name|Path
@@ -478,6 +466,7 @@ name|path
 range|:
 name|paths
 control|)
+block|{
 name|pathsStr
 operator|.
 name|add
@@ -489,11 +478,12 @@ name|path
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|pathsStr
 return|;
 block|}
-comment|/** 	 * @param partDir the partDir to set 	 */
+comment|/**    * @param partDir    *          the partDir to set    */
 specifier|public
 name|void
 name|setPartDir
@@ -512,7 +502,7 @@ operator|=
 name|partDir
 expr_stmt|;
 block|}
-comment|/** 	 * @return the partDesc 	 */
+comment|/**    * @return the partDesc    */
 specifier|public
 name|List
 argument_list|<
@@ -525,7 +515,7 @@ return|return
 name|partDesc
 return|;
 block|}
-comment|/** 	 * @param partDesc the partDesc to set 	 */
+comment|/**    * @param partDesc    *          the partDesc to set    */
 specifier|public
 name|void
 name|setPartDesc
@@ -544,7 +534,7 @@ operator|=
 name|partDesc
 expr_stmt|;
 block|}
-comment|/** 	 * @return the limit 	 */
+comment|/**    * @return the limit    */
 annotation|@
 name|explain
 argument_list|(
@@ -561,7 +551,7 @@ return|return
 name|limit
 return|;
 block|}
-comment|/** 	 * @param limit the limit to set 	 */
+comment|/**    * @param limit    *          the limit to set    */
 specifier|public
 name|void
 name|setLimit
@@ -577,6 +567,8 @@ operator|=
 name|limit
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -588,6 +580,7 @@ name|tblDir
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 operator|new
 name|String
@@ -597,15 +590,18 @@ operator|+
 name|tblDir
 argument_list|)
 return|;
+block|}
 if|if
 condition|(
 name|partDir
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|"null fetchwork"
 return|;
+block|}
 name|String
 name|ret
 init|=
@@ -622,6 +618,7 @@ name|part
 range|:
 name|partDir
 control|)
+block|{
 name|ret
 operator|=
 name|ret
@@ -631,6 +628,7 @@ argument_list|(
 name|part
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|ret
 return|;

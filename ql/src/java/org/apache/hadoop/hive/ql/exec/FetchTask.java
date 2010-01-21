@@ -387,9 +387,6 @@ operator|.
 name|SERIALIZATION_NULL_FORMAT
 argument_list|,
 operator|(
-operator|(
-name|fetchWork
-operator|)
 name|work
 operator|)
 operator|.
@@ -453,6 +450,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|execute
@@ -504,6 +503,8 @@ operator|=
 name|maxRows
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|fetch
@@ -553,6 +554,7 @@ operator|<
 name|rowsRet
 operator|)
 condition|)
+block|{
 name|rowsRet
 operator|=
 name|work
@@ -562,6 +564,7 @@ argument_list|()
 operator|-
 name|totalRows
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|rowsRet
@@ -606,9 +609,11 @@ name|numRows
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|totalRows
 operator|+=
 name|numRows
@@ -680,6 +685,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

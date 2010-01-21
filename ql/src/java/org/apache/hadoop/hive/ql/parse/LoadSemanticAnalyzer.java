@@ -442,7 +442,8 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
-comment|// generate absolute path relative to current directory or hdfs home directory
+comment|// generate absolute path relative to current directory or hdfs home
+comment|// directory
 if|if
 condition|(
 operator|!
@@ -844,7 +845,8 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-comment|// Has to use full name to make sure it does not conflict with org.apache.commons.lang.StringUtils
+comment|// Has to use full name to make sure it does not conflict with
+comment|// org.apache.commons.lang.StringUtils
 throw|throw
 operator|new
 name|SemanticException
@@ -1282,8 +1284,10 @@ condition|(
 name|isLocal
 condition|)
 block|{
-comment|// if the local keyword is specified - we will always make a copy. this might seem redundant in the case
-comment|// that the hive warehouse is also located in the local file system - but that's just a test case.
+comment|// if the local keyword is specified - we will always make a copy. this
+comment|// might seem redundant in the case
+comment|// that the hive warehouse is also located in the local file system - but
+comment|// that's just a test case.
 name|String
 name|copyURIStr
 init|=
@@ -1321,8 +1325,6 @@ argument_list|,
 name|copyURIStr
 argument_list|)
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 expr_stmt|;
@@ -1419,8 +1421,6 @@ argument_list|,
 literal|true
 argument_list|)
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 argument_list|)
@@ -1450,8 +1450,6 @@ argument_list|,
 literal|true
 argument_list|)
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 expr_stmt|;

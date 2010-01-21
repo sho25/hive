@@ -27,7 +27,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
+name|HashMap
 import|;
 end_import
 
@@ -37,25 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
-name|NodeProcessorCtx
+name|Map
 import|;
 end_import
 
@@ -77,6 +59,24 @@ name|UnionOperator
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lib
+operator|.
+name|NodeProcessorCtx
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -91,18 +91,21 @@ name|UnionParseContext
 block|{
 specifier|transient
 specifier|private
+specifier|final
 name|boolean
 index|[]
 name|mapOnlySubq
 decl_stmt|;
 specifier|transient
 specifier|private
+specifier|final
 name|boolean
 index|[]
 name|rootTask
 decl_stmt|;
 specifier|transient
 specifier|private
+specifier|final
 name|boolean
 index|[]
 name|mapJoinSubq
@@ -230,10 +233,12 @@ if|if
 condition|(
 name|mapJoinSubq
 condition|)
+block|{
 name|mapJoinQuery
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 specifier|public
 name|boolean
@@ -320,7 +325,7 @@ return|return
 name|mapOnlySubq
 return|;
 block|}
-comment|/**    * @param mapOnlySubq the mapOnlySubq to set    */
+comment|/**    * @param mapOnlySubq    *          the mapOnlySubq to set    */
 specifier|public
 name|void
 name|setMapOnlySubq
@@ -337,6 +342,7 @@ name|mapOnlySubq
 expr_stmt|;
 block|}
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|UnionOperator

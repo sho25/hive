@@ -135,20 +135,6 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang
-operator|.
-name|StringUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
 name|logging
 operator|.
 name|Log
@@ -180,22 +166,6 @@ operator|.
 name|fs
 operator|.
 name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|JavaUtils
 import|;
 end_import
 
@@ -300,24 +270,6 @@ operator|.
 name|exec
 operator|.
 name|TaskFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|HiveOutputFormat
 import|;
 end_import
 
@@ -886,6 +838,7 @@ name|HiveParser
 operator|.
 name|TOK_DROPTABLE
 condition|)
+block|{
 name|analyzeDropTable
 argument_list|(
 name|ast
@@ -893,6 +846,7 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1124,6 +1078,7 @@ name|HiveParser
 operator|.
 name|TOK_DROPVIEW
 condition|)
+block|{
 name|analyzeDropTable
 argument_list|(
 name|ast
@@ -1131,6 +1086,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1146,11 +1102,13 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_RENAME
 condition|)
+block|{
 name|analyzeAlterTableRename
 argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1166,6 +1124,7 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_ADDCOLS
 condition|)
+block|{
 name|analyzeAlterTableModifyCols
 argument_list|(
 name|ast
@@ -1175,6 +1134,7 @@ operator|.
 name|ADDCOLS
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1190,6 +1150,7 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_REPLACECOLS
 condition|)
+block|{
 name|analyzeAlterTableModifyCols
 argument_list|(
 name|ast
@@ -1199,6 +1160,7 @@ operator|.
 name|REPLACECOLS
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1214,11 +1176,13 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_RENAMECOL
 condition|)
+block|{
 name|analyzeAlterTableRenameCol
 argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1256,11 +1220,13 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_DROPPARTS
 condition|)
+block|{
 name|analyzeAlterTableDropParts
 argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1276,11 +1242,13 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_PROPERTIES
 condition|)
+block|{
 name|analyzeAlterTableProps
 argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1296,11 +1264,13 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_SERDEPROPERTIES
 condition|)
+block|{
 name|analyzeAlterTableSerdeProps
 argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1316,11 +1286,13 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_SERIALIZER
 condition|)
+block|{
 name|analyzeAlterTableSerde
 argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1336,11 +1308,13 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_FILEFORMAT
 condition|)
+block|{
 name|analyzeAlterTableFileFormat
 argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -1356,11 +1330,13 @@ name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_CLUSTER_SORT
 condition|)
+block|{
 name|analyzeAlterTableClusterSort
 argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -2135,6 +2111,7 @@ argument_list|()
 operator|==
 literal|2
 condition|)
+block|{
 name|numBuckets
 operator|=
 operator|(
@@ -2157,6 +2134,7 @@ operator|.
 name|intValue
 argument_list|()
 expr_stmt|;
+block|}
 else|else
 block|{
 name|sortCols
@@ -2203,6 +2181,7 @@ name|numBuckets
 operator|<=
 literal|0
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -2215,6 +2194,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 name|alterTableDesc
 name|alterTblDesc
 init|=
@@ -2359,7 +2339,7 @@ return|return
 name|mapProp
 return|;
 block|}
-comment|/**    * Get the fully qualified name in the ast. e.g. the ast of the form ^(DOT ^(DOT a b) c)    * will generate a name of the form a.b.c    *    * @param ast The AST from which the qualified name has to be extracted    * @return String    */
+comment|/**    * Get the fully qualified name in the ast. e.g. the ast of the form ^(DOT    * ^(DOT a b) c) will generate a name of the form a.b.c    *     * @param ast    *          The AST from which the qualified name has to be extracted    * @return String    */
 specifier|private
 name|String
 name|getFullyQualifiedName
@@ -2415,7 +2395,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a FetchTask for a given table and thrift ddl schema    * @param tablename tablename    * @param schema thrift ddl    */
+comment|/**    * Create a FetchTask for a given table and thrift ddl schema    *     * @param tablename    *          tablename    * @param schema    *          thrift ddl    */
 specifier|private
 name|Task
 argument_list|<
@@ -2543,8 +2523,6 @@ name|get
 argument_list|(
 name|fetch
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 return|;
@@ -3053,6 +3031,7 @@ name|children
 operator|>
 literal|3
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -3065,6 +3044,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 for|for
 control|(
 name|int
@@ -3107,6 +3087,7 @@ name|HiveParser
 operator|.
 name|Identifier
 condition|)
+block|{
 name|dbName
 operator|=
 name|unescapeIdentifier
@@ -3117,6 +3098,7 @@ name|getText
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -3132,6 +3114,7 @@ name|HiveParser
 operator|.
 name|TOK_PARTSPEC
 condition|)
+block|{
 name|partSpec
 operator|=
 name|getPartSpec
@@ -3139,7 +3122,9 @@ argument_list|(
 name|child
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -3152,6 +3137,7 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 name|showTblStatusDesc
@@ -3207,7 +3193,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Add the task according to the parsed command tree.    * This is used for the CLI command "SHOW FUNCTIONS;".    * @param ast The parsed command tree.    * @throws SemanticException Parsin failed    */
+comment|/**    * Add the task according to the parsed command tree. This is used for the CLI    * command "SHOW FUNCTIONS;".    *     * @param ast    *          The parsed command tree.    * @throws SemanticException    *           Parsin failed    */
 specifier|private
 name|void
 name|analyzeShowFunctions
@@ -3311,7 +3297,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Add the task according to the parsed command tree.    * This is used for the CLI command "DESCRIBE FUNCTION;".    * @param ast The parsed command tree.    * @throws SemanticException Parsing failed    */
+comment|/**    * Add the task according to the parsed command tree. This is used for the CLI    * command "DESCRIBE FUNCTION;".    *     * @param ast    *          The parsed command tree.    * @throws SemanticException    *           Parsing failed    */
 specifier|private
 name|void
 name|analyzeDescFunction
@@ -3650,6 +3636,7 @@ name|HiveParser
 operator|.
 name|StringLiteral
 condition|)
+block|{
 name|newComment
 operator|=
 name|unescapeSQLString
@@ -3665,7 +3652,9 @@ name|getText
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|positionNode
 operator|=
 operator|(
@@ -3678,6 +3667,7 @@ argument_list|(
 literal|4
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -3695,11 +3685,14 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 name|first
 operator|=
 literal|true
 expr_stmt|;
+block|}
 else|else
+block|{
 name|flagCol
 operator|=
 name|unescapeIdentifier
@@ -3715,6 +3708,7 @@ name|getText
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|alterTableDesc
 name|alterTblDesc
@@ -3949,7 +3943,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Add one or more partitions to a table. Useful    * when the data has been copied to the right location    * by some other process.    * @param ast The parsed command tree.    * @throws SemanticException Parsin failed    */
+comment|/**    * Add one or more partitions to a table. Useful when the data has been copied    * to the right location by some other process.    *     * @param ast    *          The parsed command tree.    * @throws SemanticException    *           Parsin failed    */
 specifier|private
 name|void
 name|analyzeAlterTableAddParts
@@ -3977,7 +3971,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 empty_stmt|;
-comment|//partition name to value
+comment|// partition name to value
 name|List
 argument_list|<
 name|Map
@@ -4126,7 +4120,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|//create new partition, set values
+comment|// create new partition, set values
 name|currentLocation
 operator|=
 literal|null
@@ -4144,7 +4138,7 @@ name|HiveParser
 operator|.
 name|TOK_PARTITIONLOCATION
 case|:
-comment|//if location specified, set in partition
+comment|// if location specified, set in partition
 name|currentLocation
 operator|=
 name|unescapeSQLString
@@ -4173,7 +4167,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|//add the last one
+comment|// add the last one
 if|if
 condition|(
 name|currentPart
@@ -4224,7 +4218,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Verify that the information in the metastore matches up    * with the data on the fs.    * @param ast Query tree.    * @throws SemanticException    */
+comment|/**    * Verify that the information in the metastore matches up with the data on    * the fs.    *     * @param ast    *          Query tree.    * @throws SemanticException    */
 specifier|private
 name|void
 name|analyzeMetastoreCheck
@@ -4380,7 +4374,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Get the partition specs from the tree.    * @param ast Tree to extract partitions from.    * @return A list of partition name to value mappings.    * @throws SemanticException    */
+comment|/**    * Get the partition specs from the tree.    *     * @param ast    *          Tree to extract partitions from.    * @return A list of partition name to value mappings.    * @throws SemanticException    */
 specifier|private
 name|List
 argument_list|<
@@ -4455,7 +4449,7 @@ argument_list|(
 name|childIndex
 argument_list|)
 decl_stmt|;
-comment|//sanity check
+comment|// sanity check
 if|if
 condition|(
 name|partspec

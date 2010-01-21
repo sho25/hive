@@ -149,34 +149,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
-operator|.
-name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Writable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|serde2
@@ -220,6 +192,20 @@ operator|.
 name|ObjectInspectorUtils
 operator|.
 name|ObjectInspectorCopyOption
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|Writable
 import|;
 end_import
 
@@ -277,6 +263,8 @@ operator|=
 name|obj
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -313,8 +301,6 @@ block|{
 if|if
 condition|(
 operator|(
-name|this
-operator|.
 name|obj
 operator|==
 literal|null
@@ -329,9 +315,11 @@ operator|==
 literal|null
 operator|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 operator|(
@@ -361,15 +349,19 @@ name|obj
 argument_list|)
 operator|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 block|}
 block|}
 return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -733,7 +725,7 @@ return|return
 name|metadataTag
 return|;
 block|}
-comment|/**    * @param metadataTag the metadataTag to set    */
+comment|/**    * @param metadataTag    *          the metadataTag to set    */
 specifier|public
 name|void
 name|setMetadataTag
@@ -759,7 +751,7 @@ return|return
 name|obj
 return|;
 block|}
-comment|/**    * @param obj the obj to set    */
+comment|/**    * @param obj    *          the obj to set    */
 specifier|public
 name|void
 name|setObj

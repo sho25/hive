@@ -266,7 +266,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is a bridge between GenericUDAF and UDAF.  * Old UDAF can be used with the GenericUDAF infrastructure through  * this bridge.  */
+comment|/**  * This class is a bridge between GenericUDAF and UDAF. Old UDAF can be used  * with the GenericUDAF infrastructure through this bridge.  */
 end_comment
 
 begin_class
@@ -491,8 +491,6 @@ argument_list|,
 name|parameters
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|parameterOIs
 operator|=
 name|parameters

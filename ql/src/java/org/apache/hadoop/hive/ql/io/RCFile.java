@@ -243,24 +243,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|CodecPool
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde2
 operator|.
 name|ColumnProjectionUtils
@@ -899,6 +881,7 @@ index|]
 operator|==
 literal|null
 condition|)
+block|{
 name|allCellValLenBuffer
 index|[
 name|i
@@ -908,7 +891,9 @@ operator|new
 name|NonSyncDataOutputBuffer
 argument_list|()
 expr_stmt|;
+block|}
 else|else
+block|{
 name|allCellValLenBuffer
 index|[
 name|i
@@ -917,6 +902,7 @@ operator|.
 name|reset
 argument_list|()
 expr_stmt|;
+block|}
 name|allCellValLenBuffer
 index|[
 name|i
@@ -1200,6 +1186,7 @@ name|codec
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 name|loadedColumnsValueBuffer
 index|[
@@ -1209,6 +1196,7 @@ operator|.
 name|getData
 argument_list|()
 return|;
+block|}
 name|NonSyncDataOutputBuffer
 name|compressedData
 init|=
@@ -1477,6 +1465,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|skippedColIDs
 index|[
 name|i
@@ -1484,6 +1473,7 @@ index|]
 operator|=
 literal|false
 expr_stmt|;
+block|}
 block|}
 name|int
 name|skipped
@@ -1504,13 +1494,17 @@ name|currentSkip
 range|:
 name|skippedColIDs
 control|)
+block|{
 if|if
 condition|(
 name|currentSkip
 condition|)
+block|{
 name|skipped
 operator|++
 expr_stmt|;
+block|}
+block|}
 block|}
 name|loadedColumnsValueBuffer
 operator|=
@@ -1602,7 +1596,9 @@ index|[
 name|k
 index|]
 condition|)
+block|{
 continue|continue;
+block|}
 name|loadedColumnsValueBuffer
 index|[
 name|readIndex
@@ -1783,6 +1779,7 @@ name|codec
 operator|!=
 literal|null
 condition|)
+block|{
 name|decompressedFlag
 index|[
 name|addIndex
@@ -1790,6 +1787,7 @@ index|]
 operator|=
 literal|false
 expr_stmt|;
+block|}
 name|addIndex
 operator|++
 expr_stmt|;
@@ -1824,29 +1822,12 @@ name|IOException
 block|{
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|loadedColumnsValueBuffer
-operator|.
-name|length
-condition|;
-name|i
-operator|++
-control|)
-block|{
 name|NonSyncDataOutputBuffer
 name|currentBuf
-init|=
+range|:
 name|loadedColumnsValueBuffer
-index|[
-name|i
-index|]
-decl_stmt|;
+control|)
+block|{
 name|out
 operator|.
 name|write
@@ -1886,29 +1867,17 @@ parameter_list|()
 block|{
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|NonSyncDataOutputBuffer
+name|element
+range|:
 name|loadedColumnsValueBuffer
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|IOUtils
 operator|.
 name|closeStream
 argument_list|(
-name|loadedColumnsValueBuffer
-index|[
-name|i
-index|]
+name|element
 argument_list|)
 expr_stmt|;
 block|}
@@ -2090,6 +2059,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+specifier|final
 name|ColumnBuffer
 index|[]
 name|columnBuffers
@@ -2113,6 +2083,7 @@ init|=
 literal|0
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 index|[]
 name|columnValuePlainLength
@@ -2305,6 +2276,7 @@ name|runLength
 operator|>
 literal|0
 condition|)
+block|{
 name|WritableUtils
 operator|.
 name|writeVLong
@@ -2315,6 +2287,7 @@ operator|~
 name|runLength
 argument_list|)
 expr_stmt|;
+block|}
 name|runLength
 operator|=
 operator|-
@@ -2541,12 +2514,14 @@ name|metadata
 operator|==
 literal|null
 condition|)
+block|{
 name|metadata
 operator|=
 operator|new
 name|Metadata
 argument_list|()
 expr_stmt|;
+block|}
 name|metadata
 operator|.
 name|set
@@ -3124,6 +3099,7 @@ operator|instanceof
 name|BytesRefArrayWritable
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|UnsupportedOperationException
@@ -3131,6 +3107,7 @@ argument_list|(
 literal|"Currently the writer can only accept BytesRefArrayWritable"
 argument_list|)
 throw|;
+block|}
 name|BytesRefArrayWritable
 name|columns
 init|=
@@ -3488,6 +3465,7 @@ name|keyLength
 operator|<
 literal|0
 condition|)
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -3497,6 +3475,7 @@ operator|+
 name|key
 argument_list|)
 throw|;
+block|}
 comment|// Write the record out
 name|checkAndWriteSync
 argument_list|()
@@ -3669,9 +3648,11 @@ name|bufferedRecords
 operator|>
 literal|0
 condition|)
+block|{
 name|flushRecords
 argument_list|()
 expr_stmt|;
+block|}
 name|clearColumnBuffers
 argument_list|()
 expr_stmt|;
@@ -3782,10 +3763,12 @@ class|class
 name|Reader
 block|{
 specifier|private
+specifier|final
 name|Path
 name|file
 decl_stmt|;
 specifier|private
+specifier|final
 name|FSDataInputStream
 name|in
 decl_stmt|;
@@ -3806,6 +3789,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|sync
@@ -3817,6 +3801,7 @@ name|SYNC_HASH_SIZE
 index|]
 decl_stmt|;
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|syncCheck
@@ -3832,6 +3817,7 @@ name|boolean
 name|syncSeen
 decl_stmt|;
 specifier|private
+specifier|final
 name|long
 name|end
 decl_stmt|;
@@ -3844,10 +3830,12 @@ name|int
 name|currentRecordLength
 decl_stmt|;
 specifier|private
+specifier|final
 name|Configuration
 name|conf
 decl_stmt|;
 specifier|private
+specifier|final
 name|ValueBuffer
 name|currentValue
 decl_stmt|;
@@ -3894,16 +3882,19 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+specifier|final
 name|NonSyncDataInputBuffer
 index|[]
 name|colValLenBufferReadIn
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 index|[]
 name|columnRunLength
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 index|[]
 name|columnPrvLength
@@ -4164,6 +4155,7 @@ name|read
 operator|<
 name|columnNumber
 condition|)
+block|{
 name|skippedColIDs
 index|[
 name|read
@@ -4171,6 +4163,7 @@ index|]
 operator|=
 literal|false
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
@@ -4223,32 +4216,22 @@ condition|)
 block|{
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|boolean
+name|skippedColID
+range|:
 name|skippedColIDs
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 if|if
 condition|(
-name|skippedColIDs
-index|[
-name|i
-index|]
+name|skippedColID
 condition|)
+block|{
 name|loadColumnNum
 operator|-=
 literal|1
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|// get list of selected column IDs
@@ -4360,6 +4343,7 @@ index|[
 name|i
 index|]
 condition|)
+block|{
 name|colValLenBufferReadIn
 index|[
 name|i
@@ -4369,6 +4353,7 @@ operator|new
 name|NonSyncDataInputBuffer
 argument_list|()
 expr_stmt|;
+block|}
 name|columnRunLength
 index|[
 name|i
@@ -4469,6 +4454,7 @@ literal|2
 index|]
 operator|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -4478,6 +4464,7 @@ operator|+
 literal|" not a RCFile"
 argument_list|)
 throw|;
+block|}
 comment|// Set 'version'
 name|version
 operator|=
@@ -4495,6 +4482,7 @@ index|[
 literal|3
 index|]
 condition|)
+block|{
 throw|throw
 operator|new
 name|VersionMismatchException
@@ -4507,6 +4495,7 @@ argument_list|,
 name|version
 argument_list|)
 throw|;
+block|}
 try|try
 block|{
 name|Class
@@ -4567,6 +4556,7 @@ operator|.
 name|class
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -4576,6 +4566,7 @@ operator|+
 literal|" not a RCFile"
 argument_list|)
 throw|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -4906,7 +4897,9 @@ operator|%
 name|syncLen
 index|]
 condition|)
+block|{
 break|break;
+block|}
 block|}
 if|if
 condition|(
@@ -5124,7 +5117,7 @@ argument_list|,
 name|syncCheck
 argument_list|)
 condition|)
-comment|// check it
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -5132,6 +5125,7 @@ argument_list|(
 literal|"File is corrupt!"
 argument_list|)
 throw|;
+block|}
 name|syncSeen
 operator|=
 literal|true
@@ -5183,7 +5177,9 @@ condition|(
 operator|!
 name|keyInit
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 operator|!
@@ -5410,27 +5406,15 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|j
-init|=
-literal|0
-init|;
-name|j
-operator|<
+name|prjColID
+range|:
 name|prjColIDs
-operator|.
-name|length
-condition|;
-name|j
-operator|++
 control|)
 block|{
 name|int
 name|i
 init|=
-name|prjColIDs
-index|[
-name|j
-index|]
+name|prjColID
 decl_stmt|;
 name|colValLenBufferReadIn
 index|[
@@ -5499,9 +5483,11 @@ condition|(
 operator|!
 name|keyInit
 condition|)
+block|{
 name|nextKeyBuffer
 argument_list|()
 expr_stmt|;
+block|}
 name|currentValue
 operator|.
 name|keyBuffer
@@ -5536,6 +5522,7 @@ decl_stmt|;
 comment|// use this buffer to hold column's cells value length for usages in
 comment|// getColumn(), instead of using colValLenBufferReadIn directly.
 specifier|private
+specifier|final
 name|NonSyncDataInputBuffer
 name|fetchColumnTempBuf
 init|=
@@ -5597,9 +5584,11 @@ name|currentValue
 operator|.
 name|inited
 condition|)
+block|{
 name|currentValueBuffer
 argument_list|()
 expr_stmt|;
+block|}
 name|int
 name|columnNextRowStart
 init|=
@@ -5672,6 +5661,7 @@ index|[
 name|columnID
 index|]
 condition|)
+block|{
 name|currentCell
 operator|.
 name|set
@@ -5691,7 +5681,9 @@ argument_list|,
 name|length
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|currentCell
 operator|.
 name|set
@@ -5708,6 +5700,7 @@ argument_list|,
 name|length
 argument_list|)
 expr_stmt|;
+block|}
 name|columnNextRowStart
 operator|=
 name|columnNextRowStart
@@ -5719,7 +5712,7 @@ return|return
 name|rest
 return|;
 block|}
-comment|/**      * Read in next key buffer and throw any data in current key buffer and      * current value buffer. It will influence the result of {@link      * #next(LongWritable)} and {@link #getCurrentRow(BytesRefArrayWritable)}      *       * @return whether there still has records or not      * @throws IOException      */
+comment|/**      * Read in next key buffer and throw any data in current key buffer and      * current value buffer. It will influence the result of      * {@link #next(LongWritable)} and      * {@link #getCurrentRow(BytesRefArrayWritable)}      *       * @return whether there still has records or not      * @throws IOException      */
 specifier|public
 specifier|synchronized
 name|boolean
@@ -5863,7 +5856,9 @@ name|keyInit
 operator|||
 name|rowFetched
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 operator|!
@@ -5925,9 +5920,6 @@ decl_stmt|;
 name|int
 name|columnCurrentRowStart
 init|=
-operator|(
-name|int
-operator|)
 name|columnRowReadIndex
 index|[
 name|i
@@ -5959,6 +5951,7 @@ index|[
 name|j
 index|]
 condition|)
+block|{
 name|ref
 operator|.
 name|set
@@ -5978,7 +5971,9 @@ argument_list|,
 name|length
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|ref
 operator|.
 name|set
@@ -5995,6 +5990,7 @@ argument_list|,
 name|length
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|rowFetched
 operator|=
@@ -6116,6 +6112,8 @@ name|syncSeen
 return|;
 block|}
 comment|/** Returns the name of the file. */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -6148,8 +6146,6 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|this
-operator|.
 name|decompress
 condition|)
 block|{

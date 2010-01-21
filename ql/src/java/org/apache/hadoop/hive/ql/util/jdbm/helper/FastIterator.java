@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Fast and simple iterator.  *  * @version $Revision: 1.2 $  * @author<a href="boisvert@intalio.com">Alex Boisvert</a>  */
+comment|/**  * Fast and simple iterator.  *   * @version $Revision: 1.2 $  * @author<a href="boisvert@intalio.com">Alex Boisvert</a>  */
 end_comment
 
 begin_class
@@ -37,7 +37,7 @@ specifier|abstract
 class|class
 name|FastIterator
 block|{
-comment|/**      * Returns the next element in the interation.      *      * @return the next element in the iteration, or null if no more element.      */
+comment|/**    * Returns the next element in the interation.    *     * @return the next element in the iteration, or null if no more element.    */
 specifier|public
 specifier|abstract
 name|Object

@@ -187,9 +187,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|optimizer
 operator|.
-name|SemanticException
+name|GenMRProcContext
+operator|.
+name|GenMapRedCtx
 import|;
 end_import
 
@@ -223,11 +225,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|optimizer
+name|parse
 operator|.
-name|GenMRProcContext
-operator|.
-name|GenMapRedCtx
+name|SemanticException
 import|;
 end_import
 
@@ -246,7 +246,7 @@ specifier|public
 name|GenMRTableScan1
 parameter_list|()
 block|{   }
-comment|/**    * Table Sink encountered     * @param nd the table sink operator encountered    * @param opProcCtx context    */
+comment|/**    * Table Sink encountered    *     * @param nd    *          the table sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process

@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  Abstract class for Hashtable directory nodes  *  *  @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  *  @version $Id: HashNode.java,v 1.2 2003/03/21 02:54:58 boisvert Exp $  */
+comment|/**  * Abstract class for Hashtable directory nodes  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: HashNode.java,v 1.2 2003/03/21 02:54:58 boisvert Exp $  */
 end_comment
 
 begin_class
@@ -47,7 +47,7 @@ name|HashNode
 implements|implements
 name|Serializable
 block|{
-comment|// Empty, there's no common functionality.  We use this abstract
+comment|// Empty, there's no common functionality. We use this abstract
 comment|// class for typing only.
 block|}
 end_class

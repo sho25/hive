@@ -122,7 +122,7 @@ decl_stmt|;
 specifier|public
 name|scriptDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|scriptDesc
 parameter_list|(
@@ -201,8 +201,6 @@ name|getScriptCmd
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|scriptCmd
 return|;
 block|}
@@ -235,8 +233,6 @@ name|getScriptOutputInfo
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|scriptOutputInfo
 return|;
 block|}
@@ -295,7 +291,7 @@ return|return
 name|outRecordReaderClass
 return|;
 block|}
-comment|/**    * @param outRecordReaderClass the outRecordReaderClass to set    */
+comment|/**    * @param outRecordReaderClass    *          the outRecordReaderClass to set    */
 specifier|public
 name|void
 name|setOutRecordReaderClass
@@ -331,7 +327,7 @@ return|return
 name|inRecordWriterClass
 return|;
 block|}
-comment|/**    * @param inRecordWriterClass the inRecordWriterClass to set    */
+comment|/**    * @param inRecordWriterClass    *          the inRecordWriterClass to set    */
 specifier|public
 name|void
 name|setInRecordWriterClass

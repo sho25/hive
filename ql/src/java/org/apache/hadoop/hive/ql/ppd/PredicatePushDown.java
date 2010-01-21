@@ -304,7 +304,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implements predicate pushdown. Predicate pushdown is a term borrowed from relational  * databases even though for Hive it is predicate pushup.  * The basic idea is to process expressions as early in the plan as possible. The default plan  * generation adds filters where they are seen but in some instances some of the filter expressions  * can be pushed nearer to the operator that sees this particular data for the first time.   * e.g.   *  select a.*, b.*   *  from a join b on (a.col1 = b.col1)  *  where a.col1> 20 and b.col2> 40  *    * For the above query, the predicates (a.col1> 20) and (b.col2> 40), without predicate pushdown,  * would be evaluated after the join processing has been done. Suppose the two predicates filter out  * most of the rows from a and b, the join is unnecessarily processing these rows.  * With predicate pushdown, these two predicates will be processed before the join.  *   * Predicate pushdown is enabled by setting hive.optimize.ppd to true. It is disable by default.  *   * The high-level algorithm is describe here  * - An operator is processed after all its children have been processed  * - An operator processes its own predicates and then merges (conjunction) with the processed   *     predicates of its children. In case of multiple children, there are combined using   *     disjunction (OR).  * - A predicate expression is processed for an operator using the following steps  *    - If the expr is a constant then it is a candidate for predicate pushdown  *    - If the expr is a col reference then it is a candidate and its alias is noted  *    - If the expr is an index and both the array and index expr are treated as children  *    - If the all child expr are candidates for pushdown and all of the expression reference  *        only one alias from the operator's  RowResolver then the current expression is also a  *        candidate  *   One key thing to note is that some operators (Select, ReduceSink, GroupBy, Join etc) change  *   the columns as data flows through them. In such cases the column references are replaced by  *   the corresponding expression in the input data.  */
+comment|/**  * Implements predicate pushdown. Predicate pushdown is a term borrowed from  * relational databases even though for Hive it is predicate pushup. The basic  * idea is to process expressions as early in the plan as possible. The default  * plan generation adds filters where they are seen but in some instances some  * of the filter expressions can be pushed nearer to the operator that sees this  * particular data for the first time. e.g. select a.*, b.* from a join b on  * (a.col1 = b.col1) where a.col1> 20 and b.col2> 40  *   * For the above query, the predicates (a.col1> 20) and (b.col2> 40), without  * predicate pushdown, would be evaluated after the join processing has been  * done. Suppose the two predicates filter out most of the rows from a and b,  * the join is unnecessarily processing these rows. With predicate pushdown,  * these two predicates will be processed before the join.  *   * Predicate pushdown is enabled by setting hive.optimize.ppd to true. It is  * disable by default.  *   * The high-level algorithm is describe here - An operator is processed after  * all its children have been processed - An operator processes its own  * predicates and then merges (conjunction) with the processed predicates of its  * children. In case of multiple children, there are combined using disjunction  * (OR). - A predicate expression is processed for an operator using the  * following steps - If the expr is a constant then it is a candidate for  * predicate pushdown - If the expr is a col reference then it is a candidate  * and its alias is noted - If the expr is an index and both the array and index  * expr are treated as children - If the all child expr are candidates for  * pushdown and all of the expression reference only one alias from the  * operator's RowResolver then the current expression is also a candidate One  * key thing to note is that some operators (Select, ReduceSink, GroupBy, Join  * etc) change the columns as data flows through them. In such cases the column  * references are replaced by the corresponding expression in the input data.  */
 end_comment
 
 begin_class
@@ -344,14 +344,10 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|this
-operator|.
 name|pGraphContext
 operator|=
 name|pctx
 expr_stmt|;
-name|this
-operator|.
 name|opToParseCtxMap
 operator|=
 name|pGraphContext
@@ -494,7 +490,8 @@ name|getLIMProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The dispatcher fires the processor corresponding to the closest matching rule and passes the context along
+comment|// The dispatcher fires the processor corresponding to the closest matching
+comment|// rule and passes the context along
 name|Dispatcher
 name|disp
 init|=

@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -278,8 +268,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -343,8 +331,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -404,8 +390,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -465,8 +449,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -526,8 +508,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -587,8 +567,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if
@@ -634,6 +612,8 @@ return|return
 name|r
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -648,8 +628,6 @@ block|{
 name|BooleanWritable
 name|r
 init|=
-name|this
-operator|.
 name|resultCache
 decl_stmt|;
 if|if

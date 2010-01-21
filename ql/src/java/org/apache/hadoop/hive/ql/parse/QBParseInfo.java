@@ -25,21 +25,67 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|ArrayList
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|antlr
+name|util
 operator|.
-name|runtime
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|tree
+name|util
 operator|.
-name|*
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -72,7 +118,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the parse information related to a query block  *  **/
+comment|/**  * Implementation of the parse information related to a query block  *   **/
 end_comment
 
 begin_class
@@ -81,10 +127,12 @@ class|class
 name|QBParseInfo
 block|{
 specifier|private
+specifier|final
 name|boolean
 name|isSubQ
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|alias
 decl_stmt|;
@@ -97,6 +145,7 @@ name|ASTNode
 name|hints
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -106,6 +155,7 @@ argument_list|>
 name|aliasToSrc
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -115,6 +165,7 @@ argument_list|>
 name|nameToDest
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -124,6 +175,7 @@ argument_list|>
 name|nameToSample
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -133,6 +185,7 @@ argument_list|>
 name|destToSelExpr
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -142,6 +195,7 @@ argument_list|>
 name|destToWhereExpr
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -150,8 +204,9 @@ name|ASTNode
 argument_list|>
 name|destToGroupby
 decl_stmt|;
-comment|/**    * ClusterBy is a short name for both DistributeBy and SortBy.      */
+comment|/**    * ClusterBy is a short name for both DistributeBy and SortBy.    */
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -160,8 +215,9 @@ name|ASTNode
 argument_list|>
 name|destToClusterby
 decl_stmt|;
-comment|/**    * DistributeBy controls the hashcode of the row, which determines which reducer    * the rows will go to.     */
+comment|/**    * DistributeBy controls the hashcode of the row, which determines which    * reducer the rows will go to.    */
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -170,8 +226,9 @@ name|ASTNode
 argument_list|>
 name|destToDistributeby
 decl_stmt|;
-comment|/**    * SortBy controls the reduce keys, which affects the order of rows     * that the reducer receives.     */
+comment|/**    * SortBy controls the reduce keys, which affects the order of rows that the    * reducer receives.    */
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -180,8 +237,9 @@ name|ASTNode
 argument_list|>
 name|destToSortby
 decl_stmt|;
-comment|/**    * Maping from table/subquery aliases to all the associated lateral view    * nodes    */
+comment|/**    * Maping from table/subquery aliases to all the associated lateral view nodes    */
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -195,6 +253,7 @@ name|aliasToLateralViews
 decl_stmt|;
 comment|/* Order by clause */
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -204,6 +263,7 @@ argument_list|>
 name|destToOrderby
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -218,6 +278,7 @@ name|outerQueryLimit
 decl_stmt|;
 comment|// used by GroupBy
 specifier|private
+specifier|final
 name|LinkedHashMap
 argument_list|<
 name|String
@@ -232,6 +293,7 @@ argument_list|>
 name|destToAggregationExprs
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -273,8 +335,6 @@ name|boolean
 name|isSubQ
 parameter_list|)
 block|{
-name|this
-operator|.
 name|aliasToSrc
 operator|=
 operator|new
@@ -286,8 +346,6 @@ name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|nameToDest
 operator|=
 operator|new
@@ -299,8 +357,6 @@ name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|nameToSample
 operator|=
 operator|new
@@ -312,8 +368,6 @@ name|TableSample
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToSelExpr
 operator|=
 operator|new
@@ -325,8 +379,6 @@ name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToWhereExpr
 operator|=
 operator|new
@@ -338,8 +390,6 @@ name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToGroupby
 operator|=
 operator|new
@@ -351,8 +401,6 @@ name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToClusterby
 operator|=
 operator|new
@@ -364,8 +412,6 @@ name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToDistributeby
 operator|=
 operator|new
@@ -377,8 +423,6 @@ name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToSortby
 operator|=
 operator|new
@@ -390,8 +434,6 @@ name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToOrderby
 operator|=
 operator|new
@@ -403,8 +445,6 @@ name|ASTNode
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToLimit
 operator|=
 operator|new
@@ -416,8 +456,6 @@ name|Integer
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToAggregationExprs
 operator|=
 operator|new
@@ -434,8 +472,6 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|destToDistinctFuncExpr
 operator|=
 operator|new
@@ -459,15 +495,11 @@ name|isSubQ
 operator|=
 name|isSubQ
 expr_stmt|;
-name|this
-operator|.
 name|outerQueryLimit
 operator|=
 operator|-
 literal|1
 expr_stmt|;
-name|this
-operator|.
 name|aliasToLateralViews
 operator|=
 operator|new
@@ -499,8 +531,6 @@ argument_list|>
 name|aggregationTrees
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToAggregationExprs
 operator|.
 name|put
@@ -525,8 +555,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToAggregationExprs
 operator|.
 name|get
@@ -546,8 +574,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToDistinctFuncExpr
 operator|.
 name|put
@@ -567,8 +593,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToDistinctFuncExpr
 operator|.
 name|get
@@ -588,8 +612,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToSelExpr
 operator|.
 name|put
@@ -611,8 +633,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToWhereExpr
 operator|.
 name|put
@@ -634,8 +654,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToGroupby
 operator|.
 name|put
@@ -657,8 +675,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|nameToDest
 operator|.
 name|put
@@ -669,7 +685,7 @@ name|ast
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the Cluster By AST for the clause.      * @param clause the name of the clause    * @param ast the abstract syntax tree    */
+comment|/**    * Set the Cluster By AST for the clause.    *     * @param clause    *          the name of the clause    * @param ast    *          the abstract syntax tree    */
 specifier|public
 name|void
 name|setClusterByExprForClause
@@ -681,8 +697,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToClusterby
 operator|.
 name|put
@@ -693,7 +707,7 @@ name|ast
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the Distribute By AST for the clause.      * @param clause the name of the clause    * @param ast the abstract syntax tree    */
+comment|/**    * Set the Distribute By AST for the clause.    *     * @param clause    *          the name of the clause    * @param ast    *          the abstract syntax tree    */
 specifier|public
 name|void
 name|setDistributeByExprForClause
@@ -705,8 +719,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToDistributeby
 operator|.
 name|put
@@ -717,7 +729,7 @@ name|ast
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the Sort By AST for the clause.      * @param clause the name of the clause    * @param ast the abstract syntax tree    */
+comment|/**    * Set the Sort By AST for the clause.    *     * @param clause    *          the name of the clause    * @param ast    *          the abstract syntax tree    */
 specifier|public
 name|void
 name|setSortByExprForClause
@@ -729,8 +741,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToSortby
 operator|.
 name|put
@@ -752,8 +762,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToOrderby
 operator|.
 name|put
@@ -775,8 +783,6 @@ name|ASTNode
 name|ast
 parameter_list|)
 block|{
-name|this
-operator|.
 name|aliasToSrc
 operator|.
 name|put
@@ -799,8 +805,6 @@ name|getClauseNames
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|destToSelExpr
 operator|.
 name|keySet
@@ -816,8 +820,6 @@ name|getClauseNamesForDest
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|nameToDest
 operator|.
 name|keySet
@@ -833,8 +835,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|nameToDest
 operator|.
 name|get
@@ -852,8 +852,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToWhereExpr
 operator|.
 name|get
@@ -885,8 +883,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToGroupby
 operator|.
 name|get
@@ -906,8 +902,6 @@ name|getDestToGroupBy
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|destToGroupby
 return|;
 block|}
@@ -920,8 +914,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToSelExpr
 operator|.
 name|get
@@ -930,7 +922,7 @@ name|clause
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the Cluster By AST for the clause.      * @param clause the name of the clause    * @return the abstract syntax tree    */
+comment|/**    * Get the Cluster By AST for the clause.    *     * @param clause    *          the name of the clause    * @return the abstract syntax tree    */
 specifier|public
 name|ASTNode
 name|getClusterByForClause
@@ -940,8 +932,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToClusterby
 operator|.
 name|get
@@ -964,7 +954,7 @@ return|return
 name|destToClusterby
 return|;
 block|}
-comment|/**    * Get the Distribute By AST for the clause.      * @param clause the name of the clause    * @return the abstract syntax tree    */
+comment|/**    * Get the Distribute By AST for the clause.    *     * @param clause    *          the name of the clause    * @return the abstract syntax tree    */
 specifier|public
 name|ASTNode
 name|getDistributeByForClause
@@ -974,8 +964,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToDistributeby
 operator|.
 name|get
@@ -998,7 +986,7 @@ return|return
 name|destToDistributeby
 return|;
 block|}
-comment|/**    * Get the Sort By AST for the clause.      * @param clause the name of the clause    * @return the abstract syntax tree    */
+comment|/**    * Get the Sort By AST for the clause.    *     * @param clause    *          the name of the clause    * @return the abstract syntax tree    */
 specifier|public
 name|ASTNode
 name|getSortByForClause
@@ -1008,8 +996,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToSortby
 operator|.
 name|get
@@ -1027,8 +1013,6 @@ name|clause
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToOrderby
 operator|.
 name|get
@@ -1074,8 +1058,6 @@ name|alias
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|aliasToSrc
 operator|.
 name|get
@@ -1093,8 +1075,6 @@ name|getAlias
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|alias
 return|;
 block|}
@@ -1104,8 +1084,6 @@ name|getIsSubQ
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|isSubQ
 return|;
 block|}
@@ -1115,8 +1093,6 @@ name|getJoinExpr
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|joinExpr
 return|;
 block|}
@@ -1144,8 +1120,6 @@ name|alias
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|nameToSample
 operator|.
 name|get
@@ -1168,8 +1142,6 @@ name|TableSample
 name|tableSample
 parameter_list|)
 block|{
-name|this
-operator|.
 name|nameToSample
 operator|.
 name|put
@@ -1194,8 +1166,6 @@ name|Integer
 name|limit
 parameter_list|)
 block|{
-name|this
-operator|.
 name|destToLimit
 operator|.
 name|put
@@ -1215,8 +1185,6 @@ name|dest
 parameter_list|)
 block|{
 return|return
-name|this
-operator|.
 name|destToLimit
 operator|.
 name|get
@@ -1225,7 +1193,7 @@ name|dest
 argument_list|)
 return|;
 block|}
-comment|/** 	 * @return the outerQueryLimit 	 */
+comment|/**    * @return the outerQueryLimit    */
 specifier|public
 name|int
 name|getOuterQueryLimit
@@ -1235,7 +1203,7 @@ return|return
 name|outerQueryLimit
 return|;
 block|}
-comment|/** 	 * @param outerQueryLimit the outerQueryLimit to set 	 */
+comment|/**    * @param outerQueryLimit    *          the outerQueryLimit to set    */
 specifier|public
 name|void
 name|setOuterQueryLimit
@@ -1298,9 +1266,11 @@ name|isEmpty
 argument_list|()
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|Iterator
 argument_list|<
 name|Map
@@ -1367,9 +1337,11 @@ name|isEmpty
 argument_list|()
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 if|if
 condition|(
@@ -1426,9 +1398,11 @@ name|ct
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 block|}
 name|Iterator
@@ -1510,9 +1484,11 @@ operator|.
 name|TOK_TMP_FILE
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 name|iter
 operator|=
@@ -1615,9 +1591,11 @@ name|HiveParser
 operator|.
 name|TOK_ALLCOLREF
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 block|}
 return|return
@@ -1632,8 +1610,6 @@ name|ASTNode
 name|hint
 parameter_list|)
 block|{
-name|this
-operator|.
 name|hints
 operator|=
 name|hint
@@ -1662,8 +1638,6 @@ name|getAliasToLateralViews
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|aliasToLateralViews
 return|;
 block|}

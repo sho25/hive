@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|*
+name|Serializable
 import|;
 end_import
 
@@ -33,9 +33,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|*
+name|Vector
 import|;
 end_import
 
@@ -68,7 +68,7 @@ decl_stmt|;
 specifier|public
 name|RowSchema
 parameter_list|()
-block|{}
+block|{   }
 specifier|public
 name|RowSchema
 parameter_list|(

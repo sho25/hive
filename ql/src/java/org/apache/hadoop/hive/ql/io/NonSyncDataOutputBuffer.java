@@ -79,6 +79,7 @@ extends|extends
 name|DataOutputStream
 block|{
 specifier|private
+specifier|final
 name|NonSyncByteArrayOutputStream
 name|buffer
 decl_stmt|;
@@ -147,8 +148,6 @@ name|NonSyncDataOutputBuffer
 name|reset
 parameter_list|()
 block|{
-name|this
-operator|.
 name|written
 operator|=
 literal|0
@@ -186,6 +185,8 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|write
@@ -209,6 +210,8 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|write
@@ -268,10 +271,12 @@ name|MAX_VALUE
 expr_stmt|;
 block|}
 else|else
+block|{
 name|written
 operator|+=
 name|value
 expr_stmt|;
+block|}
 block|}
 block|}
 end_class

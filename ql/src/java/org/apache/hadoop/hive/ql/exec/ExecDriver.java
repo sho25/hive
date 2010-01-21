@@ -25,7 +25,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|File
 import|;
 end_import
 
@@ -33,9 +33,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|text
+name|io
 operator|.
-name|SimpleDateFormat
+name|FileInputStream
 import|;
 end_import
 
@@ -43,9 +43,39 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|*
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|UnsupportedEncodingException
 import|;
 end_import
 
@@ -65,7 +95,7 @@ name|java
 operator|.
 name|net
 operator|.
-name|URLEncoder
+name|URLDecoder
 import|;
 end_import
 
@@ -75,7 +105,141 @@ name|java
 operator|.
 name|net
 operator|.
-name|URLDecoder
+name|URLEncoder
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|text
+operator|.
+name|SimpleDateFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Calendar
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Random
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
 import|;
 end_import
 
@@ -99,11 +263,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
+name|hadoop
 operator|.
-name|lang
+name|conf
 operator|.
-name|StringUtils
+name|Configuration
 import|;
 end_import
 
@@ -157,149 +321,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|fs
 operator|.
 name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Counters
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|FileOutputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|JobClient
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|JobConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|FileInputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|RunningJob
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|TaskCompletionEvent
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|conf
-operator|.
-name|Configuration
 import|;
 end_import
 
@@ -347,9 +371,119 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|shims
+name|ql
 operator|.
-name|ShimLoader
+name|DriverContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QueryPlan
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|FileSinkOperator
+operator|.
+name|RecordWriter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|history
+operator|.
+name|HiveHistory
+operator|.
+name|Keys
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|HiveKey
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|HiveOutputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
 import|;
 end_import
 
@@ -421,99 +555,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
+name|session
 operator|.
-name|HiveException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|FileSinkOperator
-operator|.
-name|RecordWriter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|history
-operator|.
-name|HiveHistory
-operator|.
-name|Keys
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|DriverContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|QueryPlan
+name|SessionState
 import|;
 end_import
 
@@ -547,11 +591,149 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|shims
 operator|.
-name|session
+name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
 operator|.
-name|SessionState
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|BytesWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|Text
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|Counters
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|FileInputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|FileOutputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|InputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|RunningJob
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|TaskCompletionEvent
 import|;
 end_import
 
@@ -578,32 +760,6 @@ operator|.
 name|varia
 operator|.
 name|NullAppender
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|lang
-operator|.
-name|ClassNotFoundException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|FileUtils
 import|;
 end_import
 
@@ -1100,7 +1256,7 @@ argument_list|>
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/**    * In Hive, when the user control-c's the command line, any running jobs    * spawned from that command line are best-effort killed.    *    * This static constructor registers a shutdown thread to iterate over all the    * running job kill URLs and do a get on them.    *    */
+comment|/**    * In Hive, when the user control-c's the command line, any running jobs    * spawned from that command line are best-effort killed.    *     * This static constructor registers a shutdown thread to iterate over all the    * running job kill URLs and do a get on them.    *     */
 static|static
 block|{
 if|if
@@ -1136,6 +1292,8 @@ operator|new
 name|Thread
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run
@@ -1148,35 +1306,15 @@ init|)
 block|{
 for|for
 control|(
-name|Iterator
-argument_list|<
 name|String
-argument_list|>
-name|elems
-init|=
+name|uri
+range|:
 name|runningJobKillURIs
 operator|.
 name|values
 argument_list|()
-operator|.
-name|iterator
-argument_list|()
-init|;
-name|elems
-operator|.
-name|hasNext
-argument_list|()
-condition|;
 control|)
 block|{
-name|String
-name|uri
-init|=
-name|elems
-operator|.
-name|next
-argument_list|()
-decl_stmt|;
 try|try
 block|{
 name|System
@@ -1426,7 +1564,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * This class contains the state of the running task    * Going forward, we will return this handle from execute    * and Driver can split execute into start, monitorProgess and postProcess    */
+comment|/**    * This class contains the state of the running task Going forward, we will    * return this handle from execute and Driver can split execute into start,    * monitorProgess and postProcess    */
 specifier|public
 specifier|static
 class|class
@@ -1487,8 +1625,6 @@ name|RunningJob
 name|job
 parameter_list|)
 block|{
-name|this
-operator|.
 name|rj
 operator|=
 name|job
@@ -1509,7 +1645,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Fatal errors are those errors that cannot be recovered by retries. These    * are application dependent. Examples of fatal errors include:    *  - the small table in the map-side joins is too large to be feasible to be    *    handled by one mapper. The job should fail and the user should be warned    *    to use regular joins rather than map-side joins.    * Fatal errors are indicated by counters that are set at execution time.     * If the counter is non-zero, a fatal error occurred. The value of the counter    * indicates the error type.     * @return true if fatal errors happened during job execution, false otherwise.    */
+comment|/**    * Fatal errors are those errors that cannot be recovered by retries. These    * are application dependent. Examples of fatal errors include: - the small    * table in the map-side joins is too large to be feasible to be handled by    * one mapper. The job should fail and the user should be warned to use    * regular joins rather than map-side joins. Fatal errors are indicated by    * counters that are set at execution time. If the counter is non-zero, a    * fatal error occurred. The value of the counter indicates the error type.    *     * @return true if fatal errors happened during job execution, false    *         otherwise.    */
 specifier|protected
 name|boolean
 name|checkFatalErrors
@@ -1577,9 +1713,11 @@ argument_list|,
 name|errMsg
 argument_list|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 block|}
 return|return
 literal|false
@@ -1724,8 +1862,10 @@ if|if
 condition|(
 name|fatal
 condition|)
+block|{
 continue|continue;
 comment|// wait until rj.isComplete
+block|}
 if|if
 condition|(
 name|fatal
@@ -1785,14 +1925,10 @@ argument_list|()
 operator|+
 literal|" map = "
 operator|+
-name|this
-operator|.
 name|mapProgress
 operator|+
 literal|"%,  reduce = "
 operator|+
-name|this
-operator|.
 name|reduceProgress
 operator|+
 literal|"%"
@@ -1947,7 +2083,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|// check for fatal error again in case it occurred after the last check before the job is completed
+comment|// check for fatal error again in case it occurred after the last check
+comment|// before the job is completed
 if|if
 condition|(
 operator|!
@@ -1983,6 +2120,7 @@ literal|false
 expr_stmt|;
 block|}
 else|else
+block|{
 name|success
 operator|=
 name|rj
@@ -1990,6 +2128,7 @@ operator|.
 name|isSuccessful
 argument_list|()
 expr_stmt|;
+block|}
 name|setDone
 argument_list|()
 expr_stmt|;
@@ -2039,9 +2178,9 @@ name|queryPlan
 argument_list|)
 expr_stmt|;
 block|}
-comment|//LOG.info(queryPlan);
+comment|// LOG.info(queryPlan);
 block|}
-comment|/**    * Estimate the number of reducers needed for this job, based on job input,    * and configuration parameters.    * @return the number of reducers.    */
+comment|/**    * Estimate the number of reducers needed for this job, based on job input,    * and configuration parameters.    *     * @return the number of reducers.    */
 specifier|public
 name|int
 name|estimateNumberOfReducers
@@ -2379,7 +2518,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Calculate the total size of input files.    * @param job the hadoop job conf.    * @return the total size in bytes.    * @throws IOException    */
+comment|/**    * Calculate the total size of input files.    *     * @param job    *          the hadoop job conf.    * @return the total size in bytes.    * @throws IOException    */
 specifier|public
 name|long
 name|getTotalInputFileSize
@@ -2504,8 +2643,6 @@ operator|.
 name|getRunningJob
 argument_list|()
 decl_stmt|;
-name|this
-operator|.
 name|mapProgress
 operator|=
 name|Math
@@ -2520,8 +2657,6 @@ operator|*
 literal|100
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|reduceProgress
 operator|=
 name|Math
@@ -2551,8 +2686,6 @@ name|Long
 operator|.
 name|valueOf
 argument_list|(
-name|this
-operator|.
 name|mapProgress
 argument_list|)
 argument_list|)
@@ -2572,8 +2705,6 @@ name|Long
 operator|.
 name|valueOf
 argument_list|(
-name|this
-operator|.
 name|reduceProgress
 argument_list|)
 argument_list|)
@@ -2883,10 +3014,13 @@ name|numTries
 operator|>
 literal|0
 condition|)
+block|{
 name|numTries
 operator|--
 expr_stmt|;
+block|}
 else|else
+block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -2906,6 +3040,7 @@ name|getMessage
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 name|FileOutputFormat
@@ -3027,6 +3162,7 @@ name|inpFormat
 argument_list|)
 operator|)
 condition|)
+block|{
 name|inpFormat
 operator|=
 name|ShimLoader
@@ -3037,6 +3173,7 @@ operator|.
 name|getInputFormatClassName
 argument_list|()
 expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info
@@ -3107,7 +3244,8 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-comment|// Transfer HIVEAUXJARS and HIVEADDEDJARS to "tmpjars" so hadoop understands it
+comment|// Transfer HIVEAUXJARS and HIVEADDEDJARS to "tmpjars" so hadoop understands
+comment|// it
 name|String
 name|auxJars
 init|=
@@ -3355,7 +3493,8 @@ argument_list|,
 name|work
 argument_list|)
 expr_stmt|;
-comment|// remove the pwd from conf file so that job tracker doesn't show this logs
+comment|// remove the pwd from conf file so that job tracker doesn't show this
+comment|// logs
 name|String
 name|pwd
 init|=
@@ -3378,6 +3517,7 @@ name|pwd
 operator|!=
 literal|null
 condition|)
+block|{
 name|job
 operator|.
 name|set
@@ -3393,6 +3533,7 @@ argument_list|,
 literal|"HIVE"
 argument_list|)
 expr_stmt|;
+block|}
 name|JobClient
 name|jc
 init|=
@@ -3430,6 +3571,7 @@ name|pwd
 operator|!=
 literal|null
 condition|)
+block|{
 name|job
 operator|.
 name|set
@@ -3445,6 +3587,7 @@ argument_list|,
 name|pwd
 argument_list|)
 expr_stmt|;
+block|}
 comment|// add to list of running jobs so in case of abnormal shutdown can kill
 comment|// it.
 name|runningJobKillURIs
@@ -3493,7 +3636,8 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// in the corner case where the running job has disappeared from JT memory
+comment|// in the corner case where the running job has disappeared from JT
+comment|// memory
 comment|// remember that we did actually submit the job.
 name|rj
 operator|=
@@ -3857,7 +4001,7 @@ name|returnVal
 operator|)
 return|;
 block|}
-comment|/**    * this msg pattern is used to track when a job is started    * @param jobId    * @return    */
+comment|/**    * this msg pattern is used to track when a job is started    *     * @param jobId    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -3873,7 +4017,7 @@ operator|+
 name|jobId
 return|;
 block|}
-comment|/**    * this msg pattern is used to track when a job is successfully done.    * @param jobId    * @return    */
+comment|/**    * this msg pattern is used to track when a job is successfully done.    *     * @param jobId    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -3998,7 +4142,8 @@ range|:
 name|taskCompletions
 control|)
 block|{
-comment|// getTaskJobIDs return Strings for compatibility with Hadoop version without
+comment|// getTaskJobIDs return Strings for compatibility with Hadoop version
+comment|// without
 comment|// TaskID or TaskAttemptID
 name|String
 index|[]
@@ -4208,6 +4353,7 @@ operator|.
 name|intValue
 argument_list|()
 condition|)
+block|{
 name|maxFailures
 operator|=
 name|failCount
@@ -4215,6 +4361,7 @@ operator|.
 name|intValue
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 comment|// Display Error Message for tasks with the highest failure count
 name|console
@@ -4896,8 +5043,10 @@ argument_list|(
 name|loader
 argument_list|)
 expr_stmt|;
-comment|// Also set this to the Thread ContextClassLoader, so new threads will inherit
-comment|// this class loader, and propagate into newly created Configurations by those
+comment|// Also set this to the Thread ContextClassLoader, so new threads will
+comment|// inherit
+comment|// this class loader, and propagate into newly created Configurations by
+comment|// those
 comment|// new threads.
 name|Thread
 operator|.
@@ -5083,7 +5232,9 @@ name|hadoopWorkDir
 argument_list|)
 operator|)
 condition|)
+block|{
 continue|continue;
+block|}
 name|String
 name|oneValue
 init|=
@@ -5368,9 +5519,11 @@ name|length
 operator|>
 literal|0
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 return|return
 literal|true
@@ -5428,6 +5581,7 @@ if|if
 condition|(
 name|isEmptyPath
 condition|)
+block|{
 name|outFileFormat
 operator|=
 name|work
@@ -5446,7 +5600,9 @@ operator|.
 name|getOutputFileFormatClass
 argument_list|()
 expr_stmt|;
+block|}
 else|else
+block|{
 name|outFileFormat
 operator|=
 name|work
@@ -5465,6 +5621,7 @@ operator|.
 name|getOutputFileFormatClass
 argument_list|()
 expr_stmt|;
+block|}
 comment|// create a dummy empty file in a new directory
 name|String
 name|newDir
@@ -5906,7 +6063,8 @@ name|path
 operator|=
 name|onefile
 expr_stmt|;
-comment|// Multiple aliases can point to the same path - it should be processed only once
+comment|// Multiple aliases can point to the same path - it should be
+comment|// processed only once
 if|if
 condition|(
 name|pathsProcessed
@@ -5916,7 +6074,9 @@ argument_list|(
 name|path
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 name|pathsProcessed
 operator|.
 name|add
@@ -5943,6 +6103,7 @@ argument_list|,
 name|path
 argument_list|)
 condition|)
+block|{
 name|FileInputFormat
 operator|.
 name|addInputPaths
@@ -5952,7 +6113,9 @@ argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|emptyPaths
 operator|.
 name|add
@@ -5960,6 +6123,7 @@ argument_list|(
 name|path
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|// Create a empty file if the directory is empty
@@ -5970,6 +6134,7 @@ name|emptyPath
 range|:
 name|emptyPaths
 control|)
+block|{
 name|numEmptyPaths
 operator|=
 name|addInputPath
@@ -5989,17 +6154,22 @@ argument_list|,
 name|oneAlias
 argument_list|)
 expr_stmt|;
+block|}
 comment|// If the query references non-existent partitions
-comment|// We need to add a empty file, it is not acceptable to change the operator tree
+comment|// We need to add a empty file, it is not acceptable to change the
+comment|// operator tree
 comment|// Consider the query:
-comment|//  select * from (select count(1) from T union all select count(1) from T2) x;
-comment|// If T is empty and T2 contains 100 rows, the user expects: 0, 100 (2 rows)
+comment|// select * from (select count(1) from T union all select count(1) from
+comment|// T2) x;
+comment|// If T is empty and T2 contains 100 rows, the user expects: 0, 100 (2
+comment|// rows)
 if|if
 condition|(
 name|path
 operator|==
 literal|null
 condition|)
+block|{
 name|numEmptyPaths
 operator|=
 name|addInputPath
@@ -6019,6 +6189,7 @@ argument_list|,
 name|oneAlias
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|public

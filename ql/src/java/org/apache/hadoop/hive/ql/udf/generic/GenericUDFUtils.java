@@ -41,18 +41,6 @@ name|lang
 operator|.
 name|reflect
 operator|.
-name|GenericArrayType
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|lang
-operator|.
-name|reflect
-operator|.
 name|Method
 import|;
 end_import
@@ -88,16 +76,6 @@ operator|.
 name|nio
 operator|.
 name|ByteBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Arrays
 import|;
 end_import
 
@@ -479,7 +457,7 @@ operator|!=
 literal|0x80
 return|;
 block|}
-comment|/**    * This class helps to find the return ObjectInspector for a GenericUDF.    *     * In many cases like CASE and IF, the GenericUDF is returning a value out    * of several possibilities.  However these possibilities may not always     * have the same ObjectInspector.    *     * This class will help detect whether all possibilities have exactly the    * same ObjectInspector.  If not, then we need to convert the Objects to    * the same ObjectInspector.    *     * A special case is when some values are constant NULL. In this case we     * can use the same ObjectInspector.    */
+comment|/**    * This class helps to find the return ObjectInspector for a GenericUDF.    *     * In many cases like CASE and IF, the GenericUDF is returning a value out of    * several possibilities. However these possibilities may not always have the    * same ObjectInspector.    *     * This class will help detect whether all possibilities have exactly the same    * ObjectInspector. If not, then we need to convert the Objects to the same    * ObjectInspector.    *     * A special case is when some values are constant NULL. In this case we can    * use the same ObjectInspector.    */
 specifier|public
 specifier|static
 class|class
@@ -525,7 +503,7 @@ operator|=
 name|allowTypeConversion
 expr_stmt|;
 block|}
-comment|/**      * Update returnObjectInspector and valueInspectorsAreTheSame based on the      * ObjectInspector seen.      * @return false if there is a type mismatch      */
+comment|/**      * Update returnObjectInspector and valueInspectorsAreTheSame based on the      * ObjectInspector seen.      *       * @return false if there is a type mismatch      */
 specifier|public
 name|boolean
 name|update
@@ -570,7 +548,8 @@ operator|==
 name|oi
 condition|)
 block|{
-comment|// The new ObjectInspector is the same as the old one, directly return true
+comment|// The new ObjectInspector is the same as the old one, directly return
+comment|// true
 return|return
 literal|true
 return|;
@@ -793,17 +772,14 @@ name|converted
 return|;
 block|}
 block|}
-comment|/**    * Convert parameters for the method if needed.     */
+comment|/**    * Convert parameters for the method if needed.    */
 specifier|public
 specifier|static
 class|class
 name|ConversionHelper
 block|{
 specifier|private
-name|Method
-name|m
-decl_stmt|;
-specifier|private
+specifier|final
 name|ObjectInspector
 index|[]
 name|givenParameterOIs
@@ -813,6 +789,7 @@ index|[]
 name|methodParameterTypes
 decl_stmt|;
 specifier|private
+specifier|final
 name|boolean
 name|isVariableLengthArgument
 decl_stmt|;
@@ -899,7 +876,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**      * Create a PrimitiveConversionHelper for Method m.  The ObjectInspector's      * input parameters are specified in parameters.      */
+comment|/**      * Create a PrimitiveConversionHelper for Method m. The ObjectInspector's      * input parameters are specified in parameters.      */
 specifier|public
 name|ConversionHelper
 parameter_list|(
@@ -913,14 +890,6 @@ parameter_list|)
 throws|throws
 name|UDFArgumentException
 block|{
-name|this
-operator|.
-name|m
-operator|=
-name|m
-expr_stmt|;
-name|this
-operator|.
 name|givenParameterOIs
 operator|=
 name|parameterOIs
@@ -984,7 +953,8 @@ condition|(
 name|isVariableLengthArgument
 condition|)
 block|{
-comment|// ConversionHelper can be called without method parameter length checkings
+comment|// ConversionHelper can be called without method parameter length
+comment|// checkings
 comment|// for terminatePartial() and merge() calls.
 if|if
 condition|(
@@ -1048,7 +1018,8 @@ name|i
 operator|++
 control|)
 block|{
-comment|// This method takes Object, so it accepts whatever types that are passed in.
+comment|// This method takes Object, so it accepts whatever types that are
+comment|// passed in.
 if|if
 condition|(
 name|methodParameterTypes
@@ -1114,7 +1085,8 @@ operator|.
 name|class
 condition|)
 block|{
-comment|// This method takes Object[], so it accepts whatever types that are passed in.
+comment|// This method takes Object[], so it accepts whatever types that are
+comment|// passed in.
 for|for
 control|(
 name|int
@@ -1159,7 +1131,8 @@ block|}
 block|}
 else|else
 block|{
-comment|// This method takes something like String[], so it only accepts something like String
+comment|// This method takes something like String[], so it only accepts
+comment|// something like String
 name|ObjectInspector
 name|oi
 init|=
@@ -1208,7 +1181,8 @@ block|}
 else|else
 block|{
 comment|// Normal case, the last parameter is a normal parameter.
-comment|// ConversionHelper can be called without method parameter length checkings
+comment|// ConversionHelper can be called without method parameter length
+comment|// checkings
 comment|// for terminatePartial() and merge() calls.
 if|if
 condition|(
@@ -1263,7 +1237,8 @@ name|i
 operator|++
 control|)
 block|{
-comment|// This method takes Object, so it accepts whatever types that are passed in.
+comment|// This method takes Object, so it accepts whatever types that are
+comment|// passed in.
 if|if
 condition|(
 name|methodParameterTypes
@@ -1706,7 +1681,7 @@ operator|+
 literal|"th"
 return|;
 block|}
-comment|/**    * Finds any occurence of<code>subtext</code> from<code>text</code> in the backing    * buffer, for avoiding string encoding and decoding.     * Shamelessly copy from {@link org.apache.hadoop.io.Text#find(String, int)}.     */
+comment|/**    * Finds any occurence of<code>subtext</code> from<code>text</code> in the    * backing buffer, for avoiding string encoding and decoding. Shamelessly copy    * from {@link org.apache.hadoop.io.Text#find(String, int)}.    */
 specifier|public
 specifier|static
 name|int
@@ -1729,10 +1704,12 @@ name|start
 operator|<
 literal|0
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 name|ByteBuffer
 name|src
 init|=
@@ -1906,9 +1883,11 @@ if|if
 condition|(
 name|found
 condition|)
+block|{
 return|return
 name|pos
 return|;
+block|}
 block|}
 block|}
 return|return

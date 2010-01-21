@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * unionDesc is a empty class currently.   * However, union has more than one input (as compared with forward), and therefore, we need a separate class.  **/
+comment|/**  * unionDesc is a empty class currently. However, union has more than one input  * (as compared with forward), and therefore, we need a separate class.  **/
 end_comment
 
 begin_class
@@ -84,7 +84,7 @@ return|return
 name|numInputs
 return|;
 block|}
-comment|/**    * @param numInputs the numInputs to set    */
+comment|/**    * @param numInputs    *          the numInputs to set    */
 specifier|public
 name|void
 name|setNumInputs

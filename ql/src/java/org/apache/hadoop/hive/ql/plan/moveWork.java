@@ -25,7 +25,17 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -62,16 +72,6 @@ operator|.
 name|hooks
 operator|.
 name|WriteEntity
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
 import|;
 end_import
 
@@ -224,8 +224,6 @@ name|getLoadTableWork
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|loadTableWork
 return|;
 block|}
@@ -258,8 +256,6 @@ name|getLoadFileWork
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|loadFileWork
 return|;
 block|}

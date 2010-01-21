@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|Map
+name|Serializable
 import|;
 end_import
 
@@ -45,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Stack
+name|Map
 import|;
 end_import
 
@@ -53,9 +53,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|Serializable
+name|Stack
 import|;
 end_import
 
@@ -125,24 +125,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
-operator|.
-name|mapredWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|lib
 operator|.
 name|Node
@@ -197,6 +179,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|GenMRProcContext
+operator|.
+name|GenMapRedCtx
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|SemanticException
@@ -215,11 +217,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|optimizer
+name|plan
 operator|.
-name|GenMRProcContext
-operator|.
-name|GenMapRedCtx
+name|mapredWork
 import|;
 end_import
 
@@ -238,7 +238,7 @@ specifier|public
 name|GenMRRedSink1
 parameter_list|()
 block|{   }
-comment|/**    * Reduce Scan encountered     * @param nd the reduce sink operator encountered    * @param opProcCtx context    */
+comment|/**    * Reduce Scan encountered    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -303,14 +303,6 @@ name|mapCurrCtx
 operator|.
 name|get
 argument_list|(
-operator|(
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-operator|)
 name|stack
 operator|.
 name|get
@@ -463,6 +455,7 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 name|GenMapRedUtils
 operator|.
 name|initPlan
@@ -472,7 +465,9 @@ argument_list|,
 name|ctx
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|GenMapRedUtils
 operator|.
 name|splitPlan
@@ -483,7 +478,9 @@ name|ctx
 argument_list|)
 expr_stmt|;
 block|}
-comment|// This will happen in case of joins. The current plan can be thrown away after being merged with the
+block|}
+comment|// This will happen in case of joins. The current plan can be thrown away
+comment|// after being merged with the
 comment|// original plan
 else|else
 block|{

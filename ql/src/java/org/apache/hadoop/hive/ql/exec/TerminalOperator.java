@@ -25,7 +25,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|Serializable
 import|;
 end_import
 

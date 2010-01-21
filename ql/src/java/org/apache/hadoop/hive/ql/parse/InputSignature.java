@@ -31,26 +31,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|lang
-operator|.
-name|Class
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|lang
-operator|.
-name|Object
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -114,7 +94,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The input signature of a function or operator. The signature basically consists  * of name, list of parameter types.  *  **/
+comment|/**  * The input signature of a function or operator. The signature basically  * consists of name, list of parameter types.  *   **/
 end_comment
 
 begin_class
@@ -123,10 +103,12 @@ class|class
 name|InputSignature
 block|{
 specifier|private
+specifier|final
 name|String
 name|name
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|TypeInfo
@@ -316,6 +298,8 @@ return|return
 name|typeArray
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -383,6 +367,8 @@ argument_list|)
 operator|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -396,6 +382,8 @@ name|hashCode
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

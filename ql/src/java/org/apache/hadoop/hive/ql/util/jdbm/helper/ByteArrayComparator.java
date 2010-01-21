@@ -31,9 +31,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|io
 operator|.
-name|Comparator
+name|Serializable
 import|;
 end_import
 
@@ -41,14 +41,14 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|Serializable
+name|Comparator
 import|;
 end_import
 
 begin_comment
-comment|/**  * Comparator for byte arrays.  *  * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: ByteArrayComparator.java,v 1.4 2002/05/31 06:33:20 boisvert Exp $  */
+comment|/**  * Comparator for byte arrays.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: ByteArrayComparator.java,v 1.4 2002/05/31 06:33:20 boisvert Exp  *          $  */
 end_comment
 
 begin_class
@@ -61,7 +61,7 @@ name|Comparator
 implements|,
 name|Serializable
 block|{
-comment|/**      * Version id for serialization.      */
+comment|/**    * Version id for serialization.    */
 specifier|final
 specifier|static
 name|long
@@ -69,7 +69,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * Compare two objects.      *      * @param obj1 First object      * @param obj2 Second object      * @return a positive integer if obj1> obj2, 0 if obj1 == obj2,      *         and a negative integer if obj1< obj2      */
+comment|/**    * Compare two objects.    *     * @param obj1    *          First object    * @param obj2    *          Second object    * @return a positive integer if obj1> obj2, 0 if obj1 == obj2, and a    *         negative integer if obj1< obj2    */
 specifier|public
 name|int
 name|compare
@@ -128,7 +128,7 @@ name|obj2
 argument_list|)
 return|;
 block|}
-comment|/**      * Compare two byte arrays.      */
+comment|/**    * Compare two byte arrays.    */
 specifier|public
 specifier|static
 name|int

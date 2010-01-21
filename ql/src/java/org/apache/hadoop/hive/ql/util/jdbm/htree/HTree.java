@@ -29,6 +29,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -69,18 +79,8 @@ name|FastIterator
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
 begin_comment
-comment|/**  *  Persistent hashtable implementation for PageManager.  *  Implemented as an H*Tree structure.  *  *  WARNING!  If this instance is used in a transactional context, it  *            *must* be discarded after a rollback.  *  *  @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  *  @version $Id: HTree.java,v 1.3 2005/06/25 23:12:32 doomdark Exp $  */
+comment|/**  * Persistent hashtable implementation for PageManager. Implemented as an H*Tree  * structure.  *   * WARNING! If this instance is used in a transactional context, it *must* be  * discarded after a rollback.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: HTree.java,v 1.3 2005/06/25 23:12:32 doomdark Exp $  */
 end_comment
 
 begin_class
@@ -88,12 +88,13 @@ specifier|public
 class|class
 name|HTree
 block|{
-comment|/**      * Root hash directory.      */
+comment|/**    * Root hash directory.    */
 specifier|private
+specifier|final
 name|HashDirectory
 name|_root
 decl_stmt|;
-comment|/**      * Private constructor      *      * @param root Root hash directory.      */
+comment|/**    * Private constructor    *     * @param root    *          Root hash directory.    */
 specifier|private
 name|HTree
 parameter_list|(
@@ -106,7 +107,7 @@ operator|=
 name|root
 expr_stmt|;
 block|}
-comment|/**      * Create a persistent hashtable.      *      * @param recman Record manager used for persistence.      */
+comment|/**    * Create a persistent hashtable.    *     * @param recman    *          Record manager used for persistence.    */
 specifier|public
 specifier|static
 name|HTree
@@ -161,7 +162,7 @@ name|root
 argument_list|)
 return|;
 block|}
-comment|/**      * Load a persistent hashtable      *      * @param recman RecordManager used to store the persistent hashtable      * @param root_recid Record id of the root directory of the HTree      */
+comment|/**    * Load a persistent hashtable    *     * @param recman    *          RecordManager used to store the persistent hashtable    * @param root_recid    *          Record id of the root directory of the HTree    */
 specifier|public
 specifier|static
 name|HTree
@@ -215,7 +216,7 @@ return|return
 name|tree
 return|;
 block|}
-comment|/**      * Associates the specified value with the specified key.      *      * @param key key with which the specified value is to be assocated.      * @param value value to be associated with the specified key.      */
+comment|/**    * Associates the specified value with the specified key.    *     * @param key    *          key with which the specified value is to be assocated.    * @param value    *          value to be associated with the specified key.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -240,7 +241,7 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Returns the value which is associated with the given key. Returns      *<code>null</code> if there is not association for this key.      *      * @param key key whose associated value is to be returned      */
+comment|/**    * Returns the value which is associated with the given key. Returns    *<code>null</code> if there is not association for this key.    *     * @param key    *          key whose associated value is to be returned    */
 specifier|public
 specifier|synchronized
 name|Object
@@ -261,7 +262,7 @@ name|key
 argument_list|)
 return|;
 block|}
-comment|/**      * Remove the value which is associated with the given key.  If the      * key does not exist, this method simply ignores the operation.      *      * @param key key whose associated value is to be removed      */
+comment|/**    * Remove the value which is associated with the given key. If the key does    * not exist, this method simply ignores the operation.    *     * @param key    *          key whose associated value is to be removed    */
 specifier|public
 specifier|synchronized
 name|void
@@ -281,7 +282,7 @@ name|key
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Returns an enumeration of the keys contained in this      */
+comment|/**    * Returns an enumeration of the keys contained in this    */
 specifier|public
 specifier|synchronized
 name|FastIterator
@@ -297,7 +298,7 @@ name|keys
 argument_list|()
 return|;
 block|}
-comment|/**      * Returns an enumeration of the values contained in this      */
+comment|/**    * Returns an enumeration of the values contained in this    */
 specifier|public
 specifier|synchronized
 name|FastIterator
@@ -313,7 +314,7 @@ name|values
 argument_list|()
 return|;
 block|}
-comment|/**      * Get the record identifier used to load this hashtable.      */
+comment|/**    * Get the record identifier used to load this hashtable.    */
 specifier|public
 name|long
 name|getRecid

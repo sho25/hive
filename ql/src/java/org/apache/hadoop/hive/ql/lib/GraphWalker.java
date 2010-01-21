@@ -66,7 +66,7 @@ specifier|public
 interface|interface
 name|GraphWalker
 block|{
-comment|/**    * starting point for walking.    *     * @param startNodes list of starting operators    * @param nodeOutput If this parameter is not null, the call to the function returns the     * map from node to objects returned by the processors.    * @throws SemanticException    */
+comment|/**    * starting point for walking.    *     * @param startNodes    *          list of starting operators    * @param nodeOutput    *          If this parameter is not null, the call to the function returns    *          the map from node to objects returned by the processors.    * @throws SemanticException    */
 specifier|public
 name|void
 name|startWalking

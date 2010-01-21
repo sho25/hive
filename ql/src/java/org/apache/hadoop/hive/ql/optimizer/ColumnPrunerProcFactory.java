@@ -677,24 +677,6 @@ name|tableDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|tableScanDesc
-import|;
-end_import
-
 begin_comment
 comment|/**  * Factory for generating the different node processors used by ColumnPruner.  */
 end_comment
@@ -804,7 +786,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ColumnPrunerFilterProc class.    * @return ColumnPrunerFilterProc    */
+comment|/**    * Factory method to get the ColumnPrunerFilterProc class.    *     * @return ColumnPrunerFilterProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerFilterProc
@@ -903,6 +885,7 @@ name|key
 range|:
 name|keys
 control|)
+block|{
 name|colLists
 operator|=
 name|Utilities
@@ -917,6 +900,7 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|ArrayList
 argument_list|<
 name|aggregationDesc
@@ -954,6 +938,7 @@ name|param
 range|:
 name|params
 control|)
+block|{
 name|colLists
 operator|=
 name|Utilities
@@ -968,6 +953,7 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|cppCtx
 operator|.
@@ -986,7 +972,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ColumnPrunerGroupByProc class.    * @return ColumnPrunerGroupByProc    */
+comment|/**    * Factory method to get the ColumnPrunerGroupByProc class.    *     * @return ColumnPrunerGroupByProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerGroupByProc
@@ -1076,7 +1062,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ColumnPrunerDefaultProc class.    * @return ColumnPrunerDefaultProc    */
+comment|/**    * Factory method to get the ColumnPrunerDefaultProc class.    *     * @return ColumnPrunerDefaultProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerDefaultProc
@@ -1089,7 +1075,7 @@ name|ColumnPrunerDefaultProc
 argument_list|()
 return|;
 block|}
-comment|/**    * The Node Processor for Column Pruning on Table Scan Operators. It will store    * needed columns in tableScanDesc.    */
+comment|/**    * The Node Processor for Column Pruning on Table Scan Operators. It will    * store needed columns in tableScanDesc.    */
 specifier|public
 specifier|static
 class|class
@@ -1259,7 +1245,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ColumnPrunerDefaultProc class.    * @return ColumnPrunerTableScanProc    */
+comment|/**    * Factory method to get the ColumnPrunerDefaultProc class.    *     * @return ColumnPrunerTableScanProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerTableScanProc
@@ -1421,6 +1407,7 @@ name|key
 range|:
 name|keys
 control|)
+block|{
 name|colLists
 operator|=
 name|Utilities
@@ -1435,6 +1422,7 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|(
@@ -1566,6 +1554,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|flags
 index|[
 name|i
@@ -1573,6 +1562,7 @@ index|]
 operator|=
 literal|false
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|childJoinCols
@@ -1687,6 +1677,7 @@ name|getInternalName
 argument_list|()
 argument_list|)
 condition|)
+block|{
 name|colLists
 operator|.
 name|add
@@ -1697,6 +1688,7 @@ name|getInternalName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -1719,7 +1711,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// Reduce Sink contains the columns needed - no need to aggregate from children
+comment|// Reduce Sink contains the columns needed - no need to aggregate from
+comment|// children
 name|ArrayList
 argument_list|<
 name|exprNodeDesc
@@ -1738,6 +1731,7 @@ name|val
 range|:
 name|vals
 control|)
+block|{
 name|colLists
 operator|=
 name|Utilities
@@ -1752,6 +1746,7 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|cppCtx
 operator|.
@@ -1770,7 +1765,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * The Factory method to get ColumnPrunerReduceSinkProc class.    * @return ColumnPrunerReduceSinkProc    */
+comment|/**    * The Factory method to get ColumnPrunerReduceSinkProc class.    *     * @return ColumnPrunerReduceSinkProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerReduceSinkProc
@@ -1870,7 +1865,8 @@ argument_list|()
 control|)
 block|{
 comment|// If one of my children is a FileSink or Script, return all columns.
-comment|// Without this break, a bug in ReduceSink to Extract edge column pruning will manifest
+comment|// Without this break, a bug in ReduceSink to Extract edge column
+comment|// pruning will manifest
 comment|// which should be fixed before remove this
 if|if
 condition|(
@@ -1973,9 +1969,11 @@ operator|.
 name|isSelStarNoCompute
 argument_list|()
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 comment|// do we need to prune the select operator?
 name|List
 argument_list|<
@@ -2011,6 +2009,7 @@ name|expr
 range|:
 name|originalColList
 control|)
+block|{
 name|Utilities
 operator|.
 name|mergeUniqElems
@@ -2023,6 +2022,7 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// by now, 'prunedCols' are columns used by child operators, and 'columns'
 comment|// are columns used by this select operator.
 name|ArrayList
@@ -2274,7 +2274,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**      * since we pruned the select operator, we should let its children operator      * know that. ReduceSinkOperator may send out every output columns of its      * parent select. When the select operator is pruned, its child reduce      * sink(direct child) operator should also be pruned.      *       * @param op      * @param retainedSelOutputCols      * @throws SemanticException       */
+comment|/**      * since we pruned the select operator, we should let its children operator      * know that. ReduceSinkOperator may send out every output columns of its      * parent select. When the select operator is pruned, its child reduce      * sink(direct child) operator should also be pruned.      *       * @param op      * @param retainedSelOutputCols      * @throws SemanticException      */
 specifier|private
 name|void
 name|handleChildren
@@ -2352,7 +2352,7 @@ operator|instanceof
 name|FilterOperator
 condition|)
 block|{
-comment|//filter operator has the same output columns as its parent
+comment|// filter operator has the same output columns as its parent
 for|for
 control|(
 name|Operator
@@ -3026,6 +3026,7 @@ name|colInfo
 operator|!=
 literal|null
 condition|)
+block|{
 name|newRR
 operator|.
 name|put
@@ -3043,6 +3044,7 @@ argument_list|,
 name|colInfo
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|cppCtx
 operator|.
@@ -3122,7 +3124,7 @@ name|newValueTable
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * The Factory method to get the ColumnPrunerSelectProc class.    * @return ColumnPrunerSelectProc    */
+comment|/**    * The Factory method to get the ColumnPrunerSelectProc class.    *     * @return ColumnPrunerSelectProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerSelectProc
@@ -3389,7 +3391,9 @@ name|child
 operator|instanceof
 name|FileSinkOperator
 condition|)
+block|{
 return|return;
+block|}
 block|}
 name|List
 argument_list|<
@@ -3401,14 +3405,6 @@ name|cppCtx
 operator|.
 name|genColLists
 argument_list|(
-operator|(
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-operator|)
 name|op
 argument_list|)
 decl_stmt|;
@@ -3570,7 +3566,9 @@ name|index
 operator|<
 literal|0
 condition|)
+block|{
 continue|continue;
+block|}
 name|conf
 operator|.
 name|getExprs
@@ -3592,6 +3590,7 @@ name|retainMap
 operator|!=
 literal|null
 condition|)
+block|{
 name|retainMap
 operator|.
 name|get
@@ -3604,6 +3603,7 @@ argument_list|(
 name|index
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{

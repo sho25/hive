@@ -19,16 +19,6 @@ name|exec
 package|;
 end_package
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|*
-import|;
-end_import
-
 begin_comment
 comment|/**  * TaskResult implementation  **/
 end_comment

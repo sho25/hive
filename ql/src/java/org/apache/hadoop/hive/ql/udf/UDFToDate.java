@@ -140,7 +140,8 @@ name|IllegalArgumentException
 name|e
 parameter_list|)
 block|{
-comment|// We return NULL when the string is in a wrong format, which is conservative.
+comment|// We return NULL when the string is in a wrong format, which is
+comment|// conservative.
 return|return
 literal|null
 return|;

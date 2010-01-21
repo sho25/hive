@@ -171,6 +171,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|persistence
+operator|.
+name|RowContainer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|io
 operator|.
 name|HiveSequenceFileOutputFormat
@@ -417,26 +437,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|persistence
-operator|.
-name|RowContainer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|mapred
 operator|.
 name|SequenceFileInputFormat
@@ -668,7 +668,8 @@ name|Byte
 index|[]
 name|order
 decl_stmt|;
-comment|// order in which the results should be output
+comment|// order in which the results should
+comment|// be output
 specifier|transient
 specifier|protected
 name|joinCond
@@ -701,14 +702,19 @@ argument_list|>
 index|[]
 name|dummyObjVectors
 decl_stmt|;
-comment|// empty rows for each table
+comment|// empty
+comment|// rows
+comment|// for
+comment|// each
+comment|// table
 specifier|transient
 specifier|protected
 name|int
 name|totalSz
 decl_stmt|;
 comment|// total size of the composite object
-comment|// keys are the column names. basically this maps the position of the column in
+comment|// keys are the column names. basically this maps the position of the column
+comment|// in
 comment|// the output of the CommonJoinOperator to the input columnInfo.
 specifier|transient
 specifier|private
@@ -738,7 +744,10 @@ name|tableDesc
 argument_list|>
 name|spillTableDesc
 decl_stmt|;
-comment|// spill tables are used if the join input is too large to fit in memory
+comment|// spill tables are
+comment|// used if the join
+comment|// input is too large
+comment|// to fit in memory
 name|HashMap
 argument_list|<
 name|Byte
@@ -753,7 +762,8 @@ argument_list|>
 argument_list|>
 name|storage
 decl_stmt|;
-comment|// map b/w table alias to RowContainer
+comment|// map b/w table alias
+comment|// to RowContainer
 name|int
 name|joinEmitInterval
 init|=
@@ -859,19 +869,6 @@ argument_list|>
 argument_list|>
 name|e
 init|=
-operator|(
-name|Map
-operator|.
-name|Entry
-argument_list|<
-name|Byte
-argument_list|,
-name|List
-argument_list|<
-name|exprNodeDesc
-argument_list|>
-argument_list|>
-operator|)
 name|entryIter
 operator|.
 name|next
@@ -894,12 +891,6 @@ name|exprNodeDesc
 argument_list|>
 name|expr
 init|=
-operator|(
-name|List
-argument_list|<
-name|exprNodeDesc
-argument_list|>
-operator|)
 name|e
 operator|.
 name|getValue
@@ -944,6 +935,7 @@ condition|;
 name|j
 operator|++
 control|)
+block|{
 name|valueFields
 operator|.
 name|add
@@ -961,6 +953,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|outMap
 operator|.
 name|put
@@ -1384,6 +1377,8 @@ block|}
 name|Configuration
 name|hconf
 decl_stmt|;
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|initializeOp
@@ -1639,6 +1634,7 @@ condition|;
 name|j
 operator|++
 control|)
+block|{
 name|nr
 operator|.
 name|add
@@ -1646,6 +1642,7 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 name|dummyObj
 index|[
 name|pos
@@ -1807,10 +1804,12 @@ name|serde
 operator|==
 literal|null
 condition|)
+block|{
 name|containerSize
 operator|=
 literal|1
 expr_stmt|;
+block|}
 name|RowContainer
 name|rc
 init|=
@@ -1911,9 +1910,11 @@ name|desc
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|SerDe
 name|sd
 init|=
@@ -1993,9 +1994,11 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 name|initSpillTables
 argument_list|()
 expr_stmt|;
+block|}
 return|return
 name|spillTableDesc
 operator|.
@@ -2021,9 +2024,11 @@ name|spillTableDesc
 operator|==
 literal|null
 condition|)
+block|{
 name|initSpillTables
 argument_list|()
 expr_stmt|;
+block|}
 return|return
 name|spillTableDesc
 return|;
@@ -2127,7 +2132,9 @@ name|columnSize
 operator|<=
 literal|0
 condition|)
+block|{
 continue|continue;
+block|}
 for|for
 control|(
 name|int
@@ -2152,7 +2159,8 @@ literal|"_VALUE_"
 operator|+
 name|k
 decl_stmt|;
-comment|// any name, it does not matter.
+comment|// any name, it does not
+comment|// matter.
 name|colNames
 operator|.
 name|append
@@ -2311,6 +2319,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|startGroup
@@ -2368,11 +2378,13 @@ name|sz
 operator|>=
 literal|100000
 condition|)
+block|{
 return|return
 name|sz
 operator|+
 literal|100000
 return|;
+block|}
 return|return
 literal|2
 operator|*
@@ -2384,7 +2396,7 @@ specifier|protected
 name|Byte
 name|alias
 decl_stmt|;
-comment|/**    * Return the value as a standard object.    * StandardObject can be inspected by a standard ObjectInspector.    */
+comment|/**    * Return the value as a standard object. StandardObject can be inspected by a    * standard ObjectInspector.    */
 specifier|protected
 specifier|static
 name|ArrayList
@@ -2452,9 +2464,6 @@ name|nr
 operator|.
 name|add
 argument_list|(
-operator|(
-name|Object
-operator|)
 name|ObjectInspectorUtils
 operator|.
 name|copyToStandardObject
@@ -2666,6 +2675,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|dest
 index|[
 name|i
@@ -2676,6 +2686,7 @@ index|[
 name|i
 index|]
 expr_stmt|;
+block|}
 block|}
 specifier|private
 name|ArrayList
@@ -2719,9 +2730,11 @@ if|if
 condition|(
 name|newObjNull
 condition|)
+block|{
 return|return
 name|resNulls
 return|;
+block|}
 name|Iterator
 argument_list|<
 name|boolean
@@ -2850,9 +2863,11 @@ if|if
 condition|(
 name|newObjNull
 condition|)
+block|{
 return|return
 name|resNulls
 return|;
+block|}
 name|Iterator
 argument_list|<
 name|boolean
@@ -3037,6 +3052,7 @@ if|if
 condition|(
 name|oldObjNull
 condition|)
+block|{
 name|newNulls
 index|[
 name|oldNulls
@@ -3046,7 +3062,9 @@ index|]
 operator|=
 literal|true
 expr_stmt|;
+block|}
 else|else
+block|{
 name|newNulls
 index|[
 name|oldNulls
@@ -3056,6 +3074,7 @@ index|]
 operator|=
 name|newObjNull
 expr_stmt|;
+block|}
 name|resNulls
 operator|.
 name|add
@@ -3113,9 +3132,11 @@ if|if
 condition|(
 name|newObjNull
 condition|)
+block|{
 return|return
 name|resNulls
 return|;
+block|}
 if|if
 condition|(
 name|inputNulls
@@ -3158,6 +3179,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|newNulls
 index|[
 name|i
@@ -3165,6 +3187,7 @@ index|]
 operator|=
 literal|true
 expr_stmt|;
+block|}
 name|newNulls
 index|[
 name|intObj
@@ -3351,6 +3374,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|newNulls
 index|[
 name|i
@@ -3358,6 +3382,7 @@ index|]
 operator|=
 literal|true
 expr_stmt|;
+block|}
 name|newNulls
 index|[
 name|oldNulls
@@ -3541,6 +3566,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|newNulls
 index|[
 name|i
@@ -3548,6 +3574,7 @@ index|]
 operator|=
 literal|true
 expr_stmt|;
+block|}
 name|newNulls
 index|[
 name|intObj
@@ -3778,6 +3805,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|newNulls
 index|[
 name|i
@@ -3785,6 +3813,7 @@ index|]
 operator|=
 literal|true
 expr_stmt|;
+block|}
 name|newNulls
 index|[
 name|oldNulls
@@ -3884,9 +3913,11 @@ if|if
 condition|(
 name|newObjNull
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|boolean
 index|[]
 name|nulls
@@ -4005,6 +4036,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|newNulls
 index|[
 name|i
@@ -4012,6 +4044,7 @@ index|]
 operator|=
 literal|true
 expr_stmt|;
+block|}
 name|newNulls
 index|[
 name|newNulls
@@ -4040,9 +4073,11 @@ name|inputNulls
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 if|if
 condition|(
 name|type
@@ -4051,6 +4086,7 @@ name|joinDesc
 operator|.
 name|INNER_JOIN
 condition|)
+block|{
 return|return
 name|joinObjectsInnerJoin
 argument_list|(
@@ -4067,6 +4103,7 @@ argument_list|,
 name|newObjNull
 argument_list|)
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -4076,6 +4113,7 @@ name|joinDesc
 operator|.
 name|LEFT_OUTER_JOIN
 condition|)
+block|{
 return|return
 name|joinObjectsLeftOuterJoin
 argument_list|(
@@ -4092,6 +4130,7 @@ argument_list|,
 name|newObjNull
 argument_list|)
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -4101,6 +4140,7 @@ name|joinDesc
 operator|.
 name|RIGHT_OUTER_JOIN
 condition|)
+block|{
 return|return
 name|joinObjectsRightOuterJoin
 argument_list|(
@@ -4119,6 +4159,7 @@ argument_list|,
 name|firstRow
 argument_list|)
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -4128,6 +4169,7 @@ name|joinDesc
 operator|.
 name|LEFT_SEMI_JOIN
 condition|)
+block|{
 return|return
 name|joinObjectsLeftSemiJoin
 argument_list|(
@@ -4144,6 +4186,7 @@ argument_list|,
 name|newObjNull
 argument_list|)
 return|;
+block|}
 assert|assert
 operator|(
 name|type
@@ -4344,7 +4387,8 @@ name|firstRow
 operator|=
 literal|false
 expr_stmt|;
-comment|// if left-semi-join found a match, skipping the rest of the rows in the rhs table of the semijoin
+comment|// if left-semi-join found a match, skipping the rest of the rows in the
+comment|// rhs table of the semijoin
 if|if
 condition|(
 name|skipping
@@ -4362,7 +4406,9 @@ name|inputNulls
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|Iterator
 argument_list|<
 name|boolean
@@ -4402,7 +4448,9 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Forward a record of join results.    *    * @throws HiveException    */
+comment|/**    * Forward a record of join results.    *     * @throws HiveException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|endGroup
@@ -4621,9 +4669,6 @@ operator|.
 name|UNIQUE_JOIN
 condition|)
 block|{
-name|IntermediateObject
-name|intObj
-init|=
 operator|new
 name|IntermediateObject
 argument_list|(
@@ -4635,7 +4680,7 @@ index|]
 argument_list|,
 literal|0
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// Check if results need to be emitted.
 comment|// Results only need to be emitted if there is a non-null entry in a table
 comment|// that is preserved or if there are no non-null entries
@@ -4908,7 +4953,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * All done    *    */
+comment|/**    * All done    *     */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|closeOp
@@ -4949,13 +4996,14 @@ name|alw
 operator|!=
 literal|null
 condition|)
-comment|//it maybe null for mapjoins
+block|{
 name|alw
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
 comment|// clean up the temp files
+block|}
 block|}
 name|storage
 operator|.
@@ -4992,7 +5040,7 @@ return|return
 name|posToAliasMap
 return|;
 block|}
-comment|/**    * @param posToAliasMap the posToAliasMap to set    */
+comment|/**    * @param posToAliasMap    *          the posToAliasMap to set    */
 specifier|public
 name|void
 name|setPosToAliasMap

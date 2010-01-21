@@ -185,7 +185,7 @@ return|return
 name|isExt
 return|;
 block|}
-comment|/**    * @param isExt the isExt to set    */
+comment|/**    * @param isExt    *          the isExt to set    */
 specifier|public
 name|void
 name|setExt
@@ -218,7 +218,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**    * @param tableName the tableName to set    */
+comment|/**    * @param tableName    *          the tableName to set    */
 specifier|public
 name|void
 name|setTableName
@@ -256,7 +256,7 @@ return|return
 name|partSpec
 return|;
 block|}
-comment|/**    * @param partSpec the partSpec to set    */
+comment|/**    * @param partSpec    *          the partSpec to set    */
 specifier|public
 name|void
 name|setPartSpecs
@@ -311,7 +311,7 @@ name|getName
 argument_list|()
 return|;
 block|}
-comment|/**    * @param resFile the resFile to set    */
+comment|/**    * @param resFile    *          the resFile to set    */
 specifier|public
 name|void
 name|setResFile

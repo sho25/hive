@@ -28,7 +28,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  *  Exception that occurs during eviction of an object in the cache.  *  *  @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  *  @version $Id: CacheEvictionException.java,v 1.4 2003/10/21 15:43:20 boisvert Exp $  */
+comment|/**  * Exception that occurs during eviction of an object in the cache.  *   * @author<a href="mailto:boisvert@intalio.com">Alex Boisvert</a>  * @version $Id: CacheEvictionException.java,v 1.4 2003/10/21 15:43:20 boisvert  *          Exp $  */
 end_comment
 
 begin_class
@@ -38,7 +38,7 @@ name|CacheEvictionException
 extends|extends
 name|Exception
 block|{
-comment|/**      * Nested exception -- the original exception that occured, if any.      */
+comment|/**    * Nested exception -- the original exception that occured, if any.    */
 specifier|protected
 name|Exception
 name|_nested

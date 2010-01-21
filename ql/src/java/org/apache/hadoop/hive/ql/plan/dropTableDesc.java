@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -117,8 +107,6 @@ name|tableName
 operator|=
 name|tableName
 expr_stmt|;
-name|this
-operator|.
 name|partSpecs
 operator|=
 literal|null
@@ -160,8 +148,6 @@ name|partSpecs
 operator|=
 name|partSpecs
 expr_stmt|;
-name|this
-operator|.
 name|expectView
 operator|=
 literal|false
@@ -184,7 +170,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**    * @param tableName the tableName to set    */
+comment|/**    * @param tableName    *          the tableName to set    */
 specifier|public
 name|void
 name|setTableName
@@ -218,7 +204,7 @@ return|return
 name|partSpecs
 return|;
 block|}
-comment|/**    * @param partSpecs the partSpecs to set    */
+comment|/**    * @param partSpecs    *          the partSpecs to set    */
 specifier|public
 name|void
 name|setPartSpecs
@@ -252,7 +238,7 @@ return|return
 name|expectView
 return|;
 block|}
-comment|/**    * @param expectView set whether to expect a view being dropped    */
+comment|/**    * @param expectView    *          set whether to expect a view being dropped    */
 specifier|public
 name|void
 name|setExpectView

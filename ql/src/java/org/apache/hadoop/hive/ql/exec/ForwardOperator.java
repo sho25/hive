@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Forward Operator  * Just forwards. Doesn't do anything itself.  **/
+comment|/**  * Forward Operator Just forwards. Doesn't do anything itself.  **/
 end_comment
 
 begin_class
@@ -135,6 +135,8 @@ index|]
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

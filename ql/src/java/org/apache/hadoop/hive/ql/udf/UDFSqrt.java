@@ -159,7 +159,7 @@ specifier|public
 name|UDFSqrt
 parameter_list|()
 block|{   }
-comment|/**    * Return NULL for NULL or negative inputs; otherwise, return    * the square root.    */
+comment|/**    * Return NULL for NULL or negative inputs; otherwise, return the square root.    */
 specifier|public
 name|DoubleWritable
 name|evaluate

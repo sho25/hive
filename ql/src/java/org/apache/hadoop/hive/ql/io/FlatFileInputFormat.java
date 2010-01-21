@@ -25,7 +25,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
+name|DataInputStream
 import|;
 end_import
 
@@ -45,7 +45,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|InputStream
+name|IOException
 import|;
 end_import
 
@@ -55,7 +55,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|DataInputStream
+name|InputStream
 import|;
 end_import
 
@@ -67,9 +67,23 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|fs
+name|conf
 operator|.
-name|Path
+name|Configurable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
 import|;
 end_import
 
@@ -98,6 +112,84 @@ operator|.
 name|fs
 operator|.
 name|FileSystem
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|compress
+operator|.
+name|CompressionCodec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|compress
+operator|.
+name|CompressionCodecFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|serializer
+operator|.
+name|Deserializer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|serializer
+operator|.
+name|Serialization
 import|;
 end_import
 
@@ -139,20 +231,6 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|JobConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
 name|InputSplit
 import|;
 end_import
@@ -167,7 +245,7 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|Reporter
+name|JobConf
 import|;
 end_import
 
@@ -193,119 +271,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
+name|mapred
 operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|conf
-operator|.
-name|Configurable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|serializer
-operator|.
-name|Serialization
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|serializer
-operator|.
-name|Serializer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|serializer
-operator|.
-name|SerializationFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|serializer
-operator|.
-name|Deserializer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|compress
-operator|.
-name|CompressionCodecFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|compress
-operator|.
-name|CompressionCodec
+name|Reporter
 import|;
 end_import
 
@@ -324,7 +292,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** An {@link org.apache.hadoop.mapred.InputFormat} for Plain files with {@link Deserializer} records */
+comment|/**  * An {@link org.apache.hadoop.mapred.InputFormat} for Plain files with  * {@link Deserializer} records  */
 end_comment
 
 begin_class
@@ -347,7 +315,7 @@ name|T
 argument_list|>
 argument_list|>
 block|{
-comment|/**    * A work-around until HADOOP-1230 is fixed.     *    * Allows boolean next(k,v) to be called by reference but still allow the deserializer to create a new    * object (i.e., row) on every call to next.    */
+comment|/**    * A work-around until HADOOP-1230 is fixed.    *     * Allows boolean next(k,v) to be called by reference but still allow the    * deserializer to create a new object (i.e., row) on every call to next.    */
 specifier|static
 specifier|public
 class|class
@@ -360,7 +328,7 @@ name|T
 name|row
 decl_stmt|;
 block|}
-comment|/**    * An implementation of SerializationContext is responsible for looking up the Serialization implementation    * for the given RecordReader. Potentially based on the Configuration or some other mechanism    *    * The SerializationFactory does not give this functionality since:    *  1. Requires Serialization implementations to be specified in the Configuration a-priori (although same as setting    *     a SerializationContext)    *  2. Does not lookup the actual subclass being deserialized. e.g., for Serializable does not have a way of  configuring    *      the actual Java class being serialized/deserialized.    */
+comment|/**    * An implementation of SerializationContext is responsible for looking up the    * Serialization implementation for the given RecordReader. Potentially based    * on the Configuration or some other mechanism    *     * The SerializationFactory does not give this functionality since: 1.    * Requires Serialization implementations to be specified in the Configuration    * a-priori (although same as setting a SerializationContext) 2. Does not    * lookup the actual subclass being deserialized. e.g., for Serializable does    * not have a way of configuring the actual Java class being    * serialized/deserialized.    */
 specifier|static
 specifier|public
 interface|interface
@@ -371,7 +339,7 @@ parameter_list|>
 extends|extends
 name|Configurable
 block|{
-comment|/**      *  An {@link Serialization} object for objects of type S      * @return a serialization object for this context      */
+comment|/**      * An {@link Serialization} object for objects of type S      *       * @return a serialization object for this context      */
 specifier|public
 name|Serialization
 argument_list|<
@@ -382,7 +350,7 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *  Produces the specific class to deserialize      */
+comment|/**      * Produces the specific class to deserialize      */
 specifier|public
 name|Class
 argument_list|<
@@ -405,7 +373,7 @@ name|SerializationImplKey
 init|=
 literal|"mapred.input.serialization.implKey"
 decl_stmt|;
-comment|/**    *  An implementation of {@link SerializationContext} that reads the Serialization class and     *  specific subclass to be deserialized from the JobConf.    *    */
+comment|/**    * An implementation of {@link SerializationContext} that reads the    * Serialization class and specific subclass to be deserialized from the    * JobConf.    *     */
 specifier|static
 specifier|public
 class|class
@@ -430,7 +398,7 @@ name|SerializationSubclassKey
 init|=
 literal|"mapred.input.serialization.subclassKey"
 decl_stmt|;
-comment|/**      * Implements configurable so it can use the configuration to find the right classes      * Note: ReflectionUtils will automatigically call setConf with the right configuration.      */
+comment|/**      * Implements configurable so it can use the configuration to find the right      * classes Note: ReflectionUtils will automatigically call setConf with the      * right configuration.      */
 specifier|private
 name|Configuration
 name|conf
@@ -459,7 +427,7 @@ return|return
 name|conf
 return|;
 block|}
-comment|/**      * @return the actual class being deserialized      * @exception does not currently throw IOException      */
+comment|/**      * @return the actual class being deserialized      * @exception does      *              not currently throw IOException      */
 specifier|public
 name|Class
 argument_list|<
@@ -491,7 +459,7 @@ name|class
 argument_list|)
 return|;
 block|}
-comment|/**      * Looks up and instantiates the Serialization Object      *      * Important to note here that we are not relying on the Hadoop SerializationFactory part of the       * Serialization framework. This is because in the case of Non-Writable Objects, we cannot make any      * assumptions about the uniformity of the serialization class APIs - i.e., there may not be a "write"      * method call and a subclass may need to implement its own Serialization classes.       * The SerializationFactory currently returns the first (de)serializer that is compatible      * with the class to be deserialized;  in this context, that assumption isn't necessarily true.      *      * @return the serialization object for this context      * @exception does not currently throw any IOException      */
+comment|/**      * Looks up and instantiates the Serialization Object      *       * Important to note here that we are not relying on the Hadoop      * SerializationFactory part of the Serialization framework. This is because      * in the case of Non-Writable Objects, we cannot make any assumptions about      * the uniformity of the serialization class APIs - i.e., there may not be a      * "write" method call and a subclass may need to implement its own      * Serialization classes. The SerializationFactory currently returns the      * first (de)serializer that is compatible with the class to be      * deserialized; in this context, that assumption isn't necessarily true.      *       * @return the serialization object for this context      * @exception does      *              not currently throw any IOException      */
 specifier|public
 name|Serialization
 argument_list|<
@@ -557,7 +525,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**     * An {@link RecordReader} for plain files with {@link Deserializer} records     *    * Reads one row at a time of type R.    * R is intended to be a base class of something such as: Record, Writable, Text, ...    *    */
+comment|/**    * An {@link RecordReader} for plain files with {@link Deserializer} records    *     * Reads one row at a time of type R. R is intended to be a base class of    * something such as: Record, Writable, Text, ...    *     */
 specifier|public
 class|class
 name|FlatFileRecordReader
@@ -577,7 +545,7 @@ name|R
 argument_list|>
 argument_list|>
 block|{
-comment|/**      *  An interface for a helper class for instantiating {@link Serialization} classes.      */
+comment|/**      * An interface for a helper class for instantiating {@link Serialization}      * classes.      */
 comment|/**      * The stream in use - is fsin if not compressed, otherwise, it is dcin.      */
 specifier|private
 specifier|final
@@ -611,25 +579,27 @@ name|R
 argument_list|>
 name|deserializer
 decl_stmt|;
-comment|/**      * Once EOF is reached, stop calling the deserializer       */
+comment|/**      * Once EOF is reached, stop calling the deserializer      */
 specifier|private
 name|boolean
 name|isEOF
 decl_stmt|;
-comment|/**      * The JobConf which contains information needed to instantiate the correct Deserializer      */
+comment|/**      * The JobConf which contains information needed to instantiate the correct      * Deserializer      */
 specifier|private
+specifier|final
 name|Configuration
 name|conf
 decl_stmt|;
-comment|/**      * The actual class of the row's we are deserializing, not just the base class      */
+comment|/**      * The actual class of the row's we are deserializing, not just the base      * class      */
 specifier|private
+specifier|final
 name|Class
 argument_list|<
 name|R
 argument_list|>
 name|realRowClass
 decl_stmt|;
-comment|/**      * FlatFileRecordReader constructor constructs the underlying stream (potentially decompressed) and       * creates the deserializer.      *      * @param conf the jobconf      * @param split the split for this file      */
+comment|/**      * FlatFileRecordReader constructor constructs the underlying stream      * (potentially decompressed) and creates the deserializer.      *       * @param conf      *          the jobconf      * @param split      *          the split for this file      */
 specifier|public
 name|FlatFileRecordReader
 parameter_list|(
@@ -743,7 +713,8 @@ operator|.
 name|getLength
 argument_list|()
 expr_stmt|;
-comment|// Instantiate a SerializationContext which this will use to lookup the Serialization class and the
+comment|// Instantiate a SerializationContext which this will use to lookup the
+comment|// Serialization class and the
 comment|// actual class being deserialized
 name|SerializationContext
 argument_list|<
@@ -824,22 +795,10 @@ argument_list|()
 expr_stmt|;
 name|deserializer
 operator|=
-operator|(
-name|Deserializer
-argument_list|<
-name|R
-argument_list|>
-operator|)
 name|serialization
 operator|.
 name|getDeserializer
 argument_list|(
-operator|(
-name|Class
-argument_list|<
-name|R
-argument_list|>
-operator|)
 name|realRowClass
 argument_list|)
 expr_stmt|;
@@ -851,14 +810,6 @@ name|in
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * The actual class of the data being deserialized      */
-specifier|private
-name|Class
-argument_list|<
-name|R
-argument_list|>
-name|realRowclass
-decl_stmt|;
 comment|/**      * The JobConf key of the SerializationContext to use      */
 specifier|static
 specifier|public
@@ -920,7 +871,7 @@ return|return
 name|r
 return|;
 block|}
-comment|/**      * Returns the next row # and value      *      * @param key - void as these files have a value only      * @param value - the row container which is always re-used, but the internal value may be set to a new Object      * @return whether the key and value were read. True if they were and false if EOF      * @exception IOException from the deserializer      */
+comment|/**      * Returns the next row # and value      *       * @param key      *          - void as these files have a value only      * @param value      *          - the row container which is always re-used, but the internal      *          value may be set to a new Object      * @return whether the key and value were read. True if they were and false      *         if EOF      * @exception IOException      *              from the deserializer      */
 specifier|public
 specifier|synchronized
 name|boolean
@@ -958,7 +909,8 @@ return|return
 literal|false
 return|;
 block|}
-comment|// the deserializer is responsible for actually reading each record from the stream
+comment|// the deserializer is responsible for actually reading each record from
+comment|// the stream
 try|try
 block|{
 name|value
@@ -1105,6 +1057,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|RecordReader
 argument_list|<

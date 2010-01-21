@@ -29,24 +29,6 @@ name|Serializable
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|loadDesc
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -84,7 +66,7 @@ decl_stmt|;
 specifier|public
 name|loadFileDesc
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|loadFileDesc
 parameter_list|(
@@ -152,8 +134,6 @@ name|getTargetDir
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|targetDir
 return|;
 block|}
@@ -186,8 +166,6 @@ name|getIsDfsDir
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|isDfsDir
 return|;
 block|}
@@ -207,7 +185,7 @@ operator|=
 name|isDfsDir
 expr_stmt|;
 block|}
-comment|/** 	 * @return the columns 	 */
+comment|/**    * @return the columns    */
 specifier|public
 name|String
 name|getColumns
@@ -217,7 +195,7 @@ return|return
 name|columns
 return|;
 block|}
-comment|/** 	 * @param columns the columns to set 	 */
+comment|/**    * @param columns    *          the columns to set    */
 specifier|public
 name|void
 name|setColumns
@@ -243,7 +221,7 @@ return|return
 name|columnTypes
 return|;
 block|}
-comment|/**    * @param columnTypes the columnTypes to set    */
+comment|/**    * @param columnTypes    *          the columnTypes to set    */
 specifier|public
 name|void
 name|setColumnTypes

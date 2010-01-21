@@ -21,34 +21,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|lang
@@ -170,6 +142,34 @@ operator|.
 name|regex
 operator|.
 name|PatternSyntaxException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
 import|;
 end_import
 
@@ -1907,6 +1907,26 @@ name|udf
 operator|.
 name|generic
 operator|.
+name|GenericUDAFResolver
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|generic
+operator|.
 name|GenericUDAFStd
 import|;
 end_import
@@ -1948,26 +1968,6 @@ operator|.
 name|generic
 operator|.
 name|GenericUDAFSum
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|generic
-operator|.
-name|GenericUDAFResolver
 import|;
 end_import
 
@@ -2387,7 +2387,7 @@ name|udf
 operator|.
 name|generic
 operator|.
-name|GenericUDTF
+name|GenericUDFWhen
 import|;
 end_import
 
@@ -2407,7 +2407,7 @@ name|udf
 operator|.
 name|generic
 operator|.
-name|GenericUDFWhen
+name|GenericUDTF
 import|;
 end_import
 
@@ -4533,7 +4533,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns a set of registered function names.    * This is used for the CLI command "SHOW FUNCTIONS;"    * @return      set of strings contains function names    */
+comment|/**    * Returns a set of registered function names. This is used for the CLI    * command "SHOW FUNCTIONS;"    *     * @return set of strings contains function names    */
 specifier|public
 specifier|static
 name|Set
@@ -4550,7 +4550,7 @@ name|keySet
 argument_list|()
 return|;
 block|}
-comment|/**    * Returns a set of registered function names.    * This is used for the CLI command "SHOW FUNCTIONS 'regular expression';"    * Returns an empty set when the regular expression is not valid.    * @param  funcPatternStr  regular expression of the interested function names    * @return                 set of strings contains function names    */
+comment|/**    * Returns a set of registered function names. This is used for the CLI    * command "SHOW FUNCTIONS 'regular expression';" Returns an empty set when    * the regular expression is not valid.    *     * @param funcPatternStr    *          regular expression of the interested function names    * @return set of strings contains function names    */
 specifier|public
 specifier|static
 name|Set
@@ -4640,7 +4640,7 @@ return|return
 name|funcNames
 return|;
 block|}
-comment|/**    * Returns the set of synonyms of the supplied function.    * @param funcName the name of the function    * @return Set of synonyms for funcName    */
+comment|/**    * Returns the set of synonyms of the supplied function.    *     * @param funcName    *          the name of the function    * @return Set of synonyms for funcName    */
 specifier|public
 specifier|static
 name|Set
@@ -4886,7 +4886,7 @@ literal|7
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Find a common class that objects of both TypeInfo a and TypeInfo b can convert to.    * This is used for comparing objects of type a and type b.    *     * When we are comparing string and double, we will always convert both of them    * to double and then compare.    *     * @return null if no common class could be found.    */
+comment|/**    * Find a common class that objects of both TypeInfo a and TypeInfo b can    * convert to. This is used for comparing objects of type a and type b.    *     * When we are comparing string and double, we will always convert both of    * them to double and then compare.    *     * @return null if no common class could be found.    */
 specifier|public
 specifier|static
 name|TypeInfo
@@ -4909,9 +4909,11 @@ argument_list|(
 name|b
 argument_list|)
 condition|)
+block|{
 return|return
 name|a
 return|;
+block|}
 for|for
 control|(
 name|TypeInfo
@@ -4950,7 +4952,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Find a common class that objects of both TypeInfo a and TypeInfo b can convert to.    * This is used for places other than comparison.    *     * The common class of string and double is string.    *     * @return null if no common class could be found.    */
+comment|/**    * Find a common class that objects of both TypeInfo a and TypeInfo b can    * convert to. This is used for places other than comparison.    *     * The common class of string and double is string.    *     * @return null if no common class could be found.    */
 specifier|public
 specifier|static
 name|TypeInfo
@@ -5011,7 +5013,7 @@ else|:
 name|b
 return|;
 block|}
-comment|/** Returns whether it is possible to implicitly convert an object of Class from to Class to.    */
+comment|/**    * Returns whether it is possible to implicitly convert an object of Class    * from to Class to.    */
 specifier|public
 specifier|static
 name|boolean
@@ -5081,7 +5083,8 @@ return|return
 literal|true
 return|;
 block|}
-comment|// Allow implicit conversion from Byte -> Integer -> Long -> Float -> Double -> String
+comment|// Allow implicit conversion from Byte -> Integer -> Long -> Float -> Double
+comment|// -> String
 name|Integer
 name|f
 init|=
@@ -5112,9 +5115,11 @@ name|t
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 name|f
@@ -5127,14 +5132,16 @@ operator|.
 name|intValue
 argument_list|()
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 literal|true
 return|;
 block|}
-comment|/**    * Get the GenericUDAF evaluator for the name and argumentClasses.    * @param name the name of the UDAF    * @param argumentTypeInfos    * @return The UDAF evaluator    */
+comment|/**    * Get the GenericUDAF evaluator for the name and argumentClasses.    *     * @param name    *          the name of the UDAF    * @param argumentTypeInfos    * @return The UDAF evaluator    */
 specifier|public
 specifier|static
 name|GenericUDAFEvaluator
@@ -5166,9 +5173,11 @@ name|udaf
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|TypeInfo
 index|[]
 name|parameters
@@ -5221,7 +5230,7 @@ name|parameters
 argument_list|)
 return|;
 block|}
-comment|/**    * This method is shared between UDFRegistry and UDAFRegistry.    * methodName will be "evaluate" for UDFRegistry, and "aggregate"/"evaluate"/"evaluatePartial" for UDAFRegistry.    */
+comment|/**    * This method is shared between UDFRegistry and UDAFRegistry. methodName will    * be "evaluate" for UDFRegistry, and "aggregate"/"evaluate"/"evaluatePartial"    * for UDAFRegistry.    */
 specifier|public
 specifier|static
 parameter_list|<
@@ -5545,6 +5554,7 @@ operator|.
 name|isNative
 argument_list|()
 condition|)
+block|{
 name|mFunctions
 operator|.
 name|remove
@@ -5555,7 +5565,9 @@ name|toLowerCase
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -5567,6 +5579,7 @@ operator|+
 literal|" is hive native, it can't be dropped"
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 specifier|public
@@ -5840,7 +5853,7 @@ return|return
 name|o
 return|;
 block|}
-comment|/**    * Returns -1 if passed does not match accepted.    * Otherwise return the cost (usually 0 for no conversion and 1 for conversion).    */
+comment|/**    * Returns -1 if passed does not match accepted. Otherwise return the cost    * (usually 0 for no conversion and 1 for conversion).    */
 specifier|public
 specifier|static
 name|int
@@ -6067,10 +6080,12 @@ name|cost2
 operator|<
 literal|0
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 return|return
 name|Math
 operator|.
@@ -6122,7 +6137,7 @@ operator|-
 literal|1
 return|;
 block|}
-comment|/**    * Gets the closest matching method corresponding to the argument list from a list of methods.    *    * @param mlist The list of methods to inspect.    * @param exact Boolean to indicate whether this is an exact match or not.    * @param argumentsPassed The classes for the argument.    * @return The matching method.    */
+comment|/**    * Gets the closest matching method corresponding to the argument list from a    * list of methods.    *     * @param mlist    *          The list of methods to inspect.    * @param exact    *          Boolean to indicate whether this is an exact match or not.    * @param argumentsPassed    *          The classes for the argument.    * @return The matching method.    */
 specifier|public
 specifier|static
 name|Method
@@ -6330,7 +6345,9 @@ name|leastConversionCost
 operator|==
 literal|0
 condition|)
+block|{
 break|break;
+block|}
 block|}
 elseif|else
 if|if
@@ -6340,7 +6357,8 @@ operator|==
 name|leastConversionCost
 condition|)
 block|{
-comment|// Ambiguous call: two methods with the same number of implicit conversions
+comment|// Ambiguous call: two methods with the same number of implicit
+comment|// conversions
 name|LOG
 operator|.
 name|info
@@ -6374,7 +6392,7 @@ return|return
 name|udfMethod
 return|;
 block|}
-comment|/**    * A shortcut to get the "index" GenericUDF.    * This is used for getting elements out of array and getting values out of map.    */
+comment|/**    * A shortcut to get the "index" GenericUDF. This is used for getting elements    * out of array and getting values out of map.    */
 specifier|public
 specifier|static
 name|GenericUDF
@@ -6524,7 +6542,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the UDF class from an exprNodeDesc.    * Returns null if the exprNodeDesc does not contain a UDF class.      */
+comment|/**    * Get the UDF class from an exprNodeDesc. Returns null if the exprNodeDesc    * does not contain a UDF class.    */
 specifier|private
 specifier|static
 name|Class
@@ -6696,7 +6714,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Returns whether the exprNodeDesc is a node of "and", "or", "not".      */
+comment|/**    * Returns whether the exprNodeDesc is a node of "and", "or", "not".    */
 specifier|public
 specifier|static
 name|boolean
@@ -6739,7 +6757,7 @@ operator|==
 name|udfClass
 return|;
 block|}
-comment|/**    * Returns whether the exprNodeDesc is a node of "and".      */
+comment|/**    * Returns whether the exprNodeDesc is a node of "and".    */
 specifier|public
 specifier|static
 name|boolean
@@ -6770,7 +6788,7 @@ operator|==
 name|udfClass
 return|;
 block|}
-comment|/**    * Returns whether the exprNodeDesc is a node of "positive".      */
+comment|/**    * Returns whether the exprNodeDesc is a node of "positive".    */
 specifier|public
 specifier|static
 name|boolean

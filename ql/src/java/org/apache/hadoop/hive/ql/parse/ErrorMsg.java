@@ -21,6 +21,50 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Matcher
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Pattern
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|antlr
@@ -29,7 +73,7 @@ name|runtime
 operator|.
 name|tree
 operator|.
-name|*
+name|Tree
 import|;
 end_import
 
@@ -51,50 +95,6 @@ name|HiveUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Pattern
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Matcher
-import|;
-end_import
-
 begin_comment
 comment|/**  * List of error messages thrown by the parser  **/
 end_comment
@@ -104,12 +104,12 @@ specifier|public
 enum|enum
 name|ErrorMsg
 block|{
-comment|//SQLStates are taken from Section 12.5 of ISO-9075.
-comment|//See http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt
-comment|//Most will just rollup to the generic syntax error state of 42000, but
-comment|//specific errors can override the that state.
-comment|//See this page for how MySQL uses SQLState codes:
-comment|//http://dev.mysql.com/doc/refman/5.0/en/connector-j-reference-error-sqlstates.html
+comment|// SQLStates are taken from Section 12.5 of ISO-9075.
+comment|// See http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt
+comment|// Most will just rollup to the generic syntax error state of 42000, but
+comment|// specific errors can override the that state.
+comment|// See this page for how MySQL uses SQLState codes:
+comment|// http://dev.mysql.com/doc/refman/5.0/en/connector-j-reference-error-sqlstates.html
 name|GENERIC_ERROR
 argument_list|(
 literal|"Exception while processing"
@@ -658,13 +658,15 @@ name|length
 operator|<
 name|minMesgLength
 condition|)
+block|{
 name|minMesgLength
 operator|=
 name|length
 expr_stmt|;
 block|}
 block|}
-comment|/**    * For a given error message string, searches for a<code>ErrorMsg</code>    * enum that appears to be a match. If an match is found, returns the    *<code>SQLState</code> associated with the<code>ErrorMsg</code>. If a match    * is not found or<code>ErrorMsg</code> has no<code>SQLState</code>, returns    * the<code>SQLState</code> bound to the<code>GENERIC_ERROR</code>    *<code>ErrorMsg</code>.    *    * @param mesg An error message string    * @return SQLState    */
+block|}
+comment|/**    * For a given error message string, searches for a<code>ErrorMsg</code> enum    * that appears to be a match. If an match is found, returns the    *<code>SQLState</code> associated with the<code>ErrorMsg</code>. If a match    * is not found or<code>ErrorMsg</code> has no<code>SQLState</code>, returns    * the<code>SQLState</code> bound to the<code>GENERIC_ERROR</code>    *<code>ErrorMsg</code>.    *     * @param mesg    *          An error message string    * @return SQLState    */
 specifier|public
 specifier|static
 name|String
@@ -688,7 +690,7 @@ name|getSQLState
 argument_list|()
 return|;
 block|}
-comment|//first see if there is a direct match
+comment|// first see if there is a direct match
 name|ErrorMsg
 name|errorMsg
 init|=
@@ -715,13 +717,16 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|errorMsg
 operator|.
 name|getSQLState
 argument_list|()
 return|;
+block|}
 else|else
+block|{
 return|return
 name|GENERIC_ERROR
 operator|.
@@ -729,8 +734,10 @@ name|getSQLState
 argument_list|()
 return|;
 block|}
-comment|//if not see if the mesg follows type of format, which is typically the case:
-comment|//line 1:14 Table not found table_name
+block|}
+comment|// if not see if the mesg follows type of format, which is typically the
+comment|// case:
+comment|// line 1:14 Table not found table_name
 name|String
 name|truncatedMesg
 init|=
@@ -756,6 +763,7 @@ operator|.
 name|matches
 argument_list|()
 condition|)
+block|{
 name|truncatedMesg
 operator|=
 name|match
@@ -765,7 +773,9 @@ argument_list|(
 literal|1
 argument_list|)
 expr_stmt|;
-comment|//appends might exist after the root message, so strip tokens off until we match
+block|}
+comment|// appends might exist after the root message, so strip tokens off until we
+comment|// match
 while|while
 condition|(
 name|truncatedMesg
@@ -804,19 +814,23 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|errorMsg
 operator|.
 name|getSQLState
 argument_list|()
 return|;
+block|}
 else|else
+block|{
 return|return
 name|GENERIC_ERROR
 operator|.
 name|getSQLState
 argument_list|()
 return|;
+block|}
 block|}
 name|int
 name|lastSpace
@@ -835,7 +849,9 @@ operator|==
 operator|-
 literal|1
 condition|)
+block|{
 break|break;
+block|}
 comment|// hack off the last word and try again
 name|truncatedMesg
 operator|=
@@ -865,7 +881,7 @@ name|String
 name|mesg
 parameter_list|)
 block|{
-comment|//42000 is the generic SQLState for syntax error.
+comment|// 42000 is the generic SQLState for syntax error.
 name|this
 argument_list|(
 name|mesg
@@ -984,7 +1000,8 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|// Dirty hack as this will throw away spaces and other things - find a better way!
+comment|// Dirty hack as this will throw away spaces and other things - find a better
+comment|// way!
 specifier|private
 name|String
 name|getText

@@ -91,22 +91,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Context
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|exec
 operator|.
 name|Task
@@ -171,6 +155,8 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|analyzeInternal
@@ -333,6 +319,7 @@ name|fetchTask
 operator|!=
 literal|null
 condition|)
+block|{
 name|tasks
 operator|.
 name|add
@@ -340,6 +327,7 @@ argument_list|(
 name|fetchTask
 argument_list|)
 expr_stmt|;
+block|}
 name|rootTasks
 operator|.
 name|add
@@ -376,8 +364,6 @@ argument_list|,
 name|extended
 argument_list|)
 argument_list|,
-name|this
-operator|.
 name|conf
 argument_list|)
 argument_list|)

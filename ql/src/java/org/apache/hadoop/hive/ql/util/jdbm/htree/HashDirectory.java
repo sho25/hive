@@ -29,6 +29,66 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Externalizable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|ObjectInput
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|ObjectOutput
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -91,68 +151,8 @@ name|IterationException
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Externalizable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|ObjectInput
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|ObjectOutput
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
-import|;
-end_import
-
 begin_comment
-comment|/**  *  Hashtable directory page.  *  *  @author<a href="mailto:boisvert@exoffice.com">Alex Boisvert</a>  *  @version $Id: HashDirectory.java,v 1.5 2005/06/25 23:12:32 doomdark Exp $  */
+comment|/**  * Hashtable directory page.  *   * @author<a href="mailto:boisvert@exoffice.com">Alex Boisvert</a>  * @version $Id: HashDirectory.java,v 1.5 2005/06/25 23:12:32 doomdark Exp $  */
 end_comment
 
 begin_class
@@ -171,7 +171,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * Maximum number of children in a directory.      *      * (Must be a power of 2 -- if you update this value, you must also      *  update BIT_SIZE and MAX_DEPTH.)      */
+comment|/**    * Maximum number of children in a directory.    *     * (Must be a power of 2 -- if you update this value, you must also update    * BIT_SIZE and MAX_DEPTH.)    */
 specifier|static
 specifier|final
 name|int
@@ -179,7 +179,7 @@ name|MAX_CHILDREN
 init|=
 literal|256
 decl_stmt|;
-comment|/**      * Number of significant bits per directory level.      */
+comment|/**    * Number of significant bits per directory level.    */
 specifier|static
 specifier|final
 name|int
@@ -188,7 +188,7 @@ init|=
 literal|8
 decl_stmt|;
 comment|// log2(256) = 8
-comment|/**      * Maximum number of levels (zero-based)      *      * (4 * 8 bits = 32 bits, which is the size of an "int", and as      *  you know, hashcodes in Java are "ints")      */
+comment|/**    * Maximum number of levels (zero-based)    *     * (4 * 8 bits = 32 bits, which is the size of an "int", and as you know,    * hashcodes in Java are "ints")    */
 specifier|static
 specifier|final
 name|int
@@ -197,37 +197,37 @@ init|=
 literal|3
 decl_stmt|;
 comment|// 4 levels
-comment|/**      * Record ids of children pages.      */
+comment|/**    * Record ids of children pages.    */
 specifier|private
 name|long
 index|[]
 name|_children
 decl_stmt|;
-comment|/**      * Depth of this directory page, zero-based      */
+comment|/**    * Depth of this directory page, zero-based    */
 specifier|private
 name|byte
 name|_depth
 decl_stmt|;
-comment|/**      * PageManager used to persist changes in directory and buckets      */
+comment|/**    * PageManager used to persist changes in directory and buckets    */
 specifier|private
 specifier|transient
 name|RecordManager
 name|_recman
 decl_stmt|;
-comment|/**      * This directory's record ID in the PageManager.  (transient)      */
+comment|/**    * This directory's record ID in the PageManager. (transient)    */
 specifier|private
 specifier|transient
 name|long
 name|_recid
 decl_stmt|;
-comment|/**      * Public constructor used by serialization      */
+comment|/**    * Public constructor used by serialization    */
 specifier|public
 name|HashDirectory
 parameter_list|()
 block|{
 comment|// empty
 block|}
-comment|/**      * Construct a HashDirectory      *      * @param depth Depth of this directory page.      */
+comment|/**    * Construct a HashDirectory    *     * @param depth    *          Depth of this directory page.    */
 name|HashDirectory
 parameter_list|(
 name|byte
@@ -247,7 +247,7 @@ name|MAX_CHILDREN
 index|]
 expr_stmt|;
 block|}
-comment|/**      * Sets persistence context.  This method must be called before any      * persistence-related operation.      *      * @param recman RecordManager which stores this directory      * @param recid Record id of this directory.      */
+comment|/**    * Sets persistence context. This method must be called before any    * persistence-related operation.    *     * @param recman    *          RecordManager which stores this directory    * @param recid    *          Record id of this directory.    */
 name|void
 name|setPersistenceContext
 parameter_list|(
@@ -258,20 +258,16 @@ name|long
 name|recid
 parameter_list|)
 block|{
-name|this
-operator|.
 name|_recman
 operator|=
 name|recman
 expr_stmt|;
-name|this
-operator|.
 name|_recid
 operator|=
 name|recid
 expr_stmt|;
 block|}
-comment|/**      * Get the record identifier used to load this hashtable.      */
+comment|/**    * Get the record identifier used to load this hashtable.    */
 name|long
 name|getRecid
 parameter_list|()
@@ -280,34 +276,22 @@ return|return
 name|_recid
 return|;
 block|}
-comment|/**      * Returns whether or not this directory is empty.  A directory      * is empty when it no longer contains buckets or sub-directories.      */
+comment|/**    * Returns whether or not this directory is empty. A directory is empty when    * it no longer contains buckets or sub-directories.    */
 name|boolean
 name|isEmpty
 parameter_list|()
 block|{
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|long
+name|element
+range|:
 name|_children
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 if|if
 condition|(
-name|_children
-index|[
-name|i
-index|]
+name|element
 operator|!=
 literal|0
 condition|)
@@ -321,7 +305,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**      * Returns the value which is associated with the given key. Returns      *<code>null</code> if there is not association for this key.      *      * @param key key whose associated value is to be returned      */
+comment|/**    * Returns the value which is associated with the given key. Returns    *<code>null</code> if there is not association for this key.    *     * @param key    *          key whose associated value is to be returned    */
 name|Object
 name|get
 parameter_list|(
@@ -431,7 +415,7 @@ return|;
 block|}
 block|}
 block|}
-comment|/**      * Associates the specified value with the specified key.      *      * @param key key with which the specified value is to be assocated.      * @param value value to be associated with the specified key.      * @return object which was previously associated with the given key,      *          or<code>null</code> if no association existed.      */
+comment|/**    * Associates the specified value with the specified key.    *     * @param key    *          key with which the specified value is to be assocated.    * @param value    *          value to be associated with the specified key.    * @return object which was previously associated with the given key, or    *<code>null</code> if no association existed.    */
 name|Object
 name|put
 parameter_list|(
@@ -789,7 +773,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**      * Remove the value which is associated with the given key.  If the      * key does not exist, this method simply ignores the operation.      *      * @param key key whose associated value is to be removed      * @return object which was associated with the given key, or      *<code>null</code> if no association existed with given key.      */
+comment|/**    * Remove the value which is associated with the given key. If the key does    * not exist, this method simply ignores the operation.    *     * @param key    *          key whose associated value is to be removed    * @return object which was associated with the given key, or    *<code>null</code> if no association existed with given key.    */
 name|Object
 name|remove
 parameter_list|(
@@ -1005,7 +989,7 @@ return|;
 block|}
 block|}
 block|}
-comment|/**      * Calculates the hashcode of a key, based on the current directory      * depth.      */
+comment|/**    * Calculates the hashcode of a key, based on the current directory depth.    */
 specifier|private
 name|int
 name|hashCode
@@ -1054,12 +1038,12 @@ name|hash
 operator|%
 name|MAX_CHILDREN
 expr_stmt|;
-comment|/*         System.out.println("HashDirectory.hashCode() is: 0x"                            +Integer.toHexString(hash)                            +" for object hashCode() 0x"                            +Integer.toHexString(key.hashCode()));         */
+comment|/*      * System.out.println("HashDirectory.hashCode() is: 0x"      * +Integer.toHexString(hash) +" for object hashCode() 0x"      * +Integer.toHexString(key.hashCode()));      */
 return|return
 name|hash
 return|;
 block|}
-comment|/**      * Calculates the hashmask of this directory.  The hashmask is the      * bit mask applied to a hashcode to retain only bits that are      * relevant to this directory level.      */
+comment|/**    * Calculates the hashmask of this directory. The hashmask is the bit mask    * applied to a hashcode to retain only bits that are relevant to this    * directory level.    */
 name|int
 name|hashMask
 parameter_list|()
@@ -1086,12 +1070,12 @@ operator|*
 name|BIT_SIZE
 operator|)
 decl_stmt|;
-comment|/*         System.out.println("HashDirectory.hashMask() is: 0x"                            +Integer.toHexString(hashMask));         */
+comment|/*      * System.out.println("HashDirectory.hashMask() is: 0x"      * +Integer.toHexString(hashMask));      */
 return|return
 name|hashMask
 return|;
 block|}
-comment|/**      * Returns an enumeration of the keys contained in this      */
+comment|/**    * Returns an enumeration of the keys contained in this    */
 name|FastIterator
 name|keys
 parameter_list|()
@@ -1106,7 +1090,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**      * Returns an enumeration of the values contained in this      */
+comment|/**    * Returns an enumeration of the values contained in this    */
 name|FastIterator
 name|values
 parameter_list|()
@@ -1121,7 +1105,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**      * Implement Externalizable interface      */
+comment|/**    * Implement Externalizable interface    */
 specifier|public
 name|void
 name|writeExternal
@@ -1147,7 +1131,7 @@ name|_children
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Implement Externalizable interface      */
+comment|/**    * Implement Externalizable interface    */
 specifier|public
 specifier|synchronized
 name|void
@@ -1180,46 +1164,49 @@ name|readObject
 argument_list|()
 expr_stmt|;
 block|}
-comment|////////////////////////////////////////////////////////////////////////
+comment|// //////////////////////////////////////////////////////////////////////
 comment|// INNER CLASS
-comment|////////////////////////////////////////////////////////////////////////
-comment|/**      * Utility class to enumerate keys/values in a HTree      */
+comment|// //////////////////////////////////////////////////////////////////////
+comment|/**    * Utility class to enumerate keys/values in a HTree    */
 specifier|public
 class|class
 name|HDIterator
 extends|extends
 name|FastIterator
 block|{
-comment|/**          * True if we're iterating on keys, False if enumerating on values.          */
+comment|/**      * True if we're iterating on keys, False if enumerating on values.      */
 specifier|private
+specifier|final
 name|boolean
 name|_iterateKeys
 decl_stmt|;
-comment|/**          * Stacks of directories& last enumerated child position          */
+comment|/**      * Stacks of directories& last enumerated child position      */
 specifier|private
+specifier|final
 name|ArrayList
 name|_dirStack
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 name|_childStack
 decl_stmt|;
-comment|/**          * Current HashDirectory in the hierarchy          */
+comment|/**      * Current HashDirectory in the hierarchy      */
 specifier|private
 name|HashDirectory
 name|_dir
 decl_stmt|;
-comment|/**          * Current child position          */
+comment|/**      * Current child position      */
 specifier|private
 name|int
 name|_child
 decl_stmt|;
-comment|/**          * Current bucket iterator          */
+comment|/**      * Current bucket iterator      */
 specifier|private
 name|Iterator
 name|_iter
 decl_stmt|;
-comment|/**          * Construct an iterator on this directory.          *          * @param iterateKeys True if iteration supplies keys, False          *                  if iterateKeys supplies values.          */
+comment|/**      * Construct an iterator on this directory.      *       * @param iterateKeys      *          True if iteration supplies keys, False if iterateKeys supplies      *          values.      */
 name|HDIterator
 parameter_list|(
 name|boolean
@@ -1259,7 +1246,9 @@ name|prepareNext
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**          * Returns the next object.          */
+comment|/**      * Returns the next object.      */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|next
@@ -1334,7 +1323,7 @@ return|return
 name|next
 return|;
 block|}
-comment|/**          * Prepare internal state so we can answer<code>hasMoreElements</code>          *          * Actually, this code prepares an Enumeration on the next          * Bucket to enumerate.   If no following bucket is found,          * the next Enumeration is set to<code>null</code>.          */
+comment|/**      * Prepare internal state so we can answer<code>hasMoreElements</code>      *       * Actually, this code prepares an Enumeration on the next Bucket to      * enumerate. If no following bucket is found, the next Enumeration is set      * to<code>null</code>.      */
 specifier|private
 name|void
 name|prepareNext

@@ -29,34 +29,6 @@ name|Serializable
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Vector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|joinType
-import|;
-end_import
-
 begin_comment
 comment|/**  * Join conditions Descriptor implementation.  *   */
 end_comment
@@ -95,7 +67,7 @@ decl_stmt|;
 specifier|public
 name|joinCond
 parameter_list|()
-block|{}
+block|{   }
 specifier|public
 name|joinCond
 parameter_list|(
@@ -147,8 +119,6 @@ name|joinCond
 name|condn
 parameter_list|)
 block|{
-name|this
-operator|.
 name|left
 operator|=
 name|condn
@@ -156,8 +126,6 @@ operator|.
 name|getLeft
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|right
 operator|=
 name|condn
@@ -165,8 +133,6 @@ operator|.
 name|getRight
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|preserved
 operator|=
 name|condn
@@ -185,8 +151,6 @@ block|{
 case|case
 name|INNER
 case|:
-name|this
-operator|.
 name|type
 operator|=
 name|joinDesc
@@ -197,8 +161,6 @@ break|break;
 case|case
 name|LEFTOUTER
 case|:
-name|this
-operator|.
 name|type
 operator|=
 name|joinDesc
@@ -209,8 +171,6 @@ break|break;
 case|case
 name|RIGHTOUTER
 case|:
-name|this
-operator|.
 name|type
 operator|=
 name|joinDesc
@@ -221,8 +181,6 @@ break|break;
 case|case
 name|FULLOUTER
 case|:
-name|this
-operator|.
 name|type
 operator|=
 name|joinDesc
@@ -233,8 +191,6 @@ break|break;
 case|case
 name|UNIQUE
 case|:
-name|this
-operator|.
 name|type
 operator|=
 name|joinDesc
@@ -245,8 +201,6 @@ break|break;
 case|case
 name|LEFTSEMI
 case|:
-name|this
-operator|.
 name|type
 operator|=
 name|joinDesc
@@ -267,12 +221,10 @@ name|getPreserved
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|preserved
 return|;
 block|}
-comment|/**    * @param preserved if table is preserved, false otherwise    */
+comment|/**    * @param preserved    *          if table is preserved, false otherwise    */
 specifier|public
 name|void
 name|setPreserved
@@ -295,8 +247,6 @@ name|getLeft
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|left
 return|;
 block|}
@@ -322,8 +272,6 @@ name|getRight
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|right
 return|;
 block|}
@@ -349,8 +297,6 @@ name|getType
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|type
 return|;
 block|}

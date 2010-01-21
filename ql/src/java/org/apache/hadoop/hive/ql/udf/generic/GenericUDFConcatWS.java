@@ -200,7 +200,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Generic UDF for string function<code>CONCAT_WS(sep,str1,str2,str3,...)</code>.  * This mimics the function from MySQL  * http://dev.mysql.com/doc/refman/5.0/en/string-functions.html#function_concat-ws  *  * @see org.apache.hadoop.hive.ql.udf.generic.GenericUDF  */
+comment|/**  * Generic UDF for string function  *<code>CONCAT_WS(sep,str1,str2,str3,...)</code>. This mimics the function from  * MySQL http://dev.mysql.com/doc/refman/5.0/en/string-functions.html#  * function_concat-ws  *   * @see org.apache.hadoop.hive.ql.udf.generic.GenericUDF  */
 end_comment
 
 begin_class
@@ -344,8 +344,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|this
-operator|.
 name|argumentOIs
 operator|=
 name|arguments
@@ -357,6 +355,7 @@ name|writableStringObjectInspector
 return|;
 block|}
 specifier|private
+specifier|final
 name|Text
 name|resultText
 init|=

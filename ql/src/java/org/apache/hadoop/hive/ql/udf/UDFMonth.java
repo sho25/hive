@@ -195,6 +195,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|SimpleDateFormat
 name|formatter
 init|=
@@ -205,6 +206,7 @@ literal|"yyyy-MM-dd"
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|Calendar
 name|calendar
 init|=
@@ -224,7 +226,7 @@ specifier|public
 name|UDFMonth
 parameter_list|()
 block|{   }
-comment|/**    * Get the month from a date string.    *     * @param dateString the dateString in the format of "yyyy-MM-dd HH:mm:ss" or "yyyy-MM-dd".    * @return an int from 1 to 12. null if the dateString is not a valid date string.    */
+comment|/**    * Get the month from a date string.    *     * @param dateString    *          the dateString in the format of "yyyy-MM-dd HH:mm:ss" or    *          "yyyy-MM-dd".    * @return an int from 1 to 12. null if the dateString is not a valid date    *         string.    */
 specifier|public
 name|IntWritable
 name|evaluate

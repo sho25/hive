@@ -92,7 +92,7 @@ specifier|public
 interface|interface
 name|InputFormatChecker
 block|{
-comment|/** 	 * This method is used to validate the input files 	 *  	 */
+comment|/**    * This method is used to validate the input files    *     */
 specifier|public
 name|boolean
 name|validateInput

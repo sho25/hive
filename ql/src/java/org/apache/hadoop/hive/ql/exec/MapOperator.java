@@ -219,24 +219,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|tableDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde2
 operator|.
 name|Deserializer
@@ -376,7 +358,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Map operator. This triggers overall map side processing.  * This is a little different from regular operators in that  * it starts off by processing a Writable data structure from  * a Table (instead of a Hive Object).  **/
+comment|/**  * Map operator. This triggers overall map side processing. This is a little  * different from regular operators in that it starts off by processing a  * Writable data structure from a Table (instead of a Hive Object).  **/
 end_comment
 
 begin_class
@@ -408,6 +390,7 @@ name|DESERIALIZE_ERRORS
 block|}
 specifier|transient
 specifier|private
+specifier|final
 name|LongWritable
 name|deserialize_error_count
 init|=
@@ -467,6 +450,7 @@ argument_list|>
 name|operatorToPaths
 decl_stmt|;
 specifier|private
+specifier|final
 name|java
 operator|.
 name|util
@@ -555,6 +539,8 @@ operator|=
 name|op
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -584,9 +570,11 @@ name|mObj
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 name|path
 operator|.
@@ -620,6 +608,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -752,7 +742,7 @@ name|deserializer
 return|;
 block|}
 block|}
-comment|/**    * Initializes this map op as the root of the tree. It sets JobConf& MapRedWork    * and starts initialization of the operator tree rooted at this op.    * @param hconf    * @param mrwork    * @throws HiveException    */
+comment|/**    * Initializes this map op as the root of the tree. It sets JobConf&    * MapRedWork and starts initialization of the operator tree rooted at this    * op.    *     * @param hconf    * @param mrwork    * @throws HiveException    */
 specifier|public
 name|void
 name|initializeAsRoot
@@ -934,8 +924,8 @@ argument_list|(
 name|partSpec
 argument_list|)
 decl_stmt|;
-comment|//HiveConf.setVar(hconf, HiveConf.ConfVars.HIVETABLENAME, tableName);
-comment|//HiveConf.setVar(hconf, HiveConf.ConfVars.HIVEPARTITIONNAME, partName);
+comment|// HiveConf.setVar(hconf, HiveConf.ConfVars.HIVETABLENAME, tableName);
+comment|// HiveConf.setVar(hconf, HiveConf.ConfVars.HIVEPARTITIONNAME, partName);
 name|Deserializer
 name|deserializer
 init|=
@@ -999,7 +989,7 @@ operator|.
 name|META_TABLE_PARTITION_COLUMNS
 argument_list|)
 decl_stmt|;
-comment|//Log LOG = LogFactory.getLog(MapOperator.class.getName());
+comment|// Log LOG = LogFactory.getLog(MapOperator.class.getName());
 if|if
 condition|(
 name|pcols
@@ -1113,6 +1103,7 @@ name|partSpec
 operator|==
 literal|null
 condition|)
+block|{
 name|partValues
 index|[
 name|i
@@ -1122,7 +1113,9 @@ operator|new
 name|Text
 argument_list|()
 expr_stmt|;
+block|}
 else|else
+block|{
 name|partValues
 index|[
 name|i
@@ -1139,6 +1132,7 @@ name|key
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|partObjectInspectors
 operator|.
 name|add
@@ -1199,7 +1193,8 @@ block|}
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//LOG.info("dump " + tableName + " " + partName + " " + rowObjectInspector.getTypeName());
+comment|// LOG.info("dump " + tableName + " " + partName + " " +
+comment|// rowObjectInspector.getTypeName());
 name|opCtx
 operator|=
 operator|new
@@ -1217,7 +1212,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|//LOG.info("dump2 " + tableName + " " + partName + " " + rowObjectInspector.getTypeName());
+comment|// LOG.info("dump2 " + tableName + " " + partName + " " +
+comment|// rowObjectInspector.getTypeName());
 name|opCtx
 operator|=
 operator|new
@@ -1505,6 +1501,7 @@ argument_list|)
 operator|==
 literal|null
 condition|)
+block|{
 name|operatorToPaths
 operator|.
 name|put
@@ -1523,6 +1520,7 @@ argument_list|>
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|operatorToPaths
 operator|.
 name|get
@@ -1562,7 +1560,8 @@ argument_list|(
 name|this
 argument_list|)
 expr_stmt|;
-comment|// check for the operators who will process rows coming to this Map Operator
+comment|// check for the operators who will process rows coming to this Map
+comment|// Operator
 if|if
 condition|(
 operator|!
@@ -1748,6 +1747,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initializeOp
@@ -1795,7 +1796,8 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-comment|// Add alias, table name, and partitions to hadoop conf so that their children will
+comment|// Add alias, table name, and partitions to hadoop conf so that their
+comment|// children will
 comment|// inherit these
 name|HiveConf
 operator|.
@@ -1857,7 +1859,8 @@ name|input
 operator|.
 name|op
 decl_stmt|;
-comment|// op is not in the children list, so need to remember it and close it afterwards
+comment|// op is not in the children list, so need to remember it and close it
+comment|// afterwards
 if|if
 condition|(
 name|children
@@ -1961,6 +1964,7 @@ if|if
 condition|(
 name|shouldInit
 condition|)
+block|{
 name|op
 operator|.
 name|initialize
@@ -1983,7 +1987,10 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 comment|/**    * close extra child operators that are initialized but are not executed.    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|closeOp
@@ -2111,6 +2118,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processOp
@@ -2132,6 +2141,8 @@ literal|"Hive 2 Internal error: should not be called!"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getName

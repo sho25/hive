@@ -63,7 +63,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|Writable
+name|Text
 import|;
 end_import
 
@@ -77,7 +77,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|Text
+name|Writable
 import|;
 end_import
 

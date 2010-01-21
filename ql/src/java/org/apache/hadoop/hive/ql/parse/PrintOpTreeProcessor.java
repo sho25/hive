@@ -139,10 +139,12 @@ implements|implements
 name|NodeProcessor
 block|{
 specifier|private
+specifier|final
 name|PrintStream
 name|out
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|Operator
@@ -257,6 +259,7 @@ condition|(
 operator|!
 name|first
 condition|)
+block|{
 name|ret
 operator|.
 name|append
@@ -264,6 +267,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|ret
 operator|.
 name|append
@@ -354,6 +358,7 @@ condition|(
 operator|!
 name|first
 condition|)
+block|{
 name|ret
 operator|.
 name|append
@@ -361,6 +366,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|ret
 operator|.
 name|append

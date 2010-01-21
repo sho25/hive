@@ -58,7 +58,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Dispatches calls to relevant method in processor. The user registers various rules with the dispatcher, and  * the processor corresponding to closest matching rule is fired.  */
+comment|/**  * Dispatches calls to relevant method in processor. The user registers various  * rules with the dispatcher, and the processor corresponding to closest  * matching rule is fired.  */
 end_comment
 
 begin_class
@@ -69,6 +69,7 @@ implements|implements
 name|Dispatcher
 block|{
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|Rule
@@ -78,14 +79,16 @@ argument_list|>
 name|procRules
 decl_stmt|;
 specifier|private
+specifier|final
 name|NodeProcessorCtx
 name|procCtx
 decl_stmt|;
 specifier|private
+specifier|final
 name|NodeProcessor
 name|defaultProc
 decl_stmt|;
-comment|/**    * constructor    * @param defaultProc default processor to be fired if no rule matches    * @param rules operator processor that handles actual processing of the node    * @param procCtx operator processor context, which is opaque to the dispatcher    */
+comment|/**    * constructor    *     * @param defaultProc    *          default processor to be fired if no rule matches    * @param rules    *          operator processor that handles actual processing of the node    * @param procCtx    *          operator processor context, which is opaque to the dispatcher    */
 specifier|public
 name|DefaultRuleDispatcher
 parameter_list|(
@@ -110,8 +113,6 @@ name|defaultProc
 operator|=
 name|defaultProc
 expr_stmt|;
-name|this
-operator|.
 name|procRules
 operator|=
 name|rules
@@ -123,7 +124,7 @@ operator|=
 name|procCtx
 expr_stmt|;
 block|}
-comment|/**    * dispatcher function    * @param nd operator to process    * @param ndStack the operators encountered so far    * @throws SemanticException    */
+comment|/**    * dispatcher function    *     * @param nd    *          operator to process    * @param ndStack    *          the operators encountered so far    * @throws SemanticException    */
 specifier|public
 name|Object
 name|dispatch
@@ -213,11 +214,14 @@ name|rule
 operator|==
 literal|null
 condition|)
+block|{
 name|proc
 operator|=
 name|defaultProc
 expr_stmt|;
+block|}
 else|else
+block|{
 name|proc
 operator|=
 name|procRules
@@ -227,6 +231,7 @@ argument_list|(
 name|rule
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Do nothing in case proc is null
 if|if
 condition|(
@@ -252,9 +257,11 @@ argument_list|)
 return|;
 block|}
 else|else
+block|{
 return|return
 literal|null
 return|;
+block|}
 block|}
 block|}
 end_class
