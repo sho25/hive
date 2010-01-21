@@ -21,27 +21,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|thrift
-operator|.
-name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|protocol
-operator|.
-name|*
+name|ArrayList
 import|;
 end_import
 
@@ -51,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|List
 import|;
 end_import
 
@@ -83,7 +67,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|*
+name|SerDeException
 import|;
 end_import
 
@@ -131,6 +115,46 @@ name|apache
 operator|.
 name|thrift
 operator|.
+name|TException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocol
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
 name|protocol
 operator|.
 name|TType
@@ -144,6 +168,8 @@ name|DynamicSerDeTypeList
 extends|extends
 name|DynamicSerDeTypeBase
 block|{
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isPrimitive
@@ -153,6 +179,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isList
@@ -171,6 +199,8 @@ name|FD_TYPE
 init|=
 literal|0
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|Class
 name|getRealType
@@ -223,25 +253,22 @@ name|getElementType
 parameter_list|()
 block|{
 return|return
-call|(
-name|DynamicSerDeTypeBase
-call|)
-argument_list|(
+operator|(
 operator|(
 name|DynamicSerDeFieldType
 operator|)
-name|this
-operator|.
 name|jjtGetChild
 argument_list|(
 name|FD_TYPE
 argument_list|)
-argument_list|)
+operator|)
 operator|.
 name|getMyType
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -254,8 +281,6 @@ name|LIST_TYPE_NAME
 operator|+
 literal|"<"
 operator|+
-name|this
-operator|.
 name|getElementType
 argument_list|()
 operator|.
@@ -410,8 +435,6 @@ name|deserializeReuse
 operator|.
 name|add
 argument_list|(
-name|this
-operator|.
 name|getElementType
 argument_list|()
 operator|.
@@ -432,8 +455,6 @@ name|set
 argument_list|(
 name|i
 argument_list|,
-name|this
-operator|.
 name|getElementType
 argument_list|()
 operator|.
@@ -452,7 +473,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// in theory, the below call isn't needed in non thrift_mode, but let's not get too crazy
+comment|// in theory, the below call isn't needed in non thrift_mode, but let's not
+comment|// get too crazy
 name|iprot
 operator|.
 name|readListEnd
@@ -505,8 +527,6 @@ decl_stmt|;
 name|DynamicSerDeTypeBase
 name|mt
 init|=
-name|this
-operator|.
 name|getElementType
 argument_list|()
 decl_stmt|;
@@ -724,13 +744,16 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|// in theory, the below call isn't needed in non thrift_mode, but let's not get too crazy
+comment|// in theory, the below call isn't needed in non thrift_mode, but let's not
+comment|// get too crazy
 name|oprot
 operator|.
 name|writeListEnd
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 name|getType

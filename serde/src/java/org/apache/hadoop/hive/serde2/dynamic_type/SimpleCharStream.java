@@ -475,18 +475,22 @@ name|tokenBegin
 operator|<
 literal|0
 condition|)
+block|{
 name|bufpos
 operator|=
 name|maxNextCharInd
 operator|=
 literal|0
 expr_stmt|;
+block|}
 else|else
+block|{
 name|ExpandBuff
 argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -495,10 +499,12 @@ name|available
 operator|>
 name|tokenBegin
 condition|)
+block|{
 name|available
 operator|=
 name|bufsize
 expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -510,16 +516,20 @@ operator|)
 operator|<
 literal|2048
 condition|)
+block|{
 name|ExpandBuff
 argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|available
 operator|=
 name|tokenBegin
 expr_stmt|;
+block|}
 block|}
 name|int
 name|i
@@ -565,10 +575,12 @@ argument_list|()
 throw|;
 block|}
 else|else
+block|{
 name|maxNextCharInd
 operator|+=
 name|i
 expr_stmt|;
+block|}
 return|return;
 block|}
 catch|catch
@@ -596,10 +608,12 @@ operator|==
 operator|-
 literal|1
 condition|)
+block|{
 name|tokenBegin
 operator|=
 name|bufpos
 expr_stmt|;
+block|}
 throw|throw
 name|e
 throw|;
@@ -687,6 +701,7 @@ literal|true
 expr_stmt|;
 block|}
 else|else
+block|{
 name|line
 operator|+=
 operator|(
@@ -695,6 +710,7 @@ operator|=
 literal|1
 operator|)
 expr_stmt|;
+block|}
 block|}
 switch|switch
 condition|(
@@ -736,7 +752,7 @@ operator|)
 operator|)
 expr_stmt|;
 break|break;
-default|default :
+default|default:
 break|break;
 block|}
 name|bufline
@@ -782,10 +798,12 @@ name|bufpos
 operator|==
 name|bufsize
 condition|)
+block|{
 name|bufpos
 operator|=
 literal|0
 expr_stmt|;
+block|}
 return|return
 name|buffer
 index|[
@@ -800,9 +818,11 @@ name|bufpos
 operator|>=
 name|maxNextCharInd
 condition|)
+block|{
 name|FillBuff
 argument_list|()
 expr_stmt|;
+block|}
 name|char
 name|c
 init|=
@@ -822,7 +842,9 @@ name|c
 operator|)
 return|;
 block|}
-comment|/**    * @deprecated     * @see #getEndColumn    */
+comment|/**    * @deprecated    * @see #getEndColumn    */
+annotation|@
+name|Deprecated
 specifier|public
 name|int
 name|getColumn
@@ -835,7 +857,9 @@ name|bufpos
 index|]
 return|;
 block|}
-comment|/**    * @deprecated     * @see #getEndLine    */
+comment|/**    * @deprecated    * @see #getEndLine    */
+annotation|@
+name|Deprecated
 specifier|public
 name|int
 name|getLine
@@ -918,10 +942,12 @@ operator|)
 operator|<
 literal|0
 condition|)
+block|{
 name|bufpos
 operator|+=
 name|bufsize
 expr_stmt|;
+block|}
 block|}
 specifier|public
 name|SimpleCharStream
@@ -1672,6 +1698,7 @@ name|bufpos
 operator|>=
 name|tokenBegin
 condition|)
+block|{
 return|return
 operator|new
 name|String
@@ -1687,7 +1714,9 @@ operator|+
 literal|1
 argument_list|)
 return|;
+block|}
 else|else
+block|{
 return|return
 operator|new
 name|String
@@ -1713,6 +1742,7 @@ operator|+
 literal|1
 argument_list|)
 return|;
+block|}
 block|}
 specifier|public
 name|char
@@ -1743,6 +1773,7 @@ operator|)
 operator|>=
 name|len
 condition|)
+block|{
 name|System
 operator|.
 name|arraycopy
@@ -1762,6 +1793,7 @@ argument_list|,
 name|len
 argument_list|)
 expr_stmt|;
+block|}
 else|else
 block|{
 name|System
@@ -2025,6 +2057,7 @@ operator|%
 name|bufsize
 index|]
 condition|)
+block|{
 name|bufline
 index|[
 name|j
@@ -2033,7 +2066,9 @@ operator|=
 name|newLine
 operator|++
 expr_stmt|;
+block|}
 else|else
+block|{
 name|bufline
 index|[
 name|j
@@ -2041,6 +2076,7 @@ index|]
 operator|=
 name|newLine
 expr_stmt|;
+block|}
 block|}
 block|}
 name|line

@@ -80,6 +80,8 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -90,16 +92,12 @@ name|result
 init|=
 literal|"struct "
 operator|+
-name|this
-operator|.
 name|name
 operator|+
 literal|"("
 decl_stmt|;
 name|result
 operator|+=
-name|this
-operator|.
 name|getFieldList
 argument_list|()
 operator|.
@@ -114,6 +112,8 @@ return|return
 name|result
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|DynamicSerDeFieldList
 name|getFieldList
@@ -123,14 +123,14 @@ return|return
 operator|(
 name|DynamicSerDeFieldList
 operator|)
-name|this
-operator|.
 name|jjtGetChild
 argument_list|(
 name|FD_FIELD_LIST
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 name|getType

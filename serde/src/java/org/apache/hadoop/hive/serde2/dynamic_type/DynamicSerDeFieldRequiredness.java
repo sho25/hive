@@ -35,9 +35,9 @@ block|,
 name|Skippable
 block|,
 name|Optional
-block|,       }
+block|,   }
 empty_stmt|;
-comment|/**    *  Is this a required, skippable or optional field.    *  Used by DynamicSerDe for optimizations.    */
+comment|/**    * Is this a required, skippable or optional field. Used by DynamicSerDe for    * optimizations.    */
 specifier|protected
 name|RequirednessTypes
 name|requiredness

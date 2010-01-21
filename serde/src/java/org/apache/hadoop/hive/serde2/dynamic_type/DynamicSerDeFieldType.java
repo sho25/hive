@@ -74,15 +74,15 @@ name|DynamicSerDeTypeBase
 name|getMyType
 parameter_list|()
 block|{
-comment|// bugbug, need to deal with a named type here - i.e., look it up and proxy to it
-comment|// should raise an exception if this is a typedef since won't be any children
+comment|// bugbug, need to deal with a named type here - i.e., look it up and proxy
+comment|// to it
+comment|// should raise an exception if this is a typedef since won't be any
+comment|// children
 comment|// and thus we can quickly find this comment and limitation.
 return|return
 operator|(
 name|DynamicSerDeTypeBase
 operator|)
-name|this
-operator|.
 name|jjtGetChild
 argument_list|(
 name|FD_FIELD_TYPE

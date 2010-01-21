@@ -40,34 +40,14 @@ name|DynamicSerDeFunction
 extends|extends
 name|DynamicSerDeStructBase
 block|{
-comment|// production is: Async() FunctionType() NAME FieldList() Throws() [CommaOrSemicolon]
-specifier|private
-specifier|final
-name|int
-name|FD_ASYNC
-init|=
-literal|0
-decl_stmt|;
-specifier|private
-specifier|final
-name|int
-name|FD_FUNCTION_TYPE
-init|=
-literal|1
-decl_stmt|;
+comment|// production is: Async() FunctionType() NAME FieldList() Throws()
+comment|// [CommaOrSemicolon]
 specifier|private
 specifier|final
 name|int
 name|FD_FIELD_LIST
 init|=
 literal|2
-decl_stmt|;
-specifier|private
-specifier|final
-name|int
-name|FD_THROWS
-init|=
-literal|3
 decl_stmt|;
 specifier|public
 name|DynamicSerDeFunction
@@ -100,6 +80,8 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|DynamicSerDeFieldList
 name|getFieldList
@@ -109,14 +91,14 @@ return|return
 operator|(
 name|DynamicSerDeFieldList
 operator|)
-name|this
-operator|.
 name|jjtGetChild
 argument_list|(
 name|FD_FIELD_LIST
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -127,16 +109,12 @@ name|result
 init|=
 literal|"function "
 operator|+
-name|this
-operator|.
 name|name
 operator|+
 literal|" ("
 decl_stmt|;
 name|result
 operator|+=
-name|this
-operator|.
 name|getFieldList
 argument_list|()
 operator|.
@@ -151,6 +129,8 @@ return|return
 name|result
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 name|getType

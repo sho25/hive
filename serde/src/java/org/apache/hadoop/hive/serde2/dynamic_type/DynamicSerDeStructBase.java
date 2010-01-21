@@ -21,37 +21,11 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|protocol
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|io
 operator|.
-name|*
+name|Serializable
 import|;
 end_import
 
@@ -77,7 +51,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|*
+name|SerDeException
 import|;
 end_import
 
@@ -96,6 +70,46 @@ operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|TException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocol
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TStruct
 import|;
 end_import
 
@@ -149,6 +163,8 @@ name|DynamicSerDeFieldList
 name|getFieldList
 parameter_list|()
 function_decl|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -165,6 +181,8 @@ name|initialize
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isPrimitive
@@ -174,6 +192,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Class
 name|getRealType
@@ -185,6 +205,8 @@ operator|.
 name|class
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|deserialize
@@ -240,7 +262,9 @@ return|return
 name|o
 return|;
 block|}
-comment|/**    * serialize    *    * The way to serialize a Thrift "table" which in thrift land is really a function and thus this class's name.    *    * @param o - this list should be in the order of the function's params for now. If we wanted to remove this requirement,    * we'd need to make it a List<Pair<String, Object>> with the String being the field name.    *    */
+comment|/**    * serialize    *     * The way to serialize a Thrift "table" which in thrift land is really a    * function and thus this class's name.    *     * @param o    *          - this list should be in the order of the function's params for    *          now. If we wanted to remove this requirement, we'd need to make it    *          a List<Pair<String, Object>> with the String being the field name.    *     */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|serialize
@@ -275,8 +299,6 @@ argument_list|(
 operator|new
 name|TStruct
 argument_list|(
-name|this
-operator|.
 name|name
 argument_list|)
 argument_list|)

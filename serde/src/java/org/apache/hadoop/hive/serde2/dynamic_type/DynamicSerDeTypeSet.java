@@ -21,67 +21,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|thrift
-operator|.
-name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|TApplicationException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|protocol
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|server
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|transport
-operator|.
-name|*
+name|Collections
 import|;
 end_import
 
@@ -91,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|HashSet
 import|;
 end_import
 
@@ -99,9 +43,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|*
+name|Set
 import|;
 end_import
 
@@ -117,7 +61,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|*
+name|SerDeException
 import|;
 end_import
 
@@ -159,13 +103,41 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|lang
+name|apache
 operator|.
-name|reflect
+name|thrift
 operator|.
-name|*
+name|TException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocol
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TSet
 import|;
 end_import
 
@@ -231,6 +203,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// returns Set<?>
+annotation|@
+name|Override
 specifier|public
 name|Class
 name|getRealType
@@ -241,8 +215,6 @@ block|{
 name|Class
 name|c
 init|=
-name|this
-operator|.
 name|getElementType
 argument_list|()
 operator|.
@@ -303,25 +275,22 @@ name|getElementType
 parameter_list|()
 block|{
 return|return
-call|(
-name|DynamicSerDeTypeBase
-call|)
-argument_list|(
+operator|(
 operator|(
 name|DynamicSerDeFieldType
 operator|)
-name|this
-operator|.
 name|jjtGetChild
 argument_list|(
 name|FD_TYPE
 argument_list|)
-argument_list|)
+operator|)
 operator|.
 name|getMyType
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -330,8 +299,6 @@ block|{
 return|return
 literal|"set<"
 operator|+
-name|this
-operator|.
 name|getElementType
 argument_list|()
 operator|.
@@ -341,6 +308,8 @@ operator|+
 literal|">"
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 name|getType
@@ -352,7 +321,7 @@ operator|.
 name|SET
 return|;
 block|}
-comment|/** NOTE: Set is not supported by Hive yet.    */
+comment|/**    * NOTE: Set is not supported by Hive yet.    */
 annotation|@
 name|Override
 specifier|public
@@ -452,8 +421,6 @@ block|{
 name|Object
 name|elem
 init|=
-name|this
-operator|.
 name|getElementType
 argument_list|()
 operator|.
@@ -472,7 +439,8 @@ name|elem
 argument_list|)
 expr_stmt|;
 block|}
-comment|// in theory, the below call isn't needed in non thrift_mode, but let's not get too crazy
+comment|// in theory, the below call isn't needed in non thrift_mode, but let's not
+comment|// get too crazy
 name|iprot
 operator|.
 name|readSetEnd
@@ -482,7 +450,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/** NOTE: Set is not supported by Hive yet.    *  The code uses ListObjectInspector right now. We need to change it to     *  SetObjectInspector when that is done.    */
+comment|/**    * NOTE: Set is not supported by Hive yet. The code uses ListObjectInspector    * right now. We need to change it to SetObjectInspector when that is done.    */
 name|TSet
 name|tset
 init|=
@@ -537,8 +505,6 @@ decl_stmt|;
 name|DynamicSerDeTypeBase
 name|mt
 init|=
-name|this
-operator|.
 name|getElementType
 argument_list|()
 decl_stmt|;
@@ -588,7 +554,8 @@ name|oprot
 argument_list|)
 expr_stmt|;
 block|}
-comment|// in theory, the below call isn't needed in non thrift_mode, but let's not get too crazy
+comment|// in theory, the below call isn't needed in non thrift_mode, but let's not
+comment|// get too crazy
 name|oprot
 operator|.
 name|writeSetEnd

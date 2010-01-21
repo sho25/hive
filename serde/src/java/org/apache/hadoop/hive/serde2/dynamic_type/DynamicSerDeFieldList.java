@@ -21,67 +21,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|io
 operator|.
-name|thrift
-operator|.
-name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|TApplicationException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|protocol
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|server
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|transport
-operator|.
-name|*
+name|Serializable
 import|;
 end_import
 
@@ -91,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|ArrayList
 import|;
 end_import
 
@@ -99,9 +43,39 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|*
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
 import|;
 end_import
 
@@ -117,7 +91,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|*
+name|SerDeException
 import|;
 end_import
 
@@ -177,13 +151,55 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|lang
+name|apache
 operator|.
-name|reflect
+name|thrift
 operator|.
-name|*
+name|TException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TField
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocol
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocolUtil
 import|;
 end_import
 
@@ -198,8 +214,6 @@ operator|.
 name|protocol
 operator|.
 name|TType
-operator|.
-name|*
 import|;
 end_import
 
@@ -212,10 +226,10 @@ name|DynamicSerDeSimpleNode
 implements|implements
 name|Serializable
 block|{
-comment|//  private void writeObject(ObjectOutputStream out) throws IOException {
-comment|//    out.writeObject(types_by_column_name);
-comment|//    out.writeObject(ordered_types);
-comment|//  }
+comment|// private void writeObject(ObjectOutputStream out) throws IOException {
+comment|// out.writeObject(types_by_column_name);
+comment|// out.writeObject(ordered_types);
+comment|// }
 comment|// production: Field()*
 comment|// mapping of the fieldid to the field
 specifier|private
@@ -301,8 +315,6 @@ return|return
 operator|(
 name|DynamicSerDeField
 operator|)
-name|this
-operator|.
 name|jjtGetChild
 argument_list|(
 name|i
@@ -319,8 +331,6 @@ block|{
 name|int
 name|size
 init|=
-name|this
-operator|.
 name|jjtGetNumChildren
 argument_list|()
 decl_stmt|;
@@ -357,8 +367,6 @@ operator|=
 operator|(
 name|DynamicSerDeField
 operator|)
-name|this
-operator|.
 name|jjtGetChild
 argument_list|(
 name|i
@@ -375,8 +383,6 @@ name|getNumFields
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|jjtGetNumChildren
 argument_list|()
 return|;
@@ -421,8 +427,6 @@ operator|=
 operator|new
 name|DynamicSerDeTypeBase
 index|[
-name|this
-operator|.
 name|jjtGetNumChildren
 argument_list|()
 index|]
@@ -449,8 +453,6 @@ literal|0
 init|;
 name|i
 operator|<
-name|this
-operator|.
 name|jjtGetNumChildren
 argument_list|()
 condition|;
@@ -461,8 +463,6 @@ block|{
 name|DynamicSerDeField
 name|mt
 init|=
-name|this
-operator|.
 name|getField
 argument_list|(
 name|i
@@ -584,7 +584,7 @@ name|fieldname
 argument_list|)
 return|;
 block|}
-comment|/**    * Indicates whether fields can be out of order or missing. i.e., is it really real    * thrift serialization.    * This is used by dynamicserde to do some optimizations if it knows all the fields exist    * and are required and are serialized in order.    * For now, those optimizations are only done for DynamicSerDe serialized data so always    * set to false for now.    */
+comment|/**    * Indicates whether fields can be out of order or missing. i.e., is it really    * real thrift serialization. This is used by dynamicserde to do some    * optimizations if it knows all the fields exist and are required and are    * serialized in order. For now, those optimizations are only done for    * DynamicSerDe serialized data so always set to false for now.    */
 specifier|protected
 name|boolean
 name|isRealThrift
@@ -636,27 +636,16 @@ argument_list|<
 name|Object
 argument_list|>
 argument_list|(
-name|this
-operator|.
 name|getNumFields
 argument_list|()
 argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|DynamicSerDeTypeBase
+name|orderedType
+range|:
 name|ordered_types
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|struct
@@ -755,8 +744,6 @@ literal|0
 init|;
 name|i
 operator|<
-name|this
-operator|.
 name|getNumFields
 argument_list|()
 condition|;
@@ -779,8 +766,6 @@ condition|(
 operator|!
 name|isRealThrift
 operator|&&
-name|this
-operator|.
 name|getField
 argument_list|(
 name|i
@@ -790,11 +775,10 @@ name|isSkippable
 argument_list|()
 condition|)
 block|{
-comment|// PRE - all the fields are required and serialized in order - is !isRealThrift
+comment|// PRE - all the fields are required and serialized in order - is
+comment|// !isRealThrift
 name|mt
 operator|=
-name|this
-operator|.
 name|ordered_types
 index|[
 name|i
@@ -899,8 +883,6 @@ break|break;
 block|}
 name|mt
 operator|=
-name|this
-operator|.
 name|getFieldByFieldId
 argument_list|(
 name|field
@@ -949,11 +931,15 @@ continue|continue;
 block|}
 block|}
 block|}
-comment|// field.type< 0 means that this is a faked Thrift field, e.g., TControlSeparatedProtocol, which does not
-comment|// serialize the field id in the stream.  As a result, the only way to get the field id is to fall back to
+comment|// field.type< 0 means that this is a faked Thrift field, e.g.,
+comment|// TControlSeparatedProtocol, which does not
+comment|// serialize the field id in the stream. As a result, the only way to get
+comment|// the field id is to fall back to
 comment|// the position "i".
-comment|// The intention of this hack (field.type< 0) is to make TControlSeparatedProtocol a real Thrift prototype,
-comment|// but there are a lot additional work to do to fulfill that, and that protocol inherently does not support
+comment|// The intention of this hack (field.type< 0) is to make
+comment|// TControlSeparatedProtocol a real Thrift prototype,
+comment|// but there are a lot additional work to do to fulfill that, and that
+comment|// protocol inherently does not support
 comment|// versioning (adding/deleting fields).
 name|int
 name|orderedId
@@ -975,14 +961,13 @@ condition|)
 block|{
 name|mt
 operator|=
-name|this
-operator|.
 name|ordered_types
 index|[
 name|i
 index|]
 expr_stmt|;
-comment|// We don't need to lookup order_column_id_by_name because we know it must be "i".
+comment|// We don't need to lookup order_column_id_by_name because we know it
+comment|// must be "i".
 name|orderedId
 operator|=
 name|i
@@ -1088,7 +1073,8 @@ operator|!
 name|stopSeen
 condition|)
 block|{
-comment|// strip off the STOP marker, which may be left if all the fields were in the serialization
+comment|// strip off the STOP marker, which may be left if all the fields were in
+comment|// the serialization
 name|iprot
 operator|.
 name|readFieldBegin
@@ -1128,7 +1114,8 @@ name|NoSuchFieldException
 throws|,
 name|IllegalAccessException
 block|{
-comment|// Assuming the ObjectInspector represents exactly the same type as this struct.
+comment|// Assuming the ObjectInspector represents exactly the same type as this
+comment|// struct.
 comment|// This assumption should be checked during query compile time.
 assert|assert
 operator|(
@@ -1386,6 +1373,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -1408,8 +1397,6 @@ control|(
 name|DynamicSerDeField
 name|t
 range|:
-name|this
-operator|.
 name|getChildren
 argument_list|()
 control|)

@@ -405,13 +405,13 @@ block|,
 literal|"TypeSet"
 block|,
 literal|"TypeList"
-block|,   }
+block|, }
 decl_stmt|;
 block|}
 end_interface
 
 begin_comment
-comment|/* JavaCC - OriginalChecksum=7edd3e61472739e9fede55c18a336638 (do not edit this line) */
+comment|/*  * JavaCC - OriginalChecksum=7edd3e61472739e9fede55c18a336638 (do not edit this  * line)  */
 end_comment
 
 end_unit

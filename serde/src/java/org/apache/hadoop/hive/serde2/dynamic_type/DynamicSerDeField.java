@@ -19,48 +19,6 @@ name|dynamic_type
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|protocol
-operator|.
-name|TProtocol
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -69,7 +27,8 @@ extends|extends
 name|DynamicSerDeSimpleNode
 block|{
 comment|// production is:
-comment|// [this.fieldid :] Requiredness() FieldType() this.name FieldValue() [CommaOrSemicolon()]
+comment|// [this.fieldid :] Requiredness() FieldType() this.name FieldValue()
+comment|// [CommaOrSemicolon()]
 specifier|private
 specifier|final
 name|int
@@ -84,13 +43,6 @@ name|FD_FIELD_TYPE
 init|=
 literal|1
 decl_stmt|;
-specifier|private
-specifier|final
-name|int
-name|FD_FIELD_VALUE
-init|=
-literal|2
-decl_stmt|;
 specifier|public
 name|boolean
 name|isSkippable
@@ -101,8 +53,6 @@ operator|(
 operator|(
 name|DynamicSerDeFieldRequiredness
 operator|)
-name|this
-operator|.
 name|jjtGetChild
 argument_list|(
 name|FD_REQUIREDNESS
@@ -128,8 +78,6 @@ return|return
 operator|(
 name|DynamicSerDeFieldType
 operator|)
-name|this
-operator|.
 name|jjtGetChild
 argument_list|(
 name|FD_FIELD_TYPE

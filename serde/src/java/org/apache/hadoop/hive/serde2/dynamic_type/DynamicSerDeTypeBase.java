@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -31,7 +41,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|*
+name|SerDeException
 import|;
 end_import
 
@@ -61,9 +71,7 @@ name|apache
 operator|.
 name|thrift
 operator|.
-name|protocol
-operator|.
-name|TProtocol
+name|TException
 import|;
 end_import
 
@@ -75,17 +83,9 @@ name|apache
 operator|.
 name|thrift
 operator|.
-name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|protocol
 operator|.
-name|io
-operator|.
-name|Serializable
+name|TProtocol
 import|;
 end_import
 
@@ -143,7 +143,8 @@ name|void
 name|initialize
 parameter_list|()
 block|{
-comment|// for base type, do nothing. Other types, like structs may initialize internal data
+comment|// for base type, do nothing. Other types, like structs may initialize
+comment|// internal data
 comment|// structures.
 block|}
 specifier|public
@@ -218,6 +219,8 @@ name|NoSuchFieldException
 throws|,
 name|IllegalAccessException
 function_decl|;
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
