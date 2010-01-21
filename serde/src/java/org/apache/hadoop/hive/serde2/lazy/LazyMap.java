@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -130,7 +120,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyMap stores a map of Primitive LazyObjects to LazyObjects.  * Note that the keys of the map cannot contain null.  *   * LazyMap does not deal with the case of a NULL map. That is handled  * by the parent LazyObject.  */
+comment|/**  * LazyMap stores a map of Primitive LazyObjects to LazyObjects. Note that the  * keys of the map cannot contain null.  *   * LazyMap does not deal with the case of a NULL map. That is handled by the  * parent LazyObject.  */
 end_comment
 
 begin_class
@@ -149,18 +139,18 @@ name|parsed
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * The size of the map.    * Only valid when the data is parsed.    * -1 when the map is NULL.    */
+comment|/**    * The size of the map. Only valid when the data is parsed. -1 when the map is    * NULL.    */
 name|int
 name|mapSize
 init|=
 literal|0
 decl_stmt|;
-comment|/**    * The beginning position of key[i].    * Only valid when the data is parsed.    * Note that keyStart[mapSize] = begin + length + 1;    * that makes sure we can use the same formula to compute the    * length of each value in the map.    */
+comment|/**    * The beginning position of key[i]. Only valid when the data is parsed. Note    * that keyStart[mapSize] = begin + length + 1; that makes sure we can use the    * same formula to compute the length of each value in the map.    */
 name|int
 index|[]
 name|keyStart
 decl_stmt|;
-comment|/**    * The end position of key[i] (the position of the key-value separator).    * Only valid when the data is parsed.    */
+comment|/**    * The end position of key[i] (the position of the key-value separator). Only    * valid when the data is parsed.    */
 name|int
 index|[]
 name|keyEnd
@@ -175,12 +165,12 @@ argument_list|>
 index|[]
 name|keyObjects
 decl_stmt|;
-comment|/**    * Whether init() is called on keyObjects[i].     */
+comment|/**    * Whether init() is called on keyObjects[i].    */
 name|boolean
 index|[]
 name|keyInited
 decl_stmt|;
-comment|/**    * The values are stored in an array of LazyObjects.    * value[index] will start from KeyEnd[index] + 1,    * and ends before KeyStart[index+1] - 1.    */
+comment|/**    * The values are stored in an array of LazyObjects. value[index] will start    * from KeyEnd[index] + 1, and ends before KeyStart[index+1] - 1.    */
 name|LazyObject
 index|[]
 name|valueObjects
@@ -204,7 +194,7 @@ name|oi
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the row data for this LazyArray.    * @see LazyObject#init(ByteArrayRef, int, int)    */
+comment|/**    * Set the row data for this LazyArray.    *     * @see LazyObject#init(ByteArrayRef, int, int)    */
 annotation|@
 name|Override
 specifier|public
@@ -237,7 +227,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**    * Enlarge the size of arrays storing information for the elements inside     * the array.    */
+comment|/**    * Enlarge the size of arrays storing information for the elements inside the    * array.    */
 specifier|protected
 name|void
 name|enlargeArrays
@@ -685,7 +675,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Get the value in the map for the key.    *     * If there are multiple matches (which is possible in the serialized     * format), only the first one is returned.    *     * The most efficient way to get the value for the key is to serialize the     * key and then try to find it in the array.  We do linear search because in     * most cases, user only wants to get one or two values out of the map, and     * the cost of building up a HashMap is substantially higher.    *     * @param key               The key object that we are looking for.    * @return The corresponding value object, or NULL if not found    */
+comment|/**    * Get the value in the map for the key.    *     * If there are multiple matches (which is possible in the serialized format),    * only the first one is returned.    *     * The most efficient way to get the value for the key is to serialize the key    * and then try to find it in the array. We do linear search because in most    * cases, user only wants to get one or two values out of the map, and the    * cost of building up a HashMap is substantially higher.    *     * @param key    *          The key object that we are looking for.    * @return The corresponding value object, or NULL if not found    */
 specifier|public
 name|Object
 name|getMapValueElement
@@ -739,8 +729,11 @@ name|lazyKeyI
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
-comment|// getWritableObject() will convert LazyPrimitive to actual primitive writable objects.
+block|}
+comment|// getWritableObject() will convert LazyPrimitive to actual primitive
+comment|// writable objects.
 name|Object
 name|keyI
 init|=
@@ -755,7 +748,9 @@ name|keyI
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 if|if
 condition|(
 name|keyI
@@ -793,7 +788,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get the value object with the index without checking parsed.    * @param index  The index into the array starting from 0    */
+comment|/**    * Get the value object with the index without checking parsed.    *     * @param index    *          The index into the array starting from 0    */
 specifier|private
 name|LazyObject
 name|uncheckedGetValue
@@ -953,7 +948,7 @@ name|index
 index|]
 return|;
 block|}
-comment|/**    * Get the key object with the index without checking parsed.    * @param index  The index into the array starting from 0    */
+comment|/**    * Get the key object with the index without checking parsed.    *     * @param index    *          The index into the array starting from 0    */
 specifier|private
 name|LazyPrimitive
 argument_list|<
@@ -1119,7 +1114,7 @@ name|index
 index|]
 return|;
 block|}
-comment|/**    * cachedMap is reused for different calls to getMap().    * But each LazyMap has a separate cachedMap so we won't overwrite the    * data by accident.    */
+comment|/**    * cachedMap is reused for different calls to getMap(). But each LazyMap has a    * separate cachedMap so we won't overwrite the data by accident.    */
 name|LinkedHashMap
 argument_list|<
 name|Object
@@ -1128,7 +1123,7 @@ name|Object
 argument_list|>
 name|cachedMap
 decl_stmt|;
-comment|/**    * Return the map object representing this LazyMap.    * Note that the keyObjects will be Writable primitive objects.    * @return the map object    */
+comment|/**    * Return the map object representing this LazyMap. Note that the keyObjects    * will be Writable primitive objects.    *     * @return the map object    */
 specifier|public
 name|Map
 argument_list|<
@@ -1212,7 +1207,9 @@ name|lazyKey
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 name|Object
 name|key
 init|=
@@ -1276,7 +1273,7 @@ return|return
 name|cachedMap
 return|;
 block|}
-comment|/**    * Get the size of the map represented by this LazyMap.    * @return                  The size of the map, -1 for NULL map.    */
+comment|/**    * Get the size of the map represented by this LazyMap.    *     * @return The size of the map, -1 for NULL map.    */
 specifier|public
 name|int
 name|getMapSize

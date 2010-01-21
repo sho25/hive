@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyObject stores an object in a range of bytes in a byte[].  *   * A LazyObject can represent any primitive object or hierarchical object  * like array, map or struct.  */
+comment|/**  * LazyObject stores an object in a range of bytes in a byte[].  *   * A LazyObject can represent any primitive object or hierarchical object like  * array, map or struct.  */
 end_comment
 
 begin_class
@@ -55,7 +55,7 @@ block|{
 name|OI
 name|oi
 decl_stmt|;
-comment|/**    * Create a LazyObject.    * @param oi  Derived classes can access meta information about this Lazy    *            Object (e.g, separator, nullSequence, escaper) from it.    */
+comment|/**    * Create a LazyObject.    *     * @param oi    *          Derived classes can access meta information about this Lazy Object    *          (e.g, separator, nullSequence, escaper) from it.    */
 specifier|protected
 name|LazyObject
 parameter_list|(
@@ -70,7 +70,7 @@ operator|=
 name|oi
 expr_stmt|;
 block|}
-comment|/**    * Set the data for this LazyObject.    * We take ByteArrayRef instead of byte[] so that we will be able to drop    * the reference to byte[] by a single assignment.    * The ByteArrayRef object can be reused across multiple rows.    * @param bytes  The wrapper of the byte[].    * @param start  The start position inside the bytes.    * @param length The length of the data, starting from "start"    * @see ByteArrayRef    */
+comment|/**    * Set the data for this LazyObject. We take ByteArrayRef instead of byte[] so    * that we will be able to drop the reference to byte[] by a single    * assignment. The ByteArrayRef object can be reused across multiple rows.    *     * @param bytes    *          The wrapper of the byte[].    * @param start    *          The start position inside the bytes.    * @param length    *          The length of the data, starting from "start"    * @see ByteArrayRef    */
 specifier|public
 specifier|abstract
 name|void
@@ -86,13 +86,15 @@ name|int
 name|length
 parameter_list|)
 function_decl|;
-comment|/**    * If the LazyObject is a primitive Object, then deserialize it and return    * the actual primitive Object.    * Otherwise (array, map, struct), return this.     */
+comment|/**    * If the LazyObject is a primitive Object, then deserialize it and return the    * actual primitive Object. Otherwise (array, map, struct), return this.    */
 specifier|public
 specifier|abstract
 name|Object
 name|getObject
 parameter_list|()
 function_decl|;
+annotation|@
+name|Override
 specifier|public
 specifier|abstract
 name|int

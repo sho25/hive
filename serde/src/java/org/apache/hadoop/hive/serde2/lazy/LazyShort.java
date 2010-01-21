@@ -172,7 +172,7 @@ literal|true
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Parses the string argument as if it was a short value and returns the    * result. Throws NumberFormatException if the string does not represent an    * short quantity.    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of a short quantity.    * @return short the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as a short quantity.    */
+comment|/**    * Parses the string argument as if it was a short value and returns the    * result. Throws NumberFormatException if the string does not represent an    * short quantity.    *     * @param bytes    * @param start    * @param length    *          a UTF-8 encoded string representation of a short quantity.    * @return short the value represented by the argument    * @exception NumberFormatException    *              if the argument could not be parsed as a short quantity.    */
 specifier|public
 specifier|static
 name|short
@@ -204,7 +204,7 @@ literal|10
 argument_list|)
 return|;
 block|}
-comment|/**    * Parses the string argument as if it was a short value and returns the    * result. Throws NumberFormatException if the string does not represent a    * single short quantity. The second argument specifies the radix to use    * when parsing the value.    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of a short quantity.    * @param radix    *            the radix to use when parsing.    * @return short the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as a short quantity.    */
+comment|/**    * Parses the string argument as if it was a short value and returns the    * result. Throws NumberFormatException if the string does not represent a    * single short quantity. The second argument specifies the radix to use when    * parsing the value.    *     * @param bytes    * @param start    * @param length    *          a UTF-8 encoded string representation of a short quantity.    * @param radix    *          the radix to use when parsing.    * @return short the value represented by the argument    * @exception NumberFormatException    *              if the argument could not be parsed as a short quantity.    */
 specifier|public
 specifier|static
 name|short

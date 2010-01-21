@@ -98,7 +98,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An AbstractPrimitiveLazyObjectInspector for a LazyPrimitive object.   */
+comment|/**  * An AbstractPrimitiveLazyObjectInspector for a LazyPrimitive object.  */
 end_comment
 
 begin_class

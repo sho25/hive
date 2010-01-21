@@ -128,7 +128,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyListObjectInspector works on array data that is stored in LazyArray.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects, instead  * of directly creating an instance of this class.  */
+comment|/**  * LazyListObjectInspector works on array data that is stored in LazyArray.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -171,7 +171,7 @@ decl_stmt|;
 name|byte
 name|escapeChar
 decl_stmt|;
-comment|/** Call ObjectInspectorFactory.getLazySimpleListObjectInspector instead.    */
+comment|/**    * Call ObjectInspectorFactory.getLazySimpleListObjectInspector instead.    */
 specifier|protected
 name|LazyListObjectInspector
 parameter_list|(
@@ -398,7 +398,7 @@ operator|+
 literal|">"
 return|;
 block|}
-comment|/**    * Returns the separator for delimiting items in this array.    * Called by LazyArray.init(...).    */
+comment|/**    * Returns the separator for delimiting items in this array. Called by    * LazyArray.init(...).    */
 specifier|public
 name|byte
 name|getSeparator
@@ -408,7 +408,7 @@ return|return
 name|separator
 return|;
 block|}
-comment|/**    * Returns the NullSequence for this array.    * Called by LazyArray.init(...).    */
+comment|/**    * Returns the NullSequence for this array. Called by LazyArray.init(...).    */
 specifier|public
 name|Text
 name|getNullSequence

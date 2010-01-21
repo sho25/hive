@@ -99,20 +99,6 @@ name|PrimitiveObjectInspectorUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|BooleanWritable
-import|;
-end_import
-
 begin_comment
 comment|/**  * A WritableByteObjectInspector inspects a ByteWritable Object.  */
 end_comment

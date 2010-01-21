@@ -102,7 +102,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyArray stores an array of Lazy Objects.  *   * LazyArray does not deal with the case of a NULL array. That is handled  * by the parent LazyObject.  */
+comment|/**  * LazyArray stores an array of Lazy Objects.  *   * LazyArray does not deal with the case of a NULL array. That is handled by the  * parent LazyObject.  */
 end_comment
 
 begin_class
@@ -121,13 +121,13 @@ name|parsed
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * The length of the array.    * Only valid when the data is parsed.    * -1 when the array is NULL.    */
+comment|/**    * The length of the array. Only valid when the data is parsed. -1 when the    * array is NULL.    */
 name|int
 name|arrayLength
 init|=
 literal|0
 decl_stmt|;
-comment|/**    * The start positions of array elements.    * Only valid when the data is parsed.    * Note that startPosition[arrayLength] = begin + length + 1;    * that makes sure we can use the same formula to compute the    * length of each element of the array.    */
+comment|/**    * The start positions of array elements. Only valid when the data is parsed.    * Note that startPosition[arrayLength] = begin + length + 1; that makes sure    * we can use the same formula to compute the length of each element of the    * array.    */
 name|int
 index|[]
 name|startPosition
@@ -137,12 +137,12 @@ name|boolean
 index|[]
 name|elementInited
 decl_stmt|;
-comment|/**    * The elements of the array. Note that we do arrayElements[i].    * init(bytes, begin, length) only when that element is accessed.    */
+comment|/**    * The elements of the array. Note that we do arrayElements[i]. init(bytes,    * begin, length) only when that element is accessed.    */
 name|LazyObject
 index|[]
 name|arrayElements
 decl_stmt|;
-comment|/**    * Construct a LazyArray object with the ObjectInspector.    * @param oi  the oi representing the type of this LazyArray as well as meta     *            information like separator etc.    */
+comment|/**    * Construct a LazyArray object with the ObjectInspector.    *     * @param oi    *          the oi representing the type of this LazyArray as well as meta    *          information like separator etc.    */
 specifier|protected
 name|LazyArray
 parameter_list|(
@@ -156,7 +156,7 @@ name|oi
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the row data for this LazyArray.    * @see LazyObject#init(ByteArrayRef, int, int)    */
+comment|/**    * Set the row data for this LazyArray.    *     * @see LazyObject#init(ByteArrayRef, int, int)    */
 annotation|@
 name|Override
 specifier|public
@@ -189,7 +189,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**    * Enlarge the size of arrays storing information for the elements inside     * the array.    */
+comment|/**    * Enlarge the size of arrays storing information for the elements inside the    * array.    */
 specifier|private
 name|void
 name|enlargeArrays
@@ -492,7 +492,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Returns the actual primitive object at the index position    * inside the array represented by this LazyObject.    */
+comment|/**    * Returns the actual primitive object at the index position inside the array    * represented by this LazyObject.    */
 specifier|public
 name|Object
 name|getListElementObject
@@ -690,7 +690,7 @@ name|getObject
 argument_list|()
 return|;
 block|}
-comment|/** Returns -1 for null array.    */
+comment|/**    * Returns -1 for null array.    */
 specifier|public
 name|int
 name|getListLength
@@ -710,14 +710,14 @@ return|return
 name|arrayLength
 return|;
 block|}
-comment|/**     * cachedList is reused every time getList is called.    * Different LazyArray instances cannot share the same cachedList.     */
+comment|/**    * cachedList is reused every time getList is called. Different LazyArray    * instances cannot share the same cachedList.    */
 name|ArrayList
 argument_list|<
 name|Object
 argument_list|>
 name|cachedList
 decl_stmt|;
-comment|/** Returns the List of actual primitive objects.    *  Returns null for null array.    */
+comment|/**    * Returns the List of actual primitive objects. Returns null for null array.    */
 specifier|public
 name|List
 argument_list|<

@@ -120,7 +120,9 @@ name|isNull
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * Returns the primitive object represented by this LazyObject.    * This is useful because it can make sure we have "null" for null objects.    */
+comment|/**    * Returns the primitive object represented by this LazyObject. This is useful    * because it can make sure we have "null" for null objects.    */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|getObject
@@ -147,6 +149,8 @@ else|:
 name|data
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -163,6 +167,8 @@ name|toString
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode

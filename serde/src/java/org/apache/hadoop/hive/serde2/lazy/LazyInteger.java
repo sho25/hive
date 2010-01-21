@@ -190,7 +190,7 @@ literal|true
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Parses the string argument as if it was an int value and returns the    * result. Throws NumberFormatException if the string does not represent an    * int quantity.    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of an int quantity.    * @return int the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as an int quantity.    */
+comment|/**    * Parses the string argument as if it was an int value and returns the    * result. Throws NumberFormatException if the string does not represent an    * int quantity.    *     * @param bytes    * @param start    * @param length    *          a UTF-8 encoded string representation of an int quantity.    * @return int the value represented by the argument    * @exception NumberFormatException    *              if the argument could not be parsed as an int quantity.    */
 specifier|public
 specifier|static
 name|int
@@ -222,7 +222,7 @@ literal|10
 argument_list|)
 return|;
 block|}
-comment|/**    * Parses the string argument as if it was an int value and returns the    * result. Throws NumberFormatException if the string does not represent an    * int quantity. The second argument specifies the radix to use when parsing    * the value.    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of an int quantity.    * @param radix    *            the base to use for conversion.    * @return    the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as an int quantity.    */
+comment|/**    * Parses the string argument as if it was an int value and returns the    * result. Throws NumberFormatException if the string does not represent an    * int quantity. The second argument specifies the radix to use when parsing    * the value.    *     * @param bytes    * @param start    * @param length    *          a UTF-8 encoded string representation of an int quantity.    * @param radix    *          the base to use for conversion.    * @return the value represented by the argument    * @exception NumberFormatException    *              if the argument could not be parsed as an int quantity.    */
 specifier|public
 specifier|static
 name|int
@@ -371,7 +371,7 @@ name|negative
 argument_list|)
 return|;
 block|}
-comment|/**    *     * @param bytes    * @param start    * @param length    *            a UTF-8 encoded string representation of an int quantity.    * @param radix    *            the base to use for conversion.    * @param offset    *            the starting position after the sign (if exists)    * @param radix    *            the base to use for conversion.    * @param negative    *            whether the number is negative.    * @return the value represented by the argument    * @exception NumberFormatException    *                if the argument could not be parsed as an int quantity.    */
+comment|/**    *     * @param bytes    * @param start    * @param length    *          a UTF-8 encoded string representation of an int quantity.    * @param radix    *          the base to use for conversion.    * @param offset    *          the starting position after the sign (if exists)    * @param radix    *          the base to use for conversion.    * @param negative    *          whether the number is negative.    * @return the value represented by the argument    * @exception NumberFormatException    *              if the argument could not be parsed as an int quantity.    */
 specifier|private
 specifier|static
 name|int
@@ -569,7 +569,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Writes out the text representation of an integer using base 10 to an     * OutputStream in UTF-8 encoding.    *    * Note: division by a constant (like 10) is much faster than division by    * a variable.  That's one of the reasons that we don't make radix a     * parameter here.    *      * @param out the outputstream to write to    * @param i   an int to write out    * @throws IOException     */
+comment|/**    * Writes out the text representation of an integer using base 10 to an    * OutputStream in UTF-8 encoding.    *     * Note: division by a constant (like 10) is much faster than division by a    * variable. That's one of the reasons that we don't make radix a parameter    * here.    *     * @param out    *          the outputstream to write to    * @param i    *          an int to write out    * @throws IOException    */
 specifier|public
 specifier|static
 name|void

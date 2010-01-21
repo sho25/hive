@@ -37,20 +37,6 @@ name|ObjectInspector
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|WritableComparator
-import|;
-end_import
-
 begin_comment
 comment|/**  * LazyPrimitive stores a primitive Object in a LazyObject.  */
 end_comment
@@ -83,7 +69,7 @@ specifier|protected
 name|int
 name|length
 decl_stmt|;
-comment|/**    * Create a LazyNonPrimitive object with the specified ObjectInspector.    * @param oi  The ObjectInspector would have to have a hierarchy of     *            LazyObjectInspectors with the leaf nodes being     *            WritableObjectInspectors.  It's used both for accessing the    *            type hierarchy of the complex object, as well as getting    *            meta information (separator, nullSequence, etc) when parsing    *            the lazy object.    */
+comment|/**    * Create a LazyNonPrimitive object with the specified ObjectInspector.    *     * @param oi    *          The ObjectInspector would have to have a hierarchy of    *          LazyObjectInspectors with the leaf nodes being    *          WritableObjectInspectors. It's used both for accessing the type    *          hierarchy of the complex object, as well as getting meta    *          information (separator, nullSequence, etc) when parsing the lazy    *          object.    */
 specifier|protected
 name|LazyNonPrimitive
 parameter_list|(
@@ -187,6 +173,8 @@ return|return
 name|this
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode

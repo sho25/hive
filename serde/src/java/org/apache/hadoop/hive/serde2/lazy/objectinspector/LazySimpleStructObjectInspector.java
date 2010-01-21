@@ -174,7 +174,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazySimpleStructObjectInspector works on struct data that is stored in LazyStruct.  *   * The names of the struct fields and the internal structure of the struct fields  * are specified in the ctor of the LazySimpleStructObjectInspector.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects, instead  * of directly creating an instance of this class.  */
+comment|/**  * LazySimpleStructObjectInspector works on struct data that is stored in  * LazyStruct.  *   * The names of the struct fields and the internal structure of the struct  * fields are specified in the ctor of the LazySimpleStructObjectInspector.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -283,6 +283,8 @@ return|return
 name|fieldObjectInspector
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -337,7 +339,7 @@ decl_stmt|;
 name|byte
 name|escapeChar
 decl_stmt|;
-comment|/** Call ObjectInspectorFactory.getLazySimpleStructObjectInspector instead.    */
+comment|/**    * Call ObjectInspectorFactory.getLazySimpleStructObjectInspector instead.    */
 specifier|protected
 name|LazySimpleStructObjectInspector
 parameter_list|(

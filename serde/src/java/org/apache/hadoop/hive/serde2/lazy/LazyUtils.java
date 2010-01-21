@@ -258,7 +258,7 @@ specifier|public
 class|class
 name|LazyUtils
 block|{
-comment|/**    * Returns the digit represented by character b.    * @param b  The ascii code of the character    * @param radix  The radix    * @return  -1 if it's invalid    */
+comment|/**    * Returns the digit represented by character b.    *     * @param b    *          The ascii code of the character    * @param radix    *          The radix    * @return -1 if it's invalid    */
 specifier|public
 specifier|static
 name|int
@@ -343,16 +343,18 @@ name|r
 operator|>=
 name|radix
 condition|)
+block|{
 name|r
 operator|=
 operator|-
 literal|1
 expr_stmt|;
+block|}
 return|return
 name|r
 return|;
 block|}
-comment|/**    * Returns -1 if the first byte sequence is lexicographically less than the second;    * returns +1 if the second byte sequence is lexicographically less than the first;    * otherwise return 0.    */
+comment|/**    * Returns -1 if the first byte sequence is lexicographically less than the    * second; returns +1 if the second byte sequence is lexicographically less    * than the first; otherwise return 0.    */
 specifier|public
 specifier|static
 name|int
@@ -460,24 +462,28 @@ name|length1
 operator|<
 name|length2
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 if|if
 condition|(
 name|length1
 operator|>
 name|length2
 condition|)
+block|{
 return|return
 literal|1
 return|;
+block|}
 return|return
 literal|0
 return|;
 block|}
-comment|/**    * Convert a UTF-8 byte array to String.    * @param bytes  The byte[] containing the UTF-8 String.    * @param start  The start position inside the bytes.    * @param length The length of the data, starting from "start"    * @return The unicode String    */
+comment|/**    * Convert a UTF-8 byte array to String.    *     * @param bytes    *          The byte[] containing the UTF-8 String.    * @param start    *          The start position inside the bytes.    * @param length    *          The length of the data, starting from "start"    * @return The unicode String    */
 specifier|public
 specifier|static
 name|String
@@ -558,7 +564,7 @@ block|,
 literal|'e'
 block|}
 decl_stmt|;
-comment|/**    * Write the bytes with special characters escaped.    * @param escaped     Whether the data should be written out in an escaped way.    * @param escapeChar  if escaped, the char for prefixing special characters.    * @param needsEscape if escaped, whether a specific character needs escaping.    *                    This array should have size of 128.    */
+comment|/**    * Write the bytes with special characters escaped.    *     * @param escaped    *          Whether the data should be written out in an escaped way.    * @param escapeChar    *          if escaped, the char for prefixing special characters.    * @param needsEscape    *          if escaped, whether a specific character needs escaping. This    *          array should have size of 128.    */
 specifier|private
 specifier|static
 name|void
@@ -700,7 +706,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Write out the text representation of a Primitive Object to a UTF8 byte stream.    * @param out  The UTF8 byte OutputStream    * @param o    The primitive Object    * @param needsEscape  Whether a character needs escaping. This array should have size of 128.     */
+comment|/**    * Write out the text representation of a Primitive Object to a UTF8 byte    * stream.    *     * @param out    *          The UTF8 byte OutputStream    * @param o    *          The primitive Object    * @param needsEscape    *          Whether a character needs escaping. This array should have size of    *          128.    */
 specifier|public
 specifier|static
 name|void
@@ -1089,6 +1095,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|hash
 operator|=
 operator|(
@@ -1097,14 +1104,12 @@ operator|*
 name|hash
 operator|)
 operator|+
-operator|(
-name|int
-operator|)
 name|data
 index|[
 name|i
 index|]
 expr_stmt|;
+block|}
 return|return
 name|hash
 return|;
