@@ -32,7 +32,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An interface for TProtocols that actually write out nulls -   * This should be for all those that don't actually use  * fieldids in the written data like TCTLSeparatedProtocol.  *   */
+comment|/**  * An interface for TProtocols that actually write out nulls - This should be  * for all those that don't actually use fieldids in the written data like  * TCTLSeparatedProtocol.  *   */
 end_comment
 
 begin_interface
@@ -40,7 +40,7 @@ specifier|public
 interface|interface
 name|WriteNullsProtocol
 block|{
-comment|/**    * Was the last primitive read really a NULL. Need    * only be called when the value of the primitive    * was 0. ie the protocol should return 0 on nulls    * and the caller will then check if it was actually null    * For boolean this is false.    */
+comment|/**    * Was the last primitive read really a NULL. Need only be called when the    * value of the primitive was 0. ie the protocol should return 0 on nulls and    * the caller will then check if it was actually null For boolean this is    * false.    */
 specifier|public
 name|boolean
 name|lastPrimitiveWasNull
@@ -48,7 +48,7 @@ parameter_list|()
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Write a null     */
+comment|/**    * Write a null    */
 specifier|public
 name|void
 name|writeNull

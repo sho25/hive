@@ -50,7 +50,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** A Map Type has homogeneous keys and homogeneous values.  *  All keys of the Map have the same TypeInfo, which is returned by  *  getMapKeyTypeInfo(); and all values of the Map has the same TypeInfo,  *  which is returned by getMapValueTypeInfo().  *    *  Always use the TypeInfoFactory to create new TypeInfo objects, instead  *  of directly creating an instance of this class.   */
+comment|/**  * A Map Type has homogeneous keys and homogeneous values. All keys of the Map  * have the same TypeInfo, which is returned by getMapKeyTypeInfo(); and all  * values of the Map has the same TypeInfo, which is returned by  * getMapValueTypeInfo().  *   * Always use the TypeInfoFactory to create new TypeInfo objects, instead of  * directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -76,11 +76,13 @@ decl_stmt|;
 name|TypeInfo
 name|mapValueTypeInfo
 decl_stmt|;
-comment|/** For java serialization use only.    */
+comment|/**    * For java serialization use only.    */
 specifier|public
 name|MapTypeInfo
 parameter_list|()
-block|{}
+block|{   }
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getTypeName
@@ -118,7 +120,7 @@ operator|+
 literal|">"
 return|;
 block|}
-comment|/** For java serialization use only.    */
+comment|/**    * For java serialization use only.    */
 specifier|public
 name|void
 name|setMapKeyTypeInfo
@@ -134,7 +136,7 @@ operator|=
 name|mapKeyTypeInfo
 expr_stmt|;
 block|}
-comment|/** For java serialization use only.    */
+comment|/**    * For java serialization use only.    */
 specifier|public
 name|void
 name|setMapValueTypeInfo
@@ -160,19 +162,17 @@ name|TypeInfo
 name|valueTypeInfo
 parameter_list|)
 block|{
-name|this
-operator|.
 name|mapKeyTypeInfo
 operator|=
 name|keyTypeInfo
 expr_stmt|;
-name|this
-operator|.
 name|mapValueTypeInfo
 operator|=
 name|valueTypeInfo
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Category
 name|getCategory
@@ -202,6 +202,8 @@ return|return
 name|mapValueTypeInfo
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -216,9 +218,11 @@ name|this
 operator|==
 name|other
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -276,6 +280,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode

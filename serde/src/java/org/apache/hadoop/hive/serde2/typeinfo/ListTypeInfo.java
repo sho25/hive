@@ -50,7 +50,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** A List Type has homogeneous elements.  All elements of the List has  *  the same TypeInfo which is returned by getListElementTypeInfo.  *    *  Always use the TypeInfoFactory to create new TypeInfo objects, instead  *  of directly creating an instance of this class.   */
+comment|/**  * A List Type has homogeneous elements. All elements of the List has the same  * TypeInfo which is returned by getListElementTypeInfo.  *   * Always use the TypeInfoFactory to create new TypeInfo objects, instead of  * directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -73,11 +73,13 @@ decl_stmt|;
 name|TypeInfo
 name|listElementTypeInfo
 decl_stmt|;
-comment|/** For java serialization use only.    */
+comment|/**    * For java serialization use only.    */
 specifier|public
 name|ListTypeInfo
 parameter_list|()
-block|{}
+block|{   }
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getTypeName
@@ -108,7 +110,7 @@ operator|+
 literal|">"
 return|;
 block|}
-comment|/** For java serialization use only.    */
+comment|/**    * For java serialization use only.    */
 specifier|public
 name|void
 name|setListElementTypeInfo
@@ -124,20 +126,20 @@ operator|=
 name|listElementTypeInfo
 expr_stmt|;
 block|}
-comment|/** For TypeInfoFactory use only.    */
+comment|/**    * For TypeInfoFactory use only.    */
 name|ListTypeInfo
 parameter_list|(
 name|TypeInfo
 name|elementTypeInfo
 parameter_list|)
 block|{
-name|this
-operator|.
 name|listElementTypeInfo
 operator|=
 name|elementTypeInfo
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Category
 name|getCategory
@@ -158,6 +160,8 @@ return|return
 name|listElementTypeInfo
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -172,9 +176,11 @@ name|this
 operator|==
 name|other
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -221,6 +227,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode

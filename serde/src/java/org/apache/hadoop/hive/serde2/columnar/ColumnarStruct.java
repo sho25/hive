@@ -45,17 +45,35 @@ name|java
 operator|.
 name|util
 operator|.
-name|Collections
+name|List
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|List
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
 import|;
 end_import
 
@@ -199,34 +217,6 @@ name|Text
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
 begin_comment
 comment|/**  * ColumnarStruct is different from LazyStruct in that ColumnarStruct's field  * Object get parsed at its initialize time when call  * {@link #init(BytesRefArrayWritable cols)}, while LazyStruct parse fields in a  * lazy way.  *   */
 end_comment
@@ -279,7 +269,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Construct a ColumnarStruct object with the TypeInfo. It creates the first    * level object at the first place    *     * @param oi    *          the ObjectInspector representing the type of this LazyStruct.    * @param notSkippedColumnIDs    * 		  the column ids that should not be skipped           */
+comment|/**    * Construct a ColumnarStruct object with the TypeInfo. It creates the first    * level object at the first place    *     * @param oi    *          the ObjectInspector representing the type of this LazyStruct.    * @param notSkippedColumnIDs    *          the column ids that should not be skipped    */
 specifier|public
 name|ColumnarStruct
 parameter_list|(
@@ -359,7 +349,8 @@ index|[
 name|num
 index|]
 expr_stmt|;
-comment|//if no columns is set to be skipped, add all columns in 'notSkippedColumnIDs'
+comment|// if no columns is set to be skipped, add all columns in
+comment|// 'notSkippedColumnIDs'
 if|if
 condition|(
 name|notSkippedColumnIDs
@@ -388,6 +379,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|notSkippedColumnIDs
 operator|.
 name|add
@@ -395,6 +387,7 @@ argument_list|(
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 for|for
 control|(
@@ -467,6 +460,7 @@ literal|true
 expr_stmt|;
 block|}
 else|else
+block|{
 name|inited
 index|[
 name|i
@@ -474,6 +468,7 @@ index|]
 operator|=
 literal|false
 expr_stmt|;
+block|}
 block|}
 comment|// maintain a list of non-NULL column IDs
 name|int
@@ -621,9 +616,11 @@ index|[
 name|fieldID
 index|]
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -779,7 +776,7 @@ name|getObject
 argument_list|()
 return|;
 block|}
-comment|/*  ============================  [PERF] ===================================    *  This function is called for every row. Setting up the selected/projected     *  columns at the first call, and don't do that for the following calls.     *  Ideally this should be done in the constructor where we don't need to     *  branch in the function for each row.     *  =========================================================================    */
+comment|/*    * ============================ [PERF] ===================================    * This function is called for every row. Setting up the selected/projected    * columns at the first call, and don't do that for the following calls.    * Ideally this should be done in the constructor where we don't need to    * branch in the function for each row.    * =========================================================================    */
 specifier|public
 name|void
 name|init

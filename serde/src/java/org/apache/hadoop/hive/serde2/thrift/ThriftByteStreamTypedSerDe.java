@@ -240,6 +240,8 @@ name|inTransport
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -306,6 +308,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|ObjectInspectorFactory
 operator|.
@@ -321,6 +325,8 @@ operator|.
 name|THRIFT
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|deserialize

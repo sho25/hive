@@ -46,7 +46,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An interface for TProtocols that can write out data in hadoop Text objects  * (UTF-8 encoded String).  This helps a lot with performance because we don't  * need to do unnecessary UTF-8 decoding and encoding loops.      */
+comment|/**  * An interface for TProtocols that can write out data in hadoop Text objects  * (UTF-8 encoded String). This helps a lot with performance because we don't  * need to do unnecessary UTF-8 decoding and encoding loops.  */
 end_comment
 
 begin_interface

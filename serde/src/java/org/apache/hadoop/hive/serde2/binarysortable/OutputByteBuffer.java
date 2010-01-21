@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is much more efficient than ByteArrayOutputStream  * because none of the methods are synchronized.  */
+comment|/**  * This class is much more efficient than ByteArrayOutputStream because none of  * the methods are synchronized.  */
 end_comment
 
 begin_class
@@ -79,7 +79,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Write one byte to the byte buffer.    * Final method to help inlining.    * @param invert whether we want to invert all the bits.     */
+comment|/**    * Write one byte to the byte buffer. Final method to help inlining.    *     * @param invert    *          whether we want to invert all the bits.    */
 specifier|public
 specifier|final
 name|void

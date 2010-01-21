@@ -330,7 +330,8 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-comment|// For backward compatibility: this class replaces the columnsetSerDe class.
+comment|// For backward compatibility: this class replaces the columnsetSerDe
+comment|// class.
 name|SerDeUtils
 operator|.
 name|registerSerDe
@@ -409,6 +410,8 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -760,7 +763,7 @@ name|splitLimit
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Split the row into columns.    * @param limit  up to limit columns will be produced (the last column takes all the rest), -1 for unlimited.    * @return The ColumnSet object    * @throws Exception    */
+comment|/**    * Split the row into columns.    *     * @param limit    *          up to limit columns will be produced (the last column takes all    *          the rest), -1 for unlimited.    * @return The ColumnSet object    * @throws Exception    */
 specifier|public
 specifier|static
 name|Object
@@ -1176,6 +1179,7 @@ name|i
 operator|>
 literal|0
 condition|)
+block|{
 name|sb
 operator|.
 name|append
@@ -1183,6 +1187,7 @@ argument_list|(
 name|separator
 argument_list|)
 expr_stmt|;
+block|}
 name|Object
 name|column
 init|=

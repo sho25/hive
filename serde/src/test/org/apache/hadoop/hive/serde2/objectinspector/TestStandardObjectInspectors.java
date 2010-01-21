@@ -51,6 +51,16 @@ end_import
 
 begin_import
 import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -244,16 +254,6 @@ operator|.
 name|io
 operator|.
 name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
 import|;
 end_import
 
@@ -808,9 +808,6 @@ name|Integer
 operator|.
 name|class
 argument_list|,
-operator|(
-name|int
-operator|)
 literal|1
 argument_list|)
 expr_stmt|;
@@ -1918,6 +1915,7 @@ name|i
 operator|>
 literal|0
 condition|)
+block|{
 name|structTypeName
 operator|.
 name|append
@@ -1925,6 +1923,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|structTypeName
 operator|.
 name|append

@@ -54,7 +54,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Extensions to bytearrayinput/output streams  *  */
+comment|/**  * Extensions to bytearrayinput/output streams  *   */
 end_comment
 
 begin_class
@@ -175,6 +175,8 @@ name|Output
 extends|extends
 name|NonSyncByteArrayOutputStream
 block|{
+annotation|@
+name|Override
 specifier|public
 name|byte
 index|[]

@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -55,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
+name|List
 import|;
 end_import
 
@@ -65,7 +55,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Map
 import|;
 end_import
 
@@ -98,6 +88,16 @@ operator|.
 name|Map
 operator|.
 name|Entry
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
 import|;
 end_import
 
@@ -143,24 +143,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|dynamic_type
-operator|.
-name|DynamicSerDe
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
@@ -182,32 +164,6 @@ operator|.
 name|thrift
 operator|.
 name|TCTLSeparatedProtocol
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde
-operator|.
-name|Constants
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
 import|;
 end_import
 
@@ -1759,28 +1715,34 @@ name|b
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|0
 return|;
+block|}
 if|if
 condition|(
 name|a
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 if|if
 condition|(
 name|b
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|1
 return|;
+block|}
 if|if
 condition|(
 name|a
@@ -1861,9 +1823,11 @@ name|r
 operator|!=
 literal|0
 condition|)
+block|{
 return|return
 name|r
 return|;
+block|}
 block|}
 return|return
 literal|0
@@ -1905,10 +1869,12 @@ operator|.
 name|doubleValue
 argument_list|()
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 if|if
 condition|(
 name|na
@@ -1921,9 +1887,11 @@ operator|.
 name|doubleValue
 argument_list|()
 condition|)
+block|{
 return|return
 literal|1
 return|;
+block|}
 return|return
 literal|0
 return|;
@@ -1990,6 +1958,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 for|for
 control|(
 name|int
@@ -2008,6 +1977,7 @@ condition|;
 name|j
 operator|++
 control|)
+block|{
 if|if
 condition|(
 name|compare
@@ -2051,6 +2021,8 @@ index|]
 operator|=
 name|t
 expr_stmt|;
+block|}
+block|}
 block|}
 block|}
 specifier|public
@@ -2297,7 +2269,8 @@ argument_list|(
 name|structs
 argument_list|)
 expr_stmt|;
-comment|// Null should be smaller than any other value, so put a null at the front end
+comment|// Null should be smaller than any other value, so put a null at the front
+comment|// end
 comment|// to test whether that is held.
 operator|(
 operator|(
@@ -2434,7 +2407,8 @@ argument_list|(
 name|structs
 argument_list|)
 expr_stmt|;
-comment|// Null should be smaller than any other value, so put a null at the front end
+comment|// Null should be smaller than any other value, so put a null at the front
+comment|// end
 comment|// to test whether that is held.
 operator|(
 operator|(
@@ -2567,7 +2541,8 @@ argument_list|(
 name|structs
 argument_list|)
 expr_stmt|;
-comment|// Null should be smaller than any other value, so put a null at the front end
+comment|// Null should be smaller than any other value, so put a null at the front
+comment|// end
 comment|// to test whether that is held.
 operator|(
 operator|(
@@ -2735,7 +2710,8 @@ argument_list|(
 name|structs
 argument_list|)
 expr_stmt|;
-comment|// Null should be smaller than any other value, so put a null at the front end
+comment|// Null should be smaller than any other value, so put a null at the front
+comment|// end
 comment|// to test whether that is held.
 operator|(
 operator|(
@@ -3918,7 +3894,8 @@ literal|2
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//      assertEquals(o, struct); Cannot do this because types of null lists are wrong.
+comment|// assertEquals(o, struct); Cannot do this because types of null lists are
+comment|// wrong.
 block|}
 catch|catch
 parameter_list|(
@@ -4232,7 +4209,8 @@ literal|2
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//      assertEquals(o, struct); Cannot do this because types of null lists are wrong.
+comment|// assertEquals(o, struct); Cannot do this because types of null lists are
+comment|// wrong.
 block|}
 catch|catch
 parameter_list|(
@@ -4580,7 +4558,8 @@ operator|==
 literal|0
 argument_list|)
 expr_stmt|;
-comment|//      assertEquals(o, struct); Cannot do this because types of null lists are wrong.
+comment|// assertEquals(o, struct); Cannot do this because types of null lists are
+comment|// wrong.
 block|}
 catch|catch
 parameter_list|(
@@ -4615,7 +4594,8 @@ operator|new
 name|Properties
 argument_list|()
 decl_stmt|;
-comment|//      schema.setProperty(Constants.SERIALIZATION_FORMAT, org.apache.thrift.protocol.TJSONProtocol.class.getName());
+comment|// schema.setProperty(Constants.SERIALIZATION_FORMAT,
+comment|// org.apache.thrift.protocol.TJSONProtocol.class.getName());
 name|schema
 operator|.
 name|setProperty

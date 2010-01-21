@@ -43,24 +43,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|ObjectInspector
 operator|.
 name|Category
@@ -108,7 +90,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** There are limited number of Primitive Types.  *  All Primitive Types are defined by TypeInfoFactory.isPrimitiveClass().  *    *  Always use the TypeInfoFactory to create new TypeInfo objects, instead  *  of directly creating an instance of this class.   */
+comment|/**  * There are limited number of Primitive Types. All Primitive Types are defined  * by TypeInfoFactory.isPrimitiveClass().  *   * Always use the TypeInfoFactory to create new TypeInfo objects, instead of  * directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -131,12 +113,12 @@ decl_stmt|;
 name|String
 name|typeName
 decl_stmt|;
-comment|/** For java serialization use only.    */
+comment|/**    * For java serialization use only.    */
 specifier|public
 name|PrimitiveTypeInfo
 parameter_list|()
-block|{}
-comment|/** For TypeInfoFactory use only.    */
+block|{   }
+comment|/**    * For TypeInfoFactory use only.    */
 name|PrimitiveTypeInfo
 parameter_list|(
 name|String
@@ -234,6 +216,8 @@ operator|=
 name|typeName
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getTypeName
@@ -243,7 +227,9 @@ return|return
 name|typeName
 return|;
 block|}
-comment|/**    * Compare if 2 TypeInfos are the same.    * We use TypeInfoFactory to cache TypeInfos, so we only     * need to compare the Object pointer.    */
+comment|/**    * Compare if 2 TypeInfos are the same. We use TypeInfoFactory to cache    * TypeInfos, so we only need to compare the Object pointer.    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -259,6 +245,8 @@ name|other
 return|;
 block|}
 comment|/**    * Generate the hashCode for this TypeInfo.    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode

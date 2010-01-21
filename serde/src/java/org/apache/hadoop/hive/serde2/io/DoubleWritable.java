@@ -176,6 +176,8 @@ name|value
 return|;
 block|}
 comment|/**    * Returns true iff<code>o</code> is a DoubleWritable with the same value.    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -207,8 +209,6 @@ operator|)
 name|o
 decl_stmt|;
 return|return
-name|this
-operator|.
 name|value
 operator|==
 name|other
@@ -216,6 +216,8 @@ operator|.
 name|value
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -274,6 +276,8 @@ operator|)
 operator|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -308,6 +312,8 @@ name|class
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare

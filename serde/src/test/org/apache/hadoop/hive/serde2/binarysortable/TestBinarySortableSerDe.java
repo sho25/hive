@@ -71,6 +71,16 @@ end_import
 
 begin_import
 import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -220,16 +230,6 @@ operator|.
 name|ObjectInspectorFactory
 operator|.
 name|ObjectInspectorOptions
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
 import|;
 end_import
 
@@ -963,6 +963,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 for|for
 control|(
 name|int
@@ -981,6 +982,7 @@ condition|;
 name|j
 operator|++
 control|)
+block|{
 if|if
 condition|(
 name|ObjectInspectorUtils
@@ -1030,6 +1032,8 @@ index|]
 operator|=
 name|t
 expr_stmt|;
+block|}
+block|}
 block|}
 block|}
 specifier|public
@@ -1154,9 +1158,6 @@ name|result
 operator|.
 name|add
 argument_list|(
-operator|(
-name|int
-operator|)
 name|r
 operator|.
 name|nextInt

@@ -19,6 +19,30 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -49,32 +73,8 @@ name|Writable
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Properties
-import|;
-end_import
-
 begin_comment
-comment|/**  * HiveDeserializer is used to deserialize the data from hadoop Writable to a   * custom java object that can be of any type that the developer wants.  *   * HiveDeserializer also provides the ObjectInspector which can be used to inspect   * the internal structure of the object (that is returned by deserialize function).  *  */
+comment|/**  * HiveDeserializer is used to deserialize the data from hadoop Writable to a  * custom java object that can be of any type that the developer wants.  *   * HiveDeserializer also provides the ObjectInspector which can be used to  * inspect the internal structure of the object (that is returned by deserialize  * function).  *   */
 end_comment
 
 begin_interface
@@ -82,7 +82,7 @@ specifier|public
 interface|interface
 name|Deserializer
 block|{
-comment|/**    * Initialize the HiveDeserializer.    * @param conf System properties    * @param tbl  table properties    * @throws SerDeException    */
+comment|/**    * Initialize the HiveDeserializer.    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
 specifier|public
 name|void
 name|initialize
@@ -96,7 +96,7 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
-comment|/**    * Deserialize an object out of a Writable blob.    * In most cases, the return value of this function will be constant since the function    * will reuse the returned object.    * If the client wants to keep a copy of the object, the client needs to clone the    * returned value by calling ObjectInspectorUtils.getStandardObject().    * @param blob The Writable object containing a serialized object    * @return A Java object representing the contents in the blob.    */
+comment|/**    * Deserialize an object out of a Writable blob. In most cases, the return    * value of this function will be constant since the function will reuse the    * returned object. If the client wants to keep a copy of the object, the    * client needs to clone the returned value by calling    * ObjectInspectorUtils.getStandardObject().    *     * @param blob    *          The Writable object containing a serialized object    * @return A Java object representing the contents in the blob.    */
 specifier|public
 name|Object
 name|deserialize

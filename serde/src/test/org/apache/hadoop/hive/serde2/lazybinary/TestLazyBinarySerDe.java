@@ -91,6 +91,16 @@ end_import
 
 begin_import
 import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -367,16 +377,6 @@ name|BytesWritable
 import|;
 end_import
 
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -384,7 +384,7 @@ name|TestLazyBinarySerDe
 extends|extends
 name|TestCase
 block|{
-comment|/**    * Generate a random struct array    * @param r   random number generator    * @return    an struct array    */
+comment|/**    * Generate a random struct array    *     * @param r    *          random number generator    * @return an struct array    */
 specifier|static
 name|List
 argument_list|<
@@ -465,7 +465,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Initialize the LazyBinarySerDe    * @param fieldNames    table field names    * @param fieldTypes    table field types    * @return              the initialized LazyBinarySerDe    * @throws Throwable    */
+comment|/**    * Initialize the LazyBinarySerDe    *     * @param fieldNames    *          table field names    * @param fieldTypes    *          table field types    * @return the initialized LazyBinarySerDe    * @throws Throwable    */
 specifier|private
 name|SerDe
 name|getSerDe
@@ -530,7 +530,7 @@ return|return
 name|serde
 return|;
 block|}
-comment|/**    * Test the LazyBinarySerDe.    * @param rows        array of structs to be serialized     * @param rowOI       array of struct object inspectors    * @param serde       the serde    * @throws Throwable      */
+comment|/**    * Test the LazyBinarySerDe.    *     * @param rows    *          array of structs to be serialized    * @param rowOI    *          array of struct object inspectors    * @param serde    *          the serde    * @throws Throwable    */
 specifier|private
 name|void
 name|testLazyBinarySerDe
@@ -782,7 +782,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Compare two structs that have different number of fields.     * We just compare the first few common fields, ignoring the     * fields existing in one struct but not the other.    *     * @see ObjectInspectorUtils#compare(Object, ObjectInspector, Object, ObjectInspector)     */
+comment|/**    * Compare two structs that have different number of fields. We just compare    * the first few common fields, ignoring the fields existing in one struct but    * not the other.    *     * @see ObjectInspectorUtils#compare(Object, ObjectInspector, Object,    *      ObjectInspector)    */
 name|int
 name|compareDiffSizedStructs
 parameter_list|(
@@ -946,7 +946,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Test shorter schema deserialization where a bigger struct is serialized     * and it is then deserialized with a smaller struct.    * Here the serialized struct has 10 fields and we deserialized to a     * struct of 9 fields.    */
+comment|/**    * Test shorter schema deserialization where a bigger struct is serialized and    * it is then deserialized with a smaller struct. Here the serialized struct    * has 10 fields and we deserialized to a struct of 9 fields.    */
 specifier|private
 name|void
 name|testShorterSchemaDeserialization
@@ -1006,14 +1006,11 @@ argument_list|,
 name|fieldTypes1
 argument_list|)
 decl_stmt|;
-name|ObjectInspector
-name|serdeOI1
-init|=
 name|serde1
 operator|.
 name|getObjectInspector
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|StructObjectInspector
 name|rowOI2
 init|=
@@ -1525,7 +1522,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Test shorter schema deserialization where a bigger struct is serialized     * and it is then deserialized with a smaller struct.    * Here the serialized struct has 9 fields and we deserialized to a     * struct of 8 fields.    */
+comment|/**    * Test shorter schema deserialization where a bigger struct is serialized and    * it is then deserialized with a smaller struct. Here the serialized struct    * has 9 fields and we deserialized to a struct of 8 fields.    */
 specifier|private
 name|void
 name|testShorterSchemaDeserialization1
@@ -1585,14 +1582,11 @@ argument_list|,
 name|fieldTypes1
 argument_list|)
 decl_stmt|;
-name|ObjectInspector
-name|serdeOI1
-init|=
 name|serde1
 operator|.
 name|getObjectInspector
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|StructObjectInspector
 name|rowOI2
 init|=
@@ -1994,7 +1988,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Test longer schema deserialization where a smaller struct is serialized     * and it is then deserialized with a bigger struct    * Here the serialized struct has 9 fields and we deserialized to a     * struct of 10 fields.    */
+comment|/**    * Test longer schema deserialization where a smaller struct is serialized and    * it is then deserialized with a bigger struct Here the serialized struct has    * 9 fields and we deserialized to a struct of 10 fields.    */
 name|void
 name|testLongerSchemaDeserialization
 parameter_list|(
@@ -2053,14 +2047,11 @@ argument_list|,
 name|fieldTypes1
 argument_list|)
 decl_stmt|;
-name|ObjectInspector
-name|serdeOI1
-init|=
 name|serde1
 operator|.
 name|getObjectInspector
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|StructObjectInspector
 name|rowOI2
 init|=
@@ -2462,7 +2453,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Test longer schema deserialization where a smaller struct is serialized     * and it is then deserialized with a bigger struct    * Here the serialized struct has 8 fields and we deserialized to a     * struct of 9 fields.    */
+comment|/**    * Test longer schema deserialization where a smaller struct is serialized and    * it is then deserialized with a bigger struct Here the serialized struct has    * 8 fields and we deserialized to a struct of 9 fields.    */
 name|void
 name|testLongerSchemaDeserialization1
 parameter_list|(
@@ -2521,14 +2512,11 @@ argument_list|,
 name|fieldTypes1
 argument_list|)
 decl_stmt|;
-name|ObjectInspector
-name|serdeOI1
-init|=
 name|serde1
 operator|.
 name|getObjectInspector
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|StructObjectInspector
 name|rowOI2
 init|=
@@ -3031,9 +3019,6 @@ decl_stmt|;
 name|StructObjectInspector
 name|soi2
 init|=
-operator|(
-name|StructObjectInspector
-operator|)
 name|rowOI
 decl_stmt|;
 name|List
@@ -3434,6 +3419,7 @@ condition|(
 operator|!
 name|bEqual
 condition|)
+block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -3449,7 +3435,8 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * The test entrance function    * @throws Throwable    */
+block|}
+comment|/**    * The test entrance function    *     * @throws Throwable    */
 specifier|public
 name|void
 name|testLazyBinarySerDe

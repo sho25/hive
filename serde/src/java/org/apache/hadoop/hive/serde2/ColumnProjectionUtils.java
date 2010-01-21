@@ -67,7 +67,7 @@ name|READ_COLUMN_IDS_CONF_STR
 init|=
 literal|"hive.io.file.readcolumn.ids"
 decl_stmt|;
-comment|/** 	 * Sets read columns' ids(start from zero) for RCFile's Reader. Once a column 	 * is included in the list, RCFile's reader will not skip its value. 	 *  	 */
+comment|/**    * Sets read columns' ids(start from zero) for RCFile's Reader. Once a column    * is included in the list, RCFile's reader will not skip its value.    *     */
 specifier|public
 specifier|static
 name|void
@@ -99,7 +99,7 @@ name|id
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** 	 * Sets read columns' ids(start from zero) for RCFile's Reader. Once a column 	 * is included in the list, RCFile's reader will not skip its value. 	 *  	 */
+comment|/**    * Sets read columns' ids(start from zero) for RCFile's Reader. Once a column    * is included in the list, RCFile's reader will not skip its value.    *     */
 specifier|public
 specifier|static
 name|void
@@ -153,6 +153,7 @@ name|old
 operator|!=
 literal|null
 condition|)
+block|{
 name|newConfStr
 operator|=
 name|newConfStr
@@ -163,6 +164,7 @@ name|COMMA_STR
 operator|+
 name|old
 expr_stmt|;
+block|}
 name|setReadColumnIDConf
 argument_list|(
 name|conf
@@ -304,7 +306,7 @@ return|return
 name|id
 return|;
 block|}
-comment|/** 	 * Returns an array of column ids(start from zero) which is set in the given 	 * parameter<tt>conf</tt>. 	 */
+comment|/**    * Returns an array of column ids(start from zero) which is set in the given    * parameter<tt>conf</tt>.    */
 specifier|public
 specifier|static
 name|ArrayList
@@ -323,6 +325,7 @@ name|conf
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 operator|new
 name|ArrayList
@@ -333,6 +336,7 @@ argument_list|(
 literal|0
 argument_list|)
 return|;
+block|}
 name|String
 name|skips
 init|=
@@ -375,22 +379,13 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|String
+name|element
+range|:
 name|list
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
-comment|//it may contain duplicates, remove duplicates
+comment|// it may contain duplicates, remove duplicates
 name|Integer
 name|toAdd
 init|=
@@ -398,10 +393,7 @@ name|Integer
 operator|.
 name|parseInt
 argument_list|(
-name|list
-index|[
-name|i
-index|]
+name|element
 argument_list|)
 decl_stmt|;
 if|if
@@ -414,6 +406,7 @@ argument_list|(
 name|toAdd
 argument_list|)
 condition|)
+block|{
 name|result
 operator|.
 name|add
@@ -422,11 +415,12 @@ name|toAdd
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 return|return
 name|result
 return|;
 block|}
-comment|/** 	 * Clears the read column ids set in the conf, and will read all columns. 	 */
+comment|/**    * Clears the read column ids set in the conf, and will read all columns.    */
 specifier|public
 specifier|static
 name|void

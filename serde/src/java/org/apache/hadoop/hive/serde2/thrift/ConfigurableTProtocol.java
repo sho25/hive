@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -30,16 +40,6 @@ operator|.
 name|conf
 operator|.
 name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Properties
 import|;
 end_import
 
@@ -56,7 +56,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An interface for TProtocols that need to have properties passed in to   *  initialize them. e.g., separators for TCTLSeparatedProtocol.  *  If there was a regex like deserializer, the regex could be passed in  *  in this manner.  */
+comment|/**  * An interface for TProtocols that need to have properties passed in to  * initialize them. e.g., separators for TCTLSeparatedProtocol. If there was a  * regex like deserializer, the regex could be passed in in this manner.  */
 end_comment
 
 begin_interface
@@ -64,7 +64,7 @@ specifier|public
 interface|interface
 name|ConfigurableTProtocol
 block|{
-comment|/**    * Initialize the TProtocol    * @param conf System properties    * @param tbl  table properties    * @throws TException    */
+comment|/**    * Initialize the TProtocol    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws TException    */
 specifier|public
 name|void
 name|initialize

@@ -1721,7 +1721,7 @@ name|readStructEnd
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Tests a sample apache log format. This is actually better done in general with a more TRegexLike protocol, but for this    * case, TCTLSeparatedProtocol can do it.     */
+comment|/**    * Tests a sample apache log format. This is actually better done in general    * with a more TRegexLike protocol, but for this case, TCTLSeparatedProtocol    * can do it.    */
 specifier|public
 name|void
 name|test1ApacheLogFormat
@@ -1786,7 +1786,8 @@ operator|new
 name|Properties
 argument_list|()
 decl_stmt|;
-comment|// this is a hacky way of doing the quotes since it will match any 2 of these, so
+comment|// this is a hacky way of doing the quotes since it will match any 2 of
+comment|// these, so
 comment|// "[ hello this is something to split [" would be considered to be quoted.
 name|schema
 operator|.
@@ -1864,7 +1865,7 @@ argument_list|,
 name|ip
 argument_list|)
 expr_stmt|;
-comment|//  identd
+comment|// identd
 name|prot
 operator|.
 name|readFieldBegin
@@ -1889,7 +1890,7 @@ argument_list|(
 name|identd
 argument_list|)
 expr_stmt|;
-comment|//  user
+comment|// user
 name|prot
 operator|.
 name|readFieldBegin
@@ -1916,7 +1917,7 @@ argument_list|,
 name|user
 argument_list|)
 expr_stmt|;
-comment|//  finishTime
+comment|// finishTime
 name|prot
 operator|.
 name|readFieldBegin
@@ -1943,7 +1944,7 @@ argument_list|,
 name|finishTime
 argument_list|)
 expr_stmt|;
-comment|//  requestLine
+comment|// requestLine
 name|prot
 operator|.
 name|readFieldBegin
@@ -1970,7 +1971,7 @@ argument_list|,
 name|requestLine
 argument_list|)
 expr_stmt|;
-comment|//  returncode
+comment|// returncode
 name|prot
 operator|.
 name|readFieldBegin
@@ -1997,7 +1998,7 @@ argument_list|,
 name|returnCode
 argument_list|)
 expr_stmt|;
-comment|//  return size
+comment|// return size
 name|prot
 operator|.
 name|readFieldBegin

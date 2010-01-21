@@ -315,7 +315,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Returns a copy of the underlying bytes referenced by this instance.    *     * @return a new copied byte array    * @throws IOException     */
+comment|/**    * Returns a copy of the underlying bytes referenced by this instance.    *     * @return a new copied byte array    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -356,7 +356,7 @@ return|return
 name|bb
 return|;
 block|}
-comment|/**    * Returns the underlying bytes.    * @throws IOException     */
+comment|/**    * Returns the underlying bytes.    *     * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -553,6 +553,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -566,6 +568,8 @@ argument_list|()
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -679,6 +683,7 @@ name|other
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalArgumentException
@@ -686,15 +691,18 @@ argument_list|(
 literal|"Argument can not be null."
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|this
 operator|==
 name|other
 condition|)
+block|{
 return|return
 literal|0
 return|;
+block|}
 try|try
 block|{
 return|return
@@ -742,6 +750,8 @@ throw|;
 block|}
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -763,9 +773,11 @@ operator|instanceof
 name|BytesRefWritable
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 name|compareTo
 argument_list|(

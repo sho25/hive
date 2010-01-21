@@ -21,6 +21,92 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|EOFException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|nio
+operator|.
+name|charset
+operator|.
+name|CharacterCodingException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|NoSuchElementException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|StringTokenizer
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Matcher
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Pattern
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -44,6 +130,20 @@ operator|.
 name|logging
 operator|.
 name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
 import|;
 end_import
 
@@ -97,21 +197,9 @@ name|apache
 operator|.
 name|thrift
 operator|.
-name|transport
+name|protocol
 operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|*
+name|TField
 import|;
 end_import
 
@@ -125,73 +213,7 @@ name|thrift
 operator|.
 name|protocol
 operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Pattern
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Matcher
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|nio
-operator|.
-name|ByteBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|nio
-operator|.
-name|charset
-operator|.
-name|CharacterCodingException
+name|TList
 import|;
 end_import
 
@@ -201,26 +223,128 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|thrift
 operator|.
-name|conf
+name|protocol
 operator|.
-name|Configuration
+name|TMap
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Properties
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TMessage
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocol
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocolFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TSet
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TStruct
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|transport
+operator|.
+name|TTransport
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|transport
+operator|.
+name|TTransportException
 import|;
 end_import
 
 begin_comment
-comment|/**  *  * An implementation of the Thrift Protocol for ctl separated  * records.  * This is not thrift compliant in that it doesn't write out field ids  * so things cannot actually be versioned.  */
+comment|/**  *   * An implementation of the Thrift Protocol for ctl separated records. This is  * not thrift compliant in that it doesn't write out field ids so things cannot  * actually be versioned.  */
 end_comment
 
 begin_class
@@ -350,7 +474,7 @@ specifier|protected
 name|Pattern
 name|mapPattern
 decl_stmt|;
-comment|/**    * The quote character when supporting quotes with ability to not split across quoted entries. Like csv.    * Note that escaping the quote is not currently supported.    */
+comment|/**    * The quote character when supporting quotes with ability to not split across    * quoted entries. Like csv. Note that escaping the quote is not currently    * supported.    */
 specifier|protected
 name|String
 name|quote
@@ -434,7 +558,7 @@ specifier|protected
 name|boolean
 name|isMap
 decl_stmt|;
-comment|/**    * For writes, on what element are we on so we know when to use normal list separator or     * for a map know when to use the k/v separator    */
+comment|/**    * For writes, on what element are we on so we know when to use normal list    * separator or for a map know when to use the k/v separator    */
 specifier|protected
 name|long
 name|elemIndex
@@ -444,18 +568,18 @@ specifier|protected
 name|boolean
 name|inner
 decl_stmt|;
-comment|/**    * For places where the separators are back to back, should we return a null or an empty string since it is ambiguous.    * This also applies to extra columns that are read but aren't in the current record.    */
+comment|/**    * For places where the separators are back to back, should we return a null    * or an empty string since it is ambiguous. This also applies to extra    * columns that are read but aren't in the current record.    */
 specifier|protected
 name|boolean
 name|returnNulls
 decl_stmt|;
-comment|/**    * The transport being wrapped.    *    */
+comment|/**    * The transport being wrapped.    *     */
 specifier|final
 specifier|protected
 name|TTransport
 name|innerTransport
 decl_stmt|;
-comment|/**    * Strings used to lookup the various configurable paramaters of this protocol.    */
+comment|/**    * Strings used to lookup the various configurable paramaters of this    * protocol.    */
 specifier|public
 specifier|final
 specifier|static
@@ -538,7 +662,8 @@ index|[
 name|buffer_length
 index|]
 expr_stmt|;
-comment|// do not fill tokenizer until user requests since filling it could read in data
+comment|// do not fill tokenizer until user requests since filling it could read
+comment|// in data
 comment|// not meant for this instantiation.
 name|fillTokenizer
 argument_list|()
@@ -818,7 +943,7 @@ return|;
 block|}
 block|}
 empty_stmt|;
-comment|/**    * The simple constructor which assumes ctl-a, ctl-b and '\n' separators and to return empty strings for empty fields.    *    * @param trans - the ttransport to use as input or output    *    */
+comment|/**    * The simple constructor which assumes ctl-a, ctl-b and '\n' separators and    * to return empty strings for empty fields.    *     * @param trans    *          - the ttransport to use as input or output    *     */
 specifier|public
 name|TCTLSeparatedProtocol
 parameter_list|(
@@ -872,7 +997,7 @@ name|buffer_size
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param trans - the ttransport to use as input or output    * @param primarySeparator the separator between columns (aka fields)    * @param secondarySeparator the separator within a field for things like sets and maps and lists    * @param mapSeparator - the key/value separator    * @param rowSeparator - the record separator    * @param returnNulls - whether to return a null or an empty string for fields that seem empty (ie two primary separators back to back)    */
+comment|/**    * @param trans    *          - the ttransport to use as input or output    * @param primarySeparator    *          the separator between columns (aka fields)    * @param secondarySeparator    *          the separator within a field for things like sets and maps and    *          lists    * @param mapSeparator    *          - the key/value separator    * @param rowSeparator    *          - the record separator    * @param returnNulls    *          - whether to return a null or an empty string for fields that seem    *          empty (ie two primary separators back to back)    */
 specifier|public
 name|TCTLSeparatedProtocol
 parameter_list|(
@@ -933,8 +1058,6 @@ name|mapSeparator
 operator|=
 name|mapSeparator
 expr_stmt|;
-name|this
-operator|.
 name|innerTransport
 operator|=
 name|trans
@@ -945,8 +1068,6 @@ name|bufferSize
 operator|=
 name|bufferSize
 expr_stmt|;
-name|this
-operator|.
 name|nullString
 operator|=
 literal|"\\N"
@@ -958,7 +1079,8 @@ name|void
 name|internalInitialize
 parameter_list|()
 block|{
-comment|// in the future could allow users to specify a quote character that doesn't need escaping but for now ...
+comment|// in the future could allow users to specify a quote character that doesn't
+comment|// need escaping but for now ...
 specifier|final
 name|String
 name|primaryPatternString
@@ -1090,7 +1212,7 @@ name|bufferSize
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * For quoted fields, strip away the quotes and also need something to strip away the control separator when using    * complex split method defined here.    */
+comment|/**    * For quoted fields, strip away the quotes and also need something to strip    * away the control separator when using complex split method defined here.    */
 specifier|protected
 name|Pattern
 name|stripSeparatorPrefix
@@ -1103,7 +1225,7 @@ specifier|protected
 name|Pattern
 name|stripQuotePostfix
 decl_stmt|;
-comment|/**     *    * Split the line based on a complex regex pattern    *    * @param line the current row    * @param p the pattern for matching fields in the row    * @return List of Strings - not including the separator in them    */
+comment|/**    *     * Split the line based on a complex regex pattern    *     * @param line    *          the current row    * @param p    *          the pattern for matching fields in the row    * @return List of Strings - not including the separator in them    */
 specifier|protected
 name|String
 index|[]
@@ -1162,7 +1284,9 @@ name|match
 operator|==
 literal|null
 condition|)
+block|{
 break|break;
+block|}
 if|if
 condition|(
 name|match
@@ -1172,10 +1296,12 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 name|match
 operator|=
 literal|null
 expr_stmt|;
+block|}
 else|else
 block|{
 if|if
@@ -1264,10 +1390,6 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-operator|(
-name|String
-index|[]
-operator|)
 name|list
 operator|.
 name|toArray
@@ -1355,7 +1477,7 @@ return|return
 name|defaultVal
 return|;
 block|}
-comment|/**    * Initialize the TProtocol    * @param conf System properties    * @param tbl  table properties    * @throws TException    */
+comment|/**    * Initialize the TProtocol    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws TException    */
 specifier|public
 name|void
 name|initialize
@@ -1511,6 +1633,8 @@ name|internalInitialize
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeMessageBegin
@@ -1521,6 +1645,8 @@ parameter_list|)
 throws|throws
 name|TException
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeMessageEnd
@@ -1528,6 +1654,8 @@ parameter_list|()
 throws|throws
 name|TException
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeStructBegin
@@ -1543,6 +1671,8 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeStructEnd
@@ -1550,8 +1680,11 @@ parameter_list|()
 throws|throws
 name|TException
 block|{
-comment|// We don't write rowSeparatorByte because that should be handled by file format.
+comment|// We don't write rowSeparatorByte because that should be handled by file
+comment|// format.
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeFieldBegin
@@ -1579,6 +1712,8 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeFieldEnd
@@ -1586,11 +1721,15 @@ parameter_list|()
 throws|throws
 name|TException
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeFieldStop
 parameter_list|()
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeMapBegin
@@ -1706,6 +1845,8 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeMapEnd
@@ -1722,6 +1863,8 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeListBegin
@@ -1784,6 +1927,8 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeListEnd
@@ -1796,6 +1941,8 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeSetBegin
@@ -1858,6 +2005,8 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeSetEnd
@@ -1870,6 +2019,8 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeBool
@@ -1893,6 +2044,7 @@ expr_stmt|;
 block|}
 comment|// for writing out single byte
 specifier|private
+specifier|final
 name|byte
 name|buf
 index|[]
@@ -1903,6 +2055,8 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeByte
@@ -1928,6 +2082,8 @@ name|buf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeI16
@@ -1949,6 +2105,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeI32
@@ -1970,6 +2128,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeI64
@@ -1991,6 +2151,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeDouble
@@ -2082,6 +2244,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeString
@@ -2103,7 +2267,8 @@ operator|!
 name|firstInnerField
 condition|)
 block|{
-comment|// super hack city notice the mod plus only happens after firstfield hit, so == 0 is right.
+comment|// super hack city notice the mod plus only happens after firstfield
+comment|// hit, so == 0 is right.
 if|if
 condition|(
 name|isMap
@@ -2145,6 +2310,8 @@ name|str
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeBinary
@@ -2164,6 +2331,8 @@ literal|"Ctl separated protocol cannot support writing Binary data!"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|TMessage
 name|readMessageBegin
@@ -2177,6 +2346,8 @@ name|TMessage
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readMessageEnd
@@ -2184,6 +2355,8 @@ parameter_list|()
 throws|throws
 name|TException
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|TStruct
 name|readStructBegin
@@ -2249,6 +2422,8 @@ literal|null
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readStructEnd
@@ -2261,7 +2436,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * Skip past the current field    * Just increments the field index counter.    */
+comment|/**    * Skip past the current field Just increments the field index counter.    */
 specifier|public
 name|void
 name|skip
@@ -2286,6 +2461,8 @@ operator|++
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|TField
 name|readFieldBegin
@@ -2316,11 +2493,14 @@ operator|-
 literal|1
 argument_list|)
 decl_stmt|;
-comment|// slight hack to communicate to DynamicSerDe that the field ids are not being set but things are ordered.
+comment|// slight hack to communicate to DynamicSerDe that the field ids are not
+comment|// being set but things are ordered.
 return|return
 name|f
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readFieldEnd
@@ -2333,6 +2513,8 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|TMap
 name|readMapBegin
@@ -2450,6 +2632,8 @@ return|return
 name|map
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readMapEnd
@@ -2466,6 +2650,8 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|TList
 name|readListBegin
@@ -2575,6 +2761,8 @@ return|return
 name|list
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readListEnd
@@ -2587,6 +2775,8 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|TSet
 name|readSetBegin
@@ -2724,6 +2914,8 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readSetEnd
@@ -2736,6 +2928,8 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|readBool
@@ -2778,6 +2972,8 @@ name|booleanValue
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 name|readByte
@@ -2837,6 +3033,8 @@ literal|0
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|short
 name|readI16
@@ -2896,6 +3094,8 @@ literal|0
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|readI32
@@ -2955,6 +3155,8 @@ literal|0
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|long
 name|readI64
@@ -3014,6 +3216,8 @@ literal|0
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|double
 name|readDouble
@@ -3073,6 +3277,8 @@ literal|0
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|readString
@@ -3150,6 +3356,7 @@ argument_list|(
 name|nullString
 argument_list|)
 condition|)
+block|{
 return|return
 name|returnNulls
 condition|?
@@ -3157,11 +3364,16 @@ literal|null
 else|:
 literal|""
 return|;
+block|}
 else|else
+block|{
 return|return
 name|ret
 return|;
 block|}
+block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 index|[]

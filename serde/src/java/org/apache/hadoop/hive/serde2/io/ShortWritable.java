@@ -169,6 +169,8 @@ return|return
 name|value
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -212,6 +214,8 @@ name|get
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -221,6 +225,8 @@ return|return
 name|value
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -247,8 +253,6 @@ block|{
 name|int
 name|thisValue
 init|=
-name|this
-operator|.
 name|value
 decl_stmt|;
 name|int
@@ -290,6 +294,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**      * Compare the buffers in serialized form.      */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare

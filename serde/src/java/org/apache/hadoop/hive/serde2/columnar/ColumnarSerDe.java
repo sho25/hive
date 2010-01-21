@@ -113,7 +113,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|ColumnProjectionUtils
+name|ByteStream
 import|;
 end_import
 
@@ -129,7 +129,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|ByteStream
+name|ColumnProjectionUtils
 import|;
 end_import
 
@@ -397,6 +397,8 @@ specifier|private
 name|ObjectInspector
 name|cachedObjectInspector
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

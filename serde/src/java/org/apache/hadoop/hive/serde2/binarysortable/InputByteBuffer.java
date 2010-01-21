@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is much more efficient than ByteArrayInputStream  * because none of the methods are synchronized.  */
+comment|/**  * This class is much more efficient than ByteArrayInputStream because none of  * the methods are synchronized.  */
 end_comment
 
 begin_class
@@ -108,7 +108,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * Read one byte from the byte buffer.    * Final method to help inlining.    * @param invert whether we want to invert all the bits.     */
+comment|/**    * Read one byte from the byte buffer. Final method to help inlining.    *     * @param invert    *          whether we want to invert all the bits.    */
 specifier|public
 specifier|final
 name|byte
@@ -164,7 +164,7 @@ index|]
 return|;
 block|}
 block|}
-comment|/**    * Return the current position.    * Final method to help inlining.    */
+comment|/**    * Return the current position. Final method to help inlining.    */
 specifier|public
 specifier|final
 name|int
@@ -175,7 +175,7 @@ return|return
 name|start
 return|;
 block|}
-comment|/**    * Set the current position.    * Final method to help inlining.    */
+comment|/**    * Set the current position. Final method to help inlining.    */
 specifier|public
 specifier|final
 name|void

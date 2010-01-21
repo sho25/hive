@@ -362,7 +362,7 @@ specifier|public
 class|class
 name|TypeInfoUtils
 block|{
-comment|/**    * Return the extended TypeInfo from a Java type.    * By extended TypeInfo, we allow unknownType for java.lang.Object.    * @param t  The Java type.    * @param m  The method, only used for generating error messages.    */
+comment|/**    * Return the extended TypeInfo from a Java type. By extended TypeInfo, we    * allow unknownType for java.lang.Object.    *     * @param t    *          The Java type.    * @param m    *          The method, only used for generating error messages.    */
 specifier|private
 specifier|static
 name|TypeInfo
@@ -526,7 +526,8 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|// Otherwise convert t to RawType so we will fall into the following if block.
+comment|// Otherwise convert t to RawType so we will fall into the following if
+comment|// block.
 name|t
 operator|=
 name|pt
@@ -718,29 +719,17 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|Field
+name|field
+range|:
 name|fields
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|fieldNames
 operator|.
 name|add
 argument_list|(
-name|fields
-index|[
-name|i
-index|]
+name|field
 operator|.
 name|getName
 argument_list|()
@@ -752,10 +741,7 @@ name|add
 argument_list|(
 name|getExtendedTypeInfoFromJavaType
 argument_list|(
-name|fields
-index|[
-name|i
-index|]
+name|field
 operator|.
 name|getGenericType
 argument_list|()
@@ -776,7 +762,7 @@ name|fieldTypeInfos
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns the array element type, if the Type is an array (Object[]),    * or GenericArrayType (Map<String,String>[]). Otherwise return null.    */
+comment|/**    * Returns the array element type, if the Type is an array (Object[]), or    * GenericArrayType (Map<String,String>[]). Otherwise return null.    */
 specifier|public
 specifier|static
 name|Type
@@ -854,7 +840,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get the parameter TypeInfo for a method.    * @param size In case the last parameter of Method is an array, we will try to return a     *             List<TypeInfo> with the specified size by repeating the element of the array    *             at the end.    *             In case the size is smaller than the minimum possible number of arguments     *             for the method, null will be returned.     */
+comment|/**    * Get the parameter TypeInfo for a method.    *     * @param size    *          In case the last parameter of Method is an array, we will try to    *          return a List<TypeInfo> with the specified size by repeating the    *          element of the array at the end. In case the size is smaller than    *          the minimum possible number of arguments for the method, null will    *          be returned.    */
 specifier|public
 specifier|static
 name|List
@@ -959,19 +945,10 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|Type
+name|methodParameterType
+range|:
 name|methodParameterTypes
-operator|.
-name|length
-condition|;
-name|i
-operator|++
 control|)
 block|{
 name|typeInfos
@@ -980,10 +957,7 @@ name|add
 argument_list|(
 name|getExtendedTypeInfoFromJavaType
 argument_list|(
-name|methodParameterTypes
-index|[
-name|i
-index|]
+name|methodParameterType
 argument_list|,
 name|m
 argument_list|)
@@ -1092,7 +1066,7 @@ return|return
 name|typeInfos
 return|;
 block|}
-comment|/**    * Parse a recursive TypeInfo list String.    * For example, the following inputs are valid inputs:     *  "int,string,map<string,int>,list<map<int,list<string>>>,list<struct<a:int,b:string>>"    * The separators between TypeInfos can be ",", ":", or ";".    *     * In order to use this class:    * TypeInfoParser parser = new TypeInfoParser("int,string");    * ArrayList<TypeInfo> typeInfos = parser.parseTypeInfos();    */
+comment|/**    * Parse a recursive TypeInfo list String. For example, the following inputs    * are valid inputs:"int,string,map<string,int>,list<map<int,list<string>>>,list<struct<a:int,b:string>>"    * The separators between TypeInfos can be ",", ":", or ";".    *     * In order to use this class: TypeInfoParser parser = new    * TypeInfoParser("int,string"); ArrayList<TypeInfo> typeInfos =    * parser.parseTypeInfos();    */
 specifier|private
 specifier|static
 class|class
@@ -1115,6 +1089,8 @@ specifier|public
 name|boolean
 name|isType
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -1158,7 +1134,7 @@ operator|==
 literal|'.'
 return|;
 block|}
-comment|/**      * Tokenize the typeInfoString.      * The rule is simple: all consecutive alphadigits and '_', '.' are in one      * token, and all other characters are one character per token.      *       * tokenize("map<int,string>") should return ["map","<","int",",","string",">"]      */
+comment|/**      * Tokenize the typeInfoString. The rule is simple: all consecutive      * alphadigits and '_', '.' are in one token, and all other characters are      * one character per token.      *       * tokenize("map<int,string>") should return      * ["map","<","int",",","string",">"]      */
 specifier|private
 specifier|static
 name|ArrayList
@@ -1314,8 +1290,6 @@ name|typeInfoString
 operator|=
 name|typeInfoString
 expr_stmt|;
-name|this
-operator|.
 name|typeInfoTokens
 operator|=
 name|tokenize
@@ -1325,10 +1299,12 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|final
 name|String
 name|typeInfoString
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|Token
@@ -2075,7 +2051,7 @@ name|ObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * Returns the standard object inspector that can be used to translate an object of that typeInfo    * to a standard object type.      */
+comment|/**    * Returns the standard object inspector that can be used to translate an    * object of that typeInfo to a standard object type.    */
 specifier|public
 specifier|static
 name|ObjectInspector
@@ -2350,7 +2326,7 @@ name|ObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * Returns the standard object inspector that can be used to translate an object of that typeInfo    * to a standard object type.      */
+comment|/**    * Returns the standard object inspector that can be used to translate an    * object of that typeInfo to a standard object type.    */
 specifier|public
 specifier|static
 name|ObjectInspector
@@ -2389,7 +2365,8 @@ case|case
 name|PRIMITIVE
 case|:
 block|{
-comment|// NOTE: we use JavaPrimitiveObjectInspector instead of StandardPrimitiveObjectInspector
+comment|// NOTE: we use JavaPrimitiveObjectInspector instead of
+comment|// StandardPrimitiveObjectInspector
 name|result
 operator|=
 name|PrimitiveObjectInspectorFactory
@@ -2610,7 +2587,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get the TypeInfo object from the ObjectInspector object by recursively going into the    * ObjectInspector structure.    */
+comment|/**    * Get the TypeInfo object from the ObjectInspector object by recursively    * going into the ObjectInspector structure.    */
 specifier|public
 specifier|static
 name|TypeInfo
@@ -2620,11 +2597,12 @@ name|ObjectInspector
 name|oi
 parameter_list|)
 block|{
-comment|//    OPTIMIZATION for later.
-comment|//    if (oi instanceof TypeInfoBasedObjectInspector) {
-comment|//      TypeInfoBasedObjectInspector typeInfoBasedObjectInspector = (ObjectInspector)oi;
-comment|//      return typeInfoBasedObjectInspector.getTypeInfo();
-comment|//    }
+comment|// OPTIMIZATION for later.
+comment|// if (oi instanceof TypeInfoBasedObjectInspector) {
+comment|// TypeInfoBasedObjectInspector typeInfoBasedObjectInspector =
+comment|// (ObjectInspector)oi;
+comment|// return typeInfoBasedObjectInspector.getTypeInfo();
+comment|// }
 comment|// Recursively going into ObjectInspector structure
 name|TypeInfo
 name|result

@@ -135,7 +135,7 @@ decl_stmt|;
 specifier|public
 name|ThriftDeserializer
 parameter_list|()
-block|{ }
+block|{   }
 specifier|public
 name|void
 name|initialize

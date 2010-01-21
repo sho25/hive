@@ -21,6 +21,36 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|UnsupportedEncodingException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -44,66 +74,6 @@ operator|.
 name|logging
 operator|.
 name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|transport
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|protocol
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|*
 import|;
 end_import
 
@@ -153,16 +123,144 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Properties
+name|thrift
+operator|.
+name|TException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TField
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TMap
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TMessage
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocol
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocolFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TSet
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TStruct
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|transport
+operator|.
+name|TTransport
 import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of the Thrift Protocol for binary sortable records.  *   * The data format:  * NULL:  a single byte \0  * NON-NULL Primitives: ALWAYS prepend a single byte \1, and then:  *   Boolean: FALSE = \1, TRUE = \2  *   Byte:    flip the sign-bit to make sure negative comes before positive  *   Short:   flip the sign-bit to make sure negative comes before positive  *   Int:     flip the sign-bit to make sure negative comes before positive  *   Long:    flip the sign-bit to make sure negative comes before positive  *   Double:  flip the sign-bit for positive double, and all bits for negative double values  *   String:  NULL-terminated UTF-8 string, with NULL escaped to \1 \1, and \1 escaped to \1 \2  * NON-NULL Complex Types:  *   Struct:  first the single byte \1, and then one field by one field.  *   List:    size stored as Int (see above), then one element by one element.   *   Map:     size stored as Int (see above), then one key by one value, and then the next pair and so on.  *   Binary:  size stored as Int (see above), then the binary data in its original form  *     * Note that the relative order of list/map/binary will be based on the size first (and elements one by one if   * the sizes are equal).   *   * This protocol takes an additional parameter SERIALIZATION_SORT_ORDER which is a string containing only "+" and "-".  * The length of the string should equal to the number of fields in the top-level struct for serialization.  * "+" means the field should be sorted ascendingly, and "-" means descendingly. The sub fields in the same top-level  * field will have the same sort order.   *   * This is not thrift compliant in that it doesn't write out field ids  * so things cannot actually be versioned.  */
+comment|/**  * An implementation of the Thrift Protocol for binary sortable records.  *   * The data format: NULL: a single byte \0 NON-NULL Primitives: ALWAYS prepend a  * single byte \1, and then: Boolean: FALSE = \1, TRUE = \2 Byte: flip the  * sign-bit to make sure negative comes before positive Short: flip the sign-bit  * to make sure negative comes before positive Int: flip the sign-bit to make  * sure negative comes before positive Long: flip the sign-bit to make sure  * negative comes before positive Double: flip the sign-bit for positive double,  * and all bits for negative double values String: NULL-terminated UTF-8 string,  * with NULL escaped to \1 \1, and \1 escaped to \1 \2 NON-NULL Complex Types:  * Struct: first the single byte \1, and then one field by one field. List: size  * stored as Int (see above), then one element by one element. Map: size stored  * as Int (see above), then one key by one value, and then the next pair and so  * on. Binary: size stored as Int (see above), then the binary data in its  * original form  *   * Note that the relative order of list/map/binary will be based on the size  * first (and elements one by one if the sizes are equal).  *   * This protocol takes an additional parameter SERIALIZATION_SORT_ORDER which is  * a string containing only "+" and "-". The length of the string should equal  * to the number of fields in the top-level struct for serialization. "+" means  * the field should be sorted ascendingly, and "-" means descendingly. The sub  * fields in the same top-level field will have the same sort order.  *   * This is not thrift compliant in that it doesn't write out field ids so things  * cannot actually be versioned.  */
 end_comment
 
 begin_class
@@ -247,19 +345,19 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-comment|/**    * The stack level of the current field.  Top-level fields have a stackLevel value of 1.    * Each nested struct/list/map will increase the stackLevel value by 1.    */
+comment|/**    * The stack level of the current field. Top-level fields have a stackLevel    * value of 1. Each nested struct/list/map will increase the stackLevel value    * by 1.    */
 name|int
 name|stackLevel
 decl_stmt|;
-comment|/**    * The field ID in the top level struct.  This is used to determine whether this field    * should be sorted ascendingly or descendingly.      */
+comment|/**    * The field ID in the top level struct. This is used to determine whether    * this field should be sorted ascendingly or descendingly.    */
 name|int
 name|topLevelStructFieldID
 decl_stmt|;
-comment|/**    * A string that consists of only "+" and "-".  It should have the same length as the number    * of fields in the top level struct. "+" means the corresponding field is sorted ascendingly    * and "-" means the corresponding field is sorted descendingly.    */
+comment|/**    * A string that consists of only "+" and "-". It should have the same length    * as the number of fields in the top level struct. "+" means the    * corresponding field is sorted ascendingly and "-" means the corresponding    * field is sorted descendingly.    */
 name|String
 name|sortOrder
 decl_stmt|;
-comment|/**    * Whether the current field is sorted ascendingly.  Always equals to    * sortOrder.charAt(topLevelStructFieldID) != '-'    */
+comment|/**    * Whether the current field is sorted ascendingly. Always equals to    * sortOrder.charAt(topLevelStructFieldID) != '-'    */
 name|boolean
 name|ascending
 decl_stmt|;
@@ -363,6 +461,8 @@ literal|"\""
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeMessageBegin
@@ -373,6 +473,8 @@ parameter_list|)
 throws|throws
 name|TException
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeMessageEnd
@@ -380,6 +482,8 @@ parameter_list|()
 throws|throws
 name|TException
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeStructBegin
@@ -436,9 +540,12 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
-comment|// If the struct is null and level> 1, DynamicSerDe will call writeNull();
+comment|// If the struct is null and level> 1, DynamicSerDe will call
+comment|// writeNull();
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeStructEnd
@@ -450,6 +557,8 @@ name|stackLevel
 operator|--
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeFieldBegin
@@ -460,6 +569,8 @@ parameter_list|)
 throws|throws
 name|TException
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeFieldEnd
@@ -499,11 +610,15 @@ operator|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeFieldStop
 parameter_list|()
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeMapBegin
@@ -545,6 +660,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeMapEnd
@@ -556,6 +673,8 @@ name|stackLevel
 operator|--
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeListBegin
@@ -597,6 +716,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeListEnd
@@ -608,6 +729,8 @@ name|stackLevel
 operator|--
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeSetBegin
@@ -649,6 +772,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeSetEnd
@@ -778,6 +903,7 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|bout
@@ -788,6 +914,8 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeBool
@@ -827,6 +955,8 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeByte
@@ -872,6 +1002,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|i16out
@@ -882,6 +1013,8 @@ index|[
 literal|2
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeI16
@@ -950,6 +1083,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|i32out
@@ -960,6 +1094,8 @@ index|[
 literal|4
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeI32
@@ -1064,6 +1200,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|i64out
@@ -1074,6 +1211,8 @@ index|[
 literal|8
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeI64
@@ -1249,6 +1388,8 @@ literal|8
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeDouble
@@ -1655,7 +1796,7 @@ block|{
 literal|1
 block|}
 decl_stmt|;
-comment|/**    * The escaped byte sequence for the null byte.    * This cannot be changed alone without changing the readString() code.    */
+comment|/**    * The escaped byte sequence for the null byte. This cannot be changed alone    * without changing the readString() code.    */
 specifier|final
 specifier|protected
 name|byte
@@ -1671,7 +1812,7 @@ block|,
 literal|1
 block|}
 decl_stmt|;
-comment|/**    * The escaped byte sequence for the "\1" byte.    * This cannot be changed alone without changing the readString() code.    */
+comment|/**    * The escaped byte sequence for the "\1" byte. This cannot be changed alone    * without changing the readString() code.    */
 specifier|final
 specifier|protected
 name|byte
@@ -1687,6 +1828,8 @@ block|,
 literal|2
 block|}
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeString
@@ -1744,6 +1887,8 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|writeBinary
@@ -1794,6 +1939,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|TMessage
 name|readMessageBegin
@@ -1807,6 +1954,8 @@ name|TMessage
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readMessageEnd
@@ -1821,6 +1970,8 @@ operator|new
 name|TStruct
 argument_list|()
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|TStruct
 name|readStructBegin
@@ -1866,20 +2017,25 @@ block|}
 else|else
 block|{
 comment|// is this a null?
-comment|// only read the is-null byte for level> 1 because the top-level struct can never be null.
+comment|// only read the is-null byte for level> 1 because the top-level struct
+comment|// can never be null.
 if|if
 condition|(
 name|readIsNull
 argument_list|()
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 block|}
 return|return
 name|tstruct
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readStructEnd
@@ -1896,6 +2052,8 @@ name|f
 init|=
 literal|null
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|TField
 name|readFieldBegin
@@ -1903,7 +2061,8 @@ parameter_list|()
 throws|throws
 name|TException
 block|{
-comment|// slight hack to communicate to DynamicSerDe that the field ids are not being set but things are ordered.
+comment|// slight hack to communicate to DynamicSerDe that the field ids are not
+comment|// being set but things are ordered.
 name|f
 operator|=
 operator|new
@@ -1924,6 +2083,8 @@ return|return
 name|f
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readFieldEnd
@@ -1969,7 +2130,9 @@ name|tmap
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * This method always return the same instance of TMap to avoid creating new instances.    * It is the responsibility of the caller to read the value before calling this method again.    */
+comment|/**    * This method always return the same instance of TMap to avoid creating new    * instances. It is the responsibility of the caller to read the value before    * calling this method again.    */
+annotation|@
+name|Override
 specifier|public
 name|TMap
 name|readMapBegin
@@ -2013,6 +2176,8 @@ return|return
 name|tmap
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readMapEnd
@@ -2030,7 +2195,9 @@ name|tlist
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * This method always return the same instance of TList to avoid creating new instances.    * It is the responsibility of the caller to read the value before calling this method again.    */
+comment|/**    * This method always return the same instance of TList to avoid creating new    * instances. It is the responsibility of the caller to read the value before    * calling this method again.    */
+annotation|@
+name|Override
 specifier|public
 name|TList
 name|readListBegin
@@ -2072,6 +2239,8 @@ return|return
 name|tlist
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readListEnd
@@ -2089,7 +2258,9 @@ name|set
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * This method always return the same instance of TSet to avoid creating new instances.    * It is the responsibility of the caller to read the value before calling this method again.    */
+comment|/**    * This method always return the same instance of TSet to avoid creating new    * instances. It is the responsibility of the caller to read the value before    * calling this method again.    */
+annotation|@
+name|Override
 specifier|public
 name|TSet
 name|readSetBegin
@@ -2131,6 +2302,8 @@ return|return
 name|set
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readSetEnd
@@ -2219,6 +2392,8 @@ return|return
 name|bytes
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|readBool
@@ -2260,6 +2435,7 @@ literal|2
 return|;
 block|}
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|wasNull
@@ -2303,6 +2479,7 @@ name|lastPrimitiveWasNull
 return|;
 block|}
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|bin
@@ -2313,6 +2490,8 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|byte
 name|readByte
@@ -2325,9 +2504,11 @@ condition|(
 name|readIsNull
 argument_list|()
 condition|)
+block|{
 return|return
 literal|0
 return|;
+block|}
 name|readRawAll
 argument_list|(
 name|bin
@@ -2352,6 +2533,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|i16rd
@@ -2362,6 +2544,8 @@ index|[
 literal|2
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|short
 name|readI16
@@ -2374,9 +2558,11 @@ condition|(
 name|readIsNull
 argument_list|()
 condition|)
+block|{
 return|return
 literal|0
 return|;
+block|}
 name|readRawAll
 argument_list|(
 name|i16rd
@@ -2422,6 +2608,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|i32rd
@@ -2432,6 +2619,8 @@ index|[
 literal|4
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|int
 name|readI32
@@ -2444,9 +2633,11 @@ condition|(
 name|readIsNull
 argument_list|()
 condition|)
+block|{
 return|return
 literal|0
 return|;
+block|}
 name|readRawAll
 argument_list|(
 name|i32rd
@@ -2513,6 +2704,7 @@ operator|)
 return|;
 block|}
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|i64rd
@@ -2523,6 +2715,8 @@ index|[
 literal|8
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|long
 name|readI64
@@ -2535,9 +2729,11 @@ condition|(
 name|readIsNull
 argument_list|()
 condition|)
+block|{
 return|return
 literal|0
 return|;
+block|}
 name|readRawAll
 argument_list|(
 name|i64rd
@@ -2665,20 +2861,19 @@ literal|8
 operator|)
 operator||
 operator|(
-call|(
-name|long
-call|)
-argument_list|(
+operator|(
 name|i64rd
 index|[
 literal|7
 index|]
 operator|&
 literal|0xff
-argument_list|)
+operator|)
 operator|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|double
 name|readDouble
@@ -2691,9 +2886,11 @@ condition|(
 name|readIsNull
 argument_list|()
 condition|)
+block|{
 return|return
 literal|0
 return|;
+block|}
 name|readRawAll
 argument_list|(
 name|i64rd
@@ -2842,17 +3039,14 @@ literal|8
 operator|)
 operator||
 operator|(
-call|(
-name|long
-call|)
-argument_list|(
+operator|(
 name|i64rd
 index|[
 literal|7
 index|]
 operator|&
 literal|0xff
-argument_list|)
+operator|)
 operator|)
 expr_stmt|;
 block|}
@@ -3002,10 +3196,7 @@ literal|8
 operator|)
 operator||
 operator|(
-call|(
-name|long
-call|)
-argument_list|(
+operator|(
 operator|(
 name|i64rd
 index|[
@@ -3016,7 +3207,7 @@ literal|0xff
 operator|)
 operator|&
 literal|0xff
-argument_list|)
+operator|)
 operator|)
 expr_stmt|;
 block|}
@@ -3040,6 +3231,8 @@ index|[
 literal|1000
 index|]
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|String
 name|readString
@@ -3224,6 +3417,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 index|[]
@@ -3242,9 +3437,11 @@ if|if
 condition|(
 name|lastPrimitiveWasNull
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|byte
 index|[]
 name|buf

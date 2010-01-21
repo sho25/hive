@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** StructTypeInfo represents the TypeInfo of a struct.  *  A struct contains one or more fields each of which has a unique name  *  and its own TypeInfo.  Different fields can have the same or different  *  TypeInfo.   *    *  Always use the TypeInfoFactory to create new TypeInfo objects, instead  *  of directly creating an instance of this class.   */
+comment|/**  * StructTypeInfo represents the TypeInfo of a struct. A struct contains one or  * more fields each of which has a unique name and its own TypeInfo. Different  * fields can have the same or different TypeInfo.  *   * Always use the TypeInfoFactory to create new TypeInfo objects, instead of  * directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -118,11 +118,13 @@ name|TypeInfo
 argument_list|>
 name|allStructFieldTypeInfos
 decl_stmt|;
-comment|/** For java serialization use only.    */
+comment|/**    * For java serialization use only.    */
 specifier|public
 name|StructTypeInfo
 parameter_list|()
-block|{}
+block|{   }
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getTypeName
@@ -170,6 +172,7 @@ name|i
 operator|>
 literal|0
 condition|)
+block|{
 name|sb
 operator|.
 name|append
@@ -177,6 +180,7 @@ argument_list|(
 literal|","
 argument_list|)
 expr_stmt|;
+block|}
 name|sb
 operator|.
 name|append
@@ -226,7 +230,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/** For java serialization use only.    */
+comment|/**    * For java serialization use only.    */
 specifier|public
 name|void
 name|setAllStructFieldNames
@@ -245,7 +249,7 @@ operator|=
 name|allStructFieldNames
 expr_stmt|;
 block|}
-comment|/** For java serialization use only.    */
+comment|/**    * For java serialization use only.    */
 specifier|public
 name|void
 name|setAllStructFieldTypeInfos
@@ -264,7 +268,7 @@ operator|=
 name|allStructFieldTypeInfos
 expr_stmt|;
 block|}
-comment|/** For TypeInfoFactory use only.    */
+comment|/**    * For TypeInfoFactory use only.    */
 name|StructTypeInfo
 parameter_list|(
 name|List
@@ -313,6 +317,8 @@ name|typeInfos
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Category
 name|getCategory
@@ -442,9 +448,11 @@ name|this
 operator|==
 name|other
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -502,6 +510,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode

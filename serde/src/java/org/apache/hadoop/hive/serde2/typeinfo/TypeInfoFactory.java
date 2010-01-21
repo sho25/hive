@@ -51,16 +51,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Stack
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -89,46 +79,14 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|primitive
 operator|.
 name|PrimitiveObjectInspectorUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|IntWritable
-import|;
-end_import
-
 begin_comment
-comment|/**  * TypeInfoFactory can be used to create the TypeInfo object for any types.  *   * TypeInfo objects are all read-only so we can reuse them easily. TypeInfoFactory   * has internal cache to make sure we don't create 2 TypeInfo objects that represents the  * same type.  */
+comment|/**  * TypeInfoFactory can be used to create the TypeInfo object for any types.  *   * TypeInfo objects are all read-only so we can reuse them easily.  * TypeInfoFactory has internal cache to make sure we don't create 2 TypeInfo  * objects that represents the same type.  */
 end_comment
 
 begin_class

@@ -144,6 +144,7 @@ name|capacity
 operator|<
 literal|0
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalArgumentException
@@ -151,6 +152,7 @@ argument_list|(
 literal|"Capacity can not be negative."
 argument_list|)
 throw|;
+block|}
 name|bytesRefWritables
 operator|=
 operator|new
@@ -201,6 +203,7 @@ name|index
 operator|>=
 name|valid
 condition|)
+block|{
 throw|throw
 operator|new
 name|IndexOutOfBoundsException
@@ -212,6 +215,7 @@ operator|+
 literal|" valid values."
 argument_list|)
 throw|;
+block|}
 return|return
 name|bytesRefWritables
 index|[
@@ -253,6 +257,7 @@ name|bytesRefWritable
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalArgumentException
@@ -260,6 +265,7 @@ argument_list|(
 literal|"Can not assign null."
 argument_list|)
 throw|;
+block|}
 name|ensureCapacity
 argument_list|(
 name|index
@@ -280,12 +286,14 @@ name|valid
 operator|<=
 name|index
 condition|)
+block|{
 name|valid
 operator|=
 name|index
 operator|+
 literal|1
 expr_stmt|;
+block|}
 block|}
 comment|/**    * {@inheritDoc}    */
 annotation|@
@@ -304,6 +312,7 @@ name|other
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalArgumentException
@@ -311,15 +320,18 @@ argument_list|(
 literal|"Argument can not be null."
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|this
 operator|==
 name|other
 condition|)
+block|{
 return|return
 literal|0
 return|;
+block|}
 name|int
 name|sizeDiff
 init|=
@@ -335,9 +347,11 @@ name|sizeDiff
 operator|!=
 literal|0
 condition|)
+block|{
 return|return
 name|sizeDiff
 return|;
+block|}
 for|for
 control|(
 name|int
@@ -365,11 +379,15 @@ name|i
 index|]
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 else|else
+block|{
 return|return
 literal|1
 return|;
+block|}
 block|}
 return|return
 literal|0
@@ -390,6 +408,7 @@ name|bytesRefWritable
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalArgumentException
@@ -397,6 +416,7 @@ argument_list|(
 literal|"Argument can not be null."
 argument_list|)
 throw|;
+block|}
 for|for
 control|(
 name|int
@@ -424,15 +444,19 @@ argument_list|(
 name|bytesRefWritable
 argument_list|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 block|}
 return|return
 literal|false
 return|;
 block|}
 comment|/**    * {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -454,9 +478,11 @@ operator|instanceof
 name|BytesRefArrayWritable
 operator|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 name|compareTo
 argument_list|(

@@ -19,6 +19,30 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -49,32 +73,8 @@ name|Writable
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Properties
-import|;
-end_import
-
 begin_comment
-comment|/**  * HiveSerializer is used to serialize data to a Hadoop Writable object.  * The serialize   * In addition to the interface below, all implementations are assume to have a ctor  * that takes a single 'Table' object as argument.  *  */
+comment|/**  * HiveSerializer is used to serialize data to a Hadoop Writable object. The  * serialize In addition to the interface below, all implementations are assume  * to have a ctor that takes a single 'Table' object as argument.  *   */
 end_comment
 
 begin_interface
@@ -82,7 +82,7 @@ specifier|public
 interface|interface
 name|Serializer
 block|{
-comment|/**    * Initialize the HiveSerializer.    * @param conf System properties    * @param tbl  table properties    * @throws SerDeException    */
+comment|/**    * Initialize the HiveSerializer.    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
 specifier|public
 name|void
 name|initialize
@@ -107,7 +107,7 @@ argument_list|>
 name|getSerializedClass
 parameter_list|()
 function_decl|;
-comment|/**    * Serialize an object by navigating inside the Object with the ObjectInspector.    * In most cases, the return value of this function will be constant since the function    * will reuse the Writable object.    * If the client wants to keep a copy of the Writable, the client needs to clone the    * returned value.    */
+comment|/**    * Serialize an object by navigating inside the Object with the    * ObjectInspector. In most cases, the return value of this function will be    * constant since the function will reuse the Writable object. If the client    * wants to keep a copy of the Writable, the client needs to clone the    * returned value.    */
 specifier|public
 name|Writable
 name|serialize

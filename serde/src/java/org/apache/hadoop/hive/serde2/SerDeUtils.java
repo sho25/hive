@@ -23,7 +23,37 @@ name|java
 operator|.
 name|util
 operator|.
-name|*
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
 import|;
 end_import
 
@@ -40,22 +70,6 @@ operator|.
 name|common
 operator|.
 name|JavaUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde
-operator|.
-name|Constants
 import|;
 end_import
 
@@ -110,24 +124,6 @@ operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ObjectInspectorUtils
 import|;
 end_import
 
@@ -342,20 +338,6 @@ operator|.
 name|primitive
 operator|.
 name|StringObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Text
 import|;
 end_import
 
@@ -722,7 +704,8 @@ name|boolean
 name|registerCoreSerDes
 parameter_list|()
 block|{
-comment|// Eagerly load SerDes so they will register their symbolic names even on Lazy Loading JVMs
+comment|// Eagerly load SerDes so they will register their symbolic names even on
+comment|// Lazy Loading JVMs
 try|try
 block|{
 comment|// loading these classes will automatically register the short names
@@ -1610,6 +1593,7 @@ name|i
 operator|>
 literal|0
 condition|)
+block|{
 name|sb
 operator|.
 name|append
@@ -1617,6 +1601,7 @@ argument_list|(
 name|COMMA
 argument_list|)
 expr_stmt|;
+block|}
 name|buildJSONString
 argument_list|(
 name|sb

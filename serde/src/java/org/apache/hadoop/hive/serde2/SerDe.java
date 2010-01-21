@@ -18,7 +18,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * A union of HiveDeserializer and HiveSerializer interface.  *   * If a developer wants his hive table to be read-only, then he just want to   * return   *   * both readable and writable, then  *     *  */
+comment|/**  * A union of HiveDeserializer and HiveSerializer interface.  *   * If a developer wants his hive table to be read-only, then he just want to  * return  *   * both readable and writable, then  *   *   */
 end_comment
 
 begin_interface
