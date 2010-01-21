@@ -497,6 +497,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|DriverContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|QueryPlan
 import|;
 end_import
@@ -845,6 +861,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Initialization when invoked from QL    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -854,6 +872,9 @@ name|conf
 parameter_list|,
 name|QueryPlan
 name|queryPlan
+parameter_list|,
+name|DriverContext
+name|driverContext
 parameter_list|)
 block|{
 name|super
@@ -864,7 +885,7 @@ name|conf
 argument_list|,
 name|queryPlan
 argument_list|,
-literal|null
+name|driverContext
 argument_list|)
 expr_stmt|;
 name|job
