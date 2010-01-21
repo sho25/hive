@@ -4155,7 +4155,11 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to move results to destination directory: "
+literal|"Unable to move results from "
+operator|+
+name|tmppath
+operator|+
+literal|" to destination directory: "
 operator|+
 name|destf
 operator|.
@@ -4194,45 +4198,22 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"replaceFiles: error while moving files!!!"
+literal|"replaceFiles: error while moving files from "
+operator|+
+name|tmppath
+operator|+
+literal|" to "
+operator|+
+name|destf
+operator|+
+literal|"!!!"
 argument_list|,
 name|e
 argument_list|)
 throw|;
 block|}
-finally|finally
-block|{
-try|try
-block|{
-name|fs
-operator|.
-name|delete
-argument_list|(
-name|tmppath
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Unable delete path "
-operator|+
-name|tmppath
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
-block|}
+comment|// In case of error, we should leave the temporary data there, so
+comment|// that user can recover the data if necessary.
 block|}
 comment|/**    * Creates a metastore client. Currently it creates only JDBC based client as File based store    * support is removed    * @returns a Meta Store Client    * @throws HiveMetaException  if a working client can't be created    */
 specifier|private
