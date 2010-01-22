@@ -2717,6 +2717,28 @@ expr_stmt|;
 block|}
 try|try
 block|{
+comment|// In case the partition already exists, we need to get the partition
+comment|// data from the metastore
+name|partHandle
+operator|=
+name|db
+operator|.
+name|getPartition
+argument_list|(
+name|tableHandle
+argument_list|,
+name|partSpec
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|partHandle
+operator|==
+literal|null
+condition|)
+block|{
 comment|// this doesn't create partition. partition is created in MoveTask
 name|partHandle
 operator|=
@@ -2730,6 +2752,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
