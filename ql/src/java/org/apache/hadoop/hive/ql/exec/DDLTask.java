@@ -3375,6 +3375,32 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|par
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Partition "
+operator|+
+name|part
+operator|+
+literal|" for table "
+operator|+
+name|showTblStatus
+operator|.
+name|getPattern
+argument_list|()
+operator|+
+literal|" does not exist."
+argument_list|)
+throw|;
+block|}
 name|tbls
 operator|.
 name|add
