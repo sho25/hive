@@ -552,6 +552,11 @@ name|DML_AGAINST_VIEW
 argument_list|(
 literal|"A view cannot be used as target table for LOAD or INSERT"
 argument_list|)
+block|,
+name|UNSUPPORTED_TYPE
+argument_list|(
+literal|"DATE, DATETIME, and TIMESTAMP types aren't supported yet. Please use STRING instead."
+argument_list|)
 block|;
 specifier|private
 name|String
