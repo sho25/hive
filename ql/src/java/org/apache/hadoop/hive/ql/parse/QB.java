@@ -81,7 +81,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|createTableDesc
+name|CreateTableDesc
 import|;
 end_import
 
@@ -172,7 +172,7 @@ name|boolean
 name|isQuery
 decl_stmt|;
 specifier|private
-name|createTableDesc
+name|CreateTableDesc
 name|tblDesc
 init|=
 literal|null
@@ -717,7 +717,7 @@ argument_list|()
 return|;
 block|}
 specifier|public
-name|createTableDesc
+name|CreateTableDesc
 name|getTableDesc
 parameter_list|()
 block|{
@@ -729,7 +729,7 @@ specifier|public
 name|void
 name|setTableDesc
 parameter_list|(
-name|createTableDesc
+name|CreateTableDesc
 name|desc
 parameter_list|)
 block|{

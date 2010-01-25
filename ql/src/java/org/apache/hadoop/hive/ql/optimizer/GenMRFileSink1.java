@@ -549,7 +549,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -567,7 +567,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -585,7 +585,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|extractDesc
+name|ExtractDesc
 import|;
 end_import
 
@@ -603,7 +603,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fileSinkDesc
+name|FileSinkDesc
 import|;
 end_import
 
@@ -621,7 +621,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|loadFileDesc
+name|LoadFileDesc
 import|;
 end_import
 
@@ -639,7 +639,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -657,7 +657,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|moveWork
+name|MoveWork
 import|;
 end_import
 
@@ -675,7 +675,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -693,7 +693,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|reduceSinkDesc
+name|ReduceSinkDesc
 import|;
 end_import
 
@@ -711,7 +711,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -729,7 +729,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableScanDesc
+name|TableScanDesc
 import|;
 end_import
 
@@ -967,7 +967,7 @@ operator|&&
 operator|(
 operator|(
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -1000,7 +1000,7 @@ operator|&&
 operator|(
 operator|(
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -1105,14 +1105,14 @@ decl_stmt|;
 comment|// create a reduce Sink operator - key is the first column
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keyCols
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1132,14 +1132,14 @@ argument_list|)
 expr_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|valueCols
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1159,7 +1159,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|ci
 operator|.
@@ -1197,7 +1197,7 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
-name|tableScanDesc
+name|TableScanDesc
 operator|.
 name|class
 argument_list|,
@@ -1248,7 +1248,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|rsDesc
 init|=
 name|PlanUtils
@@ -1258,7 +1258,7 @@ argument_list|(
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 argument_list|,
@@ -1289,7 +1289,7 @@ argument_list|,
 name|ts_op
 argument_list|)
 expr_stmt|;
-name|mapredWork
+name|MapredWork
 name|cplan
 init|=
 name|GenMapRedUtils
@@ -1325,7 +1325,7 @@ name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|fileSinkDesc
+name|FileSinkDesc
 name|fsConf
 init|=
 name|fsOp
@@ -1457,10 +1457,10 @@ operator|.
 name|getAndMakeChild
 argument_list|(
 operator|new
-name|extractDesc
+name|ExtractDesc
 argument_list|(
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -1491,11 +1491,11 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|ts
 init|=
 operator|(
-name|tableDesc
+name|TableDesc
 operator|)
 name|fsConf
 operator|.
@@ -1543,7 +1543,7 @@ operator|.
 name|getAndMakeChild
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|finalName
 argument_list|,
@@ -1642,7 +1642,7 @@ name|getDirName
 argument_list|()
 argument_list|,
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|fsConf
 operator|.
@@ -1661,11 +1661,11 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
-name|moveWork
+name|MoveWork
 name|dummyMv
 init|=
 operator|new
-name|moveWork
+name|MoveWork
 argument_list|(
 literal|null
 argument_list|,
@@ -1674,7 +1674,7 @@ argument_list|,
 literal|null
 argument_list|,
 operator|new
-name|loadFileDesc
+name|LoadFileDesc
 argument_list|(
 name|fsOp
 operator|.
@@ -1954,11 +1954,11 @@ range|:
 name|mvTasks
 control|)
 block|{
-name|moveWork
+name|MoveWork
 name|mvWork
 init|=
 operator|(
-name|moveWork
+name|MoveWork
 operator|)
 name|mvTsk
 operator|.
@@ -2423,7 +2423,7 @@ argument_list|,
 name|currTopOp
 argument_list|,
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -2481,7 +2481,7 @@ argument_list|,
 name|currTopOp
 argument_list|,
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|mapTask
 operator|.
@@ -2593,11 +2593,11 @@ argument_list|(
 name|currMapJoinOp
 argument_list|)
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -2612,7 +2612,7 @@ operator|.
 name|getTaskTmpDir
 argument_list|()
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tt_desc
 init|=
 name|mjCtx
@@ -2675,7 +2675,7 @@ argument_list|(
 name|taskTmpDir
 argument_list|,
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|tt_desc
 argument_list|,

@@ -437,7 +437,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fileSinkDesc
+name|FileSinkDesc
 import|;
 end_import
 
@@ -455,7 +455,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -473,7 +473,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -701,11 +701,11 @@ operator|.
 name|getCurrTask
 argument_list|()
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|currPlan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -953,7 +953,7 @@ name|GenMRProcContext
 operator|)
 name|procCtx
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|cplan
 init|=
 name|GenMapRedUtils
@@ -1397,7 +1397,7 @@ name|mjCtx
 argument_list|)
 expr_stmt|;
 block|}
-name|mapredWork
+name|MapredWork
 name|mjPlan
 init|=
 name|GenMapRedUtils
@@ -1425,7 +1425,7 @@ name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tt_desc
 init|=
 name|PlanUtils
@@ -1505,7 +1505,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|taskTmpDir
 argument_list|,
@@ -1852,11 +1852,11 @@ operator|.
 name|getCurrTask
 argument_list|()
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|currPlan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -2192,11 +2192,11 @@ operator|.
 name|getCurrTask
 argument_list|()
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|currPlan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.

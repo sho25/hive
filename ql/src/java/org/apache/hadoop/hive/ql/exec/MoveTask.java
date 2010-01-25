@@ -245,7 +245,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|loadFileDesc
+name|LoadFileDesc
 import|;
 end_import
 
@@ -263,7 +263,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|loadTableDesc
+name|LoadTableDesc
 import|;
 end_import
 
@@ -281,7 +281,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|moveWork
+name|MoveWork
 import|;
 end_import
 
@@ -330,7 +330,7 @@ name|MoveTask
 extends|extends
 name|Task
 argument_list|<
-name|moveWork
+name|MoveWork
 argument_list|>
 implements|implements
 name|Serializable
@@ -362,7 +362,7 @@ try|try
 block|{
 comment|// Do any hive related operations like moving tables and files
 comment|// to appropriate locations
-name|loadFileDesc
+name|LoadFileDesc
 name|lfd
 init|=
 name|work
@@ -654,7 +654,7 @@ block|}
 block|}
 block|}
 comment|// Next we do this for tables and partitions
-name|loadTableDesc
+name|LoadTableDesc
 name|tbd
 init|=
 name|work
@@ -1147,7 +1147,7 @@ name|boolean
 name|isLocal
 parameter_list|()
 block|{
-name|loadTableDesc
+name|LoadTableDesc
 name|tbd
 init|=
 name|work
@@ -1166,7 +1166,7 @@ return|return
 literal|false
 return|;
 block|}
-name|loadFileDesc
+name|LoadFileDesc
 name|lfd
 init|=
 name|work

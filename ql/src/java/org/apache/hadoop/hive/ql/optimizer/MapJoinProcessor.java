@@ -555,7 +555,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -573,7 +573,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -591,7 +591,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinDesc
+name|JoinDesc
 import|;
 end_import
 
@@ -609,7 +609,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapJoinDesc
+name|MapJoinDesc
 import|;
 end_import
 
@@ -627,7 +627,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|reduceSinkDesc
+name|ReduceSinkDesc
 import|;
 end_import
 
@@ -645,7 +645,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|selectDesc
+name|SelectDesc
 import|;
 end_import
 
@@ -663,7 +663,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -764,7 +764,7 @@ throws|throws
 name|SemanticException
 block|{
 comment|// outer join cannot be performed on a table which is being cached
-name|joinDesc
+name|JoinDesc
 name|desc
 init|=
 name|op
@@ -784,7 +784,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinCond
+name|JoinCondDesc
 index|[]
 name|condns
 init|=
@@ -807,7 +807,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinCond
+name|JoinCondDesc
 name|condn
 range|:
 name|condns
@@ -820,7 +820,7 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|FULL_OUTER_JOIN
 condition|)
@@ -846,7 +846,7 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|LEFT_OUTER_JOIN
 operator|)
@@ -882,7 +882,7 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|RIGHT_OUTER_JOIN
 operator|)
@@ -953,7 +953,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|keyExprMap
@@ -965,7 +965,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -976,7 +976,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|valueExprMap
@@ -988,7 +988,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -1070,7 +1070,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|colExprMap
 init|=
@@ -1079,7 +1079,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1283,7 +1283,7 @@ argument_list|(
 name|pos
 argument_list|)
 decl_stmt|;
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|rsconf
 init|=
 name|oldPar
@@ -1304,7 +1304,7 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keys
 init|=
@@ -1364,14 +1364,14 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|values
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1512,11 +1512,11 @@ argument_list|(
 name|outputCol
 argument_list|)
 expr_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|colDesc
 init|=
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|valueInfo
 operator|.
@@ -1617,7 +1617,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinCond
+name|JoinCondDesc
 index|[]
 name|joinCondns
 init|=
@@ -1670,7 +1670,7 @@ expr_stmt|;
 block|}
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keyCols
 init|=
@@ -1721,7 +1721,7 @@ literal|"+"
 argument_list|)
 expr_stmt|;
 block|}
-name|tableDesc
+name|TableDesc
 name|keyTableDesc
 init|=
 name|PlanUtils
@@ -1740,14 +1740,14 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 name|valueTableDescs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1770,7 +1770,7 @@ control|)
 block|{
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|valueCols
 init|=
@@ -1820,7 +1820,7 @@ literal|"+"
 argument_list|)
 expr_stmt|;
 block|}
-name|tableDesc
+name|TableDesc
 name|valueTableDesc
 init|=
 name|PlanUtils
@@ -1858,7 +1858,7 @@ operator|.
 name|getAndMakeChild
 argument_list|(
 operator|new
-name|mapJoinDesc
+name|MapJoinDesc
 argument_list|(
 name|keyExprMap
 argument_list|,
@@ -2050,14 +2050,14 @@ argument_list|()
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|exprs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2099,7 +2099,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|colExprMap
 init|=
@@ -2108,7 +2108,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2169,11 +2169,11 @@ literal|1
 index|]
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|colDesc
 init|=
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|valueInfo
 operator|.
@@ -2256,11 +2256,11 @@ name|colDesc
 argument_list|)
 expr_stmt|;
 block|}
-name|selectDesc
+name|SelectDesc
 name|select
 init|=
 operator|new
-name|selectDesc
+name|SelectDesc
 argument_list|(
 name|exprs
 argument_list|,

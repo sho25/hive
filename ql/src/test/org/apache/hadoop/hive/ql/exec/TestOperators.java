@@ -149,7 +149,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|collectDesc
+name|CollectDesc
 import|;
 end_import
 
@@ -167,7 +167,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 import|;
 end_import
 
@@ -185,7 +185,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -203,7 +203,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 import|;
 end_import
 
@@ -221,7 +221,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -239,7 +239,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -257,7 +257,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|scriptDesc
+name|ScriptDesc
 import|;
 end_import
 
@@ -275,7 +275,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|selectDesc
+name|SelectDesc
 import|;
 end_import
 
@@ -293,7 +293,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -693,7 +693,7 @@ argument_list|(
 literal|"Testing Filter Operator"
 argument_list|)
 expr_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|col0
 init|=
 name|TestExecDriver
@@ -703,7 +703,7 @@ argument_list|(
 literal|"col0"
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|col1
 init|=
 name|TestExecDriver
@@ -713,7 +713,7 @@ argument_list|(
 literal|"col1"
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|col2
 init|=
 name|TestExecDriver
@@ -723,16 +723,16 @@ argument_list|(
 literal|"col2"
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|zero
 init|=
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 literal|"0"
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|func1
 init|=
 name|TypeCheckProcFactory
@@ -748,7 +748,7 @@ argument_list|,
 name|col1
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|func2
 init|=
 name|TypeCheckProcFactory
@@ -764,7 +764,7 @@ argument_list|,
 name|zero
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|func3
 init|=
 name|TypeCheckProcFactory
@@ -787,11 +787,11 @@ operator|!=
 literal|null
 operator|)
 assert|;
-name|filterDesc
+name|FilterDesc
 name|filterCtx
 init|=
 operator|new
-name|filterDesc
+name|FilterDesc
 argument_list|(
 name|func3
 argument_list|,
@@ -801,7 +801,7 @@ decl_stmt|;
 comment|// Configuration
 name|Operator
 argument_list|<
-name|filterDesc
+name|FilterDesc
 argument_list|>
 name|op
 init|=
@@ -809,7 +809,7 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
-name|filterDesc
+name|FilterDesc
 operator|.
 name|class
 argument_list|)
@@ -1011,7 +1011,7 @@ literal|"Testing FileSink Operator"
 argument_list|)
 expr_stmt|;
 comment|// col1
-name|exprNodeDesc
+name|ExprNodeDesc
 name|exprDesc1
 init|=
 name|TestExecDriver
@@ -1022,7 +1022,7 @@ literal|"col1"
 argument_list|)
 decl_stmt|;
 comment|// col2
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr1
 init|=
 name|TestExecDriver
@@ -1032,16 +1032,16 @@ argument_list|(
 literal|"col0"
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr2
 init|=
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 literal|"1"
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|exprDesc2
 init|=
 name|TypeCheckProcFactory
@@ -1060,14 +1060,14 @@ decl_stmt|;
 comment|// select operator to project these two columns
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|earr
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1126,11 +1126,11 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
-name|selectDesc
+name|SelectDesc
 name|selectCtx
 init|=
 operator|new
-name|selectDesc
+name|SelectDesc
 argument_list|(
 name|earr
 argument_list|,
@@ -1139,7 +1139,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|selectDesc
+name|SelectDesc
 argument_list|>
 name|op
 init|=
@@ -1147,7 +1147,7 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
-name|selectDesc
+name|SelectDesc
 operator|.
 name|class
 argument_list|)
@@ -1273,7 +1273,7 @@ literal|"Testing Script Operator"
 argument_list|)
 expr_stmt|;
 comment|// col1
-name|exprNodeDesc
+name|ExprNodeDesc
 name|exprDesc1
 init|=
 name|TestExecDriver
@@ -1284,7 +1284,7 @@ literal|"col1"
 argument_list|)
 decl_stmt|;
 comment|// col2
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr1
 init|=
 name|TestExecDriver
@@ -1294,16 +1294,16 @@ argument_list|(
 literal|"col0"
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr2
 init|=
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 literal|"1"
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|exprDesc2
 init|=
 name|TypeCheckProcFactory
@@ -1322,14 +1322,14 @@ decl_stmt|;
 comment|// select operator to project these two columns
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|earr
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1388,11 +1388,11 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
-name|selectDesc
+name|SelectDesc
 name|selectCtx
 init|=
 operator|new
-name|selectDesc
+name|SelectDesc
 argument_list|(
 name|earr
 argument_list|,
@@ -1401,7 +1401,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|selectDesc
+name|SelectDesc
 argument_list|>
 name|op
 init|=
@@ -1409,7 +1409,7 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
-name|selectDesc
+name|SelectDesc
 operator|.
 name|class
 argument_list|)
@@ -1422,7 +1422,7 @@ name|selectCtx
 argument_list|)
 expr_stmt|;
 comment|// scriptOperator to echo the output of the select
-name|tableDesc
+name|TableDesc
 name|scriptOutput
 init|=
 name|PlanUtils
@@ -1438,7 +1438,7 @@ argument_list|,
 literal|"a,b"
 argument_list|)
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|scriptInput
 init|=
 name|PlanUtils
@@ -1454,11 +1454,11 @@ argument_list|,
 literal|"a,b"
 argument_list|)
 decl_stmt|;
-name|scriptDesc
+name|ScriptDesc
 name|sd
 init|=
 operator|new
-name|scriptDesc
+name|ScriptDesc
 argument_list|(
 literal|"cat"
 argument_list|,
@@ -1477,7 +1477,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|scriptDesc
+name|ScriptDesc
 argument_list|>
 name|sop
 init|=
@@ -1491,11 +1491,11 @@ name|op
 argument_list|)
 decl_stmt|;
 comment|// Collect operator to observe the output of the script
-name|collectDesc
+name|CollectDesc
 name|cd
 init|=
 operator|new
-name|collectDesc
+name|CollectDesc
 argument_list|(
 name|Integer
 operator|.
@@ -1885,18 +1885,18 @@ argument_list|)
 expr_stmt|;
 comment|// initialize pathToTableInfo
 comment|// Default: treat the table as a single column "col"
-name|tableDesc
+name|TableDesc
 name|td
 init|=
 name|Utilities
 operator|.
 name|defaultTd
 decl_stmt|;
-name|partitionDesc
+name|PartitionDesc
 name|pd
 init|=
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|td
 argument_list|,
@@ -1919,7 +1919,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|pathToPartitionInfo
 init|=
@@ -1940,7 +1940,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1954,11 +1954,11 @@ name|pd
 argument_list|)
 expr_stmt|;
 comment|// initialize aliasToWork
-name|collectDesc
+name|CollectDesc
 name|cd
 init|=
 operator|new
-name|collectDesc
+name|CollectDesc
 argument_list|(
 name|Integer
 operator|.
@@ -1978,7 +1978,7 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
-name|collectDesc
+name|CollectDesc
 operator|.
 name|class
 argument_list|)
@@ -2000,7 +2000,7 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
-name|collectDesc
+name|CollectDesc
 operator|.
 name|class
 argument_list|)
@@ -2058,11 +2058,11 @@ name|cdop2
 argument_list|)
 expr_stmt|;
 comment|// initialize mapredWork
-name|mapredWork
+name|MapredWork
 name|mrwork
 init|=
 operator|new
-name|mapredWork
+name|MapredWork
 argument_list|()
 decl_stmt|;
 name|mrwork

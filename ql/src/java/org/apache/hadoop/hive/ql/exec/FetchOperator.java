@@ -215,7 +215,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fetchWork
+name|FetchWork
 import|;
 end_import
 
@@ -233,7 +233,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -251,7 +251,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -517,7 +517,7 @@ decl_stmt|;
 specifier|public
 name|FetchOperator
 parameter_list|(
-name|fetchWork
+name|FetchWork
 name|work
 parameter_list|,
 name|JobConf
@@ -598,7 +598,7 @@ expr_stmt|;
 block|}
 specifier|private
 specifier|final
-name|fetchWork
+name|FetchWork
 name|work
 decl_stmt|;
 specifier|private
@@ -650,7 +650,7 @@ decl_stmt|;
 specifier|private
 name|Iterator
 argument_list|<
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|iterPartDesc
 decl_stmt|;
@@ -659,11 +659,11 @@ name|Path
 name|currPath
 decl_stmt|;
 specifier|private
-name|partitionDesc
+name|PartitionDesc
 name|currPart
 decl_stmt|;
 specifier|private
-name|tableDesc
+name|TableDesc
 name|currTbl
 decl_stmt|;
 specifier|private
@@ -1130,7 +1130,7 @@ else|else
 block|{
 name|iterPath
 operator|=
-name|fetchWork
+name|FetchWork
 operator|.
 name|convertStringToPathArray
 argument_list|(
@@ -1171,7 +1171,7 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
-name|partitionDesc
+name|PartitionDesc
 name|prt
 init|=
 name|iterPartDesc
@@ -1305,7 +1305,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|tableDesc
+name|TableDesc
 name|tmp
 init|=
 name|currTbl
@@ -1721,7 +1721,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableDesc
+name|TableDesc
 name|tbl
 init|=
 name|work
@@ -1763,7 +1763,7 @@ else|else
 block|{
 name|List
 argument_list|<
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|listParts
 init|=

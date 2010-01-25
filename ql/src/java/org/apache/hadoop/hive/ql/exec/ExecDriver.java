@@ -501,7 +501,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -519,7 +519,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -770,7 +770,7 @@ name|ExecDriver
 extends|extends
 name|Task
 argument_list|<
-name|mapredWork
+name|MapredWork
 argument_list|>
 implements|implements
 name|Serializable
@@ -1182,7 +1182,7 @@ comment|/**    * Constructor/Initialization for invocation as independent utilit
 specifier|public
 name|ExecDriver
 parameter_list|(
-name|mapredWork
+name|MapredWork
 name|plan
 parameter_list|,
 name|JobConf
@@ -2191,7 +2191,7 @@ parameter_list|,
 name|JobConf
 name|job
 parameter_list|,
-name|mapredWork
+name|MapredWork
 name|work
 parameter_list|)
 throws|throws
@@ -2526,7 +2526,7 @@ parameter_list|(
 name|JobConf
 name|job
 parameter_list|,
-name|mapredWork
+name|MapredWork
 name|work
 parameter_list|)
 throws|throws
@@ -5079,7 +5079,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 name|Utilities
@@ -5443,7 +5443,7 @@ name|boolean
 name|hasReduce
 parameter_list|()
 block|{
-name|mapredWork
+name|MapredWork
 name|w
 init|=
 name|getWork
@@ -5540,7 +5540,7 @@ parameter_list|,
 name|JobConf
 name|job
 parameter_list|,
-name|mapredWork
+name|MapredWork
 name|work
 parameter_list|,
 name|String
@@ -5804,7 +5804,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|pathToPartitionInfo
 init|=
@@ -5848,7 +5848,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|partitionDesc
+name|PartitionDesc
 name|pDesc
 init|=
 name|work
@@ -5949,7 +5949,7 @@ parameter_list|(
 name|JobConf
 name|job
 parameter_list|,
-name|mapredWork
+name|MapredWork
 name|work
 parameter_list|,
 name|String

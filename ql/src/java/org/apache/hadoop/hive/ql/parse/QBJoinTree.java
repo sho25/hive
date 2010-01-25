@@ -108,7 +108,7 @@ name|int
 name|nextTag
 decl_stmt|;
 specifier|private
-name|joinCond
+name|JoinCond
 index|[]
 name|joinCond
 decl_stmt|;
@@ -393,7 +393,7 @@ literal|"$INTNAME"
 return|;
 block|}
 specifier|public
-name|joinCond
+name|JoinCond
 index|[]
 name|getJoinCond
 parameter_list|()
@@ -406,7 +406,7 @@ specifier|public
 name|void
 name|setJoinCond
 parameter_list|(
-name|joinCond
+name|JoinCond
 index|[]
 name|joinCond
 parameter_list|)

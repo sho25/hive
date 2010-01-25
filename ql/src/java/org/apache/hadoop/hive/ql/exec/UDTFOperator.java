@@ -129,7 +129,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|udtfDesc
+name|UDTFDesc
 import|;
 end_import
 
@@ -252,7 +252,7 @@ name|UDTFOperator
 extends|extends
 name|Operator
 argument_list|<
-name|udtfDesc
+name|UDTFDesc
 argument_list|>
 implements|implements
 name|Serializable

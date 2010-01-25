@@ -61,7 +61,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|forwardDesc
+name|ForwardDesc
 import|;
 end_import
 
@@ -96,7 +96,7 @@ name|ForwardOperator
 extends|extends
 name|Operator
 argument_list|<
-name|forwardDesc
+name|ForwardDesc
 argument_list|>
 implements|implements
 name|Serializable

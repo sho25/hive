@@ -163,7 +163,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fileSinkDesc
+name|FileSinkDesc
 import|;
 end_import
 
@@ -302,7 +302,7 @@ name|FileSinkOperator
 extends|extends
 name|TerminalOperator
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 implements|implements
 name|Serializable

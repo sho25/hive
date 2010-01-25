@@ -81,7 +81,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -107,7 +107,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|opToPartPruner
 decl_stmt|;
@@ -119,7 +119,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|opToPartPruner
 parameter_list|)
@@ -140,7 +140,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|getOpToPartPruner
 parameter_list|()

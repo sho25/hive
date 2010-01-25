@@ -95,7 +95,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|unionDesc
+name|UnionDesc
 import|;
 end_import
 
@@ -224,7 +224,7 @@ name|UnionOperator
 extends|extends
 name|Operator
 argument_list|<
-name|unionDesc
+name|UnionDesc
 argument_list|>
 implements|implements
 name|Serializable

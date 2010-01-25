@@ -219,7 +219,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|aggregationDesc
+name|AggregationDesc
 import|;
 end_import
 
@@ -237,7 +237,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -255,7 +255,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|groupByDesc
+name|GroupByDesc
 import|;
 end_import
 
@@ -494,7 +494,7 @@ name|GroupByOperator
 extends|extends
 name|Operator
 argument_list|<
-name|groupByDesc
+name|GroupByDesc
 argument_list|>
 implements|implements
 name|Serializable
@@ -1100,7 +1100,7 @@ control|)
 block|{
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|parameters
 init|=
@@ -1352,7 +1352,7 @@ name|i
 operator|++
 control|)
 block|{
-name|aggregationDesc
+name|AggregationDesc
 name|agg
 init|=
 name|conf
@@ -1498,7 +1498,7 @@ operator|.
 name|getMode
 argument_list|()
 operator|!=
-name|groupByDesc
+name|GroupByDesc
 operator|.
 name|Mode
 operator|.
@@ -2202,7 +2202,7 @@ name|javaHashEntryOverHead
 expr_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keys
 init|=
@@ -4602,7 +4602,7 @@ argument_list|()
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keys
 init|=
@@ -4613,7 +4613,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|key
 range|:
 name|keys
@@ -4636,7 +4636,7 @@ expr_stmt|;
 block|}
 name|ArrayList
 argument_list|<
-name|aggregationDesc
+name|AggregationDesc
 argument_list|>
 name|aggrs
 init|=
@@ -4647,7 +4647,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|aggregationDesc
+name|AggregationDesc
 name|aggr
 range|:
 name|aggrs
@@ -4655,7 +4655,7 @@ control|)
 block|{
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|params
 init|=
@@ -4666,7 +4666,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|param
 range|:
 name|params

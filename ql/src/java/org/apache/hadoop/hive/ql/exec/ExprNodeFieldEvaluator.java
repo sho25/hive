@@ -71,7 +71,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 import|;
 end_import
 
@@ -177,7 +177,7 @@ extends|extends
 name|ExprNodeEvaluator
 block|{
 specifier|protected
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 name|desc
 decl_stmt|;
 specifier|transient
@@ -207,7 +207,7 @@ decl_stmt|;
 specifier|public
 name|ExprNodeFieldEvaluator
 parameter_list|(
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 name|desc
 parameter_list|)
 block|{

@@ -91,7 +91,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 import|;
 end_import
 
@@ -176,7 +176,7 @@ name|FilterOperator
 extends|extends
 name|Operator
 argument_list|<
-name|filterDesc
+name|FilterDesc
 argument_list|>
 implements|implements
 name|Serializable

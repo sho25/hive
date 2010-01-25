@@ -703,7 +703,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|groupByDesc
+name|GroupByDesc
 import|;
 end_import
 
@@ -721,7 +721,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -739,7 +739,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -757,7 +757,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -983,7 +983,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|mapredWork
+name|MapredWork
 argument_list|>
 name|gWorkMap
 init|=
@@ -996,7 +996,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|mapredWork
+name|MapredWork
 argument_list|>
 argument_list|()
 argument_list|)
@@ -1126,14 +1126,14 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|mapredWork
+name|MapredWork
 name|getMapRedWork
 parameter_list|(
 name|Configuration
 name|job
 parameter_list|)
 block|{
-name|mapredWork
+name|MapredWork
 name|gWork
 init|=
 literal|null
@@ -1199,7 +1199,7 @@ name|job
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|ret
 init|=
 name|deserializeMapRedWork
@@ -1431,7 +1431,7 @@ parameter_list|(
 name|Configuration
 name|job
 parameter_list|,
-name|mapredWork
+name|MapredWork
 name|w
 parameter_list|)
 block|{
@@ -1729,7 +1729,7 @@ name|e
 operator|.
 name|setPersistenceDelegate
 argument_list|(
-name|groupByDesc
+name|GroupByDesc
 operator|.
 name|Mode
 operator|.
@@ -1774,7 +1774,7 @@ specifier|static
 name|void
 name|serializeMapRedWork
 parameter_list|(
-name|mapredWork
+name|MapredWork
 name|w
 parameter_list|,
 name|OutputStream
@@ -1808,7 +1808,7 @@ name|e
 operator|.
 name|setPersistenceDelegate
 argument_list|(
-name|groupByDesc
+name|GroupByDesc
 operator|.
 name|Mode
 operator|.
@@ -1834,7 +1834,7 @@ expr_stmt|;
 block|}
 specifier|public
 specifier|static
-name|mapredWork
+name|MapredWork
 name|deserializeMapRedWork
 parameter_list|(
 name|InputStream
@@ -1862,11 +1862,11 @@ name|getClassLoader
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|ret
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|d
 operator|.
@@ -1952,7 +1952,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|defaultTd
 decl_stmt|;
 static|static
@@ -2416,7 +2416,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getTableDesc
 parameter_list|(
 name|Table
@@ -2426,7 +2426,7 @@ block|{
 return|return
 operator|(
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|tbl
 operator|.
@@ -2457,7 +2457,7 @@ block|}
 comment|// column names and column types are all delimited by comma
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getTableDesc
 parameter_list|(
 name|String
@@ -2470,7 +2470,7 @@ block|{
 return|return
 operator|(
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|LazySimpleSerDe
 operator|.
@@ -2546,7 +2546,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|partitionDesc
+name|PartitionDesc
 name|getPartitionDesc
 parameter_list|(
 name|Partition
@@ -2558,7 +2558,7 @@ block|{
 return|return
 operator|(
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|part
 argument_list|)
@@ -2570,7 +2570,7 @@ specifier|static
 name|void
 name|addMapWork
 parameter_list|(
-name|mapredWork
+name|MapredWork
 name|mr
 parameter_list|,
 name|Table
@@ -2603,7 +2603,7 @@ argument_list|,
 name|work
 argument_list|,
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|getTableDesc
 argument_list|(

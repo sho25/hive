@@ -85,7 +85,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|collectDesc
+name|CollectDesc
 import|;
 end_import
 
@@ -154,7 +154,7 @@ name|CollectOperator
 extends|extends
 name|Operator
 argument_list|<
-name|collectDesc
+name|CollectDesc
 argument_list|>
 implements|implements
 name|Serializable

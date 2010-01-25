@@ -159,7 +159,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|explain
+name|Explain
 import|;
 end_import
 
@@ -177,7 +177,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|explainWork
+name|ExplainWork
 import|;
 end_import
 
@@ -226,7 +226,7 @@ name|ExplainTask
 extends|extends
 name|Task
 argument_list|<
-name|explainWork
+name|ExplainWork
 argument_list|>
 implements|implements
 name|Serializable
@@ -852,7 +852,7 @@ argument_list|()
 operator|.
 name|getAnnotation
 argument_list|(
-name|explain
+name|Explain
 operator|.
 name|class
 argument_list|)
@@ -861,14 +861,14 @@ if|if
 condition|(
 name|note
 operator|instanceof
-name|explain
+name|Explain
 condition|)
 block|{
-name|explain
+name|Explain
 name|xpl_note
 init|=
 operator|(
-name|explain
+name|Explain
 operator|)
 name|note
 decl_stmt|;
@@ -1045,7 +1045,7 @@ name|m
 operator|.
 name|getAnnotation
 argument_list|(
-name|explain
+name|Explain
 operator|.
 name|class
 argument_list|)
@@ -1054,14 +1054,14 @@ if|if
 condition|(
 name|note
 operator|instanceof
-name|explain
+name|Explain
 condition|)
 block|{
-name|explain
+name|Explain
 name|xpl_note
 init|=
 operator|(
-name|explain
+name|Explain
 operator|)
 name|note
 decl_stmt|;

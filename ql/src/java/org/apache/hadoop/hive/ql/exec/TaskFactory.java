@@ -133,7 +133,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|copyWork
+name|CopyWork
 import|;
 end_import
 
@@ -151,7 +151,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|explainWork
+name|ExplainWork
 import|;
 end_import
 
@@ -169,7 +169,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fetchWork
+name|FetchWork
 import|;
 end_import
 
@@ -187,7 +187,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -205,7 +205,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|moveWork
+name|MoveWork
 import|;
 end_import
 
@@ -319,10 +319,10 @@ argument_list|(
 operator|new
 name|taskTuple
 argument_list|<
-name|moveWork
+name|MoveWork
 argument_list|>
 argument_list|(
-name|moveWork
+name|MoveWork
 operator|.
 name|class
 argument_list|,
@@ -339,10 +339,10 @@ argument_list|(
 operator|new
 name|taskTuple
 argument_list|<
-name|fetchWork
+name|FetchWork
 argument_list|>
 argument_list|(
-name|fetchWork
+name|FetchWork
 operator|.
 name|class
 argument_list|,
@@ -359,10 +359,10 @@ argument_list|(
 operator|new
 name|taskTuple
 argument_list|<
-name|copyWork
+name|CopyWork
 argument_list|>
 argument_list|(
-name|copyWork
+name|CopyWork
 operator|.
 name|class
 argument_list|,
@@ -419,10 +419,10 @@ argument_list|(
 operator|new
 name|taskTuple
 argument_list|<
-name|explainWork
+name|ExplainWork
 argument_list|>
 argument_list|(
-name|explainWork
+name|ExplainWork
 operator|.
 name|class
 argument_list|,
@@ -652,7 +652,7 @@ if|if
 condition|(
 name|workClass
 operator|==
-name|mapredWork
+name|MapredWork
 operator|.
 name|class
 condition|)

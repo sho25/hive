@@ -229,7 +229,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -247,7 +247,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinCond
+name|JoinCondDesc
 import|;
 end_import
 
@@ -265,7 +265,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinDesc
+name|JoinDesc
 import|;
 end_import
 
@@ -283,7 +283,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -469,7 +469,7 @@ name|CommonJoinOperator
 parameter_list|<
 name|T
 extends|extends
-name|joinDesc
+name|JoinDesc
 parameter_list|>
 extends|extends
 name|Operator
@@ -672,7 +672,7 @@ comment|// order in which the results should
 comment|// be output
 specifier|transient
 specifier|protected
-name|joinCond
+name|JoinCondDesc
 index|[]
 name|condn
 decl_stmt|;
@@ -740,7 +740,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|tableDesc
+name|TableDesc
 argument_list|>
 name|spillTableDesc
 decl_stmt|;
@@ -813,7 +813,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|inputMap
@@ -834,7 +834,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 argument_list|>
@@ -864,7 +864,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|e
@@ -887,7 +887,7 @@ index|]
 decl_stmt|;
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|expr
 init|=
@@ -1289,7 +1289,7 @@ specifier|static
 parameter_list|<
 name|T
 extends|extends
-name|joinDesc
+name|JoinDesc
 parameter_list|>
 name|ObjectInspector
 name|getJoinOutputObjectInspector
@@ -1782,7 +1782,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|tableDesc
+name|TableDesc
 name|tblDesc
 init|=
 name|getSpillTableDesc
@@ -1896,7 +1896,7 @@ name|byte
 name|alias
 parameter_list|)
 block|{
-name|tableDesc
+name|TableDesc
 name|desc
 init|=
 name|getSpillTableDesc
@@ -1974,7 +1974,7 @@ init|=
 literal|false
 decl_stmt|;
 specifier|public
-name|tableDesc
+name|TableDesc
 name|getSpillTableDesc
 parameter_list|(
 name|Byte
@@ -2013,7 +2013,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|tableDesc
+name|TableDesc
 argument_list|>
 name|getSpillTableDesc
 parameter_list|()
@@ -2044,7 +2044,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|exprs
@@ -2061,7 +2061,7 @@ name|HashMap
 argument_list|<
 name|Byte
 argument_list|,
-name|tableDesc
+name|TableDesc
 argument_list|>
 argument_list|(
 name|exprs
@@ -2090,7 +2090,7 @@ control|)
 block|{
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|valueCols
 init|=
@@ -2223,11 +2223,11 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
-name|tableDesc
+name|TableDesc
 name|tblDesc
 init|=
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|LazyBinarySerDe
 operator|.
@@ -3979,7 +3979,7 @@ operator|(
 operator|(
 name|type
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|RIGHT_OUTER_JOIN
 operator|)
@@ -3987,7 +3987,7 @@ operator|||
 operator|(
 name|type
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|FULL_OUTER_JOIN
 operator|)
@@ -4082,7 +4082,7 @@ if|if
 condition|(
 name|type
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|INNER_JOIN
 condition|)
@@ -4109,7 +4109,7 @@ if|if
 condition|(
 name|type
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|LEFT_OUTER_JOIN
 condition|)
@@ -4136,7 +4136,7 @@ if|if
 condition|(
 name|type
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|RIGHT_OUTER_JOIN
 condition|)
@@ -4165,7 +4165,7 @@ if|if
 condition|(
 name|type
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|LEFT_SEMI_JOIN
 condition|)
@@ -4191,7 +4191,7 @@ assert|assert
 operator|(
 name|type
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|FULL_OUTER_JOIN
 operator|)
@@ -4318,7 +4318,7 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|LEFT_SEMI_JOIN
 operator|&&
@@ -4664,7 +4664,7 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|UNIQUE_JOIN
 condition|)

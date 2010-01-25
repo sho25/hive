@@ -85,7 +85,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -103,7 +103,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|selectDesc
+name|SelectDesc
 import|;
 end_import
 
@@ -156,7 +156,7 @@ name|SelectOperator
 extends|extends
 name|Operator
 argument_list|<
-name|selectDesc
+name|SelectDesc
 argument_list|>
 implements|implements
 name|Serializable
@@ -210,7 +210,7 @@ return|return;
 block|}
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|colList
 init|=

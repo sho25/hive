@@ -219,7 +219,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -352,11 +352,11 @@ operator|.
 name|getCurrTask
 argument_list|()
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.

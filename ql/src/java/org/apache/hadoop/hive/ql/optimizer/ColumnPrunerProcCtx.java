@@ -209,7 +209,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -227,7 +227,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|selectDesc
+name|SelectDesc
 import|;
 end_import
 
@@ -603,7 +603,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|selectDesc
+name|SelectDesc
 name|conf
 init|=
 name|op
@@ -613,7 +613,7 @@ argument_list|()
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|exprList
 init|=
@@ -624,7 +624,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 range|:
 name|exprList
@@ -680,7 +680,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|selectDesc
+name|SelectDesc
 name|conf
 init|=
 name|op
@@ -709,7 +709,7 @@ return|;
 block|}
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|selectExprs
 init|=
@@ -766,7 +766,7 @@ argument_list|)
 argument_list|)
 condition|)
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 init|=
 name|selectExprs

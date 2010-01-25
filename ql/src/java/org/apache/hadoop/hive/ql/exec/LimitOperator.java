@@ -75,7 +75,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|limitDesc
+name|LimitDesc
 import|;
 end_import
 
@@ -110,7 +110,7 @@ name|LimitOperator
 extends|extends
 name|Operator
 argument_list|<
-name|limitDesc
+name|LimitDesc
 argument_list|>
 implements|implements
 name|Serializable

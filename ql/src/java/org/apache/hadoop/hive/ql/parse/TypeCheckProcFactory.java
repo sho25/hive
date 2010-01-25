@@ -291,7 +291,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -309,7 +309,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 import|;
 end_import
 
@@ -327,7 +327,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -345,7 +345,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 import|;
 end_import
 
@@ -363,7 +363,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -381,7 +381,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 import|;
 end_import
 
@@ -597,7 +597,7 @@ decl_stmt|;
 comment|/**    * Function to do groupby subexpression elimination. This is called by all the    * processors initially. As an example, consider the query select a+b,    * count(1) from T group by a+b; Then a+b is already precomputed in the group    * by operators key, so we substitute a+b in the select list with the internal    * column name of the a+b expression that appears in the in input row    * resolver.    *     * @param nd    *          The node that is being inspected.    * @param procCtx    *          The processor context.    *     * @return exprNodeColumnDesc.    */
 specifier|public
 specifier|static
-name|exprNodeDesc
+name|ExprNodeDesc
 name|processGByExpr
 parameter_list|(
 name|Node
@@ -639,7 +639,7 @@ operator|.
 name|getInputRR
 argument_list|()
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 literal|null
@@ -670,7 +670,7 @@ block|{
 name|desc
 operator|=
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|colInfo
 operator|.
@@ -756,7 +756,7 @@ return|return
 literal|null
 return|;
 block|}
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 name|TypeCheckProcFactory
@@ -781,7 +781,7 @@ return|;
 block|}
 return|return
 operator|new
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 argument_list|()
 return|;
 block|}
@@ -854,7 +854,7 @@ return|return
 literal|null
 return|;
 block|}
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 name|TypeCheckProcFactory
@@ -964,7 +964,7 @@ throw|;
 block|}
 return|return
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 name|v
 argument_list|)
@@ -1039,7 +1039,7 @@ return|return
 literal|null
 return|;
 block|}
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 name|TypeCheckProcFactory
@@ -1156,7 +1156,7 @@ break|break;
 block|}
 return|return
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -1235,7 +1235,7 @@ return|return
 literal|null
 return|;
 block|}
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 name|TypeCheckProcFactory
@@ -1313,7 +1313,7 @@ assert|;
 block|}
 return|return
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -1392,7 +1392,7 @@ return|return
 literal|null
 return|;
 block|}
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 name|TypeCheckProcFactory
@@ -1637,7 +1637,7 @@ block|{
 comment|// It's a column.
 return|return
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|colInfo
 operator|.
@@ -1909,7 +1909,7 @@ name|isFunction
 parameter_list|,
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children
 parameter_list|)
@@ -2179,27 +2179,27 @@ block|}
 comment|/**      * Get the exprNodeDesc      *       * @param name      * @param children      * @return The expression node descriptor      * @throws UDFArgumentException      */
 specifier|public
 specifier|static
-name|exprNodeDesc
+name|ExprNodeDesc
 name|getFuncExprNodeDesc
 parameter_list|(
 name|String
 name|name
 parameter_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 modifier|...
 name|children
 parameter_list|)
 block|{
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|c
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|(
 name|Arrays
@@ -2241,7 +2241,7 @@ block|}
 comment|/**      * This function create an ExprNodeDesc for a UDF function given the      * children (arguments). It will insert implicit type conversion functions      * if necessary.      *       * @throws UDFArgumentException      */
 specifier|public
 specifier|static
-name|exprNodeDesc
+name|ExprNodeDesc
 name|getFuncExprNodeDesc
 parameter_list|(
 name|String
@@ -2249,7 +2249,7 @@ name|udfName
 parameter_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children
 parameter_list|)
@@ -2313,7 +2313,7 @@ argument_list|)
 throw|;
 block|}
 return|return
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|.
 name|newInstance
 argument_list|(
@@ -2324,7 +2324,7 @@ argument_list|)
 return|;
 block|}
 specifier|static
-name|exprNodeDesc
+name|ExprNodeDesc
 name|getXpathOrFuncExprNodeDesc
 parameter_list|(
 name|ASTNode
@@ -2335,7 +2335,7 @@ name|isFunction
 parameter_list|,
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children
 parameter_list|,
@@ -2401,7 +2401,7 @@ argument_list|,
 name|isFunction
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 decl_stmt|;
 if|if
@@ -2435,10 +2435,10 @@ argument_list|(
 literal|1
 argument_list|)
 operator|instanceof
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 assert|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|object
 init|=
 name|children
@@ -2448,11 +2448,11 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 name|fieldName
 init|=
 operator|(
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 name|children
 operator|.
@@ -2589,7 +2589,7 @@ block|}
 name|desc
 operator|=
 operator|new
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 argument_list|(
 name|t
 argument_list|,
@@ -2666,14 +2666,14 @@ argument_list|(
 literal|1
 argument_list|)
 operator|instanceof
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 operator|||
 operator|!
 operator|(
 operator|(
 operator|(
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 name|children
 operator|.
@@ -2727,7 +2727,7 @@ decl_stmt|;
 name|desc
 operator|=
 operator|new
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 argument_list|(
 name|t
 argument_list|,
@@ -2765,7 +2765,7 @@ argument_list|(
 literal|1
 argument_list|)
 operator|instanceof
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 condition|)
 block|{
@@ -2790,7 +2790,7 @@ operator|!
 operator|(
 operator|(
 operator|(
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 name|children
 operator|.
@@ -2850,7 +2850,7 @@ decl_stmt|;
 name|desc
 operator|=
 operator|new
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 argument_list|(
 name|t
 argument_list|,
@@ -3262,7 +3262,7 @@ operator|)
 name|procCtx
 decl_stmt|;
 comment|// If this is a GroupBy expression, clear error and continue
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 name|TypeCheckProcFactory
@@ -3393,7 +3393,7 @@ name|tableAlias
 argument_list|,
 operator|(
 operator|(
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 name|nodeOutputs
 index|[
@@ -3440,7 +3440,7 @@ return|;
 block|}
 return|return
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|colInfo
 operator|.
@@ -3550,14 +3550,14 @@ operator|)
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|(
 name|expr
@@ -3591,7 +3591,7 @@ operator|.
 name|add
 argument_list|(
 operator|(
-name|exprNodeDesc
+name|ExprNodeDesc
 operator|)
 name|nodeOutputs
 index|[

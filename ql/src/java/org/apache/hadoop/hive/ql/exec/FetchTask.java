@@ -121,7 +121,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fetchWork
+name|FetchWork
 import|;
 end_import
 
@@ -139,7 +139,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -268,7 +268,7 @@ name|FetchTask
 extends|extends
 name|Task
 argument_list|<
-name|fetchWork
+name|FetchWork
 argument_list|>
 implements|implements
 name|Serializable
@@ -466,7 +466,7 @@ return|;
 block|}
 comment|/**    * Return the tableDesc of the fetchWork    */
 specifier|public
-name|tableDesc
+name|TableDesc
 name|getTblDesc
 parameter_list|()
 block|{

@@ -249,7 +249,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -267,7 +267,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -1191,11 +1191,11 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|pathToPartitionInfo
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|mrwork
 init|=
 literal|null
@@ -1303,7 +1303,7 @@ range|:
 name|dirs
 control|)
 block|{
-name|partitionDesc
+name|PartitionDesc
 name|part
 init|=
 name|getPartitionDescFromPath
@@ -1472,7 +1472,7 @@ range|:
 name|dirs
 control|)
 block|{
-name|partitionDesc
+name|PartitionDesc
 name|part
 init|=
 name|getPartitionDescFromPath
@@ -1532,14 +1532,14 @@ block|}
 block|}
 specifier|protected
 specifier|static
-name|partitionDesc
+name|PartitionDesc
 name|getPartitionDescFromPath
 parameter_list|(
 name|Map
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|pathToPartitionInfo
 parameter_list|,
@@ -1549,7 +1549,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|partitionDesc
+name|PartitionDesc
 name|partDesc
 init|=
 name|pathToPartitionInfo

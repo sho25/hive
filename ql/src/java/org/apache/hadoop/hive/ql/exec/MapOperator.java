@@ -187,7 +187,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -205,7 +205,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -368,7 +368,7 @@ name|MapOperator
 extends|extends
 name|Operator
 argument_list|<
-name|mapredWork
+name|MapredWork
 argument_list|>
 implements|implements
 name|Serializable
@@ -750,7 +750,7 @@ parameter_list|(
 name|Configuration
 name|hconf
 parameter_list|,
-name|mapredWork
+name|MapredWork
 name|mrwork
 parameter_list|)
 throws|throws
@@ -779,7 +779,7 @@ specifier|static
 name|MapOpCtx
 name|initObjectInspector
 parameter_list|(
-name|mapredWork
+name|MapredWork
 name|conf
 parameter_list|,
 name|Configuration
@@ -799,7 +799,7 @@ name|IllegalAccessException
 throws|,
 name|SerDeException
 block|{
-name|partitionDesc
+name|PartitionDesc
 name|td
 init|=
 name|conf

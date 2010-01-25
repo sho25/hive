@@ -463,7 +463,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fileSinkDesc
+name|FileSinkDesc
 import|;
 end_import
 
@@ -481,7 +481,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -499,7 +499,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -517,7 +517,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -897,7 +897,7 @@ argument_list|(
 name|pos
 argument_list|)
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|uPlan
 init|=
 literal|null
@@ -966,7 +966,7 @@ expr_stmt|;
 name|uPlan
 operator|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|uTask
 operator|.
@@ -1013,11 +1013,11 @@ name|mjCtx
 operator|!=
 literal|null
 assert|;
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -1032,7 +1032,7 @@ operator|.
 name|getTaskTmpDir
 argument_list|()
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tt_desc
 init|=
 name|mjCtx
@@ -1095,7 +1095,7 @@ argument_list|(
 name|taskTmpDir
 argument_list|,
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|tt_desc
 argument_list|,
@@ -1119,7 +1119,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|tableDesc
+name|TableDesc
 name|tt_desc
 init|=
 name|PlanUtils
@@ -1188,7 +1188,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|taskTmpDir
 argument_list|,
@@ -1315,7 +1315,7 @@ name|getCurrTopOp
 argument_list|()
 argument_list|,
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.

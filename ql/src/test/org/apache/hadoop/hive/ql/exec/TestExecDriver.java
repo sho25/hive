@@ -277,7 +277,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -295,7 +295,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 import|;
 end_import
 
@@ -313,7 +313,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -331,7 +331,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 import|;
 end_import
 
@@ -349,7 +349,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -367,7 +367,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|extractDesc
+name|ExtractDesc
 import|;
 end_import
 
@@ -385,7 +385,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fileSinkDesc
+name|FileSinkDesc
 import|;
 end_import
 
@@ -403,7 +403,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 import|;
 end_import
 
@@ -421,7 +421,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -439,7 +439,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|reduceSinkDesc
+name|ReduceSinkDesc
 import|;
 end_import
 
@@ -457,7 +457,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|scriptDesc
+name|ScriptDesc
 import|;
 end_import
 
@@ -475,7 +475,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|selectDesc
+name|SelectDesc
 import|;
 end_import
 
@@ -966,7 +966,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|mapredWork
+name|MapredWork
 name|mr
 decl_stmt|;
 specifier|protected
@@ -1155,7 +1155,7 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
-name|filterDesc
+name|FilterDesc
 name|getTestFilterDesc
 parameter_list|(
 name|String
@@ -1164,14 +1164,14 @@ parameter_list|)
 block|{
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children1
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1180,7 +1180,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -1194,11 +1194,11 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|lhs
 init|=
 operator|new
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -1221,14 +1221,14 @@ argument_list|)
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children2
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1237,7 +1237,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -1252,11 +1252,11 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|rhs
 init|=
 operator|new
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -1279,14 +1279,14 @@ argument_list|)
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children3
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1304,11 +1304,11 @@ argument_list|(
 name|rhs
 argument_list|)
 expr_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 operator|new
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -1329,7 +1329,7 @@ argument_list|)
 decl_stmt|;
 return|return
 operator|new
-name|filterDesc
+name|FilterDesc
 argument_list|(
 name|desc
 argument_list|,
@@ -1364,7 +1364,7 @@ argument_list|)
 expr_stmt|;
 name|Operator
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 name|op2
 init|=
@@ -1373,7 +1373,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|tmpdir
 operator|+
@@ -1389,7 +1389,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|filterDesc
+name|FilterDesc
 argument_list|>
 name|op1
 init|=
@@ -1446,7 +1446,7 @@ argument_list|)
 expr_stmt|;
 name|Operator
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 name|op3
 init|=
@@ -1455,7 +1455,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|tmpdir
 operator|+
@@ -1471,7 +1471,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|scriptDesc
+name|ScriptDesc
 argument_list|>
 name|op2
 init|=
@@ -1480,7 +1480,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|scriptDesc
+name|ScriptDesc
 argument_list|(
 literal|"/bin/cat"
 argument_list|,
@@ -1524,7 +1524,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|filterDesc
+name|FilterDesc
 argument_list|>
 name|op1
 init|=
@@ -1620,7 +1620,7 @@ block|}
 comment|// map-side work
 name|Operator
 argument_list|<
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|>
 name|op1
 init|=
@@ -1711,7 +1711,7 @@ expr_stmt|;
 comment|// reduce side work
 name|Operator
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 name|op3
 init|=
@@ -1720,7 +1720,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|tmpdir
 operator|+
@@ -1736,7 +1736,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|extractDesc
+name|ExtractDesc
 argument_list|>
 name|op2
 init|=
@@ -1745,7 +1745,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|extractDesc
+name|ExtractDesc
 argument_list|(
 name|getStringColumn
 argument_list|(
@@ -1837,7 +1837,7 @@ block|}
 comment|// map-side work
 name|Operator
 argument_list|<
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|>
 name|op1
 init|=
@@ -1933,7 +1933,7 @@ expr_stmt|;
 comment|// reduce side work
 name|Operator
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 name|op4
 init|=
@@ -1942,7 +1942,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|tmpdir
 operator|+
@@ -1958,7 +1958,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|filterDesc
+name|FilterDesc
 argument_list|>
 name|op3
 init|=
@@ -1976,7 +1976,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|extractDesc
+name|ExtractDesc
 argument_list|>
 name|op2
 init|=
@@ -1985,7 +1985,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|extractDesc
+name|ExtractDesc
 argument_list|(
 name|getStringColumn
 argument_list|(
@@ -2088,7 +2088,7 @@ block|}
 comment|// map-side work
 name|Operator
 argument_list|<
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|>
 name|op1
 init|=
@@ -2185,7 +2185,7 @@ argument_list|)
 expr_stmt|;
 name|Operator
 argument_list|<
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|>
 name|op2
 init|=
@@ -2272,7 +2272,7 @@ expr_stmt|;
 comment|// reduce side work
 name|Operator
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 name|op4
 init|=
@@ -2281,7 +2281,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|tmpdir
 operator|+
@@ -2297,7 +2297,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|selectDesc
+name|SelectDesc
 argument_list|>
 name|op5
 init|=
@@ -2306,7 +2306,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|selectDesc
+name|SelectDesc
 argument_list|(
 name|Utilities
 operator|.
@@ -2325,14 +2325,14 @@ argument_list|()
 argument_list|)
 argument_list|,
 operator|new
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
 name|stringTypeInfo
 argument_list|,
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -2443,7 +2443,7 @@ expr_stmt|;
 block|}
 name|Operator
 argument_list|<
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|>
 name|op1
 init|=
@@ -2496,7 +2496,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|scriptDesc
+name|ScriptDesc
 argument_list|>
 name|op0
 init|=
@@ -2505,7 +2505,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|scriptDesc
+name|ScriptDesc
 argument_list|(
 literal|"/bin/cat"
 argument_list|,
@@ -2549,7 +2549,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|selectDesc
+name|SelectDesc
 argument_list|>
 name|op4
 init|=
@@ -2558,7 +2558,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|selectDesc
+name|SelectDesc
 argument_list|(
 name|Utilities
 operator|.
@@ -2626,7 +2626,7 @@ expr_stmt|;
 comment|// reduce side work
 name|Operator
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 name|op3
 init|=
@@ -2635,7 +2635,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|tmpdir
 operator|+
@@ -2651,7 +2651,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|extractDesc
+name|ExtractDesc
 argument_list|>
 name|op2
 init|=
@@ -2660,7 +2660,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|extractDesc
+name|ExtractDesc
 argument_list|(
 name|getStringColumn
 argument_list|(
@@ -2688,7 +2688,7 @@ expr_stmt|;
 block|}
 specifier|public
 specifier|static
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 name|getStringColumn
 parameter_list|(
 name|String
@@ -2697,7 +2697,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -2777,7 +2777,7 @@ expr_stmt|;
 block|}
 name|Operator
 argument_list|<
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|>
 name|op0
 init|=
@@ -2830,7 +2830,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|selectDesc
+name|SelectDesc
 argument_list|>
 name|op4
 init|=
@@ -2839,7 +2839,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|selectDesc
+name|SelectDesc
 argument_list|(
 name|Utilities
 operator|.
@@ -2907,7 +2907,7 @@ expr_stmt|;
 comment|// reduce side work
 name|Operator
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 name|op3
 init|=
@@ -2916,7 +2916,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|tmpdir
 operator|+
@@ -2932,7 +2932,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|extractDesc
+name|ExtractDesc
 argument_list|>
 name|op2
 init|=
@@ -2941,7 +2941,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|extractDesc
+name|ExtractDesc
 argument_list|(
 name|getStringColumn
 argument_list|(
@@ -3033,7 +3033,7 @@ expr_stmt|;
 block|}
 name|Operator
 argument_list|<
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|>
 name|op1
 init|=
@@ -3086,7 +3086,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|scriptDesc
+name|ScriptDesc
 argument_list|>
 name|op0
 init|=
@@ -3095,7 +3095,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|scriptDesc
+name|ScriptDesc
 argument_list|(
 literal|"\'/bin/cat\'"
 argument_list|,
@@ -3139,7 +3139,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|selectDesc
+name|SelectDesc
 argument_list|>
 name|op4
 init|=
@@ -3148,7 +3148,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|selectDesc
+name|SelectDesc
 argument_list|(
 name|Utilities
 operator|.
@@ -3216,7 +3216,7 @@ expr_stmt|;
 comment|// reduce side work
 name|Operator
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 name|op3
 init|=
@@ -3225,7 +3225,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|tmpdir
 operator|+
@@ -3241,7 +3241,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|filterDesc
+name|FilterDesc
 argument_list|>
 name|op2
 init|=
@@ -3259,7 +3259,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|extractDesc
+name|ExtractDesc
 argument_list|>
 name|op5
 init|=
@@ -3268,7 +3268,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|extractDesc
+name|ExtractDesc
 argument_list|(
 name|getStringColumn
 argument_list|(

@@ -502,11 +502,11 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|work
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|tsk
 operator|.

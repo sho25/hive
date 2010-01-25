@@ -61,7 +61,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableScanDesc
+name|TableScanDesc
 import|;
 end_import
 
@@ -96,7 +96,7 @@ name|TableScanOperator
 extends|extends
 name|Operator
 argument_list|<
-name|tableScanDesc
+name|TableScanDesc
 argument_list|>
 implements|implements
 name|Serializable

@@ -253,7 +253,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -271,7 +271,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|loadFileDesc
+name|LoadFileDesc
 import|;
 end_import
 
@@ -289,7 +289,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|loadTableDesc
+name|LoadTableDesc
 import|;
 end_import
 
@@ -307,7 +307,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 operator|.
 name|sampleDesc
 import|;
@@ -335,7 +335,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|opToPartPruner
 decl_stmt|;
@@ -411,14 +411,14 @@ decl_stmt|;
 specifier|private
 name|List
 argument_list|<
-name|loadTableDesc
+name|LoadTableDesc
 argument_list|>
 name|loadTableWork
 decl_stmt|;
 specifier|private
 name|List
 argument_list|<
-name|loadFileDesc
+name|LoadFileDesc
 argument_list|>
 name|loadFileWork
 decl_stmt|;
@@ -510,7 +510,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|opToPartPruner
 parameter_list|,
@@ -571,13 +571,13 @@ name|topToTable
 parameter_list|,
 name|List
 argument_list|<
-name|loadTableDesc
+name|LoadTableDesc
 argument_list|>
 name|loadTableWork
 parameter_list|,
 name|List
 argument_list|<
-name|loadFileDesc
+name|LoadFileDesc
 argument_list|>
 name|loadFileWork
 parameter_list|,
@@ -877,7 +877,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|getOpToPartPruner
 parameter_list|()
@@ -895,7 +895,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|opToPartPruner
 parameter_list|)
@@ -1085,7 +1085,7 @@ comment|/**    * @return the loadTableWork    */
 specifier|public
 name|List
 argument_list|<
-name|loadTableDesc
+name|LoadTableDesc
 argument_list|>
 name|getLoadTableWork
 parameter_list|()
@@ -1101,7 +1101,7 @@ name|setLoadTableWork
 parameter_list|(
 name|List
 argument_list|<
-name|loadTableDesc
+name|LoadTableDesc
 argument_list|>
 name|loadTableWork
 parameter_list|)
@@ -1117,7 +1117,7 @@ comment|/**    * @return the loadFileWork    */
 specifier|public
 name|List
 argument_list|<
-name|loadFileDesc
+name|LoadFileDesc
 argument_list|>
 name|getLoadFileWork
 parameter_list|()
@@ -1133,7 +1133,7 @@ name|setLoadFileWork
 parameter_list|(
 name|List
 argument_list|<
-name|loadFileDesc
+name|LoadFileDesc
 argument_list|>
 name|loadFileWork
 parameter_list|)

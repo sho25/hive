@@ -327,7 +327,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -345,7 +345,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -363,7 +363,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 import|;
 end_import
 
@@ -381,7 +381,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -435,11 +435,11 @@ name|ExprWalkerInfo
 operator|)
 name|procCtx
 decl_stmt|;
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 name|colref
 init|=
 operator|(
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 operator|)
 name|nd
 decl_stmt|;
@@ -490,7 +490,7 @@ condition|)
 block|{
 comment|// replace the output expression with the input expression so that
 comment|// parent op can understand this expression
-name|exprNodeDesc
+name|ExprNodeDesc
 name|exp
 init|=
 name|op
@@ -644,11 +644,11 @@ name|alias
 init|=
 literal|null
 decl_stmt|;
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 name|expr
 init|=
 operator|(
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 operator|)
 name|nd
 decl_stmt|;
@@ -670,11 +670,11 @@ operator|==
 literal|1
 operator|)
 assert|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|ch
 init|=
 operator|(
-name|exprNodeDesc
+name|ExprNodeDesc
 operator|)
 name|nd
 operator|.
@@ -686,7 +686,7 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|newCh
 init|=
 name|ctx
@@ -847,11 +847,11 @@ name|alias
 init|=
 literal|null
 decl_stmt|;
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 name|expr
 init|=
 operator|(
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|)
 name|nd
 decl_stmt|;
@@ -916,11 +916,11 @@ name|i
 operator|++
 control|)
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|ch
 init|=
 operator|(
-name|exprNodeDesc
+name|ExprNodeDesc
 operator|)
 name|nd
 operator|.
@@ -932,7 +932,7 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|newCh
 init|=
 name|ctx
@@ -1107,7 +1107,7 @@ operator|.
 name|setIsCandidate
 argument_list|(
 operator|(
-name|exprNodeDesc
+name|ExprNodeDesc
 operator|)
 name|nd
 argument_list|,
@@ -1183,7 +1183,7 @@ name|Serializable
 argument_list|>
 name|op
 parameter_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 name|pred
 parameter_list|)
 throws|throws
@@ -1191,14 +1191,14 @@ name|SemanticException
 block|{
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|preds
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1239,7 +1239,7 @@ name|op
 parameter_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|preds
 parameter_list|)
@@ -1292,7 +1292,7 @@ name|RuleRegExp
 argument_list|(
 literal|"R1"
 argument_list|,
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 operator|.
 name|class
 operator|.
@@ -1315,7 +1315,7 @@ name|RuleRegExp
 argument_list|(
 literal|"R2"
 argument_list|,
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 operator|.
 name|class
 operator|.
@@ -1338,7 +1338,7 @@ name|RuleRegExp
 argument_list|(
 literal|"R3"
 argument_list|,
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|.
 name|class
 operator|.
@@ -1392,20 +1392,20 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|clonedPreds
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|node
 range|:
 name|preds
@@ -1441,7 +1441,7 @@ expr_stmt|;
 comment|// check the root expression for final candidates
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|pred
 range|:
 name|clonedPreds
@@ -1465,7 +1465,7 @@ specifier|static
 name|void
 name|extractFinalCandidates
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 parameter_list|,
 name|ExprWalkerInfo
@@ -1517,7 +1517,7 @@ block|{
 name|extractFinalCandidates
 argument_list|(
 operator|(
-name|exprNodeDesc
+name|ExprNodeDesc
 operator|)
 name|ch
 argument_list|,

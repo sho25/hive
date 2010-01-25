@@ -207,7 +207,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fileSinkDesc
+name|FileSinkDesc
 import|;
 end_import
 
@@ -225,7 +225,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -1067,7 +1067,7 @@ parameter_list|(
 name|JobConf
 name|jc
 parameter_list|,
-name|tableDesc
+name|TableDesc
 name|tableInfo
 parameter_list|,
 name|Class
@@ -1078,7 +1078,7 @@ name|Writable
 argument_list|>
 name|outputClass
 parameter_list|,
-name|fileSinkDesc
+name|FileSinkDesc
 name|conf
 parameter_list|,
 name|Path

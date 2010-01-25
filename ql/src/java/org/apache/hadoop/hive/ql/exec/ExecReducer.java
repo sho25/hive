@@ -173,7 +173,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -191,7 +191,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -572,10 +572,10 @@ index|]
 argument_list|)
 expr_stmt|;
 block|}
-name|tableDesc
+name|TableDesc
 name|keyTableDesc
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 index|[]
 name|valueTableDesc
 decl_stmt|;
@@ -718,7 +718,7 @@ name|jc
 operator|=
 name|job
 expr_stmt|;
-name|mapredWork
+name|MapredWork
 name|gWork
 init|=
 name|Utilities
@@ -799,7 +799,7 @@ expr_stmt|;
 name|valueTableDesc
 operator|=
 operator|new
-name|tableDesc
+name|TableDesc
 index|[
 name|gWork
 operator|.

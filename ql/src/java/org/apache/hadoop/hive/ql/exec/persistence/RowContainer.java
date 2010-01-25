@@ -267,7 +267,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -566,7 +566,7 @@ argument_list|>
 name|keyObject
 decl_stmt|;
 specifier|private
-name|tableDesc
+name|TableDesc
 name|tblDesc
 decl_stmt|;
 name|boolean
@@ -2564,7 +2564,7 @@ specifier|public
 name|void
 name|setTableDesc
 parameter_list|(
-name|tableDesc
+name|TableDesc
 name|tblDesc
 parameter_list|)
 block|{

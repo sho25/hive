@@ -480,13 +480,13 @@ literal|"nls"
 argument_list|)
 specifier|public
 specifier|static
-name|mapredWork
+name|MapredWork
 name|getMapRedWork
 parameter_list|()
 block|{
 return|return
 operator|new
-name|mapredWork
+name|MapredWork
 argument_list|(
 literal|""
 argument_list|,
@@ -507,7 +507,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 argument_list|()
 argument_list|,
@@ -526,13 +526,13 @@ argument_list|>
 argument_list|()
 argument_list|,
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|()
 argument_list|,
 operator|new
 name|ArrayList
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 argument_list|()
 argument_list|,
@@ -552,7 +552,7 @@ block|}
 comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode and column names (comma separated string).    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getDefaultTableDesc
 parameter_list|(
 name|String
@@ -576,7 +576,7 @@ block|}
 comment|/**    * Generate the table descriptor of given serde with the separatorCode and    * column names (comma separated string).    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getTableDesc
 parameter_list|(
 name|Class
@@ -610,7 +610,7 @@ block|}
 comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode and column names (comma separated string), and whether the    * last column should take the rest of the line.    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getDefaultTableDesc
 parameter_list|(
 name|String
@@ -639,7 +639,7 @@ block|}
 comment|/**    * Generate the table descriptor of the serde specified with the separatorCode    * and column names (comma separated string), and whether the last column    * should take the rest of the line.    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getTableDesc
 parameter_list|(
 name|Class
@@ -678,7 +678,7 @@ block|}
 comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode and column names (comma separated string), and whether the    * last column should take the rest of the line.    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getDefaultTableDesc
 parameter_list|(
 name|String
@@ -713,7 +713,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getTableDesc
 parameter_list|(
 name|Class
@@ -756,7 +756,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getTableDesc
 parameter_list|(
 name|Class
@@ -893,7 +893,7 @@ expr_stmt|;
 block|}
 return|return
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|serdeClass
 argument_list|,
@@ -912,10 +912,10 @@ block|}
 comment|/**    * Generate a table descriptor from a createTableDesc.    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getTableDesc
 parameter_list|(
-name|createTableDesc
+name|CreateTableDesc
 name|crtTblDesc
 parameter_list|,
 name|String
@@ -964,7 +964,7 @@ name|lastColumnTakesRestOfTheLine
 init|=
 literal|false
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|ret
 decl_stmt|;
 try|try
@@ -1226,7 +1226,7 @@ block|}
 comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode. MetaDataTypedColumnsetSerDe is used because LazySimpleSerDe    * does not support a table with a single column "col" with type    * "array<string>".    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getDefaultTableDesc
 parameter_list|(
 name|String
@@ -1235,7 +1235,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|MetadataTypedColumnsetSerDe
 operator|.
@@ -1275,7 +1275,7 @@ block|}
 comment|/**    * Generate the table descriptor for reduce key.    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getReduceKeyTableDesc
 parameter_list|(
 name|List
@@ -1290,7 +1290,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|BinarySortableSerDe
 operator|.
@@ -1342,7 +1342,7 @@ block|}
 comment|/**    * Generate the table descriptor for Map-side join key.    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getMapJoinKeyTableDesc
 parameter_list|(
 name|List
@@ -1354,7 +1354,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|LazyBinarySerDe
 operator|.
@@ -1402,7 +1402,7 @@ block|}
 comment|/**    * Generate the table descriptor for Map-side join key.    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getMapJoinValueTableDesc
 parameter_list|(
 name|List
@@ -1414,7 +1414,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|LazyBinarySerDe
 operator|.
@@ -1462,7 +1462,7 @@ block|}
 comment|/**    * Generate the table descriptor for intermediate files.    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getIntermediateFileTableDesc
 parameter_list|(
 name|List
@@ -1474,7 +1474,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|LazyBinarySerDe
 operator|.
@@ -1526,7 +1526,7 @@ block|}
 comment|/**    * Generate the table descriptor for intermediate files.    */
 specifier|public
 specifier|static
-name|tableDesc
+name|TableDesc
 name|getReduceValueTableDesc
 parameter_list|(
 name|List
@@ -1538,7 +1538,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|LazyBinarySerDe
 operator|.
@@ -1598,7 +1598,7 @@ name|getFieldSchemasFromColumnList
 parameter_list|(
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|cols
 parameter_list|,
@@ -1698,7 +1698,7 @@ name|getFieldSchemasFromColumnList
 parameter_list|(
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|cols
 parameter_list|,
@@ -2020,18 +2020,18 @@ block|}
 comment|/**    * Create the reduce sink descriptor.    *     * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param partitionCols    *          The columns for partitioning.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|getReduceSinkDesc
 parameter_list|(
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keyCols
 parameter_list|,
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|valueCols
 parameter_list|,
@@ -2049,7 +2049,7 @@ name|tag
 parameter_list|,
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|partitionCols
 parameter_list|,
@@ -2060,12 +2060,12 @@ name|int
 name|numReducers
 parameter_list|)
 block|{
-name|tableDesc
+name|TableDesc
 name|keyTable
 init|=
 literal|null
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|valueTable
 init|=
 literal|null
@@ -2246,7 +2246,7 @@ expr_stmt|;
 block|}
 return|return
 operator|new
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|(
 name|keyCols
 argument_list|,
@@ -2274,18 +2274,18 @@ block|}
 comment|/**    * Create the reduce sink descriptor.    *     * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param numPartitionFields    *          The first numPartitionFields of keyCols will be partition columns.    *          If numPartitionFields=-1, then partition randomly.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|getReduceSinkDesc
 parameter_list|(
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keyCols
 parameter_list|,
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|valueCols
 parameter_list|,
@@ -2310,7 +2310,7 @@ parameter_list|)
 block|{
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|partitionCols
 init|=
@@ -2344,7 +2344,7 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|(
 name|numPartitionFields
@@ -2387,7 +2387,7 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|(
 literal|1

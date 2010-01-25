@@ -223,7 +223,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -241,7 +241,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -6553,7 +6553,7 @@ name|UDF
 argument_list|>
 name|getUDFClassFromExprDesc
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 parameter_list|)
 block|{
@@ -6563,7 +6563,7 @@ operator|!
 operator|(
 name|desc
 operator|instanceof
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|)
 condition|)
 block|{
@@ -6571,11 +6571,11 @@ return|return
 literal|null
 return|;
 block|}
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 name|genericFuncDesc
 init|=
 operator|(
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|)
 name|desc
 decl_stmt|;
@@ -6720,7 +6720,7 @@ specifier|static
 name|boolean
 name|isOpAndOrNot
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 parameter_list|)
 block|{
@@ -6763,7 +6763,7 @@ specifier|static
 name|boolean
 name|isOpAnd
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 parameter_list|)
 block|{
@@ -6794,7 +6794,7 @@ specifier|static
 name|boolean
 name|isOpPositive
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 parameter_list|)
 block|{

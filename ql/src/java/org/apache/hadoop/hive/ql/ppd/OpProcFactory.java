@@ -387,7 +387,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -405,7 +405,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -423,7 +423,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 import|;
 end_import
 
@@ -441,7 +441,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinCond
+name|JoinCondDesc
 import|;
 end_import
 
@@ -459,7 +459,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinDesc
+name|JoinDesc
 import|;
 end_import
 
@@ -758,7 +758,7 @@ argument_list|>
 operator|)
 name|nd
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|predicate
 init|=
 operator|(
@@ -1046,7 +1046,7 @@ name|oj
 init|=
 literal|false
 decl_stmt|;
-name|joinCond
+name|JoinCondDesc
 index|[]
 name|conds
 init|=
@@ -1076,7 +1076,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|joinCond
+name|JoinCondDesc
 name|jc
 range|:
 name|conds
@@ -1089,7 +1089,7 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|FULL_OUTER_JOIN
 condition|)
@@ -1108,7 +1108,7 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|LEFT_OUTER_JOIN
 condition|)
@@ -1140,7 +1140,7 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|joinDesc
+name|JoinDesc
 operator|.
 name|RIGHT_OUTER_JOIN
 condition|)
@@ -1553,7 +1553,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|e
@@ -1588,7 +1588,7 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|n
 range|:
 name|e
@@ -1737,7 +1737,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|e
@@ -1887,13 +1887,13 @@ decl_stmt|;
 comment|// combine all predicates into a single expression
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|preds
 init|=
 literal|null
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|condn
 init|=
 literal|null
@@ -1902,7 +1902,7 @@ name|Iterator
 argument_list|<
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|iterator
@@ -1974,14 +1974,14 @@ control|)
 block|{
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|(
 literal|2
@@ -2009,7 +2009,7 @@ expr_stmt|;
 name|condn
 operator|=
 operator|new
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -2062,7 +2062,7 @@ argument_list|)
 expr_stmt|;
 name|Operator
 argument_list|<
-name|filterDesc
+name|FilterDesc
 argument_list|>
 name|output
 init|=
@@ -2071,7 +2071,7 @@ operator|.
 name|getAndMakeChild
 argument_list|(
 operator|new
-name|filterDesc
+name|FilterDesc
 argument_list|(
 name|condn
 argument_list|,

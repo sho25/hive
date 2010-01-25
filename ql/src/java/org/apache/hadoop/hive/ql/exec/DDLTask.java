@@ -697,7 +697,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|alterTableDesc
+name|AlterTableDesc
 import|;
 end_import
 
@@ -715,7 +715,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|createTableDesc
+name|CreateTableDesc
 import|;
 end_import
 
@@ -733,7 +733,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|createTableLikeDesc
+name|CreateTableLikeDesc
 import|;
 end_import
 
@@ -751,7 +751,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|createViewDesc
+name|CreateViewDesc
 import|;
 end_import
 
@@ -769,7 +769,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|descFunctionDesc
+name|DescFunctionDesc
 import|;
 end_import
 
@@ -787,7 +787,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|descTableDesc
+name|DescTableDesc
 import|;
 end_import
 
@@ -805,7 +805,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|dropTableDesc
+name|DropTableDesc
 import|;
 end_import
 
@@ -823,7 +823,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 import|;
 end_import
 
@@ -841,7 +841,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 import|;
 end_import
 
@@ -859,7 +859,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 import|;
 end_import
 
@@ -877,7 +877,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|showTablesDesc
+name|ShowTablesDesc
 import|;
 end_import
 
@@ -1174,7 +1174,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|createTableDesc
+name|CreateTableDesc
 name|crtTbl
 init|=
 name|work
@@ -1198,7 +1198,7 @@ name|crtTbl
 argument_list|)
 return|;
 block|}
-name|createTableLikeDesc
+name|CreateTableLikeDesc
 name|crtTblLike
 init|=
 name|work
@@ -1222,7 +1222,7 @@ name|crtTblLike
 argument_list|)
 return|;
 block|}
-name|dropTableDesc
+name|DropTableDesc
 name|dropTbl
 init|=
 name|work
@@ -1246,7 +1246,7 @@ name|dropTbl
 argument_list|)
 return|;
 block|}
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTbl
 init|=
 name|work
@@ -1270,7 +1270,7 @@ name|alterTbl
 argument_list|)
 return|;
 block|}
-name|createViewDesc
+name|CreateViewDesc
 name|crtView
 init|=
 name|work
@@ -1342,7 +1342,7 @@ name|msckDesc
 argument_list|)
 return|;
 block|}
-name|descTableDesc
+name|DescTableDesc
 name|descTbl
 init|=
 name|work
@@ -1366,7 +1366,7 @@ name|descTbl
 argument_list|)
 return|;
 block|}
-name|descFunctionDesc
+name|DescFunctionDesc
 name|descFunc
 init|=
 name|work
@@ -1388,7 +1388,7 @@ name|descFunc
 argument_list|)
 return|;
 block|}
-name|showTablesDesc
+name|ShowTablesDesc
 name|showTbls
 init|=
 name|work
@@ -1412,7 +1412,7 @@ name|showTbls
 argument_list|)
 return|;
 block|}
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 name|showTblStatus
 init|=
 name|work
@@ -1436,7 +1436,7 @@ name|showTblStatus
 argument_list|)
 return|;
 block|}
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 name|showFuncs
 init|=
 name|work
@@ -1458,7 +1458,7 @@ name|showFuncs
 argument_list|)
 return|;
 block|}
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 name|showParts
 init|=
 name|work
@@ -2234,7 +2234,7 @@ parameter_list|(
 name|Hive
 name|db
 parameter_list|,
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 name|showParts
 parameter_list|)
 throws|throws
@@ -2487,7 +2487,7 @@ parameter_list|(
 name|Hive
 name|db
 parameter_list|,
-name|showTablesDesc
+name|ShowTablesDesc
 name|showTbls
 parameter_list|)
 throws|throws
@@ -2725,7 +2725,7 @@ specifier|private
 name|int
 name|showFunctions
 parameter_list|(
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 name|showFuncs
 parameter_list|)
 throws|throws
@@ -2963,7 +2963,7 @@ specifier|private
 name|int
 name|describeFunction
 parameter_list|(
-name|descFunctionDesc
+name|DescFunctionDesc
 name|descFunc
 parameter_list|)
 throws|throws
@@ -3010,7 +3010,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// get the function documentation
-name|description
+name|Description
 name|desc
 init|=
 literal|null
@@ -3061,7 +3061,7 @@ name|funcClass
 operator|.
 name|getAnnotation
 argument_list|(
-name|description
+name|Description
 operator|.
 name|class
 argument_list|)
@@ -3299,7 +3299,7 @@ parameter_list|(
 name|Hive
 name|db
 parameter_list|,
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 name|showTblStatus
 parameter_list|)
 throws|throws
@@ -4091,7 +4091,7 @@ parameter_list|(
 name|Hive
 name|db
 parameter_list|,
-name|descTableDesc
+name|DescTableDesc
 name|descTbl
 parameter_list|)
 throws|throws
@@ -5608,7 +5608,7 @@ parameter_list|(
 name|Hive
 name|db
 parameter_list|,
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTbl
 parameter_list|)
 throws|throws
@@ -5663,7 +5663,7 @@ operator|.
 name|getOp
 argument_list|()
 operator|==
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 operator|.
@@ -5692,7 +5692,7 @@ operator|.
 name|getOp
 argument_list|()
 operator|==
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 operator|.
@@ -5892,7 +5892,7 @@ operator|.
 name|getOp
 argument_list|()
 operator|==
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 operator|.
@@ -6304,7 +6304,7 @@ operator|.
 name|getOp
 argument_list|()
 operator|==
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 operator|.
@@ -6449,7 +6449,7 @@ operator|.
 name|getOp
 argument_list|()
 operator|==
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 operator|.
@@ -6481,7 +6481,7 @@ operator|.
 name|getOp
 argument_list|()
 operator|==
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 operator|.
@@ -6519,7 +6519,7 @@ operator|.
 name|getOp
 argument_list|()
 operator|==
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 operator|.
@@ -6619,7 +6619,7 @@ operator|.
 name|getOp
 argument_list|()
 operator|==
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 operator|.
@@ -6688,7 +6688,7 @@ operator|.
 name|getOp
 argument_list|()
 operator|==
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 operator|.
@@ -7015,7 +7015,7 @@ parameter_list|(
 name|Hive
 name|db
 parameter_list|,
-name|dropTableDesc
+name|DropTableDesc
 name|dropTbl
 parameter_list|)
 throws|throws
@@ -7552,7 +7552,7 @@ parameter_list|(
 name|Hive
 name|db
 parameter_list|,
-name|createTableDesc
+name|CreateTableDesc
 name|crtTbl
 parameter_list|)
 throws|throws
@@ -8312,7 +8312,7 @@ parameter_list|(
 name|Hive
 name|db
 parameter_list|,
-name|createTableLikeDesc
+name|CreateTableLikeDesc
 name|crtTbl
 parameter_list|)
 throws|throws
@@ -8465,7 +8465,7 @@ parameter_list|(
 name|Hive
 name|db
 parameter_list|,
-name|createViewDesc
+name|CreateViewDesc
 name|crtView
 parameter_list|)
 throws|throws

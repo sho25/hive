@@ -249,7 +249,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapJoinDesc
+name|MapJoinDesc
 import|;
 end_import
 
@@ -267,7 +267,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -458,7 +458,7 @@ name|MapJoinOperator
 extends|extends
 name|CommonJoinOperator
 argument_list|<
-name|mapJoinDesc
+name|MapJoinDesc
 argument_list|>
 implements|implements
 name|Serializable
@@ -599,7 +599,7 @@ decl_stmt|;
 name|SerDe
 name|serde
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tblDesc
 decl_stmt|;
 name|Configuration
@@ -615,7 +615,7 @@ parameter_list|,
 name|SerDe
 name|serde
 parameter_list|,
-name|tableDesc
+name|TableDesc
 name|tblDesc
 parameter_list|,
 name|Configuration
@@ -668,7 +668,7 @@ name|serde
 return|;
 block|}
 specifier|public
-name|tableDesc
+name|TableDesc
 name|getTblDesc
 parameter_list|()
 block|{
@@ -1368,7 +1368,7 @@ operator|=
 name|nextVal
 operator|++
 expr_stmt|;
-name|tableDesc
+name|TableDesc
 name|keyTableDesc
 init|=
 name|conf
@@ -1662,7 +1662,7 @@ operator|=
 name|nextVal
 operator|++
 expr_stmt|;
-name|tableDesc
+name|TableDesc
 name|valueTableDesc
 init|=
 name|conf

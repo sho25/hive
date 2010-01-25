@@ -187,7 +187,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -449,7 +449,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|pathToPartitionInfo
 init|=
@@ -491,7 +491,7 @@ name|i
 operator|++
 control|)
 block|{
-name|partitionDesc
+name|PartitionDesc
 name|part
 init|=
 literal|null
@@ -898,7 +898,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|pathToPartitionInfo
 init|=
@@ -915,7 +915,7 @@ argument_list|()
 decl_stmt|;
 comment|// extract all the inputFormatClass names for each chunk in the
 comment|// CombinedSplit.
-name|partitionDesc
+name|PartitionDesc
 name|part
 init|=
 literal|null
@@ -1311,14 +1311,14 @@ return|;
 block|}
 specifier|protected
 specifier|static
-name|partitionDesc
+name|PartitionDesc
 name|getPartitionDescFromPath
 parameter_list|(
 name|Map
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|pathToPartitionInfo
 parameter_list|,
@@ -1338,7 +1338,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|entry
 range|:

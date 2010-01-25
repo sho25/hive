@@ -191,7 +191,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|explain
+name|Explain
 import|;
 end_import
 
@@ -209,7 +209,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -668,7 +668,7 @@ name|conf
 expr_stmt|;
 block|}
 annotation|@
-name|explain
+name|Explain
 specifier|public
 name|T
 name|getConf
@@ -826,7 +826,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|colExprMap
 decl_stmt|;
@@ -2644,7 +2644,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|getColumnExprMap
 parameter_list|()
@@ -2661,7 +2661,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|colExprMap
 parameter_list|)

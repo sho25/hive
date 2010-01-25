@@ -211,7 +211,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|scriptDesc
+name|ScriptDesc
 import|;
 end_import
 
@@ -378,7 +378,7 @@ name|ScriptOperator
 extends|extends
 name|Operator
 argument_list|<
-name|scriptDesc
+name|ScriptDesc
 argument_list|>
 implements|implements
 name|Serializable

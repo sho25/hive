@@ -33,7 +33,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -51,7 +51,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 import|;
 end_import
 
@@ -69,7 +69,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -87,7 +87,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 import|;
 end_import
 
@@ -105,7 +105,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -123,7 +123,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 import|;
 end_import
 
@@ -141,7 +141,7 @@ specifier|static
 name|ExprNodeEvaluator
 name|get
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 parameter_list|)
 block|{
@@ -150,7 +150,7 @@ if|if
 condition|(
 name|desc
 operator|instanceof
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 condition|)
 block|{
 return|return
@@ -158,7 +158,7 @@ operator|new
 name|ExprNodeConstantEvaluator
 argument_list|(
 operator|(
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 name|desc
 argument_list|)
@@ -169,7 +169,7 @@ if|if
 condition|(
 name|desc
 operator|instanceof
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 condition|)
 block|{
 return|return
@@ -177,7 +177,7 @@ operator|new
 name|ExprNodeColumnEvaluator
 argument_list|(
 operator|(
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 operator|)
 name|desc
 argument_list|)
@@ -188,7 +188,7 @@ if|if
 condition|(
 name|desc
 operator|instanceof
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 condition|)
 block|{
 return|return
@@ -196,7 +196,7 @@ operator|new
 name|ExprNodeGenericFuncEvaluator
 argument_list|(
 operator|(
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|)
 name|desc
 argument_list|)
@@ -207,7 +207,7 @@ if|if
 condition|(
 name|desc
 operator|instanceof
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 condition|)
 block|{
 return|return
@@ -215,7 +215,7 @@ operator|new
 name|ExprNodeFieldEvaluator
 argument_list|(
 operator|(
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 operator|)
 name|desc
 argument_list|)
@@ -226,7 +226,7 @@ if|if
 condition|(
 name|desc
 operator|instanceof
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 condition|)
 block|{
 return|return
@@ -234,7 +234,7 @@ operator|new
 name|ExprNodeNullEvaluator
 argument_list|(
 operator|(
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 operator|)
 name|desc
 argument_list|)

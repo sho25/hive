@@ -75,7 +75,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|extractDesc
+name|ExtractDesc
 import|;
 end_import
 
@@ -110,7 +110,7 @@ name|ExtractOperator
 extends|extends
 name|Operator
 argument_list|<
-name|extractDesc
+name|ExtractDesc
 argument_list|>
 implements|implements
 name|Serializable

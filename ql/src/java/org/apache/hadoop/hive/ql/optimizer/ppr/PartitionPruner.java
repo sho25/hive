@@ -505,7 +505,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -523,7 +523,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -541,7 +541,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -809,7 +809,7 @@ parameter_list|(
 name|Table
 name|tab
 parameter_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 parameter_list|)
 block|{
@@ -836,7 +836,7 @@ if|if
 condition|(
 name|expr
 operator|instanceof
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 condition|)
 block|{
 name|String
@@ -844,7 +844,7 @@ name|colName
 init|=
 operator|(
 operator|(
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 operator|)
 name|expr
 operator|)
@@ -867,7 +867,7 @@ condition|(
 operator|(
 name|expr
 operator|instanceof
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|)
 operator|&&
 operator|!
@@ -877,7 +877,7 @@ name|isDeterministic
 argument_list|(
 operator|(
 operator|(
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|)
 name|expr
 operator|)
@@ -894,7 +894,7 @@ block|}
 comment|// All columns of the expression must be parttioned columns
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children
 init|=
@@ -963,7 +963,7 @@ parameter_list|(
 name|Table
 name|tab
 parameter_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 name|prunerExpr
 parameter_list|,
 name|HiveConf
@@ -1682,7 +1682,7 @@ specifier|static
 name|boolean
 name|hasColumnExpr
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 parameter_list|)
 block|{
@@ -1703,7 +1703,7 @@ if|if
 condition|(
 name|desc
 operator|instanceof
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 condition|)
 block|{
 return|return
@@ -1713,7 +1713,7 @@ block|}
 comment|// Return true in case one of the children is column expr.
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children
 init|=

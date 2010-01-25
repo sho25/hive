@@ -293,7 +293,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -311,7 +311,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 import|;
 end_import
 
@@ -329,7 +329,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -347,7 +347,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 import|;
 end_import
 
@@ -365,7 +365,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -383,7 +383,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 import|;
 end_import
 
@@ -429,16 +429,16 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|newcd
 init|=
 literal|null
 decl_stmt|;
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 name|cd
 init|=
 operator|(
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 operator|)
 name|nd
 decl_stmt|;
@@ -484,7 +484,7 @@ block|{
 name|newcd
 operator|=
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 name|cd
 operator|.
@@ -540,16 +540,16 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|newfd
 init|=
 literal|null
 decl_stmt|;
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 name|fd
 init|=
 operator|(
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|)
 name|nd
 decl_stmt|;
@@ -608,11 +608,11 @@ range|:
 name|nodeOutputs
 control|)
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|child_nd
 init|=
 operator|(
-name|exprNodeDesc
+name|ExprNodeDesc
 operator|)
 name|child
 decl_stmt|;
@@ -620,11 +620,11 @@ if|if
 condition|(
 name|child_nd
 operator|instanceof
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|&&
 operator|(
 operator|(
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 name|child_nd
 operator|)
@@ -650,7 +650,7 @@ block|{
 name|newfd
 operator|=
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 name|fd
 operator|.
@@ -666,14 +666,14 @@ block|{
 comment|// Create the list of children
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|children
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -690,7 +690,7 @@ operator|.
 name|add
 argument_list|(
 operator|(
-name|exprNodeDesc
+name|ExprNodeDesc
 operator|)
 name|child
 argument_list|)
@@ -700,7 +700,7 @@ comment|// Create a copy of the function descriptor
 name|newfd
 operator|=
 operator|new
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 argument_list|(
 name|fd
 operator|.
@@ -753,11 +753,11 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 name|fnd
 init|=
 operator|(
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 operator|)
 name|nd
 decl_stmt|;
@@ -771,7 +771,7 @@ name|idx
 init|=
 literal|0
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|left_nd
 init|=
 literal|null
@@ -784,11 +784,11 @@ range|:
 name|nodeOutputs
 control|)
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|child_nd
 init|=
 operator|(
-name|exprNodeDesc
+name|ExprNodeDesc
 operator|)
 name|child
 decl_stmt|;
@@ -796,11 +796,11 @@ if|if
 condition|(
 name|child_nd
 operator|instanceof
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|&&
 operator|(
 operator|(
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 name|child_nd
 operator|)
@@ -828,7 +828,7 @@ operator|==
 literal|0
 operator|)
 assert|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|newnd
 init|=
 literal|null
@@ -841,7 +841,7 @@ block|{
 name|newnd
 operator|=
 operator|new
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 argument_list|(
 name|fnd
 operator|.
@@ -857,7 +857,7 @@ block|{
 name|newnd
 operator|=
 operator|new
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 argument_list|(
 name|fnd
 operator|.
@@ -920,13 +920,13 @@ if|if
 condition|(
 name|nd
 operator|instanceof
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 condition|)
 block|{
 return|return
 operator|(
 operator|(
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 name|nd
 operator|)
@@ -940,13 +940,13 @@ if|if
 condition|(
 name|nd
 operator|instanceof
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 condition|)
 block|{
 return|return
 operator|(
 operator|(
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 operator|)
 name|nd
 operator|)
@@ -1016,13 +1016,13 @@ block|}
 comment|/**    * Generates the partition pruner for the expression tree    *     * @param tabAlias    *          The table alias of the partition table that is being considered    *          for pruning    * @param pred    *          The predicate from which the partition pruner needs to be    *          generated    * @return hasNonPartCols returns true/false depending upon whether this pred    *         has a non partition column    * @throws SemanticException    */
 specifier|public
 specifier|static
-name|exprNodeDesc
+name|ExprNodeDesc
 name|genPruner
 parameter_list|(
 name|String
 name|tabAlias
 parameter_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 name|pred
 parameter_list|,
 name|boolean
@@ -1070,7 +1070,7 @@ name|RuleRegExp
 argument_list|(
 literal|"R1"
 argument_list|,
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 operator|.
 name|class
 operator|.
@@ -1093,7 +1093,7 @@ name|RuleRegExp
 argument_list|(
 literal|"R2"
 argument_list|,
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 operator|.
 name|class
 operator|.
@@ -1116,7 +1116,7 @@ name|RuleRegExp
 argument_list|(
 literal|"R5"
 argument_list|,
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|.
 name|class
 operator|.
@@ -1211,7 +1211,7 @@ expr_stmt|;
 comment|// Get the exprNodeDesc corresponding to the first start node;
 return|return
 operator|(
-name|exprNodeDesc
+name|ExprNodeDesc
 operator|)
 name|outputMap
 operator|.

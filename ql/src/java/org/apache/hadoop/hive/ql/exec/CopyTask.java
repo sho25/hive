@@ -117,7 +117,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|copyWork
+name|CopyWork
 import|;
 end_import
 
@@ -166,7 +166,7 @@ name|CopyTask
 extends|extends
 name|Task
 argument_list|<
-name|copyWork
+name|CopyWork
 argument_list|>
 implements|implements
 name|Serializable

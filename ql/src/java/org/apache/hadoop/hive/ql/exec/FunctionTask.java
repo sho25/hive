@@ -161,7 +161,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|createFunctionDesc
+name|CreateFunctionDesc
 import|;
 end_import
 
@@ -179,7 +179,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|dropFunctionDesc
+name|DropFunctionDesc
 import|;
 end_import
 
@@ -375,7 +375,7 @@ name|int
 name|execute
 parameter_list|()
 block|{
-name|createFunctionDesc
+name|CreateFunctionDesc
 name|createFunctionDesc
 init|=
 name|work
@@ -397,7 +397,7 @@ name|createFunctionDesc
 argument_list|)
 return|;
 block|}
-name|dropFunctionDesc
+name|DropFunctionDesc
 name|dropFunctionDesc
 init|=
 name|work
@@ -427,7 +427,7 @@ specifier|private
 name|int
 name|createFunction
 parameter_list|(
-name|createFunctionDesc
+name|CreateFunctionDesc
 name|createFunctionDesc
 parameter_list|)
 block|{
@@ -665,7 +665,7 @@ specifier|private
 name|int
 name|dropFunction
 parameter_list|(
-name|dropFunctionDesc
+name|DropFunctionDesc
 name|dropFunctionDesc
 parameter_list|)
 block|{
@@ -722,7 +722,7 @@ name|?
 argument_list|>
 name|getUdfClass
 parameter_list|(
-name|createFunctionDesc
+name|CreateFunctionDesc
 name|desc
 parameter_list|)
 throws|throws

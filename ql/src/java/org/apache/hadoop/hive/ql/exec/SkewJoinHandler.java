@@ -221,7 +221,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinDesc
+name|JoinDesc
 import|;
 end_import
 
@@ -239,7 +239,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -442,7 +442,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|tableDesc
+name|TableDesc
 argument_list|>
 name|tblDesc
 init|=
@@ -492,7 +492,7 @@ name|numAliases
 decl_stmt|;
 specifier|private
 specifier|final
-name|joinDesc
+name|JoinDesc
 name|conf
 decl_stmt|;
 specifier|public
@@ -541,7 +541,7 @@ name|hconf
 operator|=
 name|hconf
 expr_stmt|;
-name|joinDesc
+name|JoinDesc
 name|desc
 init|=
 name|joinOp
@@ -740,7 +740,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|tableDesc
+name|TableDesc
 name|joinKeyDesc
 init|=
 name|desc
@@ -859,7 +859,7 @@ literal|false
 expr_stmt|;
 break|break;
 block|}
-name|tableDesc
+name|TableDesc
 name|valTblDesc
 init|=
 name|joinOp

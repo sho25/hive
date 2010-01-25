@@ -521,7 +521,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -539,7 +539,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 import|;
 end_import
 
@@ -557,7 +557,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -575,7 +575,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 import|;
 end_import
 
@@ -593,7 +593,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -611,7 +611,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 import|;
 end_import
 
@@ -629,7 +629,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|groupByDesc
+name|GroupByDesc
 import|;
 end_import
 
@@ -962,7 +962,7 @@ operator|.
 name|getMode
 argument_list|()
 operator|!=
-name|groupByDesc
+name|GroupByDesc
 operator|.
 name|Mode
 operator|.
@@ -1008,7 +1008,7 @@ name|bucketGroupBy
 init|=
 literal|true
 decl_stmt|;
-name|groupByDesc
+name|GroupByDesc
 name|desc
 init|=
 name|curr
@@ -1018,14 +1018,14 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|groupByKeys
 init|=
 operator|new
 name|LinkedList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1063,7 +1063,7 @@ operator|>
 literal|0
 condition|)
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|node
 init|=
 name|groupByKeys
@@ -1077,7 +1077,7 @@ if|if
 condition|(
 name|node
 operator|instanceof
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 condition|)
 block|{
 name|groupByCols
@@ -1097,13 +1097,13 @@ condition|(
 operator|(
 name|node
 operator|instanceof
-name|exprNodeConstantDesc
+name|ExprNodeConstantDesc
 operator|)
 operator|||
 operator|(
 name|node
 operator|instanceof
-name|exprNodeNullDesc
+name|ExprNodeNullDesc
 operator|)
 condition|)
 block|{
@@ -1114,7 +1114,7 @@ if|if
 condition|(
 name|node
 operator|instanceof
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 condition|)
 block|{
 name|groupByKeys
@@ -1125,7 +1125,7 @@ literal|0
 argument_list|,
 operator|(
 operator|(
-name|exprNodeFieldDesc
+name|ExprNodeFieldDesc
 operator|)
 name|node
 operator|)
@@ -1141,15 +1141,15 @@ if|if
 condition|(
 name|node
 operator|instanceof
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 condition|)
 block|{
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 name|udfNode
 init|=
 operator|(
 operator|(
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 operator|)
 name|node
 operator|)

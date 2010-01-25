@@ -161,7 +161,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -230,7 +230,7 @@ name|MapRedTask
 extends|extends
 name|Task
 argument_list|<
-name|mapredWork
+name|MapredWork
 argument_list|>
 implements|implements
 name|Serializable
@@ -453,7 +453,7 @@ name|SCRATCHDIR
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 name|getWork
@@ -1030,7 +1030,7 @@ name|boolean
 name|hasReduce
 parameter_list|()
 block|{
-name|mapredWork
+name|MapredWork
 name|w
 init|=
 name|getWork

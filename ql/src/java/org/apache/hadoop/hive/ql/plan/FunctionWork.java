@@ -45,17 +45,17 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|createFunctionDesc
+name|CreateFunctionDesc
 name|createFunctionDesc
 decl_stmt|;
 specifier|private
-name|dropFunctionDesc
+name|DropFunctionDesc
 name|dropFunctionDesc
 decl_stmt|;
 specifier|public
 name|FunctionWork
 parameter_list|(
-name|createFunctionDesc
+name|CreateFunctionDesc
 name|createFunctionDesc
 parameter_list|)
 block|{
@@ -69,7 +69,7 @@ block|}
 specifier|public
 name|FunctionWork
 parameter_list|(
-name|dropFunctionDesc
+name|DropFunctionDesc
 name|dropFunctionDesc
 parameter_list|)
 block|{
@@ -81,7 +81,7 @@ name|dropFunctionDesc
 expr_stmt|;
 block|}
 specifier|public
-name|createFunctionDesc
+name|CreateFunctionDesc
 name|getCreateFunctionDesc
 parameter_list|()
 block|{
@@ -93,7 +93,7 @@ specifier|public
 name|void
 name|setCreateFunctionDesc
 parameter_list|(
-name|createFunctionDesc
+name|CreateFunctionDesc
 name|createFunctionDesc
 parameter_list|)
 block|{
@@ -105,7 +105,7 @@ name|createFunctionDesc
 expr_stmt|;
 block|}
 specifier|public
-name|dropFunctionDesc
+name|DropFunctionDesc
 name|getDropFunctionDesc
 parameter_list|()
 block|{
@@ -117,7 +117,7 @@ specifier|public
 name|void
 name|setDropFunctionDesc
 parameter_list|(
-name|dropFunctionDesc
+name|DropFunctionDesc
 name|dropFunctionDesc
 parameter_list|)
 block|{

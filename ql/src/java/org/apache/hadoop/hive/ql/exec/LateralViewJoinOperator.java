@@ -85,7 +85,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|lateralViewJoinDesc
+name|LateralViewJoinDesc
 import|;
 end_import
 
@@ -172,7 +172,7 @@ name|LateralViewJoinOperator
 extends|extends
 name|Operator
 argument_list|<
-name|lateralViewJoinDesc
+name|LateralViewJoinDesc
 argument_list|>
 block|{
 specifier|private

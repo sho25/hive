@@ -145,7 +145,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fetchWork
+name|FetchWork
 import|;
 end_import
 
@@ -163,7 +163,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredLocalWork
+name|MapredLocalWork
 import|;
 end_import
 
@@ -181,7 +181,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -495,7 +495,7 @@ operator|=
 name|job
 expr_stmt|;
 comment|// create map and fetch operators
-name|mapredWork
+name|MapredWork
 name|mrwork
 init|=
 name|Utilities
@@ -548,7 +548,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 comment|// initialize map local work
-name|mapredLocalWork
+name|MapredLocalWork
 name|localWork
 init|=
 name|mrwork
@@ -585,7 +585,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|fetchWork
+name|FetchWork
 argument_list|>
 name|entry
 range|:
@@ -811,7 +811,7 @@ condition|)
 block|{
 try|try
 block|{
-name|mapredLocalWork
+name|MapredLocalWork
 name|localWork
 init|=
 name|mo
@@ -1219,7 +1219,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|mapredLocalWork
+name|MapredLocalWork
 name|localWork
 init|=
 name|mo

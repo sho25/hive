@@ -639,7 +639,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -1197,7 +1197,7 @@ operator|.
 name|getFetchTask
 argument_list|()
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|td
 init|=
 name|ft

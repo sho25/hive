@@ -63,7 +63,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|collectDesc
+name|CollectDesc
 import|;
 end_import
 
@@ -81,7 +81,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|extractDesc
+name|ExtractDesc
 import|;
 end_import
 
@@ -99,7 +99,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fileSinkDesc
+name|FileSinkDesc
 import|;
 end_import
 
@@ -117,7 +117,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 import|;
 end_import
 
@@ -135,7 +135,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|forwardDesc
+name|ForwardDesc
 import|;
 end_import
 
@@ -153,7 +153,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|groupByDesc
+name|GroupByDesc
 import|;
 end_import
 
@@ -171,7 +171,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinDesc
+name|JoinDesc
 import|;
 end_import
 
@@ -189,7 +189,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|lateralViewJoinDesc
+name|LateralViewJoinDesc
 import|;
 end_import
 
@@ -207,7 +207,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|limitDesc
+name|LimitDesc
 import|;
 end_import
 
@@ -225,7 +225,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapJoinDesc
+name|MapJoinDesc
 import|;
 end_import
 
@@ -243,7 +243,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|reduceSinkDesc
+name|ReduceSinkDesc
 import|;
 end_import
 
@@ -261,7 +261,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|scriptDesc
+name|ScriptDesc
 import|;
 end_import
 
@@ -279,7 +279,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|selectDesc
+name|SelectDesc
 import|;
 end_import
 
@@ -297,7 +297,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableScanDesc
+name|TableScanDesc
 import|;
 end_import
 
@@ -315,7 +315,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|udtfDesc
+name|UDTFDesc
 import|;
 end_import
 
@@ -333,7 +333,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|unionDesc
+name|UnionDesc
 import|;
 end_import
 
@@ -433,10 +433,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|filterDesc
+name|FilterDesc
 argument_list|>
 argument_list|(
-name|filterDesc
+name|FilterDesc
 operator|.
 name|class
 argument_list|,
@@ -453,10 +453,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|selectDesc
+name|SelectDesc
 argument_list|>
 argument_list|(
-name|selectDesc
+name|SelectDesc
 operator|.
 name|class
 argument_list|,
@@ -473,10 +473,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|forwardDesc
+name|ForwardDesc
 argument_list|>
 argument_list|(
-name|forwardDesc
+name|ForwardDesc
 operator|.
 name|class
 argument_list|,
@@ -493,10 +493,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|>
 argument_list|(
-name|fileSinkDesc
+name|FileSinkDesc
 operator|.
 name|class
 argument_list|,
@@ -513,10 +513,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|collectDesc
+name|CollectDesc
 argument_list|>
 argument_list|(
-name|collectDesc
+name|CollectDesc
 operator|.
 name|class
 argument_list|,
@@ -533,10 +533,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|scriptDesc
+name|ScriptDesc
 argument_list|>
 argument_list|(
-name|scriptDesc
+name|ScriptDesc
 operator|.
 name|class
 argument_list|,
@@ -553,10 +553,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|>
 argument_list|(
-name|reduceSinkDesc
+name|ReduceSinkDesc
 operator|.
 name|class
 argument_list|,
@@ -573,10 +573,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|extractDesc
+name|ExtractDesc
 argument_list|>
 argument_list|(
-name|extractDesc
+name|ExtractDesc
 operator|.
 name|class
 argument_list|,
@@ -593,10 +593,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|groupByDesc
+name|GroupByDesc
 argument_list|>
 argument_list|(
-name|groupByDesc
+name|GroupByDesc
 operator|.
 name|class
 argument_list|,
@@ -613,10 +613,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|joinDesc
+name|JoinDesc
 argument_list|>
 argument_list|(
-name|joinDesc
+name|JoinDesc
 operator|.
 name|class
 argument_list|,
@@ -633,10 +633,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|mapJoinDesc
+name|MapJoinDesc
 argument_list|>
 argument_list|(
-name|mapJoinDesc
+name|MapJoinDesc
 operator|.
 name|class
 argument_list|,
@@ -653,10 +653,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|limitDesc
+name|LimitDesc
 argument_list|>
 argument_list|(
-name|limitDesc
+name|LimitDesc
 operator|.
 name|class
 argument_list|,
@@ -673,10 +673,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|tableScanDesc
+name|TableScanDesc
 argument_list|>
 argument_list|(
-name|tableScanDesc
+name|TableScanDesc
 operator|.
 name|class
 argument_list|,
@@ -693,10 +693,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|unionDesc
+name|UnionDesc
 argument_list|>
 argument_list|(
-name|unionDesc
+name|UnionDesc
 operator|.
 name|class
 argument_list|,
@@ -713,10 +713,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|udtfDesc
+name|UDTFDesc
 argument_list|>
 argument_list|(
-name|udtfDesc
+name|UDTFDesc
 operator|.
 name|class
 argument_list|,
@@ -733,10 +733,10 @@ argument_list|(
 operator|new
 name|opTuple
 argument_list|<
-name|lateralViewJoinDesc
+name|LateralViewJoinDesc
 argument_list|>
 argument_list|(
-name|lateralViewJoinDesc
+name|LateralViewJoinDesc
 operator|.
 name|class
 argument_list|,

@@ -359,7 +359,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|alterTableDesc
+name|AlterTableDesc
 import|;
 end_import
 
@@ -377,7 +377,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|descFunctionDesc
+name|DescFunctionDesc
 import|;
 end_import
 
@@ -395,7 +395,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|descTableDesc
+name|DescTableDesc
 import|;
 end_import
 
@@ -413,7 +413,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|dropTableDesc
+name|DropTableDesc
 import|;
 end_import
 
@@ -431,7 +431,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fetchWork
+name|FetchWork
 import|;
 end_import
 
@@ -449,7 +449,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 import|;
 end_import
 
@@ -467,7 +467,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 import|;
 end_import
 
@@ -485,7 +485,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 import|;
 end_import
 
@@ -503,7 +503,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|showTablesDesc
+name|ShowTablesDesc
 import|;
 end_import
 
@@ -521,7 +521,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -539,7 +539,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|alterTableDesc
+name|AlterTableDesc
 operator|.
 name|alterTableTypes
 import|;
@@ -1450,11 +1450,11 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|dropTableDesc
+name|DropTableDesc
 name|dropTblDesc
 init|=
 operator|new
-name|dropTableDesc
+name|DropTableDesc
 argument_list|(
 name|tableName
 argument_list|,
@@ -1540,11 +1540,11 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 init|=
 operator|new
-name|alterTableDesc
+name|AlterTableDesc
 argument_list|(
 name|alterTableTypes
 operator|.
@@ -1644,11 +1644,11 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 init|=
 operator|new
-name|alterTableDesc
+name|AlterTableDesc
 argument_list|(
 name|alterTableTypes
 operator|.
@@ -1736,11 +1736,11 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 init|=
 operator|new
-name|alterTableDesc
+name|AlterTableDesc
 argument_list|(
 name|alterTableTypes
 operator|.
@@ -2027,11 +2027,11 @@ name|COLUMNAR_SERDE
 expr_stmt|;
 break|break;
 block|}
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 init|=
 operator|new
-name|alterTableDesc
+name|AlterTableDesc
 argument_list|(
 name|tableName
 argument_list|,
@@ -2232,11 +2232,11 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 init|=
 operator|new
-name|alterTableDesc
+name|AlterTableDesc
 argument_list|(
 name|tableName
 argument_list|,
@@ -2510,11 +2510,11 @@ literal|1
 index|]
 argument_list|)
 expr_stmt|;
-name|fetchWork
+name|FetchWork
 name|fetch
 init|=
 operator|new
-name|fetchWork
+name|FetchWork
 argument_list|(
 name|ctx
 operator|.
@@ -2525,7 +2525,7 @@ name|toString
 argument_list|()
 argument_list|,
 operator|new
-name|tableDesc
+name|TableDesc
 argument_list|(
 name|LazySimpleSerDe
 operator|.
@@ -2655,11 +2655,11 @@ argument_list|()
 operator|>
 literal|1
 decl_stmt|;
-name|descTableDesc
+name|DescTableDesc
 name|descTblDesc
 init|=
 operator|new
-name|descTableDesc
+name|DescTableDesc
 argument_list|(
 name|ctx
 operator|.
@@ -2830,7 +2830,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 name|showPartsDesc
 decl_stmt|;
 name|String
@@ -2852,7 +2852,7 @@ decl_stmt|;
 name|showPartsDesc
 operator|=
 operator|new
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 argument_list|(
 name|tableName
 argument_list|,
@@ -2908,7 +2908,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|showTablesDesc
+name|ShowTablesDesc
 name|showTblsDesc
 decl_stmt|;
 if|if
@@ -2940,7 +2940,7 @@ decl_stmt|;
 name|showTblsDesc
 operator|=
 operator|new
-name|showTablesDesc
+name|ShowTablesDesc
 argument_list|(
 name|ctx
 operator|.
@@ -2956,7 +2956,7 @@ block|{
 name|showTblsDesc
 operator|=
 operator|new
-name|showTablesDesc
+name|ShowTablesDesc
 argument_list|(
 name|ctx
 operator|.
@@ -3011,7 +3011,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 name|showTblStatusDesc
 decl_stmt|;
 name|String
@@ -3180,7 +3180,7 @@ block|}
 name|showTblStatusDesc
 operator|=
 operator|new
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 argument_list|(
 name|ctx
 operator|.
@@ -3241,7 +3241,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 name|showFuncsDesc
 decl_stmt|;
 if|if
@@ -3273,7 +3273,7 @@ decl_stmt|;
 name|showFuncsDesc
 operator|=
 operator|new
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 argument_list|(
 name|ctx
 operator|.
@@ -3289,7 +3289,7 @@ block|{
 name|showFuncsDesc
 operator|=
 operator|new
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 argument_list|(
 name|ctx
 operator|.
@@ -3422,11 +3422,11 @@ literal|"Unexpected Tokens at DESCRIBE FUNCTION"
 argument_list|)
 throw|;
 block|}
-name|descFunctionDesc
+name|DescFunctionDesc
 name|descFuncDesc
 init|=
 operator|new
-name|descFunctionDesc
+name|DescFunctionDesc
 argument_list|(
 name|ctx
 operator|.
@@ -3484,11 +3484,11 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 init|=
 operator|new
-name|alterTableDesc
+name|AlterTableDesc
 argument_list|(
 name|unescapeIdentifier
 argument_list|(
@@ -3747,11 +3747,11 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 init|=
 operator|new
-name|alterTableDesc
+name|AlterTableDesc
 argument_list|(
 name|tblName
 argument_list|,
@@ -3863,11 +3863,11 @@ literal|1
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 init|=
 operator|new
-name|alterTableDesc
+name|AlterTableDesc
 argument_list|(
 name|tblName
 argument_list|,
@@ -3944,11 +3944,11 @@ argument_list|(
 name|ast
 argument_list|)
 decl_stmt|;
-name|dropTableDesc
+name|DropTableDesc
 name|dropTblDesc
 init|=
 operator|new
-name|dropTableDesc
+name|DropTableDesc
 argument_list|(
 name|tblName
 argument_list|,

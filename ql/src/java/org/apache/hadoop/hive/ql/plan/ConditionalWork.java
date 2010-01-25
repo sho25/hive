@@ -41,7 +41,7 @@ end_import
 
 begin_class
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=

@@ -91,43 +91,43 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|createTableDesc
+name|CreateTableDesc
 name|createTblDesc
 decl_stmt|;
 specifier|private
-name|createTableLikeDesc
+name|CreateTableLikeDesc
 name|createTblLikeDesc
 decl_stmt|;
 specifier|private
-name|createViewDesc
+name|CreateViewDesc
 name|createVwDesc
 decl_stmt|;
 specifier|private
-name|dropTableDesc
+name|DropTableDesc
 name|dropTblDesc
 decl_stmt|;
 specifier|private
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 decl_stmt|;
 specifier|private
-name|showTablesDesc
+name|ShowTablesDesc
 name|showTblsDesc
 decl_stmt|;
 specifier|private
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 name|showFuncsDesc
 decl_stmt|;
 specifier|private
-name|descFunctionDesc
+name|DescFunctionDesc
 name|descFunctionDesc
 decl_stmt|;
 specifier|private
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 name|showPartsDesc
 decl_stmt|;
 specifier|private
-name|descTableDesc
+name|DescTableDesc
 name|descTblDesc
 decl_stmt|;
 specifier|private
@@ -139,7 +139,7 @@ name|MsckDesc
 name|msckDesc
 decl_stmt|;
 specifier|private
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 name|showTblStatusDesc
 decl_stmt|;
 comment|/**    * ReadEntitites that are passed to the hooks.    */
@@ -207,7 +207,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 parameter_list|)
 block|{
@@ -241,7 +241,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|createTableDesc
+name|CreateTableDesc
 name|createTblDesc
 parameter_list|)
 block|{
@@ -275,7 +275,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|createTableLikeDesc
+name|CreateTableLikeDesc
 name|createTblLikeDesc
 parameter_list|)
 block|{
@@ -309,7 +309,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|createViewDesc
+name|CreateViewDesc
 name|createVwDesc
 parameter_list|)
 block|{
@@ -343,7 +343,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|dropTableDesc
+name|DropTableDesc
 name|dropTblDesc
 parameter_list|)
 block|{
@@ -377,7 +377,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|descTableDesc
+name|DescTableDesc
 name|descTblDesc
 parameter_list|)
 block|{
@@ -411,7 +411,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|showTablesDesc
+name|ShowTablesDesc
 name|showTblsDesc
 parameter_list|)
 block|{
@@ -445,7 +445,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 name|showFuncsDesc
 parameter_list|)
 block|{
@@ -479,7 +479,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|descFunctionDesc
+name|DescFunctionDesc
 name|descFuncDesc
 parameter_list|)
 block|{
@@ -511,7 +511,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 name|showPartsDesc
 parameter_list|)
 block|{
@@ -610,7 +610,7 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 name|showTblStatusDesc
 parameter_list|)
 block|{
@@ -630,14 +630,14 @@ expr_stmt|;
 block|}
 comment|/**    * @return the createTblDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Create Table Operator"
 argument_list|)
 specifier|public
-name|createTableDesc
+name|CreateTableDesc
 name|getCreateTblDesc
 parameter_list|()
 block|{
@@ -650,7 +650,7 @@ specifier|public
 name|void
 name|setCreateTblDesc
 parameter_list|(
-name|createTableDesc
+name|CreateTableDesc
 name|createTblDesc
 parameter_list|)
 block|{
@@ -663,14 +663,14 @@ expr_stmt|;
 block|}
 comment|/**    * @return the createTblDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Create Table Operator"
 argument_list|)
 specifier|public
-name|createTableLikeDesc
+name|CreateTableLikeDesc
 name|getCreateTblLikeDesc
 parameter_list|()
 block|{
@@ -683,7 +683,7 @@ specifier|public
 name|void
 name|setCreateTblLikeDesc
 parameter_list|(
-name|createTableLikeDesc
+name|CreateTableLikeDesc
 name|createTblLikeDesc
 parameter_list|)
 block|{
@@ -696,14 +696,14 @@ expr_stmt|;
 block|}
 comment|/**    * @return the createTblDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Create View Operator"
 argument_list|)
 specifier|public
-name|createViewDesc
+name|CreateViewDesc
 name|getCreateViewDesc
 parameter_list|()
 block|{
@@ -716,7 +716,7 @@ specifier|public
 name|void
 name|setCreateViewDesc
 parameter_list|(
-name|createViewDesc
+name|CreateViewDesc
 name|createVwDesc
 parameter_list|)
 block|{
@@ -729,14 +729,14 @@ expr_stmt|;
 block|}
 comment|/**    * @return the dropTblDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Drop Table Operator"
 argument_list|)
 specifier|public
-name|dropTableDesc
+name|DropTableDesc
 name|getDropTblDesc
 parameter_list|()
 block|{
@@ -749,7 +749,7 @@ specifier|public
 name|void
 name|setDropTblDesc
 parameter_list|(
-name|dropTableDesc
+name|DropTableDesc
 name|dropTblDesc
 parameter_list|)
 block|{
@@ -762,14 +762,14 @@ expr_stmt|;
 block|}
 comment|/**    * @return the alterTblDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Alter Table Operator"
 argument_list|)
 specifier|public
-name|alterTableDesc
+name|AlterTableDesc
 name|getAlterTblDesc
 parameter_list|()
 block|{
@@ -782,7 +782,7 @@ specifier|public
 name|void
 name|setAlterTblDesc
 parameter_list|(
-name|alterTableDesc
+name|AlterTableDesc
 name|alterTblDesc
 parameter_list|)
 block|{
@@ -795,14 +795,14 @@ expr_stmt|;
 block|}
 comment|/**    * @return the showTblsDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Show Table Operator"
 argument_list|)
 specifier|public
-name|showTablesDesc
+name|ShowTablesDesc
 name|getShowTblsDesc
 parameter_list|()
 block|{
@@ -815,7 +815,7 @@ specifier|public
 name|void
 name|setShowTblsDesc
 parameter_list|(
-name|showTablesDesc
+name|ShowTablesDesc
 name|showTblsDesc
 parameter_list|)
 block|{
@@ -828,14 +828,14 @@ expr_stmt|;
 block|}
 comment|/**    * @return the showFuncsDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Show Function Operator"
 argument_list|)
 specifier|public
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 name|getShowFuncsDesc
 parameter_list|()
 block|{
@@ -845,14 +845,14 @@ return|;
 block|}
 comment|/**    * @return the descFuncDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Show Function Operator"
 argument_list|)
 specifier|public
-name|descFunctionDesc
+name|DescFunctionDesc
 name|getDescFunctionDesc
 parameter_list|()
 block|{
@@ -865,7 +865,7 @@ specifier|public
 name|void
 name|setShowFuncsDesc
 parameter_list|(
-name|showFunctionsDesc
+name|ShowFunctionsDesc
 name|showFuncsDesc
 parameter_list|)
 block|{
@@ -881,7 +881,7 @@ specifier|public
 name|void
 name|setDescFuncDesc
 parameter_list|(
-name|descFunctionDesc
+name|DescFunctionDesc
 name|descFuncDesc
 parameter_list|)
 block|{
@@ -892,14 +892,14 @@ expr_stmt|;
 block|}
 comment|/**    * @return the showPartsDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Show Partitions Operator"
 argument_list|)
 specifier|public
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 name|getShowPartsDesc
 parameter_list|()
 block|{
@@ -912,7 +912,7 @@ specifier|public
 name|void
 name|setShowPartsDesc
 parameter_list|(
-name|showPartitionsDesc
+name|ShowPartitionsDesc
 name|showPartsDesc
 parameter_list|)
 block|{
@@ -925,14 +925,14 @@ expr_stmt|;
 block|}
 comment|/**    * @return the descTblDesc    */
 annotation|@
-name|explain
+name|Explain
 argument_list|(
 name|displayName
 operator|=
 literal|"Describe Table Operator"
 argument_list|)
 specifier|public
-name|descTableDesc
+name|DescTableDesc
 name|getDescTblDesc
 parameter_list|()
 block|{
@@ -945,7 +945,7 @@ specifier|public
 name|void
 name|setDescTblDesc
 parameter_list|(
-name|descTableDesc
+name|DescTableDesc
 name|descTblDesc
 parameter_list|)
 block|{
@@ -1010,7 +1010,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return show table descriptor    */
 specifier|public
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 name|getShowTblStatusDesc
 parameter_list|()
 block|{
@@ -1023,7 +1023,7 @@ specifier|public
 name|void
 name|setShowTblStatusDesc
 parameter_list|(
-name|showTableStatusDesc
+name|ShowTableStatusDesc
 name|showTblStatusDesc
 parameter_list|)
 block|{

@@ -129,7 +129,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|explainWork
+name|ExplainWork
 import|;
 end_import
 
@@ -337,7 +337,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|explainWork
+name|ExplainWork
 argument_list|(
 name|ctx
 operator|.

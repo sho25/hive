@@ -251,7 +251,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|copyWork
+name|CopyWork
 import|;
 end_import
 
@@ -269,7 +269,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|loadTableDesc
+name|LoadTableDesc
 import|;
 end_import
 
@@ -287,7 +287,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|moveWork
+name|MoveWork
 import|;
 end_import
 
@@ -1315,7 +1315,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|copyWork
+name|CopyWork
 argument_list|(
 name|fromURI
 operator|.
@@ -1344,11 +1344,11 @@ argument_list|(
 name|toURI
 argument_list|)
 decl_stmt|;
-name|loadTableDesc
+name|LoadTableDesc
 name|loadTableWork
 init|=
 operator|new
-name|loadTableDesc
+name|LoadTableDesc
 argument_list|(
 name|fromURI
 operator|.
@@ -1406,7 +1406,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|moveWork
+name|MoveWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -1435,7 +1435,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|moveWork
+name|MoveWork
 argument_list|(
 name|getInputs
 argument_list|()

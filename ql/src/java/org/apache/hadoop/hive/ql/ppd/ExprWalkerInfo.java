@@ -195,7 +195,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -232,7 +232,7 @@ literal|null
 decl_stmt|;
 comment|/** new expr for this expression. */
 specifier|public
-name|exprNodeDesc
+name|ExprNodeDesc
 name|convertedExpr
 init|=
 literal|null
@@ -250,7 +250,7 @@ parameter_list|,
 name|String
 name|alias
 parameter_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 name|replacedNode
 parameter_list|)
 block|{
@@ -317,7 +317,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|pushdownPreds
@@ -327,7 +327,7 @@ specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|,
 name|ExprInfo
 argument_list|>
@@ -352,7 +352,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -362,7 +362,7 @@ operator|=
 operator|new
 name|HashMap
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|,
 name|ExprInfo
 argument_list|>
@@ -406,7 +406,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -416,7 +416,7 @@ operator|=
 operator|new
 name|HashMap
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|,
 name|ExprInfo
 argument_list|>
@@ -450,7 +450,7 @@ return|;
 block|}
 comment|/**    * @return converted expression for give node. If there is none then returns    *         null.    */
 specifier|public
-name|exprNodeDesc
+name|ExprNodeDesc
 name|getConvertedNode
 parameter_list|(
 name|Node
@@ -489,10 +489,10 @@ specifier|public
 name|void
 name|addConvertedNode
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|oldNode
 parameter_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 name|newNode
 parameter_list|)
 block|{
@@ -562,7 +562,7 @@ specifier|public
 name|boolean
 name|isCandidate
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 parameter_list|)
 block|{
@@ -598,7 +598,7 @@ specifier|public
 name|void
 name|setIsCandidate
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 parameter_list|,
 name|boolean
@@ -650,7 +650,7 @@ specifier|public
 name|String
 name|getAlias
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 parameter_list|)
 block|{
@@ -686,7 +686,7 @@ specifier|public
 name|void
 name|addAlias
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 parameter_list|,
 name|String
@@ -747,7 +747,7 @@ specifier|public
 name|void
 name|addFinalCandidate
 parameter_list|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 parameter_list|)
 block|{
@@ -780,7 +780,7 @@ argument_list|,
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 argument_list|)
@@ -810,7 +810,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|getFinalCandidates
@@ -846,7 +846,7 @@ name|String
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|e
@@ -862,7 +862,7 @@ control|)
 block|{
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|predList
 init|=

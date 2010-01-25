@@ -271,7 +271,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -420,7 +420,7 @@ name|taskTmpDir
 decl_stmt|;
 name|List
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 name|tt_desc
 decl_stmt|;
@@ -446,7 +446,7 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -519,7 +519,7 @@ specifier|public
 name|void
 name|addTTDesc
 parameter_list|(
-name|tableDesc
+name|TableDesc
 name|tt_desc
 parameter_list|)
 block|{
@@ -536,7 +536,7 @@ block|}
 specifier|public
 name|List
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 name|getTTDesc
 parameter_list|()
@@ -554,7 +554,7 @@ block|{
 name|String
 name|taskTmpDir
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tt_desc
 decl_stmt|;
 name|Operator
@@ -596,7 +596,7 @@ parameter_list|(
 name|String
 name|taskTmpDir
 parameter_list|,
-name|tableDesc
+name|TableDesc
 name|tt_desc
 parameter_list|,
 name|Operator
@@ -664,7 +664,7 @@ specifier|public
 name|void
 name|setTTDesc
 parameter_list|(
-name|tableDesc
+name|TableDesc
 name|tt_desc
 parameter_list|)
 block|{
@@ -676,7 +676,7 @@ name|tt_desc
 expr_stmt|;
 block|}
 specifier|public
-name|tableDesc
+name|TableDesc
 name|getTTDesc
 parameter_list|()
 block|{

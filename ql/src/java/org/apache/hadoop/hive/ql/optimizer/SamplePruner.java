@@ -377,7 +377,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 import|;
 end_import
 
@@ -395,7 +395,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 operator|.
 name|sampleDesc
 import|;
@@ -662,7 +662,7 @@ name|FilterOperator
 operator|)
 name|nd
 decl_stmt|;
-name|filterDesc
+name|FilterDesc
 name|filOpDesc
 init|=
 name|filOp

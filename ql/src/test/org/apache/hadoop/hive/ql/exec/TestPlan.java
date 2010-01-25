@@ -101,7 +101,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 import|;
 end_import
 
@@ -119,7 +119,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -137,7 +137,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 import|;
 end_import
 
@@ -155,7 +155,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -173,7 +173,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -191,7 +191,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -256,11 +256,11 @@ decl_stmt|;
 try|try
 block|{
 comment|// initialize a complete map reduce configuration
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr1
 init|=
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -273,11 +273,11 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr2
 init|=
 operator|new
-name|exprNodeColumnDesc
+name|ExprNodeColumnDesc
 argument_list|(
 name|TypeInfoFactory
 operator|.
@@ -290,7 +290,7 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|filterExpr
 init|=
 name|TypeCheckProcFactory
@@ -306,11 +306,11 @@ argument_list|,
 name|expr2
 argument_list|)
 decl_stmt|;
-name|filterDesc
+name|FilterDesc
 name|filterCtx
 init|=
 operator|new
-name|filterDesc
+name|FilterDesc
 argument_list|(
 name|filterExpr
 argument_list|,
@@ -319,7 +319,7 @@ argument_list|)
 decl_stmt|;
 name|Operator
 argument_list|<
-name|filterDesc
+name|FilterDesc
 argument_list|>
 name|op
 init|=
@@ -327,7 +327,7 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
-name|filterDesc
+name|FilterDesc
 operator|.
 name|class
 argument_list|)
@@ -391,18 +391,18 @@ argument_list|,
 name|aliasList
 argument_list|)
 expr_stmt|;
-name|tableDesc
+name|TableDesc
 name|tblDesc
 init|=
 name|Utilities
 operator|.
 name|defaultTd
 decl_stmt|;
-name|partitionDesc
+name|PartitionDesc
 name|partDesc
 init|=
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|tblDesc
 argument_list|,
@@ -413,7 +413,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|pt
 init|=
@@ -422,7 +422,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -471,11 +471,11 @@ argument_list|,
 name|op
 argument_list|)
 expr_stmt|;
-name|mapredWork
+name|MapredWork
 name|mrwork
 init|=
 operator|new
-name|mapredWork
+name|MapredWork
 argument_list|()
 decl_stmt|;
 name|mrwork
@@ -559,7 +559,7 @@ argument_list|,
 name|mrwork
 argument_list|)
 expr_stmt|;
-name|mapredWork
+name|MapredWork
 name|mrwork2
 init|=
 name|Utilities

@@ -319,7 +319,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -478,7 +478,7 @@ name|ConditionalTask
 operator|||
 operator|(
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|task
 operator|.
@@ -592,7 +592,7 @@ name|add
 argument_list|(
 operator|(
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|task
 operator|.

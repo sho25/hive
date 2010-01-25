@@ -113,7 +113,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -131,7 +131,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|reduceSinkDesc
+name|ReduceSinkDesc
 import|;
 end_import
 
@@ -149,7 +149,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -330,7 +330,7 @@ name|ReduceSinkOperator
 extends|extends
 name|TerminalOperator
 argument_list|<
-name|reduceSinkDesc
+name|ReduceSinkDesc
 argument_list|>
 implements|implements
 name|Serializable
@@ -428,7 +428,7 @@ literal|0
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|e
 range|:
 name|conf
@@ -471,7 +471,7 @@ literal|0
 expr_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|e
 range|:
 name|conf
@@ -514,7 +514,7 @@ literal|0
 expr_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|e
 range|:
 name|conf
@@ -563,7 +563,7 @@ operator|+
 name|tag
 argument_list|)
 expr_stmt|;
-name|tableDesc
+name|TableDesc
 name|keyTableDesc
 init|=
 name|conf
@@ -610,7 +610,7 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-name|tableDesc
+name|TableDesc
 name|valueTableDesc
 init|=
 name|conf

@@ -113,7 +113,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|createFunctionDesc
+name|CreateFunctionDesc
 import|;
 end_import
 
@@ -131,7 +131,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|dropFunctionDesc
+name|DropFunctionDesc
 import|;
 end_import
 
@@ -271,11 +271,11 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|createFunctionDesc
+name|CreateFunctionDesc
 name|desc
 init|=
 operator|new
-name|createFunctionDesc
+name|CreateFunctionDesc
 argument_list|(
 name|functionName
 argument_list|,
@@ -324,11 +324,11 @@ operator|.
 name|getText
 argument_list|()
 decl_stmt|;
-name|dropFunctionDesc
+name|DropFunctionDesc
 name|desc
 init|=
 operator|new
-name|dropFunctionDesc
+name|DropFunctionDesc
 argument_list|(
 name|functionName
 argument_list|)

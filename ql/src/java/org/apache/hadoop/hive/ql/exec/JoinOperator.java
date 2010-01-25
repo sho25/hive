@@ -151,7 +151,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinDesc
+name|JoinDesc
 import|;
 end_import
 
@@ -222,7 +222,7 @@ name|JoinOperator
 extends|extends
 name|CommonJoinOperator
 argument_list|<
-name|joinDesc
+name|JoinDesc
 argument_list|>
 implements|implements
 name|Serializable

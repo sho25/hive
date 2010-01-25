@@ -181,7 +181,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -362,7 +362,7 @@ literal|null
 return|;
 block|}
 comment|// Otherwise this is not a sampling predicate and we need to
-name|exprNodeDesc
+name|ExprNodeDesc
 name|predicate
 init|=
 name|fop
@@ -390,7 +390,7 @@ name|hasNonPartCols
 init|=
 literal|false
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|ppr_pred
 init|=
 name|ExprProcFactory
@@ -436,18 +436,18 @@ name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|opToPPR
 parameter_list|,
 name|TableScanOperator
 name|top
 parameter_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 name|new_ppr_pred
 parameter_list|)
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|old_ppr_pred
 init|=
 name|opToPPR
@@ -457,7 +457,7 @@ argument_list|(
 name|top
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|ppr_pred
 init|=
 literal|null

@@ -547,7 +547,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|aggregationDesc
+name|AggregationDesc
 import|;
 end_import
 
@@ -565,7 +565,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeDesc
+name|ExprNodeDesc
 import|;
 end_import
 
@@ -583,7 +583,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|groupByDesc
+name|GroupByDesc
 import|;
 end_import
 
@@ -601,7 +601,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|joinDesc
+name|JoinDesc
 import|;
 end_import
 
@@ -619,7 +619,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapJoinDesc
+name|MapJoinDesc
 import|;
 end_import
 
@@ -637,7 +637,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|reduceSinkDesc
+name|ReduceSinkDesc
 import|;
 end_import
 
@@ -655,7 +655,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|selectDesc
+name|SelectDesc
 import|;
 end_import
 
@@ -673,7 +673,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -733,7 +733,7 @@ name|ColumnPrunerProcCtx
 operator|)
 name|ctx
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|condn
 init|=
 name|op
@@ -859,7 +859,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|groupByDesc
+name|GroupByDesc
 name|conf
 init|=
 name|op
@@ -869,7 +869,7 @@ argument_list|()
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keys
 init|=
@@ -880,7 +880,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|key
 range|:
 name|keys
@@ -903,7 +903,7 @@ expr_stmt|;
 block|}
 name|ArrayList
 argument_list|<
-name|aggregationDesc
+name|AggregationDesc
 argument_list|>
 name|aggrs
 init|=
@@ -914,7 +914,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|aggregationDesc
+name|AggregationDesc
 name|aggr
 range|:
 name|aggrs
@@ -922,7 +922,7 @@ control|)
 block|{
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|params
 init|=
@@ -933,7 +933,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|param
 range|:
 name|params
@@ -1336,7 +1336,7 @@ operator|.
 name|getRR
 argument_list|()
 decl_stmt|;
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|conf
 init|=
 name|op
@@ -1391,7 +1391,7 @@ argument_list|()
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keys
 init|=
@@ -1402,7 +1402,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|key
 range|:
 name|keys
@@ -1581,7 +1581,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|exprMap
 init|=
@@ -1598,7 +1598,7 @@ range|:
 name|childJoinCols
 control|)
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 name|exprMap
@@ -1715,7 +1715,7 @@ comment|// Reduce Sink contains the columns needed - no need to aggregate from
 comment|// children
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|vals
 init|=
@@ -1726,7 +1726,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|val
 range|:
 name|vals
@@ -1933,7 +1933,7 @@ argument_list|(
 name|op
 argument_list|)
 expr_stmt|;
-name|selectDesc
+name|SelectDesc
 name|conf
 init|=
 name|op
@@ -1977,7 +1977,7 @@ block|}
 comment|// do we need to prune the select operator?
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|originalColList
 init|=
@@ -2004,7 +2004,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|exprNodeDesc
+name|ExprNodeDesc
 name|expr
 range|:
 name|originalColList
@@ -2051,14 +2051,14 @@ condition|)
 block|{
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|newColList
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2424,7 +2424,7 @@ name|ReduceSinkOperator
 name|reduce
 parameter_list|)
 block|{
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|reduceConf
 init|=
 name|reduce
@@ -2438,7 +2438,7 @@ name|util
 operator|.
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|originalValueEval
 init|=
@@ -2592,7 +2592,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|reduceConf
 init|=
 name|reduce
@@ -2604,7 +2604,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|oldMap
 init|=
@@ -2617,7 +2617,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|newMap
 init|=
@@ -2626,7 +2626,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2683,7 +2683,7 @@ name|util
 operator|.
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|originalValueEval
 init|=
@@ -2711,14 +2711,14 @@ name|util
 operator|.
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|newValueEval
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2879,7 +2879,7 @@ block|}
 block|}
 name|ArrayList
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|keyCols
 init|=
@@ -3092,7 +3092,7 @@ argument_list|(
 name|newValueEval
 argument_list|)
 expr_stmt|;
-name|tableDesc
+name|TableDesc
 name|newValueTable
 init|=
 name|PlanUtils
@@ -3297,14 +3297,14 @@ parameter_list|,
 name|CommonJoinOperator
 name|op
 parameter_list|,
-name|joinDesc
+name|JoinDesc
 name|conf
 parameter_list|,
 name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|columnExprMap
 parameter_list|,
@@ -3461,7 +3461,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|newColExprMap
 init|=
@@ -3470,7 +3470,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -3508,7 +3508,7 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 name|columnExprMap
@@ -3686,14 +3686,14 @@ block|{
 comment|// regenerate the valueTableDesc
 name|List
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 name|valueTableDescs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -3720,7 +3720,7 @@ control|)
 block|{
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|valueCols
 init|=
@@ -3774,7 +3774,7 @@ literal|"+"
 argument_list|)
 expr_stmt|;
 block|}
-name|tableDesc
+name|TableDesc
 name|valueTableDesc
 init|=
 name|PlanUtils
@@ -3801,7 +3801,7 @@ expr_stmt|;
 block|}
 operator|(
 operator|(
-name|mapJoinDesc
+name|MapJoinDesc
 operator|)
 name|conf
 operator|)
@@ -3821,7 +3821,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 argument_list|>
@@ -3829,7 +3829,7 @@ name|exprs
 init|=
 operator|(
 operator|(
-name|mapJoinDesc
+name|MapJoinDesc
 operator|)
 name|conf
 operator|)
@@ -3850,7 +3850,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 argument_list|>
@@ -3877,7 +3877,7 @@ name|Byte
 argument_list|,
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|entry
@@ -3889,7 +3889,7 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|exprNodeDesc
+name|ExprNodeDesc
 argument_list|>
 name|lists
 init|=
@@ -3916,7 +3916,7 @@ name|j
 operator|++
 control|)
 block|{
-name|exprNodeDesc
+name|ExprNodeDesc
 name|desc
 init|=
 name|lists

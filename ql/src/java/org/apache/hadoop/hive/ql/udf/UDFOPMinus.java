@@ -61,7 +61,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|description
+name|Description
 import|;
 end_import
 
@@ -163,7 +163,7 @@ end_import
 
 begin_class
 annotation|@
-name|description
+name|Description
 argument_list|(
 name|name
 operator|=

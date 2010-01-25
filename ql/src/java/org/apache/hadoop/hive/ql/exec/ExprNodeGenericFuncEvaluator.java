@@ -79,7 +79,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -147,7 +147,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|protected
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 name|expr
 decl_stmt|;
 specifier|transient
@@ -213,7 +213,7 @@ empty_stmt|;
 specifier|public
 name|ExprNodeGenericFuncEvaluator
 parameter_list|(
-name|exprNodeGenericFuncDesc
+name|ExprNodeGenericFuncDesc
 name|expr
 parameter_list|)
 block|{

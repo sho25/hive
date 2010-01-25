@@ -633,7 +633,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fetchWork
+name|FetchWork
 import|;
 end_import
 
@@ -651,7 +651,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|fileSinkDesc
+name|FileSinkDesc
 import|;
 end_import
 
@@ -669,7 +669,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapJoinDesc
+name|MapJoinDesc
 import|;
 end_import
 
@@ -687,7 +687,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredLocalWork
+name|MapredLocalWork
 import|;
 end_import
 
@@ -705,7 +705,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|mapredWork
+name|MapredWork
 import|;
 end_import
 
@@ -723,7 +723,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|partitionDesc
+name|PartitionDesc
 import|;
 end_import
 
@@ -741,7 +741,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|reduceSinkDesc
+name|ReduceSinkDesc
 import|;
 end_import
 
@@ -759,7 +759,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableDesc
+name|TableDesc
 import|;
 end_import
 
@@ -777,7 +777,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|tableScanDesc
+name|TableScanDesc
 import|;
 end_import
 
@@ -795,7 +795,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|filterDesc
+name|FilterDesc
 operator|.
 name|sampleDesc
 import|;
@@ -909,11 +909,11 @@ operator|.
 name|getCurrTask
 argument_list|()
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -972,7 +972,7 @@ argument_list|(
 name|reducer
 argument_list|)
 expr_stmt|;
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|desc
 init|=
 name|op
@@ -1230,11 +1230,11 @@ operator|.
 name|getCurrTask
 argument_list|()
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -1386,11 +1386,11 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|desc
 init|=
 operator|(
-name|reduceSinkDesc
+name|ReduceSinkDesc
 operator|)
 name|op
 operator|.
@@ -1439,7 +1439,7 @@ decl_stmt|;
 name|String
 name|taskTmpDir
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tt_desc
 decl_stmt|;
 name|Operator
@@ -1557,11 +1557,11 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|mapJoinDesc
+name|MapJoinDesc
 name|desc
 init|=
 operator|(
-name|mapJoinDesc
+name|MapJoinDesc
 operator|)
 name|op
 operator|.
@@ -1771,11 +1771,11 @@ operator|.
 name|getCurrTask
 argument_list|()
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -1821,7 +1821,7 @@ argument_list|(
 name|reducer
 argument_list|)
 expr_stmt|;
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|desc
 init|=
 name|op
@@ -1890,11 +1890,11 @@ name|boolean
 name|local
 parameter_list|)
 block|{
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -1942,7 +1942,7 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 name|tt_descLst
 init|=
@@ -2013,7 +2013,7 @@ argument_list|(
 name|pos
 argument_list|)
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tt_desc
 init|=
 name|tt_descLst
@@ -2080,7 +2080,7 @@ argument_list|(
 name|taskTmpDir
 argument_list|,
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|tt_desc
 argument_list|,
@@ -2161,11 +2161,11 @@ name|currTask
 init|=
 name|task
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|plan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|currTask
 operator|.
@@ -2386,7 +2386,7 @@ name|pos
 operator|==
 operator|(
 operator|(
-name|mapJoinDesc
+name|MapJoinDesc
 operator|)
 name|op
 operator|.
@@ -2490,7 +2490,7 @@ name|taskTmpDir
 init|=
 literal|null
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tt_desc
 init|=
 literal|null
@@ -2712,7 +2712,7 @@ throws|throws
 name|SemanticException
 block|{
 comment|// Generate a new task
-name|mapredWork
+name|MapredWork
 name|cplan
 init|=
 name|getMapRedWork
@@ -2772,7 +2772,7 @@ argument_list|(
 name|reducer
 argument_list|)
 expr_stmt|;
-name|reduceSinkDesc
+name|ReduceSinkDesc
 name|desc
 init|=
 name|op
@@ -2884,7 +2884,7 @@ name|Serializable
 argument_list|>
 name|topOp
 parameter_list|,
-name|mapredWork
+name|MapredWork
 name|plan
 parameter_list|,
 name|boolean
@@ -2930,14 +2930,14 @@ argument_list|()
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|partDesc
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2946,7 +2946,7 @@ name|tblDir
 init|=
 literal|null
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tblDesc
 init|=
 literal|null
@@ -3075,7 +3075,7 @@ name|getUnknownPartns
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|partitionDesc
+name|PartitionDesc
 name|aliasPartnDesc
 init|=
 literal|null
@@ -3191,7 +3191,7 @@ block|{
 name|aliasPartnDesc
 operator|=
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|Utilities
 operator|.
@@ -3482,7 +3482,7 @@ argument_list|()
 decl_stmt|;
 name|Iterator
 argument_list|<
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 name|iterPartnDesc
 init|=
@@ -3522,7 +3522,7 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
-name|partitionDesc
+name|PartitionDesc
 name|prtDesc
 init|=
 name|iterPartnDesc
@@ -3630,7 +3630,7 @@ block|}
 else|else
 block|{
 comment|// populate local work if needed
-name|mapredLocalWork
+name|MapredLocalWork
 name|localPlan
 init|=
 name|plan
@@ -3648,7 +3648,7 @@ block|{
 name|localPlan
 operator|=
 operator|new
-name|mapredLocalWork
+name|MapredLocalWork
 argument_list|(
 operator|new
 name|LinkedHashMap
@@ -3669,7 +3669,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|fetchWork
+name|FetchWork
 argument_list|>
 argument_list|()
 argument_list|)
@@ -3730,9 +3730,9 @@ argument_list|(
 name|alias_id
 argument_list|,
 operator|new
-name|fetchWork
+name|FetchWork
 argument_list|(
-name|fetchWork
+name|FetchWork
 operator|.
 name|convertPathToStringArray
 argument_list|(
@@ -3756,7 +3756,7 @@ argument_list|(
 name|alias_id
 argument_list|,
 operator|new
-name|fetchWork
+name|FetchWork
 argument_list|(
 name|tblDir
 operator|.
@@ -3797,13 +3797,13 @@ name|Serializable
 argument_list|>
 name|topOp
 parameter_list|,
-name|mapredWork
+name|MapredWork
 name|plan
 parameter_list|,
 name|boolean
 name|local
 parameter_list|,
-name|tableDesc
+name|TableDesc
 name|tt_desc
 parameter_list|)
 throws|throws
@@ -3873,7 +3873,7 @@ argument_list|(
 name|path
 argument_list|,
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|tt_desc
 argument_list|,
@@ -3897,7 +3897,7 @@ block|}
 else|else
 block|{
 comment|// populate local work if needed
-name|mapredLocalWork
+name|MapredLocalWork
 name|localPlan
 init|=
 name|plan
@@ -3915,7 +3915,7 @@ block|{
 name|localPlan
 operator|=
 operator|new
-name|mapredLocalWork
+name|MapredLocalWork
 argument_list|(
 operator|new
 name|LinkedHashMap
@@ -3936,7 +3936,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|fetchWork
+name|FetchWork
 argument_list|>
 argument_list|()
 argument_list|)
@@ -3990,7 +3990,7 @@ argument_list|(
 name|alias
 argument_list|,
 operator|new
-name|fetchWork
+name|FetchWork
 argument_list|(
 name|alias
 argument_list|,
@@ -4013,7 +4013,7 @@ specifier|static
 name|void
 name|setKeyAndValueDesc
 parameter_list|(
-name|mapredWork
+name|MapredWork
 name|plan
 parameter_list|,
 name|Operator
@@ -4082,7 +4082,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 name|tagToSchema
 init|=
@@ -4179,15 +4179,15 @@ block|}
 comment|/**    * create a new plan and return    *     * @return the new plan    */
 specifier|public
 specifier|static
-name|mapredWork
+name|MapredWork
 name|getMapRedWork
 parameter_list|()
 block|{
-name|mapredWork
+name|MapredWork
 name|work
 init|=
 operator|new
-name|mapredWork
+name|MapredWork
 argument_list|()
 decl_stmt|;
 name|work
@@ -4216,7 +4216,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|partitionDesc
+name|PartitionDesc
 argument_list|>
 argument_list|()
 argument_list|)
@@ -4247,7 +4247,7 @@ argument_list|(
 operator|new
 name|ArrayList
 argument_list|<
-name|tableDesc
+name|TableDesc
 argument_list|>
 argument_list|()
 argument_list|)
@@ -4473,7 +4473,7 @@ argument_list|(
 name|posn
 argument_list|)
 decl_stmt|;
-name|tableDesc
+name|TableDesc
 name|tt_desc
 init|=
 name|PlanUtils
@@ -4511,11 +4511,11 @@ operator|.
 name|COMPRESSINTERMEDIATE
 argument_list|)
 decl_stmt|;
-name|fileSinkDesc
+name|FileSinkDesc
 name|desc
 init|=
 operator|new
-name|fileSinkDesc
+name|FileSinkDesc
 argument_list|(
 name|taskTmpDir
 argument_list|,
@@ -4706,7 +4706,7 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
-name|tableScanDesc
+name|TableScanDesc
 operator|.
 name|class
 argument_list|,
@@ -4801,11 +4801,11 @@ name|streamDesc
 init|=
 name|taskTmpDir
 decl_stmt|;
-name|mapredWork
+name|MapredWork
 name|cplan
 init|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|childTask
 operator|.
@@ -5165,7 +5165,7 @@ argument_list|(
 name|pos
 argument_list|)
 expr_stmt|;
-name|mapredWork
+name|MapredWork
 name|uPlan
 init|=
 literal|null
@@ -5234,7 +5234,7 @@ expr_stmt|;
 name|uPlan
 operator|=
 operator|(
-name|mapredWork
+name|MapredWork
 operator|)
 name|uTask
 operator|.
@@ -5331,7 +5331,7 @@ argument_list|(
 name|taskTmpDir
 argument_list|,
 operator|new
-name|partitionDesc
+name|PartitionDesc
 argument_list|(
 name|mjCtx
 operator|.
