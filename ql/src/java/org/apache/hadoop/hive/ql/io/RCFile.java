@@ -3817,6 +3817,16 @@ name|boolean
 name|syncSeen
 decl_stmt|;
 specifier|private
+name|long
+name|lastSeenSyncPos
+init|=
+literal|0
+decl_stmt|;
+specifier|private
+name|long
+name|headerEnd
+decl_stmt|;
+specifier|private
 specifier|final
 name|long
 name|end
@@ -4755,6 +4765,13 @@ name|sync
 argument_list|)
 expr_stmt|;
 comment|// read sync bytes
+name|headerEnd
+operator|=
+name|in
+operator|.
+name|getPos
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 comment|/** Return the current byte position in the input file. */
@@ -4818,6 +4835,29 @@ name|seek
 argument_list|(
 name|end
 argument_list|)
+expr_stmt|;
+return|return;
+block|}
+comment|//this is to handle syn(pos) where pos< headerEnd.
+if|if
+condition|(
+name|position
+operator|<
+name|headerEnd
+condition|)
+block|{
+comment|// seek directly to first record
+name|in
+operator|.
+name|seek
+argument_list|(
+name|headerEnd
+argument_list|)
+expr_stmt|;
+comment|// note the sync marker "seen" in the header
+name|syncSeen
+operator|=
+literal|true
 expr_stmt|;
 return|return;
 block|}
@@ -5097,6 +5137,16 @@ block|{
 comment|// process
 comment|// a
 comment|// sync entry
+name|lastSeenSyncPos
+operator|=
+name|in
+operator|.
+name|getPos
+argument_list|()
+operator|-
+literal|4
+expr_stmt|;
+comment|// minus SYNC_ESCAPE's length
 name|in
 operator|.
 name|readFully
@@ -6109,6 +6159,16 @@ parameter_list|()
 block|{
 return|return
 name|syncSeen
+return|;
+block|}
+comment|/** Returns the last seen sync position */
+specifier|public
+name|long
+name|lastSeenSyncPos
+parameter_list|()
+block|{
+return|return
+name|lastSeenSyncPos
 return|;
 block|}
 comment|/** Returns the name of the file. */
