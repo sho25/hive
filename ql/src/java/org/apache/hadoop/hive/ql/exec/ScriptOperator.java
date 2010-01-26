@@ -2692,6 +2692,25 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
+literal|"Exception in StreamThread.run(): "
+operator|+
+name|th
+operator|.
+name|getMessage
+argument_list|()
+operator|+
+literal|"\nCause: "
+operator|+
+name|th
+operator|.
+name|getCause
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|warn
+argument_list|(
 name|StringUtils
 operator|.
 name|stringifyException
