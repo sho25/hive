@@ -89,6 +89,10 @@ name|RecordReader
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveRecordReader is a simple wrapper on RecordReader.  * It allows us to stop reading the data when some global flag  * ExecMapper.getDone() is set.   */
+end_comment
+
 begin_class
 specifier|public
 class|class
