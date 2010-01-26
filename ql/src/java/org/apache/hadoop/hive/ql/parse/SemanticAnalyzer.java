@@ -2389,6 +2389,13 @@ argument_list|>
 name|prunedPartitions
 decl_stmt|;
 specifier|private
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|resultSchema
+decl_stmt|;
+specifier|private
 name|CreateViewDesc
 name|createVwDesc
 decl_stmt|;
@@ -34652,6 +34659,10 @@ argument_list|(
 literal|"Completed getting MetaData in Semantic Analysis"
 argument_list|)
 expr_stmt|;
+comment|// Save the result schema derived from the sink operator produced
+comment|// by genPlan.  This has the correct column names, which clients
+comment|// such as JDBC would prefer instead of the c0, c1 we'll end
+comment|// up with later.
 name|Operator
 name|sinkOp
 init|=
@@ -34660,6 +34671,21 @@ argument_list|(
 name|qb
 argument_list|)
 decl_stmt|;
+name|resultSchema
+operator|=
+name|convertRowSchemaToViewSchema
+argument_list|(
+name|opParseCtx
+operator|.
+name|get
+argument_list|(
+name|sinkOp
+argument_list|)
+operator|.
+name|getRR
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|createVwDesc
@@ -34668,9 +34694,7 @@ literal|null
 condition|)
 block|{
 name|saveViewDefinition
-argument_list|(
-name|sinkOp
-argument_list|)
+argument_list|()
 expr_stmt|;
 comment|// Since we're only creating a view (not executing it), we
 comment|// don't need to optimize or translate the plan (and in fact, those
@@ -34793,35 +34817,42 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|getResultSchema
+parameter_list|()
+block|{
+return|return
+name|resultSchema
+return|;
+block|}
 specifier|private
 name|void
 name|saveViewDefinition
-parameter_list|(
-name|Operator
-name|sinkOp
-parameter_list|)
+parameter_list|()
 throws|throws
 name|SemanticException
 block|{
-comment|// Save the view schema derived from the sink operator produced
-comment|// by genPlan.
+comment|// Make a copy of the statement's result schema, since we may
+comment|// modify it below as part of imposing view column names.
 name|List
 argument_list|<
 name|FieldSchema
 argument_list|>
 name|derivedSchema
 init|=
-name|convertRowSchemaToViewSchema
+operator|new
+name|ArrayList
+argument_list|<
+name|FieldSchema
+argument_list|>
 argument_list|(
-name|opParseCtx
-operator|.
-name|get
-argument_list|(
-name|sinkOp
-argument_list|)
-operator|.
-name|getRR
-argument_list|()
+name|resultSchema
 argument_list|)
 decl_stmt|;
 name|validateColumnNameUniqueness

@@ -1610,7 +1610,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select * from "
+literal|"select a,b,c,d,f as e,f*2 from "
 operator|+
 name|tableName
 operator|+
@@ -1625,6 +1625,102 @@ operator|.
 name|getMetaData
 argument_list|()
 decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected column count"
+argument_list|,
+literal|6
+argument_list|,
+name|meta
+operator|.
+name|getColumnCount
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected column name"
+argument_list|,
+literal|"a"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected column name"
+argument_list|,
+literal|"b"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|2
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected column name"
+argument_list|,
+literal|"c"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|3
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected column name"
+argument_list|,
+literal|"d"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|4
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected column name"
+argument_list|,
+literal|"e"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|5
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected column name"
+argument_list|,
+literal|"_c5"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|6
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|assertEquals
 argument_list|(
 literal|"Unexpected column type"
@@ -1707,6 +1803,22 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+literal|"Unexpected column type"
+argument_list|,
+name|Types
+operator|.
+name|DOUBLE
+argument_list|,
+name|meta
+operator|.
+name|getColumnType
+argument_list|(
+literal|6
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
 literal|"Unexpected column type name"
 argument_list|,
 literal|"string"
@@ -1772,6 +1884,20 @@ operator|.
 name|getColumnTypeName
 argument_list|(
 literal|5
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected column type name"
+argument_list|,
+literal|"double"
+argument_list|,
+name|meta
+operator|.
+name|getColumnTypeName
+argument_list|(
+literal|6
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1845,6 +1971,20 @@ literal|5
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected column display size"
+argument_list|,
+literal|16
+argument_list|,
+name|meta
+operator|.
+name|getColumnDisplaySize
+argument_list|(
+literal|6
+argument_list|)
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -1854,7 +1994,7 @@ literal|1
 init|;
 name|i
 operator|<=
-literal|5
+literal|6
 condition|;
 name|i
 operator|++
@@ -1898,7 +2038,7 @@ name|int
 name|expectedPrecision
 init|=
 name|i
-operator|==
+operator|>=
 literal|5
 condition|?
 operator|-
@@ -1910,7 +2050,7 @@ name|int
 name|expectedScale
 init|=
 name|i
-operator|==
+operator|>=
 literal|5
 condition|?
 operator|-

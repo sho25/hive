@@ -1798,6 +1798,19 @@ return|return
 name|outputs
 return|;
 block|}
+comment|/**    * @return the schema for the fields which will be produced    * when the statement is executed, or null if not known    */
+specifier|public
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|getResultSchema
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|/**    * Get the list of FieldSchema out of the ASTNode.    */
 specifier|protected
 name|List
