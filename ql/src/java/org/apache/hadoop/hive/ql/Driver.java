@@ -851,11 +851,8 @@ name|SQLState
 decl_stmt|;
 comment|// A limit on the number of threads that can be launched
 specifier|private
-specifier|final
 name|int
 name|maxthreads
-init|=
-literal|8
 decl_stmt|;
 specifier|private
 specifier|final
@@ -1718,7 +1715,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Compile a new query. Any currently-planned query associated with this    * Driver is discarded.    *     * @param command    *          The SQL query to compile.    */
+comment|/**    * Compile a new query. Any currently-planned query associated with this    * Driver is discarded.    *    * @param command    *          The SQL query to compile.    */
 specifier|public
 name|int
 name|compile
@@ -2568,6 +2565,21 @@ argument_list|,
 name|queryStr
 argument_list|)
 expr_stmt|;
+name|maxthreads
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|EXECPARALLETHREADNUMBER
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|LOG
@@ -3400,7 +3412,7 @@ literal|0
 operator|)
 return|;
 block|}
-comment|/**    * Launches a new task    *     * @param tsk    *          task being launched    * @param queryId    *          Id of the query containing the task    * @param noName    *          whether the task has a name set    * @param running    *          map from taskresults to taskrunners    * @param jobname    *          name of the task, if it is a map-reduce job    * @param jobs    *          number of map-reduce jobs    * @param curJobNo    *          the sequential number of the next map-reduce job    * @return the updated number of last the map-reduce job launched    */
+comment|/**    * Launches a new task    *    * @param tsk    *          task being launched    * @param queryId    *          Id of the query containing the task    * @param noName    *          whether the task has a name set    * @param running    *          map from taskresults to taskrunners    * @param jobname    *          name of the task, if it is a map-reduce job    * @param jobs    *          number of map-reduce jobs    * @param curJobNo    *          the sequential number of the next map-reduce job    * @return the updated number of last the map-reduce job launched    */
 specifier|public
 name|int
 name|launchTask
@@ -3630,7 +3642,7 @@ literal|9
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Polls running tasks to see if a task has ended.    *     * @param results    *          Set of result objects for running tasks    * @return The result object for any completed/failed task    */
+comment|/**    * Polls running tasks to see if a task has ended.    *    * @param results    *          Set of result objects for running tasks    * @return The result object for any completed/failed task    */
 specifier|public
 name|TaskResult
 name|pollTasks

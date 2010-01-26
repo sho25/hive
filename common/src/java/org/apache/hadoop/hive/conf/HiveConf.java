@@ -373,6 +373,13 @@ literal|false
 argument_list|)
 block|,
 comment|// parallel query launching
+name|EXECPARALLETHREADNUMBER
+argument_list|(
+literal|"hive.exec.parallel.thread.number"
+argument_list|,
+literal|8
+argument_list|)
+block|,
 name|HIVESPECULATIVEEXECREDUCERS
 argument_list|(
 literal|"hive.mapred.reduce.tasks.speculative.execution"
@@ -914,8 +921,9 @@ literal|"hive.optimize.groupby"
 argument_list|,
 literal|true
 argument_list|)
-block|;
+block|,
 comment|// optimize group by
+block|;
 specifier|public
 specifier|final
 name|String
