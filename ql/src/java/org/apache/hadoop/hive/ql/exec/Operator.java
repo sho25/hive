@@ -3934,7 +3934,7 @@ decl_stmt|;
 comment|/**    * populated at runtime from hadoop counters at run time in the client    */
 specifier|transient
 specifier|protected
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,
@@ -4211,7 +4211,7 @@ name|operatorId
 expr_stmt|;
 block|}
 specifier|public
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,

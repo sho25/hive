@@ -350,7 +350,7 @@ name|taskHandle
 decl_stmt|;
 specifier|transient
 specifier|protected
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1175,7 +1175,7 @@ block|{
 comment|// default, do nothing
 block|}
 specifier|public
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,
