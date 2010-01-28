@@ -4072,6 +4072,11 @@ name|currentPart
 init|=
 literal|null
 decl_stmt|;
+name|boolean
+name|ifNotExists
+init|=
+literal|false
+decl_stmt|;
 name|int
 name|numCh
 init|=
@@ -4122,6 +4127,16 @@ block|{
 case|case
 name|HiveParser
 operator|.
+name|TOK_IFNOTEXISTS
+case|:
+name|ifNotExists
+operator|=
+literal|true
+expr_stmt|;
+break|break;
+case|case
+name|HiveParser
+operator|.
 name|TOK_PARTSPEC
 case|:
 if|if
@@ -4146,6 +4161,8 @@ argument_list|,
 name|currentPart
 argument_list|,
 name|currentLocation
+argument_list|,
+name|ifNotExists
 argument_list|)
 decl_stmt|;
 name|rootTasks
@@ -4243,6 +4260,8 @@ argument_list|,
 name|currentPart
 argument_list|,
 name|currentLocation
+argument_list|,
+name|ifNotExists
 argument_list|)
 decl_stmt|;
 name|rootTasks

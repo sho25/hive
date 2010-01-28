@@ -47,6 +47,9 @@ decl_stmt|;
 name|String
 name|location
 decl_stmt|;
+name|boolean
+name|ifNotExists
+decl_stmt|;
 name|Map
 argument_list|<
 name|String
@@ -55,7 +58,7 @@ name|String
 argument_list|>
 name|partSpec
 decl_stmt|;
-comment|/**    * @param dbName    *          database to add to.    * @param tableName    *          table to add to.    * @param partSpec    *          partition specification.    * @param location    *          partition location, relative to table location.    */
+comment|/**    * @param dbName    *          database to add to.    * @param tableName    *          table to add to.    * @param partSpec    *          partition specification.    * @param location    *          partition location, relative to table location.    * @param ifNotExists     *          if true, the partition is only added if it doesn't exist    */
 specifier|public
 name|AddPartitionDesc
 parameter_list|(
@@ -75,6 +78,9 @@ name|partSpec
 parameter_list|,
 name|String
 name|location
+parameter_list|,
+name|boolean
+name|ifNotExists
 parameter_list|)
 block|{
 name|super
@@ -103,6 +109,12 @@ operator|.
 name|location
 operator|=
 name|location
+expr_stmt|;
+name|this
+operator|.
+name|ifNotExists
+operator|=
+name|ifNotExists
 expr_stmt|;
 block|}
 comment|/**    * @return database name    */
@@ -217,6 +229,34 @@ operator|.
 name|partSpec
 operator|=
 name|partSpec
+expr_stmt|;
+block|}
+comment|/**    * @return if the partition should only be added if it doesn't exist already    */
+specifier|public
+name|boolean
+name|getIfNotExists
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|ifNotExists
+return|;
+block|}
+comment|/**    * @param ifNotExists     *          if the part should be added only if it doesn't exist    */
+specifier|public
+name|void
+name|setIfNotExists
+parameter_list|(
+name|boolean
+name|ifNotExists
+parameter_list|)
+block|{
+name|this
+operator|.
+name|ifNotExists
+operator|=
+name|ifNotExists
 expr_stmt|;
 block|}
 block|}
