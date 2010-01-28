@@ -333,6 +333,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|io
+operator|.
+name|HiveInputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|ParseContext
@@ -636,7 +654,7 @@ specifier|public
 name|GenMRSkewJoinProcessor
 parameter_list|()
 block|{   }
-comment|/**    * Create tasks for processing skew joins. The idea is (HIVE-964) to use    * separated jobs and map-joins to handle skew joins.    *<p>    *<ul>    *<li>    * Number of mr jobs to handle skew keys is the number of table minus 1 (we    * can stream the last table, so big keys in the last table will not be a    * problem).    *<li>    * At runtime in Join, we output big keys in one table into one corresponding    * directories, and all same keys in other tables into different dirs(one for    * each table). The directories will look like:    *<ul>    *<li>    * dir-T1-bigkeys(containing big keys in T1), dir-T2-keys(containing keys    * which is big in T1),dir-T3-keys(containing keys which is big in T1), ...    *<li>    * dir-T1-keys(containing keys which is big in T2), dir-T2-bigkeys(containing    * big keys in T2),dir-T3-keys(containing keys which is big in T2), ...    *<li>    * dir-T1-keys(containing keys which is big in T3), dir-T2-keys(containing big    * keys in T3),dir-T3-bigkeys(containing keys which is big in T3), ... .....    *</ul>    *</ul>    * For each table, we launch one mapjoin job, taking the directory containing    * big keys in this table and corresponding dirs in other tables as input.    * (Actally one job for one row in the above.)    *     *<p>    * For more discussions, please check    * https://issues.apache.org/jira/browse/HIVE-964.    *     */
+comment|/**    * Create tasks for processing skew joins. The idea is (HIVE-964) to use    * separated jobs and map-joins to handle skew joins.    *<p>    *<ul>    *<li>    * Number of mr jobs to handle skew keys is the number of table minus 1 (we    * can stream the last table, so big keys in the last table will not be a    * problem).    *<li>    * At runtime in Join, we output big keys in one table into one corresponding    * directories, and all same keys in other tables into different dirs(one for    * each table). The directories will look like:    *<ul>    *<li>    * dir-T1-bigkeys(containing big keys in T1), dir-T2-keys(containing keys    * which is big in T1),dir-T3-keys(containing keys which is big in T1), ...    *<li>    * dir-T1-keys(containing keys which is big in T2), dir-T2-bigkeys(containing    * big keys in T2),dir-T3-keys(containing keys which is big in T2), ...    *<li>    * dir-T1-keys(containing keys which is big in T3), dir-T2-keys(containing big    * keys in T3),dir-T3-bigkeys(containing keys which is big in T3), ... .....    *</ul>    *</ul>    * For each table, we launch one mapjoin job, taking the directory containing    * big keys in this table and corresponding dirs in other tables as input.    * (Actally one job for one row in the above.)    *    *<p>    * For more discussions, please check    * https://issues.apache.org/jira/browse/HIVE-964.    *    */
 specifier|public
 specifier|static
 name|void
@@ -1137,6 +1155,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// used for create mapJoinDesc, should be in order
 name|List
 argument_list|<
 name|TableDesc
@@ -1150,18 +1169,21 @@ name|TableDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// used for
-comment|// create
-comment|// mapJoinDesc,
-comment|// should
-comment|// be in
-comment|// order
 for|for
 control|(
-name|Byte
-name|tag
-range|:
+name|int
+name|k
+init|=
+literal|0
+init|;
+name|k
+operator|<
 name|tags
+operator|.
+name|length
+condition|;
+name|k
+operator|++
 control|)
 block|{
 name|newJoinValueTblDesc
@@ -2216,9 +2238,13 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+name|newPlan
+operator|.
+name|setNumMapTasks
+argument_list|(
 name|HiveConf
 operator|.
-name|setVar
+name|getIntVar
 argument_list|(
 name|jc
 argument_list|,
@@ -2226,25 +2252,37 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVEINPUTFORMAT
+name|HIVESKEWJOINMAPJOINNUMMAPTASK
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|newPlan
+operator|.
+name|setMinSplitSize
+argument_list|(
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|jc
 argument_list|,
-name|org
+name|HiveConf
 operator|.
-name|apache
+name|ConfVars
 operator|.
-name|hadoop
+name|HIVESKEWJOINMAPJOINMINSPLIT
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|newPlan
 operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|CombineHiveInputFormat
+name|setInputformat
+argument_list|(
+name|HiveInputFormat
 operator|.
 name|class
 operator|.
-name|getCanonicalName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
