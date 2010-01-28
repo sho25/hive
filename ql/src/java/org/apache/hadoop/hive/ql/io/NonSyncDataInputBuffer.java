@@ -760,11 +760,11 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-name|StringBuffer
+name|StringBuilder
 name|line
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 literal|80
 argument_list|)

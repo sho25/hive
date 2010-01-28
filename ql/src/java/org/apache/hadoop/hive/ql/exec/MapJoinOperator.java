@@ -1218,7 +1218,7 @@ specifier|protected
 name|void
 name|fatalErrorMessage
 parameter_list|(
-name|StringBuffer
+name|StringBuilder
 name|errMsg
 parameter_list|,
 name|long

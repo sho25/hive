@@ -63,7 +63,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|ArrayList
 import|;
 end_import
 
@@ -513,21 +513,21 @@ block|}
 comment|// client methods called from JSP
 comment|/**    * Rather then return the actual items we return a list copies. This enforces    * our HWISessionManager by preventing the ability of the client(jsp) to    * create SessionItems.    *     * @return A set of SessionItems this framework manages    */
 specifier|public
-name|Vector
+name|ArrayList
 argument_list|<
 name|HWISessionItem
 argument_list|>
 name|findAllSessionItems
 parameter_list|()
 block|{
-name|Vector
+name|ArrayList
 argument_list|<
 name|HWISessionItem
 argument_list|>
 name|otherItems
 init|=
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
 name|HWISessionItem
 argument_list|>

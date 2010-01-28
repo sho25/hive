@@ -91,16 +91,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Vector
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -546,7 +536,7 @@ return|;
 block|}
 comment|/**    * Implements the getChildren function for the Node Interface.    */
 specifier|public
-name|Vector
+name|ArrayList
 argument_list|<
 name|Node
 argument_list|>
@@ -565,14 +555,14 @@ return|return
 literal|null
 return|;
 block|}
-name|Vector
+name|ArrayList
 argument_list|<
 name|Node
 argument_list|>
 name|ret_vec
 init|=
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
 name|Node
 argument_list|>
@@ -4355,7 +4345,7 @@ parameter_list|(
 name|Counters
 name|ctrs
 parameter_list|,
-name|StringBuffer
+name|StringBuilder
 name|errMsg
 parameter_list|)
 block|{
@@ -4496,7 +4486,7 @@ specifier|protected
 name|void
 name|fatalErrorMessage
 parameter_list|(
-name|StringBuffer
+name|StringBuilder
 name|errMsg
 parameter_list|,
 name|long

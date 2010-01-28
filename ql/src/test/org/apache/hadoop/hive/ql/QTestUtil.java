@@ -1554,11 +1554,11 @@ argument_list|(
 name|bis
 argument_list|)
 decl_stmt|;
-name|StringBuffer
+name|StringBuilder
 name|qsb
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 comment|// Read the entire query

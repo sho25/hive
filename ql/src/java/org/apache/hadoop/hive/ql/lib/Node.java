@@ -38,7 +38,7 @@ specifier|public
 interface|interface
 name|Node
 block|{
-comment|/**    * Gets the vector of children nodes. This is used in the graph walker    * algorithms.    *     * @return Vector<Node>    */
+comment|/**    * Gets the vector of children nodes. This is used in the graph walker    * algorithms.    *     * @return List<? extends Node>    */
 specifier|public
 name|List
 argument_list|<

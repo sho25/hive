@@ -45,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Properties
+name|ArrayList
 import|;
 end_import
 
@@ -55,7 +55,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|Properties
 import|;
 end_import
 
@@ -509,7 +509,7 @@ specifier|public
 name|boolean
 name|fetch
 parameter_list|(
-name|Vector
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>

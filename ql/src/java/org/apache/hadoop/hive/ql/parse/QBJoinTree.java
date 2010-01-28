@@ -55,16 +55,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
 operator|.
 name|Entry
@@ -137,9 +127,9 @@ name|rhsSemijoin
 decl_stmt|;
 comment|// join conditions
 specifier|private
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -148,9 +138,9 @@ name|expressions
 decl_stmt|;
 comment|// filters
 specifier|private
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -288,9 +278,9 @@ name|leftAliases
 expr_stmt|;
 block|}
 specifier|public
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -306,9 +296,9 @@ specifier|public
 name|void
 name|setExpressions
 parameter_list|(
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -466,9 +456,9 @@ expr_stmt|;
 block|}
 comment|/**    * @return the filters    */
 specifier|public
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -485,9 +475,9 @@ specifier|public
 name|void
 name|setFilters
 parameter_list|(
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|ASTNode
 argument_list|>

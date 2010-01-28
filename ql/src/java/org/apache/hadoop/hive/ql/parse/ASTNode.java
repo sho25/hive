@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|ArrayList
 import|;
 end_import
 
@@ -110,7 +110,7 @@ expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see org.apache.hadoop.hive.ql.lib.Node#getChildren()    */
 specifier|public
-name|Vector
+name|ArrayList
 argument_list|<
 name|Node
 argument_list|>
@@ -131,14 +131,14 @@ return|return
 literal|null
 return|;
 block|}
-name|Vector
+name|ArrayList
 argument_list|<
 name|Node
 argument_list|>
 name|ret_vec
 init|=
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
 name|Node
 argument_list|>
@@ -238,11 +238,11 @@ name|String
 name|dump
 parameter_list|()
 block|{
-name|StringBuffer
+name|StringBuilder
 name|sb
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|sb
@@ -260,7 +260,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Vector
+name|ArrayList
 argument_list|<
 name|Node
 argument_list|>

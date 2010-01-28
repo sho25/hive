@@ -65,7 +65,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|ArrayList
 import|;
 end_import
 
@@ -134,7 +134,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the Row Resolver  *   **/
+comment|/**  * Implementation of the Row Resolver  *   */
 end_comment
 
 begin_class
@@ -295,7 +295,7 @@ operator|.
 name|setSignature
 argument_list|(
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -591,7 +591,7 @@ name|ret
 return|;
 block|}
 specifier|public
-name|Vector
+name|ArrayList
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -764,11 +764,11 @@ name|String
 name|toString
 parameter_list|()
 block|{
-name|StringBuffer
+name|StringBuilder
 name|sb
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 for|for

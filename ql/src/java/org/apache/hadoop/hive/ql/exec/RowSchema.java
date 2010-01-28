@@ -35,12 +35,12 @@ name|java
 operator|.
 name|util
 operator|.
-name|Vector
+name|ArrayList
 import|;
 end_import
 
 begin_comment
-comment|/**  * RowSchema Implementation  **/
+comment|/**  * RowSchema Implementation  */
 end_comment
 
 begin_class
@@ -59,7 +59,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|Vector
+name|ArrayList
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -72,7 +72,7 @@ block|{   }
 specifier|public
 name|RowSchema
 parameter_list|(
-name|Vector
+name|ArrayList
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -90,7 +90,7 @@ specifier|public
 name|void
 name|setSignature
 parameter_list|(
-name|Vector
+name|ArrayList
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -105,7 +105,7 @@ name|signature
 expr_stmt|;
 block|}
 specifier|public
-name|Vector
+name|ArrayList
 argument_list|<
 name|ColumnInfo
 argument_list|>

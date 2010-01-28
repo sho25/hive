@@ -791,7 +791,7 @@ parameter_list|()
 throws|throws
 name|EOFException
 block|{
-name|StringBuffer
+name|StringBuilder
 name|ret
 init|=
 literal|null
@@ -874,7 +874,7 @@ block|{
 name|ret
 operator|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 name|nextToken
 argument_list|)

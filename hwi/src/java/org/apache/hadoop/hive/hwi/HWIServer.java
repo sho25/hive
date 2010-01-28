@@ -356,11 +356,11 @@ literal|"/hwi"
 argument_list|)
 expr_stmt|;
 comment|/*      * The command line args may be used by multiple components. Rather by      * setting these as a system property we avoid having to specifically pass      * them      */
-name|StringBuffer
+name|StringBuilder
 name|sb
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 for|for

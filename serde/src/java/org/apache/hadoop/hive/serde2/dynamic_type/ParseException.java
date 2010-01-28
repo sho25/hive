@@ -143,11 +143,11 @@ name|getMessage
 argument_list|()
 return|;
 block|}
-name|StringBuffer
+name|StringBuilder
 name|expected
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|int
@@ -411,11 +411,11 @@ name|String
 name|str
 parameter_list|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|retval
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|char

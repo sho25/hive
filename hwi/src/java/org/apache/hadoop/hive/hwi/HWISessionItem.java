@@ -79,16 +79,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Vector
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -332,9 +322,9 @@ name|errorFile
 decl_stmt|;
 comment|/**    * The results from the Driver. This is used for storing the most result    * results from the driver in memory    */
 specifier|private
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -438,9 +428,9 @@ expr_stmt|;
 name|resultBucket
 operator|=
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -804,9 +794,9 @@ expr_stmt|;
 name|resultBucket
 operator|=
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -1493,14 +1483,14 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|Vector
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
 name|res
 init|=
 operator|new
-name|Vector
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -2137,9 +2127,9 @@ expr_stmt|;
 block|}
 comment|/** gets the value for resultBucket */
 specifier|public
-name|Vector
+name|ArrayList
 argument_list|<
-name|Vector
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>

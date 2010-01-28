@@ -219,16 +219,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Vector
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -3988,7 +3978,7 @@ specifier|public
 name|boolean
 name|getResults
 parameter_list|(
-name|Vector
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>

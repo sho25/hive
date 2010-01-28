@@ -91,16 +91,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Vector
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -1787,7 +1777,7 @@ name|String
 name|fieldPrefix
 parameter_list|)
 block|{
-name|Vector
+name|ArrayList
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -1816,7 +1806,7 @@ name|FieldSchema
 argument_list|>
 name|getFieldSchemasFromColumnInfo
 parameter_list|(
-name|Vector
+name|ArrayList
 argument_list|<
 name|ColumnInfo
 argument_list|>

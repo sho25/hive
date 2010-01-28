@@ -1653,7 +1653,7 @@ parameter_list|(
 name|TaskHandle
 name|t
 parameter_list|,
-name|StringBuffer
+name|StringBuilder
 name|errMsg
 parameter_list|)
 block|{
@@ -1809,11 +1809,11 @@ name|fatal
 init|=
 literal|false
 decl_stmt|;
-name|StringBuffer
+name|StringBuilder
 name|errMsg
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 while|while
