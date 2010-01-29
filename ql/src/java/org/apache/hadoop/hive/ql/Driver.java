@@ -3162,8 +3162,6 @@ operator|.
 name|remove
 argument_list|()
 decl_stmt|;
-name|curJobNo
-operator|=
 name|launchTask
 argument_list|(
 name|tsk
@@ -3177,8 +3175,6 @@ argument_list|,
 name|jobname
 argument_list|,
 name|jobs
-argument_list|,
-name|curJobNo
 argument_list|,
 name|driverCxt
 argument_list|)
@@ -3657,7 +3653,7 @@ return|;
 block|}
 comment|/**    * Launches a new task    *    * @param tsk    *          task being launched    * @param queryId    *          Id of the query containing the task    * @param noName    *          whether the task has a name set    * @param running    *          map from taskresults to taskrunners    * @param jobname    *          name of the task, if it is a map-reduce job    * @param jobs    *          number of map-reduce jobs    * @param curJobNo    *          the sequential number of the next map-reduce job    * @return the updated number of last the map-reduce job launched    */
 specifier|public
-name|int
+name|void
 name|launchTask
 parameter_list|(
 name|Task
@@ -3687,9 +3683,6 @@ name|jobname
 parameter_list|,
 name|int
 name|jobs
-parameter_list|,
-name|int
-name|curJobNo
 parameter_list|,
 name|DriverContext
 name|cxt
@@ -3772,8 +3765,12 @@ literal|")"
 argument_list|)
 expr_stmt|;
 block|}
-name|curJobNo
-operator|++
+name|cxt
+operator|.
+name|incCurJobNo
+argument_list|(
+literal|1
+argument_list|)
 expr_stmt|;
 name|console
 operator|.
@@ -3781,7 +3778,10 @@ name|printInfo
 argument_list|(
 literal|"Launching Job "
 operator|+
-name|curJobNo
+name|cxt
+operator|.
+name|getCurJobNo
+argument_list|()
 operator|+
 literal|" out of "
 operator|+
@@ -3864,9 +3864,7 @@ argument_list|,
 name|tskRun
 argument_list|)
 expr_stmt|;
-return|return
-name|curJobNo
-return|;
+return|return;
 block|}
 comment|/**    * Cleans up remaining tasks in case of failure    */
 specifier|public

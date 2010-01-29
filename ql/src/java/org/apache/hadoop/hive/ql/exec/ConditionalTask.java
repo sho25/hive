@@ -393,6 +393,13 @@ operator|+
 literal|", job is filtered out (removed at runtime)."
 argument_list|)
 expr_stmt|;
+name|driverContext
+operator|.
+name|incCurJobNo
+argument_list|(
+literal|1
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|tsk
