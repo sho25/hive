@@ -37921,9 +37921,10 @@ name|getSerName
 argument_list|()
 argument_list|)
 operator|||
+operator|!
 name|SerDeUtils
 operator|.
-name|isNativeSerDe
+name|shouldGetColsFromSerDe
 argument_list|(
 name|crtTblDesc
 operator|.

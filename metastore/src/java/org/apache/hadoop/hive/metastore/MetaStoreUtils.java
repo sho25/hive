@@ -1091,6 +1091,17 @@ operator|.
 name|getSerializationLib
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|lib
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 try|try
 block|{
 name|Deserializer

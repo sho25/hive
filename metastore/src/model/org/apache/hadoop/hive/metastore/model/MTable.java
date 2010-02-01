@@ -96,11 +96,15 @@ specifier|private
 name|String
 name|viewExpandedText
 decl_stmt|;
+specifier|private
+name|String
+name|tableType
+decl_stmt|;
 specifier|public
 name|MTable
 parameter_list|()
 block|{}
-comment|/**    * @param tableName    * @param database    * @param sd    * @param owner    * @param createTime    * @param lastAccessTime    * @param retention    * @param partitionKeys    * @param parameters    */
+comment|/**    * @param tableName    * @param database    * @param sd    * @param owner    * @param createTime    * @param lastAccessTime    * @param retention    * @param partitionKeys    * @param parameters    * @param viewOriginalText    * @param viewExpandedText    * @param tableType    */
 specifier|public
 name|MTable
 parameter_list|(
@@ -144,6 +148,9 @@ name|viewOriginalText
 parameter_list|,
 name|String
 name|viewExpandedText
+parameter_list|,
+name|String
+name|tableType
 parameter_list|)
 block|{
 name|this
@@ -212,6 +219,12 @@ operator|.
 name|viewExpandedText
 operator|=
 name|viewExpandedText
+expr_stmt|;
+name|this
+operator|.
+name|tableType
+operator|=
+name|tableType
 expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */
@@ -514,6 +527,32 @@ parameter_list|()
 block|{
 return|return
 name|lastAccessTime
+return|;
+block|}
+comment|/**    * @param tableType the tableType to set    */
+specifier|public
+name|void
+name|setTableType
+parameter_list|(
+name|String
+name|tableType
+parameter_list|)
+block|{
+name|this
+operator|.
+name|tableType
+operator|=
+name|tableType
+expr_stmt|;
+block|}
+comment|/**    * @return the tableType    */
+specifier|public
+name|String
+name|getTableType
+parameter_list|()
+block|{
+return|return
+name|tableType
 return|;
 block|}
 block|}
