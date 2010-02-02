@@ -342,6 +342,8 @@ name|tableName
 parameter_list|,
 name|List
 argument_list|<
+name|?
+extends|extends
 name|Map
 argument_list|<
 name|String
@@ -761,6 +763,8 @@ name|tableName
 parameter_list|,
 name|List
 argument_list|<
+name|?
+extends|extends
 name|Map
 argument_list|<
 name|String

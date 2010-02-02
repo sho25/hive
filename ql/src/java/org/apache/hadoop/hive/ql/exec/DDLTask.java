@@ -1839,7 +1839,7 @@ argument_list|()
 argument_list|,
 name|msckDesc
 operator|.
-name|getPartitionSpec
+name|getPartSpecs
 argument_list|()
 argument_list|,
 name|result

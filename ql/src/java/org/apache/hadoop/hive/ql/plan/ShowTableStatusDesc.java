@@ -96,6 +96,7 @@ name|partSpec
 decl_stmt|;
 comment|/**    * table name for the result of show tables    */
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|table
@@ -104,6 +105,7 @@ literal|"show_tablestatus"
 decl_stmt|;
 comment|/**    * thrift ddl for the result of show tables    */
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|schema
@@ -349,7 +351,7 @@ block|}
 comment|/**    * @param partSpec    *          the partSpec to set    */
 specifier|public
 name|void
-name|setPartSpecs
+name|setPartSpec
 parameter_list|(
 name|HashMap
 argument_list|<

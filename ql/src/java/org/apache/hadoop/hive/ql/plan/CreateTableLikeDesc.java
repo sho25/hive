@@ -70,6 +70,10 @@ name|likeTableName
 decl_stmt|;
 specifier|public
 name|CreateTableLikeDesc
+parameter_list|()
+block|{   }
+specifier|public
+name|CreateTableLikeDesc
 parameter_list|(
 name|String
 name|tableName

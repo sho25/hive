@@ -75,6 +75,7 @@ name|resFile
 decl_stmt|;
 comment|/**    * table name for the result of show tables    */
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|table
@@ -83,6 +84,7 @@ literal|"showpartitions"
 decl_stmt|;
 comment|/**    * thrift ddl for the result of show tables    */
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|schema
@@ -107,6 +109,10 @@ return|return
 name|schema
 return|;
 block|}
+specifier|public
+name|ShowPartitionsDesc
+parameter_list|()
+block|{   }
 comment|/**    * @param tabName    *          Name of the table whose partitions need to be listed    * @param resFile    *          File to store the results in    */
 specifier|public
 name|ShowPartitionsDesc

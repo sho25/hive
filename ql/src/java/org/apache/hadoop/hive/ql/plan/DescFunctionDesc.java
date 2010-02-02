@@ -102,6 +102,7 @@ expr_stmt|;
 block|}
 comment|/**    * table name for the result of show tables    */
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|table
@@ -110,6 +111,7 @@ literal|"show"
 decl_stmt|;
 comment|/**    * thrift ddl for the result of show tables    */
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|schema
@@ -134,6 +136,10 @@ return|return
 name|schema
 return|;
 block|}
+specifier|public
+name|DescFunctionDesc
+parameter_list|()
+block|{   }
 comment|/**    * @param resFile    */
 specifier|public
 name|DescFunctionDesc

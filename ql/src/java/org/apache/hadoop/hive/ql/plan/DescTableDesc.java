@@ -69,6 +69,26 @@ name|DDLDesc
 implements|implements
 name|Serializable
 block|{
+specifier|public
+name|void
+name|setPartSpec
+parameter_list|(
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|)
+block|{
+name|this
+operator|.
+name|partSpec
+operator|=
+name|partSpec
+expr_stmt|;
+block|}
 specifier|private
 specifier|static
 specifier|final
@@ -96,6 +116,7 @@ name|isExt
 decl_stmt|;
 comment|/**    * table name for the result of describe table    */
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|table
@@ -104,6 +125,7 @@ literal|"describe"
 decl_stmt|;
 comment|/**    * thrift ddl for the result of describe table    */
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|schema
@@ -111,23 +133,9 @@ init|=
 literal|"col_name,data_type,comment#string:string:string"
 decl_stmt|;
 specifier|public
-name|String
-name|getTable
+name|DescTableDesc
 parameter_list|()
-block|{
-return|return
-name|table
-return|;
-block|}
-specifier|public
-name|String
-name|getSchema
-parameter_list|()
-block|{
-return|return
-name|schema
-return|;
-block|}
+block|{   }
 comment|/**    * @param isExt    * @param partSpec    * @param resFile    * @param tableName    */
 specifier|public
 name|DescTableDesc
@@ -174,6 +182,24 @@ name|tableName
 operator|=
 name|tableName
 expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getTable
+parameter_list|()
+block|{
+return|return
+name|table
+return|;
+block|}
+specifier|public
+name|String
+name|getSchema
+parameter_list|()
+block|{
+return|return
+name|schema
+return|;
 block|}
 comment|/**    * @return the isExt    */
 specifier|public

@@ -94,14 +94,14 @@ name|TableDesc
 name|tblDesc
 decl_stmt|;
 specifier|private
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
 name|partDir
 decl_stmt|;
 specifier|private
-name|List
+name|ArrayList
 argument_list|<
 name|PartitionDesc
 argument_list|>
@@ -225,13 +225,27 @@ name|this
 operator|.
 name|partDir
 operator|=
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|(
 name|partDir
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
 name|partDesc
 operator|=
+operator|new
+name|ArrayList
+argument_list|<
+name|PartitionDesc
+argument_list|>
+argument_list|(
 name|partDesc
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -330,7 +344,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the partDir    */
 specifier|public
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -488,7 +502,7 @@ specifier|public
 name|void
 name|setPartDir
 parameter_list|(
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -504,7 +518,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the partDesc    */
 specifier|public
-name|List
+name|ArrayList
 argument_list|<
 name|PartitionDesc
 argument_list|>
@@ -520,7 +534,7 @@ specifier|public
 name|void
 name|setPartDesc
 parameter_list|(
-name|List
+name|ArrayList
 argument_list|<
 name|PartitionDesc
 argument_list|>
