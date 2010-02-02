@@ -1515,7 +1515,7 @@ name|printInfo
 argument_list|(
 name|ExecDriver
 operator|.
-name|getJobEndMsg
+name|getJobStartMsg
 argument_list|(
 name|rj
 operator|.
