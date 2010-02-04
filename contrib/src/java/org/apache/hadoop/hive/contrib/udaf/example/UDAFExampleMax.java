@@ -13,9 +13,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|contrib
 operator|.
-name|udf
+name|udaf
+operator|.
+name|example
 package|;
 end_package
 
@@ -187,7 +189,7 @@ name|Description
 argument_list|(
 name|name
 operator|=
-literal|"max"
+literal|"example_max"
 argument_list|,
 name|value
 operator|=
@@ -195,7 +197,7 @@ literal|"_FUNC_(expr) - Returns the maximum value of expr"
 argument_list|)
 specifier|public
 class|class
-name|UDAFMax
+name|UDAFExampleMax
 extends|extends
 name|UDAF
 block|{
