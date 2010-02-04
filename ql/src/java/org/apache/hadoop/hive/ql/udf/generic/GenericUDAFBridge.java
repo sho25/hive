@@ -734,6 +734,17 @@ name|AggregationBuffer
 name|getNewAggregationBuffer
 parameter_list|()
 block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"udafEvaluator = "
+operator|+
+name|udafEvaluator
+argument_list|)
+expr_stmt|;
 return|return
 operator|new
 name|UDAFAgg
