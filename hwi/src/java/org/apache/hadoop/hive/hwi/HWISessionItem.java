@@ -1480,6 +1480,9 @@ name|run
 argument_list|(
 name|cmd
 argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1627,6 +1630,9 @@ name|run
 argument_list|(
 name|cmd_1
 argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;

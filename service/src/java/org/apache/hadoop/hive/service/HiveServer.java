@@ -227,6 +227,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|processors
+operator|.
+name|CommandProcessorResponse
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -523,7 +541,7 @@ name|Driver
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Executes a query.      *       * @param cmd      *          HiveQL query to execute      */
+comment|/**      * Executes a query.      *      * @param cmd      *          HiveQL query to execute      */
 specifier|public
 name|void
 name|execute
@@ -620,6 +638,11 @@ literal|0
 index|]
 argument_list|)
 decl_stmt|;
+name|CommandProcessorResponse
+name|response
+init|=
+literal|null
+decl_stmt|;
 if|if
 condition|(
 name|proc
@@ -638,18 +661,32 @@ name|isHiveQuery
 operator|=
 literal|true
 expr_stmt|;
-name|Driver
-operator|.
-name|DriverResponse
 name|response
-init|=
+operator|=
 name|driver
 operator|.
-name|runCommand
+name|run
 argument_list|(
 name|cmd
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+else|else
+block|{
+name|isHiveQuery
+operator|=
+literal|false
+expr_stmt|;
+name|response
+operator|=
+name|proc
+operator|.
+name|run
+argument_list|(
+name|cmd_1
+argument_list|)
+expr_stmt|;
+block|}
 name|ret
 operator|=
 name|response
@@ -671,23 +708,6 @@ operator|.
 name|getErrorMessage
 argument_list|()
 expr_stmt|;
-block|}
-else|else
-block|{
-name|isHiveQuery
-operator|=
-literal|false
-expr_stmt|;
-name|ret
-operator|=
-name|proc
-operator|.
-name|run
-argument_list|(
-name|cmd_1
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 block|}
 catch|catch
@@ -1118,7 +1138,7 @@ name|ex
 throw|;
 block|}
 block|}
-comment|/**      * Fetches the next row in a query result set.      *       * @return the next row in a query result set. null if there is no more row      *         to fetch.      */
+comment|/**      * Fetches the next row in a query result set.      *      * @return the next row in a query result set. null if there is no more row      *         to fetch.      */
 specifier|public
 name|String
 name|fetchOne
@@ -1215,7 +1235,7 @@ name|ex
 throw|;
 block|}
 block|}
-comment|/**      * Fetches numRows rows.      *       * @param numRows      *          Number of rows to fetch.      * @return A list of rows. The size of the list is numRows if there are at      *         least numRows rows available to return. The size is smaller than      *         numRows if there aren't enough rows. The list will be empty if      *         there is no more row to fetch or numRows == 0.      * @throws HiveServerException      *           Invalid value for numRows (numRows< 0)      */
+comment|/**      * Fetches numRows rows.      *      * @param numRows      *          Number of rows to fetch.      * @return A list of rows. The size of the list is numRows if there are at      *         least numRows rows available to return. The size is smaller than      *         numRows if there aren't enough rows. The list will be empty if      *         there is no more row to fetch or numRows == 0.      * @throws HiveServerException      *           Invalid value for numRows (numRows< 0)      */
 specifier|public
 name|List
 argument_list|<
@@ -1335,7 +1355,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**      * Fetches all the rows in a result set.      *       * @return All the rows in a result set of a query executed using execute      *         method.      *       *         TODO: Currently the server buffers all the rows before returning      *         them to the client. Decide whether the buffering should be done      *         in the client.      */
+comment|/**      * Fetches all the rows in a result set.      *      * @return All the rows in a result set of a query executed using execute      *         method.      *      *         TODO: Currently the server buffers all the rows before returning      *         them to the client. Decide whether the buffering should be done      *         in the client.      */
 specifier|public
 name|List
 argument_list|<

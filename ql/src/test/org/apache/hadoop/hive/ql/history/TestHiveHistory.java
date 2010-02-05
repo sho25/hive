@@ -806,6 +806,9 @@ name|run
 argument_list|(
 name|cmd
 argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
 decl_stmt|;
 if|if
 condition|(

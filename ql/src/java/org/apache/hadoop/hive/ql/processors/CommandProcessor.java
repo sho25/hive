@@ -30,7 +30,7 @@ name|init
 parameter_list|()
 function_decl|;
 specifier|public
-name|int
+name|CommandProcessorResponse
 name|run
 parameter_list|(
 name|String

@@ -142,7 +142,7 @@ name|init
 parameter_list|()
 block|{   }
 specifier|public
-name|int
+name|CommandProcessorResponse
 name|run
 parameter_list|(
 name|String
@@ -222,7 +222,11 @@ literal|"]<value> [<value>]*"
 argument_list|)
 expr_stmt|;
 return|return
+operator|new
+name|CommandProcessorResponse
+argument_list|(
 literal|1
+argument_list|)
 return|;
 block|}
 for|for
@@ -256,7 +260,11 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
+operator|new
+name|CommandProcessorResponse
+argument_list|(
 literal|0
+argument_list|)
 return|;
 block|}
 block|}
