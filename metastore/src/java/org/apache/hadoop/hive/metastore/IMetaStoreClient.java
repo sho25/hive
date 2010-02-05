@@ -432,6 +432,29 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * @param dbName    * @param tblName    * @param name - partition name i.e. 'ds=2010-02-03/ts=2010-02-03 18%3A16%3A01'    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
+specifier|public
+name|Partition
+name|getPartitionByName
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|UnknownTableException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * @param tbl_name    * @param db_name    * @param max_parts    * @return the list of partitions    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
