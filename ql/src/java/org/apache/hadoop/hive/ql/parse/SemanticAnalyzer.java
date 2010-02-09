@@ -12267,12 +12267,7 @@ name|AMBIGUOUS_COLUMN
 operator|.
 name|getMsg
 argument_list|(
-name|expr
-operator|.
-name|getChild
-argument_list|(
-literal|1
-argument_list|)
+name|colAlias
 argument_list|)
 argument_list|)
 throw|;
