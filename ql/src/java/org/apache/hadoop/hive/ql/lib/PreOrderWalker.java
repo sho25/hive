@@ -49,7 +49,7 @@ extends|extends
 name|DefaultGraphWalker
 block|{
 comment|/*    * Since the operator tree is a DAG, nodes with mutliple parents will be    * visited more than once. This can be made configurable.    */
-comment|/**    * Constructor    *     * @param disp    *          dispatcher to call for each op encountered    */
+comment|/**    * Constructor.    *     * @param disp    *          dispatcher to call for each op encountered    */
 specifier|public
 name|PreOrderWalker
 parameter_list|(
@@ -63,7 +63,7 @@ name|disp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * walk the current operator and its descendants    *     * @param nd    *          current operator in the graph    * @throws SemanticException    */
+comment|/**    * Walk the current operator and its descendants.    *     * @param nd    *          current operator in the graph    * @throws SemanticException    */
 annotation|@
 name|Override
 specifier|public

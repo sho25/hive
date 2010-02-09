@@ -13,6 +13,10 @@ name|hwi
 package|;
 end_package
 
+begin_comment
+comment|/**  * HWIException.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -36,7 +40,7 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
-comment|/** Specify an error String with the Exception */
+comment|/** Specify an error String with the Exception. */
 specifier|public
 name|HWIException
 parameter_list|(
@@ -50,7 +54,7 @@ name|arg0
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Wrap an Exception in HWIException */
+comment|/** Wrap an Exception in HWIException. */
 specifier|public
 name|HWIException
 parameter_list|(
@@ -64,7 +68,7 @@ name|arg0
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Specify an error String and wrap an Exception in HWIException */
+comment|/** Specify an error String and wrap an Exception in HWIException. */
 specifier|public
 name|HWIException
 parameter_list|(

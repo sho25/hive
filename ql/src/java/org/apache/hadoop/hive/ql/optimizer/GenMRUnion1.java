@@ -445,24 +445,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|FileSinkDesc
 import|;
 end_import
@@ -517,12 +499,30 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|PlanUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|TableDesc
 import|;
 end_import
 
 begin_comment
-comment|/**  * Processor for the rule - TableScan followed by Union  */
+comment|/**  * Processor for the rule - TableScan followed by Union.  */
 end_comment
 
 begin_class

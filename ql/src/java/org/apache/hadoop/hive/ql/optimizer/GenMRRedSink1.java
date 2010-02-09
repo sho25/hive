@@ -224,7 +224,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Processor for the rule - table scan followed by reduce sink  */
+comment|/**  * Processor for the rule - table scan followed by reduce sink.  */
 end_comment
 
 begin_class
@@ -238,7 +238,7 @@ specifier|public
 name|GenMRRedSink1
 parameter_list|()
 block|{   }
-comment|/**    * Reduce Scan encountered    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * Reduce Scan encountered.    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -479,11 +479,10 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// This will happen in case of joins. The current plan can be thrown away
-comment|// after being merged with the
-comment|// original plan
 else|else
 block|{
+comment|// This will happen in case of joins. The current plan can be thrown away
+comment|// after being merged with the original plan
 name|GenMapRedUtils
 operator|.
 name|joinPlan

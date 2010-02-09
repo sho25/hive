@@ -531,24 +531,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|ExprNodeColumnDesc
 import|;
 end_import
@@ -693,6 +675,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|PlanUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|ReduceSinkDesc
 import|;
 end_import
@@ -772,7 +772,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Processor for the rule - table scan followed by reduce sink  */
+comment|/**  * Processor for the rule - table scan followed by reduce sink.  */
 end_comment
 
 begin_class
@@ -786,7 +786,7 @@ specifier|public
 name|GenMRFileSink1
 parameter_list|()
 block|{   }
-comment|/**    * File Sink Operator encountered    *     * @param nd    *          the file sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * File Sink Operator encountered.    *     * @param nd    *          the file sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process

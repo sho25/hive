@@ -76,7 +76,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryObject for double which takes eight bytes  */
+comment|/**  * LazyBinaryObject for double which takes eight bytes.  */
 end_comment
 
 begin_class

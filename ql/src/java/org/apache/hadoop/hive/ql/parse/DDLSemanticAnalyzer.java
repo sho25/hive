@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -269,24 +259,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Task
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|TaskFactory
 import|;
 end_import
@@ -341,43 +313,25 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|DDLWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|MsckDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|AlterTableDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|DDLWork
 import|;
 end_import
 
@@ -450,6 +404,24 @@ operator|.
 name|plan
 operator|.
 name|FetchWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|MsckDesc
 import|;
 end_import
 
@@ -559,7 +531,7 @@ name|plan
 operator|.
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 import|;
 end_import
 
@@ -610,6 +582,10 @@ operator|.
 name|TextInputFormat
 import|;
 end_import
+
+begin_comment
+comment|/**  * DDLSemanticAnalyzer.  *  */
+end_comment
 
 begin_class
 specifier|public
@@ -1184,7 +1160,7 @@ name|analyzeAlterTableModifyCols
 argument_list|(
 name|ast
 argument_list|,
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDCOLS
 argument_list|)
@@ -1210,7 +1186,7 @@ name|analyzeAlterTableModifyCols
 argument_list|(
 name|ast
 argument_list|,
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|REPLACECOLS
 argument_list|)
@@ -1564,7 +1540,7 @@ init|=
 operator|new
 name|AlterTableDesc
 argument_list|(
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDPROPS
 argument_list|)
@@ -1668,7 +1644,7 @@ init|=
 operator|new
 name|AlterTableDesc
 argument_list|(
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDSERDEPROPS
 argument_list|)
@@ -1760,7 +1736,7 @@ init|=
 operator|new
 name|AlterTableDesc
 argument_list|(
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDSERDE
 argument_list|)
@@ -2455,7 +2431,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a FetchTask for a given table and thrift ddl schema    *     * @param tablename    *          tablename    * @param schema    *          thrift ddl    */
+comment|/**    * Create a FetchTask for a given table and thrift ddl schema.    *     * @param tablename    *          tablename    * @param schema    *          thrift ddl    */
 specifier|private
 name|FetchTask
 name|createFetchTask
@@ -3843,7 +3819,7 @@ parameter_list|(
 name|ASTNode
 name|ast
 parameter_list|,
-name|alterTableTypes
+name|AlterTableTypes
 name|alterType
 parameter_list|)
 throws|throws
@@ -4028,7 +4004,6 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
-empty_stmt|;
 comment|// partition name to value
 name|List
 argument_list|<

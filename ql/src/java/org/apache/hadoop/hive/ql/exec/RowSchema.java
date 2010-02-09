@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * RowSchema Implementation  */
+comment|/**  * RowSchema Implementation.  */
 end_comment
 
 begin_class

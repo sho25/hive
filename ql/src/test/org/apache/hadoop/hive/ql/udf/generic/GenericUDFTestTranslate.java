@@ -202,7 +202,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Mimics oracle's function translate(str1, str2, str3)  */
+comment|/**  * Mimics oracle's function translate(str1, str2, str3).  */
 end_comment
 
 begin_class

@@ -43,6 +43,10 @@ name|Path
 import|;
 end_import
 
+begin_comment
+comment|/**  * ShowPartitionsDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
@@ -73,7 +77,7 @@ decl_stmt|;
 name|Path
 name|resFile
 decl_stmt|;
-comment|/**    * table name for the result of show tables    */
+comment|/**    * table name for the result of show tables.    */
 specifier|private
 specifier|static
 specifier|final
@@ -82,7 +86,7 @@ name|table
 init|=
 literal|"showpartitions"
 decl_stmt|;
-comment|/**    * thrift ddl for the result of show tables    */
+comment|/**    * thrift ddl for the result of show tables.    */
 specifier|private
 specifier|static
 specifier|final
@@ -113,7 +117,7 @@ specifier|public
 name|ShowPartitionsDesc
 parameter_list|()
 block|{   }
-comment|/**    * @param tabName    *          Name of the table whose partitions need to be listed    * @param resFile    *          File to store the results in    */
+comment|/**    * @param tabName    *          Name of the table whose partitions need to be listed.    * @param resFile    *          File to store the results in    */
 specifier|public
 name|ShowPartitionsDesc
 parameter_list|(
@@ -137,7 +141,7 @@ operator|=
 name|resFile
 expr_stmt|;
 block|}
-comment|/**    * @return the name of the table    */
+comment|/**    * @return the name of the table.    */
 annotation|@
 name|Explain
 argument_list|(

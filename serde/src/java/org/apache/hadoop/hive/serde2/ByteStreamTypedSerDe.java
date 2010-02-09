@@ -57,6 +57,10 @@ name|Writable
 import|;
 end_import
 
+begin_comment
+comment|/**  * ByteStreamTypedSerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

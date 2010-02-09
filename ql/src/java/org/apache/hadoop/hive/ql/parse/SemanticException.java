@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Exception from SemanticAnalyzer  */
+comment|/**  * Exception from SemanticAnalyzer.  */
 end_comment
 
 begin_class

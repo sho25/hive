@@ -155,6 +155,10 @@ name|TType
 import|;
 end_import
 
+begin_comment
+comment|/**  * DynamicSerDeTypeSet.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -163,9 +167,9 @@ extends|extends
 name|DynamicSerDeTypeBase
 block|{
 comment|// production is: set<FieldType()>
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|int
 name|FD_TYPE
 init|=

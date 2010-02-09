@@ -293,7 +293,7 @@ block|,
 name|KILL_QUERY
 block|}
 empty_stmt|;
-comment|/** The Web Interface sessionName this is used to identify the session */
+comment|/** The Web Interface sessionName this is used to identify the session. */
 specifier|private
 specifier|final
 name|String
@@ -310,17 +310,17 @@ specifier|private
 name|CliSessionState
 name|ss
 decl_stmt|;
-comment|/** Standard out from the session will be written to this local file */
+comment|/** Standard out from the session will be written to this local file. */
 specifier|private
 name|String
 name|resultFile
 decl_stmt|;
-comment|/** Standard error from the session will be written to this local file */
+comment|/** Standard error from the session will be written to this local file. */
 specifier|private
 name|String
 name|errorFile
 decl_stmt|;
-comment|/**    * The results from the Driver. This is used for storing the most result    * results from the driver in memory    */
+comment|/**    * The results from the Driver. This is used for storing the most result    * results from the driver in memory.    */
 specifier|private
 name|ArrayList
 argument_list|<
@@ -331,12 +331,12 @@ argument_list|>
 argument_list|>
 name|resultBucket
 decl_stmt|;
-comment|/** Limits the resultBucket to be no greater then this size */
+comment|/** Limits the resultBucket to be no greater then this size. */
 specifier|private
 name|int
 name|resultBucketMaxSize
 decl_stmt|;
-comment|/** List of queries that this item should/has operated on */
+comment|/** List of queries that this item should/has operated on. */
 specifier|private
 name|List
 argument_list|<
@@ -344,7 +344,7 @@ name|String
 argument_list|>
 name|queries
 decl_stmt|;
-comment|/** status code results of queries */
+comment|/** status code results of queries. */
 specifier|private
 name|List
 argument_list|<
@@ -352,12 +352,12 @@ name|Integer
 argument_list|>
 name|queryRet
 decl_stmt|;
-comment|/** Reference to the configuration */
+comment|/** Reference to the configuration. */
 specifier|private
 name|HiveConf
 name|conf
 decl_stmt|;
-comment|/** User privileges */
+comment|/** User privileges. */
 specifier|private
 name|HWIAuth
 name|auth
@@ -366,7 +366,7 @@ specifier|public
 name|Thread
 name|runnable
 decl_stmt|;
-comment|/**    * Threading SessionState issues require us to capture a reference to the hive    * history file and store it    */
+comment|/**    * Threading SessionState issues require us to capture a reference to the hive    * history file and store it.    */
 specifier|private
 name|String
 name|historyFile
@@ -629,7 +629,7 @@ expr_stmt|;
 comment|/*      * HiveHistoryFileName will not be accessible outside this thread. We must      * capture this now.      */
 name|historyFile
 operator|=
-name|ss
+name|SessionState
 operator|.
 name|get
 argument_list|()
@@ -894,7 +894,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Helper function to get configuration variables    *     * @param wanted    *          a ConfVar    * @return Value of the configuration variable.    */
+comment|/**    * Helper function to get configuration variables.    *     * @param wanted    *          a ConfVar    * @return Value of the configuration variable.    */
 specifier|public
 name|String
 name|getHiveConfVar
@@ -1759,7 +1759,7 @@ name|silent
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * This is a chained call to SessionState.getIsSilent()    */
+comment|/**    * This is a chained call to SessionState.getIsSilent().    */
 specifier|public
 name|boolean
 name|getSSIsSilent
@@ -1789,7 +1789,7 @@ name|getIsSilent
 argument_list|()
 return|;
 block|}
-comment|/** to support sorting/Set */
+comment|/** to support sorting/Set. */
 specifier|public
 name|int
 name|compareTo
@@ -1860,7 +1860,7 @@ return|return
 name|hv
 return|;
 block|}
-comment|/**    * Uses the sessionName property to compare to sessions    *     * @return true if sessionNames are equal false otherwise    */
+comment|/**    * Uses the sessionName property to compare to sessions.    *     * @return true if sessionNames are equal false otherwise    */
 annotation|@
 name|Override
 specifier|public
@@ -1953,7 +1953,7 @@ operator|=
 name|resultFile
 expr_stmt|;
 block|}
-comment|/**    * The session name is an identifier to recognize the session    *     * @return the session's name    */
+comment|/**    * The session name is an identifier to recognize the session.    *     * @return the session's name    */
 specifier|public
 name|String
 name|getSessionName
@@ -1973,7 +1973,7 @@ return|return
 name|status
 return|;
 block|}
-comment|/**    * Currently unused    *     * @return a String with the full path to the error file.    */
+comment|/**    * Currently unused.    *     * @return a String with the full path to the error file.    */
 specifier|public
 name|String
 name|getErrorFile
@@ -1983,7 +1983,7 @@ return|return
 name|errorFile
 return|;
 block|}
-comment|/**    * Currently unused    *     * @param errorFile    *          the full path to the file for results.    */
+comment|/**    * Currently unused.    *     * @param errorFile    *          the full path to the file for results.    */
 specifier|public
 name|void
 name|setErrorFile
@@ -2025,7 +2025,7 @@ operator|=
 name|auth
 expr_stmt|;
 block|}
-comment|/** returns an unmodifiable list of queries */
+comment|/** Returns an unmodifiable list of queries. */
 specifier|public
 name|List
 argument_list|<
@@ -2047,7 +2047,7 @@ name|queries
 argument_list|)
 return|;
 block|}
-comment|/**    * adds a new query to the execution list    *     * @param query    *          query to be added to the list    */
+comment|/**    * Adds a new query to the execution list.    *     * @param query    *          query to be added to the list    */
 specifier|public
 name|void
 name|addQuery
@@ -2069,7 +2069,7 @@ name|query
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * removes a query from the execution list    *     * @param item    *          the 0 based index of the item to be removed    */
+comment|/**    * Removes a query from the execution list.    *     * @param item    *          the 0 based index of the item to be removed    */
 specifier|public
 name|void
 name|removeQuery
@@ -2107,7 +2107,7 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
-comment|/** returns the value for resultBucketMaxSize */
+comment|/** returns the value for resultBucketMaxSize. */
 specifier|public
 name|int
 name|getResultBucketMaxSize
@@ -2117,7 +2117,7 @@ return|return
 name|resultBucketMaxSize
 return|;
 block|}
-comment|/**    * sets the value for resultBucketMaxSize    *     * @param size    *          the new size    */
+comment|/**    * sets the value for resultBucketMaxSize.    *     * @param size    *          the new size    */
 specifier|public
 name|void
 name|setResultBucketMaxSize
@@ -2131,7 +2131,7 @@ operator|=
 name|size
 expr_stmt|;
 block|}
-comment|/** gets the value for resultBucket */
+comment|/** gets the value for resultBucket. */
 specifier|public
 name|ArrayList
 argument_list|<
@@ -2147,7 +2147,7 @@ return|return
 name|resultBucket
 return|;
 block|}
-comment|/**    * The HWISessionItem stores the result of each query in an array    *     * @return unmodifiable list of return codes    */
+comment|/**    * The HWISessionItem stores the result of each query in an array.    *     * @return unmodifiable list of return codes    */
 specifier|public
 name|List
 argument_list|<

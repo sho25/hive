@@ -1295,7 +1295,7 @@ operator|=
 name|listMapJoinOpsNoReducer
 expr_stmt|;
 block|}
-comment|/**    * Sets the hasNonPartCols flag    *     * @param val    */
+comment|/**    * Sets the hasNonPartCols flag.    *     * @param val    */
 specifier|public
 name|void
 name|setHasNonPartCols
@@ -1309,7 +1309,7 @@ operator|=
 name|val
 expr_stmt|;
 block|}
-comment|/**    * Gets the value of the hasNonPartCols flag    */
+comment|/**    * Gets the value of the hasNonPartCols flag.    */
 specifier|public
 name|boolean
 name|getHasNonPartCols

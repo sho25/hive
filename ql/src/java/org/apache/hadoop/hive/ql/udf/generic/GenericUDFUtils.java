@@ -95,34 +95,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|hive
@@ -417,26 +389,10 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|GenericUDFUtils
 block|{
-specifier|private
-specifier|static
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|GenericUDFUtils
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-decl_stmt|;
 comment|/**    * Checks if b is the first byte of a UTF-8 character.    *     */
 specifier|public
 specifier|static
@@ -1895,6 +1851,12 @@ operator|-
 literal|1
 return|;
 comment|// not found
+block|}
+specifier|private
+name|GenericUDFUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

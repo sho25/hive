@@ -160,7 +160,7 @@ operator|=
 name|collector
 expr_stmt|;
 block|}
-comment|/**    * Passes an output row to the collector    *     * @param o    * @throws HiveException    */
+comment|/**    * Passes an output row to the collector.    *     * @param o    * @throws HiveException    */
 specifier|protected
 specifier|final
 name|void

@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_import
-import|import
+import|import static
 name|org
 operator|.
 name|apache
@@ -30,6 +30,8 @@ operator|.
 name|lang
 operator|.
 name|StringUtils
+operator|.
+name|isBlank
 import|;
 end_import
 
@@ -67,11 +69,22 @@ name|SessionState
 import|;
 end_import
 
+begin_comment
+comment|/**  * CommandProcessorFactory.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|CommandProcessorFactory
 block|{
+specifier|private
+name|CommandProcessorFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 specifier|public
 specifier|static
 name|CommandProcessor
@@ -91,11 +104,11 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|cmdl
+literal|"set"
 operator|.
 name|equals
 argument_list|(
-literal|"set"
+name|cmdl
 argument_list|)
 condition|)
 block|{
@@ -108,11 +121,11 @@ block|}
 elseif|else
 if|if
 condition|(
-name|cmdl
+literal|"dfs"
 operator|.
 name|equals
 argument_list|(
-literal|"dfs"
+name|cmdl
 argument_list|)
 condition|)
 block|{
@@ -138,11 +151,11 @@ block|}
 elseif|else
 if|if
 condition|(
-name|cmdl
+literal|"add"
 operator|.
 name|equals
 argument_list|(
-literal|"add"
+name|cmdl
 argument_list|)
 condition|)
 block|{
@@ -155,11 +168,11 @@ block|}
 elseif|else
 if|if
 condition|(
-name|cmdl
+literal|"delete"
 operator|.
 name|equals
 argument_list|(
-literal|"delete"
+name|cmdl
 argument_list|)
 condition|)
 block|{
@@ -173,8 +186,6 @@ elseif|else
 if|if
 condition|(
 operator|!
-name|StringUtils
-operator|.
 name|isBlank
 argument_list|(
 name|cmd

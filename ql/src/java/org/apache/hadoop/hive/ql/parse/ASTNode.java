@@ -94,7 +94,7 @@ specifier|public
 name|ASTNode
 parameter_list|()
 block|{   }
-comment|/**    * Constructor    *     * @param t    *          Token for the CommonTree Node    */
+comment|/**    * Constructor.    *     * @param t    *          Token for the CommonTree Node    */
 specifier|public
 name|ASTNode
 parameter_list|(

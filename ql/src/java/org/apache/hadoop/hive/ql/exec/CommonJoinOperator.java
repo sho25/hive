@@ -487,9 +487,9 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|protected
 specifier|static
 specifier|final
-specifier|protected
 name|Log
 name|LOG
 init|=
@@ -505,6 +505,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|/**    * IntermediateObject.    *    */
 specifier|public
 specifier|static
 class|class
@@ -613,15 +614,15 @@ index|]
 return|;
 block|}
 block|}
-specifier|transient
 specifier|protected
+specifier|transient
 name|int
 name|numAliases
 decl_stmt|;
 comment|// number of aliases
 comment|/**    * The expressions for join outputs.    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|Map
 argument_list|<
 name|Byte
@@ -634,8 +635,8 @@ argument_list|>
 name|joinValues
 decl_stmt|;
 comment|/**    * The ObjectInspectors for the join inputs.    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|Map
 argument_list|<
 name|Byte
@@ -648,8 +649,8 @@ argument_list|>
 name|joinValuesObjectInspectors
 decl_stmt|;
 comment|/**    * The standard ObjectInspectors for the join inputs.    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|Map
 argument_list|<
 name|Byte
@@ -661,28 +662,28 @@ argument_list|>
 argument_list|>
 name|joinValuesStandardObjectInspectors
 decl_stmt|;
-specifier|transient
-specifier|static
 specifier|protected
+specifier|static
+specifier|transient
 name|Byte
 index|[]
 name|order
 decl_stmt|;
 comment|// order in which the results should
 comment|// be output
-specifier|transient
 specifier|protected
+specifier|transient
 name|JoinCondDesc
 index|[]
 name|condn
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|boolean
 name|noOuterJoin
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|dummyObj
@@ -690,8 +691,8 @@ decl_stmt|;
 comment|// for outer joins, contains the
 comment|// potential nulls for the concerned
 comment|// aliases
-specifier|transient
 specifier|protected
+specifier|transient
 name|RowContainer
 argument_list|<
 name|ArrayList
@@ -707,8 +708,8 @@ comment|// rows
 comment|// for
 comment|// each
 comment|// table
-specifier|transient
 specifier|protected
+specifier|transient
 name|int
 name|totalSz
 decl_stmt|;
@@ -716,8 +717,8 @@ comment|// total size of the composite object
 comment|// keys are the column names. basically this maps the position of the column
 comment|// in
 comment|// the output of the CommonJoinOperator to the input columnInfo.
-specifier|transient
 specifier|private
+specifier|transient
 name|Map
 argument_list|<
 name|Integer
@@ -734,8 +735,8 @@ name|LazyBinarySerDe
 index|[]
 name|spillTableSerDe
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Map
 argument_list|<
 name|Byte
@@ -2391,8 +2392,8 @@ operator|*
 name|sz
 return|;
 block|}
-specifier|transient
 specifier|protected
+specifier|transient
 name|Byte
 name|alias
 decl_stmt|;
@@ -4953,7 +4954,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * All done    *     */
+comment|/**    * All done.    *     */
 annotation|@
 name|Override
 specifier|public

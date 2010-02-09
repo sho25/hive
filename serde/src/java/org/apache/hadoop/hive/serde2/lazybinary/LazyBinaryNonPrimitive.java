@@ -73,6 +73,10 @@ name|ObjectInspector
 import|;
 end_import
 
+begin_comment
+comment|/**  * LazyBinaryNonPrimitive.  *  * @param<OI>  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

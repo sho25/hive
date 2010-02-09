@@ -520,7 +520,7 @@ name|start
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Shut down the running HWI Server    *     * @throws Exception    *           Running Thread.stop() can and probably will throw this    */
+comment|/**    * Shut down the running HWI Server.    *     * @throws Exception    *           Running Thread.stop() can and probably will throw this    */
 specifier|public
 name|void
 name|stop

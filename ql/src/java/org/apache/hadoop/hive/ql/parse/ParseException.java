@@ -29,6 +29,10 @@ name|ArrayList
 import|;
 end_import
 
+begin_comment
+comment|/**  * ParseException.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

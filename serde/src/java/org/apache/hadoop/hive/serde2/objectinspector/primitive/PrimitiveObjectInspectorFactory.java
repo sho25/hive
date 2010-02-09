@@ -111,12 +111,13 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|PrimitiveObjectInspectorFactory
 block|{
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|JavaBooleanObjectInspector
 name|javaBooleanObjectInspector
 init|=
@@ -125,8 +126,8 @@ name|JavaBooleanObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|JavaByteObjectInspector
 name|javaByteObjectInspector
 init|=
@@ -135,8 +136,8 @@ name|JavaByteObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|JavaShortObjectInspector
 name|javaShortObjectInspector
 init|=
@@ -145,8 +146,8 @@ name|JavaShortObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|JavaIntObjectInspector
 name|javaIntObjectInspector
 init|=
@@ -155,8 +156,8 @@ name|JavaIntObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|JavaLongObjectInspector
 name|javaLongObjectInspector
 init|=
@@ -165,8 +166,8 @@ name|JavaLongObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|JavaFloatObjectInspector
 name|javaFloatObjectInspector
 init|=
@@ -175,8 +176,8 @@ name|JavaFloatObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|JavaDoubleObjectInspector
 name|javaDoubleObjectInspector
 init|=
@@ -185,8 +186,8 @@ name|JavaDoubleObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|JavaStringObjectInspector
 name|javaStringObjectInspector
 init|=
@@ -195,8 +196,8 @@ name|JavaStringObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|JavaVoidObjectInspector
 name|javaVoidObjectInspector
 init|=
@@ -205,8 +206,8 @@ name|JavaVoidObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|WritableBooleanObjectInspector
 name|writableBooleanObjectInspector
 init|=
@@ -215,8 +216,8 @@ name|WritableBooleanObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|WritableByteObjectInspector
 name|writableByteObjectInspector
 init|=
@@ -225,8 +226,8 @@ name|WritableByteObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|WritableShortObjectInspector
 name|writableShortObjectInspector
 init|=
@@ -235,8 +236,8 @@ name|WritableShortObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|WritableIntObjectInspector
 name|writableIntObjectInspector
 init|=
@@ -245,8 +246,8 @@ name|WritableIntObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|WritableLongObjectInspector
 name|writableLongObjectInspector
 init|=
@@ -255,8 +256,8 @@ name|WritableLongObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|WritableFloatObjectInspector
 name|writableFloatObjectInspector
 init|=
@@ -265,8 +266,8 @@ name|WritableFloatObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|WritableDoubleObjectInspector
 name|writableDoubleObjectInspector
 init|=
@@ -275,8 +276,8 @@ name|WritableDoubleObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|WritableStringObjectInspector
 name|writableStringObjectInspector
 init|=
@@ -285,8 +286,8 @@ name|WritableStringObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|WritableVoidObjectInspector
 name|writableVoidObjectInspector
 init|=
@@ -727,6 +728,12 @@ name|primitiveCategory
 argument_list|)
 return|;
 block|}
+block|}
+specifier|private
+name|PrimitiveObjectInspectorFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

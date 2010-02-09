@@ -50,6 +50,7 @@ name|UnionStructObjectInspector
 extends|extends
 name|StructObjectInspector
 block|{
+comment|/**    * MyField.    *    */
 specifier|public
 specifier|static
 class|class

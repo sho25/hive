@@ -75,6 +75,10 @@ name|Target
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDFType.  *  */
+end_comment
+
 begin_annotation_defn
 annotation|@
 name|Target

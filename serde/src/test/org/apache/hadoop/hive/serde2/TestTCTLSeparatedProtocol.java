@@ -155,6 +155,10 @@ name|TMemoryBuffer
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestTCTLSeparatedProtocol.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -897,8 +901,8 @@ name|flush
 argument_list|()
 expr_stmt|;
 name|byte
-name|b
 index|[]
+name|b
 init|=
 operator|new
 name|byte

@@ -320,7 +320,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Reduce Sink Operator sends output to the reduce stage  **/
+comment|/**  * Reduce Sink Operator sends output to the reduce stage.  **/
 end_comment
 
 begin_class
@@ -344,22 +344,22 @@ init|=
 literal|1L
 decl_stmt|;
 comment|/**    * The evaluators for the key columns. Key columns decide the sort order on    * the reducer side. Key columns are passed to the reducer in the "key".    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|ExprNodeEvaluator
 index|[]
 name|keyEval
 decl_stmt|;
 comment|/**    * The evaluators for the value columns. Value columns are passed to reducer    * in the "value".    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|ExprNodeEvaluator
 index|[]
 name|valueEval
 decl_stmt|;
 comment|/**    * The evaluators for the partition columns (CLUSTER BY or DISTRIBUTE BY in    * Hive language). Partition columns decide the reducer that the current row    * goes to. Partition columns are not passed to reducer.    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|ExprNodeEvaluator
 index|[]
 name|partitionEval

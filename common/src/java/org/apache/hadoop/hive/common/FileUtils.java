@@ -80,11 +80,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Collection of file manipulation utilities common across Hive  */
+comment|/**  * Collection of file manipulation utilities common across Hive.  */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|FileUtils
 block|{
@@ -247,6 +248,12 @@ name|getPath
 argument_list|()
 argument_list|)
 return|;
+block|}
+specifier|private
+name|FileUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

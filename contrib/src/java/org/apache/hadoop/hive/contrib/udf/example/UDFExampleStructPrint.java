@@ -49,6 +49,10 @@ name|UDF
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDFExampleStructPrint.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

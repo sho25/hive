@@ -143,24 +143,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|FunctionWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|CreateFunctionDesc
 import|;
 end_import
@@ -180,6 +162,24 @@ operator|.
 name|plan
 operator|.
 name|DropFunctionDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|FunctionWork
 import|;
 end_import
 
@@ -290,6 +290,10 @@ operator|.
 name|StringUtils
 import|;
 end_import
+
+begin_comment
+comment|/**  * FunctionTask.  *  */
+end_comment
 
 begin_class
 specifier|public

@@ -249,8 +249,13 @@ name|WritableStringObjectInspector
 import|;
 end_import
 
+begin_comment
+comment|/**  * ObjectInspectorConverters.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|ObjectInspectorConverters
 block|{
@@ -260,7 +265,6 @@ specifier|static
 interface|interface
 name|Converter
 block|{
-specifier|public
 name|Object
 name|convert
 parameter_list|(
@@ -269,6 +273,7 @@ name|input
 parameter_list|)
 function_decl|;
 block|}
+comment|/**    * IdentityConverter.    *    */
 specifier|public
 specifier|static
 class|class
@@ -551,7 +556,6 @@ block|}
 case|case
 name|STRUCT
 case|:
-block|{
 return|return
 operator|new
 name|StructConverter
@@ -567,11 +571,9 @@ operator|)
 name|outputOI
 argument_list|)
 return|;
-block|}
 case|case
 name|LIST
 case|:
-block|{
 return|return
 operator|new
 name|ListConverter
@@ -587,11 +589,9 @@ operator|)
 name|outputOI
 argument_list|)
 return|;
-block|}
 case|case
 name|MAP
 case|:
-block|{
 return|return
 operator|new
 name|MapConverter
@@ -607,7 +607,6 @@ operator|)
 name|outputOI
 argument_list|)
 return|;
-block|}
 default|default:
 throw|throw
 operator|new
@@ -1396,6 +1395,12 @@ return|return
 name|output
 return|;
 block|}
+block|}
+specifier|private
+name|ObjectInspectorConverters
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

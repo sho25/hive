@@ -196,7 +196,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Processor for the rule - reduce sink followed by reduce sink  */
+comment|/**  * Processor for the rule - reduce sink followed by reduce sink.  */
 end_comment
 
 begin_class
@@ -210,7 +210,7 @@ specifier|public
 name|GenMRRedSink2
 parameter_list|()
 block|{   }
-comment|/**    * Reduce Scan encountered    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * Reduce Scan encountered.    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process

@@ -227,6 +227,10 @@ name|TTransport
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestHiveServer.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -239,16 +243,16 @@ name|HiveInterface
 name|client
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|host
 init|=
 literal|"localhost"
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|port
 init|=
@@ -1065,7 +1069,7 @@ name|tableName
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test metastore call    */
+comment|/**    * Test metastore call.    */
 specifier|public
 name|void
 name|testMetastore
@@ -1139,7 +1143,7 @@ name|tableName
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test cluster status retrieval    */
+comment|/**    * Test cluster status retrieval.    */
 specifier|public
 name|void
 name|testGetClusterStatus

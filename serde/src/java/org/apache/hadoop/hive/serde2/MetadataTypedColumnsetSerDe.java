@@ -279,6 +279,10 @@ name|Writable
 import|;
 end_import
 
+begin_comment
+comment|/**  * MetadataTypedColumnsetSerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -362,9 +366,9 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|final
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|DefaultSeparator
 init|=
@@ -374,9 +378,9 @@ specifier|private
 name|String
 name|separator
 decl_stmt|;
-specifier|final
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|defaultNullString
 init|=
@@ -468,8 +472,8 @@ block|{
 try|try
 block|{
 name|byte
-name|b
 index|[]
+name|b
 init|=
 operator|new
 name|byte
@@ -529,7 +533,7 @@ throws|throws
 name|SerDeException
 block|{
 name|String
-name|alt_sep
+name|altSep
 init|=
 name|tbl
 operator|.
@@ -544,13 +548,13 @@ name|separator
 operator|=
 name|getByteValue
 argument_list|(
-name|alt_sep
+name|altSep
 argument_list|,
 name|DefaultSeparator
 argument_list|)
 expr_stmt|;
 name|String
-name|alt_null
+name|altNull
 init|=
 name|tbl
 operator|.
@@ -565,7 +569,7 @@ name|nullString
 operator|=
 name|getByteValue
 argument_list|(
-name|alt_null
+name|altNull
 argument_list|,
 name|defaultNullString
 argument_list|)

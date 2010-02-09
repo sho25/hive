@@ -292,7 +292,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An {@link org.apache.hadoop.mapred.InputFormat} for Plain files with  * {@link Deserializer} records  */
+comment|/**  * An {@link org.apache.hadoop.mapred.InputFormat} for Plain files with  * {@link Deserializer} records.  */
 end_comment
 
 begin_class
@@ -316,8 +316,8 @@ argument_list|>
 argument_list|>
 block|{
 comment|/**    * A work-around until HADOOP-1230 is fixed.    *     * Allows boolean next(k,v) to be called by reference but still allow the    * deserializer to create a new object (i.e., row) on every call to next.    */
-specifier|static
 specifier|public
+specifier|static
 class|class
 name|RowContainer
 parameter_list|<
@@ -329,8 +329,8 @@ name|row
 decl_stmt|;
 block|}
 comment|/**    * An implementation of SerializationContext is responsible for looking up the    * Serialization implementation for the given RecordReader. Potentially based    * on the Configuration or some other mechanism    *     * The SerializationFactory does not give this functionality since: 1.    * Requires Serialization implementations to be specified in the Configuration    * a-priori (although same as setting a SerializationContext) 2. Does not    * lookup the actual subclass being deserialized. e.g., for Serializable does    * not have a way of configuring the actual Java class being    * serialized/deserialized.    */
-specifier|static
 specifier|public
+specifier|static
 interface|interface
 name|SerializationContext
 parameter_list|<
@@ -339,8 +339,7 @@ parameter_list|>
 extends|extends
 name|Configurable
 block|{
-comment|/**      * An {@link Serialization} object for objects of type S      *       * @return a serialization object for this context      */
-specifier|public
+comment|/**      * An {@link Serialization} object for objects of type S.      *       * @return a serialization object for this context      */
 name|Serialization
 argument_list|<
 name|S
@@ -350,8 +349,7 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Produces the specific class to deserialize      */
-specifier|public
+comment|/**      * Produces the specific class to deserialize.      */
 name|Class
 argument_list|<
 name|?
@@ -364,9 +362,9 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-comment|/**    * The JobConf keys for the Serialization implementation    */
-specifier|static
+comment|/**    * The JobConf keys for the Serialization implementation.    */
 specifier|public
+specifier|static
 specifier|final
 name|String
 name|SerializationImplKey
@@ -374,8 +372,8 @@ init|=
 literal|"mapred.input.serialization.implKey"
 decl_stmt|;
 comment|/**    * An implementation of {@link SerializationContext} that reads the    * Serialization class and specific subclass to be deserialized from the    * JobConf.    *     */
-specifier|static
 specifier|public
+specifier|static
 class|class
 name|SerializationContextFromConf
 parameter_list|<
@@ -390,8 +388,8 @@ name|S
 argument_list|>
 block|{
 comment|/**      * The JobConf keys for the Class that is being deserialized.      */
-specifier|static
 specifier|public
+specifier|static
 specifier|final
 name|String
 name|SerializationSubclassKey
@@ -427,7 +425,7 @@ return|return
 name|conf
 return|;
 block|}
-comment|/**      * @return the actual class being deserialized      * @exception does      *              not currently throw IOException      */
+comment|/**      * @return the actual class being deserialized.      * @exception does      *              not currently throw IOException      */
 specifier|public
 name|Class
 argument_list|<
@@ -564,13 +562,13 @@ specifier|final
 name|FSDataInputStream
 name|fsin
 decl_stmt|;
-comment|/**      * For calculating progress      */
+comment|/**      * For calculating progress.      */
 specifier|private
 specifier|final
 name|long
 name|end
 decl_stmt|;
-comment|/**      * The constructed deserializer      */
+comment|/**      * The constructed deserializer.      */
 specifier|private
 specifier|final
 name|Deserializer
@@ -579,18 +577,18 @@ name|R
 argument_list|>
 name|deserializer
 decl_stmt|;
-comment|/**      * Once EOF is reached, stop calling the deserializer      */
+comment|/**      * Once EOF is reached, stop calling the deserializer.      */
 specifier|private
 name|boolean
 name|isEOF
 decl_stmt|;
-comment|/**      * The JobConf which contains information needed to instantiate the correct      * Deserializer      */
+comment|/**      * The JobConf which contains information needed to instantiate the correct      * Deserializer.      */
 specifier|private
 specifier|final
 name|Configuration
 name|conf
 decl_stmt|;
-comment|/**      * The actual class of the row's we are deserializing, not just the base      * class      */
+comment|/**      * The actual class of the row's we are deserializing, not just the base      * class.      */
 specifier|private
 specifier|final
 name|Class
@@ -810,9 +808,9 @@ name|in
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * The JobConf key of the SerializationContext to use      */
-specifier|static
+comment|/**      * The JobConf key of the SerializationContext to use.      */
 specifier|public
+specifier|static
 specifier|final
 name|String
 name|SerializationContextImplKey
@@ -871,7 +869,7 @@ return|return
 name|r
 return|;
 block|}
-comment|/**      * Returns the next row # and value      *       * @param key      *          - void as these files have a value only      * @param value      *          - the row container which is always re-used, but the internal      *          value may be set to a new Object      * @return whether the key and value were read. True if they were and false      *         if EOF      * @exception IOException      *              from the deserializer      */
+comment|/**      * Returns the next row # and value.      *       * @param key      *          - void as these files have a value only      * @param value      *          - the row container which is always re-used, but the internal      *          value may be set to a new Object      * @return whether the key and value were read. True if they were and false      *         if EOF      * @exception IOException      *              from the deserializer      */
 specifier|public
 specifier|synchronized
 name|boolean

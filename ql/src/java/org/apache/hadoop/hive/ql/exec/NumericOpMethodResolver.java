@@ -169,8 +169,6 @@ argument_list|>
 name|argTypeInfos
 parameter_list|)
 throws|throws
-name|AmbiguousMethodException
-throws|,
 name|UDFArgumentException
 block|{
 assert|assert

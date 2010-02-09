@@ -33,8 +33,13 @@ name|TProtocolFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * TReflectionUtils.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|TReflectionUtils
 block|{
@@ -135,6 +140,12 @@ name|newInstance
 argument_list|()
 operator|)
 return|;
+block|}
+specifier|private
+name|TReflectionUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

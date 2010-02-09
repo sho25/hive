@@ -61,16 +61,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -123,6 +113,10 @@ name|Utilities
 import|;
 end_import
 
+begin_comment
+comment|/**  * AlterTableDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
@@ -147,10 +141,11 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+comment|/**    * alterTableTypes.    *    */
 specifier|public
 specifier|static
 enum|enum
-name|alterTableTypes
+name|AlterTableTypes
 block|{
 name|RENAME
 block|,
@@ -171,7 +166,7 @@ block|,
 name|RENAMECOLUMN
 block|}
 empty_stmt|;
-name|alterTableTypes
+name|AlterTableTypes
 name|op
 decl_stmt|;
 name|String
@@ -307,7 +302,7 @@ name|afterCol
 expr_stmt|;
 name|op
 operator|=
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|RENAMECOLUMN
 expr_stmt|;
@@ -325,7 +320,7 @@ parameter_list|)
 block|{
 name|op
 operator|=
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|RENAME
 expr_stmt|;
@@ -355,7 +350,7 @@ name|FieldSchema
 argument_list|>
 name|newCols
 parameter_list|,
-name|alterTableTypes
+name|AlterTableTypes
 name|alterType
 parameter_list|)
 block|{
@@ -385,7 +380,7 @@ comment|/**    * @param alterType    *          type of alter op    */
 specifier|public
 name|AlterTableDesc
 parameter_list|(
-name|alterTableTypes
+name|AlterTableTypes
 name|alterType
 parameter_list|)
 block|{
@@ -416,7 +411,7 @@ argument_list|()
 expr_stmt|;
 name|op
 operator|=
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDFILEFORMAT
 expr_stmt|;
@@ -471,7 +466,7 @@ name|tableName
 expr_stmt|;
 name|op
 operator|=
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDCLUSTERSORTCOLUMN
 expr_stmt|;
@@ -635,7 +630,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the op    */
 specifier|public
-name|alterTableTypes
+name|AlterTableTypes
 name|getOp
 parameter_list|()
 block|{
@@ -648,7 +643,7 @@ specifier|public
 name|void
 name|setOp
 parameter_list|(
-name|alterTableTypes
+name|AlterTableTypes
 name|op
 parameter_list|)
 block|{

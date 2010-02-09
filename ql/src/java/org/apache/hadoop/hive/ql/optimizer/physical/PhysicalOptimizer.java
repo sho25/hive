@@ -138,7 +138,7 @@ name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * create the list of physical plan resolvers    *     * @param hiveConf    */
+comment|/**    * create the list of physical plan resolvers.    *     * @param hiveConf    */
 specifier|private
 name|void
 name|initialize
@@ -181,7 +181,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * invoke all the resolvers one-by-one, and alter the physical plan    *     * @return PhysicalContext    * @throws HiveException    */
+comment|/**    * invoke all the resolvers one-by-one, and alter the physical plan.    *     * @return PhysicalContext    * @throws HiveException    */
 specifier|public
 name|PhysicalContext
 name|optimize

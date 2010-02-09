@@ -127,12 +127,17 @@ name|ExprNodeNullDesc
 import|;
 end_import
 
+begin_comment
+comment|/**  * ExprNodeEvaluatorFactory.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|ExprNodeEvaluatorFactory
 block|{
-specifier|public
+specifier|private
 name|ExprNodeEvaluatorFactory
 parameter_list|()
 block|{   }

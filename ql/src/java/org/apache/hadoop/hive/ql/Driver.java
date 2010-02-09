@@ -3939,7 +3939,7 @@ argument_list|()
 expr_stmt|;
 name|Utilities
 operator|.
-name|streamStatus
+name|StreamStatus
 name|ss
 decl_stmt|;
 try|try
@@ -3993,7 +3993,7 @@ name|ss
 operator|==
 name|Utilities
 operator|.
-name|streamStatus
+name|StreamStatus
 operator|.
 name|TERMINATED
 condition|)
@@ -4056,7 +4056,7 @@ name|ss
 operator|==
 name|Utilities
 operator|.
-name|streamStatus
+name|StreamStatus
 operator|.
 name|EOF
 condition|)
@@ -4123,15 +4123,11 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
-operator|(
 literal|13
-operator|)
 return|;
 block|}
 return|return
-operator|(
 literal|0
-operator|)
 return|;
 block|}
 specifier|public

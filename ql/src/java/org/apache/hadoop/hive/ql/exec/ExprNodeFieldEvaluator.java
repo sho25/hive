@@ -333,6 +333,7 @@ return|return
 name|resultObjectInspector
 return|;
 block|}
+specifier|private
 name|List
 argument_list|<
 name|Object

@@ -55,7 +55,6 @@ interface|interface
 name|WriteTextProtocol
 block|{
 comment|/**    * Write Text.    */
-specifier|public
 name|void
 name|writeText
 parameter_list|(

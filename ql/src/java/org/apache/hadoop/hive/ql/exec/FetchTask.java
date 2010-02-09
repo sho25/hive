@@ -258,7 +258,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * FetchTask implementation  **/
+comment|/**  * FetchTask implementation.  **/
 end_comment
 
 begin_class
@@ -464,7 +464,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Return the tableDesc of the fetchWork    */
+comment|/**    * Return the tableDesc of the fetchWork.    */
 specifier|public
 name|TableDesc
 name|getTblDesc
@@ -477,7 +477,7 @@ name|getTblDesc
 argument_list|()
 return|;
 block|}
-comment|/**    * Return the maximum number of rows returned by fetch    */
+comment|/**    * Return the maximum number of rows returned by fetch.    */
 specifier|public
 name|int
 name|getMaxRows
@@ -487,7 +487,7 @@ return|return
 name|maxRows
 return|;
 block|}
-comment|/**    * Set the maximum number of rows returned by fetch    */
+comment|/**    * Set the maximum number of rows returned by fetch.    */
 specifier|public
 name|void
 name|setMaxRows

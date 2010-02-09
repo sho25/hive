@@ -55,25 +55,15 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
+name|hadoop
 operator|.
-name|logging
+name|hive
 operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|ql
 operator|.
-name|apache
+name|exec
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|Description
 import|;
 end_import
 
@@ -92,24 +82,6 @@ operator|.
 name|exec
 operator|.
 name|UDF
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Description
 import|;
 end_import
 
@@ -127,6 +99,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDFDate.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -137,9 +113,7 @@ literal|"to_date"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(expr) - Extracts the date part of the date or datetime "
-operator|+
-literal|"expression expr"
+literal|"_FUNC_(expr) - Extracts the date part of the date or datetime expression expr"
 argument_list|,
 name|extended
 operator|=
@@ -156,23 +130,6 @@ extends|extends
 name|UDF
 block|{
 specifier|private
-specifier|static
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|UDFDate
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-decl_stmt|;
-specifier|private
 specifier|final
 name|SimpleDateFormat
 name|formatter
@@ -183,6 +140,7 @@ argument_list|(
 literal|"yyyy-MM-dd"
 argument_list|)
 decl_stmt|;
+specifier|private
 name|Text
 name|t
 init|=

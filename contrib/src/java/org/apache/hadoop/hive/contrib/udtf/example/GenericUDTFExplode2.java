@@ -55,7 +55,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentException
+name|Description
 import|;
 end_import
 
@@ -73,7 +73,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDFArgumentException
 import|;
 end_import
 
@@ -187,6 +187,10 @@ name|StructObjectInspector
 import|;
 end_import
 
+begin_comment
+comment|/**  * GenericUDTFExplode2.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -197,9 +201,7 @@ literal|"explode2"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(a) - like explode, but outputs two identical columns (for "
-operator|+
-literal|"testing purposes)"
+literal|"_FUNC_(a) - like explode, but outputs two identical columns (for testing purposes)"
 argument_list|)
 specifier|public
 class|class

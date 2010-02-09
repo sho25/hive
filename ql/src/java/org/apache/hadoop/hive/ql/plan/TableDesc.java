@@ -115,6 +115,10 @@ name|InputFormat
 import|;
 end_import
 
+begin_comment
+comment|/**  * TableDesc.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -307,7 +311,7 @@ return|return
 name|inputFileFormatClass
 return|;
 block|}
-comment|/**    * Return a deserializer object corresponding to the tableDesc    */
+comment|/**    * Return a deserializer object corresponding to the tableDesc.    */
 specifier|public
 name|Deserializer
 name|getDeserializer

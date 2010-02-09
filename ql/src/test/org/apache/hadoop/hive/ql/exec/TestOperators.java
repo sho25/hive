@@ -131,24 +131,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|CollectDesc
 import|;
 end_import
@@ -240,6 +222,24 @@ operator|.
 name|plan
 operator|.
 name|PartitionDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|PlanUtils
 import|;
 end_import
 
@@ -452,6 +452,10 @@ operator|.
 name|JobConf
 import|;
 end_import
+
+begin_comment
+comment|/**  * TestOperators.  *  */
+end_comment
 
 begin_class
 specifier|public

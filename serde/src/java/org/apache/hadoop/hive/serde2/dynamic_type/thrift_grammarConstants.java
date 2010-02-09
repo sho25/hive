@@ -493,7 +493,7 @@ block|,
 literal|"\"<\""
 block|,
 literal|"\">\""
-block|, }
+block|,}
 decl_stmt|;
 block|}
 end_interface

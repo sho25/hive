@@ -146,6 +146,12 @@ block|}
 argument_list|)
 expr_stmt|;
 block|}
+specifier|private
+name|IdentityMapper
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 block|}
 end_class
 

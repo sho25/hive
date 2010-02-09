@@ -276,8 +276,8 @@ name|WriteNullsProtocol
 implements|,
 name|WriteTextProtocol
 block|{
-specifier|final
 specifier|static
+specifier|final
 name|Log
 name|LOG
 init|=
@@ -303,7 +303,7 @@ operator|)
 operator|-
 literal|1
 decl_stmt|;
-comment|/**    * Factory for TBinarySortableProtocol objects    */
+comment|/**    * Factory for TBinarySortableProtocol objects.    */
 specifier|public
 specifier|static
 class|class
@@ -791,7 +791,6 @@ name|rawBytesBuffer
 decl_stmt|;
 comment|// This method takes care of bit-flipping for descending order
 comment|// Declare this method as final for performance reasons
-specifier|final
 specifier|private
 name|void
 name|writeRawBytes
@@ -1770,8 +1769,8 @@ literal|8
 argument_list|)
 expr_stmt|;
 block|}
-specifier|final
 specifier|protected
+specifier|final
 name|byte
 index|[]
 name|nullByte
@@ -1783,8 +1782,8 @@ block|{
 literal|0
 block|}
 decl_stmt|;
-specifier|final
 specifier|protected
+specifier|final
 name|byte
 index|[]
 name|nonNullByte
@@ -1797,8 +1796,8 @@ literal|1
 block|}
 decl_stmt|;
 comment|/**    * The escaped byte sequence for the null byte. This cannot be changed alone    * without changing the readString() code.    */
-specifier|final
 specifier|protected
+specifier|final
 name|byte
 index|[]
 name|escapedNull
@@ -1813,8 +1812,8 @@ literal|1
 block|}
 decl_stmt|;
 comment|/**    * The escaped byte sequence for the "\1" byte. This cannot be changed alone    * without changing the readString() code.    */
-specifier|final
 specifier|protected
+specifier|final
 name|byte
 index|[]
 name|escapedOne
@@ -2317,7 +2316,6 @@ expr_stmt|;
 block|}
 comment|// This method takes care of bit-flipping for descending order
 comment|// Make this method final to improve performance.
-specifier|final
 specifier|private
 name|int
 name|readRawAll
@@ -2446,8 +2444,8 @@ index|[
 literal|1
 index|]
 decl_stmt|;
-specifier|final
 specifier|public
+specifier|final
 name|boolean
 name|readIsNull
 parameter_list|()

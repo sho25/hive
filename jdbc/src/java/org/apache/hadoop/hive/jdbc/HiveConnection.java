@@ -347,6 +347,10 @@ name|TTransportException
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveConnection.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -387,7 +391,7 @@ name|URI_PREFIX
 init|=
 literal|"jdbc:hive://"
 decl_stmt|;
-comment|/**    * TODO: - parse uri (use java.net.URI?)    */
+comment|/**    * TODO: - parse uri (use java.net.URI?).    */
 specifier|public
 name|HiveConnection
 parameter_list|(

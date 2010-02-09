@@ -29,6 +29,10 @@ name|Serializable
 import|;
 end_import
 
+begin_comment
+comment|/**  * DDLDesc.  *  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

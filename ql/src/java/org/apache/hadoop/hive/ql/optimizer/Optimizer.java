@@ -150,7 +150,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the optimizer  */
+comment|/**  * Implementation of the optimizer.  */
 end_comment
 
 begin_class
@@ -169,7 +169,7 @@ name|Transform
 argument_list|>
 name|transformations
 decl_stmt|;
-comment|/**    * create the list of transformations    *     * @param hiveConf    */
+comment|/**    * Create the list of transformations.    *     * @param hiveConf    */
 specifier|public
 name|void
 name|initialize
@@ -311,7 +311,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * invoke all the transformations one-by-one, and alter the query plan    *     * @return ParseContext    * @throws SemanticException    */
+comment|/**    * Invoke all the transformations one-by-one, and alter the query plan.    *     * @return ParseContext    * @throws SemanticException    */
 specifier|public
 name|ParseContext
 name|optimize

@@ -685,24 +685,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|GroupByDesc
 import|;
 end_import
@@ -740,6 +722,24 @@ operator|.
 name|plan
 operator|.
 name|PartitionDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|PlanUtils
 import|;
 end_import
 
@@ -947,6 +947,10 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * Utilities.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|SuppressWarnings
@@ -954,10 +958,11 @@ argument_list|(
 literal|"nls"
 argument_list|)
 specifier|public
+specifier|final
 class|class
 name|Utilities
 block|{
-comment|/**    * The object in the reducer are composed of these top level fields    */
+comment|/**    * The object in the reducer are composed of these top level fields.    */
 specifier|public
 specifier|static
 name|String
@@ -965,6 +970,7 @@ name|HADOOP_LOCAL_FS
 init|=
 literal|"file:///"
 decl_stmt|;
+comment|/**    * ReduceField.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -977,6 +983,12 @@ block|,
 name|ALIAS
 block|}
 empty_stmt|;
+specifier|private
+name|Utilities
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 specifier|private
 specifier|static
 name|Map
@@ -1001,9 +1013,9 @@ argument_list|>
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|Log
 name|LOG
 init|=
@@ -1884,6 +1896,7 @@ name|ret
 operator|)
 return|;
 block|}
+comment|/**    * Tuple.    *    * @param<T>    * @param<V>    */
 specifier|public
 specifier|static
 class|class
@@ -1977,32 +1990,32 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|newLineCode
 init|=
 literal|10
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|tabCode
 init|=
 literal|9
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|ctrlaCode
 init|=
 literal|1
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|INDENT
 init|=
@@ -2260,6 +2273,7 @@ name|ret
 operator|)
 return|;
 block|}
+comment|/**    * StreamPrinter.    *    */
 specifier|public
 specifier|static
 class|class
@@ -3056,17 +3070,18 @@ name|suffix
 return|;
 block|}
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|NSTR
 init|=
 literal|""
 decl_stmt|;
+comment|/**    * StreamStatus.    *    */
 specifier|public
 specifier|static
 enum|enum
-name|streamStatus
+name|StreamStatus
 block|{
 name|EOF
 block|,
@@ -3074,7 +3089,7 @@ name|TERMINATED
 block|}
 specifier|public
 specifier|static
-name|streamStatus
+name|StreamStatus
 name|readColumn
 parameter_list|(
 name|DataInput
@@ -3111,7 +3126,7 @@ name|e
 parameter_list|)
 block|{
 return|return
-name|streamStatus
+name|StreamStatus
 operator|.
 name|EOF
 return|;
@@ -3126,7 +3141,7 @@ name|newLineCode
 condition|)
 block|{
 return|return
-name|streamStatus
+name|StreamStatus
 operator|.
 name|TERMINATED
 return|;
@@ -3319,7 +3334,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Create a sequencefile output stream based on job configuration    *     * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
+comment|/**    * Create a sequencefile output stream based on job configuration.    *     * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
 specifier|public
 specifier|static
 name|SequenceFile
@@ -3378,7 +3393,7 @@ name|isCompressed
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a sequencefile output stream based on job configuration Uses user    * supplied compression flag (rather than obtaining it from the Job    * Configuration)    *     * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
+comment|/**    * Create a sequencefile output stream based on job configuration Uses user    * supplied compression flag (rather than obtaining it from the Job    * Configuration).    *     * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
 specifier|public
 specifier|static
 name|SequenceFile
@@ -3495,7 +3510,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-comment|/**    * Create a RCFile output stream based on job configuration Uses user supplied    * compression flag (rather than obtaining it from the Job Configuration)    *     * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @return output stream over the created rcfile    */
+comment|/**    * Create a RCFile output stream based on job configuration Uses user supplied    * compression flag (rather than obtaining it from the Job Configuration).    *     * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @return output stream over the created rcfile    */
 specifier|public
 specifier|static
 name|RCFile
@@ -3582,7 +3597,7 @@ name|codec
 argument_list|)
 return|;
 block|}
-comment|/**    * Shamelessly cloned from GenericOptionsParser    */
+comment|/**    * Shamelessly cloned from GenericOptionsParser.    */
 specifier|public
 specifier|static
 name|String
@@ -3678,7 +3693,6 @@ name|IOException
 name|e
 parameter_list|)
 block|{     }
-empty_stmt|;
 name|String
 name|file
 init|=
@@ -3883,7 +3897,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Given a path, convert to a temporary path    */
+comment|/**    * Given a path, convert to a temporary path.    */
 specifier|public
 specifier|static
 name|Path
@@ -3904,7 +3918,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Detect if the supplied file is a temporary path    */
+comment|/**    * Detect if the supplied file is a temporary path.    */
 specifier|public
 specifier|static
 name|boolean
@@ -3946,8 +3960,8 @@ operator|)
 return|;
 block|}
 comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to    * dst. If there is an existing file with the same name, the new file's name    * will be appended with "_1", "_2", etc.    *     * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
-specifier|static
 specifier|public
+specifier|static
 name|void
 name|rename
 parameter_list|(
@@ -3994,8 +4008,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to    * dst. If there is an existing file with the same name, the new file's name    * will be appended with "_1", "_2", etc.    *     * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
-specifier|static
 specifier|public
+specifier|static
 name|void
 name|renameOrMoveFiles
 parameter_list|(
@@ -4178,6 +4192,7 @@ block|}
 block|}
 block|}
 comment|/**    * The first group will contain the task id. The second group is the optional    * extension. The file name looks like: "24931_r_000000_0" or    * "24931_r_000000_0.gz"    */
+specifier|private
 specifier|static
 name|Pattern
 name|fileNameTaskIdRegex
@@ -4288,8 +4303,8 @@ block|{
 return|return;
 block|}
 name|FileStatus
-name|items
 index|[]
+name|items
 init|=
 name|fs
 operator|.
@@ -4505,7 +4520,7 @@ operator|+
 literal|")"
 return|;
 block|}
-comment|/**    * Add new elements to the classpath    *     * @param newPaths    *          Array of classpath elements    */
+comment|/**    * Add new elements to the classpath.    *     * @param newPaths    *          Array of classpath elements    */
 specifier|public
 specifier|static
 name|ClassLoader
@@ -4667,7 +4682,7 @@ name|loader
 argument_list|)
 return|;
 block|}
-comment|/**    * remove elements from the classpath    *     * @param pathsToRemove    *          Array of classpath elements    */
+comment|/**    * remove elements from the classpath.    *     * @param pathsToRemove    *          Array of classpath elements    */
 specifier|public
 specifier|static
 name|void
@@ -5300,7 +5315,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Gets the default notification interval to send progress updates to the    * tracker. Useful for operators that may not output data for a while.    *     * @param hconf    * @return the interval in miliseconds    */
+comment|/**    * Gets the default notification interval to send progress updates to the    * tracker. Useful for operators that may not output data for a while.    *     * @param hconf    * @return the interval in milliseconds    */
 specifier|public
 specifier|static
 name|int

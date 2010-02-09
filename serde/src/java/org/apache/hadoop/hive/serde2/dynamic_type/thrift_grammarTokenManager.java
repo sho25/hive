@@ -6984,7 +6984,7 @@ block|,
 literal|33
 block|,
 literal|34
-block|, }
+block|,}
 decl_stmt|;
 comment|/** Token literal values. */
 specifier|public
@@ -7136,7 +7136,7 @@ block|,
 literal|"\74"
 block|,
 literal|"\76"
-block|, }
+block|,}
 decl_stmt|;
 comment|/** Lexer state names. */
 specifier|public
@@ -7148,7 +7148,7 @@ name|lexStateNames
 init|=
 block|{
 literal|"DEFAULT"
-block|, }
+block|,}
 decl_stmt|;
 specifier|static
 specifier|final
@@ -7160,7 +7160,7 @@ block|{
 literal|0xfe7fffffffffff01L
 block|,
 literal|0x7fL
-block|, }
+block|,}
 decl_stmt|;
 specifier|static
 specifier|final
@@ -7172,7 +7172,7 @@ block|{
 literal|0xfeL
 block|,
 literal|0x0L
-block|, }
+block|,}
 decl_stmt|;
 specifier|protected
 name|SimpleCharStream

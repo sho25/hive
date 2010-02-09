@@ -341,8 +341,13 @@ name|StringObjectInspector
 import|;
 end_import
 
+begin_comment
+comment|/**  * SerDeUtils.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|SerDeUtils
 block|{
@@ -1968,7 +1973,12 @@ literal|"Unknown type in ObjectInspector!"
 argument_list|)
 throw|;
 block|}
-empty_stmt|;
+block|}
+specifier|private
+name|SerDeUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

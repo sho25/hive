@@ -165,6 +165,10 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * RCFileRecordReader.  *  * @param<K>  * @param<V>  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -491,7 +495,7 @@ return|return
 name|more
 return|;
 block|}
-comment|/**    * Return the progress within the input split    *     * @return 0.0 to 1.0 of the input byte range    */
+comment|/**    * Return the progress within the input split.    *     * @return 0.0 to 1.0 of the input byte range    */
 specifier|public
 name|float
 name|getProgress

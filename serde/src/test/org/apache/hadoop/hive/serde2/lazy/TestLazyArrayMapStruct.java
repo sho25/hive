@@ -175,6 +175,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestLazyArrayMapStruct.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

@@ -75,6 +75,10 @@ name|WriteEntity
 import|;
 end_import
 
+begin_comment
+comment|/**  * MoveWork.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain

@@ -43,6 +43,10 @@ name|Path
 import|;
 end_import
 
+begin_comment
+comment|/**  * DescFunctionDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
@@ -100,7 +104,7 @@ operator|=
 name|isExtended
 expr_stmt|;
 block|}
-comment|/**    * table name for the result of show tables    */
+comment|/**    * table name for the result of show tables.    */
 specifier|private
 specifier|static
 specifier|final
@@ -109,7 +113,7 @@ name|table
 init|=
 literal|"show"
 decl_stmt|;
-comment|/**    * thrift ddl for the result of show tables    */
+comment|/**    * thrift ddl for the result of show tables.    */
 specifier|private
 specifier|static
 specifier|final

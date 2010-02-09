@@ -33,16 +33,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|FileNotFoundException
 import|;
 end_import
@@ -74,16 +64,6 @@ operator|.
 name|text
 operator|.
 name|SimpleDateFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
 import|;
 end_import
 
@@ -276,9 +256,9 @@ specifier|private
 name|FileSystem
 name|resFs
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|Log
 name|LOG
 init|=
@@ -439,7 +419,7 @@ name|getPath
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Set the context on whether the current query is an explain query    *     * @param value    *          true if the query is an explain query, false if not    */
+comment|/**    * Set the context on whether the current query is an explain query.    *     * @param value    *          true if the query is an explain query, false if not    */
 specifier|public
 name|void
 name|setExplain
@@ -453,7 +433,7 @@ operator|=
 name|value
 expr_stmt|;
 block|}
-comment|/**    * Find out whether the current query is an explain query    *     * @return true if the query is an explain query, false if not    */
+comment|/**    * Find out whether the current query is an explain query.    *     * @return true if the query is an explain query, false if not    */
 specifier|public
 name|boolean
 name|getExplain
@@ -463,7 +443,7 @@ return|return
 name|explain
 return|;
 block|}
-comment|/**    * Make a tmp directory for MR intermediate data If URI/Scheme are not    * supplied - those implied by the default filesystem will be used (which will    * typically correspond to hdfs instance on hadoop cluster)    *     * @param mkdir  if true, will make the directory. Will throw IOException if that fails.    */
+comment|/**    * Make a tmp directory for MR intermediate data If URI/Scheme are not    * supplied - those implied by the default filesystem will be used (which will    * typically correspond to hdfs instance on hadoop cluster).    *     * @param mkdir  if true, will make the directory. Will throw IOException if that fails.    */
 specifier|private
 specifier|static
 name|Path
@@ -549,7 +529,7 @@ return|return
 name|dir
 return|;
 block|}
-comment|/**    * Make a tmp directory on specified URI Currently will use the same path as    * implied by SCRATCHDIR config variable    */
+comment|/**    * Make a tmp directory on specified URI Currently will use the same path as    * implied by SCRATCHDIR config variable.    */
 specifier|private
 specifier|static
 name|Path
@@ -740,7 +720,7 @@ return|return
 name|dir
 return|;
 block|}
-comment|/**    * Get a tmp directory on specified URI Will check if this has already been    * made (either via MR or Local FileSystem or some other external URI    */
+comment|/**    * Get a tmp directory on specified URI Will check if this has already been    * made (either via MR or Local FileSystem or some other external URI.    */
 specifier|private
 name|String
 name|getExternalScratchDir
@@ -829,7 +809,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Create a map-reduce scratch directory on demand and return it    */
+comment|/**    * Create a map-reduce scratch directory on demand and return it.    */
 specifier|private
 name|String
 name|getMRScratchDir
@@ -904,7 +884,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Create a local scratch directory on demand and return it    */
+comment|/**    * Create a local scratch directory on demand and return it.    */
 specifier|private
 name|String
 name|getLocalScratchDir
@@ -1025,7 +1005,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Remove any created scratch directories    */
+comment|/**    * Remove any created scratch directories.    */
 specifier|private
 name|void
 name|removeScratchDir
@@ -1098,7 +1078,7 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Return the next available path in the current scratch dir    */
+comment|/**    * Return the next available path in the current scratch dir.    */
 specifier|private
 name|String
 name|nextPath
@@ -1123,7 +1103,7 @@ operator|++
 argument_list|)
 return|;
 block|}
-comment|/**    * check if path is tmp path. the assumption is that all uri's relative to    * scratchdir are temporary    *     * @return true if a uri is a temporary uri for map-reduce intermediate data,    *         false otherwise    */
+comment|/**    * Check if path is tmp path. the assumption is that all uri's relative to    * scratchdir are temporary.    *     * @return true if a uri is a temporary uri for map-reduce intermediate data,    *         false otherwise    */
 specifier|public
 name|boolean
 name|isMRTmpFileURI
@@ -1146,7 +1126,7 @@ literal|1
 operator|)
 return|;
 block|}
-comment|/**    * Get a path to store map-reduce intermediate data in    *     * @return next available path for map-red intermediate data    */
+comment|/**    * Get a path to store map-reduce intermediate data in.    *     * @return next available path for map-red intermediate data    */
 specifier|public
 name|String
 name|getMRTmpFileURI
@@ -1160,7 +1140,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Get a tmp path on local host to store intermediate data    *     * @return next available tmp path on local fs    */
+comment|/**    * Get a tmp path on local host to store intermediate data.    *     * @return next available tmp path on local fs    */
 specifier|public
 name|String
 name|getLocalTmpFileURI
@@ -1174,7 +1154,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Get a path to store tmp data destined for external URI    *     * @param extURI    *          external URI to which the tmp data has to be eventually moved    * @return next available tmp path on the file system corresponding extURI    */
+comment|/**    * Get a path to store tmp data destined for external URI.    *     * @param extURI    *          external URI to which the tmp data has to be eventually moved    * @return next available tmp path on the file system corresponding extURI    */
 specifier|public
 name|String
 name|getExternalTmpFileURI
@@ -1702,7 +1682,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Little abbreviation for StringUtils    */
+comment|/**    * Little abbreviation for StringUtils.    */
 specifier|private
 specifier|static
 name|boolean

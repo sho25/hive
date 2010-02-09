@@ -519,24 +519,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|AggregationDesc
 import|;
 end_import
@@ -627,6 +609,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|PlanUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|ReduceSinkDesc
 import|;
 end_import
@@ -673,9 +673,16 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|ColumnPrunerProcFactory
 block|{
+specifier|private
+name|ColumnPrunerProcFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 comment|/**    * Node Processor for Column Pruning on Filter Operators.    */
 specifier|public
 specifier|static

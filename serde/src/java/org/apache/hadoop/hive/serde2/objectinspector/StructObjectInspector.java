@@ -29,6 +29,10 @@ name|List
 import|;
 end_import
 
+begin_comment
+comment|/**  * StructObjectInspector.  *  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract
@@ -39,8 +43,8 @@ name|ObjectInspector
 block|{
 comment|// ** Methods that does not need a data object **
 comment|/**    * Returns all the fields.    */
-specifier|abstract
 specifier|public
+specifier|abstract
 name|List
 argument_list|<
 name|?
@@ -51,8 +55,8 @@ name|getAllStructFieldRefs
 parameter_list|()
 function_decl|;
 comment|/**    * Look up a field.    */
-specifier|abstract
 specifier|public
+specifier|abstract
 name|StructField
 name|getStructFieldRef
 parameter_list|(
@@ -62,8 +66,8 @@ parameter_list|)
 function_decl|;
 comment|// ** Methods that need a data object **
 comment|/**    * returns null for data = null.    */
-specifier|abstract
 specifier|public
+specifier|abstract
 name|Object
 name|getStructFieldData
 parameter_list|(
@@ -75,8 +79,8 @@ name|fieldRef
 parameter_list|)
 function_decl|;
 comment|/**    * returns null for data = null.    */
-specifier|abstract
 specifier|public
+specifier|abstract
 name|List
 argument_list|<
 name|Object

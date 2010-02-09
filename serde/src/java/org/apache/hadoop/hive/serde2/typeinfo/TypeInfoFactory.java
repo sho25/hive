@@ -91,6 +91,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|TypeInfoFactory
 block|{
@@ -112,6 +113,12 @@ name|TypeInfo
 argument_list|>
 argument_list|()
 decl_stmt|;
+specifier|private
+name|TypeInfoFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 specifier|public
 specifier|static
 name|TypeInfo

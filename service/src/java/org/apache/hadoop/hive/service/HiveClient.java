@@ -32,7 +32,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Thrift Hive Client Just an empty class that can be used to run queries on a  * stand alone hive server  */
+comment|/**  * Thrift Hive Client Just an empty class that can be used to run queries on a  * stand alone hive server.  */
 end_comment
 
 begin_class

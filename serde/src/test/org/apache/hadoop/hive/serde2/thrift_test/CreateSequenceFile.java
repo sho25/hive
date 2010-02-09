@@ -279,11 +279,22 @@ name|TIOStreamTransport
 import|;
 end_import
 
+begin_comment
+comment|/**  * CreateSequenceFile.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|CreateSequenceFile
 block|{
+specifier|private
+name|CreateSequenceFile
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 specifier|public
 specifier|static
 name|void
@@ -307,16 +318,19 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * ThriftSerializer.    *    */
 specifier|public
 specifier|static
 class|class
 name|ThriftSerializer
 block|{
+specifier|private
 name|ByteStream
 operator|.
 name|Output
 name|bos
 decl_stmt|;
+specifier|private
 name|TProtocol
 name|outProtocol
 decl_stmt|;
@@ -360,6 +374,7 @@ name|outTransport
 argument_list|)
 expr_stmt|;
 block|}
+specifier|private
 name|BytesWritable
 name|bw
 init|=

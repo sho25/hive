@@ -160,7 +160,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Processor for the rule - no specific rule fired  */
+comment|/**  * Processor for the rule - no specific rule fired.  */
 end_comment
 
 begin_class
@@ -174,7 +174,7 @@ specifier|public
 name|GenMROperator
 parameter_list|()
 block|{   }
-comment|/**    * Reduce Scan encountered    *     * @param nd    *          the reduce sink operator encountered    * @param procCtx    *          context    */
+comment|/**    * Reduce Scan encountered.    *     * @param nd    *          the reduce sink operator encountered    * @param procCtx    *          context    */
 specifier|public
 name|Object
 name|process

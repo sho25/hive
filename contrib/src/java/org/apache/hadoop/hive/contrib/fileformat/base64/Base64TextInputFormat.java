@@ -269,6 +269,7 @@ argument_list|>
 implements|,
 name|JobConfigurable
 block|{
+comment|/**    * Base64LineRecordReader.    *    */
 specifier|public
 specifier|static
 class|class

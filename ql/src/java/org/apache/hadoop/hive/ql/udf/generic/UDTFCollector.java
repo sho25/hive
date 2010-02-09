@@ -58,7 +58,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UDTFCollector collects data from a GenericUDTF and passes the data to a  * UDTFOperator  */
+comment|/**  * UDTFCollector collects data from a GenericUDTF and passes the data to a  * UDTFOperator.  */
 end_comment
 
 begin_class

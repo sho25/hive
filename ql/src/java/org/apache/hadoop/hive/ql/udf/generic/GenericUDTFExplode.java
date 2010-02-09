@@ -55,7 +55,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentException
+name|Description
 import|;
 end_import
 
@@ -73,7 +73,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDFArgumentException
 import|;
 end_import
 
@@ -167,6 +167,10 @@ name|StructObjectInspector
 import|;
 end_import
 
+begin_comment
+comment|/**  * GenericUDTFExplode.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -185,6 +189,7 @@ name|GenericUDTFExplode
 extends|extends
 name|GenericUDTF
 block|{
+specifier|private
 name|ListObjectInspector
 name|listOI
 init|=
@@ -318,9 +323,10 @@ name|fieldOIs
 argument_list|)
 return|;
 block|}
+specifier|private
 name|Object
-name|forwardObj
 index|[]
+name|forwardObj
 init|=
 operator|new
 name|Object

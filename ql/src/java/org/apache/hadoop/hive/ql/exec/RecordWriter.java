@@ -67,12 +67,15 @@ name|Writable
 import|;
 end_import
 
+begin_comment
+comment|/**  * RecordWriter.  *  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface
 name|RecordWriter
 block|{
-specifier|public
 name|void
 name|initialize
 parameter_list|(
@@ -85,7 +88,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|void
 name|write
 parameter_list|(
@@ -95,7 +97,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|void
 name|close
 parameter_list|()

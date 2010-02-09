@@ -679,6 +679,10 @@ name|TBinaryProtocol
 import|;
 end_import
 
+begin_comment
+comment|/**  * QTestUtil.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -2143,7 +2147,9 @@ expr_stmt|;
 block|}
 name|runCreateTableCmd
 argument_list|(
-literal|"CREATE TABLE srcbucket2(key int, value string) CLUSTERED BY (key) INTO 4 BUCKETS STORED AS TEXTFILE"
+literal|"CREATE TABLE srcbucket2(key int, value string) "
+operator|+
+literal|"CLUSTERED BY (key) INTO 4 BUCKETS STORED AS TEXTFILE"
 argument_list|)
 expr_stmt|;
 comment|// db.createTable("srcbucket", cols, null, TextInputFormat.class,
@@ -5267,7 +5273,7 @@ return|return
 name|qMap
 return|;
 block|}
-comment|/**    * QTRunner: Runnable class for running a a single query file    *     **/
+comment|/**    * QTRunner: Runnable class for running a a single query file.    *     **/
 specifier|public
 specifier|static
 class|class

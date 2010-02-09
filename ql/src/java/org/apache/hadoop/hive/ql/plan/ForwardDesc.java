@@ -29,6 +29,10 @@ name|Serializable
 import|;
 end_import
 
+begin_comment
+comment|/**  * ForwardDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
@@ -51,18 +55,10 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"nls"
-argument_list|)
 specifier|public
 name|ForwardDesc
 parameter_list|()
-block|{
-comment|// throw new
-comment|// RuntimeException("This class does not need to be instantiated");
-block|}
+block|{   }
 block|}
 end_class
 

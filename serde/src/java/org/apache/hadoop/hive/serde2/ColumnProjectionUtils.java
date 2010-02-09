@@ -55,13 +55,19 @@ name|StringUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * ColumnProjectionUtils.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|ColumnProjectionUtils
 block|{
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|READ_COLUMN_IDS_CONF_STR
 init|=
@@ -439,6 +445,12 @@ argument_list|,
 literal|""
 argument_list|)
 expr_stmt|;
+block|}
+specifier|private
+name|ColumnProjectionUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

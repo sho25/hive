@@ -537,24 +537,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|ExprNodeColumnDesc
 import|;
 end_import
@@ -627,6 +609,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|PlanUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|ReduceSinkDesc
 import|;
 end_import
@@ -682,7 +682,7 @@ specifier|private
 name|ParseContext
 name|pGraphContext
 decl_stmt|;
-comment|/**    * empty constructor    */
+comment|/**    * empty constructor.    */
 specifier|public
 name|MapJoinProcessor
 parameter_list|()
@@ -2875,6 +2875,7 @@ return|return
 name|pGraphContext
 return|;
 block|}
+comment|/**    * CurrentMapJoin.    *    */
 specifier|public
 specifier|static
 class|class
@@ -2882,7 +2883,7 @@ name|CurrentMapJoin
 implements|implements
 name|NodeProcessor
 block|{
-comment|/**      * Store the current mapjoin in the context      */
+comment|/**      * Store the current mapjoin in the context.      */
 annotation|@
 name|Override
 specifier|public
@@ -2936,6 +2937,7 @@ literal|null
 return|;
 block|}
 block|}
+comment|/**    * MapJoinFS.    *    */
 specifier|public
 specifier|static
 class|class
@@ -2943,7 +2945,7 @@ name|MapJoinFS
 implements|implements
 name|NodeProcessor
 block|{
-comment|/**      * Store the current mapjoin in a list of mapjoins followed by a filesink      */
+comment|/**      * Store the current mapjoin in a list of mapjoins followed by a filesink.      */
 annotation|@
 name|Override
 specifier|public
@@ -3066,6 +3068,7 @@ literal|null
 return|;
 block|}
 block|}
+comment|/**    * MapJoinDefault.    *    */
 specifier|public
 specifier|static
 class|class
@@ -3073,7 +3076,7 @@ name|MapJoinDefault
 implements|implements
 name|NodeProcessor
 block|{
-comment|/**      * Store the mapjoin in a rejected list      */
+comment|/**      * Store the mapjoin in a rejected list.      */
 annotation|@
 name|Override
 specifier|public
@@ -3162,6 +3165,7 @@ literal|null
 return|;
 block|}
 block|}
+comment|/**    * Default.    *    */
 specifier|public
 specifier|static
 class|class
@@ -3169,7 +3173,7 @@ name|Default
 implements|implements
 name|NodeProcessor
 block|{
-comment|/**      * nothing to do      */
+comment|/**      * Nothing to do.      */
 annotation|@
 name|Override
 specifier|public
@@ -3248,6 +3252,7 @@ name|CurrentMapJoin
 argument_list|()
 return|;
 block|}
+comment|/**    * MapJoinWalkerCtx.    *    */
 specifier|public
 specifier|static
 class|class
@@ -3255,18 +3260,21 @@ name|MapJoinWalkerCtx
 implements|implements
 name|NodeProcessorCtx
 block|{
+specifier|private
 name|List
 argument_list|<
 name|MapJoinOperator
 argument_list|>
 name|listMapJoinsNoRed
 decl_stmt|;
+specifier|private
 name|List
 argument_list|<
 name|MapJoinOperator
 argument_list|>
 name|listRejectedMapJoins
 decl_stmt|;
+specifier|private
 name|MapJoinOperator
 name|currMapJoinOp
 decl_stmt|;

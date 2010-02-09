@@ -55,25 +55,15 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
+name|hadoop
 operator|.
-name|logging
+name|hive
 operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|ql
 operator|.
-name|apache
+name|exec
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|Description
 import|;
 end_import
 
@@ -92,24 +82,6 @@ operator|.
 name|exec
 operator|.
 name|UDF
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Description
 import|;
 end_import
 
@@ -140,6 +112,10 @@ operator|.
 name|Text
 import|;
 end_import
+
+begin_comment
+comment|/**  * UDFUnixTimeStamp.  *  */
+end_comment
 
 begin_class
 annotation|@
@@ -172,23 +148,6 @@ name|UDFUnixTimeStamp
 extends|extends
 name|UDF
 block|{
-specifier|private
-specifier|static
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|UDFUnixTimeStamp
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-decl_stmt|;
 comment|// For now, we just use the default time zone.
 specifier|private
 specifier|final

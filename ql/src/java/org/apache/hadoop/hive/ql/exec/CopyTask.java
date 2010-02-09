@@ -156,7 +156,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * CopyTask implementation  **/
+comment|/**  * CopyTask implementation.  **/
 end_comment
 
 begin_class

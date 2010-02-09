@@ -35,7 +35,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentTypeException
+name|Description
 import|;
 end_import
 
@@ -53,7 +53,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDFArgumentTypeException
 import|;
 end_import
 
@@ -247,6 +247,7 @@ name|GenericUDAFCountEvaluator
 argument_list|()
 return|;
 block|}
+comment|/**    * GenericUDAFCountEvaluator.    *    */
 specifier|public
 specifier|static
 class|class
@@ -254,9 +255,11 @@ name|GenericUDAFCountEvaluator
 extends|extends
 name|GenericUDAFEvaluator
 block|{
+specifier|private
 name|ObjectInspector
 name|inputOI
 decl_stmt|;
+specifier|private
 name|LongWritable
 name|result
 decl_stmt|;
@@ -315,7 +318,7 @@ operator|.
 name|writableLongObjectInspector
 return|;
 block|}
-comment|/** class for storing count value */
+comment|/** class for storing count value. */
 specifier|static
 class|class
 name|CountAgg

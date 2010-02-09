@@ -231,6 +231,10 @@ begin_comment
 comment|//import org.apache.hadoop.contrib.serialization.thrift.*;
 end_comment
 
+begin_comment
+comment|/**  * TestFlatFileInputFormat.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

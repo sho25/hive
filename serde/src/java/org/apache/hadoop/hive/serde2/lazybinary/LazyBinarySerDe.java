@@ -652,7 +652,7 @@ comment|// The object for storing row data
 name|LazyBinaryStruct
 name|cachedLazyBinaryStruct
 decl_stmt|;
-comment|/**    * Initialize the SerDe with configuration and table information    */
+comment|/**    * Initialize the SerDe with configuration and table information.    */
 annotation|@
 name|Override
 specifier|public

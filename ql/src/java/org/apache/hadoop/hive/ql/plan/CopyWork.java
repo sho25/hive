@@ -29,6 +29,10 @@ name|Serializable
 import|;
 end_import
 
+begin_comment
+comment|/**  * CopyWork.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain

@@ -309,6 +309,10 @@ name|TBinaryProtocol
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestHive.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -1135,7 +1139,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Tests create and fetch of a thrift based table    *     * @throws Throwable    */
+comment|/**    * Tests create and fetch of a thrift based table.    *     * @throws Throwable    */
 specifier|public
 name|void
 name|testThriftTable

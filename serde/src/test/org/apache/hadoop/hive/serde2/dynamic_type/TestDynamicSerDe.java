@@ -181,6 +181,10 @@ name|BytesWritable
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestDynamicSerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -3340,7 +3344,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Tests a single null list within a struct with return nulls on    */
+comment|/**    * Tests a single null list within a struct with return nulls on.    */
 specifier|public
 name|void
 name|testNulls1
@@ -3614,7 +3618,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Tests all elements of a struct being null with return nulls on    */
+comment|/**    * Tests all elements of a struct being null with return nulls on.    */
 specifier|public
 name|void
 name|testNulls2
@@ -3913,7 +3917,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Tests map and list being empty with return nulls on    */
+comment|/**    * Tests map and list being empty with return nulls on.    */
 specifier|public
 name|void
 name|testNulls3
@@ -4228,7 +4232,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Tests map and list null/empty with return nulls *off*    */
+comment|/**    * Tests map and list null/empty with return nulls *off*.    */
 specifier|public
 name|void
 name|testNulls4
@@ -4577,7 +4581,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Tests map and list null/empty with return nulls *off*    */
+comment|/**    * Tests map and list null/empty with return nulls *off*.    */
 specifier|public
 name|void
 name|testStructsinStructs

@@ -196,7 +196,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implemention of shims against Hadoop 0.18.0  */
+comment|/**  * Implemention of shims against Hadoop 0.18.0.  */
 end_comment
 
 begin_class
@@ -252,7 +252,7 @@ name|IOException
 block|{
 comment|// gone in 0.18+
 block|}
-comment|/**    * workaround for hadoop-17 - jobclient only looks at commandlineconfig    */
+comment|/**    * workaround for hadoop-17 - jobclient only looks at commandlineconfig.    */
 specifier|public
 name|void
 name|setTmpFiles

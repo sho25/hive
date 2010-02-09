@@ -58,7 +58,7 @@ specifier|private
 name|UDFMethodResolver
 name|rslv
 decl_stmt|;
-comment|/**    * The constructor    */
+comment|/**    * The constructor.    */
 specifier|public
 name|UDF
 parameter_list|()
@@ -90,7 +90,7 @@ operator|=
 name|rslv
 expr_stmt|;
 block|}
-comment|/**    * Sets the resolver    *     * @param rslv    *          The method resolver to use for method resolution.    */
+comment|/**    * Sets the resolver.    *     * @param rslv    *          The method resolver to use for method resolution.    */
 specifier|public
 name|void
 name|setResolver

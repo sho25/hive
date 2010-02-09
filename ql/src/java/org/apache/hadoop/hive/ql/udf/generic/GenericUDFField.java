@@ -49,6 +49,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -68,24 +86,6 @@ operator|.
 name|exec
 operator|.
 name|UDFArgumentTypeException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Description
 import|;
 end_import
 
@@ -179,6 +179,10 @@ name|IntWritable
 import|;
 end_import
 
+begin_comment
+comment|/**  * GenericUDFField.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -189,7 +193,9 @@ literal|"field"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(str, str1, str2, ...) - returns the index of str in the str1,str2,... list or 0 if not found"
+literal|"_FUNC_(str, str1, str2, ...) - "
+operator|+
+literal|"returns the index of str in the str1,str2,... list or 0 if not found"
 argument_list|,
 name|extended
 operator|=

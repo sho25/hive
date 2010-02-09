@@ -377,6 +377,10 @@ name|BytesWritable
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestLazyBinarySerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -384,7 +388,7 @@ name|TestLazyBinarySerDe
 extends|extends
 name|TestCase
 block|{
-comment|/**    * Generate a random struct array    *     * @param r    *          random number generator    * @return an struct array    */
+comment|/**    * Generate a random struct array.    *     * @param r    *          random number generator    * @return an struct array    */
 specifier|static
 name|List
 argument_list|<
@@ -465,7 +469,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Initialize the LazyBinarySerDe    *     * @param fieldNames    *          table field names    * @param fieldTypes    *          table field types    * @return the initialized LazyBinarySerDe    * @throws Throwable    */
+comment|/**    * Initialize the LazyBinarySerDe.    *     * @param fieldNames    *          table field names    * @param fieldTypes    *          table field types    * @return the initialized LazyBinarySerDe    * @throws Throwable    */
 specifier|private
 name|SerDe
 name|getSerDe
@@ -3436,7 +3440,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * The test entrance function    *     * @throws Throwable    */
+comment|/**    * The test entrance function.    *     * @throws Throwable    */
 specifier|public
 name|void
 name|testLazyBinarySerDe

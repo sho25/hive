@@ -259,24 +259,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|ExprNodeColumnDesc
 import|;
 end_import
@@ -439,6 +421,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|PlanUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|ReduceSinkDesc
 import|;
 end_import
@@ -528,7 +528,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Mimics the actual query compiler in generating end to end plans and testing  * them out  *   */
+comment|/**  * Mimics the actual query compiler in generating end to end plans and testing  * them out.  *   */
 end_comment
 
 begin_class
@@ -542,8 +542,8 @@ specifier|static
 name|HiveConf
 name|conf
 decl_stmt|;
-specifier|static
 specifier|private
+specifier|static
 name|String
 name|tmpdir
 init|=
@@ -558,8 +558,8 @@ argument_list|)
 operator|+
 literal|"/"
 decl_stmt|;
-specifier|static
 specifier|private
+specifier|static
 name|Path
 name|tmppath
 init|=
@@ -569,13 +569,13 @@ argument_list|(
 name|tmpdir
 argument_list|)
 decl_stmt|;
-specifier|static
 specifier|private
+specifier|static
 name|Hive
 name|db
 decl_stmt|;
-specifier|static
 specifier|private
+specifier|static
 name|FileSystem
 name|fs
 decl_stmt|;
@@ -2011,7 +2011,7 @@ name|op2
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * test reduce with multiple tagged inputs    */
+comment|/**    * test reduce with multiple tagged inputs.    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

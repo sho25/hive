@@ -19,6 +19,10 @@ name|parse
 package|;
 end_package
 
+begin_comment
+comment|/**  * JoinType.  *  */
+end_comment
+
 begin_enum
 specifier|public
 enum|enum

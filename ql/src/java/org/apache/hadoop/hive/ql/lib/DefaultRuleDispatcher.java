@@ -88,7 +88,7 @@ specifier|final
 name|NodeProcessor
 name|defaultProc
 decl_stmt|;
-comment|/**    * constructor    *     * @param defaultProc    *          default processor to be fired if no rule matches    * @param rules    *          operator processor that handles actual processing of the node    * @param procCtx    *          operator processor context, which is opaque to the dispatcher    */
+comment|/**    * Constructor.    *     * @param defaultProc    *          default processor to be fired if no rule matches    * @param rules    *          operator processor that handles actual processing of the node    * @param procCtx    *          operator processor context, which is opaque to the dispatcher    */
 specifier|public
 name|DefaultRuleDispatcher
 parameter_list|(
@@ -124,7 +124,7 @@ operator|=
 name|procCtx
 expr_stmt|;
 block|}
-comment|/**    * dispatcher function    *     * @param nd    *          operator to process    * @param ndStack    *          the operators encountered so far    * @throws SemanticException    */
+comment|/**    * Dispatcher function.    *     * @param nd    *          operator to process    * @param ndStack    *          the operators encountered so far    * @throws SemanticException    */
 specifier|public
 name|Object
 name|dispatch

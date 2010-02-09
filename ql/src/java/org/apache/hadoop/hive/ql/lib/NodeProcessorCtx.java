@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Operator Processor Context  */
+comment|/**  * Operator Processor Context.  */
 end_comment
 
 begin_interface

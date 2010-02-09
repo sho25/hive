@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Terminal Operator Base Class  **/
+comment|/**  * Terminal Operator Base Class.  **/
 end_comment
 
 begin_class

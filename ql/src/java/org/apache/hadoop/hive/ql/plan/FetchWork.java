@@ -63,6 +63,10 @@ name|Path
 import|;
 end_import
 
+begin_comment
+comment|/**  * FetchWork.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
@@ -111,7 +115,7 @@ specifier|private
 name|int
 name|limit
 decl_stmt|;
-comment|/**    * Serialization Null Format for the serde used to fetch data    */
+comment|/**    * Serialization Null Format for the serde used to fetch data.    */
 specifier|private
 name|String
 name|serializationNullFormat

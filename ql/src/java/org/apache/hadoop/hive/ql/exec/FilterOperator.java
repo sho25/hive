@@ -166,7 +166,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Filter operator implementation  **/
+comment|/**  * Filter operator implementation.  **/
 end_comment
 
 begin_class
@@ -189,6 +189,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+comment|/**    * Counter.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -198,26 +199,26 @@ name|FILTERED
 block|,
 name|PASSED
 block|}
-specifier|transient
 specifier|private
 specifier|final
+specifier|transient
 name|LongWritable
 name|filtered_count
 decl_stmt|,
 name|passed_count
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|ExprNodeEvaluator
 name|conditionEvaluator
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|conditionInspector
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|int
 name|consecutiveFails
 decl_stmt|;

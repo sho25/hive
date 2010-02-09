@@ -53,6 +53,10 @@ name|Path
 import|;
 end_import
 
+begin_comment
+comment|/**  * ShowTableStatusDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
@@ -94,7 +98,7 @@ name|String
 argument_list|>
 name|partSpec
 decl_stmt|;
-comment|/**    * table name for the result of show tables    */
+comment|/**    * table name for the result of show tables.    */
 specifier|private
 specifier|static
 specifier|final
@@ -103,7 +107,7 @@ name|table
 init|=
 literal|"show_tablestatus"
 decl_stmt|;
-comment|/**    * thrift ddl for the result of show tables    */
+comment|/**    * thrift ddl for the result of show tables.    */
 specifier|private
 specifier|static
 specifier|final

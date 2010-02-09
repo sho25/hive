@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TaskRunner implementation  **/
+comment|/**  * TaskRunner implementation.  **/
 end_comment
 
 begin_class
@@ -142,7 +142,7 @@ name|runSequential
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Launches a task, and sets its exit value in the result variable    */
+comment|/**    * Launches a task, and sets its exit value in the result variable.    */
 specifier|public
 name|void
 name|runSequential

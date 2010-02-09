@@ -73,7 +73,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentTypeException
+name|Description
 import|;
 end_import
 
@@ -91,7 +91,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDFArgumentTypeException
 import|;
 end_import
 
@@ -571,37 +571,47 @@ extends|extends
 name|GenericUDAFEvaluator
 block|{
 comment|// For PARTIAL1 and COMPLETE
+specifier|private
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
 comment|// For PARTIAL2 and FINAL
+specifier|private
 name|StructObjectInspector
 name|soi
 decl_stmt|;
+specifier|private
 name|StructField
 name|countField
 decl_stmt|;
+specifier|private
 name|StructField
 name|sumField
 decl_stmt|;
+specifier|private
 name|StructField
 name|varianceField
 decl_stmt|;
+specifier|private
 name|LongObjectInspector
 name|countFieldOI
 decl_stmt|;
+specifier|private
 name|DoubleObjectInspector
 name|sumFieldOI
 decl_stmt|;
+specifier|private
 name|DoubleObjectInspector
 name|varianceFieldOI
 decl_stmt|;
 comment|// For PARTIAL1 and PARTIAL2
+specifier|private
 name|Object
 index|[]
 name|partialResult
 decl_stmt|;
 comment|// For FINAL and COMPLETE
+specifier|private
 name|DoubleWritable
 name|result
 decl_stmt|;
@@ -882,12 +892,13 @@ return|;
 block|}
 else|else
 block|{
-name|result
-operator|=
+name|setResult
+argument_list|(
 operator|new
 name|DoubleWritable
 argument_list|(
 literal|0
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -981,6 +992,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
+specifier|private
 name|boolean
 name|warned
 init|=
@@ -1545,7 +1557,8 @@ operator|>
 literal|1
 condition|)
 block|{
-name|result
+name|getResult
+argument_list|()
 operator|.
 name|set
 argument_list|(
@@ -1564,7 +1577,8 @@ block|}
 else|else
 block|{
 comment|// for one element the variance is always 0
-name|result
+name|getResult
+argument_list|()
 operator|.
 name|set
 argument_list|(
@@ -1573,9 +1587,34 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-name|result
+name|getResult
+argument_list|()
 return|;
 block|}
+block|}
+specifier|public
+name|void
+name|setResult
+parameter_list|(
+name|DoubleWritable
+name|result
+parameter_list|)
+block|{
+name|this
+operator|.
+name|result
+operator|=
+name|result
+expr_stmt|;
+block|}
+specifier|public
+name|DoubleWritable
+name|getResult
+parameter_list|()
+block|{
+return|return
+name|result
+return|;
 block|}
 block|}
 block|}

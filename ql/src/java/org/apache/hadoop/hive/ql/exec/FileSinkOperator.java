@@ -292,7 +292,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * File Sink operator implementation  **/
+comment|/**  * File Sink operator implementation.  **/
 end_comment
 
 begin_class
@@ -307,12 +307,12 @@ argument_list|>
 implements|implements
 name|Serializable
 block|{
+comment|/**    * RecordWriter.    *    */
 specifier|public
 specifier|static
 interface|interface
 name|RecordWriter
 block|{
-specifier|public
 name|void
 name|write
 parameter_list|(
@@ -322,7 +322,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|void
 name|close
 parameter_list|(
@@ -341,33 +340,33 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|RecordWriter
 name|outWriter
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|FileSystem
 name|fs
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Path
 name|outPath
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Path
 name|finalPath
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Serializer
 name|serializer
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|BytesWritable
 name|commonKey
 init|=
@@ -375,18 +374,19 @@ operator|new
 name|BytesWritable
 argument_list|()
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|TableIdEnum
 name|tabIdEnum
 init|=
 literal|null
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|LongWritable
 name|row_count
 decl_stmt|;
+comment|/**    * TableIdEnum.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -421,9 +421,9 @@ block|,
 name|TABLE_ID_14_ROWCOUNT
 block|,
 name|TABLE_ID_15_ROWCOUNT
-block|;    }
-specifier|transient
+block|;   }
 specifier|protected
+specifier|transient
 name|boolean
 name|autoDelete
 init|=
@@ -1175,7 +1175,7 @@ name|boolean
 name|success
 parameter_list|,
 name|Log
-name|LOG
+name|log
 parameter_list|)
 throws|throws
 name|IOException
@@ -1254,7 +1254,7 @@ block|{
 comment|// Step1: rename tmp output folder to intermediate path. After this
 comment|// point, updates from speculative tasks still writing to tmpPath
 comment|// will not appear in finalPath.
-name|LOG
+name|log
 operator|.
 name|info
 argument_list|(
@@ -1289,7 +1289,7 @@ name|intermediatePath
 argument_list|)
 expr_stmt|;
 comment|// Step3: move to the file destination
-name|LOG
+name|log
 operator|.
 name|info
 argument_list|(

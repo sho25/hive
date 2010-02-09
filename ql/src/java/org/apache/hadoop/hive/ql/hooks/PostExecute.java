@@ -71,7 +71,6 @@ interface|interface
 name|PostExecute
 block|{
 comment|/**    * The run command that is called just before the execution of the query.    *     * @param sess    *          The session state.    * @param inputs    *          The set of input tables and partitions.    * @param outputs    *          The set of output tables, partitions, local and hdfs directories.    * @param ugi    *          The user group security information.    */
-specifier|public
 name|void
 name|run
 parameter_list|(

@@ -92,8 +92,7 @@ specifier|public
 interface|interface
 name|InputFormatChecker
 block|{
-comment|/**    * This method is used to validate the input files    *     */
-specifier|public
+comment|/**    * This method is used to validate the input files.    *     */
 name|boolean
 name|validateInput
 parameter_list|(

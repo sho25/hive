@@ -36,7 +36,6 @@ specifier|public
 interface|interface
 name|JettyShims
 block|{
-specifier|public
 name|Server
 name|startServer
 parameter_list|(
@@ -49,11 +48,10 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
+comment|/**    * Server.    *    */
 interface|interface
 name|Server
 block|{
-specifier|public
 name|void
 name|addWar
 parameter_list|(
@@ -64,25 +62,18 @@ name|String
 name|mount
 parameter_list|)
 function_decl|;
-specifier|public
 name|void
 name|start
 parameter_list|()
 throws|throws
 name|Exception
 function_decl|;
-specifier|public
 name|void
 name|join
 parameter_list|()
 throws|throws
-name|java
-operator|.
-name|lang
-operator|.
 name|InterruptedException
 function_decl|;
-specifier|public
 name|void
 name|stop
 parameter_list|()

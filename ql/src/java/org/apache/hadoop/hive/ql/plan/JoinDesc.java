@@ -219,8 +219,8 @@ argument_list|>
 name|outputColumnNames
 decl_stmt|;
 comment|// key:column output name, value:tag
-specifier|transient
 specifier|private
+specifier|transient
 name|Map
 argument_list|<
 name|String
@@ -461,12 +461,14 @@ name|String
 argument_list|,
 name|Byte
 argument_list|>
-name|reversed_Exprs
+name|reversedExprs
 parameter_list|)
 block|{
+name|this
+operator|.
 name|reversedExprs
 operator|=
-name|reversed_Exprs
+name|reversedExprs
 expr_stmt|;
 block|}
 annotation|@
@@ -822,7 +824,7 @@ operator|=
 name|conds
 expr_stmt|;
 block|}
-comment|/**    * The order in which tables should be processed when joining    *     * @return Array of tags    */
+comment|/**    * The order in which tables should be processed when joining.    *     * @return Array of tags    */
 specifier|public
 name|Byte
 index|[]
@@ -833,7 +835,7 @@ return|return
 name|tagOrder
 return|;
 block|}
-comment|/**    * The order in which tables should be processed when joining    *     * @param tagOrder    *          Array of tags    */
+comment|/**    * The order in which tables should be processed when joining.    *     * @param tagOrder    *          Array of tags    */
 specifier|public
 name|void
 name|setTagOrder
@@ -866,7 +868,7 @@ return|return
 name|handleSkewJoin
 return|;
 block|}
-comment|/**    * set to handle skew join in this join op    *     * @param handleSkewJoin    */
+comment|/**    * set to handle skew join in this join op.    *     * @param handleSkewJoin    */
 specifier|public
 name|void
 name|setHandleSkewJoin
@@ -882,7 +884,7 @@ operator|=
 name|handleSkewJoin
 expr_stmt|;
 block|}
-comment|/**    * @return mapping from tbl to dir for big keys    */
+comment|/**    * @return mapping from tbl to dir for big keys.    */
 specifier|public
 name|Map
 argument_list|<
@@ -897,7 +899,7 @@ return|return
 name|bigKeysDirMap
 return|;
 block|}
-comment|/**    * set the mapping from tbl to dir for big keys    *     * @param bigKeysDirMap    */
+comment|/**    * set the mapping from tbl to dir for big keys.    *     * @param bigKeysDirMap    */
 specifier|public
 name|void
 name|setBigKeysDirMap
@@ -938,7 +940,7 @@ return|return
 name|smallKeysDirMap
 return|;
 block|}
-comment|/**    * set the mapping from tbl to dir for small keys    *     * @param bigKeysDirMap    */
+comment|/**    * set the mapping from tbl to dir for small keys.    *     * @param bigKeysDirMap    */
 specifier|public
 name|void
 name|setSmallKeysDirMap
@@ -974,7 +976,7 @@ return|return
 name|skewKeyDefinition
 return|;
 block|}
-comment|/**    * set skew key definition    *     * @param skewKeyDefinition    */
+comment|/**    * set skew key definition.    *     * @param skewKeyDefinition    */
 specifier|public
 name|void
 name|setSkewKeyDefinition

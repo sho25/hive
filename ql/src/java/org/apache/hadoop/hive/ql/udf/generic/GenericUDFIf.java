@@ -176,10 +176,12 @@ name|GenericUDFIf
 extends|extends
 name|GenericUDF
 block|{
+specifier|private
 name|ObjectInspector
 index|[]
 name|argumentOIs
 decl_stmt|;
+specifier|private
 name|GenericUDFUtils
 operator|.
 name|ReturnObjectInspectorResolver

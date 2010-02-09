@@ -119,6 +119,10 @@ name|GenericUDTF
 import|;
 end_import
 
+begin_comment
+comment|/**  * FunctionInfo.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -306,7 +310,7 @@ return|return
 name|genericUDAFResolver
 return|;
 block|}
-comment|/**    * Get the Class of the UDF    */
+comment|/**    * Get the Class of the UDF.    */
 specifier|public
 name|Class
 argument_list|<

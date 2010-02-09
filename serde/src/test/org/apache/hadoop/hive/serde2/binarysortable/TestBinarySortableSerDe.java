@@ -247,6 +247,10 @@ name|BytesWritable
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestBinarySortableSerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

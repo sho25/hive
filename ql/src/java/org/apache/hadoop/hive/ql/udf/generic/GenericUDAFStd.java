@@ -35,7 +35,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentTypeException
+name|Description
 import|;
 end_import
 
@@ -53,7 +53,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDFArgumentTypeException
 import|;
 end_import
 
@@ -362,7 +362,8 @@ operator|>
 literal|1
 condition|)
 block|{
-name|result
+name|getResult
+argument_list|()
 operator|.
 name|set
 argument_list|(
@@ -386,7 +387,8 @@ block|}
 else|else
 block|{
 comment|// for one element the variance is always 0
-name|result
+name|getResult
+argument_list|()
 operator|.
 name|set
 argument_list|(
@@ -395,7 +397,8 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-name|result
+name|getResult
+argument_list|()
 return|;
 block|}
 block|}

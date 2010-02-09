@@ -256,6 +256,7 @@ name|skewJoinKeyContext
 init|=
 literal|null
 decl_stmt|;
+comment|/**    * SkewkeyTableCounter.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -263,9 +264,9 @@ name|SkewkeyTableCounter
 block|{
 name|SKEWJOINFOLLOWUPJOBS
 block|}
-specifier|transient
 specifier|private
 specifier|final
+specifier|transient
 name|LongWritable
 name|skewjoin_followup_jobs
 init|=
@@ -615,7 +616,7 @@ operator|.
 name|JOIN
 return|;
 block|}
-comment|/**    * All done    *     */
+comment|/**    * All done.    *     */
 annotation|@
 name|Override
 specifier|public

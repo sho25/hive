@@ -102,7 +102,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Walks the operator tree in pre order fashion  */
+comment|/**  * Walks the operator tree in pre order fashion.  */
 end_comment
 
 begin_class
@@ -112,7 +112,7 @@ name|GenMapRedWalker
 extends|extends
 name|DefaultGraphWalker
 block|{
-comment|/**    * constructor of the walker - the dispatcher is passed    *     * @param disp    *          the dispatcher to be called for each node visited    */
+comment|/**    * constructor of the walker - the dispatcher is passed.    *     * @param disp    *          the dispatcher to be called for each node visited    */
 specifier|public
 name|GenMapRedWalker
 parameter_list|(
@@ -126,7 +126,7 @@ name|disp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Walk the given operator    *     * @param nd    *          operator being walked    */
+comment|/**    * Walk the given operator.    *     * @param nd    *          operator being walked    */
 annotation|@
 name|Override
 specifier|public

@@ -83,7 +83,6 @@ interface|interface
 name|Serializer
 block|{
 comment|/**    * Initialize the HiveSerializer.    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
-specifier|public
 name|void
 name|initialize
 parameter_list|(
@@ -97,7 +96,6 @@ throws|throws
 name|SerDeException
 function_decl|;
 comment|/**    * Returns the Writable class that would be returned by the serialize method.    * This is used to initialize SequenceFile header.    */
-specifier|public
 name|Class
 argument_list|<
 name|?
@@ -108,7 +106,6 @@ name|getSerializedClass
 parameter_list|()
 function_decl|;
 comment|/**    * Serialize an object by navigating inside the Object with the    * ObjectInspector. In most cases, the return value of this function will be    * constant since the function will reuse the Writable object. If the client    * wants to keep a copy of the Writable, the client needs to clone the    * returned value.    */
-specifier|public
 name|Writable
 name|serialize
 parameter_list|(

@@ -19,15 +19,11 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
+name|java
 operator|.
 name|util
 operator|.
-name|VersionInfo
+name|HashMap
 import|;
 end_import
 
@@ -43,13 +39,21 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
 operator|.
 name|util
 operator|.
-name|HashMap
+name|VersionInfo
 import|;
 end_import
+
+begin_comment
+comment|/**  * ShimLoader.  *  */
+end_comment
 
 begin_class
 specifier|public
@@ -70,6 +74,7 @@ decl_stmt|;
 comment|/**    * The names of the classes for shimming Hadoop for each major version.    */
 specifier|private
 specifier|static
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -129,6 +134,7 @@ block|}
 comment|/**    * The names of the classes for shimming Jetty for each major version of    * Hadoop.    */
 specifier|private
 specifier|static
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -187,8 +193,8 @@ expr_stmt|;
 block|}
 comment|/**    * Factory method to get an instance of HadoopShims based on the    * version of Hadoop on the classpath.    */
 specifier|public
-specifier|synchronized
 specifier|static
+specifier|synchronized
 name|HadoopShims
 name|getHadoopShims
 parameter_list|()
@@ -218,8 +224,8 @@ return|;
 block|}
 comment|/**    * Factory method to get an instance of JettyShims based on the version    * of Hadoop on the classpath.    */
 specifier|public
-specifier|synchronized
 specifier|static
+specifier|synchronized
 name|JettyShims
 name|getJettyShims
 parameter_list|()
@@ -350,8 +356,8 @@ name|getVersion
 argument_list|()
 decl_stmt|;
 name|String
-name|parts
 index|[]
+name|parts
 init|=
 name|vers
 operator|.
@@ -394,6 +400,12 @@ index|[
 literal|1
 index|]
 return|;
+block|}
+specifier|private
+name|ShimLoader
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

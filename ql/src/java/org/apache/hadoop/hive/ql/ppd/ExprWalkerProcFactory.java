@@ -391,9 +391,11 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|ExprWalkerProcFactory
 block|{
+comment|/**    * ColumnExprProcessor.    *    */
 specifier|public
 specifier|static
 class|class
@@ -401,7 +403,7 @@ name|ColumnExprProcessor
 implements|implements
 name|NodeProcessor
 block|{
-comment|/**      * Converts the reference from child row resolver to current row resolver      */
+comment|/**      * Converts the reference from child row resolver to current row resolver.      */
 annotation|@
 name|Override
 specifier|public
@@ -599,6 +601,7 @@ literal|true
 return|;
 block|}
 block|}
+comment|/**    * FieldExprProcessor.    *    */
 specifier|public
 specifier|static
 class|class
@@ -801,7 +804,7 @@ name|isCandidate
 return|;
 block|}
 block|}
-comment|/**    * If all children are candidates and refer only to one table alias then this    * expr is a candidate else it is not a candidate but its children could be    * final candidates    */
+comment|/**    * If all children are candidates and refer only to one table alias then this    * expr is a candidate else it is not a candidate but its children could be    * final candidates.    */
 specifier|public
 specifier|static
 class|class
@@ -1061,7 +1064,7 @@ name|isCandidate
 return|;
 block|}
 block|}
-comment|/**    * For constants and null expressions    */
+comment|/**    * For constants and null expressions.    */
 specifier|public
 specifier|static
 class|class
@@ -1220,7 +1223,7 @@ name|preds
 argument_list|)
 return|;
 block|}
-comment|/**    * Extracts pushdown predicates from the given list of predicate expression    *     * @param opContext    *          operator context used for resolving column references    * @param op    *          operator of the predicates being processed    * @param preds    * @return The expression walker information    * @throws SemanticException    */
+comment|/**    * Extracts pushdown predicates from the given list of predicate expression.    *     * @param opContext    *          operator context used for resolving column references    * @param op    *          operator of the predicates being processed    * @param preds    * @return The expression walker information    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|ExprWalkerInfo
@@ -1459,7 +1462,7 @@ return|return
 name|exprContext
 return|;
 block|}
-comment|/**    * Walks through the top AND nodes and determine which of them are final    * candidates    */
+comment|/**    * Walks through the top AND nodes and determine which of them are final    * candidates.    */
 specifier|private
 specifier|static
 name|void
@@ -1526,6 +1529,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+specifier|private
+name|ExprWalkerProcFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

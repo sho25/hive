@@ -18,11 +18,12 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Collection of Java class loading/reflection related utilities common across  * Hive  */
+comment|/**  * Collection of Java class loading/reflection related utilities common across  * Hive.  */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|JavaUtils
 block|{
@@ -64,6 +65,12 @@ block|}
 return|return
 name|classLoader
 return|;
+block|}
+specifier|private
+name|JavaUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

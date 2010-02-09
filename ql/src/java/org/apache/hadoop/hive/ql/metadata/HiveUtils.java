@@ -20,11 +20,12 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * General collection of helper functions  *   */
+comment|/**  * General collection of helper functions.  *   */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|HiveUtils
 block|{
@@ -499,6 +500,12 @@ name|identifier
 operator|+
 literal|"`"
 return|;
+block|}
+specifier|private
+name|HiveUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

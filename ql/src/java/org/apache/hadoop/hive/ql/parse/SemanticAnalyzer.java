@@ -20,6 +20,76 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|Constants
+operator|.
+name|LIST_COLUMNS
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|Constants
+operator|.
+name|LIST_COLUMN_TYPES
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|Constants
+operator|.
+name|SERIALIZATION_FORMAT
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|StringUtils
+operator|.
+name|stringifyException
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -1315,42 +1385,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|DDLWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|AggregationDesc
 import|;
 end_import
@@ -1406,6 +1440,24 @@ operator|.
 name|plan
 operator|.
 name|CreateViewDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|DDLWork
 import|;
 end_import
 
@@ -1621,6 +1673,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|JoinCondDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|JoinDesc
 import|;
 end_import
@@ -1748,6 +1818,24 @@ operator|.
 name|plan
 operator|.
 name|PartitionDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|PlanUtils
 import|;
 end_import
 
@@ -2252,7 +2340,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the semantic analyzer  */
+comment|/**  * Implementation of the semantic analyzer.  */
 end_comment
 
 begin_class
@@ -4300,7 +4388,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Given the AST with TOK_LATERAL_VIEW as the root, get the alias for the    * table or subquery in the lateral view and also make a mapping from the    * alias to all the lateral view AST's    *     * @param qb    * @param lateralView    * @return the alias for the table/subquery    * @throws SemanticException    */
+comment|/**    * Given the AST with TOK_LATERAL_VIEW as the root, get the alias for the    * table or subquery in the lateral view and also make a mapping from the    * alias to all the lateral view AST's.    *     * @param qb    * @param lateralView    * @return the alias for the table/subquery    * @throws SemanticException    */
 specifier|private
 name|String
 name|processLateralView
@@ -5902,16 +5990,6 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -6122,16 +6200,6 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -8443,7 +8511,7 @@ name|pos
 argument_list|)
 return|;
 block|}
-comment|/**    * If the user script command needs any modifications - do it here    */
+comment|/**    * If the user script command needs any modifications - do it here.    */
 specifier|private
 name|String
 name|getFixedCmd
@@ -17026,7 +17094,7 @@ return|return
 name|op
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using a single map-reduce job (3 operators will be    * inserted):    *     * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) SortGroupBy (keys = (KEY.0,KEY.1), aggregations =    * (count_distinct(KEY.2), sum(VALUE.0), count(VALUE.1))) Select (final    * selects)    *     * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *     *           Generate a Group-By plan using 1 map-reduce job. Spray by the    *           group by key, and sort by the distinct key (if any), and compute    *           aggregates * The agggregation evaluation functions are as    *           follows: Partitioning Key: grouping key    *     *           Sorting Key: grouping key if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Reducer: iterate/merge (mode = COMPLETE)    **/
+comment|/**    * Generate a Group-By plan using a single map-reduce job (3 operators will be    * inserted):    *     * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) SortGroupBy (keys = (KEY.0,KEY.1), aggregations =    * (count_distinct(KEY.2), sum(VALUE.0), count(VALUE.1))) Select (final    * selects).    *     * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *     *           Generate a Group-By plan using 1 map-reduce job. Spray by the    *           group by key, and sort by the distinct key (if any), and compute    *           aggregates * The agggregation evaluation functions are as    *           follows: Partitioning Key: grouping key    *     *           Sorting Key: grouping key if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Reducer: iterate/merge (mode = COMPLETE)    **/
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -17339,7 +17407,7 @@ return|return
 name|groupByOperatorInfo2
 return|;
 block|}
-comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs (5 operators will be    * inserted):    *     * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) NOTE: If DISTINCT_EXP is null, partition by rand() SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (count_distinct(KEY.2), sum(VALUE.0),    * count(VALUE.1))) ReduceSink ( keys = (0,1), values=(2,3,4)) SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (sum(VALUE.0), sum(VALUE.1),    * sum(VALUE.2))) Select (final selects)    *     * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *     *           Generate a Group-By plan using a 2 map-reduce jobs. Spray by the    *           grouping key and distinct key (or a random number, if no distinct    *           is present) in hope of getting a uniform distribution, and    *           compute partial aggregates grouped by the reduction key (grouping    *           key + distinct key). Evaluate partial aggregates first, and spray    *           by the grouping key to compute actual aggregates in the second    *           phase. The agggregation evaluation functions are as follows:    *           Partitioning Key: random() if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Sorting Key: grouping key if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Reducer: iterate/terminatePartial (mode = PARTIAL1)    *     *           STAGE 2    *     *           Partitioning Key: grouping key    *     *           Sorting Key: grouping key if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Reducer: merge/terminate (mode = FINAL)    */
+comment|/**    * Generate a Group-By plan using a 2 map-reduce jobs (5 operators will be    * inserted):    *     * ReduceSink ( keys = (K1_EXP, K2_EXP, DISTINCT_EXP), values = (A1_EXP,    * A2_EXP) ) NOTE: If DISTINCT_EXP is null, partition by rand() SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (count_distinct(KEY.2), sum(VALUE.0),    * count(VALUE.1))) ReduceSink ( keys = (0,1), values=(2,3,4)) SortGroupBy    * (keys = (KEY.0,KEY.1), aggregations = (sum(VALUE.0), sum(VALUE.1),    * sum(VALUE.2))) Select (final selects).    *     * @param dest    * @param qb    * @param input    * @return    * @throws SemanticException    *     *           Generate a Group-By plan using a 2 map-reduce jobs. Spray by the    *           grouping key and distinct key (or a random number, if no distinct    *           is present) in hope of getting a uniform distribution, and    *           compute partial aggregates grouped by the reduction key (grouping    *           key + distinct key). Evaluate partial aggregates first, and spray    *           by the grouping key to compute actual aggregates in the second    *           phase. The agggregation evaluation functions are as follows:    *           Partitioning Key: random() if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Sorting Key: grouping key if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Reducer: iterate/terminatePartial (mode = PARTIAL1)    *     *           STAGE 2    *     *           Partitioning Key: grouping key    *     *           Sorting Key: grouping key if no DISTINCT grouping + distinct key    *           if DISTINCT    *     *           Reducer: merge/terminate (mode = FINAL)    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -21915,35 +21983,11 @@ operator|=
 name|input
 expr_stmt|;
 block|}
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|JoinCondDesc
 index|[]
 name|joinCondns
 init|=
 operator|new
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|JoinCondDesc
 index|[
 name|join
@@ -21991,18 +22035,6 @@ name|i
 index|]
 operator|=
 operator|new
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|JoinCondDesc
 argument_list|(
 name|condn
@@ -24241,7 +24273,7 @@ comment|// Handle a table - populate aliases appropriately:
 comment|// leftAliases should contain the first table, rightAliases should
 comment|// contain all other tables and baseSrc should contain all tables
 name|String
-name|table_name
+name|tableName
 init|=
 name|unescapeIdentifier
 argument_list|(
@@ -24266,7 +24298,7 @@ argument_list|()
 operator|==
 literal|1
 condition|?
-name|table_name
+name|tableName
 else|:
 name|unescapeIdentifier
 argument_list|(
@@ -25114,7 +25146,7 @@ operator|)
 condition|)
 block|{
 name|String
-name|table_name
+name|tableName
 init|=
 name|unescapeIdentifier
 argument_list|(
@@ -25139,7 +25171,7 @@ argument_list|()
 operator|==
 literal|1
 condition|?
-name|table_name
+name|tableName
 else|:
 name|unescapeIdentifier
 argument_list|(
@@ -30924,9 +30956,9 @@ literal|"No need for sample filter"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// The table is not bucketed, add a dummy filter :: rand()
 else|else
 block|{
+comment|// The table is not bucketed, add a dummy filter :: rand()
 name|int
 name|freq
 init|=
@@ -32177,16 +32209,6 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-operator|.
 name|stringifyException
 argument_list|(
 name|e
@@ -32512,18 +32534,6 @@ name|Utilities
 operator|.
 name|makeProperties
 argument_list|(
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde
-operator|.
-name|Constants
-operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
 literal|""
@@ -32532,34 +32542,10 @@ name|Utilities
 operator|.
 name|ctrlaCode
 argument_list|,
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde
-operator|.
-name|Constants
-operator|.
 name|LIST_COLUMNS
 argument_list|,
 name|cols
 argument_list|,
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde
-operator|.
-name|Constants
-operator|.
 name|LIST_COLUMN_TYPES
 argument_list|,
 name|colTypes

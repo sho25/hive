@@ -55,8 +55,8 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|int
 name|numInputs
 decl_stmt|;

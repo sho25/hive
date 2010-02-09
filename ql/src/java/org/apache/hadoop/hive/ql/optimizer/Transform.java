@@ -64,8 +64,7 @@ specifier|public
 interface|interface
 name|Transform
 block|{
-comment|/**    * All transformation steps implement this interface    *     * @param pctx    *          input parse context    * @return ParseContext    * @throws SemanticException    */
-specifier|public
+comment|/**    * All transformation steps implement this interface.    *     * @param pctx    *          input parse context    * @return ParseContext    * @throws SemanticException    */
 name|ParseContext
 name|transform
 parameter_list|(

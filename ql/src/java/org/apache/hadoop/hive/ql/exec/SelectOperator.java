@@ -146,7 +146,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Select operator implementation  **/
+comment|/**  * Select operator implementation.  */
 end_comment
 
 begin_class
@@ -169,8 +169,8 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ExprNodeEvaluator
 index|[]
 name|eval

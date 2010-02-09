@@ -393,9 +393,16 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|ExprProcFactory
 block|{
+specifier|private
+name|ExprProcFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 comment|/**    * Processor for column expressions.    */
 specifier|public
 specifier|static
@@ -507,7 +514,7 @@ name|newcd
 return|;
 block|}
 block|}
-comment|/**    * If all children are candidates and refer only to one table alias then this    * expr is a candidate else it is not a candidate but its children could be    * final candidates    */
+comment|/**    * If all children are candidates and refer only to one table alias then this    * expr is a candidate else it is not a candidate but its children could be    * final candidates.    */
 specifier|public
 specifier|static
 class|class
@@ -721,6 +728,7 @@ name|newfd
 return|;
 block|}
 block|}
+comment|/**    * FieldExprProcessor.    *    */
 specifier|public
 specifier|static
 class|class
@@ -1013,7 +1021,7 @@ name|ColumnExprProcessor
 argument_list|()
 return|;
 block|}
-comment|/**    * Generates the partition pruner for the expression tree    *     * @param tabAlias    *          The table alias of the partition table that is being considered    *          for pruning    * @param pred    *          The predicate from which the partition pruner needs to be    *          generated    * @return hasNonPartCols returns true/false depending upon whether this pred    *         has a non partition column    * @throws SemanticException    */
+comment|/**    * Generates the partition pruner for the expression tree.    *     * @param tabAlias    *          The table alias of the partition table that is being considered    *          for pruning    * @param pred    *          The predicate from which the partition pruner needs to be    *          generated    * @return hasNonPartCols returns true/false depending upon whether this pred    *         has a non partition column    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|ExprNodeDesc

@@ -35,6 +35,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -72,24 +90,6 @@ operator|.
 name|exec
 operator|.
 name|UDFArgumentTypeException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Description
 import|;
 end_import
 
@@ -229,9 +229,7 @@ literal|"instr"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(str, substr) - Returns the index of the first occurance "
-operator|+
-literal|"of substr in str"
+literal|"_FUNC_(str, substr) - Returns the index of the first occurance of substr in str"
 argument_list|,
 name|extended
 operator|=

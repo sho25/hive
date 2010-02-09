@@ -399,6 +399,7 @@ name|currAliasId
 return|;
 block|}
 block|}
+comment|/**    * GenMRUnionCtx.    *    */
 specifier|public
 specifier|static
 class|class
@@ -546,6 +547,7 @@ name|tt_desc
 return|;
 block|}
 block|}
+comment|/**    * GenMRMapJoinCtx.    *    */
 specifier|public
 specifier|static
 class|class

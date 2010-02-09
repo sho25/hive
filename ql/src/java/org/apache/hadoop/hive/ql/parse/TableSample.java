@@ -38,12 +38,12 @@ specifier|public
 class|class
 name|TableSample
 block|{
-comment|/**    * The numerator of the TABLESAMPLE clause    */
+comment|/**    * The numerator of the TABLESAMPLE clause.    */
 specifier|private
 name|int
 name|numerator
 decl_stmt|;
-comment|/**    * The denominator of the TABLESAMPLE clause    */
+comment|/**    * The denominator of the TABLESAMPLE clause.    */
 specifier|private
 name|int
 name|denominator
@@ -56,12 +56,12 @@ name|ASTNode
 argument_list|>
 name|exprs
 decl_stmt|;
-comment|/**    * Flag to indicate that input files can be pruned    */
+comment|/**    * Flag to indicate that input files can be pruned.    */
 specifier|private
 name|boolean
 name|inputPruning
 decl_stmt|;
-comment|/**    * Constructs the TableSample given the numerator, denominator and the list of    * ON clause expressions    *     * @param num    *          The numerator    * @param den    *          The denominator    * @param exprs    *          The list of expressions in the ON part of the TABLESAMPLE clause    */
+comment|/**    * Constructs the TableSample given the numerator, denominator and the list of    * ON clause expressions.    *     * @param num    *          The numerator    * @param den    *          The denominator    * @param exprs    *          The list of expressions in the ON part of the TABLESAMPLE clause    */
 specifier|public
 name|TableSample
 parameter_list|(
@@ -132,7 +132,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * Gets the numerator    *     * @return int    */
+comment|/**    * Gets the numerator.    *     * @return int    */
 specifier|public
 name|int
 name|getNumerator
@@ -142,7 +142,7 @@ return|return
 name|numerator
 return|;
 block|}
-comment|/**    * Sets the numerator    *     * @param num    *          The numerator    */
+comment|/**    * Sets the numerator.    *     * @param num    *          The numerator    */
 specifier|public
 name|void
 name|setNumerator
@@ -156,7 +156,7 @@ operator|=
 name|num
 expr_stmt|;
 block|}
-comment|/**    * Gets the denominator    *     * @return int    */
+comment|/**    * Gets the denominator.    *     * @return int    */
 specifier|public
 name|int
 name|getDenominator
@@ -166,7 +166,7 @@ return|return
 name|denominator
 return|;
 block|}
-comment|/**    * Sets the denominator    *     * @param den    *          The denominator    */
+comment|/**    * Sets the denominator.    *     * @param den    *          The denominator    */
 specifier|public
 name|void
 name|setDenominator
@@ -180,7 +180,7 @@ operator|=
 name|den
 expr_stmt|;
 block|}
-comment|/**    * Gets the ON part's expression list    *     * @return ArrayList<ASTNode>    */
+comment|/**    * Gets the ON part's expression list.    *     * @return ArrayList<ASTNode>    */
 specifier|public
 name|ArrayList
 argument_list|<
@@ -193,7 +193,7 @@ return|return
 name|exprs
 return|;
 block|}
-comment|/**    * Sets the expression list    *     * @param exprs    *          The expression list    */
+comment|/**    * Sets the expression list.    *     * @param exprs    *          The expression list    */
 specifier|public
 name|void
 name|setExprs
@@ -212,7 +212,7 @@ operator|=
 name|exprs
 expr_stmt|;
 block|}
-comment|/**    * Gets the flag that indicates whether input pruning is possible    *     * @return boolean    */
+comment|/**    * Gets the flag that indicates whether input pruning is possible.    *     * @return boolean    */
 specifier|public
 name|boolean
 name|getInputPruning
@@ -222,7 +222,7 @@ return|return
 name|inputPruning
 return|;
 block|}
-comment|/**    * Sets the flag that indicates whether input pruning is possible or not    *     * @param inputPruning    *          true if input pruning is possible    */
+comment|/**    * Sets the flag that indicates whether input pruning is possible or not.    *     * @param inputPruning    *          true if input pruning is possible    */
 specifier|public
 name|void
 name|setInputPruning

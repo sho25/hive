@@ -89,6 +89,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|LazyObjectInspectorFactory
 block|{
@@ -629,6 +630,12 @@ block|}
 return|return
 name|result
 return|;
+block|}
+specifier|private
+name|LazyObjectInspectorFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

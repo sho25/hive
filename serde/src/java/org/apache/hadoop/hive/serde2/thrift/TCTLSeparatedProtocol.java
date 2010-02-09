@@ -360,8 +360,8 @@ name|WriteNullsProtocol
 implements|,
 name|SkippableTProtocol
 block|{
-specifier|final
 specifier|static
+specifier|final
 name|Log
 name|LOG
 init|=
@@ -387,7 +387,7 @@ operator|)
 operator|-
 literal|1
 decl_stmt|;
-comment|/**    * Factory for JSON protocol objects    */
+comment|/**    * Factory for JSON protocol objects.    */
 specifier|public
 specifier|static
 class|class
@@ -412,40 +412,40 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * These are defaults, but for now leaving them like this    */
-specifier|final
-specifier|static
+comment|/**    * These are defaults, but for now leaving them like this.    */
 specifier|protected
+specifier|static
+specifier|final
 name|String
 name|defaultPrimarySeparator
 init|=
 literal|"\001"
 decl_stmt|;
-specifier|final
-specifier|static
 specifier|protected
+specifier|static
+specifier|final
 name|String
 name|defaultSecondarySeparator
 init|=
 literal|"\002"
 decl_stmt|;
-specifier|final
-specifier|static
 specifier|protected
+specifier|static
+specifier|final
 name|String
 name|defaultRowSeparator
 init|=
 literal|"\n"
 decl_stmt|;
-specifier|final
-specifier|static
 specifier|protected
+specifier|static
+specifier|final
 name|String
 name|defaultMapSeparator
 init|=
 literal|"\003"
 decl_stmt|;
-comment|/**    * The separators for this instance    */
+comment|/**    * The separators for this instance.    */
 specifier|protected
 name|String
 name|primarySeparator
@@ -516,39 +516,39 @@ return|return
 name|mapSeparator
 return|;
 block|}
-comment|/**    * The transport stream is tokenized on the row separator    */
+comment|/**    * The transport stream is tokenized on the row separator.    */
 specifier|protected
 name|SimpleTransportTokenizer
 name|transportTokenizer
 decl_stmt|;
-comment|/**    * For a single row, the split on the primary separator    */
+comment|/**    * For a single row, the split on the primary separator.    */
 specifier|protected
 name|String
-name|columns
 index|[]
+name|columns
 decl_stmt|;
-comment|/**    * An index into what column we're on    */
+comment|/**    * An index into what column we're on.    */
 specifier|protected
 name|int
 name|index
 decl_stmt|;
-comment|/**    * For a single column, a split on the secondary separator    */
+comment|/**    * For a single column, a split on the secondary separator.    */
 specifier|protected
 name|String
-name|fields
 index|[]
+name|fields
 decl_stmt|;
-comment|/**    * An index into what field within a column we're on    */
+comment|/**    * An index into what field within a column we're on.    */
 specifier|protected
 name|int
 name|innerIndex
 decl_stmt|;
-comment|/**    * Is this the first field we're writing    */
+comment|/**    * Is this the first field we're writing.    */
 specifier|protected
 name|boolean
 name|firstField
 decl_stmt|;
-comment|/**    * Is this the first list/map/set field we're writing for the current element    */
+comment|/**    * Is this the first list/map/set field we're writing for the current element.    */
 specifier|protected
 name|boolean
 name|firstInnerField
@@ -558,12 +558,12 @@ specifier|protected
 name|boolean
 name|isMap
 decl_stmt|;
-comment|/**    * For writes, on what element are we on so we know when to use normal list    * separator or for a map know when to use the k/v separator    */
+comment|/**    * For writes, on what element are we on so we know when to use normal list    * separator or for a map know when to use the k/v separator.    */
 specifier|protected
 name|long
 name|elemIndex
 decl_stmt|;
-comment|/**    * Are we currently on the top-level columns or parsing a column itself    */
+comment|/**    * Are we currently on the top-level columns or parsing a column itself.    */
 specifier|protected
 name|boolean
 name|inner
@@ -574,23 +574,23 @@ name|boolean
 name|returnNulls
 decl_stmt|;
 comment|/**    * The transport being wrapped.    *     */
-specifier|final
 specifier|protected
+specifier|final
 name|TTransport
 name|innerTransport
 decl_stmt|;
 comment|/**    * Strings used to lookup the various configurable paramaters of this    * protocol.    */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|ReturnNullsKey
 init|=
 literal|"separators.return_nulls"
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|BufferSizeKey
 init|=
@@ -601,17 +601,17 @@ specifier|protected
 name|int
 name|bufferSize
 decl_stmt|;
-comment|/**    * The string representing nulls in the serialized data. e.g., \N as in mysql    */
+comment|/**    * The string representing nulls in the serialized data. e.g., \N as in mysql.    */
 specifier|protected
 name|String
 name|nullString
 decl_stmt|;
-comment|/**    * The nullString in UTF-8 bytes    */
+comment|/**    * The nullString in UTF-8 bytes.    */
 specifier|protected
 name|Text
 name|nullText
 decl_stmt|;
-comment|/**    * A convenience class for tokenizing a TTransport    */
+comment|/**    * A convenience class for tokenizing a TTransport.    */
 class|class
 name|SimpleTransportTokenizer
 block|{
@@ -626,8 +626,8 @@ name|String
 name|separator
 decl_stmt|;
 name|byte
-name|buf
 index|[]
+name|buf
 decl_stmt|;
 specifier|public
 name|SimpleTransportTokenizer
@@ -1225,7 +1225,7 @@ specifier|protected
 name|Pattern
 name|stripQuotePostfix
 decl_stmt|;
-comment|/**    *     * Split the line based on a complex regex pattern    *     * @param line    *          the current row    * @param p    *          the pattern for matching fields in the row    * @return List of Strings - not including the separator in them    */
+comment|/**    *     * Split the line based on a complex regex pattern.    *     * @param line    *          the current row    * @param p    *          the pattern for matching fields in the row    * @return List of Strings - not including the separator in them    */
 specifier|protected
 name|String
 index|[]
@@ -1430,8 +1430,8 @@ block|{
 try|try
 block|{
 name|byte
-name|b
 index|[]
+name|b
 init|=
 operator|new
 name|byte
@@ -1477,7 +1477,7 @@ return|return
 name|defaultVal
 return|;
 block|}
-comment|/**    * Initialize the TProtocol    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws TException    */
+comment|/**    * Initialize the TProtocol.    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws TException    */
 specifier|public
 name|void
 name|initialize
@@ -2046,8 +2046,8 @@ comment|// for writing out single byte
 specifier|private
 specifier|final
 name|byte
-name|buf
 index|[]
+name|buf
 init|=
 operator|new
 name|byte

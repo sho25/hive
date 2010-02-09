@@ -99,6 +99,20 @@ name|apache
 operator|.
 name|commons
 operator|.
+name|lang
+operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
 name|logging
 operator|.
 name|Log
@@ -161,22 +175,8 @@ name|UserGroupInformation
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|lang
-operator|.
-name|StringUtils
-import|;
-end_import
-
 begin_comment
-comment|/**  * Hive Configuration  */
+comment|/**  * Hive Configuration.  */
 end_comment
 
 begin_class
@@ -213,10 +213,10 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * metastore related options that the db is initialized against    */
+comment|/**    * Metastore related options that the db is initialized against.    */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|HiveConf
 operator|.
 name|ConfVars
@@ -243,6 +243,7 @@ operator|.
 name|METASTOREURIS
 block|}
 decl_stmt|;
+comment|/**    * ConfVars.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -943,9 +944,8 @@ literal|"hive.optimize.groupby"
 argument_list|,
 literal|true
 argument_list|)
-block|,
-comment|// optimize group by
 block|;
+comment|// optimize group by
 specifier|public
 specifier|final
 name|String
@@ -1906,6 +1906,7 @@ name|hadoopconfurl
 operator|==
 literal|null
 condition|)
+block|{
 name|hadoopconfurl
 operator|=
 name|getClassLoader
@@ -1916,6 +1917,7 @@ argument_list|(
 literal|"hadoop-site.xml"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|hadoopconfurl
@@ -2049,6 +2051,7 @@ argument_list|()
 operator|>
 literal|0
 condition|)
+block|{
 name|this
 operator|.
 name|set
@@ -2067,6 +2070,7 @@ name|varname
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

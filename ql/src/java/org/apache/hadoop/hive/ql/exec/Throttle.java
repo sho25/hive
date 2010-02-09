@@ -90,19 +90,21 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * Intelligence to make clients wait if the cluster is in a bad state.  */
+comment|/**  * Intelligence to make clients wait if the cluster is in a bad state.  */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|Throttle
 block|{
 comment|// The percentage of maximum allocated memory that triggers GC
 comment|// on job tracker. This could be overridden thru the jobconf.
 comment|// The default is such that there is no throttling.
-specifier|static
 specifier|private
+specifier|static
+specifier|final
 name|int
 name|DEFAULT_MEMORY_GC_PERCENT
 init|=
@@ -110,14 +112,15 @@ literal|100
 decl_stmt|;
 comment|// sleep this many seconds between each retry.
 comment|// This could be overridden thru the jobconf.
-specifier|static
 specifier|private
+specifier|static
+specifier|final
 name|int
 name|DEFAULT_RETRY_PERIOD
 init|=
 literal|60
 decl_stmt|;
-comment|/**    * fetch http://tracker.om:/gc.jsp?threshold=period    */
+comment|/**    * Fetch http://tracker.om:/gc.jsp?threshold=period.    */
 specifier|static
 name|void
 name|checkJobTracker
@@ -132,8 +135,8 @@ block|{
 try|try
 block|{
 name|byte
-name|buffer
 index|[]
+name|buffer
 init|=
 operator|new
 name|byte
@@ -420,6 +423,12 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|private
+name|Throttle
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

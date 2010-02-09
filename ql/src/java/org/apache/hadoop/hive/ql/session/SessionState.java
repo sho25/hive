@@ -252,7 +252,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * SessionState encapsulates common data associated with a session  *   * Also provides support for a thread static session object that can be accessed  * from any point in the code to interact with the user and to retrieve  * configuration information  */
+comment|/**  * SessionState encapsulates common data associated with a session.  *   * Also provides support for a thread static session object that can be accessed  * from any point in the code to interact with the user and to retrieve  * configuration information  */
 end_comment
 
 begin_class
@@ -260,12 +260,12 @@ specifier|public
 class|class
 name|SessionState
 block|{
-comment|/**    * current configuration    */
+comment|/**    * current configuration.    */
 specifier|protected
 name|HiveConf
 name|conf
 decl_stmt|;
-comment|/**    * silent mode    */
+comment|/**    * silent mode.    */
 specifier|protected
 name|boolean
 name|isSilent
@@ -275,7 +275,7 @@ specifier|protected
 name|HiveHistory
 name|hiveHist
 decl_stmt|;
-comment|/**    * Streams to read/write from    */
+comment|/**    * Streams to read/write from.    */
 specifier|public
 name|PrintStream
 name|out
@@ -288,7 +288,7 @@ specifier|public
 name|PrintStream
 name|err
 decl_stmt|;
-comment|/**    * type of the command    */
+comment|/**    * type of the command.    */
 specifier|private
 name|String
 name|commandType
@@ -463,7 +463,7 @@ name|SessionState
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * start a new session and set it to current session    */
+comment|/**    * start a new session and set it to current session.    */
 specifier|public
 specifier|static
 name|SessionState
@@ -522,7 +522,7 @@ name|ss
 operator|)
 return|;
 block|}
-comment|/**    * set current session to existing session object if a thread is running    * multiple sessions - it must call this method with the new session object    * when switching from one session to another    */
+comment|/**    * set current session to existing session object if a thread is running    * multiple sessions - it must call this method with the new session object    * when switching from one session to another.    */
 specifier|public
 specifier|static
 name|SessionState
@@ -603,7 +603,7 @@ return|return
 name|startSs
 return|;
 block|}
-comment|/**    * get the current session    */
+comment|/**    * get the current session.    */
 specifier|public
 specifier|static
 name|SessionState
@@ -617,7 +617,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**    * get hiveHitsory object which does structured logging    *     * @return The hive history object    */
+comment|/**    * get hiveHitsory object which does structured logging.    *     * @return The hive history object    */
 specifier|public
 name|HiveHistory
 name|getHiveHistory
@@ -775,7 +775,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * This class provides helper routines to emit informational and error    * messages to the user and log4j files while obeying the current session's    * verbosity levels.    *     * NEVER write directly to the SessionStates standard output other than to    * emit result data DO use printInfo and printError provided by LogHelper to    * emit non result data strings    *     * It is perfectly acceptable to have global static LogHelper objects (for    * example - once per module) LogHelper always emits info/error to current    * session as required.    */
+comment|/**    * This class provides helper routines to emit informational and error    * messages to the user and log4j files while obeying the current session's    * verbosity levels.    *     * NEVER write directly to the SessionStates standard output other than to    * emit result data DO use printInfo and printError provided by LogHelper to    * emit non result data strings.    *     * It is perfectly acceptable to have global static LogHelper objects (for    * example - once per module) LogHelper always emits info/error to current    * session as required.    */
 specifier|public
 specifier|static
 class|class
@@ -1048,7 +1048,7 @@ specifier|static
 name|LogHelper
 name|_console
 decl_stmt|;
-comment|/**    * initialize or retrieve console object for SessionState    */
+comment|/**    * initialize or retrieve console object for SessionState.    */
 specifier|public
 specifier|static
 name|LogHelper
@@ -1413,12 +1413,12 @@ literal|false
 return|;
 block|}
 block|}
+comment|/**    * ResourceHook.    *    */
 specifier|public
 specifier|static
 interface|interface
 name|ResourceHook
 block|{
-specifier|public
 name|String
 name|preHook
 parameter_list|(
@@ -1432,7 +1432,6 @@ name|String
 name|s
 parameter_list|)
 function_decl|;
-specifier|public
 name|boolean
 name|postHook
 parameter_list|(
@@ -1447,6 +1446,7 @@ name|s
 parameter_list|)
 function_decl|;
 block|}
+comment|/**    * ResourceType.    *    */
 specifier|public
 specifier|static
 enum|enum

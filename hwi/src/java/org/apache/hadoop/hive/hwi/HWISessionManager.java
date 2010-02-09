@@ -23,6 +23,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Collection
 import|;
 end_import
@@ -54,16 +64,6 @@ operator|.
 name|util
 operator|.
 name|TreeSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
 import|;
 end_import
 
@@ -827,7 +827,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Used to list all users that have at least one session    *     * @return keySet of items all users that have any sessions    */
+comment|/**    * Used to list all users that have at least one session.    *     * @return keySet of items all users that have any sessions    */
 specifier|public
 name|Set
 argument_list|<
@@ -843,7 +843,7 @@ name|keySet
 argument_list|()
 return|;
 block|}
-comment|/**    * Used to list all the sessions of a user    *     * @param auth    *          the user being enquired about    * @return all the sessions of that user    */
+comment|/**    * Used to list all the sessions of a user.    *     * @param auth    *          the user being enquired about    * @return all the sessions of that user    */
 specifier|public
 name|Set
 argument_list|<

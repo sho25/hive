@@ -287,8 +287,13 @@ name|WritableUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * LazyBinaryUtils.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|LazyBinaryUtils
 block|{
@@ -779,7 +784,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * A zero-compressed encoded long    */
+comment|/**    * A zero-compressed encoded long.    */
 specifier|public
 specifier|static
 class|class
@@ -940,7 +945,7 @@ name|i
 operator|)
 expr_stmt|;
 block|}
-comment|/**    * A zero-compressed encoded integer    */
+comment|/**    * A zero-compressed encoded integer.    */
 specifier|public
 specifier|static
 class|class
@@ -1566,6 +1571,12 @@ block|}
 return|return
 name|result
 return|;
+block|}
+specifier|private
+name|LazyBinaryUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

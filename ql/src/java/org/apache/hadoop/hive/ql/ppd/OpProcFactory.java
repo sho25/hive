@@ -487,10 +487,11 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|OpProcFactory
 block|{
-comment|/**    * Processor for Script Operator Prevents any predicates being pushed    */
+comment|/**    * Processor for Script Operator Prevents any predicates being pushed.    */
 specifier|public
 specifier|static
 class|class
@@ -559,7 +560,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Combines predicates of its child into a single expression and adds a filter    * op as new child    */
+comment|/**    * Combines predicates of its child into a single expression and adds a filter    * op as new child.    */
 specifier|public
 specifier|static
 class|class
@@ -671,7 +672,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Determines the push down predicates in its where expression and then    * combines it with the push down predicates that are passed from its children    */
+comment|/**    * Determines the push down predicates in its where expression and then    * combines it with the push down predicates that are passed from its children.    */
 specifier|public
 specifier|static
 class|class
@@ -893,7 +894,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Determines predicates for which alias can be pushed to it's parents. See    * the comments for getQualifiedAliases function    */
+comment|/**    * Determines predicates for which alias can be pushed to it's parents. See    * the comments for getQualifiedAliases function.    */
 specifier|public
 specifier|static
 class|class
@@ -1436,7 +1437,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Default processor which just merges its children    */
+comment|/**    * Default processor which just merges its children.    */
 specifier|public
 specifier|static
 class|class
@@ -1612,7 +1613,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Take current operators pushdown predicates and merges them with      * children's pushdown predicates      *       * @param nd      *          current operator      * @param owi      *          operator context during this walk      * @param ewi      *          pushdown predicates (part of expression walker info)      * @param aliases      *          aliases that this operator can pushdown. null means that all      *          aliases can be pushed down      * @param ignoreAliases      * @throws SemanticException      */
+comment|/**      * Take current operators pushdown predicates and merges them with      * children's pushdown predicates.      *       * @param nd      *          current operator      * @param owi      *          operator context during this walk      * @param ewi      *          pushdown predicates (part of expression walker info)      * @param aliases      *          aliases that this operator can pushdown. null means that all      *          aliases can be pushed down      * @param ignoreAliases      * @throws SemanticException      */
 specifier|protected
 name|void
 name|mergeWithChildrenPred
@@ -2265,6 +2266,12 @@ operator|new
 name|ScriptPPD
 argument_list|()
 return|;
+block|}
+specifier|private
+name|OpProcFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

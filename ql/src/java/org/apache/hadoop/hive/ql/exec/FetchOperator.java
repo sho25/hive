@@ -496,7 +496,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * FetchTask implementation  **/
+comment|/**  * FetchTask implementation.  **/
 end_comment
 
 begin_class
@@ -504,13 +504,13 @@ specifier|public
 class|class
 name|FetchOperator
 block|{
-specifier|transient
 specifier|protected
+specifier|transient
 name|Log
 name|LOG
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|LogHelper
 name|console
 decl_stmt|;

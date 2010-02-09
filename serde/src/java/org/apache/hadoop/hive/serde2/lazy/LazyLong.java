@@ -206,8 +206,6 @@ parameter_list|,
 name|int
 name|length
 parameter_list|)
-throws|throws
-name|NumberFormatException
 block|{
 return|return
 name|parseLong
@@ -241,8 +239,6 @@ parameter_list|,
 name|int
 name|radix
 parameter_list|)
-throws|throws
-name|NumberFormatException
 block|{
 if|if
 condition|(

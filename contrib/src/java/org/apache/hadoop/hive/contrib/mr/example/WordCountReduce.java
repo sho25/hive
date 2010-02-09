@@ -95,6 +95,12 @@ specifier|final
 class|class
 name|WordCountReduce
 block|{
+specifier|private
+name|WordCountReduce
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 specifier|public
 specifier|static
 name|void

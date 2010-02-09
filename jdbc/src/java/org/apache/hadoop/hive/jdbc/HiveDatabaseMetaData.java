@@ -111,6 +111,10 @@ name|Manifest
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveDatabaseMetaData.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

@@ -83,7 +83,6 @@ interface|interface
 name|Deserializer
 block|{
 comment|/**    * Initialize the HiveDeserializer.    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
-specifier|public
 name|void
 name|initialize
 parameter_list|(
@@ -97,7 +96,6 @@ throws|throws
 name|SerDeException
 function_decl|;
 comment|/**    * Deserialize an object out of a Writable blob. In most cases, the return    * value of this function will be constant since the function will reuse the    * returned object. If the client wants to keep a copy of the object, the    * client needs to clone the returned value by calling    * ObjectInspectorUtils.getStandardObject().    *     * @param blob    *          The Writable object containing a serialized object    * @return A Java object representing the contents in the blob.    */
-specifier|public
 name|Object
 name|deserialize
 parameter_list|(
@@ -108,7 +106,6 @@ throws|throws
 name|SerDeException
 function_decl|;
 comment|/**    * Get the object inspector that can be used to navigate through the internal    * structure of the Object returned from deserialize(...).    */
-specifier|public
 name|ObjectInspector
 name|getObjectInspector
 parameter_list|()

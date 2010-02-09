@@ -354,6 +354,7 @@ name|udafEvaluatorClass
 argument_list|)
 return|;
 block|}
+comment|/**    * GenericUDAFBridgeEvaluator.    *    */
 specifier|public
 specifier|static
 class|class
@@ -703,7 +704,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/** class for storing UDAFEvaluator value */
+comment|/** class for storing UDAFEvaluator value. */
 specifier|static
 class|class
 name|UDAFAgg

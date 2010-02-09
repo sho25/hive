@@ -228,7 +228,7 @@ operator|new
 name|BytesWritable
 argument_list|()
 decl_stmt|;
-comment|/**    * create the final out file, and output an empty key as the key    *     * @param jc    *          the job configuration file    * @param finalOutPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the tableInfo of this file's corresponding table    * @param progress    *          progress used for status report    * @return the RecordWriter for the output file    */
+comment|/**    * create the final out file, and output an empty key as the key.    *     * @param jc    *          the job configuration file    * @param finalOutPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the tableInfo of this file's corresponding table    * @param progress    *          progress used for status report    * @return the RecordWriter for the output file    */
 annotation|@
 name|Override
 specifier|public

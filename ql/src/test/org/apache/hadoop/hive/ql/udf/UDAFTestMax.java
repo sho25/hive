@@ -163,6 +163,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDAFTestMax.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -170,8 +174,9 @@ name|UDAFTestMax
 extends|extends
 name|UDAF
 block|{
-specifier|static
+comment|/**    * MaxShortEvaluator.    *    */
 specifier|public
+specifier|static
 class|class
 name|MaxShortEvaluator
 implements|implements
@@ -317,8 +322,9 @@ argument_list|)
 return|;
 block|}
 block|}
-specifier|static
+comment|/**    * MaxIntEvaluator.    *    */
 specifier|public
+specifier|static
 class|class
 name|MaxIntEvaluator
 implements|implements
@@ -461,8 +467,9 @@ argument_list|)
 return|;
 block|}
 block|}
-specifier|static
+comment|/**    * MaxLongEvaluator.    *    */
 specifier|public
+specifier|static
 class|class
 name|MaxLongEvaluator
 implements|implements
@@ -605,8 +612,9 @@ argument_list|)
 return|;
 block|}
 block|}
-specifier|static
+comment|/**    * MaxFloatEvaluator.    *    */
 specifier|public
+specifier|static
 class|class
 name|MaxFloatEvaluator
 implements|implements
@@ -749,8 +757,9 @@ argument_list|)
 return|;
 block|}
 block|}
-specifier|static
+comment|/**    * MaxDoubleEvaluator.    *    */
 specifier|public
+specifier|static
 class|class
 name|MaxDoubleEvaluator
 implements|implements
@@ -893,8 +902,9 @@ argument_list|)
 return|;
 block|}
 block|}
-specifier|static
+comment|/**    * MaxStringEvaluator.    *    */
 specifier|public
+specifier|static
 class|class
 name|MaxStringEvaluator
 implements|implements

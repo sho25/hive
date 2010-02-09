@@ -19,6 +19,10 @@ name|objectinspector
 package|;
 end_package
 
+begin_comment
+comment|/**  * SettableMapObjectInspector.  *  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface
@@ -27,13 +31,11 @@ extends|extends
 name|MapObjectInspector
 block|{
 comment|/**    * Create an empty map.    */
-specifier|public
 name|Object
 name|create
 parameter_list|()
 function_decl|;
 comment|/**    * Add a key-value pair to the map. Return the map.    */
-specifier|public
 name|Object
 name|put
 parameter_list|(
@@ -48,7 +50,6 @@ name|value
 parameter_list|)
 function_decl|;
 comment|/**    * Remove a key-value pair from the map. Return the map.    */
-specifier|public
 name|Object
 name|remove
 parameter_list|(
@@ -60,7 +61,6 @@ name|key
 parameter_list|)
 function_decl|;
 comment|/**    * Clear the map. Return the map.    */
-specifier|public
 name|Object
 name|clear
 parameter_list|(

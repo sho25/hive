@@ -106,8 +106,8 @@ specifier|private
 name|boolean
 name|isPartitionCol
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|TypeInfo
 name|type
 decl_stmt|;

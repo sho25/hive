@@ -864,6 +864,7 @@ name|pctx
 argument_list|)
 return|;
 block|}
+comment|/**    * BucketGroupByProcessor.    *    */
 specifier|public
 class|class
 name|BucketGroupByProcessor
@@ -1249,7 +1250,8 @@ condition|)
 block|{
 comment|// this is in a sub-query.
 comment|// In future, we need to infer subq's columns propery. For example
-comment|// "select key, count(1) from (from clustergroupbyselect key, value where ds='210') group by key, 3;",
+comment|// "select key, count(1)
+comment|// from (from clustergroupbyselect key, value where ds='210') group by key, 3;",
 comment|// even though the group by op is in a subquery, it can be changed to
 comment|// bucket groupby.
 return|return;
@@ -1770,6 +1772,7 @@ literal|true
 return|;
 block|}
 block|}
+comment|/**    * GroupByOptProcCtx.    *    */
 specifier|public
 class|class
 name|GroupByOptProcCtx

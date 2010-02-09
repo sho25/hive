@@ -210,7 +210,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Map Join Object used for both key and value  */
+comment|/**  * Map Join Object used for both key and value.  */
 end_comment
 
 begin_class
@@ -220,18 +220,18 @@ name|MapJoinObjectValue
 implements|implements
 name|Externalizable
 block|{
-specifier|transient
 specifier|protected
+specifier|transient
 name|int
 name|metadataTag
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|RowContainer
 name|obj
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Configuration
 name|conf
 decl_stmt|;

@@ -43,6 +43,10 @@ name|Path
 import|;
 end_import
 
+begin_comment
+comment|/**  * ShowFunctionsDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
@@ -73,7 +77,7 @@ decl_stmt|;
 name|Path
 name|resFile
 decl_stmt|;
-comment|/**    * table name for the result of show tables    */
+comment|/**    * table name for the result of show tables.    */
 specifier|private
 specifier|static
 specifier|final
@@ -82,7 +86,7 @@ name|table
 init|=
 literal|"show"
 decl_stmt|;
-comment|/**    * thrift ddl for the result of show tables    */
+comment|/**    * thrift ddl for the result of show tables.    */
 specifier|private
 specifier|static
 specifier|final

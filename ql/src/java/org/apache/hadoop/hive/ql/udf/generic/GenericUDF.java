@@ -116,7 +116,6 @@ specifier|static
 interface|interface
 name|DeferredObject
 block|{
-specifier|public
 name|Object
 name|get
 parameter_list|()
@@ -125,7 +124,7 @@ name|HiveException
 function_decl|;
 block|}
 empty_stmt|;
-comment|/**    * The constructor    */
+comment|/**    * The constructor.    */
 specifier|public
 name|GenericUDF
 parameter_list|()

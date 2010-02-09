@@ -43,6 +43,10 @@ name|RetentionPolicy
 import|;
 end_import
 
+begin_comment
+comment|/**  * Description.  *  */
+end_comment
+
 begin_annotation_defn
 annotation|@
 name|Retention

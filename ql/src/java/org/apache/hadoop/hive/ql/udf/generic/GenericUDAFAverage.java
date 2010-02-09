@@ -73,7 +73,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentTypeException
+name|Description
 import|;
 end_import
 
@@ -91,7 +91,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDFArgumentTypeException
 import|;
 end_import
 
@@ -383,6 +383,10 @@ name|StringUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * GenericUDAFAverage.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -558,6 +562,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**    * GenericUDAFAverageEvaluator.    *    */
 specifier|public
 specifier|static
 class|class

@@ -19,6 +19,10 @@ name|objectinspector
 package|;
 end_package
 
+begin_comment
+comment|/**  * SettableStructObjectInspector.  *  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

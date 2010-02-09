@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|ConcurrentModificationException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -615,24 +625,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|FetchWork
 import|;
 end_import
@@ -741,6 +733,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|PlanUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|ReduceSinkDesc
 import|;
 end_import
@@ -802,11 +812,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * General utility common functions for the Processor to convert operator into  * map-reduce tasks  */
+comment|/**  * General utility common functions for the Processor to convert operator into  * map-reduce tasks.  */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|GenMapRedUtils
 block|{
@@ -827,7 +838,7 @@ literal|"org.apache.hadoop.hive.ql.optimizer.GenMapRedUtils"
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Initialize the current plan by adding it to root tasks    *     * @param op    *          the reduce sink operator encountered    * @param opProcCtx    *          processing context    */
+comment|/**    * Initialize the current plan by adding it to root tasks.    *     * @param op    *          the reduce sink operator encountered    * @param opProcCtx    *          processing context    */
 specifier|public
 specifier|static
 name|void
@@ -1112,7 +1123,7 @@ name|currAliasId
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Initialize the current plan by adding it to root tasks    *     * @param op    *          the map join operator encountered    * @param opProcCtx    *          processing context    * @param pos    *          position of the parent    */
+comment|/**    * Initialize the current plan by adding it to root tasks.    *     * @param op    *          the map join operator encountered    * @param opProcCtx    *          processing context    * @param pos    *          position of the parent    */
 specifier|public
 specifier|static
 name|void
@@ -2103,7 +2114,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Merge the current task with the task for the current reducer    *     * @param op    *          operator being processed    * @param oldTask    *          the old task for the current reducer    * @param task    *          the current task for the current reducer    * @param opProcCtx    *          processing context    * @param pos    *          position of the parent in the stack    */
+comment|/**    * Merge the current task with the task for the current reducer.    *     * @param op    *          operator being processed    * @param oldTask    *          the old task for the current reducer    * @param task    *          the current task for the current reducer    * @param opProcCtx    *          processing context    * @param pos    *          position of the parent in the stack    */
 specifier|public
 specifier|static
 name|void
@@ -2696,7 +2707,7 @@ name|currTask
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Split the current plan by creating a temporary destination    *     * @param op    *          the reduce sink operator encountered    * @param opProcCtx    *          processing context    */
+comment|/**    * Split the current plan by creating a temporary destination.    *     * @param op    *          the reduce sink operator encountered    * @param opProcCtx    *          processing context    */
 specifier|public
 specifier|static
 name|void
@@ -2867,7 +2878,7 @@ name|op
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * set the current task in the mapredWork    *     * @param alias_id    *          current alias    * @param topOp    *          the top operator of the stack    * @param plan    *          current plan    * @param local    *          whether you need to add to map-reduce or local work    * @param opProcCtx    *          processing context    */
+comment|/**    * set the current task in the mapredWork.    *     * @param alias_id    *          current alias    * @param topOp    *          the top operator of the stack    * @param plan    *          current plan    * @param local    *          whether you need to add to map-reduce or local work    * @param opProcCtx    *          processing context    */
 specifier|public
 specifier|static
 name|void
@@ -3275,8 +3286,8 @@ block|}
 comment|// Later the properties have to come from the partition as opposed
 comment|// to from the table in order to support versioning.
 name|Path
-name|paths
 index|[]
+name|paths
 decl_stmt|;
 name|sampleDesc
 name|sampleDescr
@@ -3777,7 +3788,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * set the current task in the mapredWork    *     * @param alias    *          current alias    * @param topOp    *          the top operator of the stack    * @param plan    *          current plan    * @param local    *          whether you need to add to map-reduce or local work    * @param tt_desc    *          table descriptor    */
+comment|/**    * set the current task in the mapredWork.    *     * @param alias    *          current alias    * @param topOp    *          the top operator of the stack    * @param plan    *          current plan    * @param local    *          whether you need to add to map-reduce or local work    * @param tt_desc    *          table descriptor    */
 specifier|public
 specifier|static
 name|void
@@ -4007,7 +4018,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * set key and value descriptor    *     * @param plan    *          current plan    * @param topOp    *          current top operator in the path    */
+comment|/**    * set key and value descriptor.    *     * @param plan    *          current plan    * @param topOp    *          current top operator in the path    */
 specifier|public
 specifier|static
 name|void
@@ -4176,7 +4187,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * create a new plan and return    *     * @return the new plan    */
+comment|/**    * create a new plan and return.    *     * @return the new plan    */
 specifier|public
 specifier|static
 name|MapredWork
@@ -4263,7 +4274,7 @@ return|return
 name|work
 return|;
 block|}
-comment|/**    * insert in the map for the operator to row resolver    *     * @param op    *          operator created    * @param rr    *          row resolver    * @param parseCtx    *          parse context    */
+comment|/**    * insert in the map for the operator to row resolver.    *     * @param op    *          operator created    * @param rr    *          row resolver    * @param parseCtx    *          parse context    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -5074,8 +5085,8 @@ name|childTask
 argument_list|)
 expr_stmt|;
 block|}
-specifier|static
 specifier|public
+specifier|static
 name|void
 name|mergeMapJoinUnion
 parameter_list|(
@@ -5416,10 +5427,6 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|java
-operator|.
-name|util
-operator|.
 name|ConcurrentModificationException
 name|e
 parameter_list|)
@@ -5498,6 +5505,12 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+specifier|private
+name|GenMapRedUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

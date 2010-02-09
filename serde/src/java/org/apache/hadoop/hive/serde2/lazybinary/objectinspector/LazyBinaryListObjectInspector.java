@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspector for LazyBinaryList  */
+comment|/**  * ObjectInspector for LazyBinaryList.  */
 end_comment
 
 begin_class

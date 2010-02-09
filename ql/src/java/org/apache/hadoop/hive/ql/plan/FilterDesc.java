@@ -39,6 +39,10 @@ name|List
 import|;
 end_import
 
+begin_comment
+comment|/**  * FilterDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
@@ -53,7 +57,7 @@ name|FilterDesc
 implements|implements
 name|Serializable
 block|{
-comment|/**    * sampleDesc is used to keep track of the sampling descriptor    */
+comment|/**    * sampleDesc is used to keep track of the sampling descriptor.    */
 specifier|public
 specifier|static
 class|class

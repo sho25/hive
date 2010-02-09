@@ -253,8 +253,13 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * LazyUtils.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|LazyUtils
 block|{
@@ -526,6 +531,7 @@ literal|null
 return|;
 block|}
 block|}
+specifier|private
 specifier|static
 name|byte
 index|[]
@@ -544,6 +550,7 @@ block|,
 literal|'e'
 block|}
 decl_stmt|;
+specifier|private
 specifier|static
 name|byte
 index|[]
@@ -1113,6 +1120,12 @@ block|}
 return|return
 name|hash
 return|;
+block|}
+specifier|private
+name|LazyUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

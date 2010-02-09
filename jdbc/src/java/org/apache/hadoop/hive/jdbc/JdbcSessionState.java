@@ -51,6 +51,10 @@ name|SessionState
 import|;
 end_import
 
+begin_comment
+comment|/**  * JdbcSessionState.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

@@ -63,6 +63,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|UDAFExampleAvg
 extends|extends
@@ -248,6 +249,12 @@ name|mCount
 argument_list|)
 return|;
 block|}
+block|}
+specifier|private
+name|UDAFExampleAvg
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

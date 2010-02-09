@@ -45,6 +45,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -64,24 +82,6 @@ operator|.
 name|exec
 operator|.
 name|UDFArgumentTypeException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Description
 import|;
 end_import
 
@@ -215,6 +215,10 @@ name|PrimitiveObjectInspectorFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * GenericUDFArray.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -233,10 +237,12 @@ name|GenericUDFArray
 extends|extends
 name|GenericUDF
 block|{
+specifier|private
 name|Converter
 index|[]
 name|converters
 decl_stmt|;
+specifier|private
 name|ArrayList
 argument_list|<
 name|Object

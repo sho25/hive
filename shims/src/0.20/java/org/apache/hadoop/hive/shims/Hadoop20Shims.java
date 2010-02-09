@@ -19,6 +19,28 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|lang
+operator|.
+name|reflect
+operator|.
+name|Constructor
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -95,6 +117,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hdfs
+operator|.
+name|MiniDFSCluster
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|Text
@@ -109,9 +145,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hdfs
+name|mapred
 operator|.
-name|MiniDFSCluster
+name|FileInputFormat
 import|;
 end_import
 
@@ -139,7 +175,7 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|JobClient
+name|InputSplit
 import|;
 end_import
 
@@ -167,7 +203,21 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|TaskAttemptID
+name|RecordReader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|Reporter
 import|;
 end_import
 
@@ -196,28 +246,6 @@ operator|.
 name|mapred
 operator|.
 name|TaskID
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|lang
-operator|.
-name|reflect
-operator|.
-name|Constructor
 import|;
 end_import
 
@@ -253,50 +281,8 @@ name|CombineFileSplit
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Reporter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputSplit
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|RecordReader
-import|;
-end_import
-
 begin_comment
-comment|/**  * Implemention of shims against Hadoop 0.20.0  */
+comment|/**  * Implemention of shims against Hadoop 0.20.0.  */
 end_comment
 
 begin_class
@@ -352,7 +338,7 @@ name|IOException
 block|{
 comment|// gone in 0.18+
 block|}
-comment|/**    * workaround for hadoop-17 - jobclient only looks at commandlineconfig    */
+comment|/**    * Workaround for hadoop-17 - jobclient only looks at commandlineconfig.    */
 specifier|public
 name|void
 name|setTmpFiles
@@ -406,6 +392,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+comment|/**    * MiniDFSShim.    *    */
 specifier|public
 class|class
 name|MiniDFSShim
@@ -508,6 +495,8 @@ operator|new
 name|CombineFileInputFormatShim
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|RecordReader
 name|getRecordReader
@@ -744,7 +733,7 @@ name|createValue
 argument_list|()
 return|;
 block|}
-comment|/**      * return the amount of data processed      */
+comment|/**      * Return the amount of data processed.      */
 specifier|public
 name|long
 name|getPos
@@ -781,7 +770,7 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-comment|/**      * return progress based on the amount of data processed so far.      */
+comment|/**      * Return progress based on the amount of data processed so far.      */
 specifier|public
 name|float
 name|getProgress
@@ -996,9 +985,6 @@ operator|new
 name|Object
 index|[]
 block|{
-operator|(
-name|InputSplit
-operator|)
 name|split
 block|,
 name|jc
@@ -1127,7 +1113,7 @@ try|try
 block|{
 name|paths
 operator|=
-name|CombineFileInputFormat
+name|FileInputFormat
 operator|.
 name|getInputPaths
 argument_list|(
@@ -1178,6 +1164,7 @@ condition|;
 name|pos
 operator|++
 control|)
+block|{
 name|newPaths
 index|[
 name|pos
@@ -1198,10 +1185,13 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|newPaths
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createPool
@@ -1224,6 +1214,8 @@ name|filters
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|InputSplitShim
 index|[]
@@ -1264,6 +1256,7 @@ argument_list|)
 operator|==
 literal|0
 condition|)
+block|{
 name|super
 operator|.
 name|setMinSplitSizeNode
@@ -1271,6 +1264,7 @@ argument_list|(
 name|minSize
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|job
@@ -1284,6 +1278,7 @@ argument_list|)
 operator|==
 literal|0
 condition|)
+block|{
 name|super
 operator|.
 name|setMinSplitSizeRack
@@ -1291,6 +1286,7 @@ argument_list|(
 name|minSize
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|job
@@ -1304,6 +1300,7 @@ argument_list|)
 operator|==
 literal|0
 condition|)
+block|{
 name|super
 operator|.
 name|setMaxSplitSize
@@ -1311,6 +1308,7 @@ argument_list|(
 name|minSize
 argument_list|)
 expr_stmt|;
+block|}
 name|CombineFileSplit
 index|[]
 name|splits
@@ -1356,6 +1354,7 @@ condition|;
 name|pos
 operator|++
 control|)
+block|{
 name|isplits
 index|[
 name|pos
@@ -1370,6 +1369,7 @@ name|pos
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|isplits
 return|;

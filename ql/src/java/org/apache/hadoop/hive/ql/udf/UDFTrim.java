@@ -47,7 +47,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDF
+name|Description
 import|;
 end_import
 
@@ -65,7 +65,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDF
 import|;
 end_import
 
@@ -83,6 +83,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDFTrim.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -93,9 +97,7 @@ literal|"trim"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(str) - Removes the leading and trailing space characters "
-operator|+
-literal|"from str "
+literal|"_FUNC_(str) - Removes the leading and trailing space characters from str "
 argument_list|,
 name|extended
 operator|=

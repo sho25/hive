@@ -368,7 +368,7 @@ name|OpParseContext
 argument_list|>
 name|opToParseCtxMap
 decl_stmt|;
-comment|/**    * empty constructor    */
+comment|/**    * empty constructor.    */
 specifier|public
 name|ColumnPruner
 parameter_list|()
@@ -378,7 +378,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * Transform the query tree. For each table under consideration, check if all    * columns are needed. If not, only select the operators needed at the    * beginning and proceed    *     * @param pactx    *          the current parse context    */
+comment|/**    * Transform the query tree. For each table under consideration, check if all    * columns are needed. If not, only select the operators needed at the    * beginning and proceed.    *     * @param pactx    *          the current parse context    */
 specifier|public
 name|ParseContext
 name|transform
@@ -623,7 +623,7 @@ return|return
 name|pGraphContext
 return|;
 block|}
-comment|/**    * Walks the op tree in post order fashion (skips selects with file sink or    * script op children)    */
+comment|/**    * Walks the op tree in post order fashion (skips selects with file sink or    * script op children).    */
 specifier|public
 specifier|static
 class|class
@@ -644,7 +644,7 @@ name|disp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Walk the given operator      */
+comment|/**      * Walk the given operator.      */
 annotation|@
 name|Override
 specifier|public

@@ -101,6 +101,10 @@ begin_comment
 comment|// change the void to the first matching argument
 end_comment
 
+begin_comment
+comment|/**  * ExprNodeNullEvaluator.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

@@ -243,25 +243,25 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|final
 specifier|static
+specifier|final
 name|String
-name|hadoopMemKey
+name|HADOOP_MEM_KEY
 init|=
 literal|"HADOOP_HEAPSIZE"
 decl_stmt|;
-specifier|final
 specifier|static
+specifier|final
 name|String
-name|hadoopOptsKey
+name|HADOOP_OPTS_KEY
 init|=
 literal|"HADOOP_OPTS"
 decl_stmt|;
-specifier|final
 specifier|static
+specifier|final
 name|String
-name|HIVE_SYS_PROP
 index|[]
+name|HIVE_SYS_PROP
 init|=
 block|{
 literal|"build.dir"
@@ -312,7 +312,6 @@ decl_stmt|;
 name|String
 name|libJarsOption
 decl_stmt|;
-block|{
 name|String
 name|addedJars
 init|=
@@ -421,7 +420,6 @@ name|auxJars
 operator|+
 literal|" "
 expr_stmt|;
-block|}
 block|}
 block|}
 comment|// Generate the hiveConfArgs after potentially adding the jars
@@ -646,7 +644,6 @@ comment|// Inherit Java system variables
 name|String
 name|hadoopOpts
 decl_stmt|;
-block|{
 name|StringBuilder
 name|sb
 init|=
@@ -707,13 +704,11 @@ operator|.
 name|toString
 argument_list|()
 expr_stmt|;
-block|}
 comment|// Inherit the environment variables
 name|String
 index|[]
 name|env
 decl_stmt|;
-block|{
 name|Map
 argument_list|<
 name|String
@@ -757,7 +752,7 @@ name|variables
 operator|.
 name|remove
 argument_list|(
-name|hadoopMemKey
+name|HADOOP_MEM_KEY
 argument_list|)
 expr_stmt|;
 block|}
@@ -768,7 +763,7 @@ name|variables
 operator|.
 name|put
 argument_list|(
-name|hadoopMemKey
+name|HADOOP_MEM_KEY
 argument_list|,
 name|String
 operator|.
@@ -785,7 +780,7 @@ name|variables
 operator|.
 name|containsKey
 argument_list|(
-name|hadoopOptsKey
+name|HADOOP_OPTS_KEY
 argument_list|)
 condition|)
 block|{
@@ -793,13 +788,13 @@ name|variables
 operator|.
 name|put
 argument_list|(
-name|hadoopOptsKey
+name|HADOOP_OPTS_KEY
 argument_list|,
 name|variables
 operator|.
 name|get
 argument_list|(
-name|hadoopOptsKey
+name|HADOOP_OPTS_KEY
 argument_list|)
 operator|+
 name|hadoopOpts
@@ -812,7 +807,7 @@ name|variables
 operator|.
 name|put
 argument_list|(
-name|hadoopOptsKey
+name|HADOOP_OPTS_KEY
 argument_list|,
 name|hadoopOpts
 argument_list|)
@@ -880,7 +875,6 @@ literal|"="
 operator|+
 name|value
 expr_stmt|;
-block|}
 block|}
 comment|// Run ExecDriver in another JVM
 name|executor

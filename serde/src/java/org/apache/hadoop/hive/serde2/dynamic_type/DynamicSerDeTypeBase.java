@@ -89,6 +89,10 @@ name|TProtocol
 import|;
 end_import
 
+begin_comment
+comment|/**  * DynamicSerDeTypeBase.  *  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

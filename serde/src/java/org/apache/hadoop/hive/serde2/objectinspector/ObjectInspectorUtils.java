@@ -89,34 +89,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|hive
@@ -345,26 +317,10 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|ObjectInspectorUtils
 block|{
-specifier|private
-specifier|static
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|ObjectInspectorUtils
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-decl_stmt|;
 comment|/**    * This enum controls how we copy primitive objects.    *     * DEFAULT means choosing the most efficient way between JAVA and WRITABLE.    * JAVA means converting all primitive objects to java primitive objects.    * WRITABLE means converting all primitive objects to writable objects.    *     */
 specifier|public
 enum|enum
@@ -1422,7 +1378,7 @@ argument_list|)
 throw|;
 comment|// return null;
 block|}
-comment|/**    * Get all the declared non-static fields of Class c    */
+comment|/**    * Get all the declared non-static fields of Class c.    */
 specifier|public
 specifier|static
 name|Field
@@ -3509,6 +3465,12 @@ operator|.
 name|toString
 argument_list|()
 return|;
+block|}
+specifier|private
+name|ObjectInspectorUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

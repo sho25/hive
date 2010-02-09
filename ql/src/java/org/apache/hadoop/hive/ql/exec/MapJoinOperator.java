@@ -471,9 +471,9 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|Log
 name|LOG
 init|=
@@ -490,8 +490,8 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 comment|/**    * The expressions for join inputs's join keys.    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|Map
 argument_list|<
 name|Byte
@@ -504,8 +504,8 @@ argument_list|>
 name|joinKeys
 decl_stmt|;
 comment|/**    * The ObjectInspectors for the join inputs's join keys.    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|Map
 argument_list|<
 name|Byte
@@ -518,8 +518,8 @@ argument_list|>
 name|joinKeysObjectInspectors
 decl_stmt|;
 comment|/**    * The standard ObjectInspectors for the join inputs's join keys.    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|Map
 argument_list|<
 name|Byte
@@ -531,8 +531,8 @@ argument_list|>
 argument_list|>
 name|joinKeysStandardObjectInspectors
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|int
 name|posBigTable
 decl_stmt|;
@@ -542,8 +542,8 @@ name|int
 name|mapJoinRowsKey
 decl_stmt|;
 comment|// rows for a given key
-specifier|transient
 specifier|protected
+specifier|transient
 name|Map
 argument_list|<
 name|Byte
@@ -557,8 +557,8 @@ argument_list|>
 argument_list|>
 name|mapJoinTables
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|RowContainer
 argument_list|<
 name|ArrayList
@@ -570,24 +570,24 @@ name|emptyList
 init|=
 literal|null
 decl_stmt|;
-specifier|transient
+specifier|private
 specifier|static
 specifier|final
-specifier|private
+specifier|transient
 name|String
 index|[]
-name|fatalErrMsg
+name|FATAL_ERR_MSG
 init|=
 block|{
 literal|null
 block|,
 comment|// counter value 0 means no error
-literal|"Mapside join size exceeds hive.mapjoin.maxsize. Please increase that or remove the mapjoin hint."
-comment|// counter
-comment|// value
-comment|// 1
+literal|"Mapside join size exceeds hive.mapjoin.maxsize. "
+operator|+
+literal|"Please increase that or remove the mapjoin hint."
 block|}
 decl_stmt|;
+comment|/**    * MapJoinObjectCtx.    *    */
 specifier|public
 specifier|static
 class|class
@@ -686,8 +686,8 @@ name|conf
 return|;
 block|}
 block|}
-specifier|transient
 specifier|static
+specifier|transient
 name|Map
 argument_list|<
 name|Integer
@@ -705,15 +705,15 @@ name|MapJoinObjectCtx
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|transient
 specifier|static
+specifier|transient
 name|int
 name|nextVal
 init|=
 literal|0
 decl_stmt|;
-specifier|static
 specifier|public
+specifier|static
 name|Map
 argument_list|<
 name|Integer
@@ -1240,7 +1240,7 @@ name|id
 operator|+
 literal|"): "
 operator|+
-name|fatalErrMsg
+name|FATAL_ERR_MSG
 index|[
 operator|(
 name|int

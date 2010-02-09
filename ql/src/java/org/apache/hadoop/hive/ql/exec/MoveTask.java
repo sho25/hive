@@ -320,7 +320,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * MoveTask implementation  **/
+comment|/**  * MoveTask implementation.  **/
 end_comment
 
 begin_class

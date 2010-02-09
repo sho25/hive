@@ -39,7 +39,6 @@ interface|interface
 name|Node
 block|{
 comment|/**    * Gets the vector of children nodes. This is used in the graph walker    * algorithms.    *     * @return List<? extends Node>    */
-specifier|public
 name|List
 argument_list|<
 name|?
@@ -50,7 +49,6 @@ name|getChildren
 parameter_list|()
 function_decl|;
 comment|/**    * Gets the name of the node. This is used in the rule dispatchers.    *     * @return String    */
-specifier|public
 name|String
 name|getName
 parameter_list|()

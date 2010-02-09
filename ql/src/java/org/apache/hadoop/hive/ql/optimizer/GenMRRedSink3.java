@@ -262,7 +262,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Processor for the rule - union followed by reduce sink  */
+comment|/**  * Processor for the rule - union followed by reduce sink.  */
 end_comment
 
 begin_class
@@ -276,7 +276,7 @@ specifier|public
 name|GenMRRedSink3
 parameter_list|()
 block|{   }
-comment|/**    * Reduce Scan encountered    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * Reduce Scan encountered.    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -528,9 +528,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// The union is already initialized. However, the union is walked from
-comment|// another input
-comment|// initUnionPlan is idempotent
 elseif|else
 if|if
 condition|(
@@ -542,6 +539,9 @@ operator|==
 name|reducer
 condition|)
 block|{
+comment|// The union is already initialized. However, the union is walked from
+comment|// another input
+comment|// initUnionPlan is idempotent
 name|GenMapRedUtils
 operator|.
 name|initUnionPlan

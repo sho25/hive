@@ -92,28 +92,29 @@ specifier|abstract
 class|class
 name|GenericUDAFEvaluator
 block|{
-specifier|static
+comment|/**    * Mode.    *    */
 specifier|public
+specifier|static
 enum|enum
 name|Mode
 block|{
-comment|/**      * PARTIAL1: from original data to partial aggregation data: iterate() and      * terminatePartial() will be called      */
+comment|/**      * PARTIAL1: from original data to partial aggregation data: iterate() and      * terminatePartial() will be called.      */
 name|PARTIAL1
 block|,
-comment|/**      * PARTIAL2: from partial aggregation data to partial aggregation data:      * merge() and terminatePartial() will be called      */
+comment|/**      * PARTIAL2: from partial aggregation data to partial aggregation data:      * merge() and terminatePartial() will be called.      */
 name|PARTIAL2
 block|,
-comment|/**      * FINAL: from partial aggregation to full aggregation: merge() and      * terminate() will be called      */
+comment|/**      * FINAL: from partial aggregation to full aggregation: merge() and      * terminate() will be called.      */
 name|FINAL
 block|,
-comment|/**      * COMPLETE: from original data directly to full aggregation: iterate() and      * terminate() will be called      */
+comment|/**      * COMPLETE: from original data directly to full aggregation: iterate() and      * terminate() will be called.      */
 name|COMPLETE
 block|}
 empty_stmt|;
 name|Mode
 name|mode
 decl_stmt|;
-comment|/**    * The constructor    */
+comment|/**    * The constructor.    */
 specifier|public
 name|GenericUDAFEvaluator
 parameter_list|()

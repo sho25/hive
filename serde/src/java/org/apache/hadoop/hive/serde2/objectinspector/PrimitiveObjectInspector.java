@@ -19,6 +19,10 @@ name|objectinspector
 package|;
 end_package
 
+begin_comment
+comment|/**  * PrimitiveObjectInspector.  *  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface
@@ -54,13 +58,11 @@ name|UNKNOWN
 block|}
 empty_stmt|;
 comment|/**    * Get the primitive category of the PrimitiveObjectInspector.    */
-specifier|public
 name|PrimitiveCategory
 name|getPrimitiveCategory
 parameter_list|()
 function_decl|;
-comment|/**    * Get the Primitive Writable class which is the return type of    * getPrimitiveWritableObject() and copyToPrimitiveWritableObject()    */
-specifier|public
+comment|/**    * Get the Primitive Writable class which is the return type of    * getPrimitiveWritableObject() and copyToPrimitiveWritableObject().    */
 name|Class
 argument_list|<
 name|?
@@ -69,7 +71,6 @@ name|getPrimitiveWritableClass
 parameter_list|()
 function_decl|;
 comment|/**    * Return the data in an instance of primitive writable Object. If the Object    * is already a primitive writable Object, just return o.    */
-specifier|public
 name|Object
 name|getPrimitiveWritableObject
 parameter_list|(
@@ -78,7 +79,6 @@ name|o
 parameter_list|)
 function_decl|;
 comment|/**    * Get the Java Primitive class which is the return type of    * getJavaPrimitiveObject().    */
-specifier|public
 name|Class
 argument_list|<
 name|?
@@ -87,7 +87,6 @@ name|getJavaPrimitiveClass
 parameter_list|()
 function_decl|;
 comment|/**    * Get the Java Primitive object.    */
-specifier|public
 name|Object
 name|getPrimitiveJavaObject
 parameter_list|(
@@ -96,7 +95,6 @@ name|o
 parameter_list|)
 function_decl|;
 comment|/**    * Get a copy of the Object in the same class, so the return value can be    * stored independently of the parameter.    *     * If the Object is a Primitive Java Object, we just return the parameter    * since Primitive Java Object is immutable.    */
-specifier|public
 name|Object
 name|copyObject
 parameter_list|(
@@ -105,7 +103,6 @@ name|o
 parameter_list|)
 function_decl|;
 comment|/**    * Whether the ObjectInspector prefers to return a Primitive Writable Object    * instead of a Primitive Java Object. This can be useful for determining the    * most efficient way to getting data out of the Object.    */
-specifier|public
 name|boolean
 name|preferWritable
 parameter_list|()

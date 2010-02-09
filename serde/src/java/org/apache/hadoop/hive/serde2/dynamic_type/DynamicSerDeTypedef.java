@@ -79,6 +79,10 @@ name|TProtocol
 import|;
 end_import
 
+begin_comment
+comment|/**  * DynamicSerDeTypedef.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -88,8 +92,8 @@ name|DynamicSerDeTypeBase
 block|{
 comment|// production is: typedef DefinitionType() this.name
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|FD_DEFINITION_TYPE
 init|=

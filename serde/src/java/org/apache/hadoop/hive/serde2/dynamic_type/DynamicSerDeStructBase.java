@@ -113,9 +113,13 @@ name|TStruct
 import|;
 end_import
 
+begin_comment
+comment|/**  * DynamicSerDeStructBase.  *  */
+end_comment
+
 begin_class
-specifier|abstract
 specifier|public
+specifier|abstract
 class|class
 name|DynamicSerDeStructBase
 extends|extends
@@ -157,8 +161,8 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
-specifier|abstract
 specifier|public
+specifier|abstract
 name|DynamicSerDeFieldList
 name|getFieldList
 parameter_list|()

@@ -133,6 +133,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|PreparedStatement
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|Ref
 import|;
 end_import
@@ -243,15 +253,15 @@ name|HiveInterface
 import|;
 end_import
 
+begin_comment
+comment|/**  * HivePreparedStatement.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|HivePreparedStatement
 implements|implements
-name|java
-operator|.
-name|sql
-operator|.
 name|PreparedStatement
 block|{
 name|String

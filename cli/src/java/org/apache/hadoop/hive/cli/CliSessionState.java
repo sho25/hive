@@ -61,6 +61,10 @@ name|SessionState
 import|;
 end_import
 
+begin_comment
+comment|/**  * CliSessionState.  *   */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -68,17 +72,17 @@ name|CliSessionState
 extends|extends
 name|SessionState
 block|{
-comment|/**    * -e option if any that the session has been invoked with    */
+comment|/**    * -e option if any that the session has been invoked with.    */
 specifier|public
 name|String
 name|execString
 decl_stmt|;
-comment|/**    * -f option if any that the session has been invoked with    */
+comment|/**    * -f option if any that the session has been invoked with.    */
 specifier|public
 name|String
 name|fileName
 decl_stmt|;
-comment|/**    * properties set from -hiveconf via cmdline    */
+comment|/**    * properties set from -hiveconf via cmdline.    */
 specifier|public
 name|Properties
 name|cmdProperties

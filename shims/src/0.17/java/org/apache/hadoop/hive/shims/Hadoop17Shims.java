@@ -168,7 +168,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implemention of shims against Hadoop 0.17.0  */
+comment|/**  * Implemention of shims against Hadoop 0.17.0.  */
 end_comment
 
 begin_class
@@ -225,7 +225,7 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * workaround for hadoop-17 - jobclient only looks at commandlineconfig    */
+comment|/**    * workaround for hadoop-17 - jobclient only looks at commandlineconfig.    */
 specifier|public
 name|void
 name|setTmpFiles

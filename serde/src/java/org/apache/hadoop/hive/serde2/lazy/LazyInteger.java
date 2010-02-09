@@ -206,8 +206,6 @@ parameter_list|,
 name|int
 name|length
 parameter_list|)
-throws|throws
-name|NumberFormatException
 block|{
 return|return
 name|parseInt
@@ -241,8 +239,6 @@ parameter_list|,
 name|int
 name|radix
 parameter_list|)
-throws|throws
-name|NumberFormatException
 block|{
 if|if
 condition|(
@@ -396,8 +392,6 @@ parameter_list|,
 name|boolean
 name|negative
 parameter_list|)
-throws|throws
-name|NumberFormatException
 block|{
 name|int
 name|max

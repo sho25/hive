@@ -87,7 +87,7 @@ operator|=
 name|groups
 expr_stmt|;
 block|}
-comment|/**    * HWIAuth is used in SortedSets(s) the compartTo method is required    *     * @return chained call to String.compareTo based on user property    */
+comment|/**    * HWIAuth is used in SortedSets(s) the compartTo method is required.    *     * @return chained call to String.compareTo based on user property    */
 specifier|public
 name|int
 name|compareTo
@@ -143,7 +143,7 @@ name|user
 argument_list|)
 return|;
 block|}
-comment|/**    * HWIAuth is used in Map(s) the hashCode method is required    *     * @see java.lang.Object#hashCode()    */
+comment|/**    * HWIAuth is used in Map(s) the hashCode method is required.    *     * @see java.lang.Object#hashCode()    */
 annotation|@
 name|Override
 specifier|public
@@ -187,7 +187,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * HWIAuth is used in Map(s) the equals method is required    *     * @see java.lang.Object#equals(java.lang.Object)    */
+comment|/**    * HWIAuth is used in Map(s) the equals method is required.    *     * @see java.lang.Object#equals(java.lang.Object)    */
 annotation|@
 name|Override
 specifier|public

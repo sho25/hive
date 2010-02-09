@@ -379,6 +379,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|HiveFileFormatUtils
 block|{
@@ -457,15 +458,15 @@ argument_list|>
 argument_list|>
 name|outputFormatSubstituteMap
 decl_stmt|;
-comment|/**    * register a substitute    *     * @param origin    *          the class that need to be substituted    * @param substitute    */
+comment|/**    * register a substitute.    *     * @param origin    *          the class that need to be substituted    * @param substitute    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
 specifier|public
-specifier|synchronized
 specifier|static
+specifier|synchronized
 name|void
 name|registerOutputFormatSubstitute
 parameter_list|(
@@ -496,15 +497,15 @@ name|substitute
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * get a OutputFormat's substitute HiveOutputFormat    */
+comment|/**    * get a OutputFormat's substitute HiveOutputFormat.    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
 specifier|public
-specifier|synchronized
 specifier|static
+specifier|synchronized
 name|Class
 argument_list|<
 name|?
@@ -733,15 +734,15 @@ name|InputFormatChecker
 argument_list|>
 name|inputFormatCheckerInstanceCache
 decl_stmt|;
-comment|/**    * register an InputFormatChecker for a given InputFormat    *     * @param format    *          the class that need to be substituted    * @param checker    */
+comment|/**    * register an InputFormatChecker for a given InputFormat.    *     * @param format    *          the class that need to be substituted    * @param checker    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
 specifier|public
-specifier|synchronized
 specifier|static
+specifier|synchronized
 name|void
 name|registerInputFormatChecker
 parameter_list|(
@@ -774,8 +775,8 @@ expr_stmt|;
 block|}
 comment|/**    * get an InputFormatChecker for a file format.    */
 specifier|public
-specifier|synchronized
 specifier|static
+specifier|synchronized
 name|Class
 argument_list|<
 name|?
@@ -810,7 +811,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * checks if files are in same format as the given input format    */
+comment|/**    * checks if files are in same format as the given input format.    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1340,6 +1341,12 @@ block|}
 return|return
 literal|null
 return|;
+block|}
+specifier|private
+name|HiveFileFormatUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

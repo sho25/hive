@@ -19,6 +19,36 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|DataInput
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|DataOutput
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -125,7 +155,7 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|JobClient
+name|InputSplit
 import|;
 end_import
 
@@ -140,20 +170,6 @@ operator|.
 name|mapred
 operator|.
 name|JobConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputSplit
 import|;
 end_import
 
@@ -199,36 +215,6 @@ name|TaskCompletionEvent
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|DataInput
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|DataOutput
-import|;
-end_import
-
 begin_comment
 comment|/**  * In order to be compatible with multiple versions of Hadoop, all parts  * of the Hadoop interface that are not cross-version compatible are  * encapsulated in an implementation of this class. Users should use  * the ShimLoader class as a factory to obtain an implementation of  * HadoopShims corresponding to the version of Hadoop currently on the  * classpath.  */
 end_comment
@@ -239,13 +225,11 @@ interface|interface
 name|HadoopShims
 block|{
 comment|/**    * Return true if the current version of Hadoop uses the JobShell for    * command line interpretation.    */
-specifier|public
 name|boolean
 name|usesJobShell
 parameter_list|()
 function_decl|;
 comment|/**    * Calls fs.deleteOnExit(path) if such a function exists.    *    * @return true if the call was successful    */
-specifier|public
 name|boolean
 name|fileSystemDeleteOnExit
 parameter_list|(
@@ -259,7 +243,6 @@ throws|throws
 name|IOException
 function_decl|;
 comment|/**    * Calls fmt.validateInput(conf) if such a function exists.    */
-specifier|public
 name|void
 name|inputFormatValidateInput
 parameter_list|(
@@ -273,7 +256,6 @@ throws|throws
 name|IOException
 function_decl|;
 comment|/**    * If JobClient.getCommandLineConfig exists, sets the given    * property/value pair in that Configuration object.    *    * This applies for Hadoop 0.17 through 0.19    */
-specifier|public
 name|void
 name|setTmpFiles
 parameter_list|(
@@ -285,7 +267,6 @@ name|files
 parameter_list|)
 function_decl|;
 comment|/**    * return the last access time of the given file.    * @param file    * @return last access time. -1 if not supported.    */
-specifier|public
 name|long
 name|getAccessTime
 parameter_list|(
@@ -294,7 +275,6 @@ name|file
 parameter_list|)
 function_decl|;
 comment|/**    * Returns a shim to wrap MiniDFSCluster. This is necessary since this class    * was moved from org.apache.hadoop.dfs to org.apache.hadoop.hdfs    */
-specifier|public
 name|MiniDFSShim
 name|getMiniDfs
 parameter_list|(
@@ -319,14 +299,12 @@ specifier|public
 interface|interface
 name|MiniDFSShim
 block|{
-specifier|public
 name|FileSystem
 name|getFileSystem
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|void
 name|shutdown
 parameter_list|()
@@ -335,7 +313,6 @@ name|IOException
 function_decl|;
 block|}
 comment|/**    * We define this function here to make the code compatible between    * hadoop 0.17 and hadoop 0.20.    *    * Hive binary that compiled Text.compareTo(Text) with hadoop 0.20 won't    * work with hadoop 0.17 because in hadoop 0.20, Text.compareTo(Text) is    * implemented in org.apache.hadoop.io.BinaryComparable, and Java compiler    * references that class, which is not available in hadoop 0.17.    */
-specifier|public
 name|int
 name|compareText
 parameter_list|(
@@ -346,18 +323,15 @@ name|Text
 name|b
 parameter_list|)
 function_decl|;
-specifier|public
 name|CombineFileInputFormatShim
 name|getCombineFileInputFormat
 parameter_list|()
 function_decl|;
-specifier|public
 name|String
 name|getInputFormatClassName
 parameter_list|()
 function_decl|;
 comment|/**    * getTaskJobIDs returns an array of String with two elements. The first    * element is a string representing the task id and the second is a string    * representing the job id. This is necessary as TaskID and TaskAttemptID     * are not supported in Haddop 0.17    */
-specifier|public
 name|String
 index|[]
 name|getTaskJobIDs
@@ -366,38 +340,34 @@ name|TaskCompletionEvent
 name|t
 parameter_list|)
 function_decl|;
+comment|/**    * InputSplitShim.    *    */
 specifier|public
 interface|interface
 name|InputSplitShim
 extends|extends
 name|InputSplit
 block|{
-specifier|public
 name|JobConf
 name|getJob
 parameter_list|()
 function_decl|;
-specifier|public
 name|long
 name|getLength
 parameter_list|()
 function_decl|;
-comment|/** Returns an array containing the startoffsets of the files in the split*/
-specifier|public
+comment|/** Returns an array containing the startoffsets of the files in the split. */
 name|long
 index|[]
 name|getStartOffsets
 parameter_list|()
 function_decl|;
-comment|/** Returns an array containing the lengths of the files in the split*/
-specifier|public
+comment|/** Returns an array containing the lengths of the files in the split. */
 name|long
 index|[]
 name|getLengths
 parameter_list|()
 function_decl|;
-comment|/** Returns the start offset of the i<sup>th</sup> Path */
-specifier|public
+comment|/** Returns the start offset of the i<sup>th</sup> Path. */
 name|long
 name|getOffset
 parameter_list|(
@@ -405,8 +375,7 @@ name|int
 name|i
 parameter_list|)
 function_decl|;
-comment|/** Returns the length of the i<sup>th</sup> Path */
-specifier|public
+comment|/** Returns the length of the i<sup>th</sup> Path. */
 name|long
 name|getLength
 parameter_list|(
@@ -414,14 +383,12 @@ name|int
 name|i
 parameter_list|)
 function_decl|;
-comment|/** Returns the number of Paths in the split */
-specifier|public
+comment|/** Returns the number of Paths in the split. */
 name|int
 name|getNumPaths
 parameter_list|()
 function_decl|;
-comment|/** Returns the i<sup>th</sup> Path */
-specifier|public
+comment|/** Returns the i<sup>th</sup> Path. */
 name|Path
 name|getPath
 parameter_list|(
@@ -429,15 +396,13 @@ name|int
 name|i
 parameter_list|)
 function_decl|;
-comment|/** Returns all the Paths in the split */
-specifier|public
+comment|/** Returns all the Paths in the split. */
 name|Path
 index|[]
 name|getPaths
 parameter_list|()
 function_decl|;
-comment|/** Returns all the Paths where this input-split resides */
-specifier|public
+comment|/** Returns all the Paths where this input-split resides. */
 name|String
 index|[]
 name|getLocations
@@ -445,12 +410,10 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|String
 name|toString
 parameter_list|()
 function_decl|;
-specifier|public
 name|void
 name|readFields
 parameter_list|(
@@ -460,7 +423,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|void
 name|write
 parameter_list|(
@@ -471,7 +433,7 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-specifier|public
+comment|/**    * CombineFileInputFormatShim.    *    * @param<K>    * @param<V>    */
 interface|interface
 name|CombineFileInputFormatShim
 parameter_list|<
@@ -480,7 +442,6 @@ parameter_list|,
 name|V
 parameter_list|>
 block|{
-specifier|public
 name|Path
 index|[]
 name|getInputPathsShim
@@ -489,7 +450,6 @@ name|JobConf
 name|conf
 parameter_list|)
 function_decl|;
-specifier|public
 name|void
 name|createPool
 parameter_list|(
@@ -501,7 +461,6 @@ modifier|...
 name|filters
 parameter_list|)
 function_decl|;
-specifier|public
 name|InputSplitShim
 index|[]
 name|getSplits
@@ -515,14 +474,12 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|InputSplitShim
 name|getInputSplitShim
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|RecordReader
 name|getRecordReader
 parameter_list|(

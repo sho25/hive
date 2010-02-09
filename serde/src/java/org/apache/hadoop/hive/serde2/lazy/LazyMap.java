@@ -175,7 +175,7 @@ name|LazyObject
 index|[]
 name|valueObjects
 decl_stmt|;
-comment|/**    * Whether init() is called on valueObjects[i]    */
+comment|/**    * Whether init() is called on valueObjects[i].    */
 name|boolean
 index|[]
 name|valueInited

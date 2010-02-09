@@ -118,7 +118,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the parse information related to a query block  *   **/
+comment|/**  * Implementation of the parse information related to a query block.  *   **/
 end_comment
 
 begin_class
@@ -237,7 +237,7 @@ name|ASTNode
 argument_list|>
 name|destToSortby
 decl_stmt|;
-comment|/**    * Maping from table/subquery aliases to all the associated lateral view nodes    */
+comment|/**    * Maping from table/subquery aliases to all the associated lateral view nodes.    */
 specifier|private
 specifier|final
 name|HashMap

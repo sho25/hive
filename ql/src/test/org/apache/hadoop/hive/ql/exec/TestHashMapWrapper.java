@@ -87,6 +87,10 @@ name|HiveException
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestHashMapWrapper.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

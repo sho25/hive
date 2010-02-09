@@ -25,6 +25,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -56,16 +66,6 @@ operator|.
 name|util
 operator|.
 name|Set
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
 import|;
 end_import
 
@@ -134,7 +134,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the Row Resolver  *   */
+comment|/**  * Implementation of the Row Resolver.  *   */
 end_comment
 
 begin_class
@@ -719,12 +719,12 @@ argument_list|>
 name|getFieldMap
 parameter_list|(
 name|String
-name|tab_alias
+name|tabAlias
 parameter_list|)
 block|{
 if|if
 condition|(
-name|tab_alias
+name|tabAlias
 operator|==
 literal|null
 condition|)
@@ -745,7 +745,7 @@ name|rslvMap
 operator|.
 name|get
 argument_list|(
-name|tab_alias
+name|tabAlias
 operator|.
 name|toLowerCase
 argument_list|()

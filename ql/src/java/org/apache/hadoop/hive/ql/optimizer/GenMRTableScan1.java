@@ -232,7 +232,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Processor for the rule - table scan  */
+comment|/**  * Processor for the rule - table scan.  */
 end_comment
 
 begin_class
@@ -246,7 +246,7 @@ specifier|public
 name|GenMRTableScan1
 parameter_list|()
 block|{   }
-comment|/**    * Table Sink encountered    *     * @param nd    *          the table sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * Table Sink encountered.    *     * @param nd    *          the table sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process

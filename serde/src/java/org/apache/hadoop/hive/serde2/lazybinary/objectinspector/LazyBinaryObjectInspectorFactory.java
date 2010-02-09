@@ -71,6 +71,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|LazyBinaryObjectInspectorFactory
 block|{
@@ -379,6 +380,12 @@ block|}
 return|return
 name|result
 return|;
+block|}
+specifier|private
+name|LazyBinaryObjectInspectorFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

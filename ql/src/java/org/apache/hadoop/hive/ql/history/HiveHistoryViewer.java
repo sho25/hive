@@ -85,6 +85,26 @@ name|history
 operator|.
 name|HiveHistory
 operator|.
+name|Listener
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|history
+operator|.
+name|HiveHistory
+operator|.
 name|QueryInfo
 import|;
 end_import
@@ -129,25 +149,15 @@ name|TaskInfo
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveHistoryViewer.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|HiveHistoryViewer
 implements|implements
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|history
-operator|.
-name|HiveHistory
-operator|.
 name|Listener
 block|{
 name|String
@@ -248,7 +258,7 @@ return|return
 name|taskInfoMap
 return|;
 block|}
-comment|/**    * parse history files    */
+comment|/**    * Parse history files.    */
 name|void
 name|init
 parameter_list|()
@@ -279,7 +289,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Implementation Listner interface function    *     * @see org.apache.hadoop.hive.ql.history.HiveHistory.Listener#handle(org.apache.hadoop.hive.ql.history.HiveHistory.RecordTypes,    *      java.util.Map)    */
+comment|/**    * Implementation Listner interface function.    *     * @see org.apache.hadoop.hive.ql.history.HiveHistory.Listener#handle(org.apache.hadoop.hive.ql.history.HiveHistory.RecordTypes,    *      java.util.Map)    */
 specifier|public
 name|void
 name|handle

@@ -57,6 +57,10 @@ name|LineageInfo
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestLineageInfo.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -64,7 +68,7 @@ name|TestLineageInfo
 extends|extends
 name|TestCase
 block|{
-comment|/**    * Checks whether the test outputs match the expected outputs    *     * @param lep    *          The LineageInfo extracted from the test    * @param i    *          The set of input tables    * @param o    *          The set of output tables    */
+comment|/**    * Checks whether the test outputs match the expected outputs.    *     * @param lep    *          The LineageInfo extracted from the test    * @param i    *          The set of input tables    * @param o    *          The set of output tables    */
 specifier|private
 name|void
 name|checkOutput
@@ -144,7 +148,11 @@ name|lep
 operator|.
 name|getLineageInfo
 argument_list|(
-literal|"INSERT OVERWRITE TABLE dest1 partition (ds = '111')  SELECT s.* FROM srcpart TABLESAMPLE (BUCKET 1 OUT OF 1) s WHERE s.ds='2008-04-08' and s.hr='11'"
+literal|"INSERT OVERWRITE TABLE dest1 partition (ds = '111')  "
+operator|+
+literal|"SELECT s.* FROM srcpart TABLESAMPLE (BUCKET 1 OUT OF 1) s "
+operator|+
+literal|"WHERE s.ds='2008-04-08' and s.hr='11'"
 argument_list|)
 expr_stmt|;
 name|TreeSet
@@ -233,7 +241,13 @@ name|lep
 operator|.
 name|getLineageInfo
 argument_list|(
-literal|"FROM (FROM src select src.key, src.value WHERE src.key< 10 UNION ALL FROM src SELECT src.* WHERE src.key> 10 ) unioninput INSERT OVERWRITE DIRECTORY '../../../../build/contrib/hive/ql/test/data/warehouse/union.out' SELECT unioninput.*"
+literal|"FROM (FROM src select src.key, src.value "
+operator|+
+literal|"WHERE src.key< 10 UNION ALL FROM src SELECT src.* WHERE src.key> 10 ) unioninput "
+operator|+
+literal|"INSERT OVERWRITE DIRECTORY '../../../../build/contrib/hive/ql/test/data/warehouse/union.out' "
+operator|+
+literal|"SELECT unioninput.*"
 argument_list|)
 expr_stmt|;
 name|TreeSet
@@ -315,7 +329,13 @@ name|lep
 operator|.
 name|getLineageInfo
 argument_list|(
-literal|"FROM (FROM src select src.key, src.value WHERE src.key< 10 UNION ALL FROM src1 SELECT src1.* WHERE src1.key> 10 ) unioninput INSERT OVERWRITE DIRECTORY '../../../../build/contrib/hive/ql/test/data/warehouse/union.out' SELECT unioninput.*"
+literal|"FROM (FROM src select src.key, src.value "
+operator|+
+literal|"WHERE src.key< 10 UNION ALL FROM src1 SELECT src1.* WHERE src1.key> 10 ) unioninput "
+operator|+
+literal|"INSERT OVERWRITE DIRECTORY '../../../../build/contrib/hive/ql/test/data/warehouse/union.out' "
+operator|+
+literal|"SELECT unioninput.*"
 argument_list|)
 expr_stmt|;
 name|TreeSet
@@ -493,7 +513,9 @@ name|lep
 operator|.
 name|getLineageInfo
 argument_list|(
-literal|"insert overwrite table x select a.y, b.y from a a full outer join b b on (a.x = b.y)"
+literal|"insert overwrite table x select a.y, b.y "
+operator|+
+literal|"from a a full outer join b b on (a.x = b.y)"
 argument_list|)
 expr_stmt|;
 name|TreeSet

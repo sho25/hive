@@ -125,6 +125,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * PrimitiveObjectInspectorConverter.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -858,9 +862,11 @@ name|TextConverter
 implements|implements
 name|Converter
 block|{
+specifier|private
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
+specifier|private
 name|Text
 name|t
 init|=
@@ -868,6 +874,7 @@ operator|new
 name|Text
 argument_list|()
 decl_stmt|;
+specifier|private
 name|ByteStream
 operator|.
 name|Output
@@ -879,6 +886,7 @@ operator|.
 name|Output
 argument_list|()
 decl_stmt|;
+specifier|private
 specifier|static
 name|byte
 index|[]
@@ -894,6 +902,7 @@ block|,
 literal|'E'
 block|}
 decl_stmt|;
+specifier|private
 specifier|static
 name|byte
 index|[]
@@ -956,15 +965,12 @@ block|{
 case|case
 name|VOID
 case|:
-block|{
 return|return
 literal|null
 return|;
-block|}
 case|case
 name|BOOLEAN
 case|:
-block|{
 name|t
 operator|.
 name|set
@@ -989,11 +995,9 @@ expr_stmt|;
 return|return
 name|t
 return|;
-block|}
 case|case
 name|BYTE
 case|:
-block|{
 name|out
 operator|.
 name|reset
@@ -1038,11 +1042,9 @@ expr_stmt|;
 return|return
 name|t
 return|;
-block|}
 case|case
 name|SHORT
 case|:
-block|{
 name|out
 operator|.
 name|reset
@@ -1087,11 +1089,9 @@ expr_stmt|;
 return|return
 name|t
 return|;
-block|}
 case|case
 name|INT
 case|:
-block|{
 name|out
 operator|.
 name|reset
@@ -1136,11 +1136,9 @@ expr_stmt|;
 return|return
 name|t
 return|;
-block|}
 case|case
 name|LONG
 case|:
-block|{
 name|out
 operator|.
 name|reset
@@ -1185,11 +1183,9 @@ expr_stmt|;
 return|return
 name|t
 return|;
-block|}
 case|case
 name|FLOAT
 case|:
-block|{
 name|t
 operator|.
 name|set
@@ -1215,11 +1211,9 @@ expr_stmt|;
 return|return
 name|t
 return|;
-block|}
 case|case
 name|DOUBLE
 case|:
-block|{
 name|t
 operator|.
 name|set
@@ -1245,11 +1239,9 @@ expr_stmt|;
 return|return
 name|t
 return|;
-block|}
 case|case
 name|STRING
 case|:
-block|{
 name|t
 operator|.
 name|set
@@ -1270,9 +1262,7 @@ expr_stmt|;
 return|return
 name|t
 return|;
-block|}
 default|default:
-block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -1285,7 +1275,6 @@ name|getTypeName
 argument_list|()
 argument_list|)
 throw|;
-block|}
 block|}
 block|}
 block|}

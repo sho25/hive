@@ -163,6 +163,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestLazyPrimitive.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -234,7 +238,7 @@ name|LazyByte
 argument_list|(
 name|LazyPrimitiveObjectInspectorFactory
 operator|.
-name|lazyByteObjectInspector
+name|LAZY_BYTE_OBJECT_INSPECTOR
 argument_list|)
 decl_stmt|;
 name|initLazyObject
@@ -738,7 +742,7 @@ name|LazyShort
 argument_list|(
 name|LazyPrimitiveObjectInspectorFactory
 operator|.
-name|lazyShortObjectInspector
+name|LAZY_SHORT_OBJECT_INSPECTOR
 argument_list|)
 decl_stmt|;
 name|initLazyObject
@@ -1337,7 +1341,7 @@ name|LazyInteger
 argument_list|(
 name|LazyPrimitiveObjectInspectorFactory
 operator|.
-name|lazyIntObjectInspector
+name|LAZY_INT_OBJECT_INSPECTOR
 argument_list|)
 decl_stmt|;
 name|initLazyObject
@@ -2027,7 +2031,7 @@ name|LazyLong
 argument_list|(
 name|LazyPrimitiveObjectInspectorFactory
 operator|.
-name|lazyLongObjectInspector
+name|LAZY_LONG_OBJECT_INSPECTOR
 argument_list|)
 decl_stmt|;
 name|initLazyObject
@@ -2890,7 +2894,7 @@ name|LazyDouble
 argument_list|(
 name|LazyPrimitiveObjectInspectorFactory
 operator|.
-name|lazyDoubleObjectInspector
+name|LAZY_DOUBLE_OBJECT_INSPECTOR
 argument_list|)
 decl_stmt|;
 name|initLazyObject

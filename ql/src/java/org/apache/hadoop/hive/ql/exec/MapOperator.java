@@ -381,6 +381,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+comment|/**    * Counter.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -388,9 +389,9 @@ name|Counter
 block|{
 name|DESERIALIZE_ERRORS
 block|}
-specifier|transient
 specifier|private
 specifier|final
+specifier|transient
 name|LongWritable
 name|deserialize_error_count
 init|=
@@ -398,24 +399,24 @@ operator|new
 name|LongWritable
 argument_list|()
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|Deserializer
 name|deserializer
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|rowWithPart
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|StructObjectInspector
 name|rowObjectInspector
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|boolean
 name|isPartitioned
 decl_stmt|;

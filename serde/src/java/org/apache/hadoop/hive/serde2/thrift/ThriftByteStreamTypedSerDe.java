@@ -173,6 +173,10 @@ name|TIOStreamTransport
 import|;
 end_import
 
+begin_comment
+comment|/**  * ThriftByteStreamTypedSerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

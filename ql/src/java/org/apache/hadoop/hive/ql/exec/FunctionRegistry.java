@@ -2595,8 +2595,13 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * FunctionRegistry.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|FunctionRegistry
 block|{
@@ -6851,6 +6856,12 @@ name|class
 operator|==
 name|udfClass
 return|;
+block|}
+specifier|private
+name|FunctionRegistry
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

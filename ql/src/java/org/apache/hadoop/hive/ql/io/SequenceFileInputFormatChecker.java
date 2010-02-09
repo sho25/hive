@@ -97,6 +97,10 @@ name|SequenceFile
 import|;
 end_import
 
+begin_comment
+comment|/**  * SequenceFileInputFormatChecker.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

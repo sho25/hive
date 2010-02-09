@@ -20,15 +20,16 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Library of utility functions used in the parse code  *   */
+comment|/**  * Library of utility functions used in the parse code.  *   */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|ParseUtils
 block|{
-comment|/**    * Tests whether the parse tree node is a join token    *     * @param node    *          The parse tree node    * @return boolean    */
+comment|/**    * Tests whether the parse tree node is a join token.    *     * @param node    *          The parse tree node    * @return boolean    */
 specifier|public
 specifier|static
 name|boolean
@@ -38,9 +39,8 @@ name|ASTNode
 name|node
 parameter_list|)
 block|{
-if|if
+switch|switch
 condition|(
-operator|(
 name|node
 operator|.
 name|getToken
@@ -48,62 +48,36 @@ argument_list|()
 operator|.
 name|getType
 argument_list|()
-operator|==
+condition|)
+block|{
+case|case
 name|HiveParser
 operator|.
 name|TOK_JOIN
-operator|)
-operator|||
-operator|(
-name|node
-operator|.
-name|getToken
-argument_list|()
-operator|.
-name|getType
-argument_list|()
-operator|==
+case|:
+case|case
 name|HiveParser
 operator|.
 name|TOK_LEFTOUTERJOIN
-operator|)
-operator|||
-operator|(
-name|node
-operator|.
-name|getToken
-argument_list|()
-operator|.
-name|getType
-argument_list|()
-operator|==
+case|:
+case|case
 name|HiveParser
 operator|.
 name|TOK_RIGHTOUTERJOIN
-operator|)
-operator|||
-operator|(
-name|node
-operator|.
-name|getToken
-argument_list|()
-operator|.
-name|getType
-argument_list|()
-operator|==
+case|:
+case|case
 name|HiveParser
 operator|.
 name|TOK_FULLOUTERJOIN
-operator|)
-condition|)
-block|{
+case|:
 return|return
 literal|true
 return|;
-block|}
+default|default:
 return|return
 literal|false
 return|;
+block|}
 block|}
 comment|/**    * Performs a descent of the leftmost branch of a tree, stopping when either a    * node with a non-null token is found or the leaf level is encountered.    *     * @param tree    *          candidate node from which to start searching    *     * @return node at which descent stopped    */
 specifier|public
@@ -152,6 +126,12 @@ block|}
 return|return
 name|tree
 return|;
+block|}
+specifier|private
+name|ParseUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

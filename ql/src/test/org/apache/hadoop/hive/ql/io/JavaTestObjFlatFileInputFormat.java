@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Simple test object  */
+comment|/**  * Simple test object.  */
 end_comment
 
 begin_class

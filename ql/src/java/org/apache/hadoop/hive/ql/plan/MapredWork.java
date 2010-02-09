@@ -115,6 +115,10 @@ name|Utilities
 import|;
 end_import
 
+begin_comment
+comment|/**  * MapredWork.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain

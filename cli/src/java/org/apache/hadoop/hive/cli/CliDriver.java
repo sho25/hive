@@ -93,7 +93,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
+name|ArrayList
 import|;
 end_import
 
@@ -103,7 +103,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|Arrays
 import|;
 end_import
 
@@ -395,22 +395,26 @@ name|ShimLoader
 import|;
 end_import
 
+begin_comment
+comment|/**  * CliDriver.  *   */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|CliDriver
 block|{
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|prompt
 init|=
 literal|"hive"
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|prompt2
 init|=

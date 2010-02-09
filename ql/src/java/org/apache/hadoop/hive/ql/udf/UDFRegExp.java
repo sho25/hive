@@ -85,7 +85,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDF
+name|Description
 import|;
 end_import
 
@@ -103,7 +103,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDF
 import|;
 end_import
 
@@ -134,6 +134,10 @@ operator|.
 name|Text
 import|;
 end_import
+
+begin_comment
+comment|/**  * UDFRegExp.  *  */
+end_comment
 
 begin_class
 annotation|@
@@ -195,11 +199,13 @@ name|p
 init|=
 literal|null
 decl_stmt|;
+specifier|private
 name|boolean
 name|warned
 init|=
 literal|false
 decl_stmt|;
+specifier|private
 name|BooleanWritable
 name|result
 init|=

@@ -65,6 +65,10 @@ name|Task
 import|;
 end_import
 
+begin_comment
+comment|/**  * DriverContext.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -136,7 +140,7 @@ return|return
 name|runnable
 return|;
 block|}
-comment|/**    * Checks if a task can be launched    *     * @param tsk    *          the task to be checked    * @return true if the task is launchable, false otherwise    */
+comment|/**    * Checks if a task can be launched.    *     * @param tsk    *          the task to be checked    * @return true if the task is launchable, false otherwise    */
 specifier|public
 specifier|static
 name|boolean

@@ -53,6 +53,10 @@ name|Path
 import|;
 end_import
 
+begin_comment
+comment|/**  * DescTableDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
@@ -114,7 +118,7 @@ decl_stmt|;
 name|boolean
 name|isExt
 decl_stmt|;
-comment|/**    * table name for the result of describe table    */
+comment|/**    * table name for the result of describe table.    */
 specifier|private
 specifier|static
 specifier|final
@@ -123,7 +127,7 @@ name|table
 init|=
 literal|"describe"
 decl_stmt|;
-comment|/**    * thrift ddl for the result of describe table    */
+comment|/**    * thrift ddl for the result of describe table.    */
 specifier|private
 specifier|static
 specifier|final

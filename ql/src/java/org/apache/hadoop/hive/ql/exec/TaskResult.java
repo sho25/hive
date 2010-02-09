@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * TaskResult implementation  **/
+comment|/**  * TaskResult implementation.  **/
 end_comment
 
 begin_class

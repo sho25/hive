@@ -85,6 +85,10 @@ name|TypeInfo
 import|;
 end_import
 
+begin_comment
+comment|/**  * ExprNodeFieldDesc.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

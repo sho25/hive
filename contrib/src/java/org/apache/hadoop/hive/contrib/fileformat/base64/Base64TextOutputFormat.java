@@ -242,6 +242,7 @@ argument_list|,
 name|V
 argument_list|>
 block|{
+comment|/**    * Base64RecordWriter.    *    */
 specifier|public
 specifier|static
 class|class

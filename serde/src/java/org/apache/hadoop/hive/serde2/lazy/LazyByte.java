@@ -190,8 +190,6 @@ parameter_list|,
 name|int
 name|length
 parameter_list|)
-throws|throws
-name|NumberFormatException
 block|{
 return|return
 name|parseByte
@@ -225,8 +223,6 @@ parameter_list|,
 name|int
 name|radix
 parameter_list|)
-throws|throws
-name|NumberFormatException
 block|{
 name|int
 name|intValue

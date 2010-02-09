@@ -167,6 +167,10 @@ name|Task
 import|;
 end_import
 
+begin_comment
+comment|/**  * ConditionalResolverSkewJoin.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -184,6 +188,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+comment|/**    * ConditionalResolverSkewJoinCtx.    *    */
 specifier|public
 specifier|static
 class|class

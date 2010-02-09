@@ -182,14 +182,21 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Operator factory for union processing  */
+comment|/**  * Operator factory for union processing.  */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|UnionProcFactory
 block|{
+specifier|private
+name|UnionProcFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 specifier|public
 specifier|static
 name|int
@@ -296,7 +303,7 @@ return|return
 name|pos
 return|;
 block|}
-comment|/**    * MapRed subquery followed by Union    */
+comment|/**    * MapRed subquery followed by Union.    */
 specifier|public
 specifier|static
 class|class
@@ -427,7 +434,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Map-only subquery followed by Union    */
+comment|/**    * Map-only subquery followed by Union.    */
 specifier|public
 specifier|static
 class|class
@@ -551,7 +558,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Map-join subquery followed by Union    */
+comment|/**    * Map-join subquery followed by Union.    */
 specifier|public
 specifier|static
 class|class
@@ -666,7 +673,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Union subquery followed by Union    */
+comment|/**    * Union subquery followed by Union.    */
 specifier|public
 specifier|static
 class|class
@@ -790,7 +797,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Default processor    */
+comment|/**    * Default processor.    */
 specifier|public
 specifier|static
 class|class

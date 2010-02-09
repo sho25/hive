@@ -144,7 +144,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Buffers rows emitted by other operators  **/
+comment|/**  * Buffers rows emitted by other operators.  **/
 end_comment
 
 begin_class
@@ -167,16 +167,16 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ArrayList
 argument_list|<
 name|Object
 argument_list|>
 name|rowList
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ObjectInspector
 name|standardRowInspector
 decl_stmt|;

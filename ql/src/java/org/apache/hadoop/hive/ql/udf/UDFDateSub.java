@@ -75,25 +75,15 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
+name|hadoop
 operator|.
-name|logging
+name|hive
 operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|ql
 operator|.
-name|apache
+name|exec
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|Description
 import|;
 end_import
 
@@ -112,24 +102,6 @@ operator|.
 name|exec
 operator|.
 name|UDF
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Description
 import|;
 end_import
 
@@ -161,6 +133,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDFDateSub.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -171,9 +147,7 @@ literal|"date_sub"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(start_date, num_days) - Returns the date that is num_days"
-operator|+
-literal|" before start_date."
+literal|"_FUNC_(start_date, num_days) - Returns the date that is num_days before start_date."
 argument_list|,
 name|extended
 operator|=
@@ -195,23 +169,6 @@ name|UDFDateSub
 extends|extends
 name|UDF
 block|{
-specifier|private
-specifier|static
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|UDFDateSub
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-decl_stmt|;
 specifier|private
 specifier|final
 name|SimpleDateFormat
@@ -240,6 +197,7 @@ literal|"UTC"
 argument_list|)
 argument_list|)
 decl_stmt|;
+specifier|private
 name|Text
 name|result
 init|=

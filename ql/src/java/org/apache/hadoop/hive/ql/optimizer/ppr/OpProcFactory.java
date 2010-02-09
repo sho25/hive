@@ -191,6 +191,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|OpProcFactory
 block|{
@@ -506,7 +507,7 @@ expr_stmt|;
 return|return;
 block|}
 block|}
-comment|/**    * Default processor which just merges its children    */
+comment|/**    * Default processor which just merges its children.    */
 specifier|public
 specifier|static
 class|class
@@ -568,6 +569,12 @@ operator|new
 name|DefaultPPR
 argument_list|()
 return|;
+block|}
+specifier|private
+name|OpProcFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

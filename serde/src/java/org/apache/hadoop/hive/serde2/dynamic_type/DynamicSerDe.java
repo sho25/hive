@@ -385,6 +385,10 @@ name|TIOStreamTransport
 import|;
 end_import
 
+begin_comment
+comment|/**  * DynamicSerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -428,33 +432,33 @@ name|META_TABLE_NAME
 init|=
 literal|"name"
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|thrift_grammar
 name|parse_tree
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ByteStream
 operator|.
 name|Input
 name|bis_
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ByteStream
 operator|.
 name|Output
 name|bos_
 decl_stmt|;
 comment|/**    * protocols are protected in case any of their properties need to be queried    * from another class in this package. For TCTLSeparatedProtocol for example,    * may want to query the separators.    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|TProtocol
 name|oprot_
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|TProtocol
 name|iprot_
 decl_stmt|;

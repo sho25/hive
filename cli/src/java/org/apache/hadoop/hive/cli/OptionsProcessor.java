@@ -255,6 +255,10 @@ name|LogFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * OptionsProcessor.  *   */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -300,7 +304,7 @@ name|fileOption
 decl_stmt|,
 name|isHelpOption
 decl_stmt|;
-comment|/**    * shameless cloned from hadoop streaming take in multiple -hiveconf x=y    * parameters    */
+comment|/**    * Shamelessly cloned from Hadoop streaming take in multiple -hiveconf x=y parameters.    */
 class|class
 name|MultiPropertyOption
 extends|extends

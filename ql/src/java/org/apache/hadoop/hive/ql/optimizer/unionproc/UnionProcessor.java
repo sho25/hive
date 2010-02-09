@@ -260,7 +260,7 @@ name|UnionProcessor
 implements|implements
 name|Transform
 block|{
-comment|/**    * empty constructor    */
+comment|/**    * empty constructor.    */
 specifier|public
 name|UnionProcessor
 parameter_list|()

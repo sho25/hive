@@ -81,8 +81,13 @@ name|NetUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * JobTrackerURLResolver.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|JobTrackerURLResolver
 block|{
@@ -162,6 +167,12 @@ decl_stmt|;
 return|return
 name|tracker
 return|;
+block|}
+specifier|private
+name|JobTrackerURLResolver
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

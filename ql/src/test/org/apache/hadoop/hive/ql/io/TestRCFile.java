@@ -149,22 +149,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde
 operator|.
 name|Constants
@@ -528,6 +512,10 @@ operator|.
 name|Reporter
 import|;
 end_import
+
+begin_comment
+comment|/**  * TestRCFile.  *  */
+end_comment
 
 begin_class
 specifier|public
@@ -3296,6 +3284,7 @@ name|i
 operator|==
 name|intervalRecordCount
 condition|)
+block|{
 name|System
 operator|.
 name|out
@@ -3310,6 +3299,7 @@ name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|writer
 operator|.
 name|append
@@ -3459,9 +3449,11 @@ argument_list|,
 name|value
 argument_list|)
 condition|)
+block|{
 name|readCount
 operator|++
 expr_stmt|;
+block|}
 name|System
 operator|.
 name|out

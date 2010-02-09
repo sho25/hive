@@ -61,8 +61,13 @@ name|Pattern
 import|;
 end_import
 
+begin_comment
+comment|/**  * extracturl.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|extracturl
 block|{
@@ -209,6 +214,12 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|private
+name|extracturl
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

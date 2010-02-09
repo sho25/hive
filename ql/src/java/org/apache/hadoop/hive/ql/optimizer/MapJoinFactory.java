@@ -419,24 +419,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|FileSinkDesc
 import|;
 end_import
@@ -473,16 +455,35 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|PlanUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|TableDesc
 import|;
 end_import
 
 begin_comment
-comment|/**  * Operator factory for MapJoin processing  */
+comment|/**  * Operator factory for MapJoin processing.  */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|MapJoinFactory
 block|{
@@ -592,7 +593,7 @@ return|return
 name|pos
 return|;
 block|}
-comment|/**    * TableScan followed by MapJoin    */
+comment|/**    * TableScan followed by MapJoin.    */
 specifier|public
 specifier|static
 class|class
@@ -836,10 +837,10 @@ name|pos
 argument_list|)
 expr_stmt|;
 block|}
-comment|// The current plan can be thrown away after being merged with the
-comment|// original plan
 else|else
 block|{
+comment|// The current plan can be thrown away after being merged with the
+comment|// original plan
 name|GenMapRedUtils
 operator|.
 name|joinPlan
@@ -904,7 +905,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * ReduceSink followed by MapJoin    */
+comment|/**    * ReduceSink followed by MapJoin.    */
 specifier|public
 specifier|static
 class|class
@@ -1131,10 +1132,10 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|// The current plan can be thrown away after being merged with the
-comment|// original plan
 else|else
 block|{
+comment|// The current plan can be thrown away after being merged with the
+comment|// original plan
 name|GenMapRedUtils
 operator|.
 name|joinPlan
@@ -1173,7 +1174,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * MapJoin followed by Select    */
+comment|/**    * MapJoin followed by Select.    */
 specifier|public
 specifier|static
 class|class
@@ -1671,7 +1672,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * MapJoin followed by MapJoin    */
+comment|/**    * MapJoin followed by MapJoin.    */
 specifier|public
 specifier|static
 class|class
@@ -1957,10 +1958,10 @@ name|pos
 argument_list|)
 expr_stmt|;
 block|}
-comment|// The current plan can be thrown away after being merged with the
-comment|// original plan
 else|else
 block|{
+comment|// The current plan can be thrown away after being merged with the
+comment|// original plan
 name|GenMapRedUtils
 operator|.
 name|joinPlan
@@ -2019,7 +2020,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Union followed by MapJoin    */
+comment|/**    * Union followed by MapJoin.    */
 specifier|public
 specifier|static
 class|class
@@ -2339,10 +2340,10 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|// The current plan can be thrown away after being merged with the
-comment|// original plan
 else|else
 block|{
+comment|// The current plan can be thrown away after being merged with the
+comment|// original plan
 name|Task
 argument_list|<
 name|?
@@ -2528,6 +2529,12 @@ operator|new
 name|MapJoinMapJoin
 argument_list|()
 return|;
+block|}
+specifier|private
+name|MapJoinFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

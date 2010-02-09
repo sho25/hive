@@ -94,7 +94,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the metadata information related to a query block  *   **/
+comment|/**  * Implementation of the metadata information related to a query block.  *   **/
 end_comment
 
 begin_class

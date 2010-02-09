@@ -103,7 +103,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentTypeException
+name|Description
 import|;
 end_import
 
@@ -121,7 +121,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDFArgumentTypeException
 import|;
 end_import
 
@@ -321,7 +321,9 @@ literal|"dboutput"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(jdbcstring,username,password,preparedstatement,[arguments]) - sends data to a jdbc driver"
+literal|"_FUNC_(jdbcstring,username,password,preparedstatement,[arguments])"
+operator|+
+literal|" - sends data to a jdbc driver"
 argument_list|,
 name|extended
 operator|=
@@ -333,7 +335,9 @@ literal|"argument 2 is the password\n"
 operator|+
 literal|"argument 3 is an SQL query to be used in the PreparedStatement\n"
 operator|+
-literal|"argument (4-n) The remaining arguments must be primitive and are passed to the PreparedStatement object\n"
+literal|"argument (4-n) The remaining arguments must be primitive and are "
+operator|+
+literal|"passed to the PreparedStatement object\n"
 argument_list|)
 annotation|@
 name|UDFType

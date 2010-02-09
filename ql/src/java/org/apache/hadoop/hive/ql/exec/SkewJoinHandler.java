@@ -384,9 +384,9 @@ specifier|public
 class|class
 name|SkewJoinHandler
 block|{
+specifier|protected
 specifier|static
 specifier|final
-specifier|protected
 name|Log
 name|LOG
 init|=

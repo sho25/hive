@@ -75,6 +75,10 @@ name|TypeInfo
 import|;
 end_import
 
+begin_comment
+comment|/**  * ExprNodeDesc.  *  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

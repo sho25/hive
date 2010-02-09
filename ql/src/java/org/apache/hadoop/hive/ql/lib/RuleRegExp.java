@@ -72,7 +72,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Rule interface for Nodes Used in Node dispatching to dispatch process/visitor  * functions for Nodes  */
+comment|/**  * Rule interface for Nodes Used in Node dispatching to dispatch process/visitor  * functions for Nodes.  */
 end_comment
 
 begin_class

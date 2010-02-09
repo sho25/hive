@@ -17,6 +17,10 @@ name|s3
 package|;
 end_package
 
+begin_comment
+comment|/**  * S3LogStruct.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

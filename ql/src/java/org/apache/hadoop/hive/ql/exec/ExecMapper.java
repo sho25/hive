@@ -305,6 +305,10 @@ name|Reporter
 import|;
 end_import
 
+begin_comment
+comment|/**  * ExecMapper.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -1371,6 +1375,7 @@ return|return
 name|done
 return|;
 block|}
+comment|/**    * reportStats.    *    */
 specifier|public
 specifier|static
 class|class

@@ -150,7 +150,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * The reusable vLong for decoding the long    */
+comment|/**    * The reusable vLong for decoding the long.    */
 name|VLong
 name|vLong
 init|=

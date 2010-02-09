@@ -40,7 +40,6 @@ specifier|public
 interface|interface
 name|SkippableTProtocol
 block|{
-specifier|public
 name|void
 name|skip
 parameter_list|(

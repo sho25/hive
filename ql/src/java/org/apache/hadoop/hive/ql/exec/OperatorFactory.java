@@ -337,16 +337,22 @@ name|UnionDesc
 import|;
 end_import
 
+begin_comment
+comment|/**  * OperatorFactory.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|OperatorFactory
 block|{
+comment|/**    * OpTuple.    *    * @param<T>    */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 class|class
-name|opTuple
+name|OpTuple
 parameter_list|<
 name|T
 extends|extends
@@ -373,7 +379,7 @@ argument_list|>
 name|opClass
 decl_stmt|;
 specifier|public
-name|opTuple
+name|OpTuple
 parameter_list|(
 name|Class
 argument_list|<
@@ -411,7 +417,7 @@ specifier|public
 specifier|static
 name|ArrayList
 argument_list|<
-name|opTuple
+name|OpTuple
 argument_list|>
 name|opvec
 decl_stmt|;
@@ -422,7 +428,7 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<
-name|opTuple
+name|OpTuple
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -431,7 +437,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|FilterDesc
 argument_list|>
@@ -451,7 +457,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|SelectDesc
 argument_list|>
@@ -471,7 +477,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|ForwardDesc
 argument_list|>
@@ -491,7 +497,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|FileSinkDesc
 argument_list|>
@@ -511,7 +517,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|CollectDesc
 argument_list|>
@@ -531,7 +537,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|ScriptDesc
 argument_list|>
@@ -551,7 +557,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|ReduceSinkDesc
 argument_list|>
@@ -571,7 +577,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|ExtractDesc
 argument_list|>
@@ -591,7 +597,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|GroupByDesc
 argument_list|>
@@ -611,7 +617,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|JoinDesc
 argument_list|>
@@ -631,7 +637,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|MapJoinDesc
 argument_list|>
@@ -651,7 +657,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|LimitDesc
 argument_list|>
@@ -671,7 +677,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|TableScanDesc
 argument_list|>
@@ -691,7 +697,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|UnionDesc
 argument_list|>
@@ -711,7 +717,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|UDTFDesc
 argument_list|>
@@ -731,7 +737,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|opTuple
+name|OpTuple
 argument_list|<
 name|LateralViewJoinDesc
 argument_list|>
@@ -769,7 +775,7 @@ parameter_list|)
 block|{
 for|for
 control|(
-name|opTuple
+name|OpTuple
 name|o
 range|:
 name|opvec
@@ -1346,6 +1352,12 @@ operator|(
 name|ret
 operator|)
 return|;
+block|}
+specifier|private
+name|OperatorFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

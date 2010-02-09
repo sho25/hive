@@ -33,6 +33,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|Driver
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|DriverPropertyInfo
 import|;
 end_import
@@ -69,15 +79,15 @@ name|Pattern
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveDriver.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|HiveDriver
 implements|implements
-name|java
-operator|.
-name|sql
-operator|.
 name|Driver
 block|{
 static|static
@@ -93,16 +103,6 @@ operator|.
 name|registerDriver
 argument_list|(
 operator|new
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|jdbc
-operator|.
 name|HiveDriver
 argument_list|()
 argument_list|)
@@ -149,7 +149,7 @@ name|JDBC_COMPLIANT
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * The required prefix for the connection url    */
+comment|/**    * The required prefix for the connection URL.    */
 specifier|private
 specifier|static
 specifier|final
@@ -158,7 +158,7 @@ name|URL_PREFIX
 init|=
 literal|"jdbc:hive://"
 decl_stmt|;
-comment|/**    * If host is provided, without a port    */
+comment|/**    * If host is provided, without a port.    */
 specifier|private
 specifier|static
 specifier|final
@@ -167,7 +167,7 @@ name|DEFAULT_PORT
 init|=
 literal|"10000"
 decl_stmt|;
-comment|/**    * Property key for the database name    */
+comment|/**    * Property key for the database name.    */
 specifier|private
 specifier|static
 specifier|final
@@ -176,7 +176,7 @@ name|DBNAME_PROPERTY_KEY
 init|=
 literal|"DBNAME"
 decl_stmt|;
-comment|/**    * Property key for the Hive Server host    */
+comment|/**    * Property key for the Hive Server host.    */
 specifier|private
 specifier|static
 specifier|final
@@ -185,7 +185,7 @@ name|HOST_PROPERTY_KEY
 init|=
 literal|"HOST"
 decl_stmt|;
-comment|/**    * Property key for the Hive Server port    */
+comment|/**    * Property key for the Hive Server port.    */
 specifier|private
 specifier|static
 specifier|final
@@ -492,10 +492,6 @@ name|Properties
 name|defaults
 parameter_list|)
 throws|throws
-name|java
-operator|.
-name|sql
-operator|.
 name|SQLException
 block|{
 name|Properties

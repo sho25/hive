@@ -291,6 +291,10 @@ name|MoveWork
 import|;
 end_import
 
+begin_comment
+comment|/**  * LoadSemanticAnalyzer.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -298,9 +302,11 @@ name|LoadSemanticAnalyzer
 extends|extends
 name|BaseSemanticAnalyzer
 block|{
+specifier|private
 name|boolean
 name|isLocal
 decl_stmt|;
+specifier|private
 name|boolean
 name|isOverWrite
 decl_stmt|;
@@ -961,12 +967,14 @@ name|SemanticException
 block|{
 name|isLocal
 operator|=
+literal|false
+expr_stmt|;
 name|isOverWrite
 operator|=
 literal|false
 expr_stmt|;
 name|Tree
-name|from_t
+name|fromTree
 init|=
 name|ast
 operator|.
@@ -976,7 +984,7 @@ literal|0
 argument_list|)
 decl_stmt|;
 name|Tree
-name|table_t
+name|tableTree
 init|=
 name|ast
 operator|.
@@ -995,9 +1003,11 @@ operator|==
 literal|4
 condition|)
 block|{
-name|isOverWrite
-operator|=
 name|isLocal
+operator|=
+literal|true
+expr_stmt|;
+name|isOverWrite
 operator|=
 literal|true
 expr_stmt|;
@@ -1057,7 +1067,7 @@ name|fromPath
 init|=
 name|stripQuotes
 argument_list|(
-name|from_t
+name|fromTree
 operator|.
 name|getText
 argument_list|()
@@ -1087,7 +1097,7 @@ name|INVALID_PATH
 operator|.
 name|getMsg
 argument_list|(
-name|from_t
+name|fromTree
 argument_list|,
 name|e
 operator|.
@@ -1115,7 +1125,7 @@ name|INVALID_PATH
 operator|.
 name|getMsg
 argument_list|(
-name|from_t
+name|fromTree
 argument_list|,
 name|e
 operator|.
@@ -1141,7 +1151,7 @@ argument_list|,
 operator|(
 name|ASTNode
 operator|)
-name|table_t
+name|tableTree
 argument_list|)
 decl_stmt|;
 if|if
@@ -1263,7 +1273,7 @@ name|fromURI
 argument_list|,
 name|toURI
 argument_list|,
-name|from_t
+name|fromTree
 argument_list|,
 name|isLocal
 argument_list|)

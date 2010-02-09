@@ -43,7 +43,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDF
+name|Description
 import|;
 end_import
 
@@ -61,7 +61,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDF
 import|;
 end_import
 
@@ -92,6 +92,10 @@ operator|.
 name|Text
 import|;
 end_import
+
+begin_comment
+comment|/**  * UDFConv.  *  */
+end_comment
 
 begin_class
 annotation|@
@@ -221,7 +225,7 @@ operator|/
 name|m
 return|;
 block|}
-comment|/**    * Decode val into value[]    *     * @param val    *          is treated as an unsigned 64-bit integer    * @param radix    *          must be between MIN_RADIX and MAX_RADIX    */
+comment|/**    * Decode val into value[].    *     * @param val    *          is treated as an unsigned 64-bit integer    * @param radix    *          must be between MIN_RADIX and MAX_RADIX    */
 specifier|private
 name|void
 name|decode

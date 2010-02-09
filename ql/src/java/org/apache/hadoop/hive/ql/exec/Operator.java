@@ -314,7 +314,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Base operator implementation  **/
+comment|/**  * Base operator implementation.  **/
 end_comment
 
 begin_class
@@ -369,7 +369,7 @@ specifier|protected
 name|String
 name|operatorId
 decl_stmt|;
-comment|/**    * List of counter names associated with the operator It contains the    * following default counters NUM_INPUT_ROWS NUM_OUTPUT_ROWS TIME_TAKEN    * Individual operators can add to this list via addToCounterNames methods    */
+comment|/**    * List of counter names associated with the operator. It contains the    * following default counters NUM_INPUT_ROWS NUM_OUTPUT_ROWS TIME_TAKEN    * Individual operators can add to this list via addToCounterNames methods.    */
 specifier|protected
 name|ArrayList
 argument_list|<
@@ -377,7 +377,7 @@ name|String
 argument_list|>
 name|counterNames
 decl_stmt|;
-comment|/**    * Each operator has its own map of its counter names to disjoint    * ProgressCounter - it is populated at compile time and is read in at    * run-time while extracting the operator specific counts    */
+comment|/**    * Each operator has its own map of its counter names to disjoint    * ProgressCounter - it is populated at compile time and is read in at    * run-time while extracting the operator specific counts.    */
 specifier|protected
 name|HashMap
 argument_list|<
@@ -392,13 +392,11 @@ specifier|static
 name|int
 name|seqId
 decl_stmt|;
-comment|// It can be optimized later so that an operator operator (init/close) is
-comment|// performed
-comment|// only after that operation has been performed on all the parents. This will
-comment|// require
-comment|// initializing the whole tree in all the mappers (which might be required for
-comment|// mappers
+comment|// It can be optimized later so that an operator operator (init/close) is performed
+comment|// only after that operation has been performed on all the parents. This will require
+comment|// initializing the whole tree in all the mappers (which might be required for mappers
 comment|// spanning multiple files anyway, in future)
+comment|/**    * State.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -418,8 +416,8 @@ comment|// difference since close() could be called but state is not CLOSE if
 comment|// one of its parent is not in state CLOSE..
 block|}
 empty_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|State
 name|state
 init|=
@@ -427,8 +425,8 @@ name|State
 operator|.
 name|UNINIT
 decl_stmt|;
-specifier|transient
 specifier|static
+specifier|transient
 name|boolean
 name|fatalError
 init|=
@@ -695,8 +693,8 @@ name|done
 expr_stmt|;
 block|}
 comment|// non-bean fields needed during compilation
-specifier|transient
 specifier|private
+specifier|transient
 name|RowSchema
 name|rowSchema
 decl_stmt|;
@@ -725,8 +723,8 @@ name|rowSchema
 return|;
 block|}
 comment|// non-bean ..
-specifier|transient
 specifier|protected
+specifier|transient
 name|HashMap
 argument_list|<
 name|Enum
@@ -750,13 +748,13 @@ name|LongWritable
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|OutputCollector
 name|out
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Log
 name|LOG
 init|=
@@ -773,24 +771,24 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|String
 name|alias
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Reporter
 name|reporter
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|String
 name|id
 decl_stmt|;
 comment|// object inspectors for input rows
-specifier|transient
 specifier|protected
+specifier|transient
 name|ObjectInspector
 index|[]
 name|inputObjInspectors
@@ -804,8 +802,8 @@ name|MAX_VALUE
 index|]
 decl_stmt|;
 comment|// for output rows of this operator
-specifier|transient
 specifier|protected
+specifier|transient
 name|ObjectInspector
 name|outputObjInspector
 decl_stmt|;
@@ -935,7 +933,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Store the alias this operator is working on behalf of    */
+comment|/**    * Store the alias this operator is working on behalf of.    */
 specifier|public
 name|void
 name|setAlias
@@ -1060,7 +1058,7 @@ name|ret
 operator|)
 return|;
 block|}
-comment|/**    * checks whether all parent operators are initialized or not    *     * @return true if there are no parents or all parents are initialized. false    *         otherwise    */
+comment|/**    * checks whether all parent operators are initialized or not.    *     * @return true if there are no parents or all parents are initialized. false    *         otherwise    */
 specifier|protected
 name|boolean
 name|areAllParentsInitialized
@@ -1388,7 +1386,7 @@ name|hconf
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Calls initialize on each of the children with outputObjetInspector as the    * output row format    */
+comment|/**    * Calls initialize on each of the children with outputObjetInspector as the    * output row format.    */
 specifier|protected
 name|void
 name|initializeChildren
@@ -1498,7 +1496,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Collects all the parent's output object inspectors and calls actual    * initialization method    *     * @param hconf    * @param inputOI    *          OI of the row that this parent will pass to this op    * @param parentId    *          parent operator id    * @throws HiveException    */
+comment|/**    * Collects all the parent's output object inspectors and calls actual    * initialization method.    *     * @param hconf    * @param inputOI    *          OI of the row that this parent will pass to this op    * @param parentId    *          parent operator id    * @throws HiveException    */
 specifier|private
 name|void
 name|initialize
@@ -1953,7 +1951,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{   }
-comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed    *     * @param conf    *          Configuration with with which job was submitted    * @param success    *          whether the job was completed successfully or not    */
+comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed.    *     * @param conf    *          Configuration with with which job was submitted    * @param success    *          whether the job was completed successfully or not    */
 specifier|public
 name|void
 name|jobClose
@@ -2001,8 +1999,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Cache childOperators in an array for faster access. childOperatorsArray is    * accessed per row, so it's important to make the access efficient.    */
-specifier|transient
 specifier|protected
+specifier|transient
 name|Operator
 argument_list|<
 name|?
@@ -2014,22 +2012,22 @@ name|childOperatorsArray
 init|=
 literal|null
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|int
 index|[]
 name|childOperatorsTag
 decl_stmt|;
 comment|// counters for debugging
-specifier|transient
 specifier|private
+specifier|transient
 name|long
 name|cntr
 init|=
 literal|0
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|long
 name|nextCntr
 init|=
@@ -2507,12 +2505,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * OperatorFunc.    *    */
 specifier|public
 specifier|static
 interface|interface
 name|OperatorFunc
 block|{
-specifier|public
 name|void
 name|func
 parameter_list|(
@@ -2628,7 +2626,7 @@ literal|"OP"
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns a map of output column name to input expression map Note that    * currently it returns only key columns for ReduceSink and GroupBy operators    *     * @return null if the operator doesn't change columns    */
+comment|/**    * Returns a map of output column name to input expression map Note that    * currently it returns only key columns for ReduceSink and GroupBy operators.    *     * @return null if the operator doesn't change columns    */
 specifier|public
 name|Map
 argument_list|<
@@ -3107,7 +3105,7 @@ argument_list|)
 return|;
 block|}
 comment|/**    * All counter stuff below this    */
-comment|/**    * TODO This is a hack for hadoop 0.17 which only supports enum counters    */
+comment|/**    * TODO This is a hack for hadoop 0.17 which only supports enum counters.    */
 specifier|public
 specifier|static
 enum|enum
@@ -3921,9 +3919,9 @@ name|totalNumCntrs
 init|=
 literal|400
 decl_stmt|;
-comment|/**    * populated at runtime from hadoop counters at run time in the client    */
-specifier|transient
+comment|/**    * populated at runtime from hadoop counters at run time in the client.    */
 specifier|protected
+specifier|transient
 name|HashMap
 argument_list|<
 name|String
@@ -3932,46 +3930,46 @@ name|Long
 argument_list|>
 name|counters
 decl_stmt|;
-comment|/**    * keeps track of unique ProgressCounter enums used this value is used at    * compile time while assigning ProgressCounter enums to counter names    */
+comment|/**    * keeps track of unique ProgressCounter enums used this value is used at    * compile time while assigning ProgressCounter enums to counter names.    */
 specifier|private
 specifier|static
 name|int
 name|lastEnumUsed
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|long
 name|inputRows
 init|=
 literal|0
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|long
 name|outputRows
 init|=
 literal|0
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|long
 name|beginTime
 init|=
 literal|0
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|long
 name|totalTime
 init|=
 literal|0
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Object
 name|groupKeyObject
 decl_stmt|;
-comment|/**    * this is called before operator process to buffer some counters    */
+comment|/**    * this is called before operator process to buffer some counters.    */
 specifier|private
 name|void
 name|preProcessCounter
@@ -4030,7 +4028,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * this is called after operator process to buffer some counters    */
+comment|/**    * this is called after operator process to buffer some counters.    */
 specifier|private
 name|void
 name|postProcessCounter
@@ -4056,7 +4054,7 @@ operator|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * this is called in operators in map or reduce tasks    *     * @param name    * @param amount    */
+comment|/**    * this is called in operators in map or reduce tasks.    *     * @param name    * @param amount    */
 specifier|protected
 name|void
 name|incrCounter
@@ -4214,7 +4212,7 @@ return|return
 name|counters
 return|;
 block|}
-comment|/**    * called in ExecDriver.progress periodically    *     * @param ctrs    *          counters from the running job    */
+comment|/**    * called in ExecDriver.progress periodically.    *     * @param ctrs    *          counters from the running job    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -4505,7 +4503,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-comment|/**    * Called only in SemanticAnalyzer after all operators have added their own    * set of counter names    */
+comment|/**    * Called only in SemanticAnalyzer after all operators have added their own    * set of counter names.    */
 specifier|public
 name|void
 name|assignCounterNameToEnum
@@ -4765,7 +4763,7 @@ operator|=
 name|counterNameToEnum
 expr_stmt|;
 block|}
-comment|/**    * Should be overridden to return the type of the specific operator among the    * types in OperatorType    *     * @return OperatorType.* or -1 if not overridden    */
+comment|/**    * Should be overridden to return the type of the specific operator among the    * types in OperatorType.    *     * @return OperatorType.* or -1 if not overridden    */
 specifier|public
 name|int
 name|getType

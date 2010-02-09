@@ -178,7 +178,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Map Join Object used for both key  */
+comment|/**  * Map Join Object used for both key.  */
 end_comment
 
 begin_class
@@ -188,13 +188,13 @@ name|MapJoinObjectKey
 implements|implements
 name|Externalizable
 block|{
-specifier|transient
 specifier|protected
+specifier|transient
 name|int
 name|metadataTag
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ArrayList
 argument_list|<
 name|Object

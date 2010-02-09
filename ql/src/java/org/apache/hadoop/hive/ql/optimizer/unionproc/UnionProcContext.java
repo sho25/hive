@@ -77,6 +77,10 @@ name|NodeProcessorCtx
 import|;
 end_import
 
+begin_comment
+comment|/**  * UnionProcContext.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -84,39 +88,40 @@ name|UnionProcContext
 implements|implements
 name|NodeProcessorCtx
 block|{
+comment|/**    * UnionParseContext.    *    */
 specifier|public
 specifier|static
 class|class
 name|UnionParseContext
 block|{
-specifier|transient
 specifier|private
 specifier|final
+specifier|transient
 name|boolean
 index|[]
 name|mapOnlySubq
 decl_stmt|;
-specifier|transient
 specifier|private
 specifier|final
+specifier|transient
 name|boolean
 index|[]
 name|rootTask
 decl_stmt|;
-specifier|transient
 specifier|private
 specifier|final
+specifier|transient
 name|boolean
 index|[]
 name|mapJoinSubq
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|int
 name|numInputs
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|boolean
 name|mapJoinQuery
 decl_stmt|;

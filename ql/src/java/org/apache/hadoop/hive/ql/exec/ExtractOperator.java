@@ -123,8 +123,8 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ExprNodeEvaluator
 name|eval
 decl_stmt|;

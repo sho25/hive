@@ -152,7 +152,7 @@ name|getPrev
 argument_list|()
 return|;
 block|}
-comment|/**    * Insert a new item as the head    *     * @param v    *          the new linked list item to be added to the head.    */
+comment|/**    * Insert a new item as the head.    *     * @param v    *          the new linked list item to be added to the head.    */
 specifier|private
 name|void
 name|addToHead

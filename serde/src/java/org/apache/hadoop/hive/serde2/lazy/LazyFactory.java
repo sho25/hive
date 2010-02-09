@@ -495,8 +495,13 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * LazyFactory.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|LazyFactory
 block|{
@@ -531,7 +536,6 @@ block|{
 case|case
 name|BOOLEAN
 case|:
-block|{
 return|return
 operator|new
 name|LazyBoolean
@@ -542,11 +546,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|BYTE
 case|:
-block|{
 return|return
 operator|new
 name|LazyByte
@@ -557,11 +559,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|SHORT
 case|:
-block|{
 return|return
 operator|new
 name|LazyShort
@@ -572,11 +572,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|INT
 case|:
-block|{
 return|return
 operator|new
 name|LazyInteger
@@ -587,11 +585,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|LONG
 case|:
-block|{
 return|return
 operator|new
 name|LazyLong
@@ -602,11 +598,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|FLOAT
 case|:
-block|{
 return|return
 operator|new
 name|LazyFloat
@@ -617,11 +611,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|DOUBLE
 case|:
-block|{
 return|return
 operator|new
 name|LazyDouble
@@ -632,11 +624,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|STRING
 case|:
-block|{
 return|return
 operator|new
 name|LazyString
@@ -647,9 +637,7 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 default|default:
-block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -659,7 +647,6 @@ operator|+
 name|p
 argument_list|)
 throw|;
-block|}
 block|}
 block|}
 comment|/**    * Create a hierarchical LazyObject based on the given typeInfo.    */
@@ -1293,6 +1280,12 @@ argument_list|,
 name|nullSequence
 argument_list|)
 return|;
+block|}
+specifier|private
+name|LazyFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

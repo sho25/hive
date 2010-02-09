@@ -435,14 +435,19 @@ name|TextInputFormat
 import|;
 end_import
 
+begin_comment
+comment|/**  * PlanUtils.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|PlanUtils
 block|{
 specifier|protected
-specifier|final
 specifier|static
+specifier|final
 name|Log
 name|LOG
 init|=
@@ -453,6 +458,7 @@ argument_list|(
 literal|"org.apache.hadoop.hive.ql.plan.PlanUtils"
 argument_list|)
 decl_stmt|;
+comment|/**    * ExpressionTypes.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -2454,6 +2460,12 @@ argument_list|,
 name|numReducers
 argument_list|)
 return|;
+block|}
+specifier|private
+name|PlanUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

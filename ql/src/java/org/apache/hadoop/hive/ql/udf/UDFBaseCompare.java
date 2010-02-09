@@ -87,6 +87,10 @@ name|BooleanWritable
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDFBaseCompare.  *  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

@@ -230,7 +230,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ExplainTask implementation  *   **/
+comment|/**  * ExplainTask implementation.  *   **/
 end_comment
 
 begin_class
@@ -2098,6 +2098,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * MethodComparator.    *    */
 specifier|public
 specifier|static
 class|class

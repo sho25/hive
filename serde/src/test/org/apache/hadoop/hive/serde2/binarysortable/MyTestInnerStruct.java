@@ -19,6 +19,10 @@ name|binarysortable
 package|;
 end_package
 
+begin_comment
+comment|/**  * MyTestInnerStruct.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

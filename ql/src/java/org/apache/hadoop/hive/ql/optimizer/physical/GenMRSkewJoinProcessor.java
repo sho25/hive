@@ -425,24 +425,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|ExprNodeColumnDesc
 import|;
 end_import
@@ -587,6 +569,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|PlanUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|TableDesc
 import|;
 end_import
@@ -645,15 +645,22 @@ name|TypeInfoFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * GenMRSkewJoinProcessor.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|GenMRSkewJoinProcessor
 block|{
-specifier|public
+specifier|private
 name|GenMRSkewJoinProcessor
 parameter_list|()
-block|{   }
+block|{
+comment|// prevent instantiation
+block|}
 comment|/**    * Create tasks for processing skew joins. The idea is (HIVE-964) to use    * separated jobs and map-joins to handle skew joins.    *<p>    *<ul>    *<li>    * Number of mr jobs to handle skew keys is the number of table minus 1 (we    * can stream the last table, so big keys in the last table will not be a    * problem).    *<li>    * At runtime in Join, we output big keys in one table into one corresponding    * directories, and all same keys in other tables into different dirs(one for    * each table). The directories will look like:    *<ul>    *<li>    * dir-T1-bigkeys(containing big keys in T1), dir-T2-keys(containing keys    * which is big in T1),dir-T3-keys(containing keys which is big in T1), ...    *<li>    * dir-T1-keys(containing keys which is big in T2), dir-T2-bigkeys(containing    * big keys in T2),dir-T3-keys(containing keys which is big in T2), ...    *<li>    * dir-T1-keys(containing keys which is big in T3), dir-T2-keys(containing big    * keys in T3),dir-T3-bigkeys(containing keys which is big in T3), ... .....    *</ul>    *</ul>    * For each table, we launch one mapjoin job, taking the directory containing    * big keys in this table and corresponding dirs in other tables as input.    * (Actally one job for one row in the above.)    *    *<p>    * For more discussions, please check    * https://issues.apache.org/jira/browse/HIVE-964.    *    */
 specifier|public
 specifier|static
@@ -1171,19 +1178,10 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|int
-name|k
-init|=
-literal|0
-init|;
-name|k
-operator|<
+name|Byte
+name|tag
+range|:
 name|tags
-operator|.
-name|length
-condition|;
-name|k
-operator|++
 control|)
 block|{
 name|newJoinValueTblDesc

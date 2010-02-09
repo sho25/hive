@@ -33,7 +33,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDF
+name|Description
 import|;
 end_import
 
@@ -51,7 +51,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDF
 import|;
 end_import
 
@@ -68,6 +68,10 @@ operator|.
 name|Text
 import|;
 end_import
+
+begin_comment
+comment|/**  * UDFLower.  *  */
+end_comment
 
 begin_class
 annotation|@
@@ -95,6 +99,7 @@ name|UDFLower
 extends|extends
 name|UDF
 block|{
+specifier|private
 name|Text
 name|t
 init|=

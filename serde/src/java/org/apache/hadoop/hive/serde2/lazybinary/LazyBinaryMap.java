@@ -328,7 +328,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**    * Adjust the size of arrays: keyStart, keyLength valueStart, valueLength    * keyInited, keyIsNull valueInited, valueIsNull    */
+comment|/**    * Adjust the size of arrays: keyStart, keyLength valueStart, valueLength    * keyInited, keyIsNull valueInited, valueIsNull.    */
 specifier|protected
 name|void
 name|adjustArraySize
@@ -460,7 +460,7 @@ operator|.
 name|RecordInfo
 argument_list|()
 decl_stmt|;
-comment|/**    * Parse the byte[] and fill keyStart, keyLength, keyIsNull valueStart,    * valueLength and valueIsNull    */
+comment|/**    * Parse the byte[] and fill keyStart, keyLength, keyIsNull valueStart,    * valueLength and valueIsNull.    */
 specifier|private
 name|void
 name|parse

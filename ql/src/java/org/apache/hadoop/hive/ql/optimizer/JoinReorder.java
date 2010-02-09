@@ -349,7 +349,7 @@ return|return
 name|maxSize
 return|;
 block|}
-comment|/**    * Find all big tables from STREAMTABLE hints    *     * @param joinCtx    *          The join context    * @return Set of all big tables    */
+comment|/**    * Find all big tables from STREAMTABLE hints.    *     * @param joinCtx    *          The join context    * @return Set of all big tables    */
 specifier|private
 name|Set
 argument_list|<
@@ -414,7 +414,7 @@ return|return
 name|bigTables
 return|;
 block|}
-comment|/**    * Reorder the tables in a join operator appropriately (by reordering the tags    * of the reduces sinks)    *     * @param joinOp    *          The join operator to be processed    * @param bigTables    *          Set of all big tables    */
+comment|/**    * Reorder the tables in a join operator appropriately (by reordering the tags    * of the reduces sinks).    *     * @param joinOp    *          The join operator to be processed    * @param bigTables    *          Set of all big tables    */
 specifier|private
 name|void
 name|reorder

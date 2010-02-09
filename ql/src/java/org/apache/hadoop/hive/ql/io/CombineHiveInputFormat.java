@@ -621,7 +621,7 @@ return|return
 name|inputSplitShim
 return|;
 block|}
-comment|/**      * Returns the inputFormat class name for the i-th chunk      */
+comment|/**      * Returns the inputFormat class name for the i-th chunk.      */
 specifier|public
 name|String
 name|inputFormatClassName
@@ -670,7 +670,7 @@ name|getLength
 argument_list|()
 return|;
 block|}
-comment|/** Returns an array containing the startoffsets of the files in the split */
+comment|/** Returns an array containing the startoffsets of the files in the split. */
 specifier|public
 name|long
 index|[]
@@ -684,7 +684,7 @@ name|getStartOffsets
 argument_list|()
 return|;
 block|}
-comment|/** Returns an array containing the lengths of the files in the split */
+comment|/** Returns an array containing the lengths of the files in the split. */
 specifier|public
 name|long
 index|[]
@@ -698,7 +698,7 @@ name|getLengths
 argument_list|()
 return|;
 block|}
-comment|/** Returns the start offset of the i<sup>th</sup> Path */
+comment|/** Returns the start offset of the i<sup>th</sup> Path. */
 specifier|public
 name|long
 name|getOffset
@@ -716,7 +716,7 @@ name|i
 argument_list|)
 return|;
 block|}
-comment|/** Returns the length of the i<sup>th</sup> Path */
+comment|/** Returns the length of the i<sup>th</sup> Path. */
 specifier|public
 name|long
 name|getLength
@@ -734,7 +734,7 @@ name|i
 argument_list|)
 return|;
 block|}
-comment|/** Returns the number of Paths in the split */
+comment|/** Returns the number of Paths in the split. */
 specifier|public
 name|int
 name|getNumPaths
@@ -747,7 +747,7 @@ name|getNumPaths
 argument_list|()
 return|;
 block|}
-comment|/** Returns the i<sup>th</sup> Path */
+comment|/** Returns the i<sup>th</sup> Path. */
 specifier|public
 name|Path
 name|getPath
@@ -765,7 +765,7 @@ name|i
 argument_list|)
 return|;
 block|}
-comment|/** Returns all the Paths in the split */
+comment|/** Returns all the Paths in the split. */
 specifier|public
 name|Path
 index|[]
@@ -779,7 +779,7 @@ name|getPaths
 argument_list|()
 return|;
 block|}
-comment|/** Returns all the Paths where this input-split resides */
+comment|/** Returns all the Paths where this input-split resides. */
 specifier|public
 name|String
 index|[]
@@ -843,7 +843,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**      * Writable interface      */
+comment|/**      * Writable interface.      */
 specifier|public
 name|void
 name|readFields
@@ -869,7 +869,7 @@ name|readUTF
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Writable interface      */
+comment|/**      * Writable interface.      */
 specifier|public
 name|void
 name|write
@@ -996,7 +996,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Create Hive splits based on CombineFileSplit    */
+comment|/**    * Create Hive splits based on CombineFileSplit.    */
 annotation|@
 name|Override
 specifier|public
@@ -1176,7 +1176,7 @@ index|]
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a generic Hive RecordReader than can iterate over all chunks in a    * CombinedFileSplit    */
+comment|/**    * Create a generic Hive RecordReader than can iterate over all chunks in a    * CombinedFileSplit.    */
 annotation|@
 name|Override
 specifier|public

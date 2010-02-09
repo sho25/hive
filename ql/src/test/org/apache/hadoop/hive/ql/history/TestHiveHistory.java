@@ -307,6 +307,10 @@ name|TextInputFormat
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestHiveHistory.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -318,8 +322,8 @@ specifier|static
 name|HiveConf
 name|conf
 decl_stmt|;
-specifier|static
 specifier|private
+specifier|static
 name|String
 name|tmpdir
 init|=
@@ -334,8 +338,8 @@ argument_list|)
 operator|+
 literal|"/"
 decl_stmt|;
-specifier|static
 specifier|private
+specifier|static
 name|Path
 name|tmppath
 init|=
@@ -345,13 +349,13 @@ argument_list|(
 name|tmpdir
 argument_list|)
 decl_stmt|;
-specifier|static
 specifier|private
+specifier|static
 name|Hive
 name|db
 decl_stmt|;
-specifier|static
 specifier|private
+specifier|static
 name|FileSystem
 name|fs
 decl_stmt|;
@@ -686,7 +690,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * check history file output for this query.als    */
+comment|/**    * Check history file output for this query.    */
 specifier|public
 name|void
 name|testSimpleQuery

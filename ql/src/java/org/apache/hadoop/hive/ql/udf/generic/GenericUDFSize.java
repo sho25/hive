@@ -35,6 +35,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -72,24 +90,6 @@ operator|.
 name|exec
 operator|.
 name|UDFArgumentTypeException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Description
 import|;
 end_import
 
@@ -234,6 +234,10 @@ operator|.
 name|IntWritable
 import|;
 end_import
+
+begin_comment
+comment|/**  * GenericUDFSize.  *  */
+end_comment
 
 begin_class
 annotation|@

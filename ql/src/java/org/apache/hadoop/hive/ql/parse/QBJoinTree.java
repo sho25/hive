@@ -62,7 +62,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Internal representation of the join tree  *   */
+comment|/**  * Internal representation of the join tree.  *   */
 end_comment
 
 begin_class
@@ -167,7 +167,7 @@ name|String
 argument_list|>
 name|streamAliases
 decl_stmt|;
-comment|/**    * constructor    */
+comment|/**    * constructor.    */
 specifier|public
 name|QBJoinTree
 parameter_list|()
@@ -199,7 +199,7 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * returns left alias if any - this is used for merging later on    *     * @return left alias if any    */
+comment|/**    * returns left alias if any - this is used for merging later on.    *     * @return left alias if any    */
 specifier|public
 name|String
 name|getLeftAlias
@@ -209,7 +209,7 @@ return|return
 name|leftAlias
 return|;
 block|}
-comment|/**    * set left alias for the join expression    *     * @param leftAlias    *          String    */
+comment|/**    * set left alias for the join expression.    *     * @param leftAlias    *          String    */
 specifier|public
 name|void
 name|setLeftAlias

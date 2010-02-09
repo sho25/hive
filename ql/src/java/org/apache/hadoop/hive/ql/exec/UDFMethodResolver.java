@@ -69,7 +69,6 @@ interface|interface
 name|UDFMethodResolver
 block|{
 comment|/**    * Gets the evaluate method for the UDF given the parameter types.    *     * @param argClasses    *          The list of the argument types that need to matched with the    *          evaluate function signature.    */
-specifier|public
 name|Method
 name|getEvalMethod
 parameter_list|(
@@ -80,8 +79,6 @@ argument_list|>
 name|argClasses
 parameter_list|)
 throws|throws
-name|AmbiguousMethodException
-throws|,
 name|UDFArgumentException
 function_decl|;
 block|}

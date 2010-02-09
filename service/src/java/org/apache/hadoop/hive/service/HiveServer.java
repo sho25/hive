@@ -414,7 +414,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Thrift Hive Server Implementation  */
+comment|/**  * Thrift Hive Server Implementation.  */
 end_comment
 
 begin_class
@@ -425,14 +425,14 @@ extends|extends
 name|ThriftHive
 block|{
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|VERSION
 init|=
 literal|"0"
 decl_stmt|;
-comment|/**    * Handler which implements the Hive Interface This class can be used in lieu    * of the HiveClient class to get an embedded server    */
+comment|/**    * Handler which implements the Hive Interface This class can be used in lieu    * of the HiveClient class to get an embedded server.    */
 specifier|public
 specifier|static
 class|class
@@ -450,7 +450,7 @@ specifier|final
 name|Driver
 name|driver
 decl_stmt|;
-comment|/**      * Flag that indicates whether the last executed command was a Hive query      */
+comment|/**      * Flag that indicates whether the last executed command was a Hive query.      */
 specifier|private
 name|boolean
 name|isHiveQuery
@@ -765,7 +765,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Return the status information about the Map-Reduce cluster      */
+comment|/**      * Return the status information about the Map-Reduce cluster.      */
 specifier|public
 name|HiveClusterStatus
 name|getClusterStatus
@@ -928,7 +928,7 @@ return|return
 name|hcs
 return|;
 block|}
-comment|/**      * Return the Hive schema of the query result      */
+comment|/**      * Return the Hive schema of the query result.      */
 specifier|public
 name|Schema
 name|getSchema
@@ -1033,7 +1033,7 @@ name|ex
 throw|;
 block|}
 block|}
-comment|/**      * Return the Thrift schema of the query result      */
+comment|/**      * Return the Thrift schema of the query result.      */
 specifier|public
 name|Schema
 name|getThriftSchema
@@ -1467,7 +1467,7 @@ return|return
 name|rows
 return|;
 block|}
-comment|/**      * Return the status of the server      */
+comment|/**      * Return the status of the server.      */
 annotation|@
 name|Override
 specifier|public
@@ -1479,7 +1479,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**      * Return the version of the server software      */
+comment|/**      * Return the version of the server software.      */
 annotation|@
 name|Override
 specifier|public
@@ -1557,6 +1557,7 @@ name|qp
 return|;
 block|}
 block|}
+comment|/**    * ThriftHiveProcessorFactory.    *    */
 specifier|public
 specifier|static
 class|class

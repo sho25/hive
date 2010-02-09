@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Dispatcher interface for Operators Used in operator graph walking to dispatch  * process/visitor functions for operators  */
+comment|/**  * Dispatcher interface for Operators Used in operator graph walking to dispatch  * process/visitor functions for operators.  */
 end_comment
 
 begin_interface
@@ -57,7 +57,6 @@ interface|interface
 name|Dispatcher
 block|{
 comment|/**    * Dispatcher function.    *     * @param nd    *          operator to process.    * @param stack    *          operator stack to process.    * @param nodeOutputs    *          The argument list of outputs from processing other nodes that are    *          passed to this dispatcher from the walker.    * @return Object The return object from the processing call.    * @throws SemanticException    */
-specifier|public
 name|Object
 name|dispatch
 parameter_list|(

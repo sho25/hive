@@ -216,7 +216,7 @@ name|int
 index|[]
 name|elementLength
 decl_stmt|;
-comment|/**    * Whether an element is initialized or not    */
+comment|/**    * Whether an element is initialized or not.    */
 name|boolean
 index|[]
 name|elementInited

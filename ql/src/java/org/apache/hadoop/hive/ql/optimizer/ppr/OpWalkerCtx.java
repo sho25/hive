@@ -100,7 +100,7 @@ specifier|private
 name|boolean
 name|hasNonPartCols
 decl_stmt|;
-comment|/**    * Map from tablescan operator to partition pruning predicate that is    * initialized from the ParseContext    */
+comment|/**    * Map from tablescan operator to partition pruning predicate that is    * initialized from the ParseContext.    */
 specifier|private
 specifier|final
 name|HashMap
@@ -111,7 +111,7 @@ name|ExprNodeDesc
 argument_list|>
 name|opToPartPruner
 decl_stmt|;
-comment|/**    * Constructor    */
+comment|/**    * Constructor.    */
 specifier|public
 name|OpWalkerCtx
 parameter_list|(

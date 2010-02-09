@@ -96,7 +96,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * List of error messages thrown by the parser  **/
+comment|/**  * List of error messages thrown by the parser.  **/
 end_comment
 
 begin_enum
@@ -371,7 +371,9 @@ argument_list|)
 block|,
 name|NO_CARTESIAN_PRODUCT
 argument_list|(
-literal|"In strict mode, cartesian product is not allowed. If you really want to perform the operation, set hive.mapred.mode=nonstrict"
+literal|"In strict mode, cartesian product is not allowed. "
+operator|+
+literal|"If you really want to perform the operation, set hive.mapred.mode=nonstrict"
 argument_list|)
 block|,
 name|UNION_NOTIN_SUBQ
@@ -386,12 +388,16 @@ argument_list|)
 block|,
 name|INVALID_OUTPUT_FORMAT_TYPE
 argument_list|(
-literal|"Output Format must implement HiveOutputFormat, otherwise it should be either IgnoreKeyTextOutputFormat or SequenceFileOutputFormat"
+literal|"Output Format must implement HiveOutputFormat, "
+operator|+
+literal|"otherwise it should be either IgnoreKeyTextOutputFormat or SequenceFileOutputFormat"
 argument_list|)
 block|,
 name|NO_VALID_PARTN
 argument_list|(
-literal|"The query does not reference any valid partition. To run this query, set hive.mapred.mode=nonstrict"
+literal|"The query does not reference any valid partition. "
+operator|+
+literal|"To run this query, set hive.mapred.mode=nonstrict"
 argument_list|)
 block|,
 name|NO_OUTER_MAPJOIN
@@ -416,17 +422,23 @@ argument_list|)
 block|,
 name|BUCKETED_NUMBERATOR_BIGGER_DENOMINATOR
 argument_list|(
-literal|"Numberator should not be bigger than denaminator in sample clause for Table"
+literal|"Numberator should not be bigger than "
+operator|+
+literal|"denaminator in sample clause for Table"
 argument_list|)
 block|,
 name|NEED_PARTITION_ERROR
 argument_list|(
-literal|"need to specify partition columns because the destination table is partitioned."
+literal|"need to specify partition columns because the destination "
+operator|+
+literal|"table is partitioned."
 argument_list|)
 block|,
 name|CTAS_CTLT_COEXISTENCE
 argument_list|(
-literal|"Create table command does not allow LIKE and AS-SELECT in the same command"
+literal|"Create table command does not allow LIKE and AS-SELECT in "
+operator|+
+literal|"the same command"
 argument_list|)
 block|,
 name|LINES_TERMINATED_BY_NON_NEWLINE
@@ -436,12 +448,16 @@ argument_list|)
 block|,
 name|CTAS_COLLST_COEXISTENCE
 argument_list|(
-literal|"Create table as select command cannot specify the list of columns for the target table."
+literal|"Create table as select command cannot specify the list of columns "
+operator|+
+literal|"for the target table."
 argument_list|)
 block|,
 name|CTLT_COLLST_COEXISTENCE
 argument_list|(
-literal|"Create table like command cannot specify the list of columns for the target table."
+literal|"Create table like command cannot specify the list of columns for "
+operator|+
+literal|"the target table."
 argument_list|)
 block|,
 name|INVALID_SELECT_SCHEMA
@@ -451,7 +467,9 @@ argument_list|)
 block|,
 name|CTAS_PARCOL_COEXISTENCE
 argument_list|(
-literal|"CREATE-TABLE-AS-SELECT does not support partitioning in the target table."
+literal|"CREATE-TABLE-AS-SELECT does not support partitioning in the target "
+operator|+
+literal|"table."
 argument_list|)
 block|,
 name|CTAS_MULTI_LOADFILE
@@ -510,7 +528,9 @@ argument_list|)
 block|,
 name|UDTF_INVALID_LOCATION
 argument_list|(
-literal|"UDTF's are not supported outside the SELECT clause, nor nested in expressions"
+literal|"UDTF's are not supported outside the SELECT clause, nor nested "
+operator|+
+literal|"in expressions"
 argument_list|)
 block|,
 name|UDTF_LATERAL_VIEW
@@ -520,7 +540,9 @@ argument_list|)
 block|,
 name|UDTF_ALIAS_MISMATCH
 argument_list|(
-literal|"The number of aliases supplied in the AS clause does not match the number of columns output by the UDTF"
+literal|"The number of aliases supplied in the AS clause does not match the "
+operator|+
+literal|"number of columns output by the UDTF"
 argument_list|)
 block|,
 name|LATERAL_VIEW_WITH_JOIN
@@ -545,7 +567,9 @@ argument_list|)
 block|,
 name|VIEW_COL_MISMATCH
 argument_list|(
-literal|"The number of columns produced by the SELECT clause does not match the number of column names specified by CREATE VIEW"
+literal|"The number of columns produced by the SELECT clause does not match the "
+operator|+
+literal|"number of column names specified by CREATE VIEW"
 argument_list|)
 block|,
 name|DML_AGAINST_VIEW
@@ -555,7 +579,9 @@ argument_list|)
 block|,
 name|UNSUPPORTED_TYPE
 argument_list|(
-literal|"DATE, DATETIME, and TIMESTAMP types aren't supported yet. Please use STRING instead."
+literal|"DATE, DATETIME, and TIMESTAMP types aren't supported yet. Please use "
+operator|+
+literal|"STRING instead."
 argument_list|)
 block|;
 specifier|private
@@ -564,10 +590,11 @@ name|mesg
 decl_stmt|;
 specifier|private
 name|String
-name|SQLState
+name|sqlState
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|char
 name|SPACE
 init|=
@@ -575,6 +602,7 @@ literal|' '
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|Pattern
 name|ERROR_MESSAGE_PATTERN
 init|=
@@ -901,7 +929,7 @@ name|String
 name|mesg
 parameter_list|,
 name|String
-name|SQLState
+name|sqlState
 parameter_list|)
 block|{
 name|this
@@ -912,9 +940,9 @@ name|mesg
 expr_stmt|;
 name|this
 operator|.
-name|SQLState
+name|sqlState
 operator|=
-name|SQLState
+name|sqlState
 expr_stmt|;
 block|}
 specifier|private
@@ -1396,7 +1424,7 @@ name|getSQLState
 parameter_list|()
 block|{
 return|return
-name|SQLState
+name|sqlState
 return|;
 block|}
 block|}

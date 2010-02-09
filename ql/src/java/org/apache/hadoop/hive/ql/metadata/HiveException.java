@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Generic exception class for Hive  */
+comment|/**  * Generic exception class for Hive.  */
 end_comment
 
 begin_class

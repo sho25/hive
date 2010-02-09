@@ -38,7 +38,6 @@ specifier|public
 interface|interface
 name|LazyDecompressionCallback
 block|{
-specifier|public
 name|byte
 index|[]
 name|decompress

@@ -80,7 +80,7 @@ operator|=
 name|joinType
 expr_stmt|;
 block|}
-comment|/**    * Constructor for a UNIQUEJOIN cond    *     * @param p    *          true if table is preserved, false otherwise    */
+comment|/**    * Constructor for a UNIQUEJOIN cond.    *     * @param p    *          true if table is preserved, false otherwise    */
 specifier|public
 name|JoinCond
 parameter_list|(

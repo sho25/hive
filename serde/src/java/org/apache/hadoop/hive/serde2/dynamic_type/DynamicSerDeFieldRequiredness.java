@@ -19,6 +19,10 @@ name|dynamic_type
 package|;
 end_package
 
+begin_comment
+comment|/**  * DynamicSerDeFieldRequiredness.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -26,6 +30,7 @@ name|DynamicSerDeFieldRequiredness
 extends|extends
 name|SimpleNode
 block|{
+comment|/**    * RequirednessTypes.    *    */
 specifier|public
 enum|enum
 name|RequirednessTypes

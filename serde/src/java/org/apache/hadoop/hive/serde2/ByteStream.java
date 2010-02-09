@@ -54,7 +54,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Extensions to bytearrayinput/output streams  *   */
+comment|/**  * Extensions to bytearrayinput/output streams.  *   */
 end_comment
 
 begin_class
@@ -62,6 +62,7 @@ specifier|public
 class|class
 name|ByteStream
 block|{
+comment|/**    * Input.    *    */
 specifier|public
 specifier|static
 class|class
@@ -168,6 +169,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Output.    *    */
 specifier|public
 specifier|static
 class|class

@@ -29,6 +29,10 @@ name|Serializable
 import|;
 end_import
 
+begin_comment
+comment|/**  * SelectDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain

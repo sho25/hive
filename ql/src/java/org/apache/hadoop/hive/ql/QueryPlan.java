@@ -452,9 +452,9 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|Log
 name|LOG
 init|=
@@ -832,7 +832,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * generate the operator graph and operator list for the given task based on    * the operators corresponding to that task    *     * @param task    *          api.Task which needs its operator graph populated    * @param topOps    *          the set of top operators from which the operator graph for the    *          task is hanging    */
+comment|/**    * generate the operator graph and operator list for the given task based on    * the operators corresponding to that task.    *     * @param task    *          api.Task which needs its operator graph populated    * @param topOps    *          the set of top operators from which the operator graph for the    *          task is hanging    */
 specifier|private
 name|void
 name|populateOperatorGraph
@@ -2011,7 +2011,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * From the counters extracted via extractCounters(), update the counters in    * the query plan    */
+comment|/**    * From the counters extracted via extractCounters(), update the counters in    * the query plan.    */
 specifier|private
 name|void
 name|updateCountersInQueryPlan
@@ -2321,7 +2321,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * extract all the counters from tasks and operators    */
+comment|/**    * Extract all the counters from tasks and operators.    */
 specifier|private
 name|void
 name|extractCounters

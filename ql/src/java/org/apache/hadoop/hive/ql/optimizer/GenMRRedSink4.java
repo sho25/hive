@@ -224,7 +224,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Processor for the rule - map join followed by reduce sink  */
+comment|/**  * Processor for the rule - map join followed by reduce sink.  */
 end_comment
 
 begin_class
@@ -238,7 +238,7 @@ specifier|public
 name|GenMRRedSink4
 parameter_list|()
 block|{   }
-comment|/**    * Reduce Scan encountered    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * Reduce Scan encountered.    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -460,11 +460,11 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+else|else
+block|{
 comment|// There is a join after mapjoin. One of the branches of mapjoin has already
 comment|// been initialized.
 comment|// Initialize the current branch, and join with the original plan.
-else|else
-block|{
 assert|assert
 name|plan
 operator|.

@@ -144,7 +144,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Conditional Task implementation  **/
+comment|/**  * Conditional Task implementation.  */
 end_comment
 
 begin_class

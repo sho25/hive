@@ -41,15 +41,13 @@ interface|interface
 name|WriteNullsProtocol
 block|{
 comment|/**    * Was the last primitive read really a NULL. Need only be called when the    * value of the primitive was 0. ie the protocol should return 0 on nulls and    * the caller will then check if it was actually null For boolean this is    * false.    */
-specifier|public
 name|boolean
 name|lastPrimitiveWasNull
 parameter_list|()
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Write a null    */
-specifier|public
+comment|/**    * Write a null.    */
 name|void
 name|writeNull
 parameter_list|()

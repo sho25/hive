@@ -148,7 +148,6 @@ name|Writable
 parameter_list|>
 block|{
 comment|/**    * create the final out file and get some specific settings.    *     * @param jc    *          the job configuration file    * @param finalOutPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the table properties of this file's corresponding table    * @param progress    *          progress used for status report    * @return the RecordWriter for the output file    */
-specifier|public
 name|RecordWriter
 name|getHiveRecordWriter
 parameter_list|(

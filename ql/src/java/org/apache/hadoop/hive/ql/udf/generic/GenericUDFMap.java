@@ -45,6 +45,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -82,24 +100,6 @@ operator|.
 name|exec
 operator|.
 name|UDFArgumentTypeException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Description
 import|;
 end_import
 
@@ -233,6 +233,10 @@ name|PrimitiveObjectInspectorFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * GenericUDFMap.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -243,7 +247,9 @@ literal|"map"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(key0, value0, key1, value1...) - Creates a map with the given key/value pairs "
+literal|"_FUNC_(key0, value0, key1, value1...) - "
+operator|+
+literal|"Creates a map with the given key/value pairs "
 argument_list|)
 specifier|public
 class|class

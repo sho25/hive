@@ -447,6 +447,10 @@ name|Writable
 import|;
 end_import
 
+begin_comment
+comment|/**  * TypedBytesRecordReader.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -462,6 +466,7 @@ specifier|private
 name|TypedBytesWritableInput
 name|tbIn
 decl_stmt|;
+specifier|private
 name|NonSyncDataOutputBuffer
 name|barrStr
 init|=
@@ -469,9 +474,11 @@ operator|new
 name|NonSyncDataOutputBuffer
 argument_list|()
 decl_stmt|;
+specifier|private
 name|TypedBytesWritableOutput
 name|tbOut
 decl_stmt|;
+specifier|private
 name|ArrayList
 argument_list|<
 name|Writable
@@ -487,6 +494,7 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+specifier|private
 name|ArrayList
 argument_list|<
 name|String
@@ -502,12 +510,14 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+specifier|private
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|columnTypes
 decl_stmt|;
+specifier|private
 name|ArrayList
 argument_list|<
 name|ObjectInspector
@@ -521,6 +531,7 @@ name|ObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
+specifier|private
 name|ArrayList
 argument_list|<
 name|ObjectInspector
@@ -534,6 +545,7 @@ name|ObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
+specifier|private
 name|ArrayList
 argument_list|<
 name|Converter
@@ -547,8 +559,8 @@ name|Converter
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|static
 specifier|private
+specifier|static
 name|Map
 argument_list|<
 name|Type
@@ -1158,7 +1170,6 @@ block|{
 case|case
 name|BYTE
 case|:
-block|{
 name|tbIn
 operator|.
 name|readByte
@@ -1170,11 +1181,9 @@ name|w
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 case|case
 name|BOOL
 case|:
-block|{
 name|tbIn
 operator|.
 name|readBoolean
@@ -1186,11 +1195,9 @@ name|w
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 case|case
 name|INT
 case|:
-block|{
 name|tbIn
 operator|.
 name|readInt
@@ -1202,11 +1209,9 @@ name|w
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 case|case
 name|SHORT
 case|:
-block|{
 name|tbIn
 operator|.
 name|readShort
@@ -1218,11 +1223,9 @@ name|w
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 case|case
 name|LONG
 case|:
-block|{
 name|tbIn
 operator|.
 name|readLong
@@ -1234,11 +1237,9 @@ name|w
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 case|case
 name|FLOAT
 case|:
-block|{
 name|tbIn
 operator|.
 name|readFloat
@@ -1250,11 +1251,9 @@ name|w
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 case|case
 name|DOUBLE
 case|:
-block|{
 name|tbIn
 operator|.
 name|readDouble
@@ -1266,11 +1265,9 @@ name|w
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 case|case
 name|STRING
 case|:
-block|{
 name|tbIn
 operator|.
 name|readText
@@ -1282,7 +1279,6 @@ name|w
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 default|default:
 assert|assert
 literal|false
@@ -1561,8 +1557,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|static
 specifier|public
+specifier|static
 name|Type
 name|getType
 parameter_list|(

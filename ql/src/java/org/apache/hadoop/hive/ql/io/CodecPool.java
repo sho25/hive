@@ -141,6 +141,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|CodecPool
 block|{
@@ -175,7 +176,7 @@ argument_list|<
 name|Compressor
 argument_list|>
 argument_list|>
-name|compressorPool
+name|COMPRESSOR_POOL
 init|=
 operator|new
 name|HashMap
@@ -208,7 +209,7 @@ argument_list|<
 name|Decompressor
 argument_list|>
 argument_list|>
-name|decompressorPool
+name|DECOMPRESSOR_POOL
 init|=
 operator|new
 name|HashMap
@@ -459,7 +460,7 @@ name|compressor
 init|=
 name|borrow
 argument_list|(
-name|compressorPool
+name|COMPRESSOR_POOL
 argument_list|,
 name|codec
 operator|.
@@ -518,7 +519,7 @@ name|decompressor
 init|=
 name|borrow
 argument_list|(
-name|decompressorPool
+name|DECOMPRESSOR_POOL
 argument_list|,
 name|codec
 operator|.
@@ -588,7 +589,7 @@ argument_list|()
 expr_stmt|;
 name|payback
 argument_list|(
-name|compressorPool
+name|COMPRESSOR_POOL
 argument_list|,
 name|compressor
 argument_list|)
@@ -620,11 +621,17 @@ argument_list|()
 expr_stmt|;
 name|payback
 argument_list|(
-name|decompressorPool
+name|DECOMPRESSOR_POOL
 argument_list|,
 name|decompressor
 argument_list|)
 expr_stmt|;
+block|}
+specifier|private
+name|CodecPool
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

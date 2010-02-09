@@ -29,7 +29,6 @@ interface|interface
 name|UDAFEvaluator
 block|{
 comment|/**    * Initializer. Initializes the state for the evaluator.    */
-specifier|public
 name|void
 name|init
 parameter_list|()

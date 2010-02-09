@@ -143,6 +143,10 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * TypedSerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

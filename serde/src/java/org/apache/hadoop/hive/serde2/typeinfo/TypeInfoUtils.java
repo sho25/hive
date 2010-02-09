@@ -357,11 +357,22 @@ name|PrimitiveTypeEntry
 import|;
 end_import
 
+begin_comment
+comment|/**  * TypeInfoUtils.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|TypeInfoUtils
 block|{
+specifier|private
+name|TypeInfoUtils
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 comment|/**    * Return the extended TypeInfo from a Java type. By extended TypeInfo, we    * allow unknownType for java.lang.Object.    *     * @param t    *          The Java type.    * @param m    *          The method, only used for generating error messages.    */
 specifier|private
 specifier|static
@@ -1066,7 +1077,7 @@ return|return
 name|typeInfos
 return|;
 block|}
-comment|/**    * Parse a recursive TypeInfo list String. For example, the following inputs    * are valid inputs:"int,string,map<string,int>,list<map<int,list<string>>>,list<struct<a:int,b:string>>"    * The separators between TypeInfos can be ",", ":", or ";".    *     * In order to use this class: TypeInfoParser parser = new    * TypeInfoParser("int,string"); ArrayList<TypeInfo> typeInfos =    * parser.parseTypeInfos();    */
+comment|/**    * Parse a recursive TypeInfo list String. For example, the following inputs    * are valid inputs:    * "int,string,map<string,int>,list<map<int,list<string>>>,list<struct<a:int,b:string>>"    * The separators between TypeInfos can be ",", ":", or ";".    *     * In order to use this class: TypeInfoParser parser = new    * TypeInfoParser("int,string"); ArrayList<TypeInfo> typeInfos =    * parser.parseTypeInfos();    */
 specifier|private
 specifier|static
 class|class
@@ -1329,8 +1340,6 @@ name|TypeInfo
 argument_list|>
 name|parseTypeInfos
 parameter_list|()
-throws|throws
-name|IllegalArgumentException
 block|{
 name|typeInfos
 operator|=

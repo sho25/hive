@@ -63,7 +63,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentTypeException
+name|Description
 import|;
 end_import
 
@@ -81,7 +81,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDFArgumentTypeException
 import|;
 end_import
 
@@ -279,6 +279,10 @@ name|StringUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * GenericUDAFSum.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -459,6 +463,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**    * GenericUDAFSumDouble.    *    */
 specifier|public
 specifier|static
 class|class
@@ -466,9 +471,11 @@ name|GenericUDAFSumDouble
 extends|extends
 name|GenericUDAFEvaluator
 block|{
+specifier|private
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
+specifier|private
 name|DoubleWritable
 name|result
 decl_stmt|;
@@ -530,7 +537,7 @@ operator|.
 name|writableDoubleObjectInspector
 return|;
 block|}
-comment|/** class for storing double sum value */
+comment|/** class for storing double sum value. */
 specifier|static
 class|class
 name|SumDoubleAgg
@@ -812,6 +819,7 @@ name|result
 return|;
 block|}
 block|}
+comment|/**    * GenericUDAFSumLong.    *    */
 specifier|public
 specifier|static
 class|class
@@ -819,9 +827,11 @@ name|GenericUDAFSumLong
 extends|extends
 name|GenericUDAFEvaluator
 block|{
+specifier|private
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
+specifier|private
 name|LongWritable
 name|result
 decl_stmt|;
@@ -883,7 +893,7 @@ operator|.
 name|writableLongObjectInspector
 return|;
 block|}
-comment|/** class for storing double sum value */
+comment|/** class for storing double sum value. */
 specifier|static
 class|class
 name|SumLongAgg
@@ -955,6 +965,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
+specifier|private
 name|boolean
 name|warned
 init|=

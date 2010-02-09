@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the query block expression  *   **/
+comment|/**  * Implementation of the query block expression.  *   **/
 end_comment
 
 begin_class
@@ -69,6 +69,7 @@ argument_list|(
 literal|"hive.ql.parse.QBExpr"
 argument_list|)
 decl_stmt|;
+comment|/**    * Opcode.    *    */
 specifier|public
 specifier|static
 enum|enum

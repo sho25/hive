@@ -1201,7 +1201,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Find partitions on the fs that are unknown to the metastore    *     * @param table    *          Table where the partitions would be located    * @param partPaths    *          Paths of the partitions the ms knows about    * @param result    *          Result object    * @throws IOException    *           Thrown if we fail at fetching listings from the fs.    */
+comment|/**    * Find partitions on the fs that are unknown to the metastore.    *     * @param table    *          Table where the partitions would be located    * @param partPaths    *          Paths of the partitions the ms knows about    * @param result    *          Result object    * @throws IOException    *           Thrown if we fail at fetching listings from the fs.    */
 name|void
 name|findUnknownPartitions
 parameter_list|(

@@ -71,16 +71,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -262,7 +252,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Task implementation  **/
+comment|/**  * Task implementation.  **/
 end_comment
 
 begin_class
@@ -288,58 +278,58 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|boolean
 name|started
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|boolean
 name|initialized
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|boolean
 name|isdone
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|boolean
 name|queued
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|HiveConf
 name|conf
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Hive
 name|db
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Log
 name|LOG
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|LogHelper
 name|console
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|QueryPlan
 name|queryPlan
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|TaskHandle
 name|taskHandle
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|HashMap
 argument_list|<
 name|String
@@ -348,8 +338,8 @@ name|Long
 argument_list|>
 name|taskCounters
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|DriverContext
 name|driverContext
 decl_stmt|;
@@ -616,7 +606,7 @@ name|int
 name|execute
 parameter_list|()
 function_decl|;
-comment|/**    * Update the progress of the task within taskHandle and also dump the    * progress information to the history file    *     * @param taskHandle    *          task handle returned by execute    * @throws IOException    */
+comment|/**    * Update the progress of the task within taskHandle and also dump the    * progress information to the history file.    *     * @param taskHandle    *          task handle returned by execute    * @throws IOException    */
 specifier|public
 name|void
 name|progress
@@ -870,7 +860,7 @@ return|return
 name|ret
 return|;
 block|}
-comment|/**    * remove the dependent task    *     * @param dependent    *          the task to remove    */
+comment|/**    * Remove the dependent task.    *     * @param dependent    *          the task to remove    */
 specifier|public
 name|void
 name|removeDependentTask
@@ -1178,7 +1168,7 @@ return|return
 name|taskCounters
 return|;
 block|}
-comment|/**    * Should be overridden to return the type of the specific task among the    * types in TaskType    *     * @return TaskTypeType.* or -1 if not overridden    */
+comment|/**    * Should be overridden to return the type of the specific task among the    * types in TaskType.    *     * @return TaskTypeType.* or -1 if not overridden    */
 specifier|public
 name|int
 name|getType

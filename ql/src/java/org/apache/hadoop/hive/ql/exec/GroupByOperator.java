@@ -499,9 +499,9 @@ argument_list|>
 implements|implements
 name|Serializable
 block|{
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|Log
 name|LOG
 init|=
@@ -533,47 +533,47 @@ name|NUMROWSESTIMATESIZE
 init|=
 literal|1000
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ExprNodeEvaluator
 index|[]
 name|keyFields
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ObjectInspector
 index|[]
 name|keyObjectInspectors
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Object
 index|[]
 name|keyObjects
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ExprNodeEvaluator
 index|[]
 index|[]
 name|aggregationParameterFields
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ObjectInspector
 index|[]
 index|[]
 name|aggregationParameterObjectInspectors
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ObjectInspector
 index|[]
 index|[]
 name|aggregationParameterStandardObjectInspectors
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Object
 index|[]
 index|[]
@@ -582,8 +582,8 @@ decl_stmt|;
 comment|// In the future, we may allow both count(DISTINCT a) and sum(DISTINCT a) in
 comment|// the same SQL clause,
 comment|// so aggregationIsDistinct is a boolean array instead of a single number.
-specifier|transient
 specifier|protected
+specifier|transient
 name|boolean
 index|[]
 name|aggregationIsDistinct
@@ -593,8 +593,8 @@ name|GenericUDAFEvaluator
 index|[]
 name|aggregationEvaluators
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ArrayList
 argument_list|<
 name|ObjectInspector
@@ -610,38 +610,38 @@ name|fieldNames
 decl_stmt|;
 comment|// Used by sort-based GroupBy: Mode = COMPLETE, PARTIAL1, PARTIAL2,
 comment|// MERGEPARTIAL
-specifier|transient
 specifier|protected
+specifier|transient
 name|ArrayList
 argument_list|<
 name|Object
 argument_list|>
 name|currentKeys
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|ArrayList
 argument_list|<
 name|Object
 argument_list|>
 name|newKeys
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|AggregationBuffer
 index|[]
 name|aggregations
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|Object
 index|[]
 index|[]
 name|aggregationsParametersLastInvoke
 decl_stmt|;
 comment|// Used by hash-based GroupBy: Mode = HASH, PARTIALS
-specifier|transient
 specifier|protected
+specifier|transient
 name|HashMap
 argument_list|<
 name|KeyWrapper
@@ -652,8 +652,8 @@ argument_list|>
 name|hashAggregations
 decl_stmt|;
 comment|// Used by hash distinct aggregations when hashGrpKeyNotRedKey is true
-specifier|transient
 specifier|protected
+specifier|transient
 name|HashSet
 argument_list|<
 name|ArrayList
@@ -712,8 +712,8 @@ name|float
 name|minReductionHashAggr
 decl_stmt|;
 comment|// current Key ObjectInspectors are standard ObjectInspectors
-specifier|transient
 specifier|protected
+specifier|transient
 name|ObjectInspector
 index|[]
 name|currentKeyObjectInspectors
@@ -1887,15 +1887,12 @@ case|:
 case|case
 name|DOUBLE
 case|:
-block|{
 return|return
 name|javaSizePrimitiveType
 return|;
-block|}
 case|case
 name|STRING
 case|:
-block|{
 name|keyPositionsSize
 operator|.
 name|add
@@ -1910,13 +1907,10 @@ expr_stmt|;
 return|return
 name|javaObjectOverHead
 return|;
-block|}
 default|default:
-block|{
 return|return
 name|javaSizeUnknownType
 return|;
-block|}
 block|}
 block|}
 comment|/**    * The size of the element at position 'pos' is returned, if possible. If the    * field is of variable length, STRING, a list of such field names for the    * field position is maintained, and the size for such positions is then    * actually calculated at runtime.    *     * @param pos    *          the position of the key    * @param c    *          the type of the key    * @param f    *          the field to be added    * @return the size of this datatype    **/

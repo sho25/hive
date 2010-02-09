@@ -53,7 +53,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDF
+name|Description
 import|;
 end_import
 
@@ -71,7 +71,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDF
 import|;
 end_import
 
@@ -121,6 +121,10 @@ name|LongWritable
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDFRound.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -147,6 +151,7 @@ name|UDFRound
 extends|extends
 name|UDF
 block|{
+specifier|private
 name|DoubleWritable
 name|doubleWritable
 init|=
@@ -154,6 +159,7 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
+specifier|private
 name|LongWritable
 name|longWritable
 init|=

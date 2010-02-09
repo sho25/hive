@@ -371,6 +371,10 @@ name|StringUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * ScriptOperator.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -391,6 +395,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+comment|/**    * Counter.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -400,9 +405,9 @@ name|DESERIALIZE_ERRORS
 block|,
 name|SERIALIZE_ERRORS
 block|}
-specifier|transient
 specifier|private
 specifier|final
+specifier|transient
 name|LongWritable
 name|deserialize_error_count
 init|=
@@ -410,9 +415,9 @@ operator|new
 name|LongWritable
 argument_list|()
 decl_stmt|;
-specifier|transient
 specifier|private
 specifier|final
+specifier|transient
 name|LongWritable
 name|serialize_error_count
 init|=
@@ -745,7 +750,7 @@ literal|"file.separator"
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Appends the specified component to the path list      */
+comment|/**      * Appends the specified component to the path list.      */
 specifier|public
 name|void
 name|prependPathComponent
@@ -763,7 +768,7 @@ operator|+
 name|pathenv
 expr_stmt|;
 block|}
-comment|/**      * Returns the full path name of this file if it is listed in the path      */
+comment|/**      * Returns the full path name of this file if it is listed in the path.      */
 specifier|public
 name|File
 name|getAbsolutePath
@@ -1967,7 +1972,6 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-empty_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -2250,7 +2254,6 @@ block|}
 interface|interface
 name|StreamProcessor
 block|{
-specifier|public
 name|void
 name|processLine
 parameter_list|(
@@ -2260,7 +2263,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-specifier|public
 name|void
 name|close
 parameter_list|()
@@ -2774,7 +2776,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Wrap the script in a wrapper that allows admins to control    **/
+comment|/**    * Wrap the script in a wrapper that allows admins to control.    */
 specifier|protected
 name|String
 index|[]

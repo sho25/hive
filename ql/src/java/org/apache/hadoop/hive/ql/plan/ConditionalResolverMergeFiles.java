@@ -160,6 +160,7 @@ specifier|public
 name|ConditionalResolverMergeFiles
 parameter_list|()
 block|{   }
+comment|/**    * ConditionalResolverMergeFilesCtx.    *    */
 specifier|public
 specifier|static
 class|class

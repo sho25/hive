@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|// basically just a container for the real type so more like a proxy
+comment|/**  * DynamicSerDeFieldType.  * Basically just a container for the real type so more like a proxy.  *  */
 end_comment
 
 begin_class

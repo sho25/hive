@@ -537,6 +537,7 @@ argument_list|)
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|RECORD_INTERVAL_CONF_STR
 init|=
@@ -544,6 +545,7 @@ literal|"hive.io.rcfile.record.interval"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|COLUMN_NUMBER_METADATA_STR
 init|=
@@ -551,6 +553,7 @@ literal|"hive.io.rcfile.column.number"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|COLUMN_NUMBER_CONF_STR
 init|=
@@ -570,6 +573,7 @@ literal|6
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|byte
 index|[]
 name|VERSION
@@ -1021,7 +1025,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * get number of bytes to store the keyBuffer      *       * @return number of bytes used to store this KeyBuffer on disk      * @throws IOException      */
+comment|/**      * get number of bytes to store the keyBuffer.      *       * @return number of bytes used to store this KeyBuffer on disk      * @throws IOException      */
 specifier|public
 name|int
 name|getSize
@@ -2988,7 +2992,7 @@ return|return
 name|codec
 return|;
 block|}
-comment|/** create a sync point */
+comment|/** create a sync point. */
 specifier|public
 name|void
 name|sync
@@ -3079,7 +3083,7 @@ name|columnBufferSize
 init|=
 literal|0
 decl_stmt|;
-comment|/**      * append a row of values. Currently it only can accept<      * {@link BytesRefArrayWritable}. If its<code>size()</code> is less than the      * column number in the file, zero bytes are appended for the empty columns.      * If its size() is greater then the column number in the file, the exceeded      * columns' bytes are ignored.      *       * @param val      * @throws IOException      */
+comment|/**      * Append a row of values. Currently it only can accept<      * {@link BytesRefArrayWritable}. If its<code>size()</code> is less than the      * column number in the file, zero bytes are appended for the empty columns.      * If its size() is greater then the column number in the file, the exceeded      * columns' bytes are ignored.      *       * @param val      * @throws IOException      */
 specifier|public
 name|void
 name|append
@@ -6161,7 +6165,7 @@ return|return
 name|syncSeen
 return|;
 block|}
-comment|/** Returns the last seen sync position */
+comment|/** Returns the last seen sync position. */
 specifier|public
 name|long
 name|lastSeenSyncPos

@@ -573,6 +573,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|TypeCheckProcFactory
 block|{
@@ -594,6 +595,12 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
+name|TypeCheckProcFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
+block|}
 comment|/**    * Function to do groupby subexpression elimination. This is called by all the    * processors initially. As an example, consider the query select a+b,    * count(1) from T group by a+b; Then a+b is already precomputed in the group    * by operators key, so we substitute a+b in the select list with the internal    * column name of the a+b expression that appears in the in input row    * resolver.    *     * @param nd    *          The node that is being inspected.    * @param procCtx    *          The processor context.    *     * @return exprNodeColumnDesc.    */
 specifier|public
 specifier|static
@@ -1362,7 +1369,7 @@ name|BoolExprProcessor
 argument_list|()
 return|;
 block|}
-comment|/**    * Processor for table columns    */
+comment|/**    * Processor for table columns.    */
 specifier|public
 specifier|static
 class|class
@@ -2201,7 +2208,7 @@ name|funcText
 argument_list|)
 return|;
 block|}
-comment|/**      * Get the exprNodeDesc      *       * @param name      * @param children      * @return The expression node descriptor      * @throws UDFArgumentException      */
+comment|/**      * Get the exprNodeDesc.      *       * @param name      * @param children      * @return The expression node descriptor      * @throws UDFArgumentException      */
 specifier|public
 specifier|static
 name|ExprNodeDesc

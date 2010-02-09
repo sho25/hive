@@ -763,6 +763,10 @@ name|NullAppender
 import|;
 end_import
 
+begin_comment
+comment|/**  * ExecDriver.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -783,27 +787,27 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|JobConf
 name|job
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|int
 name|mapProgress
 init|=
 literal|0
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|int
 name|reduceProgress
 init|=
 literal|0
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|boolean
 name|success
 init|=
@@ -819,7 +823,7 @@ operator|new
 name|Random
 argument_list|()
 decl_stmt|;
-comment|/**    * Constructor when invoked from QL    */
+comment|/**    * Constructor when invoked from QL.    */
 specifier|public
 name|ExecDriver
 parameter_list|()
@@ -1016,7 +1020,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Initialization when invoked from QL    */
+comment|/**    * Initialization when invoked from QL.    */
 annotation|@
 name|Override
 specifier|public
@@ -1178,7 +1182,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Constructor/Initialization for invocation as independent utility    */
+comment|/**    * Constructor/Initialization for invocation as independent utility.    */
 specifier|public
 name|ExecDriver
 parameter_list|(
@@ -1421,7 +1425,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * from StreamJob.java    */
+comment|/**    * from StreamJob.java.    */
 specifier|public
 name|void
 name|jobInfo
@@ -1564,7 +1568,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * This class contains the state of the running task Going forward, we will    * return this handle from execute and Driver can split execute into start,    * monitorProgess and postProcess    */
+comment|/**    * This class contains the state of the running task Going forward, we will    * return this handle from execute and Driver can split execute into start,    * monitorProgess and postProcess.    */
 specifier|public
 specifier|static
 class|class
@@ -2614,7 +2618,7 @@ return|return
 name|r
 return|;
 block|}
-comment|/**    * update counters relevant to this task    */
+comment|/**    * Update counters relevant to this task.    */
 annotation|@
 name|Override
 specifier|public
@@ -2810,7 +2814,7 @@ operator|==
 literal|100
 return|;
 block|}
-comment|/**    * Execute a query plan using Hadoop    */
+comment|/**    * Execute a query plan using Hadoop.    */
 specifier|public
 name|int
 name|execute
@@ -4091,7 +4095,7 @@ name|returnVal
 operator|)
 return|;
 block|}
-comment|/**    * this msg pattern is used to track when a job is started    *     * @param jobId    * @return    */
+comment|/**    * This msg pattern is used to track when a job is started.    *     * @param jobId    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -5227,7 +5231,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Given a Hive Configuration object - generate a command line fragment for    * passing such configuration information to ExecDriver    */
+comment|/**    * Given a Hive Configuration object - generate a command line fragment for    * passing such configuration information to ExecDriver.    */
 specifier|public
 specifier|static
 name|String
@@ -5619,7 +5623,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Handle a empty/null path for a given alias    */
+comment|/**    * Handle a empty/null path for a given alias.    */
 specifier|private
 name|int
 name|addInputPath

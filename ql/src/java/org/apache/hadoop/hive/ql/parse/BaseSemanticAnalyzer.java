@@ -101,16 +101,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -532,6 +522,18 @@ operator|.
 name|TextInputFormat
 import|;
 end_import
+
+begin_comment
+comment|/**  * BaseSemanticAnalyzer.  *  */
+end_comment
+
+begin_comment
+comment|/**  * BaseSemanticAnalyzer.  *  */
+end_comment
+
+begin_comment
+comment|/**  * BaseSemanticAnalyzer.  *  */
+end_comment
 
 begin_class
 specifier|public
@@ -2414,6 +2416,7 @@ return|return
 name|typeStr
 return|;
 block|}
+comment|/**    * tableSpec.    *    */
 specifier|public
 specifier|static
 class|class

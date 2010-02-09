@@ -361,6 +361,10 @@ name|BytesWritable
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveResultSet.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -478,7 +482,7 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Instantiate the dynamic serde used to deserialize the result row    */
+comment|/**    * Instantiate the dynamic serde used to deserialize the result row.    */
 specifier|public
 name|void
 name|initDynamicSerde
@@ -3191,13 +3195,13 @@ literal|false
 return|;
 block|}
 name|String
-name|row_str
+name|rowStr
 init|=
 literal|""
 decl_stmt|;
 try|try
 block|{
-name|row_str
+name|rowStr
 operator|=
 operator|(
 name|String
@@ -3213,7 +3217,7 @@ expr_stmt|;
 if|if
 condition|(
 operator|!
-name|row_str
+name|rowStr
 operator|.
 name|equals
 argument_list|(
@@ -3231,7 +3235,7 @@ argument_list|(
 operator|new
 name|BytesWritable
 argument_list|(
-name|row_str
+name|rowStr
 operator|.
 name|getBytes
 argument_list|()
@@ -3272,7 +3276,7 @@ block|}
 comment|// NOTE: fetchOne dosn't throw new SQLException("Method not supported").
 return|return
 operator|!
-name|row_str
+name|rowStr
 operator|.
 name|equals
 argument_list|(

@@ -405,7 +405,7 @@ block|,
 literal|"TypeSet"
 block|,
 literal|"TypeList"
-block|, }
+block|,}
 decl_stmt|;
 block|}
 end_interface

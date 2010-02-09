@@ -11150,7 +11150,7 @@ block|,
 literal|0xb0000000
 block|,
 literal|0xa0000000
-block|, }
+block|,}
 expr_stmt|;
 block|}
 specifier|private
@@ -11230,7 +11230,7 @@ block|,
 literal|0x4001cf
 block|,
 literal|0x4001cf
-block|, }
+block|,}
 expr_stmt|;
 block|}
 specifier|private
@@ -11310,7 +11310,7 @@ block|,
 literal|0x0
 block|,
 literal|0x0
-block|, }
+block|,}
 expr_stmt|;
 block|}
 comment|/** Constructor with InputStream. */

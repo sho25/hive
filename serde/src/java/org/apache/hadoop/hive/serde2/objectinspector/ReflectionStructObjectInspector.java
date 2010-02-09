@@ -86,6 +86,7 @@ name|ReflectionStructObjectInspector
 extends|extends
 name|SettableStructObjectInspector
 block|{
+comment|/**    * MyField.    *    */
 specifier|public
 specifier|static
 class|class

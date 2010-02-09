@@ -19,6 +19,10 @@ name|objectinspector
 package|;
 end_package
 
+begin_comment
+comment|/**  * SettableListObjectInspector.  *  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface

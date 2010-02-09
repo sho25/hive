@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Suite for testing running of queries in multi-threaded mode  */
+comment|/**  * Suite for testing running of queries in multi-threaded mode.  */
 end_comment
 
 begin_class

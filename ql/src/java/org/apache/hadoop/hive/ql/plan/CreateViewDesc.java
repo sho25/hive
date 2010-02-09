@@ -75,6 +75,10 @@ name|Utilities
 import|;
 end_import
 
+begin_comment
+comment|/**  * CreateViewDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain

@@ -74,7 +74,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Conditional task resolution interface. This is invoked at run time to get the  * task to invoke. Developers can plug in their own resolvers  */
+comment|/**  * Conditional task resolution interface. This is invoked at run time to get the  * task to invoke. Developers can plug in their own resolvers.  */
 end_comment
 
 begin_interface
@@ -82,8 +82,7 @@ specifier|public
 interface|interface
 name|ConditionalResolver
 block|{
-comment|/**    * All conditional resolvers implement this interface    *     * @param conf    *          configuration    * @param ctx    *          opaque context    * @return position of the task    */
-specifier|public
+comment|/**    * All conditional resolvers implement this interface.    *     * @param conf    *          configuration    * @param ctx    *          opaque context    * @return position of the task    */
 name|List
 argument_list|<
 name|Task

@@ -63,8 +63,13 @@ name|SessionState
 import|;
 end_import
 
+begin_comment
+comment|/**  * SemanticAnalyzerFactory.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|SemanticAnalyzerFactory
 block|{
@@ -599,6 +604,12 @@ argument_list|)
 return|;
 block|}
 block|}
+block|}
+specifier|private
+name|SemanticAnalyzerFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

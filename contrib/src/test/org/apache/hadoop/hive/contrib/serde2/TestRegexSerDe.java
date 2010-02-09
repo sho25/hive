@@ -155,6 +155,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestRegexSerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -270,7 +274,9 @@ literal|"host,identity,user,time,request,status,size,referer,agent"
 argument_list|,
 literal|"string,string,string,string,string,string,string,string,string"
 argument_list|,
-literal|"([^ ]*) ([^ ]*) ([^ ]*) (-|\\[[^\\]]*\\]) ([^ \"]*|\"[^\"]*\") ([0-9]*) ([0-9]*) ([^ \"]*|\"[^\"]*\") ([^ \"]*|\"[^\"]*\")"
+literal|"([^ ]*) ([^ ]*) ([^ ]*) (-|\\[[^\\]]*\\]) ([^ \"]*|\"[^\"]*\") "
+operator|+
+literal|"([0-9]*) ([0-9]*) ([^ \"]*|\"[^\"]*\") ([^ \"]*|\"[^\"]*\")"
 argument_list|,
 literal|"%1$s %2$s %3$s %4$s %5$s %6$s %7$s %8$s %9$s"
 argument_list|)
@@ -286,7 +292,9 @@ literal|"127.0.0.1 - - [26/May/2009:00:00:00 +0000] "
 operator|+
 literal|"\"GET /someurl/?track=Blabla(Main) HTTP/1.1\" 200 5864 - "
 operator|+
-literal|"\"Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.65 Safari/525.19\""
+literal|"\"Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) "
+operator|+
+literal|"AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.65 Safari/525.19\""
 argument_list|)
 decl_stmt|;
 comment|// Deserialize

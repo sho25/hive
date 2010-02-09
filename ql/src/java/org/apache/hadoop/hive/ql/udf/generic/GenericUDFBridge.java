@@ -59,34 +59,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|hive
@@ -294,23 +266,6 @@ name|GenericUDF
 implements|implements
 name|Serializable
 block|{
-specifier|private
-specifier|static
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|GenericUDFBridge
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-decl_stmt|;
 comment|/**    * The name of the UDF.    */
 name|String
 name|udfName
@@ -468,7 +423,7 @@ specifier|transient
 name|UDF
 name|udf
 decl_stmt|;
-comment|/**    * The non-deferred real arguments for method invocation    */
+comment|/**    * The non-deferred real arguments for method invocation.    */
 specifier|transient
 name|Object
 index|[]

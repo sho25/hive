@@ -213,6 +213,10 @@ name|Reporter
 import|;
 end_import
 
+begin_comment
+comment|/**  * RCFileInputFormat.  *  * @param<K>  * @param<V>  */
+end_comment
+
 begin_class
 specifier|public
 class|class

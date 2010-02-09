@@ -324,7 +324,7 @@ name|LineageInfo
 implements|implements
 name|NodeProcessor
 block|{
-comment|/**    * Stores input tables in sql    */
+comment|/**    * Stores input tables in sql.    */
 name|TreeSet
 argument_list|<
 name|String
@@ -338,7 +338,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * Stores output tables in sql    */
+comment|/**    * Stores output tables in sql.    */
 name|TreeSet
 argument_list|<
 name|String

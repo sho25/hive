@@ -147,6 +147,10 @@ name|HiveConf
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestJdbcDriver.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -678,7 +682,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-specifier|final
 name|void
 name|doTestSelectAll
 parameter_list|(
@@ -1133,7 +1136,9 @@ name|tableName
 operator|+
 literal|" (key int, value string)"
 argument_list|,
-literal|"Query returned non-zero code: 9, cause: FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask"
+literal|"Query returned non-zero code: 9, cause: FAILED: Execution Error, "
+operator|+
+literal|"return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask"
 argument_list|,
 literal|"08S01"
 argument_list|,

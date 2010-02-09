@@ -33,7 +33,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDF
+name|Description
 import|;
 end_import
 
@@ -51,7 +51,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDF
 import|;
 end_import
 
@@ -83,6 +83,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDFLpad.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
@@ -93,9 +97,7 @@ literal|"lpad"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(str, len, pad) - Returns str, left-padded with pad to a "
-operator|+
-literal|"length of len"
+literal|"_FUNC_(str, len, pad) - Returns str, left-padded with pad to a length of len"
 argument_list|,
 name|extended
 operator|=

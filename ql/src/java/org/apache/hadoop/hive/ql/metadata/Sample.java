@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * A sample defines a subset of data based on sampling on a given dimension  *   **/
+comment|/**  * A sample defines a subset of data based on sampling on a given dimension.  *   **/
 end_comment
 
 begin_class

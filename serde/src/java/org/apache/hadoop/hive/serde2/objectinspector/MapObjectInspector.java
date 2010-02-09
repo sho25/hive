@@ -29,6 +29,10 @@ name|Map
 import|;
 end_import
 
+begin_comment
+comment|/**  * MapObjectInspector.  *  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface
@@ -38,12 +42,10 @@ name|ObjectInspector
 block|{
 comment|// ** Methods that does not need a data object **
 comment|// Map Type
-specifier|public
 name|ObjectInspector
 name|getMapKeyObjectInspector
 parameter_list|()
 function_decl|;
-specifier|public
 name|ObjectInspector
 name|getMapValueObjectInspector
 parameter_list|()
@@ -54,7 +56,6 @@ comment|// Most cases key will be primitive type, so it's OK.
 comment|// In rare cases that key is not primitive, the user is responsible for
 comment|// defining
 comment|// the hashCode() and equals() methods of the key class.
-specifier|public
 name|Object
 name|getMapValueElement
 parameter_list|(
@@ -66,7 +67,6 @@ name|key
 parameter_list|)
 function_decl|;
 comment|/**    * returns null for data = null.    *     * Note: This method should not return a Map object that is reused by the same    * MapObjectInspector, because it's possible that the same MapObjectInspector    * will be used in multiple places in the code.    *     * However it's OK if the Map object is part of the Object data.    */
-specifier|public
 name|Map
 argument_list|<
 name|?
@@ -80,7 +80,6 @@ name|data
 parameter_list|)
 function_decl|;
 comment|/**    * returns -1 for NULL map.    */
-specifier|public
 name|int
 name|getMapSize
 parameter_list|(

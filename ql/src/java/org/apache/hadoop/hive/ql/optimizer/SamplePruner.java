@@ -412,6 +412,7 @@ name|SamplePruner
 implements|implements
 name|Transform
 block|{
+comment|/**    * SamplePrunerCtx.    *    */
 specifier|public
 specifier|static
 class|class
@@ -621,7 +622,7 @@ return|return
 name|pctx
 return|;
 block|}
-comment|// Filter processor
+comment|/**    * FilterPPR filter processor.    *    */
 specifier|public
 specifier|static
 class|class
@@ -752,7 +753,7 @@ name|FilterPPR
 argument_list|()
 return|;
 block|}
-comment|// Default processor which does nothing
+comment|/**    * DefaultPPR default processor which does nothing.    *    */
 specifier|public
 specifier|static
 class|class
@@ -803,7 +804,7 @@ name|DefaultPPR
 argument_list|()
 return|;
 block|}
-comment|/**    * Prunes to get all the files in the partition that satisfy the TABLESAMPLE    * clause    *     * @param part    *          The partition to prune    * @return Path[]    * @throws SemanticException    */
+comment|/**    * Prunes to get all the files in the partition that satisfy the TABLESAMPLE    * clause.    *     * @param part    *          The partition to prune    * @return Path[]    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

@@ -217,6 +217,10 @@ name|TType
 import|;
 end_import
 
+begin_comment
+comment|/**  * DynamicSerDeFieldList.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -256,8 +260,8 @@ literal|null
 decl_stmt|;
 specifier|private
 name|DynamicSerDeTypeBase
-name|ordered_types
 index|[]
+name|ordered_types
 init|=
 literal|null
 decl_stmt|;
@@ -321,8 +325,8 @@ name|i
 argument_list|)
 return|;
 block|}
-specifier|final
 specifier|public
+specifier|final
 name|DynamicSerDeField
 index|[]
 name|getChildren
@@ -335,8 +339,8 @@ name|jjtGetNumChildren
 argument_list|()
 decl_stmt|;
 name|DynamicSerDeField
-name|result
 index|[]
+name|result
 init|=
 operator|new
 name|DynamicSerDeField

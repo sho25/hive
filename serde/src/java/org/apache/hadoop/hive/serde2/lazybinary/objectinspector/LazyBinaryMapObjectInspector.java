@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspector for LazyBinaryMap  *   * @see LazyBinaryMap  */
+comment|/**  * ObjectInspector for LazyBinaryMap.  *   * @see LazyBinaryMap  */
 end_comment
 
 begin_class

@@ -18,7 +18,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Generic exception class for SerDes  *   */
+comment|/**  * Generic exception class for SerDes.  *   */
 end_comment
 
 begin_class

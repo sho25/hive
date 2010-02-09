@@ -275,6 +275,10 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * RCFileOutputFormat.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -324,7 +328,7 @@ name|columnNum
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns the number of columns set in the conf for writers    *     * @param conf    * @return number of columns for RCFile's writer    */
+comment|/**    * Returns the number of columns set in the conf for writers.    *     * @param conf    * @return number of columns for RCFile's writer    */
 specifier|public
 specifier|static
 name|int
@@ -541,7 +545,7 @@ block|}
 block|}
 return|;
 block|}
-comment|/**    * create the final out file,    *     * @param jc    *          the job configuration file    * @param finalOutPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the tableInfo of this file's corresponding table    * @param progress    *          progress used for status report    * @throws IOException    */
+comment|/**    * create the final out file.    *     * @param jc    *          the job configuration file    * @param finalOutPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the tableInfo of this file's corresponding table    * @param progress    *          progress used for status report    * @throws IOException    */
 annotation|@
 name|Override
 specifier|public

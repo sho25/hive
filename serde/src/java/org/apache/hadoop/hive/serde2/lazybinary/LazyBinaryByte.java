@@ -76,7 +76,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryObject for byte which takes one byte  */
+comment|/**  * LazyBinaryObject for byte which takes one byte.  */
 end_comment
 
 begin_class

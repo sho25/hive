@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the query block  *   **/
+comment|/**  * Implementation of the query block.  *   **/
 end_comment
 
 begin_class

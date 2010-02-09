@@ -295,8 +295,13 @@ name|WritableStringObjectInspector
 import|;
 end_import
 
+begin_comment
+comment|/**  * LazyBinaryFactory.  *  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|LazyBinaryFactory
 block|{
@@ -331,7 +336,6 @@ block|{
 case|case
 name|BOOLEAN
 case|:
-block|{
 return|return
 operator|new
 name|LazyBinaryBoolean
@@ -342,11 +346,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|BYTE
 case|:
-block|{
 return|return
 operator|new
 name|LazyBinaryByte
@@ -357,11 +359,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|SHORT
 case|:
-block|{
 return|return
 operator|new
 name|LazyBinaryShort
@@ -372,11 +372,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|INT
 case|:
-block|{
 return|return
 operator|new
 name|LazyBinaryInteger
@@ -387,11 +385,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|LONG
 case|:
-block|{
 return|return
 operator|new
 name|LazyBinaryLong
@@ -402,11 +398,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|FLOAT
 case|:
-block|{
 return|return
 operator|new
 name|LazyBinaryFloat
@@ -417,11 +411,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|DOUBLE
 case|:
-block|{
 return|return
 operator|new
 name|LazyBinaryDouble
@@ -432,11 +424,9 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 case|case
 name|STRING
 case|:
-block|{
 return|return
 operator|new
 name|LazyBinaryString
@@ -447,9 +437,7 @@ operator|)
 name|oi
 argument_list|)
 return|;
-block|}
 default|default:
-block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -459,7 +447,6 @@ operator|+
 name|p
 argument_list|)
 throw|;
-block|}
 block|}
 block|}
 comment|/**    * Create a hierarchical LazyBinaryObject based on the given typeInfo.    */
@@ -546,6 +533,12 @@ argument_list|(
 literal|"Hive LazyBinarySerDe Internal error."
 argument_list|)
 throw|;
+block|}
+specifier|private
+name|LazyBinaryFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

@@ -83,6 +83,10 @@ name|Text
 import|;
 end_import
 
+begin_comment
+comment|/**  * UDAFWrongArgLengthForTestCase.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -90,8 +94,9 @@ name|UDAFWrongArgLengthForTestCase
 extends|extends
 name|UDAF
 block|{
-specifier|static
+comment|/**    * UDAFWrongArgLengthForTestCaseEvaluator.    *    */
 specifier|public
+specifier|static
 class|class
 name|UDAFWrongArgLengthForTestCaseEvaluator
 implements|implements

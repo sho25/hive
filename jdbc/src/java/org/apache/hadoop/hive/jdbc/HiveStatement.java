@@ -89,6 +89,10 @@ name|HiveServerException
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveStatement.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -106,25 +110,25 @@ decl_stmt|;
 name|HiveInterface
 name|client
 decl_stmt|;
-comment|/**    * We need to keep a reference to the result set to support the following:    *<code>    * statement.execute(String sql);    * statement.getResultSet();    *</code>    */
+comment|/**    * We need to keep a reference to the result set to support the following:    *<code>    * statement.execute(String sql);    * statement.getResultSet();    *</code>.    */
 name|ResultSet
 name|resultSet
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * The maximum number of rows this statement should return (0 => all rows)    */
+comment|/**    * The maximum number of rows this statement should return (0 => all rows).    */
 name|int
 name|maxRows
 init|=
 literal|0
 decl_stmt|;
-comment|/**    * Add SQLWarnings to the warningChain if needed    */
+comment|/**    * Add SQLWarnings to the warningChain if needed.    */
 name|SQLWarning
 name|warningChain
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * Keep state so we can fail certain calls made after close();    */
+comment|/**    * Keep state so we can fail certain calls made after close().    */
 name|boolean
 name|isClosed
 init|=

@@ -80,7 +80,7 @@ operator|=
 name|itm
 expr_stmt|;
 block|}
-comment|/**    * Set the previous item as itm    *     * @param itm    *          the item to be set as previous.    */
+comment|/**    * Set the previous item as itm.    *     * @param itm    *          the item to be set as previous.    */
 specifier|public
 name|void
 name|setPrev

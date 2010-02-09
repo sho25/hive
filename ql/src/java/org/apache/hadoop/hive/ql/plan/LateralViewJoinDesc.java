@@ -39,6 +39,10 @@ name|ArrayList
 import|;
 end_import
 
+begin_comment
+comment|/**  * LateralViewJoinDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain

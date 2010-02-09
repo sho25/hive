@@ -315,6 +315,10 @@ name|Group
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveHistory.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -328,9 +332,9 @@ name|String
 name|histFileName
 decl_stmt|;
 comment|// History file name
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|Log
 name|LOG
 init|=
@@ -404,6 +408,7 @@ name|DELIMITER
 init|=
 literal|" "
 decl_stmt|;
+comment|/**    * RecordTypes.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -426,6 +431,7 @@ block|,
 name|Counters
 block|}
 empty_stmt|;
+comment|/**    * Keys.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -539,13 +545,12 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * Listner interface Parser will call handle function for each record type    */
+comment|/**    * Listner interface Parser will call handle function for each record type.    */
 specifier|public
 specifier|static
 interface|interface
 name|Listener
 block|{
-specifier|public
 name|void
 name|handle
 parameter_list|(
@@ -564,7 +569,7 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-comment|/**    * Parses history file and calls call back functions    *     * @param path    * @param l    * @throws IOException    */
+comment|/**    * Parses history file and calls call back functions.    *     * @param path    * @param l    * @throws IOException    */
 specifier|public
 specifier|static
 name|void
@@ -834,11 +839,13 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
+comment|/**    * Info.    *    */
 specifier|public
 specifier|static
 class|class
 name|Info
 block|{    }
+comment|/**    * SessionInfo.    *    */
 specifier|public
 specifier|static
 class|class
@@ -852,6 +859,7 @@ name|sessionId
 decl_stmt|;
 block|}
 empty_stmt|;
+comment|/**    * QueryInfo.    *    */
 specifier|public
 specifier|static
 class|class
@@ -897,6 +905,7 @@ argument_list|()
 decl_stmt|;
 block|}
 empty_stmt|;
+comment|/**    * TaskInfo.    *    */
 specifier|public
 specifier|static
 class|class
@@ -1168,7 +1177,7 @@ return|return
 name|histFileName
 return|;
 block|}
-comment|/**    * Write the a history record to history file    *     * @param rt    * @param keyValMap    */
+comment|/**    * Write the a history record to history file.    *     * @param rt    * @param keyValMap    */
 name|void
 name|log
 parameter_list|(
@@ -1317,7 +1326,7 @@ name|flush
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Called at the start of job Driver.run()    */
+comment|/**    * Called at the start of job Driver.run().    */
 specifier|public
 name|void
 name|startQuery
@@ -1406,7 +1415,7 @@ name|hm
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Used to set job status and other attributes of a job    *     * @param queryId    * @param propName    * @param propValue    */
+comment|/**    * Used to set job status and other attributes of a job.    *     * @param queryId    * @param propName    * @param propValue    */
 specifier|public
 name|void
 name|setQueryProperty
@@ -2204,7 +2213,7 @@ name|hm
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * write out counters    */
+comment|/**    * write out counters.    */
 specifier|static
 name|Map
 argument_list|<
@@ -2267,7 +2276,7 @@ name|ctrmap
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the table to id map    *     * @param map    */
+comment|/**    * Set the table to id map.    *     * @param map    */
 specifier|public
 name|void
 name|setIdToTableMap
@@ -2286,7 +2295,7 @@ operator|=
 name|map
 expr_stmt|;
 block|}
-comment|/**    * Returns table name for the counter name    *     * @param name    * @return tableName    */
+comment|/**    * Returns table name for the counter name.    *     * @param name    * @return tableName    */
 name|String
 name|getRowCountTableName
 parameter_list|(

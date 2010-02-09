@@ -233,6 +233,10 @@ name|DefaultCodec
 import|;
 end_import
 
+begin_comment
+comment|/**  * PerformTestRCFileAndSeqFile.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

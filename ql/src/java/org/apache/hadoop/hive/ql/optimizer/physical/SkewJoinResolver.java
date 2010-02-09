@@ -399,7 +399,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Iterator a task with a rule dispatcher for its reducer operator tree,    */
+comment|/**    * Iterator a task with a rule dispatcher for its reducer operator tree.    */
 class|class
 name|SkewJoinTaskDispatcher
 implements|implements

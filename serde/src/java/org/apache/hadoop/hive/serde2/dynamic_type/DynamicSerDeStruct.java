@@ -33,6 +33,10 @@ name|TType
 import|;
 end_import
 
+begin_comment
+comment|/**  * DynamicSerDeStruct.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -41,9 +45,9 @@ extends|extends
 name|DynamicSerDeStructBase
 block|{
 comment|// production is: struct this.name { FieldList() }
-specifier|final
 specifier|private
 specifier|static
+specifier|final
 name|int
 name|FD_FIELD_LIST
 init|=

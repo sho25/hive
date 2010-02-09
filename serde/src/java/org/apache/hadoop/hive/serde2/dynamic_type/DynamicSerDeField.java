@@ -19,6 +19,10 @@ name|dynamic_type
 package|;
 end_package
 
+begin_comment
+comment|/**  * DynamicSerDeField.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class

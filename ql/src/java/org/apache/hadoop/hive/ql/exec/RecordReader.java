@@ -77,12 +77,15 @@ name|Writable
 import|;
 end_import
 
+begin_comment
+comment|/**  * RecordReader.  *  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface
 name|RecordReader
 block|{
-specifier|public
 name|void
 name|initialize
 parameter_list|(
@@ -98,7 +101,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|Writable
 name|createRow
 parameter_list|()
@@ -106,7 +108,6 @@ throws|throws
 name|IOException
 function_decl|;
 comment|/**    * Returns the number of bytes that we consumed.    * -1 means end of stream.    */
-specifier|public
 name|int
 name|next
 parameter_list|(
@@ -116,7 +117,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
 name|void
 name|close
 parameter_list|()

@@ -677,42 +677,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|DDLWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|MsckDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|AlterTableDesc
 import|;
 end_import
@@ -785,6 +749,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|DDLWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|DescFunctionDesc
 import|;
 end_import
@@ -822,6 +804,24 @@ operator|.
 name|plan
 operator|.
 name|DropTableDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|MsckDesc
 import|;
 end_import
 
@@ -1068,7 +1068,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * DDLTask implementation  *   **/
+comment|/**  * DDLTask implementation.  *   **/
 end_comment
 
 begin_class
@@ -1091,9 +1091,9 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|Log
 name|LOG
 init|=
@@ -1108,9 +1108,9 @@ specifier|transient
 name|HiveConf
 name|conf
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|int
 name|separator
 init|=
@@ -1118,9 +1118,9 @@ name|Utilities
 operator|.
 name|tabCode
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|int
 name|terminator
 init|=
@@ -5716,7 +5716,7 @@ argument_list|()
 operator|==
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|RENAME
 condition|)
@@ -5745,7 +5745,7 @@ argument_list|()
 operator|==
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDCOLS
 condition|)
@@ -5945,7 +5945,7 @@ argument_list|()
 operator|==
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|RENAMECOLUMN
 condition|)
@@ -6357,7 +6357,7 @@ argument_list|()
 operator|==
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|REPLACECOLS
 condition|)
@@ -6468,7 +6468,9 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"Replace columns is not supported for this table. SerDe may be incompatible."
+literal|"Replace columns is not supported for this table. "
+operator|+
+literal|"SerDe may be incompatible."
 argument_list|)
 expr_stmt|;
 return|return
@@ -6502,7 +6504,7 @@ argument_list|()
 operator|==
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDPROPS
 condition|)
@@ -6534,7 +6536,7 @@ argument_list|()
 operator|==
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDSERDEPROPS
 condition|)
@@ -6572,7 +6574,7 @@ argument_list|()
 operator|==
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDSERDE
 condition|)
@@ -6672,7 +6674,7 @@ argument_list|()
 operator|==
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDFILEFORMAT
 condition|)
@@ -6741,7 +6743,7 @@ argument_list|()
 operator|==
 name|AlterTableDesc
 operator|.
-name|alterTableTypes
+name|AlterTableTypes
 operator|.
 name|ADDCLUSTERSORTCOLUMN
 condition|)
@@ -7533,7 +7535,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Check if the given serde is valid    */
+comment|/**    * Check if the given serde is valid.    */
 specifier|private
 name|void
 name|validateSerDe

@@ -263,6 +263,10 @@ name|Writable
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestSerDe.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -380,9 +384,9 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|final
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|DefaultSeparator
 init|=
@@ -459,7 +463,7 @@ operator|=
 name|DefaultSeparator
 expr_stmt|;
 name|String
-name|alt_sep
+name|altSep
 init|=
 name|tbl
 operator|.
@@ -470,11 +474,11 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|alt_sep
+name|altSep
 operator|!=
 literal|null
 operator|&&
-name|alt_sep
+name|altSep
 operator|.
 name|length
 argument_list|()
@@ -485,8 +489,8 @@ block|{
 try|try
 block|{
 name|byte
-name|b
 index|[]
+name|b
 init|=
 operator|new
 name|byte
@@ -503,7 +507,7 @@ name|Byte
 operator|.
 name|valueOf
 argument_list|(
-name|alt_sep
+name|altSep
 argument_list|)
 operator|.
 name|byteValue
@@ -526,7 +530,7 @@ parameter_list|)
 block|{
 name|separator
 operator|=
-name|alt_sep
+name|altSep
 expr_stmt|;
 block|}
 block|}

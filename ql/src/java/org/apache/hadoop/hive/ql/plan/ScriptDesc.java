@@ -65,6 +65,10 @@ name|RecordWriter
 import|;
 end_import
 
+begin_comment
+comment|/**  * ScriptDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain

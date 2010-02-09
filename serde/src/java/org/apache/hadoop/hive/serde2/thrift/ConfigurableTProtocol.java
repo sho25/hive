@@ -64,8 +64,7 @@ specifier|public
 interface|interface
 name|ConfigurableTProtocol
 block|{
-comment|/**    * Initialize the TProtocol    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws TException    */
-specifier|public
+comment|/**    * Initialize the TProtocol.    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws TException    */
 name|void
 name|initialize
 parameter_list|(

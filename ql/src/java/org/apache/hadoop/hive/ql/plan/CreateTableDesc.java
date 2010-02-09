@@ -123,6 +123,10 @@ name|Utilities
 import|;
 end_import
 
+begin_comment
+comment|/**  * CreateTableDesc.  *  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain

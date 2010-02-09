@@ -195,6 +195,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|SkewJoinProcFactory
 block|{
@@ -222,6 +223,7 @@ name|SkewJoinJoinProcessor
 argument_list|()
 return|;
 block|}
+comment|/**    * SkewJoinJoinProcessor.    *    */
 specifier|public
 specifier|static
 class|class
@@ -305,6 +307,7 @@ literal|null
 return|;
 block|}
 block|}
+comment|/**    * SkewJoinDefaultProcessor.    *    */
 specifier|public
 specifier|static
 class|class
@@ -339,6 +342,12 @@ return|return
 literal|null
 return|;
 block|}
+block|}
+specifier|private
+name|SkewJoinProcFactory
+parameter_list|()
+block|{
+comment|// prevent instantiation
 block|}
 block|}
 end_class

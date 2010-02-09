@@ -123,13 +123,13 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|int
 name|limit
 decl_stmt|;
-specifier|transient
 specifier|protected
+specifier|transient
 name|int
 name|currCount
 decl_stmt|;

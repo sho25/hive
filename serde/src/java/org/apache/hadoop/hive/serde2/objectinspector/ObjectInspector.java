@@ -28,6 +28,7 @@ specifier|public
 interface|interface
 name|ObjectInspector
 block|{
+comment|/**    * Category.    *    */
 specifier|public
 specifier|static
 enum|enum
@@ -43,13 +44,11 @@ name|STRUCT
 block|}
 empty_stmt|;
 comment|/**    * Returns the name of the data type that is inspected by this    * ObjectInspector. This is used to display the type information to the user.    *     * For primitive types, the type name is standardized. For other types, the    * type name can be something like "list<int>", "map<int,string>", java class    * names, or user-defined type names similar to typedef.    */
-specifier|public
 name|String
 name|getTypeName
 parameter_list|()
 function_decl|;
-comment|/**    * An ObjectInspector must inherit from one of the following interfaces if    * getCategory() returns: PRIMITIVE: PrimitiveObjectInspector LIST:    * ListObjectInspector MAP: MapObjectInspector STRUCT: StructObjectInspector    */
-specifier|public
+comment|/**    * An ObjectInspector must inherit from one of the following interfaces if    * getCategory() returns: PRIMITIVE: PrimitiveObjectInspector LIST:    * ListObjectInspector MAP: MapObjectInspector STRUCT: StructObjectInspector.    */
 name|Category
 name|getCategory
 parameter_list|()
