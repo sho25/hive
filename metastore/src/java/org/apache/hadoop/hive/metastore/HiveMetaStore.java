@@ -3309,6 +3309,9 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Check to see if the directory already exists before calling mkdirs()
+comment|// because if the file system is read-only, mkdirs will throw an
+comment|// exception even if the directory already exists.
 if|if
 condition|(
 operator|!
