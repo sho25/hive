@@ -1062,7 +1062,7 @@ operator|.
 name|getTable
 argument_list|()
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 expr_stmt|;
 block|}

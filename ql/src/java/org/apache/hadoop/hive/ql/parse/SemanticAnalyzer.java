@@ -5742,6 +5742,19 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+name|Class
+argument_list|<
+name|?
+argument_list|>
+name|outputFormatClass
+init|=
+name|ts
+operator|.
+name|tableHandle
+operator|.
+name|getOutputFormatClass
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -5751,12 +5764,7 @@ name|class
 operator|.
 name|isAssignableFrom
 argument_list|(
-name|ts
-operator|.
-name|tableHandle
-operator|.
-name|getOutputFormatClass
-argument_list|()
+name|outputFormatClass
 argument_list|)
 condition|)
 block|{
@@ -5771,6 +5779,13 @@ operator|.
 name|getMsg
 argument_list|(
 name|ast
+argument_list|,
+literal|"The class is "
+operator|+
+name|outputFormatClass
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 argument_list|)
 throw|;
@@ -6050,7 +6065,7 @@ literal|"VIEW"
 argument_list|,
 name|tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|,
 name|tab
@@ -18324,9 +18339,6 @@ name|parts
 init|=
 name|dest_tab
 operator|.
-name|getTTable
-argument_list|()
-operator|.
 name|getPartitionKeys
 argument_list|()
 decl_stmt|;
@@ -18398,7 +18410,7 @@ argument_list|)
 argument_list|,
 name|dest_tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -18469,7 +18481,7 @@ name|getMsg
 argument_list|(
 name|dest_tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|)
 argument_list|)
@@ -18544,7 +18556,7 @@ argument_list|)
 argument_list|,
 name|dest_tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -18610,7 +18622,7 @@ name|getMsg
 argument_list|(
 name|dest_tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 operator|+
 literal|"@"
@@ -30376,7 +30388,7 @@ literal|" "
 operator|+
 name|tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|)
 throw|;
@@ -30403,7 +30415,7 @@ literal|" "
 operator|+
 name|tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|)
 throw|;
@@ -30769,7 +30781,7 @@ name|tabName
 init|=
 name|tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 decl_stmt|;
 comment|// has the user explicitly asked not to sample this table

@@ -189,9 +189,6 @@ block|{
 return|return
 name|p
 operator|.
-name|getTPartition
-argument_list|()
-operator|.
 name|getParameters
 argument_list|()
 return|;
@@ -200,9 +197,6 @@ else|else
 block|{
 return|return
 name|t
-operator|.
-name|getTTable
-argument_list|()
 operator|.
 name|getParameters
 argument_list|()
@@ -290,7 +284,7 @@ operator|.
 name|getTable
 argument_list|()
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 operator|+
 literal|"@"
@@ -313,7 +307,7 @@ literal|"@"
 operator|+
 name|t
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 return|;
 block|}

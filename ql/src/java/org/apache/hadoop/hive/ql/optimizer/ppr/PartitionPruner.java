@@ -998,7 +998,7 @@ literal|"tabname = "
 operator|+
 name|tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1016,7 +1016,7 @@ name|key
 init|=
 name|tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 operator|+
 literal|";"
@@ -1151,7 +1151,7 @@ argument_list|()
 argument_list|,
 name|tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|,
 operator|(
@@ -1374,7 +1374,7 @@ literal|"\" Table \""
 operator|+
 name|tab
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 operator|+
 literal|"\""

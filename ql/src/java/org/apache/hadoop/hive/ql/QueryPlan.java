@@ -497,6 +497,7 @@ name|ReadEntity
 argument_list|>
 name|inputs
 decl_stmt|;
+comment|/**    * Note: outputs are not all determined at compile time.    * Some of the tasks can change the outputs at run time, because only at run    * time, we know what are the changes.  These tasks should keep a reference     * to the outputs here.     */
 specifier|private
 name|HashSet
 argument_list|<

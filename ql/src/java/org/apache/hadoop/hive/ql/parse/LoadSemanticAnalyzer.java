@@ -1212,9 +1212,6 @@ name|ts
 operator|.
 name|tableHandle
 operator|.
-name|getTTable
-argument_list|()
-operator|.
 name|getPartitionKeys
 argument_list|()
 decl_stmt|;

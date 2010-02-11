@@ -343,7 +343,7 @@ literal|"@"
 operator|+
 name|t
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 return|;
 case|case
@@ -359,7 +359,7 @@ literal|"@"
 operator|+
 name|t
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 operator|+
 literal|"@"

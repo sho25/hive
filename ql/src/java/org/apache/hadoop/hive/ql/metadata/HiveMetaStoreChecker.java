@@ -1036,7 +1036,7 @@ name|add
 argument_list|(
 name|table
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1128,7 +1128,7 @@ operator|.
 name|getTable
 argument_list|()
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1327,7 +1327,7 @@ name|setTableName
 argument_list|(
 name|table
 operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
