@@ -4942,11 +4942,11 @@ literal|"append_partition_by_name: db="
 operator|+
 name|db_name
 operator|+
-literal|" tbl_name="
+literal|" tbl="
 operator|+
 name|tbl_name
 operator|+
-literal|" part_name="
+literal|" part="
 operator|+
 name|part_name
 argument_list|)
@@ -5017,7 +5017,7 @@ literal|" tbl="
 operator|+
 name|tbl_name
 operator|+
-literal|" part_name="
+literal|" part="
 operator|+
 name|part_name
 argument_list|)
@@ -5062,16 +5062,15 @@ argument_list|)
 throw|;
 block|}
 return|return
-name|getMS
-argument_list|()
-operator|.
-name|dropPartition
+name|drop_partition_common
 argument_list|(
 name|db_name
 argument_list|,
 name|tbl_name
 argument_list|,
 name|partVals
+argument_list|,
+name|deleteData
 argument_list|)
 return|;
 block|}
