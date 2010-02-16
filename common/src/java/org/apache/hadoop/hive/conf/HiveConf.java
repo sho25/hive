@@ -652,6 +652,13 @@ argument_list|,
 literal|25000
 argument_list|)
 block|,
+name|HIVEMAPJOINBUCKETCACHESIZE
+argument_list|(
+literal|"hive.mapjoin.bucket.cache.size"
+argument_list|,
+literal|100
+argument_list|)
+block|,
 name|HIVEMAPJOINROWSIZE
 argument_list|(
 literal|"hive.mapjoin.size.key"

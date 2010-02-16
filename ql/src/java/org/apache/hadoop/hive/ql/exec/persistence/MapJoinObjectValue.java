@@ -95,6 +95,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -235,10 +251,21 @@ specifier|transient
 name|Configuration
 name|conf
 decl_stmt|;
+specifier|protected
+name|int
+name|bucketSize
+decl_stmt|;
+comment|// bucket size for RowContainer
 specifier|public
 name|MapJoinObjectValue
 parameter_list|()
-block|{   }
+block|{
+name|bucketSize
+operator|=
+literal|100
+expr_stmt|;
+comment|// default bucket size
+block|}
 comment|/**    * @param metadataTag    * @param obj    */
 specifier|public
 name|MapJoinObjectValue
@@ -438,6 +465,8 @@ init|=
 operator|new
 name|RowContainer
 argument_list|(
+name|bucketSize
+argument_list|,
 name|ctx
 operator|.
 name|getConf
@@ -780,6 +809,21 @@ operator|.
 name|conf
 operator|=
 name|conf
+expr_stmt|;
+name|bucketSize
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEMAPJOINBUCKETCACHESIZE
+argument_list|)
 expr_stmt|;
 block|}
 block|}
