@@ -84,7 +84,7 @@ decl_stmt|;
 name|String
 name|pattern
 decl_stmt|;
-name|Path
+name|String
 name|resFile
 decl_stmt|;
 name|String
@@ -134,11 +134,16 @@ return|return
 name|schema
 return|;
 block|}
+comment|/**    * For serializatino use only.    */
+specifier|public
+name|ShowTableStatusDesc
+parameter_list|()
+block|{   }
 comment|/**    * @param pattern    *          names of tables to show    */
 specifier|public
 name|ShowTableStatusDesc
 parameter_list|(
-name|Path
+name|String
 name|resFile
 parameter_list|,
 name|String
@@ -171,7 +176,7 @@ comment|/**    * @param resFile    * @param dbName    *          data base name 
 specifier|public
 name|ShowTableStatusDesc
 parameter_list|(
-name|Path
+name|String
 name|resFile
 parameter_list|,
 name|String
@@ -249,7 +254,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the resFile    */
 specifier|public
-name|Path
+name|String
 name|getResFile
 parameter_list|()
 block|{
@@ -276,9 +281,6 @@ block|{
 return|return
 name|getResFile
 argument_list|()
-operator|.
-name|getName
-argument_list|()
 return|;
 block|}
 comment|/**    * @param resFile    *          the resFile to set    */
@@ -286,7 +288,7 @@ specifier|public
 name|void
 name|setResFile
 parameter_list|(
-name|Path
+name|String
 name|resFile
 parameter_list|)
 block|{

@@ -109,13 +109,18 @@ argument_list|>
 name|partSpecs
 decl_stmt|;
 specifier|private
-name|Path
+name|String
 name|resFile
 decl_stmt|;
 specifier|private
 name|boolean
 name|repairPartitions
 decl_stmt|;
+comment|/**    * For serialization use only.    */
+specifier|public
+name|MsckDesc
+parameter_list|()
+block|{   }
 comment|/**    * Description of a msck command.    *     * @param tableName    *          Table to check, can be null.    * @param partSpecs    *          Partition specification, can be null.    * @param resFile    *          Where to save the output of the command    * @param repairPartitions    *          remove stale / add new partitions found during the check    */
 specifier|public
 name|MsckDesc
@@ -220,6 +225,9 @@ operator|.
 name|resFile
 operator|=
 name|resFile
+operator|.
+name|toString
+argument_list|()
 expr_stmt|;
 name|this
 operator|.
@@ -298,7 +306,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return file to save command output to    */
 specifier|public
-name|Path
+name|String
 name|getResFile
 parameter_list|()
 block|{
@@ -311,7 +319,7 @@ specifier|public
 name|void
 name|setResFile
 parameter_list|(
-name|Path
+name|String
 name|resFile
 parameter_list|)
 block|{

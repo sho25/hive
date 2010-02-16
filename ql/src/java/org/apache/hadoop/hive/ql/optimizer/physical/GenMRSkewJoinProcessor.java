@@ -979,7 +979,7 @@ name|HIVESKEWJOINKEY
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,

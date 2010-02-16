@@ -56,6 +56,11 @@ specifier|private
 name|DropFunctionDesc
 name|dropFunctionDesc
 decl_stmt|;
+comment|/**    * For serialization only.    */
+specifier|public
+name|FunctionWork
+parameter_list|()
+block|{   }
 specifier|public
 name|FunctionWork
 parameter_list|(

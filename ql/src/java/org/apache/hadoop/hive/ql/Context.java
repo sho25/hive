@@ -810,7 +810,7 @@ throw|;
 block|}
 block|}
 comment|/**    * Create a map-reduce scratch directory on demand and return it.    */
-specifier|private
+specifier|public
 name|String
 name|getMRScratchDir
 parameter_list|()
@@ -885,7 +885,7 @@ throw|;
 block|}
 block|}
 comment|/**    * Create a local scratch directory on demand and return it.    */
-specifier|private
+specifier|public
 name|String
 name|getLocalScratchDir
 parameter_list|()

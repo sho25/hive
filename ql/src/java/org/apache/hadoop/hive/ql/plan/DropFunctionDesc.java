@@ -59,6 +59,11 @@ specifier|private
 name|String
 name|functionName
 decl_stmt|;
+comment|/**    * For serialization only.    */
+specifier|public
+name|DropFunctionDesc
+parameter_list|()
+block|{   }
 specifier|public
 name|DropFunctionDesc
 parameter_list|(

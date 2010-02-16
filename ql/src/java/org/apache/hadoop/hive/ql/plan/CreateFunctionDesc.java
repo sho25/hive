@@ -63,6 +63,11 @@ specifier|private
 name|String
 name|className
 decl_stmt|;
+comment|/**    * For serialization only.    */
+specifier|public
+name|CreateFunctionDesc
+parameter_list|()
+block|{   }
 specifier|public
 name|CreateFunctionDesc
 parameter_list|(

@@ -55,6 +55,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Iterator
 import|;
 end_import
@@ -208,7 +218,7 @@ comment|// we store big keys in one table into one dir, and same keys in other
 comment|// tables into corresponding different dirs (one dir per table).
 comment|// this map stores mapping from "big key dir" to its corresponding mapjoin
 comment|// task.
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,
@@ -221,10 +231,15 @@ argument_list|>
 argument_list|>
 name|dirToTaskMap
 decl_stmt|;
+comment|/**      * For serialization use only.      */
+specifier|public
+name|ConditionalResolverSkewJoinCtx
+parameter_list|()
+block|{     }
 specifier|public
 name|ConditionalResolverSkewJoinCtx
 parameter_list|(
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,
@@ -249,7 +264,7 @@ name|dirToTaskMap
 expr_stmt|;
 block|}
 specifier|public
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,
@@ -271,7 +286,7 @@ specifier|public
 name|void
 name|setDirToTaskMap
 parameter_list|(
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,

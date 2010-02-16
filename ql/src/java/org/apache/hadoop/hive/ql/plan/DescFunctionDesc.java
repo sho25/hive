@@ -74,7 +74,7 @@ decl_stmt|;
 name|String
 name|name
 decl_stmt|;
-name|Path
+name|String
 name|resFile
 decl_stmt|;
 name|boolean
@@ -157,6 +157,9 @@ operator|.
 name|resFile
 operator|=
 name|resFile
+operator|.
+name|toString
+argument_list|()
 expr_stmt|;
 name|name
 operator|=
@@ -188,6 +191,9 @@ operator|.
 name|resFile
 operator|=
 name|resFile
+operator|.
+name|toString
+argument_list|()
 expr_stmt|;
 name|this
 operator|.
@@ -230,15 +236,6 @@ name|name
 expr_stmt|;
 block|}
 comment|/**    * @return the resFile    */
-specifier|public
-name|Path
-name|getResFile
-parameter_list|()
-block|{
-return|return
-name|resFile
-return|;
-block|}
 annotation|@
 name|Explain
 argument_list|(
@@ -252,15 +249,11 @@ literal|false
 argument_list|)
 specifier|public
 name|String
-name|getResFileString
+name|getResFile
 parameter_list|()
 block|{
 return|return
-name|getResFile
-argument_list|()
-operator|.
-name|getName
-argument_list|()
+name|resFile
 return|;
 block|}
 comment|/**    * @param resFile    *          the resFile to set    */
@@ -268,7 +261,7 @@ specifier|public
 name|void
 name|setResFile
 parameter_list|(
-name|Path
+name|String
 name|resFile
 parameter_list|)
 block|{

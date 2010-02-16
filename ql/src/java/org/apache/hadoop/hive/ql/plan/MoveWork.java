@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Set
 import|;
 end_import
@@ -115,7 +125,7 @@ name|checkFileFormat
 decl_stmt|;
 comment|/**    * ReadEntitites that are passed to the hooks.    */
 specifier|protected
-name|Set
+name|HashSet
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -123,7 +133,7 @@ name|inputs
 decl_stmt|;
 comment|/**    * List of WriteEntities that are passed to the hooks.    */
 specifier|protected
-name|Set
+name|HashSet
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -136,13 +146,13 @@ block|{   }
 specifier|public
 name|MoveWork
 parameter_list|(
-name|Set
+name|HashSet
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|inputs
 parameter_list|,
-name|Set
+name|HashSet
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -165,13 +175,13 @@ block|}
 specifier|public
 name|MoveWork
 parameter_list|(
-name|Set
+name|HashSet
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|inputs
 parameter_list|,
-name|Set
+name|HashSet
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -304,7 +314,7 @@ name|checkFileFormat
 expr_stmt|;
 block|}
 specifier|public
-name|Set
+name|HashSet
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -316,7 +326,7 @@ name|inputs
 return|;
 block|}
 specifier|public
-name|Set
+name|HashSet
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -331,7 +341,7 @@ specifier|public
 name|void
 name|setInputs
 parameter_list|(
-name|Set
+name|HashSet
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -349,7 +359,7 @@ specifier|public
 name|void
 name|setOutputs
 parameter_list|(
-name|Set
+name|HashSet
 argument_list|<
 name|WriteEntity
 argument_list|>

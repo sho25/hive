@@ -23,6 +23,36 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Map
@@ -37,7 +67,19 @@ begin_class
 specifier|public
 class|class
 name|AddPartitionDesc
+extends|extends
+name|DDLDesc
+implements|implements
+name|Serializable
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
 name|String
 name|tableName
 decl_stmt|;
@@ -50,7 +92,7 @@ decl_stmt|;
 name|boolean
 name|ifNotExists
 decl_stmt|;
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -58,6 +100,11 @@ name|String
 argument_list|>
 name|partSpec
 decl_stmt|;
+comment|/**    * For serialization only.    */
+specifier|public
+name|AddPartitionDesc
+parameter_list|()
+block|{   }
 comment|/**    * @param dbName    *          database to add to.    * @param tableName    *          table to add to.    * @param partSpec    *          partition specification.    * @param location    *          partition location, relative to table location.    * @param ifNotExists     *          if true, the partition is only added if it doesn't exist    */
 specifier|public
 name|AddPartitionDesc
@@ -102,7 +149,16 @@ name|this
 operator|.
 name|partSpec
 operator|=
+operator|new
+name|LinkedHashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|(
 name|partSpec
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -197,7 +253,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return partition specification.    */
 specifier|public
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -215,7 +271,7 @@ specifier|public
 name|void
 name|setPartSpec
 parameter_list|(
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

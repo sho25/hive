@@ -614,6 +614,7 @@ specifier|private
 name|URI
 name|uri
 decl_stmt|;
+comment|/**    * Used only for serialization.    */
 specifier|public
 name|Table
 parameter_list|()
