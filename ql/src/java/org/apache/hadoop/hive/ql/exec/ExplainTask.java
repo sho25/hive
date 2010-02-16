@@ -606,6 +606,13 @@ name|getValue
 argument_list|()
 operator|instanceof
 name|List
+operator|||
+name|ent
+operator|.
+name|getValue
+argument_list|()
+operator|instanceof
+name|Map
 condition|)
 block|{
 name|out

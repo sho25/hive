@@ -951,8 +951,17 @@ literal|"hive.optimize.groupby"
 argument_list|,
 literal|true
 argument_list|)
-block|;
+block|,
 comment|// optimize group by
+name|HIVEOPTBUCKETMAPJOIN
+argument_list|(
+literal|"hive.optimize.bucketmapjoin"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// optimize bucket map join
+block|;
 specifier|public
 specifier|final
 name|String
