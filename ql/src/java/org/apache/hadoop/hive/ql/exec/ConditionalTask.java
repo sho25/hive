@@ -393,6 +393,14 @@ operator|+
 literal|", job is filtered out (removed at runtime)."
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|tsk
+operator|.
+name|isMapRedTask
+argument_list|()
+condition|)
+block|{
 name|driverContext
 operator|.
 name|incCurJobNo
@@ -400,6 +408,7 @@ argument_list|(
 literal|1
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|tsk
