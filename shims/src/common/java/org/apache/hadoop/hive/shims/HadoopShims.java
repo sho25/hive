@@ -331,6 +331,20 @@ name|String
 name|getInputFormatClassName
 parameter_list|()
 function_decl|;
+comment|/**    * Wrapper for Configuration.setFloat, which was not introduced    * until 0.20.    */
+name|void
+name|setFloatConf
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|String
+name|varName
+parameter_list|,
+name|float
+name|val
+parameter_list|)
+function_decl|;
 comment|/**    * getTaskJobIDs returns an array of String with two elements. The first    * element is a string representing the task id and the second is a string    * representing the job id. This is necessary as TaskID and TaskAttemptID     * are not supported in Haddop 0.17    */
 name|String
 index|[]
