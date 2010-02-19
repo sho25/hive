@@ -374,7 +374,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An util class for various Hive file format tasks.  * registerOutputFormatSubstitute(Class, Class) getOutputFormatSubstitute(Class)  * are added for backward compatibility. They return the newly added  * HiveOutputFormat for the older ones.  *   */
+comment|/**  * An util class for various Hive file format tasks.  * registerOutputFormatSubstitute(Class, Class) getOutputFormatSubstitute(Class)  * are added for backward compatibility. They return the newly added  * HiveOutputFormat for the older ones.  *  */
 end_comment
 
 begin_class
@@ -458,7 +458,7 @@ argument_list|>
 argument_list|>
 name|outputFormatSubstituteMap
 decl_stmt|;
-comment|/**    * register a substitute.    *     * @param origin    *          the class that need to be substituted    * @param substitute    */
+comment|/**    * register a substitute.    *    * @param origin    *          the class that need to be substituted    * @param substitute    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -564,7 +564,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * get the final output path of a given FileOutputFormat.    *     * @param parent    *          parent dir of the expected final output path    * @param jc    *          job configuration    */
+comment|/**    * get the final output path of a given FileOutputFormat.    *    * @param parent    *          parent dir of the expected final output path    * @param jc    *          job configuration    */
 specifier|public
 specifier|static
 name|Path
@@ -572,6 +572,9 @@ name|getOutputFormatFinalPath
 parameter_list|(
 name|Path
 name|parent
+parameter_list|,
+name|String
+name|taskId
 parameter_list|,
 name|JobConf
 name|jc
@@ -606,12 +609,7 @@ name|Path
 argument_list|(
 name|parent
 argument_list|,
-name|Utilities
-operator|.
-name|getTaskId
-argument_list|(
-name|jc
-argument_list|)
+name|taskId
 operator|+
 name|Utilities
 operator|.
@@ -734,7 +732,7 @@ name|InputFormatChecker
 argument_list|>
 name|inputFormatCheckerInstanceCache
 decl_stmt|;
-comment|/**    * register an InputFormatChecker for a given InputFormat.    *     * @param format    *          the class that need to be substituted    * @param checker    */
+comment|/**    * register an InputFormatChecker for a given InputFormat.    *    * @param format    *          the class that need to be substituted    * @param checker    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

@@ -944,6 +944,20 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVEENFORCEBUCKETING
+argument_list|(
+literal|"hive.enforce.bucketing"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVEPARTITIONER
+argument_list|(
+literal|"hive.mapred.partitioner"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.io.DefaultHivePartitioner"
+argument_list|)
+block|,
 comment|// Optimizer
 name|HIVEOPTCP
 argument_list|(

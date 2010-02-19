@@ -763,6 +763,20 @@ name|NullAppender
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|Partitioner
+import|;
+end_import
+
 begin_comment
 comment|/**  * ExecDriver.  *  */
 end_comment
@@ -1260,7 +1274,7 @@ argument_list|>
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/**    * In Hive, when the user control-c's the command line, any running jobs    * spawned from that command line are best-effort killed.    *     * This static constructor registers a shutdown thread to iterate over all the    * running job kill URLs and do a get on them.    *     */
+comment|/**    * In Hive, when the user control-c's the command line, any running jobs    * spawned from that command line are best-effort killed.    *    * This static constructor registers a shutdown thread to iterate over all the    * running job kill URLs and do a get on them.    *    */
 static|static
 block|{
 if|if
@@ -1649,7 +1663,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Fatal errors are those errors that cannot be recovered by retries. These    * are application dependent. Examples of fatal errors include: - the small    * table in the map-side joins is too large to be feasible to be handled by    * one mapper. The job should fail and the user should be warned to use    * regular joins rather than map-side joins. Fatal errors are indicated by    * counters that are set at execution time. If the counter is non-zero, a    * fatal error occurred. The value of the counter indicates the error type.    *     * @return true if fatal errors happened during job execution, false    *         otherwise.    */
+comment|/**    * Fatal errors are those errors that cannot be recovered by retries. These    * are application dependent. Examples of fatal errors include: - the small    * table in the map-side joins is too large to be feasible to be handled by    * one mapper. The job should fail and the user should be warned to use    * regular joins rather than map-side joins. Fatal errors are indicated by    * counters that are set at execution time. If the counter is non-zero, a    * fatal error occurred. The value of the counter indicates the error type.    *    * @return true if fatal errors happened during job execution, false    *         otherwise.    */
 specifier|protected
 name|boolean
 name|checkFatalErrors
@@ -2184,7 +2198,7 @@ expr_stmt|;
 block|}
 comment|// LOG.info(queryPlan);
 block|}
-comment|/**    * Estimate the number of reducers needed for this job, based on job input,    * and configuration parameters.    *     * @return the number of reducers.    */
+comment|/**    * Estimate the number of reducers needed for this job, based on job input,    * and configuration parameters.    *    * @return the number of reducers.    */
 specifier|public
 name|int
 name|estimateNumberOfReducers
@@ -2522,7 +2536,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Calculate the total size of input files.    *     * @param job    *          the hadoop job conf.    * @return the total size in bytes.    * @throws IOException    */
+comment|/**    * Calculate the total size of input files.    *    * @param job    *          the hadoop job conf.    * @return the total size in bytes.    * @throws IOException    */
 specifier|public
 name|long
 name|getTotalInputFileSize
@@ -3083,6 +3097,59 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+try|try
+block|{
+name|job
+operator|.
+name|setPartitionerClass
+argument_list|(
+call|(
+name|Class
+argument_list|<
+name|?
+extends|extends
+name|Partitioner
+argument_list|>
+call|)
+argument_list|(
+name|Class
+operator|.
+name|forName
+argument_list|(
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|job
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEPARTITIONER
+argument_list|)
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ClassNotFoundException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 name|work
@@ -4095,7 +4162,7 @@ name|returnVal
 operator|)
 return|;
 block|}
-comment|/**    * This msg pattern is used to track when a job is started.    *     * @param jobId    * @return    */
+comment|/**    * This msg pattern is used to track when a job is started.    *    * @param jobId    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -4111,7 +4178,7 @@ operator|+
 name|jobId
 return|;
 block|}
-comment|/**    * this msg pattern is used to track when a job is successfully done.    *     * @param jobId    * @return    */
+comment|/**    * this msg pattern is used to track when a job is successfully done.    *    * @param jobId    * @return    */
 specifier|public
 specifier|static
 name|String
