@@ -135,6 +135,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|MetaStoreUtils
@@ -888,6 +904,22 @@ name|e
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVECHECKFILEFORMAT
+argument_list|)
+condition|)
+block|{
 comment|// Check if the file format of the file matches that of the table.
 name|boolean
 name|flag
@@ -924,6 +956,7 @@ argument_list|(
 literal|"Wrong file format. Please check the file's format."
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 if|if

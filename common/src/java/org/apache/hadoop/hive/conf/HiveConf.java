@@ -733,6 +733,13 @@ argument_list|,
 literal|"TextFile"
 argument_list|)
 block|,
+name|HIVECHECKFILEFORMAT
+argument_list|(
+literal|"hive.fileformat.check"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//Location of Hive run time structured log file
 name|HIVEHISTORYFILELOC
 argument_list|(
