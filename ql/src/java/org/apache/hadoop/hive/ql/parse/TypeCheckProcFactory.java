@@ -601,7 +601,7 @@ parameter_list|()
 block|{
 comment|// prevent instantiation
 block|}
-comment|/**    * Function to do groupby subexpression elimination. This is called by all the    * processors initially. As an example, consider the query select a+b,    * count(1) from T group by a+b; Then a+b is already precomputed in the group    * by operators key, so we substitute a+b in the select list with the internal    * column name of the a+b expression that appears in the in input row    * resolver.    *     * @param nd    *          The node that is being inspected.    * @param procCtx    *          The processor context.    *     * @return exprNodeColumnDesc.    */
+comment|/**    * Function to do groupby subexpression elimination. This is called by all the    * processors initially. As an example, consider the query select a+b,    * count(1) from T group by a+b; Then a+b is already precomputed in the group    * by operators key, so we substitute a+b in the select list with the internal    * column name of the a+b expression that appears in the in input row    * resolver.    *    * @param nd    *          The node that is being inspected.    * @param procCtx    *          The processor context.    *    * @return exprNodeColumnDesc.    */
 specifier|public
 specifier|static
 name|ExprNodeDesc
@@ -818,7 +818,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get NullExprProcessor.    *     * @return NullExprProcessor.    */
+comment|/**    * Factory method to get NullExprProcessor.    *    * @return NullExprProcessor.    */
 specifier|public
 specifier|static
 name|NullExprProcessor
@@ -1003,7 +1003,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get NumExprProcessor.    *     * @return NumExprProcessor.    */
+comment|/**    * Factory method to get NumExprProcessor.    *    * @return NumExprProcessor.    */
 specifier|public
 specifier|static
 name|NumExprProcessor
@@ -1199,7 +1199,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get StrExprProcessor.    *     * @return StrExprProcessor.    */
+comment|/**    * Factory method to get StrExprProcessor.    *    * @return StrExprProcessor.    */
 specifier|public
 specifier|static
 name|StrExprProcessor
@@ -1356,7 +1356,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get BoolExprProcessor.    *     * @return BoolExprProcessor.    */
+comment|/**    * Factory method to get BoolExprProcessor.    *    * @return BoolExprProcessor.    */
 specifier|public
 specifier|static
 name|BoolExprProcessor
@@ -1487,6 +1487,8 @@ name|getMsg
 argument_list|(
 name|expr
 argument_list|)
+argument_list|,
+name|expr
 argument_list|)
 expr_stmt|;
 return|return
@@ -1568,6 +1570,8 @@ name|getMsg
 argument_list|(
 name|expr
 argument_list|)
+argument_list|,
+name|expr
 argument_list|)
 expr_stmt|;
 return|return
@@ -1613,6 +1617,8 @@ name|getMsg
 argument_list|(
 name|expr
 argument_list|)
+argument_list|,
+name|expr
 argument_list|)
 expr_stmt|;
 return|return
@@ -1638,6 +1644,8 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|)
+argument_list|,
+name|expr
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1696,7 +1704,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Factory method to get ColumnExprProcessor.    *     * @return ColumnExprProcessor.    */
+comment|/**    * Factory method to get ColumnExprProcessor.    *    * @return ColumnExprProcessor.    */
 specifier|public
 specifier|static
 name|ColumnExprProcessor
@@ -2208,7 +2216,7 @@ name|funcText
 argument_list|)
 return|;
 block|}
-comment|/**      * Get the exprNodeDesc.      *       * @param name      * @param children      * @return The expression node descriptor      * @throws UDFArgumentException      */
+comment|/**      * Get the exprNodeDesc.      *      * @param name      * @param children      * @return The expression node descriptor      * @throws UDFArgumentException      */
 specifier|public
 specifier|static
 name|ExprNodeDesc
@@ -2270,7 +2278,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * This function create an ExprNodeDesc for a UDF function given the      * children (arguments). It will insert implicit type conversion functions      * if necessary.      *       * @throws UDFArgumentException      */
+comment|/**      * This function create an ExprNodeDesc for a UDF function given the      * children (arguments). It will insert implicit type conversion functions      * if necessary.      *      * @throws UDFArgumentException      */
 specifier|public
 specifier|static
 name|ExprNodeDesc
@@ -3260,6 +3268,73 @@ return|return
 name|desc
 return|;
 block|}
+comment|/**      * Returns true if des is a descendant of ans (ancestor)      */
+specifier|private
+name|boolean
+name|isDescendant
+parameter_list|(
+name|Node
+name|ans
+parameter_list|,
+name|Node
+name|des
+parameter_list|)
+block|{
+if|if
+condition|(
+name|ans
+operator|.
+name|getChildren
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+for|for
+control|(
+name|Node
+name|c
+range|:
+name|ans
+operator|.
+name|getChildren
+argument_list|()
+control|)
+block|{
+if|if
+condition|(
+name|c
+operator|==
+name|des
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+if|if
+condition|(
+name|isDescendant
+argument_list|(
+name|c
+argument_list|,
+name|des
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+block|}
+return|return
+literal|false
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -3293,7 +3368,6 @@ name|TypeCheckCtx
 operator|)
 name|procCtx
 decl_stmt|;
-comment|// If this is a GroupBy expression, clear error and continue
 name|ExprNodeDesc
 name|desc
 init|=
@@ -3313,13 +3387,45 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// Here we know nd represents a group by expression.
+comment|// During the DFS traversal of the AST, a descendant of nd likely set an
+comment|// error because a sub-tree of nd is unlikely to also be a group by
+comment|// expression. For example, in a query such as
+comment|// SELECT *concat(key)* FROM src GROUP BY concat(key), 'key' will be
+comment|// processed before 'concat(key)' and since 'key' is not a group by
+comment|// expression, an error will be set in ctx by ColumnExprProcessor.
+comment|// We can clear the global error when we see that it was set in a
+comment|// descendant node of a group by expression because
+comment|// processGByExpr() returns a ExprNodeDesc that effectively ignores
+comment|// its children. Although the error can be set multiple times by
+comment|// descendant nodes, DFS traversal ensures that the error only needs to
+comment|// be cleared once. Also, for a case like
+comment|// SELECT concat(value, concat(value))... the logic still works as the
+comment|// error is only set with the first 'value'; all node pocessors quit
+comment|// early if the global error is set.
+if|if
+condition|(
+name|isDescendant
+argument_list|(
+name|nd
+argument_list|,
+name|ctx
+operator|.
+name|getErrorSrcNode
+argument_list|()
+argument_list|)
+condition|)
+block|{
 name|ctx
 operator|.
 name|setError
 argument_list|(
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|desc
 return|;
@@ -3464,6 +3570,8 @@ argument_list|(
 literal|1
 argument_list|)
 argument_list|)
+argument_list|,
+name|expr
 argument_list|)
 expr_stmt|;
 return|return
@@ -3754,7 +3862,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Factory method to get DefaultExprProcessor.    *     * @return DefaultExprProcessor.    */
+comment|/**    * Factory method to get DefaultExprProcessor.    *    * @return DefaultExprProcessor.    */
 specifier|public
 specifier|static
 name|DefaultExprProcessor

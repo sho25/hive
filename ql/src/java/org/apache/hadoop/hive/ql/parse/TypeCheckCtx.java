@@ -63,7 +63,12 @@ specifier|private
 name|String
 name|error
 decl_stmt|;
-comment|/**    * Constructor.    *     * @param inputRR    *          The input row resolver of the previous operator.    */
+comment|/**    * The node that generated the potential typecheck error    */
+specifier|private
+name|ASTNode
+name|errorSrcNode
+decl_stmt|;
+comment|/**    * Constructor.    *    * @param inputRR    *          The input row resolver of the previous operator.    */
 specifier|public
 name|TypeCheckCtx
 parameter_list|(
@@ -133,13 +138,16 @@ return|return
 name|unparseTranslator
 return|;
 block|}
-comment|/**    * @param error    *          the error to set    */
+comment|/**    * @param error    *          the error to set    *    */
 specifier|public
 name|void
 name|setError
 parameter_list|(
 name|String
 name|error
+parameter_list|,
+name|ASTNode
+name|errorSrcNode
 parameter_list|)
 block|{
 name|this
@@ -147,6 +155,12 @@ operator|.
 name|error
 operator|=
 name|error
+expr_stmt|;
+name|this
+operator|.
+name|errorSrcNode
+operator|=
+name|errorSrcNode
 expr_stmt|;
 block|}
 comment|/**    * @return the error    */
@@ -157,6 +171,15 @@ parameter_list|()
 block|{
 return|return
 name|error
+return|;
+block|}
+specifier|public
+name|ASTNode
+name|getErrorSrcNode
+parameter_list|()
+block|{
+return|return
+name|errorSrcNode
 return|;
 block|}
 block|}
