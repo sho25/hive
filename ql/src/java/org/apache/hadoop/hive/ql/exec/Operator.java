@@ -787,6 +787,7 @@ name|String
 name|id
 decl_stmt|;
 comment|// object inspectors for input rows
+comment|// We will increase the size of the array on demand
 specifier|protected
 specifier|transient
 name|ObjectInspector
@@ -796,9 +797,7 @@ init|=
 operator|new
 name|ObjectInspector
 index|[
-name|Short
-operator|.
-name|MAX_VALUE
+literal|1
 index|]
 decl_stmt|;
 comment|// for output rows of this operator
@@ -1527,6 +1526,49 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Double the size of the array if needed
+if|if
+condition|(
+name|parentId
+operator|>=
+name|inputObjInspectors
+operator|.
+name|length
+condition|)
+block|{
+name|int
+name|newLength
+init|=
+name|inputObjInspectors
+operator|.
+name|length
+operator|*
+literal|2
+decl_stmt|;
+while|while
+condition|(
+name|parentId
+operator|>=
+name|newLength
+condition|)
+block|{
+name|newLength
+operator|*=
+literal|2
+expr_stmt|;
+block|}
+name|inputObjInspectors
+operator|=
+name|Arrays
+operator|.
+name|copyOf
+argument_list|(
+name|inputObjInspectors
+argument_list|,
+name|newLength
+argument_list|)
+expr_stmt|;
+block|}
 name|inputObjInspectors
 index|[
 name|parentId
