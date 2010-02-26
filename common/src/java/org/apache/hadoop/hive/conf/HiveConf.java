@@ -958,6 +958,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEENFORCESORTING
+argument_list|(
+literal|"hive.enforce.sorting"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEPARTITIONER
 argument_list|(
 literal|"hive.mapred.partitioner"
