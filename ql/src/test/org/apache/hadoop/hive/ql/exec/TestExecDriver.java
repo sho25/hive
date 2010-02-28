@@ -528,7 +528,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Mimics the actual query compiler in generating end to end plans and testing  * them out.  *   */
+comment|/**  * Mimics the actual query compiler in generating end to end plans and testing  * them out.  *  */
 end_comment
 
 begin_class
@@ -1517,6 +1517,23 @@ argument_list|,
 name|TextRecordReader
 operator|.
 name|class
+argument_list|,
+name|TextRecordReader
+operator|.
+name|class
+argument_list|,
+name|PlanUtils
+operator|.
+name|getDefaultTableDesc
+argument_list|(
+literal|""
+operator|+
+name|Utilities
+operator|.
+name|tabCode
+argument_list|,
+literal|"key"
+argument_list|)
 argument_list|)
 argument_list|,
 name|op3
@@ -2542,6 +2559,23 @@ argument_list|,
 name|TextRecordReader
 operator|.
 name|class
+argument_list|,
+name|TextRecordReader
+operator|.
+name|class
+argument_list|,
+name|PlanUtils
+operator|.
+name|getDefaultTableDesc
+argument_list|(
+literal|""
+operator|+
+name|Utilities
+operator|.
+name|tabCode
+argument_list|,
+literal|"key"
+argument_list|)
 argument_list|)
 argument_list|,
 name|op1
@@ -3132,6 +3166,23 @@ argument_list|,
 name|TextRecordReader
 operator|.
 name|class
+argument_list|,
+name|TextRecordReader
+operator|.
+name|class
+argument_list|,
+name|PlanUtils
+operator|.
+name|getDefaultTableDesc
+argument_list|(
+literal|""
+operator|+
+name|Utilities
+operator|.
+name|tabCode
+argument_list|,
+literal|"key"
+argument_list|)
 argument_list|)
 argument_list|,
 name|op1

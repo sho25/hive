@@ -1555,7 +1555,7 @@ name|scriptErrReader
 init|=
 name|conf
 operator|.
-name|getOutRecordReaderClass
+name|getErrRecordReaderClass
 argument_list|()
 operator|.
 name|newInstance
@@ -1571,7 +1571,7 @@ name|hconf
 argument_list|,
 name|conf
 operator|.
-name|getScriptOutputInfo
+name|getScriptErrInfo
 argument_list|()
 operator|.
 name|getProperties
@@ -2351,7 +2351,7 @@ name|close
 parameter_list|()
 block|{     }
 block|}
-comment|/**    * The processor for stderr stream.    *     * TODO: In the future when we move to hadoop 0.18 and above, we should borrow    * the logic from HadoopStreaming: PipeMapRed.java MRErrorThread to support    * counters and status updates.    */
+comment|/**    * The processor for stderr stream.    *    * TODO: In the future when we move to hadoop 0.18 and above, we should borrow    * the logic from HadoopStreaming: PipeMapRed.java MRErrorThread to support    * counters and status updates.    */
 class|class
 name|ErrorStreamProcessor
 implements|implements
