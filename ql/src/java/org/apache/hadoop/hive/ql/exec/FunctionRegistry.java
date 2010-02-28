@@ -259,6 +259,24 @@ name|ql
 operator|.
 name|udf
 operator|.
+name|UDAFPercentile
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
 name|UDFAbs
 import|;
 end_import
@@ -2596,7 +2614,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * FunctionRegistry.  *  */
+comment|/**  * FunctionRegistry.  */
 end_comment
 
 begin_class
@@ -3917,6 +3935,15 @@ argument_list|,
 operator|new
 name|GenericUDAFVarianceSample
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|registerUDAF
+argument_list|(
+literal|"percentile"
+argument_list|,
+name|UDAFPercentile
+operator|.
+name|class
 argument_list|)
 expr_stmt|;
 comment|// Generic UDFs
