@@ -216,6 +216,12 @@ name|reporter
 operator|=
 name|reporter
 expr_stmt|;
+name|this
+operator|.
+name|notificationInterval
+operator|=
+name|notificationInterval
+expr_stmt|;
 block|}
 specifier|public
 name|void
