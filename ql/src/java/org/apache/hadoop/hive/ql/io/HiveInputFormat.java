@@ -910,7 +910,7 @@ name|job
 expr_stmt|;
 block|}
 comment|/**    * A cache of InputFormat instances.    */
-specifier|private
+specifier|protected
 specifier|static
 name|Map
 argument_list|<
@@ -1186,7 +1186,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|protected
 name|Map
 argument_list|<
 name|String
