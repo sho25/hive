@@ -590,6 +590,20 @@ name|String
 argument_list|>
 name|idToTableNameMap
 decl_stmt|;
+specifier|public
+specifier|static
+name|int
+name|HIVE_COLUMN_ORDER_ASC
+init|=
+literal|1
+decl_stmt|;
+specifier|public
+specifier|static
+name|int
+name|HIVE_COLUMN_ORDER_DESC
+init|=
+literal|0
+decl_stmt|;
 comment|/**    * ReadEntitites that are passed to the hooks.    */
 specifier|protected
 name|HashSet
@@ -2128,7 +2142,7 @@ name|getText
 argument_list|()
 argument_list|)
 argument_list|,
-literal|1
+name|HIVE_COLUMN_ORDER_ASC
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2155,7 +2169,7 @@ name|getText
 argument_list|()
 argument_list|)
 argument_list|,
-literal|0
+name|HIVE_COLUMN_ORDER_DESC
 argument_list|)
 argument_list|)
 expr_stmt|;

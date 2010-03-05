@@ -1005,6 +1005,14 @@ literal|false
 argument_list|)
 block|,
 comment|// optimize bucket map join
+name|HIVEOPTSORTMERGEBUCKETMAPJOIN
+argument_list|(
+literal|"hive.optimize.bucketmapjoin.sortedmerge"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// try to use sorted merge bucket map join
 block|;
 specifier|public
 specifier|final

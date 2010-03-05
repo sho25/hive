@@ -1454,6 +1454,15 @@ argument_list|(
 name|alias
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|tso
+operator|==
+literal|null
+condition|)
+return|return
+literal|null
+return|;
 name|Table
 name|tbl
 init|=
