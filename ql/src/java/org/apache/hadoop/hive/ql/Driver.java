@@ -2151,12 +2151,14 @@ parameter_list|)
 block|{
 name|errorMessage
 operator|=
-literal|"FAILED: Unknown exception: "
+literal|"FAILED: Hive Internal Error: "
 operator|+
-name|e
+name|Utilities
 operator|.
-name|getMessage
-argument_list|()
+name|getNameMessage
+argument_list|(
+name|e
+argument_list|)
 expr_stmt|;
 name|SQLState
 operator|=
@@ -2175,7 +2177,7 @@ operator|.
 name|printError
 argument_list|(
 name|errorMessage
-argument_list|,
+operator|+
 literal|"\n"
 operator|+
 name|org
@@ -3338,12 +3340,14 @@ block|}
 comment|// TODO: do better with handling types of Exception here
 name|errorMessage
 operator|=
-literal|"FAILED: Unknown exception : "
+literal|"FAILED: Hive Internal Error: "
 operator|+
-name|e
+name|Utilities
 operator|.
-name|getMessage
-argument_list|()
+name|getNameMessage
+argument_list|(
+name|e
+argument_list|)
 expr_stmt|;
 name|SQLState
 operator|=
@@ -3354,7 +3358,7 @@ operator|.
 name|printError
 argument_list|(
 name|errorMessage
-argument_list|,
+operator|+
 literal|"\n"
 operator|+
 name|org
@@ -4084,13 +4088,15 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"FAILED: Unknown exception : "
+literal|"FAILED: Hive Internal Error: "
 operator|+
-name|e
+name|Utilities
 operator|.
-name|getMessage
-argument_list|()
-argument_list|,
+name|getNameMessage
+argument_list|(
+name|e
+argument_list|)
+operator|+
 literal|"\n"
 operator|+
 name|org

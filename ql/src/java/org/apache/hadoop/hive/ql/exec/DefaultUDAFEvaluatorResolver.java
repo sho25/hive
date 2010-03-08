@@ -47,6 +47,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -128,7 +138,7 @@ argument_list|>
 name|argClasses
 parameter_list|)
 throws|throws
-name|AmbiguousMethodException
+name|UDFArgumentException
 block|{
 name|ArrayList
 argument_list|<
@@ -295,6 +305,8 @@ name|FunctionRegistry
 operator|.
 name|getMethodInternal
 argument_list|(
+name|udafClass
+argument_list|,
 name|mList
 argument_list|,
 literal|false
@@ -302,23 +314,6 @@ argument_list|,
 name|argClasses
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|m
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|AmbiguousMethodException
-argument_list|(
-name|udafClass
-argument_list|,
-name|argClasses
-argument_list|)
-throw|;
-block|}
 comment|// Find the class that has this method.
 comment|// Note that Method.getDeclaringClass() may not work here because the method
 comment|// can be inherited from a base class.
@@ -379,7 +374,9 @@ name|AmbiguousMethodException
 argument_list|(
 name|udafClass
 argument_list|,
-name|argClasses
+literal|null
+argument_list|,
+literal|null
 argument_list|)
 throw|;
 block|}

@@ -4961,6 +4961,34 @@ literal|"-I"
 block|,
 literal|"transient_lastDdlTime"
 block|,
+literal|"-I"
+block|,
+literal|"java.lang.RuntimeException"
+block|,
+literal|"-I"
+block|,
+literal|"at org"
+block|,
+literal|"-I"
+block|,
+literal|"at sun"
+block|,
+literal|"-I"
+block|,
+literal|"at java"
+block|,
+literal|"-I"
+block|,
+literal|"at junit"
+block|,
+literal|"-I"
+block|,
+literal|"Caused by:"
+block|,
+literal|"-I"
+block|,
+literal|"[.][.][.] [0-9]* more"
+block|,
 operator|(
 operator|new
 name|File
@@ -5397,11 +5425,7 @@ operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|flush
+name|outputTestFailureHelpMessage
 argument_list|()
 expr_stmt|;
 block|}
@@ -5726,6 +5750,9 @@ operator|+
 name|ecode
 argument_list|)
 expr_stmt|;
+name|outputTestFailureHelpMessage
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 block|}
@@ -5834,6 +5861,9 @@ operator|+
 name|ecode
 argument_list|)
 expr_stmt|;
+name|outputTestFailureHelpMessage
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 block|}
@@ -5859,6 +5889,31 @@ operator|!
 name|failed
 operator|)
 return|;
+block|}
+specifier|public
+specifier|static
+name|void
+name|outputTestFailureHelpMessage
+parameter_list|()
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"See build/ql/tmp/hive.log, "
+operator|+
+literal|"or try \"ant test ... -Dtest.silent=false\" to get more logs."
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|err
+operator|.
+name|flush
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 end_class

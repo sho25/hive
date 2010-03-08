@@ -72,7 +72,7 @@ argument_list|>
 name|argClasses
 parameter_list|)
 throws|throws
-name|AmbiguousMethodException
+name|UDFArgumentException
 function_decl|;
 block|}
 end_interface

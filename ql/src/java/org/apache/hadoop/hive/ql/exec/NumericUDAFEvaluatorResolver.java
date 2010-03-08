@@ -124,7 +124,7 @@ argument_list|>
 name|argTypeInfos
 parameter_list|)
 throws|throws
-name|AmbiguousMethodException
+name|UDFArgumentException
 block|{
 comment|// Go through the argClasses and for any string, void or date time, start
 comment|// looking for doubles

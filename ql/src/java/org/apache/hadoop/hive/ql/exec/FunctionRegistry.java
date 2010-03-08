@@ -5295,7 +5295,7 @@ name|parameters
 argument_list|)
 return|;
 block|}
-comment|/**    * This method is shared between UDFRegistry and UDAFRegistry. methodName will    * be "evaluate" for UDFRegistry, and "aggregate"/"evaluate"/"evaluatePartial"    * for UDAFRegistry.    */
+comment|/**    * This method is shared between UDFRegistry and UDAFRegistry. methodName will    * be "evaluate" for UDFRegistry, and "aggregate"/"evaluate"/"evaluatePartial"    * for UDAFRegistry.    * @throws UDFArgumentException     */
 specifier|public
 specifier|static
 parameter_list|<
@@ -5324,6 +5324,8 @@ name|TypeInfo
 argument_list|>
 name|argumentClasses
 parameter_list|)
+throws|throws
+name|UDFArgumentException
 block|{
 name|List
 argument_list|<
@@ -5379,6 +5381,8 @@ block|}
 return|return
 name|getMethodInternal
 argument_list|(
+name|udfClass
+argument_list|,
 name|mlist
 argument_list|,
 name|exact
@@ -6208,6 +6212,12 @@ specifier|static
 name|Method
 name|getMethodInternal
 parameter_list|(
+name|Class
+argument_list|<
+name|?
+argument_list|>
+name|udfClass
+parameter_list|,
 name|List
 argument_list|<
 name|Method
@@ -6223,18 +6233,30 @@ name|TypeInfo
 argument_list|>
 name|argumentsPassed
 parameter_list|)
+throws|throws
+name|UDFArgumentException
 block|{
+comment|// result
+name|List
+argument_list|<
+name|Method
+argument_list|>
+name|udfMethods
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|Method
+argument_list|>
+argument_list|()
+decl_stmt|;
+comment|// The cost of the result
 name|int
 name|leastConversionCost
 init|=
 name|Integer
 operator|.
 name|MAX_VALUE
-decl_stmt|;
-name|Method
-name|udfMethod
-init|=
-literal|null
 decl_stmt|;
 for|for
 control|(
@@ -6395,9 +6417,17 @@ operator|<
 name|leastConversionCost
 condition|)
 block|{
-name|udfMethod
-operator|=
+name|udfMethods
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|udfMethods
+operator|.
+name|add
+argument_list|(
 name|m
+argument_list|)
 expr_stmt|;
 name|leastConversionCost
 operator|=
@@ -6424,26 +6454,12 @@ condition|)
 block|{
 comment|// Ambiguous call: two methods with the same number of implicit
 comment|// conversions
-name|LOG
+name|udfMethods
 operator|.
-name|info
+name|add
 argument_list|(
-literal|"Ambigious methods: passed = "
-operator|+
-name|argumentsPassed
-operator|+
-literal|" method 1 = "
-operator|+
-name|udfMethod
-operator|+
-literal|" method 2 = "
-operator|+
 name|m
 argument_list|)
-expr_stmt|;
-name|udfMethod
-operator|=
-literal|null
 expr_stmt|;
 comment|// Don't break! We might find a better match later.
 block|}
@@ -6453,8 +6469,59 @@ comment|// do nothing if implicitConversions> leastImplicitConversions
 block|}
 block|}
 block|}
+if|if
+condition|(
+name|udfMethods
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
+comment|// No matching methods found
+throw|throw
+operator|new
+name|NoMatchingMethodException
+argument_list|(
+name|udfClass
+argument_list|,
+name|argumentsPassed
+argument_list|,
+name|mlist
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+name|udfMethods
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|1
+condition|)
+block|{
+comment|// Ambiguous method found
+throw|throw
+operator|new
+name|AmbiguousMethodException
+argument_list|(
+name|udfClass
+argument_list|,
+name|argumentsPassed
+argument_list|,
+name|mlist
+argument_list|)
+throw|;
+block|}
 return|return
-name|udfMethod
+name|udfMethods
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
 return|;
 block|}
 comment|/**    * A shortcut to get the "index" GenericUDF. This is used for getting elements    * out of array and getting values out of map.    */

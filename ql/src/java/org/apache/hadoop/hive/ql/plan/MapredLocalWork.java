@@ -85,26 +85,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
 operator|.
 name|Entry
@@ -125,7 +105,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Operator
+name|BucketMatcher
 import|;
 end_import
 
@@ -143,7 +123,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|BucketMatcher
+name|Operator
 import|;
 end_import
 
