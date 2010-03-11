@@ -255,6 +255,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|SerDeUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|io
 operator|.
 name|ByteWritable
@@ -412,6 +428,20 @@ operator|.
 name|util
 operator|.
 name|ReflectionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|StringUtils
 import|;
 end_import
 
@@ -583,6 +613,10 @@ name|TableDesc
 index|[]
 name|valueTableDesc
 decl_stmt|;
+name|ObjectInspector
+index|[]
+name|rowObjectInspector
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -593,10 +627,8 @@ name|JobConf
 name|job
 parameter_list|)
 block|{
-name|ObjectInspector
-index|[]
 name|rowObjectInspector
-init|=
+operator|=
 operator|new
 name|ObjectInspector
 index|[
@@ -604,7 +636,7 @@ name|Byte
 operator|.
 name|MAX_VALUE
 index|]
-decl_stmt|;
+expr_stmt|;
 name|ObjectInspector
 index|[]
 name|valueObjectInspector
@@ -1259,7 +1291,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to deserialize reduce input key from "
+literal|"Hive Runtime Error: Unable to deserialize reduce input key from "
 operator|+
 name|Utilities
 operator|.
@@ -1381,7 +1413,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to deserialize reduce input value (tag="
+literal|"Hive Runtime Error: Unable to deserialize reduce input value (tag="
 operator|+
 name|tag
 operator|.
@@ -1508,6 +1540,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+try|try
+block|{
 name|reducer
 operator|.
 name|process
@@ -1520,6 +1554,77 @@ name|get
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|String
+name|rowString
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|rowString
+operator|=
+name|SerDeUtils
+operator|.
+name|getJSONString
+argument_list|(
+name|row
+argument_list|,
+name|rowObjectInspector
+index|[
+name|tag
+operator|.
+name|get
+argument_list|()
+index|]
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e2
+parameter_list|)
+block|{
+name|rowString
+operator|=
+literal|"[Error getting row data with exception "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e2
+argument_list|)
+operator|+
+literal|" ]"
+expr_stmt|;
+block|}
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Hive Runtime Error while processing row (tag="
+operator|+
+name|tag
+operator|.
+name|get
+argument_list|()
+operator|+
+literal|") "
+operator|+
+name|rowString
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 catch|catch
@@ -1549,9 +1654,21 @@ throw|;
 block|}
 else|else
 block|{
+name|l4j
+operator|.
+name|fatal
+argument_list|(
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
-name|IOException
+name|RuntimeException
 argument_list|(
 name|e
 argument_list|)
@@ -1686,7 +1803,6 @@ argument_list|(
 name|rps
 argument_list|)
 expr_stmt|;
-return|return;
 block|}
 catch|catch
 parameter_list|(
@@ -1712,7 +1828,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Error while closing operators: "
+literal|"Hive Runtime Error while closing operators: "
 operator|+
 name|e
 operator|.

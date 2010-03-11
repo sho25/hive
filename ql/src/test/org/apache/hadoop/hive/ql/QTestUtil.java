@@ -1727,6 +1727,13 @@ argument_list|(
 literal|"test_udaf"
 argument_list|)
 expr_stmt|;
+name|FunctionRegistry
+operator|.
+name|unregisterTemporaryUDF
+argument_list|(
+literal|"test_error"
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void

@@ -389,6 +389,20 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|StringUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * ExecMapper.  *  */
 end_comment
@@ -1172,11 +1186,6 @@ name|abort
 operator|=
 literal|true
 expr_stmt|;
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 if|if
 condition|(
 name|e
@@ -1194,15 +1203,22 @@ throw|;
 block|}
 else|else
 block|{
+name|l4j
+operator|.
+name|fatal
+argument_list|(
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-name|e
-operator|.
-name|getMessage
-argument_list|()
-argument_list|,
 name|e
 argument_list|)
 throw|;
@@ -1500,7 +1516,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Map local work failed"
+literal|"Hive Runtime Error: Map local work failed"
 argument_list|,
 name|e
 argument_list|)
@@ -1832,7 +1848,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Error while closing operators"
+literal|"Hive Runtime Error while closing operators"
 argument_list|,
 name|e
 argument_list|)
