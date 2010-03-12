@@ -756,7 +756,7 @@ specifier|private
 name|Hive
 name|db
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|HiveConf
 name|conf
@@ -1447,9 +1447,22 @@ name|String
 argument_list|>
 argument_list|()
 expr_stmt|;
+name|preTestUtilInit
+argument_list|()
+expr_stmt|;
 name|init
 argument_list|()
 expr_stmt|;
+block|}
+specifier|protected
+name|void
+name|preTestUtilInit
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// do some initialization before we setup the hive
+comment|// for example, in a HBase Test Util, we setup a hbase mini cluster here
 block|}
 specifier|public
 name|void

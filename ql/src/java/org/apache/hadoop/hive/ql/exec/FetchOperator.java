@@ -594,6 +594,35 @@ index|[
 literal|2
 index|]
 expr_stmt|;
+if|if
+condition|(
+name|work
+operator|.
+name|getTblDesc
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|isNativeTable
+operator|=
+operator|!
+name|work
+operator|.
+name|getTblDesc
+argument_list|()
+operator|.
+name|isNonNative
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|isNativeTable
+operator|=
+literal|true
+expr_stmt|;
+block|}
 block|}
 specifier|public
 name|FetchWork
@@ -715,6 +744,10 @@ operator|=
 name|tblDataDone
 expr_stmt|;
 block|}
+specifier|private
+name|boolean
+name|isNativeTable
+decl_stmt|;
 specifier|private
 name|FetchWork
 name|work
@@ -1171,6 +1204,11 @@ operator|.
 name|getTblDesc
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|isNativeTable
+condition|)
+block|{
 name|FileSystem
 name|fs
 init|=
@@ -1227,6 +1265,14 @@ expr_stmt|;
 break|break;
 block|}
 block|}
+block|}
+block|}
+else|else
+block|{
+name|tblDataDone
+operator|=
+literal|true
+expr_stmt|;
 block|}
 if|if
 condition|(
@@ -1483,6 +1529,15 @@ argument_list|,
 name|job
 argument_list|)
 expr_stmt|;
+name|Utilities
+operator|.
+name|copyTableJobPropertiesToConf
+argument_list|(
+name|tmp
+argument_list|,
+name|job
+argument_list|)
+expr_stmt|;
 name|inputSplits
 operator|=
 name|inputFormat
@@ -1631,7 +1686,7 @@ return|return
 name|currRecReader
 return|;
 block|}
-comment|/**    * Get the next row. The fetch context is modified appropriately.    *     **/
+comment|/**    * Get the next row. The fetch context is modified appropriately.    *    **/
 specifier|public
 name|InspectableObject
 name|getNextRow
@@ -1773,7 +1828,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Clear the context, if anything needs to be done.    *     **/
+comment|/**    * Clear the context, if anything needs to be done.    *    **/
 specifier|public
 name|void
 name|clearFetchContext
@@ -1854,7 +1909,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * used for bucket map join. there is a hack for getting partitionDesc.     * bucket map join right now only allow one partition present in bucket map join.     */
+comment|/**    * used for bucket map join. there is a hack for getting partitionDesc.    * bucket map join right now only allow one partition present in bucket map join.    */
 specifier|public
 name|void
 name|setupContext

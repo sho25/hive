@@ -210,6 +210,14 @@ name|FILE_OUTPUT_FORMAT
 init|=
 literal|"file.outputformat"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|META_TABLE_STORAGE
+init|=
+literal|"storage_handler"
+decl_stmt|;
 block|}
 end_class
 

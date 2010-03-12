@@ -583,6 +583,16 @@ literal|"DATE, DATETIME, and TIMESTAMP types aren't supported yet. Please use "
 operator|+
 literal|"STRING instead."
 argument_list|)
+block|,
+name|CREATE_NON_NATIVE_AS
+argument_list|(
+literal|"CREATE TABLE AS SELECT cannot be used for a non-native table"
+argument_list|)
+block|,
+name|LOAD_INTO_NON_NATIVE
+argument_list|(
+literal|"A non-native table cannot be used as target for LOAD"
+argument_list|)
 block|;
 specifier|private
 name|String

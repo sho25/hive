@@ -198,6 +198,9 @@ decl_stmt|;
 name|String
 name|outputFormat
 decl_stmt|;
+name|String
+name|storageHandler
+decl_stmt|;
 name|int
 name|numberBuckets
 decl_stmt|;
@@ -404,6 +407,9 @@ name|outputFormat
 parameter_list|,
 name|String
 name|serdeName
+parameter_list|,
+name|String
+name|storageHandler
 parameter_list|)
 block|{
 name|super
@@ -436,6 +442,12 @@ operator|.
 name|serdeName
 operator|=
 name|serdeName
+expr_stmt|;
+name|this
+operator|.
+name|storageHandler
+operator|=
+name|storageHandler
 expr_stmt|;
 block|}
 specifier|public
@@ -826,6 +838,39 @@ operator|.
 name|outputFormat
 operator|=
 name|outputFormat
+expr_stmt|;
+block|}
+comment|/**    * @return the storage handler    */
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"storage handler"
+argument_list|)
+specifier|public
+name|String
+name|getStorageHandler
+parameter_list|()
+block|{
+return|return
+name|storageHandler
+return|;
+block|}
+comment|/**    * @param storageHandler    *          the storage handler to set    */
+specifier|public
+name|void
+name|setStorageHandler
+parameter_list|(
+name|String
+name|storageHandler
+parameter_list|)
+block|{
+name|this
+operator|.
+name|storageHandler
+operator|=
+name|storageHandler
 expr_stmt|;
 block|}
 comment|/**    * @return the number of buckets    */
