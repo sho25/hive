@@ -443,24 +443,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|StorageDescriptor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|DriverContext
@@ -1086,7 +1068,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * DDLTask implementation.  *   **/
+comment|/**  * DDLTask implementation.  *  **/
 end_comment
 
 begin_class
@@ -1188,6 +1170,8 @@ operator|=
 name|conf
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|execute
@@ -1628,7 +1612,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Add a partition to a table.    *     * @param db    *          Database to add the partition to.    * @param addPartitionDesc    *          Add this partition.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    */
+comment|/**    * Add a partition to a table.    *    * @param db    *          Database to add the partition to.    * @param addPartitionDesc    *          Add this partition.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    */
 specifier|private
 name|int
 name|addPartition
@@ -1831,7 +1815,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * MetastoreCheck, see if the data in the metastore matches what is on the    * dfs. Current version checks for tables and partitions that are either    * missing on disk on in the metastore.    *     * @param db    *          The database in question.    * @param msckDesc    *          Information about the tables and partitions we want to check for.    * @return Returns 0 when execution succeeds and above 0 if it fails.    */
+comment|/**    * MetastoreCheck, see if the data in the metastore matches what is on the    * dfs. Current version checks for tables and partitions that are either    * missing on disk on in the metastore.    *    * @param db    *          The database in question.    * @param msckDesc    *          Information about the tables and partitions we want to check for.    * @return Returns 0 when execution succeeds and above 0 if it fails.    */
 specifier|private
 name|int
 name|msck
@@ -2245,7 +2229,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write the result of msck to a writer.    *     * @param result    *          The result we're going to write    * @param msg    *          Message to write.    * @param out    *          Writer to write to    * @param wrote    *          if any previous call wrote data    * @return true if something was written    * @throws IOException    *           In case the writing fails    */
+comment|/**    * Write the result of msck to a writer.    *    * @param result    *          The result we're going to write    * @param msg    *          Message to write.    * @param out    *          Writer to write to    * @param wrote    *          if any previous call wrote data    * @return true if something was written    * @throws IOException    *           In case the writing fails    */
 specifier|private
 name|boolean
 name|writeMsckResult
@@ -2333,7 +2317,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Write a list of partitions to a file.    *     * @param db    *          The database in question.    * @param showParts    *          These are the partitions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of partitions to a file.    *    * @param db    *          The database in question.    * @param showParts    *          These are the partitions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showPartitions
@@ -2406,6 +2390,16 @@ return|return
 literal|1
 return|;
 block|}
+if|if
+condition|(
+name|showParts
+operator|.
+name|getPartSpec
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 name|parts
 operator|=
 name|db
@@ -2421,11 +2415,44 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|,
-name|Short
+name|showParts
 operator|.
-name|MAX_VALUE
+name|getPartSpec
+argument_list|()
+argument_list|,
+operator|(
+name|short
+operator|)
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|parts
+operator|=
+name|db
+operator|.
+name|getPartitionNames
+argument_list|(
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
+operator|(
+name|short
+operator|)
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
 comment|// write the results in the file
 try|try
 block|{
@@ -2454,9 +2481,6 @@ decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
-operator|(
-name|DataOutput
-operator|)
 name|fs
 operator|.
 name|create
@@ -2592,7 +2616,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write a list of the tables in the database to a file.    *     * @param db    *          The database in question.    * @param showTbls    *          These are the tables we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of the tables in the database to a file.    *    * @param db    *          The database in question.    * @param showTbls    *          These are the tables we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showTables
@@ -2700,9 +2724,6 @@ decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
-operator|(
-name|DataOutput
-operator|)
 name|fs
 operator|.
 name|create
@@ -2839,7 +2860,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write a list of the user defined functions to a file.    *     * @param showFuncs    *          are the functions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of the user defined functions to a file.    *    * @param showFuncs    *          are the functions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showFunctions
@@ -2944,9 +2965,6 @@ decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
-operator|(
-name|DataOutput
-operator|)
 name|fs
 operator|.
 name|create
@@ -3083,7 +3101,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Shows a description of a function.    *     * @param descFunc    *          is the function we are describing    * @throws HiveException    */
+comment|/**    * Shows a description of a function.    *    * @param descFunc    *          is the function we are describing    * @throws HiveException    */
 specifier|private
 name|int
 name|describeFunction
@@ -3130,9 +3148,6 @@ decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
-operator|(
-name|DataOutput
-operator|)
 name|fs
 operator|.
 name|create
@@ -3422,7 +3437,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write the status of tables to a file.    *     * @param db    *          The database in question.    * @param showTblStatus    *          tables we are interested in    * @return Return 0 when execution succeeds and above 0 if it fails.    */
+comment|/**    * Write the status of tables to a file.    *    * @param db    *          The database in question.    * @param showTblStatus    *          tables we are interested in    * @return Return 0 when execution succeeds and above 0 if it fails.    */
 specifier|private
 name|int
 name|showTableStatus
@@ -3682,9 +3697,6 @@ decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
-operator|(
-name|DataOutput
-operator|)
 name|fs
 operator|.
 name|create
@@ -4211,7 +4223,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write the description of a table to a file.    *     * @param db    *          The database in question.    * @param descTbl    *          This is the table we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write the description of a table to a file.    *    * @param db    *          The database in question.    * @param descTbl    *          This is the table we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|describeTable
@@ -4614,9 +4626,6 @@ decl_stmt|;
 name|DataOutput
 name|outStream
 init|=
-operator|(
-name|DataOutput
-operator|)
 name|fs
 operator|.
 name|create
@@ -5725,7 +5734,7 @@ name|terminator
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Alter a given table.    *     * @param db    *          The database in question.    * @param alterTbl    *          This is the table we're altering.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Alter a given table.    *    * @param db    *          The database in question.    * @param alterTbl    *          This is the table we're altering.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|alterTable
@@ -7113,7 +7122,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Drop a given table.    *     * @param db    *          The database in question.    * @param dropTbl    *          This is the table we're dropping.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Drop a given table.    *    * @param db    *          The database in question.    * @param dropTbl    *          This is the table we're dropping.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|dropTable
@@ -7650,7 +7659,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Create a new table.    *     * @param db    *          The database in question.    * @param crtTbl    *          This is the table we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Create a new table.    *    * @param db    *          The database in question.    * @param crtTbl    *          This is the table we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|createTable
@@ -7976,14 +7985,6 @@ name|String
 argument_list|>
 name|m
 init|=
-operator|(
-name|Entry
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-operator|)
 name|iter
 operator|.
 name|next
@@ -8006,7 +8007,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/*      * We use LazySimpleSerDe by default.      *       * If the user didn't specify a SerDe, and any of the columns are not simple      * types, we will have to use DynamicSerDe instead.      */
+comment|/*      * We use LazySimpleSerDe by default.      *      * If the user didn't specify a SerDe, and any of the columns are not simple      * types, we will have to use DynamicSerDe instead.      */
 if|if
 condition|(
 name|crtTbl
@@ -8543,7 +8544,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Create a new table like an existing table.    *     * @param db    *          The database in question.    * @param crtTbl    *          This is the table we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Create a new table like an existing table.    *    * @param db    *          The database in question.    * @param crtTbl    *          This is the table we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|createTableLike
@@ -8682,7 +8683,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Create a new view.    *     * @param db    *          The database in question.    * @param crtView    *          This is the view we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Create a new view.    *    * @param db    *          The database in question.    * @param crtView    *          This is the view we're creating.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|createView
@@ -8901,6 +8902,8 @@ return|return
 literal|0
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getType

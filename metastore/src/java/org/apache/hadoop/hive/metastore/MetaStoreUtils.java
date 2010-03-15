@@ -63,6 +63,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -190,22 +200,6 @@ operator|.
 name|fs
 operator|.
 name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|JavaUtils
 import|;
 end_import
 
@@ -537,20 +531,6 @@ name|hadoop
 operator|.
 name|util
 operator|.
-name|ReflectionUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
 name|StringUtils
 import|;
 end_import
@@ -581,7 +561,7 @@ name|DEFAULT_DATABASE_NAME
 init|=
 literal|"default"
 decl_stmt|;
-comment|/**    * printStackTrace    *     * Helper function to print an exception stack trace to the log and not stderr    *     * @param e    *          the exception    *     */
+comment|/**    * printStackTrace    *    * Helper function to print an exception stack trace to the log and not stderr    *    * @param e    *          the exception    *    */
 specifier|static
 specifier|public
 name|void
@@ -892,7 +872,7 @@ return|return
 name|tTable
 return|;
 block|}
-comment|/**    * recursiveDelete    *     * just recursively deletes a dir - you'd think Java would have something to    * do this??    *     * @param f    *          - the file/dir to delete    * @exception IOException    *              propogate f.delete() exceptions    *     */
+comment|/**    * recursiveDelete    *    * just recursively deletes a dir - you'd think Java would have something to    * do this??    *    * @param f    *          - the file/dir to delete    * @exception IOException    *              propogate f.delete() exceptions    *    */
 specifier|static
 specifier|public
 name|void
@@ -959,7 +939,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *     * Get the Deserializer for a table given its name and properties.    *     * @param conf    *          hadoop config    * @param schema    *          the properties to use to instantiate the deserializer    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *     *              todo - this should move somewhere into serde.jar    *     */
+comment|/**    * getDeserializer    *    * Get the Deserializer for a table given its name and properties.    *    * @param conf    *          hadoop config    * @param schema    *          the properties to use to instantiate the deserializer    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *    *              todo - this should move somewhere into serde.jar    *    */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1080,7 +1060,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *     * Get the Deserializer for a table.    *     * @param conf    *          - hadoop config    * @param table    *          the table    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *     *              todo - this should move somewhere into serde.jar    *     */
+comment|/**    * getDeserializer    *    * Get the Deserializer for a table.    *    * @param conf    *          - hadoop config    * @param table    *          the table    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *    *              todo - this should move somewhere into serde.jar    *    */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1229,7 +1209,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *     * Get the Deserializer for a partition.    *     * @param conf    *          - hadoop config    * @param partition    *          the partition    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *     */
+comment|/**    * getDeserializer    *    * Get the Deserializer for a partition.    *    * @param conf    *          - hadoop config    * @param partition    *          the partition    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *    */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1641,7 +1621,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * validateName    *     * Checks the name conforms to our standars which are: "[a-zA-z_0-9]+". checks    * this is just characters and numbers and _    *     * @param name    *          the name to validate    * @return true or false depending on conformance    * @exception MetaException    *              if it doesn't match the pattern.    */
+comment|/**    * validateName    *    * Checks the name conforms to our standars which are: "[a-zA-z_0-9]+". checks    * this is just characters and numbers and _    *    * @param name    *          the name to validate    * @return true or false depending on conformance    * @exception MetaException    *              if it doesn't match the pattern.    */
 specifier|static
 specifier|public
 name|boolean
@@ -3381,7 +3361,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * Convert FieldSchemas to Thrift DDL + column names and column types    *     * @param structName    *          The name of the table    * @param fieldSchemas    *          List of fields along with their schemas    * @return String containing "Thrift    *         DDL#comma-separated-column-names#colon-separated-columntypes    *         Example:    *         "struct result { a string, map<int,string> b}#a,b#string:map<int,string>"    */
+comment|/**    * Convert FieldSchemas to Thrift DDL + column names and column types    *    * @param structName    *          The name of the table    * @param fieldSchemas    *          List of fields along with their schemas    * @return String containing "Thrift    *         DDL#comma-separated-column-names#colon-separated-columntypes    *         Example:    *         "struct result { a string, map<int,string> b}#a,b#string:map<int,string>"    */
 specifier|public
 specifier|static
 name|String
@@ -4700,7 +4680,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Catches exceptions that can't be handled and bundles them to MetaException    *     * @param e    * @throws MetaException    */
+comment|/**    * Catches exceptions that can't be handled and bundles them to MetaException    *    * @param e    * @throws MetaException    */
 specifier|static
 name|void
 name|logAndThrowMetaException
@@ -5269,6 +5249,115 @@ argument_list|)
 operator|!=
 literal|null
 operator|)
+return|;
+block|}
+comment|/**    * Returns true if partial has the same values as full for all values that    * aren't empty in partial.    */
+specifier|public
+specifier|static
+name|boolean
+name|pvalMatches
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partial
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|full
+parameter_list|)
+block|{
+if|if
+condition|(
+name|partial
+operator|.
+name|size
+argument_list|()
+operator|!=
+name|full
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+name|Iterator
+argument_list|<
+name|String
+argument_list|>
+name|p
+init|=
+name|partial
+operator|.
+name|iterator
+argument_list|()
+decl_stmt|;
+name|Iterator
+argument_list|<
+name|String
+argument_list|>
+name|f
+init|=
+name|full
+operator|.
+name|iterator
+argument_list|()
+decl_stmt|;
+while|while
+condition|(
+name|p
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
+name|String
+name|pval
+init|=
+name|p
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
+name|String
+name|fval
+init|=
+name|f
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|pval
+operator|.
+name|length
+argument_list|()
+operator|!=
+literal|0
+operator|&&
+operator|!
+name|pval
+operator|.
+name|equals
+argument_list|(
+name|fval
+argument_list|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+block|}
+return|return
+literal|true
 return|;
 block|}
 block|}

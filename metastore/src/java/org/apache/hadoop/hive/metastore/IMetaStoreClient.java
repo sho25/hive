@@ -273,7 +273,7 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Drop the table.    *     * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @throws MetaException    *           Could not drop table properly.    * @throws UnknownTableException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           The table wasn't found.    */
+comment|/**    * Drop the table.    *    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @throws MetaException    *           Could not drop table properly.    * @throws UnknownTableException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           The table wasn't found.    */
 specifier|public
 name|void
 name|dropTable
@@ -293,7 +293,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Drop the table.    *     * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws ExistingDependentsException    */
+comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws ExistingDependentsException    */
 specifier|public
 name|void
 name|dropTable
@@ -334,7 +334,7 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Get a table object.    *     * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
+comment|/**    * Get a table object.    *    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
 specifier|public
 name|Table
 name|getTable
@@ -349,7 +349,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get a table object.    *     * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
+comment|/**    * Get a table object.    *    * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
 specifier|public
 name|Table
 name|getTable
@@ -393,7 +393,29 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Add a partition to the table.    *     * @param partition    *          The partition to add    * @return The partition added    * @throws InvalidObjectException    *           Could not find table to add to    * @throws AlreadyExistsException    *           Partition already exists    * @throws MetaException    *           Could not add partition    * @throws TException    *           Thrift exception    */
+specifier|public
+name|Partition
+name|appendPartition
+parameter_list|(
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|InvalidObjectException
+throws|,
+name|AlreadyExistsException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Add a partition to the table.    *    * @param partition    *          The partition to add    * @return The partition added    * @throws InvalidObjectException    *           Could not find table to add to    * @throws AlreadyExistsException    *           Partition already exists    * @throws MetaException    *           Could not add partition    * @throws TException    *           Thrift exception    */
 specifier|public
 name|Partition
 name|add_partition
@@ -435,7 +457,7 @@ function_decl|;
 comment|/**    * @param dbName    * @param tblName    * @param name - partition name i.e. 'ds=2010-02-03/ts=2010-02-03 18%3A16%3A01'    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
 specifier|public
 name|Partition
-name|getPartitionByName
+name|getPartition
 parameter_list|(
 name|String
 name|dbName
@@ -482,6 +504,35 @@ function_decl|;
 specifier|public
 name|List
 argument_list|<
+name|Partition
+argument_list|>
+name|listPartitions
+parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_vals
+parameter_list|,
+name|short
+name|max_parts
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+specifier|public
+name|List
+argument_list|<
 name|String
 argument_list|>
 name|listPartitionNames
@@ -491,6 +542,33 @@ name|db_name
 parameter_list|,
 name|String
 name|tbl_name
+parameter_list|,
+name|short
+name|max_parts
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|listPartitionNames
+parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_vals
 parameter_list|,
 name|short
 name|max_parts
@@ -595,7 +673,30 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * updates a partition to new partition    *     * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+specifier|public
+name|boolean
+name|dropPartition
+parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|String
+name|name
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * updates a partition to new partition    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
 specifier|public
 name|void
 name|alter_partition

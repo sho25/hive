@@ -33,16 +33,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|net
-operator|.
-name|URI
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|AbstractMap
@@ -76,16 +66,6 @@ operator|.
 name|util
 operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Properties
 import|;
 end_import
 
@@ -453,42 +433,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|HiveFileFormatUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|HiveSequenceFileOutputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde2
 operator|.
 name|Deserializer
@@ -526,34 +470,6 @@ operator|.
 name|lazy
 operator|.
 name|LazySimpleSerDe
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Writable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|WritableComparable
 import|;
 end_import
 
@@ -612,7 +528,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The Hive class contains information about this instance of Hive. An instance  * of Hive represents a set of data in a file system (usually HDFS) organized  * for easy query processing  *   */
+comment|/**  * The Hive class contains information about this instance of Hive. An instance  * of Hive represents a set of data in a file system (usually HDFS) organized  * for easy query processing  *  */
 end_comment
 
 begin_class
@@ -707,7 +623,7 @@ expr_stmt|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Gets hive object for the current thread. If one is not initialized then a    * new one is created If the new configuration is different in metadata conf    * vars then a new one is created.    *     * @param c    *          new Hive Configuration    * @return Hive object for current thread    * @throws HiveException    *     */
+comment|/**    * Gets hive object for the current thread. If one is not initialized then a    * new one is created If the new configuration is different in metadata conf    * vars then a new one is created.    *    * @param c    *          new Hive Configuration    * @return Hive object for current thread    * @throws HiveException    *    */
 specifier|public
 specifier|static
 name|Hive
@@ -803,7 +719,7 @@ name|needsRefresh
 argument_list|)
 return|;
 block|}
-comment|/**    * get a connection to metastore. see get(HiveConf) function for comments    *     * @param c    *          new conf    * @param needsRefresh    *          if true then creates a new one    * @return The connection to the metastore    * @throws HiveException    */
+comment|/**    * get a connection to metastore. see get(HiveConf) function for comments    *    * @param c    *          new conf    * @param needsRefresh    *          if true then creates a new one    * @return The connection to the metastore    * @throws HiveException    */
 specifier|public
 specifier|static
 name|Hive
@@ -928,7 +844,7 @@ name|remove
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Hive    *     * @param argFsRoot    * @param c    *     */
+comment|/**    * Hive    *    * @param argFsRoot    * @param c    *    */
 specifier|private
 name|Hive
 parameter_list|(
@@ -962,7 +878,7 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Creates a table metdata and the directory for the table data    *     * @param tableName    *          name of the table    * @param columns    *          list of fields of the table    * @param partCols    *          partition keys of the table    * @param fileInputFormat    *          Class of the input format of the table data file    * @param fileOutputFormat    *          Class of the output format of the table data file    * @throws HiveException    *           thrown if the args are invalid or if the metadata or the data    *           directory couldn't be created    */
+comment|/**    * Creates a table metdata and the directory for the table data    *    * @param tableName    *          name of the table    * @param columns    *          list of fields of the table    * @param partCols    *          partition keys of the table    * @param fileInputFormat    *          Class of the input format of the table data file    * @param fileOutputFormat    *          Class of the output format of the table data file    * @throws HiveException    *           thrown if the args are invalid or if the metadata or the data    *           directory couldn't be created    */
 specifier|public
 name|void
 name|createTable
@@ -1020,7 +936,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Creates a table metdata and the directory for the table data    *     * @param tableName    *          name of the table    * @param columns    *          list of fields of the table    * @param partCols    *          partition keys of the table    * @param fileInputFormat    *          Class of the input format of the table data file    * @param fileOutputFormat    *          Class of the output format of the table data file    * @param bucketCount    *          number of buckets that each partition (or the table itself) should    *          be divided into    * @throws HiveException    *           thrown if the args are invalid or if the metadata or the data    *           directory couldn't be created    */
+comment|/**    * Creates a table metdata and the directory for the table data    *    * @param tableName    *          name of the table    * @param columns    *          list of fields of the table    * @param partCols    *          partition keys of the table    * @param fileInputFormat    *          Class of the input format of the table data file    * @param fileOutputFormat    *          Class of the output format of the table data file    * @param bucketCount    *          number of buckets that each partition (or the table itself) should    *          be divided into    * @throws HiveException    *           thrown if the args are invalid or if the metadata or the data    *           directory couldn't be created    */
 specifier|public
 name|void
 name|createTable
@@ -1251,7 +1167,7 @@ name|tbl
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Updates the existing table metadata with the new metadata.    *     * @param tblName    *          name of the existing table    * @param newTbl    *          new name of the table. could be the old name    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Updates the existing table metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newTbl    *          new name of the table. could be the old name    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
 specifier|public
 name|void
 name|alterTable
@@ -1320,7 +1236,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Updates the existing table metadata with the new metadata.    *     * @param tblName    *          name of the existing table    * @param newTbl    *          new name of the table. could be the old name    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Updates the existing table metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newTbl    *          new name of the table. could be the old name    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
 specifier|public
 name|void
 name|alterPartition
@@ -1389,7 +1305,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Creates the table with the give objects    *     * @param tbl    *          a table object    * @throws HiveException    */
+comment|/**    * Creates the table with the give objects    *    * @param tbl    *          a table object    * @throws HiveException    */
 specifier|public
 name|void
 name|createTable
@@ -1408,7 +1324,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Creates the table with the give objects    *     * @param tbl    *          a table object    * @param ifNotExists    *          if true, ignore AlreadyExistsException    * @throws HiveException    */
+comment|/**    * Creates the table with the give objects    *    * @param tbl    *          a table object    * @param ifNotExists    *          if true, ignore AlreadyExistsException    * @throws HiveException    */
 specifier|public
 name|void
 name|createTable
@@ -1511,7 +1427,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *     * @param dbName    *          database where the table lives    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
+comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *    * @param dbName    *          database where the table lives    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
 specifier|public
 name|void
 name|dropTable
@@ -1537,7 +1453,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Drops the table.    *     * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception if thrown if this is falser and table doesn't exist    * @throws HiveException    */
+comment|/**    * Drops the table.    *    * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception if thrown if this is falser and table doesn't exist    * @throws HiveException    */
 specifier|public
 name|void
 name|dropTable
@@ -1621,7 +1537,7 @@ name|conf
 operator|)
 return|;
 block|}
-comment|/**    * Returns metadata of the table.    *     * @param dbName    *          the name of the database    * @param tableName    *          the name of the table    * @return the table    * @exception HiveException    *              if there's an internal error or if the table doesn't exist    */
+comment|/**    * Returns metadata of the table.    *    * @param dbName    *          the name of the database    * @param tableName    *          the name of the table    * @return the table    * @exception HiveException    *              if there's an internal error or if the table doesn't exist    */
 specifier|public
 name|Table
 name|getTable
@@ -1650,7 +1566,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns metadata of the table    *     * @param dbName    *          the name of the database    * @param tableName    *          the name of the table    * @param throwException    *          controls whether an exception is thrown or a returns a null    * @return the table or if throwException is false a null value.    * @throws HiveException    */
+comment|/**    * Returns metadata of the table    *    * @param dbName    *          the name of the database    * @param tableName    *          the name of the table    * @param throwException    *          controls whether an exception is thrown or a returns a null    * @return the table or if throwException is false a null value.    * @throws HiveException    */
 specifier|public
 name|Table
 name|getTable
@@ -2047,7 +1963,7 @@ literal|".*"
 argument_list|)
 return|;
 block|}
-comment|/**    * returns all existing tables from default database which match the given    * pattern. The matching occurs as per Java regular expressions    *     * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
+comment|/**    * returns all existing tables from default database which match the given    * pattern. The matching occurs as per Java regular expressions    *    * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
 specifier|public
 name|List
 argument_list|<
@@ -2072,7 +1988,7 @@ name|tablePattern
 argument_list|)
 return|;
 block|}
-comment|/**    * returns all existing tables from the given database which match the given    * pattern. The matching occurs as per Java regular expressions    *     * @param database    *          the database name    * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
+comment|/**    * returns all existing tables from the given database which match the given    * pattern. The matching occurs as per Java regular expressions    *    * @param database    *          the database name    * @param tablePattern    *          java re pattern    * @return list of table names    * @throws HiveException    */
 specifier|public
 name|List
 argument_list|<
@@ -2171,7 +2087,7 @@ name|name
 argument_list|)
 return|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If he partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *     * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param tmpDirPath    *          The temporary directory.    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If he partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param tmpDirPath    *          The temporary directory.    */
 specifier|public
 name|void
 name|loadPartition
@@ -2413,7 +2329,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *     * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param replace    *          if true - replace files in the table, otherwise add files to table    * @param tmpDirPath    *          The temporary directory.    */
+comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param replace    *          if true - replace files in the table, otherwise add files to table    * @param tmpDirPath    *          The temporary directory.    */
 specifier|public
 name|void
 name|loadTable
@@ -2471,7 +2387,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Creates a partition.    *     * @param tbl    *          table for which partition needs to be created    * @param partSpec    *          partition keys and their values    * @return created partition object    * @throws HiveException    *           if table doesn't exist or partition already exists    */
+comment|/**    * Creates a partition.    *    * @param tbl    *          table for which partition needs to be created    * @param partSpec    *          partition keys and their values    * @return created partition object    * @throws HiveException    *           if table doesn't exist or partition already exists    */
 specifier|public
 name|Partition
 name|createPartition
@@ -2501,7 +2417,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates a partition    *     * @param tbl    *          table for which partition needs to be created    * @param partSpec    *          partition keys and their values    * @param location    *          location of this partition    * @return created partition object    * @throws HiveException    *           if table doesn't exist or partition already exists    */
+comment|/**    * Creates a partition    *    * @param tbl    *          table for which partition needs to be created    * @param partSpec    *          partition keys and their values    * @param location    *          location of this partition    * @return created partition object    * @throws HiveException    *           if table doesn't exist or partition already exists    */
 specifier|public
 name|Partition
 name|createPartition
@@ -2659,7 +2575,7 @@ name|partition
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns partition metadata    *     * @param tbl    *          the partition's table    * @param partSpec    *          partition keys and values    * @param forceCreate    *          if this is true and partition doesn't exist then a partition is    *          created    * @return result partition object or null if there is no partition    * @throws HiveException    */
+comment|/**    * Returns partition metadata    *    * @param tbl    *          the partition's table    * @param partSpec    *          partition keys and values    * @param forceCreate    *          if this is true and partition doesn't exist then a partition is    *          created    * @return result partition object or null if there is no partition    * @throws HiveException    */
 specifier|public
 name|Partition
 name|getPartition
@@ -3003,6 +2919,9 @@ throws|throws
 name|HiveException
 block|{
 name|List
+argument_list|<
+name|String
+argument_list|>
 name|names
 init|=
 literal|null
@@ -3054,7 +2973,117 @@ return|return
 name|names
 return|;
 block|}
-comment|/**    * get all the partitions that the table has    *     * @param tbl    *          object for which partition is needed    * @return list of partition objects    * @throws HiveException    */
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getPartitionNames
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|,
+name|short
+name|max
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|names
+init|=
+literal|null
+decl_stmt|;
+name|Table
+name|t
+init|=
+name|getTable
+argument_list|(
+name|dbName
+argument_list|,
+name|tblName
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|pvals
+init|=
+name|getPvals
+argument_list|(
+name|t
+operator|.
+name|getPartCols
+argument_list|()
+argument_list|,
+name|partSpec
+argument_list|)
+decl_stmt|;
+try|try
+block|{
+name|names
+operator|=
+name|getMSC
+argument_list|()
+operator|.
+name|listPartitionNames
+argument_list|(
+name|dbName
+argument_list|,
+name|tblName
+argument_list|,
+name|pvals
+argument_list|,
+name|max
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+return|return
+name|names
+return|;
+block|}
+comment|/**    * get all the partitions that the table has    *    * @param tbl    *          object for which partition is needed    * @return list of partition objects    * @throws HiveException    */
 specifier|public
 name|List
 argument_list|<
@@ -3240,6 +3269,258 @@ return|return
 name|parts
 return|;
 block|}
+block|}
+specifier|private
+specifier|static
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getPvals
+parameter_list|(
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|partCols
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|)
+block|{
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|pvals
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|FieldSchema
+name|field
+range|:
+name|partCols
+control|)
+block|{
+name|String
+name|val
+init|=
+name|partSpec
+operator|.
+name|get
+argument_list|(
+name|field
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|val
+operator|==
+literal|null
+condition|)
+block|{
+name|val
+operator|=
+literal|""
+expr_stmt|;
+block|}
+name|pvals
+operator|.
+name|add
+argument_list|(
+name|val
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|pvals
+return|;
+block|}
+comment|/**    * get all the partitions of the table that matches the given partial    * specification. partition columns whose value is can be anything should be    * an empty string.    *    * @param tbl    *          object for which partition is needed. Must be partitioned.    * @return list of partition objects    * @throws HiveException    */
+specifier|public
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|getPartitions
+parameter_list|(
+name|Table
+name|tbl
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partialPartSpec
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+if|if
+condition|(
+operator|!
+name|tbl
+operator|.
+name|isPartitioned
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Partition spec should only be supplied for a "
+operator|+
+literal|"partitioned table"
+argument_list|)
+throw|;
+block|}
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partialPvals
+init|=
+name|getPvals
+argument_list|(
+name|tbl
+operator|.
+name|getPartCols
+argument_list|()
+argument_list|,
+name|partialPartSpec
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Partition
+argument_list|>
+name|partitions
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|partitions
+operator|=
+name|getMSC
+argument_list|()
+operator|.
+name|listPartitions
+argument_list|(
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
+name|partialPvals
+argument_list|,
+operator|(
+name|short
+operator|)
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|qlPartitions
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|Partition
+argument_list|>
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Partition
+name|p
+range|:
+name|partitions
+control|)
+block|{
+name|qlPartitions
+operator|.
+name|add
+argument_list|(
+operator|new
+name|Partition
+argument_list|(
+name|tbl
+argument_list|,
+name|p
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|qlPartitions
+return|;
 block|}
 specifier|static
 specifier|private
@@ -3647,7 +3928,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Replaces files in the partition with new data set specifed by srcf. Works    * by moving files    *     * @param srcf    *          Files to be moved. Leaf Directories or Globbed File Paths    * @param destf    *          The directory where the final data needs to go    * @param fs    *          The filesystem handle    * @param tmppath    *          Temporary directory    */
+comment|/**    * Replaces files in the partition with new data set specifed by srcf. Works    * by moving files    *    * @param srcf    *          Files to be moved. Leaf Directories or Globbed File Paths    * @param destf    *          The directory where the final data needs to go    * @param fs    *          The filesystem handle    * @param tmppath    *          Temporary directory    */
 specifier|static
 specifier|protected
 name|void
@@ -3976,7 +4257,7 @@ block|}
 comment|// In case of error, we should leave the temporary data there, so
 comment|// that user can recover the data if necessary.
 block|}
-comment|/**    * Creates a metastore client. Currently it creates only JDBC based client as    * File based store support is removed    *     * @returns a Meta Store Client    * @throws HiveMetaException    *           if a working client can't be created    */
+comment|/**    * Creates a metastore client. Currently it creates only JDBC based client as    * File based store support is removed    *    * @returns a Meta Store Client    * @throws HiveMetaException    *           if a working client can't be created    */
 specifier|private
 name|IMetaStoreClient
 name|createMetaStoreClient
@@ -4110,7 +4391,7 @@ name|hookLoader
 argument_list|)
 return|;
 block|}
-comment|/**    *     * @return the metastore client for the current thread    * @throws MetaException    */
+comment|/**    *    * @return the metastore client for the current thread    * @throws MetaException    */
 specifier|private
 name|IMetaStoreClient
 name|getMSC

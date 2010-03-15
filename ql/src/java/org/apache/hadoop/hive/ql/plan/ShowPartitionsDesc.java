@@ -31,6 +31,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -76,6 +86,15 @@ name|tabName
 decl_stmt|;
 name|String
 name|resFile
+decl_stmt|;
+comment|// Filter the partitions to show based on on supplied spec
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
 decl_stmt|;
 comment|/**    * table name for the result of show tables.    */
 specifier|private
@@ -126,6 +145,14 @@ name|tabName
 parameter_list|,
 name|Path
 name|resFile
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
 parameter_list|)
 block|{
 name|this
@@ -142,6 +169,12 @@ name|resFile
 operator|.
 name|toString
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|partSpec
+operator|=
+name|partSpec
 expr_stmt|;
 block|}
 comment|/**    * @return the name of the table.    */
@@ -175,6 +208,49 @@ operator|.
 name|tabName
 operator|=
 name|tabName
+expr_stmt|;
+block|}
+comment|/**    * @return the name of the table.    */
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"partSpec"
+argument_list|)
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|getPartSpec
+parameter_list|()
+block|{
+return|return
+name|partSpec
+return|;
+block|}
+comment|/**    * @param tabName    *          the table whose partitions have to be listed    */
+specifier|public
+name|void
+name|setPartSpec
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|)
+block|{
+name|this
+operator|.
+name|partSpec
+operator|=
+name|partSpec
 expr_stmt|;
 block|}
 comment|/**    * @return the results file    */

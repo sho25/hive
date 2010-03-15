@@ -2372,7 +2372,7 @@ return|return
 name|mapProp
 return|;
 block|}
-comment|/**    * Get the fully qualified name in the ast. e.g. the ast of the form ^(DOT    * ^(DOT a b) c) will generate a name of the form a.b.c    *     * @param ast    *          The AST from which the qualified name has to be extracted    * @return String    */
+comment|/**    * Get the fully qualified name in the ast. e.g. the ast of the form ^(DOT    * ^(DOT a b) c) will generate a name of the form a.b.c    *    * @param ast    *          The AST from which the qualified name has to be extracted    * @return String    */
 specifier|private
 name|String
 name|getFullyQualifiedName
@@ -2428,7 +2428,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a FetchTask for a given table and thrift ddl schema.    *     * @param tablename    *          tablename    * @param schema    *          thrift ddl    */
+comment|/**    * Create a FetchTask for a given table and thrift ddl schema.    *    * @param tablename    *          tablename    * @param schema    *          thrift ddl    */
 specifier|private
 name|FetchTask
 name|createFetchTask
@@ -2843,6 +2843,63 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|List
+argument_list|<
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|>
+name|partSpecs
+init|=
+name|getPartitionSpecs
+argument_list|(
+name|ast
+argument_list|)
+decl_stmt|;
+comment|// We only can have a single partition spec
+assert|assert
+operator|(
+name|partSpecs
+operator|.
+name|size
+argument_list|()
+operator|<=
+literal|1
+operator|)
+assert|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|partSpecs
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|partSpec
+operator|=
+name|partSpecs
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
 name|showPartsDesc
 operator|=
 operator|new
@@ -2854,6 +2911,8 @@ name|ctx
 operator|.
 name|getResFile
 argument_list|()
+argument_list|,
+name|partSpec
 argument_list|)
 expr_stmt|;
 name|rootTasks
@@ -3227,7 +3286,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Add the task according to the parsed command tree. This is used for the CLI    * command "SHOW FUNCTIONS;".    *     * @param ast    *          The parsed command tree.    * @throws SemanticException    *           Parsin failed    */
+comment|/**    * Add the task according to the parsed command tree. This is used for the CLI    * command "SHOW FUNCTIONS;".    *    * @param ast    *          The parsed command tree.    * @throws SemanticException    *           Parsin failed    */
 specifier|private
 name|void
 name|analyzeShowFunctions
@@ -3331,7 +3390,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Add the task according to the parsed command tree. This is used for the CLI    * command "DESCRIBE FUNCTION;".    *     * @param ast    *          The parsed command tree.    * @throws SemanticException    *           Parsing failed    */
+comment|/**    * Add the task according to the parsed command tree. This is used for the CLI    * command "DESCRIBE FUNCTION;".    *    * @param ast    *          The parsed command tree.    * @throws SemanticException    *           Parsing failed    */
 specifier|private
 name|void
 name|analyzeDescFunction
@@ -3977,7 +4036,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Add one or more partitions to a table. Useful when the data has been copied    * to the right location by some other process.    *     * @param ast    *          The parsed command tree.    * @throws SemanticException    *           Parsin failed    */
+comment|/**    * Add one or more partitions to a table. Useful when the data has been copied    * to the right location by some other process.    *    * @param ast    *          The parsed command tree.    * @throws SemanticException    *           Parsin failed    */
 specifier|private
 name|void
 name|analyzeAlterTableAddParts
@@ -4270,7 +4329,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Verify that the information in the metastore matches up with the data on    * the fs.    *     * @param ast    *          Query tree.    * @throws SemanticException    */
+comment|/**    * Verify that the information in the metastore matches up with the data on    * the fs.    *    * @param ast    *          Query tree.    * @throws SemanticException    */
 specifier|private
 name|void
 name|analyzeMetastoreCheck
@@ -4426,7 +4485,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Get the partition specs from the tree.    *     * @param ast    *          Tree to extract partitions from.    * @return A list of partition name to value mappings.    * @throws SemanticException    */
+comment|/**    * Get the partition specs from the tree.    *    * @param ast    *          Tree to extract partitions from.    * @return A list of partition name to value mappings.    * @throws SemanticException    */
 specifier|private
 name|List
 argument_list|<
