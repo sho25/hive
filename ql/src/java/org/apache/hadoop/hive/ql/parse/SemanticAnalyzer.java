@@ -11939,6 +11939,16 @@ literal|1
 else|:
 name|posn
 decl_stmt|;
+if|if
+condition|(
+name|isInTransform
+condition|)
+block|{
+name|startPosn
+operator|=
+literal|0
+expr_stmt|;
+block|}
 comment|// Iterate over all expression (either after SELECT, or in SELECT TRANSFORM)
 for|for
 control|(
