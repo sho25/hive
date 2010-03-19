@@ -778,12 +778,29 @@ name|cl
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|pruneOperator
+argument_list|(
+name|cppCtx
+argument_list|,
+name|op
+argument_list|,
+name|cppCtx
+operator|.
+name|getPrunedColLists
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|op
+argument_list|)
+argument_list|)
+expr_stmt|;
 return|return
 literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ColumnPrunerFilterProc class.    *     * @return ColumnPrunerFilterProc    */
+comment|/**    * Factory method to get the ColumnPrunerFilterProc class.    *    * @return ColumnPrunerFilterProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerFilterProc
@@ -969,7 +986,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ColumnPrunerGroupByProc class.    *     * @return ColumnPrunerGroupByProc    */
+comment|/**    * Factory method to get the ColumnPrunerGroupByProc class.    *    * @return ColumnPrunerGroupByProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerGroupByProc
@@ -1059,7 +1076,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ColumnPrunerDefaultProc class.    *     * @return ColumnPrunerDefaultProc    */
+comment|/**    * Factory method to get the ColumnPrunerDefaultProc class.    *    * @return ColumnPrunerDefaultProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerDefaultProc
@@ -1242,7 +1259,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ColumnPrunerDefaultProc class.    *     * @return ColumnPrunerTableScanProc    */
+comment|/**    * Factory method to get the ColumnPrunerDefaultProc class.    *    * @return ColumnPrunerTableScanProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerTableScanProc
@@ -1762,7 +1779,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * The Factory method to get ColumnPrunerReduceSinkProc class.    *     * @return ColumnPrunerReduceSinkProc    */
+comment|/**    * The Factory method to get ColumnPrunerReduceSinkProc class.    *    * @return ColumnPrunerReduceSinkProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerReduceSinkProc
@@ -2271,7 +2288,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**      * since we pruned the select operator, we should let its children operator      * know that. ReduceSinkOperator may send out every output columns of its      * parent select. When the select operator is pruned, its child reduce      * sink(direct child) operator should also be pruned.      *       * @param op      * @param retainedSelOutputCols      * @throws SemanticException      */
+comment|/**      * since we pruned the select operator, we should let its children operator      * know that. ReduceSinkOperator may send out every output columns of its      * parent select. When the select operator is pruned, its child reduce      * sink(direct child) operator should also be pruned.      *      * @param op      * @param retainedSelOutputCols      * @throws SemanticException      */
 specifier|private
 name|void
 name|handleChildren
@@ -3121,7 +3138,7 @@ name|newValueTable
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * The Factory method to get the ColumnPrunerSelectProc class.    *     * @return ColumnPrunerSelectProc    */
+comment|/**    * The Factory method to get the ColumnPrunerSelectProc class.    *    * @return ColumnPrunerSelectProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerSelectProc
@@ -3199,7 +3216,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * The Factory method to get ColumnJoinProc class.    *     * @return ColumnPrunerJoinProc    */
+comment|/**    * The Factory method to get ColumnJoinProc class.    *    * @return ColumnPrunerJoinProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerJoinProc
@@ -3281,6 +3298,155 @@ expr_stmt|;
 return|return
 literal|null
 return|;
+block|}
+block|}
+specifier|private
+specifier|static
+name|void
+name|pruneOperator
+parameter_list|(
+name|NodeProcessorCtx
+name|ctx
+parameter_list|,
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|op
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|cols
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+name|ColumnPrunerProcCtx
+name|cppCtx
+init|=
+operator|(
+name|ColumnPrunerProcCtx
+operator|)
+name|ctx
+decl_stmt|;
+name|ArrayList
+argument_list|<
+name|ColumnInfo
+argument_list|>
+name|rs
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|ColumnInfo
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|RowResolver
+name|rr
+init|=
+name|cppCtx
+operator|.
+name|getOpToParseCtxMap
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|op
+argument_list|)
+operator|.
+name|getRR
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|cols
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|String
+name|internalName
+init|=
+name|cols
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+name|String
+index|[]
+name|nm
+init|=
+name|rr
+operator|.
+name|reverseLookup
+argument_list|(
+name|internalName
+argument_list|)
+decl_stmt|;
+name|ColumnInfo
+name|col
+init|=
+name|rr
+operator|.
+name|get
+argument_list|(
+name|nm
+index|[
+literal|0
+index|]
+argument_list|,
+name|nm
+index|[
+literal|1
+index|]
+argument_list|)
+decl_stmt|;
+name|rs
+operator|.
+name|add
+argument_list|(
+name|col
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|op
+operator|.
+name|getSchema
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|op
+operator|.
+name|getSchema
+argument_list|()
+operator|.
+name|setSignature
+argument_list|(
+name|rs
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 specifier|private
@@ -4152,7 +4318,7 @@ name|prunedColLists
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * The Factory method to get ColumnMapJoinProc class.    *     * @return ColumnPrunerMapJoinProc    */
+comment|/**    * The Factory method to get ColumnMapJoinProc class.    *    * @return ColumnPrunerMapJoinProc    */
 specifier|public
 specifier|static
 name|ColumnPrunerMapJoinProc
