@@ -872,11 +872,19 @@ argument_list|(
 literal|"Closing current thread's connection to Hive Metastore."
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|metaStoreClient
+operator|!=
+literal|null
+condition|)
+block|{
 name|metaStoreClient
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 comment|/**    * Creates a table metdata and the directory for the table data    *    * @param tableName    *          name of the table    * @param columns    *          list of fields of the table    * @param partCols    *          partition keys of the table    * @param fileInputFormat    *          Class of the input format of the table data file    * @param fileOutputFormat    *          Class of the output format of the table data file    * @throws HiveException    *           thrown if the args are invalid or if the metadata or the data    *           directory couldn't be created    */
 specifier|public
