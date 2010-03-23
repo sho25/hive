@@ -5396,9 +5396,8 @@ condition|)
 block|{
 name|port
 operator|=
+operator|new
 name|Integer
-operator|.
-name|getInteger
 argument_list|(
 name|args
 index|[
