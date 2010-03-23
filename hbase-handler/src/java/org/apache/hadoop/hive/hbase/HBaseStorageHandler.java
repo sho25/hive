@@ -491,9 +491,33 @@ name|Table
 name|tbl
 parameter_list|)
 block|{
+comment|// Give preference to TBLPROPERTIES over SERDEPROPERTIES
+comment|// (really we should only use TBLPROPERTIES, so this is just
+comment|// for backwards compatibility with the original specs).
 name|String
 name|tableName
 init|=
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|HBaseSerDe
+operator|.
+name|HBASE_TABLE_NAME
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|tableName
+operator|==
+literal|null
+condition|)
+block|{
+name|tableName
+operator|=
 name|tbl
 operator|.
 name|getSd
@@ -511,7 +535,8 @@ name|HBaseSerDe
 operator|.
 name|HBASE_TABLE_NAME
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|tableName

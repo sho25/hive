@@ -164,6 +164,8 @@ block|,
 name|ADDCLUSTERSORTCOLUMN
 block|,
 name|RENAMECOLUMN
+block|,
+name|ADDPARTITION
 block|}
 empty_stmt|;
 name|AlterTableTypes
@@ -233,6 +235,9 @@ name|first
 decl_stmt|;
 name|String
 name|afterCol
+decl_stmt|;
+name|boolean
+name|expectView
 decl_stmt|;
 specifier|public
 name|AlterTableDesc
@@ -387,9 +392,34 @@ name|AlterTableTypes
 name|alterType
 parameter_list|)
 block|{
+name|this
+argument_list|(
+name|alterType
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * @param alterType    *          type of alter op    */
+specifier|public
+name|AlterTableDesc
+parameter_list|(
+name|AlterTableTypes
+name|alterType
+parameter_list|,
+name|boolean
+name|expectView
+parameter_list|)
+block|{
 name|op
 operator|=
 name|alterType
+expr_stmt|;
+name|this
+operator|.
+name|expectView
+operator|=
+name|expectView
 expr_stmt|;
 block|}
 comment|/**    *     * @param name    *          name of the table    * @param inputFormat    *          new table input format    * @param outputFormat    *          new table output format    */
@@ -1113,6 +1143,32 @@ operator|.
 name|afterCol
 operator|=
 name|afterCol
+expr_stmt|;
+block|}
+comment|/**    * @return whether to expect a view being altered    */
+specifier|public
+name|boolean
+name|getExpectView
+parameter_list|()
+block|{
+return|return
+name|expectView
+return|;
+block|}
+comment|/**    * @param expectView    *          set whether to expect a view being altered    */
+specifier|public
+name|void
+name|setExpectView
+parameter_list|(
+name|boolean
+name|expectView
+parameter_list|)
+block|{
+name|this
+operator|.
+name|expectView
+operator|=
+name|expectView
 expr_stmt|;
 block|}
 block|}
