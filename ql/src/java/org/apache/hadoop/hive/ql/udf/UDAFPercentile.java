@@ -582,6 +582,7 @@ implements|implements
 name|UDAFEvaluator
 block|{
 specifier|private
+specifier|final
 name|State
 name|state
 decl_stmt|;
@@ -729,6 +730,15 @@ name|percentiles
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|other
+operator|.
+name|counts
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|Map
@@ -767,6 +777,7 @@ name|get
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 literal|true
@@ -974,6 +985,7 @@ implements|implements
 name|UDAFEvaluator
 block|{
 specifier|private
+specifier|final
 name|State
 name|state
 decl_stmt|;
@@ -1111,6 +1123,15 @@ name|percentiles
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|other
+operator|.
+name|counts
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|Map
@@ -1149,6 +1170,7 @@ name|get
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 literal|true
