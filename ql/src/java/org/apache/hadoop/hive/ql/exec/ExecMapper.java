@@ -1700,6 +1700,9 @@ comment|// detecting failed executions by exceptions thrown by the operator tree
 comment|// ideally hadoop should let us know whether map execution failed or not
 try|try
 block|{
+name|inputFileChanged
+argument_list|()
+expr_stmt|;
 name|mo
 operator|.
 name|close
