@@ -257,7 +257,7 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTOREURIS
-block|}
+block|,       }
 decl_stmt|;
 comment|/**    * ConfVars.    *    */
 specifier|public
@@ -509,6 +509,22 @@ argument_list|(
 literal|"javax.jdo.option.ConnectionPassword"
 argument_list|,
 literal|""
+argument_list|)
+block|,
+name|METASTORESERVERMINTHREADS
+argument_list|(
+literal|"hive.metastore.server.min.threads"
+argument_list|,
+literal|200
+argument_list|)
+block|,
+name|METASTORESERVERMAXTHREADS
+argument_list|(
+literal|"hive.metastore.server.max.threads"
+argument_list|,
+name|Integer
+operator|.
+name|MAX_VALUE
 argument_list|)
 block|,
 comment|// CLI
