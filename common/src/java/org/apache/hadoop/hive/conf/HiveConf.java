@@ -257,6 +257,48 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTOREURIS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METATORETHRIFTRETRIES
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTOREPWD
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORECONNECTURLHOOK
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORECONNECTURLKEY
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTOREATTEMPTS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTOREINTERVAL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTOREFORCERELOADCONF
 block|,       }
 decl_stmt|;
 comment|/**    * ConfVars.    *    */
@@ -482,7 +524,8 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-comment|// MetaStore stuff.
+comment|// Metastore stuff. Be sure to update HiveConf.metaVars when you add
+comment|// something here!
 name|METASTOREDIRECTORY
 argument_list|(
 literal|"hive.metastore.metadb.dir"
@@ -504,11 +547,62 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// Number of times to retry a connection to a Thrift metastore server
+name|METATORETHRIFTRETRIES
+argument_list|(
+literal|"hive.metastore.connect.retries"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 name|METASTOREPWD
 argument_list|(
 literal|"javax.jdo.option.ConnectionPassword"
 argument_list|,
 literal|""
+argument_list|)
+block|,
+comment|// Class name of JDO connection url hook
+name|METASTORECONNECTURLHOOK
+argument_list|(
+literal|"hive.metastore.ds.connection.url.hook"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+comment|// Name of the connection url in the configuration
+name|METASTORECONNECTURLKEY
+argument_list|(
+literal|"javax.jdo.option.ConnectionURL"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+comment|// Number of attempts to retry connecting after there is a JDO datastore err
+name|METASTOREATTEMPTS
+argument_list|(
+literal|"hive.metastore.ds.retry.attempts"
+argument_list|,
+literal|1
+argument_list|)
+block|,
+comment|// Number of miliseconds to wait between attepting
+name|METASTOREINTERVAL
+argument_list|(
+literal|"hive.metastore.ds.retry.interval"
+argument_list|,
+literal|1000
+argument_list|)
+block|,
+comment|// Whether to force reloading of the metastore configuration (including
+comment|// the connection URL, before the next metastore query that accesses the
+comment|// datastore. Once reloaded, the  this value is reset to false. Used for
+comment|// testing only.
+name|METASTOREFORCERELOADCONF
+argument_list|(
+literal|"hive.metastore.force.reload.conf"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|METASTORESERVERMINTHREADS
@@ -1350,6 +1444,8 @@ operator|=
 name|defaultBoolVal
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
