@@ -451,6 +451,79 @@ name|SCRATCHDIR
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// Check if the scratch directory exists. If not, create it.
+if|if
+condition|(
+operator|!
+name|scratchDir
+operator|.
+name|exists
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Local scratch directory "
+operator|+
+name|scratchDir
+operator|.
+name|getPath
+argument_list|()
+operator|+
+literal|" not found. Attempting to create."
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|scratchDir
+operator|.
+name|mkdirs
+argument_list|()
+condition|)
+block|{
+comment|// Unable to create this directory - it might have been created due
+comment|// to another process.
+if|if
+condition|(
+operator|!
+name|scratchDir
+operator|.
+name|exists
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|TaskExecutionException
+argument_list|(
+literal|"Cannot create scratch directory "
+operator|+
+literal|"\""
+operator|+
+name|scratchDir
+operator|.
+name|getPath
+argument_list|()
+operator|+
+literal|"\". "
+operator|+
+literal|"To configure a different directory, "
+operator|+
+literal|"set the configuration "
+operator|+
+literal|"\"hive.exec.scratchdir\" "
+operator|+
+literal|"in the session, or permanently by modifying the "
+operator|+
+literal|"appropriate hive configuration file such as hive-site.xml."
+argument_list|)
+throw|;
+block|}
+block|}
+block|}
 name|MapredWork
 name|plan
 init|=
