@@ -5276,7 +5276,7 @@ name|partial
 operator|.
 name|size
 argument_list|()
-operator|!=
+operator|>
 name|full
 operator|.
 name|size

@@ -29,6 +29,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -763,7 +773,7 @@ name|UnknownTableException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * @param name    *          name of the configuration property to get the value of    * @param defaultValue    *          the value to return if property with the given name doesn't exist    * @return    * @throws TException    * @throws ConfigValSecurityException    */
+comment|/**    * @param name    *          name of the configuration property to get the value of    * @param defaultValue    *          the value to return if property with the given name doesn't exist    * @return value of the specified configuration property    * @throws TException    * @throws ConfigValSecurityException    */
 specifier|public
 name|String
 name|getConfigValue
@@ -778,6 +788,40 @@ throws|throws
 name|TException
 throws|,
 name|ConfigValSecurityException
+function_decl|;
+comment|/**    *    * @param name    *          the partition name e.g. ("ds=2010-03-03/hr=12")    * @return a list containing the partition col values, in the same order as the name    * @throws MetaException    * @throws TException    */
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partitionNameToVals
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    *    * @param name    *          the partition name e.g. ("ds=2010-03-03/hr=12")    * @return a map from the partition col to the value, as listed in the name    * @throws MetaException    * @throws TException    */
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partitionNameToSpec
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
 function_decl|;
 block|}
 end_interface
