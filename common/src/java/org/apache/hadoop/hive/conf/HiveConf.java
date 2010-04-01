@@ -1082,6 +1082,13 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.io.DefaultHivePartitioner"
 argument_list|)
 block|,
+name|HIVESCRIPTOPERATORTRUST
+argument_list|(
+literal|"hive.exec.script.trust"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Optimizer
 name|HIVEOPTCP
 argument_list|(
@@ -1123,7 +1130,13 @@ literal|false
 argument_list|)
 block|,
 comment|// try to use sorted merge bucket map join
-block|;
+name|HIVEOPTREDUCEDEDUPLICATION
+argument_list|(
+literal|"hive.optimize.reducededuplication"
+argument_list|,
+literal|true
+argument_list|)
+block|,      ;
 specifier|public
 specifier|final
 name|String
