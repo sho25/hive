@@ -2750,7 +2750,7 @@ name|ret
 operator|)
 return|;
 block|}
-comment|/**    * Serialize the mapredWork object to an output stream. DO NOT use this to     * write to standard output since it closes the output stream.    * DO USE mapredWork.toXML() instead.    */
+comment|/**    * Serialize the mapredWork object to an output stream. DO NOT use this to    * write to standard output since it closes the output stream.    * DO USE mapredWork.toXML() instead.    */
 specifier|public
 specifier|static
 name|void
@@ -4126,7 +4126,7 @@ expr_stmt|;
 block|}
 comment|// Unreachable
 block|}
-comment|/**    * Convert an output stream to a compressed output stream based on codecs and    * compression options specified in the Job Configuration.    *     * @param jc    *          Job Configuration    * @param out    *          Output Stream to be converted into compressed output stream    * @return compressed output stream    */
+comment|/**    * Convert an output stream to a compressed output stream based on codecs and    * compression options specified in the Job Configuration.    *    * @param jc    *          Job Configuration    * @param out    *          Output Stream to be converted into compressed output stream    * @return compressed output stream    */
 specifier|public
 specifier|static
 name|OutputStream
@@ -4162,7 +4162,7 @@ name|isCompressed
 argument_list|)
 return|;
 block|}
-comment|/**    * Convert an output stream to a compressed output stream based on codecs    * codecs in the Job Configuration. Caller specifies directly whether file is    * compressed or not    *     * @param jc    *          Job Configuration    * @param out    *          Output Stream to be converted into compressed output stream    * @param isCompressed    *          whether the output stream needs to be compressed or not    * @return compressed output stream    */
+comment|/**    * Convert an output stream to a compressed output stream based on codecs    * codecs in the Job Configuration. Caller specifies directly whether file is    * compressed or not    *    * @param jc    *          Job Configuration    * @param out    *          Output Stream to be converted into compressed output stream    * @param isCompressed    *          whether the output stream needs to be compressed or not    * @return compressed output stream    */
 specifier|public
 specifier|static
 name|OutputStream
@@ -4237,7 +4237,7 @@ operator|)
 return|;
 block|}
 block|}
-comment|/**    * Based on compression option and configured output codec - get extension for    * output file. This is only required for text files - not sequencefiles    *     * @param jc    *          Job Configuration    * @param isCompressed    *          Whether the output file is compressed or not    * @return the required file extension (example: .gz)    */
+comment|/**    * Based on compression option and configured output codec - get extension for    * output file. This is only required for text files - not sequencefiles    *    * @param jc    *          Job Configuration    * @param isCompressed    *          Whether the output file is compressed or not    * @return the required file extension (example: .gz)    */
 specifier|public
 specifier|static
 name|String
@@ -4304,7 +4304,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Create a sequencefile output stream based on job configuration.    *     * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
+comment|/**    * Create a sequencefile output stream based on job configuration.    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
 specifier|public
 specifier|static
 name|SequenceFile
@@ -4363,7 +4363,7 @@ name|isCompressed
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a sequencefile output stream based on job configuration Uses user    * supplied compression flag (rather than obtaining it from the Job    * Configuration).    *     * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
+comment|/**    * Create a sequencefile output stream based on job configuration Uses user    * supplied compression flag (rather than obtaining it from the Job    * Configuration).    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
 specifier|public
 specifier|static
 name|SequenceFile
@@ -4480,7 +4480,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-comment|/**    * Create a RCFile output stream based on job configuration Uses user supplied    * compression flag (rather than obtaining it from the Job Configuration).    *     * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @return output stream over the created rcfile    */
+comment|/**    * Create a RCFile output stream based on job configuration Uses user supplied    * compression flag (rather than obtaining it from the Job Configuration).    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @return output stream over the created rcfile    */
 specifier|public
 specifier|static
 name|RCFile
@@ -4929,7 +4929,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to    * dst. If there is an existing file with the same name, the new file's name    * will be appended with "_1", "_2", etc.    *     * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
+comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to    * dst. If there is an existing file with the same name, the new file's name    * will be appended with "_1", "_2", etc.    *    * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
 specifier|public
 specifier|static
 name|void
@@ -4977,7 +4977,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to    * dst. If there is an existing file with the same name, the new file's name    * will be appended with "_1", "_2", etc.    *     * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
+comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to    * dst. If there is an existing file with the same name, the new file's name    * will be appended with "_1", "_2", etc.    *    * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
 specifier|public
 specifier|static
 name|void
@@ -5337,6 +5337,36 @@ argument_list|()
 operator|+
 name|strBucketNum
 decl_stmt|;
+name|String
+index|[]
+name|spl
+init|=
+name|filename
+operator|.
+name|split
+argument_list|(
+name|taskId
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|(
+name|spl
+operator|.
+name|length
+operator|==
+literal|0
+operator|)
+operator|||
+operator|(
+name|spl
+operator|.
+name|length
+operator|==
+literal|1
+operator|)
+condition|)
+block|{
 return|return
 name|filename
 operator|.
@@ -5346,6 +5376,86 @@ name|taskId
 argument_list|,
 name|newTaskId
 argument_list|)
+return|;
+block|}
+name|StringBuffer
+name|snew
+init|=
+operator|new
+name|StringBuffer
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|int
+name|idx
+init|=
+literal|0
+init|;
+name|idx
+operator|<
+name|spl
+operator|.
+name|length
+operator|-
+literal|1
+condition|;
+name|idx
+operator|++
+control|)
+block|{
+if|if
+condition|(
+name|idx
+operator|>
+literal|0
+condition|)
+block|{
+name|snew
+operator|.
+name|append
+argument_list|(
+name|taskId
+argument_list|)
+expr_stmt|;
+block|}
+name|snew
+operator|.
+name|append
+argument_list|(
+name|spl
+index|[
+name|idx
+index|]
+argument_list|)
+expr_stmt|;
+block|}
+name|snew
+operator|.
+name|append
+argument_list|(
+name|newTaskId
+argument_list|)
+expr_stmt|;
+name|snew
+operator|.
+name|append
+argument_list|(
+name|spl
+index|[
+name|spl
+operator|.
+name|length
+operator|-
+literal|1
+index|]
+argument_list|)
+expr_stmt|;
+return|return
+name|snew
+operator|.
+name|toString
+argument_list|()
 return|;
 block|}
 comment|/**    * Remove all temporary files and duplicate (double-committed) files from a    * given directory.    */
@@ -5590,7 +5700,7 @@ operator|+
 literal|")"
 return|;
 block|}
-comment|/**    * Add new elements to the classpath.    *     * @param newPaths    *          Array of classpath elements    */
+comment|/**    * Add new elements to the classpath.    *    * @param newPaths    *          Array of classpath elements    */
 specifier|public
 specifier|static
 name|ClassLoader
@@ -5752,7 +5862,7 @@ name|loader
 argument_list|)
 return|;
 block|}
-comment|/**    * remove elements from the classpath.    *     * @param pathsToRemove    *          Array of classpath elements    */
+comment|/**    * remove elements from the classpath.    *    * @param pathsToRemove    *          Array of classpath elements    */
 specifier|public
 specifier|static
 name|void
@@ -6385,7 +6495,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Gets the default notification interval to send progress updates to the    * tracker. Useful for operators that may not output data for a while.    *     * @param hconf    * @return the interval in milliseconds    */
+comment|/**    * Gets the default notification interval to send progress updates to the    * tracker. Useful for operators that may not output data for a while.    *    * @param hconf    * @return the interval in milliseconds    */
 specifier|public
 specifier|static
 name|int

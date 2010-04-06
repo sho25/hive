@@ -2621,6 +2621,39 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+name|this
+operator|.
+name|getExecContext
+argument_list|()
+operator|.
+name|setFileId
+argument_list|(
+name|bucketMatcherCxt
+operator|.
+name|getBucketFileNameMapping
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|currentInputFile
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"set task id: "
+operator|+
+name|this
+operator|.
+name|getExecContext
+argument_list|()
+operator|.
+name|getFileId
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|bucketMatcher
 operator|.
 name|setAliasBucketFileNameMapping
@@ -3092,7 +3125,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Implements the getName function for the Node Interface.    *     * @return the name of the operator    */
+comment|/**    * Implements the getName function for the Node Interface.    *    * @return the name of the operator    */
 annotation|@
 name|Override
 specifier|public

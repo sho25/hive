@@ -515,6 +515,16 @@ decl_stmt|;
 name|String
 name|currentInputFile
 decl_stmt|;
+name|Integer
+name|fileId
+init|=
+operator|new
+name|Integer
+argument_list|(
+operator|-
+literal|1
+argument_list|)
+decl_stmt|;
 name|JobConf
 name|jc
 decl_stmt|;
@@ -588,6 +598,30 @@ operator|.
 name|jc
 operator|=
 name|jc
+expr_stmt|;
+block|}
+specifier|public
+name|Integer
+name|getFileId
+parameter_list|()
+block|{
+return|return
+name|fileId
+return|;
+block|}
+specifier|public
+name|void
+name|setFileId
+parameter_list|(
+name|Integer
+name|fileId
+parameter_list|)
+block|{
+name|this
+operator|.
+name|fileId
+operator|=
+name|fileId
 expr_stmt|;
 block|}
 block|}
@@ -1225,7 +1259,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * For CompbineFileInputFormat, the mapper's input file will be changed on the    * fly. If the map local work has any mapping depending on the current    * mapper's input file, the work need to clear context and re-initialization    * after the input file changed. This is first introduced to process bucket    * map join.    *     * @return    */
+comment|/**    * For CompbineFileInputFormat, the mapper's input file will be changed on the    * fly. If the map local work has any mapping depending on the current    * mapper's input file, the work need to clear context and re-initialization    * after the input file changed. This is first introduced to process bucket    * map join.    *    * @return    */
 specifier|private
 name|boolean
 name|inputFileChanged
