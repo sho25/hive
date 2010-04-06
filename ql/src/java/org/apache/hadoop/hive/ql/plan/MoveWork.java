@@ -45,7 +45,25 @@ name|java
 operator|.
 name|util
 operator|.
-name|Set
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Partition
 import|;
 end_import
 
@@ -138,6 +156,14 @@ argument_list|<
 name|WriteEntity
 argument_list|>
 name|outputs
+decl_stmt|;
+comment|/**    * List of inserted partitions    */
+specifier|protected
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|movedParts
 decl_stmt|;
 specifier|public
 name|MoveWork

@@ -70,7 +70,7 @@ specifier|public
 interface|interface
 name|PostExecute
 block|{
-comment|/**    * The run command that is called just before the execution of the query.    *     * @param sess    *          The session state.    * @param inputs    *          The set of input tables and partitions.    * @param outputs    *          The set of output tables, partitions, local and hdfs directories.    * @param ugi    *          The user group security information.    */
+comment|/**    * The run command that is called just before the execution of the query.    *    * @param sess    *          The session state.    * @param inputs    *          The set of input tables and partitions.    * @param outputs    *          The set of output tables, partitions, local and hdfs directories.    * @param lInfo    *           The column level lineage information.    * @param ugi    *          The user group security information.    */
 name|void
 name|run
 parameter_list|(
@@ -88,6 +88,9 @@ argument_list|<
 name|WriteEntity
 argument_list|>
 name|outputs
+parameter_list|,
+name|LineageInfo
+name|lInfo
 parameter_list|,
 name|UserGroupInformation
 name|ugi

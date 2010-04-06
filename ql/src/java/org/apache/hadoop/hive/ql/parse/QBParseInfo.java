@@ -176,7 +176,7 @@ name|nameToSample
 decl_stmt|;
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -371,7 +371,7 @@ expr_stmt|;
 name|destToSelExpr
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

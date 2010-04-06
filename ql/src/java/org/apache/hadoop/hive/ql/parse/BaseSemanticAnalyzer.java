@@ -271,6 +271,24 @@ name|ql
 operator|.
 name|hooks
 operator|.
+name|LineageInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|hooks
+operator|.
 name|ReadEntity
 import|;
 end_import
@@ -537,14 +555,6 @@ begin_comment
 comment|/**  * BaseSemanticAnalyzer.  *  */
 end_comment
 
-begin_comment
-comment|/**  * BaseSemanticAnalyzer.  *  */
-end_comment
-
-begin_comment
-comment|/**  * BaseSemanticAnalyzer.  *  */
-end_comment
-
 begin_class
 specifier|public
 specifier|abstract
@@ -629,6 +639,11 @@ argument_list|<
 name|WriteEntity
 argument_list|>
 name|outputs
+decl_stmt|;
+comment|/**    * Lineage information for the query.    */
+specifier|protected
+name|LineageInfo
+name|linfo
 decl_stmt|;
 specifier|protected
 specifier|static
@@ -2979,6 +2994,32 @@ argument_list|()
 return|;
 block|}
 block|}
+block|}
+comment|/**    * Gets the lineage information.    *    * @return LineageInfo associated with the query.    */
+specifier|public
+name|LineageInfo
+name|getLineageInfo
+parameter_list|()
+block|{
+return|return
+name|linfo
+return|;
+block|}
+comment|/**    * Sets the lineage information.    *    * @param linfo The LineageInfo structure that is set in the optimization phase.    */
+specifier|public
+name|void
+name|setLineageInfo
+parameter_list|(
+name|LineageInfo
+name|linfo
+parameter_list|)
+block|{
+name|this
+operator|.
+name|linfo
+operator|=
+name|linfo
+expr_stmt|;
 block|}
 block|}
 end_class

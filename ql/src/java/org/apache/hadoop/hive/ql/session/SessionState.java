@@ -252,7 +252,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * SessionState encapsulates common data associated with a session.  *   * Also provides support for a thread static session object that can be accessed  * from any point in the code to interact with the user and to retrieve  * configuration information  */
+comment|/**  * SessionState encapsulates common data associated with a session.  *  * Also provides support for a thread static session object that can be accessed  * from any point in the code to interact with the user and to retrieve  * configuration information  */
 end_comment
 
 begin_class
@@ -293,6 +293,20 @@ specifier|private
 name|String
 name|commandType
 decl_stmt|;
+comment|/**    * Lineage state.    */
+name|LineageState
+name|ls
+decl_stmt|;
+comment|/**    * Get the lineage state stored in this session.    *    * @return LineageState    */
+specifier|public
+name|LineageState
+name|getLineageState
+parameter_list|()
+block|{
+return|return
+name|ls
+return|;
+block|}
 specifier|public
 name|HiveConf
 name|getConf
@@ -363,6 +377,12 @@ operator|.
 name|conf
 operator|=
 name|conf
+expr_stmt|;
+name|ls
+operator|=
+operator|new
+name|LineageState
+argument_list|()
 expr_stmt|;
 block|}
 specifier|public
@@ -447,7 +467,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-comment|/**    * Singleton Session object per thread.    *     **/
+comment|/**    * Singleton Session object per thread.    *    **/
 specifier|private
 specifier|static
 name|ThreadLocal
@@ -617,7 +637,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**    * get hiveHitsory object which does structured logging.    *     * @return The hive history object    */
+comment|/**    * get hiveHitsory object which does structured logging.    *    * @return The hive history object    */
 specifier|public
 name|HiveHistory
 name|getHiveHistory
@@ -775,7 +795,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * This class provides helper routines to emit informational and error    * messages to the user and log4j files while obeying the current session's    * verbosity levels.    *     * NEVER write directly to the SessionStates standard output other than to    * emit result data DO use printInfo and printError provided by LogHelper to    * emit non result data strings.    *     * It is perfectly acceptable to have global static LogHelper objects (for    * example - once per module) LogHelper always emits info/error to current    * session as required.    */
+comment|/**    * This class provides helper routines to emit informational and error    * messages to the user and log4j files while obeying the current session's    * verbosity levels.    *    * NEVER write directly to the SessionStates standard output other than to    * emit result data DO use printInfo and printError provided by LogHelper to    * emit non result data strings.    *    * It is perfectly acceptable to have global static LogHelper objects (for    * example - once per module) LogHelper always emits info/error to current    * session as required.    */
 specifier|public
 specifier|static
 class|class

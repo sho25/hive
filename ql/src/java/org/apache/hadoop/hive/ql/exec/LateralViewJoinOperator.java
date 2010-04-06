@@ -468,6 +468,17 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getName
+parameter_list|()
+block|{
+return|return
+literal|"LVJ"
+return|;
+block|}
 block|}
 end_class
 

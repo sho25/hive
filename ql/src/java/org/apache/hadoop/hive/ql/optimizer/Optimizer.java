@@ -149,6 +149,26 @@ name|PredicatePushDown
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|lineage
+operator|.
+name|Generator
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implementation of the optimizer.  */
 end_comment
@@ -186,6 +206,16 @@ argument_list|<
 name|Transform
 argument_list|>
 argument_list|()
+expr_stmt|;
+comment|// Add the transformation that computes the lineage information.
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
+name|Generator
+argument_list|()
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
