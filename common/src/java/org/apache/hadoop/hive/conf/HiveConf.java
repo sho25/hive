@@ -1089,6 +1089,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVE_COMBINE_INPUT_FORMAT_SUPPORTS_SPLITTABLE
+argument_list|(
+literal|"hive.hadoop.supports.splittable.combineinputformat"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Optimizer
 name|HIVEOPTCP
 argument_list|(
@@ -1136,7 +1143,7 @@ literal|"hive.optimize.reducededuplication"
 argument_list|,
 literal|true
 argument_list|)
-block|,      ;
+block|,     ;
 specifier|public
 specifier|final
 name|String

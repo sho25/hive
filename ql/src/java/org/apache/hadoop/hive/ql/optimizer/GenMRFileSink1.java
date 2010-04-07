@@ -840,7 +840,7 @@ specifier|public
 name|GenMRFileSink1
 parameter_list|()
 block|{   }
-comment|/**    * File Sink Operator encountered.    *     * @param nd    *          the file sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * File Sink Operator encountered.    *    * @param nd    *          the file sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -1345,14 +1345,6 @@ argument_list|,
 name|ts_op
 argument_list|)
 expr_stmt|;
-name|MapredWork
-name|cplan
-init|=
-name|GenMapRedUtils
-operator|.
-name|getMapRedWork
-argument_list|()
-decl_stmt|;
 name|ParseContext
 name|parseCtx
 init|=
@@ -1360,6 +1352,19 @@ name|ctx
 operator|.
 name|getParseCtx
 argument_list|()
+decl_stmt|;
+name|MapredWork
+name|cplan
+init|=
+name|GenMapRedUtils
+operator|.
+name|getMapRedWork
+argument_list|(
+name|parseCtx
+operator|.
+name|getConf
+argument_list|()
+argument_list|)
 decl_stmt|;
 name|Task
 argument_list|<

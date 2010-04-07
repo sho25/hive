@@ -572,7 +572,7 @@ specifier|public
 name|GenMRUnion1
 parameter_list|()
 block|{   }
-comment|/**    * Union Operator encountered . Currently, the algorithm is pretty simple: If    * all the sub-queries are map-only, dont do anything. However, if there is a    * mapjoin followed by the union, merge at the union Otherwise, insert a    * FileSink on top of all the sub-queries.    *     * This can be optimized later on.    *     * @param nd    *          the file sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * Union Operator encountered . Currently, the algorithm is pretty simple: If    * all the sub-queries are map-only, dont do anything. However, if there is a    * mapjoin followed by the union, merge at the union Otherwise, insert a    * FileSink on top of all the sub-queries.    *    * This can be optimized later on.    *    * @param nd    *          the file sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -957,7 +957,12 @@ operator|=
 name|GenMapRedUtils
 operator|.
 name|getMapRedWork
+argument_list|(
+name|parseCtx
+operator|.
+name|getConf
 argument_list|()
+argument_list|)
 expr_stmt|;
 name|uTask
 operator|=

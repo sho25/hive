@@ -230,6 +230,10 @@ name|boolean
 name|needsTagging
 decl_stmt|;
 specifier|private
+name|boolean
+name|hadoopSupportsSplittable
+decl_stmt|;
+specifier|private
 name|MapredLocalWork
 name|mapLocalWork
 decl_stmt|;
@@ -319,6 +323,10 @@ parameter_list|,
 specifier|final
 name|MapredLocalWork
 name|mapLocalWork
+parameter_list|,
+specifier|final
+name|boolean
+name|hadoopSupportsSplittable
 parameter_list|)
 block|{
 name|this
@@ -385,6 +393,12 @@ argument_list|,
 name|PartitionDesc
 argument_list|>
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|hadoopSupportsSplittable
+operator|=
+name|hadoopSupportsSplittable
 expr_stmt|;
 block|}
 specifier|public
@@ -750,7 +764,7 @@ operator|=
 name|numMapTasks
 expr_stmt|;
 block|}
-comment|/**    * If the number of reducers is -1, the runtime will automatically figure it    * out by input data size.    *     * The number of reducers will be a positive number only in case the target    * table is bucketed into N buckets (through CREATE TABLE). This feature is    * not supported yet, so the number of reducers will always be -1 for now.    */
+comment|/**    * If the number of reducers is -1, the runtime will automatically figure it    * out by input data size.    *    * The number of reducers will be a positive number only in case the target    * table is bucketed into N buckets (through CREATE TABLE). This feature is    * not supported yet, so the number of reducers will always be -1 for now.    */
 specifier|public
 name|Integer
 name|getNumReduceTasks
@@ -1168,6 +1182,30 @@ operator|.
 name|needsTagging
 operator|=
 name|needsTagging
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|getHadoopSupportsSplittable
+parameter_list|()
+block|{
+return|return
+name|hadoopSupportsSplittable
+return|;
+block|}
+specifier|public
+name|void
+name|setHadoopSupportsSplittable
+parameter_list|(
+name|boolean
+name|hadoopSupportsSplittable
+parameter_list|)
+block|{
+name|this
+operator|.
+name|hadoopSupportsSplittable
+operator|=
+name|hadoopSupportsSplittable
 expr_stmt|;
 block|}
 specifier|public

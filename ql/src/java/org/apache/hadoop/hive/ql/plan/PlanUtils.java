@@ -535,6 +535,22 @@ name|TextInputFormat
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
 begin_comment
 comment|/**  * PlanUtils.  *  */
 end_comment
@@ -579,6 +595,8 @@ specifier|static
 name|MapredWork
 name|getMapRedWork
 parameter_list|()
+block|{
+try|try
 block|{
 return|return
 operator|new
@@ -642,8 +660,40 @@ literal|1
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+name|Hive
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_COMBINE_INPUT_FORMAT_SUPPORTS_SPLITTABLE
+argument_list|)
 argument_list|)
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|ex
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|ex
+argument_list|)
+throw|;
+block|}
 block|}
 comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode and column names (comma separated string).    */
 specifier|public
@@ -2113,7 +2163,7 @@ return|return
 name|schema
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    *     * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param partitionCols    *          The columns for partitioning.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param partitionCols    *          The columns for partitioning.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|ReduceSinkDesc
@@ -2367,7 +2417,7 @@ name|valueTable
 argument_list|)
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    *     * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param numPartitionFields    *          The first numPartitionFields of keyCols will be partition columns.    *          If numPartitionFields=-1, then partition randomly.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param numPartitionFields    *          The first numPartitionFields of keyCols will be partition columns.    *          If numPartitionFields=-1, then partition randomly.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|ReduceSinkDesc
