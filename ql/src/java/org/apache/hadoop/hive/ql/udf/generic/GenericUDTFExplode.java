@@ -324,6 +324,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
+specifier|final
 name|Object
 index|[]
 name|forwardObj
@@ -363,6 +364,15 @@ literal|0
 index|]
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|list
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 for|for
 control|(
 name|Object
