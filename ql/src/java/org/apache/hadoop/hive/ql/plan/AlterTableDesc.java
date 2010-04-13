@@ -166,6 +166,8 @@ block|,
 name|RENAMECOLUMN
 block|,
 name|ADDPARTITION
+block|,
+name|TOUCH
 block|}
 empty_stmt|;
 name|AlterTableTypes
@@ -422,7 +424,7 @@ operator|=
 name|expectView
 expr_stmt|;
 block|}
-comment|/**    *     * @param name    *          name of the table    * @param inputFormat    *          new table input format    * @param outputFormat    *          new table output format    */
+comment|/**    *    * @param name    *          name of the table    * @param inputFormat    *          new table input format    * @param outputFormat    *          new table output format    */
 specifier|public
 name|AlterTableDesc
 parameter_list|(
