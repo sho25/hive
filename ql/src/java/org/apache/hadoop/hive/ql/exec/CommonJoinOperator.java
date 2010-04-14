@@ -85,7 +85,9 @@ name|java
 operator|.
 name|util
 operator|.
-name|Set
+name|Map
+operator|.
+name|Entry
 import|;
 end_import
 
@@ -95,9 +97,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
-operator|.
-name|Entry
+name|Set
 import|;
 end_import
 
@@ -405,7 +405,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|StructObjectInspector
+name|ObjectInspectorUtils
+operator|.
+name|ObjectInspectorCopyOption
 import|;
 end_import
 
@@ -423,9 +425,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorUtils
-operator|.
-name|ObjectInspectorCopyOption
+name|StructObjectInspector
 import|;
 end_import
 
@@ -4718,7 +4718,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Forward a record of join results.    *     * @throws HiveException    */
+comment|/**    * Forward a record of join results.    *    * @throws HiveException    */
 annotation|@
 name|Override
 specifier|public
@@ -5223,7 +5223,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * All done.    *     */
+comment|/**    * All done.    *    */
 annotation|@
 name|Override
 specifier|public

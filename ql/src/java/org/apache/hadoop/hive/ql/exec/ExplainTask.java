@@ -129,6 +129,18 @@ name|java
 operator|.
 name|util
 operator|.
+name|Map
+operator|.
+name|Entry
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Set
 import|;
 end_import
@@ -140,18 +152,6 @@ operator|.
 name|util
 operator|.
 name|TreeMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-operator|.
-name|Entry
 import|;
 end_import
 
@@ -240,7 +240,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ExplainTask implementation.  *   **/
+comment|/**  * ExplainTask implementation.  *  **/
 end_comment
 
 begin_class
@@ -670,6 +670,14 @@ literal|2
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+name|out
+operator|.
+name|println
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private
@@ -866,6 +874,10 @@ return|;
 block|}
 if|if
 condition|(
+name|val
+operator|!=
+literal|null
+operator|&&
 name|val
 operator|.
 name|getClass

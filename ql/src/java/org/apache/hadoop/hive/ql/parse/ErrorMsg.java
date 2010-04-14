@@ -577,6 +577,39 @@ argument_list|(
 literal|"A view cannot be used as target table for LOAD or INSERT"
 argument_list|)
 block|,
+name|PARTITION_DYN_STA_ORDER
+argument_list|(
+literal|"Dynamic partition cannot be the parent of a static partition"
+argument_list|)
+block|,
+name|DYNAMIC_PARTITION_DISABLED
+argument_list|(
+literal|"Dynamic partition is disabled. Either enable it by setting "
+operator|+
+literal|"hive.exec.dynamic.partition=true or specify partition column values"
+argument_list|)
+block|,
+name|DYNAMIC_PARTITION_STRICT_MODE
+argument_list|(
+literal|"Dynamic partition strict mode requires at least one "
+operator|+
+literal|"static partition column. To turn this off set hive.exec.dynamic.partition.mode=nonstrict"
+argument_list|)
+block|,
+name|DYNAMIC_PARTITION_MERGE
+argument_list|(
+literal|"Dynamic partition does not support merging mapfiles/mapredfiles yet."
+operator|+
+literal|"Please set hive.merge.mapfiles and hive.merge.mapredfiles to false or use static "
+operator|+
+literal|"partitions"
+argument_list|)
+block|,
+name|NONEXISTPARTCOL
+argument_list|(
+literal|"Partition column in the partition specification does not exist"
+argument_list|)
+block|,
 name|UNSUPPORTED_TYPE
 argument_list|(
 literal|"DATE, DATETIME, and TIMESTAMP types aren't supported yet. Please use "
@@ -709,7 +742,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * For a given error message string, searches for a<code>ErrorMsg</code> enum    * that appears to be a match. If an match is found, returns the    *<code>SQLState</code> associated with the<code>ErrorMsg</code>. If a match    * is not found or<code>ErrorMsg</code> has no<code>SQLState</code>, returns    * the<code>SQLState</code> bound to the<code>GENERIC_ERROR</code>    *<code>ErrorMsg</code>.    *     * @param mesg    *          An error message string    * @return SQLState    */
+comment|/**    * For a given error message string, searches for a<code>ErrorMsg</code> enum    * that appears to be a match. If an match is found, returns the    *<code>SQLState</code> associated with the<code>ErrorMsg</code>. If a match    * is not found or<code>ErrorMsg</code> has no<code>SQLState</code>, returns    * the<code>SQLState</code> bound to the<code>GENERIC_ERROR</code>    *<code>ErrorMsg</code>.    *    * @param mesg    *          An error message string    * @return SQLState    */
 specifier|public
 specifier|static
 name|String

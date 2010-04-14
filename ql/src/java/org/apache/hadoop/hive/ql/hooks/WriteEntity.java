@@ -129,7 +129,7 @@ specifier|private
 name|String
 name|d
 decl_stmt|;
-comment|/**    * This is derived from t and p, but we need to serialize this field to make sure    * WriteEntity.hashCode() does not need to recursively read into t and p.     */
+comment|/**    * This is derived from t and p, but we need to serialize this field to make sure    * WriteEntity.hashCode() does not need to recursively read into t and p.    */
 specifier|private
 name|String
 name|name
@@ -259,7 +259,7 @@ specifier|public
 name|WriteEntity
 parameter_list|()
 block|{   }
-comment|/**    * Constructor for a table.    *     * @param t    *          Table that is written to.    */
+comment|/**    * Constructor for a table.    *    * @param t    *          Table that is written to.    */
 specifier|public
 name|WriteEntity
 parameter_list|(
@@ -293,7 +293,7 @@ name|computeName
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Constructor for a partition.    *     * @param p    *          Partition that is written to.    */
+comment|/**    * Constructor for a partition.    *    * @param p    *          Partition that is written to.    */
 specifier|public
 name|WriteEntity
 parameter_list|(
@@ -330,7 +330,7 @@ name|computeName
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Constructor for a file.    *     * @param d    *          The name of the directory that is being written to.    * @param islocal    *          Flag to decide whether this directory is local or in dfs.    */
+comment|/**    * Constructor for a file.    *    * @param d    *          The name of the directory that is being written to.    * @param islocal    *          Flag to decide whether this directory is local or in dfs.    */
 specifier|public
 name|WriteEntity
 parameter_list|(

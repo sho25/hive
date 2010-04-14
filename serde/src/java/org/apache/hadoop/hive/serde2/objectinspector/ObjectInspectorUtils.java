@@ -386,7 +386,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector  * instances.  *   * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  */
+comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector  * instances.  *  * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  */
 end_comment
 
 begin_class
@@ -413,7 +413,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/**    * This enum controls how we copy primitive objects.    *     * DEFAULT means choosing the most efficient way between JAVA and WRITABLE.    * JAVA means converting all primitive objects to java primitive objects.    * WRITABLE means converting all primitive objects to writable objects.    *     */
+comment|/**    * This enum controls how we copy primitive objects.    *    * DEFAULT means choosing the most efficient way between JAVA and WRITABLE.    * JAVA means converting all primitive objects to java primitive objects.    * WRITABLE means converting all primitive objects to writable objects.    *    */
 specifier|public
 enum|enum
 name|ObjectInspectorCopyOption
@@ -424,7 +424,7 @@ name|JAVA
 block|,
 name|WRITABLE
 block|}
-comment|/**    * Get the corresponding standard ObjectInspector for an ObjectInspector.    *     * The returned ObjectInspector can be used to inspect the standard object.    */
+comment|/**    * Get the corresponding standard ObjectInspector for an ObjectInspector.    *    * The returned ObjectInspector can be used to inspect the standard object.    */
 specifier|public
 specifier|static
 name|ObjectInspector
@@ -762,6 +762,108 @@ block|}
 return|return
 name|result
 return|;
+block|}
+comment|/**    * Copy specified fields in the input row to the output array of standard objects.    * @param result output list of standard objects.    * @param row input row.    * @param startCol starting column number from the input row.    * @param numCols number of columns to copy.    * @param soi Object inspector for the to-be-copied columns.    */
+specifier|public
+specifier|static
+name|void
+name|partialCopyToStandardObject
+parameter_list|(
+name|List
+argument_list|<
+name|Object
+argument_list|>
+name|result
+parameter_list|,
+name|Object
+name|row
+parameter_list|,
+name|int
+name|startCol
+parameter_list|,
+name|int
+name|numCols
+parameter_list|,
+name|StructObjectInspector
+name|soi
+parameter_list|,
+name|ObjectInspectorCopyOption
+name|objectInspectorOption
+parameter_list|)
+block|{
+name|List
+argument_list|<
+name|?
+extends|extends
+name|StructField
+argument_list|>
+name|fields
+init|=
+name|soi
+operator|.
+name|getAllStructFieldRefs
+argument_list|()
+decl_stmt|;
+name|int
+name|i
+init|=
+literal|0
+decl_stmt|,
+name|j
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+name|StructField
+name|f
+range|:
+name|fields
+control|)
+block|{
+if|if
+condition|(
+name|i
+operator|++
+operator|>=
+name|startCol
+condition|)
+block|{
+name|result
+operator|.
+name|add
+argument_list|(
+name|copyToStandardObject
+argument_list|(
+name|soi
+operator|.
+name|getStructFieldData
+argument_list|(
+name|row
+argument_list|,
+name|f
+argument_list|)
+argument_list|,
+name|f
+operator|.
+name|getFieldObjectInspector
+argument_list|()
+argument_list|,
+name|objectInspectorOption
+argument_list|)
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|j
+operator|==
+name|numCols
+condition|)
+block|{
+break|break;
+block|}
+block|}
+block|}
 block|}
 comment|/**    * Returns a deep copy of the Object o that can be scanned by a    * StandardObjectInspector returned by getStandardObjectInspector(oi).    */
 specifier|public
@@ -3558,7 +3660,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * Get the type name of the Java class.     */
+comment|/**    * Get the type name of the Java class.    */
 specifier|public
 specifier|static
 name|String

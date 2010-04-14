@@ -151,7 +151,9 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Utilities
+name|FileSinkOperator
+operator|.
+name|RecordWriter
 import|;
 end_import
 
@@ -169,9 +171,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|Utilities
 import|;
 end_import
 
@@ -239,7 +239,9 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|Writable
+name|SequenceFile
+operator|.
+name|CompressionType
 import|;
 end_import
 
@@ -253,9 +255,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|SequenceFile
-operator|.
-name|CompressionType
+name|Writable
 import|;
 end_import
 

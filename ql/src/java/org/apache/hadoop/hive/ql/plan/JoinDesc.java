@@ -70,7 +70,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Join operator Descriptor implementation.  *   */
+comment|/**  * Join operator Descriptor implementation.  *  */
 end_comment
 
 begin_class
@@ -204,16 +204,8 @@ name|exprs
 decl_stmt|;
 comment|// used for create joinOutputObjectInspector
 specifier|protected
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
+name|List
 argument_list|<
-name|java
-operator|.
-name|lang
-operator|.
 name|String
 argument_list|>
 name|outputColumnNames
@@ -267,7 +259,7 @@ argument_list|>
 argument_list|>
 name|exprs
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -362,7 +354,7 @@ argument_list|>
 argument_list|>
 name|exprs
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -396,7 +388,7 @@ argument_list|>
 argument_list|>
 name|exprs
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -772,16 +764,8 @@ operator|=
 literal|"outputColumnNames"
 argument_list|)
 specifier|public
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
+name|List
 argument_list|<
-name|java
-operator|.
-name|lang
-operator|.
 name|String
 argument_list|>
 name|getOutputColumnNames
@@ -795,16 +779,8 @@ specifier|public
 name|void
 name|setOutputColumnNames
 parameter_list|(
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
+name|List
 argument_list|<
-name|java
-operator|.
-name|lang
-operator|.
 name|String
 argument_list|>
 name|outputColumnNames
@@ -928,7 +904,7 @@ operator|=
 name|conds
 expr_stmt|;
 block|}
-comment|/**    * The order in which tables should be processed when joining.    *     * @return Array of tags    */
+comment|/**    * The order in which tables should be processed when joining.    *    * @return Array of tags    */
 specifier|public
 name|Byte
 index|[]
@@ -939,7 +915,7 @@ return|return
 name|tagOrder
 return|;
 block|}
-comment|/**    * The order in which tables should be processed when joining.    *     * @param tagOrder    *          Array of tags    */
+comment|/**    * The order in which tables should be processed when joining.    *    * @param tagOrder    *          Array of tags    */
 specifier|public
 name|void
 name|setTagOrder
@@ -972,7 +948,7 @@ return|return
 name|handleSkewJoin
 return|;
 block|}
-comment|/**    * set to handle skew join in this join op.    *     * @param handleSkewJoin    */
+comment|/**    * set to handle skew join in this join op.    *    * @param handleSkewJoin    */
 specifier|public
 name|void
 name|setHandleSkewJoin
@@ -1003,7 +979,7 @@ return|return
 name|bigKeysDirMap
 return|;
 block|}
-comment|/**    * set the mapping from tbl to dir for big keys.    *     * @param bigKeysDirMap    */
+comment|/**    * set the mapping from tbl to dir for big keys.    *    * @param bigKeysDirMap    */
 specifier|public
 name|void
 name|setBigKeysDirMap
@@ -1044,7 +1020,7 @@ return|return
 name|smallKeysDirMap
 return|;
 block|}
-comment|/**    * set the mapping from tbl to dir for small keys.    *     * @param bigKeysDirMap    */
+comment|/**    * set the mapping from tbl to dir for small keys.    *    * @param bigKeysDirMap    */
 specifier|public
 name|void
 name|setSmallKeysDirMap
@@ -1080,7 +1056,7 @@ return|return
 name|skewKeyDefinition
 return|;
 block|}
-comment|/**    * set skew key definition.    *     * @param skewKeyDefinition    */
+comment|/**    * set skew key definition.    *    * @param skewKeyDefinition    */
 specifier|public
 name|void
 name|setSkewKeyDefinition

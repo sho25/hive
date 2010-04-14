@@ -492,7 +492,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-comment|/**    * Create an operator with a reporter.    *     * @param reporter    *          Used to report progress of certain operators.    */
+comment|/**    * Create an operator with a reporter.    *    * @param reporter    *          Used to report progress of certain operators.    */
 specifier|public
 name|Operator
 parameter_list|(
@@ -1082,7 +1082,7 @@ name|ret
 operator|)
 return|;
 block|}
-comment|/**    * checks whether all parent operators are initialized or not.    *     * @return true if there are no parents or all parents are initialized. false    *         otherwise    */
+comment|/**    * checks whether all parent operators are initialized or not.    *    * @return true if there are no parents or all parents are initialized. false    *         otherwise    */
 specifier|protected
 name|boolean
 name|areAllParentsInitialized
@@ -1132,7 +1132,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Initializes operators only if all parents have been initialized. Calls    * operator specific initializer which then initializes child ops.    *     * @param hconf    * @param inputOIs    *          input object inspector array indexes by tag id. null value is    *          ignored.    * @throws HiveException    */
+comment|/**    * Initializes operators only if all parents have been initialized. Calls    * operator specific initializer which then initializes child ops.    *    * @param hconf    * @param inputOIs    *          input object inspector array indexes by tag id. null value is    *          ignored.    * @throws HiveException    */
 specifier|public
 name|void
 name|initialize
@@ -1590,7 +1590,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Pass the execContext reference to every child operator     */
+comment|/**    * Pass the execContext reference to every child operator    */
 specifier|public
 name|void
 name|passExecContext
@@ -1646,7 +1646,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Collects all the parent's output object inspectors and calls actual    * initialization method.    *     * @param hconf    * @param inputOI    *          OI of the row that this parent will pass to this op    * @param parentId    *          parent operator id    * @throws HiveException    */
+comment|/**    * Collects all the parent's output object inspectors and calls actual    * initialization method.    *    * @param hconf    * @param inputOI    *          OI of the row that this parent will pass to this op    * @param parentId    *          parent operator id    * @throws HiveException    */
 specifier|private
 name|void
 name|initialize
@@ -1736,7 +1736,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Process the row.    *     * @param row    *          The object representing the row.    * @param tag    *          The tag of the row usually means which parent this row comes from.    *          Rows with the same tag should have exactly the same rowInspector    *          all the time.    */
+comment|/**    * Process the row.    *    * @param row    *          The object representing the row.    * @param tag    *          The tag of the row usually means which parent this row comes from.    *          Rows with the same tag should have exactly the same rowInspector    *          all the time.    */
 specifier|public
 specifier|abstract
 name|void
@@ -1751,7 +1751,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Process the row.    *     * @param row    *          The object representing the row.    * @param tag    *          The tag of the row usually means which parent this row comes from.    *          Rows with the same tag should have exactly the same rowInspector    *          all the time.    */
+comment|/**    * Process the row.    *    * @param row    *          The object representing the row.    * @param tag    *          The tag of the row usually means which parent this row comes from.    *          Rows with the same tag should have exactly the same rowInspector    *          all the time.    */
 specifier|public
 name|void
 name|process
@@ -2144,7 +2144,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{   }
-comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed.    *     * @param conf    *          Configuration with with which job was submitted    * @param success    *          whether the job was completed successfully or not    */
+comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed.    *    * @param conf    *          Configuration with with which job was submitted    * @param success    *          whether the job was completed successfully or not    */
 specifier|public
 name|void
 name|jobClose
@@ -2154,6 +2154,9 @@ name|conf
 parameter_list|,
 name|boolean
 name|success
+parameter_list|,
+name|JobCloseFeedBack
+name|feedBack
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2187,6 +2190,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|success
+argument_list|,
+name|feedBack
 argument_list|)
 expr_stmt|;
 block|}
@@ -2226,7 +2231,7 @@ name|nextCntr
 init|=
 literal|1
 decl_stmt|;
-comment|/**    * Replace one child with another at the same position. The parent of the    * child is not changed    *     * @param child    *          the old child    * @param newChild    *          the new child    */
+comment|/**    * Replace one child with another at the same position. The parent of the    * child is not changed    *    * @param child    *          the old child    * @param newChild    *          the new child    */
 specifier|public
 name|void
 name|replaceChild
@@ -2382,7 +2387,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Replace one parent with another at the same position. Chilren of the new    * parent are not updated    *     * @param parent    *          the old parent    * @param newParent    *          the new parent    */
+comment|/**    * Replace one parent with another at the same position. Chilren of the new    * parent are not updated    *    * @param parent    *          the old parent    * @param newParent    *          the new parent    */
 specifier|public
 name|void
 name|replaceParent
@@ -2805,7 +2810,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Implements the getName function for the Node Interface.    *     * @return the name of the operator    */
+comment|/**    * Implements the getName function for the Node Interface.    *    * @return the name of the operator    */
 specifier|public
 name|String
 name|getName
@@ -2819,7 +2824,7 @@ literal|"OP"
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns a map of output column name to input expression map Note that    * currently it returns only key columns for ReduceSink and GroupBy operators.    *     * @return null if the operator doesn't change columns    */
+comment|/**    * Returns a map of output column name to input expression map Note that    * currently it returns only key columns for ReduceSink and GroupBy operators.    *    * @return null if the operator doesn't change columns    */
 specifier|public
 name|Map
 argument_list|<
@@ -4247,7 +4252,7 @@ operator|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * this is called in operators in map or reduce tasks.    *     * @param name    * @param amount    */
+comment|/**    * this is called in operators in map or reduce tasks.    *    * @param name    * @param amount    */
 specifier|protected
 name|void
 name|incrCounter
@@ -4405,7 +4410,7 @@ return|return
 name|counters
 return|;
 block|}
-comment|/**    * called in ExecDriver.progress periodically.    *     * @param ctrs    *          counters from the running job    */
+comment|/**    * called in ExecDriver.progress periodically.    *    * @param ctrs    *          counters from the running job    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -4528,7 +4533,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Recursively check this operator and its descendants to see if the fatal    * error counter is set to non-zero.    *     * @param ctrs    */
+comment|/**    * Recursively check this operator and its descendants to see if the fatal    * error counter is set to non-zero.    *    * @param ctrs    */
 specifier|public
 name|boolean
 name|checkFatalErrors
@@ -4672,7 +4677,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Get the fatal error message based on counter's code.    *     * @param errMsg    *          error message should be appended to this output parameter.    * @param counterValue    *          input counter code.    */
+comment|/**    * Get the fatal error message based on counter's code.    *    * @param errMsg    *          error message should be appended to this output parameter.    * @param counterValue    *          input counter code.    */
 specifier|protected
 name|void
 name|fatalErrorMessage
@@ -4956,7 +4961,7 @@ operator|=
 name|counterNameToEnum
 expr_stmt|;
 block|}
-comment|/**    * Should be overridden to return the type of the specific operator among the    * types in OperatorType.    *     * @return OperatorType.* or -1 if not overridden    */
+comment|/**    * Should be overridden to return the type of the specific operator among the    * types in OperatorType.    *    * @return OperatorType.* or -1 if not overridden    */
 specifier|public
 name|int
 name|getType
