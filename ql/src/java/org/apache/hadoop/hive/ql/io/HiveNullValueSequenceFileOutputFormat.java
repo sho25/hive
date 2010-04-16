@@ -410,20 +410,23 @@ name|BytesWritable
 operator|)
 name|r
 decl_stmt|;
+comment|// Once we drop support for old Hadoop versions, change these
+comment|// to getBytes() and getLength() to fix the deprecation warnings.
+comment|// Not worth a shim.
 name|keyWritable
 operator|.
 name|set
 argument_list|(
 name|bw
 operator|.
-name|getBytes
+name|get
 argument_list|()
 argument_list|,
 literal|0
 argument_list|,
 name|bw
 operator|.
-name|getLength
+name|getSize
 argument_list|()
 argument_list|)
 expr_stmt|;
