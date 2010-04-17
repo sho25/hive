@@ -2910,6 +2910,8 @@ operator|new
 name|DriverContext
 argument_list|(
 name|runnable
+argument_list|,
+name|ctx
 argument_list|)
 decl_stmt|;
 comment|// Add root Tasks to runnable
@@ -4088,11 +4090,19 @@ parameter_list|()
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|ctx
+operator|!=
+literal|null
+condition|)
+block|{
 name|ctx
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

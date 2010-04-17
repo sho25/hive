@@ -561,6 +561,17 @@ argument_list|(
 name|job
 argument_list|,
 name|mrwork
+argument_list|,
+literal|"/tmp/"
+operator|+
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"user.name"
+argument_list|)
+operator|+
+literal|"/hive"
 argument_list|)
 expr_stmt|;
 name|MapredWork

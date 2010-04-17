@@ -302,6 +302,11 @@ specifier|private
 name|Path
 name|MRScratchDir
 decl_stmt|;
+comment|// all query specific directories are created as sub-directories of queryPath
+specifier|private
+name|Path
+name|queryPath
+decl_stmt|;
 comment|// allScratchDirs contains all scratch directories including
 comment|// localScratchDir and MRScratchDir.
 comment|// The external scratch dirs will be also based on hive.exec.scratchdir.
@@ -365,7 +370,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Create a Context with a given executionId.  ExecutionId, together with    * user name and conf, will determine the temporary directory locations.     */
+comment|/**    * Create a Context with a given executionId.  ExecutionId, together with    * user name and conf, will determine the temporary directory locations.    */
 specifier|public
 name|Context
 parameter_list|(
@@ -418,56 +423,8 @@ operator|.
 name|getPath
 argument_list|()
 expr_stmt|;
-block|}
-comment|/**    * Set the context on whether the current query is an explain query.    *     * @param value    *          true if the query is an explain query, false if not    */
-specifier|public
-name|void
-name|setExplain
-parameter_list|(
-name|boolean
-name|value
-parameter_list|)
-block|{
-name|explain
+name|queryPath
 operator|=
-name|value
-expr_stmt|;
-block|}
-comment|/**    * Find out whether the current query is an explain query.    *     * @return true if the query is an explain query, false if not    */
-specifier|public
-name|boolean
-name|getExplain
-parameter_list|()
-block|{
-return|return
-name|explain
-return|;
-block|}
-comment|/**    * Make a tmp directory for MR intermediate data If URI/Scheme are not    * supplied - those implied by the default filesystem will be used (which will    * typically correspond to hdfs instance on hadoop cluster).    *     * @param mkdir  if true, will make the directory. Will throw IOException if that fails.    */
-specifier|private
-specifier|static
-name|Path
-name|makeMRScratchDir
-parameter_list|(
-name|HiveConf
-name|conf
-parameter_list|,
-name|String
-name|executionId
-parameter_list|,
-name|boolean
-name|mkdir
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-name|Path
-name|dir
-init|=
-name|FileUtils
-operator|.
-name|makeQualified
-argument_list|(
 operator|new
 name|Path
 argument_list|(
@@ -484,6 +441,54 @@ argument_list|)
 argument_list|,
 name|executionId
 argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Set the context on whether the current query is an explain query.    *    * @param value    *          true if the query is an explain query, false if not    */
+specifier|public
+name|void
+name|setExplain
+parameter_list|(
+name|boolean
+name|value
+parameter_list|)
+block|{
+name|explain
+operator|=
+name|value
+expr_stmt|;
+block|}
+comment|/**    * Find out whether the current query is an explain query.    *    * @return true if the query is an explain query, false if not    */
+specifier|public
+name|boolean
+name|getExplain
+parameter_list|()
+block|{
+return|return
+name|explain
+return|;
+block|}
+comment|/**    * Make a tmp directory for MR intermediate data If URI/Scheme are not    * supplied - those implied by the default filesystem will be used (which will    * typically correspond to hdfs instance on hadoop cluster).    *    * @param mkdir  if true, will make the directory. Will throw IOException if that fails.    */
+specifier|private
+name|Path
+name|makeMRScratchDir
+parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|,
+name|boolean
+name|mkdir
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|Path
+name|dir
+init|=
+name|FileUtils
+operator|.
+name|makeQualified
+argument_list|(
+name|queryPath
 argument_list|,
 name|conf
 argument_list|)
@@ -531,15 +536,11 @@ return|;
 block|}
 comment|/**    * Make a tmp directory on specified URI Currently will use the same path as    * implied by SCRATCHDIR config variable.    */
 specifier|private
-specifier|static
 name|Path
 name|makeExternalScratchDir
 parameter_list|(
 name|HiveConf
 name|conf
-parameter_list|,
-name|String
-name|executionId
 parameter_list|,
 name|boolean
 name|mkdir
@@ -566,22 +567,10 @@ operator|.
 name|getAuthority
 argument_list|()
 argument_list|,
-name|conf
+name|queryPath
 operator|.
-name|getVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|SCRATCHDIR
-argument_list|)
-operator|+
-name|Path
-operator|.
-name|SEPARATOR
-operator|+
-name|executionId
+name|toString
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -625,7 +614,7 @@ return|return
 name|dir
 return|;
 block|}
-comment|/**    * Make a tmp directory for local file system.    *     * @param mkdir  if true, will make the directory. Will throw IOException if that fails.    */
+comment|/**    * Make a tmp directory for local file system.    *    * @param mkdir  if true, will make the directory. Will throw IOException if that fails.    */
 specifier|private
 specifier|static
 name|Path
@@ -769,8 +758,6 @@ name|makeExternalScratchDir
 argument_list|(
 name|conf
 argument_list|,
-name|executionId
-argument_list|,
 operator|!
 name|explain
 argument_list|,
@@ -829,8 +816,6 @@ operator|=
 name|makeMRScratchDir
 argument_list|(
 name|conf
-argument_list|,
-name|executionId
 argument_list|,
 operator|!
 name|explain
@@ -1103,7 +1088,7 @@ operator|++
 argument_list|)
 return|;
 block|}
-comment|/**    * Check if path is tmp path. the assumption is that all uri's relative to    * scratchdir are temporary.    *     * @return true if a uri is a temporary uri for map-reduce intermediate data,    *         false otherwise    */
+comment|/**    * Check if path is tmp path. the assumption is that all uri's relative to    * scratchdir are temporary.    *    * @return true if a uri is a temporary uri for map-reduce intermediate data,    *         false otherwise    */
 specifier|public
 name|boolean
 name|isMRTmpFileURI
@@ -1126,7 +1111,7 @@ literal|1
 operator|)
 return|;
 block|}
-comment|/**    * Get a path to store map-reduce intermediate data in.    *     * @return next available path for map-red intermediate data    */
+comment|/**    * Get a path to store map-reduce intermediate data in.    *    * @return next available path for map-red intermediate data    */
 specifier|public
 name|String
 name|getMRTmpFileURI
@@ -1140,7 +1125,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Get a tmp path on local host to store intermediate data.    *     * @return next available tmp path on local fs    */
+comment|/**    * Get a tmp path on local host to store intermediate data.    *    * @return next available tmp path on local fs    */
 specifier|public
 name|String
 name|getLocalTmpFileURI
@@ -1154,7 +1139,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Get a path to store tmp data destined for external URI.    *     * @param extURI    *          external URI to which the tmp data has to be eventually moved    * @return next available tmp path on the file system corresponding extURI    */
+comment|/**    * Get a path to store tmp data destined for external URI.    *    * @param extURI    *          external URI to which the tmp data has to be eventually moved    * @return next available tmp path on the file system corresponding extURI    */
 specifier|public
 name|String
 name|getExternalTmpFileURI
@@ -1714,7 +1699,7 @@ name|str2
 argument_list|)
 return|;
 block|}
-comment|/**    * Set the token rewrite stream being used to parse the current top-level SQL    * statement. Note that this should<b>not</b> be used for other parsing    * activities; for example, when we encounter a reference to a view, we switch    * to a new stream for parsing the stored view definition from the catalog,    * but we don't clobber the top-level stream in the context.    *     * @param tokenRewriteStream    *          the stream being used    */
+comment|/**    * Set the token rewrite stream being used to parse the current top-level SQL    * statement. Note that this should<b>not</b> be used for other parsing    * activities; for example, when we encounter a reference to a view, we switch    * to a new stream for parsing the stored view definition from the catalog,    * but we don't clobber the top-level stream in the context.    *    * @param tokenRewriteStream    *          the stream being used    */
 specifier|public
 name|void
 name|setTokenRewriteStream
@@ -1749,7 +1734,7 @@ return|return
 name|tokenRewriteStream
 return|;
 block|}
-comment|/**    * Generate a unique executionId.  An executionId, together with user name and    * the configuration, will determine the temporary locations of all intermediate    * files.    *     * In the future, users can use the executionId to resume a query.    */
+comment|/**    * Generate a unique executionId.  An executionId, together with user name and    * the configuration, will determine the temporary locations of all intermediate    * files.    *    * In the future, users can use the executionId to resume a query.    */
 specifier|public
 specifier|static
 name|String
@@ -1801,6 +1786,30 @@ decl_stmt|;
 return|return
 name|executionId
 return|;
+block|}
+specifier|public
+name|Path
+name|getQueryPath
+parameter_list|()
+block|{
+return|return
+name|queryPath
+return|;
+block|}
+specifier|public
+name|void
+name|setQueryPath
+parameter_list|(
+name|Path
+name|queryPath
+parameter_list|)
+block|{
+name|this
+operator|.
+name|queryPath
+operator|=
+name|queryPath
+expr_stmt|;
 block|}
 block|}
 end_class

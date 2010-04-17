@@ -509,7 +509,7 @@ name|LOG
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * This method is called in the Driver on every task. It updates counters and    * calls execute(), which is overridden in each task    *     * @return return value of execute()    */
+comment|/**    * This method is called in the Driver on every task. It updates counters and    * calls execute(), which is overridden in each task    *    * @return return value of execute()    */
 specifier|public
 name|int
 name|executeTask
@@ -552,7 +552,9 @@ name|int
 name|retval
 init|=
 name|execute
-argument_list|()
+argument_list|(
+name|driverContext
+argument_list|)
 decl_stmt|;
 name|this
 operator|.
@@ -599,14 +601,17 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * This method is overridden in each Task. TODO execute should return a    * TaskHandle.    *     * @return status of executing the task    */
+comment|/**    * This method is overridden in each Task. TODO execute should return a    * TaskHandle.    *    * @return status of executing the task    */
 specifier|protected
 specifier|abstract
 name|int
 name|execute
-parameter_list|()
+parameter_list|(
+name|DriverContext
+name|driverContext
+parameter_list|)
 function_decl|;
-comment|/**    * Update the progress of the task within taskHandle and also dump the    * progress information to the history file.    *     * @param taskHandle    *          task handle returned by execute    * @throws IOException    */
+comment|/**    * Update the progress of the task within taskHandle and also dump the    * progress information to the history file.    *    * @param taskHandle    *          task handle returned by execute    * @throws IOException    */
 specifier|public
 name|void
 name|progress
@@ -735,7 +740,7 @@ return|return
 name|parentTasks
 return|;
 block|}
-comment|/**    * Add a dependent task on the current task. Return if the dependency already    * existed or is this a new one    *     * @return true if the task got added false if it already existed    */
+comment|/**    * Add a dependent task on the current task. Return if the dependency already    * existed or is this a new one    *    * @return true if the task got added false if it already existed    */
 specifier|public
 name|boolean
 name|addDependentTask
@@ -860,7 +865,7 @@ return|return
 name|ret
 return|;
 block|}
-comment|/**    * Remove the dependent task.    *     * @param dependent    *          the task to remove    */
+comment|/**    * Remove the dependent task.    *    * @param dependent    *          the task to remove    */
 specifier|public
 name|void
 name|removeDependentTask
@@ -1168,7 +1173,7 @@ return|return
 name|taskCounters
 return|;
 block|}
-comment|/**    * Should be overridden to return the type of the specific task among the    * types in TaskType.    *     * @return TaskTypeType.* or -1 if not overridden    */
+comment|/**    * Should be overridden to return the type of the specific task among the    * types in TaskType.    *    * @return TaskTypeType.* or -1 if not overridden    */
 specifier|public
 name|int
 name|getType

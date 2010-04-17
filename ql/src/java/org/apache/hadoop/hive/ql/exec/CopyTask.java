@@ -155,6 +155,22 @@ name|StringUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|DriverContext
+import|;
+end_import
+
 begin_comment
 comment|/**  * CopyTask implementation.  **/
 end_comment
@@ -192,7 +208,10 @@ name|Override
 specifier|public
 name|int
 name|execute
-parameter_list|()
+parameter_list|(
+name|DriverContext
+name|driverContext
+parameter_list|)
 block|{
 name|FileSystem
 name|dstFs
