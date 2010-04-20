@@ -1831,11 +1831,7 @@ argument_list|)
 expr_stmt|;
 comment|// Create all the files - this is required because empty files need to be created for
 comment|// empty buckets
-name|createBucketFiles
-argument_list|(
-name|fsp
-argument_list|)
-expr_stmt|;
+comment|// createBucketFiles(fsp);
 name|valToPaths
 operator|.
 name|put
