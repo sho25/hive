@@ -64,7 +64,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyPrimitiveObjectInspectorFactory is the primary way to create new  * ObjectInspector instances.  *   * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  *   * The reason of having caches here is that ObjectInspector is because  * ObjectInspectors do not have an internal state - so ObjectInspectors with the  * same construction parameters should result in exactly the same  * ObjectInspector.  */
+comment|/**  * LazyPrimitiveObjectInspectorFactory is the primary way to create new  * ObjectInspector instances.  *  * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  *  * The reason of having caches here is that ObjectInspector is because  * ObjectInspectors do not have an internal state - so ObjectInspectors with the  * same construction parameters should result in exactly the same  * ObjectInspector.  */
 end_comment
 
 begin_class
@@ -346,6 +346,9 @@ return|;
 case|case
 name|VOID
 case|:
+return|return
+name|LAZY_VOID_OBJECT_INSPECTOR
+return|;
 default|default:
 throw|throw
 operator|new

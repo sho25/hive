@@ -55,6 +55,34 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -119,7 +147,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|PrimitiveObjectInspector
+name|ObjectInspector
+operator|.
+name|Category
 import|;
 end_import
 
@@ -137,9 +167,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
-operator|.
-name|Category
+name|PrimitiveObjectInspector
 import|;
 end_import
 
@@ -297,7 +325,24 @@ specifier|final
 class|class
 name|LazyBinaryUtils
 block|{
-comment|/**    * Convert the byte array to an int starting from the given offset. Refer to    * code by aeden on DZone Snippets:    *     * @param b    *          the byte array    * @param offset    *          the array offset    * @return the integer    */
+specifier|private
+specifier|static
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|LazyBinaryUtils
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+decl_stmt|;
+comment|/**    * Convert the byte array to an int starting from the given offset. Refer to    * code by aeden on DZone Snippets:    *    * @param b    *          the byte array    * @param offset    *          the array offset    * @return the integer    */
 specifier|public
 specifier|static
 name|int
@@ -364,7 +409,7 @@ return|return
 name|value
 return|;
 block|}
-comment|/**    * Convert the byte array to a long starting from the given offset.    *     * @param b    *          the byte array    * @param offset    *          the array offset    * @return the long    */
+comment|/**    * Convert the byte array to a long starting from the given offset.    *    * @param b    *          the byte array    * @param offset    *          the array offset    * @return the long    */
 specifier|public
 specifier|static
 name|long
@@ -436,7 +481,7 @@ return|return
 name|value
 return|;
 block|}
-comment|/**    * Convert the byte array to a short starting from the given offset.    *     * @param b    *          the byte array    * @param offset    *          the array offset    * @return the short    */
+comment|/**    * Convert the byte array to a short starting from the given offset.    *    * @param b    *          the byte array    * @param offset    *          the array offset    * @return the short    */
 specifier|public
 specifier|static
 name|short
@@ -485,7 +530,7 @@ return|return
 name|value
 return|;
 block|}
-comment|/**    * Record is the unit that data is serialized in. A record includes two parts.    * The first part stores the size of the element and the second part stores    * the real element. size element record -> |----|-------------------------|    *     * A RecordInfo stores two information of a record, the size of the "size"    * part which is the element offset and the size of the element part which is    * element size.    */
+comment|/**    * Record is the unit that data is serialized in. A record includes two parts.    * The first part stores the size of the element and the second part stores    * the real element. size element record -> |----|-------------------------|    *    * A RecordInfo stores two information of a record, the size of the "size"    * part which is the element offset and the size of the element part which is    * element size.    */
 specifier|public
 specifier|static
 class|class
@@ -512,6 +557,25 @@ specifier|public
 name|int
 name|elementSize
 decl_stmt|;
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"("
+operator|+
+name|elementOffset
+operator|+
+literal|", "
+operator|+
+name|elementSize
+operator|+
+literal|")"
+return|;
+block|}
 block|}
 specifier|static
 name|VInt
@@ -523,7 +587,7 @@ operator|.
 name|VInt
 argument_list|()
 decl_stmt|;
-comment|/**    * Check a particular field and set its size and offset in bytes based on the    * field type and the bytes arrays.    *     * For void, boolean, byte, short, int, long, float and double, there is no    * offset and the size is fixed. For string, map, list, struct, the first four    * bytes are used to store the size. So the offset is 4 and the size is    * computed by concating the first four bytes together. The first four bytes    * are defined with respect to the offset in the bytes arrays.    *     * @param objectInspector    *          object inspector of the field    * @param bytes    *          bytes arrays store the table row    * @param offset    *          offset of this field    * @param recordInfo    *          modify this byteinfo object and return it    */
+comment|/**    * Check a particular field and set its size and offset in bytes based on the    * field type and the bytes arrays.    *    * For void, boolean, byte, short, int, long, float and double, there is no    * offset and the size is fixed. For string, map, list, struct, the first four    * bytes are used to store the size. So the offset is 4 and the size is    * computed by concating the first four bytes together. The first four bytes    * are defined with respect to the offset in the bytes arrays.    *    * @param objectInspector    *          object inspector of the field    * @param bytes    *          bytes arrays store the table row    * @param offset    *          offset of this field    * @param recordInfo    *          modify this byteinfo object and return it    */
 specifier|public
 specifier|static
 name|void
@@ -580,6 +644,19 @@ block|{
 case|case
 name|VOID
 case|:
+name|recordInfo
+operator|.
+name|elementOffset
+operator|=
+literal|0
+expr_stmt|;
+name|recordInfo
+operator|.
+name|elementSize
+operator|=
+literal|0
+expr_stmt|;
+break|break;
 case|case
 name|BOOLEAN
 case|:
@@ -813,7 +890,7 @@ name|length
 decl_stmt|;
 block|}
 empty_stmt|;
-comment|/**    * Reads a zero-compressed encoded long from a byte array and returns it.    *     * @param bytes    *          the byte array    * @param offset    *          offset of the array to read from    * @param vlong    *          storing the deserialized long and its size in byte    */
+comment|/**    * Reads a zero-compressed encoded long from a byte array and returns it.    *    * @param bytes    *          the byte array    * @param offset    *          offset of the array to read from    * @param vlong    *          storing the deserialized long and its size in byte    */
 specifier|public
 specifier|static
 name|void
@@ -974,7 +1051,7 @@ name|length
 decl_stmt|;
 block|}
 empty_stmt|;
-comment|/**    * Reads a zero-compressed encoded int from a byte array and returns it.    *     * @param bytes    *          the byte array    * @param offset    *          offset of the array to read from    * @param vInt    *          storing the deserialized int and its size in byte    */
+comment|/**    * Reads a zero-compressed encoded int from a byte array and returns it.    *    * @param bytes    *          the byte array    * @param offset    *          offset of the array to read from    * @param vInt    *          storing the deserialized int and its size in byte    */
 specifier|public
 specifier|static
 name|void
@@ -1106,7 +1183,7 @@ name|i
 operator|)
 expr_stmt|;
 block|}
-comment|/**    * Writes a zero-compressed encoded int to a byte array.    *     * @param byteStream    *          the byte array/stream    * @param i    *          the int    */
+comment|/**    * Writes a zero-compressed encoded int to a byte array.    *    * @param byteStream    *          the byte array/stream    * @param i    *          the int    */
 specifier|public
 specifier|static
 name|void
@@ -1127,7 +1204,7 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Write a zero-compressed encoded long to a byte array.    *     * @param byteStream    *          the byte array/stream    * @param l    *          the long    */
+comment|/**    * Write a zero-compressed encoded long to a byte array.    *    * @param byteStream    *          the byte array/stream    * @param l    *          the long    */
 specifier|public
 specifier|static
 name|void
@@ -1315,7 +1392,7 @@ name|ObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * Returns the lazy binary object inspector that can be used to inspect an    * lazy binary object of that typeInfo    *     * For primitive types, we use the standard writable object inspector.    */
+comment|/**    * Returns the lazy binary object inspector that can be used to inspect an    * lazy binary object of that typeInfo    *    * For primitive types, we use the standard writable object inspector.    */
 specifier|public
 specifier|static
 name|ObjectInspector

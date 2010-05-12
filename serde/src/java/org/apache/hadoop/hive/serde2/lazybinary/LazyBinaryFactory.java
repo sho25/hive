@@ -295,6 +295,26 @@ name|WritableStringObjectInspector
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|WritableVoidObjectInspector
+import|;
+end_import
+
 begin_comment
 comment|/**  * LazyBinaryFactory.  *  */
 end_comment
@@ -433,6 +453,20 @@ name|LazyBinaryString
 argument_list|(
 operator|(
 name|WritableStringObjectInspector
+operator|)
+name|oi
+argument_list|)
+return|;
+case|case
+name|VOID
+case|:
+comment|// for NULL
+return|return
+operator|new
+name|LazyBinaryVoid
+argument_list|(
+operator|(
+name|WritableVoidObjectInspector
 operator|)
 name|oi
 argument_list|)
