@@ -576,10 +576,13 @@ literal|"partition keys can not be changed."
 argument_list|)
 throw|;
 block|}
+comment|// if this alter is a rename, and user didn't change the
+comment|// default location (or new location is empty), and table is
+comment|// not an external table, that means user is asking metastore
+comment|// to move data to new location corresponding to the new name
 if|if
 condition|(
 name|rename
-comment|// if this alter is a rename
 operator|&&
 operator|(
 name|oldt
@@ -602,13 +605,6 @@ argument_list|()
 argument_list|)
 operator|==
 literal|0
-comment|// and
-comment|// user
-comment|// didn't
-comment|// change
-comment|// the
-comment|// default
-comment|// location
 operator|||
 name|StringUtils
 operator|.
@@ -623,24 +619,16 @@ name|getLocation
 argument_list|()
 argument_list|)
 operator|)
-comment|// or new location
-comment|// is empty
 operator|&&
 operator|!
-name|oldt
+name|MetaStoreUtils
 operator|.
-name|getParameters
-argument_list|()
-operator|.
-name|containsKey
+name|isExternalTable
 argument_list|(
-literal|"EXTERNAL"
+name|oldt
 argument_list|)
 condition|)
 block|{
-comment|// and table is
-comment|// not an external
-comment|// table
 comment|// that means user is asking metastore to move data to new location
 comment|// corresponding to the new name
 comment|// get new location
