@@ -748,7 +748,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TypedBytesSerDe uses typed bytes to serialize/deserialize.  *   * More info on the typedbytes stuff that Dumbo uses.  * http://issues.apache.org/jira/browse/HADOOP-1722 A fast python decoder for  * this, which is apparently 25% faster than the python version is available at  * http://github.com/klbostee/ctypedbytes/tree/master  */
+comment|/**  * TypedBytesSerDe uses typed bytes to serialize/deserialize.  *  * More info on the typedbytes stuff that Dumbo uses.  * http://issues.apache.org/jira/browse/HADOOP-1722 A fast python decoder for  * this, which is apparently 25% faster than the python version is available at  * http://github.com/klbostee/ctypedbytes/tree/master  */
 end_comment
 
 begin_class
@@ -906,6 +906,20 @@ argument_list|)
 expr_stmt|;
 name|columnTypes
 operator|=
+literal|null
+expr_stmt|;
+if|if
+condition|(
+name|columnTypeProperty
+operator|.
+name|length
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
+name|columnTypes
+operator|=
 operator|new
 name|ArrayList
 argument_list|<
@@ -913,42 +927,16 @@ name|TypeInfo
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|columnTypeProps
-init|=
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-name|columnTypeProperty
-operator|.
-name|split
-argument_list|(
-literal|","
-argument_list|)
-argument_list|)
-decl_stmt|;
-for|for
-control|(
-name|String
-name|colType
-range|:
-name|columnTypeProps
-control|)
+block|}
+else|else
 block|{
 name|columnTypes
-operator|.
-name|add
-argument_list|(
+operator|=
 name|TypeInfoUtils
 operator|.
-name|getTypeInfoFromTypeString
+name|getTypeInfosFromTypeString
 argument_list|(
-name|colType
-argument_list|)
+name|columnTypeProperty
 argument_list|)
 expr_stmt|;
 block|}
