@@ -91,6 +91,11 @@ argument_list|(
 literal|11
 argument_list|)
 block|,
+name|NULL
+argument_list|(
+literal|12
+argument_list|)
+block|,
 comment|// application-specific codes (50-200):
 name|WRITABLE
 argument_list|(

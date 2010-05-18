@@ -251,6 +251,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|NullWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|SortedMapWritable
 import|;
 end_import
@@ -354,7 +368,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Provides functionality for reading typed bytes as Writable objects.  *   * @see TypedBytesInput  */
+comment|/**  * Provides functionality for reading typed bytes as Writable objects.  *  * @see TypedBytesInput  */
 end_comment
 
 begin_class
@@ -423,7 +437,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link TypedBytesInput}.    *     * @param in    *          typed bytes input object    * @return typed bytes writable input corresponding to the supplied    *         {@link TypedBytesInput}.    */
+comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link TypedBytesInput}.    *    * @param in    *          typed bytes input object    * @return typed bytes writable input corresponding to the supplied    *         {@link TypedBytesInput}.    */
 specifier|public
 specifier|static
 name|TypedBytesWritableInput
@@ -455,7 +469,7 @@ return|return
 name|bin
 return|;
 block|}
-comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link DataInput}.    *     * @param in    *          data input object    * @return typed bytes writable input corresponding to the supplied    *         {@link DataInput}.    */
+comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link DataInput}.    *    * @param in    *          data input object    * @return typed bytes writable input corresponding to the supplied    *         {@link DataInput}.    */
 specifier|public
 specifier|static
 name|TypedBytesWritableInput
@@ -634,6 +648,15 @@ case|:
 return|return
 literal|null
 return|;
+case|case
+name|NULL
+case|:
+return|return
+name|NullWritable
+operator|.
+name|get
+argument_list|()
+return|;
 default|default:
 throw|throw
 operator|new
@@ -795,6 +818,14 @@ name|ENDOFRECORD
 case|:
 return|return
 literal|null
+return|;
+case|case
+name|NULL
+case|:
+return|return
+name|NullWritable
+operator|.
+name|class
 return|;
 default|default:
 throw|throw

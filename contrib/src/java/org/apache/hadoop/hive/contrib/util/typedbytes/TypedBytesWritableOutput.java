@@ -243,6 +243,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|NullWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|SortedMapWritable
 import|;
 end_import
@@ -346,7 +360,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Provides functionality for writing Writable objects as typed bytes.  *   * @see TypedBytesOutput  */
+comment|/**  * Provides functionality for writing Writable objects as typed bytes.  *  * @see TypedBytesOutput  */
 end_comment
 
 begin_class
@@ -402,7 +416,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link TypedBytesOutput}.    *     * @param out    *          typed bytes output object    * @return typed bytes writable output corresponding to the supplied    *         {@link TypedBytesOutput}.    */
+comment|/**    * Get a thread-local typed bytes writable input for the supplied    * {@link TypedBytesOutput}.    *    * @param out    *          typed bytes output object    * @return typed bytes writable output corresponding to the supplied    *         {@link TypedBytesOutput}.    */
 specifier|public
 specifier|static
 name|TypedBytesWritableOutput
@@ -434,7 +448,7 @@ return|return
 name|bout
 return|;
 block|}
-comment|/**    * Get a thread-local typed bytes writable output for the supplied    * {@link DataOutput}.    *     * @param out    *          data output object    * @return typed bytes writable output corresponding to the supplied    *         {@link DataOutput}.    */
+comment|/**    * Get a thread-local typed bytes writable output for the supplied    * {@link DataOutput}.    *    * @param out    *          data output object    * @return typed bytes writable output corresponding to the supplied    *         {@link DataOutput}.    */
 specifier|public
 specifier|static
 name|TypedBytesWritableOutput
@@ -771,6 +785,22 @@ name|Record
 operator|)
 name|w
 argument_list|)
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|w
+operator|instanceof
+name|NullWritable
+operator|||
+name|w
+operator|==
+literal|null
+condition|)
+block|{
+name|writeNull
+argument_list|()
 expr_stmt|;
 block|}
 else|else
@@ -1236,6 +1266,19 @@ argument_list|(
 name|out
 argument_list|)
 argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|writeNull
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|out
+operator|.
+name|writeNull
+argument_list|()
 expr_stmt|;
 block|}
 specifier|public
