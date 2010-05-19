@@ -201,6 +201,20 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
+name|JobStatus
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|TaskCompletionEvent
 import|;
 end_import
@@ -311,6 +325,20 @@ name|RecordReader
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|RunningJob
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implemention of shims against Hadoop 0.19.0.  */
 end_comment
@@ -367,6 +395,27 @@ throws|throws
 name|IOException
 block|{
 comment|// gone in 0.18+
+block|}
+specifier|public
+name|boolean
+name|isJobPreparing
+parameter_list|(
+name|RunningJob
+name|job
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+return|return
+name|job
+operator|.
+name|getJobState
+argument_list|()
+operator|==
+name|JobStatus
+operator|.
+name|PREP
+return|;
 block|}
 comment|/**    * workaround for hadoop-17 - jobclient only looks at commandlineconfig.    */
 specifier|public

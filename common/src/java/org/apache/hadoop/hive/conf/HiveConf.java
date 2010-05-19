@@ -446,6 +446,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVECOUNTERSPULLINTERVAL
+argument_list|(
+literal|"hive.exec.counters.pull.interval"
+argument_list|,
+literal|1000L
+argument_list|)
+block|,
 name|DYNAMICPARTITIONING
 argument_list|(
 literal|"hive.exec.dynamic.partition"

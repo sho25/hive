@@ -211,6 +211,20 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
+name|RunningJob
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|TaskCompletionEvent
 import|;
 end_import
@@ -228,6 +242,16 @@ comment|/**    * Return true if the current version of Hadoop uses the JobShell 
 name|boolean
 name|usesJobShell
 parameter_list|()
+function_decl|;
+comment|/**    * Return true if the job has not switched to RUNNING state yet    * and is still in PREP state    */
+name|boolean
+name|isJobPreparing
+parameter_list|(
+name|RunningJob
+name|job
+parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 comment|/**    * Calls fs.deleteOnExit(path) if such a function exists.    *    * @return true if the call was successful    */
 name|boolean

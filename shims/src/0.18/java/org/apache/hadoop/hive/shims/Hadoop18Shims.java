@@ -153,6 +153,20 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
+name|RunningJob
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|TaskID
 import|;
 end_import
@@ -251,6 +265,20 @@ throws|throws
 name|IOException
 block|{
 comment|// gone in 0.18+
+block|}
+specifier|public
+name|boolean
+name|isJobPreparing
+parameter_list|(
+name|RunningJob
+name|job
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+return|return
+literal|false
+return|;
 block|}
 comment|/**    * workaround for hadoop-17 - jobclient only looks at commandlineconfig.    */
 specifier|public
