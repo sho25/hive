@@ -463,11 +463,8 @@ name|CombineHiveInputSplit
 implements|implements
 name|InputSplitShim
 block|{
-specifier|static
 name|String
 name|inputFormatClassName
-init|=
-literal|null
 decl_stmt|;
 name|InputSplitShim
 name|inputSplitShim
@@ -531,16 +528,10 @@ name|inputSplitShim
 operator|=
 name|inputSplitShim
 expr_stmt|;
-comment|// get the inputFormatClassName only once because it will be the same
-comment|// for all input files within the same input split.
 if|if
 condition|(
 name|job
 operator|!=
-literal|null
-operator|&&
-name|inputFormatClassName
-operator|==
 literal|null
 condition|)
 block|{
@@ -573,6 +564,15 @@ operator|.
 name|getPaths
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|ipaths
+operator|.
+name|length
+operator|>
+literal|0
+condition|)
+block|{
 name|PartitionDesc
 name|part
 init|=
@@ -596,6 +596,7 @@ operator|.
 name|getName
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|public
@@ -1645,13 +1646,7 @@ operator|==
 literal|null
 condition|)
 block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"exact match not found, try ripping input path's theme and authority"
-argument_list|)
-expr_stmt|;
+comment|//      LOG.warn("exact match not found, try ripping input path's theme and authority");
 name|part
 operator|=
 name|pathToPartitionInfo
@@ -1669,19 +1664,8 @@ operator|==
 literal|null
 condition|)
 block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"still does not found just the path part: "
-operator|+
-name|dirPath
-operator|+
-literal|" in pathToPartitionInfo."
-operator|+
-literal|" Will try prefix matching"
-argument_list|)
-expr_stmt|;
+comment|//      LOG.warn("still does not found just the path part: " + dirPath + " in pathToPartitionInfo."
+comment|//          + " Will try prefix matching");
 for|for
 control|(
 name|Map
