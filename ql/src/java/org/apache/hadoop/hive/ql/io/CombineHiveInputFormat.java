@@ -249,6 +249,22 @@ name|hive
 operator|.
 name|shims
 operator|.
+name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
 name|HadoopShims
 operator|.
 name|CombineFileInputFormatShim
@@ -270,22 +286,6 @@ operator|.
 name|HadoopShims
 operator|.
 name|InputSplitShim
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
 import|;
 end_import
 
@@ -1728,10 +1728,7 @@ init|=
 operator|new
 name|Path
 argument_list|(
-name|entry
-operator|.
-name|getKey
-argument_list|()
+name|keyPath
 argument_list|)
 decl_stmt|;
 name|String
@@ -1751,6 +1748,37 @@ decl_stmt|;
 if|if
 condition|(
 name|dirStr
+operator|.
+name|startsWith
+argument_list|(
+name|newP
+argument_list|)
+condition|)
+block|{
+name|part
+operator|=
+name|entry
+operator|.
+name|getValue
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
+comment|// This case handles the situation where dir is a fully qualified
+comment|// subdirectory of a path in pathToPartitionInfo. e.g.
+comment|// dir = hdfs://host:9000/user/warehouse/tableName/abc
+comment|// pathToPartitionInfo = {/user/warehouse/tableName : myPart}
+comment|// In such a case, just compare the path components.
+comment|// This could result in aliasing if we have a case where
+comment|// two entries in pathToPartitionInfo differ only by scheme
+comment|// or authority, but this problem exists anyway in the above checks.
+comment|// This check was precipitated by changes that allow recursive dirs
+comment|// in the input path, and an upcoming change to CombineFileInputFormat
+comment|// where the paths in splits no longer have the scheme and authority
+comment|// stripped out.
+if|if
+condition|(
+name|dirPath
 operator|.
 name|startsWith
 argument_list|(
