@@ -369,13 +369,21 @@ name|float
 name|val
 parameter_list|)
 function_decl|;
-comment|/**    * getTaskJobIDs returns an array of String with two elements. The first    * element is a string representing the task id and the second is a string    * representing the job id. This is necessary as TaskID and TaskAttemptID     * are not supported in Haddop 0.17    */
+comment|/**    * getTaskJobIDs returns an array of String with two elements. The first    * element is a string representing the task id and the second is a string    * representing the job id. This is necessary as TaskID and TaskAttemptID    * are not supported in Haddop 0.17    */
 name|String
 index|[]
 name|getTaskJobIDs
 parameter_list|(
 name|TaskCompletionEvent
 name|t
+parameter_list|)
+function_decl|;
+comment|/**    * Hive uses side effect files exclusively for it's output. It also manages    * the setup/cleanup/commit of output from the hive client. As a result it does    * not need support for the same inside the MR framework    *    * This routine sets the appropriate options to set the output format and any    * options related to bypass setup/cleanup/commit support in the MR framework    */
+name|void
+name|setNullOutputFormat
+parameter_list|(
+name|JobConf
+name|conf
 parameter_list|)
 function_decl|;
 comment|/**    * InputSplitShim.    *    */

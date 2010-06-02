@@ -235,6 +235,64 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|OutputCommitter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|TaskAttemptContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|lib
+operator|.
+name|NullOutputFormat
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -618,7 +676,7 @@ return|return
 literal|"org.apache.hadoop.hive.ql.io.HiveInputFormat"
 return|;
 block|}
-comment|/**    * MultiFileShim code here    *     *     */
+comment|/**    * MultiFileShim code here    *    *    */
 specifier|public
 specifier|abstract
 specifier|static
@@ -646,7 +704,7 @@ argument_list|,
 name|V
 argument_list|>
 block|{
-comment|/**      * gets the input paths from static method in parent class. Same code in the      * hadoop20shim, adapted for @link{MultiFileInputFormat}      *       * @param conf      * @return Path[] of all files to be processed.      */
+comment|/**      * gets the input paths from static method in parent class. Same code in the      * hadoop20shim, adapted for @link{MultiFileInputFormat}      *      * @param conf      * @return Path[] of all files to be processed.      */
 specifier|public
 name|Path
 index|[]
@@ -756,7 +814,7 @@ return|return
 name|newPaths
 return|;
 block|}
-comment|/**      * Not supported by MultiFileInputFormat so it doesn't do anything      *       * @param conf      * @param filters      */
+comment|/**      * Not supported by MultiFileInputFormat so it doesn't do anything      *      * @param conf      * @param filters      */
 specifier|public
 name|void
 name|createPool
@@ -1027,7 +1085,7 @@ name|rrClass
 argument_list|)
 return|;
 block|}
-comment|/**      * tries to guesstimate the optimal number of splits. We just calculate the      * total size of the job and divide it by the block size.      *       * @param job      * @param numSplits      * @return      */
+comment|/**      * tries to guesstimate the optimal number of splits. We just calculate the      * total size of the job and divide it by the block size.      *      * @param job      * @param numSplits      * @return      */
 specifier|private
 name|long
 name|estimateNumSplits
@@ -1726,7 +1784,7 @@ literal|true
 return|;
 block|}
 block|}
-comment|/**    * InputSplitShim    *     */
+comment|/**    * InputSplitShim    *    */
 specifier|public
 specifier|static
 class|class
@@ -1786,7 +1844,7 @@ operator|=
 literal|"default"
 expr_stmt|;
 block|}
-comment|/**      * It encapsulate a set of files      *       * @param job      * @param old      * @throws IOException      */
+comment|/**      * It encapsulate a set of files      *      * @param job      * @param old      * @throws IOException      */
 specifier|public
 name|InputSplitShim
 parameter_list|(
@@ -2156,6 +2214,106 @@ name|toString
 argument_list|(
 name|val
 argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+specifier|static
+class|class
+name|NullOutputCommitter
+extends|extends
+name|OutputCommitter
+block|{
+specifier|public
+name|void
+name|setupJob
+parameter_list|(
+name|JobContext
+name|jobContext
+parameter_list|)
+block|{ }
+specifier|public
+name|void
+name|cleanupJob
+parameter_list|(
+name|JobContext
+name|jobContext
+parameter_list|)
+block|{ }
+specifier|public
+name|void
+name|setupTask
+parameter_list|(
+name|TaskAttemptContext
+name|taskContext
+parameter_list|)
+block|{ }
+specifier|public
+name|boolean
+name|needsTaskCommit
+parameter_list|(
+name|TaskAttemptContext
+name|taskContext
+parameter_list|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+specifier|public
+name|void
+name|commitTask
+parameter_list|(
+name|TaskAttemptContext
+name|taskContext
+parameter_list|)
+block|{ }
+specifier|public
+name|void
+name|abortTask
+parameter_list|(
+name|TaskAttemptContext
+name|taskContext
+parameter_list|)
+block|{ }
+block|}
+specifier|public
+name|void
+name|setNullOutputFormat
+parameter_list|(
+name|JobConf
+name|conf
+parameter_list|)
+block|{
+name|conf
+operator|.
+name|setOutputFormat
+argument_list|(
+name|NullOutputFormat
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setOutputCommitter
+argument_list|(
+name|Hadoop19Shims
+operator|.
+name|NullOutputCommitter
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+comment|// option to bypass job setup and cleanup was introduced in hadoop-21 (MAPREDUCE-463)
+comment|// but can be backported. So we disable setup/cleanup in all versions>= 0.19
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+literal|"mapred.committer.job.setup.cleanup.needed"
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
