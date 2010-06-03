@@ -145,8 +145,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|ExecMapper
-operator|.
 name|ExecMapperContext
 import|;
 end_import

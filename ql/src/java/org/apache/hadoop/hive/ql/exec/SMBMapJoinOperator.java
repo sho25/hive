@@ -257,7 +257,9 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|SMBJoinDesc
+name|MapredLocalWork
+operator|.
+name|BucketMapJoinContext
 import|;
 end_import
 
@@ -275,9 +277,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredLocalWork
-operator|.
-name|BucketMapJoinContext
+name|SMBJoinDesc
 import|;
 end_import
 
@@ -1034,7 +1034,8 @@ operator|.
 name|getExecContext
 argument_list|()
 operator|.
-name|jc
+name|getJc
+argument_list|()
 argument_list|,
 operator|new
 name|ObjectInspector
@@ -1083,12 +1084,20 @@ name|HiveException
 block|{
 if|if
 condition|(
+name|tag
+operator|==
+name|posBigTable
+condition|)
+block|{
+if|if
+condition|(
 name|this
 operator|.
 name|getExecContext
 argument_list|()
 operator|.
 name|inputFileChanged
+argument_list|()
 condition|)
 block|{
 if|if
@@ -1096,12 +1105,12 @@ condition|(
 name|firstFetchHappened
 condition|)
 block|{
-comment|//we need to first join and flush out data left by the previous file.
+comment|// we need to first join and flush out data left by the previous file.
 name|joinFinalLeftData
 argument_list|()
 expr_stmt|;
 block|}
-comment|//set up the fetch operator for the new input file.
+comment|// set up the fetch operator for the new input file.
 for|for
 control|(
 name|Map
@@ -1149,19 +1158,11 @@ name|alias
 argument_list|)
 expr_stmt|;
 block|}
-name|this
-operator|.
-name|getExecContext
-argument_list|()
-operator|.
-name|inputFileChanged
-operator|=
-literal|false
-expr_stmt|;
 name|firstFetchHappened
 operator|=
 literal|false
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -2556,7 +2557,8 @@ operator|.
 name|getExecContext
 argument_list|()
 operator|.
-name|currentInputFile
+name|getCurrentInputFile
+argument_list|()
 decl_stmt|;
 name|BucketMapJoinContext
 name|bucketMatcherCxt
@@ -2884,6 +2886,7 @@ name|getExecContext
 argument_list|()
 operator|.
 name|inputFileChanged
+argument_list|()
 operator|)
 operator|||
 operator|!
@@ -2938,15 +2941,6 @@ name|alias
 argument_list|)
 expr_stmt|;
 block|}
-name|this
-operator|.
-name|getExecContext
-argument_list|()
-operator|.
-name|inputFileChanged
-operator|=
-literal|false
-expr_stmt|;
 name|firstFetchHappened
 operator|=
 literal|true
@@ -3091,6 +3085,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|boolean
 name|allInitializedParentsAreClosed

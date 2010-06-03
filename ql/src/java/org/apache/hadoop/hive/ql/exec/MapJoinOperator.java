@@ -836,6 +836,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|tag
+operator|==
+name|posBigTable
+condition|)
+block|{
+name|this
+operator|.
+name|getExecContext
+argument_list|()
+operator|.
+name|processInputFileChangeForLocalWork
+argument_list|()
+expr_stmt|;
+block|}
 try|try
 block|{
 comment|// get alias
