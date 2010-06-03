@@ -1145,6 +1145,8 @@ operator|new
 name|String
 index|[]
 block|{
+literal|":key"
+block|,
 literal|"cfa:a"
 block|,
 literal|"cfa:b"
@@ -1857,6 +1859,8 @@ operator|new
 name|String
 index|[]
 block|{
+literal|":key"
+block|,
 literal|"cfa:a"
 block|,
 literal|"cfa:b"
