@@ -626,7 +626,41 @@ name|LOAD_INTO_NON_NATIVE
 argument_list|(
 literal|"A non-native table cannot be used as target for LOAD"
 argument_list|)
-block|;
+block|,
+name|OVERWRITE_ARCHIVED_PART
+argument_list|(
+literal|"Cannot overwrite an archived partition. "
+operator|+
+literal|"Unarchive before running this command."
+argument_list|)
+block|,
+name|ARCHIVE_METHODS_DISABLED
+argument_list|(
+literal|"Archiving methods are currently disabled. "
+operator|+
+literal|"Please see the Hive wiki for more information about enabling archiving."
+argument_list|)
+block|,
+name|ARCHIVE_ON_MULI_PARTS
+argument_list|(
+literal|"ARCHIVE can only be run on a single partition"
+argument_list|)
+block|,
+name|UNARCHIVE_ON_MULI_PARTS
+argument_list|(
+literal|"ARCHIVE can only be run on a single partition"
+argument_list|)
+block|,
+name|ARCHIVE_ON_TABLE
+argument_list|(
+literal|"ARCHIVE can only be run on partitions"
+argument_list|)
+block|,
+name|RESERVED_PART_VAL
+argument_list|(
+literal|"Partition value contains a reserved substring"
+argument_list|)
+block|,       ;
 specifier|private
 name|String
 name|mesg

@@ -139,8 +139,8 @@ name|AddPartitionDesc
 name|addPartitionDesc
 decl_stmt|;
 specifier|private
-name|TouchDesc
-name|touchDesc
+name|AlterTableSimpleDesc
+name|alterTblSimpleDesc
 decl_stmt|;
 specifier|private
 name|MsckDesc
@@ -587,8 +587,8 @@ name|WriteEntity
 argument_list|>
 name|outputs
 parameter_list|,
-name|TouchDesc
-name|touchDesc
+name|AlterTableSimpleDesc
+name|simpleDesc
 parameter_list|)
 block|{
 name|this
@@ -600,9 +600,9 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|touchDesc
+name|alterTblSimpleDesc
 operator|=
-name|touchDesc
+name|simpleDesc
 expr_stmt|;
 block|}
 specifier|public
@@ -1024,30 +1024,30 @@ operator|=
 name|addPartitionDesc
 expr_stmt|;
 block|}
-comment|/**    * @return information about the table/partitionss we want to touch.    */
+comment|/**    * @return information about the table/partitions we want to alter.    */
 specifier|public
-name|TouchDesc
-name|getTouchDesc
+name|AlterTableSimpleDesc
+name|getAlterTblSimpleDesc
 parameter_list|()
 block|{
 return|return
-name|touchDesc
+name|alterTblSimpleDesc
 return|;
 block|}
-comment|/**    * @param touchDesc    *          information about the table/partitions we want to touch.    */
+comment|/**    * @param desc    *          information about the table/partitions we want to alter.    */
 specifier|public
 name|void
-name|setTouchDesc
+name|setAlterTblSimpleDesc
 parameter_list|(
-name|TouchDesc
-name|touchDesc
+name|AlterTableSimpleDesc
+name|desc
 parameter_list|)
 block|{
 name|this
 operator|.
-name|touchDesc
+name|alterTblSimpleDesc
 operator|=
-name|touchDesc
+name|desc
 expr_stmt|;
 block|}
 comment|/**    * @return Metastore check description    */

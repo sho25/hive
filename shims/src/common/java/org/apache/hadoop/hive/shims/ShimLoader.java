@@ -341,7 +341,7 @@ throw|;
 block|}
 block|}
 comment|/**    * Return the major version of Hadoop currently on the classpath.    * This is simply the first two components of the version number    * (e.g "0.18" or "0.20")    */
-specifier|private
+specifier|public
 specifier|static
 name|String
 name|getMajorVersion

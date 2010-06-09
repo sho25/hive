@@ -168,7 +168,11 @@ block|,
 name|ADDPARTITION
 block|,
 name|TOUCH
-block|}
+block|,
+name|ARCHIVE
+block|,
+name|UNARCHIVE
+block|,   }
 empty_stmt|;
 name|AlterTableTypes
 name|op

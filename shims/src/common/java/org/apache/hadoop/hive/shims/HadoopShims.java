@@ -378,6 +378,24 @@ name|TaskCompletionEvent
 name|t
 parameter_list|)
 function_decl|;
+name|int
+name|createHadoopArchive
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|Path
+name|parentDir
+parameter_list|,
+name|Path
+name|destDir
+parameter_list|,
+name|String
+name|archiveName
+parameter_list|)
+throws|throws
+name|Exception
+function_decl|;
 comment|/**    * Hive uses side effect files exclusively for it's output. It also manages    * the setup/cleanup/commit of output from the hive client. As a result it does    * not need support for the same inside the MR framework    *    * This routine sets the appropriate options to set the output format and any    * options related to bypass setup/cleanup/commit support in the MR framework    */
 name|void
 name|setNullOutputFormat

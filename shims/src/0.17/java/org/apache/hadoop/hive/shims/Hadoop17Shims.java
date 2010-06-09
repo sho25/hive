@@ -518,6 +518,35 @@ name|class
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|createHadoopArchive
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|Path
+name|parentDir
+parameter_list|,
+name|Path
+name|destDir
+parameter_list|,
+name|String
+name|archiveName
+parameter_list|)
+throws|throws
+name|Exception
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Not implemented in this Hadoop version"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 

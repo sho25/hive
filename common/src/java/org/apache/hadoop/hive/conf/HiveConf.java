@@ -670,6 +670,29 @@ operator|.
 name|MAX_VALUE
 argument_list|)
 block|,
+comment|// Intermediate dir suffixes used for archiving. Not important what they
+comment|// are, as long as collisions are avoided
+name|METASTORE_INT_ORIGINAL
+argument_list|(
+literal|"hive.metastore.archive.intermediate.original"
+argument_list|,
+literal|"_INTERMEDIATE_ORIGINAL"
+argument_list|)
+block|,
+name|METASTORE_INT_ARCHIVED
+argument_list|(
+literal|"hive.metastore.archive.intermediate.archived"
+argument_list|,
+literal|"_INTERMEDIATE_ARCHIVED"
+argument_list|)
+block|,
+name|METASTORE_INT_EXTRACTED
+argument_list|(
+literal|"hive.metastore.archive.intermediate.extracted"
+argument_list|,
+literal|"_INTERMEDIATE_EXTRACTED"
+argument_list|)
+block|,
 comment|// CLI
 name|CLIIGNOREERRORS
 argument_list|(
@@ -1191,6 +1214,21 @@ argument_list|(
 literal|"hive.optimize.reducededuplication"
 argument_list|,
 literal|true
+argument_list|)
+block|,
+comment|// For har files
+name|HIVEARCHIVEENABLED
+argument_list|(
+literal|"hive.archive.enabled"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVEHARPARENTDIRSETTABLE
+argument_list|(
+literal|"hive.archive.har.parentdir.settable"
+argument_list|,
+literal|false
 argument_list|)
 block|,     ;
 specifier|public

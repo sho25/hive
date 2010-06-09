@@ -432,7 +432,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Hive Table Partition: is a fundamental storage unit within a Table.  *   * Please note that the ql code should always go through methods of this class to access the  * metadata, instead of directly accessing org.apache.hadoop.hive.metastore.api.Partition.  * This helps to isolate the metastore code and the ql code.  */
+comment|/**  * A Hive Table Partition: is a fundamental storage unit within a Table.  *  * Please note that the ql code should always go through methods of this class to access the  * metadata, instead of directly accessing org.apache.hadoop.hive.metastore.api.Partition.  * This helps to isolate the metastore code and the ql code.  */
 end_comment
 
 begin_class
@@ -523,7 +523,7 @@ name|getValues
 argument_list|()
 return|;
 block|}
-comment|/**    * Used only for serialization.     */
+comment|/**    * Used only for serialization.    */
 specifier|public
 name|Partition
 parameter_list|()
@@ -623,7 +623,7 @@ name|tp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Create partition object with the given info.    *     * @param tbl    *          Table the partition will be in.    * @param partSpec    *          Partition specifications.    * @param location    *          Location of the partition, relative to the table.    * @throws HiveException    *           Thrown if we could not create the partition.    */
+comment|/**    * Create partition object with the given info.    *    * @param tbl    *          Table the partition will be in.    * @param partSpec    *          Partition specifications.    * @param location    *          Location of the partition, relative to the table.    * @throws HiveException    *           Thrown if we could not create the partition.    */
 specifier|public
 name|Partition
 parameter_list|(
@@ -881,7 +881,7 @@ name|tpart
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Initializes this object with the given variables    *     * @param table    *          Table the partition belongs to    * @param tPartition    *          Thrift Partition object    * @throws HiveException    *           Thrown if we cannot initialize the partition    */
+comment|/**    * Initializes this object with the given variables    *    * @param table    *          Table the partition belongs to    * @param tPartition    *          Thrift Partition object    * @throws HiveException    *           Thrown if we cannot initialize the partition    */
 specifier|private
 name|void
 name|initialize
@@ -1527,15 +1527,7 @@ name|?
 argument_list|>
 name|c
 init|=
-call|(
-name|Class
-argument_list|<
-name|?
-extends|extends
-name|HiveOutputFormat
-argument_list|>
-call|)
-argument_list|(
+operator|(
 name|Class
 operator|.
 name|forName
@@ -1549,7 +1541,7 @@ operator|.
 name|getClassLoader
 argument_list|()
 argument_list|)
-argument_list|)
+operator|)
 decl_stmt|;
 comment|// Replace FileOutputFormat for backward compatibility
 if|if
@@ -1626,7 +1618,7 @@ operator|.
 name|getNumBuckets
 argument_list|()
 return|;
-comment|/*      * TODO: Keeping this code around for later use when we will support      * sampling on tables which are not created with CLUSTERED INTO clause      *       * // read from table meta data int numBuckets = this.table.getNumBuckets();      * if (numBuckets == -1) { // table meta data does not have bucket      * information // check if file system has multiple buckets(files) in this      * partition String pathPattern = this.partPath.toString() + "/*"; try {      * FileSystem fs = FileSystem.get(this.table.getDataLocation(),      * Hive.get().getConf()); FileStatus srcs[] = fs.globStatus(new      * Path(pathPattern)); numBuckets = srcs.length; } catch (Exception e) {      * throw new RuntimeException("Cannot get bucket count for table " +      * this.table.getName(), e); } } return numBuckets;      */
+comment|/*      * TODO: Keeping this code around for later use when we will support      * sampling on tables which are not created with CLUSTERED INTO clause      *      * // read from table meta data int numBuckets = this.table.getNumBuckets();      * if (numBuckets == -1) { // table meta data does not have bucket      * information // check if file system has multiple buckets(files) in this      * partition String pathPattern = this.partPath.toString() + "/*"; try {      * FileSystem fs = FileSystem.get(this.table.getDataLocation(),      * Hive.get().getConf()); FileStatus srcs[] = fs.globStatus(new      * Path(pathPattern)); numBuckets = srcs.length; } catch (Exception e) {      * throw new RuntimeException("Cannot get bucket count for table " +      * this.table.getName(), e); } } return numBuckets;      */
 block|}
 specifier|public
 name|List
@@ -1699,6 +1691,8 @@ parameter_list|)
 block|{
 try|try
 block|{
+comment|// Previously, this got the filesystem of the Table, which could be
+comment|// different from the filesystem of the partition.
 name|FileSystem
 name|fs
 init|=
@@ -1706,9 +1700,10 @@ name|FileSystem
 operator|.
 name|get
 argument_list|(
-name|table
+name|getPartitionPath
+argument_list|()
 operator|.
-name|getDataLocation
+name|toUri
 argument_list|()
 argument_list|,
 name|Hive
@@ -2305,6 +2300,40 @@ operator|.
 name|getCols
 argument_list|()
 return|;
+block|}
+specifier|public
+name|String
+name|getLocation
+parameter_list|()
+block|{
+return|return
+name|tPartition
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+return|;
+block|}
+specifier|public
+name|void
+name|setLocation
+parameter_list|(
+name|String
+name|location
+parameter_list|)
+block|{
+name|tPartition
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|setLocation
+argument_list|(
+name|location
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class
