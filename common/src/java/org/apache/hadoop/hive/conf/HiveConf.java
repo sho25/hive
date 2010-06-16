@@ -229,7 +229,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * Metastore related options that the db is initialized against.    */
+comment|/**    * Metastore related options that the db is initialized against. When a conf    * var in this is list is changed, the metastore instance for the CLI will    * be recreated so that the change will take effect.    */
 specifier|public
 specifier|static
 specifier|final
@@ -668,6 +668,13 @@ argument_list|,
 name|Integer
 operator|.
 name|MAX_VALUE
+argument_list|)
+block|,
+name|METASTORE_TCP_KEEP_ALIVE
+argument_list|(
+literal|"hive.metastore.server.tcp.keepalive"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 comment|// Intermediate dir suffixes used for archiving. Not important what they
