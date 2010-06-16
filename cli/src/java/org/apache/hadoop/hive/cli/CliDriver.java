@@ -396,7 +396,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * CliDriver.  *   */
+comment|/**  * CliDriver.  *  */
 end_comment
 
 begin_class
@@ -1383,8 +1383,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// NOTE: It is critical to do this here so that log4j is reinitialized
-comment|// before
-comment|// any of the other core hive classes are loaded
+comment|// before any of the other core hive classes are loaded
 name|SessionState
 operator|.
 name|initHiveLog4j

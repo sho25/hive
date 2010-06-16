@@ -1899,8 +1899,22 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
-comment|// Serialize the query plan
-comment|//   get temp file name and remove file:
+comment|// test Only - serialize the query plan and deserialize it
+if|if
+condition|(
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"test.serialize.qplan"
+argument_list|)
+argument_list|)
+condition|)
+block|{
 name|String
 name|queryPlanFileName
 init|=
@@ -1994,6 +2008,7 @@ name|plan
 operator|=
 name|newPlan
 expr_stmt|;
+block|}
 comment|// initialize FetchTask right here
 if|if
 condition|(

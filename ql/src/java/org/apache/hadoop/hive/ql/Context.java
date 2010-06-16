@@ -281,14 +281,19 @@ decl_stmt|;
 name|boolean
 name|initialized
 decl_stmt|;
+comment|// all query specific directories are created as sub-directories of queryPath
+comment|// this applies to all non-local (ie. hdfs) file system tmp folders
+specifier|private
+name|Path
+name|queryScratchPath
+decl_stmt|;
 comment|// Path without a file system
-comment|// hive.exec.scratchdir: default: "/tmp/"+System.getProperty("user.name")+"/hive"
-comment|// Used for creating temporary path on external file systems
+comment|// Used for creating temporary directory on local file system
 specifier|private
 name|String
-name|scratchPath
+name|localScratchPath
 decl_stmt|;
-comment|// Path on the local file system
+comment|// Fully Qualified path on the local file system
 comment|// System.getProperty("java.io.tmpdir") + Path.SEPARATOR
 comment|// + System.getProperty("user.name") + Path.SEPARATOR + executionId
 specifier|private
@@ -302,14 +307,7 @@ specifier|private
 name|Path
 name|MRScratchDir
 decl_stmt|;
-comment|// all query specific directories are created as sub-directories of queryPath
-specifier|private
-name|Path
-name|queryPath
-decl_stmt|;
-comment|// allScratchDirs contains all scratch directories including
-comment|// localScratchDir and MRScratchDir.
-comment|// The external scratch dirs will be also based on hive.exec.scratchdir.
+comment|// Keeps track of scratch directories created for different scheme/authority
 specifier|private
 specifier|final
 name|Map
@@ -395,35 +393,33 @@ name|executionId
 operator|=
 name|executionId
 expr_stmt|;
-name|Path
-name|tmpPath
-init|=
-operator|new
-name|Path
-argument_list|(
-name|conf
-operator|.
-name|getVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|SCRATCHDIR
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|scratchPath
+name|localScratchPath
 operator|=
-name|tmpPath
+name|System
 operator|.
-name|toUri
-argument_list|()
+name|getProperty
+argument_list|(
+literal|"java.io.tmpdir"
+argument_list|)
+operator|+
+name|Path
 operator|.
-name|getPath
-argument_list|()
+name|SEPARATOR
+operator|+
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"user.name"
+argument_list|)
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+name|executionId
 expr_stmt|;
-name|queryPath
+name|queryScratchPath
 operator|=
 operator|new
 name|Path
@@ -488,7 +484,7 @@ name|FileUtils
 operator|.
 name|makeQualified
 argument_list|(
-name|queryPath
+name|queryScratchPath
 argument_list|,
 name|conf
 argument_list|)
@@ -567,9 +563,12 @@ operator|.
 name|getAuthority
 argument_list|()
 argument_list|,
-name|queryPath
+name|queryScratchPath
 operator|.
-name|toString
+name|toUri
+argument_list|()
+operator|.
+name|getPath
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -616,16 +615,9 @@ return|;
 block|}
 comment|/**    * Make a tmp directory for local file system.    *    * @param mkdir  if true, will make the directory. Will throw IOException if that fails.    */
 specifier|private
-specifier|static
 name|Path
 name|makeLocalScratchDir
 parameter_list|(
-name|HiveConf
-name|conf
-parameter_list|,
-name|String
-name|executionId
-parameter_list|,
 name|boolean
 name|mkdir
 parameter_list|)
@@ -652,29 +644,7 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"java.io.tmpdir"
-argument_list|)
-operator|+
-name|Path
-operator|.
-name|SEPARATOR
-operator|+
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"user.name"
-argument_list|)
-operator|+
-name|Path
-operator|.
-name|SEPARATOR
-operator|+
-name|executionId
+name|localScratchPath
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -804,6 +774,17 @@ parameter_list|()
 block|{
 try|try
 block|{
+comment|// if we are executing entirely on the client side - then
+comment|// just (re)use the local scratch directory
+if|if
+condition|(
+name|isLocalOnlyExecutionMode
+argument_list|()
+condition|)
+return|return
+name|getLocalScratchDir
+argument_list|()
+return|;
 if|if
 condition|(
 name|MRScratchDir
@@ -888,10 +869,6 @@ name|localScratchDir
 operator|=
 name|makeLocalScratchDir
 argument_list|(
-name|conf
-argument_list|,
-name|executionId
-argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
@@ -1103,7 +1080,7 @@ name|uriStr
 operator|.
 name|indexOf
 argument_list|(
-name|scratchPath
+name|executionId
 argument_list|)
 operator|!=
 operator|-
@@ -1793,23 +1770,32 @@ name|getQueryPath
 parameter_list|()
 block|{
 return|return
-name|queryPath
+name|queryScratchPath
 return|;
 block|}
+comment|/**    * Does Hive wants to run tasks entirely on the local machine    * (where the query is being compiled)?    *    * Today this translates into running hadoop jobs locally    */
 specifier|public
-name|void
-name|setQueryPath
-parameter_list|(
-name|Path
-name|queryPath
-parameter_list|)
+name|boolean
+name|isLocalOnlyExecutionMode
+parameter_list|()
 block|{
-name|this
+return|return
+name|conf
 operator|.
-name|queryPath
-operator|=
-name|queryPath
-expr_stmt|;
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HADOOPJT
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"local"
+argument_list|)
+return|;
 block|}
 block|}
 end_class

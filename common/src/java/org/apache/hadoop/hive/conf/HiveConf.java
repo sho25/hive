@@ -717,6 +717,14 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// whether session is running in silent mode or not
+name|HIVESESSIONSILENT
+argument_list|(
+literal|"hive.session.silent"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// query being executed (multiple per session)
 name|HIVEQUERYSTRING
 argument_list|(

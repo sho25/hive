@@ -1182,11 +1182,6 @@ finally|finally
 block|{
 comment|// where a single process works with multiple plans - we must clear
 comment|// the cache before working with the next plan.
-synchronized|synchronized
-init|(
-name|gWorkMap
-init|)
-block|{
 name|gWorkMap
 operator|.
 name|remove
@@ -1197,7 +1192,6 @@ name|job
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 specifier|public
@@ -1216,11 +1210,6 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-synchronized|synchronized
-init|(
-name|gWorkMap
-init|)
-block|{
 name|gWork
 operator|=
 name|gWorkMap
@@ -1233,7 +1222,6 @@ name|job
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|gWork
@@ -1241,26 +1229,6 @@ operator|==
 literal|null
 condition|)
 block|{
-synchronized|synchronized
-init|(
-name|Utilities
-operator|.
-name|class
-init|)
-block|{
-if|if
-condition|(
-name|gWork
-operator|!=
-literal|null
-condition|)
-block|{
-return|return
-operator|(
-name|gWork
-operator|)
-return|;
-block|}
 name|InputStream
 name|in
 init|=
@@ -1306,7 +1274,6 @@ argument_list|,
 name|gWork
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 return|return
 operator|(
@@ -2113,6 +2080,31 @@ parameter_list|)
 block|{
 try|try
 block|{
+comment|// Serialize the plan to the default hdfs instance
+comment|// Except for hadoop local mode execution where we should be
+comment|// able to get the plan directly from the cache
+if|if
+condition|(
+operator|!
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|job
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HADOOPJT
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"local"
+argument_list|)
+condition|)
+block|{
 comment|// use the default file system of the job
 name|FileSystem
 name|fs
@@ -2214,15 +2206,8 @@ argument_list|,
 name|job
 argument_list|)
 expr_stmt|;
-comment|// Cache the object in this process too so lookups don't hit the file
-comment|// system
-synchronized|synchronized
-init|(
-name|Utilities
-operator|.
-name|class
-init|)
-block|{
+block|}
+comment|// Cache the plan in this process
 name|w
 operator|.
 name|initialize
@@ -2240,7 +2225,6 @@ argument_list|,
 name|w
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 catch|catch
 parameter_list|(

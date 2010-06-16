@@ -208,30 +208,9 @@ operator|.
 name|getAuthority
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|scheme
-operator|!=
-literal|null
-operator|&&
-operator|(
-name|authority
-operator|!=
-literal|null
-operator|||
-name|fsUri
-operator|.
-name|getAuthority
-argument_list|()
-operator|==
-literal|null
-operator|)
-condition|)
-block|{
-return|return
-name|path
-return|;
-block|}
+comment|// validate/fill-in scheme and authority. this follows logic
+comment|// identical to FileSystem.get(URI, conf) - but doesn't actually
+comment|// obtain a file system handle
 if|if
 condition|(
 name|scheme
@@ -239,6 +218,7 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// no scheme - use default file system uri
 name|scheme
 operator|=
 name|fsUri
@@ -246,14 +226,6 @@ operator|.
 name|getScheme
 argument_list|()
 expr_stmt|;
-block|}
-if|if
-condition|(
-name|authority
-operator|==
-literal|null
-condition|)
-block|{
 name|authority
 operator|=
 name|fsUri
@@ -261,6 +233,9 @@ operator|.
 name|getAuthority
 argument_list|()
 expr_stmt|;
+block|}
+else|else
+block|{
 if|if
 condition|(
 name|authority
@@ -268,6 +243,34 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// no authority - use default one if it applies
+if|if
+condition|(
+name|scheme
+operator|.
+name|equals
+argument_list|(
+name|fsUri
+operator|.
+name|getScheme
+argument_list|()
+argument_list|)
+operator|&&
+name|fsUri
+operator|.
+name|getAuthority
+argument_list|()
+operator|!=
+literal|null
+condition|)
+name|authority
+operator|=
+name|fsUri
+operator|.
+name|getAuthority
+argument_list|()
+expr_stmt|;
+else|else
 name|authority
 operator|=
 literal|""

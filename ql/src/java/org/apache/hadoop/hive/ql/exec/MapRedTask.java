@@ -648,7 +648,7 @@ literal|"test.silent"
 argument_list|)
 argument_list|)
 condition|?
-literal|"-silent"
+literal|"-nolog"
 else|:
 literal|""
 decl_stmt|;
