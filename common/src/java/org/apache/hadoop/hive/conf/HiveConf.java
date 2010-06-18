@@ -1231,6 +1231,14 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// For HBase storage handler
+name|HIVE_HBASE_WAL_ENABLED
+argument_list|(
+literal|"hive.hbase.wal.enabled"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// For har files
 name|HIVEARCHIVEENABLED
 argument_list|(
