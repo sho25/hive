@@ -1303,6 +1303,13 @@ name|i
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|position
+operator|>=
+literal|0
+condition|)
+block|{
 name|needed_columns
 operator|.
 name|add
@@ -1310,6 +1317,7 @@ argument_list|(
 name|position
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|scanOp
 operator|.
