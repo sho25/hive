@@ -75,6 +75,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedList
 import|;
 end_import
@@ -96,6 +106,16 @@ operator|.
 name|util
 operator|.
 name|Queue
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -249,22 +269,6 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
 name|HadoopShims
 operator|.
 name|CombineFileInputFormatShim
@@ -286,6 +290,22 @@ operator|.
 name|HadoopShims
 operator|.
 name|InputSplitShim
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
 import|;
 end_import
 
@@ -1038,6 +1058,19 @@ argument_list|(
 name|job
 argument_list|)
 decl_stmt|;
+name|Set
+argument_list|<
+name|Path
+argument_list|>
+name|poolSet
+init|=
+operator|new
+name|HashSet
+argument_list|<
+name|Path
+argument_list|>
+argument_list|()
+decl_stmt|;
 for|for
 control|(
 name|Path
@@ -1046,15 +1079,6 @@ range|:
 name|paths
 control|)
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"CombineHiveInputSplit creating pool for "
-operator|+
-name|path
-argument_list|)
-expr_stmt|;
 name|PartitionDesc
 name|part
 init|=
@@ -1356,6 +1380,68 @@ name|numSplits
 argument_list|)
 return|;
 block|}
+comment|// In the case of tablesample, the input paths are pointing to files rather than directories.
+comment|// We need to get the parent directory as the filtering path so that all files in the same
+comment|// parent directory will be grouped into one pool but not files from different parent
+comment|// directories. This guarantees that a split will combine all files in the same partition
+comment|// but won't cross multiple partitions.
+name|Path
+name|filterPath
+init|=
+name|path
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|path
+operator|.
+name|getFileSystem
+argument_list|(
+name|job
+argument_list|)
+operator|.
+name|getFileStatus
+argument_list|(
+name|path
+argument_list|)
+operator|.
+name|isDir
+argument_list|()
+condition|)
+block|{
+comment|// path is not directory
+name|filterPath
+operator|=
+name|path
+operator|.
+name|getParent
+argument_list|()
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|poolSet
+operator|.
+name|contains
+argument_list|(
+name|filterPath
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"CombineHiveInputSplit creating pool for "
+operator|+
+name|path
+operator|+
+literal|"; using filter path "
+operator|+
+name|filterPath
+argument_list|)
+expr_stmt|;
 name|combine
 operator|.
 name|createPool
@@ -1365,10 +1451,34 @@ argument_list|,
 operator|new
 name|CombineFilter
 argument_list|(
-name|path
+name|filterPath
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|poolSet
+operator|.
+name|add
+argument_list|(
+name|filterPath
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"CombineHiveInputSplit: pool is already created for "
+operator|+
+name|path
+operator|+
+literal|"; using filter path "
+operator|+
+name|filterPath
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|InputSplitShim
 index|[]
@@ -1844,6 +1954,7 @@ name|String
 name|pString
 decl_stmt|;
 comment|// store a path prefix in this TestFilter
+comment|// PRECONDITION: p should always be a directory
 specifier|public
 name|CombineFilter
 parameter_list|(
@@ -1853,6 +1964,7 @@ parameter_list|)
 block|{
 comment|// we need to keep the path part only because the Hadoop CombineFileInputFormat will
 comment|// pass the path part only to accept().
+comment|// Trailing the path with a separator to prevent partial matching.
 name|pString
 operator|=
 name|p
@@ -1870,6 +1982,7 @@ name|File
 operator|.
 name|separator
 expr_stmt|;
+empty_stmt|;
 block|}
 comment|// returns true if the specified path matches the prefix stored
 comment|// in this TestFilter.
