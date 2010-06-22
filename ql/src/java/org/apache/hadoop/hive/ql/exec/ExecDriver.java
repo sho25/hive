@@ -1809,6 +1809,18 @@ operator|.
 name|getCounters
 argument_list|()
 decl_stmt|;
+comment|// HIVE-1422
+if|if
+condition|(
+name|ctrs
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
 for|for
 control|(
 name|Operator
@@ -2923,6 +2935,16 @@ operator|.
 name|getCounters
 argument_list|()
 decl_stmt|;
+comment|// HIVE-1422
+if|if
+condition|(
+name|ctrs
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 for|for
 control|(
 name|Operator
