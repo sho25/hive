@@ -1156,6 +1156,12 @@ condition|)
 block|{
 return|return;
 block|}
+name|this
+operator|.
+name|out
+operator|=
+literal|null
+expr_stmt|;
 if|if
 condition|(
 operator|!
