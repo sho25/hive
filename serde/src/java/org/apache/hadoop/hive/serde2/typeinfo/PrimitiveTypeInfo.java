@@ -95,6 +95,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|PrimitiveTypeInfo
 extends|extends
@@ -110,6 +111,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|private
 name|String
 name|typeName
 decl_stmt|;

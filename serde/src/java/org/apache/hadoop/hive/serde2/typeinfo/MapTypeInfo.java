@@ -55,6 +55,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|MapTypeInfo
 extends|extends
@@ -70,9 +71,11 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|private
 name|TypeInfo
 name|mapKeyTypeInfo
 decl_stmt|;
+specifier|private
 name|TypeInfo
 name|mapValueTypeInfo
 decl_stmt|;
@@ -246,17 +249,6 @@ operator|)
 name|other
 decl_stmt|;
 return|return
-name|o
-operator|.
-name|getCategory
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-name|getCategory
-argument_list|()
-argument_list|)
-operator|&&
 name|o
 operator|.
 name|getMapKeyTypeInfo
