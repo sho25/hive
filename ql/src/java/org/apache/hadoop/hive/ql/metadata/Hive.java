@@ -2100,6 +2100,9 @@ name|replace
 parameter_list|,
 name|Path
 name|tmpDirPath
+parameter_list|,
+name|boolean
+name|holdDDLTime
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2245,6 +2248,12 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// recreate the partition if it existed before
+if|if
+condition|(
+operator|!
+name|holdDDLTime
+condition|)
+block|{
 name|part
 operator|=
 name|getPartition
@@ -2256,6 +2265,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2345,6 +2355,9 @@ name|tmpDirPath
 parameter_list|,
 name|int
 name|numDP
+parameter_list|,
+name|boolean
+name|holdDDLTime
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2556,6 +2569,8 @@ argument_list|,
 name|replace
 argument_list|,
 name|tmpDirPath
+argument_list|,
+name|holdDDLTime
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -2607,6 +2622,9 @@ name|replace
 parameter_list|,
 name|Path
 name|tmpDirPath
+parameter_list|,
+name|boolean
+name|holdDDLTime
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2647,6 +2665,37 @@ argument_list|(
 name|loadPath
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|holdDDLTime
+condition|)
+block|{
+try|try
+block|{
+name|alterTable
+argument_list|(
+name|tableName
+argument_list|,
+name|tbl
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InvalidOperationException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 comment|/**    * Creates a partition.    *    * @param tbl    *          table for which partition needs to be created    * @param partSpec    *          partition keys and their values    * @return created partition object    * @throws HiveException    *           if table doesn't exist or partition already exists    */

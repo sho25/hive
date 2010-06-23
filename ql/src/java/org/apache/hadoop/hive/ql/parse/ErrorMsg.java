@@ -660,6 +660,13 @@ name|RESERVED_PART_VAL
 argument_list|(
 literal|"Partition value contains a reserved substring"
 argument_list|)
+block|,
+name|HOLD_DDLTIME_ON_NONEXIST_PARTITIONS
+argument_list|(
+literal|"HOLD_DDLTIME hint cannot be applied to dynamic "
+operator|+
+literal|"partitions or non-existent partitions"
+argument_list|)
 block|,       ;
 specifier|private
 name|String
