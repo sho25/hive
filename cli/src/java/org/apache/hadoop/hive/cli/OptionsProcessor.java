@@ -296,6 +296,8 @@ specifier|final
 name|Option
 name|confOptions
 decl_stmt|,
+name|initFilesOption
+decl_stmt|,
 name|isSilentOption
 decl_stmt|,
 name|execOption
@@ -313,6 +315,10 @@ block|{
 specifier|private
 name|String
 name|optionString
+decl_stmt|;
+specifier|private
+name|boolean
+name|keyValue
 decl_stmt|;
 name|MultiPropertyOption
 parameter_list|()
@@ -334,6 +340,9 @@ parameter_list|,
 specifier|final
 name|int
 name|id
+parameter_list|,
+name|boolean
+name|keyValue
 parameter_list|)
 block|{
 name|super
@@ -350,6 +359,12 @@ operator|.
 name|optionString
 operator|=
 name|optionString
+expr_stmt|;
+name|this
+operator|.
+name|keyValue
+operator|=
+name|keyValue
 expr_stmt|;
 block|}
 annotation|@
@@ -484,6 +499,9 @@ condition|)
 block|{
 if|if
 condition|(
+name|keyValue
+operator|&&
+operator|(
 name|next
 operator|.
 name|indexOf
@@ -493,6 +511,7 @@ argument_list|)
 operator|==
 operator|-
 literal|1
+operator|)
 condition|)
 block|{
 throw|throw
@@ -841,6 +860,22 @@ argument_list|,
 literal|"(n=v) Optional. Add or override Hive/Hadoop properties."
 argument_list|,
 literal|'D'
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|initFilesOption
+operator|=
+operator|new
+name|MultiPropertyOption
+argument_list|(
+literal|"-i"
+argument_list|,
+literal|"File to run before other commands"
+argument_list|,
+literal|'I'
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 operator|new
@@ -857,6 +892,11 @@ operator|.
 name|withOption
 argument_list|(
 name|confOptions
+argument_list|)
+operator|.
+name|withOption
+argument_list|(
+name|initFilesOption
 argument_list|)
 operator|.
 name|withOption
@@ -1061,6 +1101,40 @@ argument_list|(
 name|fileOption
 argument_list|)
 expr_stmt|;
+comment|// -i
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|initFiles
+init|=
+operator|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+operator|)
+name|cmdLine
+operator|.
+name|getValue
+argument_list|(
+name|initFilesOption
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+literal|null
+operator|!=
+name|initFiles
+condition|)
+block|{
+name|ss
+operator|.
+name|initFiles
+operator|=
+name|initFiles
+expr_stmt|;
+block|}
 comment|// -h
 if|if
 condition|(
@@ -1217,7 +1291,9 @@ name|err
 operator|.
 name|println
 argument_list|(
-literal|"Usage: hive [--config confdir] [-hiveconf x=y]* [<-f filename>|<-e query-string>] [-S]"
+literal|"Usage: hive [--config confdir] [-hiveconf x=y]* [-i<init-filename>]*"
+operator|+
+literal|" [-f<filename>|-e<query-string>] [-S]"
 argument_list|)
 expr_stmt|;
 name|System
@@ -1227,6 +1303,15 @@ operator|.
 name|println
 argument_list|(
 literal|""
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"  -i<filename>             init Sql file"
 argument_list|)
 expr_stmt|;
 name|System
@@ -1280,7 +1365,7 @@ name|err
 operator|.
 name|println
 argument_list|(
-literal|"options, interactive shell is started"
+literal|" options, interactive shell is started."
 argument_list|)
 expr_stmt|;
 name|System
