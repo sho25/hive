@@ -507,6 +507,13 @@ argument_list|(
 name|argumentTypeInfos
 argument_list|)
 expr_stmt|;
+name|udfMethod
+operator|.
+name|setAccessible
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 comment|// Create parameter converters
 name|conversionHelper
 operator|=
