@@ -671,9 +671,9 @@ name|createRCFileWriter
 argument_list|(
 name|jc
 argument_list|,
-name|FileSystem
+name|finalOutPath
 operator|.
-name|get
+name|getFileSystem
 argument_list|(
 name|jc
 argument_list|)

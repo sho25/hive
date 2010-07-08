@@ -77,6 +77,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -2268,6 +2282,7 @@ name|getDirName
 argument_list|()
 expr_stmt|;
 comment|// generate the temporary file
+comment|// it must be on the same file system as the current destination
 name|ParseContext
 name|parseCtx
 init|=
@@ -2289,8 +2304,19 @@ name|tmpDir
 init|=
 name|baseCtx
 operator|.
-name|getMRTmpFileURI
+name|getExternalTmpFileURI
+argument_list|(
+operator|(
+operator|new
+name|Path
+argument_list|(
+name|dest
+argument_list|)
+operator|)
+operator|.
+name|toUri
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|fsOp
 operator|.
