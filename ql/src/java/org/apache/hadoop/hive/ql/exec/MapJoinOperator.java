@@ -1037,6 +1037,9 @@ block|}
 name|reportProgress
 argument_list|()
 expr_stmt|;
+name|numMapRowsRead
+operator|++
+expr_stmt|;
 if|if
 condition|(
 operator|(

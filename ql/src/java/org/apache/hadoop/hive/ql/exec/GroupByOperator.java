@@ -824,6 +824,14 @@ specifier|transient
 name|int
 name|numEntriesHashTable
 decl_stmt|;
+specifier|transient
+name|int
+name|countAfterReport
+decl_stmt|;
+specifier|transient
+name|int
+name|heartbeatInterval
+decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
@@ -851,6 +859,25 @@ operator|=
 literal|0
 expr_stmt|;
 name|numRowsHashTbl
+operator|=
+literal|0
+expr_stmt|;
+name|heartbeatInterval
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVESENDHEARTBEAT
+argument_list|)
+expr_stmt|;
+name|countAfterReport
 operator|=
 literal|0
 expr_stmt|;
@@ -1771,7 +1798,7 @@ name|hconf
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Estimate the number of entries in map-side hash table. The user can specify    * the total amount of memory to be used by the map-side hash. By default, all    * available memory is used. The size of each row is estimated, rather    * crudely, and the number of entries are figure out based on that.    *     * @return number of entries that can fit in hash table - useful for map-side    *         aggregation only    **/
+comment|/**    * Estimate the number of entries in map-side hash table. The user can specify    * the total amount of memory to be used by the map-side hash. By default, all    * available memory is used. The size of each row is estimated, rather    * crudely, and the number of entries are figure out based on that.    *    * @return number of entries that can fit in hash table - useful for map-side    *         aggregation only    **/
 specifier|private
 name|void
 name|computeMaxEntriesHashAggr
@@ -1846,7 +1873,7 @@ name|javaSizeUnknownType
 init|=
 literal|256
 decl_stmt|;
-comment|/**    * The size of the element at position 'pos' is returned, if possible. If the    * datatype is of variable length, STRING, a list of such key positions is    * maintained, and the size for such positions is then actually calculated at    * runtime.    *     * @param pos    *          the position of the key    * @param c    *          the type of the key    * @return the size of this datatype    **/
+comment|/**    * The size of the element at position 'pos' is returned, if possible. If the    * datatype is of variable length, STRING, a list of such key positions is    * maintained, and the size for such positions is then actually calculated at    * runtime.    *    * @param pos    *          the position of the key    * @param c    *          the type of the key    * @return the size of this datatype    **/
 specifier|private
 name|int
 name|getSize
@@ -1913,7 +1940,7 @@ name|javaSizeUnknownType
 return|;
 block|}
 block|}
-comment|/**    * The size of the element at position 'pos' is returned, if possible. If the    * field is of variable length, STRING, a list of such field names for the    * field position is maintained, and the size for such positions is then    * actually calculated at runtime.    *     * @param pos    *          the position of the key    * @param c    *          the type of the key    * @param f    *          the field to be added    * @return the size of this datatype    **/
+comment|/**    * The size of the element at position 'pos' is returned, if possible. If the    * field is of variable length, STRING, a list of such field names for the    * field position is maintained, and the size for such positions is then    * actually calculated at runtime.    *    * @param pos    *          the position of the key    * @param c    *          the type of the key    * @param f    *          the field to be added    * @return the size of this datatype    **/
 specifier|private
 name|int
 name|getSize
@@ -2421,7 +2448,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/*    * Update aggregations. If the aggregation is for distinct, in case of hash    * aggregation, the client tells us whether it is a new entry. For sort-based    * aggregations, the last row is compared with the current one to figure out    * whether it has changed. As a cleanup, the lastInvoke logic can be pushed in    * the caller, and this function can be independent of that. The client should    * always notify whether it is a different row or not.    *     * @param aggs the aggregations to be evaluated    *     * @param row the row being processed    *     * @param rowInspector the inspector for the row    *     * @param hashAggr whether hash aggregation is being performed or not    *     * @param newEntryForHashAggr only valid if it is a hash aggregation, whether    * it is a new entry or not    */
+comment|/*    * Update aggregations. If the aggregation is for distinct, in case of hash    * aggregation, the client tells us whether it is a new entry. For sort-based    * aggregations, the last row is compared with the current one to figure out    * whether it has changed. As a cleanup, the lastInvoke logic can be pushed in    * the caller, and this function can be independent of that. The client should    * always notify whether it is a different row or not.    *    * @param aggs the aggregations to be evaluated    *    * @param row the row being processed    *    * @param rowInspector the inspector for the row    *    * @param hashAggr whether hash aggregation is being performed or not    *    * @param newEntryForHashAggr only valid if it is a hash aggregation, whether    * it is a new entry or not    */
 specifier|protected
 name|void
 name|updateAggregations
@@ -2864,6 +2891,9 @@ block|}
 block|}
 try|try
 block|{
+name|countAfterReport
+operator|++
+expr_stmt|;
 comment|// Compute the keys
 name|newKeys
 operator|.
@@ -2970,6 +3000,37 @@ name|firstRowInGroup
 operator|=
 literal|false
 expr_stmt|;
+if|if
+condition|(
+name|countAfterReport
+operator|!=
+literal|0
+operator|&&
+operator|(
+name|countAfterReport
+operator|%
+name|heartbeatInterval
+operator|)
+operator|==
+literal|0
+operator|&&
+operator|(
+name|reporter
+operator|!=
+literal|null
+operator|)
+condition|)
+block|{
+name|reporter
+operator|.
+name|progress
+argument_list|()
+expr_stmt|;
+name|countAfterReport
+operator|=
+literal|0
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -3562,6 +3623,10 @@ argument_list|,
 name|aggregations
 argument_list|)
 expr_stmt|;
+name|countAfterReport
+operator|=
+literal|0
+expr_stmt|;
 block|}
 comment|// Need to update the keys?
 if|if
@@ -3666,7 +3731,7 @@ name|lastInvoke
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Based on user-parameters, should the hash table be flushed.    *     * @param newKeys    *          keys for the row under consideration    **/
+comment|/**    * Based on user-parameters, should the hash table be flushed.    *    * @param newKeys    *          keys for the row under consideration    **/
 specifier|private
 name|boolean
 name|shouldBeFlushed
@@ -3943,6 +4008,10 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|countAfterReport
+operator|=
+literal|0
+expr_stmt|;
 comment|// Currently, the algorithm flushes 10% of the entries - this can be
 comment|// changed in the future
 if|if
@@ -4151,7 +4220,7 @@ name|Object
 index|[]
 name|forwardCache
 decl_stmt|;
-comment|/**    * Forward a record of keys and aggregation results.    *     * @param keys    *          The keys in the record    * @throws HiveException    */
+comment|/**    * Forward a record of keys and aggregation results.    *    * @param keys    *          The keys in the record    * @throws HiveException    */
 specifier|protected
 name|void
 name|forward
@@ -4277,7 +4346,7 @@ name|outputObjInspector
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * We need to forward all the aggregations to children.    *     */
+comment|/**    * We need to forward all the aggregations to children.    *    */
 annotation|@
 name|Override
 specifier|public

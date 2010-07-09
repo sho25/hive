@@ -257,9 +257,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredLocalWork
-operator|.
-name|BucketMapJoinContext
+name|SMBJoinDesc
 import|;
 end_import
 
@@ -277,7 +275,9 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|SMBJoinDesc
+name|MapredLocalWork
+operator|.
+name|BucketMapJoinContext
 import|;
 end_import
 
@@ -529,6 +529,7 @@ name|tagToAlias
 decl_stmt|;
 specifier|private
 specifier|transient
+specifier|final
 name|HashMap
 argument_list|<
 name|Byte
@@ -548,6 +549,7 @@ argument_list|()
 decl_stmt|;
 specifier|private
 specifier|transient
+specifier|final
 name|HashMap
 argument_list|<
 name|Byte
@@ -1469,6 +1471,9 @@ block|}
 name|reportProgress
 argument_list|()
 expr_stmt|;
+name|numMapRowsRead
+operator|++
+expr_stmt|;
 comment|// the big table has reached a new key group. try to let the small tables
 comment|// catch up with the big table.
 if|if
@@ -1658,6 +1663,9 @@ break|break;
 block|}
 name|reportProgress
 argument_list|()
+expr_stmt|;
+name|numMapRowsRead
+operator|++
 expr_stmt|;
 name|allFetchOpDone
 operator|=

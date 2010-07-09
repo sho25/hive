@@ -357,6 +357,9 @@ name|HiveException
 block|{
 try|try
 block|{
+name|reportProgress
+argument_list|()
+expr_stmt|;
 comment|// get alias
 name|alias
 operator|=

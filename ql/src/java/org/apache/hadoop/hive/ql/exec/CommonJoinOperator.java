@@ -85,9 +85,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
-operator|.
-name|Entry
+name|Set
 import|;
 end_import
 
@@ -97,7 +95,9 @@ name|java
 operator|.
 name|util
 operator|.
-name|Set
+name|Map
+operator|.
+name|Entry
 import|;
 end_import
 
@@ -405,9 +405,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorUtils
-operator|.
-name|ObjectInspectorCopyOption
+name|StructObjectInspector
 import|;
 end_import
 
@@ -425,7 +423,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|StructObjectInspector
+name|ObjectInspectorUtils
+operator|.
+name|ObjectInspectorCopyOption
 import|;
 end_import
 
@@ -792,6 +792,16 @@ name|boolean
 name|handleSkewJoin
 init|=
 literal|false
+decl_stmt|;
+specifier|protected
+specifier|transient
+name|int
+name|countAfterReport
+decl_stmt|;
+specifier|protected
+specifier|transient
+name|int
+name|heartbeatInterval
 decl_stmt|;
 specifier|public
 name|CommonJoinOperator
@@ -1693,6 +1703,25 @@ operator|.
 name|hconf
 operator|=
 name|hconf
+expr_stmt|;
+name|heartbeatInterval
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVESENDHEARTBEAT
+argument_list|)
+expr_stmt|;
+name|countAfterReport
+operator|=
+literal|0
 expr_stmt|;
 name|totalSz
 operator|=
@@ -2914,6 +2943,10 @@ name|forwardCache
 argument_list|,
 name|outputObjInspector
 argument_list|)
+expr_stmt|;
+name|countAfterReport
+operator|=
+literal|0
 expr_stmt|;
 block|}
 specifier|private
@@ -4848,6 +4881,10 @@ argument_list|,
 name|outputObjInspector
 argument_list|)
 expr_stmt|;
+name|countAfterReport
+operator|=
+literal|0
+expr_stmt|;
 return|return;
 block|}
 name|RowContainer
@@ -5220,6 +5257,43 @@ name|trace
 argument_list|(
 literal|"called genObject"
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+specifier|protected
+name|void
+name|reportProgress
+parameter_list|()
+block|{
+comment|// Send some status periodically
+name|countAfterReport
+operator|++
+expr_stmt|;
+if|if
+condition|(
+operator|(
+name|countAfterReport
+operator|%
+name|heartbeatInterval
+operator|)
+operator|==
+literal|0
+operator|&&
+operator|(
+name|reporter
+operator|!=
+literal|null
+operator|)
+condition|)
+block|{
+name|reporter
+operator|.
+name|progress
+argument_list|()
+expr_stmt|;
+name|countAfterReport
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
