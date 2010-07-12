@@ -298,8 +298,8 @@ argument_list|)
 specifier|public
 class|class
 name|GenericUDAFSum
-implements|implements
-name|GenericUDAFResolver
+extends|extends
+name|AbstractGenericUDAFResolver
 block|{
 specifier|static
 specifier|final

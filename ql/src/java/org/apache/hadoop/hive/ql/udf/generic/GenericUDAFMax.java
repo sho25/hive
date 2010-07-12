@@ -63,7 +63,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDFArgumentTypeException
+name|Description
 import|;
 end_import
 
@@ -81,7 +81,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
+name|UDFArgumentTypeException
 import|;
 end_import
 
@@ -171,24 +171,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|PrimitiveObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|ObjectInspectorUtils
 operator|.
 name|ObjectInspectorCopyOption
@@ -246,8 +228,8 @@ argument_list|)
 specifier|public
 class|class
 name|GenericUDAFMax
-implements|implements
-name|GenericUDAFResolver
+extends|extends
+name|AbstractGenericUDAFResolver
 block|{
 specifier|static
 specifier|final

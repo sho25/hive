@@ -273,8 +273,8 @@ begin_class
 specifier|public
 class|class
 name|GenericUDAFBridge
-implements|implements
-name|GenericUDAFResolver
+extends|extends
+name|AbstractGenericUDAFResolver
 block|{
 name|UDAF
 name|udaf

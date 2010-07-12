@@ -468,8 +468,8 @@ argument_list|)
 specifier|public
 class|class
 name|GenericUDAFHistogramNumeric
-implements|implements
-name|GenericUDAFResolver
+extends|extends
+name|AbstractGenericUDAFResolver
 block|{
 comment|// class static variables
 specifier|static

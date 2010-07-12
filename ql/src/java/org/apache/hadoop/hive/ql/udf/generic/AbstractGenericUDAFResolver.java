@@ -58,29 +58,62 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Generic User-defined aggregation function (GenericUDAF) for the use with  * Hive.  *  * GenericUDAFResolver is used at compile time. We use GenericUDAFResolver to  * find out the GenericUDAFEvaluator for the parameter types.  *  * @deprecated Use {@link GenericUDAFResolver2} instead.  */
+comment|/**  * An abstract class to help facilitate existing implementations of  *<tt>GenericUDAFResolver</tt> to migrate towards the newly introduced  * interface {@link GenericUDAFResolver2}. This class provides a default  * implementation of this new API and in turn calls  * the existing API {@link GenericUDAFResolver#getEvaluator(TypeInfo[])} by  * ignoring the extra parameter information available via the  *<tt>GenericUDAFParameterInfo</tt> interface.  *  */
 end_comment
 
-begin_interface
-annotation|@
-name|Deprecated
+begin_class
 specifier|public
-interface|interface
-name|GenericUDAFResolver
+specifier|abstract
+class|class
+name|AbstractGenericUDAFResolver
+implements|implements
+name|GenericUDAFResolver2
 block|{
-comment|/**    * Get the evaluator for the parameter types.    *    * The reason that this function returns an object instead of a class is    * because it is possible that the object needs some configuration (that can    * be serialized). In that case the class of the object has to implement the    * Serializable interface. At execution time, we will deserialize the object    * from the plan and use it to evaluate the aggregations.    *<p>    * If the class of the object does not implement Serializable, then we will    * create a new instance of the class at execution time.    *</p>    * @param parameters    *          The types of the parameters. We need the type information to know    *          which evaluator class to use.    * @throws SemanticException    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"deprecation"
+argument_list|)
+annotation|@
+name|Override
+specifier|public
 name|GenericUDAFEvaluator
 name|getEvaluator
 parameter_list|(
-name|TypeInfo
-index|[]
-name|parameters
+name|GenericUDAFParameterInfo
+name|info
 parameter_list|)
 throws|throws
 name|SemanticException
-function_decl|;
+block|{
+if|if
+condition|(
+name|info
+operator|.
+name|isAllColumns
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"The specified syntax for UDAF invocation is invalid."
+argument_list|)
+throw|;
 block|}
-end_interface
+return|return
+name|getEvaluator
+argument_list|(
+name|info
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+return|;
+block|}
+block|}
+end_class
 
 end_unit
 

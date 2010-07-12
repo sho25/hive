@@ -402,8 +402,8 @@ argument_list|)
 specifier|public
 class|class
 name|GenericUDAFVariance
-implements|implements
-name|GenericUDAFResolver
+extends|extends
+name|AbstractGenericUDAFResolver
 block|{
 specifier|static
 specifier|final
