@@ -1765,6 +1765,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|LateralViewForwardDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|LateralViewJoinDesc
 import|;
 end_import
@@ -34683,12 +34701,9 @@ comment|// to the same LateralViewJoinOperator.
 comment|// TS -> SelectOperator(*) -> LateralViewJoinOperator
 comment|// TS -> SelectOperator (gets cols for UDTF) -> UDTFOperator0
 comment|// -> LateralViewJoinOperator
-comment|// The order in which the two paths are added is important. The
-comment|// lateral view join operator depends on having the select operator
-comment|// give it the row first.
-comment|// Get the all path by making a select(*)
+comment|//
 name|RowResolver
-name|allPathRR
+name|lvForwardRR
 init|=
 name|opParseCtx
 operator|.
@@ -34700,6 +34715,52 @@ operator|.
 name|getRR
 argument_list|()
 decl_stmt|;
+name|Operator
+name|lvForward
+init|=
+name|putOpInsertMap
+argument_list|(
+name|OperatorFactory
+operator|.
+name|getAndMakeChild
+argument_list|(
+operator|new
+name|LateralViewForwardDesc
+argument_list|()
+argument_list|,
+operator|new
+name|RowSchema
+argument_list|(
+name|lvForwardRR
+operator|.
+name|getColumnInfos
+argument_list|()
+argument_list|)
+argument_list|,
+name|op
+argument_list|)
+argument_list|,
+name|lvForwardRR
+argument_list|)
+decl_stmt|;
+comment|// The order in which the two paths are added is important. The
+comment|// lateral view join operator depends on having the select operator
+comment|// give it the row first.
+comment|// Get the all path by making a select(*).
+name|RowResolver
+name|allPathRR
+init|=
+name|opParseCtx
+operator|.
+name|get
+argument_list|(
+name|lvForward
+argument_list|)
+operator|.
+name|getRR
+argument_list|()
+decl_stmt|;
+comment|//Operator allPath = op;
 name|Operator
 name|allPath
 init|=
@@ -34724,7 +34785,7 @@ name|getColumnInfos
 argument_list|()
 argument_list|)
 argument_list|,
-name|op
+name|lvForward
 argument_list|)
 argument_list|,
 name|allPathRR
@@ -34761,7 +34822,7 @@ argument_list|)
 argument_list|,
 name|blankQb
 argument_list|,
-name|op
+name|lvForward
 argument_list|)
 decl_stmt|;
 name|RowResolver
@@ -34819,6 +34880,86 @@ argument_list|,
 name|outputInternalColNames
 argument_list|)
 expr_stmt|;
+comment|// For PPD, we need a column to expression map so that during the walk,
+comment|// the processor knows how to transform the internal col names.
+comment|// Following steps are dependant on the fact that we called
+comment|// LVmerge.. in the above order
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|ExprNodeDesc
+argument_list|>
+name|colExprMap
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|ExprNodeDesc
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|int
+name|i
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+name|ColumnInfo
+name|c
+range|:
+name|allPathRR
+operator|.
+name|getColumnInfos
+argument_list|()
+control|)
+block|{
+name|String
+name|internalName
+init|=
+name|getColumnInternalName
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+name|i
+operator|++
+expr_stmt|;
+name|colExprMap
+operator|.
+name|put
+argument_list|(
+name|internalName
+argument_list|,
+operator|new
+name|ExprNodeColumnDesc
+argument_list|(
+name|c
+operator|.
+name|getType
+argument_list|()
+argument_list|,
+name|c
+operator|.
+name|getInternalName
+argument_list|()
+argument_list|,
+name|c
+operator|.
+name|getTabAlias
+argument_list|()
+argument_list|,
+name|c
+operator|.
+name|getIsPartitionCol
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|Operator
 name|lateralViewJoin
 init|=
@@ -34851,6 +34992,13 @@ argument_list|,
 name|lateralViewRR
 argument_list|)
 decl_stmt|;
+name|lateralViewJoin
+operator|.
+name|setColumnExprMap
+argument_list|(
+name|colExprMap
+argument_list|)
+expr_stmt|;
 name|op
 operator|=
 name|lateralViewJoin

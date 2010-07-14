@@ -314,12 +314,6 @@ specifier|transient
 name|AutoProgressor
 name|autoProgressor
 decl_stmt|;
-specifier|transient
-name|boolean
-name|closeCalled
-init|=
-literal|false
-decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
@@ -588,7 +582,7 @@ name|objToSendToUDTF
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * forwardUDTFOutput is typically called indirectly by the GenericUDTF when    * the GenericUDTF has generated output rows that should be passed on to the    * next operator(s) in the DAG.    *     * @param o    * @throws HiveException    */
+comment|/**    * forwardUDTFOutput is typically called indirectly by the GenericUDTF when    * the GenericUDTF has generated output rows that should be passed on to the    * next operator(s) in the DAG.    *    * @param o    * @throws HiveException    */
 specifier|public
 name|void
 name|forwardUDTFOutput
@@ -599,19 +593,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-if|if
-condition|(
-name|closeCalled
-condition|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"UDTF's should not output rows on close"
-argument_list|)
-throw|;
-block|}
 comment|// Since the output of the UDTF is a struct, we can just forward that
 name|forward
 argument_list|(
@@ -657,10 +638,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|closeCalled
-operator|=
-literal|true
-expr_stmt|;
 name|conf
 operator|.
 name|getGenericUDTF
