@@ -354,6 +354,8 @@ name|part_vals
 parameter_list|)
 throws|throws
 name|MetaException
+throws|,
+name|NoSuchObjectException
 function_decl|;
 specifier|public
 specifier|abstract

@@ -460,6 +460,8 @@ argument_list|>
 name|partVals
 parameter_list|)
 throws|throws
+name|NoSuchObjectException
+throws|,
 name|MetaException
 throws|,
 name|TException

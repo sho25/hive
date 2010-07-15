@@ -601,7 +601,7 @@ name|METATORETHRIFTRETRIES
 argument_list|(
 literal|"hive.metastore.connect.retries"
 argument_list|,
-literal|""
+literal|3
 argument_list|)
 block|,
 name|METASTOREPWD
