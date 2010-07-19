@@ -371,13 +371,12 @@ comment|// We support both List<Object> and Object[]
 comment|// so we have to do differently.
 if|if
 condition|(
+operator|!
+operator|(
 name|data
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|isArray
-argument_list|()
+operator|instanceof
+name|List
+operator|)
 condition|)
 block|{
 name|Object
@@ -506,13 +505,12 @@ comment|// We support both List<Object> and Object[]
 comment|// so we have to do differently.
 if|if
 condition|(
+operator|!
+operator|(
 name|data
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|isArray
-argument_list|()
+operator|instanceof
+name|List
+operator|)
 condition|)
 block|{
 name|data
