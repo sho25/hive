@@ -20539,12 +20539,19 @@ name|col
 operator|.
 name|setName
 argument_list|(
+name|unescapeIdentifier
+argument_list|(
 name|colInfo
 operator|.
 name|getAlias
 argument_list|()
 argument_list|)
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
 expr_stmt|;
+comment|// remove ``
 block|}
 else|else
 block|{
