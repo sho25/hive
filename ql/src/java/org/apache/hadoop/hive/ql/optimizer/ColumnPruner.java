@@ -378,7 +378,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/**    * Transform the query tree. For each table under consideration, check if all    * columns are needed. If not, only select the operators needed at the    * beginning and proceed.    *     * @param pactx    *          the current parse context    */
+comment|/**    * Transform the query tree. For each table under consideration, check if all    * columns are needed. If not, only select the operators needed at the    * beginning and proceed.    *    * @param pactx    *          the current parse context    */
 specifier|public
 name|ParseContext
 name|transform
@@ -553,6 +553,24 @@ argument_list|,
 name|ColumnPrunerProcFactory
 operator|.
 name|getTableScanProc
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|opRules
+operator|.
+name|put
+argument_list|(
+operator|new
+name|RuleRegExp
+argument_list|(
+literal|"R8"
+argument_list|,
+literal|"LVJ%"
+argument_list|)
+argument_list|,
+name|ColumnPrunerProcFactory
+operator|.
+name|getLateralViewJoinProc
 argument_list|()
 argument_list|)
 expr_stmt|;
