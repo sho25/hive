@@ -57,9 +57,9 @@ name|hadoop
 operator|.
 name|hbase
 operator|.
-name|io
+name|client
 operator|.
-name|RowResult
+name|Result
 import|;
 end_import
 
@@ -224,6 +224,10 @@ name|LazyStruct
 block|{
 comment|/**    * The HBase columns mapping of the row.    */
 specifier|private
+name|Result
+name|result
+decl_stmt|;
+specifier|private
 name|List
 argument_list|<
 name|String
@@ -231,8 +235,12 @@ argument_list|>
 name|hbaseColumns
 decl_stmt|;
 specifier|private
-name|RowResult
-name|rowResult
+name|List
+argument_list|<
+name|byte
+index|[]
+argument_list|>
+name|hbaseColumnsBytes
 decl_stmt|;
 specifier|private
 name|ArrayList
@@ -255,32 +263,43 @@ name|oi
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the hbase row data(a RowResult writable) for this LazyStruct.    * @see LazyHBaseRow#init(RowResult)    */
+comment|/**    * Set the HBase row data(a Result writable) for this LazyStruct.    * @see LazyHBaseRow#init(Result)    */
 specifier|public
 name|void
 name|init
 parameter_list|(
-name|RowResult
-name|rr
+name|Result
+name|r
 parameter_list|,
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|hbaseColumns
+parameter_list|,
+name|List
+argument_list|<
+name|byte
+index|[]
+argument_list|>
+name|hbaseColumnsBytes
 parameter_list|)
 block|{
-name|this
-operator|.
-name|rowResult
+name|result
 operator|=
-name|rr
+name|r
 expr_stmt|;
 name|this
 operator|.
 name|hbaseColumns
 operator|=
 name|hbaseColumns
+expr_stmt|;
+name|this
+operator|.
+name|hbaseColumnsBytes
+operator|=
+name|hbaseColumnsBytes
 expr_stmt|;
 name|setParsed
 argument_list|(
@@ -288,7 +307,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Parse the RowResult and fill each field.    * @see LazyStruct#parse()    */
+comment|/**    * Parse the Result and fill each field.    * @see LazyStruct#parse()    */
 specifier|private
 name|void
 name|parse
@@ -448,7 +467,9 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Get one field out of the hbase row.    *     * If the field is a primitive field, return the actual object.    * Otherwise return the LazyObject.  This is because PrimitiveObjectInspector    * does not have control over the object used by the user - the user simply    * directly uses the Object instead of going through     * Object PrimitiveObjectInspector.get(Object).      *     * @param fieldID  The field ID    * @return         The field as a LazyObject    */
+comment|/**    * Get one field out of the HBase row.    *    * If the field is a primitive field, return the actual object.    * Otherwise return the LazyObject.  This is because PrimitiveObjectInspector    * does not have control over the object used by the user - the user simply    * directly uses the Object instead of going through    * Object PrimitiveObjectInspector.get(Object).    *    * @param fieldID  The field ID    * @return         The field as a LazyObject    */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|getField
@@ -517,6 +538,17 @@ argument_list|(
 name|fieldID
 argument_list|)
 decl_stmt|;
+name|byte
+index|[]
+name|columnNameBytes
+init|=
+name|hbaseColumnsBytes
+operator|.
+name|get
+argument_list|(
+name|fieldID
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|columnName
@@ -539,7 +571,7 @@ name|ref
 operator|.
 name|setData
 argument_list|(
-name|rowResult
+name|result
 operator|.
 name|getRow
 argument_list|()
@@ -572,24 +604,38 @@ operator|)
 operator|.
 name|init
 argument_list|(
-name|rowResult
+name|result
 argument_list|,
-name|columnName
+name|columnNameBytes
 argument_list|)
 expr_stmt|;
 block|}
 else|else
 block|{
 comment|// it is a column
+name|byte
+index|[]
+name|res
+init|=
+name|result
+operator|.
+name|getValue
+argument_list|(
+name|columnNameBytes
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
-name|rowResult
-operator|.
-name|containsKey
-argument_list|(
-name|columnName
-argument_list|)
+name|res
+operator|==
+literal|null
 condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
 block|{
 name|ref
 operator|=
@@ -601,23 +647,9 @@ name|ref
 operator|.
 name|setData
 argument_list|(
-name|rowResult
-operator|.
-name|get
-argument_list|(
-name|columnName
-argument_list|)
-operator|.
-name|getValue
-argument_list|()
+name|res
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-return|return
-literal|null
-return|;
 block|}
 block|}
 block|}
@@ -662,6 +694,8 @@ argument_list|()
 return|;
 block|}
 comment|/**    * Get the values of the fields as an ArrayList.    * @return The values of the fields as an ArrayList.    */
+annotation|@
+name|Override
 specifier|public
 name|ArrayList
 argument_list|<
