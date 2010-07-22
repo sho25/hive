@@ -3398,13 +3398,7 @@ init|=
 operator|new
 name|CliSessionState
 argument_list|(
-operator|new
-name|HiveConf
-argument_list|(
-name|Driver
-operator|.
-name|class
-argument_list|)
+name|conf
 argument_list|)
 decl_stmt|;
 assert|assert
