@@ -2007,6 +2007,7 @@ argument_list|(
 name|s
 argument_list|)
 condition|)
+block|{
 name|db
 operator|.
 name|dropTable
@@ -2018,6 +2019,7 @@ argument_list|,
 name|s
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// allocate and initialize a new conf since a test can
 comment|// modify conf by using 'set' commands
@@ -5350,7 +5352,18 @@ block|{
 name|String
 name|ret
 init|=
+operator|(
+operator|new
+name|File
+argument_list|(
+name|outDir
+argument_list|,
 name|testName
+argument_list|)
+operator|)
+operator|.
+name|getPath
+argument_list|()
 decl_stmt|;
 comment|// List of configurations. Currently the list consists of hadoop version and execution mode only
 name|List
