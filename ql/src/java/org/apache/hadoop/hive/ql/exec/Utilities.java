@@ -3117,7 +3117,7 @@ return|;
 block|}
 else|else
 block|{
-comment|/* extract the task and attempt id from the hadoop taskid.           in version 17 the leading component was 'task_'. thereafter           the leading component is 'attempt_'. in 17 - hadoop also            seems to have used _map_ and _reduce_ to denote map/reduce           task types        */
+comment|/* extract the task and attempt id from the hadoop taskid.           in version 17 the leading component was 'task_'. thereafter           the leading component is 'attempt_'. in 17 - hadoop also           seems to have used _map_ and _reduce_ to denote map/reduce           task types        */
 name|String
 name|ret
 init|=
@@ -5266,6 +5266,7 @@ operator|!=
 operator|-
 literal|1
 condition|)
+block|{
 name|taskId
 operator|=
 name|filename
@@ -5277,6 +5278,7 @@ operator|+
 literal|1
 argument_list|)
 expr_stmt|;
+block|}
 name|Matcher
 name|m
 init|=
@@ -6163,6 +6165,70 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// Compare the file sizes of all the attempt files for the same task, the largest win
+comment|// any attempt files could contain partial results (due to task failures or
+comment|// speculative runs), but the largest should be the correct one since the result
+comment|// of a successful run should never be smaller than a failed/speculative run.
+name|FileStatus
+name|toDelete
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|otherFile
+operator|.
+name|getLen
+argument_list|()
+operator|>=
+name|one
+operator|.
+name|getLen
+argument_list|()
+condition|)
+block|{
+name|toDelete
+operator|=
+name|one
+expr_stmt|;
+block|}
+else|else
+block|{
+name|toDelete
+operator|=
+name|otherFile
+expr_stmt|;
+name|taskIdToFile
+operator|.
+name|put
+argument_list|(
+name|taskId
+argument_list|,
+name|one
+argument_list|)
+expr_stmt|;
+block|}
+name|long
+name|len1
+init|=
+name|toDelete
+operator|.
+name|getLen
+argument_list|()
+decl_stmt|;
+name|long
+name|len2
+init|=
+name|taskIdToFile
+operator|.
+name|get
+argument_list|(
+name|taskId
+argument_list|)
+operator|.
+name|getLen
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -6170,7 +6236,7 @@ name|fs
 operator|.
 name|delete
 argument_list|(
-name|one
+name|toDelete
 operator|.
 name|getPath
 argument_list|()
@@ -6185,14 +6251,19 @@ name|IOException
 argument_list|(
 literal|"Unable to delete duplicate file: "
 operator|+
-name|one
+name|toDelete
 operator|.
 name|getPath
 argument_list|()
 operator|+
 literal|". Existing file: "
 operator|+
-name|otherFile
+name|taskIdToFile
+operator|.
+name|get
+argument_list|(
+name|taskId
+argument_list|)
 operator|.
 name|getPath
 argument_list|()
@@ -6207,17 +6278,30 @@ name|warn
 argument_list|(
 literal|"Duplicate taskid file removed: "
 operator|+
-name|one
+name|toDelete
 operator|.
 name|getPath
 argument_list|()
+operator|+
+literal|" with length "
+operator|+
+name|len1
 operator|+
 literal|". Existing file: "
 operator|+
-name|otherFile
+name|taskIdToFile
+operator|.
+name|get
+argument_list|(
+name|taskId
+argument_list|)
 operator|.
 name|getPath
 argument_list|()
+operator|+
+literal|" with length "
+operator|+
+name|len2
 argument_list|)
 expr_stmt|;
 block|}
