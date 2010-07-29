@@ -282,13 +282,9 @@ operator|new
 name|Path
 argument_list|(
 name|scheme
-operator|+
-literal|":"
-operator|+
-literal|"//"
-operator|+
+argument_list|,
 name|authority
-operator|+
+argument_list|,
 name|pathUri
 operator|.
 name|getPath

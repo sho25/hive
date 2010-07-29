@@ -488,6 +488,32 @@ argument_list|,
 literal|"__HIVE_DEFAULT_PARTITION__"
 argument_list|)
 block|,
+comment|// should hive determine whether to run in local mode automatically ?
+name|LOCALMODEAUTO
+argument_list|(
+literal|"hive.exec.mode.local.auto"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|// if yes:
+comment|// run in local mode only if input bytes is less than this. 128MB by default
+name|LOCALMODEMAXBYTES
+argument_list|(
+literal|"hive.exec.mode.local.auto.inputbytes.max"
+argument_list|,
+literal|134217728L
+argument_list|)
+block|,
+comment|// run in local mode only if number of tasks (for map and reduce each) is
+comment|// less than this
+name|LOCALMODEMAXTASKS
+argument_list|(
+literal|"hive.exec.mode.local.auto.tasks.max"
+argument_list|,
+literal|4
+argument_list|)
+block|,
 comment|// hadoop stuff
 name|HADOOPBIN
 argument_list|(

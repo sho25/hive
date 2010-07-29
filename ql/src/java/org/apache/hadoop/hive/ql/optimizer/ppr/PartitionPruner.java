@@ -1530,6 +1530,11 @@ operator|.
 name|FALSE
 argument_list|)
 decl_stmt|;
+name|String
+name|state
+init|=
+literal|"retained"
+decl_stmt|;
 if|if
 condition|(
 name|Boolean
@@ -1542,15 +1547,6 @@ name|r
 argument_list|)
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"retained partition: "
-operator|+
-name|partSpec
-argument_list|)
-expr_stmt|;
 name|true_parts
 operator|.
 name|add
@@ -1561,15 +1557,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"unknown partition: "
-operator|+
-name|partSpec
-argument_list|)
-expr_stmt|;
 name|unkn_parts
 operator|.
 name|add
@@ -1577,7 +1564,29 @@ argument_list|(
 name|part
 argument_list|)
 expr_stmt|;
+name|state
+operator|=
+literal|"unknown"
+expr_stmt|;
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|state
+operator|+
+literal|" partition: "
+operator|+
+name|partSpec
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 else|else

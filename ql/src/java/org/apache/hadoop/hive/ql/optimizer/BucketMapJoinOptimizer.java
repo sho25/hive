@@ -1980,6 +1980,11 @@ name|FileSystem
 operator|.
 name|get
 argument_list|(
+name|tbl
+operator|.
+name|getDataLocation
+argument_list|()
+argument_list|,
 name|this
 operator|.
 name|pGraphContext
@@ -2905,6 +2910,11 @@ name|FileSystem
 operator|.
 name|get
 argument_list|(
+name|part
+operator|.
+name|getDataLocation
+argument_list|()
+argument_list|,
 name|this
 operator|.
 name|pGraphContext

@@ -2189,6 +2189,11 @@ operator|.
 name|getResponseCode
 argument_list|()
 expr_stmt|;
+name|drv
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|ecode
@@ -2346,9 +2351,6 @@ expr_stmt|;
 name|Path
 name|fpath
 decl_stmt|;
-name|Path
-name|newfpath
-decl_stmt|;
 name|HashMap
 argument_list|<
 name|String
@@ -2431,39 +2433,12 @@ argument_list|,
 literal|"kv1.txt"
 argument_list|)
 expr_stmt|;
-name|newfpath
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|tmppath
-argument_list|,
-literal|"kv1.txt"
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|copyFromLocalFile
-argument_list|(
-literal|false
-argument_list|,
-literal|true
-argument_list|,
-name|fpath
-argument_list|,
-name|newfpath
-argument_list|)
-expr_stmt|;
-name|fpath
-operator|=
-name|newfpath
-expr_stmt|;
 comment|// db.loadPartition(fpath, srcpart.getName(), part_spec, true);
 name|runLoadCmd
 argument_list|(
-literal|"LOAD DATA INPATH '"
+literal|"LOAD DATA LOCAL INPATH '"
 operator|+
-name|newfpath
+name|fpath
 operator|.
 name|toString
 argument_list|()
@@ -2533,34 +2508,11 @@ argument_list|,
 name|fname
 argument_list|)
 expr_stmt|;
-name|newfpath
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|tmppath
-argument_list|,
-name|fname
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|copyFromLocalFile
-argument_list|(
-literal|false
-argument_list|,
-literal|true
-argument_list|,
-name|fpath
-argument_list|,
-name|newfpath
-argument_list|)
-expr_stmt|;
 name|runLoadCmd
 argument_list|(
-literal|"LOAD DATA INPATH '"
+literal|"LOAD DATA LOCAL INPATH '"
 operator|+
-name|newfpath
+name|fpath
 operator|.
 name|toString
 argument_list|()
@@ -2607,34 +2559,11 @@ argument_list|,
 name|fname
 argument_list|)
 expr_stmt|;
-name|newfpath
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|tmppath
-argument_list|,
-name|fname
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|copyFromLocalFile
-argument_list|(
-literal|false
-argument_list|,
-literal|true
-argument_list|,
-name|fpath
-argument_list|,
-name|newfpath
-argument_list|)
-expr_stmt|;
 name|runLoadCmd
 argument_list|(
-literal|"LOAD DATA INPATH '"
+literal|"LOAD DATA LOCAL INPATH '"
 operator|+
-name|newfpath
+name|fpath
 operator|.
 name|toString
 argument_list|()
@@ -2831,35 +2760,11 @@ argument_list|,
 literal|"kv1.txt"
 argument_list|)
 expr_stmt|;
-name|newfpath
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|tmppath
-argument_list|,
-literal|"kv1.txt"
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|copyFromLocalFile
-argument_list|(
-literal|false
-argument_list|,
-literal|true
-argument_list|,
-name|fpath
-argument_list|,
-name|newfpath
-argument_list|)
-expr_stmt|;
-comment|// db.loadTable(newfpath, "src", false);
 name|runLoadCmd
 argument_list|(
-literal|"LOAD DATA INPATH '"
+literal|"LOAD DATA LOCAL INPATH '"
 operator|+
-name|newfpath
+name|fpath
 operator|.
 name|toString
 argument_list|()
@@ -2878,35 +2783,11 @@ argument_list|,
 literal|"kv3.txt"
 argument_list|)
 expr_stmt|;
-name|newfpath
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|tmppath
-argument_list|,
-literal|"kv3.txt"
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|copyFromLocalFile
-argument_list|(
-literal|false
-argument_list|,
-literal|true
-argument_list|,
-name|fpath
-argument_list|,
-name|newfpath
-argument_list|)
-expr_stmt|;
-comment|// db.loadTable(newfpath, "src1", false);
 name|runLoadCmd
 argument_list|(
-literal|"LOAD DATA INPATH '"
+literal|"LOAD DATA LOCAL INPATH '"
 operator|+
-name|newfpath
+name|fpath
 operator|.
 name|toString
 argument_list|()
@@ -2925,35 +2806,11 @@ argument_list|,
 literal|"kv1.seq"
 argument_list|)
 expr_stmt|;
-name|newfpath
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|tmppath
-argument_list|,
-literal|"kv1.seq"
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|copyFromLocalFile
-argument_list|(
-literal|false
-argument_list|,
-literal|true
-argument_list|,
-name|fpath
-argument_list|,
-name|newfpath
-argument_list|)
-expr_stmt|;
-comment|// db.loadTable(newfpath, "src_sequencefile", true);
 name|runLoadCmd
 argument_list|(
-literal|"LOAD DATA INPATH '"
+literal|"LOAD DATA LOCAL INPATH '"
 operator|+
-name|newfpath
+name|fpath
 operator|.
 name|toString
 argument_list|()
@@ -2972,35 +2829,11 @@ argument_list|,
 literal|"complex.seq"
 argument_list|)
 expr_stmt|;
-name|newfpath
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|tmppath
-argument_list|,
-literal|"complex.seq"
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|copyFromLocalFile
-argument_list|(
-literal|false
-argument_list|,
-literal|true
-argument_list|,
-name|fpath
-argument_list|,
-name|newfpath
-argument_list|)
-expr_stmt|;
-comment|// db.loadTable(newfpath, "src_thrift", true);
 name|runLoadCmd
 argument_list|(
-literal|"LOAD DATA INPATH '"
+literal|"LOAD DATA LOCAL INPATH '"
 operator|+
-name|newfpath
+name|fpath
 operator|.
 name|toString
 argument_list|()
@@ -3019,35 +2852,11 @@ argument_list|,
 literal|"json.txt"
 argument_list|)
 expr_stmt|;
-name|newfpath
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|tmppath
-argument_list|,
-literal|"json.txt"
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|copyFromLocalFile
-argument_list|(
-literal|false
-argument_list|,
-literal|true
-argument_list|,
-name|fpath
-argument_list|,
-name|newfpath
-argument_list|)
-expr_stmt|;
-comment|// db.loadTable(newfpath, "src_json", false);
 name|runLoadCmd
 argument_list|(
-literal|"LOAD DATA INPATH '"
+literal|"LOAD DATA LOCAL INPATH '"
 operator|+
-name|newfpath
+name|fpath
 operator|.
 name|toString
 argument_list|()
@@ -4520,6 +4329,8 @@ literal|"\\|\\(<string>.*/tmp/.*</string>\\)"
 operator|+
 literal|"\\|\\(<string>file:.*</string>\\)"
 operator|+
+literal|"\\|\\(<string>pfile:.*</string>\\)"
+operator|+
 literal|"\\|\\(<string>[0-9]\\{10\\}</string>\\)"
 operator|+
 literal|"\\|\\(<string>/.*/warehouse/.*</string>\\)\\)"
@@ -5559,6 +5370,10 @@ block|,
 literal|"-I"
 block|,
 literal|"file:"
+block|,
+literal|"-I"
+block|,
+literal|"pfile:"
 block|,
 literal|"-I"
 block|,

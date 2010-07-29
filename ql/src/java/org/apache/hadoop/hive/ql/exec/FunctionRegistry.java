@@ -6412,6 +6412,13 @@ name|String
 name|functionName
 parameter_list|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
 name|LOG
 operator|.
 name|debug
@@ -7129,6 +7136,13 @@ name|cost
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
 name|LOG
 operator|.
 name|debug

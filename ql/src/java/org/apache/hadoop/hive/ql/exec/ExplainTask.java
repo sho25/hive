@@ -255,6 +255,22 @@ name|DriverContext
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|Context
+import|;
+end_import
+
 begin_comment
 comment|/**  * ExplainTask implementation.  *  **/
 end_comment
@@ -2244,6 +2260,26 @@ block|{
 return|return
 literal|"EXPLAIN"
 return|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|void
+name|localizeMRTmpFilesImpl
+parameter_list|(
+name|Context
+name|ctx
+parameter_list|)
+block|{
+comment|// explain task has nothing to localize
+comment|// we don't expect to enter this code path at all
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Unexpected call"
+argument_list|)
+throw|;
 block|}
 block|}
 end_class

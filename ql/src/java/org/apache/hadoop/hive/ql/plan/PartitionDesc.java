@@ -171,6 +171,20 @@ name|InputFormat
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
 begin_comment
 comment|/**  * PartitionDesc.  *  */
 end_comment
@@ -1254,27 +1268,18 @@ return|return;
 block|}
 try|try
 block|{
-name|URI
-name|uri
+name|Path
+name|p
 init|=
 operator|new
-name|URI
+name|Path
 argument_list|(
 name|path
 argument_list|)
 decl_stmt|;
-name|File
-name|file
-init|=
-operator|new
-name|File
-argument_list|(
-name|uri
-argument_list|)
-decl_stmt|;
 name|baseFileName
 operator|=
-name|file
+name|p
 operator|.
 name|getName
 argument_list|()
@@ -1286,8 +1291,8 @@ name|Exception
 name|ex
 parameter_list|)
 block|{
-comment|// This could be due to either URI syntax error or File constructor
-comment|// illegal arg; we don't really care which one it is.
+comment|// don't really care about the exception. the goal is to capture the
+comment|// the last component at the minimum - so set to the complete path
 name|baseFileName
 operator|=
 name|path

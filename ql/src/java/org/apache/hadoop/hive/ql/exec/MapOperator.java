@@ -2315,6 +2315,18 @@ return|return
 literal|"MAP"
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|getType
+parameter_list|()
+block|{
+return|return
+operator|-
+literal|1
+return|;
+block|}
 block|}
 end_class
 

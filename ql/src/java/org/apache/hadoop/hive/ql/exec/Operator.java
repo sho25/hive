@@ -4972,20 +4972,13 @@ operator|=
 name|counterNameToEnum
 expr_stmt|;
 block|}
-comment|/**    * Should be overridden to return the type of the specific operator among the    * types in OperatorType.    *    * @return OperatorType.* or -1 if not overridden    */
+comment|/**    * Return the type of the specific operator among the    * types in OperatorType.    *    * @return OperatorType.*    */
+specifier|abstract
 specifier|public
 name|int
 name|getType
 parameter_list|()
-block|{
-assert|assert
-literal|false
-assert|;
-return|return
-operator|-
-literal|1
-return|;
-block|}
+function_decl|;
 specifier|public
 name|void
 name|setGroupKeyObject
