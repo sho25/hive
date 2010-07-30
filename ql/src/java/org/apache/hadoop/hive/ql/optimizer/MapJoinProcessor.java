@@ -1630,7 +1630,7 @@ argument_list|()
 argument_list|,
 name|valueInfo
 operator|.
-name|getIsPartitionCol
+name|getIsVirtualCol
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -1666,7 +1666,12 @@ argument_list|()
 argument_list|,
 name|valueInfo
 operator|.
-name|getIsPartitionCol
+name|getIsVirtualCol
+argument_list|()
+argument_list|,
+name|valueInfo
+operator|.
+name|isHiddenVirtualCol
 argument_list|()
 argument_list|)
 argument_list|)
@@ -2433,7 +2438,7 @@ index|]
 argument_list|,
 name|valueInfo
 operator|.
-name|getIsPartitionCol
+name|getIsVirtualCol
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -2482,7 +2487,12 @@ index|]
 argument_list|,
 name|valueInfo
 operator|.
-name|getIsPartitionCol
+name|getIsVirtualCol
+argument_list|()
+argument_list|,
+name|valueInfo
+operator|.
+name|isHiddenVirtualCol
 argument_list|()
 argument_list|)
 argument_list|)

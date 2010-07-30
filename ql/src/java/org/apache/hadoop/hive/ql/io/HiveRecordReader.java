@@ -90,7 +90,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveRecordReader is a simple wrapper on RecordReader.  * It allows us to stop reading the data when some global flag  * ExecMapper.getDone() is set.   */
+comment|/**  * HiveRecordReader is a simple wrapper on RecordReader. It allows us to stop  * reading the data when some global flag ExecMapper.getDone() is set.  */
 end_comment
 
 begin_class
@@ -106,8 +106,8 @@ name|V
 extends|extends
 name|Writable
 parameter_list|>
-implements|implements
-name|RecordReader
+extends|extends
+name|HiveContextAwareRecordReader
 argument_list|<
 name|K
 argument_list|,
@@ -125,6 +125,8 @@ parameter_list|(
 name|RecordReader
 name|recordReader
 parameter_list|)
+throws|throws
+name|IOException
 block|{
 name|this
 operator|.
@@ -135,7 +137,7 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
-name|close
+name|doClose
 parameter_list|()
 throws|throws
 name|IOException
@@ -204,9 +206,11 @@ name|getProgress
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
-name|next
+name|doNext
 parameter_list|(
 name|K
 name|key

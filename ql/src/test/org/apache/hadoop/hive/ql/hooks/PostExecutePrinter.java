@@ -776,6 +776,15 @@ operator|.
 name|getKey
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|dep
+operator|==
+literal|null
+condition|)
+block|{
+continue|continue;
+block|}
 name|StringBuilder
 name|sb
 init|=

@@ -474,7 +474,7 @@ argument_list|)
 operator|&&
 name|cd
 operator|.
-name|getIsParititonCol
+name|getIsPartitionColOrVirtualCol
 argument_list|()
 condition|)
 block|{

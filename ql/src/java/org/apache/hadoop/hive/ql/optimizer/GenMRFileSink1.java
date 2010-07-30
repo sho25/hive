@@ -1248,7 +1248,7 @@ argument_list|()
 argument_list|,
 name|ci
 operator|.
-name|getIsPartitionCol
+name|getIsVirtualCol
 argument_list|()
 argument_list|)
 argument_list|)
@@ -1504,7 +1504,12 @@ index|]
 argument_list|,
 name|colInfo
 operator|.
-name|getIsPartitionCol
+name|getIsVirtualCol
+argument_list|()
+argument_list|,
+name|colInfo
+operator|.
+name|isHiddenVirtualCol
 argument_list|()
 argument_list|)
 argument_list|)

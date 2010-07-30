@@ -31,6 +31,8 @@ block|,
 name|EXTERNAL_TABLE
 block|,
 name|VIRTUAL_VIEW
+block|,
+name|INDEX_TABLE
 block|}
 end_enum
 

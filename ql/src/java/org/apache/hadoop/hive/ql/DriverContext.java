@@ -81,6 +81,20 @@ name|Task
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobConf
+import|;
+end_import
+
 begin_comment
 comment|/**  * DriverContext.  *  */
 end_comment

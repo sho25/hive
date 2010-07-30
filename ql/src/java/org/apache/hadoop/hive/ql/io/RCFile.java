@@ -6292,6 +6292,17 @@ name|toString
 argument_list|()
 return|;
 block|}
+specifier|public
+name|boolean
+name|isCompressedRCFile
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|decompress
+return|;
+block|}
 comment|/** Close the reader. */
 specifier|public
 name|void

@@ -1260,6 +1260,13 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|val
+operator|!=
+literal|null
+condition|)
+block|{
 name|val
 operator|=
 name|val
@@ -1271,6 +1278,7 @@ argument_list|,
 literal|' '
 argument_list|)
 expr_stmt|;
+block|}
 name|sb
 operator|.
 name|append

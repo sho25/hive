@@ -119,7 +119,7 @@ decl_stmt|;
 comment|/**    * Is the column a partitioned column.    */
 specifier|private
 name|boolean
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 decl_stmt|;
 specifier|public
 name|ExprNodeColumnDesc
@@ -138,7 +138,7 @@ name|String
 name|tabAlias
 parameter_list|,
 name|boolean
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 parameter_list|)
 block|{
 name|super
@@ -160,9 +160,9 @@ name|tabAlias
 expr_stmt|;
 name|this
 operator|.
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 operator|=
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 expr_stmt|;
 block|}
 specifier|public
@@ -181,7 +181,7 @@ name|String
 name|tabAlias
 parameter_list|,
 name|boolean
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 parameter_list|)
 block|{
 name|super
@@ -208,9 +208,9 @@ name|tabAlias
 expr_stmt|;
 name|this
 operator|.
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 operator|=
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 expr_stmt|;
 block|}
 specifier|public
@@ -263,16 +263,16 @@ expr_stmt|;
 block|}
 specifier|public
 name|boolean
-name|getIsParititonCol
+name|getIsPartitionColOrVirtualCol
 parameter_list|()
 block|{
 return|return
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 return|;
 block|}
 specifier|public
 name|void
-name|setIsPartitionCol
+name|setIsPartitionColOrVirtualCol
 parameter_list|(
 name|boolean
 name|isPartitionCol
@@ -280,7 +280,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 operator|=
 name|isPartitionCol
 expr_stmt|;
@@ -370,7 +370,7 @@ name|column
 argument_list|,
 name|tabAlias
 argument_list|,
-name|isPartitionCol
+name|isPartitionColOrVirtualCol
 argument_list|)
 return|;
 block|}

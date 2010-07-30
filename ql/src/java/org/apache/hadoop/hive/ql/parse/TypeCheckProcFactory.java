@@ -691,7 +691,7 @@ argument_list|()
 argument_list|,
 name|colInfo
 operator|.
-name|getIsPartitionCol
+name|getIsVirtualCol
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1696,7 +1696,7 @@ argument_list|()
 argument_list|,
 name|colInfo
 operator|.
-name|getIsPartitionCol
+name|getIsVirtualCol
 argument_list|()
 argument_list|)
 return|;
@@ -3403,7 +3403,7 @@ argument_list|()
 argument_list|,
 name|colInfo
 operator|.
-name|getIsPartitionCol
+name|getIsVirtualCol
 argument_list|()
 argument_list|)
 return|;
