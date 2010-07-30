@@ -264,12 +264,15 @@ name|HivePreparedStatement
 implements|implements
 name|PreparedStatement
 block|{
+specifier|private
 name|String
 name|sql
 decl_stmt|;
+specifier|private
 name|JdbcSessionState
 name|session
 decl_stmt|;
+specifier|private
 name|HiveInterface
 name|client
 decl_stmt|;
@@ -388,7 +391,7 @@ throw|;
 block|}
 return|return
 operator|new
-name|HiveResultSet
+name|HiveQueryResultSet
 argument_list|(
 name|client
 argument_list|)

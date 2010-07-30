@@ -88,12 +88,14 @@ name|sql
 operator|.
 name|ResultSetMetaData
 block|{
+specifier|private
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|columnNames
 decl_stmt|;
+specifier|private
 name|List
 argument_list|<
 name|String
@@ -129,7 +131,6 @@ operator|=
 name|columnTypes
 expr_stmt|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getCatalogName(int)    */
 specifier|public
 name|String
 name|getCatalogName
@@ -140,7 +141,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -149,7 +149,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnClassName(int)    */
 specifier|public
 name|String
 name|getColumnClassName
@@ -160,7 +159,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -169,7 +167,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnCount()    */
 specifier|public
 name|int
 name|getColumnCount
@@ -184,7 +181,6 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnDisplaySize(int)    */
 specifier|public
 name|int
 name|getColumnDisplaySize
@@ -252,7 +248,6 @@ literal|32
 return|;
 block|}
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnLabel(int)    */
 specifier|public
 name|String
 name|getColumnLabel
@@ -263,7 +258,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 return|return
 name|columnNames
 operator|.
@@ -275,7 +269,6 @@ literal|1
 argument_list|)
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnName(int)    */
 specifier|public
 name|String
 name|getColumnName
@@ -297,7 +290,6 @@ literal|1
 argument_list|)
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnType(int)    */
 specifier|public
 name|int
 name|getColumnType
@@ -361,12 +353,30 @@ literal|1
 argument_list|)
 decl_stmt|;
 comment|// we need to convert the thrift type to the SQL type
-comment|// TODO: this would be better handled in an enum
+return|return
+name|hiveTypeToSqlType
+argument_list|(
+name|type
+argument_list|)
+return|;
+block|}
+comment|/**    * Convert hive types to sql types.    * @param type    * @return Integer java.sql.Types values    * @throws SQLException    */
+specifier|public
+specifier|static
+name|Integer
+name|hiveTypeToSqlType
+parameter_list|(
+name|String
+name|type
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
 if|if
 condition|(
 literal|"string"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -383,7 +393,14 @@ if|if
 condition|(
 literal|"bool"
 operator|.
-name|equals
+name|equalsIgnoreCase
+argument_list|(
+name|type
+argument_list|)
+operator|||
+literal|"boolean"
+operator|.
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -398,9 +415,26 @@ block|}
 elseif|else
 if|if
 condition|(
+literal|"float"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|type
+argument_list|)
+condition|)
+block|{
+return|return
+name|Types
+operator|.
+name|FLOAT
+return|;
+block|}
+elseif|else
+if|if
+condition|(
 literal|"double"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -417,7 +451,14 @@ if|if
 condition|(
 literal|"byte"
 operator|.
-name|equals
+name|equalsIgnoreCase
+argument_list|(
+name|type
+argument_list|)
+operator|||
+literal|"tinyint"
+operator|.
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -434,7 +475,14 @@ if|if
 condition|(
 literal|"i32"
 operator|.
-name|equals
+name|equalsIgnoreCase
+argument_list|(
+name|type
+argument_list|)
+operator|||
+literal|"int"
+operator|.
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -451,7 +499,14 @@ if|if
 condition|(
 literal|"i64"
 operator|.
-name|equals
+name|equalsIgnoreCase
+argument_list|(
+name|type
+argument_list|)
+operator|||
+literal|"bigint"
+operator|.
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -467,13 +522,12 @@ throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Inrecognized column type: "
+literal|"Unrecognized column type: "
 operator|+
 name|type
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getColumnTypeName(int)    */
 specifier|public
 name|String
 name|getColumnTypeName
@@ -541,7 +595,7 @@ if|if
 condition|(
 literal|"string"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -558,7 +612,7 @@ if|if
 condition|(
 literal|"double"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -575,7 +629,7 @@ if|if
 condition|(
 literal|"bool"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -592,7 +646,7 @@ if|if
 condition|(
 literal|"byte"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -609,7 +663,7 @@ if|if
 condition|(
 literal|"i32"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -626,7 +680,7 @@ if|if
 condition|(
 literal|"i64"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|type
 argument_list|)
@@ -648,7 +702,6 @@ name|type
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getPrecision(int)    */
 specifier|public
 name|int
 name|getPrecision
@@ -681,7 +734,6 @@ return|return
 literal|0
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getScale(int)    */
 specifier|public
 name|int
 name|getScale
@@ -714,7 +766,6 @@ return|return
 literal|0
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getSchemaName(int)    */
 specifier|public
 name|String
 name|getSchemaName
@@ -725,7 +776,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -734,7 +784,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#getTableName(int)    */
 specifier|public
 name|String
 name|getTableName
@@ -745,7 +794,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -754,7 +802,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isAutoIncrement(int)    */
 specifier|public
 name|boolean
 name|isAutoIncrement
@@ -770,7 +817,6 @@ return|return
 literal|false
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isCaseSensitive(int)    */
 specifier|public
 name|boolean
 name|isCaseSensitive
@@ -781,7 +827,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -790,7 +835,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isCurrency(int)    */
 specifier|public
 name|boolean
 name|isCurrency
@@ -806,7 +850,6 @@ return|return
 literal|false
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isDefinitelyWritable(int)    */
 specifier|public
 name|boolean
 name|isDefinitelyWritable
@@ -817,7 +860,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -826,7 +868,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isNullable(int)    */
 specifier|public
 name|int
 name|isNullable
@@ -844,7 +885,6 @@ operator|.
 name|columnNullable
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isReadOnly(int)    */
 specifier|public
 name|boolean
 name|isReadOnly
@@ -855,7 +895,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -864,7 +903,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isSearchable(int)    */
 specifier|public
 name|boolean
 name|isSearchable
@@ -875,7 +913,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -884,7 +921,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isSigned(int)    */
 specifier|public
 name|boolean
 name|isSigned
@@ -895,7 +931,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -904,7 +939,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.ResultSetMetaData#isWritable(int)    */
 specifier|public
 name|boolean
 name|isWritable
@@ -915,7 +949,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -924,7 +957,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -938,7 +970,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -947,7 +978,6 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
 specifier|public
 parameter_list|<
 name|T
@@ -964,7 +994,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException

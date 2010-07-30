@@ -104,31 +104,37 @@ name|sql
 operator|.
 name|Statement
 block|{
+specifier|private
 name|JdbcSessionState
 name|session
 decl_stmt|;
+specifier|private
 name|HiveInterface
 name|client
 decl_stmt|;
 comment|/**    * We need to keep a reference to the result set to support the following:    *<code>    * statement.execute(String sql);    * statement.getResultSet();    *</code>.    */
+specifier|private
 name|ResultSet
 name|resultSet
 init|=
 literal|null
 decl_stmt|;
 comment|/**    * The maximum number of rows this statement should return (0 => all rows).    */
+specifier|private
 name|int
 name|maxRows
 init|=
 literal|0
 decl_stmt|;
 comment|/**    * Add SQLWarnings to the warningChain if needed.    */
+specifier|private
 name|SQLWarning
 name|warningChain
 init|=
 literal|null
 decl_stmt|;
 comment|/**    * Keep state so we can fail certain calls made after close().    */
+specifier|private
 name|boolean
 name|isClosed
 init|=
@@ -169,7 +175,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -186,7 +191,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -203,7 +207,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -233,7 +236,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO: how to properly shut down the client?
 name|client
 operator|=
 literal|null
@@ -288,7 +290,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -312,7 +313,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -336,7 +336,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -354,7 +353,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -450,7 +448,7 @@ block|}
 name|resultSet
 operator|=
 operator|new
-name|HiveResultSet
+name|HiveQueryResultSet
 argument_list|(
 name|client
 argument_list|,
@@ -521,7 +519,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -545,7 +542,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -569,7 +565,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -586,7 +581,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -603,7 +597,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -620,7 +613,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -637,7 +629,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -654,7 +645,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -683,7 +673,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -703,7 +692,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -720,7 +708,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -749,7 +736,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -766,7 +752,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -783,7 +768,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -836,7 +820,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -856,7 +839,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -876,7 +858,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -896,7 +877,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -916,7 +896,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -936,7 +915,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -987,7 +965,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -1007,7 +984,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -1030,7 +1006,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
@@ -1056,7 +1031,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException

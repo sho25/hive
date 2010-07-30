@@ -2800,7 +2800,7 @@ block|{
 comment|// TODO Auto-generated method stub
 return|return
 operator|new
-name|HiveResultSet
+name|HiveQueryResultSet
 argument_list|(
 literal|null
 argument_list|)
