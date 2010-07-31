@@ -1246,20 +1246,6 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|command
-operator|.
-name|append
-argument_list|(
-literal|" SORT BY "
-argument_list|)
-expr_stmt|;
-name|command
-operator|.
-name|append
-argument_list|(
-name|indexCols
-argument_list|)
-expr_stmt|;
 name|Driver
 name|driver
 init|=
