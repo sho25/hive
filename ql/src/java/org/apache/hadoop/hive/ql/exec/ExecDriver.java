@@ -982,14 +982,6 @@ name|reduceProgress
 init|=
 literal|0
 decl_stmt|;
-specifier|protected
-specifier|transient
-name|boolean
-name|success
-init|=
-literal|false
-decl_stmt|;
-comment|// if job execution is successful
 comment|/**    * Constructor when invoked from QL.    */
 specifier|public
 name|ExecDriver
@@ -1848,7 +1840,6 @@ operator|.
 name|getCounters
 argument_list|()
 decl_stmt|;
-comment|// HIVE-1422
 if|if
 condition|(
 name|ctrs
@@ -1856,6 +1847,8 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// hadoop might return null if it cannot locate the job.
+comment|// we may still be able to retrieve the job status - so ignore
 return|return
 literal|false
 return|;
@@ -1948,7 +1941,7 @@ return|;
 block|}
 block|}
 specifier|private
-name|void
+name|boolean
 name|progress
 parameter_list|(
 name|ExecDriverTaskHandle
@@ -2088,10 +2081,9 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-name|th
-operator|.
-name|setRunningJob
-argument_list|(
+name|RunningJob
+name|newRj
+init|=
 name|jc
 operator|.
 name|getJob
@@ -2101,8 +2093,36 @@ operator|.
 name|getJobID
 argument_list|()
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|newRj
+operator|==
+literal|null
+condition|)
+block|{
+comment|// under exceptional load, hadoop may not be able to look up status
+comment|// of finished jobs (because it has purged them from memory). From
+comment|// hive's perspective - it's equivalent to the job having failed.
+comment|// So raise a meaningful exception
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Could not find status of job: + rj.getJobID()"
+argument_list|)
+throw|;
+block|}
+else|else
+block|{
+name|th
+operator|.
+name|setRunningJob
+argument_list|(
+name|newRj
 argument_list|)
 expr_stmt|;
+block|}
 comment|// If fatal errors happen we should kill the job immediately rather than
 comment|// let the job retry several times, which eventually lead to failure.
 if|if
@@ -2125,10 +2145,6 @@ name|errMsg
 argument_list|)
 condition|)
 block|{
-name|success
-operator|=
-literal|false
-expr_stmt|;
 name|console
 operator|.
 name|printError
@@ -2330,23 +2346,31 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|// check for fatal error again in case it occurred after the last check
-comment|// before the job is completed
+name|boolean
+name|success
+decl_stmt|;
 if|if
 condition|(
-operator|!
 name|fatal
-operator|&&
-operator|(
-name|fatal
+condition|)
+block|{
+name|success
 operator|=
+literal|false
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// check for fatal error again in case it occurred after
+comment|// the last check before the job is completed
+if|if
+condition|(
 name|checkFatalErrors
 argument_list|(
 name|th
 argument_list|,
 name|errMsg
 argument_list|)
-operator|)
 condition|)
 block|{
 name|console
@@ -2376,24 +2400,11 @@ name|isSuccessful
 argument_list|()
 expr_stmt|;
 block|}
+block|}
 name|setDone
 argument_list|()
 expr_stmt|;
-name|th
-operator|.
-name|setRunningJob
-argument_list|(
-name|jc
-operator|.
-name|getJob
-argument_list|(
-name|rj
-operator|.
-name|getJobID
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
+comment|// update based on the final value of the counters
 name|updateCounters
 argument_list|(
 name|th
@@ -2426,6 +2437,11 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// LOG.info(queryPlan);
+return|return
+operator|(
+name|success
+operator|)
+return|;
 block|}
 comment|/**    * Update counters relevant to this task.    */
 specifier|private
@@ -2520,7 +2536,6 @@ operator|.
 name|getCounters
 argument_list|()
 decl_stmt|;
-comment|// HIVE-1422
 if|if
 condition|(
 name|ctrs
@@ -2528,6 +2543,8 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// hadoop might return null if it cannot locate the job.
+comment|// we may still be able to retrieve the job status - so ignore
 return|return;
 block|}
 for|for
@@ -2634,10 +2651,11 @@ name|DriverContext
 name|driverContext
 parameter_list|)
 block|{
+name|boolean
 name|success
-operator|=
+init|=
 literal|true
-expr_stmt|;
+decl_stmt|;
 name|String
 name|invalidReason
 init|=
@@ -3297,10 +3315,6 @@ name|RunningJob
 name|rj
 init|=
 literal|null
-decl_stmt|,
-name|orig_rj
-init|=
-literal|null
 decl_stmt|;
 name|boolean
 name|noName
@@ -3437,8 +3451,6 @@ argument_list|,
 name|LOG
 argument_list|)
 expr_stmt|;
-name|orig_rj
-operator|=
 name|rj
 operator|=
 name|jc
@@ -3506,30 +3518,13 @@ argument_list|(
 name|rj
 argument_list|)
 expr_stmt|;
+name|success
+operator|=
 name|progress
 argument_list|(
 name|th
 argument_list|)
 expr_stmt|;
-comment|// success status will be setup inside progress
-if|if
-condition|(
-name|rj
-operator|==
-literal|null
-condition|)
-block|{
-comment|// in the corner case where the running job has disappeared from JT
-comment|// memory remember that we did actually submit the job.
-name|rj
-operator|=
-name|orig_rj
-expr_stmt|;
-name|success
-operator|=
-literal|false
-expr_stmt|;
-block|}
 name|String
 name|statusMesg
 init|=
@@ -3691,13 +3686,16 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|returnVal
-operator|!=
-literal|0
-operator|&&
 name|rj
 operator|!=
 literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|returnVal
+operator|!=
+literal|0
 condition|)
 block|{
 name|rj
@@ -3716,6 +3714,7 @@ name|getJobID
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

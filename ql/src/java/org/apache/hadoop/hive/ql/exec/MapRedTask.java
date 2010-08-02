@@ -1917,7 +1917,10 @@ condition|)
 return|return
 literal|"Input Size (= "
 operator|+
-name|maxBytes
+name|inputSummary
+operator|.
+name|getLength
+argument_list|()
 operator|+
 literal|") is larger than "
 operator|+
