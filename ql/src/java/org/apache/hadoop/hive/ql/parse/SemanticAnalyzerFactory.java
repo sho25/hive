@@ -605,6 +605,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_ALTERTABLE_ALTERPARTS_PROTECTMODE
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_ALTERTABLE_PROPERTIES
 case|:
 case|case
@@ -661,6 +666,11 @@ case|case
 name|HiveParser
 operator|.
 name|TOK_ALTERTABLE_FILEFORMAT
+case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_ALTERTABLE_PROTECTMODE
 case|:
 case|case
 name|HiveParser

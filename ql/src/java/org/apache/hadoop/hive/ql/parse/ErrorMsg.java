@@ -667,7 +667,12 @@ literal|"HOLD_DDLTIME hint cannot be applied to dynamic "
 operator|+
 literal|"partitions or non-existent partitions"
 argument_list|)
-block|,       ;
+block|,
+name|OFFLINE_TABLE_OR_PARTITION
+argument_list|(
+literal|"Query against an offline table or partition"
+argument_list|)
+block|;
 specifier|private
 name|String
 name|mesg

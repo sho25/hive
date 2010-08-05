@@ -219,6 +219,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|ProtectMode
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|TableType
 import|;
 end_import
@@ -540,7 +556,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Hive Table: is a fundamental unit of data in Hive that shares a common schema/DDL.  *   * Please note that the ql code should always go through methods of this class to access the  * metadata, instead of directly accessing org.apache.hadoop.hive.metastore.api.Table.  This  * helps to isolate the metastore code and the ql code.  */
+comment|/**  * A Hive Table: is a fundamental unit of data in Hive that shares a common schema/DDL.  *  * Please note that the ql code should always go through methods of this class to access the  * metadata, instead of directly accessing org.apache.hadoop.hive.metastore.api.Table.  This  * helps to isolate the metastore code and the ql code.  */
 end_comment
 
 begin_class
@@ -2684,7 +2700,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Returns a list of all the columns of the table (data columns + partition    * columns in that order.    *     * @return List<FieldSchema>    */
+comment|/**    * Returns a list of all the columns of the table (data columns + partition    * columns in that order.    *    * @return List<FieldSchema>    */
 specifier|public
 name|List
 argument_list|<
@@ -2772,7 +2788,7 @@ name|getNumBuckets
 argument_list|()
 return|;
 block|}
-comment|/**    * Replaces files in the partition with new data set specified by srcf. Works    * by moving files    *     * @param srcf    *          Files to be replaced. Leaf directories or globbed file paths    * @param tmpd    *          Temporary directory    */
+comment|/**    * Replaces files in the partition with new data set specified by srcf. Works    * by moving files    *    * @param srcf    *          Files to be replaced. Leaf directories or globbed file paths    * @param tmpd    *          Temporary directory    */
 specifier|protected
 name|void
 name|replaceFiles
@@ -2848,7 +2864,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Inserts files specified into the partition. Works by moving files    *     * @param srcf    *          Files to be moved. Leaf directories or globbed file paths    */
+comment|/**    * Inserts files specified into the partition. Works by moving files    *    * @param srcf    *          Files to be moved. Leaf directories or globbed file paths    */
 specifier|protected
 name|void
 name|copyFiles
@@ -3510,7 +3526,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates a partition name -> value spec map object    *     * @param tp    *          Use the information from this partition.    * @return Partition name to value mapping.    */
+comment|/**    * Creates a partition name -> value spec map object    *    * @param tp    *          Use the information from this partition.    * @return Partition name to value mapping.    */
 specifier|public
 name|LinkedHashMap
 argument_list|<
@@ -3688,6 +3704,177 @@ name|META_TABLE_STORAGE
 argument_list|)
 operator|!=
 literal|null
+return|;
+block|}
+comment|/**    * @param protectMode    */
+specifier|public
+name|void
+name|setProtectMode
+parameter_list|(
+name|ProtectMode
+name|protectMode
+parameter_list|)
+block|{
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|parameters
+init|=
+name|tTable
+operator|.
+name|getParameters
+argument_list|()
+decl_stmt|;
+name|parameters
+operator|.
+name|put
+argument_list|(
+name|ProtectMode
+operator|.
+name|PARAMETER_NAME
+argument_list|,
+name|protectMode
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|tTable
+operator|.
+name|setParameters
+argument_list|(
+name|parameters
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * @return protect mode    */
+specifier|public
+name|ProtectMode
+name|getProtectMode
+parameter_list|()
+block|{
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|parameters
+init|=
+name|tTable
+operator|.
+name|getParameters
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|parameters
+operator|.
+name|containsKey
+argument_list|(
+name|ProtectMode
+operator|.
+name|PARAMETER_NAME
+argument_list|)
+condition|)
+block|{
+return|return
+operator|new
+name|ProtectMode
+argument_list|()
+return|;
+block|}
+else|else
+block|{
+return|return
+name|ProtectMode
+operator|.
+name|getProtectModeFromString
+argument_list|(
+name|parameters
+operator|.
+name|get
+argument_list|(
+name|ProtectMode
+operator|.
+name|PARAMETER_NAME
+argument_list|)
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**    * @return True protect mode indicates the table if offline.    */
+specifier|public
+name|boolean
+name|isOffline
+parameter_list|()
+block|{
+return|return
+name|getProtectMode
+argument_list|()
+operator|.
+name|offline
+return|;
+block|}
+comment|/**    * @return True if protect mode attribute of the partition indicate    * that it is OK to drop the partition    */
+specifier|public
+name|boolean
+name|canDrop
+parameter_list|()
+block|{
+name|ProtectMode
+name|mode
+init|=
+name|getProtectMode
+argument_list|()
+decl_stmt|;
+return|return
+operator|(
+operator|!
+name|mode
+operator|.
+name|noDrop
+operator|&&
+operator|!
+name|mode
+operator|.
+name|offline
+operator|&&
+operator|!
+name|mode
+operator|.
+name|readOnly
+operator|)
+return|;
+block|}
+comment|/**    * @return True if protect mode attribute of the table indicate    * that it is OK to write the table    */
+specifier|public
+name|boolean
+name|canWrite
+parameter_list|()
+block|{
+name|ProtectMode
+name|mode
+init|=
+name|getProtectMode
+argument_list|()
+decl_stmt|;
+return|return
+operator|(
+operator|!
+name|mode
+operator|.
+name|offline
+operator|&&
+operator|!
+name|mode
+operator|.
+name|readOnly
+operator|)
 return|;
 block|}
 block|}
