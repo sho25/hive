@@ -35,16 +35,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|FileInputStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|IOException
 import|;
 end_import
@@ -85,7 +75,7 @@ name|java
 operator|.
 name|net
 operator|.
-name|URI
+name|URL
 import|;
 end_import
 
@@ -96,16 +86,6 @@ operator|.
 name|net
 operator|.
 name|URLDecoder
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URL
 import|;
 end_import
 
@@ -225,16 +205,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Random
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Set
 import|;
 end_import
@@ -263,7 +233,7 @@ name|commons
 operator|.
 name|logging
 operator|.
-name|LogFactory
+name|Log
 import|;
 end_import
 
@@ -277,7 +247,7 @@ name|commons
 operator|.
 name|logging
 operator|.
-name|Log
+name|LogFactory
 import|;
 end_import
 
@@ -292,20 +262,6 @@ operator|.
 name|conf
 operator|.
 name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|FileStatus
 import|;
 end_import
 
@@ -383,7 +339,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|Context
 import|;
 end_import
 
@@ -399,7 +355,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Context
+name|DriverContext
 import|;
 end_import
 
@@ -436,6 +392,26 @@ operator|.
 name|FileSinkOperator
 operator|.
 name|RecordWriter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Operator
+operator|.
+name|ProgressCounter
 import|;
 end_import
 
@@ -585,7 +561,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
+name|FileSinkDesc
 import|;
 end_import
 
@@ -621,7 +597,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|FileSinkDesc
+name|MapredWork
 import|;
 end_import
 
@@ -843,20 +819,6 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|JobStatus
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
 name|Partitioner
 import|;
 end_import
@@ -909,20 +871,6 @@ name|apache
 operator|.
 name|log4j
 operator|.
-name|varia
-operator|.
-name|NullAppender
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|log4j
-operator|.
 name|LogManager
 import|;
 end_import
@@ -936,6 +884,20 @@ operator|.
 name|log4j
 operator|.
 name|PropertyConfigurator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|log4j
+operator|.
+name|varia
+operator|.
+name|NullAppender
 import|;
 end_import
 
@@ -1851,6 +1813,58 @@ comment|// hadoop might return null if it cannot locate the job.
 comment|// we may still be able to retrieve the job status - so ignore
 return|return
 literal|false
+return|;
+block|}
+comment|// check for number of created files
+name|long
+name|numFiles
+init|=
+name|ctrs
+operator|.
+name|getCounter
+argument_list|(
+name|ProgressCounter
+operator|.
+name|CREATED_FILES
+argument_list|)
+decl_stmt|;
+name|long
+name|upperLimit
+init|=
+name|HiveConf
+operator|.
+name|getLongVar
+argument_list|(
+name|job
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|MAXCREATEDFILES
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|numFiles
+operator|>
+name|upperLimit
+condition|)
+block|{
+name|errMsg
+operator|.
+name|append
+argument_list|(
+literal|"total number of created files exceeds "
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|upperLimit
+argument_list|)
+expr_stmt|;
+return|return
+literal|true
 return|;
 block|}
 for|for
@@ -3679,11 +3693,13 @@ if|if
 condition|(
 name|ctxCreated
 condition|)
+block|{
 name|ctx
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|rj
@@ -4765,6 +4781,7 @@ name|hive_l4j
 operator|==
 literal|null
 condition|)
+block|{
 name|hive_l4j
 operator|=
 name|ExecDriver
@@ -4781,6 +4798,7 @@ operator|.
 name|HIVE_L4J
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|hive_l4j
@@ -6702,6 +6720,7 @@ argument_list|(
 name|s
 argument_list|)
 condition|)
+block|{
 name|fw
 operator|.
 name|setTblDir
@@ -6714,6 +6733,7 @@ name|s
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -6754,6 +6774,7 @@ operator|.
 name|values
 argument_list|()
 control|)
+block|{
 for|for
 control|(
 name|String
@@ -6867,6 +6888,7 @@ argument_list|(
 name|s
 argument_list|)
 condition|)
+block|{
 name|fdesc
 operator|.
 name|setDirName
@@ -6879,6 +6901,7 @@ name|s
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 operator|(
 operator|(
 name|FileSinkOperator
@@ -6901,6 +6924,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|opList
 operator|.
 name|addAll
@@ -6911,6 +6935,8 @@ name|getChildOperators
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+block|}
 block|}
 block|}
 block|}

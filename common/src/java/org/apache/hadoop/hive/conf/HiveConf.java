@@ -481,6 +481,13 @@ argument_list|,
 literal|100
 argument_list|)
 block|,
+name|MAXCREATEDFILES
+argument_list|(
+literal|"hive.exec.max.created.files"
+argument_list|,
+literal|100000L
+argument_list|)
+block|,
 name|DEFAULTPARTITIONNAME
 argument_list|(
 literal|"hive.exec.default.partition.name"

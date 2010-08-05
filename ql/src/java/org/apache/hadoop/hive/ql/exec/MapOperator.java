@@ -95,7 +95,9 @@ name|java
 operator|.
 name|util
 operator|.
-name|Properties
+name|Map
+operator|.
+name|Entry
 import|;
 end_import
 
@@ -105,9 +107,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
-operator|.
-name|Entry
+name|Properties
 import|;
 end_import
 
@@ -914,7 +914,7 @@ name|deserializer
 return|;
 block|}
 block|}
-comment|/**    * Initializes this map op as the root of the tree. It sets JobConf&    * MapRedWork and starts initialization of the operator tree rooted at this    * op.    *     * @param hconf    * @param mrwork    * @throws HiveException    */
+comment|/**    * Initializes this map op as the root of the tree. It sets JobConf&    * MapRedWork and starts initialization of the operator tree rooted at this    * op.    *    * @param hconf    * @param mrwork    * @throws HiveException    */
 specifier|public
 name|void
 name|initializeAsRoot
@@ -1640,13 +1640,7 @@ name|onealias
 operator|+
 literal|" to work list for file "
 operator|+
-name|fpath
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getPath
-argument_list|()
+name|onefile
 argument_list|)
 expr_stmt|;
 name|MapInputPath
