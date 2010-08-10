@@ -500,7 +500,7 @@ name|LOCALMODEAUTO
 argument_list|(
 literal|"hive.exec.mode.local.auto"
 argument_list|,
-literal|true
+literal|false
 argument_list|)
 block|,
 comment|// if yes:
