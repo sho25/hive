@@ -3116,7 +3116,11 @@ name|baseTblPartitions
 argument_list|,
 name|indexTbl
 argument_list|,
-name|db
+name|getInputs
+argument_list|()
+argument_list|,
+name|getOutputs
+argument_list|()
 argument_list|)
 decl_stmt|;
 return|return
