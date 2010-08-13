@@ -8877,6 +8877,34 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|part
+operator|==
+literal|null
+condition|)
+block|{
+name|console
+operator|.
+name|printError
+argument_list|(
+literal|"Partition : "
+operator|+
+name|alterTbl
+operator|.
+name|getPartSpec
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" does not exist."
+argument_list|)
+expr_stmt|;
+return|return
+literal|1
+return|;
+block|}
 block|}
 name|validateAlterTableType
 argument_list|(
