@@ -5608,7 +5608,7 @@ name|srcs
 operator|=
 name|fs
 operator|.
-name|globStatus
+name|listStatus
 argument_list|(
 name|srcf
 argument_list|)
