@@ -4335,6 +4335,10 @@ decl_stmt|;
 if|if
 condition|(
 name|filesInTmpDir
+operator|!=
+literal|null
+operator|&&
+name|filesInTmpDir
 operator|.
 name|length
 operator|!=
