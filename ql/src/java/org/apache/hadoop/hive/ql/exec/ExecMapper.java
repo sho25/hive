@@ -1231,6 +1231,24 @@ literal|"Close called. no row processed by map."
 argument_list|)
 expr_stmt|;
 block|}
+comment|// check if there are IOExceptions
+if|if
+condition|(
+operator|!
+name|abort
+condition|)
+block|{
+name|abort
+operator|=
+name|execContext
+operator|.
+name|getIoCxt
+argument_list|()
+operator|.
+name|getIOExceptions
+argument_list|()
+expr_stmt|;
+block|}
 comment|// detecting failed executions by exceptions thrown by the operator tree
 comment|// ideally hadoop should let us know whether map execution failed or not
 try|try

@@ -151,7 +151,7 @@ name|initDone
 init|=
 literal|false
 decl_stmt|;
-comment|/**     * Reads the next key/value pair from the input for processing.    *    * @param key the key to read data into    * @param value the value to read data into    * @return true if a key/value was read, false if at EOF    */
+comment|/**    * Reads the next key/value pair from the input for processing.    *    * @param key the key to read data into    * @param value the value to read data into    * @return true if a key/value was read, false if at EOF    */
 specifier|public
 specifier|abstract
 name|boolean
@@ -166,7 +166,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**     * Close this {@link InputSplit} to future operations.    *     * @throws IOException    */
+comment|/**    * Close this {@link InputSplit} to future operations.    *    * @throws IOException    */
 specifier|public
 specifier|abstract
 name|void
@@ -234,6 +234,8 @@ block|}
 name|updateIOContext
 argument_list|()
 expr_stmt|;
+try|try
+block|{
 return|return
 name|doNext
 argument_list|(
@@ -242,6 +244,24 @@ argument_list|,
 name|value
 argument_list|)
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+name|ioCxtRef
+operator|.
+name|setIOExceptions
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+throw|throw
+name|e
+throw|;
+block|}
 block|}
 specifier|protected
 name|void
