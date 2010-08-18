@@ -37,6 +37,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Arrays
 import|;
 end_import
@@ -302,7 +312,7 @@ specifier|public
 name|void
 name|merge
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|DoubleWritable
 argument_list|>
@@ -333,10 +343,9 @@ comment|// Our aggregation buffer has nothing in it, so just copy over 'other'
 comment|// by deserializing the ArrayList of (x,y) pairs into an array of Coord objects
 name|nbins
 operator|=
-call|(
+operator|(
 name|int
-call|)
-argument_list|(
+operator|)
 name|other
 operator|.
 name|get
@@ -346,7 +355,6 @@ argument_list|)
 operator|.
 name|get
 argument_list|()
-argument_list|)
 expr_stmt|;
 name|nusedbins
 operator|=

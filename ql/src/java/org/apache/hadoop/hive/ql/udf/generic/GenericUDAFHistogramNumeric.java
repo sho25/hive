@@ -37,7 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
+name|List
 import|;
 end_import
 
@@ -461,7 +461,7 @@ literal|"smaller datasets. Note that this function creates a histogram with non-
 operator|+
 literal|"bin widths. It offers no guarantees in terms of the mean-squared-error of the "
 operator|+
-literal|"histogram, but in practice is comparable to the histograms produced by the R/S-Plus "
+literal|"histogram, but in practice is comparable to the histograms produced by the R/S-Plus"
 operator|+
 literal|"statistical computing packages."
 argument_list|)
@@ -1120,11 +1120,17 @@ condition|)
 block|{
 return|return;
 block|}
-name|ArrayList
+name|List
+argument_list|<
+name|DoubleWritable
+argument_list|>
 name|partialHistogram
 init|=
 operator|(
-name|ArrayList
+name|List
+argument_list|<
+name|DoubleWritable
+argument_list|>
 operator|)
 name|loi
 operator|.
