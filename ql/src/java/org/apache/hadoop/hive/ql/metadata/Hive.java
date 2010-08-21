@@ -1518,7 +1518,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    *     * @param tableName    *          table name    * @param indexName    *          index name    * @param indexHandlerClass    *          index handler class    * @param indexedCols    *          index columns    * @param indexTblName    *          index table's name    * @param deferredRebuild    *          referred build index table's data    * @param inputFormat    *          input format    * @param outputFormat    *          output format    * @param serde    * @param storageHandler    *          index table's storage handler    * @param location    *          location    * @param idxProps    *          idx    * @param serdeProps    *          serde properties    * @param collItemDelim    * @param fieldDelim    * @param fieldEscape    * @param lineDelim    * @param mapKeyDelim    * @throws HiveException    */
+comment|/**    *    * @param tableName    *          table name    * @param indexName    *          index name    * @param indexHandlerClass    *          index handler class    * @param indexedCols    *          index columns    * @param indexTblName    *          index table's name    * @param deferredRebuild    *          referred build index table's data    * @param inputFormat    *          input format    * @param outputFormat    *          output format    * @param serde    * @param storageHandler    *          index table's storage handler    * @param location    *          location    * @param idxProps    *          idx    * @param serdeProps    *          serde properties    * @param collItemDelim    * @param fieldDelim    * @param fieldEscape    * @param lineDelim    * @param mapKeyDelim    * @throws HiveException    */
 specifier|public
 name|void
 name|createIndex
@@ -2266,6 +2266,7 @@ operator|.
 name|size
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -2273,6 +2274,7 @@ argument_list|(
 literal|"Check the index columns, they should appear in the table being indexed."
 argument_list|)
 throw|;
+block|}
 name|storageDescriptor
 operator|.
 name|setCols
@@ -3591,6 +3593,23 @@ argument_list|,
 name|fs
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|status
+operator|.
+name|length
+operator|==
+literal|0
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"No partition is genereated by dynamic partitioning"
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|status

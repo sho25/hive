@@ -125,7 +125,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|Context
 import|;
 end_import
 
@@ -141,7 +141,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Context
+name|DriverContext
 import|;
 end_import
 
@@ -743,6 +743,25 @@ return|return
 name|parentTasks
 return|;
 block|}
+comment|/**    * The default dependent tasks are just child tasks, but different types    * could implement their own (e.g. ConditionalTask will use the listTasks    * as dependents).    *    * @return a list of tasks that are dependent on this task.    */
+specifier|public
+name|List
+argument_list|<
+name|Task
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+argument_list|>
+name|getDependentTasks
+parameter_list|()
+block|{
+return|return
+name|getChildTasks
+argument_list|()
+return|;
+block|}
 comment|/**    * Add a dependent task on the current task. Return if the dependency already    * existed or is this a new one    *    * @return true if the task got added false if it already existed    */
 specifier|public
 name|boolean
@@ -1209,7 +1228,9 @@ name|childTasks
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Task
