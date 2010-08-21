@@ -495,6 +495,14 @@ argument_list|,
 literal|"__HIVE_DEFAULT_PARTITION__"
 argument_list|)
 block|,
+comment|// Whether to show a link to the most failed task + debugging tips
+name|SHOW_JOB_FAIL_DEBUG_INFO
+argument_list|(
+literal|"hive.exec.show.job.failure.debug.info"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// should hive determine whether to run in local mode automatically ?
 name|LOCALMODEAUTO
 argument_list|(
