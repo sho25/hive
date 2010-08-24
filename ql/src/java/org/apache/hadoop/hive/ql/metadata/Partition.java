@@ -2522,6 +2522,25 @@ name|readOnly
 operator|)
 return|;
 block|}
+comment|/**    * @return include the db name    */
+specifier|public
+name|String
+name|getCompleteName
+parameter_list|()
+block|{
+return|return
+name|getTable
+argument_list|()
+operator|.
+name|getCompleteName
+argument_list|()
+operator|+
+literal|"@"
+operator|+
+name|getName
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

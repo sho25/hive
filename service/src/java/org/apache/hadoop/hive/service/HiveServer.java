@@ -657,6 +657,16 @@ operator|instanceof
 name|Driver
 condition|)
 block|{
+operator|(
+operator|(
+name|Driver
+operator|)
+name|proc
+operator|)
+operator|.
+name|destroy
+argument_list|()
+expr_stmt|;
 name|isHiveQuery
 operator|=
 literal|true

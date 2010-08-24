@@ -214,6 +214,8 @@ argument_list|,
 name|logDirs
 argument_list|,
 literal|true
+argument_list|,
+name|this
 argument_list|)
 decl_stmt|;
 if|if

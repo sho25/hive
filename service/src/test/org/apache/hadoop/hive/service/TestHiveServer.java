@@ -490,6 +490,13 @@ name|client
 operator|.
 name|execute
 argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|execute
+argument_list|(
 literal|"drop table "
 operator|+
 name|tableName
@@ -709,6 +716,13 @@ name|client
 operator|.
 name|execute
 argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|execute
+argument_list|(
 literal|"drop table "
 operator|+
 name|tableName
@@ -796,6 +810,13 @@ name|Exception
 block|{
 try|try
 block|{
+name|client
+operator|.
+name|execute
+argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
 name|execute
@@ -1083,6 +1104,13 @@ name|client
 operator|.
 name|execute
 argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|execute
+argument_list|(
 literal|"drop table "
 operator|+
 name|tableName
@@ -1236,7 +1264,7 @@ name|RUNNING
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**     *    */
+comment|/**    *    */
 specifier|public
 name|void
 name|testFetch
@@ -1247,6 +1275,13 @@ block|{
 comment|// create and populate a table with 500 rows.
 try|try
 block|{
+name|client
+operator|.
+name|execute
+argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
 name|execute
@@ -1466,6 +1501,13 @@ name|Exception
 block|{
 try|try
 block|{
+name|client
+operator|.
+name|execute
+argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
 name|execute

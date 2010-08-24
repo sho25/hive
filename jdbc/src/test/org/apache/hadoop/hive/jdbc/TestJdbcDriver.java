@@ -435,6 +435,13 @@ argument_list|,
 name|stmt
 argument_list|)
 expr_stmt|;
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
 comment|// drop table. ignore error.
 try|try
 block|{

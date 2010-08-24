@@ -627,6 +627,26 @@ argument_list|(
 literal|"A non-native table cannot be used as target for LOAD"
 argument_list|)
 block|,
+name|LOCKMGR_NOT_SPECIFIED
+argument_list|(
+literal|"lock manager not specified correctly, set hive.lock.manager"
+argument_list|)
+block|,
+name|LOCKMGR_NOT_INITIALIZED
+argument_list|(
+literal|"lock manager could not be initialized, check hive.lock.manager "
+argument_list|)
+block|,
+name|LOCK_CANNOT_BE_ACQUIRED
+argument_list|(
+literal|"locks on the underlying objects cannot be acquired. retry after some time"
+argument_list|)
+block|,
+name|ZOOKEEPER_CLIENT_COULD_NOT_BE_INITIALIZED
+argument_list|(
+literal|"Check hive.zookeeper.quorum and hive.zookeeper.client.port"
+argument_list|)
+block|,
 name|OVERWRITE_ARCHIVED_PART
 argument_list|(
 literal|"Cannot overwrite an archived partition. "

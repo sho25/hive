@@ -307,6 +307,24 @@ name|TextInputFormat
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QTestUtil
+operator|.
+name|QTestSetup
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestHiveHistory.  *  */
 end_comment
@@ -358,6 +376,10 @@ specifier|private
 specifier|static
 name|FileSystem
 name|fs
+decl_stmt|;
+specifier|private
+name|QTestSetup
+name|setup
 decl_stmt|;
 comment|/*    * intialize the tables    */
 annotation|@
@@ -452,6 +474,19 @@ argument_list|)
 throw|;
 block|}
 block|}
+name|setup
+operator|=
+operator|new
+name|QTestSetup
+argument_list|()
+expr_stmt|;
+name|setup
+operator|.
+name|preTest
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 comment|// copy the test files into hadoop if required.
 name|int
 name|i
@@ -692,6 +727,60 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|protected
+name|void
+name|tearDown
+parameter_list|()
+block|{
+try|try
+block|{
+name|setup
+operator|.
+name|tearDown
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"Exception: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|flush
+argument_list|()
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Unexpected exception in tearDown"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 comment|/**    * Check history file output for this query.    */
 specifier|public
 name|void
@@ -801,7 +890,9 @@ name|d
 init|=
 operator|new
 name|Driver
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|int
 name|ret

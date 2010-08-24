@@ -405,6 +405,27 @@ argument_list|,
 literal|3
 argument_list|)
 expr_stmt|;
+name|user1_item1
+operator|.
+name|addQuery
+argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
+name|user1_item2
+operator|.
+name|addQuery
+argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
+name|user2_item1
+operator|.
+name|addQuery
+argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
 name|HWISessionItem
 name|searchItem
 init|=
@@ -521,6 +542,13 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
+name|zero
+operator|.
+name|add
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
 name|ArrayList
 argument_list|<
 name|Integer
@@ -534,6 +562,13 @@ name|Integer
 argument_list|>
 argument_list|()
 decl_stmt|;
+name|zero3
+operator|.
+name|add
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
 name|zero3
 operator|.
 name|add
@@ -1059,6 +1094,13 @@ argument_list|,
 literal|"cleanup"
 argument_list|)
 decl_stmt|;
+name|cleanup
+operator|.
+name|addQuery
+argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
 name|cleanup
 operator|.
 name|addQuery

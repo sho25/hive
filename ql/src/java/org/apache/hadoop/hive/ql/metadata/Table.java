@@ -3877,6 +3877,22 @@ name|readOnly
 operator|)
 return|;
 block|}
+comment|/**    * @return include the db name    */
+specifier|public
+name|String
+name|getCompleteName
+parameter_list|()
+block|{
+return|return
+name|getDbName
+argument_list|()
+operator|+
+literal|"@"
+operator|+
+name|getTableName
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 
