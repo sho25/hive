@@ -1495,11 +1495,19 @@ argument_list|(
 name|keyMap
 argument_list|)
 decl_stmt|;
+comment|// there is no join-value or join-key has all null elements
 if|if
 condition|(
 name|o
 operator|==
 literal|null
+operator|||
+operator|(
+name|hasAllNulls
+argument_list|(
+name|key
+argument_list|)
+operator|)
 condition|)
 block|{
 if|if
