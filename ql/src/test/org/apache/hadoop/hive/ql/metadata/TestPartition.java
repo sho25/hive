@@ -270,6 +270,8 @@ init|=
 operator|new
 name|Table
 argument_list|(
+literal|"default"
+argument_list|,
 name|TABLENAME
 argument_list|)
 decl_stmt|;

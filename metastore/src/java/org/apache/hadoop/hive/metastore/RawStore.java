@@ -198,14 +198,14 @@ name|void
 name|shutdown
 parameter_list|()
 function_decl|;
-comment|/**    * Opens a new one or the one already created Every call of this function must    * have corresponding commit or rollback function call    *     * @return an active transaction    */
+comment|/**    * Opens a new one or the one already created Every call of this function must    * have corresponding commit or rollback function call    *    * @return an active transaction    */
 specifier|public
 specifier|abstract
 name|boolean
 name|openTransaction
 parameter_list|()
 function_decl|;
-comment|/**    * if this is the commit of the first open call then an actual commit is    * called.    *     * @return true or false    */
+comment|/**    * if this is the commit of the first open call then an actual commit is    * called.    *    * @return true or false    */
 specifier|public
 specifier|abstract
 name|boolean
@@ -221,24 +221,15 @@ parameter_list|()
 function_decl|;
 specifier|public
 specifier|abstract
-name|boolean
+name|void
 name|createDatabase
 parameter_list|(
 name|Database
 name|db
 parameter_list|)
 throws|throws
-name|MetaException
-function_decl|;
-specifier|public
-specifier|abstract
-name|boolean
-name|createDatabase
-parameter_list|(
-name|String
-name|name
-parameter_list|)
-throws|throws
+name|InvalidObjectException
+throws|,
 name|MetaException
 function_decl|;
 specifier|public
@@ -260,6 +251,10 @@ parameter_list|(
 name|String
 name|dbname
 parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
 function_decl|;
 specifier|public
 specifier|abstract
@@ -268,6 +263,20 @@ argument_list|<
 name|String
 argument_list|>
 name|getDatabases
+parameter_list|(
+name|String
+name|pattern
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
+specifier|public
+specifier|abstract
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getAllDatabases
 parameter_list|()
 throws|throws
 name|MetaException
@@ -446,6 +455,19 @@ name|dbName
 parameter_list|,
 name|String
 name|pattern
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getAllTables
+parameter_list|(
+name|String
+name|dbName
 parameter_list|)
 throws|throws
 name|MetaException

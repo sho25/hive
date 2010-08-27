@@ -18,6 +18,24 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -311,8 +329,18 @@ specifier|final
 name|Configuration
 name|conf
 decl_stmt|;
+specifier|private
+specifier|final
 name|String
 name|whRootString
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|DATABASE_WAREHOUSE_SUFFIX
+init|=
+literal|".db"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -567,8 +595,6 @@ name|dbName
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|MetaStoreUtils
-operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|)
 condition|)
@@ -590,7 +616,7 @@ operator|.
 name|toLowerCase
 argument_list|()
 operator|+
-literal|".db"
+name|DATABASE_WAREHOUSE_SUFFIX
 argument_list|)
 return|;
 block|}

@@ -19,16 +19,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -46,9 +36,9 @@ end_import
 begin_class
 specifier|public
 class|class
-name|TestHiveMetaStoreRemote
+name|TestRemoteHiveMetaStore
 extends|extends
-name|TestCase
+name|TestHiveMetaStore
 block|{
 specifier|private
 specifier|static
@@ -59,13 +49,7 @@ init|=
 literal|"29083"
 decl_stmt|;
 specifier|private
-name|HiveMetaStoreClient
-name|client
-decl_stmt|;
-specifier|private
-name|HiveConf
-name|hiveConf
-decl_stmt|;
+specifier|static
 name|boolean
 name|isServerRunning
 init|=
@@ -166,18 +150,6 @@ argument_list|(
 literal|5000
 argument_list|)
 expr_stmt|;
-comment|// Set conf to connect to the local metastore.
-name|hiveConf
-operator|=
-operator|new
-name|HiveConf
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-argument_list|)
-expr_stmt|;
 comment|// hive.metastore.local should be defined in HiveConf
 name|hiveConf
 operator|.
@@ -224,30 +196,14 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
+name|isThriftClient
+operator|=
+literal|true
+expr_stmt|;
 comment|// Now you have the client - run necessary tests.
 name|isServerRunning
 operator|=
 literal|true
-expr_stmt|;
-block|}
-comment|/**    * tests create table and partition and tries to drop the table without    * droppping the partition    *    * @throws Exception    */
-specifier|public
-name|void
-name|testPartition
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-name|TestHiveMetaStore
-operator|.
-name|partitionTester
-argument_list|(
-name|client
-argument_list|,
-name|hiveConf
-argument_list|,
-literal|true
-argument_list|)
 expr_stmt|;
 block|}
 block|}

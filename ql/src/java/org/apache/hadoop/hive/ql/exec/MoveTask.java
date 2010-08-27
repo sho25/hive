@@ -181,9 +181,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|ql
 operator|.
-name|MetaStoreUtils
+name|Context
 import|;
 end_import
 
@@ -217,9 +217,7 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|LineageInfo
-operator|.
-name|DataContainer
+name|WriteEntity
 import|;
 end_import
 
@@ -237,7 +235,9 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|WriteEntity
+name|LineageInfo
+operator|.
+name|DataContainer
 import|;
 end_import
 
@@ -420,22 +420,6 @@ operator|.
 name|session
 operator|.
 name|SessionState
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|Context
 import|;
 end_import
 
@@ -947,10 +931,6 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
-operator|.
-name|DEFAULT_DATABASE_NAME
-argument_list|,
 name|tbd
 operator|.
 name|getTable

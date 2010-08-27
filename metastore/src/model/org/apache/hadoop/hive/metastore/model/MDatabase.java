@@ -38,6 +38,10 @@ name|name
 decl_stmt|;
 specifier|private
 name|String
+name|locationUri
+decl_stmt|;
+specifier|private
+name|String
 name|description
 decl_stmt|;
 comment|/**    * Default construction to keep jpox/jdo happy    */
@@ -45,7 +49,7 @@ specifier|public
 name|MDatabase
 parameter_list|()
 block|{}
-comment|/**    * To create a database object    * @param name of the database    * @param location future use    */
+comment|/**    * To create a database object    * @param name of the database    * @param locationUri Location of the database in the warehouse    * @param description Comment describing the database    */
 specifier|public
 name|MDatabase
 parameter_list|(
@@ -53,7 +57,10 @@ name|String
 name|name
 parameter_list|,
 name|String
-name|location
+name|locationUri
+parameter_list|,
+name|String
+name|description
 parameter_list|)
 block|{
 name|this
@@ -64,9 +71,15 @@ name|name
 expr_stmt|;
 name|this
 operator|.
+name|locationUri
+operator|=
+name|locationUri
+expr_stmt|;
+name|this
+operator|.
 name|description
 operator|=
-name|location
+name|description
 expr_stmt|;
 block|}
 comment|/**    * @return the name    */
@@ -93,6 +106,32 @@ operator|.
 name|name
 operator|=
 name|name
+expr_stmt|;
+block|}
+comment|/**    * @return the location_uri    */
+specifier|public
+name|String
+name|getLocationUri
+parameter_list|()
+block|{
+return|return
+name|locationUri
+return|;
+block|}
+comment|/**    * @param locationUri the locationUri to set    */
+specifier|public
+name|void
+name|setLocationUri
+parameter_list|(
+name|String
+name|locationUri
+parameter_list|)
+block|{
+name|this
+operator|.
+name|locationUri
+operator|=
+name|locationUri
 expr_stmt|;
 block|}
 comment|/**    * @return the description    */

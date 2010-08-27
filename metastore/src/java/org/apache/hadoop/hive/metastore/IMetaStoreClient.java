@@ -87,6 +87,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|Database
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|FieldSchema
 import|;
 end_import
@@ -106,24 +124,6 @@ operator|.
 name|api
 operator|.
 name|Index
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|IndexAlreadyExistsException
 import|;
 end_import
 
@@ -302,6 +302,33 @@ name|List
 argument_list|<
 name|String
 argument_list|>
+name|getDatabases
+parameter_list|(
+name|String
+name|databasePattern
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getAllDatabases
+parameter_list|()
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|getTables
 parameter_list|(
 name|String
@@ -313,31 +340,26 @@ parameter_list|)
 throws|throws
 name|MetaException
 throws|,
-name|UnknownTableException
-throws|,
 name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Drop the table.    *    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @throws MetaException    *           Could not drop table properly.    * @throws UnknownTableException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           The table wasn't found.    */
 specifier|public
-name|void
-name|dropTable
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getAllTables
 parameter_list|(
 name|String
-name|tableName
-parameter_list|,
-name|boolean
-name|deleteData
+name|dbName
 parameter_list|)
 throws|throws
 name|MetaException
 throws|,
-name|UnknownTableException
-throws|,
 name|TException
 throws|,
-name|NoSuchObjectException
+name|UnknownDBException
 function_decl|;
 comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws ExistingDependentsException    */
 specifier|public
@@ -363,6 +385,23 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+specifier|public
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|dbname
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
+function_decl|;
 comment|// public void createTable(String tableName, Properties schema) throws
 comment|// MetaException, UnknownTableException,
 comment|// TException;
@@ -370,6 +409,9 @@ specifier|public
 name|boolean
 name|tableExists
 parameter_list|(
+name|String
+name|databaseName
+parameter_list|,
 name|String
 name|tableName
 parameter_list|)
@@ -380,20 +422,20 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Get a table object.    *    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
+comment|/**    * Get a Database Object    * @param databaseName  name of the database to fetch    * @return    * @throws NoSuchObjectException The database does not exist    * @throws MetaException Could not fetch the database    * @throws TException A thrift communication error occurred    */
 specifier|public
-name|Table
-name|getTable
+name|Database
+name|getDatabase
 parameter_list|(
 name|String
-name|tableName
+name|databaseName
 parameter_list|)
 throws|throws
+name|NoSuchObjectException
+throws|,
 name|MetaException
 throws|,
 name|TException
-throws|,
-name|NoSuchObjectException
 function_decl|;
 comment|/**    * Get a table object.    *    * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
 specifier|public
@@ -666,16 +708,15 @@ throws|,
 name|TException
 function_decl|;
 specifier|public
-name|boolean
+name|void
 name|createDatabase
 parameter_list|(
-name|String
-name|name
-parameter_list|,
-name|String
-name|location_uri
+name|Database
+name|db
 parameter_list|)
 throws|throws
+name|InvalidObjectException
+throws|,
 name|AlreadyExistsException
 throws|,
 name|MetaException
@@ -683,13 +724,39 @@ throws|,
 name|TException
 function_decl|;
 specifier|public
-name|boolean
+name|void
 name|dropDatabase
 parameter_list|(
 name|String
 name|name
 parameter_list|)
 throws|throws
+name|NoSuchObjectException
+throws|,
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+specifier|public
+name|void
+name|dropDatabase
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ignoreUnknownDb
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|InvalidOperationException
+throws|,
 name|MetaException
 throws|,
 name|TException
@@ -861,7 +928,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * create an index    * @param index the index object    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws AlreadyExistsException     */
+comment|/**    * create an index    * @param index the index object    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws AlreadyExistsException    */
 specifier|public
 name|void
 name|createIndex
@@ -883,7 +950,7 @@ name|TException
 throws|,
 name|AlreadyExistsException
 function_decl|;
-comment|/**    *     * @param dbName    * @param tblName    * @param indexName    * @return    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
+comment|/**    *    * @param dbName    * @param tblName    * @param indexName    * @return    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
 specifier|public
 name|Index
 name|getIndex
@@ -930,7 +997,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * list all the index names of the give base table.    *     * @param db_name    * @param tbl_name    * @param max    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * list all the index names of the give base table.    *    * @param db_name    * @param tbl_name    * @param max    * @return    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<
