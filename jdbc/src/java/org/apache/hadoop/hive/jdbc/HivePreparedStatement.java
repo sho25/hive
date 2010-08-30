@@ -253,6 +253,22 @@ name|HiveInterface
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|HiveServerException
+import|;
+end_import
+
 begin_comment
 comment|/**  * HivePreparedStatement.  *  */
 end_comment
@@ -275,6 +291,36 @@ decl_stmt|;
 specifier|private
 name|HiveInterface
 name|client
+decl_stmt|;
+comment|/**    * We need to keep a reference to the result set to support the following:    *<code>    * statement.execute(String sql);    * statement.getResultSet();    *</code>.    */
+specifier|private
+name|ResultSet
+name|resultSet
+init|=
+literal|null
+decl_stmt|;
+comment|/**    * The maximum number of rows this statement should return (0 => all rows).    */
+specifier|private
+specifier|final
+name|int
+name|maxRows
+init|=
+literal|0
+decl_stmt|;
+comment|/**    * Add SQLWarnings to the warningChain if needed.    */
+specifier|private
+specifier|final
+name|SQLWarning
+name|warningChain
+init|=
+literal|null
+decl_stmt|;
+comment|/**    * Keep state so we can fail certain calls made after close().    */
+specifier|private
+name|boolean
+name|isClosed
+init|=
+literal|false
 decl_stmt|;
 comment|/**    *    */
 specifier|public
@@ -337,7 +383,7 @@ block|{
 comment|// TODO Auto-generated method stub
 comment|// throw new SQLException("Method not supported");
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#execute()    */
+comment|/**    *  Invokes executeQuery(sql) using the sql provided to the constructor.    *    *  @return boolean Returns true if a resultSet is created, false if not.    *                  Note: If the result set is empty a true is returned.    *    *  @throws    */
 specifier|public
 name|boolean
 name|execute
@@ -345,16 +391,21 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|ResultSet
+name|rs
+init|=
+name|executeImmediate
 argument_list|(
-literal|"Method not supported"
+name|sql
 argument_list|)
-throw|;
+decl_stmt|;
+return|return
+name|rs
+operator|!=
+literal|null
+return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#executeQuery()    */
+comment|/**    *  Invokes executeQuery(sql) using the sql provided to the constructor.    *    *  @return ResultSet    *  @throws    */
 specifier|public
 name|ResultSet
 name|executeQuery
@@ -362,38 +413,10 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-try|try
-block|{
-name|client
-operator|.
-name|execute
+return|return
+name|executeImmediate
 argument_list|(
 name|sql
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|ex
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-name|ex
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-throw|;
-block|}
-return|return
-operator|new
-name|HiveQueryResultSet
-argument_list|(
-name|client
 argument_list|)
 return|;
 block|}
@@ -413,6 +436,107 @@ argument_list|(
 literal|"Method not supported"
 argument_list|)
 throw|;
+block|}
+comment|/**    *  Executes the SQL statement.    *    *  @param sql The sql, as a string, to execute    *  @return ResultSet    *  @throws SQLException if the prepared statement is closed or there is a database error.    *                       caught Exceptions are thrown as SQLExceptions with the description    *                       "08S01".    */
+specifier|protected
+name|ResultSet
+name|executeImmediate
+parameter_list|(
+name|String
+name|sql
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+if|if
+condition|(
+name|isClosed
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Can't execute after statement has been closed"
+argument_list|)
+throw|;
+block|}
+try|try
+block|{
+name|clearWarnings
+argument_list|()
+expr_stmt|;
+name|resultSet
+operator|=
+literal|null
+expr_stmt|;
+name|client
+operator|.
+name|execute
+argument_list|(
+name|sql
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveServerException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+operator|.
+name|getSQLState
+argument_list|()
+argument_list|,
+name|e
+operator|.
+name|getErrorCode
+argument_list|()
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+name|ex
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+literal|"08S01"
+argument_list|)
+throw|;
+block|}
+name|resultSet
+operator|=
+operator|new
+name|HiveQueryResultSet
+argument_list|(
+name|client
+argument_list|,
+name|maxRows
+argument_list|)
+expr_stmt|;
+return|return
+name|resultSet
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#getMetaData()    */
 specifier|public
@@ -1678,7 +1802,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#close()    */
+comment|/**    *  Closes the prepared statement.    *    *  @throws    */
 specifier|public
 name|void
 name|close
@@ -1686,14 +1810,31 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+name|client
+operator|=
+literal|null
+expr_stmt|;
+if|if
+condition|(
+name|resultSet
+operator|!=
+literal|null
+condition|)
+block|{
+name|resultSet
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|resultSet
+operator|=
+literal|null
+expr_stmt|;
+block|}
+name|isClosed
+operator|=
+literal|true
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#execute(java.lang.String)    */
 specifier|public

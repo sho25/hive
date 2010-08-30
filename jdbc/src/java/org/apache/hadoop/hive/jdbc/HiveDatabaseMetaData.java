@@ -245,6 +245,7 @@ operator|.
 name|DatabaseMetaData
 block|{
 specifier|private
+specifier|final
 name|HiveInterface
 name|client
 decl_stmt|;
@@ -255,6 +256,15 @@ name|String
 name|CATALOG_SEPARATOR
 init|=
 literal|"."
+decl_stmt|;
+comment|//  The maximum column length = MFieldSchema.FNAME in metastore/src/model/package.jdo
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|maxColumnNameLength
+init|=
+literal|128
 decl_stmt|;
 comment|/**    *    */
 specifier|public
@@ -1748,6 +1758,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
+comment|/**    *  Returns the value of maxColumnNameLength.    *    *  @param int    */
 specifier|public
 name|int
 name|getMaxColumnNameLength
@@ -1755,13 +1766,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|maxColumnNameLength
+return|;
 block|}
 specifier|public
 name|int
