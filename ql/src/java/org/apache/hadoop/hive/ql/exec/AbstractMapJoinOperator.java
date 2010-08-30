@@ -731,10 +731,10 @@ operator|.
 name|MAPJOIN
 return|;
 block|}
-comment|// returns true if there are elements in key list and all of them are null
+comment|// returns true if there are elements in key list and any of them is null
 specifier|protected
 name|boolean
-name|hasAllNulls
+name|hasAnyNulls
 parameter_list|(
 name|ArrayList
 argument_list|<
@@ -768,18 +768,15 @@ block|{
 if|if
 condition|(
 name|k
-operator|!=
+operator|==
 literal|null
 condition|)
 block|{
 return|return
-literal|false
-return|;
-block|}
-block|}
-return|return
 literal|true
 return|;
+block|}
+block|}
 block|}
 return|return
 literal|false

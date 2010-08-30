@@ -606,7 +606,7 @@ if|if
 condition|(
 name|SerDeUtils
 operator|.
-name|isNullObject
+name|hasAnyNullObject
 argument_list|(
 name|keyObject
 argument_list|,

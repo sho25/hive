@@ -1503,7 +1503,7 @@ operator|==
 literal|null
 operator|||
 operator|(
-name|hasAllNulls
+name|hasAnyNulls
 argument_list|(
 name|key
 argument_list|)

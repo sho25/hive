@@ -1978,7 +1978,7 @@ comment|/**    * True if Object passed is representing null object.    *    * @p
 specifier|public
 specifier|static
 name|boolean
-name|isNullObject
+name|hasAnyNullObject
 parameter_list|(
 name|Object
 name|o
@@ -2096,8 +2096,7 @@ control|)
 block|{
 if|if
 condition|(
-operator|!
-name|isNullObject
+name|hasAnyNullObject
 argument_list|(
 name|olist
 operator|.
@@ -2111,12 +2110,12 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|false
+literal|true
 return|;
 block|}
 block|}
 return|return
-literal|true
+literal|false
 return|;
 block|}
 block|}
@@ -2215,8 +2214,7 @@ control|)
 block|{
 if|if
 condition|(
-operator|!
-name|isNullObject
+name|hasAnyNullObject
 argument_list|(
 name|entry
 operator|.
@@ -2226,8 +2224,7 @@ argument_list|,
 name|mapKeyObjectInspector
 argument_list|)
 operator|||
-operator|!
-name|isNullObject
+name|hasAnyNullObject
 argument_list|(
 name|entry
 operator|.
@@ -2239,12 +2236,12 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|false
+literal|true
 return|;
 block|}
 block|}
 return|return
-literal|true
+literal|false
 return|;
 block|}
 block|}
@@ -2301,7 +2298,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|// if all the fields of struct are representing null, then return true
+comment|// if any the fields of struct are representing null, then return true
 for|for
 control|(
 name|int
@@ -2322,8 +2319,7 @@ control|)
 block|{
 if|if
 condition|(
-operator|!
-name|isNullObject
+name|hasAnyNullObject
 argument_list|(
 name|soi
 operator|.
@@ -2352,12 +2348,12 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|false
+literal|true
 return|;
 block|}
 block|}
 return|return
-literal|true
+literal|false
 return|;
 block|}
 block|}
