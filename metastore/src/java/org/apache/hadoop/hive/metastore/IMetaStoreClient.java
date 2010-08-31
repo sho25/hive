@@ -297,6 +297,7 @@ name|void
 name|close
 parameter_list|()
 function_decl|;
+comment|/**    * Get the names of all databases in the MetaStore that match the given pattern.    * @param databasePattern    * @return List of database names.    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<
@@ -312,6 +313,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get the names of all databases in the MetaStore.    * @return List of database names.    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<
@@ -324,6 +326,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get the names of all tables in the specified database that satisfy the supplied    * table name pattern.    * @param dbName    * @param tablePattern    * @return List of table names.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    */
 specifier|public
 name|List
 argument_list|<
@@ -344,6 +347,7 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
+comment|/**    * Get the names of all tables in the specified database.    * @param dbName    * @return List of table names.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    */
 specifier|public
 name|List
 argument_list|<
@@ -385,6 +389,28 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Drop the table in the DEFAULT database.    *    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @throws MetaException    *           Could not drop table properly.    * @throws UnknownTableException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           The table wasn't found.    *    * @deprecated As of release 0.6.0 replaced by {@link #dropTable(String, String, boolean, boolean)}.    *             This method will be removed in release 0.7.0.    */
+annotation|@
+name|Deprecated
+specifier|public
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|tableName
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|UnknownTableException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
+function_decl|;
 specifier|public
 name|void
 name|dropTable
@@ -402,9 +428,6 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|// public void createTable(String tableName, Properties schema) throws
-comment|// MetaException, UnknownTableException,
-comment|// TException;
 specifier|public
 name|boolean
 name|tableExists
@@ -421,6 +444,40 @@ throws|,
 name|TException
 throws|,
 name|UnknownDBException
+function_decl|;
+comment|/**    * Check to see if the specified table exists in the DEFAULT database.    * @param tableName    * @return TRUE if DEFAULT.tableName exists, FALSE otherwise.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    * @deprecated As of release 0.6.0 replaced by {@link #tableExists(String, String)}.    *             This method will be removed in release 0.7.0.    */
+annotation|@
+name|Deprecated
+specifier|public
+name|boolean
+name|tableExists
+parameter_list|(
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownDBException
+function_decl|;
+comment|/**    * Get a table object from the DEFAULT database.    *    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    * @deprecated As of release 0.6.0 replaced by {@link #getTable(String, String)}.    *             This method will be removed in release 0.7.0.    */
+annotation|@
+name|Deprecated
+specifier|public
+name|Table
+name|getTable
+parameter_list|(
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
 function_decl|;
 comment|/**    * Get a Database Object    * @param databaseName  name of the database to fetch    * @return    * @throws NoSuchObjectException The database does not exist    * @throws MetaException Could not fetch the database    * @throws TException A thrift communication error occurred    */
 specifier|public

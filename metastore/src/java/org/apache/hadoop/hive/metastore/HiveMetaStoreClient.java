@@ -18,6 +18,24 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -1681,6 +1699,40 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+comment|/** {@inheritDoc} */
+annotation|@
+name|Deprecated
+specifier|public
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|tableName
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|UnknownTableException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
+block|{
+name|dropTable
+argument_list|(
+name|DEFAULT_DATABASE_NAME
+argument_list|,
+name|tableName
+argument_list|,
+name|deleteData
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * @param dbname    * @param name    * @param deleteData    *          delete the underlying data or just delete the table in metadata    * @throws NoSuchObjectException    * @throws ExistingDependentsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_table(java.lang.String,    *      java.lang.String, boolean)    */
 specifier|public
 name|void
@@ -1957,7 +2009,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * @return the list of databases    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_databases()    */
+comment|/** {@inheritDoc} */
 specifier|public
 name|List
 argument_list|<
@@ -2000,7 +2052,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * @return the list of databases    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_all_databases()    */
+comment|/** {@inheritDoc} */
 specifier|public
 name|List
 argument_list|<
@@ -2226,6 +2278,32 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+comment|/** {@inheritDoc} */
+annotation|@
+name|Deprecated
+specifier|public
+name|Table
+name|getTable
+parameter_list|(
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
+block|{
+return|return
+name|getTable
+argument_list|(
+name|DEFAULT_DATABASE_NAME
+argument_list|,
+name|tableName
+argument_list|)
+return|;
+block|}
 comment|/**    * @param name    * @return the type    * @throws MetaException    * @throws TException    * @throws NoSuchObjectException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_type(java.lang.String)    */
 specifier|public
 name|Type
@@ -2253,6 +2331,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+comment|/** {@inheritDoc} */
 specifier|public
 name|List
 argument_list|<
@@ -2300,6 +2379,7 @@ return|return
 literal|null
 return|;
 block|}
+comment|/** {@inheritDoc} */
 specifier|public
 name|List
 argument_list|<
@@ -2383,6 +2463,32 @@ return|;
 block|}
 return|return
 literal|true
+return|;
+block|}
+comment|/** {@inheritDoc} */
+annotation|@
+name|Deprecated
+specifier|public
+name|boolean
+name|tableExists
+parameter_list|(
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownDBException
+block|{
+return|return
+name|tableExists
+argument_list|(
+name|DEFAULT_DATABASE_NAME
+argument_list|,
+name|tableName
+argument_list|)
 return|;
 block|}
 specifier|public
