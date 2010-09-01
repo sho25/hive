@@ -978,6 +978,13 @@ argument_list|,
 literal|"TextFile"
 argument_list|)
 block|,
+name|HIVEQUERYRESULTFILEFORMAT
+argument_list|(
+literal|"hive.query.result.fileformat"
+argument_list|,
+literal|"TextFile"
+argument_list|)
+block|,
 name|HIVECHECKFILEFORMAT
 argument_list|(
 literal|"hive.fileformat.check"
