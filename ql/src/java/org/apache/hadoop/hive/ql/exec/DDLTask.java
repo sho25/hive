@@ -12360,30 +12360,6 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-operator|!
-name|tbl
-operator|.
-name|canDrop
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Table "
-operator|+
-name|tbl
-operator|.
-name|getTableName
-argument_list|()
-operator|+
-literal|" is protected from being dropped"
-argument_list|)
-throw|;
-block|}
 block|}
 catch|catch
 parameter_list|(
@@ -12456,6 +12432,34 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|tbl
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|tbl
+operator|.
+name|canDrop
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Table "
+operator|+
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|" is protected from being dropped"
+argument_list|)
+throw|;
+block|}
 comment|// We should check that all the partitions of the table can be dropped
 if|if
 condition|(
