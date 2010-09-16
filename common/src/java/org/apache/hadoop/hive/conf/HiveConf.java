@@ -1344,6 +1344,13 @@ operator|*
 literal|1000
 argument_list|)
 block|,
+name|HIVE_ZOOKEEPER_NAMESPACE
+argument_list|(
+literal|"hive.zookeeper.namespace"
+argument_list|,
+literal|"hive_zookeeper_namespace"
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(
