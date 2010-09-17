@@ -1456,22 +1456,10 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Failed to get ZooKeeper children: "
-operator|+
-name|e
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|LockException
-argument_list|(
-name|e
-argument_list|)
-throw|;
+comment|// no locks present
+return|return
+name|locks
+return|;
 block|}
 for|for
 control|(
