@@ -843,6 +843,13 @@ literal|""
 argument_list|)
 block|,
 comment|// for hive script operator
+name|HIVES_AUTO_PROGRESS_TIMEOUT
+argument_list|(
+literal|"hive.auto.progress.timeout"
+argument_list|,
+literal|0
+argument_list|)
+block|,
 name|HIVETABLENAME
 argument_list|(
 literal|"hive.table.name"
