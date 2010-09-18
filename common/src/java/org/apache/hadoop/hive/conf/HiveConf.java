@@ -1262,6 +1262,14 @@ literal|true
 argument_list|)
 block|,
 comment|// predicate pushdown
+comment|// push predicates down to storage handlers
+name|HIVEOPTPPD_STORAGE
+argument_list|(
+literal|"hive.optimize.ppd.storage"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVEOPTGROUPBY
 argument_list|(
 literal|"hive.optimize.groupby"

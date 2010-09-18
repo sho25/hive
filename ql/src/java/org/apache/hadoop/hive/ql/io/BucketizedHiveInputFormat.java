@@ -398,7 +398,7 @@ argument_list|(
 name|job
 argument_list|)
 decl_stmt|;
-name|initColumnsNeeded
+name|pushProjectionsAndFilters
 argument_list|(
 name|cloneJobConf
 argument_list|,

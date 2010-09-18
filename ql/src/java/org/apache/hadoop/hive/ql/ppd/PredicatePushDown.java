@@ -362,7 +362,7 @@ init|=
 operator|new
 name|OpWalkerInfo
 argument_list|(
-name|opToParseCtxMap
+name|pGraphContext
 argument_list|)
 decl_stmt|;
 name|Map

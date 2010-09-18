@@ -1673,7 +1673,7 @@ name|inputFormatClassName
 argument_list|)
 throw|;
 block|}
-name|initColumnsNeeded
+name|pushProjectionsAndFilters
 argument_list|(
 name|job
 argument_list|,

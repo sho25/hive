@@ -3123,6 +3123,15 @@ operator|=
 name|useJSONSerialize
 expr_stmt|;
 block|}
+comment|/**    * @return 0-based offset of the key column within the table    */
+name|int
+name|getKeyColumnOffset
+parameter_list|()
+block|{
+return|return
+name|iKey
+return|;
+block|}
 block|}
 end_class
 
