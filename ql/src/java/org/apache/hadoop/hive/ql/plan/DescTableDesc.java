@@ -200,6 +200,7 @@ name|table
 return|;
 block|}
 specifier|public
+specifier|static
 name|String
 name|getSchema
 parameter_list|()

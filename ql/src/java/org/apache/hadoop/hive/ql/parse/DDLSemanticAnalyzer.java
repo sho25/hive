@@ -6331,7 +6331,7 @@ name|setFetchTask
 argument_list|(
 name|createFetchTask
 argument_list|(
-name|descTblDesc
+name|DescTableDesc
 operator|.
 name|getSchema
 argument_list|()

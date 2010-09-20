@@ -2675,6 +2675,16 @@ operator|.
 name|next
 argument_list|()
 expr_stmt|;
+name|res
+operator|.
+name|next
+argument_list|()
+expr_stmt|;
+name|res
+operator|.
+name|next
+argument_list|()
+expr_stmt|;
 name|assertEquals
 argument_list|(
 literal|"Column name 'key' not found"
@@ -2687,6 +2697,9 @@ name|getString
 argument_list|(
 literal|1
 argument_list|)
+operator|.
+name|trim
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2701,6 +2714,9 @@ name|getString
 argument_list|(
 literal|2
 argument_list|)
+operator|.
+name|trim
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|res
@@ -2720,6 +2736,9 @@ name|getString
 argument_list|(
 literal|1
 argument_list|)
+operator|.
+name|trim
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2734,6 +2753,9 @@ name|getString
 argument_list|(
 literal|2
 argument_list|)
+operator|.
+name|trim
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertFalse
