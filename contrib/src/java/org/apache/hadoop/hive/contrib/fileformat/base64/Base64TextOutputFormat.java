@@ -500,8 +500,9 @@ specifier|final
 name|Base64
 name|base64
 init|=
-operator|new
-name|Base64
+name|Base64TextInputFormat
+operator|.
+name|createBase64
 argument_list|()
 decl_stmt|;
 annotation|@
