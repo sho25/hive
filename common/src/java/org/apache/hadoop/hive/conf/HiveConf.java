@@ -1388,6 +1388,13 @@ literal|"hive.archive.har.parentdir.settable"
 argument_list|,
 literal|false
 argument_list|)
+block|,
+name|HIVEOUTERJOINSUPPORTSFILTERS
+argument_list|(
+literal|"hive.outerjoin.supports.filters"
+argument_list|,
+literal|true
+argument_list|)
 block|,      ;
 specifier|public
 specifier|final

@@ -1326,7 +1326,7 @@ name|Object
 argument_list|>
 name|key
 init|=
-name|computeValues
+name|computeKeys
 argument_list|(
 name|row
 argument_list|,
@@ -1368,6 +1368,22 @@ name|get
 argument_list|(
 name|alias
 argument_list|)
+argument_list|,
+name|joinFilters
+operator|.
+name|get
+argument_list|(
+name|alias
+argument_list|)
+argument_list|,
+name|joinFilterObjectInspectors
+operator|.
+name|get
+argument_list|(
+name|alias
+argument_list|)
+argument_list|,
+name|noOuterJoin
 argument_list|)
 decl_stmt|;
 comment|//have we reached a new key group?

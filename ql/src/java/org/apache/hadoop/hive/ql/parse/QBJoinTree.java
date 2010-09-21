@@ -147,6 +147,17 @@ argument_list|>
 argument_list|>
 name|filters
 decl_stmt|;
+comment|// filters for pushing
+specifier|private
+name|ArrayList
+argument_list|<
+name|ArrayList
+argument_list|<
+name|ASTNode
+argument_list|>
+argument_list|>
+name|filtersForPushing
+decl_stmt|;
 comment|// user asked for map-side join
 specifier|private
 name|boolean
@@ -488,6 +499,44 @@ block|{
 name|this
 operator|.
 name|filters
+operator|=
+name|filters
+expr_stmt|;
+block|}
+comment|/**    * @return the filters for pushing    */
+specifier|public
+name|ArrayList
+argument_list|<
+name|ArrayList
+argument_list|<
+name|ASTNode
+argument_list|>
+argument_list|>
+name|getFiltersForPushing
+parameter_list|()
+block|{
+return|return
+name|filtersForPushing
+return|;
+block|}
+comment|/**    * @param filters for pushing    *          the filters to set    */
+specifier|public
+name|void
+name|setFiltersForPushing
+parameter_list|(
+name|ArrayList
+argument_list|<
+name|ArrayList
+argument_list|<
+name|ASTNode
+argument_list|>
+argument_list|>
+name|filters
+parameter_list|)
+block|{
+name|this
+operator|.
+name|filtersForPushing
 operator|=
 name|filters
 expr_stmt|;
