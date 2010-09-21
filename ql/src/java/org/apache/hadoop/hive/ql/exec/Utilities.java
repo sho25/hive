@@ -923,9 +923,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-operator|.
-name|ExpressionTypes
+name|TableDesc
 import|;
 end_import
 
@@ -943,7 +941,9 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|TableDesc
+name|PlanUtils
+operator|.
+name|ExpressionTypes
 import|;
 end_import
 
@@ -2912,6 +2912,10 @@ name|org
 operator|.
 name|datanucleus
 operator|.
+name|store
+operator|.
+name|types
+operator|.
 name|sco
 operator|.
 name|backed
@@ -2932,6 +2936,10 @@ argument_list|(
 name|org
 operator|.
 name|datanucleus
+operator|.
+name|store
+operator|.
+name|types
 operator|.
 name|sco
 operator|.
