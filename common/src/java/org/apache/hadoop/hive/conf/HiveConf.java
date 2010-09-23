@@ -748,6 +748,14 @@ argument_list|,
 literal|"_INTERMEDIATE_EXTRACTED"
 argument_list|)
 block|,
+comment|// Default parameters for creating tables
+name|NEWTABLEDEFAULTPARA
+argument_list|(
+literal|"hive.table.parameters.default"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// CLI
 name|CLIIGNOREERRORS
 argument_list|(
