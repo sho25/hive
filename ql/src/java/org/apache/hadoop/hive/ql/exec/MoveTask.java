@@ -95,6 +95,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
 import|;
 end_import
@@ -217,7 +227,9 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|WriteEntity
+name|LineageInfo
+operator|.
+name|DataContainer
 import|;
 end_import
 
@@ -235,9 +247,7 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|LineageInfo
-operator|.
-name|DataContainer
+name|WriteEntity
 import|;
 end_import
 
@@ -1274,7 +1284,43 @@ literal|0
 condition|)
 block|{
 comment|// dynamic partitions
+name|List
+argument_list|<
+name|LinkedHashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|>
+name|dps
+init|=
+name|Utilities
+operator|.
+name|getFullDPSpecs
+argument_list|(
+name|conf
+argument_list|,
+name|dpCtx
+argument_list|)
+decl_stmt|;
+comment|// publish DP columns to its subscribers
+name|pushFeed
+argument_list|(
+name|FeedType
+operator|.
+name|DYNAMIC_PARTITIONS
+argument_list|,
+name|dps
+argument_list|)
+expr_stmt|;
 comment|// load the list of DP partitions and return the list of partition specs
+comment|// TODO: In a follow-up to HIVE-1361, we should refactor loadDynamicPartitions
+comment|// to use Utilities.getFullDPSpecs() to get the list of full partSpecs.
+comment|// After that check the number of DPs created to not exceed the limit and
+comment|// iterate over it and call loadPartition() here.
+comment|// The reason we don't do inside HIVE-1361 is the latter is large and we
+comment|// want to isolate any potential issue it may introduce.
 name|ArrayList
 argument_list|<
 name|LinkedHashMap

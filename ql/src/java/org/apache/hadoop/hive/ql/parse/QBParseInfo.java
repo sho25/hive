@@ -117,8 +117,28 @@ name|LogFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|BaseSemanticAnalyzer
+operator|.
+name|tableSpec
+import|;
+end_import
+
 begin_comment
-comment|/**  * Implementation of the parse information related to a query block.  *   **/
+comment|/**  * Implementation of the parse information related to a query block.  *  **/
 end_comment
 
 begin_class
@@ -204,6 +224,27 @@ name|ASTNode
 argument_list|>
 name|destToGroupby
 decl_stmt|;
+specifier|private
+name|boolean
+name|isAnalyzeCommand
+decl_stmt|;
+comment|// used for the analyze command (statistics)
+specifier|private
+name|boolean
+name|isInsertToTable
+decl_stmt|;
+comment|// used for insert overwrite command (statistics)
+specifier|private
+specifier|final
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|tableSpec
+argument_list|>
+name|tableSpecs
+decl_stmt|;
+comment|// used for statistics
 comment|/**    * ClusterBy is a short name for both DistributeBy and SortBy.    */
 specifier|private
 specifier|final
@@ -514,6 +555,19 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
+name|tableSpecs
+operator|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|BaseSemanticAnalyzer
+operator|.
+name|tableSpec
+argument_list|>
+argument_list|()
+expr_stmt|;
 block|}
 specifier|public
 name|void
@@ -685,7 +739,7 @@ name|ast
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the Cluster By AST for the clause.    *     * @param clause    *          the name of the clause    * @param ast    *          the abstract syntax tree    */
+comment|/**    * Set the Cluster By AST for the clause.    *    * @param clause    *          the name of the clause    * @param ast    *          the abstract syntax tree    */
 specifier|public
 name|void
 name|setClusterByExprForClause
@@ -707,7 +761,7 @@ name|ast
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the Distribute By AST for the clause.    *     * @param clause    *          the name of the clause    * @param ast    *          the abstract syntax tree    */
+comment|/**    * Set the Distribute By AST for the clause.    *    * @param clause    *          the name of the clause    * @param ast    *          the abstract syntax tree    */
 specifier|public
 name|void
 name|setDistributeByExprForClause
@@ -729,7 +783,7 @@ name|ast
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the Sort By AST for the clause.    *     * @param clause    *          the name of the clause    * @param ast    *          the abstract syntax tree    */
+comment|/**    * Set the Sort By AST for the clause.    *    * @param clause    *          the name of the clause    * @param ast    *          the abstract syntax tree    */
 specifier|public
 name|void
 name|setSortByExprForClause
@@ -922,7 +976,7 @@ name|clause
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the Cluster By AST for the clause.    *     * @param clause    *          the name of the clause    * @return the abstract syntax tree    */
+comment|/**    * Get the Cluster By AST for the clause.    *    * @param clause    *          the name of the clause    * @return the abstract syntax tree    */
 specifier|public
 name|ASTNode
 name|getClusterByForClause
@@ -954,7 +1008,7 @@ return|return
 name|destToClusterby
 return|;
 block|}
-comment|/**    * Get the Distribute By AST for the clause.    *     * @param clause    *          the name of the clause    * @return the abstract syntax tree    */
+comment|/**    * Get the Distribute By AST for the clause.    *    * @param clause    *          the name of the clause    * @return the abstract syntax tree    */
 specifier|public
 name|ASTNode
 name|getDistributeByForClause
@@ -986,7 +1040,7 @@ return|return
 name|destToDistributeby
 return|;
 block|}
-comment|/**    * Get the Sort By AST for the clause.    *     * @param clause    *          the name of the clause    * @return the abstract syntax tree    */
+comment|/**    * Get the Sort By AST for the clause.    *    * @param clause    *          the name of the clause    * @return the abstract syntax tree    */
 specifier|public
 name|ASTNode
 name|getSortByForClause
@@ -1729,6 +1783,124 @@ argument_list|(
 name|lateralView
 argument_list|)
 expr_stmt|;
+block|}
+specifier|public
+name|void
+name|setIsAnalyzeCommand
+parameter_list|(
+name|boolean
+name|isAnalyzeCommand
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isAnalyzeCommand
+operator|=
+name|isAnalyzeCommand
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isAnalyzeCommand
+parameter_list|()
+block|{
+return|return
+name|isAnalyzeCommand
+return|;
+block|}
+specifier|public
+name|void
+name|setIsInsertToTable
+parameter_list|(
+name|boolean
+name|isInsertToTable
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isInsertToTable
+operator|=
+name|isInsertToTable
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isInsertToTable
+parameter_list|()
+block|{
+return|return
+name|isInsertToTable
+return|;
+block|}
+specifier|public
+name|void
+name|addTableSpec
+parameter_list|(
+name|String
+name|tName
+parameter_list|,
+name|tableSpec
+name|tSpec
+parameter_list|)
+block|{
+name|tableSpecs
+operator|.
+name|put
+argument_list|(
+name|tName
+argument_list|,
+name|tSpec
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|tableSpec
+name|getTableSpec
+parameter_list|(
+name|String
+name|tName
+parameter_list|)
+block|{
+return|return
+name|tableSpecs
+operator|.
+name|get
+argument_list|(
+name|tName
+argument_list|)
+return|;
+block|}
+comment|/**    * This method is used only for the anlayze command to get the partition specs    */
+specifier|public
+name|tableSpec
+name|getTableSpec
+parameter_list|()
+block|{
+name|Iterator
+argument_list|<
+name|String
+argument_list|>
+name|tName
+init|=
+name|tableSpecs
+operator|.
+name|keySet
+argument_list|()
+operator|.
+name|iterator
+argument_list|()
+decl_stmt|;
+return|return
+name|tableSpecs
+operator|.
+name|get
+argument_list|(
+name|tName
+operator|.
+name|next
+argument_list|()
+argument_list|)
+return|;
 block|}
 block|}
 end_class

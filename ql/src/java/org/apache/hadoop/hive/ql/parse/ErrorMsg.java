@@ -699,6 +699,11 @@ literal|"The query results could be wrong. "
 operator|+
 literal|"Turn on hive.outerjoin.supports.filters"
 argument_list|)
+block|,
+name|NEED_PARTITION_SPECIFICATION
+argument_list|(
+literal|"Table is partitioned and partition specification is needed"
+argument_list|)
 block|,       ;
 specifier|private
 name|String

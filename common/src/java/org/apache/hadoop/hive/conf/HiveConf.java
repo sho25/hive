@@ -1316,6 +1316,39 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// Statistics
+name|HIVESTATSAUTOGATHER
+argument_list|(
+literal|"hive.stats.autogather"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|HIVESTATSDBCLASS
+argument_list|(
+literal|"hive.stats.dbclass"
+argument_list|,
+literal|"jdbc:derby"
+argument_list|)
+block|,
+comment|// other options are jdbc:mysql and hbase as defined in StatsSetupConst.java
+name|HIVESTATSJDBCDRIVER
+argument_list|(
+literal|"hive.stats.jdbcdriver"
+argument_list|,
+literal|"org.apache.derby.jdbc.EmbeddedDriver"
+argument_list|)
+block|,
+comment|// JDBC driver specific to the dbclass
+name|HIVESTATSDBCONNECTIONSTRING
+argument_list|(
+literal|"hive.stats.dbconnectionstring"
+argument_list|,
+literal|"jdbc:derby:;databaseName=TempStatsStore;create=true"
+argument_list|)
+block|,
+comment|// automatically create database
+comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
 literal|"hive.support.concurrency"

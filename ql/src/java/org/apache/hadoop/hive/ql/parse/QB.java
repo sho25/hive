@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the query block.  *   **/
+comment|/**  * Implementation of the query block.  *  **/
 end_comment
 
 begin_class
@@ -713,6 +713,12 @@ argument_list|()
 operator|&&
 operator|!
 name|isCTAS
+argument_list|()
+operator|&&
+operator|!
+name|qbp
+operator|.
+name|isAnalyzeCommand
 argument_list|()
 return|;
 block|}

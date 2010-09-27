@@ -25,6 +25,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|OutputStream
 import|;
 end_import
@@ -36,16 +46,6 @@ operator|.
 name|io
 operator|.
 name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
 import|;
 end_import
 
@@ -101,6 +101,48 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|ContentSummary
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|FileSystem
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -139,7 +181,23 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QueryPlan
+name|Context
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|DriverContext
 import|;
 end_import
 
@@ -211,26 +269,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
-operator|.
-name|api
-operator|.
-name|StageType
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|session
 operator|.
 name|SessionState
@@ -250,80 +288,6 @@ operator|.
 name|shims
 operator|.
 name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|DriverContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|Context
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|ContentSummary
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|FileSystem
 import|;
 end_import
 
@@ -509,6 +473,7 @@ name|inputSummary
 operator|==
 literal|null
 condition|)
+block|{
 name|inputSummary
 operator|=
 name|Utilities
@@ -525,6 +490,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 comment|// at this point the number of reducers is precisely defined in the plan
 name|int
 name|numReducers
@@ -1411,11 +1377,13 @@ if|if
 condition|(
 name|ctxCreated
 condition|)
+block|{
 name|ctx
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1774,6 +1742,7 @@ name|inputSummary
 operator|==
 literal|null
 condition|)
+block|{
 comment|// compute the summary and stash it away
 name|inputSummary
 operator|=
@@ -1791,6 +1760,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 name|long
 name|totalInputFileSize
 init|=
@@ -1914,6 +1884,7 @@ argument_list|()
 operator|>
 name|maxBytes
 condition|)
+block|{
 return|return
 literal|"Input Size (= "
 operator|+
@@ -1938,6 +1909,7 @@ name|maxBytes
 operator|+
 literal|")"
 return|;
+block|}
 comment|// ideally we would like to do this check based on the number of splits
 comment|// in the absence of an easy way to get the number of splits - do this
 comment|// based on the total number of files (pessimistically assumming that
@@ -1951,6 +1923,7 @@ argument_list|()
 operator|>
 name|maxTasks
 condition|)
+block|{
 return|return
 literal|"Number of Input Files (= "
 operator|+
@@ -1975,6 +1948,7 @@ name|maxTasks
 operator|+
 literal|")"
 return|;
+block|}
 comment|// since local mode only runs with 1 reducers - make sure that the
 comment|// the number of reducers (set by user or inferred) is<=1
 if|if
@@ -1983,6 +1957,7 @@ name|numReducers
 operator|>
 literal|1
 condition|)
+block|{
 return|return
 literal|"Number of reducers (= "
 operator|+
@@ -1990,6 +1965,7 @@ name|numReducers
 operator|+
 literal|") is more than 1"
 return|;
+block|}
 return|return
 literal|null
 return|;
