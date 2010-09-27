@@ -1436,7 +1436,15 @@ literal|"hive.outerjoin.supports.filters"
 argument_list|,
 literal|true
 argument_list|)
-block|,      ;
+block|,
+comment|// Serde for FetchTask
+name|HIVEFETCHOUTPUTSERDE
+argument_list|(
+literal|"hive.fetch.output.serde"
+argument_list|,
+literal|"org.apache.hadoop.hive.serde2.DelimitedJSONSerDe"
+argument_list|)
+block|;
 specifier|public
 specifier|final
 name|String

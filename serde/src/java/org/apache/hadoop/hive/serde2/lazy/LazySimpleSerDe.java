@@ -197,22 +197,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDeUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|objectinspector
 operator|.
 name|ListObjectInspector
@@ -341,26 +325,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|objectinspector
-operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|typeinfo
 operator|.
 name|StructTypeInfo
@@ -464,7 +428,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazySimpleSerDe can be used to read the same data format as  * MetadataTypedColumnsetSerDe and TCTLSeparatedProtocol.  *   * However, LazySimpleSerDe creates Objects in a lazy way, to provide better  * performance.  *   * Also LazySimpleSerDe outputs typed columns instead of treating all columns as  * String like MetadataTypedColumnsetSerDe.  */
+comment|/**  * LazySimpleSerDe can be used to read the same data format as  * MetadataTypedColumnsetSerDe and TCTLSeparatedProtocol.  *  * However, LazySimpleSerDe creates Objects in a lazy way, to provide better  * performance.  *  * Also LazySimpleSerDe outputs typed columns instead of treating all columns as  * String like MetadataTypedColumnsetSerDe.  */
 end_comment
 
 begin_class
@@ -520,11 +484,6 @@ specifier|private
 name|ObjectInspector
 name|cachedObjectInspector
 decl_stmt|;
-specifier|private
-name|boolean
-name|useJSONSerialize
-decl_stmt|;
-comment|// use json to serialize
 annotation|@
 name|Override
 specifier|public
@@ -587,7 +546,7 @@ parameter_list|()
 throws|throws
 name|SerDeException
 block|{   }
-comment|/**    * Return the byte value of the number string.    *     * @param altValue    *          The string containing a number.    * @param defaultVal    *          If the altValue does not represent a number, return the    *          defaultVal.    */
+comment|/**    * Return the byte value of the number string.    *    * @param altValue    *          The string containing a number.    * @param defaultVal    *          If the altValue does not represent a number, return the    *          defaultVal.    */
 specifier|public
 specifier|static
 name|byte
@@ -697,9 +656,6 @@ name|boolean
 index|[]
 name|needsEscape
 decl_stmt|;
-name|boolean
-name|jsonSerialize
-decl_stmt|;
 specifier|public
 name|List
 argument_list|<
@@ -798,39 +754,13 @@ return|return
 name|needsEscape
 return|;
 block|}
-comment|/**      * @return the jsonSerialize      */
-specifier|public
-name|boolean
-name|isJsonSerialize
-parameter_list|()
-block|{
-return|return
-name|jsonSerialize
-return|;
-block|}
-comment|/**      * @param jsonSerialize      *          the jsonSerialize to set      */
-specifier|public
-name|void
-name|setJsonSerialize
-parameter_list|(
-name|boolean
-name|jsonSerialize
-parameter_list|)
-block|{
-name|this
-operator|.
-name|jsonSerialize
-operator|=
-name|jsonSerialize
-expr_stmt|;
-block|}
 block|}
 name|SerDeParameters
 name|serdeParams
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * Initialize the SerDe given the parameters. serialization.format: separator    * char or byte code (only supports byte-value up to 127) columns:    * ","-separated column names columns.types: ",", ":", or ";"-separated column    * types    *     * @see SerDe#initialize(Configuration, Properties)    */
+comment|/**    * Initialize the SerDe given the parameters. serialization.format: separator    * char or byte code (only supports byte-value up to 127) columns:    * ","-separated column names columns.types: ",", ":", or ";"-separated column    * types    *    * @see SerDe#initialize(Configuration, Properties)    */
 specifier|public
 name|void
 name|initialize
@@ -904,20 +834,6 @@ name|getEscapeChar
 argument_list|()
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|serdeParams
-operator|.
-name|isJsonSerialize
-argument_list|()
-condition|)
-block|{
-name|setUseJSONSerialize
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
 name|cachedLazyStruct
 operator|=
 operator|(
@@ -934,7 +850,13 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"LazySimpleSerDe initialized with: columnNames="
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" initialized with: columnNames="
 operator|+
 name|serdeParams
 operator|.
@@ -1174,35 +1096,6 @@ operator|!=
 literal|null
 operator|&&
 name|lastColumnTakesRestString
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-literal|"true"
-argument_list|)
-operator|)
-expr_stmt|;
-name|String
-name|useJsonSerialize
-init|=
-name|tbl
-operator|.
-name|getProperty
-argument_list|(
-name|Constants
-operator|.
-name|SERIALIZATION_USE_JSON_OBJECTS
-argument_list|)
-decl_stmt|;
-name|serdeParams
-operator|.
-name|jsonSerialize
-operator|=
-operator|(
-name|useJsonSerialize
-operator|!=
-literal|null
-operator|&&
-name|useJsonSerialize
 operator|.
 name|equalsIgnoreCase
 argument_list|(
@@ -1569,7 +1462,7 @@ comment|// The wrapper for byte array
 name|ByteArrayRef
 name|byteArrayRef
 decl_stmt|;
-comment|/**    * Deserialize a row from the Writable to a LazyObject.    *     * @param field    *          the Writable that contains the data    * @return The deserialized row Object.    * @see SerDe#deserialize(Writable)    */
+comment|/**    * Deserialize a row from the Writable to a LazyObject.    *    * @param field    *          the Writable that contains the data    * @return The deserialized row Object.    * @see SerDe#deserialize(Writable)    */
 specifier|public
 name|Object
 name|deserialize
@@ -1708,7 +1601,7 @@ return|return
 name|cachedObjectInspector
 return|;
 block|}
-comment|/**    * Returns the Writable Class after serialization.    *     * @see SerDe#getSerializedClass()    */
+comment|/**    * Returns the Writable Class after serialization.    *    * @see SerDe#getSerializedClass()    */
 specifier|public
 name|Class
 argument_list|<
@@ -1743,7 +1636,7 @@ operator|.
 name|Output
 argument_list|()
 decl_stmt|;
-comment|/**    * Serialize a row of data.    *     * @param obj    *          The row object    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @throws IOException    * @see SerDe#serialize(Object, ObjectInspector)    */
+comment|/**    * Serialize a row of data.    *    * @param obj    *          The row object    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @throws IOException    * @see SerDe#serialize(Object, ObjectInspector)    */
 specifier|public
 name|Writable
 name|serialize
@@ -1874,8 +1767,6 @@ operator|.
 name|reset
 argument_list|()
 expr_stmt|;
-try|try
-block|{
 comment|// Serialize each field
 for|for
 control|(
@@ -2007,99 +1898,7 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-comment|// If the field that is passed in is NOT a primitive, and either the
-comment|// field is not declared (no schema was given at initialization), or
-comment|// the field is declared as a primitive in initialization, serialize
-comment|// the data to JSON string. Otherwise serialize the data in the
-comment|// delimited way.
-if|if
-condition|(
-operator|!
-name|foi
-operator|.
-name|getCategory
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-name|Category
-operator|.
-name|PRIMITIVE
-argument_list|)
-operator|&&
-operator|(
-name|declaredFields
-operator|==
-literal|null
-operator|||
-name|declaredFields
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|getFieldObjectInspector
-argument_list|()
-operator|.
-name|getCategory
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-name|Category
-operator|.
-name|PRIMITIVE
-argument_list|)
-operator|||
-name|useJSONSerialize
-operator|)
-condition|)
-block|{
-name|serialize
-argument_list|(
-name|serializeStream
-argument_list|,
-name|SerDeUtils
-operator|.
-name|getJSONString
-argument_list|(
-name|f
-argument_list|,
-name|foi
-argument_list|)
-argument_list|,
-name|PrimitiveObjectInspectorFactory
-operator|.
-name|javaStringObjectInspector
-argument_list|,
-name|serdeParams
-operator|.
-name|separators
-argument_list|,
-literal|1
-argument_list|,
-name|serdeParams
-operator|.
-name|nullSequence
-argument_list|,
-name|serdeParams
-operator|.
-name|escaped
-argument_list|,
-name|serdeParams
-operator|.
-name|escapeChar
-argument_list|,
-name|serdeParams
-operator|.
-name|needsEscape
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|serialize
+name|serializeField
 argument_list|(
 name|serializeStream
 argument_list|,
@@ -2108,44 +1907,8 @@ argument_list|,
 name|foi
 argument_list|,
 name|serdeParams
-operator|.
-name|separators
-argument_list|,
-literal|1
-argument_list|,
-name|serdeParams
-operator|.
-name|nullSequence
-argument_list|,
-name|serdeParams
-operator|.
-name|escaped
-argument_list|,
-name|serdeParams
-operator|.
-name|escapeChar
-argument_list|,
-name|serdeParams
-operator|.
-name|needsEscape
 argument_list|)
 expr_stmt|;
-block|}
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SerDeException
-argument_list|(
-name|e
-argument_list|)
-throw|;
 block|}
 comment|// TODO: The copy of data is unnecessary, but there is no work-around
 comment|// since we cannot directly set the private byte[] field inside Text.
@@ -2170,7 +1933,77 @@ return|return
 name|serializeCache
 return|;
 block|}
-comment|/**    * Serialize the row into the StringBuilder.    *     * @param out    *          The StringBuilder to store the serialized data.    * @param obj    *          The object for the current field.    * @param objInspector    *          The ObjectInspector for the current Object.    * @param separators    *          The separators array.    * @param level    *          The current level of separator.    * @param nullSequence    *          The byte sequence representing the NULL value.    * @param escaped    *          Whether we need to escape the data when writing out    * @param escapeChar    *          Which char to use as the escape char, e.g. '\\'    * @param needsEscape    *          Which chars needs to be escaped. This array should have size of    *          128. Negative byte values (or byte values>= 128) are never    *          escaped.    * @throws IOException    */
+specifier|protected
+name|void
+name|serializeField
+parameter_list|(
+name|ByteStream
+operator|.
+name|Output
+name|out
+parameter_list|,
+name|Object
+name|obj
+parameter_list|,
+name|ObjectInspector
+name|objInspector
+parameter_list|,
+name|SerDeParameters
+name|serdeParams
+parameter_list|)
+throws|throws
+name|SerDeException
+block|{
+try|try
+block|{
+name|serialize
+argument_list|(
+name|out
+argument_list|,
+name|obj
+argument_list|,
+name|objInspector
+argument_list|,
+name|serdeParams
+operator|.
+name|separators
+argument_list|,
+literal|1
+argument_list|,
+name|serdeParams
+operator|.
+name|nullSequence
+argument_list|,
+name|serdeParams
+operator|.
+name|escaped
+argument_list|,
+name|serdeParams
+operator|.
+name|escapeChar
+argument_list|,
+name|serdeParams
+operator|.
+name|needsEscape
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SerDeException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * Serialize the row into the StringBuilder.    *    * @param out    *          The StringBuilder to store the serialized data.    * @param obj    *          The object for the current field.    * @param objInspector    *          The ObjectInspector for the current Object.    * @param separators    *          The separators array.    * @param level    *          The current level of separator.    * @param nullSequence    *          The byte sequence representing the NULL value.    * @param escaped    *          Whether we need to escape the data when writing out    * @param escapeChar    *          Which char to use as the escape char, e.g. '\\'    * @param needsEscape    *          Which chars needs to be escaped. This array should have size of    *          128. Negative byte values (or byte values>= 128) are never    *          escaped.    * @throws IOException    */
 specifier|public
 specifier|static
 name|void
@@ -2760,32 +2593,6 @@ name|getCategory
 argument_list|()
 argument_list|)
 throw|;
-block|}
-comment|/**    * @return the useJSONSerialize    */
-specifier|public
-name|boolean
-name|isUseJSONSerialize
-parameter_list|()
-block|{
-return|return
-name|useJSONSerialize
-return|;
-block|}
-comment|/**    * @param useJSONSerialize    *          the useJSONSerialize to set    */
-specifier|public
-name|void
-name|setUseJSONSerialize
-parameter_list|(
-name|boolean
-name|useJSONSerialize
-parameter_list|)
-block|{
-name|this
-operator|.
-name|useJSONSerialize
-operator|=
-name|useJSONSerialize
-expr_stmt|;
 block|}
 block|}
 end_class

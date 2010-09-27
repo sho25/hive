@@ -9812,8 +9812,6 @@ argument_list|,
 name|colTypes
 argument_list|,
 name|defaultCols
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 comment|// copy all the properties
