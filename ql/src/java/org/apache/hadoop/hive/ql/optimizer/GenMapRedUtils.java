@@ -1564,6 +1564,8 @@ name|getOldMapJoin
 argument_list|()
 operator|==
 literal|null
+operator|||
+name|setReducer
 condition|)
 block|{
 name|taskTmpDir
