@@ -607,7 +607,7 @@ argument_list|)
 block|,
 name|NONEXISTPARTCOL
 argument_list|(
-literal|"Partition column in the partition specification does not exist"
+literal|"Non-Partition column appears in the partition specification: "
 argument_list|)
 block|,
 name|UNSUPPORTED_TYPE
@@ -1454,6 +1454,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
 name|String
 name|getMsg
 parameter_list|(
@@ -1471,6 +1472,7 @@ name|tree
 argument_list|)
 return|;
 block|}
+specifier|public
 name|String
 name|getMsg
 parameter_list|(
@@ -1492,6 +1494,7 @@ operator|+
 name|reason
 return|;
 block|}
+specifier|public
 name|String
 name|getMsg
 parameter_list|(
