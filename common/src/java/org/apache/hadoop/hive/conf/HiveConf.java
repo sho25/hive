@@ -1460,7 +1460,14 @@ literal|"hive.fetch.output.serde"
 argument_list|,
 literal|"org.apache.hadoop.hive.serde2.DelimitedJSONSerDe"
 argument_list|)
-block|;
+block|,
+name|SEMANTIC_ANALYZER_HOOK
+argument_list|(
+literal|"hive.semantic.analyzer.hook"
+argument_list|,
+literal|null
+argument_list|)
+block|,     ;
 specifier|public
 specifier|final
 name|String

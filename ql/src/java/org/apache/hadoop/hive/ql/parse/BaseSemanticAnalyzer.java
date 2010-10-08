@@ -2564,8 +2564,55 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the list of FieldSchema out of the ASTNode.    */
 specifier|protected
+name|void
+name|handleGenericFileFormat
+parameter_list|(
+name|ASTNode
+name|node
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+name|ASTNode
+name|child
+init|=
+operator|(
+name|ASTNode
+operator|)
+name|node
+operator|.
+name|getChild
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Unrecognized file format in STORED AS clause:"
+operator|+
+literal|" "
+operator|+
+operator|(
+name|child
+operator|==
+literal|null
+condition|?
+literal|""
+else|:
+name|child
+operator|.
+name|getText
+argument_list|()
+operator|)
+argument_list|)
+throw|;
+block|}
+comment|/**    * Get the list of FieldSchema out of the ASTNode.    */
+specifier|public
+specifier|static
 name|List
 argument_list|<
 name|FieldSchema
