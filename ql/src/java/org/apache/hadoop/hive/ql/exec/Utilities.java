@@ -2410,6 +2410,32 @@ argument_list|,
 name|job
 argument_list|)
 expr_stmt|;
+comment|// set replication of the plan file to a high number. we use the same
+comment|// replication factor as used by the hadoop jobclient for job.xml etc.
+name|short
+name|replication
+init|=
+operator|(
+name|short
+operator|)
+name|job
+operator|.
+name|getInt
+argument_list|(
+literal|"mapred.submit.replication"
+argument_list|,
+literal|10
+argument_list|)
+decl_stmt|;
+name|fs
+operator|.
+name|setReplication
+argument_list|(
+name|planPath
+argument_list|,
+name|replication
+argument_list|)
+expr_stmt|;
 block|}
 comment|// Cache the plan in this process
 name|w
