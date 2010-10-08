@@ -43,6 +43,8 @@ block|,
 name|MAP
 block|,
 name|STRUCT
+block|,
+name|UNION
 block|}
 empty_stmt|;
 comment|/**    * Returns the name of the data type that is inspected by this    * ObjectInspector. This is used to display the type information to the user.    *    * For primitive types, the type name is standardized. For other types, the    * type name can be something like "list<int>", "map<int,string>", java class    * names, or user-defined type names similar to typedef.    */

@@ -340,6 +340,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|UNION_TYPE_NAME
+init|=
+literal|"uniontype"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|LIST_COLUMNS
 init|=
 literal|"columns"

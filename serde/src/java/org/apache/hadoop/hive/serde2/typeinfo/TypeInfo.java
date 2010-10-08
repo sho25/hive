@@ -50,7 +50,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Stores information about a type. Always use the TypeInfoFactory to create new  * TypeInfo objects.  *   * We support 4 categories of types: 1. Primitive objects (String, Number, etc)  * 2. List objects (a list of objects of a single type) 3. Map objects (a map  * from objects of one type to objects of another type) 4. Struct objects (a  * list of fields with names and their own types)  */
+comment|/**  * Stores information about a type. Always use the TypeInfoFactory to create new  * TypeInfo objects.  *  * We support 5 categories of types: 1. Primitive objects (String, Number, etc)  * 2. List objects (a list of objects of a single type) 3. Map objects (a map  * from objects of one type to objects of another type) 4. Struct objects (a  * list of fields with names and their own types) 5. Union objects  */
 end_comment
 
 begin_class
@@ -73,7 +73,7 @@ specifier|protected
 name|TypeInfo
 parameter_list|()
 block|{   }
-comment|/**    * The Category of this TypeInfo. Possible values are Primitive, List, Map and    * Struct, which corresponds to the 4 sub-classes of TypeInfo.    */
+comment|/**    * The Category of this TypeInfo. Possible values are Primitive, List, Map,    * Struct and Union, which corresponds to the 5 sub-classes of TypeInfo.    */
 specifier|public
 specifier|abstract
 name|Category
