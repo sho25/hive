@@ -130,6 +130,15 @@ argument_list|,
 literal|"org.apache.hadoop.hive.shims.Hadoop20Shims"
 argument_list|)
 expr_stmt|;
+name|HADOOP_SHIM_CLASSES
+operator|.
+name|put
+argument_list|(
+literal|"0.20S"
+argument_list|,
+literal|"org.apache.hadoop.hive.shims.Hadoop20SShims"
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * The names of the classes for shimming Jetty for each major version of    * Hadoop.    */
 specifier|private
@@ -188,6 +197,15 @@ argument_list|(
 literal|"0.20"
 argument_list|,
 literal|"org.apache.hadoop.hive.shims.Jetty20Shims"
+argument_list|)
+expr_stmt|;
+name|JETTY_SHIM_CLASSES
+operator|.
+name|put
+argument_list|(
+literal|"0.20S"
+argument_list|,
+literal|"org.apache.hadoop.hive.shims.Jetty20SShims"
 argument_list|)
 expr_stmt|;
 block|}
@@ -387,7 +405,9 @@ literal|" (expected A.B.* format)"
 argument_list|)
 throw|;
 block|}
-return|return
+name|String
+name|majorVersion
+init|=
 name|parts
 index|[
 literal|0
@@ -399,6 +419,32 @@ name|parts
 index|[
 literal|1
 index|]
+decl_stmt|;
+comment|// If we are running a security release, we won't have UnixUserGroupInformation
+comment|// (removed by HADOOP-6299 when switching to JAAS for Login)
+try|try
+block|{
+name|Class
+operator|.
+name|forName
+argument_list|(
+literal|"org.apache.hadoop.security.UnixUserGroupInformation"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ClassNotFoundException
+name|cnf
+parameter_list|)
+block|{
+name|majorVersion
+operator|+=
+literal|"S"
+expr_stmt|;
+block|}
+return|return
+name|majorVersion
 return|;
 block|}
 specifier|private
