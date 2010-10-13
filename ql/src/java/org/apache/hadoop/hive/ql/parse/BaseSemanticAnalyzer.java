@@ -3411,7 +3411,7 @@ name|int
 name|numDynParts
 decl_stmt|;
 comment|// number of dynamic partition columns
-specifier|private
+specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -3419,6 +3419,22 @@ argument_list|>
 name|partitions
 decl_stmt|;
 comment|// involved partitions in TableScanOperator/FileSinkOperator
+specifier|public
+specifier|static
+enum|enum
+name|SpecType
+block|{
+name|TABLE_ONLY
+block|,
+name|STATIC_PARTITION
+block|,
+name|DYNAMIC_PARTITION
+block|}
+empty_stmt|;
+specifier|public
+name|SpecType
+name|specType
+decl_stmt|;
 specifier|public
 name|tableSpec
 parameter_list|(
@@ -3622,6 +3638,15 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
+name|partitions
+operator|=
+operator|new
+name|ArrayList
+argument_list|<
+name|Partition
+argument_list|>
+argument_list|()
+expr_stmt|;
 comment|// partSpec is a mapping from partition column name to its value.
 name|partSpec
 operator|=
@@ -3738,6 +3763,7 @@ name|val
 argument_list|)
 expr_stmt|;
 block|}
+comment|// check if the columns specified in the partition() clause are actually partition columns
 name|Utilities
 operator|.
 name|validatePartSpec
@@ -3879,12 +3905,40 @@ name|partHandle
 operator|=
 literal|null
 expr_stmt|;
+name|specType
+operator|=
+name|SpecType
+operator|.
+name|DYNAMIC_PARTITION
+expr_stmt|;
 block|}
 else|else
 block|{
 try|try
 block|{
-comment|// this doesn't create partition. partition is created in MoveTask
+comment|// this doesn't create partition.
+name|partHandle
+operator|=
+name|db
+operator|.
+name|getPartition
+argument_list|(
+name|tableHandle
+argument_list|,
+name|partSpec
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|partHandle
+operator|==
+literal|null
+condition|)
+block|{
+comment|// if partSpec doesn't exists in DB, return a delegate one
+comment|// and the actual partition is created in MoveTask
 name|partHandle
 operator|=
 operator|new
@@ -3897,6 +3951,17 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|partitions
+operator|.
+name|add
+argument_list|(
+name|partHandle
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -3924,7 +3989,22 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+name|specType
+operator|=
+name|SpecType
+operator|.
+name|STATIC_PARTITION
+expr_stmt|;
 block|}
+block|}
+else|else
+block|{
+name|specType
+operator|=
+name|SpecType
+operator|.
+name|TABLE_ONLY
+expr_stmt|;
 block|}
 block|}
 specifier|public
