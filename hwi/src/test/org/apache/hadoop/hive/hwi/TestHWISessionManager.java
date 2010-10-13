@@ -646,7 +646,7 @@ argument_list|)
 operator|.
 name|get
 argument_list|(
-literal|2
+literal|0
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -685,7 +685,7 @@ argument_list|)
 operator|.
 name|get
 argument_list|(
-literal|3
+literal|1
 argument_list|)
 decl_stmt|;
 name|assertEquals

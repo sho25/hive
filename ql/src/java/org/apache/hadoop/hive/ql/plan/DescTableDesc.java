@@ -118,6 +118,9 @@ decl_stmt|;
 name|boolean
 name|isExt
 decl_stmt|;
+name|boolean
+name|isFormatted
+decl_stmt|;
 comment|/**    * table name for the result of describe table.    */
 specifier|private
 specifier|static
@@ -140,7 +143,7 @@ specifier|public
 name|DescTableDesc
 parameter_list|()
 block|{   }
-comment|/**    * @param isExt    * @param partSpec    * @param resFile    * @param tableName    */
+comment|/**    * @param partSpec    * @param resFile    * @param tableName    */
 specifier|public
 name|DescTableDesc
 parameter_list|(
@@ -157,16 +160,19 @@ argument_list|,
 name|String
 argument_list|>
 name|partSpec
-parameter_list|,
-name|boolean
-name|isExt
 parameter_list|)
 block|{
 name|this
 operator|.
 name|isExt
 operator|=
-name|isExt
+literal|false
+expr_stmt|;
+name|this
+operator|.
+name|isFormatted
+operator|=
+literal|false
 expr_stmt|;
 name|this
 operator|.
@@ -233,6 +239,32 @@ operator|.
 name|isExt
 operator|=
 name|isExt
+expr_stmt|;
+block|}
+comment|/**    * @return the isFormatted    */
+specifier|public
+name|boolean
+name|isFormatted
+parameter_list|()
+block|{
+return|return
+name|isFormatted
+return|;
+block|}
+comment|/**    * @param isFormatted    *          the isFormat to set    */
+specifier|public
+name|void
+name|setFormatted
+parameter_list|(
+name|boolean
+name|isFormat
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isFormatted
+operator|=
+name|isFormat
 expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */
