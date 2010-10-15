@@ -5950,6 +5950,14 @@ range|:
 name|items
 control|)
 block|{
+name|Path
+name|itemStaging
+init|=
+name|item
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|Utilities
@@ -5967,10 +5975,7 @@ name|fs
 operator|.
 name|delete
 argument_list|(
-name|item
-operator|.
-name|getPath
-argument_list|()
+name|itemStaging
 argument_list|,
 literal|true
 argument_list|)
@@ -5998,25 +6003,76 @@ argument_list|()
 operator|+
 literal|" has nested directory"
 operator|+
-name|item
-operator|.
-name|getPath
-argument_list|()
+name|itemStaging
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+operator|!
+name|replace
+condition|)
+block|{
+comment|// It's possible that the file we're copying may have the same
+comment|// relative name as an existing file in the "destf" directory.
+comment|// So let's make a quick check to see if we can rename any
+comment|// potential offenders so as to allow them to move into the
+comment|// "destf" directory. The scheme is dead simple: simply tack
+comment|// on "_copy_N" where N starts at 1 and works its way up until
+comment|// we find a free space.
+comment|// Note: there are race conditions here, but I don't believe
+comment|// they're worse than what was already present.
+name|int
+name|counter
+init|=
+literal|1
+decl_stmt|;
 name|Path
-name|tmpDest
+name|itemDest
 init|=
 operator|new
 name|Path
 argument_list|(
 name|destf
 argument_list|,
-name|item
+name|itemStaging
 operator|.
-name|getPath
+name|getName
 argument_list|()
+argument_list|)
+decl_stmt|;
+while|while
+condition|(
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|itemDest
+argument_list|)
+condition|)
+block|{
+name|Path
+name|proposedStaging
+init|=
+name|itemStaging
+operator|.
+name|suffix
+argument_list|(
+literal|"_copy_"
+operator|+
+name|counter
+operator|++
+argument_list|)
+decl_stmt|;
+name|Path
+name|proposedDest
+init|=
+operator|new
+name|Path
+argument_list|(
+name|destf
+argument_list|,
+name|proposedStaging
 operator|.
 name|getName
 argument_list|()
@@ -6024,28 +6080,75 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-operator|!
-name|replace
-operator|&&
 name|fs
 operator|.
 name|exists
 argument_list|(
-name|tmpDest
+name|proposedDest
 argument_list|)
 condition|)
 block|{
-throw|throw
-operator|new
-name|HiveException
+comment|// There's already a file in our destination directory with our
+comment|// _copy_N suffix. We've been here before...
+name|LOG
+operator|.
+name|trace
 argument_list|(
-literal|"checkPaths: "
-operator|+
-name|tmpDest
+name|proposedDest
 operator|+
 literal|" already exists"
 argument_list|)
-throw|;
+expr_stmt|;
+continue|continue;
+block|}
+if|if
+condition|(
+operator|!
+name|fs
+operator|.
+name|rename
+argument_list|(
+name|itemStaging
+argument_list|,
+name|proposedStaging
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Unsuccessfully in attempt to rename "
+operator|+
+name|itemStaging
+operator|+
+literal|" to "
+operator|+
+name|proposedStaging
+operator|+
+literal|"..."
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Successfully renamed "
+operator|+
+name|itemStaging
+operator|+
+literal|" to "
+operator|+
+name|proposedStaging
+argument_list|)
+expr_stmt|;
+name|itemDest
+operator|=
+name|proposedDest
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
