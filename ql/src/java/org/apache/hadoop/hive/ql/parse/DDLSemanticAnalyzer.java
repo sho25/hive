@@ -4122,6 +4122,8 @@ operator|.
 name|makePartName
 argument_list|(
 name|partSpec
+argument_list|,
+literal|false
 argument_list|)
 operator|+
 literal|" does not exist in table "

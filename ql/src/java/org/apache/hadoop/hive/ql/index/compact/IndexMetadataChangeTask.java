@@ -434,6 +434,8 @@ name|work
 operator|.
 name|getPartSpec
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|toString

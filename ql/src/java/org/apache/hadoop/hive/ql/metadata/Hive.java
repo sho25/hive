@@ -3884,7 +3884,7 @@ argument_list|()
 argument_list|,
 name|Warehouse
 operator|.
-name|makePartName
+name|makePartPath
 argument_list|(
 name|partSpec
 argument_list|)
@@ -6523,7 +6523,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Replaces files in the partition with new data set specifed by srcf. Works    * by moving files.    * srcf, destf, and tmppath should resident in the same dfs, but the oldPath can be in a     * different dfs.    *    * @param srcf    *          Files to be moved. Leaf Directories or Globbed File Paths    * @param destf    *          The directory where the final data needs to go    * @param oldPath    *          The directory where the old data location, need to be cleaned up.    * @param tmppath    *          Temporary directory    */
+comment|/**    * Replaces files in the partition with new data set specifed by srcf. Works    * by moving files.    * srcf, destf, and tmppath should resident in the same dfs, but the oldPath can be in a    * different dfs.    *    * @param srcf    *          Files to be moved. Leaf Directories or Globbed File Paths    * @param destf    *          The directory where the final data needs to go    * @param oldPath    *          The directory where the old data location, need to be cleaned up.    * @param tmppath    *          Temporary directory    */
 specifier|static
 specifier|protected
 name|void

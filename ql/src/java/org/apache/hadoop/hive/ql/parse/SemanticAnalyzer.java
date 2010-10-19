@@ -22123,7 +22123,7 @@ name|staticSpec
 init|=
 name|Warehouse
 operator|.
-name|makePartName
+name|makePartPath
 argument_list|(
 name|dest_part
 operator|.
@@ -43331,9 +43331,6 @@ name|getInputSummary
 argument_list|(
 name|ctx
 argument_list|,
-operator|(
-name|MapredWork
-operator|)
 name|mrtask
 operator|.
 name|getWork

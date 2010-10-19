@@ -1512,7 +1512,7 @@ argument_list|()
 operator|+
 name|Warehouse
 operator|.
-name|makePartName
+name|makePartPath
 argument_list|(
 name|partn
 operator|.
