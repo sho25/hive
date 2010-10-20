@@ -6167,6 +6167,18 @@ argument_list|(
 name|newPath
 argument_list|)
 expr_stmt|;
+comment|//Qualify the path against the filesystem. The user configured path might contain default port which is skipped
+comment|//in the file status. This makes sure that all paths which goes into PathToPartitionInfo are always listed status
+comment|//filepath.
+name|newPath
+operator|=
+name|fs
+operator|.
+name|makeQualified
+argument_list|(
+name|newPath
+argument_list|)
+expr_stmt|;
 name|String
 name|newFile
 init|=
