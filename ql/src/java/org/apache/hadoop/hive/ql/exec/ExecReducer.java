@@ -525,6 +525,12 @@ argument_list|(
 literal|"ExecReducer"
 argument_list|)
 decl_stmt|;
+specifier|private
+name|boolean
+name|isLogInfoEnabled
+init|=
+literal|false
+decl_stmt|;
 comment|// used to log memory usage periodically
 specifier|private
 name|MemoryMXBean
@@ -674,6 +680,13 @@ operator|.
 name|getMax
 argument_list|()
 argument_list|)
+expr_stmt|;
+name|isLogInfoEnabled
+operator|=
+name|l4j
+operator|.
+name|isInfoEnabled
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1491,10 +1504,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|l4j
-operator|.
-name|isInfoEnabled
-argument_list|()
+name|isLogInfoEnabled
 condition|)
 block|{
 name|cntr
@@ -1754,10 +1764,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|l4j
-operator|.
-name|isInfoEnabled
-argument_list|()
+name|isLogInfoEnabled
 condition|)
 block|{
 name|l4j
