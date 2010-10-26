@@ -396,7 +396,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 return|return
-literal|null
+name|pctx
 return|;
 block|}
 comment|/**    * Iterator a task with a rule dispatcher for its reducer operator tree.    */

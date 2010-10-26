@@ -143,7 +143,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MapJoinOperator
+name|MapJoinMetaData
 import|;
 end_import
 
@@ -161,9 +161,9 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MapJoinOperator
+name|JDBMSinkOperator
 operator|.
-name|MapJoinObjectCtx
+name|JDBMSinkObjectCtx
 import|;
 end_import
 
@@ -478,13 +478,10 @@ name|readInt
 argument_list|()
 expr_stmt|;
 comment|// get the tableDesc from the map stored in the mapjoin operator
-name|MapJoinObjectCtx
+name|JDBMSinkObjectCtx
 name|ctx
 init|=
-name|MapJoinOperator
-operator|.
-name|getMapMetadata
-argument_list|()
+name|MapJoinMetaData
 operator|.
 name|get
 argument_list|(
@@ -649,6 +646,39 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+else|else
+block|{
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|sz
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|res
+operator|.
+name|add
+argument_list|(
+operator|new
+name|ArrayList
+argument_list|<
+name|Object
+argument_list|>
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 name|obj
 operator|=
@@ -692,13 +722,10 @@ name|metadataTag
 argument_list|)
 expr_stmt|;
 comment|// get the tableDesc from the map stored in the mapjoin operator
-name|MapJoinObjectCtx
+name|JDBMSinkObjectCtx
 name|ctx
 init|=
-name|MapJoinOperator
-operator|.
-name|getMapMetadata
-argument_list|()
+name|MapJoinMetaData
 operator|.
 name|get
 argument_list|(

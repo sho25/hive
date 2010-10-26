@@ -253,6 +253,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|util
+operator|.
+name|JoinUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|SerDe
@@ -376,7 +394,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * At runtime in Join, we output big keys in one table into one corresponding  * directories, and all same keys in other tables into different dirs(one for  * each table). The directories will look like:  *<ul>  *<li>  * dir-T1-bigkeys(containing big keys in T1), dir-T2-keys(containing keys which  * is big in T1),dir-T3-keys(containing keys which is big in T1), ...  *<li>  * dir-T1-keys(containing keys which is big in T2), dir-T2-bigkeys(containing  * big keys in T2),dir-T3-keys(containing keys which is big in T2), ...  *<li>  * dir-T1-keys(containing keys which is big in T3), dir-T2-keys(containing big  * keys in T3),dir-T3-bigkeys(containing keys which is big in T3), ... .....  *</ul>  *   *<p>  * For each skew key, we first write all values to a local tmp file. At the time  * of ending the current group, the local tmp file will be uploaded to hdfs.  * Right now, we use one file per skew key.  *   *<p>  * For more info, please see https://issues.apache.org/jira/browse/HIVE-964.  *   */
+comment|/**  * At runtime in Join, we output big keys in one table into one corresponding  * directories, and all same keys in other tables into different dirs(one for  * each table). The directories will look like:  *<ul>  *<li>  * dir-T1-bigkeys(containing big keys in T1), dir-T2-keys(containing keys which  * is big in T1),dir-T3-keys(containing keys which is big in T1), ...  *<li>  * dir-T1-keys(containing keys which is big in T2), dir-T2-bigkeys(containing  * big keys in T2),dir-T3-keys(containing keys which is big in T2), ...  *<li>  * dir-T1-keys(containing keys which is big in T3), dir-T2-keys(containing big  * keys in T3),dir-T3-bigkeys(containing keys which is big in T3), ... .....  *</ul>  *  *<p>  * For each skew key, we first write all values to a local tmp file. At the time  * of ending the current group, the local tmp file will be uploaded to hdfs.  * Right now, we use one file per skew key.  *  *<p>  * For more info, please see https://issues.apache.org/jira/browse/HIVE-964.  *  */
 end_comment
 
 begin_class
@@ -477,6 +495,11 @@ specifier|private
 name|LongWritable
 name|skewjoinFollowupJobs
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|noOuterJoin
+decl_stmt|;
 name|Configuration
 name|hconf
 init|=
@@ -543,6 +566,12 @@ name|joinOp
 operator|.
 name|getConf
 argument_list|()
+expr_stmt|;
+name|noOuterJoin
+operator|=
+name|joinOp
+operator|.
+name|noOuterJoin
 expr_stmt|;
 block|}
 specifier|public
@@ -880,11 +909,19 @@ block|}
 name|TableDesc
 name|valTblDesc
 init|=
-name|joinOp
+name|JoinUtil
 operator|.
 name|getSpillTableDesc
 argument_list|(
 name|alias
+argument_list|,
+name|joinOp
+operator|.
+name|spillTableDesc
+argument_list|,
+name|conf
+argument_list|,
+name|noOuterJoin
 argument_list|)
 decl_stmt|;
 name|List

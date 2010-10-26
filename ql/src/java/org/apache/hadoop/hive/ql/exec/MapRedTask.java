@@ -25,7 +25,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
+name|File
 import|;
 end_import
 
@@ -35,7 +35,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
+name|IOException
 import|;
 end_import
 
@@ -1051,6 +1051,7 @@ operator|.
 name|mkdir
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -1060,6 +1061,7 @@ operator|+
 name|workDir
 argument_list|)
 throw|;
+block|}
 for|for
 control|(
 name|String
@@ -1122,6 +1124,7 @@ argument_list|)
 operator|!=
 literal|0
 condition|)
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -1135,6 +1138,7 @@ operator|+
 name|link
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 name|LOG

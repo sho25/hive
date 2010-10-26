@@ -152,7 +152,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Hashtable directory page.  *   * @author<a href="mailto:boisvert@exoffice.com">Alex Boisvert</a>  * @version $Id: HashDirectory.java,v 1.5 2005/06/25 23:12:32 doomdark Exp $  */
+comment|/**  * Hashtable directory page.  *  * @author<a href="mailto:boisvert@exoffice.com">Alex Boisvert</a>  * @version $Id: HashDirectory.java,v 1.5 2005/06/25 23:12:32 doomdark Exp $  */
 end_comment
 
 begin_class
@@ -171,13 +171,13 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**    * Maximum number of children in a directory.    *     * (Must be a power of 2 -- if you update this value, you must also update    * BIT_SIZE and MAX_DEPTH.)    */
+comment|/**    * Maximum number of children in a directory.    *    * (Must be a power of 2 -- if you update this value, you must also update    * BIT_SIZE and MAX_DEPTH.)    */
 specifier|static
 specifier|final
 name|int
 name|MAX_CHILDREN
 init|=
-literal|256
+literal|65536
 decl_stmt|;
 comment|/**    * Number of significant bits per directory level.    */
 specifier|static
@@ -185,16 +185,16 @@ specifier|final
 name|int
 name|BIT_SIZE
 init|=
-literal|8
+literal|16
 decl_stmt|;
 comment|// log2(256) = 8
-comment|/**    * Maximum number of levels (zero-based)    *     * (4 * 8 bits = 32 bits, which is the size of an "int", and as you know,    * hashcodes in Java are "ints")    */
+comment|/**    * Maximum number of levels (zero-based)    *    * (4 * 8 bits = 32 bits, which is the size of an "int", and as you know,    * hashcodes in Java are "ints")    */
 specifier|static
 specifier|final
 name|int
 name|MAX_DEPTH
 init|=
-literal|3
+literal|64
 decl_stmt|;
 comment|// 4 levels
 comment|/**    * Record ids of children pages.    */
@@ -227,7 +227,7 @@ parameter_list|()
 block|{
 comment|// empty
 block|}
-comment|/**    * Construct a HashDirectory    *     * @param depth    *          Depth of this directory page.    */
+comment|/**    * Construct a HashDirectory    *    * @param depth    *          Depth of this directory page.    */
 name|HashDirectory
 parameter_list|(
 name|byte
@@ -247,7 +247,7 @@ name|MAX_CHILDREN
 index|]
 expr_stmt|;
 block|}
-comment|/**    * Sets persistence context. This method must be called before any    * persistence-related operation.    *     * @param recman    *          RecordManager which stores this directory    * @param recid    *          Record id of this directory.    */
+comment|/**    * Sets persistence context. This method must be called before any    * persistence-related operation.    *    * @param recman    *          RecordManager which stores this directory    * @param recid    *          Record id of this directory.    */
 name|void
 name|setPersistenceContext
 parameter_list|(
@@ -305,7 +305,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Returns the value which is associated with the given key. Returns    *<code>null</code> if there is not association for this key.    *     * @param key    *          key whose associated value is to be returned    */
+comment|/**    * Returns the value which is associated with the given key. Returns    *<code>null</code> if there is not association for this key.    *    * @param key    *          key whose associated value is to be returned    */
 name|Object
 name|get
 parameter_list|(
@@ -415,7 +415,7 @@ return|;
 block|}
 block|}
 block|}
-comment|/**    * Associates the specified value with the specified key.    *     * @param key    *          key with which the specified value is to be assocated.    * @param value    *          value to be associated with the specified key.    * @return object which was previously associated with the given key, or    *<code>null</code> if no association existed.    */
+comment|/**    * Associates the specified value with the specified key.    *    * @param key    *          key with which the specified value is to be assocated.    * @param value    *          value to be associated with the specified key.    * @return object which was previously associated with the given key, or    *<code>null</code> if no association existed.    */
 name|Object
 name|put
 parameter_list|(
@@ -773,7 +773,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Remove the value which is associated with the given key. If the key does    * not exist, this method simply ignores the operation.    *     * @param key    *          key whose associated value is to be removed    * @return object which was associated with the given key, or    *<code>null</code> if no association existed with given key.    */
+comment|/**    * Remove the value which is associated with the given key. If the key does    * not exist, this method simply ignores the operation.    *    * @param key    *          key whose associated value is to be removed    * @return object which was associated with the given key, or    *<code>null</code> if no association existed with given key.    */
 name|Object
 name|remove
 parameter_list|(
@@ -1206,7 +1206,7 @@ specifier|private
 name|Iterator
 name|_iter
 decl_stmt|;
-comment|/**      * Construct an iterator on this directory.      *       * @param iterateKeys      *          True if iteration supplies keys, False if iterateKeys supplies      *          values.      */
+comment|/**      * Construct an iterator on this directory.      *      * @param iterateKeys      *          True if iteration supplies keys, False if iterateKeys supplies      *          values.      */
 name|HDIterator
 parameter_list|(
 name|boolean
@@ -1323,7 +1323,7 @@ return|return
 name|next
 return|;
 block|}
-comment|/**      * Prepare internal state so we can answer<code>hasMoreElements</code>      *       * Actually, this code prepares an Enumeration on the next Bucket to      * enumerate. If no following bucket is found, the next Enumeration is set      * to<code>null</code>.      */
+comment|/**      * Prepare internal state so we can answer<code>hasMoreElements</code>      *      * Actually, this code prepares an Enumeration on the next Bucket to      * enumerate. If no following bucket is found, the next Enumeration is set      * to<code>null</code>.      */
 specifier|private
 name|void
 name|prepareNext

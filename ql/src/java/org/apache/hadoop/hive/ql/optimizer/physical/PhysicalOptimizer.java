@@ -138,7 +138,7 @@ name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * create the list of physical plan resolvers.    *     * @param hiveConf    */
+comment|/**    * create the list of physical plan resolvers.    *    * @param hiveConf    */
 specifier|private
 name|void
 name|initialize
@@ -180,8 +180,17 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|resolvers
+operator|.
+name|add
+argument_list|(
+operator|new
+name|MapJoinResolver
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
-comment|/**    * invoke all the resolvers one-by-one, and alter the physical plan.    *     * @return PhysicalContext    * @throws HiveException    */
+comment|/**    * invoke all the resolvers one-by-one, and alter the physical plan.    *    * @return PhysicalContext    * @throws HiveException    */
 specifier|public
 name|PhysicalContext
 name|optimize
