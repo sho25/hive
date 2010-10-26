@@ -1765,9 +1765,9 @@ operator|.
 name|TOTAL_SIZE
 argument_list|)
 condition|?
-name|Integer
+name|Long
 operator|.
-name|parseInt
+name|parseLong
 argument_list|(
 name|parameters
 operator|.
