@@ -41,7 +41,7 @@ name|io
 operator|.
 name|Serializable
 block|{
-comment|/**    * Group-by Mode: COMPLETE: complete 1-phase aggregation: iterate, terminate    * PARTIAL1: partial aggregation - first phase: iterate, terminatePartial    * PARTIAL2: partial aggregation - second phase: merge, terminatePartial    * PARTIALS: For non-distinct the same as PARTIAL2, for distinct the same as    * PARTIAL1 FINAL: partial aggregation - final phase: merge, terminate HASH:    * For non-distinct the same as PARTIAL1 but use hash-table-based aggregation    * MERGEPARTIAL: FINAL for non-distinct aggregations, COMPLETE for distinct    * aggregations.    */
+comment|/**    * Group-by Mode: COMPLETE: complete 1-phase aggregation: iterate, terminate    * PARTIAL1: partial aggregation - first phase: iterate, terminatePartial    * PARTIAL2: partial aggregation - second phase: merge, terminatePartial    * PARTIALS: For non-distinct the same as PARTIAL2, for distinct the same as    *           PARTIAL1    * FINAL: partial aggregation - final phase: merge, terminate    * HASH: For non-distinct the same as PARTIAL1 but use hash-table-based aggregation    * MERGEPARTIAL: FINAL for non-distinct aggregations, COMPLETE for distinct    * aggregations.    */
 specifier|private
 specifier|static
 specifier|final

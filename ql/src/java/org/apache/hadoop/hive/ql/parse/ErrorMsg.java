@@ -221,7 +221,7 @@ argument_list|)
 block|,
 name|UNSUPPORTED_MULTIPLE_DISTINCTS
 argument_list|(
-literal|"DISTINCT on Different Columns not Supported"
+literal|"DISTINCT on Different Columns not Supported with skew in data"
 argument_list|)
 block|,
 name|NO_SUBQUERY_ALIAS
