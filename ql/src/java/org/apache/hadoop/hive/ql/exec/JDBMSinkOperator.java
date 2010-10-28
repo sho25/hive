@@ -2316,17 +2316,6 @@ operator|+
 name|tmpURIPath
 argument_list|)
 expr_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Upload 1 JDBM File to: "
-operator|+
-name|tmpURIPath
-argument_list|)
-expr_stmt|;
 comment|//remove the original jdbm tmp file
 name|hashTable
 operator|.

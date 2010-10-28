@@ -1470,15 +1470,6 @@ operator|!=
 literal|0
 condition|)
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Reloading existing hashtable..."
-argument_list|)
-expr_stmt|;
 name|pHash
 operator|=
 name|HTree

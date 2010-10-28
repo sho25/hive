@@ -1014,15 +1014,6 @@ operator|.
 name|HADOOPMAPFILENAME
 argument_list|)
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"******* Load from JDBM File: input : "
-operator|+
-name|currentInputFile
-argument_list|)
-expr_stmt|;
 name|String
 name|currentFileName
 decl_stmt|;
@@ -1074,13 +1065,6 @@ name|localMode
 condition|)
 block|{
 comment|//load the jdbm file from tmp dir
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"******* Load from tmp file uri ***"
-argument_list|)
-expr_stmt|;
 name|tmpURI
 operator|=
 name|this
@@ -1225,13 +1209,6 @@ block|}
 else|else
 block|{
 comment|//load the jdbm file from distributed cache
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"******* Load from distributed Cache ***:"
-argument_list|)
-expr_stmt|;
 name|Path
 index|[]
 name|localFiles
@@ -1455,13 +1432,6 @@ argument_list|()
 throw|;
 block|}
 block|}
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"******* End of loading *******:"
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 catch|catch
