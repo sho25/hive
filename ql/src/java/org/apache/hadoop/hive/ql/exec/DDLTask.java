@@ -2579,6 +2579,11 @@ argument_list|()
 argument_list|,
 name|crtIndex
 operator|.
+name|getTblProps
+argument_list|()
+argument_list|,
+name|crtIndex
+operator|.
 name|getSerdeProps
 argument_list|()
 argument_list|,
