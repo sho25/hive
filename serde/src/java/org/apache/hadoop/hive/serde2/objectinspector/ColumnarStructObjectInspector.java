@@ -100,7 +100,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ColumnarStructObjectInspector works on struct data that is stored in  * ColumnarStruct.  *   * The names of the struct fields and the internal structure of the struct  * fields are specified in the ctor of the ColumnarStructObjectInspector.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
+comment|/**  * ColumnarStructObjectInspector works on struct data that is stored in  * ColumnarStruct.  *  * The names of the struct fields and the internal structure of the struct  * fields are specified in the ctor of the ColumnarStructObjectInspector.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -611,8 +611,6 @@ operator|.
 name|getField
 argument_list|(
 name|fieldID
-argument_list|,
-name|nullSequence
 argument_list|)
 return|;
 block|}
@@ -652,9 +650,7 @@ return|return
 name|struct
 operator|.
 name|getFieldsAsList
-argument_list|(
-name|nullSequence
-argument_list|)
+argument_list|()
 return|;
 block|}
 block|}

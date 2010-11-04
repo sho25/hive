@@ -580,6 +580,11 @@ argument_list|(
 name|cachedObjectInspector
 argument_list|,
 name|notSkipIDs
+argument_list|,
+name|serdeParams
+operator|.
+name|getNullSequence
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|int
