@@ -1353,6 +1353,25 @@ try|try
 block|{
 name|partsList
 operator|=
+name|pGraphContext
+operator|.
+name|getOpToPartList
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|ts
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|partsList
+operator|==
+literal|null
+condition|)
+block|{
+name|partsList
+operator|=
 name|PartitionPruner
 operator|.
 name|prune
@@ -1382,6 +1401,19 @@ name|getPrunedPartitions
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|pGraphContext
+operator|.
+name|getOpToPartList
+argument_list|()
+operator|.
+name|put
+argument_list|(
+name|ts
+argument_list|,
+name|partsList
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1520,7 +1552,7 @@ name|bucketGroupBy
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Given the group by keys, bucket columns, sort column, this method      * determines if we can use sorted group by or not.      *       * We use bucket columns only when the sorted column set is empty and if all      * group by columns are contained in bucket columns.      *       * If we can can not determine by looking at bucketed columns and the table      * has sort columns, we resort to sort columns. We can use bucket group by      * if the groupby column set is an exact prefix match of sort columns.      *       * @param groupByCols      * @param bucketCols      * @param sortCols      * @return      * @throws SemanticException      */
+comment|/**      * Given the group by keys, bucket columns, sort column, this method      * determines if we can use sorted group by or not.      *      * We use bucket columns only when the sorted column set is empty and if all      * group by columns are contained in bucket columns.      *      * If we can can not determine by looking at bucketed columns and the table      * has sort columns, we resort to sort columns. We can use bucket group by      * if the groupby column set is an exact prefix match of sort columns.      *      * @param groupByCols      * @param bucketCols      * @param sortCols      * @return      * @throws SemanticException      */
 specifier|private
 name|boolean
 name|matchBucketOrSortedColumns

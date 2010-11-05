@@ -69,6 +69,46 @@ name|ql
 operator|.
 name|optimizer
 operator|.
+name|lineage
+operator|.
+name|Generator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|pcr
+operator|.
+name|PartitionConditionRemover
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
 name|ppr
 operator|.
 name|PartitionPruner
@@ -149,26 +189,6 @@ name|PredicatePushDown
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|lineage
-operator|.
-name|Generator
-import|;
-end_import
-
 begin_comment
 comment|/**  * Implementation of the optimizer.  */
 end_comment
@@ -189,7 +209,7 @@ name|Transform
 argument_list|>
 name|transformations
 decl_stmt|;
-comment|/**    * Create the list of transformations.    *     * @param hiveConf    */
+comment|/**    * Create the list of transformations.    *    * @param hiveConf    */
 specifier|public
 name|void
 name|initialize
@@ -274,6 +294,15 @@ name|add
 argument_list|(
 operator|new
 name|PartitionPruner
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
+name|PartitionConditionRemover
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -419,7 +448,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Invoke all the transformations one-by-one, and alter the query plan.    *     * @return ParseContext    * @throws SemanticException    */
+comment|/**    * Invoke all the transformations one-by-one, and alter the query plan.    *    * @return ParseContext    * @throws SemanticException    */
 specifier|public
 name|ParseContext
 name|optimize
