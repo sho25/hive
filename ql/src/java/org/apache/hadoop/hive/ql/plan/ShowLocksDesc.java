@@ -95,6 +95,9 @@ name|String
 argument_list|>
 name|partSpec
 decl_stmt|;
+name|boolean
+name|isExt
+decl_stmt|;
 comment|/**    * table name for the result of show locks.    */
 specifier|private
 specifier|static
@@ -152,6 +155,9 @@ argument_list|,
 name|String
 argument_list|>
 name|partSpec
+parameter_list|,
+name|boolean
+name|isExt
 parameter_list|)
 block|{
 name|this
@@ -174,6 +180,12 @@ operator|.
 name|tableName
 operator|=
 name|tableName
+expr_stmt|;
+name|this
+operator|.
+name|isExt
+operator|=
+name|isExt
 expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */
@@ -287,6 +299,32 @@ operator|.
 name|resFile
 operator|=
 name|resFile
+expr_stmt|;
+block|}
+comment|/**    * @return the isExt    */
+specifier|public
+name|boolean
+name|isExt
+parameter_list|()
+block|{
+return|return
+name|isExt
+return|;
+block|}
+comment|/**    * @param isExt    *          the isExt to set    */
+specifier|public
+name|void
+name|setExt
+parameter_list|(
+name|boolean
+name|isExt
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isExt
+operator|=
+name|isExt
 expr_stmt|;
 block|}
 block|}

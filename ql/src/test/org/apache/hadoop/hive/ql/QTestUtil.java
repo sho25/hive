@@ -5047,6 +5047,10 @@ literal|"Caused by:"
 block|,
 literal|"-I"
 block|,
+literal|"QUERYID_LOCK:"
+block|,
+literal|"-I"
+block|,
 literal|"[.][.][.] [0-9]* more"
 block|,
 operator|(

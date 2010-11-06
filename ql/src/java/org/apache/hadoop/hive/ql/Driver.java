@@ -2748,6 +2748,11 @@ operator|new
 name|HiveLockObject
 argument_list|(
 name|t
+argument_list|,
+name|plan
+operator|.
+name|getQueryId
+argument_list|()
 argument_list|)
 argument_list|,
 name|mode
@@ -2776,6 +2781,11 @@ operator|new
 name|HiveLockObject
 argument_list|(
 name|p
+argument_list|,
+name|plan
+operator|.
+name|getQueryId
+argument_list|()
 argument_list|)
 argument_list|,
 name|mode
@@ -2884,6 +2894,11 @@ literal|"@"
 operator|+
 name|partialName
 argument_list|)
+argument_list|,
+name|plan
+operator|.
+name|getQueryId
+argument_list|()
 argument_list|)
 argument_list|,
 name|mode
@@ -2908,6 +2923,11 @@ argument_list|(
 name|p
 operator|.
 name|getTable
+argument_list|()
+argument_list|,
+name|plan
+operator|.
+name|getQueryId
 argument_list|()
 argument_list|)
 argument_list|,
