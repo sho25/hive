@@ -94,7 +94,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Generic User-defined Table Generating Function (UDTF)  *   * Generates a variable number of output rows for a single input row. Useful for  * explode(array)...  */
+comment|/**  * A Generic User-defined Table Generating Function (UDTF)  *  * Generates a variable number of output rows for a single input row. Useful for  * explode(array)...  */
 end_comment
 
 begin_class
@@ -108,7 +108,7 @@ name|collector
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * Initialize this GenericUDTF. This will be called only once per instance.    *     * @param args    *          An array of ObjectInspectors for the arguments    * @return A StructObjectInspector for output. The output struct represents a    *         row of the table where the fields of the stuct are the columns. The    *         field names are unimportant as they will be overridden by user    *         supplied column aliases.    */
+comment|/**    * Initialize this GenericUDTF. This will be called only once per instance.    *    * @param args    *          An array of ObjectInspectors for the arguments    * @return A StructObjectInspector for output. The output struct represents a    *         row of the table where the fields of the stuct are the columns. The    *         field names are unimportant as they will be overridden by user    *         supplied column aliases.    */
 specifier|public
 specifier|abstract
 name|StructObjectInspector
@@ -121,7 +121,7 @@ parameter_list|)
 throws|throws
 name|UDFArgumentException
 function_decl|;
-comment|/**    * Give a set of arguments for the UDTF to process.    *     * @param o    *          object array of arguments    */
+comment|/**    * Give a set of arguments for the UDTF to process.    *    * @param o    *          object array of arguments    */
 specifier|public
 specifier|abstract
 name|void
@@ -134,7 +134,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Called to notify the UDTF that there are no more rows to process. Note that    * forward() should not be called in this function. Only clean up code should    * be run.    */
+comment|/**    * Called to notify the UDTF that there are no more rows to process.    * Clean up code or additional forward() calls can be made here.    */
 specifier|public
 specifier|abstract
 name|void
@@ -143,7 +143,7 @@ parameter_list|()
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Associates a collector with this UDTF. Can't be specified in the    * constructor as the UDTF may be initialized before the collector has been    * constructed.    *     * @param collector    */
+comment|/**    * Associates a collector with this UDTF. Can't be specified in the    * constructor as the UDTF may be initialized before the collector has been    * constructed.    *    * @param collector    */
 specifier|public
 specifier|final
 name|void
@@ -160,7 +160,7 @@ operator|=
 name|collector
 expr_stmt|;
 block|}
-comment|/**    * Passes an output row to the collector.    *     * @param o    * @throws HiveException    */
+comment|/**    * Passes an output row to the collector.    *    * @param o    * @throws HiveException    */
 specifier|protected
 specifier|final
 name|void
