@@ -1023,9 +1023,9 @@ block|{
 name|String
 name|indexCols
 init|=
-name|MetaStoreUtils
+name|HiveUtils
 operator|.
-name|getColumnNamesFromFieldSchema
+name|getUnparsedColumnNamesFromFieldSchema
 argument_list|(
 name|indexField
 argument_list|)
@@ -1057,7 +1057,12 @@ name|append
 argument_list|(
 literal|"INSERT OVERWRITE TABLE "
 operator|+
+name|HiveUtils
+operator|.
+name|unparseIdentifier
+argument_list|(
 name|indexTableName
+argument_list|)
 argument_list|)
 expr_stmt|;
 if|if
@@ -1221,7 +1226,12 @@ name|append
 argument_list|(
 literal|" FROM "
 operator|+
+name|HiveUtils
+operator|.
+name|unparseIdentifier
+argument_list|(
 name|baseTableName
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|LinkedHashMap
