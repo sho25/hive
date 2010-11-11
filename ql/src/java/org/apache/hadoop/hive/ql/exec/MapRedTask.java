@@ -582,22 +582,9 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// set the JT to local for the duration of this job
-name|ctx
-operator|.
-name|setOriginalTracker
-argument_list|(
-name|conf
-operator|.
-name|getVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HADOOPJT
-argument_list|)
-argument_list|)
+comment|// clone configuration before modifying it on per-task basis
+name|cloneConf
+argument_list|()
 expr_stmt|;
 name|conf
 operator|.
@@ -682,6 +669,10 @@ name|driverContext
 argument_list|)
 return|;
 block|}
+comment|// we need to edit the configuration to setup cmdline. clone it first
+name|cloneConf
+argument_list|()
+expr_stmt|;
 comment|// enable assertion
 name|String
 name|hadoopExec
@@ -1561,13 +1552,6 @@ finally|finally
 block|{
 try|try
 block|{
-comment|// in case we decided to run everything in local mode, restore the
-comment|// the jobtracker setting to its initial value
-name|ctx
-operator|.
-name|restoreOriginalTracker
-argument_list|()
-expr_stmt|;
 comment|// creating the context can create a bunch of files. So make
 comment|// sure to clear it out
 if|if

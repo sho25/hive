@@ -369,6 +369,13 @@ specifier|transient
 name|DriverContext
 name|driverContext
 decl_stmt|;
+specifier|protected
+specifier|transient
+name|boolean
+name|clonedConf
+init|=
+literal|false
+decl_stmt|;
 comment|// Descendants tasks who subscribe feeds from this task
 specifier|protected
 specifier|transient
@@ -1528,6 +1535,31 @@ name|Object
 name|feedValue
 parameter_list|)
 block|{   }
+specifier|protected
+name|void
+name|cloneConf
+parameter_list|()
+block|{
+if|if
+condition|(
+operator|!
+name|clonedConf
+condition|)
+block|{
+name|clonedConf
+operator|=
+literal|true
+expr_stmt|;
+name|conf
+operator|=
+operator|new
+name|HiveConf
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 end_class
 
