@@ -227,7 +227,7 @@ throw|throw
 operator|new
 name|UDFArgumentLengthException
 argument_list|(
-literal|"The operator 'AND' only accepts 2 argument."
+literal|"The operator 'OR' only accepts 2 argument."
 argument_list|)
 throw|;
 block|}

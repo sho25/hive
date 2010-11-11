@@ -85,7 +85,7 @@ name|Description
 argument_list|(
 name|name
 operator|=
-literal|"="
+literal|"<>"
 argument_list|,
 name|value
 operator|=

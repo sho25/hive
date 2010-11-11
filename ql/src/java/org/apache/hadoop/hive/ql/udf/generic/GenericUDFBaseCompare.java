@@ -388,7 +388,8 @@ specifier|public
 enum|enum
 name|CompareType
 block|{
-comment|// Now only string, int and bollean comparisons are treated as special cases.
+comment|// Now only string, text, int, long, byte and boolean comparisons are
+comment|// treated as special cases.
 comment|// For other types, we reuse ObjectInspectorUtils.compare()
 name|COMPARE_STRING
 block|,
@@ -610,10 +611,13 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|==
+operator|.
+name|equals
+argument_list|(
 name|TypeInfoFactory
 operator|.
 name|stringTypeInfo
+argument_list|)
 operator|&&
 name|TypeInfoUtils
 operator|.
@@ -624,10 +628,13 @@ index|[
 literal|1
 index|]
 argument_list|)
-operator|==
+operator|.
+name|equals
+argument_list|(
 name|TypeInfoFactory
 operator|.
 name|stringTypeInfo
+argument_list|)
 condition|)
 block|{
 name|soi0
