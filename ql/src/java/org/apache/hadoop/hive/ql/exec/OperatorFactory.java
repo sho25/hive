@@ -171,7 +171,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|JDBMDummyDesc
+name|HashTableDummyDesc
 import|;
 end_import
 
@@ -189,7 +189,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|JDBMSinkDesc
+name|HashTableSinkDesc
 import|;
 end_import
 
@@ -871,14 +871,14 @@ argument_list|(
 operator|new
 name|OpTuple
 argument_list|<
-name|JDBMDummyDesc
+name|HashTableDummyDesc
 argument_list|>
 argument_list|(
-name|JDBMDummyDesc
+name|HashTableDummyDesc
 operator|.
 name|class
 argument_list|,
-name|JDBMDummyOperator
+name|HashTableDummyOperator
 operator|.
 name|class
 argument_list|)
@@ -891,14 +891,14 @@ argument_list|(
 operator|new
 name|OpTuple
 argument_list|<
-name|JDBMSinkDesc
+name|HashTableSinkDesc
 argument_list|>
 argument_list|(
-name|JDBMSinkDesc
+name|HashTableSinkDesc
 operator|.
 name|class
 argument_list|,
-name|JDBMSinkOperator
+name|HashTableSinkOperator
 operator|.
 name|class
 argument_list|)

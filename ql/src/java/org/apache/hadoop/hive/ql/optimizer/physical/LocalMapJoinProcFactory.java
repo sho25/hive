@@ -75,7 +75,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|JDBMDummyOperator
+name|HashTableDummyOperator
 import|;
 end_import
 
@@ -93,7 +93,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|JDBMSinkOperator
+name|HashTableSinkOperator
 import|;
 end_import
 
@@ -295,7 +295,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|JDBMDummyDesc
+name|HashTableDummyDesc
 import|;
 end_import
 
@@ -313,7 +313,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|JDBMSinkDesc
+name|HashTableSinkDesc
 import|;
 end_import
 
@@ -495,12 +495,11 @@ name|MapJoinOperator
 operator|)
 name|nd
 decl_stmt|;
-comment|//create an new operator: JDBMSinkOperator
-name|JDBMSinkDesc
-name|jdbmSinkDesc
+name|HashTableSinkDesc
+name|hashTableSinkDesc
 init|=
 operator|new
-name|JDBMSinkDesc
+name|HashTableSinkDesc
 argument_list|(
 name|mapJoinOp
 operator|.
@@ -508,17 +507,17 @@ name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|JDBMSinkOperator
-name|jdbmSinkOp
+name|HashTableSinkOperator
+name|hashTableSinkOp
 init|=
 operator|(
-name|JDBMSinkOperator
+name|HashTableSinkOperator
 operator|)
 name|OperatorFactory
 operator|.
 name|get
 argument_list|(
-name|jdbmSinkDesc
+name|hashTableSinkDesc
 argument_list|)
 decl_stmt|;
 comment|//get the last operator for processing big tables
@@ -574,7 +573,7 @@ argument_list|(
 name|bigTable
 argument_list|)
 decl_stmt|;
-comment|//the parent ops for jdbmSinkOp
+comment|//the parent ops for hashTableSinkOp
 name|List
 argument_list|<
 name|Operator
@@ -687,14 +686,14 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-comment|//let jdbmOp be the child of this parent
+comment|//let hashtable Op be the child of this parent
 name|parent
 operator|.
 name|replaceChild
 argument_list|(
 name|mapJoinOp
 argument_list|,
-name|jdbmSinkOp
+name|hashTableSinkOp
 argument_list|)
 expr_stmt|;
 comment|//keep the parent id correct
@@ -705,19 +704,19 @@ argument_list|(
 name|parent
 argument_list|)
 expr_stmt|;
-comment|//create an new operator: JDBMDummyOpeator, which share the table desc
-name|JDBMDummyDesc
+comment|//create an new operator: HashTable DummyOpeator, which share the table desc
+name|HashTableDummyDesc
 name|desc
 init|=
 operator|new
-name|JDBMDummyDesc
+name|HashTableDummyDesc
 argument_list|()
 decl_stmt|;
-name|JDBMDummyOperator
+name|HashTableDummyOperator
 name|dummyOp
 init|=
 operator|(
-name|JDBMDummyOperator
+name|HashTableDummyOperator
 operator|)
 name|OperatorFactory
 operator|.
@@ -862,7 +861,7 @@ name|dummyOp
 argument_list|)
 expr_stmt|;
 block|}
-name|jdbmSinkOp
+name|hashTableSinkOp
 operator|.
 name|setParentOperators
 argument_list|(

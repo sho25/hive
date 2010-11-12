@@ -442,7 +442,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Simple persistent container for rows.  *  * This container interface only accepts adding or appending new rows and  * iterating through the rows in the order of their insertions.  *  * The iterator interface is a lightweight first()/next() API rather than the  * Java Iterator interface. This way we do not need to create an Iterator object  * every time we want to start a new iteration. Below is simple example of how  * to convert a typical Java's Iterator code to the LW iterator interface.  *  * Iterator itr = rowContainer.iterator();  * while (itr.hasNext()) {  *   v = itr.next(); // do anything with v  * }  *  * can be rewritten to:  *  * for ( v = rowContainer.first(); v != null; v = rowContainer.next()) {  *   // do anything with v  * }  *  * Once the first is called, it will not be able to write again. So there can  * not be any writes after read. It can be read multiple times, but it does not  * support multiple reader interleaving reading.  *  */
+comment|/**  * Simple persistent container for rows.  *  * This container interface only accepts adding or appending new rows and iterating through the rows  * in the order of their insertions.  *  * The iterator interface is a lightweight first()/next() API rather than the Java Iterator  * interface. This way we do not need to create an Iterator object every time we want to start a new  * iteration. Below is simple example of how to convert a typical Java's Iterator code to the LW  * iterator interface.  *  * Iterator itr = rowContainer.iterator(); while (itr.hasNext()) { v = itr.next(); // do anything  * with v }  *  * can be rewritten to:  *  * for ( v = rowContainer.first(); v != null; v = rowContainer.next()) { // do anything with v }  *  * Once the first is called, it will not be able to write again. So there can not be any writes  * after read. It can be read multiple times, but it does not support multiple reader interleaving  * reading.  *  */
 end_comment
 
 begin_class
@@ -457,6 +457,11 @@ parameter_list|<
 name|Object
 parameter_list|>
 parameter_list|>
+extends|extends
+name|AbstractRowContainer
+argument_list|<
+name|Row
+argument_list|>
 block|{
 specifier|protected
 specifier|static
@@ -642,6 +647,10 @@ specifier|private
 name|LocalFileSystem
 name|localFs
 decl_stmt|;
+specifier|public
+name|RowContainer
+parameter_list|()
+block|{    }
 specifier|public
 name|RowContainer
 parameter_list|(
@@ -869,6 +878,8 @@ operator|=
 name|oi
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|add
@@ -959,6 +970,8 @@ operator|++
 name|size
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Row
 name|first
@@ -1211,6 +1224,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Row
 name|next
@@ -1869,6 +1884,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Get the number of elements in the RowContainer.    *    * @return number of elements in the RowContainer    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|size
@@ -2236,6 +2253,8 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Remove all elements in the RowContainer.    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|clear

@@ -163,6 +163,26 @@ name|exec
 operator|.
 name|persistence
 operator|.
+name|AbstractRowContainer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|persistence
+operator|.
 name|RowContainer
 import|;
 end_import
@@ -236,24 +256,6 @@ operator|.
 name|plan
 operator|.
 name|TableDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|util
-operator|.
-name|JoinUtil
 import|;
 end_import
 
@@ -718,7 +720,7 @@ name|HashMap
 argument_list|<
 name|Byte
 argument_list|,
-name|RowContainer
+name|AbstractRowContainer
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -768,7 +770,7 @@ specifier|transient
 name|int
 name|heartbeatInterval
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|int
@@ -1242,7 +1244,7 @@ name|HashMap
 argument_list|<
 name|Byte
 argument_list|,
-name|RowContainer
+name|AbstractRowContainer
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -1815,7 +1817,7 @@ literal|true
 expr_stmt|;
 for|for
 control|(
-name|RowContainer
+name|AbstractRowContainer
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -3771,7 +3773,7 @@ name|numAliases
 condition|)
 block|{
 comment|// search for match in the rhs table
-name|RowContainer
+name|AbstractRowContainer
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -4098,7 +4100,7 @@ literal|0
 expr_stmt|;
 return|return;
 block|}
-name|RowContainer
+name|AbstractRowContainer
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -4238,7 +4240,7 @@ index|[
 name|i
 index|]
 decl_stmt|;
-name|RowContainer
+name|AbstractRowContainer
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -4371,7 +4373,7 @@ index|[
 name|i
 index|]
 decl_stmt|;
-name|RowContainer
+name|AbstractRowContainer
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -4634,7 +4636,7 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|RowContainer
+name|AbstractRowContainer
 argument_list|<
 name|ArrayList
 argument_list|<

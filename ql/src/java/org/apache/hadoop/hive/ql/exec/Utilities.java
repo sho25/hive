@@ -273,6 +273,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|text
+operator|.
+name|SimpleDateFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -286,6 +296,16 @@ operator|.
 name|util
 operator|.
 name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Calendar
 import|;
 end_import
 
@@ -895,6 +915,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|MapredLocalWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|MapredWork
 import|;
 end_import
@@ -949,9 +987,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-operator|.
-name|ExpressionTypes
+name|TableDesc
 import|;
 end_import
 
@@ -969,7 +1005,9 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|TableDesc
+name|PlanUtils
+operator|.
+name|ExpressionTypes
 import|;
 end_import
 
@@ -1587,7 +1625,7 @@ return|return
 name|ret
 return|;
 block|}
-comment|/**    * Java 1.5 workaround. From    * http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5015403    */
+comment|/**    * Java 1.5 workaround. From http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5015403    */
 specifier|public
 specifier|static
 class|class
@@ -3108,7 +3146,7 @@ name|ret
 operator|)
 return|;
 block|}
-comment|/**    * Serialize the mapredWork object to an output stream. DO NOT use this to    * write to standard output since it closes the output stream.    * DO USE mapredWork.toXML() instead.    */
+comment|/**    * Serialize the mapredWork object to an output stream. DO NOT use this to write to standard    * output since it closes the output stream. DO USE mapredWork.toXML() instead.    */
 specifier|public
 specifier|static
 name|void
@@ -3207,6 +3245,122 @@ name|ret
 init|=
 operator|(
 name|MapredWork
+operator|)
+name|d
+operator|.
+name|readObject
+argument_list|()
+decl_stmt|;
+name|d
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+return|return
+operator|(
+name|ret
+operator|)
+return|;
+block|}
+comment|/**    * Serialize the mapredLocalWork object to an output stream. DO NOT use this to write to standard    * output since it closes the output stream. DO USE mapredWork.toXML() instead.    */
+specifier|public
+specifier|static
+name|void
+name|serializeMapRedLocalWork
+parameter_list|(
+name|MapredLocalWork
+name|w
+parameter_list|,
+name|OutputStream
+name|out
+parameter_list|)
+block|{
+name|XMLEncoder
+name|e
+init|=
+operator|new
+name|XMLEncoder
+argument_list|(
+name|out
+argument_list|)
+decl_stmt|;
+comment|// workaround for java 1.5
+name|e
+operator|.
+name|setPersistenceDelegate
+argument_list|(
+name|ExpressionTypes
+operator|.
+name|class
+argument_list|,
+operator|new
+name|EnumDelegate
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|e
+operator|.
+name|setPersistenceDelegate
+argument_list|(
+name|GroupByDesc
+operator|.
+name|Mode
+operator|.
+name|class
+argument_list|,
+operator|new
+name|EnumDelegate
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|e
+operator|.
+name|writeObject
+argument_list|(
+name|w
+argument_list|)
+expr_stmt|;
+name|e
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+specifier|static
+name|MapredLocalWork
+name|deserializeMapRedLocalWork
+parameter_list|(
+name|InputStream
+name|in
+parameter_list|,
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+name|XMLDecoder
+name|d
+init|=
+operator|new
+name|XMLDecoder
+argument_list|(
+name|in
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|conf
+operator|.
+name|getClassLoader
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|MapredLocalWork
+name|ret
+init|=
+operator|(
+name|MapredLocalWork
 operator|)
 name|d
 operator|.
@@ -3375,7 +3529,7 @@ operator|new
 name|Random
 argument_list|()
 decl_stmt|;
-comment|/**    * Gets the task id if we are running as a Hadoop job. Gets a random number    * otherwise.    */
+comment|/**    * Gets the task id if we are running as a Hadoop job. Gets a random number otherwise.    */
 specifier|public
 specifier|static
 name|String
@@ -3437,7 +3591,7 @@ return|;
 block|}
 else|else
 block|{
-comment|/* extract the task and attempt id from the hadoop taskid.           in version 17 the leading component was 'task_'. thereafter           the leading component is 'attempt_'. in 17 - hadoop also           seems to have used _map_ and _reduce_ to denote map/reduce           task types        */
+comment|/*        * extract the task and attempt id from the hadoop taskid. in version 17 the leading component        * was 'task_'. thereafter the leading component is 'attempt_'. in 17 - hadoop also seems to        * have used _map_ and _reduce_ to denote map/reduce task types        */
 name|String
 name|ret
 init|=
@@ -4504,7 +4658,7 @@ expr_stmt|;
 block|}
 comment|// Unreachable
 block|}
-comment|/**    * Convert an output stream to a compressed output stream based on codecs and    * compression options specified in the Job Configuration.    *    * @param jc    *          Job Configuration    * @param out    *          Output Stream to be converted into compressed output stream    * @return compressed output stream    */
+comment|/**    * Convert an output stream to a compressed output stream based on codecs and compression options    * specified in the Job Configuration.    *    * @param jc    *          Job Configuration    * @param out    *          Output Stream to be converted into compressed output stream    * @return compressed output stream    */
 specifier|public
 specifier|static
 name|OutputStream
@@ -4540,7 +4694,7 @@ name|isCompressed
 argument_list|)
 return|;
 block|}
-comment|/**    * Convert an output stream to a compressed output stream based on codecs    * codecs in the Job Configuration. Caller specifies directly whether file is    * compressed or not    *    * @param jc    *          Job Configuration    * @param out    *          Output Stream to be converted into compressed output stream    * @param isCompressed    *          whether the output stream needs to be compressed or not    * @return compressed output stream    */
+comment|/**    * Convert an output stream to a compressed output stream based on codecs codecs in the Job    * Configuration. Caller specifies directly whether file is compressed or not    *    * @param jc    *          Job Configuration    * @param out    *          Output Stream to be converted into compressed output stream    * @param isCompressed    *          whether the output stream needs to be compressed or not    * @return compressed output stream    */
 specifier|public
 specifier|static
 name|OutputStream
@@ -4615,7 +4769,7 @@ operator|)
 return|;
 block|}
 block|}
-comment|/**    * Based on compression option and configured output codec - get extension for    * output file. This is only required for text files - not sequencefiles    *    * @param jc    *          Job Configuration    * @param isCompressed    *          Whether the output file is compressed or not    * @return the required file extension (example: .gz)    */
+comment|/**    * Based on compression option and configured output codec - get extension for output file. This    * is only required for text files - not sequencefiles    *    * @param jc    *          Job Configuration    * @param isCompressed    *          Whether the output file is compressed or not    * @return the required file extension (example: .gz)    */
 specifier|public
 specifier|static
 name|String
@@ -4741,7 +4895,7 @@ name|isCompressed
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a sequencefile output stream based on job configuration Uses user    * supplied compression flag (rather than obtaining it from the Job    * Configuration).    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
+comment|/**    * Create a sequencefile output stream based on job configuration Uses user supplied compression    * flag (rather than obtaining it from the Job Configuration).    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
 specifier|public
 specifier|static
 name|SequenceFile
@@ -4858,7 +5012,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-comment|/**    * Create a RCFile output stream based on job configuration Uses user supplied    * compression flag (rather than obtaining it from the Job Configuration).    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @return output stream over the created rcfile    */
+comment|/**    * Create a RCFile output stream based on job configuration Uses user supplied compression flag    * (rather than obtaining it from the Job Configuration).    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @return output stream over the created rcfile    */
 specifier|public
 specifier|static
 name|RCFile
@@ -5307,7 +5461,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to    * dst. If there is an existing file with the same name, the new file's name    * will be appended with "_1", "_2", etc.    *    * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
+comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to dst. If there is an    * existing file with the same name, the new file's name will be appended with "_1", "_2", etc.    *    * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
 specifier|public
 specifier|static
 name|void
@@ -5355,7 +5509,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to    * dst. If there is an existing file with the same name, the new file's name    * will be appended with "_1", "_2", etc.    *    * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
+comment|/**    * Rename src to dst, or in the case dst already exists, move files in src to dst. If there is an    * existing file with the same name, the new file's name will be appended with "_1", "_2", etc.    *    * @param fs    *          the FileSystem where src and dst are on.    * @param src    *          the src directory    * @param dst    *          the target directory    * @throws IOException    */
 specifier|public
 specifier|static
 name|void
@@ -5539,7 +5693,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * The first group will contain the task id. The second group is the optional    * extension. The file name looks like: "0_0" or "0_0.gz". There may be a leading    * prefix (tmp_). Since getTaskId() can return an integer only - this should match    * a pure integer as well    */
+comment|/**    * The first group will contain the task id. The second group is the optional extension. The file    * name looks like: "0_0" or "0_0.gz". There may be a leading prefix (tmp_). Since getTaskId() can    * return an integer only - this should match a pure integer as well    */
 specifier|private
 specifier|static
 name|Pattern
@@ -5552,7 +5706,7 @@ argument_list|(
 literal|"^.*?([0-9]+)(_[0-9])?(\\..*)?$"
 argument_list|)
 decl_stmt|;
-comment|/**    * Get the task id from the filename.    * It is assumed that the filename is derived from the output of getTaskId    *    * @param filename filename to extract taskid from    */
+comment|/**    * Get the task id from the filename. It is assumed that the filename is derived from the output    * of getTaskId    *    * @param filename    *          filename to extract taskid from    */
 specifier|public
 specifier|static
 name|String
@@ -5663,7 +5817,7 @@ return|return
 name|taskId
 return|;
 block|}
-comment|/**    * Replace the task id from the filename.    * It is assumed that the filename is derived from the output of getTaskId    *    * @param filename filename to replace taskid    * "0_0" or "0_0.gz" by 33 to    * "33_0" or "33_0.gz"    */
+comment|/**    * Replace the task id from the filename. It is assumed that the filename is derived from the    * output of getTaskId    *    * @param filename    *          filename to replace taskid "0_0" or "0_0.gz" by 33 to "33_0" or "33_0.gz"    */
 specifier|public
 specifier|static
 name|String
@@ -5791,7 +5945,7 @@ operator|+
 name|strBucketNum
 return|;
 block|}
-comment|/**    * Replace the oldTaskId appearing in the filename by the newTaskId.    * The string oldTaskId could appear multiple times, we should only replace the last one.    * @param filename    * @param oldTaskId    * @param newTaskId    * @return    */
+comment|/**    * Replace the oldTaskId appearing in the filename by the newTaskId. The string oldTaskId could    * appear multiple times, we should only replace the last one.    *    * @param filename    * @param oldTaskId    * @param newTaskId    * @return    */
 specifier|private
 specifier|static
 name|String
@@ -5928,7 +6082,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * Get all file status from a root path and recursively go deep into certain levels.    * @param path the root path    * @param level the depth of directory should explore    * @param fs the file system    * @return array of FileStatus    * @throws IOException    */
+comment|/**    * Get all file status from a root path and recursively go deep into certain levels.    *    * @param path    *          the root path    * @param level    *          the depth of directory should explore    * @param fs    *          the file system    * @return array of FileStatus    * @throws IOException    */
 specifier|public
 specifier|static
 name|FileStatus
@@ -6016,7 +6170,7 @@ name|pathPattern
 argument_list|)
 return|;
 block|}
-comment|/**    * Remove all temporary files and duplicate (double-committed) files from a    * given directory.    * @return a list of path names corresponding to should-be-created empty buckets.    */
+comment|/**    * Remove all temporary files and duplicate (double-committed) files from a given directory.    *    * @return a list of path names corresponding to should-be-created empty buckets.    */
 specifier|public
 specifier|static
 name|void
@@ -6041,7 +6195,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Remove all temporary files and duplicate (double-committed) files from a    * given directory.    * @return a list of path names corresponding to should-be-created empty buckets.    */
+comment|/**    * Remove all temporary files and duplicate (double-committed) files from a given directory.    *    * @return a list of path names corresponding to should-be-created empty buckets.    */
 specifier|public
 specifier|static
 name|ArrayList
@@ -7517,7 +7671,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Gets the default notification interval to send progress updates to the    * tracker. Useful for operators that may not output data for a while.    *    * @param hconf    * @return the interval in milliseconds    */
+comment|/**    * Gets the default notification interval to send progress updates to the tracker. Useful for    * operators that may not output data for a while.    *    * @param hconf    * @return the interval in milliseconds    */
 specifier|public
 specifier|static
 name|int
@@ -7578,7 +7732,7 @@ return|return
 name|notificationInterval
 return|;
 block|}
-comment|/**    * Copies the storage handler properties configured for a table descriptor    * to a runtime job configuration.    *    * @param tbl table descriptor from which to read    *    * @param job configuration which receives configured properties    */
+comment|/**    * Copies the storage handler properties configured for a table descriptor to a runtime job    * configuration.    *    * @param tbl    *          table descriptor from which to read    *    * @param job    *          configuration which receives configured properties    */
 specifier|public
 specifier|static
 name|void
@@ -7648,7 +7802,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Calculate the total size of input files.    *    * @param job  the hadoop job conf.    * @param work map reduce job plan    * @param filter filter to apply to the input paths before calculating size    * @return the summary of all the input paths.    * @throws IOException    */
+comment|/**    * Calculate the total size of input files.    *    * @param job    *          the hadoop job conf.    * @param work    *          map reduce job plan    * @param filter    *          filter to apply to the input paths before calculating size    * @return the summary of all the input paths.    * @throws IOException    */
 specifier|public
 specifier|static
 name|ContentSummary
@@ -8087,7 +8241,7 @@ operator|!=
 literal|null
 return|;
 block|}
-comment|/**    * Construct a list of full partition spec from Dynamic Partition Context and    * the directory names corresponding to these dynamic partitions.    */
+comment|/**    * Construct a list of full partition spec from Dynamic Partition Context and the directory names    * corresponding to these dynamic partitions.    */
 specifier|public
 specifier|static
 name|List
@@ -8571,6 +8725,156 @@ argument_list|)
 throw|;
 block|}
 block|}
+block|}
+specifier|public
+specifier|static
+name|String
+name|suffix
+init|=
+literal|".hashtable"
+decl_stmt|;
+specifier|public
+specifier|static
+name|String
+name|generatePath
+parameter_list|(
+name|String
+name|baseURI
+parameter_list|,
+name|Byte
+name|tag
+parameter_list|,
+name|String
+name|bigBucketFileName
+parameter_list|)
+block|{
+name|String
+name|path
+init|=
+operator|new
+name|String
+argument_list|(
+name|baseURI
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+literal|"-"
+operator|+
+name|tag
+operator|+
+literal|"-"
+operator|+
+name|bigBucketFileName
+operator|+
+name|suffix
+argument_list|)
+decl_stmt|;
+return|return
+name|path
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|generateFileName
+parameter_list|(
+name|Byte
+name|tag
+parameter_list|,
+name|String
+name|bigBucketFileName
+parameter_list|)
+block|{
+name|String
+name|fileName
+init|=
+operator|new
+name|String
+argument_list|(
+literal|"-"
+operator|+
+name|tag
+operator|+
+literal|"-"
+operator|+
+name|bigBucketFileName
+operator|+
+name|suffix
+argument_list|)
+decl_stmt|;
+return|return
+name|fileName
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|generateTmpURI
+parameter_list|(
+name|String
+name|baseURI
+parameter_list|,
+name|String
+name|id
+parameter_list|)
+block|{
+name|String
+name|tmpFileURI
+init|=
+operator|new
+name|String
+argument_list|(
+name|baseURI
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+literal|"HashTable-"
+operator|+
+name|id
+argument_list|)
+decl_stmt|;
+return|return
+name|tmpFileURI
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|now
+parameter_list|()
+block|{
+name|Calendar
+name|cal
+init|=
+name|Calendar
+operator|.
+name|getInstance
+argument_list|()
+decl_stmt|;
+name|SimpleDateFormat
+name|sdf
+init|=
+operator|new
+name|SimpleDateFormat
+argument_list|(
+literal|"yyyy-MM-dd hh:mm:ss"
+argument_list|)
+decl_stmt|;
+return|return
+name|sdf
+operator|.
+name|format
+argument_list|(
+name|cal
+operator|.
+name|getTime
+argument_list|()
+argument_list|)
+return|;
 block|}
 block|}
 end_class

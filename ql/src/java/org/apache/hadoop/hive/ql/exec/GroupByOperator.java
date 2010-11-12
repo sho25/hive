@@ -1085,15 +1085,6 @@ name|countAfterReport
 operator|=
 literal|0
 expr_stmt|;
-assert|assert
-operator|(
-name|inputObjInspectors
-operator|.
-name|length
-operator|==
-literal|1
-operator|)
-assert|;
 name|ObjectInspector
 name|rowInspector
 init|=
