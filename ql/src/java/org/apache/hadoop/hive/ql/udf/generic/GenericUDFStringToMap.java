@@ -214,6 +214,16 @@ operator|=
 literal|"_FUNC_(text, delimiter1, delimiter2) - "
 operator|+
 literal|"Creates a map by parsing text "
+argument_list|,
+name|extended
+operator|=
+literal|"Split text into key-value pairs"
+operator|+
+literal|" using two delimiters. The first delimiter seperates pairs, and the"
+operator|+
+literal|" second delimiter sperates key and value. If only one parameter is given, default"
+operator|+
+literal|" delimiters are used: ',' as delimiter1 and '=' as delimiter2."
 argument_list|)
 specifier|public
 class|class
