@@ -1054,7 +1054,16 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"conflicting lock present "
+literal|"conflicting lock present for "
+operator|+
+name|key
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" mode "
+operator|+
+name|mode
 argument_list|)
 expr_stmt|;
 return|return
