@@ -1979,6 +1979,8 @@ argument_list|(
 operator|new
 name|DummyPartition
 argument_list|(
+name|tab
+argument_list|,
 name|objName
 operator|.
 name|split
