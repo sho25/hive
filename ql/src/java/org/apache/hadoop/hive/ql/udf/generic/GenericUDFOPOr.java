@@ -279,12 +279,9 @@ name|bool_a1
 init|=
 literal|false
 decl_stmt|;
-name|BooleanWritable
+name|Object
 name|a0
 init|=
-operator|(
-name|BooleanWritable
-operator|)
 name|arguments
 index|[
 literal|0
@@ -328,12 +325,9 @@ name|result
 return|;
 block|}
 block|}
-name|BooleanWritable
+name|Object
 name|a1
 init|=
-operator|(
-name|BooleanWritable
-operator|)
 name|arguments
 index|[
 literal|1
