@@ -23,6 +23,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -62,14 +72,24 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Internal representation of the join tree.  *   */
+comment|/**  * Internal representation of the join tree.  *  */
 end_comment
 
 begin_class
 specifier|public
 class|class
 name|QBJoinTree
+implements|implements
+name|Serializable
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
 specifier|private
 name|String
 name|leftAlias
@@ -210,7 +230,7 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * returns left alias if any - this is used for merging later on.    *     * @return left alias if any    */
+comment|/**    * returns left alias if any - this is used for merging later on.    *    * @return left alias if any    */
 specifier|public
 name|String
 name|getLeftAlias
@@ -220,7 +240,7 @@ return|return
 name|leftAlias
 return|;
 block|}
-comment|/**    * set left alias for the join expression.    *     * @param leftAlias    *          String    */
+comment|/**    * set left alias for the join expression.    *    * @param leftAlias    *          String    */
 specifier|public
 name|void
 name|setLeftAlias
@@ -629,7 +649,7 @@ operator|=
 name|streamAliases
 expr_stmt|;
 block|}
-comment|/**    * Insert only a key to the semijoin table name to column names map.    *     * @param alias    *          table name alias.    */
+comment|/**    * Insert only a key to the semijoin table name to column names map.    *    * @param alias    *          table name alias.    */
 specifier|public
 name|void
 name|addRHSSemijoin
@@ -660,7 +680,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Remeber the mapping of table alias to set of columns.    *     * @param alias    * @param columns    */
+comment|/**    * Remeber the mapping of table alias to set of columns.    *    * @param alias    * @param columns    */
 specifier|public
 name|void
 name|addRHSSemijoinColumns
@@ -716,7 +736,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Remeber the mapping of table alias to set of columns.    *     * @param alias    * @param columns    */
+comment|/**    * Remeber the mapping of table alias to set of columns.    *    * @param alias    * @param columns    */
 specifier|public
 name|void
 name|addRHSSemijoinColumns
@@ -805,7 +825,7 @@ name|alias
 argument_list|)
 return|;
 block|}
-comment|/**    * Merge the rhs tables from another join tree.    *     * @param src    *          the source join tree    */
+comment|/**    * Merge the rhs tables from another join tree.    *    * @param src    *          the source join tree    */
 specifier|public
 name|void
 name|mergeRHSSemijoin

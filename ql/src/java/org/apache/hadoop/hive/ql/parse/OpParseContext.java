@@ -19,6 +19,16 @@ name|parse
 package|;
 end_package
 
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implementation of the Operator Parse Context. It maintains the parse context  * that may be needed by an operator. Currently, it only maintains the row  * resolver.  **/
 end_comment
@@ -27,7 +37,17 @@ begin_class
 specifier|public
 class|class
 name|OpParseContext
+implements|implements
+name|Serializable
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
 specifier|private
 name|RowResolver
 name|rr
@@ -55,7 +75,7 @@ block|}
 comment|/**    * @return the row resolver    */
 specifier|public
 name|RowResolver
-name|getRR
+name|getRowResolver
 parameter_list|()
 block|{
 return|return
@@ -65,7 +85,7 @@ block|}
 comment|/**    * @param rr    *          the row resolver to set    */
 specifier|public
 name|void
-name|setRR
+name|setRowResolver
 parameter_list|(
 name|RowResolver
 name|rr

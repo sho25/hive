@@ -1978,6 +1978,8 @@ name|newJoinValues
 argument_list|,
 name|newJoinValueTblDesc
 argument_list|,
+name|newJoinValueTblDesc
+argument_list|,
 name|joinDescriptor
 operator|.
 name|getOutputColumnNames

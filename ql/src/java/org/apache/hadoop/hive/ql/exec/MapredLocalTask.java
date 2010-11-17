@@ -780,8 +780,7 @@ parameter_list|)
 block|{
 try|try
 block|{
-comment|//generate the cmd line to run in the child jvm
-comment|//String hadoopExec = conf.getVar(HiveConf.ConfVars.HADOOPBIN);
+comment|// generate the cmd line to run in the child jvm
 name|Context
 name|ctx
 init|=
@@ -1212,11 +1211,11 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// The user can specify the hadoop memory
-comment|//if ("local".equals(conf.getVar(HiveConf.ConfVars.HADOOPJT))) {
+comment|// if ("local".equals(conf.getVar(HiveConf.ConfVars.HADOOPJT))) {
 comment|// if we are running in local mode - then the amount of memory used
 comment|// by the child jvm can no longer default to the memory used by the
 comment|// parent jvm
-comment|//int hadoopMem = conf.getIntVar(HiveConf.ConfVars.HIVEHADOOPMAXMEM);
+comment|// int hadoopMem = conf.getIntVar(HiveConf.ConfVars.HIVEHADOOPMAXMEM);
 name|int
 name|hadoopMem
 init|=
@@ -1231,7 +1230,6 @@ operator|.
 name|HIVEHADOOPMAXMEM
 argument_list|)
 decl_stmt|;
-empty_stmt|;
 if|if
 condition|(
 name|hadoopMem
@@ -1278,11 +1276,11 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|//} else {
+comment|// } else {
 comment|// nothing to do - we are not running in local mode - only submitting
 comment|// the job via a child process. in this case it's appropriate that the
 comment|// child jvm use the same memory as the parent jvm
-comment|//}
+comment|// }
 if|if
 condition|(
 name|variables
@@ -1476,13 +1474,6 @@ operator|+
 name|exitVal
 argument_list|)
 expr_stmt|;
-name|console
-operator|.
-name|printError
-argument_list|(
-literal|"Mapred Local Task Failed. Give up the map join stragery"
-argument_list|)
-expr_stmt|;
 block|}
 else|else
 block|{
@@ -1497,7 +1488,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Mapred Local Task Running Successfully . Keep using map join stragery"
+literal|"Mapred Local Task Succeeded . Convert the Join into MapJoin"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1563,6 +1554,14 @@ operator|.
 name|getMemoryMXBean
 argument_list|()
 expr_stmt|;
+name|long
+name|startTime
+init|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+decl_stmt|;
 name|console
 operator|.
 name|printInfo
@@ -1572,14 +1571,7 @@ operator|.
 name|now
 argument_list|()
 operator|+
-literal|"\tStarting to luaunch local task to process map join "
-argument_list|)
-expr_stmt|;
-name|console
-operator|.
-name|printInfo
-argument_list|(
-literal|"\tmaximum memory = "
+literal|"\tStarting to luaunch local task to process map join;\tmaximum memory = "
 operator|+
 name|memoryMXBean
 operator|.
@@ -1625,7 +1617,7 @@ argument_list|(
 name|job
 argument_list|)
 expr_stmt|;
-comment|//set the local work, so all the operator can get this context
+comment|// set the local work, so all the operator can get this context
 name|execContext
 operator|.
 name|setLocalWork
@@ -1648,7 +1640,7 @@ argument_list|(
 name|fetchOpJobConfMap
 argument_list|)
 expr_stmt|;
-comment|//for each big table's bucket, call the start forward
+comment|// for each big table's bucket, call the start forward
 if|if
 condition|(
 name|inputFileChangeSenstive
@@ -1710,14 +1702,40 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+name|long
+name|currentTime
+init|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+decl_stmt|;
+name|long
+name|elapsed
+init|=
+name|currentTime
+operator|-
+name|startTime
+decl_stmt|;
 name|console
 operator|.
 name|printInfo
 argument_list|(
+name|Utilities
+operator|.
 name|now
 argument_list|()
 operator|+
-literal|"\tEnd of local task "
+literal|"\tEnd of local task; Time Taken: "
+operator|+
+name|Utilities
+operator|.
+name|showTime
+argument_list|(
+name|elapsed
+argument_list|)
+operator|+
+literal|" sec."
 argument_list|)
 expr_stmt|;
 block|}
@@ -1732,25 +1750,27 @@ condition|(
 name|e
 operator|instanceof
 name|OutOfMemoryError
+operator|||
+operator|(
+name|e
+operator|instanceof
+name|HiveException
+operator|&&
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"RunOutOfMeomoryUsage"
+argument_list|)
+operator|)
 condition|)
 block|{
 comment|// Don't create a new object if we are already out of memory
-name|l4j
-operator|.
-name|error
-argument_list|(
-literal|"Out of Memory Error"
-argument_list|)
-expr_stmt|;
-name|console
-operator|.
-name|printError
-argument_list|(
-literal|"[Warning] Small table is too large to put into memory"
-argument_list|)
-expr_stmt|;
 return|return
-literal|2
+literal|3
 return|;
 block|}
 else|else
@@ -1767,22 +1787,10 @@ operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
+return|return
+literal|2
+return|;
 block|}
-block|}
-finally|finally
-block|{
-name|console
-operator|.
-name|printInfo
-argument_list|(
-name|Utilities
-operator|.
-name|now
-argument_list|()
-operator|+
-literal|"\tFinish running local task"
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 literal|0
@@ -1860,7 +1868,7 @@ name|bigTableBucket
 argument_list|)
 expr_stmt|;
 block|}
-comment|//get the root operator
+comment|// get the root operator
 name|Operator
 argument_list|<
 name|?
@@ -1879,7 +1887,7 @@ argument_list|(
 name|alias
 argument_list|)
 decl_stmt|;
-comment|//walk through the operator tree
+comment|// walk through the operator tree
 while|while
 condition|(
 literal|true
@@ -1961,7 +1969,7 @@ name|getDone
 argument_list|()
 condition|)
 block|{
-comment|//ExecMapper.setDone(true);
+comment|// ExecMapper.setDone(true);
 break|break;
 block|}
 block|}
@@ -2098,7 +2106,7 @@ name|jobClone
 argument_list|)
 expr_stmt|;
 block|}
-comment|//create a fetch operator
+comment|// create a fetch operator
 name|FetchOperator
 name|fetchOp
 init|=
@@ -2149,7 +2157,7 @@ literal|" created"
 argument_list|)
 expr_stmt|;
 block|}
-comment|//initilize all forward operator
+comment|// initilize all forward operator
 for|for
 control|(
 name|Map
@@ -2168,7 +2176,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-comment|//get the forward op
+comment|// get the forward op
 name|Operator
 argument_list|<
 name|?
@@ -2190,7 +2198,7 @@ name|getKey
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|//put the exe context into all the operators
+comment|// put the exe context into all the operators
 name|forwardOp
 operator|.
 name|setExecContext
@@ -2229,7 +2237,7 @@ operator|=
 name|job
 expr_stmt|;
 block|}
-comment|//initialize the forward operator
+comment|// initialize the forward operator
 name|forwardOp
 operator|.
 name|initialize
@@ -2435,6 +2443,17 @@ block|{    }
 annotation|@
 name|Override
 specifier|public
+name|boolean
+name|isMapRedLocalTask
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|String
 name|getName
 parameter_list|()
@@ -2450,7 +2469,7 @@ name|int
 name|getType
 parameter_list|()
 block|{
-comment|//assert false;
+comment|// assert false;
 return|return
 name|StageType
 operator|.

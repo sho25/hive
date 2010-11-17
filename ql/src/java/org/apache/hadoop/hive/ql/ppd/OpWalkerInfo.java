@@ -306,7 +306,7 @@ argument_list|(
 name|op
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 return|;
 block|}

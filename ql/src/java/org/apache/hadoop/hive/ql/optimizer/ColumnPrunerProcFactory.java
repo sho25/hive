@@ -1321,7 +1321,7 @@ argument_list|(
 name|scanOp
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|TableScanDesc
@@ -1621,7 +1621,7 @@ argument_list|(
 name|op
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|ReduceSinkDesc
@@ -1780,7 +1780,7 @@ argument_list|(
 name|par
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|List
@@ -2569,7 +2569,7 @@ argument_list|(
 name|op
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -2685,7 +2685,7 @@ argument_list|(
 name|op
 argument_list|)
 operator|.
-name|setRR
+name|setRowResolver
 argument_list|(
 name|new_rr
 argument_list|)
@@ -3110,7 +3110,7 @@ argument_list|(
 name|reduce
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -3376,7 +3376,7 @@ literal|0
 argument_list|)
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 for|for
@@ -3510,7 +3510,7 @@ argument_list|(
 name|reduce
 argument_list|)
 operator|.
-name|setRR
+name|setRowResolver
 argument_list|(
 name|newRR
 argument_list|)
@@ -4123,7 +4123,7 @@ argument_list|(
 name|op
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -4839,7 +4839,7 @@ argument_list|(
 name|op
 argument_list|)
 operator|.
-name|setRR
+name|setRowResolver
 argument_list|(
 name|newJoinRR
 argument_list|)

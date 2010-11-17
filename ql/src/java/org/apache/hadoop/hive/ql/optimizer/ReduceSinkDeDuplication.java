@@ -1333,7 +1333,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|ArrayList

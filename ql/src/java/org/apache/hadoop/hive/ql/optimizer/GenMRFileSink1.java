@@ -1687,7 +1687,7 @@ argument_list|(
 name|fsOp
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|Integer

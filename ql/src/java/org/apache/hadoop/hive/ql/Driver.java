@@ -83,16 +83,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Collections
 import|;
 end_import
@@ -114,6 +104,16 @@ operator|.
 name|util
 operator|.
 name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashSet
 import|;
 end_import
 
@@ -2105,7 +2105,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Compile a new query. Any currently-planned query associated with this    * Driver is discarded.    *    * @param command    *          The SQL query to compile.    */
+comment|/**    * Compile a new query. Any currently-planned query associated with this Driver is discarded.    *    * @param command    *          The SQL query to compile.    */
 specifier|public
 name|int
 name|compile
@@ -2389,7 +2389,7 @@ operator|.
 name|getPath
 argument_list|()
 expr_stmt|;
-comment|//   serialize the queryPlan
+comment|// serialize the queryPlan
 name|FileOutputStream
 name|fos
 init|=
@@ -2413,7 +2413,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-comment|//   deserialize the queryPlan
+comment|// deserialize the queryPlan
 name|FileInputStream
 name|fis
 init|=
@@ -2785,7 +2785,7 @@ name|lck
 expr_stmt|;
 block|}
 block|}
-comment|/**    * @param t     The table to be locked    * @param p     The partition to be locked    * @param mode  The mode of the lock (SHARED/EXCLUSIVE)    * Get the list of objects to be locked. If a partition needs to be locked (in any mode), all its parents    * should also be locked in SHARED mode.    **/
+comment|/**    * @param t    *          The table to be locked    * @param p    *          The partition to be locked    * @param mode    *          The mode of the lock (SHARED/EXCLUSIVE) Get the list of objects to be locked. If a    *          partition needs to be locked (in any mode), all its parents should also be locked in    *          SHARED mode.    **/
 specifier|private
 name|List
 argument_list|<
@@ -3079,7 +3079,7 @@ return|return
 name|locks
 return|;
 block|}
-comment|/**    * Acquire read and write locks needed by the statement. The list of objects to be locked are obtained    * from he inputs and outputs populated by the compiler. The lock acuisition scheme is pretty simple.    * If all the locks cannot be obtained, error out. Deadlock is avoided by making sure that the locks    * are lexicographically sorted.    **/
+comment|/**    * Acquire read and write locks needed by the statement. The list of objects to be locked are    * obtained from he inputs and outputs populated by the compiler. The lock acuisition scheme is    * pretty simple. If all the locks cannot be obtained, error out. Deadlock is avoided by making    * sure that the locks are lexicographically sorted.    **/
 specifier|public
 name|int
 name|acquireReadWriteLocks
@@ -3160,7 +3160,8 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 comment|// Sort all the inputs, outputs.
-comment|// If a lock needs to be acquired on any partition, a read lock needs to be acquired on all its parents also
+comment|// If a lock needs to be acquired on any partition, a read lock needs to be acquired on all
+comment|// its parents also
 for|for
 control|(
 name|ReadEntity
@@ -3493,7 +3494,8 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
-comment|// walk the list and acquire the locks - if any lock cant be acquired, release all locks, sleep and retry
+comment|// walk the list and acquire the locks - if any lock cant be acquired, release all locks,
+comment|// sleep and retry
 name|LockObjectContainer
 name|notFound
 init|=
@@ -3677,7 +3679,7 @@ operator|)
 return|;
 block|}
 block|}
-comment|/**    * @param lockObjects   The list of objects to be locked    * Lock the objects specified in the list. The same object is not locked twice, and the list passed is sorted    * such that EXCLUSIVE locks occur before SHARED locks.    **/
+comment|/**    * @param lockObjects    *          The list of objects to be locked Lock the objects specified in the list. The same    *          object is not locked twice, and the list passed is sorted such that EXCLUSIVE locks    *          occur before SHARED locks.    **/
 specifier|private
 name|List
 argument_list|<
@@ -3697,7 +3699,8 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|// walk the list and acquire the locks - if any lock cant be acquired, release all locks, sleep and retry
+comment|// walk the list and acquire the locks - if any lock cant be acquired, release all locks, sleep
+comment|// and retry
 name|LockObject
 name|prevLockObj
 init|=
@@ -3836,7 +3839,7 @@ return|return
 name|hiveLocks
 return|;
 block|}
-comment|/**    * Release all the locks acquired implicitly by the statement. Note that the locks acquired    * with 'keepAlive' set to True are not released.    **/
+comment|/**    * Release all the locks acquired implicitly by the statement. Note that the locks acquired with    * 'keepAlive' set to True are not released.    **/
 specifier|private
 name|void
 name|releaseLocks
@@ -3882,7 +3885,7 @@ parameter_list|)
 block|{       }
 block|}
 block|}
-comment|/**    * @param hiveLocks  list of hive locks to be released    * Release all the locks specified. If some of the locks have already been released, ignore them    **/
+comment|/**    * @param hiveLocks    *          list of hive locks to be released Release all the locks specified. If some of the    *          locks have already been released, ignore them    **/
 specifier|private
 name|void
 name|releaseLocks
@@ -4846,6 +4849,91 @@ operator|!=
 literal|0
 condition|)
 block|{
+name|Task
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|backupTask
+init|=
+name|tsk
+operator|.
+name|getAndInitBackupTask
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|backupTask
+operator|!=
+literal|null
+condition|)
+block|{
+name|errorMessage
+operator|=
+literal|"FAILED: Execution Error, return code "
+operator|+
+name|exitVal
+operator|+
+literal|" from "
+operator|+
+name|tsk
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+expr_stmt|;
+name|console
+operator|.
+name|printInfo
+argument_list|(
+name|errorMessage
+argument_list|)
+expr_stmt|;
+name|errorMessage
+operator|=
+literal|"ATTEMPT: Execute BackupTask: "
+operator|+
+name|backupTask
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+expr_stmt|;
+name|console
+operator|.
+name|printInfo
+argument_list|(
+name|errorMessage
+argument_list|)
+expr_stmt|;
+comment|// add backup task to runnable
+if|if
+condition|(
+name|DriverContext
+operator|.
+name|isLaunchable
+argument_list|(
+name|backupTask
+argument_list|)
+condition|)
+block|{
+name|driverCxt
+operator|.
+name|addToRunnable
+argument_list|(
+name|backupTask
+argument_list|)
+expr_stmt|;
+block|}
+continue|continue;
+block|}
+else|else
+block|{
 comment|// TODO: This error messaging is not very informative. Fix that.
 name|errorMessage
 operator|=
@@ -4891,6 +4979,7 @@ block|}
 return|return
 literal|9
 return|;
+block|}
 block|}
 if|if
 condition|(

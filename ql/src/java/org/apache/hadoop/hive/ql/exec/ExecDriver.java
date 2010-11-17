@@ -1501,7 +1501,7 @@ name|isSilent
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * A list of the currently running jobs spawned in this Hive instance that is    * used to kill all running jobs in the event of an unexpected shutdown -    * i.e., the JVM shuts down while there are still jobs running.    */
+comment|/**    * A list of the currently running jobs spawned in this Hive instance that is used to kill all    * running jobs in the event of an unexpected shutdown - i.e., the JVM shuts down while there are    * still jobs running.    */
 specifier|private
 specifier|static
 name|Map
@@ -1526,7 +1526,7 @@ argument_list|>
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/**    * In Hive, when the user control-c's the command line, any running jobs    * spawned from that command line are best-effort killed.    *    * This static constructor registers a shutdown thread to iterate over all the    * running job kill URLs and do a get on them.    *    */
+comment|/**    * In Hive, when the user control-c's the command line, any running jobs spawned from that command    * line are best-effort killed.    *    * This static constructor registers a shutdown thread to iterate over all the running job kill    * URLs and do a get on them.    *    */
 static|static
 block|{
 if|if
@@ -1834,7 +1834,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * This class contains the state of the running task Going forward, we will    * return this handle from execute and Driver can split execute into start,    * monitorProgess and postProcess.    */
+comment|/**    * This class contains the state of the running task Going forward, we will return this handle    * from execute and Driver can split execute into start, monitorProgess and postProcess.    */
 specifier|private
 specifier|static
 class|class
@@ -1917,7 +1917,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Fatal errors are those errors that cannot be recovered by retries. These    * are application dependent. Examples of fatal errors include: - the small    * table in the map-side joins is too large to be feasible to be handled by    * one mapper. The job should fail and the user should be warned to use    * regular joins rather than map-side joins. Fatal errors are indicated by    * counters that are set at execution time. If the counter is non-zero, a    * fatal error occurred. The value of the counter indicates the error type.    *    * @return true if fatal errors happened during job execution, false    *         otherwise.    */
+comment|/**    * Fatal errors are those errors that cannot be recovered by retries. These are application    * dependent. Examples of fatal errors include: - the small table in the map-side joins is too    * large to be feasible to be handled by one mapper. The job should fail and the user should be    * warned to use regular joins rather than map-side joins. Fatal errors are indicated by counters    * that are set at execution time. If the counter is non-zero, a fatal error occurred. The value    * of the counter indicates the error type.    *    * @return true if fatal errors happened during job execution, false otherwise.    */
 specifier|private
 name|boolean
 name|checkFatalErrors
@@ -3516,7 +3516,7 @@ expr_stmt|;
 block|}
 try|try
 block|{
-comment|//propagate the file to distributed cache
+comment|// propagate the file to distributed cache
 name|MapredLocalWork
 name|localwork
 init|=
@@ -3559,7 +3559,6 @@ operator|!
 name|localMode
 condition|)
 block|{
-comment|//LOG.info("=========Adding files to HDFS ================");
 name|Path
 name|localPath
 init|=
@@ -3689,7 +3688,6 @@ argument_list|(
 name|hdfsFile
 argument_list|)
 decl_stmt|;
-comment|//hdfs.setVerifyChecksum(false);
 name|hdfs
 operator|.
 name|copyFromLocalFile
@@ -3724,7 +3722,6 @@ name|replication
 argument_list|)
 expr_stmt|;
 block|}
-comment|//LOG.info("=========Adding files to distributed cache================");
 name|FileStatus
 index|[]
 name|hashtableRemoteFiles
@@ -3794,7 +3791,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|//LOG.info("===========Finishing adding files to distributed cache==========");
 block|}
 block|}
 name|addInputPaths
@@ -5171,7 +5167,7 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * we are running the hadoop job via a sub-command. this typically    * happens when we are running jobs in local mode. the log4j in this    * mode is controlled as follows:    * 1. if the admin provides a log4j properties file especially for    *    execution mode - then we pick that up    * 2. otherwise - we default to the regular hive log4j properties if    *    one is supplied    * 3. if none of the above two apply - we don't do anything - the log4j    *    properties would likely be determined by hadoop.    *    * The intention behind providing a separate option #1 is to be able to    * collect hive run time logs generated in local mode in a separate    * (centralized) location if desired. This mimics the behavior of hive    * run time logs when running against a hadoop cluster where they are available    * on the tasktracker nodes.    */
+comment|/**    * we are running the hadoop job via a sub-command. this typically happens when we are running    * jobs in local mode. the log4j in this mode is controlled as follows: 1. if the admin provides a    * log4j properties file especially for execution mode - then we pick that up 2. otherwise - we    * default to the regular hive log4j properties if one is supplied 3. if none of the above two    * apply - we don't do anything - the log4j properties would likely be determined by hadoop.    *    * The intention behind providing a separate option #1 is to be able to collect hive run time logs    * generated in local mode in a separate (centralized) location if desired. This mimics the    * behavior of hive run time logs when running against a hadoop cluster where they are available    * on the tasktracker nodes.    */
 specifier|private
 specifier|static
 name|void
@@ -6094,7 +6090,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Given a Hive Configuration object - generate a command line fragment for    * passing such configuration information to ExecDriver.    */
+comment|/**    * Given a Hive Configuration object - generate a command line fragment for passing such    * configuration information to ExecDriver.    */
 specifier|public
 specifier|static
 name|String

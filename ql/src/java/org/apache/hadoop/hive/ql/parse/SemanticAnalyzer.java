@@ -9157,7 +9157,7 @@ name|inputRR
 init|=
 name|inputCtx
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|Operator
@@ -11168,7 +11168,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 operator|.
 name|getColumnInfos
@@ -12634,7 +12634,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 comment|// SELECT * or SELECT TRANSFORM(*)
@@ -14465,7 +14465,7 @@ argument_list|(
 name|reduceSinkOperatorInfo
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -15264,7 +15264,7 @@ argument_list|(
 name|reduceSinkOperatorInfo
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -16168,7 +16168,7 @@ argument_list|(
 name|inputOperatorInfo
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|QBParseInfo
@@ -16928,7 +16928,7 @@ argument_list|(
 name|inputOperatorInfo
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|QBParseInfo
@@ -17913,7 +17913,7 @@ argument_list|(
 name|groupByOperatorInfo
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -18371,7 +18371,7 @@ argument_list|(
 name|reduceSinkOperatorInfo2
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -19613,7 +19613,7 @@ argument_list|(
 name|inputOperatorInfo
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 operator|.
 name|getTableNames
@@ -19788,7 +19788,7 @@ argument_list|(
 name|inputOperatorInfo
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 operator|.
 name|getTableNames
@@ -20821,7 +20821,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|QBMetaData
@@ -22577,7 +22577,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 expr_stmt|;
 name|ArrayList
@@ -23038,7 +23038,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 operator|.
 name|getColumnInfos
@@ -23698,7 +23698,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|Operator
@@ -23955,7 +23955,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|ArrayList
@@ -24408,7 +24408,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|List
@@ -24629,7 +24629,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 operator|.
 name|getColumnInfos
@@ -24893,7 +24893,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|List
@@ -25058,7 +25058,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 comment|// For the generation of the values expression just get the inputs
@@ -25509,7 +25509,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 comment|// First generate the expression for the partition and sort keys
@@ -26559,7 +26559,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|Iterator
@@ -27044,7 +27044,7 @@ argument_list|(
 name|child
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -27842,7 +27842,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|ArrayList
@@ -28001,7 +28001,7 @@ argument_list|(
 name|inputOperatorInfo
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -31916,7 +31916,7 @@ name|inputRR
 init|=
 name|inputCtx
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|ArrayList
@@ -32098,7 +32098,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|QBParseInfo
@@ -32499,7 +32499,7 @@ argument_list|(
 name|input
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -33216,7 +33216,7 @@ argument_list|(
 name|curr
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 comment|// create a forward operator
@@ -33849,7 +33849,7 @@ argument_list|(
 name|curr
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -33922,7 +33922,7 @@ argument_list|(
 name|curr
 argument_list|)
 operator|.
-name|setRR
+name|setRowResolver
 argument_list|(
 name|newRR
 argument_list|)
@@ -33995,7 +33995,7 @@ argument_list|(
 name|leftOp
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|RowResolver
@@ -34008,7 +34008,7 @@ argument_list|(
 name|rightOp
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 name|HashMap
@@ -35476,7 +35476,7 @@ argument_list|(
 name|top
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 expr_stmt|;
 name|top
@@ -37109,7 +37109,7 @@ argument_list|(
 name|op
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 for|for
@@ -37212,7 +37212,7 @@ argument_list|(
 name|lvForward
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 comment|//Operator allPath = op;
@@ -37310,7 +37310,7 @@ argument_list|(
 name|udtfPath
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 decl_stmt|;
 comment|// Merge the two into the lateral view join
@@ -40181,7 +40181,7 @@ argument_list|(
 name|sinkOp
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -41699,7 +41699,7 @@ argument_list|(
 name|opt
 argument_list|)
 operator|.
-name|getRR
+name|getRowResolver
 argument_list|()
 return|;
 block|}

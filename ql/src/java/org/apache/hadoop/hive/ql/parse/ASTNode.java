@@ -23,6 +23,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -74,7 +84,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * @author athusoo  *   */
+comment|/**  * @author athusoo  *  */
 end_comment
 
 begin_class
@@ -85,7 +95,17 @@ extends|extends
 name|CommonTree
 implements|implements
 name|Node
+implements|,
+name|Serializable
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
 specifier|private
 name|ASTNodeOrigin
 name|origin
@@ -94,7 +114,7 @@ specifier|public
 name|ASTNode
 parameter_list|()
 block|{   }
-comment|/**    * Constructor.    *     * @param t    *          Token for the CommonTree Node    */
+comment|/**    * Constructor.    *    * @param t    *          Token for the CommonTree Node    */
 specifier|public
 name|ASTNode
 parameter_list|(
@@ -108,7 +128,7 @@ name|t
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see org.apache.hadoop.hive.ql.lib.Node#getChildren()    */
+comment|/*    * (non-Javadoc)    *    * @see org.apache.hadoop.hive.ql.lib.Node#getChildren()    */
 specifier|public
 name|ArrayList
 argument_list|<
@@ -182,7 +202,7 @@ return|return
 name|ret_vec
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see org.apache.hadoop.hive.ql.lib.Node#getName()    */
+comment|/*    * (non-Javadoc)    *    * @see org.apache.hadoop.hive.ql.lib.Node#getName()    */
 specifier|public
 name|String
 name|getName

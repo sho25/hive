@@ -5457,6 +5457,25 @@ argument_list|)
 expr_stmt|;
 comment|// create a dummy tableScan operator on top of op
 comment|// TableScanOperator is implicitly created here for each MapOperator
+name|RowResolver
+name|rowResolver
+init|=
+name|opProcCtx
+operator|.
+name|getParseCtx
+argument_list|()
+operator|.
+name|getOpParseCtx
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|parent
+argument_list|)
+operator|.
+name|getRowResolver
+argument_list|()
+decl_stmt|;
 name|Operator
 argument_list|<
 name|?
@@ -5481,7 +5500,7 @@ name|getSchema
 argument_list|()
 argument_list|)
 argument_list|,
-literal|null
+name|rowResolver
 argument_list|,
 name|parseCtx
 argument_list|)
