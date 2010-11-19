@@ -99,6 +99,10 @@ name|CreateIndexDesc
 name|createIndexDesc
 decl_stmt|;
 specifier|private
+name|AlterIndexDesc
+name|alterIndexDesc
+decl_stmt|;
+specifier|private
 name|DropIndexDesc
 name|dropIdxDesc
 decl_stmt|;
@@ -133,6 +137,10 @@ decl_stmt|;
 specifier|private
 name|AlterTableDesc
 name|alterTblDesc
+decl_stmt|;
+specifier|private
+name|AlterIndexDesc
+name|alterIdxDesc
 decl_stmt|;
 specifier|private
 name|ShowDatabasesDesc
@@ -251,6 +259,20 @@ operator|.
 name|createIndexDesc
 operator|=
 name|createIndex
+expr_stmt|;
+block|}
+specifier|public
+name|DDLWork
+parameter_list|(
+name|AlterIndexDesc
+name|alterIndex
+parameter_list|)
+block|{
+name|this
+operator|.
+name|alterIndexDesc
+operator|=
+name|alterIndex
 expr_stmt|;
 block|}
 comment|/**    * @param createDatabaseDesc    *          Create Database descriptor    */
@@ -387,6 +409,40 @@ operator|.
 name|alterTblDesc
 operator|=
 name|alterTblDesc
+expr_stmt|;
+block|}
+comment|/**    * @param alterIdxDesc    *          alter index descriptor    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|HashSet
+argument_list|<
+name|ReadEntity
+argument_list|>
+name|inputs
+parameter_list|,
+name|HashSet
+argument_list|<
+name|WriteEntity
+argument_list|>
+name|outputs
+parameter_list|,
+name|AlterIndexDesc
+name|alterIdxDesc
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|inputs
+argument_list|,
+name|outputs
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|alterIdxDesc
+operator|=
+name|alterIdxDesc
 expr_stmt|;
 block|}
 comment|/**    * @param createTblDesc    *          create table descriptor    */
@@ -1139,6 +1195,7 @@ operator|=
 name|createTblDesc
 expr_stmt|;
 block|}
+comment|/**    * @return the createIndexDesc    */
 specifier|public
 name|CreateIndexDesc
 name|getCreateIndexDesc
@@ -1148,6 +1205,7 @@ return|return
 name|createIndexDesc
 return|;
 block|}
+comment|/**    * @param createIndexDesc    *          the createIndexDesc to set    */
 specifier|public
 name|void
 name|setCreateIndexDesc
@@ -1161,6 +1219,32 @@ operator|.
 name|createIndexDesc
 operator|=
 name|createIndexDesc
+expr_stmt|;
+block|}
+comment|/**    * @return the alterIndexDesc    */
+specifier|public
+name|AlterIndexDesc
+name|getAlterIndexDesc
+parameter_list|()
+block|{
+return|return
+name|alterIndexDesc
+return|;
+block|}
+comment|/**    * @param alterTblDesc    *          the alterTblDesc to set    */
+specifier|public
+name|void
+name|setAlterIndexDesc
+parameter_list|(
+name|AlterIndexDesc
+name|alterIndexDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|alterIndexDesc
+operator|=
+name|alterIndexDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the createTblDesc    */
