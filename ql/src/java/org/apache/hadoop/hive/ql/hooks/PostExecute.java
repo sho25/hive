@@ -69,8 +69,12 @@ begin_interface
 specifier|public
 interface|interface
 name|PostExecute
+extends|extends
+name|Hook
 block|{
 comment|/**    * The run command that is called just before the execution of the query.    *    * @param sess    *          The session state.    * @param inputs    *          The set of input tables and partitions.    * @param outputs    *          The set of output tables, partitions, local and hdfs directories.    * @param lInfo    *           The column level lineage information.    * @param ugi    *          The user group security information.    */
+annotation|@
+name|Deprecated
 name|void
 name|run
 parameter_list|(
