@@ -2315,6 +2315,11 @@ name|getKey
 argument_list|()
 decl_stmt|;
 name|HashMapWrapper
+argument_list|<
+name|AbstractMapJoinKey
+argument_list|,
+name|MapJoinObjectValue
+argument_list|>
 name|hashTable
 init|=
 name|hashTables
@@ -2357,7 +2362,7 @@ comment|// get the tmp URI path; it will be a hdfs path if not local mode
 name|String
 name|tmpURIPath
 init|=
-name|PathUtil
+name|Utilities
 operator|.
 name|generatePath
 argument_list|(
