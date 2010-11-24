@@ -1829,6 +1829,14 @@ operator|.
 name|iterator
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|iter
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
 name|part
 operator|=
 name|iter
@@ -1836,6 +1844,7 @@ operator|.
 name|next
 argument_list|()
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|part
@@ -1853,6 +1862,14 @@ operator|.
 name|iterator
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|iter
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
 name|part
 operator|=
 name|iter
@@ -1860,6 +1877,7 @@ operator|.
 name|next
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 assert|assert
 name|part
