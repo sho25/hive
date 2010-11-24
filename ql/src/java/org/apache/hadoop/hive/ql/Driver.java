@@ -4992,7 +4992,7 @@ argument_list|()
 expr_stmt|;
 name|console
 operator|.
-name|printInfo
+name|printError
 argument_list|(
 name|errorMessage
 argument_list|)
@@ -5011,7 +5011,7 @@ argument_list|()
 expr_stmt|;
 name|console
 operator|.
-name|printInfo
+name|printError
 argument_list|(
 name|errorMessage
 argument_list|)

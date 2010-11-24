@@ -1262,7 +1262,7 @@ argument_list|)
 block|,
 name|HIVEHASHTABLEMAXMEMORYUSAGE
 argument_list|(
-literal|"hive.hashtable.max.memory.usage"
+literal|"hive.mapjoin.localtask.max.memory.usage"
 argument_list|,
 operator|(
 name|float
@@ -1272,7 +1272,7 @@ argument_list|)
 block|,
 name|HIVEHASHTABLESCALE
 argument_list|(
-literal|"hive.hashtable.scale"
+literal|"hive.mapjoin.check.memory.rows"
 argument_list|,
 operator|(
 name|long
