@@ -395,9 +395,15 @@ argument_list|,
 name|job
 argument_list|,
 name|inputFormatClass
+argument_list|,
+name|this
+operator|.
+name|recordReader
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|doClose
@@ -469,6 +475,8 @@ name|getProgress
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|doNext

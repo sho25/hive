@@ -495,7 +495,7 @@ return|return
 name|more
 return|;
 block|}
-comment|/**    * Return the progress within the input split.    *     * @return 0.0 to 1.0 of the input byte range    */
+comment|/**    * Return the progress within the input split.    *    * @return 0.0 to 1.0 of the input byte range    */
 specifier|public
 name|float
 name|getProgress
@@ -575,6 +575,15 @@ argument_list|(
 name|pos
 argument_list|)
 expr_stmt|;
+block|}
+specifier|public
+name|long
+name|getStart
+parameter_list|()
+block|{
+return|return
+name|start
+return|;
 block|}
 specifier|public
 name|void
