@@ -605,6 +605,15 @@ return|return
 literal|null
 return|;
 block|}
+name|currTask
+operator|.
+name|setTaskTag
+argument_list|(
+name|Task
+operator|.
+name|COMMON_JOIN
+argument_list|)
+expr_stmt|;
 name|MapredWork
 name|currWork
 init|=
@@ -951,6 +960,15 @@ operator|.
 name|add
 argument_list|(
 name|newTask
+argument_list|)
+expr_stmt|;
+name|newTask
+operator|.
+name|setTaskTag
+argument_list|(
+name|Task
+operator|.
+name|CONVERTED_MAPJOIN
 argument_list|)
 expr_stmt|;
 comment|//set up backup task
