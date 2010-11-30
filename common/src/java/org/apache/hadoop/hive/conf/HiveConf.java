@@ -1527,7 +1527,15 @@ literal|"hive.semantic.analyzer.hook"
 argument_list|,
 literal|null
 argument_list|)
-block|,     ;
+block|,
+comment|// Print column names in output
+name|HIVE_CLI_PRINT_HEADER
+argument_list|(
+literal|"hive.cli.print.header"
+argument_list|,
+literal|false
+argument_list|)
+block|;     ;
 specifier|public
 specifier|final
 name|String
