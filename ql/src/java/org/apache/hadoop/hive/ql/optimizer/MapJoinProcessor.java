@@ -1516,26 +1516,6 @@ name|path
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|pathSet
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"No input path for alias "
-operator|+
-name|alias
-argument_list|)
-throw|;
-block|}
 comment|// create fetch work
 name|FetchWork
 name|fetchWork
