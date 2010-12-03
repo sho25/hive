@@ -3557,11 +3557,6 @@ operator|new
 name|LockObjectContainer
 argument_list|()
 decl_stmt|;
-while|while
-condition|(
-literal|true
-condition|)
-block|{
 name|notFound
 operator|.
 name|setLck
@@ -3580,6 +3575,10 @@ argument_list|(
 name|lockObjects
 argument_list|,
 name|notFound
+argument_list|,
+name|numRetries
+argument_list|,
+name|sleepTime
 argument_list|)
 decl_stmt|;
 if|if
@@ -3589,41 +3588,6 @@ operator|==
 literal|null
 condition|)
 block|{
-if|if
-condition|(
-name|tryNum
-operator|==
-name|numRetries
-condition|)
-block|{
-name|console
-operator|.
-name|printError
-argument_list|(
-literal|"Lock for "
-operator|+
-name|notFound
-operator|.
-name|getLck
-argument_list|()
-operator|.
-name|getObj
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-operator|+
-literal|" cannot be acquired in "
-operator|+
-name|notFound
-operator|.
-name|getLck
-argument_list|()
-operator|.
-name|getMode
-argument_list|()
-argument_list|)
-expr_stmt|;
 throw|throw
 operator|new
 name|SemanticException
@@ -3637,26 +3601,6 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-name|tryNum
-operator|++
-expr_stmt|;
-try|try
-block|{
-name|Thread
-operator|.
-name|sleep
-argument_list|(
-name|sleepTime
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InterruptedException
-name|e
-parameter_list|)
-block|{           }
-block|}
 else|else
 block|{
 name|ctx
@@ -3666,8 +3610,6 @@ argument_list|(
 name|hiveLocks
 argument_list|)
 expr_stmt|;
-break|break;
-block|}
 block|}
 return|return
 operator|(
@@ -3733,7 +3675,7 @@ operator|)
 return|;
 block|}
 block|}
-comment|/**    * @param lockObjects    *          The list of objects to be locked Lock the objects specified in the list. The same    *          object is not locked twice, and the list passed is sorted such that EXCLUSIVE locks    *          occur before SHARED locks.    **/
+comment|/**    * @param lockObjects    *          The list of objects to be locked Lock the objects specified in the list. The same    *          object is not locked twice, and the list passed is sorted such that EXCLUSIVE locks    *          occur before SHARED locks.    * @param sleepTime    * @param numRetries     **/
 specifier|private
 name|List
 argument_list|<
@@ -3749,6 +3691,12 @@ name|lockObjects
 parameter_list|,
 name|LockObjectContainer
 name|notFound
+parameter_list|,
+name|int
+name|numRetries
+parameter_list|,
+name|int
+name|sleepTime
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -3840,6 +3788,10 @@ name|getMode
 argument_list|()
 argument_list|,
 literal|false
+argument_list|,
+name|numRetries
+argument_list|,
+name|sleepTime
 argument_list|)
 expr_stmt|;
 block|}
@@ -3849,6 +3801,18 @@ name|LockException
 name|e
 parameter_list|)
 block|{
+name|console
+operator|.
+name|printError
+argument_list|(
+literal|"Error in acquireLocks: "
+operator|+
+name|e
+operator|.
+name|getLocalizedMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|lock
 operator|=
 literal|null

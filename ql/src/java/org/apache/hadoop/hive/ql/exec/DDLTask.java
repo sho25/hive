@@ -8066,6 +8066,10 @@ argument_list|,
 name|mode
 argument_list|,
 literal|true
+argument_list|,
+literal|0
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 if|if
@@ -8138,6 +8142,10 @@ argument_list|,
 name|mode
 argument_list|,
 literal|true
+argument_list|,
+literal|0
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 if|if
