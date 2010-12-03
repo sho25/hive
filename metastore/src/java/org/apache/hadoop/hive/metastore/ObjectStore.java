@@ -6447,6 +6447,16 @@ name|getTableType
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|oldt
+operator|.
+name|setLastAccessTime
+argument_list|(
+name|newt
+operator|.
+name|getLastAccessTime
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// commit the changes
 name|success
 operator|=
