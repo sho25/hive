@@ -609,6 +609,13 @@ name|getId
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|setLocalMode
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -619,6 +626,13 @@ argument_list|(
 literal|"Cannot run job locally: "
 operator|+
 name|reason
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|setLocalMode
+argument_list|(
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
