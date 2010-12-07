@@ -83,7 +83,10 @@ argument_list|<
 name|HiveLock
 argument_list|>
 name|getLocks
-parameter_list|()
+parameter_list|(
+name|boolean
+name|verifyTablePartitions
+parameter_list|)
 throws|throws
 name|LockException
 function_decl|;
@@ -96,6 +99,9 @@ name|getLocks
 parameter_list|(
 name|HiveLockObject
 name|key
+parameter_list|,
+name|boolean
+name|fetchData
 parameter_list|)
 throws|throws
 name|LockException

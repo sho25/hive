@@ -7551,7 +7551,9 @@ operator|=
 name|lockMgr
 operator|.
 name|getLocks
-argument_list|()
+argument_list|(
+name|isExt
+argument_list|)
 expr_stmt|;
 block|}
 else|else
@@ -7574,6 +7576,8 @@ operator|.
 name|getPartSpec
 argument_list|()
 argument_list|)
+argument_list|,
+name|isExt
 argument_list|)
 expr_stmt|;
 block|}
@@ -8365,6 +8369,8 @@ operator|.
 name|getLocks
 argument_list|(
 name|obj
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 if|if
