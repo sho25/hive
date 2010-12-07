@@ -27,7 +27,39 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|IntRangeSet
 import|;
 end_import
 
@@ -43,13 +75,11 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|thrift
-operator|.
-name|IntRangeSet
+name|HashMap
 import|;
 end_import
 

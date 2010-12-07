@@ -4,7 +4,7 @@ comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or 
 end_comment
 
 begin_comment
-comment|/**  *   */
+comment|/**  *  */
 end_comment
 
 begin_package
@@ -22,6 +22,16 @@ operator|.
 name|model
 package|;
 end_package
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
 
 begin_comment
 comment|/**  * Storage Class representing the Hive MDatabase in a rdbms  *  */
@@ -44,6 +54,15 @@ specifier|private
 name|String
 name|description
 decl_stmt|;
+specifier|private
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|parameters
+decl_stmt|;
 comment|/**    * Default construction to keep jpox/jdo happy    */
 specifier|public
 name|MDatabase
@@ -61,6 +80,14 @@ name|locationUri
 parameter_list|,
 name|String
 name|description
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|parameters
 parameter_list|)
 block|{
 name|this
@@ -80,6 +107,12 @@ operator|.
 name|description
 operator|=
 name|description
+expr_stmt|;
+name|this
+operator|.
+name|parameters
+operator|=
+name|parameters
 expr_stmt|;
 block|}
 comment|/**    * @return the name    */
@@ -158,6 +191,42 @@ operator|.
 name|description
 operator|=
 name|description
+expr_stmt|;
+block|}
+comment|/**    * @return the parameters mapping.    */
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|getParameters
+parameter_list|()
+block|{
+return|return
+name|parameters
+return|;
+block|}
+comment|/**    * @param parameters the parameters mapping.    */
+specifier|public
+name|void
+name|setParameters
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|parameters
+parameter_list|)
+block|{
+name|this
+operator|.
+name|parameters
+operator|=
+name|parameters
 expr_stmt|;
 block|}
 block|}
