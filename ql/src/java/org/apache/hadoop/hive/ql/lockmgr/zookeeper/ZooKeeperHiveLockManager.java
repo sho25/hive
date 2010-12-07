@@ -341,6 +341,26 @@ name|ql
 operator|.
 name|lockmgr
 operator|.
+name|HiveLockObject
+operator|.
+name|HiveLockObjectData
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lockmgr
+operator|.
 name|HiveLockMode
 import|;
 end_import
@@ -836,7 +856,7 @@ operator|+
 literal|"-"
 return|;
 block|}
-comment|/**    * @param  key          The object to be locked    * @param  mode         The mode of the lock    * @param  keepAlive    Whether the lock is to be persisted after the statement    * @param  numRetries   number of retries when the lock can not be acquired    * @param  sleepTime    sleep time between retries    *     * Acuire the lock. Return null if a conflicting lock is present.    **/
+comment|/**    * @param  key          The object to be locked    * @param  mode         The mode of the lock    * @param  keepAlive    Whether the lock is to be persisted after the statement    * @param  numRetries   number of retries when the lock can not be acquired    * @param  sleepTime    sleep time between retries    *    * Acuire the lock. Return null if a conflicting lock is present.    **/
 specifier|public
 name|ZooKeeperHiveLock
 name|lock
@@ -911,6 +931,9 @@ operator|.
 name|getData
 argument_list|()
 operator|.
+name|toString
+argument_list|()
+operator|.
 name|getBytes
 argument_list|()
 argument_list|,
@@ -937,6 +960,9 @@ argument_list|,
 name|key
 operator|.
 name|getData
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 operator|.
 name|getBytes
@@ -1540,6 +1566,9 @@ name|getLocks
 parameter_list|(
 name|boolean
 name|verifyTablePartition
+parameter_list|,
+name|boolean
+name|fetchData
 parameter_list|)
 throws|throws
 name|LockException
@@ -1560,7 +1589,7 @@ name|parent
 argument_list|,
 name|verifyTablePartition
 argument_list|,
-literal|false
+name|fetchData
 argument_list|)
 return|;
 block|}
@@ -1574,6 +1603,9 @@ name|getLocks
 parameter_list|(
 name|HiveLockObject
 name|key
+parameter_list|,
+name|boolean
+name|verifyTablePartitions
 parameter_list|,
 name|boolean
 name|fetchData
@@ -1595,7 +1627,7 @@ name|key
 argument_list|,
 name|parent
 argument_list|,
-literal|false
+name|verifyTablePartitions
 argument_list|,
 name|fetchData
 argument_list|)
@@ -1714,10 +1746,10 @@ condition|)
 block|{
 continue|continue;
 block|}
-name|String
+name|HiveLockObjectData
 name|data
 init|=
-literal|"NULL"
+literal|null
 decl_stmt|;
 comment|//set the lock object with a dummy data, and then do a set if needed.
 name|HiveLockObject
@@ -1779,6 +1811,9 @@ block|{
 name|data
 operator|=
 operator|new
+name|HiveLockObjectData
+argument_list|(
+operator|new
 name|String
 argument_list|(
 name|zkpClient
@@ -1792,6 +1827,7 @@ name|DummyWatcher
 argument_list|()
 argument_list|,
 literal|null
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1961,7 +1997,7 @@ return|;
 comment|// invalid number
 block|}
 block|}
-comment|/**    * Get the object from the path of the lock.    * The object may correspond to a table, a partition or a parent to a partition.    * For eg: if Table T is partitioned by ds, hr and ds=1/hr=1 is a valid partition,    * the lock may also correspond to T@ds=1, which is not a valid object    * @param verifyTablePartition     **/
+comment|/**    * Get the object from the path of the lock.    * The object may correspond to a table, a partition or a parent to a partition.    * For eg: if Table T is partitioned by ds, hr and ds=1/hr=1 is a valid partition,    * the lock may also correspond to T@ds=1, which is not a valid object    * @param verifyTablePartition    **/
 specifier|private
 specifier|static
 name|HiveLockObject
@@ -1976,7 +2012,7 @@ parameter_list|,
 name|HiveLockMode
 name|mode
 parameter_list|,
-name|String
+name|HiveLockObjectData
 name|data
 parameter_list|,
 name|boolean

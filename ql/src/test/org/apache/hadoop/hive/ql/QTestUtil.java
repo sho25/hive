@@ -5047,7 +5047,7 @@ literal|"Caused by:"
 block|,
 literal|"-I"
 block|,
-literal|"QUERYID_LOCK:"
+literal|"LOCK_QUERYID:"
 block|,
 literal|"-I"
 block|,

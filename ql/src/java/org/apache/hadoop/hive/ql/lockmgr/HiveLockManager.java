@@ -44,7 +44,7 @@ parameter_list|)
 throws|throws
 name|LockException
 function_decl|;
-comment|/**    * @param key        object to be locked    * @param mode       mode of the lock (SHARED/EXCLUSIVE)    * @param keepAlive  if the lock needs to be persisted after the statement    * @param sleepTime     * @param numRetries     */
+comment|/**    * @param key        object to be locked    * @param mode       mode of the lock (SHARED/EXCLUSIVE)    * @param keepAlive  if the lock needs to be persisted after the statement    * @param sleepTime    * @param numRetries    */
 specifier|public
 name|HiveLock
 name|lock
@@ -86,6 +86,9 @@ name|getLocks
 parameter_list|(
 name|boolean
 name|verifyTablePartitions
+parameter_list|,
+name|boolean
+name|fetchData
 parameter_list|)
 throws|throws
 name|LockException
@@ -99,6 +102,9 @@ name|getLocks
 parameter_list|(
 name|HiveLockObject
 name|key
+parameter_list|,
+name|boolean
+name|verifyTablePartitions
 parameter_list|,
 name|boolean
 name|fetchData
