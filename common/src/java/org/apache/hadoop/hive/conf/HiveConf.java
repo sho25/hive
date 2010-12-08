@@ -1521,6 +1521,14 @@ argument_list|,
 literal|"org.apache.hadoop.hive.serde2.DelimitedJSONSerDe"
 argument_list|)
 block|,
+comment|// Hive Variables
+name|HIVEVARIABLESUBSTITUTE
+argument_list|(
+literal|"hive.variable.substitute"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|SEMANTIC_ANALYZER_HOOK
 argument_list|(
 literal|"hive.semantic.analyzer.hook"
