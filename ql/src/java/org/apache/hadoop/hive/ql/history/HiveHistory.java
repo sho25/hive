@@ -279,7 +279,7 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|RunningJob
+name|Counters
 import|;
 end_import
 
@@ -312,20 +312,6 @@ operator|.
 name|Counters
 operator|.
 name|Group
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Counters
 import|;
 end_import
 
@@ -583,7 +569,7 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-comment|/**    * Parses history file and calls call back functions.    *     * @param path    * @param l    * @throws IOException    */
+comment|/**    * Parses history file and calls call back functions.    *    * @param path    * @param l    * @throws IOException    */
 specifier|public
 specifier|static
 name|void
@@ -708,7 +694,7 @@ parameter_list|)
 block|{       }
 block|}
 block|}
-comment|/**    * Parse a single line of history.    *     * @param line    * @param l    * @throws IOException    */
+comment|/**    * Parse a single line of history.    *    * @param line    * @param l    * @throws IOException    */
 specifier|private
 specifier|static
 name|void
@@ -947,7 +933,7 @@ argument_list|()
 decl_stmt|;
 block|}
 empty_stmt|;
-comment|/**    * Construct HiveHistory object an open history log file.    *     * @param ss    */
+comment|/**    * Construct HiveHistory object an open history log file.    *    * @param ss    */
 specifier|public
 name|HiveHistory
 parameter_list|(
@@ -1054,6 +1040,8 @@ operator|new
 name|Random
 argument_list|()
 decl_stmt|;
+do|do
+block|{
 name|histFileName
 operator|=
 name|conf_file_loc
@@ -1079,6 +1067,19 @@ argument_list|)
 operator|+
 literal|".txt"
 expr_stmt|;
+block|}
+do|while
+condition|(
+operator|new
+name|File
+argument_list|(
+name|histFileName
+argument_list|)
+operator|.
+name|exists
+argument_list|()
+condition|)
+do|;
 name|console
 operator|.
 name|printInfo
@@ -1191,7 +1192,7 @@ return|return
 name|histFileName
 return|;
 block|}
-comment|/**    * Write the a history record to history file.    *     * @param rt    * @param keyValMap    */
+comment|/**    * Write the a history record to history file.    *    * @param rt    * @param keyValMap    */
 name|void
 name|log
 parameter_list|(
@@ -1437,7 +1438,7 @@ name|hm
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Used to set job status and other attributes of a job.    *     * @param queryId    * @param propName    * @param propValue    */
+comment|/**    * Used to set job status and other attributes of a job.    *    * @param queryId    * @param propName    * @param propValue    */
 specifier|public
 name|void
 name|setQueryProperty
@@ -1486,7 +1487,7 @@ name|propValue
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Used to set task properties.    *     * @param taskId    * @param propName    * @param propValue    */
+comment|/**    * Used to set task properties.    *    * @param taskId    * @param propName    * @param propValue    */
 specifier|public
 name|void
 name|setTaskProperty
@@ -1547,7 +1548,7 @@ name|propValue
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Serialize the task counters and set as a task property.    *     * @param taskId    * @param rj    */
+comment|/**    * Serialize the task counters and set as a task property.    *    * @param taskId    * @param rj    */
 specifier|public
 name|void
 name|setTaskCounters
@@ -1964,7 +1965,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Called at the end of Job. A Job is sql query.    *     * @param queryId    */
+comment|/**    * Called at the end of Job. A Job is sql query.    *    * @param queryId    */
 specifier|public
 name|void
 name|endQuery
@@ -2004,7 +2005,7 @@ name|hm
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Called at the start of a task. Called by Driver.run() A Job can have    * multiple tasks. Tasks will have multiple operator.    *     * @param task    */
+comment|/**    * Called at the start of a task. Called by Driver.run() A Job can have    * multiple tasks. Tasks will have multiple operator.    *    * @param task    */
 specifier|public
 name|void
 name|startTask
@@ -2135,7 +2136,7 @@ name|hm
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Called at the end of a task.    *     * @param task    */
+comment|/**    * Called at the end of a task.    *    * @param task    */
 specifier|public
 name|void
 name|endTask
@@ -2195,7 +2196,7 @@ name|hm
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Called at the end of a task.    *     * @param task    */
+comment|/**    * Called at the end of a task.    *    * @param task    */
 specifier|public
 name|void
 name|progressTask
@@ -2318,7 +2319,7 @@ name|ctrmap
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the table to id map.    *     * @param map    */
+comment|/**    * Set the table to id map.    *    * @param map    */
 specifier|public
 name|void
 name|setIdToTableMap
@@ -2337,7 +2338,7 @@ operator|=
 name|map
 expr_stmt|;
 block|}
-comment|/**    * Returns table name for the counter name.    *     * @param name    * @return tableName    */
+comment|/**    * Returns table name for the counter name.    *    * @param name    * @return tableName    */
 name|String
 name|getRowCountTableName
 parameter_list|(
@@ -2396,6 +2397,34 @@ block|}
 return|return
 literal|null
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|finalize
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+if|if
+condition|(
+name|histStream
+operator|!=
+literal|null
+condition|)
+block|{
+name|histStream
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+name|super
+operator|.
+name|finalize
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 end_class
