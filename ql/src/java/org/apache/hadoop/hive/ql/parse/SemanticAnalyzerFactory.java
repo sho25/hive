@@ -735,6 +735,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_DESCDATABASE
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_DESCTABLE
 case|:
 case|case
