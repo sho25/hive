@@ -2343,7 +2343,7 @@ operator|.
 name|getSd
 argument_list|()
 operator|.
-name|clone
+name|deepCopy
 argument_list|()
 decl_stmt|;
 name|SerDeInfo

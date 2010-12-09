@@ -515,7 +515,7 @@ name|indexTableSd
 init|=
 name|storageDesc
 operator|.
-name|clone
+name|deepCopy
 argument_list|()
 decl_stmt|;
 name|List

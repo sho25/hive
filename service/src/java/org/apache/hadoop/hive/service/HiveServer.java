@@ -49,6 +49,18 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|facebook
+operator|.
+name|fb303
+operator|.
+name|fb_status
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -809,7 +821,7 @@ name|getJobTrackerState
 argument_list|()
 decl_stmt|;
 comment|// Convert the ClusterStatus to its Thrift equivalent: HiveClusterStatus
-name|int
+name|JobTrackerState
 name|state
 decl_stmt|;
 switch|switch
@@ -1481,12 +1493,14 @@ comment|/**      * Return the status of the server.      */
 annotation|@
 name|Override
 specifier|public
-name|int
+name|fb_status
 name|getStatus
 parameter_list|()
 block|{
 return|return
-literal|0
+name|fb_status
+operator|.
+name|ALIVE
 return|;
 block|}
 comment|/**      * Return the version of the server software.      */

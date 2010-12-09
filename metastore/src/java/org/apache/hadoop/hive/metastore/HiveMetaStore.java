@@ -2199,7 +2199,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|int
+name|fb_status
 name|getStatus
 parameter_list|()
 block|{

@@ -1892,7 +1892,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|int
+name|OperatorType
 name|getType
 parameter_list|()
 block|{

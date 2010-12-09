@@ -3631,7 +3631,7 @@ name|Table
 argument_list|(
 name|tTable
 operator|.
-name|clone
+name|deepCopy
 argument_list|()
 argument_list|)
 return|;

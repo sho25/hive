@@ -199,6 +199,26 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|api
+operator|.
+name|OperatorType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|Explain
 import|;
 end_import
@@ -5284,7 +5304,7 @@ block|}
 comment|/**    * Return the type of the specific operator among the    * types in OperatorType.    *    * @return OperatorType.*    */
 specifier|abstract
 specifier|public
-name|int
+name|OperatorType
 name|getType
 parameter_list|()
 function_decl|;

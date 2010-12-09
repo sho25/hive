@@ -237,6 +237,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|plan
+operator|.
+name|api
+operator|.
+name|StageType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -1551,20 +1571,13 @@ return|return
 name|taskCounters
 return|;
 block|}
-comment|/**    * Should be overridden to return the type of the specific task among the types in TaskType.    *    * @return TaskTypeType.* or -1 if not overridden    */
+comment|/**    * Should be overridden to return the type of the specific task among the types in StageType.    *    * @return StageType.* or null if not overridden    */
 specifier|public
-name|int
+specifier|abstract
+name|StageType
 name|getType
 parameter_list|()
-block|{
-assert|assert
-literal|false
-assert|;
-return|return
-operator|-
-literal|1
-return|;
-block|}
+function_decl|;
 comment|/**    * If this task uses any map-reduce intermediate data (either for reading or for writing),    * localize them (using the supplied Context). Map-Reduce intermediate directories are allocated    * using Context.getMRTmpFileURI() and can be localized using localizeMRTmpFileURI().    *    * This method is declared abstract to force any task code to explicitly deal with this aspect of    * execution.    *    * @param ctx    *          context object with which to localize    */
 specifier|abstract
 specifier|protected
