@@ -151,11 +151,25 @@ block|{
 name|int
 name|exitVal
 init|=
+operator|-
+literal|101
+decl_stmt|;
+try|try
+block|{
+name|exitVal
+operator|=
 name|tsk
 operator|.
 name|executeTask
 argument_list|()
-decl_stmt|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Throwable
+name|t
+parameter_list|)
+block|{     }
 name|result
 operator|.
 name|setExitVal
