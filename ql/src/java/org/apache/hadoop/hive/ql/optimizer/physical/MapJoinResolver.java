@@ -580,7 +580,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of PhysicalPlanResolver. It iterator each MapRedTask to see whether the task has a local map work  * if it has, it will move the local work to a new local map join task. Then it will make this new generated task depends on  * current task's parent task and make current task depends on this new generated task.  */
+comment|/**  * An implementation of PhysicalPlanResolver. It iterator each MapRedTask to see whether the task  * has a local map work if it has, it will move the local work to a new local map join task. Then it  * will make this new generated task depends on current task's parent task and make current task  * depends on this new generated task.  */
 end_comment
 
 begin_class
@@ -602,7 +602,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|//create dispatcher and graph walker
+comment|// create dispatcher and graph walker
 name|Dispatcher
 name|disp
 init|=
@@ -621,7 +621,7 @@ argument_list|(
 name|disp
 argument_list|)
 decl_stmt|;
-comment|//get all the tasks nodes from root task
+comment|// get all the tasks nodes from root task
 name|ArrayList
 argument_list|<
 name|Node
@@ -644,7 +644,7 @@ operator|.
 name|rootTasks
 argument_list|)
 expr_stmt|;
-comment|//begin to walk through the task tree.
+comment|// begin to walk through the task tree.
 name|ogw
 operator|.
 name|startWalking
@@ -658,7 +658,7 @@ return|return
 name|pctx
 return|;
 block|}
-comment|/**    * Iterator each tasks. If this task has a local work,create a new task for this local work, named MapredLocalTask.    * then make this new generated task depends on current task's parent task, and make current task    * depends on this new generated task    */
+comment|/**    * Iterator each tasks. If this task has a local work,create a new task for this local work, named    * MapredLocalTask. then make this new generated task depends on current task's parent task, and    * make current task depends on this new generated task    */
 class|class
 name|LocalMapJoinTaskDispatcher
 implements|implements
@@ -701,7 +701,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|//get current mapred work and its local work
+comment|// get current mapred work and its local work
 name|MapredWork
 name|mapredWork
 init|=
@@ -728,7 +728,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|//get the context info and set up the shared tmp URI
+comment|// get the context info and set up the shared tmp URI
 name|Context
 name|ctx
 init|=
@@ -787,8 +787,8 @@ argument_list|(
 name|hdfsTmpURI
 argument_list|)
 expr_stmt|;
-comment|//create a task for this local work; right now, this local work is shared
-comment|//by the original MapredTask and this new generated MapredLocalTask.
+comment|// create a task for this local work; right now, this local work is shared
+comment|// by the original MapredTask and this new generated MapredLocalTask.
 name|MapredLocalTask
 name|localTask
 init|=
@@ -810,7 +810,7 @@ name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|//set the backup task from curr task
+comment|// set the backup task from curr task
 name|localTask
 operator|.
 name|setBackupTask
@@ -879,8 +879,16 @@ name|LOCAL_MAPJOIN
 argument_list|)
 expr_stmt|;
 block|}
-comment|//replace the map join operator to local_map_join operator in the operator tree
-comment|//and return all the dummy parent
+comment|// replace the map join operator to local_map_join operator in the operator tree
+comment|// and return all the dummy parent
+name|LocalMapJoinProcCtx
+name|localMapJoinProcCtx
+init|=
+name|adjustLocalTask
+argument_list|(
+name|localTask
+argument_list|)
+decl_stmt|;
 name|List
 argument_list|<
 name|Operator
@@ -892,12 +900,12 @@ argument_list|>
 argument_list|>
 name|dummyOps
 init|=
-name|adjustLocalTask
-argument_list|(
-name|localTask
-argument_list|)
+name|localMapJoinProcCtx
+operator|.
+name|getDummyParentOp
+argument_list|()
 decl_stmt|;
-comment|//create new local work and setup the dummy ops
+comment|// create new local work and setup the dummy ops
 name|MapredLocalWork
 name|newLocalWork
 init|=
@@ -936,7 +944,7 @@ argument_list|(
 name|newLocalWork
 argument_list|)
 expr_stmt|;
-comment|//get all parent tasks
+comment|// get all parent tasks
 name|List
 argument_list|<
 name|Task
@@ -980,7 +988,7 @@ range|:
 name|parentTasks
 control|)
 block|{
-comment|//make new generated task depends on all the  parent tasks of current task.
+comment|// make new generated task depends on all the parent tasks of current task.
 name|tsk
 operator|.
 name|addDependentTask
@@ -988,7 +996,7 @@ argument_list|(
 name|localTask
 argument_list|)
 expr_stmt|;
-comment|//remove the current task from its original parent task's dependent task
+comment|// remove the current task from its original parent task's dependent task
 name|tsk
 operator|.
 name|removeDependentTask
@@ -1000,8 +1008,8 @@ block|}
 block|}
 else|else
 block|{
-comment|//in this case, current task is in the root tasks
-comment|//so add this new task into root tasks and remove the current task from root tasks
+comment|// in this case, current task is in the root tasks
+comment|// so add this new task into root tasks and remove the current task from root tasks
 if|if
 condition|(
 name|conditionalTask
@@ -1026,7 +1034,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|//set list task
+comment|// set list task
 name|List
 argument_list|<
 name|Task
@@ -1070,7 +1078,7 @@ argument_list|,
 name|localTask
 argument_list|)
 expr_stmt|;
-comment|//set list work
+comment|// set list work
 name|List
 argument_list|<
 name|Serializable
@@ -1131,7 +1139,7 @@ operator|instanceof
 name|ConditionalResolverSkewJoin
 condition|)
 block|{
-comment|//get bigKeysDirToTaskMap
+comment|// get bigKeysDirToTaskMap
 name|ConditionalResolverSkewJoinCtx
 name|context
 init|=
@@ -1161,7 +1169,7 @@ operator|.
 name|getDirToTaskMap
 argument_list|()
 decl_stmt|;
-comment|//to avoid concurrent modify the hashmap
+comment|// to avoid concurrent modify the hashmap
 name|HashMap
 argument_list|<
 name|String
@@ -1189,7 +1197,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|//reset the resolver
+comment|// reset the resolver
 for|for
 control|(
 name|Map
@@ -1290,7 +1298,7 @@ operator|instanceof
 name|ConditionalResolverCommonJoin
 condition|)
 block|{
-comment|//get bigKeysDirToTaskMap
+comment|// get bigKeysDirToTaskMap
 name|ConditionalResolverCommonJoinCtx
 name|context
 init|=
@@ -1320,7 +1328,7 @@ operator|.
 name|getAliasToTask
 argument_list|()
 decl_stmt|;
-comment|//to avoid concurrent modify the hashmap
+comment|// to avoid concurrent modify the hashmap
 name|HashMap
 argument_list|<
 name|String
@@ -1348,7 +1356,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|//reset the resolver
+comment|// reset the resolver
 for|for
 control|(
 name|Map
@@ -1441,12 +1449,10 @@ name|context
 argument_list|)
 expr_stmt|;
 block|}
-else|else
-block|{              }
 block|}
 block|}
-comment|//make current task depends on this new generated localMapJoinTask
-comment|//now localTask is the parent task of the current task
+comment|// make current task depends on this new generated localMapJoinTask
+comment|// now localTask is the parent task of the current task
 name|localTask
 operator|.
 name|addDependentTask
@@ -1496,7 +1502,7 @@ argument_list|>
 operator|)
 name|nd
 decl_stmt|;
-comment|//not map reduce task or not conditional task, just skip
+comment|// not map reduce task or not conditional task, just skip
 if|if
 condition|(
 name|currTask
@@ -1512,7 +1518,7 @@ operator|instanceof
 name|ConditionalTask
 condition|)
 block|{
-comment|//get the list of task
+comment|// get the list of task
 name|List
 argument_list|<
 name|Task
@@ -1589,17 +1595,9 @@ return|return
 literal|null
 return|;
 block|}
-comment|//replace the map join operator to local_map_join operator in the operator tree
+comment|// replace the map join operator to local_map_join operator in the operator tree
 specifier|private
-name|List
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-argument_list|>
+name|LocalMapJoinProcCtx
 name|adjustLocalTask
 parameter_list|(
 name|MapredLocalTask
@@ -1639,8 +1637,6 @@ name|NodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|//opRules.put(new RuleRegExp("R1", "MAPJOIN%.*MAPJOIN%"),
-comment|//LocalMapJoinProcFactory.getMapJoinMapJoinProc());
 name|opRules
 operator|.
 name|put
@@ -1727,9 +1723,6 @@ argument_list|)
 expr_stmt|;
 return|return
 name|localMapJoinProcCtx
-operator|.
-name|getDummyParentOp
-argument_list|()
 return|;
 block|}
 specifier|public
@@ -1792,6 +1785,10 @@ name|dummyParentOp
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+name|boolean
+name|isFollowedByGroupBy
+decl_stmt|;
 specifier|public
 name|LocalMapJoinProcCtx
 parameter_list|(
@@ -1831,6 +1828,10 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
+name|isFollowedByGroupBy
+operator|=
+literal|false
+expr_stmt|;
 block|}
 specifier|public
 name|Task
@@ -1864,6 +1865,30 @@ operator|.
 name|currentTask
 operator|=
 name|currentTask
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isFollowedByGroupBy
+parameter_list|()
+block|{
+return|return
+name|isFollowedByGroupBy
+return|;
+block|}
+specifier|public
+name|void
+name|setFollowedByGroupBy
+parameter_list|(
+name|boolean
+name|isFollowedByGroupBy
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isFollowedByGroupBy
+operator|=
+name|isFollowedByGroupBy
 expr_stmt|;
 block|}
 specifier|public
