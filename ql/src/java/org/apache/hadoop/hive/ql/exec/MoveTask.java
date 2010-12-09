@@ -1305,6 +1305,20 @@ name|dpCtx
 argument_list|)
 decl_stmt|;
 comment|// publish DP columns to its subscribers
+if|if
+condition|(
+name|dps
+operator|!=
+literal|null
+operator|&&
+name|dps
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
 name|pushFeed
 argument_list|(
 name|FeedType
@@ -1314,6 +1328,7 @@ argument_list|,
 name|dps
 argument_list|)
 expr_stmt|;
+block|}
 comment|// load the list of DP partitions and return the list of partition specs
 comment|// TODO: In a follow-up to HIVE-1361, we should refactor loadDynamicPartitions
 comment|// to use Utilities.getFullDPSpecs() to get the list of full partSpecs.
@@ -1383,6 +1398,37 @@ name|getHoldDDLTime
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|dp
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+operator|&&
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_ERROR_ON_EMPTY_PARTITION
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"This query creates no partitions."
+operator|+
+literal|" To turn off this error, set hive.error.on.empty.partition=false."
+argument_list|)
+throw|;
+block|}
 comment|// for each partition spec, get the partition
 comment|// and put it to WriteEntity for post-exec hook
 for|for

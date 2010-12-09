@@ -1573,7 +1573,14 @@ literal|"hive.cli.print.header"
 argument_list|,
 literal|false
 argument_list|)
-block|;     ;
+block|,
+name|HIVE_ERROR_ON_EMPTY_PARTITION
+argument_list|(
+literal|"hive.error.on.empty.partition"
+argument_list|,
+literal|false
+argument_list|)
+block|;      ;
 specifier|public
 specifier|final
 name|String
