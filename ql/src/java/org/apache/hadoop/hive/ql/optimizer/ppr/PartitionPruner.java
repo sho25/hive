@@ -1022,6 +1022,20 @@ name|isPartitioned
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"tabname = "
+operator|+
+name|tab
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|" is partitioned"
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|String
@@ -1127,6 +1141,17 @@ argument_list|(
 name|partName
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|trace
+argument_list|(
+literal|"about to process partition "
+operator|+
+name|partSpec
+operator|+
+literal|" for pruning "
+argument_list|)
+expr_stmt|;
 comment|// evaluate the expression tree
 if|if
 condition|(
