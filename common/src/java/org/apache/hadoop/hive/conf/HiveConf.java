@@ -764,6 +764,27 @@ argument_list|,
 literal|"_INTERMEDIATE_EXTRACTED"
 argument_list|)
 block|,
+name|METASTORE_KERBEROS_KEYTAB_FILE
+argument_list|(
+literal|"hive.metastore.kerberos.keytab.file"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+name|METASTORE_KERBEROS_PRINCIPAL
+argument_list|(
+literal|"hive.metastore.kerberos.principal"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+name|METASTORE_USE_THRIFT_SASL
+argument_list|(
+literal|"hive.metastore.sasl.enabled"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Default parameters for creating tables
 name|NEWTABLEDEFAULTPARA
 argument_list|(
