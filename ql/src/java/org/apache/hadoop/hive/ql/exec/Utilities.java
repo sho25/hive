@@ -3102,10 +3102,6 @@ name|org
 operator|.
 name|datanucleus
 operator|.
-name|store
-operator|.
-name|types
-operator|.
 name|sco
 operator|.
 name|backed
@@ -3126,10 +3122,6 @@ argument_list|(
 name|org
 operator|.
 name|datanucleus
-operator|.
-name|store
-operator|.
-name|types
 operator|.
 name|sco
 operator|.
