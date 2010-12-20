@@ -1492,11 +1492,8 @@ decl_stmt|;
 if|if
 condition|(
 name|jtConf
-operator|.
-name|equals
-argument_list|(
+operator|==
 literal|"local"
-argument_list|)
 condition|)
 block|{
 name|String
