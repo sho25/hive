@@ -552,6 +552,15 @@ argument_list|,
 literal|4
 argument_list|)
 block|,
+comment|// if true, DROP TABLE/VIEW does not fail if table/view doesn't exist and IF EXISTS is
+comment|// not specified
+name|DROPIGNORESNONEXISTENT
+argument_list|(
+literal|"hive.exec.drop.ignorenonexistent"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// hadoop stuff
 name|HADOOPBIN
 argument_list|(

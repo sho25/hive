@@ -3235,6 +3235,40 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|boolean
+name|ifExists
+init|=
+operator|(
+name|ast
+operator|.
+name|getFirstChildWithType
+argument_list|(
+name|TOK_IFEXISTS
+argument_list|)
+operator|!=
+literal|null
+operator|)
+decl_stmt|;
+comment|// we want to signal an error if the table/view doesn't exist and we're
+comment|// configured not to fail silently
+name|boolean
+name|throwException
+init|=
+operator|!
+name|ifExists
+operator|&&
+operator|!
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|DROPIGNORESNONEXISTENT
+argument_list|)
+decl_stmt|;
 try|try
 block|{
 name|Table
@@ -3251,10 +3285,9 @@ argument_list|()
 argument_list|,
 name|tableName
 argument_list|,
-literal|false
+name|throwException
 argument_list|)
 decl_stmt|;
-comment|// Ignore if table does not exist
 if|if
 condition|(
 name|tab
