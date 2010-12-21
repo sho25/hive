@@ -1749,14 +1749,6 @@ name|ASTNode
 name|lateralView
 parameter_list|)
 block|{
-name|String
-name|lowerAlias
-init|=
-name|alias
-operator|.
-name|toLowerCase
-argument_list|()
-decl_stmt|;
 name|ArrayList
 argument_list|<
 name|ASTNode
@@ -1767,7 +1759,7 @@ name|aliasToLateralViews
 operator|.
 name|get
 argument_list|(
-name|lowerAlias
+name|alias
 argument_list|)
 decl_stmt|;
 if|if

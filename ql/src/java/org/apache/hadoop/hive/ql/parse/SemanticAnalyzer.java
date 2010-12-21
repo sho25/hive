@@ -4736,6 +4736,13 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+name|alias
+operator|=
+name|alias
+operator|.
+name|toLowerCase
+argument_list|()
+expr_stmt|;
 name|qb
 operator|.
 name|getParseInfo
