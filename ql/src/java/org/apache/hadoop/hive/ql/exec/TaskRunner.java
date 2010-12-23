@@ -169,7 +169,13 @@ parameter_list|(
 name|Throwable
 name|t
 parameter_list|)
-block|{     }
+block|{
+name|t
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
+block|}
 name|result
 operator|.
 name|setExitVal

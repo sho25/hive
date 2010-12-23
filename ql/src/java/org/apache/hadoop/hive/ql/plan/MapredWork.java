@@ -258,7 +258,7 @@ name|Integer
 name|numMapTasks
 decl_stmt|;
 specifier|private
-name|Integer
+name|Long
 name|minSplitSize
 decl_stmt|;
 specifier|private
@@ -1271,7 +1271,7 @@ name|hadoopSupportsSplittable
 expr_stmt|;
 block|}
 specifier|public
-name|Integer
+name|Long
 name|getMinSplitSize
 parameter_list|()
 block|{
@@ -1283,7 +1283,7 @@ specifier|public
 name|void
 name|setMinSplitSize
 parameter_list|(
-name|Integer
+name|Long
 name|minSplitSize
 parameter_list|)
 block|{

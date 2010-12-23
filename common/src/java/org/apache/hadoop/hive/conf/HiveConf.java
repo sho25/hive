@@ -1261,7 +1261,7 @@ name|HIVESKEWJOINMAPJOINMINSPLIT
 argument_list|(
 literal|"hive.skewjoin.mapjoin.min.split"
 argument_list|,
-literal|33554432
+literal|33554432L
 argument_list|)
 block|,
 comment|//32M

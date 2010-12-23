@@ -2282,7 +2282,7 @@ name|setMinSplitSize
 argument_list|(
 name|HiveConf
 operator|.
-name|getIntVar
+name|getLongVar
 argument_list|(
 name|jc
 argument_list|,

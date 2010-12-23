@@ -3084,7 +3084,7 @@ condition|)
 block|{
 name|HiveConf
 operator|.
-name|setIntVar
+name|setLongVar
 argument_list|(
 name|job
 argument_list|,
@@ -3099,7 +3099,7 @@ operator|.
 name|getMinSplitSize
 argument_list|()
 operator|.
-name|intValue
+name|longValue
 argument_list|()
 argument_list|)
 expr_stmt|;
