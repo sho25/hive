@@ -1064,13 +1064,6 @@ argument_list|,
 name|fetchOp
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|l4j
-operator|!=
-literal|null
-condition|)
-block|{
 name|l4j
 operator|.
 name|info
@@ -1085,7 +1078,6 @@ operator|+
 literal|" created"
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 for|for
 control|(
