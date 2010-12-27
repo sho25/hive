@@ -127,6 +127,11 @@ argument_list|(
 literal|"Invalid Column Reference"
 argument_list|)
 block|,
+name|INVALID_INDEX
+argument_list|(
+literal|"Invalid Index"
+argument_list|)
+block|,
 name|INVALID_TABLE_OR_COLUMN
 argument_list|(
 literal|"Invalid Table Alias or Column Reference"
