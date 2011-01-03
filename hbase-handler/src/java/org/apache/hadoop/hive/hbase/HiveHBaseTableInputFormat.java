@@ -1857,7 +1857,7 @@ name|analyzer
 operator|.
 name|addComparisonOp
 argument_list|(
-literal|"="
+literal|"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual"
 argument_list|)
 expr_stmt|;
 comment|// and only on the key column
