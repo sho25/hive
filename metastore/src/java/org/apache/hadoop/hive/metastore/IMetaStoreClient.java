@@ -818,6 +818,23 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+specifier|public
+name|void
+name|alterDatabase
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+name|Database
+name|db
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData    *          delete the underlying data or just delete the table in metadata    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String,    *      java.lang.String, java.util.List, boolean)    */
 specifier|public
 name|boolean
