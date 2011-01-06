@@ -810,6 +810,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVE_METASTORE_FS_HANDLER_CLS
+argument_list|(
+literal|"hive.metastore.fs.handler.class"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.HiveMetaStoreFsImpl"
+argument_list|)
+block|,
 comment|// Things we log in the jobconf
 comment|// session identifier
 name|HIVESESSIONID
