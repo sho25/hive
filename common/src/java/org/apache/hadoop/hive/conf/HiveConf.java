@@ -1617,7 +1617,14 @@ literal|"hive.error.on.empty.partition"
 argument_list|,
 literal|false
 argument_list|)
-block|;      ;
+block|,
+name|HIVE_INDEX_IGNORE_HDFS_LOC
+argument_list|(
+literal|"hive.index.compact.file.ignore.hdfs"
+argument_list|,
+literal|false
+argument_list|)
+block|,     ;
 specifier|public
 specifier|final
 name|String

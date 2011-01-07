@@ -417,6 +417,8 @@ argument_list|()
 operator|.
 name|allocatePartitionDescMap
 argument_list|()
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 comment|// create a new InputFormat instance if this is the first time to see this
