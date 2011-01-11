@@ -262,7 +262,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METATORETHRIFTRETRIES
+name|METASTORETHRIFTRETRIES
 block|,
 name|HiveConf
 operator|.
@@ -670,11 +670,27 @@ literal|""
 argument_list|)
 block|,
 comment|// Number of times to retry a connection to a Thrift metastore server
-name|METATORETHRIFTRETRIES
+name|METASTORETHRIFTRETRIES
 argument_list|(
 literal|"hive.metastore.connect.retries"
 argument_list|,
-literal|3
+literal|5
+argument_list|)
+block|,
+comment|// Number of seconds the client should wait between connection attempts
+name|METASTORE_CLIENT_CONNECT_RETRY_DELAY
+argument_list|(
+literal|"hive.metastore.client.connect.retry.delay"
+argument_list|,
+literal|1
+argument_list|)
+block|,
+comment|// Socket timeout for the client connection (in seconds)
+name|METASTORE_CLIENT_SOCKET_TIMEOUT
+argument_list|(
+literal|"hive.metastore.client.socket.timeout"
+argument_list|,
+literal|20
 argument_list|)
 block|,
 name|METASTOREPWD

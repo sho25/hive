@@ -207,6 +207,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -607,7 +625,7 @@ literal|null
 decl_stmt|;
 specifier|private
 name|boolean
-name|open
+name|isConnected
 init|=
 literal|false
 decl_stmt|;
@@ -639,6 +657,12 @@ name|int
 name|retries
 init|=
 literal|5
+decl_stmt|;
+specifier|private
+name|int
+name|retryDelaySeconds
+init|=
+literal|0
 decl_stmt|;
 specifier|static
 specifier|final
@@ -743,7 +767,7 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
-name|open
+name|isConnected
 operator|=
 literal|true
 expr_stmt|;
@@ -762,7 +786,18 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METATORETHRIFTRETRIES
+name|METASTORETHRIFTRETRIES
+argument_list|)
+expr_stmt|;
+name|retryDelaySeconds
+operator|=
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_CONNECT_RETRY_DELAY
 argument_list|)
 expr_stmt|;
 comment|// user wants file store based configuration
@@ -1065,7 +1100,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Unable to connect metastore with URI "
+literal|"Unable to connect to metastore with URI "
 operator|+
 name|store
 argument_list|)
@@ -1073,7 +1108,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|open
+name|isConnected
 condition|)
 block|{
 break|break;
@@ -1082,7 +1117,7 @@ block|}
 if|if
 condition|(
 operator|!
-name|open
+name|isConnected
 condition|)
 block|{
 throw|throw
@@ -1111,28 +1146,69 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|retries
-operator|&&
-operator|!
-name|open
-condition|;
-operator|++
-name|i
-control|)
-block|{
-name|open
+name|isConnected
 operator|=
 literal|false
 expr_stmt|;
+for|for
+control|(
+name|int
+name|attempt
+init|=
+literal|0
+init|;
+operator|!
+name|isConnected
+operator|&&
+name|attempt
+operator|<
+name|retries
+condition|;
+operator|++
+name|attempt
+control|)
+block|{
+if|if
+condition|(
+name|attempt
+operator|>
+literal|0
+operator|&&
+name|retryDelaySeconds
+operator|>
+literal|0
+condition|)
+block|{
+try|try
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Waiting "
+operator|+
+name|retryDelaySeconds
+operator|+
+literal|" seconds before next connection attempt."
+argument_list|)
+expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+name|retryDelaySeconds
+operator|*
+literal|1000
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|ignore
+parameter_list|)
+block|{         }
+block|}
 name|transport
 operator|=
 operator|new
@@ -1158,7 +1234,16 @@ operator|)
 operator|.
 name|setTimeout
 argument_list|(
-literal|20000
+literal|1000
+operator|*
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_SOCKET_TIMEOUT
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// Wrap thrift connection with SASL if enabled.
@@ -1282,7 +1367,7 @@ operator|.
 name|open
 argument_list|()
 expr_stmt|;
-name|open
+name|isConnected
 operator|=
 literal|true
 expr_stmt|;
@@ -1305,7 +1390,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"failed to connect to MetaStore, re-trying..."
+literal|"Failed to connect to the MetaStore Server..."
 argument_list|,
 name|e
 argument_list|)
@@ -1318,39 +1403,23 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"failed to connect to MetaStore, re-trying..."
+literal|"Failed to connect to the MetaStore Server..."
 argument_list|)
 expr_stmt|;
 block|}
-try|try
-block|{
-name|Thread
-operator|.
-name|sleep
-argument_list|(
-literal|1000
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InterruptedException
-name|ignore
-parameter_list|)
-block|{         }
 block|}
 block|}
 if|if
 condition|(
 operator|!
-name|open
+name|isConnected
 condition|)
 block|{
 throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"could not connect to meta store"
+literal|"Could not connect to the MetaStore server!"
 argument_list|)
 throw|;
 block|}
@@ -1360,7 +1429,7 @@ name|void
 name|close
 parameter_list|()
 block|{
-name|open
+name|isConnected
 operator|=
 literal|false
 expr_stmt|;
