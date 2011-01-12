@@ -1399,6 +1399,8 @@ operator|new
 name|WriteEntity
 argument_list|(
 name|table
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1617,6 +1619,8 @@ operator|new
 name|WriteEntity
 argument_list|(
 name|partn
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 if|if
@@ -1840,6 +1844,8 @@ operator|new
 name|WriteEntity
 argument_list|(
 name|partn
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;

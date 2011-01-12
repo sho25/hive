@@ -4205,6 +4205,15 @@ return|return
 name|partSpec
 return|;
 block|}
+specifier|public
+name|Hive
+name|getDb
+parameter_list|()
+block|{
+return|return
+name|db
+return|;
+block|}
 block|}
 end_class
 
