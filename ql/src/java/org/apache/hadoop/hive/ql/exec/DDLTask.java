@@ -10685,7 +10685,7 @@ operator|.
 name|getHiveLockObject
 argument_list|()
 operator|.
-name|getName
+name|getDisplayName
 argument_list|()
 argument_list|)
 expr_stmt|;

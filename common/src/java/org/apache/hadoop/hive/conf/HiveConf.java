@@ -1566,6 +1566,13 @@ argument_list|,
 literal|"hive_zookeeper_namespace"
 argument_list|)
 block|,
+name|HIVE_ZOOKEEPER_CLEAN_EXTRA_NODES
+argument_list|(
+literal|"hive.zookeeper.clean.extra.nodes"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(
