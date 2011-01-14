@@ -7829,9 +7829,6 @@ literal|"-rmr"
 block|,
 name|oldPath
 operator|.
-name|toUri
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 block|}
