@@ -902,6 +902,10 @@ parameter_list|()
 block|{
 if|if
 condition|(
+name|properties
+operator|==
+literal|null
+operator|&&
 name|tableDesc
 operator|!=
 literal|null
