@@ -2203,6 +2203,26 @@ return|return
 name|ugi
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getTokenStrForm
+parameter_list|(
+name|String
+name|tokenSignature
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"Tokens are not supported in current hadoop version"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 
