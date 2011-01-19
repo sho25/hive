@@ -1381,6 +1381,19 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * list all role names    * @return    * @throws TException     * @throws MetaException     */
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|listRoleNames
+parameter_list|()
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 comment|/**    *     * @param role_name    * @param user_name    * @param principalType    * @param grantor    * @param grantorType    * @param grantOption    * @return    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean

@@ -528,7 +528,7 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Error in loading index handler."
+literal|"Error in loading MetaStoreFS handler."
 operator|+
 name|e
 operator|.

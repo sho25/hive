@@ -2235,6 +2235,33 @@ argument_list|(
 name|DEFAULT_DATABASE_NAME
 argument_list|)
 expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|roleNames
+init|=
+name|db
+operator|.
+name|getAllRoleNames
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|String
+name|roleName
+range|:
+name|roleNames
+control|)
+block|{
+name|db
+operator|.
+name|dropRole
+argument_list|(
+name|roleName
+argument_list|)
+expr_stmt|;
+block|}
 comment|// allocate and initialize a new conf since a test can
 comment|// modify conf by using 'set' commands
 name|conf

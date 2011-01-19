@@ -1272,6 +1272,14 @@ function_decl|;
 specifier|public
 name|List
 argument_list|<
+name|String
+argument_list|>
+name|listRoleNames
+parameter_list|()
+function_decl|;
+specifier|public
+name|List
+argument_list|<
 name|MRoleMap
 argument_list|>
 name|listRoles
