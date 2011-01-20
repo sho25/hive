@@ -141,6 +141,22 @@ name|Constants
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|FileUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * The Class representing the filter as a  binary tree. The tree has TreeNode's  * at intermediate level and the leaf level nodes are of type LeafNode.  */
 end_comment
@@ -705,6 +721,77 @@ expr_stmt|;
 name|String
 name|filter
 decl_stmt|;
+name|String
+name|keyEqual
+init|=
+name|FileUtils
+operator|.
+name|escapePathName
+argument_list|(
+name|keyName
+argument_list|)
+operator|+
+literal|"="
+decl_stmt|;
+name|int
+name|keyEqualLength
+init|=
+name|keyEqual
+operator|.
+name|length
+argument_list|()
+decl_stmt|;
+name|String
+name|valString
+decl_stmt|;
+comment|// partitionname ==>  (key=value/)*(key=value)
+if|if
+condition|(
+name|partitionColumnIndex
+operator|==
+operator|(
+name|partitionColumnCount
+operator|-
+literal|1
+operator|)
+condition|)
+block|{
+name|valString
+operator|=
+literal|"partitionName.substring(partitionName.indexOf(\""
+operator|+
+name|keyEqual
+operator|+
+literal|"\")+"
+operator|+
+name|keyEqualLength
+operator|+
+literal|")"
+expr_stmt|;
+block|}
+else|else
+block|{
+name|valString
+operator|=
+literal|"partitionName.substring(partitionName.indexOf(\""
+operator|+
+name|keyEqual
+operator|+
+literal|"\")+"
+operator|+
+name|keyEqualLength
+operator|+
+literal|").substring(0, partitionName.substring(partitionName.indexOf(\""
+operator|+
+name|keyEqual
+operator|+
+literal|"\")+"
+operator|+
+name|keyEqualLength
+operator|+
+literal|").indexOf(\"/\"))"
+expr_stmt|;
+block|}
 comment|//Handle "a> 10" and "10> a" appropriately
 if|if
 condition|(
@@ -778,11 +865,7 @@ argument_list|()
 operator|+
 literal|" "
 operator|+
-literal|" this.values.get("
-operator|+
-name|partitionColumnIndex
-operator|+
-literal|")"
+name|valString
 expr_stmt|;
 block|}
 block|}
@@ -800,11 +883,11 @@ block|{
 comment|//generate this.values.get(i).matches("abc%")
 name|filter
 operator|=
-literal|" this.values.get("
+literal|" "
 operator|+
-name|partitionColumnIndex
+name|valString
 operator|+
-literal|")."
+literal|"."
 operator|+
 name|operator
 operator|.
@@ -850,11 +933,11 @@ else|else
 block|{
 name|filter
 operator|=
-literal|" this.values.get("
+literal|" "
 operator|+
-name|partitionColumnIndex
+name|valString
 operator|+
-literal|") "
+literal|" "
 operator|+
 name|operator
 operator|.
