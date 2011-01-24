@@ -1507,6 +1507,22 @@ literal|"jdbc:derby:;databaseName=TempStatsStore;create=true"
 argument_list|)
 block|,
 comment|// automatically create database
+name|HIVE_STATS_DEFAULT_PUBLISHER
+argument_list|(
+literal|"hive.stats.default.publisher"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+comment|// default stats publisher if none of JDBC/HBase is specified
+name|HIVE_STATS_DEFAULT_AGGREGATOR
+argument_list|(
+literal|"hive.stats.default.aggregator"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+comment|// default stats aggregator if none of JDBC/HBase is specified
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
