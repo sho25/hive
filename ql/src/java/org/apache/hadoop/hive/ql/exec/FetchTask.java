@@ -151,6 +151,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|FetchWork
@@ -239,9 +257,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|objectinspector
-operator|.
-name|InspectableObject
+name|SerDe
 import|;
 end_import
 
@@ -257,7 +273,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|objectinspector
+operator|.
+name|InspectableObject
 import|;
 end_import
 
@@ -859,6 +877,7 @@ argument_list|(
 name|s
 argument_list|)
 condition|)
+block|{
 name|work
 operator|.
 name|setTblDir
@@ -871,6 +890,7 @@ name|s
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|ArrayList
 argument_list|<
 name|String
@@ -888,6 +908,7 @@ name|ls
 operator|!=
 literal|null
 condition|)
+block|{
 name|ctx
 operator|.
 name|localizePaths
@@ -895,6 +916,29 @@ argument_list|(
 name|ls
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+comment|/**    * Clear the Fetch Operator.    *    * @throws HiveException    */
+specifier|public
+name|void
+name|clearFetch
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+if|if
+condition|(
+literal|null
+operator|!=
+name|ftOp
+condition|)
+block|{
+name|ftOp
+operator|.
+name|clearFetchContext
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class
