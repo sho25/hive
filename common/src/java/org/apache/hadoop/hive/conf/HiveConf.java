@@ -299,7 +299,7 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTOREFORCERELOADCONF
-block|,       }
+block|}
 decl_stmt|;
 comment|/**    * ConfVars.    *    */
 specifier|public
@@ -808,6 +808,13 @@ argument_list|(
 literal|"hive.metastore.sasl.enabled"
 argument_list|,
 literal|false
+argument_list|)
+block|,
+name|METASTORE_CACHE_PINOBJTYPES
+argument_list|(
+literal|"hive.metastore.cache.pinobjtypes"
+argument_list|,
+literal|"Table,StorageDescriptor,SerDeInfo,Partition,Database,Type,FieldSchema,Order"
 argument_list|)
 block|,
 comment|// Default parameters for creating tables
