@@ -9951,6 +9951,37 @@ name|tbls
 init|=
 literal|null
 decl_stmt|;
+name|String
+name|dbName
+init|=
+name|showTbls
+operator|.
+name|getDbName
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|db
+operator|.
+name|databaseExists
+argument_list|(
+name|dbName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"ERROR: The database "
+operator|+
+name|dbName
+operator|+
+literal|" does not exist."
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 name|showTbls
@@ -9979,6 +10010,8 @@ name|db
 operator|.
 name|getTablesByPattern
 argument_list|(
+name|dbName
+argument_list|,
 name|showTbls
 operator|.
 name|getPattern
@@ -10005,7 +10038,9 @@ operator|=
 name|db
 operator|.
 name|getAllTables
-argument_list|()
+argument_list|(
+name|dbName
+argument_list|)
 expr_stmt|;
 block|}
 comment|// write the results in the file

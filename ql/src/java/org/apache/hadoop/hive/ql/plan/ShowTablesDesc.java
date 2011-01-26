@@ -75,6 +75,9 @@ name|String
 name|pattern
 decl_stmt|;
 name|String
+name|dbName
+decl_stmt|;
+name|String
 name|resFile
 decl_stmt|;
 comment|/**    * table name for the result of show tables.    */
@@ -139,12 +142,42 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+comment|/**    * @param dbName    *          name of database to show tables of    */
+specifier|public
+name|ShowTablesDesc
+parameter_list|(
+name|Path
+name|resFile
+parameter_list|,
+name|String
+name|dbName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|resFile
+operator|=
+name|resFile
+operator|.
+name|toString
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|dbName
+operator|=
+name|dbName
+expr_stmt|;
+block|}
 comment|/**    * @param pattern    *          names of tables to show    */
 specifier|public
 name|ShowTablesDesc
 parameter_list|(
 name|Path
 name|resFile
+parameter_list|,
+name|String
+name|dbName
 parameter_list|,
 name|String
 name|pattern
@@ -158,6 +191,12 @@ name|resFile
 operator|.
 name|toString
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|dbName
+operator|=
+name|dbName
 expr_stmt|;
 name|this
 operator|.
@@ -234,6 +273,39 @@ operator|.
 name|resFile
 operator|=
 name|resFile
+expr_stmt|;
+block|}
+comment|/**    * @return the dbName    */
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"database name"
+argument_list|)
+specifier|public
+name|String
+name|getDbName
+parameter_list|()
+block|{
+return|return
+name|dbName
+return|;
+block|}
+comment|/**    * @param dbName    *          the dbName to set    */
+specifier|public
+name|void
+name|setDbName
+parameter_list|(
+name|String
+name|dbName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|dbName
+operator|=
+name|dbName
 expr_stmt|;
 block|}
 block|}
