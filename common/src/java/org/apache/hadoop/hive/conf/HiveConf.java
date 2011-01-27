@@ -1727,6 +1727,13 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|HIVE_AUTHORIZATION_TABLE_OWNER_GRANTS
+argument_list|(
+literal|"hive.security.authorization.createtable.owner.grants"
+argument_list|,
+literal|"All"
+argument_list|)
+block|,
 comment|// Print column names in output
 name|HIVE_CLI_PRINT_HEADER
 argument_list|(
@@ -1748,7 +1755,7 @@ literal|"hive.index.compact.file.ignore.hdfs"
 argument_list|,
 literal|false
 argument_list|)
-block|,     ;
+block|,      ;
 specifier|public
 specifier|final
 name|String
