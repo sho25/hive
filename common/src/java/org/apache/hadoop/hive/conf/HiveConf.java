@@ -1731,7 +1731,7 @@ name|HIVE_AUTHORIZATION_TABLE_OWNER_GRANTS
 argument_list|(
 literal|"hive.security.authorization.createtable.owner.grants"
 argument_list|,
-literal|"All"
+literal|null
 argument_list|)
 block|,
 comment|// Print column names in output
