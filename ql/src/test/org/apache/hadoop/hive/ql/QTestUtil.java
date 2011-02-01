@@ -311,6 +311,8 @@ name|hadoop
 operator|.
 name|hbase
 operator|.
+name|zookeeper
+operator|.
 name|MiniZooKeeperCluster
 import|;
 end_import
