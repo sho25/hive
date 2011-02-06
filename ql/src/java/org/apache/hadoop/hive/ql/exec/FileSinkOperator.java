@@ -4261,7 +4261,20 @@ condition|(
 name|statsPublisher
 operator|==
 literal|null
-operator|||
+condition|)
+block|{
+comment|// just return, stats gathering should not block the main query
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"StatsPublishing error: StatsPublisher is not initialized."
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 operator|!
 name|statsPublisher
 operator|.

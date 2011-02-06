@@ -202,6 +202,12 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
+name|int
+name|timeout
+init|=
+literal|30
+decl_stmt|;
 specifier|public
 name|boolean
 name|connect
@@ -217,6 +223,21 @@ operator|.
 name|hiveconf
 operator|=
 name|hiveconf
+expr_stmt|;
+name|timeout
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hiveconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_JDBC_TIMEOUT
+argument_list|)
 expr_stmt|;
 name|connectionString
 operator|=
@@ -259,14 +280,14 @@ operator|.
 name|newInstance
 argument_list|()
 expr_stmt|;
+comment|// stats is non-blocking -- throw an exception when timeout
 name|DriverManager
 operator|.
 name|setLoginTimeout
 argument_list|(
-literal|3
+name|timeout
 argument_list|)
 expr_stmt|;
-comment|// stats should not block
 name|conn
 operator|=
 name|DriverManager
@@ -359,6 +380,13 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
+name|stmt
+operator|.
+name|setQueryTimeout
+argument_list|(
+name|timeout
+argument_list|)
+expr_stmt|;
 name|String
 name|select
 init|=

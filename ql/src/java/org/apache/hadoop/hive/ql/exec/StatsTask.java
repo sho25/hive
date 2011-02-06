@@ -1071,29 +1071,6 @@ name|int
 name|aggregateStats
 parameter_list|()
 block|{
-try|try
-block|{
-comment|// Stats setup:
-name|Warehouse
-name|wh
-init|=
-operator|new
-name|Warehouse
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
-name|FileSystem
-name|fileSys
-decl_stmt|;
-name|FileStatus
-index|[]
-name|fileStatus
-decl_stmt|;
-comment|// manufacture a StatsAggregator
-name|StatsAggregator
-name|statsAggregator
-decl_stmt|;
 name|String
 name|statsImplementationClass
 init|=
@@ -1119,13 +1096,34 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
+name|StatsAggregator
 name|statsAggregator
-operator|=
+init|=
 name|StatsFactory
 operator|.
 name|getStatsAggregator
 argument_list|()
-expr_stmt|;
+decl_stmt|;
+try|try
+block|{
+comment|// Stats setup:
+name|Warehouse
+name|wh
+init|=
+operator|new
+name|Warehouse
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|FileSystem
+name|fileSys
+decl_stmt|;
+name|FileStatus
+index|[]
+name|fileStatus
+decl_stmt|;
+comment|// manufacture a StatsAggregator
 if|if
 condition|(
 operator|!
@@ -1137,21 +1135,15 @@ name|conf
 argument_list|)
 condition|)
 block|{
-comment|// this should not fail the whole job, return 0 so that the job won't fail.
-name|console
-operator|.
-name|printInfo
+throw|throw
+operator|new
+name|HiveException
 argument_list|(
-literal|"[WARNING] Could not update table/partition level stats."
-argument_list|,
-literal|"StatsAggregator.connect() failed: stats class = "
+literal|"StatsAggregator connect failed "
 operator|+
 name|statsImplementationClass
 argument_list|)
-expr_stmt|;
-return|return
-literal|0
-return|;
+throw|;
 block|}
 name|TableStatistics
 name|tblStats
@@ -1477,6 +1469,33 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_ATOMIC
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"StatsAggregator failed to get numRows."
+argument_list|)
+throw|;
+block|}
+block|}
 block|}
 else|else
 block|{
@@ -1553,6 +1572,33 @@ name|rows
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_ATOMIC
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"StatsAggregator failed to get numRows."
+argument_list|)
+throw|;
+block|}
 block|}
 name|fileSys
 operator|=
@@ -1932,11 +1978,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|statsAggregator
-operator|.
-name|closeConnection
-argument_list|()
-expr_stmt|;
 comment|//
 comment|// write table stats to metastore
 comment|//
@@ -2093,9 +2134,6 @@ operator|+
 literal|']'
 argument_list|)
 expr_stmt|;
-return|return
-literal|0
-return|;
 block|}
 catch|catch
 parameter_list|(
@@ -2127,10 +2165,19 @@ name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+name|statsAggregator
+operator|.
+name|closeConnection
+argument_list|()
+expr_stmt|;
+block|}
+comment|// StatsTask always return 0 so that the whole job won't fail
 return|return
 literal|0
 return|;
-block|}
 block|}
 comment|/**    * Get the list of partitions that need to update statistics.    * TODO: we should reuse the Partitions generated at compile time    * since getting the list of partitions is quite expensive.    * @return a list of partitions that need to update statistics.    * @throws HiveException    */
 specifier|private

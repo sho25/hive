@@ -230,6 +230,13 @@ name|updStmt
 decl_stmt|,
 name|insStmt
 decl_stmt|;
+specifier|private
+name|int
+name|timeout
+init|=
+literal|30
+decl_stmt|;
+comment|// default timeout in sec. for JDBC connection and statements
 specifier|public
 name|JDBCStatsPublisher
 parameter_list|()
@@ -274,6 +281,21 @@ operator|.
 name|HIVESTATSDBCONNECTIONSTRING
 argument_list|)
 expr_stmt|;
+name|timeout
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hiveconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_JDBC_TIMEOUT
+argument_list|)
+expr_stmt|;
 name|String
 name|driver
 init|=
@@ -304,10 +326,10 @@ name|DriverManager
 operator|.
 name|setLoginTimeout
 argument_list|(
-literal|3
+name|timeout
 argument_list|)
 expr_stmt|;
-comment|// stats should not block
+comment|// stats is non-blocking
 name|conn
 operator|=
 name|DriverManager
@@ -409,21 +431,21 @@ name|selStmt
 operator|.
 name|setQueryTimeout
 argument_list|(
-literal|5
+name|timeout
 argument_list|)
 expr_stmt|;
 name|updStmt
 operator|.
 name|setQueryTimeout
 argument_list|(
-literal|5
+name|timeout
 argument_list|)
 expr_stmt|;
 name|insStmt
 operator|.
 name|setQueryTimeout
 argument_list|(
-literal|5
+name|timeout
 argument_list|)
 expr_stmt|;
 return|return
@@ -837,6 +859,13 @@ operator|.
 name|newInstance
 argument_list|()
 expr_stmt|;
+name|DriverManager
+operator|.
+name|setLoginTimeout
+argument_list|(
+name|timeout
+argument_list|)
+expr_stmt|;
 name|conn
 operator|=
 name|DriverManager
@@ -854,6 +883,13 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
+name|stmt
+operator|.
+name|setQueryTimeout
+argument_list|(
+name|timeout
+argument_list|)
+expr_stmt|;
 comment|// Check if the table exists
 name|DatabaseMetaData
 name|dbm

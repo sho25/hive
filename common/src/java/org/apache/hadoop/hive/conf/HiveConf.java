@@ -1566,6 +1566,22 @@ literal|""
 argument_list|)
 block|,
 comment|// default stats aggregator if none of JDBC/HBase is specified
+name|HIVE_STATS_JDBC_TIMEOUT
+argument_list|(
+literal|"hive.stats.jdbc.timeout"
+argument_list|,
+literal|30
+argument_list|)
+block|,
+comment|// default timeout in sec for JDBC connection& SQL statements
+name|HIVE_STATS_ATOMIC
+argument_list|(
+literal|"hive.stats.atomic"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// whether to update metastore stats only if all stats are available
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
@@ -1755,7 +1771,7 @@ literal|"hive.index.compact.file.ignore.hdfs"
 argument_list|,
 literal|false
 argument_list|)
-block|,      ;
+block|,     ;
 specifier|public
 specifier|final
 name|String
