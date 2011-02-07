@@ -2781,6 +2781,13 @@ argument_list|,
 name|topOp
 argument_list|)
 expr_stmt|;
+name|cplan
+operator|.
+name|setMapperCannotSpanPartns
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 return|return
 name|cplan
 return|;

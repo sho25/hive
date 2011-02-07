@@ -1771,6 +1771,16 @@ literal|"hive.index.compact.file.ignore.hdfs"
 argument_list|,
 literal|false
 argument_list|)
+block|,
+comment|// temporary variable for testing. This is added just to turn off this feature in case of a bug in
+comment|// deployment. It has not been documented in hive-default.xml intentionally, this should be removed
+comment|// once the feature is stable
+name|HIVE_MAPPER_CANNOT_SPAN_MULTIPLE_PARTITIONS
+argument_list|(
+literal|"hive.mapper.cannot.span.multiple.partitions"
+argument_list|,
+literal|false
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final

@@ -490,6 +490,15 @@ name|String
 name|getCurrentInputFile
 parameter_list|()
 block|{
+name|currentInputFile
+operator|=
+name|this
+operator|.
+name|ioCxt
+operator|.
+name|getInputFile
+argument_list|()
+expr_stmt|;
 return|return
 name|currentInputFile
 return|;

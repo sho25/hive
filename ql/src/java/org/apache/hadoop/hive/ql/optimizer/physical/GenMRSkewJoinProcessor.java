@@ -645,6 +645,24 @@ name|TypeInfoFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
 begin_comment
 comment|/**  * GenMRSkewJoinProcessor.  *  */
 end_comment
@@ -1667,6 +1685,31 @@ operator|.
 name|getMapRedWork
 argument_list|()
 decl_stmt|;
+comment|// This code has been only added for testing
+name|boolean
+name|mapperCannotSpanPartns
+init|=
+name|parseCtx
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_MAPPER_CANNOT_SPAN_MULTIPLE_PARTITIONS
+argument_list|)
+decl_stmt|;
+name|newPlan
+operator|.
+name|setMapperCannotSpanPartns
+argument_list|(
+name|mapperCannotSpanPartns
+argument_list|)
+expr_stmt|;
 name|MapredWork
 name|clonePlan
 init|=

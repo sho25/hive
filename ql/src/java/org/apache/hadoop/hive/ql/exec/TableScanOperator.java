@@ -354,6 +354,13 @@ name|String
 name|partitionSpecs
 decl_stmt|;
 specifier|private
+specifier|transient
+name|boolean
+name|inputFileChanged
+init|=
+literal|false
+decl_stmt|;
+specifier|private
 name|TableDesc
 name|tableDesc
 decl_stmt|;
@@ -426,6 +433,21 @@ index|]
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Change the table partition for collecting stats
+annotation|@
+name|Override
+specifier|public
+name|void
+name|cleanUpInputFileChangedOp
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+name|inputFileChanged
+operator|=
+literal|true
+expr_stmt|;
+block|}
 specifier|private
 name|void
 name|gatherStats
@@ -434,14 +456,22 @@ name|Object
 name|row
 parameter_list|)
 block|{
+comment|// first row/call or a new partition
 if|if
 condition|(
+operator|(
 name|stat
 operator|==
 literal|null
+operator|)
+operator|||
+name|inputFileChanged
 condition|)
 block|{
-comment|// first row/call
+name|inputFileChanged
+operator|=
+literal|false
+expr_stmt|;
 name|stat
 operator|=
 operator|new
@@ -718,6 +748,10 @@ name|initializeChildren
 argument_list|(
 name|hconf
 argument_list|)
+expr_stmt|;
+name|inputFileChanged
+operator|=
+literal|false
 expr_stmt|;
 if|if
 condition|(
