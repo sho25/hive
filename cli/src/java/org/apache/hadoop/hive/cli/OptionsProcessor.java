@@ -305,6 +305,8 @@ decl_stmt|,
 name|fileOption
 decl_stmt|,
 name|isHelpOption
+decl_stmt|,
+name|isVerboseOption
 decl_stmt|;
 comment|/**    * Shamelessly cloned from Hadoop streaming take in multiple -hiveconf x=y parameters.    */
 class|class
@@ -835,6 +837,20 @@ argument_list|,
 literal|"silent mode"
 argument_list|)
 expr_stmt|;
+comment|// -v
+name|isVerboseOption
+operator|=
+name|createBoolOption
+argument_list|(
+name|builder
+argument_list|,
+literal|"verbose"
+argument_list|,
+literal|"v"
+argument_list|,
+literal|"verbose mode"
+argument_list|)
+expr_stmt|;
 comment|// -help
 name|isHelpOption
 operator|=
@@ -917,6 +933,11 @@ operator|.
 name|withOption
 argument_list|(
 name|fileOption
+argument_list|)
+operator|.
+name|withOption
+argument_list|(
+name|isVerboseOption
 argument_list|)
 operator|.
 name|create
@@ -1099,6 +1120,19 @@ operator|.
 name|getValue
 argument_list|(
 name|fileOption
+argument_list|)
+expr_stmt|;
+comment|// -v
+name|ss
+operator|.
+name|setIsVerbose
+argument_list|(
+name|cmdLine
+operator|.
+name|hasOption
+argument_list|(
+name|isVerboseOption
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// -i
@@ -1293,7 +1327,7 @@ name|println
 argument_list|(
 literal|"Usage: hive [--config confdir] [-hiveconf x=y]* [-i<init-filename>]*"
 operator|+
-literal|" [-f<filename>|-e<query-string>] [-S]"
+literal|" [-f<filename>|-e<query-string>] [-S] [-v]"
 argument_list|)
 expr_stmt|;
 name|System
@@ -1339,6 +1373,15 @@ operator|.
 name|println
 argument_list|(
 literal|"  -S                        Silent mode in interactive shell"
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"  -v                        Verbose mode (echo executed Sql to the console)"
 argument_list|)
 expr_stmt|;
 name|System

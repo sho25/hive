@@ -428,6 +428,11 @@ specifier|protected
 name|boolean
 name|isSilent
 decl_stmt|;
+comment|/**    * verbose mode    */
+specifier|protected
+name|boolean
+name|isVerbose
+decl_stmt|;
 comment|/*    * HiveHistory Object    */
 specifier|protected
 name|HiveHistory
@@ -567,6 +572,30 @@ operator|.
 name|isSilent
 operator|=
 name|isSilent
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|getIsVerbose
+parameter_list|()
+block|{
+return|return
+name|isVerbose
+return|;
+block|}
+specifier|public
+name|void
+name|setIsVerbose
+parameter_list|(
+name|boolean
+name|isVerbose
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isVerbose
+operator|=
+name|isVerbose
 expr_stmt|;
 block|}
 specifier|public
