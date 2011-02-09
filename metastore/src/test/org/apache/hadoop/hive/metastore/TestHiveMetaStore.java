@@ -514,6 +514,15 @@ name|hiveConf
 operator|.
 name|set
 argument_list|(
+literal|"hive.metastore.metrics.enabled"
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
+name|hiveConf
+operator|.
+name|set
+argument_list|(
 literal|"hive.key1"
 argument_list|,
 literal|"value1"
