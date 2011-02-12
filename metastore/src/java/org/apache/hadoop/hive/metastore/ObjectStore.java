@@ -1629,10 +1629,15 @@ operator|.
 name|getKey
 argument_list|()
 argument_list|,
+name|conf
+operator|.
+name|get
+argument_list|(
 name|e
 operator|.
-name|getValue
+name|getKey
 argument_list|()
+argument_list|)
 argument_list|)
 decl_stmt|;
 if|if
