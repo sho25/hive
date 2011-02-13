@@ -5194,6 +5194,10 @@ literal|"-I"
 block|,
 literal|"[.][.][.] [0-9]* more"
 block|,
+literal|"-I"
+block|,
+literal|"USING 'java -cp"
+block|,
 operator|(
 operator|new
 name|File
