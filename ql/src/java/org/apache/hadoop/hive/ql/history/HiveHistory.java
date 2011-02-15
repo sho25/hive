@@ -461,6 +461,8 @@ name|TASK_HADOOP_PROGRESS
 block|,
 name|TASK_COUNTERS
 block|,
+name|TASK_NUM_MAPPERS
+block|,
 name|TASK_NUM_REDUCERS
 block|,
 name|ROWS_INSERTED
