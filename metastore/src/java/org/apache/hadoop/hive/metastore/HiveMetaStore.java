@@ -6210,7 +6210,9 @@ try|try
 block|{
 name|old_part
 operator|=
-name|get_partition
+name|ms
+operator|.
+name|getPartition
 argument_list|(
 name|part
 operator|.
@@ -6876,7 +6878,9 @@ try|try
 block|{
 name|old_part
 operator|=
-name|get_partition
+name|ms
+operator|.
+name|getPartition
 argument_list|(
 name|part
 operator|.
@@ -7392,7 +7396,9 @@ argument_list|()
 expr_stmt|;
 name|part
 operator|=
-name|get_partition
+name|ms
+operator|.
+name|getPartition
 argument_list|(
 name|db_name
 argument_list|,
