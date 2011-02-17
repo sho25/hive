@@ -4595,7 +4595,7 @@ name|PrivilegeGrantInfo
 argument_list|(
 name|priv
 operator|.
-name|getPriv
+name|toString
 argument_list|()
 argument_list|,
 literal|0
@@ -4773,7 +4773,7 @@ name|HiveException
 argument_list|(
 name|priv
 operator|.
-name|getPriv
+name|toString
 argument_list|()
 operator|+
 literal|" does not support column level."
@@ -4856,7 +4856,7 @@ name|PrivilegeGrantInfo
 argument_list|(
 name|priv
 operator|.
-name|getPriv
+name|toString
 argument_list|()
 argument_list|,
 literal|0
@@ -4924,7 +4924,7 @@ name|PrivilegeGrantInfo
 argument_list|(
 name|priv
 operator|.
-name|getPriv
+name|toString
 argument_list|()
 argument_list|,
 literal|0
@@ -4973,7 +4973,7 @@ name|PrivilegeGrantInfo
 argument_list|(
 name|priv
 operator|.
-name|getPriv
+name|toString
 argument_list|()
 argument_list|,
 literal|0
@@ -5023,7 +5023,7 @@ name|PrivilegeGrantInfo
 argument_list|(
 name|priv
 operator|.
-name|getPriv
+name|toString
 argument_list|()
 argument_list|,
 literal|0

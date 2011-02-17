@@ -2075,7 +2075,7 @@ index|[
 name|i
 index|]
 operator|.
-name|getPriv
+name|toString
 argument_list|()
 decl_stmt|;
 if|if
@@ -2458,7 +2458,7 @@ index|[
 name|input
 index|]
 operator|.
-name|getPriv
+name|toString
 argument_list|()
 operator|+
 literal|"' found for inputs "
@@ -2503,7 +2503,7 @@ index|[
 name|output
 index|]
 operator|.
-name|getPriv
+name|toString
 argument_list|()
 operator|+
 literal|"' found for outputs "
