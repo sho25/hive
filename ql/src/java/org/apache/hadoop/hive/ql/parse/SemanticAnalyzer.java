@@ -7139,6 +7139,9 @@ if|if
 condition|(
 name|s
 operator|.
+name|toLowerCase
+argument_list|()
+operator|.
 name|equals
 argument_list|(
 name|elem
@@ -28218,6 +28221,9 @@ operator|.
 name|get
 argument_list|(
 name|src
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// for left-semi join, generate an additional selection& group-by
