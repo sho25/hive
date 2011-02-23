@@ -237,6 +237,22 @@ init|=
 literal|30
 decl_stmt|;
 comment|// default timeout in sec. for JDBC connection and statements
+comment|// SQL comment that identifies where the SQL statement comes from
+specifier|private
+specifier|final
+name|String
+name|comment
+init|=
+literal|"Hive stats publishing: "
+operator|+
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
 specifier|public
 name|JDBCStatsPublisher
 parameter_list|()
@@ -343,7 +359,11 @@ comment|// prepare the SELECT/UPDATE/INSERT statements
 name|String
 name|select
 init|=
-literal|"SELECT "
+literal|"SELECT /* "
+operator|+
+name|comment
+operator|+
+literal|" */ "
 operator|+
 name|JDBCStatsSetupConstants
 operator|.
@@ -366,7 +386,11 @@ decl_stmt|;
 name|String
 name|update
 init|=
-literal|"UPDATE "
+literal|"UPDATE /* "
+operator|+
+name|comment
+operator|+
+literal|" */ "
 operator|+
 name|JDBCStatsSetupConstants
 operator|.
@@ -391,7 +415,11 @@ decl_stmt|;
 name|String
 name|insert
 init|=
-literal|"INSERT INTO "
+literal|"INSERT INTO /* "
+operator|+
+name|comment
+operator|+
+literal|" */ "
 operator|+
 name|JDBCStatsSetupConstants
 operator|.

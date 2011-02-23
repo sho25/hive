@@ -208,6 +208,21 @@ name|timeout
 init|=
 literal|30
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|comment
+init|=
+literal|"Hive stats aggregation: "
+operator|+
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
 specifier|public
 name|boolean
 name|connect
@@ -390,9 +405,13 @@ expr_stmt|;
 name|String
 name|select
 init|=
-literal|"SELECT SUM"
+literal|"SELECT /* "
 operator|+
-literal|"("
+name|comment
+operator|+
+literal|" */ "
+operator|+
+literal|" SUM("
 operator|+
 name|JDBCStatsSetupConstants
 operator|.
@@ -468,7 +487,13 @@ comment|/* Automatic Cleaning:           IMPORTANT: Since we publish and aggrega
 name|String
 name|delete
 init|=
-literal|"DELETE FROM "
+literal|"DELETE /* "
+operator|+
+name|comment
+operator|+
+literal|" */ "
+operator|+
+literal|" FROM "
 operator|+
 name|JDBCStatsSetupConstants
 operator|.
@@ -648,7 +673,13 @@ decl_stmt|;
 name|String
 name|delete
 init|=
-literal|"DELETE FROM "
+literal|"DELETE /* "
+operator|+
+name|comment
+operator|+
+literal|" */ "
+operator|+
+literal|" FROM "
 operator|+
 name|JDBCStatsSetupConstants
 operator|.
