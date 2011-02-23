@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
+name|List
 import|;
 end_import
 
@@ -45,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Map
 import|;
 end_import
 
@@ -174,7 +174,7 @@ return|return
 name|enabled
 return|;
 block|}
-comment|/**    * Register a translation to be performed as part of unparse.    * The translation must not overlap with any previously    * registered translations (unless it is identical to an    * existing translation, in which case it is ignored).    *     * @param node    *          target node whose subtree is to be replaced    *     * @param replacementText    *          text to use as replacement    */
+comment|/**    * Register a translation to be performed as part of unparse.    * The translation must not overlap with any previously    * registered translations (unless it is identical to an    * existing translation, in which case it is ignored).    *    * @param node    *          target node whose subtree is to be replaced    *    * @param replacementText    *          text to use as replacement    */
 name|void
 name|addTranslation
 parameter_list|(
@@ -374,7 +374,108 @@ name|translation
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Register a translation for an identifier.    *     * @param node    *          source node (which must be an identifier) to be replaced    */
+comment|/**    * Register a translation for an tabName.    *    * @param node    *          source node (which must be an tabName) to be replaced    */
+name|void
+name|addTableNameTranslation
+parameter_list|(
+name|ASTNode
+name|tableName
+parameter_list|)
+block|{
+if|if
+condition|(
+operator|!
+name|enabled
+condition|)
+block|{
+return|return;
+block|}
+if|if
+condition|(
+name|tableName
+operator|.
+name|getToken
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|Identifier
+condition|)
+block|{
+name|addIdentifierTranslation
+argument_list|(
+name|tableName
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+assert|assert
+operator|(
+name|tableName
+operator|.
+name|getToken
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|TOK_TABNAME
+operator|)
+assert|;
+assert|assert
+operator|(
+name|tableName
+operator|.
+name|getChildCount
+argument_list|()
+operator|<=
+literal|2
+operator|)
+assert|;
+name|addIdentifierTranslation
+argument_list|(
+operator|(
+name|ASTNode
+operator|)
+name|tableName
+operator|.
+name|getChild
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|tableName
+operator|.
+name|getChildCount
+argument_list|()
+operator|==
+literal|2
+condition|)
+block|{
+name|addIdentifierTranslation
+argument_list|(
+operator|(
+name|ASTNode
+operator|)
+name|tableName
+operator|.
+name|getChild
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|/**    * Register a translation for an identifier.    *    * @param node    *          source node (which must be an identifier) to be replaced    */
 name|void
 name|addIdentifierTranslation
 parameter_list|(
@@ -497,7 +598,7 @@ name|copyTranslation
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Apply all translations on the given token stream.    *     * @param tokenRewriteStream    *          rewrite-capable stream    */
+comment|/**    * Apply all translations on the given token stream.    *    * @param tokenRewriteStream    *          rewrite-capable stream    */
 name|void
 name|applyTranslations
 parameter_list|(

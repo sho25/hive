@@ -2565,6 +2565,11 @@ argument_list|()
 argument_list|,
 name|table
 operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|table
+operator|.
 name|getTableName
 argument_list|()
 argument_list|,
@@ -2633,6 +2638,11 @@ argument_list|()
 argument_list|,
 name|table
 operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|table
+operator|.
 name|getTableName
 argument_list|()
 argument_list|,
@@ -2685,6 +2695,9 @@ argument_list|,
 name|String
 argument_list|>
 name|parameters
+parameter_list|,
+name|String
+name|databaseName
 parameter_list|,
 name|String
 name|tableName
@@ -2849,6 +2862,10 @@ name|Constants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
+name|databaseName
+operator|+
+literal|"."
+operator|+
 name|tableName
 argument_list|)
 expr_stmt|;

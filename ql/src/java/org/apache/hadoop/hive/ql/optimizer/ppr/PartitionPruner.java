@@ -884,6 +884,18 @@ name|LOG
 operator|.
 name|trace
 argument_list|(
+literal|"dbname = "
+operator|+
+name|tab
+operator|.
+name|getDbName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|trace
+argument_list|(
 literal|"tabname = "
 operator|+
 name|tab
@@ -904,6 +916,13 @@ expr_stmt|;
 name|String
 name|key
 init|=
+name|tab
+operator|.
+name|getDbName
+argument_list|()
+operator|+
+literal|"."
+operator|+
 name|tab
 operator|.
 name|getTableName
