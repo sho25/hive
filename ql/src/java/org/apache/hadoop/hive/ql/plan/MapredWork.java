@@ -1173,6 +1173,15 @@ name|void
 name|setAliases
 parameter_list|()
 block|{
+if|if
+condition|(
+name|aliasToWork
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 for|for
 control|(
 name|String

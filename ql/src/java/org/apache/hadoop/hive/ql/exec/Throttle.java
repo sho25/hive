@@ -121,6 +121,7 @@ init|=
 literal|60
 decl_stmt|;
 comment|/**    * Fetch http://tracker.om:/gc.jsp?threshold=period.    */
+specifier|public
 specifier|static
 name|void
 name|checkJobTracker

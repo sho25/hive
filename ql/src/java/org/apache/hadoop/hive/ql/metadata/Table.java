@@ -3500,6 +3500,24 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|/**    * @return whether this table is actually an index table    */
+specifier|public
+name|boolean
+name|isIndexTable
+parameter_list|()
+block|{
+return|return
+name|TableType
+operator|.
+name|INDEX_TABLE
+operator|.
+name|equals
+argument_list|(
+name|getTableType
+argument_list|()
+argument_list|)
+return|;
+block|}
 comment|/**    * Creates a partition name -> value spec map object    *    * @param tp    *          Use the information from this partition.    * @return Partition name to value mapping.    */
 specifier|public
 name|LinkedHashMap
