@@ -603,11 +603,11 @@ argument_list|)
 block|,
 name|DYNAMIC_PARTITION_MERGE
 argument_list|(
-literal|"Dynamic partition does not support merging mapfiles/mapredfiles yet."
+literal|"Dynamic partition does not support merging using non-CombineHiveInputFormat."
 operator|+
-literal|"Please set hive.merge.mapfiles and hive.merge.mapredfiles to false or use static "
+literal|"Please check your hive.input.format setting and make sure your Hadoop version support "
 operator|+
-literal|"partitions"
+literal|"CombineFileInputFormat."
 argument_list|)
 block|,
 name|NONEXISTPARTCOL
