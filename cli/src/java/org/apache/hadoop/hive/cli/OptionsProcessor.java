@@ -318,6 +318,58 @@ name|create
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// -h hostname/ippaddress
+name|options
+operator|.
+name|addOption
+argument_list|(
+name|OptionBuilder
+operator|.
+name|hasArg
+argument_list|()
+operator|.
+name|withArgName
+argument_list|(
+literal|"hostname"
+argument_list|)
+operator|.
+name|withDescription
+argument_list|(
+literal|"connecting to Hive Server on remote host"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|'h'
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// -p port
+name|options
+operator|.
+name|addOption
+argument_list|(
+name|OptionBuilder
+operator|.
+name|hasArg
+argument_list|()
+operator|.
+name|withArgName
+argument_list|(
+literal|"port"
+argument_list|)
+operator|.
+name|withDescription
+argument_list|(
+literal|"connecting to Hive Server on port number"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|'p'
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// [-S|--silent]
 name|options
 operator|.
@@ -354,7 +406,7 @@ literal|"Verbose mode (echo executed SQL to the console)"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// [-h|--help]
+comment|// [-H|--help]
 name|options
 operator|.
 name|addOption
@@ -362,7 +414,7 @@ argument_list|(
 operator|new
 name|Option
 argument_list|(
-literal|"h"
+literal|"H"
 argument_list|,
 literal|"help"
 argument_list|,
@@ -482,7 +534,7 @@ name|commandLine
 operator|.
 name|hasOption
 argument_list|(
-literal|'h'
+literal|'H'
 argument_list|)
 condition|)
 block|{
@@ -536,6 +588,41 @@ operator|.
 name|hasOption
 argument_list|(
 literal|'v'
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|ss
+operator|.
+name|host
+operator|=
+operator|(
+name|String
+operator|)
+name|commandLine
+operator|.
+name|getOptionValue
+argument_list|(
+literal|'h'
+argument_list|)
+expr_stmt|;
+name|ss
+operator|.
+name|port
+operator|=
+name|Integer
+operator|.
+name|parseInt
+argument_list|(
+operator|(
+name|String
+operator|)
+name|commandLine
+operator|.
+name|getOptionValue
+argument_list|(
+literal|'p'
+argument_list|,
+literal|"10000"
 argument_list|)
 argument_list|)
 expr_stmt|;
