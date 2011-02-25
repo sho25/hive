@@ -109,6 +109,10 @@ argument_list|(
 name|deterministic
 operator|=
 literal|false
+argument_list|,
+name|stateful
+operator|=
+literal|true
 argument_list|)
 specifier|public
 class|class

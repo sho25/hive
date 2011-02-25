@@ -110,6 +110,12 @@ parameter_list|()
 default|default
 literal|true
 function_decl|;
+name|boolean
+name|stateful
+parameter_list|()
+default|default
+literal|false
+function_decl|;
 block|}
 end_annotation_defn
 

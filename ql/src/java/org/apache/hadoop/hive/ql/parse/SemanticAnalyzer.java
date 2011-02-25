@@ -14055,6 +14055,23 @@ block|}
 else|else
 block|{
 comment|// Case when this is an expression
+name|TypeCheckCtx
+name|tcCtx
+init|=
+operator|new
+name|TypeCheckCtx
+argument_list|(
+name|inputRR
+argument_list|)
+decl_stmt|;
+comment|// We allow stateful functions in the SELECT list (but nowhere else)
+name|tcCtx
+operator|.
+name|setAllowStatefulFunctions
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|ExprNodeDesc
 name|exp
 init|=
@@ -14063,6 +14080,8 @@ argument_list|(
 name|expr
 argument_list|,
 name|inputRR
+argument_list|,
+name|tcCtx
 argument_list|)
 decl_stmt|;
 name|col_list
@@ -41506,6 +41525,42 @@ name|fieldSchemas
 return|;
 block|}
 comment|/**    * Generates an expression node descriptor for the expression passed in the    * arguments. This function uses the row resolver and the metadata information    * that are passed as arguments to resolve the column names to internal names.    *    * @param expr    *          The expression    * @param input    *          The row resolver    * @return exprNodeDesc    * @throws SemanticException    */
+specifier|public
+name|ExprNodeDesc
+name|genExprNodeDesc
+parameter_list|(
+name|ASTNode
+name|expr
+parameter_list|,
+name|RowResolver
+name|input
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+comment|// Since the user didn't supply a customized type-checking context,
+comment|// use default settings.
+name|TypeCheckCtx
+name|tcCtx
+init|=
+operator|new
+name|TypeCheckCtx
+argument_list|(
+name|input
+argument_list|)
+decl_stmt|;
+return|return
+name|genExprNodeDesc
+argument_list|(
+name|expr
+argument_list|,
+name|input
+argument_list|,
+name|tcCtx
+argument_list|)
+return|;
+block|}
+comment|/**    * Generates an expression node descriptor for the expression passed in the    * arguments. This function uses the row resolver and the metadata information    * that are passed as arguments to resolve the column names to internal names.    *    * @param expr    *          The expression    * @param input    *          The row resolver    * @param tcCtx    *          Customized type-checking context    * @return exprNodeDesc    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -41520,6 +41575,9 @@ name|expr
 parameter_list|,
 name|RowResolver
 name|input
+parameter_list|,
+name|TypeCheckCtx
+name|tcCtx
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -41601,16 +41659,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|// Create the walker, the rules dispatcher and the context.
-name|TypeCheckCtx
-name|tcCtx
-init|=
-operator|new
-name|TypeCheckCtx
-argument_list|(
-name|input
-argument_list|)
-decl_stmt|;
+comment|// Create the walker and  the rules dispatcher.
 name|tcCtx
 operator|.
 name|setUnparseTranslator

@@ -68,6 +68,11 @@ specifier|private
 name|ASTNode
 name|errorSrcNode
 decl_stmt|;
+comment|/**    * Whether to allow stateful UDF invocations.    */
+specifier|private
+name|boolean
+name|allowStatefulFunctions
+decl_stmt|;
 comment|/**    * Constructor.    *    * @param inputRR    *          The input row resolver of the previous operator.    */
 specifier|public
 name|TypeCheckCtx
@@ -84,6 +89,10 @@ expr_stmt|;
 name|error
 operator|=
 literal|null
+expr_stmt|;
+name|allowStatefulFunctions
+operator|=
+literal|false
 expr_stmt|;
 block|}
 comment|/**    * @param inputRR    *          the inputRR to set    */
@@ -136,6 +145,32 @@ parameter_list|()
 block|{
 return|return
 name|unparseTranslator
+return|;
+block|}
+comment|/**    * @param allowStatefulFunctions whether to allow stateful UDF invocations    */
+specifier|public
+name|void
+name|setAllowStatefulFunctions
+parameter_list|(
+name|boolean
+name|allowStatefulFunctions
+parameter_list|)
+block|{
+name|this
+operator|.
+name|allowStatefulFunctions
+operator|=
+name|allowStatefulFunctions
+expr_stmt|;
+block|}
+comment|/**    * @return whether to allow stateful UDF invocations    */
+specifier|public
+name|boolean
+name|getAllowStatefulFunctions
+parameter_list|()
+block|{
+return|return
+name|allowStatefulFunctions
 return|;
 block|}
 comment|/**    * @param error    *          the error to set    *    */

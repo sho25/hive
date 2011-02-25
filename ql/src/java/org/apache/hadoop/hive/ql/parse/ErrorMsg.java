@@ -550,6 +550,11 @@ operator|+
 literal|"number of columns output by the UDTF"
 argument_list|)
 block|,
+name|UDF_STATEFUL_INVALID_LOCATION
+argument_list|(
+literal|"Stateful UDF's can only be invoked in the SELECT list"
+argument_list|)
+block|,
 name|LATERAL_VIEW_WITH_JOIN
 argument_list|(
 literal|"Join with a lateral view is not supported"
