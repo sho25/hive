@@ -2279,6 +2279,12 @@ parameter_list|)
 block|{
 try|try
 block|{
+comment|//Initializing log for the HiveServer Mode
+name|SessionState
+operator|.
+name|initHiveLog4j
+argument_list|()
+expr_stmt|;
 name|int
 name|port
 init|=
