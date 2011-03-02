@@ -92,6 +92,9 @@ decl_stmt|;
 name|boolean
 name|ifNotExists
 decl_stmt|;
+name|boolean
+name|expectView
+decl_stmt|;
 name|LinkedHashMap
 argument_list|<
 name|String
@@ -105,7 +108,7 @@ specifier|public
 name|AddPartitionDesc
 parameter_list|()
 block|{   }
-comment|/**    * @param dbName    *          database to add to.    * @param tableName    *          table to add to.    * @param partSpec    *          partition specification.    * @param location    *          partition location, relative to table location.    * @param ifNotExists     *          if true, the partition is only added if it doesn't exist    */
+comment|/**    * @param dbName    *          database to add to.    * @param tableName    *          table to add to.    * @param partSpec    *          partition specification.    * @param location    *          partition location, relative to table location.    * @param ifNotExists     *          if true, the partition is only added if it doesn't exist    * @param expectView    *          true for ALTER VIEW, false for ALTER TABLE    */
 specifier|public
 name|AddPartitionDesc
 parameter_list|(
@@ -128,6 +131,9 @@ name|location
 parameter_list|,
 name|boolean
 name|ifNotExists
+parameter_list|,
+name|boolean
+name|expectView
 parameter_list|)
 block|{
 name|super
@@ -171,6 +177,12 @@ operator|.
 name|ifNotExists
 operator|=
 name|ifNotExists
+expr_stmt|;
+name|this
+operator|.
+name|expectView
+operator|=
+name|expectView
 expr_stmt|;
 block|}
 comment|/**    * @return database name    */
@@ -313,6 +325,32 @@ operator|.
 name|ifNotExists
 operator|=
 name|ifNotExists
+expr_stmt|;
+block|}
+comment|/**    * @return whether to expect a view being altered    */
+specifier|public
+name|boolean
+name|getExpectView
+parameter_list|()
+block|{
+return|return
+name|expectView
+return|;
+block|}
+comment|/**    * @param expectView    *          set whether to expect a view being altered    */
+specifier|public
+name|void
+name|setExpectView
+parameter_list|(
+name|boolean
+name|expectView
+parameter_list|)
+block|{
+name|this
+operator|.
+name|expectView
+operator|=
+name|expectView
 expr_stmt|;
 block|}
 block|}

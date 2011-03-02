@@ -587,6 +587,21 @@ argument_list|(
 literal|"A view cannot be used as target table for LOAD or INSERT"
 argument_list|)
 block|,
+name|ANALYZE_VIEW
+argument_list|(
+literal|"ANALYZE is not supported for views"
+argument_list|)
+block|,
+name|VIEW_PARTITION_TOTAL
+argument_list|(
+literal|"At least one non-partitioning column must be present in view"
+argument_list|)
+block|,
+name|VIEW_PARTITION_MISMATCH
+argument_list|(
+literal|"Rightmost columns in view output do not match PARTITIONED ON clause"
+argument_list|)
+block|,
 name|PARTITION_DYN_STA_ORDER
 argument_list|(
 literal|"Dynamic partition cannot be the parent of a static partition"

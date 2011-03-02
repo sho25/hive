@@ -178,7 +178,9 @@ block|,
 name|ALTERPARTITIONPROTECTMODE
 block|,
 name|ALTERLOCATION
-block|,   }
+block|,
+name|DROPPARTITION
+block|}
 empty_stmt|;
 specifier|public
 specifier|static

@@ -164,6 +164,9 @@ name|String
 argument_list|>
 argument_list|>
 name|partSpecs
+parameter_list|,
+name|boolean
+name|expectView
 parameter_list|)
 block|{
 name|this
@@ -235,9 +238,11 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|this
+operator|.
 name|expectView
 operator|=
-literal|false
+name|expectView
 expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */

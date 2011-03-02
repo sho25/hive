@@ -1042,6 +1042,7 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// skip the last (partitioning) column since it is always non-null
 for|for
 control|(
 name|int
@@ -1050,7 +1051,7 @@ init|=
 literal|1
 init|;
 name|i
-operator|<=
+operator|<
 name|meta
 operator|.
 name|getColumnCount
@@ -1650,11 +1651,30 @@ operator|.
 name|getMetaData
 argument_list|()
 decl_stmt|;
+name|int
+name|expectedColCount
+init|=
+literal|2
+decl_stmt|;
+if|if
+condition|(
+name|tableName
+operator|.
+name|equals
+argument_list|(
+name|partitionedTableName
+argument_list|)
+condition|)
+block|{
+operator|++
+name|expectedColCount
+expr_stmt|;
+block|}
 name|assertEquals
 argument_list|(
 literal|"Unexpected column count"
 argument_list|,
-literal|2
+name|expectedColCount
 argument_list|,
 name|meta
 operator|.

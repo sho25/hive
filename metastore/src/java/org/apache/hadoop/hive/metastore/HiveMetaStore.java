@@ -6137,6 +6137,27 @@ literal|"Unable to add partition because table or database do not exist"
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|tbl
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Cannot append a partition to a view"
+argument_list|)
+throw|;
+block|}
 name|part
 operator|.
 name|setSd
@@ -6949,6 +6970,20 @@ block|}
 name|String
 name|partLocationStr
 init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|part
+operator|.
+name|getSd
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|partLocationStr
+operator|=
 name|part
 operator|.
 name|getSd
@@ -6956,7 +6991,8 @@ argument_list|()
 operator|.
 name|getLocation
 argument_list|()
-decl_stmt|;
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|partLocationStr
@@ -6969,7 +7005,21 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-comment|// set default location if not specified
+comment|// set default location if not specified and this is
+comment|// a physical table partition (not a view)
+if|if
+condition|(
+name|tbl
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 name|partLocation
 operator|=
 operator|new
@@ -7000,8 +7050,30 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 else|else
 block|{
+if|if
+condition|(
+name|tbl
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Cannot specify location for a view partition"
+argument_list|)
+throw|;
+block|}
 name|partLocation
 operator|=
 name|wh
@@ -7016,6 +7088,13 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|partLocation
+operator|!=
+literal|null
+condition|)
+block|{
 name|part
 operator|.
 name|getSd
@@ -7029,9 +7108,9 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Check to see if the directory already exists before calling mkdirs()
-comment|// because if the file system is read-only, mkdirs will throw an
-comment|// exception even if the directory already exists.
+comment|// Check to see if the directory already exists before calling
+comment|// mkdirs() because if the file system is read-only, mkdirs will
+comment|// throw an exception even if the directory already exists.
 if|if
 condition|(
 operator|!
@@ -7068,6 +7147,7 @@ name|madeDir
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 comment|// set create time
 name|long
@@ -7435,34 +7515,6 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|part
-operator|.
-name|getSd
-argument_list|()
-operator|==
-literal|null
-operator|||
-name|part
-operator|.
-name|getSd
-argument_list|()
-operator|.
-name|getLocation
-argument_list|()
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Partition metadata is corrupted"
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
 operator|!
 name|ms
 operator|.
@@ -7491,6 +7543,30 @@ operator|.
 name|commitTransaction
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+operator|(
+name|part
+operator|.
+name|getSd
+argument_list|()
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|part
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+operator|!=
+literal|null
+operator|)
+condition|)
+block|{
 name|partPath
 operator|=
 operator|new
@@ -7505,6 +7581,7 @@ name|getLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|tbl
 operator|=
 name|get_table

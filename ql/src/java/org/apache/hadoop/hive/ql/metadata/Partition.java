@@ -585,6 +585,15 @@ operator|.
 name|Partition
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|tbl
+operator|.
+name|isView
+argument_list|()
+condition|)
+block|{
 name|tPart
 operator|.
 name|setSd
@@ -599,6 +608,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// TODO: get a copy
+block|}
 name|initialize
 argument_list|(
 name|tbl
@@ -778,6 +788,23 @@ argument_list|(
 name|pvals
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|tbl
+operator|.
+name|isView
+argument_list|()
+condition|)
+block|{
+name|initialize
+argument_list|(
+name|tbl
+argument_list|,
+name|tpart
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 name|StorageDescriptor
 name|sd
 init|=
@@ -935,6 +962,16 @@ name|tPartition
 operator|=
 name|tPartition
 expr_stmt|;
+if|if
+condition|(
+name|table
+operator|.
+name|isView
+argument_list|()
+condition|)
+block|{
+return|return;
+block|}
 name|String
 name|partName
 init|=
@@ -980,7 +1017,18 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// set default if location is not set
+comment|// set default if location is not set and this is a physical
+comment|// table partition (not a view partition)
+if|if
+condition|(
+name|table
+operator|.
+name|getDataLocation
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 name|Path
 name|partPath
 init|=
@@ -1011,6 +1059,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch
@@ -2324,6 +2373,22 @@ name|String
 name|getLocation
 parameter_list|()
 block|{
+if|if
+condition|(
+name|tPartition
+operator|.
+name|getSd
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
 return|return
 name|tPartition
 operator|.
@@ -2333,6 +2398,7 @@ operator|.
 name|getLocation
 argument_list|()
 return|;
+block|}
 block|}
 specifier|public
 name|void

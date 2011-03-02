@@ -2010,7 +2010,9 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"table is partitioned but partition spec is not specified or tab: "
+literal|"table is partitioned but partition spec is not specified or"
+operator|+
+literal|" does not fully match table partitioning: "
 operator|+
 name|spec
 argument_list|)
