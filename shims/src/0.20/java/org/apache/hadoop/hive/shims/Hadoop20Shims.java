@@ -2055,6 +2055,17 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+comment|// option to bypass task cleanup task was introduced in hadoop-23 (MAPREDUCE-2206)
+comment|// but can be backported. So we disable setup/cleanup in all versions>= 0.19
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+literal|"mapreduce.job.committer.task.cleanup.needed"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
