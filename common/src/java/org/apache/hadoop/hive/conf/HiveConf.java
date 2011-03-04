@@ -744,6 +744,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|METASTOREMULTITHREADED
+argument_list|(
+literal|"javax.jdo.option.Multithreaded"
+argument_list|,
+literal|"true"
+argument_list|)
+block|,
 comment|// Name of the connection url in the configuration
 name|METASTORECONNECTURLKEY
 argument_list|(
