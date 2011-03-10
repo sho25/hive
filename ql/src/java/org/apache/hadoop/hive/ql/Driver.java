@@ -6366,6 +6366,13 @@ name|taskCleanup
 argument_list|()
 expr_stmt|;
 block|}
+comment|// in case we decided to run everything in local mode, restore the
+comment|// the jobtracker setting to its initial value
+name|ctx
+operator|.
+name|restoreOriginalTracker
+argument_list|()
+expr_stmt|;
 return|return
 literal|9
 return|;
