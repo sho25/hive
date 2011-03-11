@@ -44,7 +44,7 @@ parameter_list|)
 throws|throws
 name|LockException
 function_decl|;
-comment|/**    * @param key        object to be locked    * @param mode       mode of the lock (SHARED/EXCLUSIVE)    * @param keepAlive  if the lock needs to be persisted after the statement    * @param sleepTime    * @param numRetries    */
+comment|/**    * @param key        object to be locked    * @param mode       mode of the lock (SHARED/EXCLUSIVE)    * @param keepAlive  if the lock needs to be persisted after the statement    */
 specifier|public
 name|HiveLock
 name|lock
@@ -57,12 +57,6 @@ name|mode
 parameter_list|,
 name|boolean
 name|keepAlive
-parameter_list|,
-name|int
-name|numRetries
-parameter_list|,
-name|int
-name|sleepTime
 parameter_list|)
 throws|throws
 name|LockException
@@ -82,12 +76,6 @@ name|objs
 parameter_list|,
 name|boolean
 name|keepAlive
-parameter_list|,
-name|int
-name|numRetries
-parameter_list|,
-name|int
-name|sleepTime
 parameter_list|)
 throws|throws
 name|LockException
@@ -151,6 +139,13 @@ function_decl|;
 specifier|public
 name|void
 name|close
+parameter_list|()
+throws|throws
+name|LockException
+function_decl|;
+specifier|public
+name|void
+name|prepareRetry
 parameter_list|()
 throws|throws
 name|LockException
