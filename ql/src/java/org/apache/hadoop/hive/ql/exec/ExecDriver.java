@@ -2704,6 +2704,8 @@ argument_list|,
 name|work
 argument_list|,
 name|emptyScratchDirStr
+argument_list|,
+name|ctx
 argument_list|)
 expr_stmt|;
 name|Utilities
@@ -5011,6 +5013,9 @@ name|work
 parameter_list|,
 name|String
 name|hiveScratchDir
+parameter_list|,
+name|Context
+name|ctx
 parameter_list|)
 throws|throws
 name|Exception
@@ -5168,7 +5173,9 @@ name|isEmptyPath
 argument_list|(
 name|job
 argument_list|,
-name|dirPath
+name|path
+argument_list|,
+name|ctx
 argument_list|)
 condition|)
 block|{
