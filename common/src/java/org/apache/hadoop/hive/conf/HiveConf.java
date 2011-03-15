@@ -1800,6 +1800,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVE_EXIM_URI_SCHEME_WL
+argument_list|(
+literal|"hive.exim.uri.scheme.whitelist"
+argument_list|,
+literal|"hdfs,pfile"
+argument_list|)
+block|,
 comment|// temporary variable for testing. This is added just to turn off this feature in case of a bug in
 comment|// deployment. It has not been documented in hive-default.xml intentionally, this should be removed
 comment|// once the feature is stable

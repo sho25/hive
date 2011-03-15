@@ -729,6 +729,36 @@ name|NEED_PARTITION_SPECIFICATION
 argument_list|(
 literal|"Table is partitioned and partition specification is needed"
 argument_list|)
+block|,
+name|INVALID_METADATA
+argument_list|(
+literal|"The metadata file could not be parsed "
+argument_list|)
+block|,
+name|NEED_TABLE_SPECIFICATION
+argument_list|(
+literal|"Table name could be determined; It should be specified "
+argument_list|)
+block|,
+name|PARTITION_EXISTS
+argument_list|(
+literal|"Partition already exists"
+argument_list|)
+block|,
+name|TABLE_DATA_EXISTS
+argument_list|(
+literal|"Table exists and contains data files"
+argument_list|)
+block|,
+name|INCOMPATIBLE_SCHEMA
+argument_list|(
+literal|"The existing table is not compatible with the import spec. "
+argument_list|)
+block|,
+name|EXIM_FOR_NON_NATIVE
+argument_list|(
+literal|"Export/Import cannot be done for a non-native table. "
+argument_list|)
 block|,       ;
 specifier|private
 name|String

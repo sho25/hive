@@ -1787,6 +1787,11 @@ name|tbd
 operator|.
 name|getHoldDDLTime
 argument_list|()
+argument_list|,
+name|tbd
+operator|.
+name|getInheritTableSpecs
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Partition

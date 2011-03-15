@@ -98,6 +98,14 @@ specifier|private
 name|boolean
 name|holdDDLTime
 decl_stmt|;
+specifier|private
+name|boolean
+name|inheritTableSpecs
+init|=
+literal|true
+decl_stmt|;
+comment|//For partitions, flag controlling whether the current
+comment|//table specs are to be used
 comment|// TODO: the below seems like they should just be combined into partitionDesc
 specifier|private
 name|org
@@ -618,6 +626,30 @@ operator|.
 name|dpCtx
 operator|=
 name|dpCtx
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|getInheritTableSpecs
+parameter_list|()
+block|{
+return|return
+name|inheritTableSpecs
+return|;
+block|}
+specifier|public
+name|void
+name|setInheritTableSpecs
+parameter_list|(
+name|boolean
+name|inheritTableSpecs
+parameter_list|)
+block|{
+name|this
+operator|.
+name|inheritTableSpecs
+operator|=
+name|inheritTableSpecs
 expr_stmt|;
 block|}
 block|}

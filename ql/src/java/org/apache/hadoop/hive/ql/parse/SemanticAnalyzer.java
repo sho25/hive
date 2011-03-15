@@ -43432,6 +43432,17 @@ name|getText
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|location
+operator|=
+name|EximUtil
+operator|.
+name|relativeToAbsolutePath
+argument_list|(
+name|conf
+argument_list|,
+name|location
+argument_list|)
+expr_stmt|;
 break|break;
 case|case
 name|HiveParser
