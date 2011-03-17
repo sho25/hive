@@ -2006,6 +2006,13 @@ operator|.
 name|hm
 argument_list|)
 expr_stmt|;
+name|queryInfoMap
+operator|.
+name|remove
+argument_list|(
+name|queryId
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Called at the start of a task. Called by Driver.run() A Job can have    * multiple tasks. Tasks will have multiple operator.    *    * @param task    */
 specifier|public
@@ -2195,6 +2202,13 @@ argument_list|,
 name|ti
 operator|.
 name|hm
+argument_list|)
+expr_stmt|;
+name|taskInfoMap
+operator|.
+name|remove
+argument_list|(
+name|id
 argument_list|)
 expr_stmt|;
 block|}
