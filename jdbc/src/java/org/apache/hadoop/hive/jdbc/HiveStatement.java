@@ -112,6 +112,12 @@ specifier|private
 name|HiveInterface
 name|client
 decl_stmt|;
+specifier|private
+name|int
+name|fetchSize
+init|=
+literal|50
+decl_stmt|;
 comment|/**    * We need to keep a reference to the result set to support the following:    *<code>    * statement.execute(String sql);    * statement.getResultSet();    *</code>.    */
 specifier|private
 name|ResultSet
@@ -455,6 +461,13 @@ argument_list|,
 name|maxRows
 argument_list|)
 expr_stmt|;
+name|resultSet
+operator|.
+name|setFetchSize
+argument_list|(
+name|fetchSize
+argument_list|)
+expr_stmt|;
 return|return
 name|resultSet
 return|;
@@ -613,13 +626,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|fetchSize
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getGeneratedKeys()    */
 specifier|public
@@ -896,13 +905,10 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+name|fetchSize
+operator|=
+name|rows
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setMaxFieldSize(int)    */
 specifier|public

@@ -940,6 +940,9 @@ name|tableName
 argument_list|,
 operator|-
 literal|1
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 comment|// tests not setting maxRows (return all)
@@ -948,6 +951,9 @@ argument_list|(
 name|tableName
 argument_list|,
 literal|0
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 comment|// tests setting maxRows to 0 (return all)
@@ -966,6 +972,9 @@ name|partitionedTableName
 argument_list|,
 operator|-
 literal|1
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 comment|// tests not setting maxRows
@@ -975,6 +984,9 @@ argument_list|(
 name|partitionedTableName
 argument_list|,
 literal|0
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 comment|// tests setting maxRows to 0
@@ -993,6 +1005,27 @@ argument_list|(
 name|tableName
 argument_list|,
 literal|100
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+specifier|final
+name|void
+name|testSelectAllFetchSize
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|doTestSelectAll
+argument_list|(
+name|tableName
+argument_list|,
+literal|100
+argument_list|,
+literal|20
 argument_list|)
 expr_stmt|;
 block|}
@@ -1524,6 +1557,9 @@ name|tableName
 parameter_list|,
 name|int
 name|maxRows
+parameter_list|,
+name|int
+name|fetchSize
 parameter_list|)
 throws|throws
 name|Exception
@@ -1548,6 +1584,31 @@ operator|.
 name|setMaxRows
 argument_list|(
 name|maxRows
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|fetchSize
+operator|>
+literal|0
+condition|)
+block|{
+name|stmt
+operator|.
+name|setFetchSize
+argument_list|(
+name|fetchSize
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|fetchSize
+argument_list|,
+name|stmt
+operator|.
+name|getFetchSize
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
