@@ -2293,7 +2293,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|public
-name|void
+name|String
 name|add_resource
 parameter_list|(
 name|ResourceType
@@ -2304,6 +2304,7 @@ name|value
 parameter_list|)
 block|{
 comment|// By default don't convert to unix
+return|return
 name|add_resource
 argument_list|(
 name|t
@@ -2312,7 +2313,7 @@ name|value
 argument_list|,
 literal|false
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 specifier|public
 name|String
