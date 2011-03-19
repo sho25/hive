@@ -1713,7 +1713,7 @@ name|getServerPrincipal
 argument_list|(
 name|principalConf
 argument_list|,
-literal|null
+literal|"0.0.0.0"
 argument_list|)
 expr_stmt|;
 name|UserGroupInformation
