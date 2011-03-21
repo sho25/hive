@@ -463,9 +463,6 @@ throw|;
 block|}
 try|try
 block|{
-name|clearWarnings
-argument_list|()
-expr_stmt|;
 name|resultSet
 operator|=
 literal|null
