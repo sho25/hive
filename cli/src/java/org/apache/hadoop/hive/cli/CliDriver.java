@@ -716,6 +716,11 @@ block|{
 comment|// if we have come this far - either the previous commands
 comment|// are all successful or this is command line. in either case
 comment|// this counts as a successful run
+name|ss
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 name|System
 operator|.
 name|exit

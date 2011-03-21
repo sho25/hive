@@ -359,14 +359,14 @@ parameter_list|()
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|remoteMode
+condition|)
+block|{
 name|client
 operator|.
 name|clean
-argument_list|()
-expr_stmt|;
-name|client
-operator|.
-name|shutdown
 argument_list|()
 expr_stmt|;
 name|transport
@@ -374,6 +374,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
