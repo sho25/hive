@@ -759,9 +759,7 @@ name|ql
 operator|.
 name|lockmgr
 operator|.
-name|HiveLockObject
-operator|.
-name|HiveLockObjectData
+name|LockException
 import|;
 end_import
 
@@ -779,7 +777,9 @@ name|ql
 operator|.
 name|lockmgr
 operator|.
-name|LockException
+name|HiveLockObject
+operator|.
+name|HiveLockObjectData
 import|;
 end_import
 
@@ -6075,8 +6075,24 @@ argument_list|(
 name|plan
 argument_list|,
 name|conf
+argument_list|,
+name|ctx
+operator|.
+name|getPathToCS
+argument_list|()
 argument_list|)
 decl_stmt|;
+name|hookContext
+operator|.
+name|setHookType
+argument_list|(
+name|HookContext
+operator|.
+name|HookType
+operator|.
+name|PRE_EXEC_HOOK
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Hook
@@ -6834,6 +6850,17 @@ name|output
 argument_list|)
 expr_stmt|;
 block|}
+name|hookContext
+operator|.
+name|setHookType
+argument_list|(
+name|HookContext
+operator|.
+name|HookType
+operator|.
+name|POST_EXEC_HOOK
+argument_list|)
+expr_stmt|;
 comment|// Get all the post execution hooks and execute them.
 for|for
 control|(
