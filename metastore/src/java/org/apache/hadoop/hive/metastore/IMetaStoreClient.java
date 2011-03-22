@@ -868,7 +868,34 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param dbName    * @param tableName    * @param s    * @param userName    * @param groupNames    * @return    * @throws NoSuchObjectException     */
+comment|/**    * Get list of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
+specifier|public
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|listPartitionsByFilter
+parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|String
+name|filter
+parameter_list|,
+name|short
+name|max_parts
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * @param dbName    * @param tableName    * @param s    * @param userName    * @param groupNames    * @return    * @throws NoSuchObjectException    */
 specifier|public
 name|List
 argument_list|<
@@ -901,7 +928,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * @param dbName    * @param tableName    * @param partialPvals    * @param s    * @param userName    * @param groupNames    * @return    * @throws NoSuchObjectException     */
+comment|/**    * @param dbName    * @param tableName    * @param partialPvals    * @param s    * @param userName    * @param groupNames    * @return    * @throws NoSuchObjectException    */
 specifier|public
 name|List
 argument_list|<
@@ -1368,7 +1395,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param role_name    *          role name    * @param db_name     *     * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param role_name    *          role name    * @param db_name    *    * @return    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|drop_role
@@ -1381,7 +1408,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * list all role names    * @return    * @throws TException     * @throws MetaException     */
+comment|/**    * list all role names    * @return    * @throws TException    * @throws MetaException    */
 specifier|public
 name|List
 argument_list|<
@@ -1394,7 +1421,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    *     * @param role_name    * @param user_name    * @param principalType    * @param grantor    * @param grantorType    * @param grantOption    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    *    * @param role_name    * @param user_name    * @param principalType    * @param grantor    * @param grantorType    * @param grantOption    * @return    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|grant_role
@@ -1422,7 +1449,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param role_name    *          role name    * @param user_name    *          user name    * @param principalType    * @param db_name    *     * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param role_name    *          role name    * @param user_name    *          user name    * @param principalType    * @param db_name    *    * @return    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|revoke_role
@@ -1441,7 +1468,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    *     * @param principalName    * @param principalType    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    *    * @param principalName    * @param principalType    * @return    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<

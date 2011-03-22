@@ -7282,6 +7282,13 @@ argument_list|(
 literal|"java.lang.String t1, java.lang.String t2"
 argument_list|)
 expr_stmt|;
+name|query
+operator|.
+name|setOrdering
+argument_list|(
+literal|"partitionName ascending"
+argument_list|)
+expr_stmt|;
 name|mparts
 operator|=
 operator|(
@@ -7392,6 +7399,18 @@ name|maxParts
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"# parts after pruning = "
+operator|+
+name|parts
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|commitTransaction
 argument_list|()
 expr_stmt|;
@@ -7530,6 +7549,15 @@ argument_list|,
 name|params
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"jdoFilter = "
+operator|+
+name|jdoFilter
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|jdoFilter
@@ -7951,7 +7979,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Executing listMPartitionsByFilter"
+literal|"Executing listMPartitionNamesByFilter"
 argument_list|)
 expr_stmt|;
 name|dbName
