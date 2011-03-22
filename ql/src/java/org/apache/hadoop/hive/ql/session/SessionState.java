@@ -1199,9 +1199,11 @@ name|out
 operator|.
 name|println
 argument_list|(
+literal|"Unable to initialize logging. "
+operator|+
 name|HIVE_L4J
 operator|+
-literal|" not found"
+literal|" not found on CLASSPATH!"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1216,6 +1218,18 @@ name|PropertyConfigurator
 operator|.
 name|configure
 argument_list|(
+name|hive_l4j
+argument_list|)
+expr_stmt|;
+name|SessionState
+operator|.
+name|getConsole
+argument_list|()
+operator|.
+name|printInfo
+argument_list|(
+literal|"Logging initialized using configuration in "
+operator|+
 name|hive_l4j
 argument_list|)
 expr_stmt|;
