@@ -455,6 +455,7 @@ block|{
 comment|// all children are done or no need to walk the children
 if|if
 condition|(
+operator|!
 name|getDispatchedList
 argument_list|()
 operator|.
@@ -464,11 +465,6 @@ name|nd
 argument_list|)
 condition|)
 block|{
-comment|// sanity check
-assert|assert
-literal|false
-assert|;
-block|}
 name|dispatch
 argument_list|(
 name|nd
@@ -476,6 +472,7 @@ argument_list|,
 name|opStack
 argument_list|)
 expr_stmt|;
+block|}
 name|opStack
 operator|.
 name|pop

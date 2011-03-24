@@ -1190,33 +1190,6 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-comment|// get table scan op
-if|if
-condition|(
-operator|!
-operator|(
-name|op
-operator|instanceof
-name|TableScanOperator
-operator|)
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"top op is not table scan"
-argument_list|)
-throw|;
-block|}
-name|TableScanOperator
-name|tableScanOp
-init|=
-operator|(
-name|TableScanOperator
-operator|)
-name|op
-decl_stmt|;
 comment|// if the table scan is for big table; then skip it
 comment|// tracing down the operator tree from the table scan operator
 name|Operator
@@ -1227,7 +1200,7 @@ name|Serializable
 argument_list|>
 name|parentOp
 init|=
-name|tableScanOp
+name|op
 decl_stmt|;
 name|Operator
 argument_list|<
@@ -1237,7 +1210,7 @@ name|Serializable
 argument_list|>
 name|childOp
 init|=
-name|tableScanOp
+name|op
 operator|.
 name|getChildOperators
 argument_list|()
@@ -1346,7 +1319,7 @@ name|put
 argument_list|(
 name|alias
 argument_list|,
-name|tableScanOp
+name|op
 argument_list|)
 expr_stmt|;
 name|smallTableAliasList
