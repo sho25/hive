@@ -1088,6 +1088,13 @@ argument_list|,
 literal|"LOG"
 argument_list|)
 block|,
+name|METASTORE_BATCH_RETRIEVE_MAX
+argument_list|(
+literal|"hive.metastore.batch.retrieve.max"
+argument_list|,
+literal|300
+argument_list|)
+block|,
 comment|// Default parameters for creating tables
 name|NEWTABLEDEFAULTPARA
 argument_list|(

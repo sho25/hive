@@ -928,6 +928,33 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Get partitions by a list of partition names.    * @param db_name database name    * @param tbl_name table name    * @param part_names list of partition names    * @return list of Partition objects    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
+specifier|public
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|getPartitionsByNames
+parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_names
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * @param dbName    * @param tableName    * @param partialPvals    * @param s    * @param userName    * @param groupNames    * @return    * @throws NoSuchObjectException    */
 specifier|public
 name|List
