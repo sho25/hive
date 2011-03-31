@@ -475,6 +475,10 @@ decl_stmt|;
 if|if
 condition|(
 name|fstatus
+operator|!=
+literal|null
+operator|&&
+name|fstatus
 operator|.
 name|length
 operator|>

@@ -2456,6 +2456,7 @@ condition|)
 block|{
 name|containerSize
 operator|=
+operator|-
 literal|1
 expr_stmt|;
 block|}
