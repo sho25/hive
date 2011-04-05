@@ -285,10 +285,6 @@ name|String
 name|sql
 decl_stmt|;
 specifier|private
-name|JdbcSessionState
-name|session
-decl_stmt|;
-specifier|private
 name|HiveInterface
 name|client
 decl_stmt|;
@@ -326,9 +322,6 @@ comment|/**    *    */
 specifier|public
 name|HivePreparedStatement
 parameter_list|(
-name|JdbcSessionState
-name|session
-parameter_list|,
 name|HiveInterface
 name|client
 parameter_list|,
@@ -336,12 +329,6 @@ name|String
 name|sql
 parameter_list|)
 block|{
-name|this
-operator|.
-name|session
-operator|=
-name|session
-expr_stmt|;
 name|this
 operator|.
 name|client
