@@ -1584,27 +1584,14 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param renewerKerberosPrincipalName    * @param tokenSignature    * @return    * @throws MetaException    * @throws TException    */
-specifier|public
-name|String
-name|getDelegationTokenWithSignature
-parameter_list|(
-name|String
-name|renewerKerberosPrincipalName
-parameter_list|,
-name|String
-name|tokenSignature
-parameter_list|)
-throws|throws
-name|MetaException
-throws|,
-name|TException
-function_decl|;
-comment|/**    * @param renewerKerberosPrincipalName    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param owner the intended owner for the token    * @param renewerKerberosPrincipalName    * @return    * @throws MetaException    * @throws TException    */
 specifier|public
 name|String
 name|getDelegationToken
 parameter_list|(
+name|String
+name|owner
+parameter_list|,
 name|String
 name|renewerKerberosPrincipalName
 parameter_list|)
