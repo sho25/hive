@@ -1223,7 +1223,9 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|TableDesc
+name|PlanUtils
+operator|.
+name|ExpressionTypes
 import|;
 end_import
 
@@ -1241,9 +1243,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-operator|.
-name|ExpressionTypes
+name|TableDesc
 import|;
 end_import
 
@@ -1501,7 +1501,9 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|Writable
+name|SequenceFile
+operator|.
+name|CompressionType
 import|;
 end_import
 
@@ -1515,9 +1517,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|SequenceFile
-operator|.
-name|CompressionType
+name|Writable
 import|;
 end_import
 
@@ -4681,6 +4681,30 @@ return|;
 block|}
 specifier|public
 specifier|static
+name|PartitionDesc
+name|getPartitionDescFromTableDesc
+parameter_list|(
+name|TableDesc
+name|tblDesc
+parameter_list|,
+name|Partition
+name|part
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+return|return
+operator|new
+name|PartitionDesc
+argument_list|(
+name|part
+argument_list|,
+name|tblDesc
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
 name|void
 name|addMapWork
 parameter_list|(
@@ -4724,6 +4748,14 @@ argument_list|(
 name|tbl
 argument_list|)
 argument_list|,
+operator|(
+name|LinkedHashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+operator|)
 literal|null
 argument_list|)
 argument_list|)
