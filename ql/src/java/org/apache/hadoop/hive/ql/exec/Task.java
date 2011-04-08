@@ -993,6 +993,13 @@ literal|null
 condition|)
 block|{
 comment|// first set back the backup task with its children task.
+if|if
+condition|(
+name|backupChildrenTasks
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|Task
@@ -1016,6 +1023,7 @@ argument_list|(
 name|backupTask
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// recursively remove task from its children tasks if this task doesn't have any parent task
 name|this

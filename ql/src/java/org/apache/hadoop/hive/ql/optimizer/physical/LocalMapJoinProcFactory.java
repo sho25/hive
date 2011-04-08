@@ -516,7 +516,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Node processor factory for skew join resolver.  */
+comment|/**  * Node processor factory for map join resolver. What it did is to replace the  * map-join operator in the local map join task with a hash-table dump operator.  * And if the map join is followed by a group by, the hash-table sink  * operator/mapjoin operator should be configured to use less memory to avoid  * OOM in group by operator.  */
 end_comment
 
 begin_class
@@ -545,7 +545,7 @@ parameter_list|()
 block|{
 return|return
 operator|new
-name|MapJoinFollowByProcessor
+name|MapJoinFollowedByGroupByProcessor
 argument_list|()
 return|;
 block|}
@@ -596,7 +596,7 @@ comment|/**    * MapJoinFollowByProcessor.    *    */
 specifier|public
 specifier|static
 class|class
-name|MapJoinFollowByProcessor
+name|MapJoinFollowedByGroupByProcessor
 implements|implements
 name|NodeProcessor
 block|{
@@ -909,24 +909,6 @@ name|order
 index|[
 name|bigTable
 index|]
-decl_stmt|;
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-name|bigOp
-init|=
-name|mapJoinOp
-operator|.
-name|getParentOperators
-argument_list|()
-operator|.
-name|get
-argument_list|(
-name|bigTable
-argument_list|)
 decl_stmt|;
 comment|// the parent ops for hashTableSinkOp
 name|List
