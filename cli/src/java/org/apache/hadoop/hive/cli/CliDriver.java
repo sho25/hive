@@ -2689,6 +2689,11 @@ literal|2
 argument_list|)
 expr_stmt|;
 block|}
+name|ss
+operator|.
+name|printInitInfo
+argument_list|()
+expr_stmt|;
 comment|// set all properties specified via command line
 name|HiveConf
 name|conf
