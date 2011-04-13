@@ -1028,6 +1028,7 @@ name|METADATA_FORMAT_FORWARD_COMPATIBLE_VERSION
 init|=
 literal|null
 decl_stmt|;
+specifier|public
 specifier|static
 name|void
 name|createExportDump
@@ -1296,6 +1297,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+specifier|public
 specifier|static
 name|Map
 operator|.
