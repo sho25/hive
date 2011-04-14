@@ -7081,6 +7081,11 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|ctx
+operator|.
+name|restoreOriginalTracker
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|SessionState
