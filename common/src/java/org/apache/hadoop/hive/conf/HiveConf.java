@@ -443,6 +443,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_PLUGIN_REGISTRY_BUNDLE_CHECK
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AUTHORIZATION_STORAGE_AUTH_CHECKS
 block|,       }
 decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
@@ -1093,6 +1099,14 @@ argument_list|(
 literal|"hive.metastore.batch.retrieve.max"
 argument_list|,
 literal|300
+argument_list|)
+block|,
+comment|// should we do checks against the storage (usually hdfs) for operations like drop_partition
+name|METASTORE_AUTHORIZATION_STORAGE_AUTH_CHECKS
+argument_list|(
+literal|"hive.metastore.authorization.storage.checks"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 comment|// Default parameters for creating tables

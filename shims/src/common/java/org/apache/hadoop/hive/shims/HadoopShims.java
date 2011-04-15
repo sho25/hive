@@ -487,6 +487,15 @@ name|LoginException
 throws|,
 name|IOException
 function_decl|;
+comment|/**    * Get the short name corresponding to the subject in the passed UGI    *    * In secure versions of Hadoop, this returns the short name (after    * undergoing the translation in the kerberos name rule mapping).    * In unsecure versions of Hadoop, this returns the name of the subject    */
+specifier|public
+name|String
+name|getShortUserName
+parameter_list|(
+name|UserGroupInformation
+name|ugi
+parameter_list|)
+function_decl|;
 comment|/**    * Return true if the Shim is based on Hadoop Security APIs.    */
 specifier|public
 name|boolean
