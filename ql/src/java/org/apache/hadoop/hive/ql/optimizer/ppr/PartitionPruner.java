@@ -1325,7 +1325,8 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// add all partitions corresponding to the table
+comment|// This can happen when hive.mapred.mode=nonstrict and there is no predicates at all
+comment|// Add all partitions to the unknown_parts so that a MR job is generated.
 name|true_parts
 operator|.
 name|addAll
@@ -1406,7 +1407,9 @@ operator|==
 literal|null
 condition|)
 block|{
-name|true_parts
+comment|// This could happen when hive.mapred.mode=nonstrict and all the predicates
+comment|// are on non-partition columns.
+name|unkn_parts
 operator|.
 name|addAll
 argument_list|(
