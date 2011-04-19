@@ -165,6 +165,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|CommandNeedRetryException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|Driver
 import|;
 end_import
@@ -242,7 +258,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HWISessionItem can be viewed as a wrapper for a Hive shell. With it the user  * has a session on the web server rather then in a console window.  *   */
+comment|/**  * HWISessionItem can be viewed as a wrapper for a Hive shell. With it the user  * has a session on the web server rather then in a console window.  *  */
 end_comment
 
 begin_class
@@ -894,7 +910,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Helper function to get configuration variables.    *     * @param wanted    *          a ConfVar    * @return Value of the configuration variable.    */
+comment|/**    * Helper function to get configuration variables.    *    * @param wanted    *          a ConfVar    * @return Value of the configuration variable.    */
 specifier|public
 name|String
 name|getHiveConfVar
@@ -1467,6 +1483,17 @@ name|Driver
 operator|)
 name|proc
 decl_stmt|;
+name|qp
+operator|.
+name|setTryCount
+argument_list|(
+name|Integer
+operator|.
+name|MAX_VALUE
+argument_list|)
+expr_stmt|;
+try|try
+block|{
 name|queryRet
 operator|.
 name|add
@@ -1633,13 +1660,39 @@ name|ex
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+catch|catch
+parameter_list|(
+name|CommandNeedRetryException
+name|e
+parameter_list|)
+block|{
+comment|// this should never happen since we Driver.setTryCount(Integer.MAX_VALUE)
+name|l4j
+operator|.
+name|error
+argument_list|(
+name|getSessionName
+argument_list|()
+operator|+
+literal|" Exception when executing"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
 name|qp
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
 block|}
+block|}
 else|else
+block|{
+try|try
 block|{
 name|queryRet
 operator|.
@@ -1660,6 +1713,27 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandNeedRetryException
+name|e
+parameter_list|)
+block|{
+comment|// this should never happen if there is no bug
+name|l4j
+operator|.
+name|error
+argument_list|(
+name|getSessionName
+argument_list|()
+operator|+
+literal|" Exception when executing"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 else|else
@@ -1847,7 +1921,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    *     * @return the HiveHistoryViewer for the session    * @throws HWIException    */
+comment|/**    *    * @return the HiveHistoryViewer for the session    * @throws HWIException    */
 specifier|public
 name|HiveHistoryViewer
 name|getHistoryViewer
@@ -1884,7 +1958,7 @@ return|return
 name|hv
 return|;
 block|}
-comment|/**    * Uses the sessionName property to compare to sessions.    *     * @return true if sessionNames are equal false otherwise    */
+comment|/**    * Uses the sessionName property to compare to sessions.    *    * @return true if sessionNames are equal false otherwise    */
 annotation|@
 name|Override
 specifier|public
@@ -1977,7 +2051,7 @@ operator|=
 name|resultFile
 expr_stmt|;
 block|}
-comment|/**    * The session name is an identifier to recognize the session.    *     * @return the session's name    */
+comment|/**    * The session name is an identifier to recognize the session.    *    * @return the session's name    */
 specifier|public
 name|String
 name|getSessionName
@@ -1987,7 +2061,7 @@ return|return
 name|sessionName
 return|;
 block|}
-comment|/**    * Used to represent to the user and other components what state the    * HWISessionItem is in. Certain commands can only be run when the application    * is in certain states.    *     * @return the current status of the session    */
+comment|/**    * Used to represent to the user and other components what state the    * HWISessionItem is in. Certain commands can only be run when the application    * is in certain states.    *    * @return the current status of the session    */
 specifier|public
 name|WebSessionItemStatus
 name|getStatus
@@ -1997,7 +2071,7 @@ return|return
 name|status
 return|;
 block|}
-comment|/**    * Currently unused.    *     * @return a String with the full path to the error file.    */
+comment|/**    * Currently unused.    *    * @return a String with the full path to the error file.    */
 specifier|public
 name|String
 name|getErrorFile
@@ -2007,7 +2081,7 @@ return|return
 name|errorFile
 return|;
 block|}
-comment|/**    * Currently unused.    *     * @param errorFile    *          the full path to the file for results.    */
+comment|/**    * Currently unused.    *    * @param errorFile    *          the full path to the file for results.    */
 specifier|public
 name|void
 name|setErrorFile
@@ -2071,7 +2145,7 @@ name|queries
 argument_list|)
 return|;
 block|}
-comment|/**    * Adds a new query to the execution list.    *     * @param query    *          query to be added to the list    */
+comment|/**    * Adds a new query to the execution list.    *    * @param query    *          query to be added to the list    */
 specifier|public
 name|void
 name|addQuery
@@ -2093,7 +2167,7 @@ name|query
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Removes a query from the execution list.    *     * @param item    *          the 0 based index of the item to be removed    */
+comment|/**    * Removes a query from the execution list.    *    * @param item    *          the 0 based index of the item to be removed    */
 specifier|public
 name|void
 name|removeQuery
@@ -2141,7 +2215,7 @@ return|return
 name|resultBucketMaxSize
 return|;
 block|}
-comment|/**    * sets the value for resultBucketMaxSize.    *     * @param size    *          the new size    */
+comment|/**    * sets the value for resultBucketMaxSize.    *    * @param size    *          the new size    */
 specifier|public
 name|void
 name|setResultBucketMaxSize
@@ -2171,7 +2245,7 @@ return|return
 name|resultBucket
 return|;
 block|}
-comment|/**    * The HWISessionItem stores the result of each query in an array.    *     * @return unmodifiable list of return codes    */
+comment|/**    * The HWISessionItem stores the result of each query in an array.    *    * @return unmodifiable list of return codes    */
 specifier|public
 name|List
 argument_list|<

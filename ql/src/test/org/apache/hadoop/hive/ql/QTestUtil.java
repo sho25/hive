@@ -4013,6 +4013,8 @@ name|String
 name|tname
 parameter_list|)
 block|{
+try|try
+block|{
 return|return
 name|drv
 operator|.
@@ -4029,6 +4031,24 @@ operator|.
 name|getResponseCode
 argument_list|()
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandNeedRetryException
+name|e
+parameter_list|)
+block|{
+comment|// TODO Auto-generated catch block
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
+return|return
+operator|-
+literal|1
+return|;
+block|}
 block|}
 specifier|public
 name|int
