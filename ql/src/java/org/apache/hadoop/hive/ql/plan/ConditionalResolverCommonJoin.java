@@ -1102,6 +1102,9 @@ name|pair
 operator|.
 name|size
 decl_stmt|;
+name|idx
+operator|--
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -1131,9 +1134,6 @@ block|}
 name|smallTablesFileSizeSum
 operator|+=
 name|size
-expr_stmt|;
-name|idx
-operator|--
 expr_stmt|;
 block|}
 comment|// compare with threshold
