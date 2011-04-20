@@ -1011,6 +1011,15 @@ name|this
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|boolean
+name|requireLock
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
 specifier|protected
 specifier|static
 name|String

@@ -1916,6 +1916,13 @@ argument_list|,
 literal|60
 argument_list|)
 block|,
+name|HIVE_LOCK_MAPRED_ONLY
+argument_list|(
+literal|"hive.lock.mapred.only.operation"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVE_ZOOKEEPER_QUORUM
 argument_list|(
 literal|"hive.zookeeper.quorum"
@@ -2093,7 +2100,7 @@ literal|"hive.mapper.cannot.span.multiple.partitions"
 argument_list|,
 literal|false
 argument_list|)
-block|,     ;
+block|,      ;
 specifier|public
 specifier|final
 name|String
