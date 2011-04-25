@@ -1760,6 +1760,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEROWOFFSET
+argument_list|(
+literal|"hive.exec.rowoffset"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVE_COMBINE_INPUT_FORMAT_SUPPORTS_SPLITTABLE
 argument_list|(
 literal|"hive.hadoop.supports.splittable.combineinputformat"

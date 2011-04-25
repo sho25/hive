@@ -16,8 +16,6 @@ operator|.
 name|ql
 operator|.
 name|index
-operator|.
-name|compact
 package|;
 end_package
 

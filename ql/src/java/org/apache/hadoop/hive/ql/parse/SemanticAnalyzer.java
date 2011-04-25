@@ -36189,10 +36189,10 @@ name|vcs
 init|=
 name|VirtualColumn
 operator|.
-name|registry
-operator|.
-name|values
-argument_list|()
+name|getRegistry
+argument_list|(
+name|conf
+argument_list|)
 operator|.
 name|iterator
 argument_list|()

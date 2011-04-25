@@ -16,8 +16,6 @@ operator|.
 name|ql
 operator|.
 name|index
-operator|.
-name|compact
 package|;
 end_package
 
@@ -303,10 +301,14 @@ name|LineReader
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveIndexResult parses the input stream from an index query  * to generate a list of file splits to query.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
-name|HiveCompactIndexResult
+name|HiveIndexResult
 block|{
 specifier|public
 specifier|static
@@ -318,7 +320,12 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"HiveCompactIndexResult"
+name|HiveIndexResult
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// IndexBucket
@@ -464,7 +471,7 @@ init|=
 literal|false
 decl_stmt|;
 specifier|public
-name|HiveCompactIndexResult
+name|HiveIndexResult
 parameter_list|(
 name|String
 name|indexFile
@@ -641,6 +648,8 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|Text
 name|line
 init|=
@@ -666,12 +675,16 @@ name|line
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+finally|finally
+block|{
 comment|// this will close the input stream
 name|lr
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

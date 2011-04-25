@@ -1101,10 +1101,13 @@ name|vcs
 init|=
 name|VirtualColumn
 operator|.
-name|registry
+name|getRegistry
+argument_list|(
+name|pctx
 operator|.
-name|values
+name|getConf
 argument_list|()
+argument_list|)
 operator|.
 name|iterator
 argument_list|()

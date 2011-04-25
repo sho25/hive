@@ -16,8 +16,6 @@ operator|.
 name|ql
 operator|.
 name|index
-operator|.
-name|compact
 package|;
 end_package
 
@@ -142,24 +140,6 @@ operator|.
 name|exec
 operator|.
 name|Task
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|index
-operator|.
-name|HiveIndex
 import|;
 end_import
 
@@ -630,7 +610,12 @@ name|getName
 parameter_list|()
 block|{
 return|return
-literal|"IndexMetadataChangeTask"
+name|IndexMetadataChangeTask
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
 return|;
 block|}
 annotation|@

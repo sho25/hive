@@ -87,6 +87,13 @@ literal|"compact"
 argument_list|,
 literal|"org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler"
 argument_list|)
+block|,
+name|BITMAP_TABLE
+argument_list|(
+literal|"bitmap"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.index.bitmap.BitmapIndexHandler"
+argument_list|)
 block|;
 specifier|private
 name|IndexType
