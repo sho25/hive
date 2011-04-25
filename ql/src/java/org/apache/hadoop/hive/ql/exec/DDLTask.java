@@ -817,24 +817,6 @@ name|ql
 operator|.
 name|io
 operator|.
-name|RCFileInputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|rcfile
 operator|.
 name|merge
@@ -2008,20 +1990,6 @@ operator|.
 name|shims
 operator|.
 name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputFormat
 import|;
 end_import
 
@@ -3233,7 +3201,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * First, make sure the source table/partition is not    * archived/indexes/non-rcfile. If either of these is true, throw an    * exception.    *     * The way how it does the merge is to create a BlockMergeTask from the    * mergeFilesDesc.    *     * @param db    * @param mergeFilesDesc    * @return    * @throws HiveException    */
+comment|/**    * First, make sure the source table/partition is not    * archived/indexes/non-rcfile. If either of these is true, throw an    * exception.    *    * The way how it does the merge is to create a BlockMergeTask from the    * mergeFilesDesc.    *    * @param db    * @param mergeFilesDesc    * @return    * @throws HiveException    */
 specifier|private
 name|int
 name|mergeFiles
@@ -17667,6 +17635,11 @@ argument_list|,
 name|dropDb
 operator|.
 name|getIfExists
+argument_list|()
+argument_list|,
+name|dropDb
+operator|.
+name|isCasdade
 argument_list|()
 argument_list|)
 expr_stmt|;
