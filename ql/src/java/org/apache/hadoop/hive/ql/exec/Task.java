@@ -371,6 +371,7 @@ name|Hive
 name|db
 decl_stmt|;
 specifier|protected
+specifier|static
 specifier|transient
 name|Log
 name|LOG

@@ -2107,6 +2107,13 @@ literal|"hive.mapper.cannot.span.multiple.partitions"
 argument_list|,
 literal|false
 argument_list|)
+block|,
+name|HIVE_REWORK_MAPREDWORK
+argument_list|(
+literal|"hive.rework.mapredwork"
+argument_list|,
+literal|false
+argument_list|)
 block|,      ;
 specifier|public
 specifier|final

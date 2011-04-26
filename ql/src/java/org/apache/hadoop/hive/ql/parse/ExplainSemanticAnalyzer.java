@@ -216,6 +216,11 @@ argument_list|,
 name|ctx
 argument_list|)
 expr_stmt|;
+name|sem
+operator|.
+name|validate
+argument_list|()
+expr_stmt|;
 name|boolean
 name|extended
 init|=

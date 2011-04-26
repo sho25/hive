@@ -4531,6 +4531,7 @@ return|;
 block|}
 comment|/**    * Handle a empty/null path for a given alias.    */
 specifier|private
+specifier|static
 name|int
 name|addInputPath
 parameter_list|(
@@ -5010,7 +5011,8 @@ return|return
 name|numEmptyPaths
 return|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|void
 name|addInputPaths
 parameter_list|(
