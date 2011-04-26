@@ -682,6 +682,11 @@ name|e
 argument_list|)
 throw|;
 block|}
+name|ret
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 name|List
 argument_list|<
 name|LongWritable
