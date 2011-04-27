@@ -1894,6 +1894,22 @@ literal|false
 argument_list|)
 block|,
 comment|// whether to update metastore stats only if all stats are available
+name|HIVE_STATS_RETRIES_MAX
+argument_list|(
+literal|"hive.stats.retries.max"
+argument_list|,
+literal|0
+argument_list|)
+block|,
+comment|// maximum # of retries to insert/select/delete the stats DB
+name|HIVE_STATS_RETRIES_WAIT
+argument_list|(
+literal|"hive.stats.retries.wait"
+argument_list|,
+literal|3000
+argument_list|)
+block|,
+comment|// # milliseconds to wait before the next retry
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
