@@ -2130,7 +2130,14 @@ literal|"hive.rework.mapredwork"
 argument_list|,
 literal|false
 argument_list|)
-block|,      ;
+block|,
+name|HIVE_CONCATENATE_CHECK_INDEX
+argument_list|(
+literal|"hive.exec.concatenate.check.index"
+argument_list|,
+literal|true
+argument_list|)
+block|,     ;
 specifier|public
 specifier|final
 name|String

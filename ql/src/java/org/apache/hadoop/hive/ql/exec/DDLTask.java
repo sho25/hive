@@ -3268,6 +3268,16 @@ argument_list|(
 name|mergeWork
 argument_list|)
 expr_stmt|;
+name|taskExec
+operator|.
+name|setQueryPlan
+argument_list|(
+name|this
+operator|.
+name|getQueryPlan
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|int
 name|ret
 init|=
