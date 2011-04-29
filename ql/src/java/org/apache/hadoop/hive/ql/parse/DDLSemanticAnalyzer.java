@@ -5390,6 +5390,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|expectView
+argument_list|,
+name|ifExists
 argument_list|)
 decl_stmt|;
 name|rootTasks

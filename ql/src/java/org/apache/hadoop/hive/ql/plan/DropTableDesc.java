@@ -114,6 +114,9 @@ decl_stmt|;
 name|boolean
 name|expectView
 decl_stmt|;
+name|boolean
+name|ifExists
+decl_stmt|;
 specifier|public
 name|DropTableDesc
 parameter_list|()
@@ -127,6 +130,9 @@ name|tableName
 parameter_list|,
 name|boolean
 name|expectView
+parameter_list|,
+name|boolean
+name|ifExists
 parameter_list|)
 block|{
 name|this
@@ -144,6 +150,12 @@ operator|.
 name|expectView
 operator|=
 name|expectView
+expr_stmt|;
+name|this
+operator|.
+name|ifExists
+operator|=
+name|ifExists
 expr_stmt|;
 block|}
 specifier|public
@@ -344,6 +356,32 @@ operator|.
 name|expectView
 operator|=
 name|expectView
+expr_stmt|;
+block|}
+comment|/**    * @return whether IF EXISTS was specified    */
+specifier|public
+name|boolean
+name|getIfExists
+parameter_list|()
+block|{
+return|return
+name|ifExists
+return|;
+block|}
+comment|/**    * @param ifExists    *          set whether IF EXISTS was specified    */
+specifier|public
+name|void
+name|setIfExists
+parameter_list|(
+name|boolean
+name|ifExists
+parameter_list|)
+block|{
+name|this
+operator|.
+name|ifExists
+operator|=
+name|ifExists
 expr_stmt|;
 block|}
 block|}
