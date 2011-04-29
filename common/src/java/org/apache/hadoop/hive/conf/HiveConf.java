@@ -1476,6 +1476,14 @@ literal|25000000L
 argument_list|)
 block|,
 comment|//25M
+comment|// random number for split sampling
+name|HIVESAMPLERANDOMNUM
+argument_list|(
+literal|"hive.sample.seednumber"
+argument_list|,
+literal|0
+argument_list|)
+block|,
 comment|// test mode in hive mode
 name|HIVETESTMODE
 argument_list|(

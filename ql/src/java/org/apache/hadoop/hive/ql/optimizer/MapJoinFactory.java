@@ -1005,9 +1005,6 @@ operator|.
 name|getMapRedWork
 argument_list|(
 name|parseCtx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|Task
@@ -1459,9 +1456,6 @@ operator|.
 name|getMapRedWork
 argument_list|(
 name|parseCtx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|Task

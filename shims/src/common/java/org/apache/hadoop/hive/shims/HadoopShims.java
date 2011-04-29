@@ -582,6 +582,13 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
+name|void
+name|shrinkSplit
+parameter_list|(
+name|long
+name|length
+parameter_list|)
+function_decl|;
 name|String
 name|toString
 parameter_list|()
