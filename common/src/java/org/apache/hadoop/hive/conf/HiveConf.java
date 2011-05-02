@@ -1791,6 +1791,14 @@ literal|true
 argument_list|)
 block|,
 comment|// column pruner
+name|HIVEOPTINDEXFILTER
+argument_list|(
+literal|"hive.optimize.index.filter"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// automatically use indexes
 name|HIVEOPTPPD
 argument_list|(
 literal|"hive.optimize.ppd"
@@ -1838,6 +1846,36 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// Indexes
+name|HIVEOPTINDEXFILTER_COMPACT_MINSIZE
+argument_list|(
+literal|"hive.optimize.index.filter.compact.minsize"
+argument_list|,
+operator|(
+name|long
+operator|)
+literal|5
+operator|*
+literal|1024
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|)
+block|,
+comment|// 5G
+name|HIVEOPTINDEXFILTER_COMPACT_MAXSIZE
+argument_list|(
+literal|"hive.optimize.index.filter.compact.maxsize"
+argument_list|,
+operator|(
+name|long
+operator|)
+operator|-
+literal|1
+argument_list|)
+block|,
+comment|// infinity
 comment|// Statistics
 name|HIVESTATSAUTOGATHER
 argument_list|(

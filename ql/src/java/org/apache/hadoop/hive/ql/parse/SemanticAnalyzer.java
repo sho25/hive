@@ -3379,6 +3379,10 @@ argument_list|,
 name|globalLimitCtx
 argument_list|,
 name|nameToSplitSample
+argument_list|,
+name|inputs
+argument_list|,
+name|rootTasks
 argument_list|)
 return|;
 block|}
@@ -42303,6 +42307,10 @@ argument_list|,
 name|globalLimitCtx
 argument_list|,
 name|nameToSplitSample
+argument_list|,
+name|inputs
+argument_list|,
+name|rootTasks
 argument_list|)
 decl_stmt|;
 name|Optimizer

@@ -687,6 +687,14 @@ comment|// we need to edit the configuration to setup cmdline. clone it first
 name|cloneConf
 argument_list|()
 expr_stmt|;
+comment|// propagate input format if necessary
+name|super
+operator|.
+name|setInputAttributes
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 comment|// enable assertion
 name|String
 name|hadoopExec
