@@ -941,7 +941,11 @@ name|errMsg
 operator|.
 name|append
 argument_list|(
-literal|"total number of created files exceeds "
+literal|"total number of created files now is "
+operator|+
+name|numFiles
+operator|+
+literal|", which exceeds "
 argument_list|)
 operator|.
 name|append
@@ -1383,10 +1387,6 @@ if|if
 condition|(
 name|fatal
 operator|=
-name|this
-operator|.
-name|callBackObj
-operator|.
 name|checkFatalErrors
 argument_list|(
 name|ctrs
