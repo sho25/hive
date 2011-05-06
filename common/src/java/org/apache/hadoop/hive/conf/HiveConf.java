@@ -1101,6 +1101,13 @@ argument_list|,
 literal|300
 argument_list|)
 block|,
+name|METASTORE_EVENT_LISTENERS
+argument_list|(
+literal|"hive.metastore.event.listeners"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// should we do checks against the storage (usually hdfs) for operations like drop_partition
 name|METASTORE_AUTHORIZATION_STORAGE_AUTH_CHECKS
 argument_list|(
