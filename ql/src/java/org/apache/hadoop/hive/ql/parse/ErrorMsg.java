@@ -124,22 +124,22 @@ argument_list|)
 block|,
 name|INVALID_COLUMN
 argument_list|(
-literal|"Invalid Column Reference"
+literal|"Invalid column reference"
 argument_list|)
 block|,
 name|INVALID_INDEX
 argument_list|(
-literal|"Invalid Index"
+literal|"Invalid index"
 argument_list|)
 block|,
 name|INVALID_TABLE_OR_COLUMN
 argument_list|(
-literal|"Invalid Table Alias or Column Reference"
+literal|"Invalid table alias or column reference"
 argument_list|)
 block|,
 name|AMBIGUOUS_TABLE_OR_COLUMN
 argument_list|(
-literal|"Ambiguous Table Alias or Column Reference"
+literal|"Ambiguous table alias or column reference"
 argument_list|)
 block|,
 name|INVALID_PARTITION
@@ -149,109 +149,109 @@ argument_list|)
 block|,
 name|AMBIGUOUS_COLUMN
 argument_list|(
-literal|"Ambiguous Column Reference"
+literal|"Ambiguous column reference"
 argument_list|)
 block|,
 name|AMBIGUOUS_TABLE_ALIAS
 argument_list|(
-literal|"Ambiguous Table Alias"
+literal|"Ambiguous table alias"
 argument_list|)
 block|,
 name|INVALID_TABLE_ALIAS
 argument_list|(
-literal|"Invalid Table Alias"
+literal|"Invalid table alias"
 argument_list|)
 block|,
 name|NO_TABLE_ALIAS
 argument_list|(
-literal|"No Table Alias"
+literal|"No table alias"
 argument_list|)
 block|,
 name|INVALID_FUNCTION
 argument_list|(
-literal|"Invalid Function"
+literal|"Invalid function"
 argument_list|)
 block|,
 name|INVALID_FUNCTION_SIGNATURE
 argument_list|(
-literal|"Function Argument Type Mismatch"
+literal|"Function argument type mismatch"
 argument_list|)
 block|,
 name|INVALID_OPERATOR_SIGNATURE
 argument_list|(
-literal|"Operator Argument Type Mismatch"
+literal|"Operator argument type mismatch"
 argument_list|)
 block|,
 name|INVALID_ARGUMENT
 argument_list|(
-literal|"Wrong Arguments"
+literal|"Wrong arguments"
 argument_list|)
 block|,
 name|INVALID_ARGUMENT_LENGTH
 argument_list|(
-literal|"Arguments Length Mismatch"
+literal|"Arguments length mismatch"
 argument_list|,
 literal|"21000"
 argument_list|)
 block|,
 name|INVALID_ARGUMENT_TYPE
 argument_list|(
-literal|"Argument Type Mismatch"
+literal|"Argument type mismatch"
 argument_list|)
 block|,
 name|INVALID_JOIN_CONDITION_1
 argument_list|(
-literal|"Both Left and Right Aliases Encountered in Join"
+literal|"Both left and right aliases encountered in JOIN"
 argument_list|)
 block|,
 name|INVALID_JOIN_CONDITION_2
 argument_list|(
-literal|"Neither Left nor Right Aliases Encountered in Join"
+literal|"Neither left nor right aliases encountered in JOIN"
 argument_list|)
 block|,
 name|INVALID_JOIN_CONDITION_3
 argument_list|(
-literal|"OR not supported in Join currently"
+literal|"OR not supported in JOIN currently"
 argument_list|)
 block|,
 name|INVALID_TRANSFORM
 argument_list|(
-literal|"TRANSFORM with Other Select Columns not Supported"
+literal|"TRANSFORM with other SELECT columns not supported"
 argument_list|)
 block|,
 name|DUPLICATE_GROUPBY_KEY
 argument_list|(
-literal|"Repeated Key in Group By"
+literal|"Repeated key in GROUP BY"
 argument_list|)
 block|,
 name|UNSUPPORTED_MULTIPLE_DISTINCTS
 argument_list|(
-literal|"DISTINCT on Different Columns not Supported with skew in data"
+literal|"DISTINCT on different columns not supported with skew in data"
 argument_list|)
 block|,
 name|NO_SUBQUERY_ALIAS
 argument_list|(
-literal|"No Alias For Subquery"
+literal|"No alias for subquery"
 argument_list|)
 block|,
 name|NO_INSERT_INSUBQUERY
 argument_list|(
-literal|"Cannot insert in a Subquery. Inserting to table "
+literal|"Cannot insert in a subquery. Inserting to table "
 argument_list|)
 block|,
 name|NON_KEY_EXPR_IN_GROUPBY
 argument_list|(
-literal|"Expression Not In Group By Key"
+literal|"Expression not in GROUP BY key"
 argument_list|)
 block|,
 name|INVALID_XPATH
 argument_list|(
-literal|"General . and [] Operators are Not Supported"
+literal|"General . and [] operators are not supported"
 argument_list|)
 block|,
 name|INVALID_PATH
 argument_list|(
-literal|"Invalid Path"
+literal|"Invalid path"
 argument_list|)
 block|,
 name|ILLEGAL_PATH
@@ -261,27 +261,27 @@ argument_list|)
 block|,
 name|INVALID_NUMERICAL_CONSTANT
 argument_list|(
-literal|"Invalid Numerical Constant"
+literal|"Invalid numerical constant"
 argument_list|)
 block|,
 name|INVALID_ARRAYINDEX_CONSTANT
 argument_list|(
-literal|"Non Constant Expressions for Array Indexes not Supported"
+literal|"Non-constant expressions for array indexes not supported"
 argument_list|)
 block|,
 name|INVALID_MAPINDEX_CONSTANT
 argument_list|(
-literal|"Non Constant Expression for Map Indexes not Supported"
+literal|"Non-constant expression for map indexes not supported"
 argument_list|)
 block|,
 name|INVALID_MAPINDEX_TYPE
 argument_list|(
-literal|"Map Key Type does not Match Index Expression Type"
+literal|"MAP key type does not match index expression type"
 argument_list|)
 block|,
 name|NON_COLLECTION_TYPE
 argument_list|(
-literal|"[] not Valid on Non Collection Types"
+literal|"[] not valid on non-collection types"
 argument_list|)
 block|,
 name|SELECT_DISTINCT_WITH_GROUPBY
@@ -306,27 +306,27 @@ argument_list|)
 block|,
 name|COLUMN_REPEATED_IN_CLUSTER_SORT
 argument_list|(
-literal|"Same column cannot appear in cluster and sort by"
+literal|"Same column cannot appear in CLUSTER BY and SORT BY"
 argument_list|)
 block|,
 name|SAMPLE_RESTRICTION
 argument_list|(
-literal|"Cannot Sample on More Than Two Columns"
+literal|"Cannot SAMPLE on more than two columns"
 argument_list|)
 block|,
 name|SAMPLE_COLUMN_NOT_FOUND
 argument_list|(
-literal|"Sample Column Not Found"
+literal|"SAMPLE column not found"
 argument_list|)
 block|,
 name|NO_PARTITION_PREDICATE
 argument_list|(
-literal|"No Partition Predicate Found"
+literal|"No partition predicate found"
 argument_list|)
 block|,
 name|INVALID_DOT
 argument_list|(
-literal|". operator is only supported on struct or list of struct types"
+literal|". Operator is only supported on struct or list of struct types"
 argument_list|)
 block|,
 name|INVALID_TBL_DDL_SERDE
@@ -341,37 +341,37 @@ argument_list|)
 block|,
 name|TABLE_ALIAS_NOT_ALLOWED
 argument_list|(
-literal|"Table Alias not Allowed in Sampling Clause"
+literal|"Table alias not allowed in sampling clause"
 argument_list|)
 block|,
 name|CLUSTERBY_DISTRIBUTEBY_CONFLICT
 argument_list|(
-literal|"Cannot have both Cluster By and Distribute By Clauses"
+literal|"Cannot have both CLUSTER BY and DISTRIBUTE BY clauses"
 argument_list|)
 block|,
 name|ORDERBY_DISTRIBUTEBY_CONFLICT
 argument_list|(
-literal|"Cannot have both Order By and Distribute By Clauses"
+literal|"Cannot have both ORDER BY and DISTRIBUTE BY clauses"
 argument_list|)
 block|,
 name|CLUSTERBY_SORTBY_CONFLICT
 argument_list|(
-literal|"Cannot have both Cluster By and Sort By Clauses"
+literal|"Cannot have both CLUSTER BY and SORT BY clauses"
 argument_list|)
 block|,
 name|ORDERBY_SORTBY_CONFLICT
 argument_list|(
-literal|"Cannot have both Order By and Sort By Clauses"
+literal|"Cannot have both ORDER BY and SORT BY clauses"
 argument_list|)
 block|,
 name|CLUSTERBY_ORDERBY_CONFLICT
 argument_list|(
-literal|"Cannot have both Cluster By and Order By Clauses"
+literal|"Cannot have both CLUSTER BY and ORDER BY clauses"
 argument_list|)
 block|,
 name|NO_LIMIT_WITH_ORDERBY
 argument_list|(
-literal|"In strict mode, limit must be specified if ORDER BY is present"
+literal|"In strict mode, if ORDER BY is specified, LIMIT must also be specified"
 argument_list|)
 block|,
 name|NO_CARTESIAN_PRODUCT
@@ -383,12 +383,12 @@ argument_list|)
 block|,
 name|UNION_NOTIN_SUBQ
 argument_list|(
-literal|"Top level Union is not supported currently; use a subquery for the union"
+literal|"Top level UNION is not supported currently; use a subquery for the UNION"
 argument_list|)
 block|,
 name|INVALID_INPUT_FORMAT_TYPE
 argument_list|(
-literal|"Input Format must implement InputFormat"
+literal|"Input format must implement InputFormat"
 argument_list|)
 block|,
 name|INVALID_OUTPUT_FORMAT_TYPE
@@ -407,34 +407,34 @@ argument_list|)
 block|,
 name|NO_OUTER_MAPJOIN
 argument_list|(
-literal|"Map Join cannot be performed with Outer join"
+literal|"MAPJOIN cannot be performed with OUTER JOIN"
 argument_list|)
 block|,
 name|INVALID_MAPJOIN_HINT
 argument_list|(
-literal|"neither table specified as map-table"
+literal|"Neither table specified as map-table"
 argument_list|)
 block|,
 name|INVALID_MAPJOIN_TABLE
 argument_list|(
-literal|"result of a union cannot be a map table"
+literal|"Result of a union cannot be a map table"
 argument_list|)
 block|,
 name|NON_BUCKETED_TABLE
 argument_list|(
-literal|"Sampling Expression Needed for Non-Bucketed Table"
+literal|"Sampling expression needed for non-bucketed table"
 argument_list|)
 block|,
 name|BUCKETED_NUMBERATOR_BIGGER_DENOMINATOR
 argument_list|(
 literal|"Numberator should not be bigger than "
 operator|+
-literal|"denaminator in sample clause for Table"
+literal|"denaminator in sample clause for table"
 argument_list|)
 block|,
 name|NEED_PARTITION_ERROR
 argument_list|(
-literal|"need to specify partition columns because the destination "
+literal|"Need to specify partition columns because the destination "
 operator|+
 literal|"table is partitioned."
 argument_list|)
@@ -453,14 +453,14 @@ argument_list|)
 block|,
 name|CTAS_COLLST_COEXISTENCE
 argument_list|(
-literal|"Create table as select command cannot specify the list of columns "
+literal|"CREATE TABLE AS SELECT command cannot specify the list of columns "
 operator|+
 literal|"for the target table."
 argument_list|)
 block|,
 name|CTLT_COLLST_COEXISTENCE
 argument_list|(
-literal|"Create table like command cannot specify the list of columns for "
+literal|"CREATE TABLE LIKE command cannot specify the list of columns for "
 operator|+
 literal|"the target table."
 argument_list|)
@@ -557,12 +557,12 @@ argument_list|)
 block|,
 name|LATERAL_VIEW_WITH_JOIN
 argument_list|(
-literal|"Join with a lateral view is not supported"
+literal|"JOIN with a LATERAL VIEW is not supported"
 argument_list|)
 block|,
 name|LATERAL_VIEW_INVALID_CHILD
 argument_list|(
-literal|"Lateral view AST with invalid child"
+literal|"LATERAL VIEW AST with invalid child"
 argument_list|)
 block|,
 name|OUTPUT_SPECIFIED_MULTIPLE_TIMES
@@ -654,17 +654,17 @@ argument_list|)
 block|,
 name|LOCKMGR_NOT_SPECIFIED
 argument_list|(
-literal|"lock manager not specified correctly, set hive.lock.manager"
+literal|"Lock manager not specified correctly, set hive.lock.manager"
 argument_list|)
 block|,
 name|LOCKMGR_NOT_INITIALIZED
 argument_list|(
-literal|"lock manager could not be initialized, check hive.lock.manager "
+literal|"Lock manager could not be initialized, check hive.lock.manager "
 argument_list|)
 block|,
 name|LOCK_CANNOT_BE_ACQUIRED
 argument_list|(
-literal|"locks on the underlying objects cannot be acquired. retry after some time"
+literal|"Locks on the underlying objects cannot be acquired. retry after some time"
 argument_list|)
 block|,
 name|ZOOKEEPER_CLIENT_COULD_NOT_BE_INITIALIZED
@@ -1478,7 +1478,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"line "
+literal|"Line "
 argument_list|)
 expr_stmt|;
 name|sb

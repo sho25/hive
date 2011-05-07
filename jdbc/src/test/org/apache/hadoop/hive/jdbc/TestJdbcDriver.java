@@ -2032,7 +2032,7 @@ literal|"SELECTT * FROM "
 operator|+
 name|tableName
 argument_list|,
-literal|"cannot recognize input 'SELECTT'"
+literal|"cannot recognize input near 'SELECTT' '*' 'FROM'"
 argument_list|,
 name|invalidSyntaxSQLState
 argument_list|,
@@ -2045,7 +2045,7 @@ literal|"SELECT * FROM some_table_that_does_not_exist"
 argument_list|,
 literal|"Table not found"
 argument_list|,
-literal|"42S02"
+literal|"42000"
 argument_list|,
 name|parseErrorCode
 argument_list|)
@@ -2056,7 +2056,7 @@ literal|"drop table some_table_that_does_not_exist"
 argument_list|,
 literal|"Table not found"
 argument_list|,
-literal|"42S02"
+literal|"42000"
 argument_list|,
 name|parseErrorCode
 argument_list|)
@@ -2067,7 +2067,7 @@ literal|"SELECT invalid_column FROM "
 operator|+
 name|tableName
 argument_list|,
-literal|"Invalid Table Alias or Column Reference"
+literal|"Invalid table alias or column reference"
 argument_list|,
 name|invalidSyntaxSQLState
 argument_list|,
@@ -2080,7 +2080,7 @@ literal|"SELECT invalid_function(key) FROM "
 operator|+
 name|tableName
 argument_list|,
-literal|"Invalid Function"
+literal|"Invalid function"
 argument_list|,
 name|invalidSyntaxSQLState
 argument_list|,
