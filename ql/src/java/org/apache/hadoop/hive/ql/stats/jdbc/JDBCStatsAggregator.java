@@ -457,7 +457,7 @@ name|JDBCStatsSetupConstants
 operator|.
 name|PART_STAT_ID_COLUMN_NAME
 operator|+
-literal|" LIKE ?"
+literal|" LIKE ? ESCAPE ?"
 decl_stmt|;
 comment|/* Automatic Cleaning:     IMPORTANT: Since we publish and aggregate only 1 value (1 column) which is the row count, it     is valid to delete the row after aggregation (automatic cleaning) because we know that there is no     other values to aggregate.     If ;in the future; other values are aggregated and published, then we cannot do cleaning except     when we are sure that all values are aggregated, or we can separate the implementation of cleaning     through a separate method which the developer has to call it manually in the code.     */
 name|String
@@ -481,7 +481,7 @@ name|JDBCStatsSetupConstants
 operator|.
 name|PART_STAT_ID_COLUMN_NAME
 operator|+
-literal|" LIKE ?"
+literal|" LIKE ? ESCAPE ?"
 decl_stmt|;
 comment|// stats is non-blocking -- throw an exception when timeout
 name|DriverManager
@@ -817,6 +817,18 @@ return|;
 block|}
 block|}
 decl_stmt|;
+name|String
+name|keyPrefix
+init|=
+name|Utilities
+operator|.
+name|escapeSqlLike
+argument_list|(
+name|fileID
+argument_list|)
+operator|+
+literal|"%"
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -836,13 +848,6 @@ name|retval
 init|=
 literal|0
 decl_stmt|;
-name|String
-name|keyPrefix
-init|=
-name|fileID
-operator|+
-literal|"%"
-decl_stmt|;
 name|selStmt
 operator|.
 name|setString
@@ -850,6 +855,22 @@ argument_list|(
 literal|1
 argument_list|,
 name|keyPrefix
+argument_list|)
+expr_stmt|;
+name|selStmt
+operator|.
+name|setString
+argument_list|(
+literal|2
+argument_list|,
+name|Character
+operator|.
+name|toString
+argument_list|(
+name|Utilities
+operator|.
+name|sqlEscapeChar
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|ResultSet
@@ -907,6 +928,22 @@ argument_list|(
 literal|1
 argument_list|,
 name|keyPrefix
+argument_list|)
+expr_stmt|;
+name|delStmt
+operator|.
+name|setString
+argument_list|(
+literal|2
+argument_list|,
+name|Character
+operator|.
+name|toString
+argument_list|(
+name|Utilities
+operator|.
+name|sqlEscapeChar
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|Utilities
