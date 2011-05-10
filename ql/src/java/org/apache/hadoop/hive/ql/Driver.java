@@ -1621,8 +1621,20 @@ literal|false
 return|;
 block|}
 block|}
+comment|// the reason that we set the lock manager for the cxt here is because each
+comment|// query has its own ctx object. The hiveLockMgr is shared accross the
+comment|// same instance of Driver, which can run multiple queries.
+name|ctx
+operator|.
+name|setHiveLockMgr
+argument_list|(
+name|hiveLockMgr
+argument_list|)
+expr_stmt|;
 return|return
-literal|true
+name|hiveLockMgr
+operator|!=
+literal|null
 return|;
 block|}
 specifier|private
@@ -1733,6 +1745,36 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+comment|// set hiveLockMgr to null just in case this invalid manager got set to
+comment|// next query's ctx.
+if|if
+condition|(
+name|hiveLockMgr
+operator|!=
+literal|null
+condition|)
+block|{
+try|try
+block|{
+name|hiveLockMgr
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|LockException
+name|e1
+parameter_list|)
+block|{
+comment|//nothing can do here
+block|}
+name|hiveLockMgr
+operator|=
+literal|null
+expr_stmt|;
+block|}
 throw|throw
 operator|new
 name|SemanticException
@@ -5405,17 +5447,6 @@ argument_list|(
 name|command
 argument_list|)
 decl_stmt|;
-name|boolean
-name|requireLock
-init|=
-literal|false
-decl_stmt|;
-name|boolean
-name|ckLock
-init|=
-name|checkLockManager
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
 name|ret
@@ -5443,18 +5474,22 @@ name|SQLState
 argument_list|)
 return|;
 block|}
+name|boolean
+name|requireLock
+init|=
+literal|false
+decl_stmt|;
+name|boolean
+name|ckLock
+init|=
+name|checkLockManager
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|ckLock
 condition|)
 block|{
-name|ctx
-operator|.
-name|setHiveLockMgr
-argument_list|(
-name|hiveLockMgr
-argument_list|)
-expr_stmt|;
 name|boolean
 name|lockOnlyMapred
 init|=
