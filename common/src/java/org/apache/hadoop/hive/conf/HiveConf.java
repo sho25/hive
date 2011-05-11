@@ -1371,6 +1371,13 @@ operator|)
 literal|0.5
 argument_list|)
 block|,
+name|HIVEMULTIGROUPBYSINGLEMR
+argument_list|(
+literal|"hive.multigroupby.singlemr"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// for hive udtf operator
 name|HIVEUDTFAUTOPROGRESS
 argument_list|(
