@@ -1635,7 +1635,7 @@ argument_list|(
 literal|"hive.ql.parse.DDLSemanticAnalyzer"
 argument_list|)
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|static
 specifier|final
 name|Map
@@ -1655,21 +1655,13 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|public
-specifier|static
+specifier|private
 specifier|final
 name|Set
 argument_list|<
 name|String
 argument_list|>
 name|reservedPartitionValues
-init|=
-operator|new
-name|HashSet
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
 decl_stmt|;
 static|static
 block|{
@@ -1983,6 +1975,15 @@ name|super
 argument_list|(
 name|conf
 argument_list|)
+expr_stmt|;
+name|reservedPartitionValues
+operator|=
+operator|new
+name|HashSet
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
 expr_stmt|;
 comment|// Partition can't have this name
 name|reservedPartitionValues
