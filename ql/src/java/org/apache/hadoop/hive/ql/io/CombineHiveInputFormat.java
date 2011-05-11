@@ -2361,7 +2361,7 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|int
+name|long
 name|size
 init|=
 literal|0
