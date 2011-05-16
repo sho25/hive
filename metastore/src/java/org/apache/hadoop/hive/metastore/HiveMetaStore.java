@@ -3190,11 +3190,9 @@ name|shutdown
 argument_list|()
 expr_stmt|;
 block|}
-name|System
-operator|.
-name|exit
+name|logInfo
 argument_list|(
-literal|0
+literal|"Metastore shutdown complete."
 argument_list|)
 expr_stmt|;
 block|}
@@ -17250,6 +17248,8 @@ name|String
 index|[]
 name|args
 parameter_list|)
+throws|throws
+name|Throwable
 block|{
 name|int
 name|port
@@ -17296,22 +17296,21 @@ name|Throwable
 name|t
 parameter_list|)
 block|{
+comment|// Catch the exception, log it and rethrow it.
 name|HMSHandler
 operator|.
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Metastore Thrift Server threw an exception. Exiting..."
+literal|"Metastore Thrift Server threw an exception..."
+argument_list|,
+name|t
 argument_list|)
 expr_stmt|;
-name|System
-operator|.
-name|exit
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
+throw|throw
+name|t
+throw|;
 block|}
 block|}
 comment|/**    * Start Metastore based on a passed {@link HadoopThriftAuthBridge}    * @param port    * @param bridge    * @throws Throwable    */

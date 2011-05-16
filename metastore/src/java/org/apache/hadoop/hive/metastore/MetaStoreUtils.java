@@ -4353,6 +4353,8 @@ operator|new
 name|Runnable
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run
@@ -4376,11 +4378,13 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
-name|System
+name|LOG
 operator|.
-name|exit
+name|error
 argument_list|(
-literal|1
+literal|"Metastore Thrift Server threw an exception..."
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 block|}
