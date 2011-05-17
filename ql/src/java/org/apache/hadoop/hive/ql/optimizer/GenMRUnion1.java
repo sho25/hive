@@ -983,16 +983,6 @@ operator|.
 name|getUTask
 argument_list|()
 expr_stmt|;
-name|uPlan
-operator|=
-operator|(
-name|MapredWork
-operator|)
-name|uTask
-operator|.
-name|getWork
-argument_list|()
-expr_stmt|;
 block|}
 comment|// If there is a mapjoin at position 'pos'
 if|if

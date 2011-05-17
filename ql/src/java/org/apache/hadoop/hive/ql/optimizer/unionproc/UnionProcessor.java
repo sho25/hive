@@ -250,7 +250,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the union processor. This can be enhanced later on.  * Currently, it does the following: Identify if both the subqueries of UNION  * are map-only. Store that fact in the unionDesc/UnionOperator. If either of  * the sub-query involves a map-reduce job, a FS is introduced on top of the  * UNION. This can be later optimized to clone all the operators above the  * UNION.  *   * The parse Context is not changed.  */
+comment|/**  * Implementation of the union processor. This can be enhanced later on.  * Currently, it does the following: Identify if both the subqueries of UNION  * are map-only. Store that fact in the unionDesc/UnionOperator. If either of  * the sub-query involves a map-reduce job, a FS is introduced on top of the  * UNION. This can be later optimized to clone all the operators above the  * UNION.  *  * The parse Context is not changed.  */
 end_comment
 
 begin_class
@@ -265,7 +265,7 @@ specifier|public
 name|UnionProcessor
 parameter_list|()
 block|{   }
-comment|/**    * Transform the query tree. For each union, store the fact whether both the    * sub-queries are map-only    *     * @param pCtx    *          the current parse context    */
+comment|/**    * Transform the query tree. For each union, store the fact whether both the    * sub-queries are map-only    *    * @param pCtx    *          the current parse context    */
 specifier|public
 name|ParseContext
 name|transform
@@ -302,11 +302,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"R1"
-argument_list|)
 argument_list|,
 literal|"RS%.*UNION%"
 argument_list|)
@@ -324,11 +320,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"R2"
-argument_list|)
 argument_list|,
 literal|"UNION%.*UNION%"
 argument_list|)
@@ -346,11 +338,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"R3"
-argument_list|)
 argument_list|,
 literal|"TS%.*UNION%"
 argument_list|)
@@ -368,11 +356,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"R3"
-argument_list|)
 argument_list|,
 literal|"MAPJOIN%.*UNION%"
 argument_list|)

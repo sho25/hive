@@ -1498,8 +1498,9 @@ name|queryRet
 operator|.
 name|add
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|qp
 operator|.
@@ -1698,8 +1699,9 @@ name|queryRet
 operator|.
 name|add
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|proc
 operator|.

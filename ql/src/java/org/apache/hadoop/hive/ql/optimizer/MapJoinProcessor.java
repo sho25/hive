@@ -85,16 +85,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -386,24 +376,6 @@ operator|.
 name|exec
 operator|.
 name|SelectOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|TableScanOperator
 import|;
 end_import
 
@@ -2619,8 +2591,9 @@ name|valueExprMap
 operator|.
 name|put
 argument_list|(
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|byte
@@ -2878,8 +2851,9 @@ name|keyExprMap
 operator|.
 name|get
 argument_list|(
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|byte
@@ -2991,8 +2965,9 @@ name|valueExprMap
 operator|.
 name|get
 argument_list|(
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|byte
@@ -3066,8 +3041,9 @@ name|filterMap
 operator|.
 name|get
 argument_list|(
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|byte
@@ -3485,7 +3461,7 @@ return|return
 name|mapJoinOp
 return|;
 block|}
-comment|/**    * Get a list of big table candidates. Only the tables in the returned set can    * be used as big table in the join operation.    *     * The logic here is to scan the join condition array from left to right. If    * see a inner join, and the bigTableCandidates is empty or the outer join    * that we last saw is a right outer join, add both side of this inner join to    * big table candidates only if they are not in bad position. If see a left    * outer join, set lastSeenRightOuterJoin to false, and the bigTableCandidates    * is empty, add the left side to it, and if the bigTableCandidates is not    * empty, do nothing (which means the bigTableCandidates is from left side).    * If see a right outer join, set lastSeenRightOuterJoin to true, clear the    * bigTableCandidates, and add right side to the bigTableCandidates, it means    * the right side of a right outer join always win. If see a full outer join,    * return null immediately (no one can be the big table, can not do a    * mapjoin).    *     *     * @param condns    * @return    */
+comment|/**    * Get a list of big table candidates. Only the tables in the returned set can    * be used as big table in the join operation.    *    * The logic here is to scan the join condition array from left to right. If    * see a inner join, and the bigTableCandidates is empty or the outer join    * that we last saw is a right outer join, add both side of this inner join to    * big table candidates only if they are not in bad position. If see a left    * outer join, set lastSeenRightOuterJoin to false, and the bigTableCandidates    * is empty, add the left side to it, and if the bigTableCandidates is not    * empty, do nothing (which means the bigTableCandidates is from left side).    * If see a right outer join, set lastSeenRightOuterJoin to true, clear the    * bigTableCandidates, and add right side to the bigTableCandidates, it means    * the right side of a right outer join always win. If see a full outer join,    * return null immediately (no one can be the big table, can not do a    * mapjoin).    *    *    * @param condns    * @return    */
 specifier|public
 specifier|static
 name|HashSet
@@ -4633,11 +4609,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"R0"
-argument_list|)
 argument_list|,
 literal|"MAPJOIN%"
 argument_list|)
@@ -4653,11 +4625,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"R1"
-argument_list|)
 argument_list|,
 literal|"MAPJOIN%.*FS%"
 argument_list|)
@@ -4673,11 +4641,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"R2"
-argument_list|)
 argument_list|,
 literal|"MAPJOIN%.*RS%"
 argument_list|)
@@ -4693,11 +4657,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"R4"
-argument_list|)
 argument_list|,
 literal|"MAPJOIN%.*UNION%"
 argument_list|)

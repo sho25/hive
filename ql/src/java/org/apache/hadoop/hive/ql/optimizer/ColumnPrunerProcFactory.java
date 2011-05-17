@@ -4433,8 +4433,9 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|byte

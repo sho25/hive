@@ -6431,12 +6431,6 @@ name|openTransaction
 argument_list|()
 expr_stmt|;
 name|part
-operator|=
-operator|new
-name|Partition
-argument_list|()
-expr_stmt|;
-name|part
 operator|.
 name|setDbName
 argument_list|(

@@ -651,11 +651,7 @@ block|}
 name|String
 name|ret
 init|=
-operator|new
-name|String
-argument_list|(
 literal|"partition = "
-argument_list|)
 decl_stmt|;
 for|for
 control|(
