@@ -755,6 +755,21 @@ name|void
 name|run
 parameter_list|()
 block|{
+name|killRunningJobs
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+specifier|public
+specifier|static
+name|void
+name|killRunningJobs
+parameter_list|()
+block|{
 synchronized|synchronized
 init|(
 name|runningJobKillURIs
@@ -870,11 +885,6 @@ expr_stmt|;
 comment|// do nothing
 block|}
 block|}
-block|}
-block|}
-block|}
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 specifier|public
