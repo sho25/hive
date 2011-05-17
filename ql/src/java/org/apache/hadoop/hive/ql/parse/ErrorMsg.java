@@ -436,7 +436,7 @@ name|NEED_PARTITION_ERROR
 argument_list|(
 literal|"Need to specify partition columns because the destination "
 operator|+
-literal|"table is partitioned."
+literal|"table is partitioned"
 argument_list|)
 block|,
 name|CTAS_CTLT_COEXISTENCE
@@ -455,36 +455,36 @@ name|CTAS_COLLST_COEXISTENCE
 argument_list|(
 literal|"CREATE TABLE AS SELECT command cannot specify the list of columns "
 operator|+
-literal|"for the target table."
+literal|"for the target table"
 argument_list|)
 block|,
 name|CTLT_COLLST_COEXISTENCE
 argument_list|(
 literal|"CREATE TABLE LIKE command cannot specify the list of columns for "
 operator|+
-literal|"the target table."
+literal|"the target table"
 argument_list|)
 block|,
 name|INVALID_SELECT_SCHEMA
 argument_list|(
-literal|"Cannot derive schema from the select-clause."
+literal|"Cannot derive schema from the select-clause"
 argument_list|)
 block|,
 name|CTAS_PARCOL_COEXISTENCE
 argument_list|(
 literal|"CREATE-TABLE-AS-SELECT does not support partitioning in the target "
 operator|+
-literal|"table."
+literal|"table"
 argument_list|)
 block|,
 name|CTAS_MULTI_LOADFILE
 argument_list|(
-literal|"CREATE-TABLE-AS-SELECT results in multiple file load."
+literal|"CREATE-TABLE-AS-SELECT results in multiple file load"
 argument_list|)
 block|,
 name|CTAS_EXTTBL_COEXISTENCE
 argument_list|(
-literal|"CREATE-TABLE-AS-SELECT cannot create external table."
+literal|"CREATE-TABLE-AS-SELECT cannot create external table"
 argument_list|)
 block|,
 name|TABLE_ALREADY_EXISTS
@@ -623,11 +623,11 @@ argument_list|)
 block|,
 name|DYNAMIC_PARTITION_MERGE
 argument_list|(
-literal|"Dynamic partition does not support merging using non-CombineHiveInputFormat."
+literal|"Dynamic partition does not support merging using non-CombineHiveInputFormat"
 operator|+
 literal|"Please check your hive.input.format setting and make sure your Hadoop version support "
 operator|+
-literal|"CombineFileInputFormat."
+literal|"CombineFileInputFormat"
 argument_list|)
 block|,
 name|NONEXISTPARTCOL
@@ -639,7 +639,7 @@ name|UNSUPPORTED_TYPE
 argument_list|(
 literal|"DATE, DATETIME, and TIMESTAMP types aren't supported yet. Please use "
 operator|+
-literal|"STRING instead."
+literal|"STRING instead"
 argument_list|)
 block|,
 name|CREATE_NON_NATIVE_AS
@@ -676,14 +676,14 @@ name|OVERWRITE_ARCHIVED_PART
 argument_list|(
 literal|"Cannot overwrite an archived partition. "
 operator|+
-literal|"Unarchive before running this command."
+literal|"Unarchive before running this command"
 argument_list|)
 block|,
 name|ARCHIVE_METHODS_DISABLED
 argument_list|(
 literal|"Archiving methods are currently disabled. "
 operator|+
-literal|"Please see the Hive wiki for more information about enabling archiving."
+literal|"Please see the Hive wiki for more information about enabling archiving"
 argument_list|)
 block|,
 name|ARCHIVE_ON_MULI_PARTS
@@ -1211,7 +1211,8 @@ return|;
 block|}
 comment|// Dirty hack as this will throw away spaces and other things - find a better
 comment|// way!
-specifier|private
+specifier|public
+specifier|static
 name|String
 name|getText
 parameter_list|(
@@ -1296,7 +1297,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" "
+literal|" '"
 argument_list|)
 expr_stmt|;
 name|sb
@@ -1307,6 +1308,13 @@ name|getText
 argument_list|(
 name|tree
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"'"
 argument_list|)
 expr_stmt|;
 name|renderOrigin
