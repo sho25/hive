@@ -1890,6 +1890,34 @@ literal|1
 argument_list|)
 block|,
 comment|// infinity
+name|HIVE_INDEX_COMPACT_QUERY_MAX_ENTRIES
+argument_list|(
+literal|"hive.index.compact.query.max.entries"
+argument_list|,
+operator|(
+name|long
+operator|)
+literal|10000000
+argument_list|)
+block|,
+comment|// 10M
+name|HIVE_INDEX_COMPACT_QUERY_MAX_SIZE
+argument_list|(
+literal|"hive.index.compact.query.max.size"
+argument_list|,
+operator|(
+name|long
+operator|)
+literal|10
+operator|*
+literal|1024
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|)
+block|,
+comment|// 10G
 comment|// Statistics
 name|HIVESTATSAUTOGATHER
 argument_list|(
