@@ -87,6 +87,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|SQLIntegrityConstraintViolationException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|SQLRecoverableException
 import|;
 end_import
@@ -262,8 +272,6 @@ argument_list|)
 decl_stmt|;
 specifier|private
 name|PreparedStatement
-name|selStmt
-decl_stmt|,
 name|updStmt
 decl_stmt|,
 name|insStmt
@@ -441,33 +449,6 @@ return|;
 block|}
 comment|// prepare the SELECT/UPDATE/INSERT statements
 name|String
-name|select
-init|=
-literal|"SELECT /* "
-operator|+
-name|comment
-operator|+
-literal|" */ "
-operator|+
-name|JDBCStatsSetupConstants
-operator|.
-name|PART_STAT_ROW_COUNT_COLUMN_NAME
-operator|+
-literal|" FROM "
-operator|+
-name|JDBCStatsSetupConstants
-operator|.
-name|PART_STAT_TABLE_NAME
-operator|+
-literal|" WHERE "
-operator|+
-name|JDBCStatsSetupConstants
-operator|.
-name|PART_STAT_ID_COLUMN_NAME
-operator|+
-literal|" = ?"
-decl_stmt|;
-name|String
 name|update
 init|=
 literal|"UPDATE /* "
@@ -494,7 +475,35 @@ name|JDBCStatsSetupConstants
 operator|.
 name|PART_STAT_ID_COLUMN_NAME
 operator|+
-literal|" = ?"
+literal|" = ? "
+operator|+
+literal|" AND ?> ( SELECT TEMP."
+operator|+
+name|JDBCStatsSetupConstants
+operator|.
+name|PART_STAT_ROW_COUNT_COLUMN_NAME
+operator|+
+literal|" FROM ( "
+operator|+
+literal|" SELECT "
+operator|+
+name|JDBCStatsSetupConstants
+operator|.
+name|PART_STAT_ROW_COUNT_COLUMN_NAME
+operator|+
+literal|" FROM "
+operator|+
+name|JDBCStatsSetupConstants
+operator|.
+name|PART_STAT_TABLE_NAME
+operator|+
+literal|" WHERE "
+operator|+
+name|JDBCStatsSetupConstants
+operator|.
+name|PART_STAT_ID_COLUMN_NAME
+operator|+
+literal|" = ?) TEMP )"
 decl_stmt|;
 name|String
 name|insert
@@ -590,21 +599,6 @@ name|maxRetries
 argument_list|)
 expr_stmt|;
 comment|// prepare statements
-name|selStmt
-operator|=
-name|Utilities
-operator|.
-name|prepareWithRetry
-argument_list|(
-name|conn
-argument_list|,
-name|select
-argument_list|,
-name|waitWindow
-argument_list|,
-name|maxRetries
-argument_list|)
-expr_stmt|;
 name|updStmt
 operator|=
 name|Utilities
@@ -636,19 +630,6 @@ name|maxRetries
 argument_list|)
 expr_stmt|;
 comment|// set query timeout
-name|Utilities
-operator|.
-name|executeWithRetry
-argument_list|(
-name|setQueryTimeout
-argument_list|,
-name|selStmt
-argument_list|,
-name|waitWindow
-argument_list|,
-name|maxRetries
-argument_list|)
-expr_stmt|;
 name|Utilities
 operator|.
 name|executeWithRetry
@@ -828,44 +809,6 @@ name|Utilities
 operator|.
 name|SQLCommand
 argument_list|<
-name|ResultSet
-argument_list|>
-name|execQuery
-init|=
-operator|new
-name|Utilities
-operator|.
-name|SQLCommand
-argument_list|<
-name|ResultSet
-argument_list|>
-argument_list|()
-block|{
-annotation|@
-name|Override
-specifier|public
-name|ResultSet
-name|run
-parameter_list|(
-name|PreparedStatement
-name|stmt
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-return|return
-name|stmt
-operator|.
-name|executeQuery
-argument_list|()
-return|;
-block|}
-block|}
-decl_stmt|;
-name|Utilities
-operator|.
-name|SQLCommand
-argument_list|<
 name|Void
 argument_list|>
 name|execUpdate
@@ -916,100 +859,6 @@ control|)
 block|{
 try|try
 block|{
-comment|// Check to see if a previous task (mapper attempt) had published a previous stat
-name|selStmt
-operator|.
-name|setString
-argument_list|(
-literal|1
-argument_list|,
-name|fileID
-argument_list|)
-expr_stmt|;
-name|ResultSet
-name|result
-init|=
-name|Utilities
-operator|.
-name|executeWithRetry
-argument_list|(
-name|execQuery
-argument_list|,
-name|selStmt
-argument_list|,
-name|waitWindow
-argument_list|,
-name|maxRetries
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|result
-operator|.
-name|next
-argument_list|()
-condition|)
-block|{
-name|long
-name|currval
-init|=
-name|result
-operator|.
-name|getLong
-argument_list|(
-literal|1
-argument_list|)
-decl_stmt|;
-comment|// Only update if the previous value is smaller (i.e. the previous attempt was a fail and
-comment|// hopefully this attempt is a success (as it has a greater value).
-if|if
-condition|(
-name|currval
-operator|<
-name|Long
-operator|.
-name|parseLong
-argument_list|(
-name|value
-argument_list|)
-condition|)
-block|{
-name|updStmt
-operator|.
-name|setString
-argument_list|(
-literal|1
-argument_list|,
-name|value
-argument_list|)
-expr_stmt|;
-name|updStmt
-operator|.
-name|setString
-argument_list|(
-literal|2
-argument_list|,
-name|fileID
-argument_list|)
-expr_stmt|;
-name|Utilities
-operator|.
-name|executeWithRetry
-argument_list|(
-name|execUpdate
-argument_list|,
-name|updStmt
-argument_list|,
-name|waitWindow
-argument_list|,
-name|maxRetries
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-else|else
-block|{
-comment|// No previous attempts.
 name|insStmt
 operator|.
 name|setString
@@ -1041,10 +890,130 @@ argument_list|,
 name|maxRetries
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 literal|true
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLIntegrityConstraintViolationException
+name|e
+parameter_list|)
+block|{
+comment|// We assume that the table used for partial statistics has a primary key declared on the
+comment|// "fileID". The exception will be thrown if two tasks report results for the same fileID.
+comment|// In such case, we either update the row, or abandon changes depending on which statistic
+comment|// is newer.
+for|for
+control|(
+name|int
+name|updateFailures
+init|=
+literal|0
+init|;
+condition|;
+name|updateFailures
+operator|++
+control|)
+block|{
+try|try
+block|{
+name|updStmt
+operator|.
+name|setString
+argument_list|(
+literal|1
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+name|updStmt
+operator|.
+name|setString
+argument_list|(
+literal|2
+argument_list|,
+name|fileID
+argument_list|)
+expr_stmt|;
+name|updStmt
+operator|.
+name|setString
+argument_list|(
+literal|3
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+name|updStmt
+operator|.
+name|setString
+argument_list|(
+literal|4
+argument_list|,
+name|fileID
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|executeWithRetry
+argument_list|(
+name|execUpdate
+argument_list|,
+name|updStmt
+argument_list|,
+name|waitWindow
+argument_list|,
+name|maxRetries
+argument_list|)
+expr_stmt|;
+return|return
+literal|true
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLRecoverableException
+name|ue
+parameter_list|)
+block|{
+comment|// need to start from scratch (connection)
+if|if
+condition|(
+operator|!
+name|handleSQLRecoverableException
+argument_list|(
+name|ue
+argument_list|,
+name|updateFailures
+argument_list|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|ue
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error during publishing statistics. "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1053,6 +1022,54 @@ name|e
 parameter_list|)
 block|{
 comment|// need to start from scratch (connection)
+if|if
+condition|(
+operator|!
+name|handleSQLRecoverableException
+argument_list|(
+name|e
+argument_list|,
+name|failures
+argument_list|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error during publishing statistics. "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
+block|}
+block|}
+specifier|private
+name|boolean
+name|handleSQLRecoverableException
+parameter_list|(
+name|Exception
+name|e
+parameter_list|,
+name|int
+name|failures
+parameter_list|)
+block|{
 if|if
 condition|(
 name|failures
@@ -1097,7 +1114,7 @@ parameter_list|(
 name|InterruptedException
 name|iex
 parameter_list|)
-block|{         }
+block|{     }
 comment|// get a new connection
 if|if
 condition|(
@@ -1122,27 +1139,9 @@ return|return
 literal|false
 return|;
 block|}
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Error during publishing statistics. "
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
 return|return
-literal|false
+literal|true
 return|;
-block|}
-block|}
 block|}
 annotation|@
 name|Override
@@ -1190,19 +1189,6 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|selStmt
-operator|!=
-literal|null
-condition|)
-block|{
-name|selStmt
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-block|}
 name|conn
 operator|.
 name|close
@@ -1233,7 +1219,8 @@ condition|)
 block|{
 try|try
 block|{
-comment|// The following closes the derby connection. It throws an exception that has to be caught and ignored.
+comment|// The following closes the derby connection. It throws an exception that has to be caught
+comment|// and ignored.
 name|DriverManager
 operator|.
 name|getConnection
@@ -1425,13 +1412,13 @@ name|JDBCStatsSetupConstants
 operator|.
 name|PART_STAT_ID_COLUMN_NAME
 operator|+
-literal|" VARCHAR(255), "
+literal|" VARCHAR(255) PRIMARY KEY, "
 operator|+
 name|JDBCStatsSetupConstants
 operator|.
 name|PART_STAT_ROW_COUNT_COLUMN_NAME
 operator|+
-literal|" BIGINT)"
+literal|" BIGINT )"
 decl_stmt|;
 name|stmt
 operator|.
