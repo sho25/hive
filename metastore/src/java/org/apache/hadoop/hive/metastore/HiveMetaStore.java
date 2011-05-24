@@ -2050,6 +2050,20 @@ parameter_list|<
 name|T
 parameter_list|>
 block|{
+annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"HCATALOG"
+block|}
+argument_list|)
+annotation|@
+name|InterfaceStability
+operator|.
+name|Evolving
+specifier|public
 name|T
 name|run
 parameter_list|(
@@ -2790,6 +2804,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -3447,6 +3462,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -3574,6 +3590,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Database
 name|run
 parameter_list|(
@@ -3687,6 +3704,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -4059,6 +4077,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -4197,6 +4216,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|String
@@ -4305,6 +4325,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|String
@@ -4529,6 +4550,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -4660,6 +4682,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Type
 name|run
 parameter_list|(
@@ -4919,6 +4942,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -5518,6 +5542,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -6074,6 +6099,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -6234,6 +6260,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Table
 name|run
 parameter_list|(
@@ -6826,6 +6853,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Partition
 name|run
 parameter_list|(
@@ -7088,6 +7116,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Integer
 name|run
 parameter_list|(
@@ -7681,6 +7710,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Partition
 name|run
 parameter_list|(
@@ -8225,6 +8255,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -8378,6 +8409,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Partition
 name|run
 parameter_list|(
@@ -8526,6 +8558,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Partition
 name|run
 parameter_list|(
@@ -8667,6 +8700,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -8822,6 +8856,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -8964,6 +8999,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|String
@@ -9214,6 +9250,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -9416,6 +9453,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -9618,6 +9656,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -9756,6 +9795,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|String
@@ -9872,6 +9912,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|String
@@ -10749,6 +10790,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Partition
 name|run
 parameter_list|(
@@ -10899,6 +10941,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Partition
 name|run
 parameter_list|(
@@ -11169,6 +11212,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -11891,6 +11935,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Index
 name|run
 parameter_list|(
@@ -12334,6 +12379,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -12770,6 +12816,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Index
 name|run
 parameter_list|(
@@ -12989,6 +13036,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|String
@@ -13123,6 +13171,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|Index
@@ -13261,6 +13310,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -13410,6 +13460,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -13829,6 +13880,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|PrincipalPrivilegeSet
 name|run
 parameter_list|(
@@ -13938,6 +13990,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|PrincipalPrivilegeSet
 name|run
 parameter_list|(
@@ -14049,6 +14102,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|PrincipalPrivilegeSet
 name|run
 parameter_list|(
@@ -14160,6 +14214,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|PrincipalPrivilegeSet
 name|run
 parameter_list|(
@@ -14276,6 +14331,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -14397,6 +14453,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|Role
@@ -14562,6 +14619,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -14660,6 +14718,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -14755,6 +14814,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|String
@@ -14852,6 +14912,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -14955,6 +15016,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -15059,6 +15121,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|Boolean
 name|run
 parameter_list|(
@@ -15154,6 +15217,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|PrincipalPrivilegeSet
 name|run
 parameter_list|(
@@ -15489,6 +15553,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -15980,6 +16045,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -16243,6 +16309,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -16528,6 +16595,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -16778,6 +16846,7 @@ argument_list|()
 block|{
 annotation|@
 name|Override
+specifier|public
 name|List
 argument_list|<
 name|HiveObjectPrivilege
