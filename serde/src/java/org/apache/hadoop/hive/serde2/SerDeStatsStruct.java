@@ -13,55 +13,23 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|stats
-operator|.
-name|jdbc
+name|serde2
 package|;
 end_package
 
-begin_class
+begin_interface
 specifier|public
-specifier|final
-class|class
-name|JDBCStatsSetupConstants
+interface|interface
+name|SerDeStatsStruct
 block|{
+comment|/**    * Rerurns the serialized size of the object.    */
 specifier|public
-specifier|static
-specifier|final
-name|String
-name|PART_STAT_ID_COLUMN_NAME
-init|=
-literal|"ID"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|PART_STAT_TABLE_NAME
-init|=
-literal|"PARTITION_STAT_TBL"
-decl_stmt|;
-comment|// supported statistics - column names
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|PART_STAT_ROW_COUNT_COLUMN_NAME
-init|=
-literal|"ROW_COUNT"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|PART_STAT_RAW_DATA_SIZE_COLUMN_NAME
-init|=
-literal|"RAW_DATA_SIZE"
-decl_stmt|;
+name|long
+name|getRawDataSerializedSize
+parameter_list|()
+function_decl|;
 block|}
-end_class
+end_interface
 
 end_unit
 

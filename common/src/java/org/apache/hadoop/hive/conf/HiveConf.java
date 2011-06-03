@@ -1998,6 +1998,14 @@ literal|3000
 argument_list|)
 block|,
 comment|// # milliseconds to wait before the next retry
+name|HIVE_STATS_COLLECT_RAWDATASIZE
+argument_list|(
+literal|"hive.stats.collect.rawdatasize"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|// should the raw data size be collected when analayzing tables
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(

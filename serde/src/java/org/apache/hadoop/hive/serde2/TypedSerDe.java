@@ -379,6 +379,16 @@ literal|"not supported"
 argument_list|)
 throw|;
 block|}
+specifier|public
+name|SerDeStats
+name|getSerDeStats
+parameter_list|()
+block|{
+comment|// no support for statistics
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_class
 

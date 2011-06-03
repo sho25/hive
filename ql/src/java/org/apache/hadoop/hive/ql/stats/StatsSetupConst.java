@@ -46,6 +46,34 @@ name|JDBC_IMPL_CLASS_VAL
 init|=
 literal|"jdbc"
 decl_stmt|;
+comment|/**    * The name of the statistic Num Files to be published or gathered.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|NUM_FILES
+init|=
+literal|"numFiles"
+decl_stmt|;
+comment|/**    * The name of the statistic Num Partitions to be published or gathered.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|NUM_PARTITIONS
+init|=
+literal|"numPartitions"
+decl_stmt|;
+comment|/**    * The name of the statistic Total Size to be published or gathered.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TOTAL_SIZE
+init|=
+literal|"totalSize"
+decl_stmt|;
+comment|// statistics stored in metastore
 comment|/**    * The name of the statistic Row Count to be published or gathered.    */
 specifier|public
 specifier|static
@@ -55,32 +83,14 @@ name|ROW_COUNT
 init|=
 literal|"numRows"
 decl_stmt|;
-comment|/**    * The name of the statistic Row Count to be published or gathered.    */
+comment|/**    * The name of the statistic Raw Data Size to be published or gathered.    */
 specifier|public
 specifier|static
 specifier|final
 name|String
-name|NUM_FILES
+name|RAW_DATA_SIZE
 init|=
-literal|"numFiles"
-decl_stmt|;
-comment|/**    * The name of the statistic Row Count to be published or gathered.    */
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|NUM_PARTITIONS
-init|=
-literal|"numPartitions"
-decl_stmt|;
-comment|/**    * The name of the statistic Row Count to be published or gathered.    */
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|TOTAL_SIZE
-init|=
-literal|"totalSize"
+literal|"rawDataSize"
 decl_stmt|;
 block|}
 end_class

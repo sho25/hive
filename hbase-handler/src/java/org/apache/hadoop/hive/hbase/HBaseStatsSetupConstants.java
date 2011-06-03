@@ -35,6 +35,15 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|PART_STAT_COLUMN_FAMILY
+init|=
+literal|"PARTITION_STAT_FAMILY"
+decl_stmt|;
+comment|//supported stats
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|PART_STAT_ROW_COUNT_COLUMN_NAME
 init|=
 literal|"ROW_COUNT"
@@ -43,9 +52,9 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|PART_STAT_ROW_COUNT_COLUMN_FAMILY
+name|PART_STAT_RAW_DATA_SIZE_COLUMN_NAME
 init|=
-literal|"ROW_COUNT_FAMILY"
+literal|"RAW_DATA_SIZE"
 decl_stmt|;
 block|}
 end_class

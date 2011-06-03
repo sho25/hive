@@ -191,6 +191,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|SerDeStats
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|io
 operator|.
 name|ByteWritable
@@ -319,6 +335,26 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
+name|StandardUnionObjectInspector
+operator|.
+name|StandardUnion
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
 name|StructField
 import|;
 end_import
@@ -356,26 +392,6 @@ operator|.
 name|objectinspector
 operator|.
 name|UnionObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|StandardUnionObjectInspector
-operator|.
-name|StandardUnion
 import|;
 end_import
 
@@ -782,7 +798,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * BinarySortableSerDe can be used to write data in a way that the data can be  * compared byte-by-byte with the same order.  *   * The data format: NULL: a single byte \0 NON-NULL Primitives: ALWAYS prepend a  * single byte \1, and then: Boolean: FALSE = \1, TRUE = \2 Byte: flip the  * sign-bit to make sure negative comes before positive Short: flip the sign-bit  * to make sure negative comes before positive Int: flip the sign-bit to make  * sure negative comes before positive Long: flip the sign-bit to make sure  * negative comes before positive Double: flip the sign-bit for positive double,  * and all bits for negative double values String: NULL-terminated UTF-8 string,  * with NULL escaped to \1 \1, and \1 escaped to \1 \2 NON-NULL Complex Types:  * ALWAYS prepend a single byte \1, and then: Struct: one field by one field.  * List: \1 followed by each element, and \0 to terminate Map: \1 followed by  * each key and then each value, and \0 to terminate  *   * This SerDe takes an additional parameter SERIALIZATION_SORT_ORDER which is a  * string containing only "+" and "-". The length of the string should equal to  * the number of fields in the top-level struct for serialization. "+" means the  * field should be sorted ascendingly, and "-" means descendingly. The sub  * fields in the same top-level field will have the same sort order.  *   */
+comment|/**  * BinarySortableSerDe can be used to write data in a way that the data can be  * compared byte-by-byte with the same order.  *  * The data format: NULL: a single byte \0 NON-NULL Primitives: ALWAYS prepend a  * single byte \1, and then: Boolean: FALSE = \1, TRUE = \2 Byte: flip the  * sign-bit to make sure negative comes before positive Short: flip the sign-bit  * to make sure negative comes before positive Int: flip the sign-bit to make  * sure negative comes before positive Long: flip the sign-bit to make sure  * negative comes before positive Double: flip the sign-bit for positive double,  * and all bits for negative double values String: NULL-terminated UTF-8 string,  * with NULL escaped to \1 \1, and \1 escaped to \1 \2 NON-NULL Complex Types:  * ALWAYS prepend a single byte \1, and then: Struct: one field by one field.  * List: \1 followed by each element, and \0 to terminate Map: \1 followed by  * each key and then each value, and \0 to terminate  *  * This SerDe takes an additional parameter SERIALIZATION_SORT_ORDER which is a  * string containing only "+" and "-". The length of the string should equal to  * the number of fields in the top-level struct for serialization. "+" means the  * field should be sorted ascendingly, and "-" means descendingly. The sub  * fields in the same top-level field will have the same sort order.  *  */
 end_comment
 
 begin_class
@@ -4055,6 +4071,16 @@ argument_list|)
 throw|;
 block|}
 block|}
+block|}
+specifier|public
+name|SerDeStats
+name|getSerDeStats
+parameter_list|()
+block|{
+comment|// no support for statistics
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class

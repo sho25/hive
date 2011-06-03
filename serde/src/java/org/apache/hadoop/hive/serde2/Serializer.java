@@ -74,7 +74,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveSerializer is used to serialize data to a Hadoop Writable object. The  * serialize In addition to the interface below, all implementations are assume  * to have a ctor that takes a single 'Table' object as argument.  *   */
+comment|/**  * HiveSerializer is used to serialize data to a Hadoop Writable object. The  * serialize In addition to the interface below, all implementations are assume  * to have a ctor that takes a single 'Table' object as argument.  *  */
 end_comment
 
 begin_interface
@@ -82,7 +82,7 @@ specifier|public
 interface|interface
 name|Serializer
 block|{
-comment|/**    * Initialize the HiveSerializer.    *     * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
+comment|/**    * Initialize the HiveSerializer.    *    * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
 name|void
 name|initialize
 parameter_list|(
@@ -117,6 +117,11 @@ name|objInspector
 parameter_list|)
 throws|throws
 name|SerDeException
+function_decl|;
+comment|/**    * Returns statistics collected when serializing    */
+name|SerDeStats
+name|getSerDeStats
+parameter_list|()
 function_decl|;
 block|}
 end_interface

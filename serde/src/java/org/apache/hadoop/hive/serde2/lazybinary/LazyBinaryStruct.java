@@ -89,6 +89,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|SerDeStatsStruct
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|lazy
 operator|.
 name|ByteArrayRef
@@ -202,6 +218,8 @@ name|LazyBinaryNonPrimitive
 argument_list|<
 name|LazyBinaryStructObjectInspector
 argument_list|>
+implements|implements
+name|SerDeStatsStruct
 block|{
 specifier|private
 specifier|static
@@ -223,6 +241,10 @@ decl_stmt|;
 comment|/**    * Whether the data is already parsed or not.    */
 name|boolean
 name|parsed
+decl_stmt|;
+comment|/**    * Size of serialized data    */
+name|long
+name|serializedSize
 decl_stmt|;
 comment|/**    * The fields of the struct.    */
 name|LazyBinaryObject
@@ -292,6 +314,10 @@ expr_stmt|;
 name|parsed
 operator|=
 literal|false
+expr_stmt|;
+name|serializedSize
+operator|=
+name|length
 expr_stmt|;
 block|}
 name|RecordInfo
@@ -905,6 +931,15 @@ parameter_list|()
 block|{
 return|return
 name|this
+return|;
+block|}
+specifier|public
+name|long
+name|getRawDataSerializedSize
+parameter_list|()
+block|{
+return|return
+name|serializedSize
 return|;
 block|}
 block|}

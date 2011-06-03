@@ -89,6 +89,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|SerDeStatsStruct
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|lazy
 operator|.
 name|objectinspector
@@ -148,7 +164,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyObject for storing a struct. The field of a struct can be primitive or  * non-primitive.  *   * LazyStruct does not deal with the case of a NULL struct. That is handled by  * the parent LazyObject.  */
+comment|/**  * LazyObject for storing a struct. The field of a struct can be primitive or  * non-primitive.  *  * LazyStruct does not deal with the case of a NULL struct. That is handled by  * the parent LazyObject.  */
 end_comment
 
 begin_class
@@ -160,6 +176,8 @@ name|LazyNonPrimitive
 argument_list|<
 name|LazySimpleStructObjectInspector
 argument_list|>
+implements|implements
+name|SerDeStatsStruct
 block|{
 specifier|private
 specifier|static
@@ -181,6 +199,10 @@ decl_stmt|;
 comment|/**    * Whether the data is already parsed or not.    */
 name|boolean
 name|parsed
+decl_stmt|;
+comment|/**    * Size of serialized data    */
+name|long
+name|serializedSize
 decl_stmt|;
 comment|/**    * The start positions of struct fields. Only valid when the data is parsed.    * Note that startPosition[arrayLength] = begin + length + 1; that makes sure    * we can use the same formula to compute the length of each element of the    * array.    */
 name|int
@@ -211,7 +233,7 @@ name|oi
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the row data for this LazyStruct.    *     * @see LazyObject#init(ByteArrayRef, int, int)    */
+comment|/**    * Set the row data for this LazyStruct.    *    * @see LazyObject#init(ByteArrayRef, int, int)    */
 annotation|@
 name|Override
 specifier|public
@@ -242,6 +264,10 @@ expr_stmt|;
 name|parsed
 operator|=
 literal|false
+expr_stmt|;
+name|serializedSize
+operator|=
+name|length
 expr_stmt|;
 block|}
 name|boolean
@@ -643,7 +669,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**    * Get one field out of the struct.    *     * If the field is a primitive field, return the actual object. Otherwise    * return the LazyObject. This is because PrimitiveObjectInspector does not    * have control over the object used by the user - the user simply directly    * use the Object instead of going through Object    * PrimitiveObjectInspector.get(Object).    *     * @param fieldID    *          The field ID    * @return The field as a LazyObject    */
+comment|/**    * Get one field out of the struct.    *    * If the field is a primitive field, return the actual object. Otherwise    * return the LazyObject. This is because PrimitiveObjectInspector does not    * have control over the object used by the user - the user simply directly    * use the Object instead of going through Object    * PrimitiveObjectInspector.get(Object).    *    * @param fieldID    *          The field ID    * @return The field as a LazyObject    */
 specifier|public
 name|Object
 name|getField
@@ -669,7 +695,7 @@ name|fieldID
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the field out of the row without checking parsed. This is called by    * both getField and getFieldsAsList.    *     * @param fieldID    *          The id of the field starting from 0.    * @param nullSequence    *          The sequence representing NULL value.    * @return The value of the field    */
+comment|/**    * Get the field out of the row without checking parsed. This is called by    * both getField and getFieldsAsList.    *    * @param fieldID    *          The id of the field starting from 0.    * @param nullSequence    *          The sequence representing NULL value.    * @return The value of the field    */
 specifier|private
 name|Object
 name|uncheckedGetField
@@ -810,7 +836,7 @@ name|Object
 argument_list|>
 name|cachedList
 decl_stmt|;
-comment|/**    * Get the values of the fields as an ArrayList.    *     * @return The values of the fields as an ArrayList.    */
+comment|/**    * Get the values of the fields as an ArrayList.    *    * @return The values of the fields as an ArrayList.    */
 specifier|public
 name|ArrayList
 argument_list|<
@@ -972,6 +998,15 @@ name|fieldInited
 operator|=
 name|fieldInited
 expr_stmt|;
+block|}
+specifier|public
+name|long
+name|getRawDataSerializedSize
+parameter_list|()
+block|{
+return|return
+name|serializedSize
+return|;
 block|}
 block|}
 end_class
