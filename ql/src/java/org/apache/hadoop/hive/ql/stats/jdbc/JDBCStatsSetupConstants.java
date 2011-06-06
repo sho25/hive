@@ -41,7 +41,7 @@ specifier|final
 name|String
 name|PART_STAT_TABLE_NAME
 init|=
-literal|"PARTITION_STAT_TBL"
+literal|"PARTITION_STATS"
 decl_stmt|;
 comment|// supported statistics - column names
 specifier|public
