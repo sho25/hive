@@ -1425,7 +1425,7 @@ name|jobClose
 argument_list|(
 name|outputPath
 argument_list|,
-name|noName
+name|success
 argument_list|,
 name|job
 argument_list|,
