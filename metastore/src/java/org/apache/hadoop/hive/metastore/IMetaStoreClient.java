@@ -620,6 +620,32 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    *    * @param dbName    *          The database the tables are located in.    * @param tableNames    *          The names of the tables to fetch    * @return A list of objects representing the tables.    *          Only the tables that can be retrieved from the database are returned.  For example,    *          if none of the requested tables could be retrieved, an empty list is returned.    *          There is no guarantee of ordering of the returned tables.    * @throws InvalidOperationException    *          The input to this operation is invalid (e.g., the list of tables names is null)    * @throws UnknownDBException    *          The requested database could not be fetched.    * @throws TException    *          A thrift communication error occurred    * @throws MetaException    *          Any other errors    */
+specifier|public
+name|List
+argument_list|<
+name|Table
+argument_list|>
+name|getTableObjectsByName
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|tableNames
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|InvalidOperationException
+throws|,
+name|UnknownDBException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * @param tableName    * @param dbName    * @param partVals    * @return the partition object    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
 specifier|public
 name|Partition
