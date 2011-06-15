@@ -239,6 +239,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -281,12 +291,33 @@ implements|implements
 name|PreparedStatement
 block|{
 specifier|private
+specifier|final
 name|String
 name|sql
 decl_stmt|;
 specifier|private
 name|HiveInterface
 name|client
+decl_stmt|;
+comment|/**    * save the SQL parameters {paramLoc:paramValue}    */
+specifier|private
+specifier|final
+name|HashMap
+argument_list|<
+name|Integer
+argument_list|,
+name|String
+argument_list|>
+name|parameters
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|Integer
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
 decl_stmt|;
 comment|/**    * We need to keep a reference to the result set to support the following:    *<code>    * statement.execute(String sql);    * statement.getResultSet();    *</code>.    */
 specifier|private
@@ -297,7 +328,6 @@ literal|null
 decl_stmt|;
 comment|/**    * The maximum number of rows this statement should return (0 => all rows).    */
 specifier|private
-specifier|final
 name|int
 name|maxRows
 init|=
@@ -305,7 +335,6 @@ literal|0
 decl_stmt|;
 comment|/**    * Add SQLWarnings to the warningChain if needed.    */
 specifier|private
-specifier|final
 name|SQLWarning
 name|warningChain
 init|=
@@ -317,6 +346,14 @@ name|boolean
 name|isClosed
 init|=
 literal|false
+decl_stmt|;
+comment|/**    * keep the current ResultRet update count    */
+specifier|private
+specifier|final
+name|int
+name|updateCount
+init|=
+literal|0
 decl_stmt|;
 comment|/**    *    */
 specifier|public
@@ -367,8 +404,13 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-comment|// throw new SQLException("Method not supported");
+name|this
+operator|.
+name|parameters
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    *  Invokes executeQuery(sql) using the sql provided to the constructor.    *    *  @return boolean Returns true if a resultSet is created, false if not.    *                  Note: If the result set is empty a true is returned.    *    *  @throws    */
 specifier|public
@@ -415,14 +457,14 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|executeImmediate
 argument_list|(
-literal|"Method not supported"
+name|sql
 argument_list|)
-throw|;
+expr_stmt|;
+return|return
+name|updateCount
+return|;
 block|}
 comment|/**    *  Executes the SQL statement.    *    *  @param sql The sql, as a string, to execute    *  @return ResultSet    *  @throws SQLException if the prepared statement is closed or there is a database error.    *                       caught Exceptions are thrown as SQLExceptions with the description    *                       "08S01".    */
 specifier|protected
@@ -450,10 +492,33 @@ throw|;
 block|}
 try|try
 block|{
+name|clearWarnings
+argument_list|()
+expr_stmt|;
 name|resultSet
 operator|=
 literal|null
 expr_stmt|;
+if|if
+condition|(
+name|sql
+operator|.
+name|contains
+argument_list|(
+literal|"?"
+argument_list|)
+condition|)
+block|{
+name|sql
+operator|=
+name|updateSql
+argument_list|(
+name|sql
+argument_list|,
+name|parameters
+argument_list|)
+expr_stmt|;
+block|}
 name|client
 operator|.
 name|execute
@@ -520,6 +585,226 @@ argument_list|)
 expr_stmt|;
 return|return
 name|resultSet
+return|;
+block|}
+comment|/**    * update the SQL string with parameters set by setXXX methods of {@link PreparedStatement}    *    * @param sql    * @param parameters    * @return updated SQL string    */
+specifier|private
+name|String
+name|updateSql
+parameter_list|(
+specifier|final
+name|String
+name|sql
+parameter_list|,
+name|HashMap
+argument_list|<
+name|Integer
+argument_list|,
+name|String
+argument_list|>
+name|parameters
+parameter_list|)
+block|{
+name|StringBuffer
+name|newSql
+init|=
+operator|new
+name|StringBuffer
+argument_list|(
+name|sql
+argument_list|)
+decl_stmt|;
+name|int
+name|paramLoc
+init|=
+literal|1
+decl_stmt|;
+while|while
+condition|(
+name|getCharIndexFromSqlByParamLocation
+argument_list|(
+name|sql
+argument_list|,
+literal|'?'
+argument_list|,
+name|paramLoc
+argument_list|)
+operator|>
+literal|0
+condition|)
+block|{
+comment|// check the user has set the needs parameters
+if|if
+condition|(
+name|parameters
+operator|.
+name|containsKey
+argument_list|(
+name|paramLoc
+argument_list|)
+condition|)
+block|{
+name|int
+name|tt
+init|=
+name|getCharIndexFromSqlByParamLocation
+argument_list|(
+name|newSql
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+literal|'?'
+argument_list|,
+literal|1
+argument_list|)
+decl_stmt|;
+name|newSql
+operator|.
+name|deleteCharAt
+argument_list|(
+name|tt
+argument_list|)
+expr_stmt|;
+name|newSql
+operator|.
+name|insert
+argument_list|(
+name|tt
+argument_list|,
+name|parameters
+operator|.
+name|get
+argument_list|(
+name|paramLoc
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+name|paramLoc
+operator|++
+expr_stmt|;
+block|}
+return|return
+name|newSql
+operator|.
+name|toString
+argument_list|()
+return|;
+block|}
+comment|/**    * Get the index of given char from the SQL string by parameter location    *</br> The -1 will be return, if nothing found    *    * @param sql    * @param cchar    * @param paramLoc    * @return    */
+specifier|private
+name|int
+name|getCharIndexFromSqlByParamLocation
+parameter_list|(
+specifier|final
+name|String
+name|sql
+parameter_list|,
+specifier|final
+name|char
+name|cchar
+parameter_list|,
+specifier|final
+name|int
+name|paramLoc
+parameter_list|)
+block|{
+name|int
+name|signalCount
+init|=
+literal|0
+decl_stmt|;
+name|int
+name|charIndex
+init|=
+operator|-
+literal|1
+decl_stmt|;
+name|int
+name|num
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|sql
+operator|.
+name|length
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|char
+name|c
+init|=
+name|sql
+operator|.
+name|charAt
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|c
+operator|==
+literal|'\''
+operator|||
+name|c
+operator|==
+literal|'\\'
+condition|)
+comment|// record the count of char "'" and char "\"
+block|{
+name|signalCount
+operator|++
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|c
+operator|==
+name|cchar
+operator|&&
+name|signalCount
+operator|%
+literal|2
+operator|==
+literal|0
+condition|)
+block|{
+comment|// check if the ? is really the parameter
+name|num
+operator|++
+expr_stmt|;
+if|if
+condition|(
+name|num
+operator|==
+name|paramLoc
+condition|)
+block|{
+name|charIndex
+operator|=
+name|i
+expr_stmt|;
+break|break;
+block|}
+block|}
+block|}
+return|return
+name|charIndex
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#getMetaData()    */
@@ -838,14 +1123,19 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
 argument_list|(
-literal|"Method not supported"
+name|parameterIndex
+argument_list|,
+literal|""
+operator|+
+name|x
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#setByte(int, byte)    */
 specifier|public
@@ -861,14 +1151,19 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
 argument_list|(
-literal|"Method not supported"
+name|parameterIndex
+argument_list|,
+literal|""
+operator|+
+name|x
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#setBytes(int, byte[])    */
 specifier|public
@@ -1104,14 +1399,19 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
 argument_list|(
-literal|"Method not supported"
+name|parameterIndex
+argument_list|,
+literal|""
+operator|+
+name|x
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#setFloat(int, float)    */
 specifier|public
@@ -1127,14 +1427,19 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
 argument_list|(
-literal|"Method not supported"
+name|parameterIndex
+argument_list|,
+literal|""
+operator|+
+name|x
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#setInt(int, int)    */
 specifier|public
@@ -1150,14 +1455,19 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
 argument_list|(
-literal|"Method not supported"
+name|parameterIndex
+argument_list|,
+literal|""
+operator|+
+name|x
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#setLong(int, long)    */
 specifier|public
@@ -1173,14 +1483,19 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
 argument_list|(
-literal|"Method not supported"
+name|parameterIndex
+argument_list|,
+literal|""
+operator|+
+name|x
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#setNCharacterStream(int, java.io.Reader)    */
 specifier|public
@@ -1536,14 +1851,19 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
 argument_list|(
-literal|"Method not supported"
+name|parameterIndex
+argument_list|,
+literal|""
+operator|+
+name|x
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#setString(int, java.lang.String)    */
 specifier|public
@@ -1559,14 +1879,32 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|x
+operator|=
+name|x
+operator|.
+name|replace
 argument_list|(
-literal|"Method not supported"
+literal|"'"
+argument_list|,
+literal|"\\'"
 argument_list|)
-throw|;
+expr_stmt|;
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
+argument_list|(
+name|parameterIndex
+argument_list|,
+literal|"'"
+operator|+
+name|x
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.PreparedStatement#setTime(int, java.sql.Time)    */
 specifier|public
@@ -1777,14 +2115,10 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+name|warningChain
+operator|=
+literal|null
+expr_stmt|;
 block|}
 comment|/**    *  Closes the prepared statement.    *    *  @throws    */
 specifier|public
@@ -2133,14 +2467,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|maxRows
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getMoreResults()    */
 specifier|public
@@ -2204,14 +2535,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|resultSet
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getResultSetConcurrency()    */
 specifier|public
@@ -2272,14 +2600,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|updateCount
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#getWarnings()    */
 specifier|public
@@ -2289,14 +2612,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|warningChain
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#isClosed()    */
 specifier|public
@@ -2306,14 +2624,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|isClosed
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#isPoolable()    */
 specifier|public
@@ -2443,8 +2756,27 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-comment|// throw new SQLException("Method not supported");
+if|if
+condition|(
+name|max
+operator|<
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"max must be>= 0"
+argument_list|)
+throw|;
+block|}
+name|this
+operator|.
+name|maxRows
+operator|=
+name|max
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.Statement#setPoolable(boolean)    */
 specifier|public
