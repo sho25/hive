@@ -159,6 +159,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|ConcurrentLinkedQueue
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -2427,7 +2439,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**    * Compile a new query, but potentially reset taskID counter.  Not resetting task counter    * is useful for generating re-entrant QL queries.      * @param command  The HiveQL query to compile    * @param resetTaskIds Resets taskID counter if true.      * @return    */
+comment|/**    * Compile a new query, but potentially reset taskID counter.  Not resetting task counter    * is useful for generating re-entrant QL queries.    * @param command  The HiveQL query to compile    * @param resetTaskIds Resets taskID counter if true.    * @return    */
 specifier|public
 name|int
 name|compile
@@ -6592,7 +6604,7 @@ argument_list|>
 name|runnable
 init|=
 operator|new
-name|LinkedList
+name|ConcurrentLinkedQueue
 argument_list|<
 name|Task
 argument_list|<
