@@ -171,6 +171,24 @@ name|DropTableEvent
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
+name|LoadPartitionDoneEvent
+import|;
+end_import
+
 begin_comment
 comment|/**  * This abstract class needs to be extended to  provide implementation of actions that needs  * to be performed when a particular event occurs on a metastore. These methods  * are called whenever an event occurs on metastore. Status of the event whether  * it was successful or not is contained in container event object.  */
 end_comment
@@ -269,6 +287,18 @@ name|onDropDatabase
 parameter_list|(
 name|DropDatabaseEvent
 name|dbEvent
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
+comment|/**    * @param partSetDoneEvent    * @throws MetaException    */
+specifier|public
+specifier|abstract
+name|void
+name|onLoadPartitionDone
+parameter_list|(
+name|LoadPartitionDoneEvent
+name|partSetDoneEvent
 parameter_list|)
 throws|throws
 name|MetaException
