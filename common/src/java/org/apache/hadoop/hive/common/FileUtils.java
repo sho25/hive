@@ -338,6 +338,39 @@ argument_list|>
 name|vals
 parameter_list|)
 block|{
+return|return
+name|makePartName
+argument_list|(
+name|partCols
+argument_list|,
+name|vals
+argument_list|,
+literal|null
+argument_list|)
+return|;
+block|}
+comment|/**    * Makes a valid partition name.    * @param partCols The partition keys' names    * @param vals The partition values    * @param defaultStr    *         The default name given to a partition value if the respective value is empty or null.    * @return An escaped, valid partition name.    */
+specifier|public
+specifier|static
+name|String
+name|makePartName
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partCols
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|vals
+parameter_list|,
+name|String
+name|defaultStr
+parameter_list|)
+block|{
 name|StringBuilder
 name|name
 init|=
@@ -397,6 +430,8 @@ operator|)
 operator|.
 name|toLowerCase
 argument_list|()
+argument_list|,
+name|defaultStr
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -419,6 +454,8 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+argument_list|,
+name|defaultStr
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -628,7 +665,29 @@ name|String
 name|path
 parameter_list|)
 block|{
-comment|// __HIVE_DEFAULT_NULL__ is the system default value for null and empty string. We should
+return|return
+name|escapePathName
+argument_list|(
+name|path
+argument_list|,
+literal|null
+argument_list|)
+return|;
+block|}
+comment|/**    * Escapes a path name.    * @param path The path to escape.    * @param defaultPath    *          The default name for the path, if the given path is empty or null.    * @return An escaped path name.    */
+specifier|public
+specifier|static
+name|String
+name|escapePathName
+parameter_list|(
+name|String
+name|path
+parameter_list|,
+name|String
+name|defaultPath
+parameter_list|)
+block|{
+comment|// __HIVE_DEFAULT_NULL__ is the system default value for null and empty string.
 comment|// TODO: we should allow user to specify default partition or HDFS file location.
 if|if
 condition|(
@@ -644,9 +703,25 @@ operator|==
 literal|0
 condition|)
 block|{
+if|if
+condition|(
+name|defaultPath
+operator|==
+literal|null
+condition|)
+block|{
+comment|//previously, when path is empty or null and no default path is specified,
+comment|// __HIVE_DEFAULT_PARTITION__ was the return value for escapePathName
 return|return
 literal|"__HIVE_DEFAULT_PARTITION__"
 return|;
+block|}
+else|else
+block|{
+return|return
+name|defaultPath
+return|;
+block|}
 block|}
 name|StringBuilder
 name|sb
