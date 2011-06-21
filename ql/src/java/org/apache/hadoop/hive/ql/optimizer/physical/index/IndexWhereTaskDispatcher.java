@@ -171,6 +171,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|index
+operator|.
+name|bitmap
+operator|.
+name|BitmapIndexHandler
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|lib
 operator|.
 name|DefaultGraphWalker
@@ -653,6 +673,18 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|supportedIndexes
+operator|.
+name|add
+argument_list|(
+name|BitmapIndexHandler
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// query the metastore to know what columns we have indexed
 name|Collection
 argument_list|<
@@ -748,7 +780,8 @@ return|return
 literal|null
 return|;
 block|}
-comment|// FIL% is a filter operator, a WHERE shows up as a filter on a table scan operator (TS%)
+comment|// We set the pushed predicate from the WHERE clause as the filter expr on
+comment|// all table scan operators, so we look for table scan operators(TS%)
 name|operatorRules
 operator|.
 name|put
@@ -758,7 +791,7 @@ name|RuleRegExp
 argument_list|(
 literal|"RULEWhere"
 argument_list|,
-literal|"TS%FIL%"
+literal|"TS%"
 argument_list|)
 argument_list|,
 operator|new

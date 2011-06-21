@@ -2567,6 +2567,33 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTINDEXFILTER
+argument_list|)
+condition|)
+block|{
+comment|// attach the original predicate to the table scan operator for index
+comment|// optimizations that require the pushed predicate before pcr& later
+comment|// optimizations are applied
+name|tableScanDesc
+operator|.
+name|setFilterExpr
+argument_list|(
+name|originalPredicate
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 operator|!
 name|tbl
 operator|.
