@@ -37,7 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
+name|HashMap
 import|;
 end_import
 
@@ -57,7 +57,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|List
 import|;
 end_import
 
@@ -68,16 +68,6 @@ operator|.
 name|util
 operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
 import|;
 end_import
 
@@ -116,24 +106,6 @@ operator|.
 name|logging
 operator|.
 name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|MapredWork
 import|;
 end_import
 
@@ -345,10 +317,6 @@ name|HiveIndexedInputFormat
 import|;
 end_import
 
-begin_empty_stmt
-empty_stmt|;
-end_empty_stmt
-
 begin_import
 import|import
 name|org
@@ -453,26 +421,6 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|HiveStoragePredicateHandler
-operator|.
-name|DecomposedPredicate
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
 name|HiveException
 import|;
 end_import
@@ -509,7 +457,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|VirtualColumn
+name|Partition
 import|;
 end_import
 
@@ -527,7 +475,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|Partition
+name|VirtualColumn
 import|;
 end_import
 
@@ -564,44 +512,6 @@ operator|.
 name|plan
 operator|.
 name|ExprNodeDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|ExprNodeGenericFuncDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|index
-operator|.
-name|bitmap
-operator|.
-name|BitmapQuery
 import|;
 end_import
 
