@@ -157,7 +157,9 @@ operator|new
 name|GenericUDFUtils
 operator|.
 name|ReturnObjectInspectorResolver
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 for|for
 control|(
