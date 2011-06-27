@@ -179,6 +179,11 @@ name|more
 init|=
 literal|true
 decl_stmt|;
+specifier|private
+specifier|final
+name|Path
+name|path
+decl_stmt|;
 specifier|protected
 name|Configuration
 name|conf
@@ -195,14 +200,13 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|Path
 name|path
-init|=
+operator|=
 name|split
 operator|.
 name|getPath
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|FileSystem
 name|fs
 init|=
@@ -463,6 +467,12 @@ operator|.
 name|getCompressionCodec
 argument_list|()
 expr_stmt|;
+name|keyWrapper
+operator|.
+name|inputPath
+operator|=
+name|path
+expr_stmt|;
 name|valueWrapper
 operator|.
 name|valueBuffer
@@ -501,7 +511,7 @@ return|return
 name|more
 return|;
 block|}
-comment|/**    * Return the progress within the input split.    *     * @return 0.0 to 1.0 of the input byte range    */
+comment|/**    * Return the progress within the input split.    *    * @return 0.0 to 1.0 of the input byte range    */
 specifier|public
 name|float
 name|getProgress
