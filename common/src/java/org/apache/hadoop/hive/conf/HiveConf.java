@@ -1116,6 +1116,20 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|METASTORE_EVENT_CLEAN_FREQ
+argument_list|(
+literal|"hive.metastore.event.clean.freq"
+argument_list|,
+literal|0L
+argument_list|)
+block|,
+name|METASTORE_EVENT_EXPIRY_DURATION
+argument_list|(
+literal|"hive.metastore.event.expiry.duration"
+argument_list|,
+literal|0L
+argument_list|)
+block|,
 comment|// Default parameters for creating tables
 name|NEWTABLEDEFAULTPARA
 argument_list|(

@@ -1631,6 +1631,12 @@ name|MetaException
 throws|,
 name|InvalidObjectException
 function_decl|;
+specifier|public
+specifier|abstract
+name|long
+name|cleanupEvents
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
