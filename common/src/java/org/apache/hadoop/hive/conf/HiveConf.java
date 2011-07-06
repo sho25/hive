@@ -1786,7 +1786,7 @@ name|HIVEINPUTFORMAT
 argument_list|(
 literal|"hive.input.format"
 argument_list|,
-literal|""
+literal|"org.apache.hadoop.hive.ql.io.CombineHiveInputFormat"
 argument_list|)
 block|,
 name|HIVEENFORCEBUCKETING
