@@ -1061,6 +1061,13 @@ operator|.
 name|rollbackTransaction
 argument_list|()
 expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Committing the alter table transaction was not successful."
+argument_list|)
+throw|;
 block|}
 if|if
 condition|(

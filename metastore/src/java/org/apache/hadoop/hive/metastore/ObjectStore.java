@@ -10255,6 +10255,13 @@ block|{
 name|rollbackTransaction
 argument_list|()
 expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"The transaction for alter partition did not commit successfully."
+argument_list|)
+throw|;
 block|}
 block|}
 block|}
