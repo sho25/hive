@@ -672,12 +672,37 @@ index|[
 name|buffer_length
 index|]
 expr_stmt|;
+block|}
+specifier|private
+name|void
+name|initialize
+parameter_list|()
+block|{
 comment|// do not fill tokenizer until user requests since filling it could read
 comment|// in data
 comment|// not meant for this instantiation.
+try|try
+block|{
 name|fillTokenizer
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Unable to initialize tokenizer"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|boolean
@@ -805,18 +830,17 @@ return|return
 literal|false
 return|;
 block|}
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 name|tokenizer
 operator|=
 literal|null
 expr_stmt|;
-return|return
-literal|false
-return|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|e
+argument_list|)
+throw|;
 block|}
 return|return
 literal|true
@@ -1248,6 +1272,11 @@ name|rowSeparator
 argument_list|,
 name|bufferSize
 argument_list|)
+expr_stmt|;
+name|transportTokenizer
+operator|.
+name|initialize
+argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * For quoted fields, strip away the quotes and also need something to strip    * away the control separator when using complex split method defined here.    */
