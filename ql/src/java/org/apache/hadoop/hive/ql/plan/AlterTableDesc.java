@@ -368,6 +368,9 @@ name|oldName
 parameter_list|,
 name|String
 name|newName
+parameter_list|,
+name|boolean
+name|expectView
 parameter_list|)
 block|{
 name|op
@@ -387,6 +390,12 @@ operator|.
 name|newName
 operator|=
 name|newName
+expr_stmt|;
+name|this
+operator|.
+name|expectView
+operator|=
+name|expectView
 expr_stmt|;
 block|}
 comment|/**    * @param name    *          name of the table    * @param newCols    *          new columns to be added    */
@@ -466,7 +475,7 @@ operator|=
 name|expectView
 expr_stmt|;
 block|}
-comment|/**    *    * @param name    *          name of the table    * @param inputFormat    *          new table input format    * @param outputFormat    *          new table output format    * @param partSpec     */
+comment|/**    *    * @param name    *          name of the table    * @param inputFormat    *          new table input format    * @param outputFormat    *          new table output format    * @param partSpec    */
 specifier|public
 name|AlterTableDesc
 parameter_list|(

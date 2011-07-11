@@ -1178,6 +1178,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_ALTERVIEW_RENAME
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_SHOWDATABASES
 case|:
 case|case

@@ -2590,11 +2590,38 @@ break|break;
 case|case
 name|HiveParser
 operator|.
+name|TOK_ALTERVIEW_RENAME
+case|:
+comment|// for ALTER VIEW RENAME, we wrapped the RENAME to discriminate
+comment|// view from table; unwrap it now
+name|analyzeAlterTableRename
+argument_list|(
+operator|(
+operator|(
+name|ASTNode
+operator|)
+name|ast
+operator|.
+name|getChild
+argument_list|(
+literal|0
+argument_list|)
+operator|)
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+break|break;
+case|case
+name|HiveParser
+operator|.
 name|TOK_ALTERTABLE_RENAME
 case|:
 name|analyzeAlterTableRename
 argument_list|(
 name|ast
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 break|break;
@@ -11349,6 +11376,9 @@ name|analyzeAlterTableRename
 parameter_list|(
 name|ASTNode
 name|ast
+parameter_list|,
+name|boolean
+name|expectView
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -11389,6 +11419,8 @@ argument_list|(
 literal|1
 argument_list|)
 argument_list|)
+argument_list|,
+name|expectView
 argument_list|)
 decl_stmt|;
 try|try

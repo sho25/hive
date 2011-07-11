@@ -8984,6 +8984,9 @@ case|:
 case|case
 name|ADDPROPS
 case|:
+case|case
+name|RENAME
+case|:
 comment|// allow this form
 break|break;
 default|default:

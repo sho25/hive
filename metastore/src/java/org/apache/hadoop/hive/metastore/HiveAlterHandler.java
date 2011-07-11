@@ -590,13 +590,29 @@ literal|"partition keys can not be changed."
 argument_list|)
 throw|;
 block|}
-comment|// if this alter is a rename, and user didn't change the
-comment|// default location (or new location is empty), and table is
-comment|// not an external table, that means user is asking metastore
-comment|// to move data to new location corresponding to the new name
+comment|// if this alter is a rename, the table is not a virtual view, the user
+comment|// didn't change the default location (or new location is empty), and
+comment|// table is not an external table, that means useris asking metastore to
+comment|// move data to the new location corresponding to the new name
 if|if
 condition|(
 name|rename
+operator|&&
+operator|!
+name|oldt
+operator|.
+name|getTableType
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|TableType
+operator|.
+name|VIRTUAL_VIEW
+operator|.
+name|toString
+argument_list|()
+argument_list|)
 operator|&&
 operator|(
 name|oldt
