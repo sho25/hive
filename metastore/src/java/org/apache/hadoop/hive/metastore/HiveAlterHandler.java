@@ -221,6 +221,24 @@ name|Table
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|NoSuchObjectException
+import|;
+end_import
+
 begin_comment
 comment|/**  * Hive specific implementation of alter  */
 end_comment
@@ -666,12 +684,17 @@ name|newTblLoc
 operator|=
 name|wh
 operator|.
-name|getDefaultTablePath
+name|getTablePath
+argument_list|(
+name|msdb
+operator|.
+name|getDatabase
 argument_list|(
 name|newt
 operator|.
 name|getDbName
 argument_list|()
+argument_list|)
 argument_list|,
 name|newt
 operator|.
@@ -1054,6 +1077,38 @@ operator|new
 name|InvalidOperationException
 argument_list|(
 literal|"Unable to change partition or table."
+operator|+
+literal|" Check metastore logs for detailed stack."
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|NoSuchObjectException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|InvalidOperationException
+argument_list|(
+literal|"Unable to change partition or table. Database "
+operator|+
+name|dbname
+operator|+
+literal|" does not exist"
 operator|+
 literal|" Check metastore logs for detailed stack."
 operator|+
