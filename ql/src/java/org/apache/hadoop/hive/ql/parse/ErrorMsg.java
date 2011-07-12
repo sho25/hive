@@ -759,6 +759,11 @@ name|EXIM_FOR_NON_NATIVE
 argument_list|(
 literal|"Export/Import cannot be done for a non-native table. "
 argument_list|)
+block|,
+name|INSERT_INTO_BUCKETIZED_TABLE
+argument_list|(
+literal|"Bucketized tables do not support INSERT INTO:"
+argument_list|)
 block|,       ;
 specifier|private
 name|String
