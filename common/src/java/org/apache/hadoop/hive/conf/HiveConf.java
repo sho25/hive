@@ -1856,6 +1856,13 @@ literal|true
 argument_list|)
 block|,
 comment|// predicate pushdown
+name|HIVEPPDREMOVEDUPLICATEFILTERS
+argument_list|(
+literal|"hive.ppd.remove.duplicatefilters"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// push predicates down to storage handlers
 name|HIVEOPTPPD_STORAGE
 argument_list|(
