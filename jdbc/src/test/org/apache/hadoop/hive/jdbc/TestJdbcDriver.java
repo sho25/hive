@@ -220,6 +220,7 @@ name|TestCase
 block|{
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|driverName
 init|=
@@ -227,13 +228,15 @@ literal|"org.apache.hadoop.hive.jdbc.HiveDriver"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|tableName
 init|=
-literal|"testHiveJdbcDriverTable"
+literal|"testHiveJdbcDriver_Table"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|tableComment
 init|=
@@ -241,6 +244,7 @@ literal|"Simple table"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|viewName
 init|=
@@ -248,6 +252,7 @@ literal|"testHiveJdbcDriverView"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|viewComment
 init|=
@@ -255,6 +260,7 @@ literal|"Simple view"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|partitionedTableName
 init|=
@@ -262,6 +268,7 @@ literal|"testHiveJdbcDriverPartitionedTable"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|partitionedTableComment
 init|=
@@ -269,6 +276,7 @@ literal|"Partitioned table"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|dataTypeTableName
 init|=
@@ -276,6 +284,7 @@ literal|"testDataTypeTable"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|dataTypeTableComment
 init|=
@@ -523,7 +532,7 @@ literal|"create table "
 operator|+
 name|tableName
 operator|+
-literal|" (key int comment 'the key', value string) comment '"
+literal|" (under_col int comment 'the under column', value string) comment '"
 operator|+
 name|tableComment
 operator|+
@@ -604,7 +613,7 @@ literal|"create table "
 operator|+
 name|partitionedTableName
 operator|+
-literal|" (key int, value string) comment '"
+literal|" (under_col int, value string) comment '"
 operator|+
 name|partitionedTableComment
 operator|+
@@ -2340,7 +2349,7 @@ name|res
 operator|.
 name|getInt
 argument_list|(
-literal|"key"
+literal|"under_col"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2357,7 +2366,7 @@ name|res
 operator|.
 name|getString
 argument_list|(
-literal|"key"
+literal|"under_col"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2642,7 +2651,7 @@ argument_list|)
 expr_stmt|;
 name|doTestErrorCase
 argument_list|(
-literal|"SELECT invalid_function(key) FROM "
+literal|"SELECT invalid_function(under_col) FROM "
 operator|+
 name|tableName
 argument_list|,
@@ -2921,9 +2930,9 @@ operator|new
 name|Object
 index|[]
 block|{
-literal|"testhivejdbcdriverpartitionedtable"
+literal|"testhivejdbcdriver_table"
 block|,
-literal|"testhivejdbcdrivertable"
+literal|"testhivejdbcdriverpartitionedtable"
 block|,
 literal|"testhivejdbcdriverview"
 block|}
@@ -2933,13 +2942,13 @@ name|tests
 operator|.
 name|put
 argument_list|(
-literal|"%jdbcdrivertable"
+literal|"%jdbcdriver\\_table"
 argument_list|,
 operator|new
 name|Object
 index|[]
 block|{
-literal|"testhivejdbcdrivertable"
+literal|"testhivejdbcdriver_table"
 block|}
 argument_list|)
 expr_stmt|;
@@ -2947,13 +2956,13 @@ name|tests
 operator|.
 name|put
 argument_list|(
-literal|"testhivejdbcdrivertable"
+literal|"testhivejdbcdriver\\_table"
 argument_list|,
 operator|new
 name|Object
 index|[]
 block|{
-literal|"testhivejdbcdrivertable"
+literal|"testhivejdbcdriver_table"
 block|}
 argument_list|)
 expr_stmt|;
@@ -2961,13 +2970,43 @@ name|tests
 operator|.
 name|put
 argument_list|(
-literal|"test_ivejdbcdri_ertable"
+literal|"test_ivejdbcdri_er\\_table"
 argument_list|,
 operator|new
 name|Object
 index|[]
 block|{
-literal|"testhivejdbcdrivertable"
+literal|"testhivejdbcdriver_table"
+block|}
+argument_list|)
+expr_stmt|;
+name|tests
+operator|.
+name|put
+argument_list|(
+literal|"test_ivejdbcdri_er_table"
+argument_list|,
+operator|new
+name|Object
+index|[]
+block|{
+literal|"testhivejdbcdriver_table"
+block|}
+argument_list|)
+expr_stmt|;
+name|tests
+operator|.
+name|put
+argument_list|(
+literal|"test_ivejdbcdri_er%table"
+argument_list|,
+operator|new
+name|Object
+index|[]
+block|{
+literal|"testhivejdbcdriver_table"
+block|,
+literal|"testhivejdbcdriverpartitionedtable"
 block|}
 argument_list|)
 expr_stmt|;
@@ -2981,9 +3020,9 @@ operator|new
 name|Object
 index|[]
 block|{
-literal|"testhivejdbcdriverpartitionedtable"
+literal|"testhivejdbcdriver_table"
 block|,
-literal|"testhivejdbcdrivertable"
+literal|"testhivejdbcdriverpartitionedtable"
 block|,
 literal|"testhivejdbcdriverview"
 block|}
@@ -3544,7 +3583,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"testhivejdbcdrivertable"
+literal|"testhivejdbcdriver\\_table"
 block|,
 literal|null
 block|}
@@ -3576,7 +3615,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdrivertable"
+literal|"%jdbcdriver\\_table"
 block|,
 literal|null
 block|}
@@ -3592,9 +3631,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdrivertable%"
+literal|"%jdbcdriver\\_table%"
 block|,
-literal|"key"
+literal|"under\\_col"
 block|}
 argument_list|,
 literal|1
@@ -3608,9 +3647,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdrivertable%"
+literal|"%jdbcdriver\\_table%"
 block|,
-literal|"ke_"
+literal|"under\\_co_"
 block|}
 argument_list|,
 literal|1
@@ -3624,12 +3663,60 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdrivertable%"
+literal|"%jdbcdriver\\_table%"
 block|,
-literal|"ke%"
+literal|"under_col"
 block|}
 argument_list|,
 literal|1
+argument_list|)
+expr_stmt|;
+name|tests
+operator|.
+name|put
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"%jdbcdriver\\_table%"
+block|,
+literal|"und%"
+block|}
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+name|tests
+operator|.
+name|put
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"%jdbcdriver\\_table%"
+block|,
+literal|"%"
+block|}
+argument_list|,
+literal|2
+argument_list|)
+expr_stmt|;
+name|tests
+operator|.
+name|put
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"%jdbcdriver\\_table%"
+block|,
+literal|"_%"
+block|}
+argument_list|,
+literal|2
 argument_list|)
 expr_stmt|;
 for|for
@@ -3717,7 +3804,7 @@ name|assertEquals
 argument_list|(
 literal|"Wrong column name found"
 argument_list|,
-literal|"key"
+literal|"under_col"
 argument_list|,
 name|columnname
 argument_list|)
@@ -4063,9 +4150,9 @@ argument_list|()
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"Column name 'key' not found"
+literal|"Column name 'under_col' not found"
 argument_list|,
-literal|"key"
+literal|"under_col"
 argument_list|,
 name|res
 operator|.
@@ -4077,7 +4164,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"Column type 'int' for column key not found"
+literal|"Column type 'under_col' for column under_col not found"
 argument_list|,
 literal|"int"
 argument_list|,
