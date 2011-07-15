@@ -2271,6 +2271,18 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// Skipping through comments
+if|if
+condition|(
+operator|!
+name|line
+operator|.
+name|startsWith
+argument_list|(
+literal|"--"
+argument_list|)
+condition|)
+block|{
 name|qsb
 operator|.
 name|append
@@ -2280,6 +2292,7 @@ operator|+
 literal|"\n"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 operator|(
