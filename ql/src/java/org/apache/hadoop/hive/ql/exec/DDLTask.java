@@ -8528,15 +8528,7 @@ comment|// Copy the files out of the archive into the temporary directory
 name|String
 name|copySource
 init|=
-operator|(
-operator|new
-name|Path
-argument_list|(
 name|sourceDir
-argument_list|,
-literal|"*"
-argument_list|)
-operator|)
 operator|.
 name|toString
 argument_list|()
