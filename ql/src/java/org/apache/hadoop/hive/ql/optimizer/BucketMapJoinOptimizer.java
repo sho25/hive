@@ -125,6 +125,18 @@ name|java
 operator|.
 name|util
 operator|.
+name|Map
+operator|.
+name|Entry
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Set
 import|;
 end_import
@@ -136,18 +148,6 @@ operator|.
 name|util
 operator|.
 name|Stack
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-operator|.
-name|Entry
 import|;
 end_import
 
@@ -3254,8 +3254,9 @@ literal|false
 return|;
 block|}
 block|}
-comment|// to see if the join columns from a table is exactly this same as its
-comment|// bucket columns
+comment|// Check if the join columns contains all bucket columns.
+comment|// If a table is bucketized on column B, but the join key is A and B,
+comment|// it is easy to see joining on different buckets yield empty results.
 if|if
 condition|(
 name|joinCols
@@ -3265,44 +3266,18 @@ argument_list|()
 operator|==
 literal|0
 operator|||
-name|joinCols
-operator|.
-name|size
-argument_list|()
-operator|!=
-name|bucketColumns
-operator|.
-name|size
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
-for|for
-control|(
-name|String
-name|col
-range|:
-name|joinCols
-control|)
-block|{
-if|if
-condition|(
 operator|!
-name|bucketColumns
+name|joinCols
 operator|.
-name|contains
+name|containsAll
 argument_list|(
-name|col
+name|bucketColumns
 argument_list|)
 condition|)
 block|{
 return|return
 literal|false
 return|;
-block|}
 block|}
 return|return
 literal|true
