@@ -1766,6 +1766,35 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+comment|/**    * @param new_parts    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#add_partitions(List<org.apache.hadoop.hive.metastore.api.Partition>)    */
+specifier|public
+name|int
+name|add_partitions
+parameter_list|(
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|new_parts
+parameter_list|)
+throws|throws
+name|InvalidObjectException
+throws|,
+name|AlreadyExistsException
+throws|,
+name|MetaException
+throws|,
+name|TException
+block|{
+return|return
+name|client
+operator|.
+name|add_partitions
+argument_list|(
+name|new_parts
+argument_list|)
+return|;
+block|}
 comment|/**    * @param table_name    * @param db_name    * @param part_vals    * @return the appended partition    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
 specifier|public
 name|Partition

@@ -765,6 +765,26 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Add partitions to the table.    *    * @param partitions    *          The partitions to add    * @throws InvalidObjectException    *           Could not find table to add to    * @throws AlreadyExistsException    *           Partition already exists    * @throws MetaException    *           Could not add partition    * @throws TException    *           Thrift exception    */
+specifier|public
+name|int
+name|add_partitions
+parameter_list|(
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|partitions
+parameter_list|)
+throws|throws
+name|InvalidObjectException
+throws|,
+name|AlreadyExistsException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * @param tblName    * @param dbName    * @param partVals    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
 specifier|public
 name|Partition
