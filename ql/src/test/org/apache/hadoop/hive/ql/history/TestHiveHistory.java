@@ -123,6 +123,40 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|LogUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|LogUtils
+operator|.
+name|LogInitializationException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -794,11 +828,22 @@ block|{
 comment|// NOTE: It is critical to do this here so that log4j is reinitialized
 comment|// before
 comment|// any of the other core hive classes are loaded
-name|SessionState
+try|try
+block|{
+name|LogUtils
 operator|.
 name|initHiveLog4j
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|LogInitializationException
+name|e
+parameter_list|)
+block|{
+comment|// ignore
+block|}
 name|CliSessionState
 name|ss
 init|=
