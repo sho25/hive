@@ -5354,6 +5354,10 @@ literal|"Location"
 block|,
 literal|"-I"
 block|,
+literal|"LOCATION '"
+block|,
+literal|"-I"
+block|,
 literal|"transient_lastDdlTime"
 block|,
 literal|"-I"
