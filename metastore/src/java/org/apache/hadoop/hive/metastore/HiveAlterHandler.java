@@ -199,6 +199,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|NoSuchObjectException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|Partition
 import|;
 end_import
@@ -218,24 +236,6 @@ operator|.
 name|api
 operator|.
 name|Table
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|NoSuchObjectException
 import|;
 end_import
 
@@ -566,7 +566,26 @@ literal|" doesn't exist"
 argument_list|)
 throw|;
 block|}
-comment|// check that partition keys have not changed
+comment|// check that partition keys have not changed, except for virtual views
+if|if
+condition|(
+operator|!
+name|oldt
+operator|.
+name|getTableType
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|TableType
+operator|.
+name|VIRTUAL_VIEW
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+condition|)
+block|{
 if|if
 condition|(
 name|oldt
@@ -607,6 +626,7 @@ argument_list|(
 literal|"partition keys can not be changed."
 argument_list|)
 throw|;
+block|}
 block|}
 comment|// if this alter is a rename, the table is not a virtual view, the user
 comment|// didn't change the default location (or new location is empty), and

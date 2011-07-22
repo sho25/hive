@@ -9923,6 +9923,26 @@ name|getLastAccessTime
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|oldt
+operator|.
+name|setViewOriginalText
+argument_list|(
+name|newt
+operator|.
+name|getViewOriginalText
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|oldt
+operator|.
+name|setViewExpandedText
+argument_list|(
+name|newt
+operator|.
+name|getViewExpandedText
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// commit the changes
 name|success
 operator|=
