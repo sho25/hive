@@ -1354,6 +1354,19 @@ operator|.
 name|residualPredicate
 argument_list|)
 expr_stmt|;
+comment|// setup TableScanOperator to change input format for original query
+name|queryContext
+operator|.
+name|setIndexInputFormat
+argument_list|(
+name|HiveCompactIndexInputFormat
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Build reentrant QL for index query
 name|StringBuilder
 name|qlCommand
@@ -1375,6 +1388,13 @@ operator|.
 name|getMRTmpFileURI
 argument_list|()
 decl_stmt|;
+name|queryContext
+operator|.
+name|setIndexIntermediateFile
+argument_list|(
+name|tmpFile
+argument_list|)
+expr_stmt|;
 name|qlCommand
 operator|.
 name|append
@@ -1468,26 +1488,6 @@ name|toString
 argument_list|()
 argument_list|,
 literal|false
-argument_list|)
-expr_stmt|;
-comment|// setup TableScanOperator to change input format for original query
-name|queryContext
-operator|.
-name|setIndexInputFormat
-argument_list|(
-name|HiveCompactIndexInputFormat
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|queryContext
-operator|.
-name|setIndexIntermediateFile
-argument_list|(
-name|tmpFile
 argument_list|)
 expr_stmt|;
 name|queryContext

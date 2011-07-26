@@ -729,53 +729,6 @@ expr_stmt|;
 return|return;
 comment|// abort if we couldn't pull out anything from the predicate
 block|}
-comment|// Build reentrant QL for index query
-name|StringBuilder
-name|qlCommand
-init|=
-operator|new
-name|StringBuilder
-argument_list|(
-literal|"INSERT OVERWRITE DIRECTORY "
-argument_list|)
-decl_stmt|;
-name|String
-name|tmpFile
-init|=
-name|pctx
-operator|.
-name|getContext
-argument_list|()
-operator|.
-name|getMRTmpFileURI
-argument_list|()
-decl_stmt|;
-name|qlCommand
-operator|.
-name|append
-argument_list|(
-literal|"\""
-operator|+
-name|tmpFile
-operator|+
-literal|"\" "
-argument_list|)
-expr_stmt|;
-comment|// QL includes " around file name
-name|qlCommand
-operator|.
-name|append
-argument_list|(
-literal|"SELECT bucketname AS `_bucketname` , COLLECT_SET(offset) AS `_offsets` FROM "
-argument_list|)
-expr_stmt|;
-name|qlCommand
-operator|.
-name|append
-argument_list|(
-literal|"(SELECT `_bucketname` AS bucketname , `_offset` AS offset FROM "
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|BitmapInnerQuery
@@ -847,6 +800,66 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// setup TableScanOperator to change input format for original query
+name|queryContext
+operator|.
+name|setIndexInputFormat
+argument_list|(
+name|HiveIndexedInputFormat
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// Build reentrant QL for index query
+name|StringBuilder
+name|qlCommand
+init|=
+operator|new
+name|StringBuilder
+argument_list|(
+literal|"INSERT OVERWRITE DIRECTORY "
+argument_list|)
+decl_stmt|;
+name|String
+name|tmpFile
+init|=
+name|pctx
+operator|.
+name|getContext
+argument_list|()
+operator|.
+name|getMRTmpFileURI
+argument_list|()
+decl_stmt|;
+name|qlCommand
+operator|.
+name|append
+argument_list|(
+literal|"\""
+operator|+
+name|tmpFile
+operator|+
+literal|"\" "
+argument_list|)
+expr_stmt|;
+comment|// QL includes " around file name
+name|qlCommand
+operator|.
+name|append
+argument_list|(
+literal|"SELECT bucketname AS `_bucketname` , COLLECT_SET(offset) AS `_offsets` FROM "
+argument_list|)
+expr_stmt|;
+name|qlCommand
+operator|.
+name|append
+argument_list|(
+literal|"(SELECT `_bucketname` AS bucketname , `_offset` AS offset FROM "
+argument_list|)
+expr_stmt|;
 name|BitmapQuery
 name|head
 init|=
@@ -953,19 +966,6 @@ name|toString
 argument_list|()
 argument_list|,
 literal|false
-argument_list|)
-expr_stmt|;
-comment|// setup TableScanOperator to change input format for original query
-name|queryContext
-operator|.
-name|setIndexInputFormat
-argument_list|(
-name|HiveIndexedInputFormat
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|queryContext
