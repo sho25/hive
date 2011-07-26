@@ -527,6 +527,32 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
+comment|/**    * Get a list of table names that match a filter.    * The filter operators are LIKE,<,<=,>,>=, =,<>    *    * In the filter statement, values interpreted as strings must be enclosed in quotes,    * while values interpreted as integers should not be.  Strings and integers are the only    * supported value types.    *    * The currently supported key names in the filter are:    * Constants.HIVE_FILTER_FIELD_OWNER, which filters on the tables' owner's name    *   and supports all filter operators    * Constants.HIVE_FILTER_FIELD_LAST_ACCESS, which filters on the last access times    *   and supports all filter operators except LIKE    * Constants.HIVE_FILTER_FIELD_PARAMS, which filters on the tables' parameter keys and values    *   and only supports the filter operators = and<>.    *   Append the parameter key name to HIVE_FILTER_FIELD_PARAMS in the filter statement.    *   For example, to filter on parameter keys called "retention", the key name in the filter    *   statement should be Constants.HIVE_FILTER_FIELD_PARAMS + "retention"    *   Also, = and<> only work for keys that exist in the tables.    *   E.g., filtering on tables where key1<> value will only    *   return tables that have a value for the parameter key1.    * Some example filter statements include:    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " like \".*test.*\" and " +    *   Constants.HIVE_FILTER_FIELD_LAST_ACCESS + " = 0";    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " = \"test_user\" and (" +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"30\" or " +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"90\")"    *    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filterType    *          The type of filter    * @param filter    *          The filter string    * @param max_tables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    */
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|listTableNamesByFilter
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|filter
+parameter_list|,
+name|short
+name|maxTables
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|InvalidOperationException
+throws|,
+name|UnknownDBException
+function_decl|;
 comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws ExistingDependentsException    */
 specifier|public
 name|void
