@@ -390,6 +390,23 @@ name|runningViaChild
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+specifier|transient
+name|boolean
+name|inputSizeEstimated
+init|=
+literal|false
+decl_stmt|;
+specifier|private
+specifier|transient
+name|long
+name|totalInputFileSize
+decl_stmt|;
+specifier|private
+specifier|transient
+name|long
+name|totalInputNumFiles
+decl_stmt|;
 specifier|public
 name|MapRedTask
 parameter_list|()
@@ -515,6 +532,11 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|// set the values of totalInputFileSize and totalInputNumFiles, estimating them
+comment|// if percentage block sampling is being used
+name|estimateInputSize
+argument_list|()
+expr_stmt|;
 comment|// at this point the number of reducers is precisely defined in the plan
 name|int
 name|numReducers
@@ -543,17 +565,11 @@ argument_list|()
 operator|+
 literal|", Summary: "
 operator|+
-name|inputSummary
-operator|.
-name|getLength
-argument_list|()
+name|totalInputFileSize
 operator|+
 literal|","
 operator|+
-name|inputSummary
-operator|.
-name|getFileCount
-argument_list|()
+name|totalInputNumFiles
 operator|+
 literal|","
 operator|+
@@ -570,9 +586,11 @@ name|isEligibleForLocalMode
 argument_list|(
 name|conf
 argument_list|,
-name|inputSummary
-argument_list|,
 name|numReducers
+argument_list|,
+name|totalInputFileSize
+argument_list|,
+name|totalInputNumFiles
 argument_list|)
 decl_stmt|;
 if|if
@@ -1972,15 +1990,157 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-name|long
+comment|// if all inputs are sampled, we should shrink the size of reducers accordingly.
+name|estimateInputSize
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
 name|totalInputFileSize
-init|=
+operator|!=
 name|inputSummary
 operator|.
 name|getLength
 argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"BytesPerReducer="
+operator|+
+name|bytesPerReducer
+operator|+
+literal|" maxReducers="
+operator|+
+name|maxReducers
+operator|+
+literal|" estimated totalInputFileSize="
+operator|+
+name|totalInputFileSize
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"BytesPerReducer="
+operator|+
+name|bytesPerReducer
+operator|+
+literal|" maxReducers="
+operator|+
+name|maxReducers
+operator|+
+literal|" totalInputFileSize="
+operator|+
+name|totalInputFileSize
+argument_list|)
+expr_stmt|;
+block|}
+name|int
+name|reducers
+init|=
+call|(
+name|int
+call|)
+argument_list|(
+operator|(
+name|totalInputFileSize
+operator|+
+name|bytesPerReducer
+operator|-
+literal|1
+operator|)
+operator|/
+name|bytesPerReducer
+argument_list|)
 decl_stmt|;
-comment|// if all inputs are sampled, we should shrink the size of reducers accordingly.
+name|reducers
+operator|=
+name|Math
+operator|.
+name|max
+argument_list|(
+literal|1
+argument_list|,
+name|reducers
+argument_list|)
+expr_stmt|;
+name|reducers
+operator|=
+name|Math
+operator|.
+name|min
+argument_list|(
+name|maxReducers
+argument_list|,
+name|reducers
+argument_list|)
+expr_stmt|;
+return|return
+name|reducers
+return|;
+block|}
+comment|/**    * Sets the values of totalInputFileSize and totalInputNumFiles.  If percentage    * block sampling is used, these values are estimates based on the highest    * percentage being used for sampling multiplied by the value obtained from the    * input summary.  Otherwise, these values are set to the exact value obtained    * from the input summary.    *    * Once the function completes, inputSizeEstimated is set so that the logic is    * never run more than once.    */
+specifier|private
+name|void
+name|estimateInputSize
+parameter_list|()
+block|{
+if|if
+condition|(
+name|inputSizeEstimated
+condition|)
+block|{
+comment|// If we've already run this function, return
+return|return;
+block|}
+comment|// Initialize the values to be those taken from the input summary
+name|totalInputFileSize
+operator|=
+name|inputSummary
+operator|.
+name|getLength
+argument_list|()
+expr_stmt|;
+name|totalInputNumFiles
+operator|=
+name|inputSummary
+operator|.
+name|getFileCount
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+name|work
+operator|.
+name|getNameToSplitSample
+argument_list|()
+operator|==
+literal|null
+operator|||
+name|work
+operator|.
+name|getNameToSplitSample
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// If percentage block sampling wasn't used, we don't need to do any estimation
+name|inputSizeEstimated
+operator|=
+literal|true
+expr_stmt|;
+return|return;
+block|}
+comment|// if all inputs are sampled, we should shrink the size of the input accordingly
 name|double
 name|highestSamplePercentage
 init|=
@@ -2066,8 +2226,8 @@ name|allSample
 condition|)
 block|{
 comment|// This is a little bit dangerous if inputs turns out not to be able to be sampled.
-comment|// In that case, we significantly underestimate number of reducers.
-comment|// It's the same as other cases of estimateNumberOfReducers(). It's just our best
+comment|// In that case, we significantly underestimate the input.
+comment|// It's the same as estimateNumberOfReducers(). It's just our best
 comment|// guess and there is no guarantee.
 name|totalInputFileSize
 operator|=
@@ -2089,89 +2249,33 @@ argument_list|,
 name|totalInputFileSize
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"BytesPerReducer="
-operator|+
-name|bytesPerReducer
-operator|+
-literal|" maxReducers="
-operator|+
-name|maxReducers
-operator|+
-literal|" estimated totalInputFileSize="
-operator|+
-name|totalInputFileSize
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"BytesPerReducer="
-operator|+
-name|bytesPerReducer
-operator|+
-literal|" maxReducers="
-operator|+
-name|maxReducers
-operator|+
-literal|" totalInputFileSize="
-operator|+
-name|totalInputFileSize
-argument_list|)
-expr_stmt|;
-block|}
-name|int
-name|reducers
-init|=
-call|(
-name|int
-call|)
-argument_list|(
-operator|(
-name|totalInputFileSize
-operator|+
-name|bytesPerReducer
-operator|-
-literal|1
-operator|)
-operator|/
-name|bytesPerReducer
-argument_list|)
-decl_stmt|;
-name|reducers
-operator|=
-name|Math
-operator|.
-name|max
-argument_list|(
-literal|1
-argument_list|,
-name|reducers
-argument_list|)
-expr_stmt|;
-name|reducers
+name|totalInputNumFiles
 operator|=
 name|Math
 operator|.
 name|min
 argument_list|(
-name|maxReducers
+call|(
+name|long
+call|)
+argument_list|(
+name|totalInputNumFiles
+operator|*
+name|highestSamplePercentage
+operator|/
+literal|100D
+argument_list|)
 argument_list|,
-name|reducers
+name|totalInputNumFiles
 argument_list|)
 expr_stmt|;
-return|return
-name|reducers
-return|;
 block|}
-comment|/**    * Find out if a job can be run in local mode based on it's characteristics    *    * @param conf Hive Configuration    * @param inputSummary summary about the input files for this job    * @param numReducers total number of reducers for this job    * @return String null if job is eligible for local mode, reason otherwise    */
+name|inputSizeEstimated
+operator|=
+literal|true
+expr_stmt|;
+block|}
+comment|/**    * Find out if a job can be run in local mode based on it's characteristics    *    * @param conf Hive Configuration    * @param numReducers total number of reducers for this job    * @param inputLength the size of the input    * @param inputFileCount the number of files of input    * @return String null if job is eligible for local mode, reason otherwise    */
 specifier|public
 specifier|static
 name|String
@@ -2180,11 +2284,14 @@ parameter_list|(
 name|HiveConf
 name|conf
 parameter_list|,
-name|ContentSummary
-name|inputSummary
-parameter_list|,
 name|int
 name|numReducers
+parameter_list|,
+name|long
+name|inputLength
+parameter_list|,
+name|long
+name|inputFileCount
 parameter_list|)
 block|{
 name|long
@@ -2218,10 +2325,7 @@ decl_stmt|;
 comment|// check for max input size
 if|if
 condition|(
-name|inputSummary
-operator|.
-name|getLength
-argument_list|()
+name|inputLength
 operator|>
 name|maxBytes
 condition|)
@@ -2229,10 +2333,7 @@ block|{
 return|return
 literal|"Input Size (= "
 operator|+
-name|inputSummary
-operator|.
-name|getLength
-argument_list|()
+name|inputLength
 operator|+
 literal|") is larger than "
 operator|+
@@ -2257,10 +2358,7 @@ comment|// based on the total number of files (pessimistically assumming that
 comment|// splits are equal to number of files in worst case)
 if|if
 condition|(
-name|inputSummary
-operator|.
-name|getFileCount
-argument_list|()
+name|inputFileCount
 operator|>
 name|maxTasks
 condition|)
@@ -2268,10 +2366,7 @@ block|{
 return|return
 literal|"Number of Input Files (= "
 operator|+
-name|inputSummary
-operator|.
-name|getFileCount
-argument_list|()
+name|inputFileCount
 operator|+
 literal|") is larger than "
 operator|+
