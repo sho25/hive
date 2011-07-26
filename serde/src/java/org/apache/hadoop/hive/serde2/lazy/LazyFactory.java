@@ -1404,8 +1404,6 @@ argument_list|(
 name|columnNames
 argument_list|,
 name|columnObjectInspectors
-argument_list|,
-name|nullSequence
 argument_list|)
 return|;
 block|}

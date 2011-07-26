@@ -157,20 +157,6 @@ name|PrimitiveObjectInspectorUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Text
-import|;
-end_import
-
 begin_comment
 comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector  * instances.  *   * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  *   * The reason of having caches here is that ObjectInspector is because  * ObjectInspectors do not have an internal state - so ObjectInspectors with the  * same construction parameters should result in exactly the same  * ObjectInspector.  */
 end_comment
@@ -1365,9 +1351,6 @@ argument_list|<
 name|ObjectInspector
 argument_list|>
 name|structFieldObjectInspectors
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
 name|ArrayList
@@ -1397,16 +1380,6 @@ argument_list|(
 name|structFieldObjectInspectors
 argument_list|)
 expr_stmt|;
-name|signature
-operator|.
-name|add
-argument_list|(
-name|nullSequence
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|ColumnarStructObjectInspector
 name|result
 init|=
@@ -1432,8 +1405,6 @@ argument_list|(
 name|structFieldNames
 argument_list|,
 name|structFieldObjectInspectors
-argument_list|,
-name|nullSequence
 argument_list|)
 expr_stmt|;
 name|cachedColumnarStructObjectInspector

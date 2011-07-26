@@ -81,26 +81,12 @@ name|serde2
 operator|.
 name|columnar
 operator|.
-name|ColumnarStruct
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Text
+name|ColumnarStructBase
 import|;
 end_import
 
 begin_comment
-comment|/**  * ColumnarStructObjectInspector works on struct data that is stored in  * ColumnarStruct.  *  * The names of the struct fields and the internal structure of the struct  * fields are specified in the ctor of the ColumnarStructObjectInspector.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
+comment|/**  * ColumnarStructObjectInspector works on struct data that is stored in  * ColumnarStructBase.  *  * The names of the struct fields and the internal structure of the struct  * fields are specified in the ctor of the ColumnarStructObjectInspector.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -249,9 +235,6 @@ name|this
 argument_list|)
 return|;
 block|}
-name|Text
-name|nullSequence
-decl_stmt|;
 comment|/**    * Call ObjectInspectorFactory.getLazySimpleStructObjectInspector instead.    */
 specifier|public
 name|ColumnarStructObjectInspector
@@ -267,9 +250,6 @@ argument_list|<
 name|ObjectInspector
 argument_list|>
 name|structFieldObjectInspectors
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
 name|init
@@ -277,8 +257,6 @@ argument_list|(
 name|structFieldNames
 argument_list|,
 name|structFieldObjectInspectors
-argument_list|,
-name|nullSequence
 argument_list|)
 expr_stmt|;
 block|}
@@ -297,9 +275,6 @@ argument_list|<
 name|ObjectInspector
 argument_list|>
 name|structFieldObjectInspectors
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
 assert|assert
@@ -315,12 +290,6 @@ name|size
 argument_list|()
 operator|)
 assert|;
-name|this
-operator|.
-name|nullSequence
-operator|=
-name|nullSequence
-expr_stmt|;
 name|fields
 operator|=
 operator|new
@@ -388,16 +357,11 @@ argument_list|<
 name|StructField
 argument_list|>
 name|fields
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
 name|init
 argument_list|(
 name|fields
-argument_list|,
-name|nullSequence
 argument_list|)
 expr_stmt|;
 block|}
@@ -410,17 +374,8 @@ argument_list|<
 name|StructField
 argument_list|>
 name|fields
-parameter_list|,
-name|Text
-name|nullSequence
 parameter_list|)
 block|{
-name|this
-operator|.
-name|nullSequence
-operator|=
-name|nullSequence
-expr_stmt|;
 name|this
 operator|.
 name|fields
@@ -567,11 +522,11 @@ return|return
 literal|null
 return|;
 block|}
-name|ColumnarStruct
+name|ColumnarStructBase
 name|struct
 init|=
 operator|(
-name|ColumnarStruct
+name|ColumnarStructBase
 operator|)
 name|data
 decl_stmt|;
@@ -638,11 +593,11 @@ return|return
 literal|null
 return|;
 block|}
-name|ColumnarStruct
+name|ColumnarStructBase
 name|struct
 init|=
 operator|(
-name|ColumnarStruct
+name|ColumnarStructBase
 operator|)
 name|data
 decl_stmt|;
