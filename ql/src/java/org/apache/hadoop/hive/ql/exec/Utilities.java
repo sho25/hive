@@ -6497,7 +6497,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * The first group will contain the task id. The second group is the optional extension. The file    * name looks like: "0_0" or "0_0.gz". There may be a leading prefix (tmp_). Since getTaskId() can    * return an integer only - this should match a pure integer as well    */
+comment|/**    * The first group will contain the task id. The second group is the optional extension. The file    * name looks like: "0_0" or "0_0.gz". There may be a leading prefix (tmp_). Since getTaskId() can    * return an integer only - this should match a pure integer as well. {1,3} is used to limit    * matching for attempts #'s 0-999.    */
 specifier|private
 specifier|static
 name|Pattern
@@ -6507,7 +6507,7 @@ name|Pattern
 operator|.
 name|compile
 argument_list|(
-literal|"^.*?([0-9]+)(_[0-9])?(\\..*)?$"
+literal|"^.*?([0-9]+)(_[0-9]{1,3})?(\\..*)?$"
 argument_list|)
 decl_stmt|;
 comment|/**    * Get the task id from the filename. It is assumed that the filename is derived from the output    * of getTaskId    *    * @param filename    *          filename to extract taskid from    */
