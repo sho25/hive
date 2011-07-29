@@ -495,11 +495,7 @@ name|getName
 parameter_list|()
 block|{
 return|return
-operator|new
-name|String
-argument_list|(
 literal|"FIL"
-argument_list|)
 return|;
 block|}
 annotation|@

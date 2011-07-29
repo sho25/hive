@@ -807,11 +807,7 @@ name|getName
 parameter_list|()
 block|{
 return|return
-operator|new
-name|String
-argument_list|(
 literal|"UNION"
-argument_list|)
 return|;
 block|}
 annotation|@

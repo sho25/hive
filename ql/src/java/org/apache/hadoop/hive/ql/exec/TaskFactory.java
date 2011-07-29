@@ -639,8 +639,9 @@ name|initialValue
 parameter_list|()
 block|{
 return|return
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 literal|0
 argument_list|)
@@ -692,8 +693,9 @@ name|tid
 operator|.
 name|set
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 literal|0
 argument_list|)

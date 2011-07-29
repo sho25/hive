@@ -3193,11 +3193,7 @@ name|getName
 parameter_list|()
 block|{
 return|return
-operator|new
-name|String
-argument_list|(
 literal|"OP"
-argument_list|)
 return|;
 block|}
 comment|/**    * Returns a map of output column name to input expression map Note that    * currently it returns only key columns for ReduceSink and GroupBy operators.    *    * @return null if the operator doesn't change columns    */

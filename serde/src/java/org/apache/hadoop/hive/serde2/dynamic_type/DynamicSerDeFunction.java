@@ -47,6 +47,7 @@ block|{
 comment|// production is: Async() FunctionType() NAME FieldList() Throws()
 comment|// [CommaOrSemicolon]
 specifier|private
+specifier|static
 specifier|final
 name|int
 name|FD_FIELD_LIST

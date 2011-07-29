@@ -34,6 +34,7 @@ comment|// production is:
 comment|// [this.fieldid :] Requiredness() FieldType() this.name FieldValue()
 comment|// [CommaOrSemicolon()]
 specifier|private
+specifier|static
 specifier|final
 name|int
 name|FD_REQUIREDNESS
@@ -41,6 +42,7 @@ init|=
 literal|0
 decl_stmt|;
 specifier|private
+specifier|static
 specifier|final
 name|int
 name|FD_FIELD_TYPE

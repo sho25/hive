@@ -32,6 +32,7 @@ name|DynamicSerDeSimpleNode
 block|{
 comment|// production: this.name | BaseType() | MapType() | SetType() | ListType()
 specifier|private
+specifier|static
 specifier|final
 name|int
 name|FD_FIELD_TYPE

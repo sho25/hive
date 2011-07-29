@@ -4277,18 +4277,6 @@ operator|.
 name|UNIQUE_JOIN
 condition|)
 block|{
-operator|new
-name|IntermediateObject
-argument_list|(
-operator|new
-name|ArrayList
-index|[
-name|numAliases
-index|]
-argument_list|,
-literal|0
-argument_list|)
-expr_stmt|;
 comment|// Check if results need to be emitted.
 comment|// Results only need to be emitted if there is a non-null entry in a table
 comment|// that is preserved or if there are no non-null entries

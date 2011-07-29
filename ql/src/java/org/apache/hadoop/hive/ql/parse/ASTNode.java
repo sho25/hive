@@ -210,8 +210,9 @@ parameter_list|()
 block|{
 return|return
 operator|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|super
 operator|.

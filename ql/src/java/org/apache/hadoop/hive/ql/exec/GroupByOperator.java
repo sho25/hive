@@ -2647,8 +2647,9 @@ name|c
 operator|.
 name|isInstance
 argument_list|(
-operator|new
 name|Boolean
+operator|.
+name|valueOf
 argument_list|(
 literal|true
 argument_list|)
@@ -2658,8 +2659,9 @@ name|c
 operator|.
 name|isInstance
 argument_list|(
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|byte
@@ -2672,8 +2674,9 @@ name|c
 operator|.
 name|isInstance
 argument_list|(
-operator|new
 name|Short
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|short
@@ -2686,8 +2689,9 @@ name|c
 operator|.
 name|isInstance
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 literal|0
 argument_list|)
@@ -2697,8 +2701,9 @@ name|c
 operator|.
 name|isInstance
 argument_list|(
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 literal|0
 argument_list|)
@@ -5669,11 +5674,7 @@ name|getName
 parameter_list|()
 block|{
 return|return
-operator|new
-name|String
-argument_list|(
 literal|"GBY"
-argument_list|)
 return|;
 block|}
 annotation|@
