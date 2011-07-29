@@ -212,7 +212,9 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"hive.ql.parse.FunctionSemanticAnalyzer"
+name|FunctionSemanticAnalyzer
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 specifier|public

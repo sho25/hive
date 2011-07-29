@@ -91,7 +91,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|Context
 import|;
 end_import
 
@@ -107,7 +107,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Context
+name|DriverContext
 import|;
 end_import
 
@@ -331,6 +331,7 @@ literal|1L
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|transient
 specifier|final
 name|Log
 name|LOG
@@ -339,7 +340,9 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"hive.ql.exec.FunctionTask"
+name|FunctionTask
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 specifier|transient

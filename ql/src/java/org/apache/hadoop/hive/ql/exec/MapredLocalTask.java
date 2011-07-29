@@ -640,6 +640,7 @@ name|job
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|transient
 specifier|final
 name|Log
 name|l4j
@@ -648,7 +649,9 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"MapredLocalTask"
+name|MapredLocalTask
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 specifier|static
@@ -681,6 +684,21 @@ specifier|public
 specifier|static
 name|MemoryMXBean
 name|memoryMXBean
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|MapredLocalTask
+operator|.
+name|class
+argument_list|)
 decl_stmt|;
 comment|// not sure we need this exec context; but all the operators in the work
 comment|// will pass this context throught
@@ -726,21 +744,6 @@ operator|.
 name|job
 operator|=
 name|job
-expr_stmt|;
-name|LOG
-operator|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|)
 expr_stmt|;
 name|console
 operator|=
@@ -828,6 +831,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|requireLock

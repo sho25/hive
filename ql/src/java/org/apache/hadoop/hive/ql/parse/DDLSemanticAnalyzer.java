@@ -143,16 +143,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|net
-operator|.
-name|URISyntaxException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -1632,7 +1622,9 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"hive.ql.parse.DDLSemanticAnalyzer"
+name|DDLSemanticAnalyzer
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 specifier|private

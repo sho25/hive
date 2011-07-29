@@ -1519,9 +1519,10 @@ name|int
 name|maxthreads
 decl_stmt|;
 specifier|private
+specifier|static
 specifier|final
 name|int
-name|sleeptime
+name|SLEEP_TIME
 init|=
 literal|2000
 decl_stmt|;
@@ -8006,7 +8007,7 @@ name|Thread
 operator|.
 name|sleep
 argument_list|(
-name|sleeptime
+name|SLEEP_TIME
 argument_list|)
 expr_stmt|;
 block|}
