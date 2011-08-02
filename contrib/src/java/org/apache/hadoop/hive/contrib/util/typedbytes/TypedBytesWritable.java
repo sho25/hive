@@ -209,7 +209,7 @@ init|=
 operator|new
 name|ByteArrayInputStream
 argument_list|(
-name|get
+name|getBytes
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -264,7 +264,7 @@ name|byte
 index|[]
 name|bytes
 init|=
-name|get
+name|getBytes
 argument_list|()
 decl_stmt|;
 if|if

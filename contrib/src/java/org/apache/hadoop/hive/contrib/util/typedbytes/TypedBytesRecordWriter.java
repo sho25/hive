@@ -160,14 +160,14 @@ name|write
 argument_list|(
 name|brow
 operator|.
-name|get
+name|getBytes
 argument_list|()
 argument_list|,
 literal|0
 argument_list|,
 name|brow
 operator|.
-name|getSize
+name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;

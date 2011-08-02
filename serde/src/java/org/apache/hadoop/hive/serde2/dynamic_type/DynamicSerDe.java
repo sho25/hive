@@ -933,12 +933,12 @@ name|reset
 argument_list|(
 name|b
 operator|.
-name|get
+name|getBytes
 argument_list|()
 argument_list|,
 name|b
 operator|.
-name|getSize
+name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
