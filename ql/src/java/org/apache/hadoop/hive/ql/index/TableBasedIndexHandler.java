@@ -753,6 +753,8 @@ parameter_list|,
 name|String
 name|dbName
 parameter_list|)
+throws|throws
+name|HiveException
 function_decl|;
 specifier|protected
 name|List

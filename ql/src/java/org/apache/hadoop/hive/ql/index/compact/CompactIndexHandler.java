@@ -813,6 +813,8 @@ parameter_list|,
 name|String
 name|dbName
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|String
 name|indexCols

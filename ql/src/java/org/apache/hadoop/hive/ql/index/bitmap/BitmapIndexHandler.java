@@ -1558,6 +1558,8 @@ parameter_list|,
 name|String
 name|dbName
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|HiveConf
 name|conf
@@ -2004,6 +2006,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Require clusterby ROWOFFSET if map-size aggregation is off.
+comment|// TODO: Make this work without map side aggregation
 if|if
 condition|(
 operator|!
@@ -2022,25 +2025,13 @@ literal|"true"
 argument_list|)
 condition|)
 block|{
-name|command
-operator|.
-name|append
+throw|throw
+operator|new
+name|HiveException
 argument_list|(
-literal|" CLUSTER BY "
+literal|"Cannot construct index without map-side aggregation"
 argument_list|)
-expr_stmt|;
-name|command
-operator|.
-name|append
-argument_list|(
-name|VirtualColumn
-operator|.
-name|ROWOFFSET
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
+throw|;
 block|}
 name|Driver
 name|driver
