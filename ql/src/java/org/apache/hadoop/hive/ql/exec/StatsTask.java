@@ -2562,6 +2562,13 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+name|work
+operator|.
+name|getLoadTableDesc
+argument_list|()
+operator|!=
+literal|null
+operator|&&
 operator|!
 name|work
 operator|.
