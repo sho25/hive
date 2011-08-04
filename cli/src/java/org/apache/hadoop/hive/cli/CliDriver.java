@@ -2196,6 +2196,22 @@ argument_list|(
 name|command
 argument_list|)
 expr_stmt|;
+comment|//wipe cli query state
+name|SessionState
+name|ss
+init|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+decl_stmt|;
+name|ss
+operator|.
+name|setCommandType
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
 name|command
 operator|=
 literal|""
