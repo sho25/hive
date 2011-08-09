@@ -45,11 +45,8 @@ class|class
 name|MStorageDescriptor
 block|{
 specifier|private
-name|List
-argument_list|<
-name|MFieldSchema
-argument_list|>
-name|cols
+name|MColumnDescriptor
+name|cd
 decl_stmt|;
 specifier|private
 name|String
@@ -106,15 +103,12 @@ specifier|public
 name|MStorageDescriptor
 parameter_list|()
 block|{}
-comment|/**    * @param cols    * @param location    * @param inputFormat    * @param outputFormat    * @param isCompressed    * @param numBuckets    * @param serDeInfo    * @param bucketCols    * @param sortOrder    * @param parameters    */
+comment|/**    * @param cd    * @param location    * @param inputFormat    * @param outputFormat    * @param isCompressed    * @param numBuckets    * @param serDeInfo    * @param bucketCols    * @param sortOrder    * @param parameters    */
 specifier|public
 name|MStorageDescriptor
 parameter_list|(
-name|List
-argument_list|<
-name|MFieldSchema
-argument_list|>
-name|cols
+name|MColumnDescriptor
+name|cd
 parameter_list|,
 name|String
 name|location
@@ -157,9 +151,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|cols
+name|cd
 operator|=
-name|cols
+name|cd
 expr_stmt|;
 name|this
 operator|.
@@ -414,36 +408,30 @@ operator|=
 name|outputFormat
 expr_stmt|;
 block|}
-comment|/**    * @return the cols    */
+comment|/**    * @return the column descriptor    */
 specifier|public
-name|List
-argument_list|<
-name|MFieldSchema
-argument_list|>
-name|getCols
+name|MColumnDescriptor
+name|getCD
 parameter_list|()
 block|{
 return|return
-name|cols
+name|cd
 return|;
 block|}
-comment|/**    * @param cols the cols to set    */
+comment|/**    * @param cd the Column Descriptor to set    */
 specifier|public
 name|void
-name|setCols
+name|setCD
 parameter_list|(
-name|List
-argument_list|<
-name|MFieldSchema
-argument_list|>
-name|cols
+name|MColumnDescriptor
+name|cd
 parameter_list|)
 block|{
 name|this
 operator|.
-name|cols
+name|cd
 operator|=
-name|cols
+name|cd
 expr_stmt|;
 block|}
 comment|/**    * @return the serDe    */
