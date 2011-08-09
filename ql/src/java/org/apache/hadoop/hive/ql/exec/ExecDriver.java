@@ -3289,6 +3289,16 @@ name|getJobID
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|jobID
+operator|=
+name|rj
+operator|.
+name|getID
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 catch|catch

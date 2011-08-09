@@ -408,6 +408,11 @@ init|=
 literal|false
 decl_stmt|;
 specifier|protected
+specifier|transient
+name|String
+name|jobID
+decl_stmt|;
+specifier|protected
 name|Task
 argument_list|<
 name|?
@@ -2031,6 +2036,15 @@ name|queryPlan
 operator|=
 name|queryPlan
 expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getJobID
+parameter_list|()
+block|{
+return|return
+name|jobID
+return|;
 block|}
 block|}
 end_class
