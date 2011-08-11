@@ -200,6 +200,8 @@ block|{
 name|PRE_EXEC_HOOK
 block|,
 name|POST_EXEC_HOOK
+block|,
+name|ON_FAILURE_HOOK
 block|}
 specifier|private
 name|QueryPlan

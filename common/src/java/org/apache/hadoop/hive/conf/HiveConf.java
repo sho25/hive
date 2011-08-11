@@ -610,6 +610,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|ONFAILUREHOOKS
+argument_list|(
+literal|"hive.exec.failure.hooks"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 name|EXECPARALLEL
 argument_list|(
 literal|"hive.exec.parallel"
