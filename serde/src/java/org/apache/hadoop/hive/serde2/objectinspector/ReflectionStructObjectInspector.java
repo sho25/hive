@@ -149,6 +149,15 @@ return|return
 name|fieldObjectInspector
 return|;
 block|}
+specifier|public
+name|String
+name|getFieldComment
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

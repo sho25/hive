@@ -38,6 +38,11 @@ name|ObjectInspector
 name|getFieldObjectInspector
 parameter_list|()
 function_decl|;
+comment|/**    * Get the comment for the field. May be null if no comment provided.    */
+name|String
+name|getFieldComment
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
