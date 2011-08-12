@@ -1531,10 +1531,15 @@ expr_stmt|;
 name|int
 name|exitVal
 init|=
-name|executor
+name|jobExecHelper
 operator|.
-name|waitFor
+name|progressLocal
+argument_list|(
+name|executor
+argument_list|,
+name|getId
 argument_list|()
+argument_list|)
 decl_stmt|;
 if|if
 condition|(

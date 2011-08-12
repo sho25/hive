@@ -5402,6 +5402,10 @@ literal|"[.][.][.] [0-9]* more"
 block|,
 literal|"-I"
 block|,
+literal|"job_[0-9]*_[0-9]*"
+block|,
+literal|"-I"
+block|,
 literal|"USING 'java -cp"
 block|,
 operator|(

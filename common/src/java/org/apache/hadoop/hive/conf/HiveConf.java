@@ -719,6 +719,20 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|JOB_DEBUG_TIMEOUT
+argument_list|(
+literal|"hive.exec.job.debug.timeout"
+argument_list|,
+literal|30000
+argument_list|)
+block|,
+name|TASKLOG_DEBUG_TIMEOUT
+argument_list|(
+literal|"hive.exec.tasklog.debug.timeout"
+argument_list|,
+literal|20000
+argument_list|)
+block|,
 comment|// should hive determine whether to run in local mode automatically ?
 name|LOCALMODEAUTO
 argument_list|(
@@ -1300,14 +1314,14 @@ name|HIVEMAPSIDEAGGREGATE
 argument_list|(
 literal|"hive.map.aggr"
 argument_list|,
-literal|"true"
+literal|true
 argument_list|)
 block|,
 name|HIVEGROUPBYSKEW
 argument_list|(
 literal|"hive.groupby.skewindata"
 argument_list|,
-literal|"false"
+literal|false
 argument_list|)
 block|,
 name|HIVEJOINEMITINTERVAL
