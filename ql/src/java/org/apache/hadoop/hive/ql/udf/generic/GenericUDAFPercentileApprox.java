@@ -617,6 +617,9 @@ case|:
 case|case
 name|DOUBLE
 case|:
+case|case
+name|TIMESTAMP
+case|:
 break|break;
 default|default:
 throw|throw
@@ -911,6 +914,9 @@ name|INT
 case|:
 case|case
 name|LONG
+case|:
+case|case
+name|TIMESTAMP
 case|:
 break|break;
 default|default:

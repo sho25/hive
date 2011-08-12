@@ -637,9 +637,9 @@ argument_list|)
 block|,
 name|UNSUPPORTED_TYPE
 argument_list|(
-literal|"DATE, DATETIME, and TIMESTAMP types aren't supported yet. Please use "
+literal|"DATE and DATETIME types aren't supported yet. Please use "
 operator|+
-literal|"STRING instead"
+literal|"TIMESTAMP instead"
 argument_list|)
 block|,
 name|CREATE_NON_NATIVE_AS

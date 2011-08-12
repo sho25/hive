@@ -597,6 +597,9 @@ case|:
 case|case
 name|DOUBLE
 case|:
+case|case
+name|TIMESTAMP
+case|:
 break|break;
 case|case
 name|STRING

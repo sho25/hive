@@ -570,6 +570,9 @@ case|:
 case|case
 name|DOUBLE
 case|:
+case|case
+name|TIMESTAMP
+case|:
 switch|switch
 condition|(
 operator|(
@@ -603,6 +606,9 @@ name|FLOAT
 case|:
 case|case
 name|DOUBLE
+case|:
+case|case
+name|TIMESTAMP
 case|:
 return|return
 operator|new

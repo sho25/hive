@@ -333,6 +333,26 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|TimestampObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|typeinfo
 operator|.
 name|TypeInfoUtils
@@ -363,7 +383,7 @@ specifier|final
 class|class
 name|LazyUtils
 block|{
-comment|/**    * Returns the digit represented by character b.    *     * @param b    *          The ascii code of the character    * @param radix    *          The radix    * @return -1 if it's invalid    */
+comment|/**    * Returns the digit represented by character b.    *    * @param b    *          The ascii code of the character    * @param radix    *          The radix    * @return -1 if it's invalid    */
 specifier|public
 specifier|static
 name|int
@@ -588,7 +608,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Convert a UTF-8 byte array to String.    *     * @param bytes    *          The byte[] containing the UTF-8 String.    * @param start    *          The start position inside the bytes.    * @param length    *          The length of the data, starting from "start"    * @return The unicode String    */
+comment|/**    * Convert a UTF-8 byte array to String.    *    * @param bytes    *          The byte[] containing the UTF-8 String.    * @param start    *          The start position inside the bytes.    * @param length    *          The length of the data, starting from "start"    * @return The unicode String    */
 specifier|public
 specifier|static
 name|String
@@ -671,7 +691,7 @@ block|,
 literal|'e'
 block|}
 decl_stmt|;
-comment|/**    * Write the bytes with special characters escaped.    *     * @param escaped    *          Whether the data should be written out in an escaped way.    * @param escapeChar    *          if escaped, the char for prefixing special characters.    * @param needsEscape    *          if escaped, whether a specific character needs escaping. This    *          array should have size of 128.    */
+comment|/**    * Write the bytes with special characters escaped.    *    * @param escaped    *          Whether the data should be written out in an escaped way.    * @param escapeChar    *          if escaped, the char for prefixing special characters.    * @param needsEscape    *          if escaped, whether a specific character needs escaping. This    *          array should have size of 128.    */
 specifier|private
 specifier|static
 name|void
@@ -813,7 +833,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Write out the text representation of a Primitive Object to a UTF8 byte    * stream.    *     * @param out    *          The UTF8 byte OutputStream    * @param o    *          The primitive Object    * @param needsEscape    *          Whether a character needs escaping. This array should have size of    *          128.    */
+comment|/**    * Write out the text representation of a Primitive Object to a UTF8 byte    * stream.    *    * @param out    *          The UTF8 byte OutputStream    * @param o    *          The primitive Object    * @param needsEscape    *          Whether a character needs escaping. This array should have size of    *          128.    */
 specifier|public
 specifier|static
 name|void
@@ -1151,6 +1171,31 @@ argument_list|,
 name|escapeChar
 argument_list|,
 name|needsEscape
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+case|case
+name|TIMESTAMP
+case|:
+block|{
+name|LazyTimestamp
+operator|.
+name|writeUTF8
+argument_list|(
+name|out
+argument_list|,
+operator|(
+operator|(
+name|TimestampObjectInspector
+operator|)
+name|oi
+operator|)
+operator|.
+name|getPrimitiveWritableObject
+argument_list|(
+name|o
+argument_list|)
 argument_list|)
 expr_stmt|;
 break|break;

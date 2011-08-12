@@ -103,6 +103,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|io
+operator|.
+name|TimestampWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|lazy
 operator|.
 name|LazyLong
@@ -216,7 +234,7 @@ specifier|public
 name|UDFToLong
 parameter_list|()
 block|{   }
-comment|/**    * Convert from void to a long. This is called for CAST(... AS BIGINT)    *     * @param i    *          The void value to convert    * @return LongWritable    */
+comment|/**    * Convert from void to a long. This is called for CAST(... AS BIGINT)    *    * @param i    *          The void value to convert    * @return LongWritable    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -229,7 +247,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert from boolean to a long. This is called for CAST(... AS BIGINT)    *     * @param i    *          The boolean value to convert    * @return LongWritable    */
+comment|/**    * Convert from boolean to a long. This is called for CAST(... AS BIGINT)    *    * @param i    *          The boolean value to convert    * @return LongWritable    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -276,7 +294,7 @@ name|longWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from byte to a long. This is called for CAST(... AS BIGINT)    *     * @param i    *          The byte value to convert    * @return LongWritable    */
+comment|/**    * Convert from byte to a long. This is called for CAST(... AS BIGINT)    *    * @param i    *          The byte value to convert    * @return LongWritable    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -313,7 +331,7 @@ name|longWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from short to a long. This is called for CAST(... AS BIGINT)    *     * @param i    *          The short value to convert    * @return LongWritable    */
+comment|/**    * Convert from short to a long. This is called for CAST(... AS BIGINT)    *    * @param i    *          The short value to convert    * @return LongWritable    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -350,7 +368,7 @@ name|longWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from integer to a long. This is called for CAST(... AS BIGINT)    *     * @param i    *          The integer value to convert    * @return LongWritable    */
+comment|/**    * Convert from integer to a long. This is called for CAST(... AS BIGINT)    *    * @param i    *          The integer value to convert    * @return LongWritable    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -387,7 +405,7 @@ name|longWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from long to a long. This is called for CAST(... AS BIGINT)    *     * @param i    *          The long value to convert    * @return LongWritable    */
+comment|/**    * Convert from long to a long. This is called for CAST(... AS BIGINT)    *    * @param i    *          The long value to convert    * @return LongWritable    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -400,7 +418,7 @@ return|return
 name|i
 return|;
 block|}
-comment|/**    * Convert from float to a long. This is called for CAST(... AS BIGINT)    *     * @param i    *          The float value to convert    * @return LongWritable    */
+comment|/**    * Convert from float to a long. This is called for CAST(... AS BIGINT)    *    * @param i    *          The float value to convert    * @return LongWritable    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -440,7 +458,7 @@ name|longWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from double to a long. This is called for CAST(... AS BIGINT)    *     * @param i    *          The double value to convert    * @return LongWritable    */
+comment|/**    * Convert from double to a long. This is called for CAST(... AS BIGINT)    *    * @param i    *          The double value to convert    * @return LongWritable    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -480,7 +498,7 @@ name|longWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from string to a long. This is called for CAST(... AS BIGINT)    *     * @param i    *          The string value to convert    * @return LongWritable    */
+comment|/**    * Convert from string to a long. This is called for CAST(... AS BIGINT)    *    * @param i    *          The string value to convert    * @return LongWritable    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -545,6 +563,42 @@ return|return
 literal|null
 return|;
 block|}
+block|}
+block|}
+specifier|public
+name|LongWritable
+name|evaluate
+parameter_list|(
+name|TimestampWritable
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+name|longWritable
+operator|.
+name|set
+argument_list|(
+name|i
+operator|.
+name|getSeconds
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|longWritable
+return|;
 block|}
 block|}
 block|}

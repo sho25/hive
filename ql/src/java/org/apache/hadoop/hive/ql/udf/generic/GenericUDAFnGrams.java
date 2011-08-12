@@ -792,6 +792,9 @@ case|:
 case|case
 name|LONG
 case|:
+case|case
+name|TIMESTAMP
+case|:
 break|break;
 default|default:
 throw|throw
@@ -879,6 +882,9 @@ name|INT
 case|:
 case|case
 name|LONG
+case|:
+case|case
+name|TIMESTAMP
 case|:
 break|break;
 default|default:
@@ -976,6 +982,9 @@ name|INT
 case|:
 case|case
 name|LONG
+case|:
+case|case
+name|TIMESTAMP
 case|:
 break|break;
 default|default:

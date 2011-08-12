@@ -99,6 +99,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|TimestampWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|BooleanWritable
@@ -198,7 +216,7 @@ specifier|public
 name|UDFToDouble
 parameter_list|()
 block|{   }
-comment|/**    * Convert from void to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The void value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from void to a double. This is called for CAST(... AS DOUBLE)    *    * @param i    *          The void value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -211,7 +229,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The boolean value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *    * @param i    *          The boolean value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -252,7 +270,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The byte value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from boolean to a double. This is called for CAST(... AS DOUBLE)    *    * @param i    *          The byte value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -289,7 +307,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from short to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The short value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from short to a double. This is called for CAST(... AS DOUBLE)    *    * @param i    *          The short value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -326,7 +344,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from integer to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The integer value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from integer to a double. This is called for CAST(... AS DOUBLE)    *    * @param i    *          The integer value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -363,7 +381,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from long to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The long value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from long to a double. This is called for CAST(... AS DOUBLE)    *    * @param i    *          The long value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -400,7 +418,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from float to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The float value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from float to a double. This is called for CAST(... AS DOUBLE)    *    * @param i    *          The float value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -437,7 +455,7 @@ name|doubleWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from string to a double. This is called for CAST(... AS DOUBLE)    *     * @param i    *          The string value to convert    * @return DoubleWritable    */
+comment|/**    * Convert from string to a double. This is called for CAST(... AS DOUBLE)    *    * @param i    *          The string value to convert    * @return DoubleWritable    */
 specifier|public
 name|DoubleWritable
 name|evaluate
@@ -487,6 +505,57 @@ name|e
 parameter_list|)
 block|{
 comment|// MySQL returns 0 if the string is not a well-formed double value.
+comment|// But we decided to return NULL instead, which is more conservative.
+return|return
+literal|null
+return|;
+block|}
+block|}
+block|}
+specifier|public
+name|DoubleWritable
+name|evaluate
+parameter_list|(
+name|TimestampWritable
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+try|try
+block|{
+name|doubleWritable
+operator|.
+name|set
+argument_list|(
+name|i
+operator|.
+name|getDouble
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|doubleWritable
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|NumberFormatException
+name|e
+parameter_list|)
+block|{
+comment|// MySQL returns 0 if the string is not a well-formed numeric value.
 comment|// But we decided to return NULL instead, which is more conservative.
 return|return
 literal|null

@@ -419,6 +419,9 @@ case|:
 case|case
 name|LONG
 case|:
+case|case
+name|TIMESTAMP
+case|:
 return|return
 operator|new
 name|GenericUDAFSumLong

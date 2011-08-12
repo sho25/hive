@@ -99,6 +99,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|TimestampWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|BooleanWritable
@@ -198,7 +216,7 @@ specifier|public
 name|UDFToFloat
 parameter_list|()
 block|{   }
-comment|/**    * Convert from void to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The void value to convert    * @return FloatWritable    */
+comment|/**    * Convert from void to a float. This is called for CAST(... AS FLOAT)    *    * @param i    *          The void value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -211,7 +229,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert from boolean to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The boolean value to convert    * @return FloatWritable    */
+comment|/**    * Convert from boolean to a float. This is called for CAST(... AS FLOAT)    *    * @param i    *          The boolean value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -258,7 +276,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from byte to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The byte value to convert    * @return FloatWritable    */
+comment|/**    * Convert from byte to a float. This is called for CAST(... AS FLOAT)    *    * @param i    *          The byte value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -295,7 +313,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from short to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The short value to convert    * @return FloatWritable    */
+comment|/**    * Convert from short to a float. This is called for CAST(... AS FLOAT)    *    * @param i    *          The short value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -332,7 +350,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from integer to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The integer value to convert    * @return FloatWritable    */
+comment|/**    * Convert from integer to a float. This is called for CAST(... AS FLOAT)    *    * @param i    *          The integer value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -369,7 +387,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from long to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The long value to convert    * @return FloatWritable    */
+comment|/**    * Convert from long to a float. This is called for CAST(... AS FLOAT)    *    * @param i    *          The long value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -406,7 +424,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from double to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The double value to convert    * @return FloatWritable    */
+comment|/**    * Convert from double to a float. This is called for CAST(... AS FLOAT)    *    * @param i    *          The double value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -446,7 +464,7 @@ name|floatWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from string to a float. This is called for CAST(... AS FLOAT)    *     * @param i    *          The string value to convert    * @return FloatWritable    */
+comment|/**    * Convert from string to a float. This is called for CAST(... AS FLOAT)    *    * @param i    *          The string value to convert    * @return FloatWritable    */
 specifier|public
 name|FloatWritable
 name|evaluate
@@ -483,6 +501,60 @@ operator|.
 name|toString
 argument_list|()
 argument_list|)
+argument_list|)
+expr_stmt|;
+return|return
+name|floatWritable
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|NumberFormatException
+name|e
+parameter_list|)
+block|{
+comment|// MySQL returns 0 if the string is not a well-formed numeric value.
+comment|// But we decided to return NULL instead, which is more conservative.
+return|return
+literal|null
+return|;
+block|}
+block|}
+block|}
+specifier|public
+name|FloatWritable
+name|evaluate
+parameter_list|(
+name|TimestampWritable
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+try|try
+block|{
+name|floatWritable
+operator|.
+name|set
+argument_list|(
+operator|(
+name|float
+operator|)
+name|i
+operator|.
+name|getDouble
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return

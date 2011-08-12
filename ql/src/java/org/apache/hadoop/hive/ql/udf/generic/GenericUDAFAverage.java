@@ -532,6 +532,9 @@ case|:
 case|case
 name|STRING
 case|:
+case|case
+name|TIMESTAMP
+case|:
 return|return
 operator|new
 name|GenericUDAFAverageEvaluator

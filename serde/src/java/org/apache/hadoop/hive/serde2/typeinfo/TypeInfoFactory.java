@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TypeInfoFactory can be used to create the TypeInfo object for any types.  *   * TypeInfo objects are all read-only so we can reuse them easily.  * TypeInfoFactory has internal cache to make sure we don't create 2 TypeInfo  * objects that represents the same type.  */
+comment|/**  * TypeInfoFactory can be used to create the TypeInfo object for any types.  *  * TypeInfo objects are all read-only so we can reuse them easily.  * TypeInfoFactory has internal cache to make sure we don't create 2 TypeInfo  * objects that represents the same type.  */
 end_comment
 
 begin_class
@@ -304,6 +304,19 @@ argument_list|(
 name|Constants
 operator|.
 name|SMALLINT_TYPE_NAME
+argument_list|)
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|TypeInfo
+name|timestampTypeInfo
+init|=
+name|getPrimitiveTypeInfo
+argument_list|(
+name|Constants
+operator|.
+name|TIMESTAMP_TYPE_NAME
 argument_list|)
 decl_stmt|;
 specifier|public

@@ -106,7 +106,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * PrimitiveObjectInspectorFactory is the primary way to create new  * PrimitiveObjectInspector instances.  *   * The reason of having caches here is that ObjectInspector is because  * ObjectInspectors do not have an internal state - so ObjectInspectors with the  * same construction parameters should result in exactly the same  * ObjectInspector.  */
+comment|/**  * PrimitiveObjectInspectorFactory is the primary way to create new  * PrimitiveObjectInspector instances.  *  * The reason of having caches here is that ObjectInspector is because  * ObjectInspectors do not have an internal state - so ObjectInspectors with the  * same construction parameters should result in exactly the same  * ObjectInspector.  */
 end_comment
 
 begin_class
@@ -208,6 +208,16 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
+name|JavaTimestampObjectInspector
+name|javaTimestampObjectInspector
+init|=
+operator|new
+name|JavaTimestampObjectInspector
+argument_list|()
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
 name|WritableBooleanObjectInspector
 name|writableBooleanObjectInspector
 init|=
@@ -293,6 +303,16 @@ name|writableVoidObjectInspector
 init|=
 operator|new
 name|WritableVoidObjectInspector
+argument_list|()
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|WritableTimestampObjectInspector
+name|writableTimestampObjectInspector
+init|=
+operator|new
+name|WritableTimestampObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|private
@@ -413,6 +433,17 @@ operator|.
 name|VOID
 argument_list|,
 name|writableVoidObjectInspector
+argument_list|)
+expr_stmt|;
+name|cachedPrimitiveWritableInspectorCache
+operator|.
+name|put
+argument_list|(
+name|PrimitiveCategory
+operator|.
+name|TIMESTAMP
+argument_list|,
+name|writableTimestampObjectInspector
 argument_list|)
 expr_stmt|;
 block|}
@@ -536,8 +567,19 @@ argument_list|,
 name|javaVoidObjectInspector
 argument_list|)
 expr_stmt|;
+name|cachedPrimitiveJavaInspectorCache
+operator|.
+name|put
+argument_list|(
+name|PrimitiveCategory
+operator|.
+name|TIMESTAMP
+argument_list|,
+name|javaTimestampObjectInspector
+argument_list|)
+expr_stmt|;
 block|}
-comment|/**    * Returns the PrimitiveWritableObjectInspector for the PrimitiveCategory.    *     * @param primitiveCategory    */
+comment|/**    * Returns the PrimitiveWritableObjectInspector for the PrimitiveCategory.    *    * @param primitiveCategory    */
 specifier|public
 specifier|static
 name|AbstractPrimitiveWritableObjectInspector
@@ -580,7 +622,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Returns the PrimitiveJavaObjectInspector for the PrimitiveCategory.    *     * @param primitiveCategory    */
+comment|/**    * Returns the PrimitiveJavaObjectInspector for the PrimitiveCategory.    *    * @param primitiveCategory    */
 specifier|public
 specifier|static
 name|AbstractPrimitiveJavaObjectInspector
@@ -623,7 +665,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Returns an ObjectInspector for a primitive Class. The Class can be a Hive    * Writable class, or a Java Primitive Class.    *     * A runtimeException will be thrown if the class is not recognized as a    * primitive type by Hive.    */
+comment|/**    * Returns an ObjectInspector for a primitive Class. The Class can be a Hive    * Writable class, or a Java Primitive Class.    *    * A runtimeException will be thrown if the class is not recognized as a    * primitive type by Hive.    */
 specifier|public
 specifier|static
 name|PrimitiveObjectInspector

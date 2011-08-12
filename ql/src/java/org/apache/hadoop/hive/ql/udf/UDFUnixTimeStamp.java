@@ -93,6 +93,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|TimestampWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|LongWritable
@@ -171,7 +189,7 @@ specifier|public
 name|UDFUnixTimeStamp
 parameter_list|()
 block|{   }
-comment|/**    * Return current UnixTime.    *     * @return long Number of seconds from 1970-01-01 00:00:00    */
+comment|/**    * Return current UnixTime.    *    * @return long Number of seconds from 1970-01-01 00:00:00    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -200,7 +218,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Convert time string to UnixTime.    *     * @param dateText    *          Time string in format yyyy-MM-dd HH:mm:ss    * @return long Number of seconds from 1970-01-01 00:00:00    */
+comment|/**    * Convert time string to UnixTime.    *    * @param dateText    *          Time string in format yyyy-MM-dd HH:mm:ss    * @return long Number of seconds from 1970-01-01 00:00:00    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -269,7 +287,7 @@ operator|new
 name|Text
 argument_list|()
 decl_stmt|;
-comment|/**    * Convert time string to UnixTime with user defined pattern.    *     * @param dateText    *          Time string in format patternstring    * @param patternText    *          Time patterns string supported by SimpleDateFormat    * @return long Number of seconds from 1970-01-01 00:00:00    */
+comment|/**    * Convert time string to UnixTime with user defined pattern.    *    * @param dateText    *          Time string in format patternstring    * @param patternText    *          Time patterns string supported by SimpleDateFormat    * @return long Number of seconds from 1970-01-01 00:00:00    */
 specifier|public
 name|LongWritable
 name|evaluate
@@ -344,6 +362,42 @@ argument_list|(
 name|dateText
 argument_list|)
 return|;
+block|}
+specifier|public
+name|LongWritable
+name|evaluate
+parameter_list|(
+name|TimestampWritable
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+name|result
+operator|.
+name|set
+argument_list|(
+name|i
+operator|.
+name|getSeconds
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|result
+return|;
+block|}
 block|}
 block|}
 end_class

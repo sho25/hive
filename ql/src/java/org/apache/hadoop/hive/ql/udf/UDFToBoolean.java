@@ -99,6 +99,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|TimestampWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|BooleanWritable
@@ -198,7 +216,7 @@ specifier|public
 name|UDFToBoolean
 parameter_list|()
 block|{   }
-comment|/**    * Convert a void to boolean. This is called for CAST(... AS BOOLEAN)    *     * @param i    *          The value of a void type    * @return BooleanWritable    */
+comment|/**    * Convert a void to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i    *          The value of a void type    * @return BooleanWritable    */
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -211,7 +229,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert from a byte to boolean. This is called for CAST(... AS BOOLEAN)    *     * @param i    *          The byte value to convert    * @return BooleanWritable    */
+comment|/**    * Convert from a byte to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i    *          The byte value to convert    * @return BooleanWritable    */
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -250,7 +268,7 @@ name|booleanWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from a short to boolean. This is called for CAST(... AS BOOLEAN)    *     * @param i    *          The short value to convert    * @return BooleanWritable    */
+comment|/**    * Convert from a short to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i    *          The short value to convert    * @return BooleanWritable    */
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -289,7 +307,7 @@ name|booleanWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from a integer to boolean. This is called for CAST(... AS BOOLEAN)    *     * @param i    *          The integer value to convert    * @return BooleanWritable    */
+comment|/**    * Convert from a integer to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i    *          The integer value to convert    * @return BooleanWritable    */
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -328,7 +346,7 @@ name|booleanWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from a long to boolean. This is called for CAST(... AS BOOLEAN)    *     * @param i    *          The long value to convert    * @return BooleanWritable    */
+comment|/**    * Convert from a long to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i    *          The long value to convert    * @return BooleanWritable    */
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -367,7 +385,7 @@ name|booleanWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from a float to boolean. This is called for CAST(... AS BOOLEAN)    *     * @param i    *          The float value to convert    * @return BooleanWritable    */
+comment|/**    * Convert from a float to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i    *          The float value to convert    * @return BooleanWritable    */
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -406,7 +424,7 @@ name|booleanWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from a double to boolean. This is called for CAST(... AS BOOLEAN)    *     * @param i    *          The double value to convert    * @return BooleanWritable    */
+comment|/**    * Convert from a double to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i    *          The double value to convert    * @return BooleanWritable    */
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -445,7 +463,7 @@ name|booleanWritable
 return|;
 block|}
 block|}
-comment|/**    * Convert from a string to boolean. This is called for CAST(... AS BOOLEAN)    *     * @param i    *          The string value to convert    * @return BooleanWritable    */
+comment|/**    * Convert from a string to boolean. This is called for CAST(... AS BOOLEAN)    *    * @param i    *          The string value to convert    * @return BooleanWritable    */
 specifier|public
 name|BooleanWritable
 name|evaluate
@@ -474,6 +492,51 @@ argument_list|(
 name|i
 operator|.
 name|getLength
+argument_list|()
+operator|!=
+literal|0
+argument_list|)
+expr_stmt|;
+return|return
+name|booleanWritable
+return|;
+block|}
+block|}
+specifier|public
+name|BooleanWritable
+name|evaluate
+parameter_list|(
+name|TimestampWritable
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+name|booleanWritable
+operator|.
+name|set
+argument_list|(
+name|i
+operator|.
+name|getSeconds
+argument_list|()
+operator|!=
+literal|0
+operator|||
+name|i
+operator|.
+name|getNanos
 argument_list|()
 operator|!=
 literal|0

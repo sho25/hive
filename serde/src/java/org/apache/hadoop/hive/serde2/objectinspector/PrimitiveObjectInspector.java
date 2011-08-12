@@ -54,6 +54,8 @@ name|DOUBLE
 block|,
 name|STRING
 block|,
+name|TIMESTAMP
+block|,
 name|UNKNOWN
 block|}
 empty_stmt|;
@@ -94,7 +96,7 @@ name|Object
 name|o
 parameter_list|)
 function_decl|;
-comment|/**    * Get a copy of the Object in the same class, so the return value can be    * stored independently of the parameter.    *     * If the Object is a Primitive Java Object, we just return the parameter    * since Primitive Java Object is immutable.    */
+comment|/**    * Get a copy of the Object in the same class, so the return value can be    * stored independently of the parameter.    *    * If the Object is a Primitive Java Object, we just return the parameter    * since Primitive Java Object is immutable.    */
 name|Object
 name|copyObject
 parameter_list|(
