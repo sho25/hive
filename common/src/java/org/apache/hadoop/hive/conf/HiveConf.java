@@ -2296,6 +2296,15 @@ literal|"hive.exec.concatenate.check.index"
 argument_list|,
 literal|true
 argument_list|)
+block|,
+comment|// The class responsible for logging client side performance metrics
+comment|// Must be a subclass of org.apache.hadoop.hive.ql.log.PerfLogger
+name|HIVE_PERF_LOGGER
+argument_list|(
+literal|"hive.exec.perf.logger"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.log.PerfLogger"
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final
