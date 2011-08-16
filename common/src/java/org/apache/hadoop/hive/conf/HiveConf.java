@@ -2297,6 +2297,21 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|//prefix used to auto generated column aliases
+name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
+argument_list|(
+literal|"hive.autogen.columnalias.prefix.label"
+argument_list|,
+literal|"_c"
+argument_list|)
+block|,
+name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_INCLUDEFUNCNAME
+argument_list|(
+literal|"hive.autogen.columnalias.prefix.includefuncname"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// The class responsible for logging client side performance metrics
 comment|// Must be a subclass of org.apache.hadoop.hive.ql.log.PerfLogger
 name|HIVE_PERF_LOGGER
