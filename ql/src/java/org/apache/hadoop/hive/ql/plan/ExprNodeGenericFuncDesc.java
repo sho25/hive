@@ -713,10 +713,6 @@ index|[
 name|i
 index|]
 operator|=
-name|TypeInfoUtils
-operator|.
-name|getStandardWritableObjectInspectorFromTypeInfo
-argument_list|(
 name|children
 operator|.
 name|get
@@ -724,9 +720,8 @@ argument_list|(
 name|i
 argument_list|)
 operator|.
-name|getTypeInfo
+name|getWritableObjectInspector
 argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
 name|ObjectInspector
