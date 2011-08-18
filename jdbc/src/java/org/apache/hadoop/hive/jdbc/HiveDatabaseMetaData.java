@@ -903,7 +903,7 @@ name|fields
 init|=
 name|client
 operator|.
-name|get_fields
+name|get_schema
 argument_list|(
 name|catalog
 argument_list|,

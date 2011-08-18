@@ -270,6 +270,22 @@ specifier|private
 specifier|static
 specifier|final
 name|String
+name|partitionedColumnName
+init|=
+literal|"partcolabc"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|partitionedColumnValue
+init|=
+literal|"20090619"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
 name|partitionedTableComment
 init|=
 literal|"Partitioned table"
@@ -617,7 +633,11 @@ literal|" (under_col int, value string) comment '"
 operator|+
 name|partitionedTableComment
 operator|+
-literal|"' partitioned by (dt STRING)"
+literal|"' partitioned by ("
+operator|+
+name|partitionedColumnName
+operator|+
+literal|" STRING)"
 argument_list|)
 expr_stmt|;
 name|assertFalse
@@ -646,7 +666,15 @@ literal|"' into table "
 operator|+
 name|partitionedTableName
 operator|+
-literal|" PARTITION (dt='20090619')"
+literal|" PARTITION ("
+operator|+
+name|partitionedColumnName
+operator|+
+literal|"="
+operator|+
+name|partitionedColumnValue
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 name|assertFalse
@@ -2139,6 +2167,16 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+name|boolean
+name|isPartitionTable
+init|=
+name|tableName
+operator|.
+name|equals
+argument_list|(
+name|partitionedTableName
+argument_list|)
+decl_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -2290,22 +2328,12 @@ decl_stmt|;
 name|int
 name|expectedColCount
 init|=
+name|isPartitionTable
+condition|?
+literal|3
+else|:
 literal|2
 decl_stmt|;
-if|if
-condition|(
-name|tableName
-operator|.
-name|equals
-argument_list|(
-name|partitionedTableName
-argument_list|)
-condition|)
-block|{
-operator|++
-name|expectedColCount
-expr_stmt|;
-block|}
 name|assertEquals
 argument_list|(
 literal|"Unexpected column count"
@@ -2387,6 +2415,41 @@ literal|"value"
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isPartitionTable
+condition|)
+block|{
+name|assertEquals
+argument_list|(
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|3
+argument_list|)
+argument_list|,
+name|partitionedColumnValue
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|3
+argument_list|)
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+name|partitionedColumnName
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|assertFalse
 argument_list|(
 literal|"Last result value was not null"
@@ -3604,7 +3667,7 @@ block|,
 literal|null
 block|}
 argument_list|,
-literal|6
+literal|7
 argument_list|)
 expr_stmt|;
 name|tests
