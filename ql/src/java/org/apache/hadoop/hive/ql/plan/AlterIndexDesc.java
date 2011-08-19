@@ -45,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|Map
 import|;
 end_import
 
@@ -154,7 +154,7 @@ name|String
 name|dbName
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -319,7 +319,7 @@ operator|=
 literal|"properties"
 argument_list|)
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -337,7 +337,7 @@ specifier|public
 name|void
 name|setProps
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
