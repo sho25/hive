@@ -1186,13 +1186,6 @@ operator|.
 name|rollbackTransaction
 argument_list|()
 expr_stmt|;
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Committing the alter table transaction was not successful."
-argument_list|)
-throw|;
 block|}
 if|if
 condition|(
@@ -1314,6 +1307,20 @@ argument_list|)
 throw|;
 block|}
 block|}
+block|}
+if|if
+condition|(
+operator|!
+name|success
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Committing the alter table transaction was not successful."
+argument_list|)
+throw|;
 block|}
 block|}
 specifier|private
