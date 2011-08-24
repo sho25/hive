@@ -160,6 +160,16 @@ name|String
 argument_list|,
 name|String
 argument_list|>
+name|partSpec
+decl_stmt|;
+comment|// partition specification of partitions touched
+specifier|private
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
 name|props
 decl_stmt|;
 comment|/**    * alterIndexTypes.    *    */
@@ -168,6 +178,8 @@ specifier|static
 enum|enum
 name|AlterIndexTypes
 block|{
+name|UPDATETIMESTAMP
+block|,
 name|ADDPROPS
 block|}
 empty_stmt|;
@@ -256,6 +268,42 @@ operator|.
 name|baseTable
 operator|=
 name|baseTable
+expr_stmt|;
+block|}
+comment|/**    * @return the partition spec    */
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|getSpec
+parameter_list|()
+block|{
+return|return
+name|partSpec
+return|;
+block|}
+comment|/**    * @param partSpec    *          the partition spec to set    */
+specifier|public
+name|void
+name|setSpec
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|)
+block|{
+name|this
+operator|.
+name|partSpec
+operator|=
+name|partSpec
 expr_stmt|;
 block|}
 comment|/**    * @return the name of the database that the base table is in    */

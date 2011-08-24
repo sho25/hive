@@ -1869,6 +1869,14 @@ literal|false
 argument_list|)
 block|,
 comment|// automatically use indexes
+name|HIVEINDEXAUTOUPDATE
+argument_list|(
+literal|"hive.optimize.index.autoupdate"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|//automatically update stale indexes
 name|HIVEOPTPPD
 argument_list|(
 literal|"hive.optimize.ppd"
