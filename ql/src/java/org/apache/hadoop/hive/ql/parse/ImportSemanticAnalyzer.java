@@ -2486,6 +2486,16 @@ name|tblDesc
 operator|.
 name|getLocation
 argument_list|()
+argument_list|,
+name|Warehouse
+operator|.
+name|makePartPath
+argument_list|(
+name|addPartitionDesc
+operator|.
+name|getPartSpec
+argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
