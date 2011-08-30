@@ -1167,6 +1167,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|CLIPRINTCURRENTDB
+argument_list|(
+literal|"hive.cli.print.current.db"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVE_METASTORE_FS_HANDLER_CLS
 argument_list|(
 literal|"hive.metastore.fs.handler.class"
