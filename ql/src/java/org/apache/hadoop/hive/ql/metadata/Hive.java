@@ -1345,6 +1345,10 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+name|metaStoreClient
+operator|=
+literal|null
+expr_stmt|;
 block|}
 block|}
 comment|/**    * Create a database    * @param db    * @param ifNotExist if true, will ignore AlreadyExistsException exception    * @throws AlreadyExistsException    * @throws HiveException    */

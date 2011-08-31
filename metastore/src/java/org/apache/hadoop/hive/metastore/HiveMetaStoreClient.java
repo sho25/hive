@@ -798,13 +798,6 @@ index|[]
 decl_stmt|;
 specifier|private
 specifier|final
-name|boolean
-name|standAloneClient
-init|=
-literal|false
-decl_stmt|;
-specifier|private
-specifier|final
 name|HiveMetaHookLoader
 name|hookLoader
 decl_stmt|;
@@ -1696,18 +1689,21 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
+try|try
+block|{
 if|if
 condition|(
-name|standAloneClient
+literal|null
+operator|!=
+name|client
 condition|)
-block|{
-try|try
 block|{
 name|client
 operator|.
 name|shutdown
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1734,7 +1730,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// throw new RuntimeException(e.getMessage());
-block|}
 block|}
 block|}
 comment|/**    * @param new_part    * @return the added partition    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#add_partition(org.apache.hadoop.hive.metastore.api.Partition)    */
