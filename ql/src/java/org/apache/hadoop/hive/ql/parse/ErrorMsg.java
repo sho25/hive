@@ -764,6 +764,24 @@ name|INSERT_INTO_BUCKETIZED_TABLE
 argument_list|(
 literal|"Bucketized tables do not support INSERT INTO:"
 argument_list|)
+block|,
+name|NO_COMPARE_BIGINT_STRING
+argument_list|(
+literal|"In strict mode, comparing bigints and strings is not allowed, "
+operator|+
+literal|"it may result in a loss of precision. "
+operator|+
+literal|"If you really want to perform the operation, set hive.mapred.mode=nonstrict"
+argument_list|)
+block|,
+name|NO_COMPARE_BIGINT_DOUBLE
+argument_list|(
+literal|"In strict mode, comparing bigints and doubles is not allowed, "
+operator|+
+literal|"it may result in a loss of precision. "
+operator|+
+literal|"If you really want to perform the operation, set hive.mapred.mode=nonstrict"
+argument_list|)
 block|,       ;
 specifier|private
 name|String
