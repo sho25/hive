@@ -1059,7 +1059,7 @@ return|return
 literal|true
 return|;
 block|}
-specifier|protected
+specifier|public
 specifier|static
 name|String
 name|getResourceFiles
