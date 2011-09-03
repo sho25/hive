@@ -1892,6 +1892,14 @@ literal|true
 argument_list|)
 block|,
 comment|// predicate pushdown
+name|HIVEPPDRECOGNIZETRANSITIVITY
+argument_list|(
+literal|"hive.ppd.recognizetransivity"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|// predicate pushdown
 name|HIVEPPDREMOVEDUPLICATEFILTERS
 argument_list|(
 literal|"hive.ppd.remove.duplicatefilters"
