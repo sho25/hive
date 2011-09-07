@@ -174,7 +174,7 @@ return|return
 name|enabled
 return|;
 block|}
-comment|/**    * Register a translation to be performed as part of unparse.    * The translation must not overlap with any previously    * registered translations (unless it is identical to an    * existing translation, in which case it is ignored).    *    * @param node    *          target node whose subtree is to be replaced    *    * @param replacementText    *          text to use as replacement    */
+comment|/**    * Register a translation to be performed as part of unparse.    * If the translation overlaps with any previously    * registered translation, then it must be either    * identical or a prefix (in which cases it is ignored),    * or else it must extend the existing translation (i.e.    * the existing translation must be a prefix of the new translation).    * All other overlap cases result in assertion failures.    *    * @param node    *          target node whose subtree is to be replaced    *    * @param replacementText    *          text to use as replacement    */
 name|void
 name|addTranslation
 parameter_list|(
@@ -243,7 +243,7 @@ name|replacementText
 operator|=
 name|replacementText
 expr_stmt|;
-comment|// Sanity check: no overlap with regions already being expanded
+comment|// Sanity check for overlap with regions already being expanded
 assert|assert
 operator|(
 name|tokenStopIndex
@@ -270,6 +270,11 @@ argument_list|(
 name|tokenStartIndex
 argument_list|)
 expr_stmt|;
+name|boolean
+name|prefix
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 name|existingEntry
@@ -322,7 +327,72 @@ comment|// redundant, but we'll let it pass
 return|return;
 block|}
 block|}
+elseif|else
+if|if
+condition|(
+name|tokenStopIndex
+operator|>
+name|existingEntry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|tokenStopIndex
+condition|)
+block|{
+comment|// is existing mapping a prefix for new mapping? if so, that's also
+comment|// redundant, but in this case we need to expand it
+name|prefix
+operator|=
+name|replacementText
+operator|.
+name|startsWith
+argument_list|(
+name|existingEntry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|replacementText
+argument_list|)
+expr_stmt|;
+assert|assert
+operator|(
+name|prefix
+operator|)
+assert|;
 block|}
+else|else
+block|{
+comment|// new mapping is a prefix for existing mapping:  ignore it
+name|prefix
+operator|=
+name|existingEntry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|replacementText
+operator|.
+name|startsWith
+argument_list|(
+name|replacementText
+argument_list|)
+expr_stmt|;
+assert|assert
+operator|(
+name|prefix
+operator|)
+assert|;
+return|return;
+block|}
+block|}
+if|if
+condition|(
+operator|!
+name|prefix
+condition|)
+block|{
 assert|assert
 operator|(
 name|existingEntry
@@ -336,6 +406,13 @@ name|tokenStartIndex
 operator|)
 assert|;
 block|}
+block|}
+if|if
+condition|(
+operator|!
+name|prefix
+condition|)
+block|{
 name|existingEntry
 operator|=
 name|translations
@@ -363,7 +440,8 @@ name|tokenStopIndex
 operator|)
 assert|;
 block|}
-comment|// It's all good: create a new entry in the map
+block|}
+comment|// It's all good: create a new entry in the map (or update existing one)
 name|translations
 operator|.
 name|put
