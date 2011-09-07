@@ -577,7 +577,7 @@ throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Could not establish connecton to "
+literal|"Could not establish connection to "
 operator|+
 name|uri
 operator|+
