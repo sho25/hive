@@ -1976,11 +1976,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-if|if
-condition|(
-name|lazyDecompress
-condition|)
-block|{
 name|decompressedFlag
 index|[
 name|addIndex
@@ -1988,8 +1983,11 @@ index|]
 operator|=
 literal|false
 expr_stmt|;
-block|}
-else|else
+if|if
+condition|(
+operator|!
+name|lazyDecompress
+condition|)
 block|{
 name|lazyDecompressCallbackObjs
 index|[
