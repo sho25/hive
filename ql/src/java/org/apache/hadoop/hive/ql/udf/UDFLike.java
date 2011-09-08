@@ -180,7 +180,7 @@ name|type
 init|=
 name|PatternType
 operator|.
-name|COMPLEX
+name|NONE
 decl_stmt|;
 specifier|private
 specifier|final
