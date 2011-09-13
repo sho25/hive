@@ -1294,7 +1294,9 @@ name|String
 name|fileFormat
 parameter_list|)
 block|{
-return|return
+name|TableDesc
+name|tblDesc
+init|=
 name|getTableDesc
 argument_list|(
 name|LazySimpleSerDe
@@ -1317,6 +1319,23 @@ literal|false
 argument_list|,
 name|fileFormat
 argument_list|)
+decl_stmt|;
+name|tblDesc
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|setProperty
+argument_list|(
+name|Constants
+operator|.
+name|ESCAPE_CHAR
+argument_list|,
+literal|"\\"
+argument_list|)
+expr_stmt|;
+return|return
+name|tblDesc
 return|;
 block|}
 comment|/**    * Generate a table descriptor from a createTableDesc.    */
