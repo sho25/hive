@@ -2188,6 +2188,14 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+comment|//Enable/Disable gbToIdx rewrite rule
+name|HIVEOPTGBYUSINGINDEX
+argument_list|(
+literal|"hive.optimize.index.groupby"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEOUTERJOINSUPPORTSFILTERS
 argument_list|(
 literal|"hive.outerjoin.supports.filters"

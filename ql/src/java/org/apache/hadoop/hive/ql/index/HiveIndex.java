@@ -81,6 +81,13 @@ specifier|static
 enum|enum
 name|IndexType
 block|{
+name|AGGREGATE_TABLE
+argument_list|(
+literal|"aggregate"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.AggregateIndexHandler"
+argument_list|)
+block|,
 name|COMPACT_SUMMARY_TABLE
 argument_list|(
 literal|"compact"

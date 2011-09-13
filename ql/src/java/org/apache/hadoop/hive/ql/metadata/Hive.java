@@ -3421,17 +3421,6 @@ argument_list|,
 name|indexComment
 argument_list|)
 expr_stmt|;
-name|indexHandler
-operator|.
-name|analyzeIndexDefinition
-argument_list|(
-name|baseTbl
-argument_list|,
-name|indexDesc
-argument_list|,
-name|tt
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|idxProps
@@ -3450,6 +3439,17 @@ name|idxProps
 argument_list|)
 expr_stmt|;
 block|}
+name|indexHandler
+operator|.
+name|analyzeIndexDefinition
+argument_list|(
+name|baseTbl
+argument_list|,
+name|indexDesc
+argument_list|,
+name|tt
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|getMSC
@@ -3710,7 +3710,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unknow error. Please check logs."
+literal|"Unknown error. Please check logs."
 argument_list|,
 name|e
 argument_list|)
@@ -6502,7 +6502,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unknow error. Please check logs."
+literal|"Unknown error. Please check logs."
 argument_list|,
 name|e
 argument_list|)
