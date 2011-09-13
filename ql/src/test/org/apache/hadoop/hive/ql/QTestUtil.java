@@ -5394,6 +5394,10 @@ literal|"LOCK_QUERYID:"
 block|,
 literal|"-I"
 block|,
+literal|"LOCK_TIME:"
+block|,
+literal|"-I"
+block|,
 literal|"grantTime"
 block|,
 literal|"-I"

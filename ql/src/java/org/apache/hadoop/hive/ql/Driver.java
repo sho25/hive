@@ -2745,6 +2745,13 @@ name|getTryCount
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|ctx
+operator|.
+name|setCmd
+argument_list|(
+name|command
+argument_list|)
+expr_stmt|;
 name|ParseDriver
 name|pd
 init|=
@@ -4631,6 +4638,11 @@ argument_list|()
 argument_list|)
 argument_list|,
 literal|"IMPLICIT"
+argument_list|,
+name|plan
+operator|.
+name|getQueryStr
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -5288,6 +5300,11 @@ argument_list|()
 argument_list|)
 argument_list|,
 literal|"IMPLICIT"
+argument_list|,
+name|plan
+operator|.
+name|getQueryStr
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Lock the database also

@@ -460,6 +460,12 @@ name|explain
 init|=
 literal|false
 decl_stmt|;
+specifier|protected
+name|String
+name|cmd
+init|=
+literal|""
+decl_stmt|;
 comment|// number of previous attempts
 specifier|protected
 name|int
@@ -604,6 +610,32 @@ parameter_list|()
 block|{
 return|return
 name|explain
+return|;
+block|}
+comment|/**    * Set the original query command.    * @param cmd the original query command string    */
+specifier|public
+name|void
+name|setCmd
+parameter_list|(
+name|String
+name|cmd
+parameter_list|)
+block|{
+name|this
+operator|.
+name|cmd
+operator|=
+name|cmd
+expr_stmt|;
+block|}
+comment|/**    * Find the original query command.    * @return the original query command string    */
+specifier|public
+name|String
+name|getCmd
+parameter_list|()
+block|{
+return|return
+name|cmd
 return|;
 block|}
 comment|/**    * Get a tmp directory on specified URI    *    * @param scheme Scheme of the target FS    * @param authority Authority of the target FS    * @param mkdir create the directory if true    * @param scratchdir path of tmp directory    */
