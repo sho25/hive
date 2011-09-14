@@ -283,6 +283,10 @@ name|UDF
 argument_list|>
 name|udfClass
 decl_stmt|;
+comment|/**    * The underlying UDF class Name.    */
+name|String
+name|udfClassName
+decl_stmt|;
 comment|/**    * Greate a new GenericUDFBridge object.    *     * @param udfName    *          The name of the corresponding udf.    * @param isOperator    * @param udfClass    */
 specifier|public
 name|GenericUDFBridge
@@ -320,6 +324,21 @@ name|udfClass
 operator|=
 name|udfClass
 expr_stmt|;
+name|this
+operator|.
+name|udfClassName
+operator|=
+name|udfClass
+operator|!=
+literal|null
+condition|?
+name|udfClass
+operator|.
+name|getName
+argument_list|()
+else|:
+literal|null
+expr_stmt|;
 block|}
 comment|// For Java serialization only
 specifier|public
@@ -349,6 +368,30 @@ block|{
 return|return
 name|udfName
 return|;
+block|}
+specifier|public
+name|String
+name|getUdfClassName
+parameter_list|()
+block|{
+return|return
+name|udfClassName
+return|;
+block|}
+specifier|public
+name|void
+name|setUdfClassName
+parameter_list|(
+name|String
+name|udfClassName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|udfClassName
+operator|=
+name|udfClassName
+expr_stmt|;
 block|}
 specifier|public
 name|boolean
@@ -442,6 +485,25 @@ parameter_list|)
 throws|throws
 name|UDFArgumentException
 block|{
+if|if
+condition|(
+name|udfClass
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|UDFArgumentException
+argument_list|(
+literal|"The UDF implementation class '"
+operator|+
+name|udfClassName
+operator|+
+literal|"' is not present in the class path"
+argument_list|)
+throw|;
+block|}
 name|udf
 operator|=
 operator|(
