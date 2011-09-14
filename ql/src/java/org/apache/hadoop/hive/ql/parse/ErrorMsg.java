@@ -782,6 +782,11 @@ literal|"it may result in a loss of precision. "
 operator|+
 literal|"If you really want to perform the operation, set hive.mapred.mode=nonstrict"
 argument_list|)
+block|,
+name|FUNCTIONS_ARE_NOT_SUPPORTED_IN_ORDER_BY
+argument_list|(
+literal|"functions are not supported in order by"
+argument_list|)
 block|,       ;
 specifier|private
 name|String
