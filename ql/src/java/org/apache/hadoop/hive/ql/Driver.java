@@ -771,7 +771,9 @@ name|ql
 operator|.
 name|lockmgr
 operator|.
-name|LockException
+name|HiveLockObject
+operator|.
+name|HiveLockObjectData
 import|;
 end_import
 
@@ -789,9 +791,7 @@ name|ql
 operator|.
 name|lockmgr
 operator|.
-name|HiveLockObject
-operator|.
-name|HiveLockObjectData
+name|LockException
 import|;
 end_import
 
@@ -6812,7 +6812,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -6843,7 +6843,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -6871,7 +6871,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -6925,7 +6925,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -7405,7 +7405,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -7436,7 +7436,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -7711,7 +7711,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -7742,7 +7742,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -7770,7 +7770,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -7846,7 +7846,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|getSimpleName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
