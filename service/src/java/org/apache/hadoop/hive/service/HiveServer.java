@@ -662,6 +662,10 @@ specifier|private
 name|Driver
 name|driver
 decl_stmt|;
+specifier|private
+name|CommandProcessorResponse
+name|response
+decl_stmt|;
 comment|/**      * For processors other than Hive queries (Driver), they output to session.out (a temp file)      * first and the fetchOne/fetchN/fetchAll functions get the output from pipeIn.      */
 specifier|private
 name|BufferedReader
@@ -1015,11 +1019,6 @@ index|[
 literal|0
 index|]
 argument_list|)
-decl_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
-literal|null
 decl_stmt|;
 if|if
 condition|(
@@ -1433,12 +1432,34 @@ operator|!
 name|isHiveQuery
 condition|)
 block|{
+name|Schema
+name|schema
+init|=
+name|response
+operator|.
+name|getSchema
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|schema
+operator|==
+literal|null
+condition|)
+block|{
 comment|// Return empty schema if the last command was not a Hive query
 return|return
 operator|new
 name|Schema
 argument_list|()
 return|;
+block|}
+else|else
+block|{
+return|return
+name|schema
+return|;
+block|}
 block|}
 assert|assert
 name|driver
