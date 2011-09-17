@@ -1351,7 +1351,7 @@ name|flush
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Called at the start of job Driver.run().    */
+comment|/**    * Called at the start of job Driver.execute().    */
 specifier|public
 name|void
 name|startQuery

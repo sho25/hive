@@ -617,6 +617,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|CLIENTSTATSPUBLISHERS
+argument_list|(
+literal|"hive.client.stats.publishers"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 name|EXECPARALLEL
 argument_list|(
 literal|"hive.exec.parallel"
@@ -2092,6 +2099,14 @@ literal|true
 argument_list|)
 block|,
 comment|// should the raw data size be collected when analayzing tables
+name|CLIENT_STATS_COUNTERS
+argument_list|(
+literal|"hive.client.stats.counters"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+comment|//Subset of counters that should be of interest for hive.client.stats.publishers (when one wants to limit their publishing). Non-display names should be used".
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
