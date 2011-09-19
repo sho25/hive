@@ -674,11 +674,7 @@ operator|.
 name|getIdColumnName
 argument_list|()
 operator|+
-literal|" LIKE '"
-operator|+
-name|rowID
-operator|+
-literal|"%'"
+literal|" LIKE ? ESCAPE ?"
 decl_stmt|;
 return|return
 name|delete
