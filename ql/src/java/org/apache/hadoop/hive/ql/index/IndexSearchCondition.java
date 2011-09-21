@@ -74,7 +74,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * IndexSearchCondition represents an individual search condition  * found by {@link IndexPredicateAnalyzer}.  *  * @author John Sichi  * @version $Id:$  */
+comment|/**  * IndexSearchCondition represents an individual search condition  * found by {@link IndexPredicateAnalyzer}.  *  */
 end_comment
 
 begin_class
