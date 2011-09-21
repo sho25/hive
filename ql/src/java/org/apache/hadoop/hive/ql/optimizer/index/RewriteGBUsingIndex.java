@@ -446,7 +446,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * RewriteGBUsingIndex is implemented as one of the Rule-based Optimizations.  * Implements optimizations for GroupBy clause rewrite using aggregate index.  * This optimization rewrites GroupBy query over base table to the query over simple table-scan  * over index table, if there is index on the group by key(s) or the distinct column(s).  * E.g.  *<code>  *   select count(key)  *   from table  *   group by key;  *</code>  *  to  *<code>  *   select sum(_count_Of_key)  *   from idx_table  *   group by key;  *</code>  *  *  The rewrite supports following queries:  *<ul>  *<li> Queries having only those col refs that are in the index key.  *<li> Queries that have index key col refs  *<ul>  *<li> in SELECT  *<li> in WHERE  *<li> in GROUP BY  *</ul>  *<li> Queries with agg func COUNT(index key col ref) in SELECT  *<li> Queries with SELECT DISTINCT index_key_col_refs  *<li> Queries having a subquery satisfying above condition (only the subquery is rewritten)  *</ul>  *  *  @see AggregateIndexHandler  *  @see IndexUtils  *  @see RewriteCanApplyCtx  *  @see RewriteCanApplyProcFactory  *  @see RewriteParseContextGenerator  *  @see RewriteQueryUsingAggregateIndexCtx  *  @see RewriteQueryUsingAggregateIndex  *  For test cases, @see ql_rewrite_gbtoidx.q  */
+comment|/**  * RewriteGBUsingIndex is implemented as one of the Rule-based Optimizations.  * Implements optimizations for GroupBy clause rewrite using aggregate index.  * This optimization rewrites GroupBy query over base table to the query over simple table-scan  * over index table, if there is index on the group by key(s) or the distinct column(s).  * E.g.  *<code>  *   select count(key)  *   from table  *   group by key;  *</code>  *  to  *<code>  *   select sum(_count_of_key)  *   from idx_table  *   group by key;  *</code>  *  *  The rewrite supports following queries:  *<ul>  *<li> Queries having only those col refs that are in the index key.  *<li> Queries that have index key col refs  *<ul>  *<li> in SELECT  *<li> in WHERE  *<li> in GROUP BY  *</ul>  *<li> Queries with agg func COUNT(index key col ref) in SELECT  *<li> Queries with SELECT DISTINCT index_key_col_refs  *<li> Queries having a subquery satisfying above condition (only the subquery is rewritten)  *</ul>  *  *  @see AggregateIndexHandler  *  @see IndexUtils  *  @see RewriteCanApplyCtx  *  @see RewriteCanApplyProcFactory  *  @see RewriteParseContextGenerator  *  @see RewriteQueryUsingAggregateIndexCtx  *  @see RewriteQueryUsingAggregateIndex  *  For test cases, @see ql_rewrite_gbtoidx.q  */
 end_comment
 
 begin_class
@@ -1120,7 +1120,7 @@ name|canApplyCtx
 operator|.
 name|setAggFunction
 argument_list|(
-literal|"_count_Of_"
+literal|"_count_of_"
 operator|+
 name|aggregationFunction
 operator|+

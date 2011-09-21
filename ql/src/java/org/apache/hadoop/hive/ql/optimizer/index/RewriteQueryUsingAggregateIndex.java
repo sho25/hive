@@ -795,7 +795,7 @@ argument_list|()
 decl_stmt|;
 comment|//we need to set the colList, outputColumnNames, colExprMap,
 comment|// rowSchema for only that SelectOperator which precedes the GroupByOperator
-comment|// count(indexed_key_column) needs to be replaced by sum(`_count_Of_indexed_key_column`)
+comment|// count(indexed_key_column) needs to be replaced by sum(`_count_of_indexed_key_column`)
 if|if
 condition|(
 name|childOp
@@ -873,7 +873,7 @@ operator|.
 name|getSignature
 argument_list|()
 decl_stmt|;
-comment|//Need to create a new type for Column[_count_Of_indexed_key_column] node
+comment|//Need to create a new type for Column[_count_of_indexed_key_column] node
 name|PrimitiveTypeInfo
 name|pti
 init|=

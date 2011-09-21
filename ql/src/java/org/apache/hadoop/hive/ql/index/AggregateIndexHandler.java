@@ -611,7 +611,7 @@ name|replace
 argument_list|(
 literal|"*"
 argument_list|,
-literal|"ALL"
+literal|"all"
 argument_list|)
 expr_stmt|;
 block|}
@@ -625,7 +625,7 @@ literal|"_"
 operator|+
 name|funcName
 operator|+
-literal|"_Of_"
+literal|"_of_"
 operator|+
 name|colName
 operator|+

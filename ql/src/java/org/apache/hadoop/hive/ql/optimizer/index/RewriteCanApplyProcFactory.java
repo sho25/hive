@@ -816,7 +816,7 @@ name|canApplyCtx
 operator|.
 name|setAggFunction
 argument_list|(
-literal|"_count_Of_ALL"
+literal|"_count_of_all"
 argument_list|)
 expr_stmt|;
 block|}
@@ -912,7 +912,7 @@ name|canApplyCtx
 operator|.
 name|setAggFunction
 argument_list|(
-literal|"_count_Of_"
+literal|"_count_of_"
 operator|+
 operator|(
 operator|(
@@ -948,7 +948,7 @@ name|canApplyCtx
 operator|.
 name|setAggFunction
 argument_list|(
-literal|"_count_Of_1"
+literal|"_count_of_1"
 argument_list|)
 expr_stmt|;
 block|}
