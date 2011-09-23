@@ -113,6 +113,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|QueryPlan
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -592,6 +608,18 @@ return|return
 name|duration
 return|;
 block|}
+comment|/**    * Call this function at the end of processing a query (any time after the last call to PerfLogEnd    * for a given query) to run any cleanup/final steps that need to be run    * @param _log    */
+specifier|public
+name|void
+name|close
+parameter_list|(
+name|Log
+name|_log
+parameter_list|,
+name|QueryPlan
+name|queryPlan
+parameter_list|)
+block|{    }
 block|}
 end_class
 
