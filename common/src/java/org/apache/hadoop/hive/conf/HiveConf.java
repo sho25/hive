@@ -2366,6 +2366,14 @@ literal|"hive.exec.perf.logger"
 argument_list|,
 literal|"org.apache.hadoop.hive.ql.log.PerfLogger"
 argument_list|)
+block|,
+comment|// Whether to delete the scratchdir while startup
+name|HIVE_START_CLEANUP_SCRATCHDIR
+argument_list|(
+literal|"hive.start.cleanup.scratchdir"
+argument_list|,
+literal|false
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final
