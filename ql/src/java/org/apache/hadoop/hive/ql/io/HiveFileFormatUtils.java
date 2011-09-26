@@ -630,7 +630,9 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * get the final output path of a given FileOutputFormat.    *    * @param parent    *          parent dir of the expected final output path    * @param jc    *          job configuration    */
+comment|/**    * get the final output path of a given FileOutputFormat.    *    * @param parent    *          parent dir of the expected final output path    * @param jc    *          job configuration    * @deprecated    */
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 name|Path

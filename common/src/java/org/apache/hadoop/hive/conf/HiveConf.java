@@ -740,6 +740,13 @@ argument_list|,
 literal|20000
 argument_list|)
 block|,
+name|OUTPUT_FILE_EXTENSION
+argument_list|(
+literal|"hive.output.file.extension"
+argument_list|,
+literal|null
+argument_list|)
+block|,
 comment|// should hive determine whether to run in local mode automatically ?
 name|LOCALMODEAUTO
 argument_list|(
