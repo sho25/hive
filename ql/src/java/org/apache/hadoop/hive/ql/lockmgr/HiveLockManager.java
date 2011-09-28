@@ -150,6 +150,12 @@ parameter_list|()
 throws|throws
 name|LockException
 function_decl|;
+comment|/**    * refresh to enable new configurations.    */
+specifier|public
+name|void
+name|refresh
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

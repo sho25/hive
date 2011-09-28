@@ -2136,6 +2136,13 @@ argument_list|,
 literal|100
 argument_list|)
 block|,
+name|HIVE_UNLOCK_NUMRETRIES
+argument_list|(
+literal|"hive.unlock.numretries"
+argument_list|,
+literal|10
+argument_list|)
+block|,
 name|HIVE_LOCK_SLEEP_BETWEEN_RETRIES
 argument_list|(
 literal|"hive.lock.sleep.between.retries"
