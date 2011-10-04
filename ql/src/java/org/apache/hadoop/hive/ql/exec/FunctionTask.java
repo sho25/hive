@@ -658,6 +658,20 @@ return|return
 literal|0
 return|;
 block|}
+name|console
+operator|.
+name|printError
+argument_list|(
+literal|"FAILED: Class "
+operator|+
+name|createFunctionDesc
+operator|.
+name|getClassName
+argument_list|()
+operator|+
+literal|" does not implement UDF, GenericUDF, or UDAF"
+argument_list|)
+expr_stmt|;
 return|return
 literal|1
 return|;
@@ -668,6 +682,20 @@ name|ClassNotFoundException
 name|e
 parameter_list|)
 block|{
+name|console
+operator|.
+name|printError
+argument_list|(
+literal|"FAILED: Class "
+operator|+
+name|createFunctionDesc
+operator|.
+name|getClassName
+argument_list|()
+operator|+
+literal|" not found"
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|info
