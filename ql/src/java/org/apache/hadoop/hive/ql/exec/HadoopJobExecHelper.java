@@ -1699,6 +1699,13 @@ block|{
 comment|// find out CPU msecs
 comment|// In the case that we can't find out this number, we just skip the step to print
 comment|// it out.
+if|if
+condition|(
+name|ctrs
+operator|!=
+literal|null
+condition|)
+block|{
 name|Counter
 name|counterCpuMsec
 init|=
@@ -1749,6 +1756,7 @@ operator|)
 operator|+
 literal|" sec"
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|// write out serialized plan with counters to log file
@@ -1976,6 +1984,10 @@ name|size
 argument_list|()
 operator|>
 literal|0
+operator|&&
+name|ctrs
+operator|!=
+literal|null
 condition|)
 block|{
 name|Map
@@ -2016,6 +2028,13 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|ctrs
+operator|!=
+literal|null
+condition|)
+block|{
 name|Counter
 name|counterCpuMsec
 init|=
@@ -2056,6 +2075,7 @@ name|newCpuMSec
 expr_stmt|;
 block|}
 block|}
+block|}
 name|MapRedStats
 name|mapRedStats
 init|=
@@ -2079,6 +2099,13 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|ctrs
+operator|!=
+literal|null
+condition|)
+block|{
 name|Counter
 name|ctr
 decl_stmt|;
@@ -2284,6 +2311,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|this
 operator|.
