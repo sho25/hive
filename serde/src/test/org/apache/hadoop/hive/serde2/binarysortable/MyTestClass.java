@@ -29,6 +29,24 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazy
+operator|.
+name|ByteArrayRef
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -63,6 +81,9 @@ argument_list|<
 name|Integer
 argument_list|>
 name|myList
+decl_stmt|;
+name|ByteArrayRef
+name|myBA
 decl_stmt|;
 specifier|public
 name|MyTestClass
@@ -100,6 +121,9 @@ argument_list|<
 name|Integer
 argument_list|>
 name|li
+parameter_list|,
+name|ByteArrayRef
+name|ba
 parameter_list|)
 block|{
 name|myByte
@@ -137,6 +161,10 @@ expr_stmt|;
 name|myList
 operator|=
 name|li
+expr_stmt|;
+name|myBA
+operator|=
+name|ba
 expr_stmt|;
 block|}
 block|}

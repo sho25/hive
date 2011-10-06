@@ -870,6 +870,15 @@ name|xlateMap
 operator|.
 name|put
 argument_list|(
+literal|"KW_BINARY"
+argument_list|,
+literal|"BINARY"
+argument_list|)
+expr_stmt|;
+name|xlateMap
+operator|.
+name|put
+argument_list|(
 literal|"KW_ARRAY"
 argument_list|,
 literal|"ARRAY"

@@ -2098,6 +2098,27 @@ argument_list|,
 literal|"string"
 argument_list|)
 expr_stmt|;
+name|typeToThriftTypeMap
+operator|.
+name|put
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|Constants
+operator|.
+name|BINARY_TYPE_NAME
+argument_list|,
+literal|"binary"
+argument_list|)
+expr_stmt|;
 comment|// These 3 types are not supported yet.
 comment|// We should define a complex type date in thrift that contains a single int
 comment|// member, and DynamicSerDe

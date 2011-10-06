@@ -56,6 +56,8 @@ name|STRING
 block|,
 name|TIMESTAMP
 block|,
+name|BINARY
+block|,
 name|UNKNOWN
 block|}
 empty_stmt|;

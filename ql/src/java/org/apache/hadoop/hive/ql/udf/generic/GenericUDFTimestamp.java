@@ -326,7 +326,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"CAST "
+literal|"CAST( "
 argument_list|)
 expr_stmt|;
 name|sb
@@ -343,7 +343,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" AS TIMESTAMP"
+literal|" AS TIMESTAMP)"
 argument_list|)
 expr_stmt|;
 return|return
