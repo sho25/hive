@@ -469,7 +469,7 @@ name|arguments
 operator|.
 name|length
 operator|==
-literal|2
+literal|1
 operator|)
 assert|;
 name|Object

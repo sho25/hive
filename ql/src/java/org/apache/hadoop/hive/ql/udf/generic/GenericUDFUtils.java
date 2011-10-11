@@ -488,10 +488,20 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// The first argument, just set it.
+comment|// The first argument, just set the return to be the standard
+comment|// writable version of this OI.
 name|returnObjectInspector
 operator|=
+name|ObjectInspectorUtils
+operator|.
+name|getStandardObjectInspector
+argument_list|(
 name|oi
+argument_list|,
+name|ObjectInspectorCopyOption
+operator|.
+name|WRITABLE
+argument_list|)
 expr_stmt|;
 return|return
 literal|true
