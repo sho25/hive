@@ -1540,7 +1540,7 @@ block|,
 comment|//small table file size
 name|HIVESMALLTABLESFILESIZE
 argument_list|(
-literal|"hive.smalltable.filesize"
+literal|"hive.mapjoin.smalltable.filesize"
 argument_list|,
 literal|25000000L
 argument_list|)
