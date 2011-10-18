@@ -33,6 +33,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|objectinspector
+operator|.
+name|ObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|typeinfo
 operator|.
 name|TypeInfo
@@ -49,9 +67,17 @@ interface|interface
 name|GenericUDAFParameterInfo
 block|{
 comment|/**    *    * @return the parameter type list passed into the UDAF.    */
+annotation|@
+name|Deprecated
 name|TypeInfo
 index|[]
 name|getParameters
+parameter_list|()
+function_decl|;
+comment|/**    *    * @return getParameters() with types returned as ObjectInspectors.    */
+name|ObjectInspector
+index|[]
+name|getParameterObjectInspectors
 parameter_list|()
 function_decl|;
 comment|/**    * Returns<tt>true</tt> if the UDAF invocation was qualified with    *<tt>DISTINCT</tt> keyword. Note that this is provided for informational    * purposes only and the function implementation is not expected to ensure    * the distinct property for the parameter values. That is handled by the    * framework.    * @return<tt>true</tt> if the UDAF invocation was qualified with    *<tt>DISTINCT</tt> keyword,<tt>false</tt> otherwise.    */

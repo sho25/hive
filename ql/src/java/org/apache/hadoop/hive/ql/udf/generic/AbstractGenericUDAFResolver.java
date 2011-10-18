@@ -112,6 +112,27 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|GenericUDAFEvaluator
+name|getEvaluator
+parameter_list|(
+name|TypeInfo
+index|[]
+name|info
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"This UDAF does not support the deprecated getEvaluator() method."
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 
