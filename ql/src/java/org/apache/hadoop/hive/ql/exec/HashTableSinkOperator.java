@@ -471,7 +471,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|StandardStructObjectInspector
+name|ObjectInspectorUtils
+operator|.
+name|ObjectInspectorCopyOption
 import|;
 end_import
 
@@ -489,9 +491,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorUtils
-operator|.
-name|ObjectInspectorCopyOption
+name|StandardStructObjectInspector
 import|;
 end_import
 
@@ -926,9 +926,9 @@ block|{
 literal|null
 block|,
 comment|// counter value 0 means no error
-literal|"Mapside join size exceeds hive.mapjoin.maxsize. "
+literal|"Mapside join exceeds available memory. "
 operator|+
-literal|"Please increase that or remove the mapjoin hint."
+literal|"Please try removing the mapjoin hint."
 block|}
 decl_stmt|;
 specifier|private
@@ -943,10 +943,6 @@ specifier|transient
 name|int
 index|[]
 name|metadataValueTag
-decl_stmt|;
-specifier|transient
-name|int
-name|maxMapJoinSize
 decl_stmt|;
 specifier|public
 name|HashTableSinkOperator
@@ -1009,21 +1005,6 @@ argument_list|(
 name|LOG
 argument_list|,
 name|isSilent
-argument_list|)
-expr_stmt|;
-name|maxMapJoinSize
-operator|=
-name|HiveConf
-operator|.
-name|getIntVar
-argument_list|(
-name|hconf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEMAXMAPJOINSIZE
 argument_list|)
 expr_stmt|;
 name|numMapRowsRead

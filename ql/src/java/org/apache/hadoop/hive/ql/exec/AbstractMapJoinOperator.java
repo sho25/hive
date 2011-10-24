@@ -378,9 +378,9 @@ block|{
 literal|null
 block|,
 comment|// counter value 0 means no error
-literal|"Mapside join size exceeds hive.mapjoin.maxsize. "
+literal|"Mapside join exceeds available memory. "
 operator|+
-literal|"Please increase that or remove the mapjoin hint."
+literal|"Please try removing the mapjoin hint."
 block|}
 decl_stmt|;
 specifier|transient
