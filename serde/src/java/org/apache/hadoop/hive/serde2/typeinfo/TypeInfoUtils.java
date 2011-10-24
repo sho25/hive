@@ -2919,6 +2919,17 @@ comment|// TypeInfoBasedObjectInspector typeInfoBasedObjectInspector =
 comment|// (ObjectInspector)oi;
 comment|// return typeInfoBasedObjectInspector.getTypeInfo();
 comment|// }
+if|if
+condition|(
+name|oi
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// Recursively going into ObjectInspector structure
 name|TypeInfo
 name|result
