@@ -11472,6 +11472,8 @@ init|=
 name|listStorageDescriptorsWithCD
 argument_list|(
 name|oldCD
+argument_list|,
+literal|1
 argument_list|)
 decl_stmt|;
 comment|//if no other SD references this CD, we can throw it out.
@@ -11578,7 +11580,7 @@ name|mcd
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Get a list of storage descriptors that reference a particular Column Descriptor    * @param oldCD the column descriptor to get storage descriptors for    * @return a list of storage descriptors    */
+comment|/**    * Get a list of storage descriptors that reference a particular Column Descriptor    * @param oldCD the column descriptor to get storage descriptors for    * @param maxSDs the maximum number of SDs to return    * @return a list of storage descriptors    */
 specifier|private
 name|List
 argument_list|<
@@ -11588,6 +11590,9 @@ name|listStorageDescriptorsWithCD
 parameter_list|(
 name|MColumnDescriptor
 name|oldCD
+parameter_list|,
+name|long
+name|maxSDs
 parameter_list|)
 block|{
 name|boolean
@@ -11636,6 +11641,24 @@ argument_list|(
 literal|"MColumnDescriptor inCD"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|maxSDs
+operator|>=
+literal|0
+condition|)
+block|{
+comment|//User specified a row limit, set it on the Query
+name|query
+operator|.
+name|setRange
+argument_list|(
+literal|0
+argument_list|,
+name|maxSDs
+argument_list|)
+expr_stmt|;
+block|}
 name|sds
 operator|=
 operator|(
