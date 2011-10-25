@@ -783,11 +783,6 @@ operator|+
 literal|"If you really want to perform the operation, set hive.mapred.mode=nonstrict"
 argument_list|)
 block|,
-name|FUNCTIONS_ARE_NOT_SUPPORTED_IN_ORDER_BY
-argument_list|(
-literal|"functions are not supported in order by"
-argument_list|)
-block|,
 name|PARTSPEC_DIFFER_FROM_SCHEMA
 argument_list|(
 literal|"Partition columns in partition specification are not the same as "
