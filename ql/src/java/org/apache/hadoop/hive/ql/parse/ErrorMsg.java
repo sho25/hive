@@ -787,6 +787,13 @@ name|FUNCTIONS_ARE_NOT_SUPPORTED_IN_ORDER_BY
 argument_list|(
 literal|"functions are not supported in order by"
 argument_list|)
+block|,
+name|PARTSPEC_DIFFER_FROM_SCHEMA
+argument_list|(
+literal|"Partition columns in partition specification are not the same as "
+operator|+
+literal|"that defined in the table schema. The names and orders have to be exactly the same."
+argument_list|)
 block|,       ;
 specifier|private
 name|String
