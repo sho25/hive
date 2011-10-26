@@ -63,27 +63,7 @@ name|java
 operator|.
 name|net
 operator|.
-name|InetSocketAddress
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
 name|NetworkInterface
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|Socket
 import|;
 end_import
 
@@ -178,6 +158,24 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
 import|;
 end_import
 
@@ -303,7 +301,9 @@ name|hadoop
 operator|.
 name|security
 operator|.
-name|UserGroupInformation
+name|SaslRpcServer
+operator|.
+name|AuthMethod
 import|;
 end_import
 
@@ -317,9 +317,7 @@ name|hadoop
 operator|.
 name|security
 operator|.
-name|SaslRpcServer
-operator|.
-name|AuthMethod
+name|UserGroupInformation
 import|;
 end_import
 
@@ -805,9 +803,11 @@ argument_list|)
 expr_stmt|;
 name|conf
 operator|.
-name|setBoolean
+name|setBoolVar
 argument_list|(
-literal|"hive.metastore.local"
+name|ConfVars
+operator|.
+name|METASTORE_MODE
 argument_list|,
 literal|false
 argument_list|)

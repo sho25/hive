@@ -206,11 +206,13 @@ expr_stmt|;
 comment|// hive.metastore.local should be defined in HiveConf
 name|hiveConf
 operator|.
-name|set
+name|setBoolVar
 argument_list|(
-literal|"hive.metastore.local"
+name|ConfVars
+operator|.
+name|METASTORE_MODE
 argument_list|,
-literal|"false"
+literal|false
 argument_list|)
 expr_stmt|;
 name|hiveConf

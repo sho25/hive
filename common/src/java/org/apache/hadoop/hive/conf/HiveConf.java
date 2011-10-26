@@ -262,6 +262,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_MODE
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORETHRIFTRETRIES
 block|,
 name|HiveConf
@@ -1163,6 +1169,13 @@ argument_list|(
 literal|"hive.metastore.event.expiry.duration"
 argument_list|,
 literal|0L
+argument_list|)
+block|,
+name|METASTORE_MODE
+argument_list|(
+literal|"hive.metastore.local"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 comment|// Default parameters for creating tables

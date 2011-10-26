@@ -221,11 +221,13 @@ argument_list|)
 expr_stmt|;
 name|conf
 operator|.
-name|set
+name|setBoolVar
 argument_list|(
-literal|"hive.metastore.local"
+name|ConfVars
+operator|.
+name|METASTORE_MODE
 argument_list|,
-literal|"false"
+literal|false
 argument_list|)
 expr_stmt|;
 name|conf

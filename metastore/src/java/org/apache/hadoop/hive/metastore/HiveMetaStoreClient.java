@@ -904,11 +904,11 @@ name|localMetaStore
 operator|=
 name|conf
 operator|.
-name|getBoolean
+name|getBoolVar
 argument_list|(
-literal|"hive.metastore.local"
-argument_list|,
-literal|false
+name|ConfVars
+operator|.
+name|METASTORE_MODE
 argument_list|)
 expr_stmt|;
 if|if
