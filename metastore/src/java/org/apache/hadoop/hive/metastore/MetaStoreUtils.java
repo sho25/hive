@@ -4110,6 +4110,17 @@ name|entrySet
 argument_list|()
 control|)
 block|{
+comment|// add non-null parameters to the schema
+if|if
+condition|(
+name|e
+operator|.
+name|getValue
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 name|schema
 operator|.
 name|setProperty
@@ -4125,6 +4136,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 return|return
