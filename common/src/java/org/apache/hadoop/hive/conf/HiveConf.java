@@ -2394,6 +2394,13 @@ literal|"hive.start.cleanup.scratchdir"
 argument_list|,
 literal|false
 argument_list|)
+block|,
+name|HIVE_INSERT_INTO_MULTILEVEL_DIRS
+argument_list|(
+literal|"hive.insert.into.multilevel.dirs"
+argument_list|,
+literal|false
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final
