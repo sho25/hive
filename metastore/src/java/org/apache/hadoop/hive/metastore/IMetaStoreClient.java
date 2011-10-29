@@ -1400,6 +1400,37 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * rename a partition to a new partition    *    * @param dbname    *          database of the old partition    * @param name    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
+specifier|public
+name|void
+name|renamePartition
+parameter_list|(
+specifier|final
+name|String
+name|dbname
+parameter_list|,
+specifier|final
+name|String
+name|name
+parameter_list|,
+specifier|final
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_vals
+parameter_list|,
+specifier|final
+name|Partition
+name|newPart
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_fields(java.lang.String,    *      java.lang.String)    */
 specifier|public
 name|List

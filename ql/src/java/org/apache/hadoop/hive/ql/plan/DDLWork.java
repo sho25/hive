@@ -201,6 +201,10 @@ name|AddPartitionDesc
 name|addPartitionDesc
 decl_stmt|;
 specifier|private
+name|RenamePartitionDesc
+name|renamePartitionDesc
+decl_stmt|;
+specifier|private
 name|AlterTableSimpleDesc
 name|alterTblSimpleDesc
 decl_stmt|;
@@ -1048,6 +1052,40 @@ operator|.
 name|addPartitionDesc
 operator|=
 name|addPartitionDesc
+expr_stmt|;
+block|}
+comment|/**    * @param renamePartitionDesc    *          information about the partitions we want to add.    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|HashSet
+argument_list|<
+name|ReadEntity
+argument_list|>
+name|inputs
+parameter_list|,
+name|HashSet
+argument_list|<
+name|WriteEntity
+argument_list|>
+name|outputs
+parameter_list|,
+name|RenamePartitionDesc
+name|renamePartitionDesc
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|inputs
+argument_list|,
+name|outputs
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|renamePartitionDesc
+operator|=
+name|renamePartitionDesc
 expr_stmt|;
 block|}
 comment|/**    * @param touchDesc    *          information about the table/partitions that we want to touch    */
@@ -2059,6 +2097,32 @@ operator|.
 name|addPartitionDesc
 operator|=
 name|addPartitionDesc
+expr_stmt|;
+block|}
+comment|/**    * @return information about the partitions we want to rename.    */
+specifier|public
+name|RenamePartitionDesc
+name|getRenamePartitionDesc
+parameter_list|()
+block|{
+return|return
+name|renamePartitionDesc
+return|;
+block|}
+comment|/**    * @param renamePartitionDesc    *          information about the partitions we want to rename.    */
+specifier|public
+name|void
+name|setRenamePartitionDesc
+parameter_list|(
+name|RenamePartitionDesc
+name|renamePartitionDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|renamePartitionDesc
+operator|=
+name|renamePartitionDesc
 expr_stmt|;
 block|}
 comment|/**    * @return information about the table/partitions we want to alter.    */

@@ -885,6 +885,12 @@ parameter_list|,
 name|String
 name|tbl_name
 parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_vals
+parameter_list|,
 name|Partition
 name|new_part
 parameter_list|)

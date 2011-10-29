@@ -180,6 +180,8 @@ block|,
 name|ALTERLOCATION
 block|,
 name|DROPPARTITION
+block|,
+name|RENAMEPARTITION
 block|}
 empty_stmt|;
 specifier|public
