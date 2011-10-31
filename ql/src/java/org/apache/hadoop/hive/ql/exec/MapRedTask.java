@@ -2697,6 +2697,26 @@ return|return
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|getReducer
+parameter_list|()
+block|{
+return|return
+name|getWork
+argument_list|()
+operator|.
+name|getReducer
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

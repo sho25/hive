@@ -1927,6 +1927,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVEMETADATAONLYQUERIES
+argument_list|(
+literal|"hive.optimize.metadataonly"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// push predicates down to storage handlers
 name|HIVEOPTPPD_STORAGE
 argument_list|(

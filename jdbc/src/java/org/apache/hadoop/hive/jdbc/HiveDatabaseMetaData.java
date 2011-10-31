@@ -471,6 +471,9 @@ name|catalogs
 init|=
 operator|new
 name|ArrayList
+argument_list|<
+name|String
+argument_list|>
 argument_list|()
 decl_stmt|;
 name|catalogs
@@ -2666,6 +2669,9 @@ name|resultTables
 init|=
 operator|new
 name|ArrayList
+argument_list|<
+name|JdbcTable
+argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|final
