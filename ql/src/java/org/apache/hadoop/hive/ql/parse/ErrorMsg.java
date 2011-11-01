@@ -487,6 +487,11 @@ argument_list|(
 literal|"CREATE-TABLE-AS-SELECT cannot create external table"
 argument_list|)
 block|,
+name|DATABASE_NOT_EXISTS
+argument_list|(
+literal|"Database does not exist:"
+argument_list|)
+block|,
 name|TABLE_ALREADY_EXISTS
 argument_list|(
 literal|"Table already exists:"
