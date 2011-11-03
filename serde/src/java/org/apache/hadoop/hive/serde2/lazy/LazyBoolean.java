@@ -326,6 +326,17 @@ name|isNull
 operator|=
 literal|true
 expr_stmt|;
+name|logExceptionMessage
+argument_list|(
+name|bytes
+argument_list|,
+name|start
+argument_list|,
+name|length
+argument_list|,
+literal|"BOOLEAN"
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}

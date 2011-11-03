@@ -279,6 +279,17 @@ name|t
 operator|=
 literal|null
 expr_stmt|;
+name|logExceptionMessage
+argument_list|(
+name|bytes
+argument_list|,
+name|start
+argument_list|,
+name|length
+argument_list|,
+literal|"TIMESTAMP"
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
