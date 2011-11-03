@@ -794,6 +794,11 @@ literal|"Partition columns in partition specification are not the same as "
 operator|+
 literal|"that defined in the table schema. The names and orders have to be exactly the same."
 argument_list|)
+block|,
+name|PARTITION_COLUMN_NON_PRIMITIVE
+argument_list|(
+literal|"Partition column must be of primitive type."
+argument_list|)
 block|,       ;
 specifier|private
 name|String
