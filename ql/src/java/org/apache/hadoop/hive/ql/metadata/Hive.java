@@ -7402,7 +7402,7 @@ return|return
 name|pvals
 return|;
 block|}
-comment|/**    * get all the partitions of the table that matches the given partial    * specification. partition columns whose value is can be anything should be    * an empty string.    *    * @param tbl    *          object for which partition is needed. Must be partitioned.    * @return list of partition objects    * @throws HiveException    */
+comment|/**    * get all the partitions of the table that matches the given partial    * specification. partition columns whose value is can be anything should be    * an empty string.    *    * @param tbl    *          object for which partition is needed. Must be partitioned.    * @param limit number of partitions to return    * @return list of partition objects    * @throws HiveException    */
 specifier|public
 name|List
 argument_list|<
@@ -7420,6 +7420,9 @@ argument_list|,
 name|String
 argument_list|>
 name|partialPartSpec
+parameter_list|,
+name|short
+name|limit
 parameter_list|)
 throws|throws
 name|HiveException
@@ -7500,11 +7503,7 @@ argument_list|()
 argument_list|,
 name|partialPvals
 argument_list|,
-operator|(
-name|short
-operator|)
-operator|-
-literal|1
+name|limit
 argument_list|,
 name|getUserName
 argument_list|()
@@ -7577,6 +7576,43 @@ expr_stmt|;
 block|}
 return|return
 name|qlPartitions
+return|;
+block|}
+comment|/**    * get all the partitions of the table that matches the given partial    * specification. partition columns whose value is can be anything should be    * an empty string.    *    * @param tbl    *          object for which partition is needed. Must be partitioned.    * @return list of partition objects    * @throws HiveException    */
+specifier|public
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|getPartitions
+parameter_list|(
+name|Table
+name|tbl
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partialPartSpec
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+return|return
+name|getPartitions
+argument_list|(
+name|tbl
+argument_list|,
+name|partialPartSpec
+argument_list|,
+operator|(
+name|short
+operator|)
+operator|-
+literal|1
+argument_list|)
 return|;
 block|}
 comment|/**    * get all the partitions of the table that matches the given partial    * specification. partition columns whose value is can be anything should be    * an empty string.    *    * @param tbl    *          object for which partition is needed. Must be partitioned.    * @param partialPartSpec    *          partial partition specification (some subpartitions can be empty).    * @return list of partition objects    * @throws HiveException    */

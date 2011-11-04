@@ -3536,6 +3536,8 @@ argument_list|(
 name|tab
 argument_list|,
 name|path
+argument_list|,
+name|partSpec
 argument_list|)
 argument_list|,
 name|data
