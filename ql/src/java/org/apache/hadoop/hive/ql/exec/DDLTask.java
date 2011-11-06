@@ -14700,12 +14700,9 @@ argument_list|)
 decl_stmt|;
 name|outStream
 operator|=
-operator|(
-name|DataOutput
-operator|)
 name|fs
 operator|.
-name|open
+name|create
 argument_list|(
 name|resFile
 argument_list|)
@@ -14794,12 +14791,9 @@ argument_list|)
 decl_stmt|;
 name|outStream
 operator|=
-operator|(
-name|DataOutput
-operator|)
 name|fs
 operator|.
-name|open
+name|create
 argument_list|(
 name|resFile
 argument_list|)
