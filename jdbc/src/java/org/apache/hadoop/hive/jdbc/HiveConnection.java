@@ -465,6 +465,8 @@ name|getMessage
 argument_list|()
 argument_list|,
 literal|"08S01"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

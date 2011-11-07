@@ -405,10 +405,9 @@ throw|throw
 operator|new
 name|Error
 argument_list|(
+literal|"Error in ExpandBuff"
+argument_list|,
 name|t
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 throw|;
 block|}

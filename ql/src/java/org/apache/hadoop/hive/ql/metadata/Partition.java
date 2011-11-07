@@ -872,6 +872,8 @@ operator|new
 name|HiveException
 argument_list|(
 literal|"Could not create a copy of StorageDescription"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

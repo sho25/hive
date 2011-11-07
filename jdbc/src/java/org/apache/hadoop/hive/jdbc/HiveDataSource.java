@@ -127,7 +127,11 @@ block|{
 throw|throw
 operator|new
 name|SQLException
-argument_list|()
+argument_list|(
+literal|"Error in getting HiveConnection"
+argument_list|,
+name|ex
+argument_list|)
 throw|;
 block|}
 block|}

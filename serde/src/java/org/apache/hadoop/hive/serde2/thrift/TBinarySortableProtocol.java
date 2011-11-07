@@ -270,7 +270,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of the Thrift Protocol for binary sortable records.  *   * The data format: NULL: a single byte \0 NON-NULL Primitives: ALWAYS prepend a  * single byte \1, and then: Boolean: FALSE = \1, TRUE = \2 Byte: flip the  * sign-bit to make sure negative comes before positive Short: flip the sign-bit  * to make sure negative comes before positive Int: flip the sign-bit to make  * sure negative comes before positive Long: flip the sign-bit to make sure  * negative comes before positive Double: flip the sign-bit for positive double,  * and all bits for negative double values String: NULL-terminated UTF-8 string,  * with NULL escaped to \1 \1, and \1 escaped to \1 \2 NON-NULL Complex Types:  * Struct: first the single byte \1, and then one field by one field. List: size  * stored as Int (see above), then one element by one element. Map: size stored  * as Int (see above), then one key by one value, and then the next pair and so  * on. Binary: size stored as Int (see above), then the binary data in its  * original form  *   * Note that the relative order of list/map/binary will be based on the size  * first (and elements one by one if the sizes are equal).  *   * This protocol takes an additional parameter SERIALIZATION_SORT_ORDER which is  * a string containing only "+" and "-". The length of the string should equal  * to the number of fields in the top-level struct for serialization. "+" means  * the field should be sorted ascendingly, and "-" means descendingly. The sub  * fields in the same top-level field will have the same sort order.  *   * This is not thrift compliant in that it doesn't write out field ids so things  * cannot actually be versioned.  */
+comment|/**  * An implementation of the Thrift Protocol for binary sortable records.  *  * The data format: NULL: a single byte \0 NON-NULL Primitives: ALWAYS prepend a  * single byte \1, and then: Boolean: FALSE = \1, TRUE = \2 Byte: flip the  * sign-bit to make sure negative comes before positive Short: flip the sign-bit  * to make sure negative comes before positive Int: flip the sign-bit to make  * sure negative comes before positive Long: flip the sign-bit to make sure  * negative comes before positive Double: flip the sign-bit for positive double,  * and all bits for negative double values String: NULL-terminated UTF-8 string,  * with NULL escaped to \1 \1, and \1 escaped to \1 \2 NON-NULL Complex Types:  * Struct: first the single byte \1, and then one field by one field. List: size  * stored as Int (see above), then one element by one element. Map: size stored  * as Int (see above), then one key by one value, and then the next pair and so  * on. Binary: size stored as Int (see above), then the binary data in its  * original form  *  * Note that the relative order of list/map/binary will be based on the size  * first (and elements one by one if the sizes are equal).  *  * This protocol takes an additional parameter SERIALIZATION_SORT_ORDER which is  * a string containing only "+" and "-". The length of the string should equal  * to the number of fields in the top-level struct for serialization. "+" means  * the field should be sorted ascendingly, and "-" means descendingly. The sub  * fields in the same top-level field will have the same sort order.  *  * This is not thrift compliant in that it doesn't write out field ids so things  * cannot actually be versioned.  */
 end_comment
 
 begin_class
@@ -1876,11 +1876,8 @@ operator|new
 name|TException
 argument_list|(
 literal|"JVM DOES NOT SUPPORT UTF-8: "
-operator|+
+argument_list|,
 name|uex
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -3562,11 +3559,8 @@ operator|new
 name|TException
 argument_list|(
 literal|"JVM DOES NOT SUPPORT UTF-8: "
-operator|+
+argument_list|,
 name|uex
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 throw|;
 block|}
