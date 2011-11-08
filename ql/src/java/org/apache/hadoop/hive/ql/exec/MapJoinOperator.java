@@ -1299,6 +1299,11 @@ name|generatePath
 argument_list|(
 name|baseDir
 argument_list|,
+name|conf
+operator|.
+name|getDumpFilePrefix
+argument_list|()
+argument_list|,
 name|pos
 argument_list|,
 name|currentFileName

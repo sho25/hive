@@ -95,7 +95,9 @@ name|java
 operator|.
 name|util
 operator|.
-name|Set
+name|Map
+operator|.
+name|Entry
 import|;
 end_import
 
@@ -105,9 +107,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
-operator|.
-name|Entry
+name|Set
 import|;
 end_import
 
@@ -330,6 +330,11 @@ specifier|private
 name|float
 name|hashtableMemoryUsage
 decl_stmt|;
+comment|//map join dump file name
+specifier|private
+name|String
+name|dumpFilePrefix
+decl_stmt|;
 specifier|public
 name|HashTableSinkDesc
 parameter_list|()
@@ -551,6 +556,15 @@ operator|.
 name|getBucketFileNameMapping
 argument_list|()
 expr_stmt|;
+name|this
+operator|.
+name|dumpFilePrefix
+operator|=
+name|clone
+operator|.
+name|getDumpFilePrefix
+argument_list|()
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -711,6 +725,32 @@ operator|.
 name|hashtableMemoryUsage
 operator|=
 name|hashtableMemoryUsage
+expr_stmt|;
+block|}
+comment|/**    * @return the dumpFilePrefix    */
+specifier|public
+name|String
+name|getDumpFilePrefix
+parameter_list|()
+block|{
+return|return
+name|dumpFilePrefix
+return|;
+block|}
+comment|/**    * @param dumpFilePrefix    *          the dumpFilePrefix to set    */
+specifier|public
+name|void
+name|setDumpFilePrefix
+parameter_list|(
+name|String
+name|dumpFilePrefix
+parameter_list|)
+block|{
+name|this
+operator|.
+name|dumpFilePrefix
+operator|=
+name|dumpFilePrefix
 expr_stmt|;
 block|}
 specifier|public

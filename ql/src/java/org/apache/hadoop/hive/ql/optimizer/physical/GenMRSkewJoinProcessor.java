@@ -645,24 +645,6 @@ name|TypeInfoFactory
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveException
-import|;
-end_import
-
 begin_comment
 comment|/**  * GenMRSkewJoinProcessor.  *  */
 end_comment
@@ -2007,6 +1989,16 @@ name|JoinOperator
 operator|)
 name|reducer
 decl_stmt|;
+name|String
+name|dumpFilePrefix
+init|=
+literal|"mapfile"
+operator|+
+name|PlanUtils
+operator|.
+name|getCountForMapJoinDumpFilePrefix
+argument_list|()
+decl_stmt|;
 name|MapJoinDesc
 name|mapJoinDescriptor
 init|=
@@ -2044,6 +2036,8 @@ name|joinDescriptor
 operator|.
 name|getNoOuterJoin
 argument_list|()
+argument_list|,
+name|dumpFilePrefix
 argument_list|)
 decl_stmt|;
 name|mapJoinDescriptor

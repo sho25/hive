@@ -680,6 +680,13 @@ argument_list|(
 literal|"org.apache.hadoop.hive.ql.plan.PlanUtils"
 argument_list|)
 decl_stmt|;
+specifier|private
+specifier|static
+name|long
+name|countForMapJoinDumpFilePrefix
+init|=
+literal|0
+decl_stmt|;
 comment|/**    * ExpressionTypes.    *    */
 specifier|public
 specifier|static
@@ -691,6 +698,17 @@ block|,
 name|JEXL
 block|}
 empty_stmt|;
+specifier|public
+specifier|static
+name|long
+name|getCountForMapJoinDumpFilePrefix
+parameter_list|()
+block|{
+return|return
+name|countForMapJoinDumpFilePrefix
+operator|++
+return|;
+block|}
 annotation|@
 name|SuppressWarnings
 argument_list|(
