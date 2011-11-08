@@ -8467,6 +8467,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_STRINGLITERALSEQUENCE
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_CHARSETLITERAL
 case|:
 case|case
