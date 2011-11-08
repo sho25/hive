@@ -20112,6 +20112,20 @@ operator|.
 name|addHiveconfToSystemProperties
 argument_list|()
 decl_stmt|;
+comment|// If the log4j.configuration property hasn't already been explicitly set, use Hive's default
+comment|// log4j configuration
+if|if
+condition|(
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"log4j.configuration"
+argument_list|)
+operator|==
+literal|null
+condition|)
+block|{
 comment|// NOTE: It is critical to do this here so that log4j is reinitialized
 comment|// before any of the other core hive classes are loaded
 try|try
@@ -20140,6 +20154,7 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 try|try
 block|{
