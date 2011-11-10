@@ -1244,7 +1244,7 @@ name|TException
 block|{
 name|client
 operator|.
-name|alter_partition
+name|rename_partition
 argument_list|(
 name|dbname
 argument_list|,
@@ -3574,8 +3574,6 @@ argument_list|(
 name|dbName
 argument_list|,
 name|tblName
-argument_list|,
-literal|null
 argument_list|,
 name|newPart
 argument_list|)
