@@ -86,6 +86,11 @@ name|loadTableDesc
 decl_stmt|;
 comment|// same as MoveWork.loadTableDesc -- for FileSinkOperator
 specifier|private
+name|LoadFileDesc
+name|loadFileDesc
+decl_stmt|;
+comment|// same as MoveWork.loadFileDesc -- for FileSinkOperator
+specifier|private
 name|String
 name|aggKey
 decl_stmt|;
@@ -129,6 +134,20 @@ name|loadTableDesc
 expr_stmt|;
 block|}
 specifier|public
+name|StatsWork
+parameter_list|(
+name|LoadFileDesc
+name|loadFileDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|loadFileDesc
+operator|=
+name|loadFileDesc
+expr_stmt|;
+block|}
+specifier|public
 name|tableSpec
 name|getTableSpecs
 parameter_list|()
@@ -144,6 +163,15 @@ parameter_list|()
 block|{
 return|return
 name|loadTableDesc
+return|;
+block|}
+specifier|public
+name|LoadFileDesc
+name|getLoadFileDesc
+parameter_list|()
+block|{
+return|return
+name|loadFileDesc
 return|;
 block|}
 specifier|public
