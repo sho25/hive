@@ -89,6 +89,16 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+comment|/**    * Return whether this node (and all children nodes) are deterministic.    */
+specifier|public
+name|boolean
+name|isDeterministic
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
 block|}
 end_class
 
