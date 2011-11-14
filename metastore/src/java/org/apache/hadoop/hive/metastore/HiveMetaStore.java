@@ -2087,9 +2087,13 @@ name|rawStoreClassName
 operator|=
 name|hiveConf
 operator|.
-name|get
+name|getVar
 argument_list|(
-literal|"hive.metastore.rawstore.impl"
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_RAW_STORE_IMPL
 argument_list|)
 expr_stmt|;
 name|checkForDefaultDb
