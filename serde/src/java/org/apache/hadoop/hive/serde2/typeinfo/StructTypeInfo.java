@@ -96,7 +96,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * StructTypeInfo represents the TypeInfo of a struct. A struct contains one or  * more fields each of which has a unique name and its own TypeInfo. Different  * fields can have the same or different TypeInfo.  *   * Always use the TypeInfoFactory to create new TypeInfo objects, instead of  * directly creating an instance of this class.  */
+comment|/**  * StructTypeInfo represents the TypeInfo of a struct. A struct contains one or  * more fields each of which has a unique name and its own TypeInfo. Different  * fields can have the same or different TypeInfo.  *  * Always use the TypeInfoFactory to create new TypeInfo objects, instead of  * directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -304,11 +304,6 @@ name|ArrayList
 argument_list|<
 name|String
 argument_list|>
-argument_list|()
-expr_stmt|;
-name|allStructFieldNames
-operator|.
-name|addAll
 argument_list|(
 name|names
 argument_list|)
@@ -320,11 +315,6 @@ name|ArrayList
 argument_list|<
 name|TypeInfo
 argument_list|>
-argument_list|()
-expr_stmt|;
-name|allStructFieldTypeInfos
-operator|.
-name|addAll
 argument_list|(
 name|typeInfos
 argument_list|)

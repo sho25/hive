@@ -291,6 +291,26 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
+name|ObjectInspectorUtils
+operator|.
+name|ObjectInspectorCopyOption
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
 name|StructField
 import|;
 end_import
@@ -310,26 +330,6 @@ operator|.
 name|objectinspector
 operator|.
 name|StructObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ObjectInspectorUtils
-operator|.
-name|ObjectInspectorCopyOption
 import|;
 end_import
 
@@ -450,7 +450,7 @@ operator|=
 name|tableDesc
 expr_stmt|;
 block|}
-comment|/**    * Other than gathering statistics for the ANALYZE command, the table scan operator    * does not do anything special other than just forwarding the row. Since the table    * data is always read as part of the map-reduce framework by the mapper. But, this    * assumption is not true, i.e table data is not only read by the mapper, this    * operator will be enhanced to read the table.    **/
+comment|/**    * Other than gathering statistics for the ANALYZE command, the table scan operator    * does not do anything special other than just forwarding the row. Since the table    * data is always read as part of the map-reduce framework by the mapper. But, when this    * assumption stops to be true, i.e table data won't be only read by the mapper, this    * operator will be enhanced to read the table.    **/
 annotation|@
 name|Override
 specifier|public
