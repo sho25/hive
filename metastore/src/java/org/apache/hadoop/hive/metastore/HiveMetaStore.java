@@ -20374,17 +20374,6 @@ name|Throwable
 block|{
 try|try
 block|{
-name|HMSHandler
-name|handler
-init|=
-operator|new
-name|HMSHandler
-argument_list|(
-literal|"new db based metaserver"
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 comment|// Server will create new threads up to max as necessary. After an idle
 comment|// period, it will destory threads to keep the number of threads in the
 comment|// pool to min.
@@ -20462,14 +20451,6 @@ argument_list|)
 decl_stmt|;
 name|TProcessor
 name|processor
-init|=
-operator|new
-name|ThriftHiveMetastore
-operator|.
-name|Processor
-argument_list|(
-name|handler
-argument_list|)
 decl_stmt|;
 name|TTransportFactory
 name|transFactory
@@ -20529,12 +20510,40 @@ name|saslServer
 operator|.
 name|wrapProcessor
 argument_list|(
-name|processor
+operator|new
+name|ThriftHiveMetastore
+operator|.
+name|Processor
+argument_list|(
+operator|new
+name|HMSHandler
+argument_list|(
+literal|"new db based metaserver"
+argument_list|,
+name|conf
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
 else|else
 block|{
+name|processor
+operator|=
+operator|new
+name|ThriftHiveMetastore
+operator|.
+name|Processor
+argument_list|(
+operator|new
+name|HMSHandler
+argument_list|(
+literal|"new db based metaserver"
+argument_list|,
+name|conf
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|transFactory
 operator|=
 operator|new
