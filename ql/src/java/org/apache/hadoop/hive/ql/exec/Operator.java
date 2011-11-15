@@ -2684,12 +2684,13 @@ argument_list|(
 name|this
 argument_list|)
 decl_stmt|;
-assert|assert
+if|if
+condition|(
 name|childIndex
-operator|!=
-operator|-
-literal|1
-assert|;
+operator|>=
+literal|0
+condition|)
+block|{
 if|if
 condition|(
 name|parent
@@ -2723,6 +2724,7 @@ argument_list|(
 name|childIndex
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Replace one parent with another at the same position. Chilren of the new    * parent are not updated    *    * @param parent    *          the old parent    * @param newParent    *          the new parent    */
