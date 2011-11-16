@@ -2100,6 +2100,13 @@ literal|1024
 argument_list|)
 block|,
 comment|// 10G
+name|HIVE_INDEX_COMPACT_BINARY_SEARCH
+argument_list|(
+literal|"hive.index.compact.binary.search"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// Statistics
 name|HIVESTATSAUTOGATHER
 argument_list|(

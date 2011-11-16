@@ -3543,6 +3543,19 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Intentionally overwrites anything the user may have put here
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+literal|"hive.input.format.sorted"
+argument_list|,
+name|work
+operator|.
+name|isInputFormatSorted
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|boolean

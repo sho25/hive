@@ -341,6 +341,22 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|SequenceFile
+operator|.
+name|Metadata
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|Text
 import|;
 end_import
@@ -398,22 +414,6 @@ operator|.
 name|io
 operator|.
 name|WritableUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|SequenceFile
-operator|.
-name|Metadata
 import|;
 end_import
 
@@ -526,7 +526,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *<code>RCFile</code>s, short of Record Columnar File, are flat files  * consisting of binary key/value pairs, which shares much similarity with  *<code>SequenceFile</code>.  *   * RCFile stores columns of a table in a record columnar way. It first  * partitions rows horizontally into row splits. and then it vertically  * partitions each row split in a columnar way. RCFile first stores the meta  * data of a row split, as the key part of a record, and all the data of a row  * split as the value part. When writing, RCFile.Writer first holds records'  * value bytes in memory, and determines a row split if the raw bytes size of  * buffered records overflow a given parameter<tt>Writer.columnsBufferSize</tt>,  * which can be set like:<code>conf.setInt(COLUMNS_BUFFER_SIZE_CONF_STR,           4 * 1024 * 1024)</code> .  *<p>  *<code>RCFile</code> provides {@link Writer}, {@link Reader} and classes for  * writing, reading respectively.  *</p>  *   *<p>  * RCFile stores columns of a table in a record columnar way. It first  * partitions rows horizontally into row splits. and then it vertically  * partitions each row split in a columnar way. RCFile first stores the meta  * data of a row split, as the key part of a record, and all the data of a row  * split as the value part.  *</p>  *   *<p>  * RCFile compresses values in a more fine-grained manner then record level  * compression. However, It currently does not support compress the key part  * yet. The actual compression algorithm used to compress key and/or values can  * be specified by using the appropriate {@link CompressionCodec}.  *</p>  *   *<p>  * The {@link Reader} is used to read and explain the bytes of RCFile.  *</p>  *   *<h4 id="Formats">RCFile Formats</h4>  *   *   *<h5 id="Header">RC Header</h5>  *<ul>  *<li>version - 3 bytes of magic header<b>SEQ</b>, followed by 1 byte of  * actual version number (e.g. SEQ4 or SEQ6)</li>  *<li>keyClassName -KeyBuffer's class name</li>  *<li>valueClassName - ValueBuffer's class name</li>  *<li>compression - A boolean which specifies if compression is turned on for  * keys/values in this file.</li>  *<li>blockCompression - always false. this field is kept for compatible with  * SequeceFile's format</li>  *<li>compression codec -<code>CompressionCodec</code> class which is used for  * compression of keys and/or values (if compression is enabled).</li>  *<li>metadata - {@link Metadata} for this file.</li>  *<li>sync - A sync marker to denote end of the header.</li>  *</ul>  *   *<h5>RCFile Format</h5>  *<ul>  *<li><a href="#Header">Header</a></li>  *<li>Record  *<li>Key part  *<ul>  *<li>Record length in bytes</li>  *<li>Key length in bytes</li>  *<li>Number_of_rows_in_this_record(vint)</li>  *<li>Column_1_ondisk_length(vint)</li>  *<li>Column_1_row_1_value_plain_length</li>  *<li>Column_1_row_2_value_plain_length</li>  *<li>...</li>  *<li>Column_2_ondisk_length(vint)</li>  *<li>Column_2_row_1_value_plain_length</li>  *<li>Column_2_row_2_value_plain_length</li>  *<li>...</li>  *</ul>  *</li>  *</li>  *<li>Value part  *<ul>  *<li>Compressed or plain data of [column_1_row_1_value,  * column_1_row_2_value,....]</li>  *<li>Compressed or plain data of [column_2_row_1_value,  * column_2_row_2_value,....]</li>  *</ul>  *</li>  *</ul>  *   */
+comment|/**  *<code>RCFile</code>s, short of Record Columnar File, are flat files  * consisting of binary key/value pairs, which shares much similarity with  *<code>SequenceFile</code>.  *  * RCFile stores columns of a table in a record columnar way. It first  * partitions rows horizontally into row splits. and then it vertically  * partitions each row split in a columnar way. RCFile first stores the meta  * data of a row split, as the key part of a record, and all the data of a row  * split as the value part. When writing, RCFile.Writer first holds records'  * value bytes in memory, and determines a row split if the raw bytes size of  * buffered records overflow a given parameter<tt>Writer.columnsBufferSize</tt>,  * which can be set like:<code>conf.setInt(COLUMNS_BUFFER_SIZE_CONF_STR,           4 * 1024 * 1024)</code> .  *<p>  *<code>RCFile</code> provides {@link Writer}, {@link Reader} and classes for  * writing, reading respectively.  *</p>  *  *<p>  * RCFile stores columns of a table in a record columnar way. It first  * partitions rows horizontally into row splits. and then it vertically  * partitions each row split in a columnar way. RCFile first stores the meta  * data of a row split, as the key part of a record, and all the data of a row  * split as the value part.  *</p>  *  *<p>  * RCFile compresses values in a more fine-grained manner then record level  * compression. However, It currently does not support compress the key part  * yet. The actual compression algorithm used to compress key and/or values can  * be specified by using the appropriate {@link CompressionCodec}.  *</p>  *  *<p>  * The {@link Reader} is used to read and explain the bytes of RCFile.  *</p>  *  *<h4 id="Formats">RCFile Formats</h4>  *  *  *<h5 id="Header">RC Header</h5>  *<ul>  *<li>version - 3 bytes of magic header<b>SEQ</b>, followed by 1 byte of  * actual version number (e.g. SEQ4 or SEQ6)</li>  *<li>keyClassName -KeyBuffer's class name</li>  *<li>valueClassName - ValueBuffer's class name</li>  *<li>compression - A boolean which specifies if compression is turned on for  * keys/values in this file.</li>  *<li>blockCompression - always false. this field is kept for compatible with  * SequeceFile's format</li>  *<li>compression codec -<code>CompressionCodec</code> class which is used for  * compression of keys and/or values (if compression is enabled).</li>  *<li>metadata - {@link Metadata} for this file.</li>  *<li>sync - A sync marker to denote end of the header.</li>  *</ul>  *  *<h5>RCFile Format</h5>  *<ul>  *<li><a href="#Header">Header</a></li>  *<li>Record  *<li>Key part  *<ul>  *<li>Record length in bytes</li>  *<li>Key length in bytes</li>  *<li>Number_of_rows_in_this_record(vint)</li>  *<li>Column_1_ondisk_length(vint)</li>  *<li>Column_1_row_1_value_plain_length</li>  *<li>Column_1_row_2_value_plain_length</li>  *<li>...</li>  *<li>Column_2_ondisk_length(vint)</li>  *<li>Column_2_row_1_value_plain_length</li>  *<li>Column_2_row_2_value_plain_length</li>  *<li>...</li>  *</ul>  *</li>  *</li>  *<li>Value part  *<ul>  *<li>Compressed or plain data of [column_1_row_1_value,  * column_1_row_2_value,....]</li>  *<li>Compressed or plain data of [column_2_row_1_value,  * column_2_row_2_value,....]</li>  *</ul>  *</li>  *</ul>  *  */
 end_comment
 
 begin_class
@@ -663,7 +663,7 @@ literal|100
 operator|*
 name|SYNC_SIZE
 decl_stmt|;
-comment|/**    * KeyBuffer is the key of each record in RCFile. Its on-disk layout is as    * below:    *     *<ul>    *<li>record length in bytes,it is the sum of bytes used to store the key    * part and the value part.</li>    *<li>Key length in bytes, it is how many bytes used by the key part.</li>    *<li>number_of_rows_in_this_record(vint),</li>    *<li>column_1_ondisk_length(vint),</li>    *<li>column_1_row_1_value_plain_length,</li>    *<li>column_1_row_2_value_plain_length,</li>    *<li>....</li>    *<li>column_2_ondisk_length(vint),</li>    *<li>column_2_row_1_value_plain_length,</li>    *<li>column_2_row_2_value_plain_length,</li>    *<li>.... .</li>    *<li>{the end of the key part}</li>    *</ul>    */
+comment|/**    * KeyBuffer is the key of each record in RCFile. Its on-disk layout is as    * below:    *    *<ul>    *<li>record length in bytes,it is the sum of bytes used to store the key    * part and the value part.</li>    *<li>Key length in bytes, it is how many bytes used by the key part.</li>    *<li>number_of_rows_in_this_record(vint),</li>    *<li>column_1_ondisk_length(vint),</li>    *<li>column_1_row_1_value_plain_length,</li>    *<li>column_1_row_2_value_plain_length,</li>    *<li>....</li>    *<li>column_2_ondisk_length(vint),</li>    *<li>column_2_row_1_value_plain_length,</li>    *<li>column_2_row_2_value_plain_length,</li>    *<li>.... .</li>    *<li>{the end of the key part}</li>    *</ul>    */
 specifier|public
 specifier|static
 class|class
@@ -780,7 +780,7 @@ operator|=
 name|numberRows
 expr_stmt|;
 block|}
-comment|/**      * add in a new column's meta data.      *       * @param columnValueLen      *          this total bytes number of this column's values in this split      * @param colValLenBuffer      *          each cell's length of this column's in this split      */
+comment|/**      * add in a new column's meta data.      *      * @param columnValueLen      *          this total bytes number of this column's values in this split      * @param colValLenBuffer      *          each cell's length of this column's in this split      */
 name|void
 name|setColumnLenInfo
 parameter_list|(
@@ -1062,7 +1062,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * get number of bytes to store the keyBuffer.      *       * @return number of bytes used to store this KeyBuffer on disk      * @throws IOException      */
+comment|/**      * get number of bytes to store the keyBuffer.      *      * @return number of bytes used to store this KeyBuffer on disk      * @throws IOException      */
 specifier|public
 name|int
 name|getSize
@@ -2200,7 +2200,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Write KeyBuffer/ValueBuffer pairs to a RCFile. RCFile's format is    * compatible with SequenceFile's.    *     */
+comment|/**    * Write KeyBuffer/ValueBuffer pairs to a RCFile. RCFile's format is    * compatible with SequenceFile's.    *    */
 specifier|public
 specifier|static
 class|class
@@ -2644,7 +2644,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Constructs a RCFile Writer.      *       * @param fs      *          the file system used      * @param conf      *          the configuration file      * @param name      *          the file name      * @throws IOException      */
+comment|/**      * Constructs a RCFile Writer.      *      * @param fs      *          the file system used      * @param conf      *          the configuration file      * @param name      *          the file name      * @throws IOException      */
 specifier|public
 name|Writer
 parameter_list|(
@@ -2684,7 +2684,7 @@ name|codec
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Constructs a RCFile Writer.      *       * @param fs      *          the file system used      * @param conf      *          the configuration file      * @param name      *          the file name      * @param progress      * @param metadata      * @throws IOException      */
+comment|/**      * Constructs a RCFile Writer.      *      * @param fs      *          the file system used      * @param conf      *          the configuration file      * @param name      *          the file name      * @param progress      * @param metadata      * @throws IOException      */
 specifier|public
 name|Writer
 parameter_list|(
@@ -2747,7 +2747,7 @@ name|codec
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *       * Constructs a RCFile Writer.      *       * @param fs      *          the file system used      * @param conf      *          the configuration file      * @param name      *          the file name      * @param bufferSize      * @param replication      * @param blockSize      * @param progress      * @param metadata      * @throws IOException      */
+comment|/**      *      * Constructs a RCFile Writer.      *      * @param fs      *          the file system used      * @param conf      *          the configuration file      * @param name      *          the file name      * @param bufferSize      * @param replication      * @param blockSize      * @param progress      * @param metadata      * @throws IOException      */
 specifier|public
 name|Writer
 parameter_list|(
@@ -3374,7 +3374,7 @@ name|columnBufferSize
 init|=
 literal|0
 decl_stmt|;
-comment|/**      * Append a row of values. Currently it only can accept<      * {@link BytesRefArrayWritable}. If its<code>size()</code> is less than the      * column number in the file, zero bytes are appended for the empty columns.      * If its size() is greater then the column number in the file, the exceeded      * columns' bytes are ignored.      *       * @param val      * @throws IOException      */
+comment|/**      * Append a row of values. Currently it only can accept<      * {@link BytesRefArrayWritable}. If its<code>size()</code> is less than the      * column number in the file, zero bytes are appended for the empty columns.      * If its size() is greater then the column number in the file, the exceeded      * columns' bytes are ignored.      *      * @param val      * @throws IOException      */
 specifier|public
 name|void
 name|append
@@ -4185,7 +4185,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Read KeyBuffer/ValueBuffer pairs from a RCFile.    *     */
+comment|/**    * Read KeyBuffer/ValueBuffer pairs from a RCFile.    *    */
 specifier|public
 specifier|static
 class|class
@@ -4301,6 +4301,7 @@ name|ValueBuffer
 name|currentValue
 decl_stmt|;
 specifier|private
+specifier|final
 name|boolean
 index|[]
 name|skippedColIDs
@@ -5349,7 +5350,7 @@ name|getPos
 argument_list|()
 return|;
 block|}
-comment|/**      * Set the current byte position in the input file.      *       *<p>      * The position passed must be a position returned by      * {@link RCFile.Writer#getLength()} when writing this file. To seek to an      * arbitrary position, use {@link RCFile.Reader#sync(long)}. In another      * words, the current seek can only seek to the end of the file. For other      * positions, use {@link RCFile.Reader#sync(long)}.      */
+comment|/**      * Set the current byte position in the input file.      *      *<p>      * The position passed must be a position returned by      * {@link RCFile.Writer#getLength()} when writing this file. To seek to an      * arbitrary position, use {@link RCFile.Reader#sync(long)}. In another      * words, the current seek can only seek to the end of the file. For other      * positions, use {@link RCFile.Reader#sync(long)}.      */
 specifier|public
 specifier|synchronized
 name|void
@@ -5367,6 +5368,22 @@ name|seek
 argument_list|(
 name|position
 argument_list|)
+expr_stmt|;
+block|}
+comment|/**      * Resets the values which determine if there are more rows in the buffer      *      * This can be used after one calls seek or sync, if one called next before that.      * Otherwise, the seek or sync will have no effect, it will continue to get rows from the      * buffer built up from the call to next.      */
+specifier|public
+specifier|synchronized
+name|void
+name|resetBuffer
+parameter_list|()
+block|{
+name|readRowsIndexInBuffer
+operator|=
+literal|0
+expr_stmt|;
+name|recordsNumInValBuffer
+operator|=
+literal|0
 expr_stmt|;
 block|}
 comment|/** Seek to the next sync mark past a given position. */
@@ -5621,7 +5638,7 @@ name|columnNumber
 argument_list|)
 return|;
 block|}
-comment|/**      * Read and return the next record length, potentially skipping over a sync      * block.      *       * @return the length of the next record or -1 if there is no next record      * @throws IOException      */
+comment|/**      * Read and return the next record length, potentially skipping over a sync      * block.      *      * @return the length of the next record or -1 if there is no next record      * @throws IOException      */
 specifier|private
 specifier|synchronized
 name|int
@@ -6161,7 +6178,7 @@ operator|new
 name|NonSyncDataInputBuffer
 argument_list|()
 decl_stmt|;
-comment|/**      * Fetch all data in the buffer for a given column. This is useful for      * columnar operators, which perform operations on an array data of one      * column. It should be used together with {@link #nextColumnsBatch()}.      * Calling getColumn() with not change the result of      * {@link #next(LongWritable)} and      * {@link #getCurrentRow(BytesRefArrayWritable)}.      *       * @param columnID      * @throws IOException      */
+comment|/**      * Fetch all data in the buffer for a given column. This is useful for      * columnar operators, which perform operations on an array data of one      * column. It should be used together with {@link #nextColumnsBatch()}.      * Calling getColumn() with not change the result of      * {@link #next(LongWritable)} and      * {@link #getCurrentRow(BytesRefArrayWritable)}.      *      * @param columnID      * @throws IOException      */
 specifier|public
 name|BytesRefArrayWritable
 name|getColumn
@@ -6400,7 +6417,7 @@ return|return
 name|rest
 return|;
 block|}
-comment|/**      * Read in next key buffer and throw any data in current key buffer and      * current value buffer. It will influence the result of      * {@link #next(LongWritable)} and      * {@link #getCurrentRow(BytesRefArrayWritable)}      *       * @return whether there still has records or not      * @throws IOException      */
+comment|/**      * Read in next key buffer and throw any data in current key buffer and      * current value buffer. It will influence the result of      * {@link #next(LongWritable)} and      * {@link #getCurrentRow(BytesRefArrayWritable)}      *      * @return whether there still has records or not      * @throws IOException      */
 specifier|public
 specifier|synchronized
 name|boolean
@@ -6424,7 +6441,7 @@ operator|>
 literal|0
 return|;
 block|}
-comment|/**      * Returns how many rows we fetched with next(). It only means how many rows      * are read by next(). The returned result may be smaller than actual number      * of rows passed by, because {@link #seek(long)},      * {@link #nextColumnsBatch()} can change the underlying key buffer and      * value buffer.      *       * @return next row number      * @throws IOException      */
+comment|/**      * Returns how many rows we fetched with next(). It only means how many rows      * are read by next(). The returned result may be smaller than actual number      * of rows passed by, because {@link #seek(long)},      * {@link #nextColumnsBatch()} can change the underlying key buffer and      * value buffer.      *      * @return next row number      * @throws IOException      */
 specifier|public
 specifier|synchronized
 name|boolean
@@ -6673,7 +6690,7 @@ operator|<
 name|recordsNumInValBuffer
 return|;
 block|}
-comment|/**      * get the current row used,make sure called {@link #next(LongWritable)}      * first.      *       * @throws IOException      */
+comment|/**      * get the current row used,make sure called {@link #next(LongWritable)}      * first.      *      * @throws IOException      */
 specifier|public
 specifier|synchronized
 name|void
