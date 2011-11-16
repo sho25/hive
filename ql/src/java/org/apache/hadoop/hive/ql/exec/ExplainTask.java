@@ -379,6 +379,16 @@ literal|null
 expr_stmt|;
 block|}
 comment|// Print out the parse AST
+if|if
+condition|(
+name|work
+operator|.
+name|getAstStringTree
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 name|String
 name|jsonAST
 init|=
@@ -423,6 +433,7 @@ argument_list|,
 name|jsonAST
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|JSONObject
 name|jsonDependencies
