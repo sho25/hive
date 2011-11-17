@@ -1684,7 +1684,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-specifier|private
+specifier|static
 name|void
 name|configureDebugVariablesForChildJVM
 parameter_list|(
