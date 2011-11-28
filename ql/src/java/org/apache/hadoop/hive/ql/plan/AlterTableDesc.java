@@ -194,6 +194,8 @@ block|,
 name|OFFLINE
 block|,
 name|READ_ONLY
+block|,
+name|NO_DROP_CASCADE
 block|}
 empty_stmt|;
 name|AlterTableTypes

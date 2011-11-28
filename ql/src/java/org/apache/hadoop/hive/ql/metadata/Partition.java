@@ -2819,6 +2819,14 @@ init|=
 name|getProtectMode
 argument_list|()
 decl_stmt|;
+name|ProtectMode
+name|parentMode
+init|=
+name|table
+operator|.
+name|getProtectMode
+argument_list|()
+decl_stmt|;
 return|return
 operator|(
 operator|!
@@ -2835,6 +2843,11 @@ operator|!
 name|mode
 operator|.
 name|readOnly
+operator|&&
+operator|!
+name|parentMode
+operator|.
+name|noDropCascade
 operator|)
 return|;
 block|}

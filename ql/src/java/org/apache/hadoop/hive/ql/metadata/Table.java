@@ -3898,6 +3898,11 @@ operator|!
 name|mode
 operator|.
 name|readOnly
+operator|&&
+operator|!
+name|mode
+operator|.
+name|noDropCascade
 operator|)
 return|;
 block|}
