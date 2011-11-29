@@ -254,7 +254,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDFBridge encapsulates UDF to provide the same interface as  * GenericUDF.  *   * Note that GenericUDFBridge implements Serializable because the name of the  * UDF class needs to be serialized with the plan.  *   */
+comment|/**  * GenericUDFBridge encapsulates UDF to provide the same interface as  * GenericUDF.  *  * Note that GenericUDFBridge implements Serializable because the name of the  * UDF class needs to be serialized with the plan.  *  */
 end_comment
 
 begin_class
@@ -287,7 +287,7 @@ comment|/**    * The underlying UDF class Name.    */
 name|String
 name|udfClassName
 decl_stmt|;
-comment|/**    * Greate a new GenericUDFBridge object.    *     * @param udfName    *          The name of the corresponding udf.    * @param isOperator    * @param udfClass    */
+comment|/**    * Greate a new GenericUDFBridge object.    *    * @param udfName    *          The name of the corresponding udf.    * @param isOperator    * @param udfClass    */
 specifier|public
 name|GenericUDFBridge
 parameter_list|(
@@ -858,6 +858,36 @@ name|toString
 argument_list|()
 return|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+index|[]
+name|getRequiredJars
+parameter_list|()
+block|{
+return|return
+name|udf
+operator|.
+name|getRequiredJars
+argument_list|()
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+index|[]
+name|getRequiredFiles
+parameter_list|()
+block|{
+return|return
+name|udf
+operator|.
+name|getRequiredFiles
+argument_list|()
+return|;
 block|}
 block|}
 end_class

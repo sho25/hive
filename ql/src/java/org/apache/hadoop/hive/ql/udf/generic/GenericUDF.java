@@ -223,7 +223,7 @@ specifier|public
 name|GenericUDF
 parameter_list|()
 block|{   }
-comment|/**    * Initialize this GenericUDF. This will be called once and only once per    * GenericUDF instance.    *     * @param arguments    *          The ObjectInspector for the arguments    * @throws UDFArgumentException    *           Thrown when arguments have wrong types, wrong length, etc.    * @return The ObjectInspector for the return value    */
+comment|/**    * Initialize this GenericUDF. This will be called once and only once per    * GenericUDF instance.    *    * @param arguments    *          The ObjectInspector for the arguments    * @throws UDFArgumentException    *           Thrown when arguments have wrong types, wrong length, etc.    * @return The ObjectInspector for the return value    */
 specifier|public
 specifier|abstract
 name|ObjectInspector
@@ -256,6 +256,25 @@ argument_list|(
 name|arguments
 argument_list|)
 decl_stmt|;
+comment|// If the UDF depends on any external resources, we can't fold because the
+comment|// resources may not be available at compile time.
+if|if
+condition|(
+name|getRequiredFiles
+argument_list|()
+operator|!=
+literal|null
+operator|||
+name|getRequiredJars
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+return|return
+name|oi
+return|;
+block|}
 name|boolean
 name|allConstant
 init|=
@@ -425,6 +444,27 @@ block|}
 block|}
 return|return
 name|oi
+return|;
+block|}
+comment|/**    * The following two functions can be overridden to automatically include    * additional resources required by this UDF.  The return types should be    * arrays of paths.    */
+specifier|public
+name|String
+index|[]
+name|getRequiredJars
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
+specifier|public
+name|String
+index|[]
+name|getRequiredFiles
+parameter_list|()
+block|{
+return|return
+literal|null
 return|;
 block|}
 comment|/**    * Evaluate the GenericUDF with the arguments.    *    * @param arguments    *          The arguments as DeferedObject, use DeferedObject.get() to get the    *          actual argument Object. The Objects can be inspected by the    *          ObjectInspectors passed in the initialize call.    * @return The    */

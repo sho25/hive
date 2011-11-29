@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A User-defined function (UDF) for the use with Hive.  *   * New UDF classes need to inherit from this UDF class.  *   * Required for all UDF classes: 1. Implement one or more methods named  * "evaluate" which will be called by Hive. The following are some examples:  * public int evaluate(); public int evaluate(int a); public double evaluate(int  * a, double b); public String evaluate(String a, int b, String c);  *   * "evaluate" should never be a void method. However it can return "null" if  * needed.  */
+comment|/**  * A User-defined function (UDF) for the use with Hive.  *  * New UDF classes need to inherit from this UDF class.  *  * Required for all UDF classes: 1. Implement one or more methods named  * "evaluate" which will be called by Hive. The following are some examples:  * public int evaluate(); public int evaluate(int a); public double evaluate(int  * a, double b); public String evaluate(String a, int b, String c);  *  * "evaluate" should never be a void method. However it can return "null" if  * needed.  */
 end_comment
 
 begin_class
@@ -90,7 +90,7 @@ operator|=
 name|rslv
 expr_stmt|;
 block|}
-comment|/**    * Sets the resolver.    *     * @param rslv    *          The method resolver to use for method resolution.    */
+comment|/**    * Sets the resolver.    *    * @param rslv    *          The method resolver to use for method resolution.    */
 specifier|public
 name|void
 name|setResolver
@@ -114,6 +114,27 @@ parameter_list|()
 block|{
 return|return
 name|rslv
+return|;
+block|}
+comment|/**    * These can be overriden to provide the same functionality as the    * correspondingly named methods in GenericUDF.    */
+specifier|public
+name|String
+index|[]
+name|getRequiredJars
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
+specifier|public
+name|String
+index|[]
+name|getRequiredFiles
+parameter_list|()
+block|{
+return|return
+literal|null
 return|;
 block|}
 block|}
