@@ -1551,7 +1551,12 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Could not find status of job: + rj.getJobID()"
+literal|"Could not find status of job:"
+operator|+
+name|rj
+operator|.
+name|getJobID
+argument_list|()
 argument_list|)
 throw|;
 block|}

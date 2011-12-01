@@ -81,6 +81,20 @@ end_import
 
 begin_import
 import|import
+name|javax
+operator|.
+name|security
+operator|.
+name|auth
+operator|.
+name|login
+operator|.
+name|LoginException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -207,41 +221,9 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|Hadoop20Shims
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
 name|HadoopShims
-import|;
-end_import
-
-begin_import
-import|import
-name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|Hadoop20Shims
-operator|.
-name|InputSplitShim
+name|JobTrackerState
 import|;
 end_import
 
@@ -257,7 +239,7 @@ name|hive
 operator|.
 name|thrift
 operator|.
-name|DelegationTokenSelector
+name|DelegationTokenSelector23
 import|;
 end_import
 
@@ -272,20 +254,6 @@ operator|.
 name|io
 operator|.
 name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|WritableComparable
 import|;
 end_import
 
@@ -569,6 +537,38 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|mapreduce
+operator|.
+name|task
+operator|.
+name|JobContextImpl
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapreduce
+operator|.
+name|task
+operator|.
+name|TaskAttemptContextImpl
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -666,13 +666,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implemention of shims against Hadoop 0.20.0.  */
+comment|/**  * Implemention of shims against Hadoop 0.23.0.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|Hadoop20SShims
+name|Hadoop23Shims
 implements|implements
 name|HadoopShims
 block|{
@@ -1446,8 +1446,6 @@ assert|assert
 operator|(
 name|split
 operator|instanceof
-name|Hadoop20Shims
-operator|.
 name|InputSplitShim
 operator|)
 assert|;
@@ -1620,7 +1618,7 @@ expr_stmt|;
 comment|// done processing so far
 block|}
 block|}
-comment|// if all chunks have been processed, nothing more to do.
+comment|// if all chunks have been processed or reached the length, nothing more to do.
 if|if
 condition|(
 name|idx
@@ -1954,14 +1952,10 @@ name|minSize
 argument_list|)
 expr_stmt|;
 block|}
-name|CombineFileSplit
+name|InputSplit
 index|[]
 name|splits
 init|=
-operator|(
-name|CombineFileSplit
-index|[]
-operator|)
 name|super
 operator|.
 name|getSplits
@@ -2008,6 +2002,9 @@ operator|=
 operator|new
 name|InputSplitShim
 argument_list|(
+operator|(
+name|CombineFileSplit
+operator|)
 name|splits
 index|[
 name|pos
@@ -2448,7 +2445,7 @@ name|conf
 operator|.
 name|setOutputCommitter
 argument_list|(
-name|Hadoop20Shims
+name|Hadoop23Shims
 operator|.
 name|NullOutputCommitter
 operator|.
@@ -2554,7 +2551,7 @@ argument_list|>
 name|tokenSelector
 init|=
 operator|new
-name|DelegationTokenSelector
+name|DelegationTokenSelector23
 argument_list|()
 decl_stmt|;
 name|Token
@@ -2621,7 +2618,7 @@ switch|switch
 condition|(
 name|clusterStatus
 operator|.
-name|getJobTrackerState
+name|getJobTrackerStatus
 argument_list|()
 condition|)
 block|{
@@ -2649,7 +2646,7 @@ literal|"Unrecognized JobTracker state: "
 operator|+
 name|clusterStatus
 operator|.
-name|getJobTrackerState
+name|getJobTrackerStatus
 argument_list|()
 decl_stmt|;
 throw|throw
@@ -2685,15 +2682,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapreduce
-operator|.
-name|TaskAttemptContext
+name|TaskAttemptContextImpl
 argument_list|(
 name|conf
 argument_list|,
@@ -2738,15 +2727,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapreduce
-operator|.
-name|JobContext
+name|JobContextImpl
 argument_list|(
 name|job
 operator|.
