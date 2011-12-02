@@ -485,6 +485,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_RAW_STORE_IMPL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_END_FUNCTION_LISTENERS
 block|,       }
 decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
@@ -1253,6 +1259,13 @@ argument_list|(
 literal|"javax.jdo.option.ConnectionUserName"
 argument_list|,
 literal|"APP"
+argument_list|)
+block|,
+name|METASTORE_END_FUNCTION_LISTENERS
+argument_list|(
+literal|"hive.metastore.end.function.listeners"
+argument_list|,
+literal|""
 argument_list|)
 block|,
 comment|// CLI
