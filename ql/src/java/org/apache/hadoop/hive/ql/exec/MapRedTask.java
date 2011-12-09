@@ -770,6 +770,8 @@ decl_stmt|;
 name|String
 name|addedJars
 init|=
+name|Utilities
+operator|.
 name|getResourceFiles
 argument_list|(
 name|conf
@@ -1049,6 +1051,8 @@ decl_stmt|;
 name|String
 name|files
 init|=
+name|Utilities
+operator|.
 name|getResourceFiles
 argument_list|(
 name|conf

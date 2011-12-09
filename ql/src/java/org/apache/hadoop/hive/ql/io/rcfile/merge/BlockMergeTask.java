@@ -1356,7 +1356,7 @@ decl_stmt|;
 name|String
 name|addedJars
 init|=
-name|ExecDriver
+name|Utilities
 operator|.
 name|getResourceFiles
 argument_list|(
