@@ -305,6 +305,18 @@ name|JSONObject
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|lang
+operator|.
+name|reflect
+operator|.
+name|InvocationTargetException
+import|;
+end_import
+
 begin_comment
 comment|/**  * ExplainTask implementation.  *  **/
 end_comment
@@ -1779,13 +1791,32 @@ block|{
 name|Object
 name|val
 init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|val
+operator|=
 name|m
 operator|.
 name|invoke
 argument_list|(
 name|work
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InvocationTargetException
+name|ex
+parameter_list|)
+block|{
+comment|// Ignore the exception, this may be caused by external jars
+name|val
+operator|=
+literal|null
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|val
