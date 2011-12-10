@@ -752,6 +752,15 @@ name|inputFile
 operator|=
 name|inputFile
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Processing file "
+operator|+
+name|inputFile
+argument_list|)
+expr_stmt|;
 name|initDone
 operator|=
 literal|true

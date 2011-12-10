@@ -2931,21 +2931,6 @@ name|inputFileChanged
 argument_list|()
 condition|)
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Processing path "
-operator|+
-name|this
-operator|.
-name|getExecContext
-argument_list|()
-operator|.
-name|getCurrentInputFile
-argument_list|()
-argument_list|)
-expr_stmt|;
 comment|// The child operators cleanup if input file has changed
 name|cleanUpInputFileChanged
 argument_list|()
