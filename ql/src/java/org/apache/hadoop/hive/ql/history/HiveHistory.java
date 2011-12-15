@@ -1019,7 +1019,7 @@ condition|(
 operator|!
 name|f
 operator|.
-name|mkdir
+name|mkdirs
 argument_list|()
 condition|)
 block|{
