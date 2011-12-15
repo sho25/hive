@@ -6099,6 +6099,12 @@ argument_list|(
 operator|new
 name|DDLWork
 argument_list|(
+name|getInputs
+argument_list|()
+argument_list|,
+name|getOutputs
+argument_list|()
+argument_list|,
 name|crtIndexDesc
 argument_list|)
 argument_list|,
