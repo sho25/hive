@@ -942,9 +942,9 @@ argument_list|)
 block|,
 comment|// run in local mode only if number of tasks (for map and reduce each) is
 comment|// less than this
-name|LOCALMODEMAXTASKS
+name|LOCALMODEMAXINPUTFILES
 argument_list|(
-literal|"hive.exec.mode.local.auto.tasks.max"
+literal|"hive.exec.mode.local.auto.input.files.max"
 argument_list|,
 literal|4
 argument_list|)

@@ -2604,7 +2604,7 @@ name|LOCALMODEMAXBYTES
 argument_list|)
 decl_stmt|;
 name|long
-name|maxTasks
+name|maxInputFiles
 init|=
 name|conf
 operator|.
@@ -2614,7 +2614,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LOCALMODEMAXTASKS
+name|LOCALMODEMAXINPUTFILES
 argument_list|)
 decl_stmt|;
 comment|// check for max input size
@@ -2655,7 +2655,7 @@ if|if
 condition|(
 name|inputFileCount
 operator|>
-name|maxTasks
+name|maxInputFiles
 condition|)
 block|{
 return|return
@@ -2669,13 +2669,13 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LOCALMODEMAXTASKS
+name|LOCALMODEMAXINPUTFILES
 operator|.
 name|varname
 operator|+
 literal|"(= "
 operator|+
-name|maxTasks
+name|maxInputFiles
 operator|+
 literal|")"
 return|;
