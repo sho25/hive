@@ -29,6 +29,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|ExplainTask
+operator|.
+name|EXPL_COLUMN_NAME
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|processors
 operator|.
 name|SetProcessor
@@ -990,6 +1010,82 @@ argument_list|(
 literal|"createStatement() on closed connection should throw exception"
 argument_list|,
 name|expectedException
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * verify 'explain ...' resultset    * @throws SQLException    */
+specifier|public
+name|void
+name|testExplainStmt
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+name|Statement
+name|stmt
+init|=
+name|con
+operator|.
+name|createStatement
+argument_list|()
+decl_stmt|;
+name|ResultSet
+name|res
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"explain select c1, c2, c3, c4, c5 as a, c6, c7, c8, c9, c10, c11, c12, "
+operator|+
+literal|"c1*2, sentences(null, null, null) as b from "
+operator|+
+name|dataTypeTableName
+operator|+
+literal|" limit 1"
+argument_list|)
+decl_stmt|;
+name|ResultSetMetaData
+name|md
+init|=
+name|res
+operator|.
+name|getMetaData
+argument_list|()
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|md
+operator|.
+name|getColumnCount
+argument_list|()
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+comment|// only one result column
+name|assertEquals
+argument_list|(
+name|md
+operator|.
+name|getColumnLabel
+argument_list|(
+literal|1
+argument_list|)
+argument_list|,
+name|EXPL_COLUMN_NAME
+argument_list|)
+expr_stmt|;
+comment|// verify the column name
+comment|//verify that there is data in the resultset
+name|assertTrue
+argument_list|(
+literal|"Nothing returned explain"
+argument_list|,
+name|res
+operator|.
+name|next
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
