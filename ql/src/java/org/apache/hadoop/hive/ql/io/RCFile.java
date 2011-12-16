@@ -581,6 +581,16 @@ name|TOLERATE_CORRUPTIONS_CONF_STR
 init|=
 literal|"hive.io.rcfile.tolerate.corruptions"
 decl_stmt|;
+comment|// HACK: We actually need BlockMissingException, but that is not available
+comment|// in all hadoop versions.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|BLOCK_MISSING_MESSAGE
+init|=
+literal|"Could not obtain block"
+decl_stmt|;
 comment|/*    * these header and Sync are kept from SequenceFile, for compatible of    * SequenceFile's format.    */
 specifier|private
 specifier|static
@@ -6581,69 +6591,68 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|EOFException
-name|eof
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Ignoring EOFException in file "
-operator|+
-name|file
-operator|+
-literal|" after offset "
-operator|+
-name|currentOffset
-argument_list|,
-name|eof
-argument_list|)
-expr_stmt|;
-name|ret
-operator|=
-operator|-
-literal|1
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ChecksumException
-name|ce
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Ignoring ChecksumException in file "
-operator|+
-name|file
-operator|+
-literal|" after offset "
-operator|+
-name|currentOffset
-argument_list|,
-name|ce
-argument_list|)
-expr_stmt|;
-name|ret
-operator|=
-operator|-
-literal|1
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
 name|IOException
 name|ioe
 parameter_list|)
 block|{
-comment|// We have an IOException other than EOF or ChecksumException
-comment|// This is likely a read-error, not corruption, re-throw.
+comment|// A BlockMissingException indicates a temporary error,
+comment|// not a corruption. Re-throw this exception.
+name|String
+name|msg
+init|=
+name|ioe
+operator|.
+name|getMessage
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|msg
+operator|!=
+literal|null
+operator|&&
+name|msg
+operator|.
+name|startsWith
+argument_list|(
+name|BLOCK_MISSING_MESSAGE
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Re-throwing block-missing exception"
+operator|+
+name|ioe
+argument_list|)
+expr_stmt|;
 throw|throw
 name|ioe
 throw|;
+block|}
+comment|// We have an IOException other than a BlockMissingException.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Ignoring IOException in file "
+operator|+
+name|file
+operator|+
+literal|" after offset "
+operator|+
+name|currentOffset
+argument_list|,
+name|ioe
+argument_list|)
+expr_stmt|;
+name|ret
+operator|=
+operator|-
+literal|1
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
