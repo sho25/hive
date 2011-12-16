@@ -12003,6 +12003,16 @@ argument_list|(
 name|funcs
 argument_list|)
 decl_stmt|;
+comment|// To remove the primitive types
+name|sortedFuncs
+operator|.
+name|removeAll
+argument_list|(
+name|Constants
+operator|.
+name|PrimitiveTypes
+argument_list|)
+expr_stmt|;
 name|Iterator
 argument_list|<
 name|String
