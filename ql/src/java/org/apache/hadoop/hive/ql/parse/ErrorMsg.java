@@ -799,6 +799,11 @@ name|PARTITION_COLUMN_NON_PRIMITIVE
 argument_list|(
 literal|"Partition column must be of primitive type."
 argument_list|)
+block|,
+name|INSERT_INTO_DYNAMICPARTITION_IFNOTEXISTS
+argument_list|(
+literal|"Dynamic partitions do not support IF NOT EXISTS. Specified partitions with value :"
+argument_list|)
 block|,       ;
 specifier|private
 name|String
