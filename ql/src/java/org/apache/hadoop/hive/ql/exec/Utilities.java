@@ -3306,11 +3306,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-name|addResourceFilesToClassPath
-argument_list|(
-name|conf
-argument_list|)
 argument_list|)
 decl_stmt|;
 try|try
@@ -3744,11 +3739,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-name|addResourceFilesToClassPath
-argument_list|(
-name|conf
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|QueryPlan
@@ -3896,11 +3886,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-name|addResourceFilesToClassPath
-argument_list|(
-name|conf
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|MapredWork
@@ -4048,11 +4033,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-name|addResourceFilesToClassPath
-argument_list|(
-name|conf
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|MapredLocalWork
@@ -11900,7 +11880,7 @@ parameter_list|(
 name|InterruptedException
 name|iex
 parameter_list|)
-block|{      	  }
+block|{          }
 block|}
 catch|catch
 parameter_list|(
@@ -12165,7 +12145,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Introducing a random factor to the wait time before another retry. 	 * The wait time is dependent on # of failures and a random factor. 	 * At the first time of getting an exception , the wait time 	 * is a random number between 0..baseWindow msec. If the first retry 	 * still fails, we will wait baseWindow msec grace period before the 2nd retry. 	 * Also at the second retry, the waiting window is expanded to 2*baseWindow msec 	 * alleviating the request rate from the server. Similarly the 3rd retry 	 * will wait 2*baseWindow msec. grace period before retry and the waiting window is 	 * expanded to 3*baseWindow msec and so on.    * @param baseWindow the base waiting window.    * @param failures number of failures so far.    * @param r a random generator.    * @return number of milliseconds for the next wait time.    */
+comment|/**    * Introducing a random factor to the wait time before another retry.    * The wait time is dependent on # of failures and a random factor.    * At the first time of getting an exception , the wait time    * is a random number between 0..baseWindow msec. If the first retry    * still fails, we will wait baseWindow msec grace period before the 2nd retry.    * Also at the second retry, the waiting window is expanded to 2*baseWindow msec    * alleviating the request rate from the server. Similarly the 3rd retry    * will wait 2*baseWindow msec. grace period before retry and the waiting window is    * expanded to 3*baseWindow msec and so on.    * @param baseWindow the base waiting window.    * @param failures number of failures so far.    * @param r a random generator.    * @return number of milliseconds for the next wait time.    */
 specifier|public
 specifier|static
 name|long
