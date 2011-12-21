@@ -3948,8 +3948,8 @@ operator|==
 literal|null
 condition|)
 block|{
-assert|assert
-operator|(
+if|if
+condition|(
 operator|!
 name|seenOps
 operator|.
@@ -3957,8 +3957,8 @@ name|contains
 argument_list|(
 name|currTopOp
 argument_list|)
-operator|)
-assert|;
+condition|)
+block|{
 name|seenOps
 operator|.
 name|add
@@ -3987,6 +3987,7 @@ argument_list|,
 name|ctx
 argument_list|)
 expr_stmt|;
+block|}
 name|opTaskMap
 operator|.
 name|put
@@ -3996,6 +3997,17 @@ argument_list|,
 name|currTask
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|rootTasks
+operator|.
+name|contains
+argument_list|(
+name|currTask
+argument_list|)
+condition|)
+block|{
 name|rootTasks
 operator|.
 name|add
@@ -4003,6 +4015,7 @@ argument_list|(
 name|currTask
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
