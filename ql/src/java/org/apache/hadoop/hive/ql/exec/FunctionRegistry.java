@@ -5359,6 +5359,15 @@ argument_list|)
 expr_stmt|;
 name|registerGenericUDF
 argument_list|(
+literal|"java_method"
+argument_list|,
+name|GenericUDFReflect
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|registerGenericUDF
+argument_list|(
 literal|"array"
 argument_list|,
 name|GenericUDFArray
