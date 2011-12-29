@@ -1381,6 +1381,13 @@ argument_list|,
 literal|0L
 argument_list|)
 block|,
+name|METASTORE_EXECUTE_SET_UGI
+argument_list|(
+literal|"hive.metastore.execute.setugi"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|METASTORE_MODE
 argument_list|(
 literal|"hive.metastore.local"

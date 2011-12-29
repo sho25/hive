@@ -49,6 +49,26 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|security
+operator|.
+name|PrivilegedExceptionAction
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -556,6 +576,40 @@ throws|throws
 name|LoginException
 throws|,
 name|IOException
+function_decl|;
+comment|/**    * Used by metastore server to perform requested rpc in client context.    * @param ugi    * @param pvea    * @throws IOException    * @throws InterruptedException    */
+specifier|public
+name|void
+name|doAs
+parameter_list|(
+name|UserGroupInformation
+name|ugi
+parameter_list|,
+name|PrivilegedExceptionAction
+argument_list|<
+name|Void
+argument_list|>
+name|pvea
+parameter_list|)
+throws|throws
+name|IOException
+throws|,
+name|InterruptedException
+function_decl|;
+comment|/**    * Used by metastore server to creates UGI object for a remote user.    * @param userName remote User Name    * @param groupNames group names associated with remote user name    * @return UGI created for the remote user.    */
+specifier|public
+name|UserGroupInformation
+name|createRemoteUser
+parameter_list|(
+name|String
+name|userName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|groupNames
+parameter_list|)
 function_decl|;
 comment|/**    * Get the short name corresponding to the subject in the passed UGI    *    * In secure versions of Hadoop, this returns the short name (after    * undergoing the translation in the kerberos name rule mapping).    * In unsecure versions of Hadoop, this returns the name of the subject    */
 specifier|public
