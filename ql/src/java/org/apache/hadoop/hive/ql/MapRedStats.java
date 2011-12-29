@@ -335,7 +335,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" Accumulative CPU: "
+literal|" Cumulative CPU: "
 operator|+
 operator|(
 name|cpuMSec
@@ -450,7 +450,7 @@ operator|+
 operator|(
 name|success
 condition|?
-literal|"SUCESS"
+literal|"SUCCESS"
 else|:
 literal|"FAIL"
 operator|)
