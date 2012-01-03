@@ -1706,11 +1706,11 @@ operator|)
 literal|0.5
 argument_list|)
 block|,
-name|HIVEMULTIGROUPBYSINGLEMR
+name|HIVEMULTIGROUPBYSINGLEREDUCER
 argument_list|(
-literal|"hive.multigroupby.singlemr"
+literal|"hive.multigroupby.singlereducer"
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 block|,
 comment|// for hive udtf operator
