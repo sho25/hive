@@ -8519,7 +8519,7 @@ name|tblPartLoc
 operator|=
 name|part
 operator|.
-name|getDataLocation
+name|getPartitionPath
 argument_list|()
 operator|.
 name|toString
@@ -8547,7 +8547,7 @@ name|tblPartLoc
 operator|=
 name|tblObj
 operator|.
-name|getDataLocation
+name|getPath
 argument_list|()
 operator|.
 name|toString
