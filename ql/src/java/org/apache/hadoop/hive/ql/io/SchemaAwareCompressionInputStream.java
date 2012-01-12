@@ -63,6 +63,12 @@ parameter_list|(
 name|InputStream
 name|in
 parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
 block|{
 name|super
 argument_list|(
