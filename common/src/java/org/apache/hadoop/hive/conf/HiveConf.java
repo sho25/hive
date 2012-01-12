@@ -2673,6 +2673,13 @@ literal|"hive.insert.into.multilevel.dirs"
 argument_list|,
 literal|false
 argument_list|)
+block|,
+name|HIVE_FILES_UMASK_VALUE
+argument_list|(
+literal|"hive.files.umask.vlaue"
+argument_list|,
+literal|0002
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final
