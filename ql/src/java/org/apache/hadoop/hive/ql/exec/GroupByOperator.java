@@ -4984,7 +4984,7 @@ literal|null
 expr_stmt|;
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"Hash Table completed flushed"
 argument_list|)
@@ -5001,7 +5001,7 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"Hash Tbl flush: #hash table = "
 operator|+
@@ -5094,7 +5094,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"Hash Table flushed: new size = "
 operator|+
@@ -5398,7 +5398,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"Begin Hash Table flush at close: size = "
 operator|+

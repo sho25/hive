@@ -675,7 +675,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Warning. Invalid statistic: "
+literal|"Invalid statistic: "
 operator|+
 name|statType
 operator|+

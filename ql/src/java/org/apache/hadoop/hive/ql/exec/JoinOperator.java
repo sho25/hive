@@ -576,13 +576,12 @@ operator|==
 name|nextSz
 condition|)
 block|{
-comment|// Output a warning if we reached at least 1000 rows for a join
-comment|// operand
-comment|// We won't output a warning for the last join operand since the size
+comment|// Print a message if we reached at least 1000 rows for a join operand
+comment|// We won't print a message for the last join operand since the size
 comment|// will never goes to joinEmitInterval.
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"table "
 operator|+

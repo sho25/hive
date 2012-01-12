@@ -712,7 +712,7 @@ literal|true
 expr_stmt|;
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"Missing fields! Expected "
 operator|+

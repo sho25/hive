@@ -729,7 +729,24 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Warning. Invalid statistic."
+literal|"Invalid statistic:"
+operator|+
+name|stats
+operator|.
+name|keySet
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|", supported "
+operator|+
+literal|" stats: "
+operator|+
+name|JDBCStatsUtils
+operator|.
+name|getSupportedStatistics
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
