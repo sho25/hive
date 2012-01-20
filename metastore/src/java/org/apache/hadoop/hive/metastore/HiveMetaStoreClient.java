@@ -3690,6 +3690,8 @@ throws|throws
 name|MetaException
 throws|,
 name|TException
+throws|,
+name|NoSuchObjectException
 block|{
 return|return
 name|client

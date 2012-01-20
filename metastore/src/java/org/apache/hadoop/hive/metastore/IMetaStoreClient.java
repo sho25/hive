@@ -993,6 +993,8 @@ throws|throws
 name|MetaException
 throws|,
 name|TException
+throws|,
+name|NoSuchObjectException
 function_decl|;
 comment|/**    * Get list of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
 specifier|public

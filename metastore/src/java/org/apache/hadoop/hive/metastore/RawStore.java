@@ -1621,6 +1621,8 @@ name|max_parts
 parameter_list|)
 throws|throws
 name|MetaException
+throws|,
+name|NoSuchObjectException
 function_decl|;
 comment|/**    * Lists partitions that match a given partial specification and sets their auth privileges.    *   If userName and groupNames null, then no auth privileges are set.    * @param db_name    *          The name of the database which has the partitions    * @param tbl_name    *          The name of the table which has the partitions    * @param part_vals    *          A partial list of values for partitions in order of the table's partition keys    *          Entries can be empty if you need to specify latter partitions.    * @param max_parts    *          The maximum number of partitions to return    * @param userName    *          The user name for the partition for authentication privileges    * @param groupNames    *          The groupNames for the partition for authentication privileges    * @return A list of partitions that match the partial spec.    * @throws MetaException    * @throws NoSuchObjectException    * @throws InvalidObjectException    */
 specifier|public
@@ -1659,6 +1661,8 @@ throws|throws
 name|MetaException
 throws|,
 name|InvalidObjectException
+throws|,
+name|NoSuchObjectException
 function_decl|;
 specifier|public
 specifier|abstract

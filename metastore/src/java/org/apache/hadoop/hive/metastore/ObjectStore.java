@@ -8150,7 +8150,7 @@ return|return
 name|pns
 return|;
 block|}
-comment|/**    * Retrieves a Collection of partition-related results from the database that match    *  the partial specification given for a specific table.    * @param dbName the name of the database    * @param tableName the name of the table    * @param part_vals the partial specification values    * @param max_parts the maximum number of partitions to return    * @param resultsCol the metadata column of the data to return, e.g. partitionName, etc.    *        if resultsCol is empty or null, a collection of MPartition objects is returned    * @results A Collection of partition-related items from the db that match the partial spec    *          for a table.  The type of each item in the collection corresponds to the column    *          you want results for.  E.g., if resultsCol is partitionName, the Collection    *          has types of String, and if resultsCol is null, the types are MPartition.    */
+comment|/**    * Retrieves a Collection of partition-related results from the database that match    *  the partial specification given for a specific table.    * @param dbName the name of the database    * @param tableName the name of the table    * @param part_vals the partial specification values    * @param max_parts the maximum number of partitions to return    * @param resultsCol the metadata column of the data to return, e.g. partitionName, etc.    *        if resultsCol is empty or null, a collection of MPartition objects is returned    * @throws NoSuchObjectException    * @results A Collection of partition-related items from the db that match the partial spec    *          for a table.  The type of each item in the collection corresponds to the column    *          you want results for.  E.g., if resultsCol is partitionName, the Collection    *          has types of String, and if resultsCol is null, the types are MPartition.    */
 specifier|private
 name|Collection
 name|getPartitionPsQueryResults
@@ -8175,6 +8175,8 @@ name|resultsCol
 parameter_list|)
 throws|throws
 name|MetaException
+throws|,
+name|NoSuchObjectException
 block|{
 name|dbName
 operator|=
@@ -8206,6 +8208,27 @@ argument_list|,
 name|tableName
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|table
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|NoSuchObjectException
+argument_list|(
+name|dbName
+operator|+
+literal|"."
+operator|+
+name|tableName
+operator|+
+literal|" table not found"
+argument_list|)
+throw|;
+block|}
 name|List
 argument_list|<
 name|FieldSchema
@@ -8438,6 +8461,8 @@ throws|throws
 name|MetaException
 throws|,
 name|InvalidObjectException
+throws|,
+name|NoSuchObjectException
 block|{
 name|List
 argument_list|<
@@ -8645,6 +8670,8 @@ name|max_parts
 parameter_list|)
 throws|throws
 name|MetaException
+throws|,
+name|NoSuchObjectException
 block|{
 name|List
 argument_list|<
