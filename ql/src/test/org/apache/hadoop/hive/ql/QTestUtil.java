@@ -2409,7 +2409,10 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|db
+name|Hive
+operator|.
+name|get
+argument_list|()
 operator|.
 name|setCurrentDatabase
 argument_list|(
