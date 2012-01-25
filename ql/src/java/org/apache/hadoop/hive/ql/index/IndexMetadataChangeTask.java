@@ -436,7 +436,7 @@ name|Path
 argument_list|(
 name|part
 operator|.
-name|getDataLocation
+name|getPartitionPath
 argument_list|()
 operator|.
 name|toString
@@ -508,7 +508,7 @@ name|Path
 argument_list|(
 name|tbl
 operator|.
-name|getDataLocation
+name|getPath
 argument_list|()
 operator|.
 name|toString

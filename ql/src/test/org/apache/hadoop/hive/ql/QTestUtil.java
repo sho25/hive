@@ -5547,6 +5547,8 @@ literal|".*lastUpdateTime.*"
 block|,
 literal|".*lastAccessTime.*"
 block|,
+literal|".*lastModifiedTime.*"
+block|,
 literal|".*[Oo]wner.*"
 block|,
 literal|".*CreateTime.*"

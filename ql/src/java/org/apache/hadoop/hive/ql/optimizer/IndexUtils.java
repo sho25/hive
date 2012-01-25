@@ -622,6 +622,17 @@ name|getUnknownPartns
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|queryPartitions
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 for|for
 control|(
 name|Partition
