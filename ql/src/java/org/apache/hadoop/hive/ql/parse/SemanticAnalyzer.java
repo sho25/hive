@@ -20539,7 +20539,7 @@ name|getReduceValuesForReduceSinkNoMapAgg
 argument_list|(
 name|parseInfo
 argument_list|,
-name|dest
+name|destination
 argument_list|,
 name|reduceSinkInputRowResolver
 argument_list|,
