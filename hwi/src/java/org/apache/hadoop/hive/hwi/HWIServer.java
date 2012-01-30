@@ -322,7 +322,10 @@ name|fatal
 argument_list|(
 literal|"HWI WAR file not found at "
 operator|+
-name|hwiWAR
+name|hwiWARFile
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|System
