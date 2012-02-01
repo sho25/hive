@@ -1334,7 +1334,7 @@ name|METASTORE_CACHE_LEVEL2_TYPE
 argument_list|(
 literal|"datanucleus.cache.level2.type"
 argument_list|,
-literal|"SOFT"
+literal|"none"
 argument_list|)
 block|,
 name|METASTORE_IDENTIFIER_FACTORY
