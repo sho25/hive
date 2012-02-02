@@ -8691,11 +8691,16 @@ name|ctx
 operator|.
 name|getExternalTmpFileURI
 argument_list|(
+operator|(
 operator|new
-name|URI
+name|Path
 argument_list|(
 name|tblPartLoc
 argument_list|)
+operator|)
+operator|.
+name|toUri
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|mergeDesc
