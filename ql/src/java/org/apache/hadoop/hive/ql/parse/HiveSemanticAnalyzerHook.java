@@ -57,6 +57,24 @@ name|Task
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|hooks
+operator|.
+name|Hook
+import|;
+end_import
+
 begin_comment
 comment|/**  * HiveSemanticAnalyzerHook allows Hive to be extended with custom  * logic for semantic analysis of QL statements.  This interface  * and any Hive internals it exposes are currently  * "limited private and evolving" (unless otherwise stated elsewhere)  * and intended mainly for use by the Howl project.  *  *<p>  *  * Note that the lifetime of an instantiated hook object is scoped to  * the analysis of a single statement; hook instances are never reused.  */
 end_comment
@@ -65,6 +83,8 @@ begin_interface
 specifier|public
 interface|interface
 name|HiveSemanticAnalyzerHook
+extends|extends
+name|Hook
 block|{
 comment|/**    * Invoked before Hive performs its own semantic analysis on    * a statement.  The implementation may inspect the statement AST and    * prevent its execution by throwing a SemanticException.    * Optionally, it may also augment/rewrite the AST, but must produce    * a form equivalent to one which could have    * been returned directly from Hive's own parser.    *    * @param context context information for semantic analysis    *    * @param ast AST being analyzed and optionally rewritten    *    * @return replacement AST (typically the same as the original AST unless the    * entire tree had to be replaced; must not be null)    */
 specifier|public
