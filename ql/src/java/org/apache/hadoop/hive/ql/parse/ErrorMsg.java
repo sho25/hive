@@ -439,6 +439,11 @@ operator|+
 literal|"table is partitioned"
 argument_list|)
 block|,
+name|USE_DEFAULT_REGION
+argument_list|(
+literal|"Only default region can be used"
+argument_list|)
+block|,
 name|CTAS_CTLT_COEXISTENCE
 argument_list|(
 literal|"Create table command does not allow LIKE and AS-SELECT in "

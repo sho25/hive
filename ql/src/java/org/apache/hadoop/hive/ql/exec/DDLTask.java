@@ -20370,6 +20370,16 @@ return|return
 name|rc
 return|;
 block|}
+name|tbl
+operator|.
+name|setPrimaryRegionName
+argument_list|(
+name|crtTbl
+operator|.
+name|getPrimaryRegionName
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// create the table
 name|db
 operator|.
