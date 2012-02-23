@@ -101,6 +101,26 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|HiveAuthorizationProvider
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapred
 operator|.
 name|InputFormat
@@ -170,6 +190,14 @@ specifier|public
 name|HiveMetaHook
 name|getMetaHook
 parameter_list|()
+function_decl|;
+comment|/**    * Returns the implementation specific authorization provider    *    * @return authorization provider    * @throws HiveException    */
+specifier|public
+name|HiveAuthorizationProvider
+name|getAuthorizationProvider
+parameter_list|()
+throws|throws
+name|HiveException
 function_decl|;
 comment|/**    * Configures properties for a job based on the definition of the    * source or target table it accesses.    *    * @param tableDesc descriptor for the table being accessed    *    * @param jobProperties receives properties copied or transformed    * from the table properties    */
 specifier|public
