@@ -2704,7 +2704,7 @@ argument_list|)
 block|,
 name|HIVE_FILES_UMASK_VALUE
 argument_list|(
-literal|"hive.files.umask.vlaue"
+literal|"hive.files.umask.value"
 argument_list|,
 literal|0002
 argument_list|)
