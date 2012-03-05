@@ -321,8 +321,13 @@ parameter_list|,
 name|Configuration
 name|conf
 parameter_list|,
+name|Class
+argument_list|<
+name|?
+extends|extends
 name|RawStore
-name|base
+argument_list|>
+name|rawStoreClass
 parameter_list|,
 name|int
 name|id
@@ -332,12 +337,6 @@ name|MetaException
 block|{
 name|this
 operator|.
-name|base
-operator|=
-name|base
-expr_stmt|;
-name|this
-operator|.
 name|conf
 operator|=
 name|conf
@@ -354,8 +353,25 @@ name|id
 operator|=
 name|id
 expr_stmt|;
+comment|// This has to be called before initializing the instance of RawStore
 name|init
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|base
+operator|=
+operator|(
+name|RawStore
+operator|)
+name|ReflectionUtils
+operator|.
+name|newInstance
+argument_list|(
+name|rawStoreClass
+argument_list|,
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -369,8 +385,8 @@ parameter_list|,
 name|Configuration
 name|conf
 parameter_list|,
-name|RawStore
-name|base
+name|String
+name|rawStoreClassName
 parameter_list|,
 name|int
 name|id
@@ -378,6 +394,29 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+name|Class
+argument_list|<
+name|?
+extends|extends
+name|RawStore
+argument_list|>
+name|baseClass
+init|=
+operator|(
+name|Class
+argument_list|<
+name|?
+extends|extends
+name|RawStore
+argument_list|>
+operator|)
+name|MetaStoreUtils
+operator|.
+name|getClass
+argument_list|(
+name|rawStoreClassName
+argument_list|)
+decl_stmt|;
 name|RetryingRawStore
 name|handler
 init|=
@@ -388,7 +427,7 @@ name|hiveConf
 argument_list|,
 name|conf
 argument_list|,
-name|base
+name|baseClass
 argument_list|,
 name|id
 argument_list|)
@@ -408,10 +447,7 @@ operator|.
 name|getClassLoader
 argument_list|()
 argument_list|,
-name|base
-operator|.
-name|getClass
-argument_list|()
+name|baseClass
 operator|.
 name|getInterfaces
 argument_list|()
@@ -458,11 +494,12 @@ name|METASTOREATTEMPTS
 argument_list|)
 expr_stmt|;
 comment|// Using the hook on startup ensures that the hook always has priority
-comment|// over settings in *.xml. We can use hiveConf as only a single thread
-comment|// will be calling the constructor.
+comment|// over settings in *.xml.  The thread local conf needs to be used because at this point
+comment|// it has already been initialized using hiveConf.
 name|updateConnectionURL
 argument_list|(
-name|hiveConf
+name|getConf
+argument_list|()
 argument_list|,
 literal|null
 argument_list|)
