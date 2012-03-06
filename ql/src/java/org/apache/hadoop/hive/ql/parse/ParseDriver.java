@@ -1384,6 +1384,15 @@ name|xlateMap
 operator|.
 name|put
 argument_list|(
+literal|"EQUAL_NS"
+argument_list|,
+literal|"<=>"
+argument_list|)
+expr_stmt|;
+name|xlateMap
+operator|.
+name|put
+argument_list|(
 literal|"LESSTHANOREQUALTO"
 argument_list|,
 literal|"<="
