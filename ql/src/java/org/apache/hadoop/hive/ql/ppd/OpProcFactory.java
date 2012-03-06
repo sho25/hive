@@ -4562,6 +4562,15 @@ argument_list|)
 expr_stmt|;
 name|Utilities
 operator|.
+name|setColumnTypeList
+argument_list|(
+name|jobConf
+argument_list|,
+name|tableScanOp
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
 name|copyTableJobPropertiesToConf
 argument_list|(
 name|Utilities

@@ -1947,10 +1947,19 @@ condition|)
 block|{
 return|return;
 block|}
-comment|// construct column name list for reference by filter push down
+comment|// construct column name list and types for reference by filter push down
 name|Utilities
 operator|.
 name|setColumnNameList
+argument_list|(
+name|jobConf
+argument_list|,
+name|tableScan
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|setColumnTypeList
 argument_list|(
 name|jobConf
 argument_list|,
