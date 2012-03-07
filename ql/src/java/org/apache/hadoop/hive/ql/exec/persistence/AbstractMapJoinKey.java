@@ -132,7 +132,11 @@ specifier|public
 specifier|abstract
 name|boolean
 name|hasAnyNulls
-parameter_list|()
+parameter_list|(
+name|boolean
+index|[]
+name|nullsafes
+parameter_list|)
 function_decl|;
 block|}
 end_class

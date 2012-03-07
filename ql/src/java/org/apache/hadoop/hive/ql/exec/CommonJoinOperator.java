@@ -644,6 +644,12 @@ name|JoinCondDesc
 index|[]
 name|condn
 decl_stmt|;
+specifier|protected
+specifier|transient
+name|boolean
+index|[]
+name|nullsafes
+decl_stmt|;
 specifier|public
 specifier|transient
 name|boolean
@@ -1310,6 +1316,13 @@ operator|=
 name|conf
 operator|.
 name|getConds
+argument_list|()
+expr_stmt|;
+name|nullsafes
+operator|=
+name|conf
+operator|.
+name|getNullSafes
 argument_list|()
 expr_stmt|;
 name|noOuterJoin

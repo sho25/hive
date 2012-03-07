@@ -2400,6 +2400,17 @@ literal|null
 condition|)
 block|{
 return|return
+name|nullsafes
+operator|!=
+literal|null
+operator|&&
+name|nullsafes
+index|[
+name|i
+index|]
+condition|?
+literal|0
+else|:
 operator|-
 literal|1
 return|;

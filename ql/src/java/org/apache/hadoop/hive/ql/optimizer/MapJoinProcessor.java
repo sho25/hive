@@ -3280,6 +3280,16 @@ argument_list|(
 name|tagOrder
 argument_list|)
 expr_stmt|;
+name|mapJoinDescriptor
+operator|.
+name|setNullSafes
+argument_list|(
+name|desc
+operator|.
+name|getNullSafes
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|MapJoinOperator
 name|mapJoinOp
 init|=

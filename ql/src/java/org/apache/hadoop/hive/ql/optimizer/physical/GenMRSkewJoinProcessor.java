@@ -2054,6 +2054,16 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+name|mapJoinDescriptor
+operator|.
+name|setNullSafes
+argument_list|(
+name|joinDescriptor
+operator|.
+name|getNullSafes
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|MapredLocalWork
 name|localPlan
 init|=

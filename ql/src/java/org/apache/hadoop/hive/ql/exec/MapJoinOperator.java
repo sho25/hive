@@ -1627,7 +1627,9 @@ operator|||
 name|key
 operator|.
 name|hasAnyNulls
-argument_list|()
+argument_list|(
+name|nullsafes
+argument_list|)
 condition|)
 block|{
 if|if
