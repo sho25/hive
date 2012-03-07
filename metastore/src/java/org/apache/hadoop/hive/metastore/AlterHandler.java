@@ -186,7 +186,7 @@ name|InvalidOperationException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * handles alter partition    *    * @param msdb    *          object to get metadata    * @param wh    * @param dbname    *          database of the partition being altered    * @param name    *          table of the partition being altered    * @param part_vals    *          original values of the partition being altered    * @param new_part    *          new partition object    * @return    * @throws InvalidOperationException    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    */
+comment|/**    * handles alter partition    *    * @param msdb    *          object to get metadata    * @param wh    * @param dbname    *          database of the partition being altered    * @param name    *          table of the partition being altered    * @param part_vals    *          original values of the partition being altered    * @param new_part    *          new partition object    * @return the altered partition    * @throws InvalidOperationException    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    */
 specifier|public
 specifier|abstract
 name|Partition

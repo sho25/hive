@@ -188,7 +188,7 @@ specifier|public
 name|MapJoinDoubleKeys
 parameter_list|()
 block|{   }
-comment|/**    * @param metadataTag    * @param obj    */
+comment|/**    * @param obj1    * @param obj2    */
 specifier|public
 name|MapJoinDoubleKeys
 parameter_list|(
@@ -671,7 +671,7 @@ return|return
 name|obj1
 return|;
 block|}
-comment|/**    * @param obj    *          the obj to set    */
+comment|/**    * @param obj1    *          the obj to set    */
 specifier|public
 name|void
 name|setObj1
@@ -697,7 +697,7 @@ return|return
 name|obj2
 return|;
 block|}
-comment|/**    * @param obj    *          the obj to set    */
+comment|/**    * @param obj2    *          the obj to set    */
 specifier|public
 name|void
 name|setObj2

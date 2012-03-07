@@ -387,7 +387,7 @@ operator|=
 name|createDatabaseDesc
 expr_stmt|;
 block|}
-comment|/**    * @param dropDatabaseDesc    *          Drop Database descriptor    */
+comment|/**    * @param inputs    * @param outputs    * @param descDatabaseDesc Database descriptor    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -1107,7 +1107,7 @@ operator|=
 name|renamePartitionDesc
 expr_stmt|;
 block|}
-comment|/**    * @param touchDesc    *          information about the table/partitions that we want to touch    */
+comment|/**    * @param inputs    * @param outputs    * @param simpleDesc    */
 specifier|public
 name|DDLWork
 parameter_list|(
@@ -1617,7 +1617,7 @@ return|return
 name|alterIndexDesc
 return|;
 block|}
-comment|/**    * @param alterTblDesc    *          the alterTblDesc to set    */
+comment|/**    * @param alterIndexDesc    *          the alterIndexDesc to set    */
 specifier|public
 name|void
 name|setAlterIndexDesc
@@ -2447,7 +2447,6 @@ operator|=
 name|revokeDesc
 expr_stmt|;
 block|}
-comment|/**    * @return    */
 specifier|public
 name|GrantRevokeRoleDDL
 name|getGrantRevokeRoleDDL

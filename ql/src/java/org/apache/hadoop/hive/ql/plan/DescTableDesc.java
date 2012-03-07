@@ -251,7 +251,7 @@ return|return
 name|isFormatted
 return|;
 block|}
-comment|/**    * @param isFormatted    *          the isFormat to set    */
+comment|/**    * @param isFormat    *          the isFormat to set    */
 specifier|public
 name|void
 name|setFormatted

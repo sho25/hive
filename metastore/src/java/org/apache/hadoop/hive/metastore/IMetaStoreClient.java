@@ -527,7 +527,7 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Get a list of table names that match a filter.    * The filter operators are LIKE,<,<=,>,>=, =,<>    *    * In the filter statement, values interpreted as strings must be enclosed in quotes,    * while values interpreted as integers should not be.  Strings and integers are the only    * supported value types.    *    * The currently supported key names in the filter are:    * Constants.HIVE_FILTER_FIELD_OWNER, which filters on the tables' owner's name    *   and supports all filter operators    * Constants.HIVE_FILTER_FIELD_LAST_ACCESS, which filters on the last access times    *   and supports all filter operators except LIKE    * Constants.HIVE_FILTER_FIELD_PARAMS, which filters on the tables' parameter keys and values    *   and only supports the filter operators = and<>.    *   Append the parameter key name to HIVE_FILTER_FIELD_PARAMS in the filter statement.    *   For example, to filter on parameter keys called "retention", the key name in the filter    *   statement should be Constants.HIVE_FILTER_FIELD_PARAMS + "retention"    *   Also, = and<> only work for keys that exist in the tables.    *   E.g., filtering on tables where key1<> value will only    *   return tables that have a value for the parameter key1.    * Some example filter statements include:    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " like \".*test.*\" and " +    *   Constants.HIVE_FILTER_FIELD_LAST_ACCESS + " = 0";    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " = \"test_user\" and (" +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"30\" or " +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"90\")"    *    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filterType    *          The type of filter    * @param filter    *          The filter string    * @param max_tables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    */
+comment|/**    * Get a list of table names that match a filter.    * The filter operators are LIKE,<,<=,>,>=, =,<>    *    * In the filter statement, values interpreted as strings must be enclosed in quotes,    * while values interpreted as integers should not be.  Strings and integers are the only    * supported value types.    *    * The currently supported key names in the filter are:    * Constants.HIVE_FILTER_FIELD_OWNER, which filters on the tables' owner's name    *   and supports all filter operators    * Constants.HIVE_FILTER_FIELD_LAST_ACCESS, which filters on the last access times    *   and supports all filter operators except LIKE    * Constants.HIVE_FILTER_FIELD_PARAMS, which filters on the tables' parameter keys and values    *   and only supports the filter operators = and<>.    *   Append the parameter key name to HIVE_FILTER_FIELD_PARAMS in the filter statement.    *   For example, to filter on parameter keys called "retention", the key name in the filter    *   statement should be Constants.HIVE_FILTER_FIELD_PARAMS + "retention"    *   Also, = and<> only work for keys that exist in the tables.    *   E.g., filtering on tables where key1<> value will only    *   return tables that have a value for the parameter key1.    * Some example filter statements include:    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " like \".*test.*\" and " +    *   Constants.HIVE_FILTER_FIELD_LAST_ACCESS + " = 0";    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " = \"test_user\" and (" +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"30\" or " +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"90\")"    *    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filter    *          The filter string    * @param maxTables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    */
 specifier|public
 name|List
 argument_list|<
@@ -667,7 +667,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get a Database Object    * @param databaseName  name of the database to fetch    * @return    * @throws NoSuchObjectException The database does not exist    * @throws MetaException Could not fetch the database    * @throws TException A thrift communication error occurred    */
+comment|/**    * Get a Database Object    * @param databaseName  name of the database to fetch    * @return the database    * @throws NoSuchObjectException The database does not exist    * @throws MetaException Could not fetch the database    * @throws TException A thrift communication error occurred    */
 specifier|public
 name|Database
 name|getDatabase
@@ -858,7 +858,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param dbName    * @param tableName    * @param pvals    * @param userName    * @param groupNames    * @return    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
+comment|/**    * @param dbName    * @param tableName    * @param pvals    * @param userName    * @param groupNames    * @return the partition    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
 specifier|public
 name|Partition
 name|getPartitionWithAuthInfo
@@ -1023,7 +1023,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param dbName    * @param tableName    * @param s    * @param userName    * @param groupNames    * @return    * @throws NoSuchObjectException    */
+comment|/**    * @param dbName    * @param tableName    * @param s    * @param userName    * @param groupNames    * @return the list of partitions    * @throws NoSuchObjectException    */
 specifier|public
 name|List
 argument_list|<
@@ -1083,7 +1083,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param dbName    * @param tableName    * @param partialPvals    * @param s    * @param userName    * @param groupNames    * @return    * @throws NoSuchObjectException    */
+comment|/**    * @param dbName    * @param tableName    * @param partialPvals    * @param s    * @param userName    * @param groupNames    * @return the list of paritions    * @throws NoSuchObjectException    */
 specifier|public
 name|List
 argument_list|<
@@ -1574,7 +1574,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    *    * @param dbName    * @param tblName    * @param indexName    * @return    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
+comment|/**    *    * @param dbName    * @param tblName    * @param indexName    * @return the index    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
 specifier|public
 name|Index
 name|getIndex
@@ -1597,7 +1597,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * list indexes of the give base table    * @param db_name    * @param tbl_name    * @param max    * @return    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
+comment|/**    * list indexes of the give base table    * @param db_name    * @param tbl_name    * @param max    * @return the list of indexes    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<
@@ -1621,7 +1621,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * list all the index names of the give base table.    *    * @param db_name    * @param tbl_name    * @param max    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * list all the index names of the give base table.    *    * @param db_name    * @param tbl_name    * @param max    * @return the list of names    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<
@@ -1643,7 +1643,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param db_name    * @param tbl_name    * @param name index name    * @param deleteData    * @return    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
+comment|/**    * @param db_name    * @param tbl_name    * @param name index name    * @param deleteData    * @return true on success    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|dropIndex
@@ -1667,7 +1667,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param Role    *          role object    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param role    *          role object    * @return true on success    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|create_role
@@ -1680,7 +1680,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param role_name    *          role name    * @param db_name    *    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param role_name    *          role name    *    * @return true on success    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|drop_role
@@ -1693,7 +1693,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * list all role names    * @return    * @throws TException    * @throws MetaException    */
+comment|/**    * list all role names    * @return list of names    * @throws TException    * @throws MetaException    */
 specifier|public
 name|List
 argument_list|<
@@ -1706,7 +1706,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    *    * @param role_name    * @param user_name    * @param principalType    * @param grantor    * @param grantorType    * @param grantOption    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    *    * @param role_name    * @param user_name    * @param principalType    * @param grantor    * @param grantorType    * @param grantOption    * @return true on success    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|grant_role
@@ -1734,7 +1734,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param role_name    *          role name    * @param user_name    *          user name    * @param principalType    * @param db_name    *    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param role_name    *          role name    * @param user_name    *          user name    * @param principalType    *    * @return true on success    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|revoke_role
@@ -1753,7 +1753,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    *    * @param principalName    * @param principalType    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    *    * @param principalName    * @param principalType    * @return list of roles    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<
@@ -1772,7 +1772,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param hiveObject    * @param user_name    * @param group_names    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param hiveObject    * @param user_name    * @param group_names    * @return the privilege set    * @throws MetaException    * @throws TException    */
 specifier|public
 name|PrincipalPrivilegeSet
 name|get_privilege_set
@@ -1794,7 +1794,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param principal_name    * @param principal_type    * @param hiveObject    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param principal_name    * @param principal_type    * @param hiveObject    * @return list of privileges    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<
@@ -1816,7 +1816,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param privileges    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param privileges    * @return true on success    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|grant_privileges
@@ -1829,7 +1829,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param privileges    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param privileges    * @return true on success    * @throws MetaException    * @throws TException    */
 specifier|public
 name|boolean
 name|revoke_privileges
@@ -1842,7 +1842,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param owner the intended owner for the token    * @param renewerKerberosPrincipalName    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param owner the intended owner for the token    * @param renewerKerberosPrincipalName    * @return the string of the token    * @throws MetaException    * @throws TException    */
 specifier|public
 name|String
 name|getDelegationToken
@@ -1858,7 +1858,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param tokenStrForm    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * @param tokenStrForm    * @return the new expiration time    * @throws MetaException    * @throws TException    */
 specifier|public
 name|long
 name|renewDelegationToken

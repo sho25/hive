@@ -1079,7 +1079,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Determines whether a partition has been archived    *    * @param p    * @return    */
+comment|/**    * Determines whether a partition has been archived    *    * @param p    * @return is it archived?    */
 specifier|public
 specifier|static
 name|boolean
@@ -1226,7 +1226,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Get a prefix of the given parition's string representation. The sencond    * argument, level, is used for the prefix length. For example, partition    * (ds='2010-01-01', hr='00', min='00'), level 1 will reture 'ds=2010-01-01',    * and level 2 will return 'ds=2010-01-01/hr=00'.    *     * @param p    *          partition object    * @param level    *          level for prefix depth    * @return    * @throws HiveException    */
+comment|/**    * Get a prefix of the given parition's string representation. The sencond    * argument, level, is used for the prefix length. For example, partition    * (ds='2010-01-01', hr='00', min='00'), level 1 will reture 'ds=2010-01-01',    * and level 2 will return 'ds=2010-01-01/hr=00'.    *    * @param p    *          partition object    * @param level    *          level for prefix depth    * @return prefix of partition's string representation    * @throws HiveException    */
 specifier|public
 specifier|static
 name|String

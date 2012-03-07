@@ -42,7 +42,7 @@ specifier|public
 interface|interface
 name|JDOConnectionURLHook
 block|{
-comment|/**    * Gets the connection URL to supply to JDO. In addition to initialization,    * this method will be called after a connection failure for each reconnect    * attempt.    *    * @param conf The configuration used to initialize this instance of the HMS    * @return    * @throws Exception    */
+comment|/**    * Gets the connection URL to supply to JDO. In addition to initialization,    * this method will be called after a connection failure for each reconnect    * attempt.    *    * @param conf The configuration used to initialize this instance of the HMS    * @return the connection URL    * @throws Exception    */
 specifier|public
 name|String
 name|getJdoConnectionUrl

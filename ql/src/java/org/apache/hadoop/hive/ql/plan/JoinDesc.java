@@ -1379,7 +1379,7 @@ return|return
 name|smallKeysDirMap
 return|;
 block|}
-comment|/**    * set the mapping from tbl to dir for small keys.    *    * @param bigKeysDirMap    */
+comment|/**    * set the mapping from tbl to dir for small keys.    *    * @param smallKeysDirMap    */
 specifier|public
 name|void
 name|setSmallKeysDirMap
@@ -1446,7 +1446,7 @@ return|return
 name|skewKeysValuesTables
 return|;
 block|}
-comment|/**    * @param skewKeysValuesTable    *          set the table desc for storing skew keys and their corresponding    *          value;    */
+comment|/**    * @param skewKeysValuesTables    *          set the table desc for storing skew keys and their corresponding    *          value;    */
 specifier|public
 name|void
 name|setSkewKeysValuesTables

@@ -1778,7 +1778,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * convert a regular join to a a map-side join.    *    * @param op    *          join operator    * @param qbJoin    *          qb join tree    * @param mapJoinPos    *          position of the source to be read as part of map-reduce framework. All other sources    *          are cached in memory    */
+comment|/**    * convert a regular join to a a map-side join.    *    * @param opParseCtxMap    * @param op    *          join operator    * @param joinTree    *          qb join tree    * @param mapJoinPos    *          position of the source to be read as part of map-reduce framework. All other sources    *          are cached in memory    * @param noCheckOuterJoin    */
 specifier|public
 specifier|static
 name|MapJoinOperator
@@ -3530,7 +3530,7 @@ return|return
 name|mapJoinOp
 return|;
 block|}
-comment|/**    * Get a list of big table candidates. Only the tables in the returned set can    * be used as big table in the join operation.    *    * The logic here is to scan the join condition array from left to right. If    * see a inner join, and the bigTableCandidates is empty or the outer join    * that we last saw is a right outer join, add both side of this inner join to    * big table candidates only if they are not in bad position. If see a left    * outer join, set lastSeenRightOuterJoin to false, and the bigTableCandidates    * is empty, add the left side to it, and if the bigTableCandidates is not    * empty, do nothing (which means the bigTableCandidates is from left side).    * If see a right outer join, set lastSeenRightOuterJoin to true, clear the    * bigTableCandidates, and add right side to the bigTableCandidates, it means    * the right side of a right outer join always win. If see a full outer join,    * return null immediately (no one can be the big table, can not do a    * mapjoin).    *    *    * @param condns    * @return    */
+comment|/**    * Get a list of big table candidates. Only the tables in the returned set can    * be used as big table in the join operation.    *    * The logic here is to scan the join condition array from left to right. If    * see a inner join, and the bigTableCandidates is empty or the outer join    * that we last saw is a right outer join, add both side of this inner join to    * big table candidates only if they are not in bad position. If see a left    * outer join, set lastSeenRightOuterJoin to false, and the bigTableCandidates    * is empty, add the left side to it, and if the bigTableCandidates is not    * empty, do nothing (which means the bigTableCandidates is from left side).    * If see a right outer join, set lastSeenRightOuterJoin to true, clear the    * bigTableCandidates, and add right side to the bigTableCandidates, it means    * the right side of a right outer join always win. If see a full outer join,    * return null immediately (no one can be the big table, can not do a    * mapjoin).    *    *    * @param condns    * @return list of big table candidates    */
 specifier|public
 specifier|static
 name|HashSet
@@ -5729,7 +5729,7 @@ name|MapJoinDesc
 argument_list|>
 name|currMapJoinOp
 decl_stmt|;
-comment|/**      * @param listMapJoinsNoRed      * @param pGraphContext2      */
+comment|/**      * @param listMapJoinsNoRed      * @param pGraphContext      */
 specifier|public
 name|MapJoinWalkerCtx
 parameter_list|(

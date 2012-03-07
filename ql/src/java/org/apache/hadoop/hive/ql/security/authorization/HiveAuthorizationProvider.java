@@ -201,7 +201,7 @@ name|HiveAuthenticationProvider
 name|authenticator
 parameter_list|)
 function_decl|;
-comment|/**    * Authorization user level privileges.    *     * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @return    * @throws HiveException    * @throws AuthorizationException    */
+comment|/**    * Authorization user level privileges.    *    * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @throws HiveException    * @throws AuthorizationException    */
 specifier|public
 name|void
 name|authorize
@@ -219,7 +219,7 @@ name|HiveException
 throws|,
 name|AuthorizationException
 function_decl|;
-comment|/**    * Authorization privileges against a database object.    *     * @param db    *          database    * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @return    * @throws HiveException    * @throws AuthorizationException    */
+comment|/**    * Authorization privileges against a database object.    *    * @param db    *          database    * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @throws HiveException    * @throws AuthorizationException    */
 specifier|public
 name|void
 name|authorize
@@ -240,7 +240,7 @@ name|HiveException
 throws|,
 name|AuthorizationException
 function_decl|;
-comment|/**    * Authorization privileges against a hive table object.    *     * @param table    *          table object    * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @return    * @throws HiveException    * @throws AuthorizationException    */
+comment|/**    * Authorization privileges against a hive table object.    *    * @param table    *          table object    * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @throws HiveException    * @throws AuthorizationException    */
 specifier|public
 name|void
 name|authorize
@@ -261,7 +261,7 @@ name|HiveException
 throws|,
 name|AuthorizationException
 function_decl|;
-comment|/**    * Authorization privileges against a hive partition object.    *     * @param part    *          partition object    * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @return    * @throws HiveException    * @throws AuthorizationException    */
+comment|/**    * Authorization privileges against a hive partition object.    *    * @param part    *          partition object    * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @throws HiveException    * @throws AuthorizationException    */
 specifier|public
 name|void
 name|authorize
@@ -282,7 +282,7 @@ name|HiveException
 throws|,
 name|AuthorizationException
 function_decl|;
-comment|/**    * Authorization privileges against a list of columns. If the partition object    * is not null, look at the column grants for the given partition. Otherwise    * look at the table column grants.    *     * @param table    *          table object    * @param part    *          partition object    * @param columns    *          a list of columns    * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @return    * @throws HiveException    * @throws AuthorizationException    */
+comment|/**    * Authorization privileges against a list of columns. If the partition object    * is not null, look at the column grants for the given partition. Otherwise    * look at the table column grants.    *    * @param table    *          table object    * @param part    *          partition object    * @param columns    *          a list of columns    * @param readRequiredPriv    *          a list of privileges needed for inputs.    * @param writeRequiredPriv    *          a list of privileges needed for outputs.    * @throws HiveException    * @throws AuthorizationException    */
 specifier|public
 name|void
 name|authorize

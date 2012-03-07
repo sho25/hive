@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Used to call back lazy decompression process.  *   * @see #BytesRefWritable  */
+comment|/**  * Used to call back lazy decompression process.  *  * @see org.apache.hadoop.hive.serde2.columnar.BytesRefWritable  */
 end_comment
 
 begin_interface

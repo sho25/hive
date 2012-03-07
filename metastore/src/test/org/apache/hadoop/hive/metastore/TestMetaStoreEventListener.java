@@ -412,7 +412,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TestMetaStoreEventListener. Test case for  * {@link org.apache.hadoop.hive.metastore.hadooorg.apache.hadoop.hive.metastore.MetaStoreEventListener}  */
+comment|/**  * TestMetaStoreEventListener. Test case for  * {@link org.apache.hadoop.hive.metastore.MetaStoreEventListener}  */
 end_comment
 
 begin_class

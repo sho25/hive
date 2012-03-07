@@ -183,7 +183,7 @@ specifier|public
 name|MapJoinSingleKey
 parameter_list|()
 block|{   }
-comment|/**    * @param metadataTag    * @param obj    */
+comment|/**    * @param obj    */
 specifier|public
 name|MapJoinSingleKey
 parameter_list|(

@@ -128,7 +128,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Reusable code for Hive Cli's.  *<p>  * Basic usage is: create an instance (usually a subclass if you want to  * all your own options or processing instructions), parse, and then use  * the resulting information.  *<p>  * See {@link HiveServer} or {@link HiveMetaStore} for examples of use.  *  */
+comment|/**  * Reusable code for Hive Cli's.  *<p>  * Basic usage is: create an instance (usually a subclass if you want to  * all your own options or processing instructions), parse, and then use  * the resulting information.  *<p>  * See {@link org.apache.hadoop.hive.service.HiveServer} or  *     {@link org.apache.hadoop.hive.metastore.HiveMetaStore}  *     for examples of use.  *  */
 end_comment
 
 begin_class
@@ -162,7 +162,7 @@ name|verbose
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * Create an instance with common options (help, verbose, etc...).    *    * @param includeHiveConf include "hiveconf" as an option if true    */
+comment|/**    * Create an instance with common options (help, verbose, etc...).    *    * @param cliname the name of the command    * @param includeHiveConf include "hiveconf" as an option if true    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -175,7 +175,7 @@ name|String
 name|cliname
 parameter_list|,
 name|boolean
-name|includeHiveconf
+name|includeHiveConf
 parameter_list|)
 block|{
 name|this
@@ -222,7 +222,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|includeHiveconf
+name|includeHiveConf
 condition|)
 block|{
 name|OPTIONS

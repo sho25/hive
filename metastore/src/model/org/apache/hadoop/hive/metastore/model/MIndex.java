@@ -83,7 +83,7 @@ specifier|public
 name|MIndex
 parameter_list|()
 block|{}
-comment|/**  * @param indexName  * @param orignialTable  * @param createTime  * @param lastAccessTime  * @param parameters  * @param indexTable  * @param sd  */
+comment|/**  * @param indexName  * @param baseTable  * @param createTime  * @param lastAccessTime  * @param parameters  * @param indexTable  * @param sd  * @param indexHandlerClass  * @param deferredRebuild  */
 specifier|public
 name|MIndex
 parameter_list|(
@@ -416,7 +416,7 @@ return|return
 name|deferredRebuild
 return|;
 block|}
-comment|/**    * @param autoRebuild    */
+comment|/**    * @param deferredRebuild    */
 specifier|public
 name|void
 name|setDeferredRebuild

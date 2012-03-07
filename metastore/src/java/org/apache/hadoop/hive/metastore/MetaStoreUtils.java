@@ -1269,7 +1269,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *    * Get the Deserializer for a partition.    *    * @param conf    *          - hadoop config    * @param partition    *          the partition    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *    */
+comment|/**    * getDeserializer    *    * Get the Deserializer for a partition.    *    * @param conf    *          - hadoop config    * @param part    *          the partition    * @param table the table    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *    */
 specifier|static
 specifier|public
 name|Deserializer
@@ -2726,7 +2726,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Get partition level schema from table level schema.    * This function will use the same column names, column types and partition keys for    * each partition Properties. Their values are copied from the table Properties. This    * is mainly to save CPU and memory. CPU is saved because the first time the    * StorageDescriptor column names are accessed, JDO needs to execute a SQL query to    * retrieve the data. If we know the data will be the same as the table level schema    * and they are immutable, we should just reuse the table level schema objects.    *    * @param sd The Partition level Storage Descriptor.    * @param tblsd The Table level Storage Descriptor.    * @param parameters partition level parameters    * @param databaseName DB name    * @param tableName table name    * @param partitionKeys partition columns    * @param tblSchema The table level schema from which this partition should be copied.    * @return    */
+comment|/**    * Get partition level schema from table level schema.    * This function will use the same column names, column types and partition keys for    * each partition Properties. Their values are copied from the table Properties. This    * is mainly to save CPU and memory. CPU is saved because the first time the    * StorageDescriptor column names are accessed, JDO needs to execute a SQL query to    * retrieve the data. If we know the data will be the same as the table level schema    * and they are immutable, we should just reuse the table level schema objects.    *    * @param sd The Partition level Storage Descriptor.    * @param tblsd The Table level Storage Descriptor.    * @param parameters partition level parameters    * @param databaseName DB name    * @param tableName table name    * @param partitionKeys partition columns    * @param tblSchema The table level schema from which this partition should be copied.    * @return the properties    */
 specifier|public
 specifier|static
 name|Properties
@@ -5455,7 +5455,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Given a map of partition column names to values, this creates a filter    * string that can be used to call the *byFilter methods    * @param m    * @return    */
+comment|/**    * Given a map of partition column names to values, this creates a filter    * string that can be used to call the *byFilter methods    * @param m    * @return the filter string    */
 specifier|public
 specifier|static
 name|String

@@ -75,7 +75,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      *      * @param name      * @return      * @throws Exception      */
+comment|/**      *      * @param name      * @return value associated with the key      * @throws Exception      */
 specifier|public
 specifier|abstract
 name|Object

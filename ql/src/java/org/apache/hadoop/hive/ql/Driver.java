@@ -2636,7 +2636,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Compile a new query, but potentially reset taskID counter.  Not resetting task counter    * is useful for generating re-entrant QL queries.    * @param command  The HiveQL query to compile    * @param resetTaskIds Resets taskID counter if true.    * @return    */
+comment|/**    * Compile a new query, but potentially reset taskID counter.  Not resetting task counter    * is useful for generating re-entrant QL queries.    * @param command  The HiveQL query to compile    * @param resetTaskIds Resets taskID counter if true.    * @return 0 for ok    */
 specifier|public
 name|int
 name|compile
@@ -7918,7 +7918,7 @@ literal|0
 operator|)
 return|;
 block|}
-comment|/**    * Launches a new task    *    * @param tsk    *          task being launched    * @param queryId    *          Id of the query containing the task    * @param noName    *          whether the task has a name set    * @param running    *          map from taskresults to taskrunners    * @param jobname    *          name of the task, if it is a map-reduce job    * @param jobs    *          number of map-reduce jobs    * @param curJobNo    *          the sequential number of the next map-reduce job    * @return the updated number of last the map-reduce job launched    */
+comment|/**    * Launches a new task    *    * @param tsk    *          task being launched    * @param queryId    *          Id of the query containing the task    * @param noName    *          whether the task has a name set    * @param running    *          map from taskresults to taskrunners    * @param jobname    *          name of the task, if it is a map-reduce job    * @param jobs    *          number of map-reduce jobs    * @param cxt    *          the driver context    */
 specifier|public
 name|void
 name|launchTask

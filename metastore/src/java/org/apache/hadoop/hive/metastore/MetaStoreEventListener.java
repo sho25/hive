@@ -255,7 +255,7 @@ operator|=
 name|config
 expr_stmt|;
 block|}
-comment|/**    * @param create table event.    * @throws MetaException    */
+comment|/**    * @param tableEvent table event.    * @throws MetaException    */
 specifier|public
 specifier|abstract
 name|void
@@ -267,7 +267,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * @param drop table event.    * @throws MetaException    */
+comment|/**    * @param tableEvent table event.    * @throws MetaException    */
 specifier|public
 specifier|abstract
 name|void
@@ -303,7 +303,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * @param drop partition event    * @throws MetaException    */
+comment|/**    * @param partitionEvent partition event    * @throws MetaException    */
 specifier|public
 specifier|abstract
 name|void
@@ -315,7 +315,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * @param alter partition event    * @throws MetaException    */
+comment|/**    * @param partitionEvent partition event    * @throws MetaException    */
 specifier|public
 specifier|abstract
 name|void
@@ -327,7 +327,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * @param create database event    * @throws MetaException    */
+comment|/**    * @param dbEvent database event    * @throws MetaException    */
 specifier|public
 specifier|abstract
 name|void
@@ -339,7 +339,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * @param drop database event    * @throws MetaException    */
+comment|/**    * @param dbEvent database event    * @throws MetaException    */
 specifier|public
 specifier|abstract
 name|void

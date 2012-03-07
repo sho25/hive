@@ -98,7 +98,7 @@ specifier|private
 name|ExprNodeDesc
 name|comparisonExpr
 decl_stmt|;
-comment|/**    * Constructs a search condition, which takes the form    *<pre>column-ref comparison-op constant-value</pre>.    *    * @param columnDesc column being compared    *    * @param comparisonOp comparison operator, e.g. "="    * (taken from GenericUDFBridge.getUdfName())    *    * @param constantDesc constant value to search for    *    * @Param comparisonExpr the original comparison expression    */
+comment|/**    * Constructs a search condition, which takes the form    *<pre>column-ref comparison-op constant-value</pre>.    *    * @param columnDesc column being compared    *    * @param comparisonOp comparison operator, e.g. "="    * (taken from GenericUDFBridge.getUdfName())    *    * @param constantDesc constant value to search for    *    * @param comparisonExpr the original comparison expression    */
 specifier|public
 name|IndexSearchCondition
 parameter_list|(

@@ -108,7 +108,7 @@ name|collector
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * Initialize this GenericUDTF. This will be called only once per instance.    *    * @param args    *          An array of ObjectInspectors for the arguments    * @return A StructObjectInspector for output. The output struct represents a    *         row of the table where the fields of the stuct are the columns. The    *         field names are unimportant as they will be overridden by user    *         supplied column aliases.    */
+comment|/**    * Initialize this GenericUDTF. This will be called only once per instance.    *    * @param argOIs    *          An array of ObjectInspectors for the arguments    * @return A StructObjectInspector for output. The output struct represents a    *         row of the table where the fields of the stuct are the columns. The    *         field names are unimportant as they will be overridden by user    *         supplied column aliases.    */
 specifier|public
 specifier|abstract
 name|StructObjectInspector
@@ -121,7 +121,7 @@ parameter_list|)
 throws|throws
 name|UDFArgumentException
 function_decl|;
-comment|/**    * Give a set of arguments for the UDTF to process.    *    * @param o    *          object array of arguments    */
+comment|/**    * Give a set of arguments for the UDTF to process.    *    * @param args    *          object array of arguments    */
 specifier|public
 specifier|abstract
 name|void

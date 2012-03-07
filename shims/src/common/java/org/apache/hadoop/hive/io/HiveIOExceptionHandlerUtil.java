@@ -132,7 +132,7 @@ return|return
 name|cache
 return|;
 block|}
-comment|/**    * Handle exception thrown when creating record reader. In case that there is    * an exception raised when construction the record reader and one handler can    * handle this exception, it should return an record reader, which is either a    * dummy empty record reader or a specific record reader that do some magic.    *     * @param e    * @param job    * @return    * @throws IOException    */
+comment|/**    * Handle exception thrown when creating record reader. In case that there is    * an exception raised when construction the record reader and one handler can    * handle this exception, it should return an record reader, which is either a    * dummy empty record reader or a specific record reader that do some magic.    *    * @param e    * @param job    * @return RecordReader    * @throws IOException    */
 specifier|public
 specifier|static
 name|RecordReader
@@ -179,7 +179,7 @@ name|e
 argument_list|)
 throw|;
 block|}
-comment|/**    * Handle exception thrown when calling record reader's next. If this    * exception is handled by one handler, will just return true. Otherwise,    * either re-throw this exception in one handler or at the end of the handler    * chain.    *     * @param e    * @param job    * @return    * @throws IOException    */
+comment|/**    * Handle exception thrown when calling record reader's next. If this    * exception is handled by one handler, will just return true. Otherwise,    * either re-throw this exception in one handler or at the end of the handler    * chain.    *    * @param e    * @param job    * @return true on success    * @throws IOException    */
 specifier|public
 specifier|static
 name|boolean

@@ -232,7 +232,7 @@ return|return
 name|partSpec
 return|;
 block|}
-comment|/**    * @param tabName    *          the table whose partitions have to be listed    */
+comment|/**    * @param partSpec the partSpec to set.    */
 specifier|public
 name|void
 name|setPartSpec

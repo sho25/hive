@@ -2365,7 +2365,7 @@ return|return
 name|conf
 return|;
 block|}
-comment|/**      * Get a cached RawStore.      *      * @return      * @throws MetaException      */
+comment|/**      * Get a cached RawStore.      *      * @return the cached RawStore      * @throws MetaException      */
 annotation|@
 name|InterfaceAudience
 operator|.
@@ -16261,7 +16261,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Start Metastore based on a passed {@link HadoopThriftAuthBridge}    *    * @param port    * @param bridge    * @param hiveconf    *          configuration overrides    * @throws Throwable    */
+comment|/**    * Start Metastore based on a passed {@link HadoopThriftAuthBridge}    *    * @param port    * @param bridge    * @param conf    *          configuration overrides    * @throws Throwable    */
 specifier|public
 specifier|static
 name|void

@@ -172,7 +172,7 @@ operator|=
 name|pattern
 expr_stmt|;
 block|}
-comment|/**    * @param resFile    * @param dbName    *          data base name    * @param pattern    *          names of tables to show    * @param part    *          partition specification    */
+comment|/**    * @param resFile    * @param dbName    *          data base name    * @param pattern    *          names of tables to show    * @param partSpec    *          partition specification    */
 specifier|public
 name|ShowTableStatusDesc
 parameter_list|(

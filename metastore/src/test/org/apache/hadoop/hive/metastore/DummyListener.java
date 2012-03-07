@@ -250,7 +250,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** A dummy implementation for  * {@link org.apache.hadoop.hive.metastore.hadooorg.apache.hadoop.hive.metastore.MetaStoreEventListener}  * for testing purposes.  */
+comment|/** A dummy implementation for  * {@link org.apache.hadoop.hive.metastore.MetaStoreEventListener}  * for testing purposes.  */
 end_comment
 
 begin_class

@@ -1511,7 +1511,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param class1    */
+comment|/**    * @param outputFormatClass    */
 specifier|public
 name|void
 name|setOutputFormatClass

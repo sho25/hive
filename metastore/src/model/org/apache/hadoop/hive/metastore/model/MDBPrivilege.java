@@ -176,7 +176,7 @@ return|return
 name|privilege
 return|;
 block|}
-comment|/**    * @param dbPrivileges a set of privileges this user/role/group has    */
+comment|/**    * @param dbPrivilege a set of privileges this user/role/group has    */
 specifier|public
 name|void
 name|setPrivilege

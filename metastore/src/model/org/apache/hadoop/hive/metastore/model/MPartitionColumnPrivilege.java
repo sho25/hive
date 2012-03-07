@@ -64,7 +64,7 @@ specifier|public
 name|MPartitionColumnPrivilege
 parameter_list|()
 block|{   }
-comment|/**    * @param principalName    * @param isRole    * @param isGroup    * @param partition    * @param columnName    * @param privileges    * @param createTime    * @param grantor    */
+comment|/**    * @param principalName    * @param principalType    * @param partition    * @param columnName    * @param privileges    * @param createTime    * @param grantor    * @param grantorType    * @param grantOption    */
 specifier|public
 name|MPartitionColumnPrivilege
 parameter_list|(

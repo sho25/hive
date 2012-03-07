@@ -143,7 +143,7 @@ name|BaseSemanticAnalyzer
 name|sem
 parameter_list|)
 function_decl|;
-comment|/**    * The following methods will only be available to hooks executing postAnalyze.  If called in a    * preAnalyze method, they should return null.    * @return    */
+comment|/**    * The following methods will only be available to hooks executing postAnalyze.  If called in a    * preAnalyze method, they should return null.    * @return the set of read entities    */
 specifier|public
 name|Set
 argument_list|<

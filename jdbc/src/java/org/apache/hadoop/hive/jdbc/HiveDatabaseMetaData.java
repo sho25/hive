@@ -1902,7 +1902,7 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/**    *  Returns the value of maxColumnNameLength.    *    *  @param int    */
+comment|/**    *  Returns the value of maxColumnNameLength.    *    */
 specifier|public
 name|int
 name|getMaxColumnNameLength
@@ -3132,7 +3132,7 @@ return|;
 block|}
 block|}
 block|}
-comment|/**    * Translate hive table types into jdbc table types.    * @param hivetabletype    * @return    */
+comment|/**    * Translate hive table types into jdbc table types.    * @param hivetabletype    * @return the type of the table    */
 specifier|public
 specifier|static
 name|String

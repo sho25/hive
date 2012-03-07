@@ -86,7 +86,7 @@ specifier|public
 interface|interface
 name|MetaStoreFS
 block|{
-comment|/**    * delete a directory    *     * @param f    * @param recursive    * @return    * @throws MetaException    */
+comment|/**    * delete a directory    *    * @param f    * @param recursive    * @return true on success    * @throws MetaException    */
 specifier|public
 name|boolean
 name|deleteDir

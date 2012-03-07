@@ -1550,7 +1550,7 @@ name|propValue
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Serialize the task counters and set as a task property.    *    * @param taskId    * @param rj    */
+comment|/**    * Serialize the task counters and set as a task property.    *    * @param queryId    * @param taskId    * @param ctrs    */
 specifier|public
 name|void
 name|setTaskCounters

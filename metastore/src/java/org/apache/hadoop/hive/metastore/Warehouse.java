@@ -1378,7 +1378,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**    * Makes a partition name from a specification    * @param spec    * @param addTrailingSeperator if true, adds a trailing separator e.g. 'ds=1/'    * @return    * @throws MetaException    */
+comment|/**    * Makes a partition name from a specification    * @param spec    * @param addTrailingSeperator if true, adds a trailing separator e.g. 'ds=1/'    * @return partition name    * @throws MetaException    */
 specifier|public
 specifier|static
 name|String

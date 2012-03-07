@@ -188,7 +188,7 @@ specifier|public
 name|MapJoinObjectKey
 parameter_list|()
 block|{   }
-comment|/**    * @param metadataTag    * @param obj    */
+comment|/**    * @param obj    */
 specifier|public
 name|MapJoinObjectKey
 parameter_list|(

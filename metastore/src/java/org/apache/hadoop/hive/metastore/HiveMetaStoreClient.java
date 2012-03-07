@@ -1232,7 +1232,7 @@ name|open
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * @param dbname    * @param tbl_name    * @param new_tbl    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#alter_table(java.lang.String,    *      java.lang.String, org.apache.hadoop.hive.metastore.api.Table)    */
+comment|/**    * @param dbname    * @param tbl_name    * @param new_tbl    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see    *   org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#alter_table(    *   java.lang.String, java.lang.String,    *   org.apache.hadoop.hive.metastore.api.Table)    */
 specifier|public
 name|void
 name|alter_table
@@ -1958,7 +1958,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * @param new_parts    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#add_partitions(List<org.apache.hadoop.hive.metastore.api.Partition>)    */
+comment|/**    * @param new_parts    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#add_partitions(List)    */
 specifier|public
 name|int
 name|add_partitions
@@ -2067,7 +2067,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a new Database    * @param db    * @return true or false    * @throws AlreadyExistsException    * @throws InvalidObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_database(java.lang.String,    *      java.lang.String)    */
+comment|/**    * Create a new Database    * @param db    * @throws AlreadyExistsException    * @throws InvalidObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_database(Database)    */
 specifier|public
 name|void
 name|createDatabase
@@ -2218,7 +2218,7 @@ name|type
 argument_list|)
 return|;
 block|}
-comment|/**    * @param name    * @return true or false    * @throws NoSuchObjectException    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_database(java.lang.String)    */
+comment|/**    * @param name    * @throws NoSuchObjectException    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_database(java.lang.String, boolean, boolean)    */
 specifier|public
 name|void
 name|dropDatabase
@@ -3797,7 +3797,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * create an index    * @param index the index object    * @param index table which stores the index data    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws AlreadyExistsException    */
+comment|/**    * create an index    * @param index the index object    * @param indexTable which stores the index data    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws AlreadyExistsException    */
 specifier|public
 name|void
 name|createIndex
@@ -3867,7 +3867,7 @@ name|new_idx
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param dbName    * @param tblName    * @param indexName    * @return    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
+comment|/**    * @param dbName    * @param tblName    * @param indexName    * @return the index    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
 specifier|public
 name|Index
 name|getIndex
@@ -3906,7 +3906,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * list indexes of the give base table    * @param db_name    * @param tbl_name    * @param max    * @return    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
+comment|/**    * list indexes of the give base table    * @param dbName    * @param tblName    * @param max    * @return the list of indexes    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<
@@ -3941,7 +3941,7 @@ name|max
 argument_list|)
 return|;
 block|}
-comment|/**    * list all the index names of the give base table.    *    * @param db_name    * @param tbl_name    * @param max    * @return    * @throws MetaException    * @throws TException    */
+comment|/**    * list all the index names of the give base table.    *    * @param dbName    * @param tblName    * @param max    * @return list of indexes    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<

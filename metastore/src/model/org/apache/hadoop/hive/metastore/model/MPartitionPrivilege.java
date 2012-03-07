@@ -216,7 +216,7 @@ operator|=
 name|createTime
 expr_stmt|;
 block|}
-comment|/**    * @return    */
+comment|/**    * @return the grantor    */
 specifier|public
 name|String
 name|getGrantor

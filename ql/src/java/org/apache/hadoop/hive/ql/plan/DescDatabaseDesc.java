@@ -93,7 +93,7 @@ specifier|public
 name|DescDatabaseDesc
 parameter_list|()
 block|{   }
-comment|/**    * @param partSpec    * @param resFile    * @param tableName    */
+comment|/**    * @param resFile    * @param dbName    * @param isExt    */
 specifier|public
 name|DescDatabaseDesc
 parameter_list|(
@@ -182,7 +182,7 @@ return|return
 name|dbName
 return|;
 block|}
-comment|/**    * @param tableName    *          the tableName to set    */
+comment|/**    * @param db    *          the database name to set    */
 specifier|public
 name|void
 name|setDatabaseName

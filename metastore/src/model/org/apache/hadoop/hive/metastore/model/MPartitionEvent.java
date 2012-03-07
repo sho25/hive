@@ -149,7 +149,7 @@ operator|=
 name|partName
 expr_stmt|;
 block|}
-comment|/**    * @param eventTime the eventTime to set    */
+comment|/**    * @param createTime the eventTime to set    */
 specifier|public
 name|void
 name|setEventTime

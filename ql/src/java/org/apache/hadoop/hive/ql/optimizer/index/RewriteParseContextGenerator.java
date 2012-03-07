@@ -303,7 +303,7 @@ specifier|private
 name|RewriteParseContextGenerator
 parameter_list|()
 block|{   }
-comment|/**    * Parse the input {@link String} command and generate a ASTNode tree.    * @param conf    * @param command    * @return    * @throws SemanticException    */
+comment|/**    * Parse the input {@link String} command and generate a ASTNode tree.    * @param conf    * @param command    * @return the parse context    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|ParseContext

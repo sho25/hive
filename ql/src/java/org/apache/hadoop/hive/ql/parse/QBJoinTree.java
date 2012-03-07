@@ -744,7 +744,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Remeber the mapping of table alias to set of columns.    *    * @param alias    * @param columns    */
+comment|/**    * Remeber the mapping of table alias to set of columns.    *    * @param alias    * @param column    */
 specifier|public
 name|void
 name|addRHSSemijoinColumns

@@ -92,7 +92,7 @@ return|return
 name|regionName
 return|;
 block|}
-comment|/**    * @param region    */
+comment|/**    * @param regionName    */
 specifier|public
 name|void
 name|setRegionName

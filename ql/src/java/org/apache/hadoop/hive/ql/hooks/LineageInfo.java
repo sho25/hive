@@ -752,7 +752,7 @@ return|return
 name|baseCols
 return|;
 block|}
-comment|/**      * @param basecols the baseCols to set      */
+comment|/**      * @param baseCols the baseCols to set      */
 specifier|public
 name|void
 name|setBaseCols

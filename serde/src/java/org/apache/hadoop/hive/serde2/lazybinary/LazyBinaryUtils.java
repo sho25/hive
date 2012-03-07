@@ -1303,7 +1303,7 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Write a zero-compressed encoded long to a byte array.    *    * @param byteStream    *          the byte array/stream    * @param l    *          the long    */
+comment|/**    * Write a zero-compressed encoded long to a byte array.    *    * @param bytes    *          the byte array/stream    * @param l    *          the long    */
 specifier|public
 specifier|static
 name|int

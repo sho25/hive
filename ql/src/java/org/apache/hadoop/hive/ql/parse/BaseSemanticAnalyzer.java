@@ -1966,7 +1966,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * @param Get the name from a table node    * @return if DB name is give, db.tab is returned. Otherwise, tab.    */
+comment|/**    * Get the name from a table node.    * @param tableNameNode the table node    * @return if DB name is give, db.tab is returned. Otherwise, tab.    */
 specifier|public
 specifier|static
 name|String

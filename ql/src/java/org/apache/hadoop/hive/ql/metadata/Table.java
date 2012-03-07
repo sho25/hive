@@ -2824,7 +2824,7 @@ name|getNumBuckets
 argument_list|()
 return|;
 block|}
-comment|/**    * Replaces the directory corresponding to the table by srcf. Works by    * deleting the table directory and renaming the source directory.    *    * @param srcf    *          Source directory    * @param tmpd    *          Temporary directory    */
+comment|/**    * Replaces the directory corresponding to the table by srcf. Works by    * deleting the table directory and renaming the source directory.    *    * @param srcf    *          Source directory    */
 specifier|protected
 name|void
 name|replaceFiles

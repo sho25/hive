@@ -700,7 +700,7 @@ operator|+
 name|jobId
 return|;
 block|}
-comment|/**    * this msg pattern is used to track when a job is successfully done.    *    * @param jobId    * @return    */
+comment|/**    * this msg pattern is used to track when a job is successfully done.    *    * @param jobId    * @return the job end message    */
 specifier|public
 specifier|static
 name|String

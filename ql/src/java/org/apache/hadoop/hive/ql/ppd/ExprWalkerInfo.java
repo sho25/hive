@@ -1019,7 +1019,7 @@ name|expr
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns list of non-final candidate predicate for each map.    *    * @return    */
+comment|/**    * Returns list of non-final candidate predicate for each map.    *    * @return list of non-final candidate predicates    */
 specifier|public
 name|Map
 argument_list|<

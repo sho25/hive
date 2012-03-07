@@ -409,7 +409,7 @@ name|dep
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Merges the new dependencies in dep to the existing dependencies      * of (op, ci).      *      * @param op The operator of the column whose dependency is being modified.      * @param ci The column info of the associated column.      * @param dependency The new dependency.      */
+comment|/**      * Merges the new dependencies in dep to the existing dependencies      * of (op, ci).      *      * @param op The operator of the column whose dependency is being modified.      * @param ci The column info of the associated column.      * @param dep The new dependency.      */
 specifier|public
 name|void
 name|mergeDependency
@@ -592,7 +592,7 @@ return|return
 name|index
 return|;
 block|}
-comment|/**    * Gets the new dependency type by comparing the old dependency type and the    * current dependency type. The current dependency type is the dependency imposed    * by the current expression. Typically the dependency type is computed using    * the following rules:    *    SCRIPT - In case anywhere in the lineage tree there was a script operator, otherwise    *    EXPRESSION - In case anywhere in the lineage tree a union,    *                 udf, udaf or udtf was done, otherwise    *    SIMPLE - This captures direct column copies.    *    * @param old_type The old dependency type.    * @param curr_type The current operators dependency type.    * @return    */
+comment|/**    * Gets the new dependency type by comparing the old dependency type and the    * current dependency type. The current dependency type is the dependency imposed    * by the current expression. Typically the dependency type is computed using    * the following rules:    *    SCRIPT - In case anywhere in the lineage tree there was a script operator, otherwise    *    EXPRESSION - In case anywhere in the lineage tree a union,    *                 udf, udaf or udtf was done, otherwise    *    SIMPLE - This captures direct column copies.    *    * @param old_type The old dependency type.    * @param curr_type The current operators dependency type.    * @return the dependency type    */
 specifier|public
 specifier|static
 name|LineageInfo

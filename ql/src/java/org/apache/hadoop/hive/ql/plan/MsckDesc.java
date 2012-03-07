@@ -125,7 +125,7 @@ specifier|public
 name|MsckDesc
 parameter_list|()
 block|{   }
-comment|/**    * Description of a msck command.    *     * @param tableName    *          Table to check, can be null.    * @param partSpecs    *          Partition specification, can be null.    * @param resFile    *          Where to save the output of the command    * @param repairPartitions    *          remove stale / add new partitions found during the check    */
+comment|/**    * Description of a msck command.    *    * @param tableName    *          Table to check, can be null.    * @param partSpecs    *          Partition specification, can be null.    * @param resFile    *          Where to save the output of the command    * @param repairPartitions    *          remove stale / add new partitions found during the check    */
 specifier|public
 name|MsckDesc
 parameter_list|(
@@ -284,7 +284,7 @@ return|return
 name|partSpecs
 return|;
 block|}
-comment|/**    * @param partitionSpec    *          partitions to check.    */
+comment|/**    * @param partSpecs    *          partitions to check.    */
 specifier|public
 name|void
 name|setPartSpecs
@@ -344,7 +344,7 @@ return|return
 name|repairPartitions
 return|;
 block|}
-comment|/**    * @param remove    *          stale / add new partitions found during the check    */
+comment|/**    * @param repairPartitions    *          stale / add new partitions found during the check    */
 specifier|public
 name|void
 name|setRepairPartitions

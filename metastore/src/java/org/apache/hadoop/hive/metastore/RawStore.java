@@ -808,7 +808,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Gets a list of tables based on a filter string and filter type.    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filterType    *          The type of filter    * @param filter    *          The filter string    * @param max_tables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    * @throws MetaException    * @throws UnknownDBException    */
+comment|/**    * Gets a list of tables based on a filter string and filter type.    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filter    *          The filter string    * @param max_tables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    * @throws MetaException    * @throws UnknownDBException    */
 specifier|public
 specifier|abstract
 name|List

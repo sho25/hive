@@ -7524,7 +7524,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Remove all temporary files and duplicate (double-committed) files from a given directory.    *    * @return a list of path names corresponding to should-be-created empty buckets.    */
+comment|/**    * Remove all temporary files and duplicate (double-committed) files from a given directory.    */
 specifier|public
 specifier|static
 name|void
@@ -9316,7 +9316,7 @@ operator|new
 name|Object
 argument_list|()
 decl_stmt|;
-comment|/**    * Calculate the total size of input files.    *    * @param job    *          the hadoop job conf.    * @param work    *          map reduce job plan    * @param filter    *          filter to apply to the input paths before calculating size    * @return the summary of all the input paths.    * @throws IOException    */
+comment|/**    * Calculate the total size of input files.    *    * @param ctx    *          the hadoop job context    * @param work    *          map reduce job plan    * @param filter    *          filter to apply to the input paths before calculating size    * @return the summary of all the input paths.    * @throws IOException    */
 specifier|public
 specifier|static
 name|ContentSummary
@@ -11786,7 +11786,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Retry SQL execution with random backoff (same as the one implemented in HDFS-767).    * This function only retries when the SQL query throws a SQLTransientException (which    * might be able to succeed with a simple retry). It doesn't retry when the exception    * is a SQLRecoverableException or SQLNonTransientException. For SQLRecoverableException    * the caller needs to reconnect to the database and restart the whole transaction.    *    * @param query the prepared statement of SQL.    * @param type either SQLCommandType.QUERY or SQLCommandType.UPDATE    * @param baseWindow  The base time window (in milliseconds) before the next retry.    * see {@getRandomWaitTime} for details.    * @param maxRetries the maximum # of retries when getting a SQLTransientException.    * @throws SQLException throws SQLRecoverableException or SQLNonTransientException the    * first time it is caught, or SQLTransientException when the maxRetries has reached.    */
+comment|/**    * Retry SQL execution with random backoff (same as the one implemented in HDFS-767).    * This function only retries when the SQL query throws a SQLTransientException (which    * might be able to succeed with a simple retry). It doesn't retry when the exception    * is a SQLRecoverableException or SQLNonTransientException. For SQLRecoverableException    * the caller needs to reconnect to the database and restart the whole transaction.    *    * @param cmd the SQL command    * @param stmt the prepared statement of SQL.    * @param baseWindow  The base time window (in milliseconds) before the next retry.    * see {@link #getRandomWaitTime} for details.    * @param maxRetries the maximum # of retries when getting a SQLTransientException.    * @throws SQLException throws SQLRecoverableException or SQLNonTransientException the    * first time it is caught, or SQLTransientException when the maxRetries has reached.    */
 specifier|public
 specifier|static
 parameter_list|<
@@ -11928,7 +11928,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Retry connecting to a database with random backoff (same as the one implemented in HDFS-767).    * This function only retries when the SQL query throws a SQLTransientException (which    * might be able to succeed with a simple retry). It doesn't retry when the exception    * is a SQLRecoverableException or SQLNonTransientException. For SQLRecoverableException    * the caller needs to reconnect to the database and restart the whole transaction.    *    * @param connectionString the JDBC connection string.    * @param baseWindow  The base time window (in milliseconds) before the next retry.    * see {@getRandomWaitTime} for details.    * @param maxRetries the maximum # of retries when getting a SQLTransientException.    * @throws SQLException throws SQLRecoverableException or SQLNonTransientException the    * first time it is caught, or SQLTransientException when the maxRetries has reached.    */
+comment|/**    * Retry connecting to a database with random backoff (same as the one implemented in HDFS-767).    * This function only retries when the SQL query throws a SQLTransientException (which    * might be able to succeed with a simple retry). It doesn't retry when the exception    * is a SQLRecoverableException or SQLNonTransientException. For SQLRecoverableException    * the caller needs to reconnect to the database and restart the whole transaction.    *    * @param connectionString the JDBC connection string.    * @param waitWindow  The base time window (in milliseconds) before the next retry.    * see {@link #getRandomWaitTime} for details.    * @param maxRetries the maximum # of retries when getting a SQLTransientException.    * @throws SQLException throws SQLRecoverableException or SQLNonTransientException the    * first time it is caught, or SQLTransientException when the maxRetries has reached.    */
 specifier|public
 specifier|static
 name|Connection
@@ -12052,7 +12052,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Retry preparing a SQL statement with random backoff (same as the one implemented in HDFS-767).    * This function only retries when the SQL query throws a SQLTransientException (which    * might be able to succeed with a simple retry). It doesn't retry when the exception    * is a SQLRecoverableException or SQLNonTransientException. For SQLRecoverableException    * the caller needs to reconnect to the database and restart the whole transaction.    *    * @param conn a JDBC connection.    * @param stmt the SQL statement to be prepared.    * @param baseWindow  The base time window (in milliseconds) before the next retry.    * see {@getRandomWaitTime} for details.    * @param maxRetries the maximum # of retries when getting a SQLTransientException.    * @throws SQLException throws SQLRecoverableException or SQLNonTransientException the    * first time it is caught, or SQLTransientException when the maxRetries has reached.    */
+comment|/**    * Retry preparing a SQL statement with random backoff (same as the one implemented in HDFS-767).    * This function only retries when the SQL query throws a SQLTransientException (which    * might be able to succeed with a simple retry). It doesn't retry when the exception    * is a SQLRecoverableException or SQLNonTransientException. For SQLRecoverableException    * the caller needs to reconnect to the database and restart the whole transaction.    *    * @param conn a JDBC connection.    * @param stmt the SQL statement to be prepared.    * @param waitWindow  The base time window (in milliseconds) before the next retry.    * see {@link #getRandomWaitTime} for details.    * @param maxRetries the maximum # of retries when getting a SQLTransientException.    * @throws SQLException throws SQLRecoverableException or SQLNonTransientException the    * first time it is caught, or SQLTransientException when the maxRetries has reached.    */
 specifier|public
 specifier|static
 name|PreparedStatement
@@ -12220,7 +12220,6 @@ argument_list|)
 return|;
 comment|// expanding time window for each failure
 block|}
-comment|/**    * Escape the '_', '%', as well as the escape characters inside the string key.    * @param key the string that will be used for the SQL LIKE operator.    * @param escape the escape character    * @return a string with escaped '_' and '%'.    */
 specifier|public
 specifier|static
 specifier|final
@@ -12229,6 +12228,7 @@ name|sqlEscapeChar
 init|=
 literal|'\\'
 decl_stmt|;
+comment|/**    * Escape the '_', '%', as well as the escape characters inside the string key.    * @param key the string that will be used for the SQL LIKE operator.    * @return a string with escaped '_' and '%'.    */
 specifier|public
 specifier|static
 name|String

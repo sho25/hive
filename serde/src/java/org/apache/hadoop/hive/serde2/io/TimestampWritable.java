@@ -1404,7 +1404,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/** Static methods **/
-comment|/**    * Gets seconds stored as integer at bytes[offset]    * @param bytes    * @param offset    * @return    */
+comment|/**    * Gets seconds stored as integer at bytes[offset]    * @param bytes    * @param offset    * @return the number of seconds    */
 specifier|public
 specifier|static
 name|int
@@ -1750,7 +1750,7 @@ operator|!=
 literal|0
 return|;
 block|}
-comment|/**    * Interprets a float as a unix timestamp and returns a Timestamp object    * @param f    * @return    */
+comment|/**    * Interprets a float as a unix timestamp and returns a Timestamp object    * @param f    * @return the equivalent Timestamp object    */
 specifier|public
 specifier|static
 name|Timestamp

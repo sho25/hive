@@ -176,7 +176,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UDAF for calculating the percentile values.  * There are several definitions of percentile, and we take the method recommended by  * NIST.  * @see http://en.wikipedia.org/wiki/Percentile#Alternative_methods  */
+comment|/**  * UDAF for calculating the percentile values.  * There are several definitions of percentile, and we take the method recommended by  * NIST.  * @see<a href="http://en.wikipedia.org/wiki/Percentile#Alternative_methods">  *      Percentile references</a>  */
 end_comment
 
 begin_class

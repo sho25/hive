@@ -64,7 +64,7 @@ specifier|public
 interface|interface
 name|HiveIOExceptionHandler
 block|{
-comment|/**    * process exceptions raised when creating a record reader.    *     * @param e    * @return    */
+comment|/**    * process exceptions raised when creating a record reader.    *    * @param e    * @return RecordReader    */
 specifier|public
 name|RecordReader
 argument_list|<
@@ -80,7 +80,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * process exceptions thrown when calling rr's next    *     * @param e    * @param result    * @throws IOException    */
+comment|/**    * process exceptions thrown when calling rr's next    *    * @param e    * @param result    * @throws IOException    */
 specifier|public
 name|void
 name|handleRecorReaderNextException

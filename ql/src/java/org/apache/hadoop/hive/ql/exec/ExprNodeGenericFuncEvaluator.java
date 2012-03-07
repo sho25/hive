@@ -835,7 +835,7 @@ name|deferredChildren
 argument_list|)
 return|;
 block|}
-comment|/**    * If the genericUDF is a base comparison, it returns an integer based on the result of comparing    * the two sides of the UDF, like the compareTo method in Comparable.    *    * If the genericUDF is not a base comparison, or there is an error executing the comparison, it    * returns null.    * @param row    * @return    * @throws HiveException    */
+comment|/**    * If the genericUDF is a base comparison, it returns an integer based on the result of comparing    * the two sides of the UDF, like the compareTo method in Comparable.    *    * If the genericUDF is not a base comparison, or there is an error executing the comparison, it    * returns null.    * @param row    * @return the compare results    * @throws HiveException    */
 specifier|public
 name|Integer
 name|compare

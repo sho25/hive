@@ -43,7 +43,7 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Constructs an {@link AuthorizationException} with the specified detail    * message.    *     * @param s    *          the detail message.    */
+comment|/**    * Constructs an {@link AuthorizationException} with the specified detail    * message.    *    * @param message    *          the detail message.    */
 specifier|public
 name|AuthorizationException
 parameter_list|(
@@ -57,7 +57,7 @@ name|message
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Constructs an {@link AuthorizationException} with the specified cause.    *     * @param cause    *          the cause    */
+comment|/**    * Constructs an {@link AuthorizationException} with the specified cause.    *    * @param cause    *          the cause    */
 specifier|public
 name|AuthorizationException
 parameter_list|(

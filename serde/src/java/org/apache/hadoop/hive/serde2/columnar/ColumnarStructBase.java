@@ -679,7 +679,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Get one field out of the struct.    *     * If the field is a primitive field, return the actual object. Otherwise    * return the LazyObject. This is because PrimitiveObjectInspector does not    * have control over the object used by the user - the user simply directly    * use the Object instead of going through Object    * PrimitiveObjectInspector.get(Object).    *     * NOTE: separator and nullSequence has to be the same each time this method    * is called. These two parameters are used only once to parse each record.    *     * @param fieldID    *          The field ID    * @param nullSequence    *          The sequence for null value    * @return The field as a LazyObject    */
+comment|/**    * Get one field out of the struct.    *    * If the field is a primitive field, return the actual object. Otherwise    * return the LazyObject. This is because PrimitiveObjectInspector does not    * have control over the object used by the user - the user simply directly    * use the Object instead of going through Object    * PrimitiveObjectInspector.get(Object).    *    * NOTE: separator and nullSequence has to be the same each time this method    * is called. These two parameters are used only once to parse each record.    *    * @param fieldID    *          The field ID    * @return The field as a LazyObject    */
 specifier|public
 name|Object
 name|getField
@@ -698,7 +698,7 @@ name|uncheckedGetField
 argument_list|()
 return|;
 block|}
-comment|/**    * Check if the object is null and return the length of the stream    *     * @param objectInspector    * @param cachedByteArrayRef    *          the bytes of the object    * @param start    *          the start offset    * @param length    *          the length    *     * @return -1 for null,>=0 for length    */
+comment|/**    * Check if the object is null and return the length of the stream    *    * @param objectInspector    * @param cachedByteArrayRef    *          the bytes of the object    * @param start    *          the start offset    * @param length    *          the length    *    * @return -1 for null,>=0 for length    */
 specifier|protected
 specifier|abstract
 name|int
@@ -717,7 +717,7 @@ name|int
 name|length
 parameter_list|)
 function_decl|;
-comment|/**    * create the lazy object for this field    *     * @param objectInspector    *          the object inspector for the field    * @return the lazy object for the field    */
+comment|/**    * create the lazy object for this field    *    * @param objectInspector    *          the object inspector for the field    * @return the lazy object for the field    */
 specifier|protected
 specifier|abstract
 name|LazyObjectBase
@@ -802,7 +802,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Get the values of the fields as an ArrayList.    *     * @param nullSequence    *          The sequence for the NULL value    * @return The values of the fields as an ArrayList.    */
+comment|/**    * Get the values of the fields as an ArrayList.    *    * @return The values of the fields as an ArrayList.    */
 specifier|public
 name|ArrayList
 argument_list|<

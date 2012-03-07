@@ -2126,7 +2126,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * Processes a line of semicolon separated commands    *    * @param line    *          The commands to process    * @param allowInterupting    *          When true the function will handle SIG_INT (Ctrl+C) by interrupting the processing and    *          returning -1    * @return    */
+comment|/**    * Processes a line of semicolon separated commands    *    * @param line    *          The commands to process    * @param allowInterupting    *          When true the function will handle SIG_INT (Ctrl+C) by interrupting the processing and    *          returning -1    * @return 0 if ok    */
 specifier|public
 name|int
 name|processLine

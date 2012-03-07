@@ -1719,7 +1719,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**    * Returns true if the current comparison is in the list of stop comparisons, i.e. we've found    * all records which won't be filtered    * @return    */
+comment|/**    * Returns true if the current comparison is in the list of stop comparisons, i.e. we've found    * all records which won't be filtered    * @return true if the current comparison is found    */
 specifier|public
 name|boolean
 name|foundAllTargets

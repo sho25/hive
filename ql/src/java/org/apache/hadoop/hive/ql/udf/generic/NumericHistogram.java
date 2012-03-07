@@ -168,7 +168,7 @@ specifier|private
 name|Random
 name|prng
 decl_stmt|;
-comment|/**    * Creates a new histogram object. Note that the allocate() or merge()     * method must be called before the histogram can be used.    */
+comment|/**    * Creates a new histogram object. Note that the allocate() or merge()    * method must be called before the histogram can be used.    */
 specifier|public
 name|NumericHistogram
 parameter_list|()
@@ -224,7 +224,7 @@ return|return
 name|nusedbins
 return|;
 block|}
-comment|/**    * Returns true if this histogram object has been initialized by calling merge()    * or allocate().     */
+comment|/**    * Returns true if this histogram object has been initialized by calling merge()    * or allocate().    */
 specifier|public
 name|boolean
 name|isReady
@@ -307,7 +307,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-comment|/**    * Takes a serialized histogram created by the serialize() method and merges    * it with the current histogram object.    *    * @param other A serialized histogram created by the serialize() method    * @see merge    */
+comment|/**    * Takes a serialized histogram created by the serialize() method and merges    * it with the current histogram object.    *    * @param other A serialized histogram created by the serialize() method    * @see #merge    */
 specifier|public
 name|void
 name|merge
@@ -1288,7 +1288,7 @@ literal|1
 return|;
 comment|// for Xlint, code will never reach here
 block|}
-comment|/**    * In preparation for a Hive merge() call, serializes the current histogram object into an    * ArrayList of DoubleWritable objects. This list is deserialized and merged by the     * merge method.    *    * @return An ArrayList of Hadoop DoubleWritable objects that represents the current    * histogram.    * @see merge(ArrayList<DoubleWritable>)    */
+comment|/**    * In preparation for a Hive merge() call, serializes the current histogram object into an    * ArrayList of DoubleWritable objects. This list is deserialized and merged by the    * merge method.    *    * @return An ArrayList of Hadoop DoubleWritable objects that represents the current    * histogram.    * @see #merge    */
 specifier|public
 name|ArrayList
 argument_list|<

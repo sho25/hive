@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * User global level privileges    */
+comment|/**  * User global level privileges  */
 end_comment
 
 begin_class
@@ -146,7 +146,7 @@ return|return
 name|privilege
 return|;
 block|}
-comment|/**    * @param dbPrivileges set of global privileges to user    */
+comment|/**    * @param dbPrivilege set of global privileges to user    */
 specifier|public
 name|void
 name|setPrivilege

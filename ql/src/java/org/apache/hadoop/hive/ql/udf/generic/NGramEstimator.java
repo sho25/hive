@@ -170,7 +170,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A generic, re-usable n-gram estimation class that supports partial aggregations.  * The algorithm is based on the heuristic from the following paper:  * Yael Ben-Haim and Elad Tom-Tov, "A streaming parallel decision tree algorithm",  * J. Machine Learning Research 11 (2010), pp. 849--872.   *  * In particular, it is guaranteed that frequencies will be under-counted. With large  * data and a reasonable precision factor, this undercounting appears to be on the order  * of 5%.  */
+comment|/**  * A generic, re-usable n-gram estimation class that supports partial aggregations.  * The algorithm is based on the heuristic from the following paper:  * Yael Ben-Haim and Elad Tom-Tov, "A streaming parallel decision tree algorithm",  * J. Machine Learning Research 11 (2010), pp. 849--872.  *  * In particular, it is guaranteed that frequencies will be under-counted. With large  * data and a reasonable precision factor, this undercounting appears to be on the order  * of 5%.  */
 end_comment
 
 begin_class
@@ -203,7 +203,7 @@ name|Double
 argument_list|>
 name|ngrams
 decl_stmt|;
-comment|/**    * Creates a new n-gram estimator object. The 'n' for n-grams is computed dynamically    * when data is fed to the object.     */
+comment|/**    * Creates a new n-gram estimator object. The 'n' for n-grams is computed dynamically    * when data is fed to the object.    */
 specifier|public
 name|NGramEstimator
 parameter_list|()
@@ -311,7 +311,7 @@ name|k
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Resets an n-gram estimator object to its initial state.     */
+comment|/**    * Resets an n-gram estimator object to its initial state.    */
 specifier|public
 name|void
 name|reset
@@ -792,7 +792,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Trims an n-gram estimation down to either 'pf' * 'k' n-grams, or 'k' n-grams if     * finalTrim is true.    */
+comment|/**    * Trims an n-gram estimation down to either 'pf' * 'k' n-grams, or 'k' n-grams if    * finalTrim is true.    */
 specifier|private
 name|void
 name|trim
@@ -945,7 +945,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Takes a serialized n-gram estimator object created by the serialize() method and merges    * it with the current n-gram object.    *    * @param other A serialized n-gram object created by the serialize() method    * @see merge    */
+comment|/**    * Takes a serialized n-gram estimator object created by the serialize() method and merges    * it with the current n-gram object.    *    * @param other A serialized n-gram object created by the serialize() method    */
 specifier|public
 name|void
 name|merge
@@ -1281,7 +1281,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * In preparation for a Hive merge() call, serializes the current n-gram estimator object into an    * ArrayList of Text objects. This list is deserialized and merged by the     * merge method.    *    * @return An ArrayList of Hadoop Text objects that represents the current    * n-gram estimation.    * @see merge(ArrayList<Text>)    */
+comment|/**    * In preparation for a Hive merge() call, serializes the current n-gram estimator object into an    * ArrayList of Text objects. This list is deserialized and merged by the    * merge method.    *    * @return An ArrayList of Hadoop Text objects that represents the current    * n-gram estimation.    * @see #merge    */
 specifier|public
 name|ArrayList
 argument_list|<

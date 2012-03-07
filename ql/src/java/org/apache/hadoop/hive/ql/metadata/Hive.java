@@ -1523,7 +1523,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Drop a database    * @param name    * @param deleteData    * @param ignoreUnknownDb if true, will ignore NoSuchObjectException    * @return    * @throws HiveException    * @throws NoSuchObjectException    */
+comment|/**    * Drop a database    * @param name    * @param deleteData    * @param ignoreUnknownDb if true, will ignore NoSuchObjectException    * @throws HiveException    * @throws NoSuchObjectException    */
 specifier|public
 name|void
 name|dropDatabase
@@ -1554,7 +1554,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Drop a database    * @param name    * @param deleteData    * @param ignoreUnknownDb if true, will ignore NoSuchObjectException    * @param cascade           if true, delete all tables on the DB if exists. Othewise, the query    *                        will fail if table still exists.    * @return    * @throws HiveException    * @throws NoSuchObjectException    */
+comment|/**    * Drop a database    * @param name    * @param deleteData    * @param ignoreUnknownDb if true, will ignore NoSuchObjectException    * @param cascade           if true, delete all tables on the DB if exists. Othewise, the query    *                        will fail if table still exists.    * @throws HiveException    * @throws NoSuchObjectException    */
 specifier|public
 name|void
 name|dropDatabase
@@ -2057,7 +2057,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Updates the existing table metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newTbl    *          new name of the table. could be the old name    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Updates the existing table metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
 specifier|public
 name|void
 name|alterPartition
@@ -4045,7 +4045,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Drops table along with the data in it. If the table doesn't exist    * then it is a no-op    * @param dbName database where the table lives    * @param tableName table to drop    * @throws HiveException thrown if the drop fails    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *    * @param dbName    *          database where the table lives    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
+comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
 specifier|public
 name|void
 name|dropTable
@@ -4082,7 +4082,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Drops table along with the data in it. If the table doesn't exist    * then it is a no-op    * @param dbName database where the table lives    * @param tableName table to drop    * @throws HiveException thrown if the drop fails    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *    * @param dbName    *          database where the table lives    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
+comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *    * @param dbName    *          database where the table lives    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
 specifier|public
 name|void
 name|dropTable
@@ -4108,7 +4108,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Drops the table.    *    * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception if thrown if this is falser and table doesn't exist    * @throws HiveException    */
+comment|/**    * Drops the table.    *    * @param dbName    * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception if thrown if this is falser and table doesn't exist    * @throws HiveException    */
 specifier|public
 name|void
 name|dropTable
@@ -4192,7 +4192,7 @@ name|conf
 operator|)
 return|;
 block|}
-comment|/**    * Returns metadata for the table named tableName    * @param tableName the name of the table    * @return    * @throws HiveException if there's an internal error or if the    * table doesn't exist    */
+comment|/**    * Returns metadata for the table named tableName    * @param tableName the name of the table    * @return the table metadata    * @throws HiveException if there's an internal error or if the    * table doesn't exist    */
 specifier|public
 name|Table
 name|getTable
@@ -4231,7 +4231,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns metadata for the table named tableName    * @param tableName the name of the table    * @param throwException controls whether an exception is thrown or a returns a null    * @return    * @throws HiveException if there's an internal error or if the    * table doesn't exist    */
+comment|/**    * Returns metadata for the table named tableName    * @param tableName the name of the table    * @param throwException controls whether an exception is thrown or a returns a null    * @return the table metadata    * @throws HiveException if there's an internal error or if the    * table doesn't exist    */
 specifier|public
 name|Table
 name|getTable
@@ -4974,7 +4974,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * @param userName    *          principal name    * @param isRole    *          is the given principal name a role    * @param isGroup    *          is the given principal name a group    * @param privileges    *          a bag of privileges    * @return    * @throws HiveException    */
+comment|/**    * @param privileges    *          a bag of privileges    * @return true on success    * @throws HiveException    */
 specifier|public
 name|boolean
 name|revokePrivileges
@@ -5080,7 +5080,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If he partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param holdDDLTime if true, force [re]create the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param tmpDirPath    *          The temporary directory.    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If he partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param holdDDLTime if true, force [re]create the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    */
 specifier|public
 name|void
 name|loadPartition
@@ -5398,7 +5398,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param tmpDirPath    * @param numSp: number of static partitions in the partition spec    * @return    * @throws HiveException    */
+comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param holdDDLTime    * @return a list of strings with the dynamic partition paths    * @throws HiveException    */
 specifier|public
 name|ArrayList
 argument_list|<
@@ -5764,7 +5764,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param replace    *          if true - replace files in the table, otherwise add files to table    * @param tmpDirPath    *          The temporary directory.    */
+comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param replace    *          if true - replace files in the table, otherwise add files to table    * @param holdDDLTime    */
 specifier|public
 name|void
 name|loadTable
@@ -5896,7 +5896,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates a partition    *    * @param tbl    *          table for which partition needs to be created    * @param partSpec    *          partition keys and their values    * @param location    *          location of this partition    * @param partParams    *          partition parameters    * @param inputFormat the inputformat class    * @param outputformat the outputformat class    * @param numBuckets the number of buckets    * @param cols the column schema    * @param serializationLib the serde class    * @param serdeParams the serde parameters    * @param bucketCols the bucketing columns    * @param sortCols sort columns and order    *    * @return created partition object    * @throws HiveException    *           if table doesn't exist or partition already exists    */
+comment|/**    * Creates a partition    *    * @param tbl    *          table for which partition needs to be created    * @param partSpec    *          partition keys and their values    * @param location    *          location of this partition    * @param partParams    *          partition parameters    * @param inputFormat the inputformat class    * @param outputFormat the outputformat class    * @param numBuckets the number of buckets    * @param cols the column schema    * @param serializationLib the serde class    * @param serdeParams the serde parameters    * @param bucketCols the bucketing columns    * @param sortCols sort columns and order    *    * @return created partition object    * @throws HiveException    *           if table doesn't exist or partition already exists    */
 specifier|public
 name|Partition
 name|createPartition
@@ -8202,7 +8202,7 @@ return|return
 name|results
 return|;
 block|}
-comment|/**    * Get the name of the current database    * @return    */
+comment|/**    * Get the name of the current database    * @return the current database name    */
 specifier|public
 name|String
 name|getCurrentDatabase
@@ -8559,7 +8559,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * @param objectType    *          hive object type    * @param db_name    *          database name    * @param table_name    *          table name    * @param part_values    *          partition values    * @param column_name    *          column name    * @param user_name    *          user name    * @param group_names    *          group names    * @return    * @throws HiveException    */
+comment|/**    * @param objectType    *          hive object type    * @param db_name    *          database name    * @param table_name    *          table name    * @param part_values    *          partition values    * @param column_name    *          column name    * @param user_name    *          user name    * @param group_names    *          group names    * @return the privilege set    * @throws HiveException    */
 specifier|public
 name|PrincipalPrivilegeSet
 name|get_privilege_set
@@ -8642,7 +8642,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * @param objectType    *          hive object type    * @param principalName    * @param principalType    * @param dbName    * @param tableName    * @param partValues    * @param columnName    * @return    * @throws HiveException    */
+comment|/**    * @param objectType    *          hive object type    * @param principalName    * @param principalType    * @param dbName    * @param tableName    * @param partValues    * @param columnName    * @return list of privileges    * @throws HiveException    */
 specifier|public
 name|List
 argument_list|<

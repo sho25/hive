@@ -6868,7 +6868,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Get the GenericUDAF evaluator for the name and argumentClasses.    *    * @param name    *          the name of the UDAF    * @param argumentTypeInfos    * @return The UDAF evaluator    */
+comment|/**    * Get the GenericUDAF evaluator for the name and argumentClasses.    *    * @param name    *          the name of the UDAF    * @param argumentOIs    * @param isDistinct    * @param isAllColumns    * @return The UDAF evaluator    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

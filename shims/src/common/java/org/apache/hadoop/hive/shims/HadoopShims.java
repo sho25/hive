@@ -636,7 +636,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Convert the ClusterStatus to its Thrift equivalent: JobTrackerState.    * See MAPREDUCE-2455 for why this is a part of the shim.    * @param clusterStatus    * @return the matching JobTrackerState    * @throws Exception if no equivalent JobTrackerState exists    */
 enum|enum
 name|JobTrackerState
 block|{
@@ -645,6 +644,7 @@ block|,
 name|RUNNING
 block|}
 empty_stmt|;
+comment|/**    * Convert the ClusterStatus to its Thrift equivalent: JobTrackerState.    * See MAPREDUCE-2455 for why this is a part of the shim.    * @param clusterStatus    * @return the matching JobTrackerState    * @throws Exception if no equivalent JobTrackerState exists    */
 specifier|public
 name|JobTrackerState
 name|getJobTrackerState
