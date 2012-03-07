@@ -1003,10 +1003,12 @@ name|blockStart
 argument_list|,
 name|blockPointer
 argument_list|,
-name|split
+name|path
 operator|.
-name|getPath
-argument_list|()
+name|makeQualified
+argument_list|(
+name|fs
+argument_list|)
 operator|.
 name|toString
 argument_list|()
