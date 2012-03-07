@@ -652,12 +652,15 @@ block|}
 comment|// if scheme is specified but not authority then use the default authority
 if|if
 condition|(
+operator|(
+operator|!
 name|fromScheme
 operator|.
 name|equals
 argument_list|(
-literal|"hdfs"
+literal|"file"
 argument_list|)
+operator|)
 operator|&&
 name|StringUtils
 operator|.
@@ -738,48 +741,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-if|if
-condition|(
-operator|!
-name|fromURI
-operator|.
-name|getScheme
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-literal|"file"
-argument_list|)
-operator|&&
-operator|!
-name|fromURI
-operator|.
-name|getScheme
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-literal|"hdfs"
-argument_list|)
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|ErrorMsg
-operator|.
-name|INVALID_PATH
-operator|.
-name|getMsg
-argument_list|(
-name|ast
-argument_list|,
-literal|"only \"file\" or \"hdfs\" file systems accepted"
-argument_list|)
-argument_list|)
-throw|;
-block|}
 comment|// local mode implies that scheme should be "file"
 comment|// we can change this going forward
 if|if
