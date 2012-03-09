@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyObject stores an object in a range of bytes in a byte[].  *   * A LazyObject can represent any primitive object or hierarchical object like  * array, map or struct.  */
+comment|/**  * LazyObject stores an object in a range of bytes in a byte[].  *  * A LazyObject can represent any primitive object or hierarchical object like  * array, map or struct.  */
 end_comment
 
 begin_class
@@ -54,10 +54,11 @@ parameter_list|>
 extends|extends
 name|LazyObjectBase
 block|{
+specifier|protected
 name|OI
 name|oi
 decl_stmt|;
-comment|/**    * Create a LazyObject.    *     * @param oi    *          Derived classes can access meta information about this Lazy Object    *          (e.g, separator, nullSequence, escaper) from it.    */
+comment|/**    * Create a LazyObject.    *    * @param oi    *          Derived classes can access meta information about this Lazy Object    *          (e.g, separator, nullSequence, escaper) from it.    */
 specifier|protected
 name|LazyObject
 parameter_list|(
