@@ -492,6 +492,11 @@ argument_list|(
 literal|"CREATE-TABLE-AS-SELECT cannot create external table"
 argument_list|)
 block|,
+name|INSERT_EXTERNAL_TABLE
+argument_list|(
+literal|"Inserting into a external table is not allowed"
+argument_list|)
+block|,
 name|DATABASE_NOT_EXISTS
 argument_list|(
 literal|"Database does not exist:"

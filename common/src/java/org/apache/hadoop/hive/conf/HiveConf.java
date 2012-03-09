@@ -2730,6 +2730,14 @@ literal|"hive.region.properties"
 argument_list|,
 literal|""
 argument_list|)
+block|,
+comment|// whether insert into external tables is allowed
+name|HIVE_INSERT_INTO_EXTERNAL_TABLES
+argument_list|(
+literal|"hive.insert.into.external.tables"
+argument_list|,
+literal|true
+argument_list|)
 block|,      ;
 specifier|public
 specifier|final
