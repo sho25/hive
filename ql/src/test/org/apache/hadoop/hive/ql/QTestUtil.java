@@ -2574,6 +2574,8 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|FileStatus
 index|[]
 name|ls
@@ -2625,6 +2627,15 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|FileNotFoundException
+name|e
+parameter_list|)
+block|{
+comment|// Best effort
 block|}
 name|FunctionRegistry
 operator|.
