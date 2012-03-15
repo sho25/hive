@@ -21,6 +21,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|Closeable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|List
@@ -71,6 +81,8 @@ interface|interface
 name|DelegationTokenStore
 extends|extends
 name|Configurable
+extends|,
+name|Closeable
 block|{
 comment|/**    * Exception for internal token store errors that typically cannot be handled by the caller.    */
 specifier|public
