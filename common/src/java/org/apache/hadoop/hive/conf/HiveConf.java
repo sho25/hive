@@ -2760,7 +2760,16 @@ literal|"hive.insert.into.external.tables"
 argument_list|,
 literal|true
 argument_list|)
-block|,      ;
+block|,
+comment|// A comma separated list of hooks which implement HiveDriverRunHook and will be run at the
+comment|// beginning and end of Driver.run, these will be run in the order specified
+name|HIVE_DRIVER_RUN_HOOKS
+argument_list|(
+literal|"hive.exec.driver.run.hooks"
+argument_list|,
+literal|""
+argument_list|)
+block|,     ;
 specifier|public
 specifier|final
 name|String
