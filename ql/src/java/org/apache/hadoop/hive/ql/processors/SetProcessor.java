@@ -33,7 +33,7 @@ name|serde
 operator|.
 name|Constants
 operator|.
-name|STRING_TYPE_NAME
+name|SERIALIZATION_NULL_FORMAT
 import|;
 end_import
 
@@ -51,7 +51,7 @@ name|serde
 operator|.
 name|Constants
 operator|.
-name|SERIALIZATION_NULL_FORMAT
+name|STRING_TYPE_NAME
 import|;
 end_import
 
@@ -127,7 +127,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Schema
+name|FieldSchema
 import|;
 end_import
 
@@ -145,7 +145,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|FieldSchema
+name|Schema
 import|;
 end_import
 
@@ -905,15 +905,9 @@ return|;
 block|}
 else|else
 block|{
-name|ss
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|set
-argument_list|(
-name|varname
-argument_list|,
+name|String
+name|substitutedValue
+init|=
 operator|new
 name|VariableSubstitution
 argument_list|()
@@ -927,6 +921,29 @@ argument_list|()
 argument_list|,
 name|varvalue
 argument_list|)
+decl_stmt|;
+name|ss
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|set
+argument_list|(
+name|varname
+argument_list|,
+name|substitutedValue
+argument_list|)
+expr_stmt|;
+name|ss
+operator|.
+name|getOverriddenConfigurations
+argument_list|()
+operator|.
+name|put
+argument_list|(
+name|varname
+argument_list|,
+name|substitutedValue
 argument_list|)
 expr_stmt|;
 return|return
