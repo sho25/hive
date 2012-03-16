@@ -2526,7 +2526,11 @@ init|=
 operator|new
 name|HiveServerHandler
 argument_list|(
+operator|new
+name|HiveConf
+argument_list|(
 name|conf
+argument_list|)
 argument_list|)
 decl_stmt|;
 return|return
