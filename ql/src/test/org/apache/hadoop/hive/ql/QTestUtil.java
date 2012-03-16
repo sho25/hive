@@ -5621,7 +5621,9 @@ block|,
 literal|".*job_[0-9]*_[0-9]*.*"
 block|,
 literal|".*USING 'java -cp.*"
-block|}
+block|,
+literal|"^Deleted.*"
+block|,     }
 expr_stmt|;
 name|maskPatterns
 argument_list|(
