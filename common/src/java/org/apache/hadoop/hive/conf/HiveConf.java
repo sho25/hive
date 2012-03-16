@@ -861,7 +861,7 @@ name|DYNAMICPARTITIONING
 argument_list|(
 literal|"hive.exec.dynamic.partition"
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 block|,
 name|DYNAMICPARTITIONINGMODE
