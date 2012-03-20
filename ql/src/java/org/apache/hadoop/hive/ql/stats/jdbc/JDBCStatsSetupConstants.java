@@ -39,9 +39,20 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|PART_STAT_TIMESTAMP_COLUMN_NAME
+init|=
+literal|"TS"
+decl_stmt|;
+comment|// NOTE:
+comment|// For all table names past and future, Hive will not drop old versions of this table, it is up
+comment|// to the administrator
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|PART_STAT_TABLE_NAME
 init|=
-literal|"PARTITION_STATS"
+literal|"PARTITION_STATS_V2"
 decl_stmt|;
 comment|// supported statistics - column names
 specifier|public

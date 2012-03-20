@@ -282,6 +282,18 @@ block|}
 specifier|public
 specifier|static
 name|String
+name|getTimestampColumnName
+parameter_list|()
+block|{
+return|return
+name|JDBCStatsSetupConstants
+operator|.
+name|PART_STAT_TIMESTAMP_COLUMN_NAME
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
 name|getStatTableName
 parameter_list|()
 block|{
@@ -351,6 +363,11 @@ name|getStatTableName
 argument_list|()
 operator|+
 literal|" ("
+operator|+
+name|getTimestampColumnName
+argument_list|()
+operator|+
+literal|" TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
 operator|+
 name|JDBCStatsUtils
 operator|.
@@ -462,20 +479,11 @@ literal|" = ? , "
 expr_stmt|;
 block|}
 name|update
-operator|=
-name|update
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-name|update
-operator|.
-name|length
+operator|+=
+name|getTimestampColumnName
 argument_list|()
-operator|-
-literal|2
-argument_list|)
+operator|+
+literal|" = CURRENT_TIMESTAMP"
 expr_stmt|;
 name|update
 operator|+=
@@ -531,18 +539,17 @@ name|comment
 parameter_list|)
 block|{
 name|String
-name|insert
+name|columns
 init|=
-literal|"INSERT INTO /* "
-operator|+
-name|comment
-operator|+
-literal|" */ "
-operator|+
-name|getStatTableName
+name|JDBCStatsUtils
+operator|.
+name|getIdColumnName
 argument_list|()
-operator|+
-literal|" VALUES (?, "
+decl_stmt|;
+name|String
+name|values
+init|=
+literal|"?"
 decl_stmt|;
 for|for
 control|(
@@ -562,31 +569,47 @@ name|i
 operator|++
 control|)
 block|{
-name|insert
+name|columns
 operator|+=
-literal|"? , "
-expr_stmt|;
-block|}
-name|insert
-operator|=
-name|insert
-operator|.
-name|substring
+literal|", "
+operator|+
+name|getStatColumnName
 argument_list|(
-literal|0
-argument_list|,
-name|insert
+name|supportedStats
 operator|.
-name|length
-argument_list|()
-operator|-
-literal|3
+name|get
+argument_list|(
+name|i
+argument_list|)
 argument_list|)
 expr_stmt|;
-name|insert
+name|values
 operator|+=
-literal|")"
+literal|", ?"
 expr_stmt|;
+block|}
+name|String
+name|insert
+init|=
+literal|"INSERT INTO /* "
+operator|+
+name|comment
+operator|+
+literal|" */ "
+operator|+
+name|getStatTableName
+argument_list|()
+operator|+
+literal|"("
+operator|+
+name|columns
+operator|+
+literal|") VALUES ("
+operator|+
+name|values
+operator|+
+literal|")"
+decl_stmt|;
 return|return
 name|insert
 return|;
