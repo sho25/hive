@@ -1731,21 +1731,75 @@ argument_list|,
 name|searchConditions
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
+name|int
+name|scSize
+init|=
 name|searchConditions
 operator|.
 name|size
 argument_list|()
-operator|!=
+decl_stmt|;
+if|if
+condition|(
+name|scSize
+operator|<
 literal|1
+operator|||
+literal|2
+operator|<
+name|scSize
 condition|)
 block|{
 comment|// Either there was nothing which could be pushed down (size = 0),
-comment|// or more than one predicate (size> 1); in the latter case,
-comment|// we bail out for now since multiple lookups on the key are
-comment|// either contradictory or redundant.  We'll need to handle
-comment|// this better later when we support more interesting predicates.
+comment|// there were complex predicates which we don't support yet.
+comment|// Currently supported are one of the form:
+comment|// 1. key< 20                        (size = 1)
+comment|// 2. key = 20                        (size = 1)
+comment|// 3. key< 20 and key> 10           (size = 2)
+return|return
+literal|null
+return|;
+block|}
+if|if
+condition|(
+name|scSize
+operator|==
+literal|2
+operator|&&
+operator|(
+name|searchConditions
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getComparisonOp
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual"
+argument_list|)
+operator|||
+name|searchConditions
+operator|.
+name|get
+argument_list|(
+literal|1
+argument_list|)
+operator|.
+name|getComparisonOp
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual"
+argument_list|)
+operator|)
+condition|)
+block|{
+comment|// If one of the predicates is =, then any other predicate with it is illegal.
 return|return
 literal|null
 return|;

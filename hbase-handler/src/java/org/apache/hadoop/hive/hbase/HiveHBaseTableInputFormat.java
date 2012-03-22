@@ -1633,29 +1633,48 @@ name|searchConditions
 operator|.
 name|size
 argument_list|()
-operator|!=
+operator|<
 literal|1
+operator|||
+name|searchConditions
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|2
 condition|)
 block|{
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Exactly one search condition expected in push down"
+literal|"Either one or two search conditions expected in push down"
 argument_list|)
 throw|;
 block|}
 comment|// Convert the search condition into a restriction on the HBase scan
+name|byte
+index|[]
+name|startRow
+init|=
+name|HConstants
+operator|.
+name|EMPTY_START_ROW
+decl_stmt|,
+name|stopRow
+init|=
+name|HConstants
+operator|.
+name|EMPTY_END_ROW
+decl_stmt|;
+for|for
+control|(
 name|IndexSearchCondition
 name|sc
-init|=
+range|:
 name|searchConditions
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
+control|)
+block|{
 name|ExprNodeConstantEvaluator
 name|eval
 init|=
@@ -1746,20 +1765,6 @@ name|objInspector
 argument_list|,
 name|isKeyBinary
 argument_list|)
-decl_stmt|;
-name|byte
-index|[]
-name|startRow
-init|=
-name|HConstants
-operator|.
-name|EMPTY_START_ROW
-decl_stmt|,
-name|stopRow
-init|=
-name|HConstants
-operator|.
-name|EMPTY_END_ROW
 decl_stmt|;
 name|String
 name|comparisonOp
@@ -1873,6 +1878,7 @@ literal|" is not a supported comparison operator"
 argument_list|)
 throw|;
 block|}
+block|}
 if|if
 condition|(
 name|tableSplit
@@ -1942,7 +1948,8 @@ operator|!
 name|isKeyBinary
 condition|)
 block|{
-comment|// Key is stored in text format. Get bytes representation of constant also of text format.
+comment|// Key is stored in text format. Get bytes representation of constant also of
+comment|// text format.
 name|byte
 index|[]
 name|startRow
