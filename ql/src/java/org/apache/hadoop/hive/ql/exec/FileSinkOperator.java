@@ -4264,7 +4264,7 @@ parameter_list|()
 block|{
 name|PlanUtils
 operator|.
-name|configureTableJobPropertiesForStorageHandler
+name|configureOutputJobPropertiesForStorageHandler
 argument_list|(
 name|getConf
 argument_list|()

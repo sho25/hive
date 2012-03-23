@@ -515,7 +515,7 @@ continue|continue;
 block|}
 name|PlanUtils
 operator|.
-name|configureTableJobPropertiesForStorageHandler
+name|configureInputJobPropertiesForStorageHandler
 argument_list|(
 name|fetchWork
 operator|.

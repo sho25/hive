@@ -199,7 +199,45 @@ parameter_list|()
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Configures properties for a job based on the definition of the    * source or target table it accesses.    *    * @param tableDesc descriptor for the table being accessed    *    * @param jobProperties receives properties copied or transformed    * from the table properties    */
+comment|/**    * This method is called to allow the StorageHandlers the chance    * to populate the JobContext.getConfiguration() with properties that    * maybe be needed by the handler's bundled artifacts (ie InputFormat, SerDe, etc).    * Key value pairs passed into jobProperties are guaranteed to be set in the job's    * configuration object. User's can retrieve "context" information from tableDesc.    * User's should avoid mutating tableDesc and only make changes in jobProperties.    * This method is expected to be idempotent such that a job called with the    * same tableDesc values should return the same key-value pairs in jobProperties.    * Any external state set by this method should remain the same if this method is    * called again. It is up to the user to determine how best guarantee this invariant.    *    * This method in particular is to create a configuration for input.    * @param tableDesc descriptor for the table being accessed    * @param jobProperties receives properties copied or transformed    * from the table properties    */
+specifier|public
+specifier|abstract
+name|void
+name|configureInputJobProperties
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|jobProperties
+parameter_list|)
+function_decl|;
+comment|/**    * This method is called to allow the StorageHandlers the chance    * to populate the JobContext.getConfiguration() with properties that    * maybe be needed by the handler's bundled artifacts (ie InputFormat, SerDe, etc).    * Key value pairs passed into jobProperties are guaranteed to be set in the job's    * configuration object. User's can retrieve "context" information from tableDesc.    * User's should avoid mutating tableDesc and only make changes in jobProperties.    * This method is expected to be idempotent such that a job called with the    * same tableDesc values should return the same key-value pairs in jobProperties.    * Any external state set by this method should remain the same if this method is    * called again. It is up to the user to determine how best guarantee this invariant.    *    * This method in particular is to create a configuration for output.    * @param tableDesc descriptor for the table being accessed    * @param jobProperties receives properties copied or transformed    * from the table properties    */
+specifier|public
+specifier|abstract
+name|void
+name|configureOutputJobProperties
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|jobProperties
+parameter_list|)
+function_decl|;
+comment|/**    * Deprecated use configureInputJobProperties/configureOutputJobProperties    * methods instead.    *    * Configures properties for a job based on the definition of the    * source or target table it accesses.    *    * @param tableDesc descriptor for the table being accessed    *    * @param jobProperties receives properties copied or transformed    * from the table properties    */
+annotation|@
+name|Deprecated
 specifier|public
 name|void
 name|configureTableJobProperties

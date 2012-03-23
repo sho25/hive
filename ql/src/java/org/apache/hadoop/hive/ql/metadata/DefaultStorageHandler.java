@@ -305,7 +305,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|configureTableJobProperties
+name|configureInputJobProperties
 parameter_list|(
 name|TableDesc
 name|tableDesc
@@ -320,6 +320,46 @@ name|jobProperties
 parameter_list|)
 block|{
 comment|// do nothing by default
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|configureOutputJobProperties
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|jobProperties
+parameter_list|)
+block|{
+comment|// do nothing by default
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|configureTableJobProperties
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|jobProperties
+parameter_list|)
+block|{
+comment|//do nothing by default
 block|}
 annotation|@
 name|Override

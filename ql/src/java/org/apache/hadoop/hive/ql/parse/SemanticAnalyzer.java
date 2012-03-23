@@ -43569,7 +43569,7 @@ condition|)
 block|{
 name|PlanUtils
 operator|.
-name|configureTableJobPropertiesForStorageHandler
+name|configureInputJobPropertiesForStorageHandler
 argument_list|(
 name|fetch
 operator|.
@@ -43667,7 +43667,7 @@ condition|)
 block|{
 name|PlanUtils
 operator|.
-name|configureTableJobPropertiesForStorageHandler
+name|configureInputJobPropertiesForStorageHandler
 argument_list|(
 name|td
 argument_list|)
