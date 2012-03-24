@@ -5083,6 +5083,16 @@ name|lazyDecompress
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * Return the metadata (string to string map) that was written into the      * file.      */
+specifier|public
+name|Metadata
+name|getMetadata
+parameter_list|()
+block|{
+return|return
+name|metadata
+return|;
+block|}
 comment|/**      * Override this method to specialize the type of      * {@link FSDataInputStream} returned.      */
 specifier|protected
 name|FSDataInputStream
