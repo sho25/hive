@@ -2230,6 +2230,91 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**    * Create a metadata object with alternating key-value pairs.    * Eg. metadata(key1, value1, key2, value2)    */
+specifier|public
+specifier|static
+name|Metadata
+name|createMetadata
+parameter_list|(
+name|Text
+modifier|...
+name|values
+parameter_list|)
+block|{
+if|if
+condition|(
+name|values
+operator|.
+name|length
+operator|%
+literal|2
+operator|!=
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Must have a matched set of "
+operator|+
+literal|"key-value pairs. "
+operator|+
+name|values
+operator|.
+name|length
+operator|+
+literal|" strings supplied."
+argument_list|)
+throw|;
+block|}
+name|Metadata
+name|result
+init|=
+operator|new
+name|Metadata
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|values
+operator|.
+name|length
+condition|;
+name|i
+operator|+=
+literal|2
+control|)
+block|{
+name|result
+operator|.
+name|set
+argument_list|(
+name|values
+index|[
+name|i
+index|]
+argument_list|,
+name|values
+index|[
+name|i
+operator|+
+literal|1
+index|]
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|result
+return|;
+block|}
 comment|/**    * Write KeyBuffer/ValueBuffer pairs to a RCFile. RCFile's format is    * compatible with SequenceFile's.    *    */
 specifier|public
 specifier|static
@@ -5083,7 +5168,7 @@ name|lazyDecompress
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Return the metadata (string to string map) that was written into the      * file.      */
+comment|/**      * Return the metadata (Text to Text map) that was written into the      * file.      */
 specifier|public
 name|Metadata
 name|getMetadata
@@ -5091,6 +5176,24 @@ parameter_list|()
 block|{
 return|return
 name|metadata
+return|;
+block|}
+comment|/**      * Return the metadata value associated with the given key.      * @param key the metadata key to retrieve      */
+specifier|public
+name|Text
+name|getMetadataValueOf
+parameter_list|(
+name|Text
+name|key
+parameter_list|)
+block|{
+return|return
+name|metadata
+operator|.
+name|get
+argument_list|(
+name|key
+argument_list|)
 return|;
 block|}
 comment|/**      * Override this method to specialize the type of      * {@link FSDataInputStream} returned.      */
