@@ -655,6 +655,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_PART_INHERIT_TBL_PROPS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_PRE_EVENT_LISTENERS
 block|,       }
 decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
@@ -1406,6 +1412,13 @@ argument_list|(
 literal|"hive.metastore.batch.retrieve.max"
 argument_list|,
 literal|300
+argument_list|)
+block|,
+name|METASTORE_PRE_EVENT_LISTENERS
+argument_list|(
+literal|"hive.metastore.pre.event.listeners"
+argument_list|,
+literal|""
 argument_list|)
 block|,
 name|METASTORE_EVENT_LISTENERS
