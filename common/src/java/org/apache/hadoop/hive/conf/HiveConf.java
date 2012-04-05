@@ -2782,6 +2782,13 @@ literal|"hive.exec.driver.run.hooks"
 argument_list|,
 literal|""
 argument_list|)
+block|,
+name|HIVE_DDL_OUTPUT_FORMAT
+argument_list|(
+literal|"hive.ddl.output.format"
+argument_list|,
+literal|null
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final
