@@ -39162,7 +39162,7 @@ name|commonTypeInfo
 init|=
 name|FunctionRegistry
 operator|.
-name|getCommonClassForComparison
+name|getCommonClassForUnionAll
 argument_list|(
 name|lInfo
 operator|.
@@ -39278,7 +39278,7 @@ name|setType
 argument_list|(
 name|FunctionRegistry
 operator|.
-name|getCommonClassForComparison
+name|getCommonClassForUnionAll
 argument_list|(
 name|lInfo
 operator|.
