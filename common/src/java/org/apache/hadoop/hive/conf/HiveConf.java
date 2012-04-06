@@ -936,6 +936,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|JOB_DEBUG_CAPTURE_STACKTRACES
+argument_list|(
+literal|"hive.exec.job.debug.capture.stacktraces"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|JOB_DEBUG_TIMEOUT
 argument_list|(
 literal|"hive.exec.job.debug.timeout"
