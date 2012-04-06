@@ -1315,6 +1315,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|DELEGATION_TOKEN_STORE_ZK_CONNECT_TIMEOUTMILLIS
+init|=
+literal|"hive.cluster.delegation.token.store.zookeeper.connectTimeoutMillis"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|DELEGATION_TOKEN_STORE_ZK_ZNODE
 init|=
 literal|"hive.cluster.delegation.token.store.zookeeper.znode"
