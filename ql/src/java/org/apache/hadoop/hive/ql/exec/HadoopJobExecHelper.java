@@ -2153,13 +2153,6 @@ argument_list|(
 name|ctrs
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
-name|task
-operator|.
-name|setDone
-argument_list|()
-expr_stmt|;
 comment|// update based on the final value of the counters
 name|updateCounters
 argument_list|(
