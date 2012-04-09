@@ -556,9 +556,9 @@ parameter_list|)
 throws|throws
 name|Exception
 function_decl|;
-comment|/**    * Hive uses side effect files exclusively for it's output. It also manages    * the setup/cleanup/commit of output from the hive client. As a result it does    * not need support for the same inside the MR framework    *    * This routine sets the appropriate options to set the output format and any    * options related to bypass setup/cleanup/commit support in the MR framework    */
+comment|/**    * Hive uses side effect files exclusively for it's output. It also manages    * the setup/cleanup/commit of output from the hive client. As a result it does    * not need support for the same inside the MR framework    *    * This routine sets the appropriate options related to bypass setup/cleanup/commit    * support in the MR framework, but does not set the OutputFormat class.    */
 name|void
-name|setNullOutputFormat
+name|prepareJobOutput
 parameter_list|(
 name|JobConf
 name|conf

@@ -165,6 +165,22 @@ name|hadoop
 operator|.
 name|hbase
 operator|.
+name|mapred
+operator|.
+name|TableMapReduceUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hbase
+operator|.
 name|mapreduce
 operator|.
 name|TableOutputFormat
@@ -556,6 +572,14 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+comment|//obtain delegation tokens for the job
+name|TableMapReduceUtil
+operator|.
+name|initCredentials
+argument_list|(
+name|jc
+argument_list|)
+expr_stmt|;
 name|String
 name|hbaseTableName
 init|=
