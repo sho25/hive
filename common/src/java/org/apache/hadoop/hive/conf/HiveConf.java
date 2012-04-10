@@ -660,6 +660,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_BATCH_RETRIEVE_TABLE_PARTITION_MAX
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_PRE_EVENT_LISTENERS
 block|,       }
 decl_stmt|;
@@ -1419,6 +1425,13 @@ argument_list|(
 literal|"hive.metastore.batch.retrieve.max"
 argument_list|,
 literal|300
+argument_list|)
+block|,
+name|METASTORE_BATCH_RETRIEVE_TABLE_PARTITION_MAX
+argument_list|(
+literal|"hive.metastore.batch.retrieve.table.partition.max"
+argument_list|,
+literal|1000
 argument_list|)
 block|,
 name|METASTORE_PRE_EVENT_LISTENERS
