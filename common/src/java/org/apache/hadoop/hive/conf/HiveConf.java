@@ -1301,6 +1301,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|METASTORE_USE_THRIFT_FRAMED_TRANSPORT
+argument_list|(
+literal|"hive.metastore.thrift.framed.transport.enabled"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|METASTORE_CLUSTER_DELEGATION_TOKEN_STORE_CLS
 argument_list|(
 literal|"hive.cluster.delegation.token.store.class"
