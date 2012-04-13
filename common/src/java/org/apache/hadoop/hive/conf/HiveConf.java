@@ -2764,11 +2764,11 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-name|HIVE_FILES_UMASK_VALUE
+name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
 argument_list|(
-literal|"hive.files.umask.value"
+literal|"hive.warehouse.subdir.inherit.perms"
 argument_list|,
-literal|0002
+literal|false
 argument_list|)
 block|,
 comment|// parameters for using multiple clusters in a hive instance
