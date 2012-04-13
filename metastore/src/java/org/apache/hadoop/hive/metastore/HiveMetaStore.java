@@ -2886,6 +2886,13 @@ parameter_list|()
 throws|throws
 name|MetaException
 block|{
+synchronized|synchronized
+init|(
+name|HMSHandler
+operator|.
+name|class
+init|)
+block|{
 if|if
 condition|(
 name|HMSHandler
@@ -2953,6 +2960,7 @@ name|RuntimeException
 operator|)
 name|e
 throw|;
+block|}
 block|}
 block|}
 specifier|private

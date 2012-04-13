@@ -2510,6 +2510,11 @@ expr_stmt|;
 block|}
 annotation|@
 name|Override
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 specifier|public
 name|TProcessor
 name|getProcessor
@@ -2549,6 +2554,24 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|HiveServerHandler
+operator|.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to get processor by exception "
+operator|+
+name|e
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+name|trans
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 throw|throw
 operator|new
 name|RuntimeException
