@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -94,16 +104,6 @@ operator|.
 name|io
 operator|.
 name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Arrays
 import|;
 end_import
 
@@ -245,6 +245,14 @@ return|return
 name|r
 return|;
 block|}
+name|String
+name|s
+init|=
+name|t
+operator|.
+name|toString
+argument_list|()
+decl_stmt|;
 name|int
 index|[]
 name|index
@@ -261,9 +269,9 @@ operator|.
 name|get
 argument_list|()
 argument_list|,
-name|t
+name|s
 operator|.
-name|getLength
+name|length
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -278,14 +286,6 @@ return|return
 name|r
 return|;
 block|}
-name|String
-name|s
-init|=
-name|t
-operator|.
-name|toString
-argument_list|()
-decl_stmt|;
 name|r
 operator|.
 name|set
