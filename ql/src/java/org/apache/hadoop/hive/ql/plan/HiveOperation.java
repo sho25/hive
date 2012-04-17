@@ -465,6 +465,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|SHOW_TBLPROPERTIES
+argument_list|(
+literal|"SHOW_TBLPROPERTIES"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|SHOWFUNCTIONS
 argument_list|(
 literal|"SHOWFUNCTIONS"

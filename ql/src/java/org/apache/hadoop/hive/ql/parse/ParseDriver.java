@@ -564,6 +564,15 @@ name|xlateMap
 operator|.
 name|put
 argument_list|(
+literal|"KW_TBLPROPERTIES"
+argument_list|,
+literal|"TBLPROPERTIES"
+argument_list|)
+expr_stmt|;
+name|xlateMap
+operator|.
+name|put
+argument_list|(
 literal|"KW_SHOW"
 argument_list|,
 literal|"SHOW"
