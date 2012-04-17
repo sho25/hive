@@ -1,4 +1,8 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
+begin_comment
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+end_comment
+
 begin_package
 package|package
 name|org
@@ -508,7 +512,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *   * MetadataOnlyOptimizer determines to which TableScanOperators "metadata only"  * optimization can be applied. Such operator must use only partition columns  * (it is easy to check, because we are after column pruning and all places  * where the data from the operator is used must go through GroupByOperator  * distinct or distinct-like aggregations. Aggregation is distinct-like if  * adding distinct wouldn't change the result, for example min, max.  *   * We cannot apply the optimization without group by, because the results depend  * on the numbers of rows in partitions, for example count(hr) will count all  * rows in matching partitions.  *   */
+comment|/**  *  * MetadataOnlyOptimizer determines to which TableScanOperators "metadata only"  * optimization can be applied. Such operator must use only partition columns  * (it is easy to check, because we are after column pruning and all places  * where the data from the operator is used must go through GroupByOperator  * distinct or distinct-like aggregations. Aggregation is distinct-like if  * adding distinct wouldn't change the result, for example min, max.  *  * We cannot apply the optimization without group by, because the results depend  * on the numbers of rows in partitions, for example count(hr) will count all  * rows in matching partitions.  *  */
 end_comment
 
 begin_class
@@ -575,7 +579,7 @@ name|TableScanOperator
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**      * Sets operator as one for which there is a chance to apply optimization      *       * @param op      *          the operator      */
+comment|/**      * Sets operator as one for which there is a chance to apply optimization      *      * @param op      *          the operator      */
 specifier|public
 name|void
 name|setMayBeMetadataOnly
