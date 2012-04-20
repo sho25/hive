@@ -698,18 +698,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|MetaStoreUtils
-operator|.
-name|checkOrSetPrimaryRegionName
-argument_list|(
-name|newt
-operator|.
-name|getSd
-argument_list|()
-argument_list|,
-name|hiveConf
-argument_list|)
-expr_stmt|;
 comment|// if this alter is a rename, the table is not a virtual view, the user
 comment|// didn't change the default location (or new location is empty), and
 comment|// table is not an external table, that means useris asking metastore to
@@ -1527,18 +1515,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|MetaStoreUtils
-operator|.
-name|checkOrSetPrimaryRegionName
-argument_list|(
-name|new_part
-operator|.
-name|getSd
-argument_list|()
-argument_list|,
-name|hiveConf
-argument_list|)
-expr_stmt|;
 comment|//alter partition
 if|if
 condition|(

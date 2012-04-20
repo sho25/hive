@@ -3991,25 +3991,6 @@ name|max
 argument_list|)
 return|;
 block|}
-specifier|public
-name|void
-name|setPrimaryRegionName
-parameter_list|(
-name|String
-name|primaryRegionName
-parameter_list|)
-block|{
-name|tTable
-operator|.
-name|getSd
-argument_list|()
-operator|.
-name|setPrimaryRegionName
-argument_list|(
-name|primaryRegionName
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 end_class
 

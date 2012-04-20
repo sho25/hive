@@ -905,14 +905,6 @@ name|getParameters
 argument_list|()
 argument_list|,
 literal|false
-argument_list|,
-name|table
-operator|.
-name|getSd
-argument_list|()
-operator|.
-name|getPrimaryRegionName
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|List

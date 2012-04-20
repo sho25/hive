@@ -2771,28 +2771,6 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-comment|// parameters for using multiple clusters in a hive instance
-name|HIVE_USE_INPUT_PRIMARY_REGION
-argument_list|(
-literal|"hive.use.input.primary.region"
-argument_list|,
-literal|true
-argument_list|)
-block|,
-name|HIVE_DEFAULT_REGION_NAME
-argument_list|(
-literal|"hive.default.region.name"
-argument_list|,
-literal|""
-argument_list|)
-block|,
-name|HIVE_REGION_PROPERTIES
-argument_list|(
-literal|"hive.region.properties"
-argument_list|,
-literal|""
-argument_list|)
-block|,
 comment|// whether insert into external tables is allowed
 name|HIVE_INSERT_INTO_EXTERNAL_TABLES
 argument_list|(
