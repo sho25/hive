@@ -87,7 +87,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazyPrimitive
+name|LazyInteger
 import|;
 end_import
 
@@ -113,20 +113,6 @@ name|LazyIntObjectInspector
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|IntWritable
-import|;
-end_import
-
 begin_comment
 comment|/**  * LazyIntegerBinary for storing an int value as an IntWritable. This class complements class  * LazyInteger. It's primary difference is the {@link #init(ByteArrayRef, int, int)} method, which  * reads the integer value stored from the default binary format.  */
 end_comment
@@ -136,12 +122,7 @@ specifier|public
 class|class
 name|LazyDioInteger
 extends|extends
-name|LazyPrimitive
-argument_list|<
-name|LazyIntObjectInspector
-argument_list|,
-name|IntWritable
-argument_list|>
+name|LazyInteger
 block|{
 specifier|private
 name|ByteStream
@@ -165,12 +146,6 @@ argument_list|(
 name|oi
 argument_list|)
 expr_stmt|;
-name|data
-operator|=
-operator|new
-name|IntWritable
-argument_list|()
-expr_stmt|;
 block|}
 specifier|public
 name|LazyDioInteger
@@ -182,19 +157,6 @@ block|{
 name|super
 argument_list|(
 name|copy
-argument_list|)
-expr_stmt|;
-name|data
-operator|=
-operator|new
-name|IntWritable
-argument_list|(
-name|copy
-operator|.
-name|data
-operator|.
-name|get
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

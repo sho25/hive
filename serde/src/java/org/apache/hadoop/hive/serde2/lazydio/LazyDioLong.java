@@ -87,7 +87,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazyPrimitive
+name|LazyLong
 import|;
 end_import
 
@@ -113,20 +113,6 @@ name|LazyLongObjectInspector
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|LongWritable
-import|;
-end_import
-
 begin_comment
 comment|/**  * LazyLongBinary for storing a long value as a LongWritable. This class complements class  * LazyLong. It's primary difference is the {@link #init(ByteArrayRef, int, int)} method, which  * reads the long value stored in the default binary format.  */
 end_comment
@@ -136,12 +122,7 @@ specifier|public
 class|class
 name|LazyDioLong
 extends|extends
-name|LazyPrimitive
-argument_list|<
-name|LazyLongObjectInspector
-argument_list|,
-name|LongWritable
-argument_list|>
+name|LazyLong
 block|{
 specifier|private
 name|ByteStream
@@ -165,12 +146,6 @@ argument_list|(
 name|oi
 argument_list|)
 expr_stmt|;
-name|data
-operator|=
-operator|new
-name|LongWritable
-argument_list|()
-expr_stmt|;
 block|}
 specifier|public
 name|LazyDioLong
@@ -182,19 +157,6 @@ block|{
 name|super
 argument_list|(
 name|copy
-argument_list|)
-expr_stmt|;
-name|data
-operator|=
-operator|new
-name|LongWritable
-argument_list|(
-name|copy
-operator|.
-name|data
-operator|.
-name|get
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

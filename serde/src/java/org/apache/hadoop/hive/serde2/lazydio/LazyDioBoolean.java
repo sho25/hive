@@ -87,7 +87,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazyPrimitive
+name|LazyBoolean
 import|;
 end_import
 
@@ -113,20 +113,6 @@ name|LazyBooleanObjectInspector
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|BooleanWritable
-import|;
-end_import
-
 begin_comment
 comment|/**  * LazyBooleanBinary for storing a boolean value as an BooleanWritable. This class complements class  * LazyBoolean. It's primary difference is the {@link #init(ByteArrayRef, int, int)} method, which  * reads the boolean value stored from the default binary format.  */
 end_comment
@@ -136,12 +122,7 @@ specifier|public
 class|class
 name|LazyDioBoolean
 extends|extends
-name|LazyPrimitive
-argument_list|<
-name|LazyBooleanObjectInspector
-argument_list|,
-name|BooleanWritable
-argument_list|>
+name|LazyBoolean
 block|{
 specifier|private
 name|ByteStream
@@ -165,12 +146,6 @@ argument_list|(
 name|oi
 argument_list|)
 expr_stmt|;
-name|data
-operator|=
-operator|new
-name|BooleanWritable
-argument_list|()
-expr_stmt|;
 block|}
 specifier|public
 name|LazyDioBoolean
@@ -182,19 +157,6 @@ block|{
 name|super
 argument_list|(
 name|copy
-argument_list|)
-expr_stmt|;
-name|data
-operator|=
-operator|new
-name|BooleanWritable
-argument_list|(
-name|copy
-operator|.
-name|data
-operator|.
-name|get
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
