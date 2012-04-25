@@ -1307,6 +1307,12 @@ return|return
 name|newdb
 return|;
 block|}
+name|db
+operator|.
+name|conf
+operator|=
+name|c
+expr_stmt|;
 return|return
 name|db
 return|;
