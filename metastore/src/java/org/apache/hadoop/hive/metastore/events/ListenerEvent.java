@@ -37,6 +37,24 @@ name|HMSHandler
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|EnvironmentContext
+import|;
+end_import
+
 begin_comment
 comment|/**  * Base class for all the events which are defined for metastore.  */
 end_comment
@@ -57,6 +75,13 @@ specifier|private
 specifier|final
 name|HMSHandler
 name|handler
+decl_stmt|;
+comment|// Properties passed by the client, to be used in execution hooks.
+specifier|private
+name|EnvironmentContext
+name|environmentContext
+init|=
+literal|null
 decl_stmt|;
 specifier|public
 name|ListenerEvent
@@ -102,6 +127,31 @@ parameter_list|()
 block|{
 return|return
 name|status
+return|;
+block|}
+specifier|public
+name|void
+name|setEnvironmentContext
+parameter_list|(
+name|EnvironmentContext
+name|environmentContext
+parameter_list|)
+block|{
+name|this
+operator|.
+name|environmentContext
+operator|=
+name|environmentContext
+expr_stmt|;
+block|}
+comment|/**    * @return environment properties of the event    */
+specifier|public
+name|EnvironmentContext
+name|getEnvironmentContext
+parameter_list|()
+block|{
+return|return
+name|environmentContext
 return|;
 block|}
 block|}
