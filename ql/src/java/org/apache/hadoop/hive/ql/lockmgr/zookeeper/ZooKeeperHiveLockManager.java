@@ -1414,7 +1414,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * @param name    *          The name of the zookeeper child    * @param data    *          The data for the zookeeper child    * @param mode    *          The mode in which the child needs to be created    * @throws KeeperException     * @throws InterruptedException     **/
+comment|/**    * @param name    *          The name of the zookeeper child    * @param data    *          The data for the zookeeper child    * @param mode    *          The mode in which the child needs to be created    * @throws KeeperException    * @throws InterruptedException    **/
 specifier|private
 name|String
 name|createChild
@@ -1557,6 +1557,9 @@ name|Exception
 name|e1
 parameter_list|)
 block|{
+name|tryNum
+operator|++
+expr_stmt|;
 if|if
 condition|(
 name|e1
