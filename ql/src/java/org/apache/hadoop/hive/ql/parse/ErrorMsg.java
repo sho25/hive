@@ -548,6 +548,11 @@ operator|+
 literal|"in expressions"
 argument_list|)
 block|,
+name|UDAF_INVALID_LOCATION
+argument_list|(
+literal|"Not yet supported place for UDAF"
+argument_list|)
+block|,
 name|UDTF_LATERAL_VIEW
 argument_list|(
 literal|"UDTF's cannot be in a select expression when there is a lateral view"
