@@ -169,6 +169,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|lang
+operator|.
+name|UnsupportedOperationException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -276,6 +286,20 @@ operator|.
 name|regex
 operator|.
 name|Pattern
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
 import|;
 end_import
 
@@ -2012,14 +2036,31 @@ name|Pattern
 operator|.
 name|compile
 argument_list|(
-literal|"-- EXCLUDE_HADOOP_MAJOR_VERSIONS(.*)"
+literal|"-- (EX|IN)CLUDE_HADOOP_MAJOR_VERSIONS\\((.*)\\)"
 argument_list|)
 decl_stmt|;
-comment|// Read the entire query
 name|boolean
 name|excludeQuery
 init|=
 literal|false
+decl_stmt|;
+name|boolean
+name|includeQuery
+init|=
+literal|false
+decl_stmt|;
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|versionSet
+init|=
+operator|new
+name|HashSet
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
 decl_stmt|;
 name|String
 name|hadoopVer
@@ -2032,6 +2073,7 @@ decl_stmt|;
 name|String
 name|line
 decl_stmt|;
+comment|// Read the entire query
 while|while
 condition|(
 operator|(
@@ -2046,8 +2088,17 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// While we are reading the lines, detect whether this query wants to be
-comment|// excluded from running because the Hadoop version is incorrect
+comment|// Each qfile may include at most one INCLUDE or EXCLUDE directive.
+comment|//
+comment|// If a qfile contains an INCLUDE directive, and hadoopVer does
+comment|// not appear in the list of versions to include, then the qfile
+comment|// is skipped.
+comment|//
+comment|// If a qfile contains an EXCLUDE directive, and hadoopVer is
+comment|// listed in the list of versions to EXCLUDE, then the qfile is
+comment|// skipped.
+comment|//
+comment|// Otherwise, the qfile is included.
 name|Matcher
 name|matcher
 init|=
@@ -2066,66 +2117,74 @@ name|find
 argument_list|()
 condition|)
 block|{
+if|if
+condition|(
+name|excludeQuery
+operator|||
+name|includeQuery
+condition|)
+block|{
 name|String
-name|group
+name|message
+init|=
+literal|"QTestUtil: qfile "
+operator|+
+name|qf
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" contains more than one reference to (EX|IN)CLUDE_HADOOP_MAJOR_VERSIONS"
+decl_stmt|;
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+name|message
+argument_list|)
+throw|;
+block|}
+name|String
+name|prefix
 init|=
 name|matcher
 operator|.
 name|group
-argument_list|()
-decl_stmt|;
-name|int
-name|start
-init|=
-name|group
-operator|.
-name|indexOf
 argument_list|(
-literal|'('
+literal|1
 argument_list|)
 decl_stmt|;
-name|int
-name|end
-init|=
-name|group
+if|if
+condition|(
+literal|"EX"
 operator|.
-name|indexOf
+name|equals
 argument_list|(
-literal|')'
+name|prefix
 argument_list|)
-decl_stmt|;
-assert|assert
-name|end
-operator|>
-name|start
-assert|;
-comment|// versions might be something like '0.17, 0.19'
+condition|)
+block|{
+name|excludeQuery
+operator|=
+literal|true
+expr_stmt|;
+block|}
+else|else
+block|{
+name|includeQuery
+operator|=
+literal|true
+expr_stmt|;
+block|}
 name|String
 name|versions
 init|=
-name|group
+name|matcher
 operator|.
-name|substring
+name|group
 argument_list|(
-name|start
-operator|+
-literal|1
-argument_list|,
-name|end
+literal|2
 argument_list|)
-decl_stmt|;
-name|Set
-argument_list|<
-name|String
-argument_list|>
-name|excludedVersionSet
-init|=
-operator|new
-name|HashSet
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
 decl_stmt|;
 for|for
 control|(
@@ -2147,27 +2206,12 @@ operator|.
 name|trim
 argument_list|()
 expr_stmt|;
-name|excludedVersionSet
+name|versionSet
 operator|.
 name|add
 argument_list|(
 name|s
 argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|excludedVersionSet
-operator|.
-name|contains
-argument_list|(
-name|hadoopVer
-argument_list|)
-condition|)
-block|{
-name|excludeQuery
-operator|=
-literal|true
 expr_stmt|;
 block|}
 block|}
@@ -2199,6 +2243,13 @@ expr_stmt|;
 if|if
 condition|(
 name|excludeQuery
+operator|&&
+name|versionSet
+operator|.
+name|contains
+argument_list|(
+name|hadoopVer
+argument_list|)
 condition|)
 block|{
 name|System
@@ -2207,20 +2258,63 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Due to the Hadoop Version ("
-operator|+
-name|hadoopVer
-operator|+
-literal|"), "
-operator|+
-literal|"adding query "
+literal|"QTestUtil: "
 operator|+
 name|qf
 operator|.
 name|getName
 argument_list|()
 operator|+
-literal|" to the set of tests to skip"
+literal|" EXCLUDE list contains Hadoop Version "
+operator|+
+name|hadoopVer
+operator|+
+literal|". Skipping..."
+argument_list|)
+expr_stmt|;
+name|qSkipSet
+operator|.
+name|add
+argument_list|(
+name|qf
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|includeQuery
+operator|&&
+operator|!
+name|versionSet
+operator|.
+name|contains
+argument_list|(
+name|hadoopVer
+argument_list|)
+condition|)
+block|{
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"QTestUtil: "
+operator|+
+name|qf
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" INCLUDE list does not contain Hadoop Version "
+operator|+
+name|hadoopVer
+operator|+
+literal|". Skipping..."
 argument_list|)
 expr_stmt|;
 name|qSkipSet
