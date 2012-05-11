@@ -1864,6 +1864,13 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.exec.TextRecordWriter"
 argument_list|)
 block|,
+name|HIVESCRIPTESCAPENEWLINES
+argument_list|(
+literal|"hive.script.escape.newlines"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// HWI
 name|HIVEHWILISTENHOST
 argument_list|(
