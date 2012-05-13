@@ -2019,6 +2019,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEUSEEXPLICITRCFILEHEADER
+argument_list|(
+literal|"hive.exec.rcfile.use.explicit.header"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"
