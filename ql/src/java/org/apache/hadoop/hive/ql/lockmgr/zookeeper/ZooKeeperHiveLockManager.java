@@ -247,8 +247,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
-operator|.
 name|ErrorMsg
 import|;
 end_import

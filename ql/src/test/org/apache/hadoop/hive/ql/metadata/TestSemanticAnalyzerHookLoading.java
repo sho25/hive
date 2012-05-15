@@ -233,25 +233,12 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|10
+literal|40000
 argument_list|,
 name|resp
 operator|.
 name|getResponseCode
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertTrue
-argument_list|(
-name|resp
-operator|.
-name|getErrorMessage
-argument_list|()
-operator|.
-name|contains
-argument_list|(
-literal|"CTAS not supported."
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|resp

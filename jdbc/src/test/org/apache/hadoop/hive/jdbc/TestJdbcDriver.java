@@ -2827,11 +2827,6 @@ name|invalidSyntaxSQLState
 init|=
 literal|"42000"
 decl_stmt|;
-name|int
-name|parseErrorCode
-init|=
-literal|10
-decl_stmt|;
 comment|// These tests inherently cause exceptions to be written to the test output
 comment|// logs. This is undesirable, since you it might appear to someone looking
 comment|// at the test output logs as if something is failing when it isn't. Not
@@ -2847,7 +2842,7 @@ literal|"cannot recognize input near 'SELECTT' '*' 'FROM'"
 argument_list|,
 name|invalidSyntaxSQLState
 argument_list|,
-literal|11
+literal|40000
 argument_list|)
 expr_stmt|;
 name|doTestErrorCase
@@ -2856,9 +2851,9 @@ literal|"SELECT * FROM some_table_that_does_not_exist"
 argument_list|,
 literal|"Table not found"
 argument_list|,
-literal|"42000"
+literal|"42S02"
 argument_list|,
-name|parseErrorCode
+literal|10001
 argument_list|)
 expr_stmt|;
 name|doTestErrorCase
@@ -2867,9 +2862,9 @@ literal|"drop table some_table_that_does_not_exist"
 argument_list|,
 literal|"Table not found"
 argument_list|,
-literal|"42000"
+literal|"42S02"
 argument_list|,
-name|parseErrorCode
+literal|10001
 argument_list|)
 expr_stmt|;
 name|doTestErrorCase
@@ -2882,7 +2877,7 @@ literal|"Invalid table alias or column reference"
 argument_list|,
 name|invalidSyntaxSQLState
 argument_list|,
-name|parseErrorCode
+literal|10004
 argument_list|)
 expr_stmt|;
 name|doTestErrorCase
@@ -2895,14 +2890,11 @@ literal|"Invalid function"
 argument_list|,
 name|invalidSyntaxSQLState
 argument_list|,
-name|parseErrorCode
+literal|10011
 argument_list|)
 expr_stmt|;
-comment|// TODO: execute errors like this currently don't return good messages (i.e.
-comment|// 'Table already exists'). This is because the Driver class calls
-comment|// Task.executeTask() which swallows meaningful exceptions and returns a
-comment|// status
-comment|// code. This should be refactored.
+comment|// TODO: execute errors like this currently don't return good error
+comment|// codes and messages. This should be fixed.
 name|doTestErrorCase
 argument_list|(
 literal|"create table "
@@ -2911,13 +2903,11 @@ name|tableName
 operator|+
 literal|" (key int, value string)"
 argument_list|,
-literal|"Query returned non-zero code: 9, cause: FAILED: Execution Error, "
-operator|+
-literal|"return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask"
+literal|"FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask"
 argument_list|,
 literal|"08S01"
 argument_list|,
-literal|9
+literal|1
 argument_list|)
 expr_stmt|;
 block|}

@@ -4450,7 +4450,7 @@ name|System
 operator|.
 name|exit
 argument_list|(
-literal|2
+name|ret
 argument_list|)
 expr_stmt|;
 block|}

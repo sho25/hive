@@ -191,6 +191,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|ErrorMsg
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -1064,7 +1080,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Cannot initialize ScriptOperator"
+name|ErrorMsg
+operator|.
+name|SCRIPT_INIT_ERROR
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -1686,7 +1707,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Cannot initialize ScriptOperator"
+name|ErrorMsg
+operator|.
+name|SCRIPT_INIT_ERROR
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -1704,6 +1730,13 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
+name|ErrorMsg
+operator|.
+name|SCRIPT_GENERIC_ERROR
+operator|.
+name|getErrorCodedMsg
+argument_list|()
+argument_list|,
 name|scriptError
 argument_list|)
 throw|;
@@ -1839,6 +1872,13 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
+name|ErrorMsg
+operator|.
+name|SCRIPT_IO_ERROR
+operator|.
+name|getErrorCodedMsg
+argument_list|()
+argument_list|,
 name|e
 argument_list|)
 throw|;
@@ -1879,6 +1919,13 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
+name|ErrorMsg
+operator|.
+name|SCRIPT_GENERIC_ERROR
+operator|.
+name|getErrorCodedMsg
+argument_list|()
+argument_list|,
 name|scriptError
 argument_list|)
 throw|;
@@ -2261,7 +2308,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Hit error while closing .."
+name|ErrorMsg
+operator|.
+name|SCRIPT_CLOSING_ERROR
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 throw|;
 block|}
