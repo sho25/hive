@@ -25,6 +25,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -35,7 +45,27 @@ name|java
 operator|.
 name|util
 operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -159,6 +189,20 @@ name|Table
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Sets
+import|;
+end_import
+
 begin_comment
 comment|/**  * The Class representing the filter as a  binary tree. The tree has TreeNode's  * at intermediate level and the leaf level nodes are of type LeafNode.  */
 end_comment
@@ -214,6 +258,13 @@ argument_list|(
 literal|"LIKE"
 argument_list|,
 literal|"matches"
+argument_list|)
+block|,
+name|NOTEQUALS2
+argument_list|(
+literal|"!="
+argument_list|,
+literal|"!="
 argument_list|)
 block|,
 name|NOTEQUALS
@@ -351,6 +402,17 @@ name|getSimpleName
 argument_list|()
 argument_list|)
 throw|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|op
+return|;
 block|}
 block|}
 comment|/**    * The Class representing a Node in the ExpressionTree.    */
@@ -606,6 +668,34 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|//can only support "=" and "!=" for now, because our JDO lib is buggy when
+comment|// using objects from map.get()
+specifier|private
+specifier|static
+specifier|final
+name|Set
+argument_list|<
+name|Operator
+argument_list|>
+name|TABLE_FILTER_OPS
+init|=
+name|Sets
+operator|.
+name|newHashSet
+argument_list|(
+name|Operator
+operator|.
+name|EQUALS
+argument_list|,
+name|Operator
+operator|.
+name|NOTEQUALS
+argument_list|,
+name|Operator
+operator|.
+name|NOTEQUALS2
+argument_list|)
+decl_stmt|;
 specifier|private
 name|String
 name|generateJDOFilterOverTables
@@ -687,33 +777,28 @@ name|HIVE_FILTER_FIELD_PARAMS
 argument_list|)
 condition|)
 block|{
-comment|//can only support "=" and "<>" for now, because our JDO lib is buggy when
-comment|// using objects from map.get()
 if|if
 condition|(
 operator|!
-operator|(
-name|operator
-operator|==
-name|Operator
+name|TABLE_FILTER_OPS
 operator|.
-name|EQUALS
-operator|||
+name|contains
+argument_list|(
 name|operator
-operator|==
-name|Operator
-operator|.
-name|NOTEQUALS
-operator|)
+argument_list|)
 condition|)
 block|{
 throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Only = and<> are supported "
+literal|"Only "
 operator|+
-literal|"opreators for HIVE_FILTER_FIELD_PARAMS"
+name|TABLE_FILTER_OPS
+operator|+
+literal|" are supported "
+operator|+
+literal|"operators for HIVE_FILTER_FIELD_PARAMS"
 argument_list|)
 throw|;
 block|}

@@ -9409,6 +9409,27 @@ name|re
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|lexer
+operator|.
+name|errorMsg
+operator|!=
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Error parsing partition filter : "
+operator|+
+name|lexer
+operator|.
+name|errorMsg
+argument_list|)
+throw|;
+block|}
 return|return
 name|parser
 return|;
