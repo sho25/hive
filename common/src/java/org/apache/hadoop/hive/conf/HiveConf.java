@@ -1864,9 +1864,9 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.exec.TextRecordWriter"
 argument_list|)
 block|,
-name|HIVESCRIPTESCAPENEWLINES
+name|HIVESCRIPTESCAPE
 argument_list|(
-literal|"hive.script.escape.newlines"
+literal|"hive.transform.escape.input"
 argument_list|,
 literal|false
 argument_list|)

@@ -195,7 +195,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVESCRIPTESCAPENEWLINES
+name|HIVESCRIPTESCAPE
 argument_list|)
 condition|)
 block|{
@@ -203,7 +203,7 @@ name|escapeText
 operator|=
 name|HiveUtils
 operator|.
-name|escapeNewLine
+name|escapeText
 argument_list|(
 name|text
 argument_list|)

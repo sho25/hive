@@ -271,14 +271,14 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVESCRIPTESCAPENEWLINES
+name|HIVESCRIPTESCAPE
 argument_list|)
 condition|)
 block|{
 return|return
 name|HiveUtils
 operator|.
-name|unescapeNewLine
+name|unescapeText
 argument_list|(
 operator|(
 name|Text
