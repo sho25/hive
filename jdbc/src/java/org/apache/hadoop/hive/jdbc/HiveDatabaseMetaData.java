@@ -786,7 +786,12 @@ name|result
 operator|.
 name|append
 argument_list|(
+name|Character
+operator|.
+name|toLowerCase
+argument_list|(
 name|c
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
