@@ -1679,6 +1679,13 @@ argument_list|,
 literal|"HIVE_SCRIPT_OPERATOR_ID"
 argument_list|)
 block|,
+name|HIVESCRIPTTRUNCATEENV
+argument_list|(
+literal|"hive.script.operator.truncate.env"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEMAPREDMODE
 argument_list|(
 literal|"hive.mapred.mode"
