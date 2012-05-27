@@ -83,24 +83,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|MapObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|PrimitiveObjectInspector
 import|;
 end_import
@@ -120,7 +102,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyMap stores a map of Primitive LazyObjects to LazyObjects. Note that the  * keys of the map cannot contain null.  *   * LazyMap does not deal with the case of a NULL map. That is handled by the  * parent LazyObject.  */
+comment|/**  * LazyMap stores a map of Primitive LazyObjects to LazyObjects. Note that the  * keys of the map cannot contain null.  *  * LazyMap does not deal with the case of a NULL map. That is handled by the  * parent LazyObject.  */
 end_comment
 
 begin_class
@@ -194,7 +176,7 @@ name|oi
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the row data for this LazyArray.    *     * @see LazyObject#init(ByteArrayRef, int, int)    */
+comment|/**    * Set the row data for this LazyArray.    *    * @see LazyObject#init(ByteArrayRef, int, int)    */
 annotation|@
 name|Override
 specifier|public
@@ -225,6 +207,10 @@ expr_stmt|;
 name|parsed
 operator|=
 literal|false
+expr_stmt|;
+name|cachedMap
+operator|=
+literal|null
 expr_stmt|;
 block|}
 comment|/**    * Enlarge the size of arrays storing information for the elements inside the    * array.    */
@@ -675,7 +661,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Get the value in the map for the key.    *     * If there are multiple matches (which is possible in the serialized format),    * only the first one is returned.    *     * The most efficient way to get the value for the key is to serialize the key    * and then try to find it in the array. We do linear search because in most    * cases, user only wants to get one or two values out of the map, and the    * cost of building up a HashMap is substantially higher.    *     * @param key    *          The key object that we are looking for.    * @return The corresponding value object, or NULL if not found    */
+comment|/**    * Get the value in the map for the key.    *    * If there are multiple matches (which is possible in the serialized format),    * only the first one is returned.    *    * The most efficient way to get the value for the key is to serialize the key    * and then try to find it in the array. We do linear search because in most    * cases, user only wants to get one or two values out of the map, and the    * cost of building up a HashMap is substantially higher.    *    * @param key    *          The key object that we are looking for.    * @return The corresponding value object, or NULL if not found    */
 specifier|public
 name|Object
 name|getMapValueElement
@@ -788,7 +774,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get the value object with the index without checking parsed.    *     * @param index    *          The index into the array starting from 0    */
+comment|/**    * Get the value object with the index without checking parsed.    *    * @param index    *          The index into the array starting from 0    */
 specifier|private
 name|LazyObject
 name|uncheckedGetValue
@@ -797,6 +783,28 @@ name|int
 name|index
 parameter_list|)
 block|{
+if|if
+condition|(
+name|valueInited
+index|[
+name|index
+index|]
+condition|)
+block|{
+return|return
+name|valueObjects
+index|[
+name|index
+index|]
+return|;
+block|}
+name|valueInited
+index|[
+name|index
+index|]
+operator|=
+literal|true
+expr_stmt|;
 name|Text
 name|nullSequence
 init|=
@@ -876,35 +884,14 @@ operator|)
 condition|)
 block|{
 return|return
-literal|null
-return|;
-block|}
-if|if
-condition|(
-operator|!
-name|valueInited
-index|[
-name|index
-index|]
-condition|)
-block|{
-name|valueInited
-index|[
-name|index
-index|]
-operator|=
-literal|true
-expr_stmt|;
-if|if
-condition|(
 name|valueObjects
 index|[
 name|index
 index|]
-operator|==
+operator|=
 literal|null
-condition|)
-block|{
+return|;
+block|}
 name|valueObjects
 index|[
 name|index
@@ -914,18 +901,12 @@ name|LazyFactory
 operator|.
 name|createLazyObject
 argument_list|(
-operator|(
-operator|(
-name|MapObjectInspector
-operator|)
 name|oi
-operator|)
 operator|.
 name|getMapValueObjectInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|valueObjects
 index|[
 name|index
@@ -940,7 +921,6 @@ argument_list|,
 name|valueILength
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|valueObjects
 index|[
@@ -948,7 +928,7 @@ name|index
 index|]
 return|;
 block|}
-comment|/**    * Get the key object with the index without checking parsed.    *     * @param index    *          The index into the array starting from 0    */
+comment|/**    * Get the key object with the index without checking parsed.    *    * @param index    *          The index into the array starting from 0    */
 specifier|private
 name|LazyPrimitive
 argument_list|<
@@ -962,6 +942,28 @@ name|int
 name|index
 parameter_list|)
 block|{
+if|if
+condition|(
+name|keyInited
+index|[
+name|index
+index|]
+condition|)
+block|{
+return|return
+name|keyObjects
+index|[
+name|index
+index|]
+return|;
+block|}
+name|keyInited
+index|[
+name|index
+index|]
+operator|=
+literal|true
+expr_stmt|;
 name|Text
 name|nullSequence
 init|=
@@ -1038,35 +1040,14 @@ operator|)
 condition|)
 block|{
 return|return
-literal|null
-return|;
-block|}
-if|if
-condition|(
-operator|!
-name|keyInited
-index|[
-name|index
-index|]
-condition|)
-block|{
-name|keyInited
-index|[
-name|index
-index|]
-operator|=
-literal|true
-expr_stmt|;
-if|if
-condition|(
 name|keyObjects
 index|[
 name|index
 index|]
-operator|==
+operator|=
 literal|null
-condition|)
-block|{
+return|;
+block|}
 comment|// Keys are always primitive
 name|keyObjects
 index|[
@@ -1077,21 +1058,15 @@ name|LazyFactory
 operator|.
 name|createLazyPrimitiveClass
 argument_list|(
-call|(
-name|PrimitiveObjectInspector
-call|)
-argument_list|(
 operator|(
-name|MapObjectInspector
+name|PrimitiveObjectInspector
 operator|)
 name|oi
-argument_list|)
 operator|.
 name|getMapKeyObjectInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|keyObjects
 index|[
 name|index
@@ -1106,7 +1081,6 @@ argument_list|,
 name|keyILength
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|keyObjects
 index|[
@@ -1124,7 +1098,7 @@ name|Object
 argument_list|>
 name|cachedMap
 decl_stmt|;
-comment|/**    * Return the map object representing this LazyMap. Note that the keyObjects    * will be Writable primitive objects.    *     * @return the map object    */
+comment|/**    * Return the map object representing this LazyMap. Note that the keyObjects    * will be Writable primitive objects.    *    * @return the map object    */
 specifier|public
 name|Map
 argument_list|<
@@ -1148,10 +1122,14 @@ block|}
 if|if
 condition|(
 name|cachedMap
-operator|==
+operator|!=
 literal|null
 condition|)
 block|{
+return|return
+name|cachedMap
+return|;
+block|}
 comment|// Use LinkedHashMap to provide deterministic order
 name|cachedMap
 operator|=
@@ -1164,15 +1142,6 @@ name|Object
 argument_list|>
 argument_list|()
 expr_stmt|;
-block|}
-else|else
-block|{
-name|cachedMap
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
-block|}
 comment|// go through each element of the map
 for|for
 control|(
@@ -1274,7 +1243,7 @@ return|return
 name|cachedMap
 return|;
 block|}
-comment|/**    * Get the size of the map represented by this LazyMap.    *     * @return The size of the map, -1 for NULL map.    */
+comment|/**    * Get the size of the map represented by this LazyMap.    *    * @return The size of the map, -1 for NULL map.    */
 specifier|public
 name|int
 name|getMapSize

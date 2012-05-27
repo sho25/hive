@@ -77,24 +77,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ListObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|Text
@@ -102,7 +84,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyArray stores an array of Lazy Objects.  *   * LazyArray does not deal with the case of a NULL array. That is handled by the  * parent LazyObject.  */
+comment|/**  * LazyArray stores an array of Lazy Objects.  *  * LazyArray does not deal with the case of a NULL array. That is handled by the  * parent LazyObject.  */
 end_comment
 
 begin_class
@@ -142,7 +124,7 @@ name|LazyObject
 index|[]
 name|arrayElements
 decl_stmt|;
-comment|/**    * Construct a LazyArray object with the ObjectInspector.    *     * @param oi    *          the oi representing the type of this LazyArray as well as meta    *          information like separator etc.    */
+comment|/**    * Construct a LazyArray object with the ObjectInspector.    *    * @param oi    *          the oi representing the type of this LazyArray as well as meta    *          information like separator etc.    */
 specifier|protected
 name|LazyArray
 parameter_list|(
@@ -156,7 +138,7 @@ name|oi
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the row data for this LazyArray.    *     * @see LazyObject#init(ByteArrayRef, int, int)    */
+comment|/**    * Set the row data for this LazyArray.    *    * @see LazyObject#init(ByteArrayRef, int, int)    */
 annotation|@
 name|Override
 specifier|public
@@ -187,6 +169,10 @@ expr_stmt|;
 name|parsed
 operator|=
 literal|false
+expr_stmt|;
+name|cachedList
+operator|=
+literal|null
 expr_stmt|;
 block|}
 comment|/**    * Enlarge the size of arrays storing information for the elements inside the    * array.    */
@@ -542,6 +528,40 @@ name|int
 name|index
 parameter_list|)
 block|{
+if|if
+condition|(
+name|elementInited
+index|[
+name|index
+index|]
+condition|)
+block|{
+return|return
+name|arrayElements
+index|[
+name|index
+index|]
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|arrayElements
+index|[
+name|index
+index|]
+operator|.
+name|getObject
+argument_list|()
+return|;
+block|}
+name|elementInited
+index|[
+name|index
+index|]
+operator|=
+literal|true
+expr_stmt|;
 name|Text
 name|nullSequence
 init|=
@@ -612,34 +632,6 @@ return|return
 literal|null
 return|;
 block|}
-else|else
-block|{
-if|if
-condition|(
-operator|!
-name|elementInited
-index|[
-name|index
-index|]
-condition|)
-block|{
-name|elementInited
-index|[
-name|index
-index|]
-operator|=
-literal|true
-expr_stmt|;
-if|if
-condition|(
-name|arrayElements
-index|[
-name|index
-index|]
-operator|==
-literal|null
-condition|)
-block|{
 name|arrayElements
 index|[
 name|index
@@ -649,18 +641,12 @@ name|LazyFactory
 operator|.
 name|createLazyObject
 argument_list|(
-operator|(
-operator|(
-name|ListObjectInspector
-operator|)
 name|oi
-operator|)
 operator|.
 name|getListElementObjectInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|arrayElements
 index|[
 name|index
@@ -678,8 +664,6 @@ argument_list|,
 name|elementLength
 argument_list|)
 expr_stmt|;
-block|}
-block|}
 return|return
 name|arrayElements
 index|[
@@ -751,10 +735,14 @@ block|}
 if|if
 condition|(
 name|cachedList
-operator|==
+operator|!=
 literal|null
 condition|)
 block|{
+return|return
+name|cachedList
+return|;
+block|}
 name|cachedList
 operator|=
 operator|new
@@ -766,15 +754,6 @@ argument_list|(
 name|arrayLength
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-name|cachedList
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
-block|}
 for|for
 control|(
 name|int
