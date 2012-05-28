@@ -313,22 +313,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|TableType
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|Warehouse
 import|;
 end_import
@@ -2688,6 +2672,22 @@ operator|.
 name|mapred
 operator|.
 name|InputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|TableType
 import|;
 end_import
 
@@ -40325,6 +40325,8 @@ operator|+
 name|part_col
 argument_list|)
 expr_stmt|;
+comment|// TODO: use the right type by calling part_col.getType() instead of
+comment|// String.class
 name|rwsch
 operator|.
 name|put
@@ -40346,13 +40348,7 @@ argument_list|()
 argument_list|,
 name|TypeInfoFactory
 operator|.
-name|getPrimitiveTypeInfo
-argument_list|(
-name|part_col
-operator|.
-name|getType
-argument_list|()
-argument_list|)
+name|stringTypeInfo
 argument_list|,
 name|alias
 argument_list|,
