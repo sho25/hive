@@ -3384,9 +3384,10 @@ operator|.
 name|shutdown
 argument_list|()
 expr_stmt|;
-name|ms
-operator|=
-literal|null
+name|threadLocalMS
+operator|.
+name|remove
+argument_list|()
 expr_stmt|;
 block|}
 name|logInfo
