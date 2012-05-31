@@ -1133,6 +1133,13 @@ argument_list|,
 literal|"Not yet supported place for UDAF"
 argument_list|)
 block|,
+name|DROP_PARTITION_NON_STRING_PARTCOLS_NONEQUALITY
+argument_list|(
+literal|10129
+argument_list|,
+literal|"Drop partitions for a non string partition columns is not allowed using non-equality"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

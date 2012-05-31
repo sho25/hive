@@ -18149,6 +18149,16 @@ name|partitions
 init|=
 literal|null
 decl_stmt|;
+comment|// getPartitionsByFilter only works for string columns.
+comment|// Till that is fixed, only equality will work for non-string columns.
+if|if
+condition|(
+name|dropTbl
+operator|.
+name|isStringPartitionColumns
+argument_list|()
+condition|)
+block|{
 try|try
 block|{
 name|partitions
@@ -18179,6 +18189,24 @@ argument_list|(
 name|e
 argument_list|)
 throw|;
+block|}
+block|}
+else|else
+block|{
+name|partitions
+operator|=
+name|db
+operator|.
+name|getPartitions
+argument_list|(
+name|tbl
+argument_list|,
+name|partSpec
+operator|.
+name|getPartSpecWithoutOperator
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|// this is to prevent dropping archived partition which is archived in a
 comment|// different level the drop command specified.

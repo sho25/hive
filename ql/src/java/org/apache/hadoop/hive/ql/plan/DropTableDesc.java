@@ -92,6 +92,12 @@ decl_stmt|;
 name|boolean
 name|ifExists
 decl_stmt|;
+name|boolean
+name|stringPartitionColumns
+decl_stmt|;
+comment|// This is due to JDO not working very well with
+comment|// non-string partition columns.
+comment|// We need a different codepath for them
 specifier|public
 name|DropTableDesc
 parameter_list|()
@@ -108,6 +114,9 @@ name|expectView
 parameter_list|,
 name|boolean
 name|ifExists
+parameter_list|,
+name|boolean
+name|stringPartitionColumns
 parameter_list|)
 block|{
 name|this
@@ -132,6 +141,12 @@ name|ifExists
 operator|=
 name|ifExists
 expr_stmt|;
+name|this
+operator|.
+name|stringPartitionColumns
+operator|=
+name|stringPartitionColumns
+expr_stmt|;
 block|}
 specifier|public
 name|DropTableDesc
@@ -147,6 +162,9 @@ name|partSpecs
 parameter_list|,
 name|boolean
 name|expectView
+parameter_list|,
+name|boolean
+name|stringPartitionColumns
 parameter_list|)
 block|{
 name|this
@@ -209,6 +227,12 @@ operator|.
 name|expectView
 operator|=
 name|expectView
+expr_stmt|;
+name|this
+operator|.
+name|stringPartitionColumns
+operator|=
+name|stringPartitionColumns
 expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */
@@ -326,6 +350,30 @@ operator|.
 name|ifExists
 operator|=
 name|ifExists
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isStringPartitionColumns
+parameter_list|()
+block|{
+return|return
+name|stringPartitionColumns
+return|;
+block|}
+specifier|public
+name|void
+name|setStringPartitionColumns
+parameter_list|(
+name|boolean
+name|stringPartitionColumns
+parameter_list|)
+block|{
+name|this
+operator|.
+name|stringPartitionColumns
+operator|=
+name|stringPartitionColumns
 expr_stmt|;
 block|}
 block|}
