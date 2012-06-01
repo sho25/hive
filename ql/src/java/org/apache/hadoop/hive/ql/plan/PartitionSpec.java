@@ -25,16 +25,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Iterator
 import|;
 end_import
@@ -392,7 +382,7 @@ argument_list|>
 name|partSpec
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -429,6 +419,10 @@ operator|.
 name|getKey
 argument_list|()
 argument_list|,
+name|PlanUtils
+operator|.
+name|stripQuotes
+argument_list|(
 name|entry
 operator|.
 name|getValue
@@ -436,6 +430,7 @@ argument_list|()
 operator|.
 name|getValue
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
