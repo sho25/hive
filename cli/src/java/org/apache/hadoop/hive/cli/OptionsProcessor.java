@@ -243,6 +243,35 @@ specifier|public
 name|OptionsProcessor
 parameter_list|()
 block|{
+comment|// -database database
+name|options
+operator|.
+name|addOption
+argument_list|(
+name|OptionBuilder
+operator|.
+name|hasArg
+argument_list|()
+operator|.
+name|withArgName
+argument_list|(
+literal|"databasename"
+argument_list|)
+operator|.
+name|withLongOpt
+argument_list|(
+literal|"database"
+argument_list|)
+operator|.
+name|withDescription
+argument_list|(
+literal|"Specify the database to use"
+argument_list|)
+operator|.
+name|create
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// -e 'quoted-query-string'
 name|options
 operator|.
@@ -734,6 +763,17 @@ name|hasOption
 argument_list|(
 literal|'S'
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|ss
+operator|.
+name|database
+operator|=
+name|commandLine
+operator|.
+name|getOptionValue
+argument_list|(
+literal|"database"
 argument_list|)
 expr_stmt|;
 name|ss

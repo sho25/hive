@@ -226,6 +226,11 @@ name|CliSessionState
 extends|extends
 name|SessionState
 block|{
+comment|/**    * -database option if any that the session has been invoked with.    */
+specifier|public
+name|String
+name|database
+decl_stmt|;
 comment|/**    * -e option if any that the session has been invoked with.    */
 specifier|public
 name|String
