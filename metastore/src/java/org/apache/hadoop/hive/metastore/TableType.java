@@ -33,6 +33,10 @@ block|,
 name|VIRTUAL_VIEW
 block|,
 name|INDEX_TABLE
+block|,
+name|LINK_TABLE
+block|,
+name|STATIC_LINK_TABLE
 block|}
 end_enum
 
