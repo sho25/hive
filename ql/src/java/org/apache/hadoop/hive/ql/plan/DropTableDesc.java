@@ -90,9 +90,6 @@ name|boolean
 name|expectView
 decl_stmt|;
 name|boolean
-name|expectLink
-decl_stmt|;
-name|boolean
 name|ifExists
 decl_stmt|;
 name|boolean
@@ -116,9 +113,6 @@ name|boolean
 name|expectView
 parameter_list|,
 name|boolean
-name|expectLink
-parameter_list|,
-name|boolean
 name|ifExists
 parameter_list|,
 name|boolean
@@ -140,12 +134,6 @@ operator|.
 name|expectView
 operator|=
 name|expectView
-expr_stmt|;
-name|this
-operator|.
-name|expectLink
-operator|=
-name|expectLink
 expr_stmt|;
 name|this
 operator|.
@@ -246,12 +234,6 @@ name|stringPartitionColumns
 operator|=
 name|stringPartitionColumns
 expr_stmt|;
-name|this
-operator|.
-name|expectLink
-operator|=
-literal|false
-expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */
 annotation|@
@@ -342,32 +324,6 @@ operator|.
 name|expectView
 operator|=
 name|expectView
-expr_stmt|;
-block|}
-comment|/**    * @return whether to expect a table link being dropped    */
-specifier|public
-name|boolean
-name|getExpectLink
-parameter_list|()
-block|{
-return|return
-name|expectLink
-return|;
-block|}
-comment|/**    * @param expectLink    *          set whether to expect a table link being dropped    */
-specifier|public
-name|void
-name|setExpectLink
-parameter_list|(
-name|boolean
-name|expectLink
-parameter_list|)
-block|{
-name|this
-operator|.
-name|expectLink
-operator|=
-name|expectLink
 expr_stmt|;
 block|}
 comment|/**    * @return whether IF EXISTS was specified    */

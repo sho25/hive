@@ -1140,47 +1140,6 @@ argument_list|,
 literal|"Drop partitions for a non string partition columns is not allowed using non-equality"
 argument_list|)
 block|,
-name|TABLELINK_TO_OWN_DB
-argument_list|(
-literal|10130
-argument_list|,
-literal|"You cannot create Links to tables in your own database. "
-operator|+
-literal|"Links are meant for accessing other databases."
-argument_list|)
-block|,
-name|TABLELINK_TO_UNMANAGED_TABLE
-argument_list|(
-literal|10131
-argument_list|,
-literal|"Table Links can only point to Managed Tables. "
-operator|+
-literal|"They cannot point to Views, External Tables or other Links."
-argument_list|)
-block|,
-name|DROP_COMMAND_FOR_VIEWS
-argument_list|(
-literal|10132
-argument_list|,
-literal|"To drop a view you need to use the DROP VIEW command."
-argument_list|)
-block|,
-name|DROP_COMMAND_FOR_TABLELINKS
-argument_list|(
-literal|10133
-argument_list|,
-literal|"To drop a table link you need to use the"
-operator|+
-literal|" DROP TABLELINK command."
-argument_list|)
-block|,
-name|DROP_COMMAND_FOR_TABLES
-argument_list|(
-literal|10134
-argument_list|,
-literal|"To drop a base table you need to use the DROP TABLE command."
-argument_list|)
-block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

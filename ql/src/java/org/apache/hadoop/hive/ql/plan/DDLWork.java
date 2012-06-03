@@ -149,10 +149,6 @@ name|CreateViewDesc
 name|createVwDesc
 decl_stmt|;
 specifier|private
-name|CreateTableLinkDesc
-name|createTblLinkDesc
-decl_stmt|;
-specifier|private
 name|DropTableDesc
 name|dropTblDesc
 decl_stmt|;
@@ -707,40 +703,6 @@ operator|.
 name|createVwDesc
 operator|=
 name|createVwDesc
-expr_stmt|;
-block|}
-comment|/**    * @param createTblLinkDesc    *          create table link descriptor    */
-specifier|public
-name|DDLWork
-parameter_list|(
-name|HashSet
-argument_list|<
-name|ReadEntity
-argument_list|>
-name|inputs
-parameter_list|,
-name|HashSet
-argument_list|<
-name|WriteEntity
-argument_list|>
-name|outputs
-parameter_list|,
-name|CreateTableLinkDesc
-name|createTblLinkDesc
-parameter_list|)
-block|{
-name|this
-argument_list|(
-name|inputs
-argument_list|,
-name|outputs
-argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|createTblLinkDesc
-operator|=
-name|createTblLinkDesc
 expr_stmt|;
 block|}
 comment|/**    * @param dropTblDesc    *          drop table descriptor    */
@@ -1773,39 +1735,6 @@ operator|.
 name|createVwDesc
 operator|=
 name|createVwDesc
-expr_stmt|;
-block|}
-comment|/**    * @return the createTblLinkDesc    */
-annotation|@
-name|Explain
-argument_list|(
-name|displayName
-operator|=
-literal|"Create Table Link Operator"
-argument_list|)
-specifier|public
-name|CreateTableLinkDesc
-name|getCreateTblLinkDesc
-parameter_list|()
-block|{
-return|return
-name|createTblLinkDesc
-return|;
-block|}
-comment|/**    * @param createTblLinkDesc    *          the createTblLinkDesc to set    */
-specifier|public
-name|void
-name|setCreateTblLinkDesc
-parameter_list|(
-name|CreateTableLinkDesc
-name|createTblLinkDesc
-parameter_list|)
-block|{
-name|this
-operator|.
-name|createTblLinkDesc
-operator|=
-name|createTblLinkDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the dropTblDesc    */

@@ -605,14 +605,6 @@ argument_list|(
 literal|"hive.log"
 argument_list|)
 decl_stmt|;
-specifier|protected
-specifier|static
-specifier|final
-name|String
-name|IDENTIFIER_REGEX
-init|=
-literal|"[a-zA-Z_0-9@]+"
-decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
@@ -1689,7 +1681,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * validateName    *    * Checks the name conforms to our standars which are: "[a-zA-z_0-9@]+". checks    * this is just characters and numbers and _    *    * @param name    *          the name to validate    * @return true or false depending on conformance    * @exception MetaException    *              if it doesn't match the pattern.    */
+comment|/**    * validateName    *    * Checks the name conforms to our standars which are: "[a-zA-z_0-9]+". checks    * this is just characters and numbers and _    *    * @param name    *          the name to validate    * @return true or false depending on conformance    * @exception MetaException    *              if it doesn't match the pattern.    */
 specifier|static
 specifier|public
 name|boolean
@@ -1706,7 +1698,7 @@ name|Pattern
 operator|.
 name|compile
 argument_list|(
-name|IDENTIFIER_REGEX
+literal|"[\\w_]+"
 argument_list|)
 decl_stmt|;
 name|Matcher
