@@ -781,7 +781,9 @@ name|ql
 operator|.
 name|lockmgr
 operator|.
-name|LockException
+name|HiveLockObject
+operator|.
+name|HiveLockObjectData
 import|;
 end_import
 
@@ -799,9 +801,7 @@ name|ql
 operator|.
 name|lockmgr
 operator|.
-name|HiveLockObject
-operator|.
-name|HiveLockObjectData
+name|LockException
 import|;
 end_import
 
@@ -5759,6 +5759,17 @@ operator|.
 name|DRIVER_RUN
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|LOG
+argument_list|,
+name|PerfLogger
+operator|.
+name|TIME_TO_SUBMIT
+argument_list|)
+expr_stmt|;
 name|int
 name|ret
 init|=
@@ -6951,6 +6962,17 @@ name|tsk
 argument_list|)
 expr_stmt|;
 block|}
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|LOG
+argument_list|,
+name|PerfLogger
+operator|.
+name|TIME_TO_SUBMIT
+argument_list|)
+expr_stmt|;
 comment|// Loop while you either have tasks running, or tasks queued up
 while|while
 condition|(
