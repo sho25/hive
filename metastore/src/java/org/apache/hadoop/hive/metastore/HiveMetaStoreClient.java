@@ -2731,6 +2731,10 @@ name|deleteData
 argument_list|)
 expr_stmt|;
 block|}
+name|success
+operator|=
+literal|true
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
