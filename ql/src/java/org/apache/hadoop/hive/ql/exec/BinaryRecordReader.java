@@ -91,8 +91,24 @@ name|Writable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
 begin_comment
-comment|/**  * Read from a binary stream and treat each 1000 bytes (configurable via   * hive.binary.record.max.length) as a record.  The last record before the   * end of stream can have less than 1000 bytes.   */
+comment|/**  * Read from a binary stream and treat each 1000 bytes (configurable via  * hive.binary.record.max.length) as a record.  The last record before the  * end of stream can have less than 1000 bytes.  */
 end_comment
 
 begin_class
@@ -138,13 +154,17 @@ name|in
 expr_stmt|;
 name|maxRecordLength
 operator|=
-name|conf
+name|HiveConf
 operator|.
-name|getInt
+name|getIntVar
 argument_list|(
-literal|"hive.binary.record.max.length"
+name|conf
 argument_list|,
-literal|1000
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEBINARYRECORDMAX
 argument_list|)
 expr_stmt|;
 block|}

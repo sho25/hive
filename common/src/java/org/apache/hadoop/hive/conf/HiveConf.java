@@ -1878,6 +1878,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEBINARYRECORDMAX
+argument_list|(
+literal|"hive.binary.record.max.length"
+argument_list|,
+literal|1000
+argument_list|)
+block|,
 comment|// HWI
 name|HIVEHWILISTENHOST
 argument_list|(
