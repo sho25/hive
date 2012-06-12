@@ -593,13 +593,13 @@ argument_list|,
 literal|"Sampling expression needed for non-bucketed table"
 argument_list|)
 block|,
-name|BUCKETED_NUMBERATOR_BIGGER_DENOMINATOR
+name|BUCKETED_NUMERATOR_BIGGER_DENOMINATOR
 argument_list|(
 literal|10061
 argument_list|,
-literal|"Numberator should not be bigger than "
+literal|"Numerator should not be bigger than "
 operator|+
-literal|"denaminator in sample clause for table"
+literal|"denominator in sample clause for table"
 argument_list|)
 block|,
 name|NEED_PARTITION_ERROR

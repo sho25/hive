@@ -40674,7 +40674,7 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|BUCKETED_NUMBERATOR_BIGGER_DENOMINATOR
+name|BUCKETED_NUMERATOR_BIGGER_DENOMINATOR
 operator|.
 name|getMsg
 argument_list|()
