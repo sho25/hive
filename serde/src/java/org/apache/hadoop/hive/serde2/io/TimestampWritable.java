@@ -666,6 +666,9 @@ argument_list|()
 return|;
 block|}
 return|return
+name|hasDecimal
+argument_list|()
+condition|?
 name|TimestampWritable
 operator|.
 name|getNanos
@@ -676,6 +679,8 @@ name|offset
 operator|+
 literal|4
 argument_list|)
+else|:
+literal|0
 return|;
 block|}
 comment|/**    *    * @return length of serialized TimestampWritable data    */
@@ -701,6 +706,9 @@ name|checkBytes
 argument_list|()
 expr_stmt|;
 return|return
+name|hasDecimal
+argument_list|()
+condition|?
 name|WritableUtils
 operator|.
 name|decodeVIntSize
@@ -712,6 +720,8 @@ operator|+
 literal|4
 index|]
 argument_list|)
+else|:
+literal|0
 return|;
 block|}
 specifier|public
@@ -1590,6 +1600,10 @@ decl_stmt|;
 name|boolean
 name|hasDecimal
 init|=
+name|nanos
+operator|!=
+literal|0
+operator|&&
 name|setNanosBytes
 argument_list|(
 name|nanos
@@ -1879,6 +1893,17 @@ name|int
 name|offset
 parameter_list|)
 block|{
+name|boolean
+name|hasDecimal
+init|=
+name|hasDecimal
+argument_list|(
+name|bytes
+index|[
+name|offset
+index|]
+argument_list|)
+decl_stmt|;
 name|t
 operator|.
 name|setTime
@@ -1900,6 +1925,11 @@ operator|*
 literal|1000
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|hasDecimal
+condition|)
+block|{
 name|t
 operator|.
 name|setNanos
@@ -1916,6 +1946,7 @@ literal|4
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|public
 specifier|static
@@ -1952,6 +1983,21 @@ argument_list|)
 expr_stmt|;
 return|return
 name|t
+return|;
+block|}
+specifier|public
+name|boolean
+name|hasDecimal
+parameter_list|()
+block|{
+return|return
+name|hasDecimal
+argument_list|(
+name|currentBytes
+index|[
+name|offset
+index|]
+argument_list|)
 return|;
 block|}
 comment|/**    *    * @param b first byte in an encoded TimestampWritable    * @return true if it has a decimal portion, false otherwise    */
