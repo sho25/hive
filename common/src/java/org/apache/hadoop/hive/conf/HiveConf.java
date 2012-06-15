@@ -2802,6 +2802,15 @@ literal|"hive.ddl.output.format"
 argument_list|,
 literal|null
 argument_list|)
+block|,
+comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
+comment|// outputs are ready
+name|HIVE_MULTI_INSERT_MOVE_TASKS_SHARE_DEPENDENCIES
+argument_list|(
+literal|"hive.multi.insert.move.tasks.share.dependencies"
+argument_list|,
+literal|false
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final

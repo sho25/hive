@@ -115,6 +115,11 @@ name|STATS
 argument_list|(
 literal|9
 argument_list|)
+block|,
+name|DEPENDENCY_COLLECTION
+argument_list|(
+literal|10
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -219,6 +224,12 @@ literal|9
 case|:
 return|return
 name|STATS
+return|;
+case|case
+literal|10
+case|:
+return|return
+name|DEPENDENCY_COLLECTION
 return|;
 default|default:
 return|return
