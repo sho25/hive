@@ -3261,6 +3261,11 @@ argument_list|,
 name|finalName
 argument_list|,
 name|hasDynamicPartitions
+argument_list|,
+name|fsInputDesc
+operator|.
+name|getDynPartCtx
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|LinkedHashMap

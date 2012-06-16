@@ -1594,6 +1594,11 @@ argument_list|,
 name|job
 argument_list|,
 name|console
+argument_list|,
+name|work
+operator|.
+name|getDynPartCtx
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
