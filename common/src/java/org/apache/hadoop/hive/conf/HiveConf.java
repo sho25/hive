@@ -420,12 +420,6 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORE_MODE
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
 name|METASTORETHRIFTRETRIES
 block|,
 name|HiveConf
@@ -1462,13 +1456,6 @@ argument_list|(
 literal|"hive.metastore.execute.setugi"
 argument_list|,
 literal|false
-argument_list|)
-block|,
-name|METASTORE_MODE
-argument_list|(
-literal|"hive.metastore.local"
-argument_list|,
-literal|true
 argument_list|)
 block|,
 comment|// Default parameters for creating tables
@@ -4309,6 +4296,89 @@ comment|// Overlay the values of any system properties whose names appear in the
 name|applySystemProperties
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|this
+operator|.
+name|get
+argument_list|(
+literal|"hive.metastore.local"
+argument_list|,
+literal|null
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+name|l4j
+operator|.
+name|warn
+argument_list|(
+literal|"DEPRECATED: Configuration property hive.metastore.local no longer has any "
+operator|+
+literal|"effect. Make sure to provide a valid value for hive.metastore.uris if you are "
+operator|+
+literal|"connecting to a remote metastore."
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+literal|null
+operator|!=
+name|this
+operator|.
+name|get
+argument_list|(
+name|ConfVars
+operator|.
+name|METASTOREURIS
+operator|.
+name|varname
+argument_list|,
+literal|null
+argument_list|)
+operator|&&
+literal|null
+operator|!=
+name|this
+operator|.
+name|get
+argument_list|(
+name|ConfVars
+operator|.
+name|METASTORECONNECTURLKEY
+operator|.
+name|varname
+argument_list|,
+literal|null
+argument_list|)
+condition|)
+block|{
+name|l4j
+operator|.
+name|error
+argument_list|(
+literal|"Found both "
+operator|+
+name|ConfVars
+operator|.
+name|METASTOREURIS
+operator|.
+name|varname
+operator|+
+literal|" and "
+operator|+
+name|ConfVars
+operator|.
+name|METASTORECONNECTURLKEY
+operator|+
+literal|" Recommended to have exactly one of those config key"
+operator|+
+literal|"in configuration"
+argument_list|)
+expr_stmt|;
+block|}
 comment|// if the running class was loaded directly (through eclipse) rather than through a
 comment|// jar then this would be needed
 if|if

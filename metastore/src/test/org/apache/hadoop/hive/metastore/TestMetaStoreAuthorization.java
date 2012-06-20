@@ -221,17 +221,6 @@ argument_list|)
 expr_stmt|;
 name|conf
 operator|.
-name|setBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|METASTORE_MODE
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
 name|setVar
 argument_list|(
 name|HiveConf
