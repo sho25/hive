@@ -129,9 +129,6 @@ name|TUGIContainingTransport
 parameter_list|(
 name|TTransport
 name|wrapped
-parameter_list|,
-name|UserGroupInformation
-name|ugi
 parameter_list|)
 block|{
 name|super
@@ -203,7 +200,8 @@ name|Factory
 extends|extends
 name|TTransportFactory
 block|{
-comment|// Need a concurrent weak hashmap.
+comment|// Need a concurrent weakhashmap. WeakKeys() so that when underlying transport gets out of
+comment|// scope, it still can be GC'ed. Since value of map has a ref to key, need weekValues as well.
 specifier|private
 specifier|static
 specifier|final
@@ -220,6 +218,9 @@ name|MapMaker
 argument_list|()
 operator|.
 name|weakKeys
+argument_list|()
+operator|.
+name|weakValues
 argument_list|()
 operator|.
 name|makeMap
@@ -248,8 +249,6 @@ operator|new
 name|TUGIContainingTransport
 argument_list|(
 name|trans
-argument_list|,
-literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
