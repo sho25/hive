@@ -563,6 +563,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|io
+operator|.
+name|OneNullRowInputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -4855,6 +4873,11 @@ name|nonNative
 init|=
 literal|true
 decl_stmt|;
+name|boolean
+name|oneRow
+init|=
+literal|false
+decl_stmt|;
 name|Properties
 name|props
 decl_stmt|;
@@ -4899,6 +4922,17 @@ argument_list|()
 operator|.
 name|isNonNative
 argument_list|()
+expr_stmt|;
+name|oneRow
+operator|=
+name|partDesc
+operator|.
+name|getInputFileFormatClass
+argument_list|()
+operator|==
+name|OneNullRowInputFormat
+operator|.
+name|class
 expr_stmt|;
 block|}
 else|else
@@ -5278,6 +5312,27 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|oneRow
+condition|)
+block|{
+comment|// empty files are ommited at CombineHiveInputFormat.
+comment|// for metadata only query, it effectively makes partition columns disappear..
+comment|// this could be fixed by other methods, but this seemed to be the most easy (HIVEV-2955)
+name|recWriter
+operator|.
+name|write
+argument_list|(
+operator|new
+name|Text
+argument_list|(
+literal|"empty"
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// written via HiveIgnoreKeyTextOutputFormat
+block|}
 name|recWriter
 operator|.
 name|close
