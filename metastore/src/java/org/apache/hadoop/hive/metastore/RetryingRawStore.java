@@ -653,12 +653,36 @@ name|InvocationTargetException
 name|e
 parameter_list|)
 block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|javax
+operator|.
+name|jdo
+operator|.
+name|JDOException
+condition|)
+block|{
+comment|// Due to reflection, the jdo exception is wrapped in
+comment|// invocationTargetException
+name|caughtException
+operator|=
+name|e
+expr_stmt|;
+block|}
+else|else
+block|{
 throw|throw
 name|e
 operator|.
 name|getCause
 argument_list|()
 throw|;
+block|}
 block|}
 if|if
 condition|(
