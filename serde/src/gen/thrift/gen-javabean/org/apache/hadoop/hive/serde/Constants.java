@@ -19,6 +19,22 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|builder
+operator|.
+name|HashCodeBuilder
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
