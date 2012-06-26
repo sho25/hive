@@ -173,13 +173,6 @@ argument_list|(
 literal|"\\$\\{[^\\}\\$\u0020]+\\}"
 argument_list|)
 decl_stmt|;
-specifier|protected
-specifier|static
-name|int
-name|MAX_SUBST
-init|=
-literal|40
-decl_stmt|;
 specifier|private
 name|String
 name|getSubstitute
@@ -469,7 +462,14 @@ literal|0
 init|;
 name|s
 operator|<
-name|MAX_SUBST
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVEVARIABLESUBSTITUTEDEPTH
+argument_list|)
 condition|;
 name|s
 operator|++
@@ -585,7 +585,14 @@ name|IllegalStateException
 argument_list|(
 literal|"Variable substitution depth too large: "
 operator|+
-name|MAX_SUBST
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVEVARIABLESUBSTITUTEDEPTH
+argument_list|)
 operator|+
 literal|" "
 operator|+

@@ -2604,6 +2604,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVEVARIABLESUBSTITUTEDEPTH
+argument_list|(
+literal|"hive.variable.substitute.depth"
+argument_list|,
+literal|40
+argument_list|)
+block|,
 name|SEMANTIC_ANALYZER_HOOK
 argument_list|(
 literal|"hive.semantic.analyzer.hook"
