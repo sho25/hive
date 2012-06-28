@@ -1037,6 +1037,8 @@ operator|.
 name|generateCmdLine
 argument_list|(
 name|conf
+argument_list|,
+name|ctx
 argument_list|)
 decl_stmt|;
 name|String

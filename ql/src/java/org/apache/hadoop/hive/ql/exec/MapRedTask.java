@@ -902,6 +902,8 @@ init|=
 name|generateCmdLine
 argument_list|(
 name|conf
+argument_list|,
+name|ctx
 argument_list|)
 decl_stmt|;
 comment|// write out the plan to a local file
