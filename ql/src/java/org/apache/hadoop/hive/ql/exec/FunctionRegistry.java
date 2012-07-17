@@ -67,6 +67,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -3845,6 +3855,10 @@ name|FunctionInfo
 argument_list|>
 name|mFunctions
 init|=
+name|Collections
+operator|.
+name|synchronizedMap
+argument_list|(
 operator|new
 name|LinkedHashMap
 argument_list|<
@@ -3853,6 +3867,7 @@ argument_list|,
 name|FunctionInfo
 argument_list|>
 argument_list|()
+argument_list|)
 decl_stmt|;
 static|static
 block|{
