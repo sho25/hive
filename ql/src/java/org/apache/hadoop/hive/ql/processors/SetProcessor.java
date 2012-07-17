@@ -712,6 +712,26 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
+name|varvalue
+operator|.
+name|contains
+argument_list|(
+literal|"\n"
+argument_list|)
+condition|)
+block|{
+name|ss
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"Warning: Value had a \\n character in it."
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|varname
 operator|.
 name|startsWith
