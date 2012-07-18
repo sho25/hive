@@ -1879,6 +1879,22 @@ literal|"user.name"
 argument_list|)
 argument_list|)
 block|,
+comment|// Whether to log the plan's progress every time a job's progress is checked
+name|HIVE_LOG_INCREMENTAL_PLAN_PROGRESS
+argument_list|(
+literal|"hive.querylog.enable.plan.progress"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|// The interval between logging the plan's progress in milliseconds
+name|HIVE_LOG_INCREMENTAL_PLAN_PROGRESS_INTERVAL
+argument_list|(
+literal|"hive.querylog.plan.progress.interval"
+argument_list|,
+literal|60000L
+argument_list|)
+block|,
 comment|// Default serde and record reader for user scripts
 name|HIVESCRIPTSERDE
 argument_list|(
