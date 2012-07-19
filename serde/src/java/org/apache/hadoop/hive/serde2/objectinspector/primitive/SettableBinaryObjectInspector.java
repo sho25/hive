@@ -29,24 +29,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|lazy
-operator|.
-name|ByteArrayRef
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|BytesWritable
@@ -60,16 +42,19 @@ name|SettableBinaryObjectInspector
 extends|extends
 name|BinaryObjectInspector
 block|{
+comment|/**    * Set the object with the value. Return the object that has the new value.    *    * In most cases the returned value should be the same as o, but in case o is    * unmodifiable, this will return a new object with new value.    */
 name|Object
 name|set
 parameter_list|(
 name|Object
 name|o
 parameter_list|,
-name|ByteArrayRef
+name|byte
+index|[]
 name|bb
 parameter_list|)
 function_decl|;
+comment|/**    * Set the object with the value. Return the object that has the new value.    *    * In most cases the returned value should be the same as o, but in case o is    * unmodifiable, this will return a new object with new value.    */
 name|Object
 name|set
 parameter_list|(
@@ -80,13 +65,16 @@ name|BytesWritable
 name|bw
 parameter_list|)
 function_decl|;
+comment|/**    * Create an object with the value.    */
 name|Object
 name|create
 parameter_list|(
-name|ByteArrayRef
+name|byte
+index|[]
 name|bb
 parameter_list|)
 function_decl|;
+comment|/**    * Create an object with the value.    */
 name|Object
 name|create
 parameter_list|(

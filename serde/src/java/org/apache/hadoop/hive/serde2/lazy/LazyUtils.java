@@ -1859,22 +1859,20 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Creates a ByteArrayRef with data from source BytesWritable    * @param sourceBw - source BytesWritable    */
+comment|/**    * gets a byte[] with copy of data from source BytesWritable    * @param sourceBw - source BytesWritable    */
 specifier|public
 specifier|static
-name|ByteArrayRef
-name|createByteArrayRef
+name|byte
+index|[]
+name|createByteArray
 parameter_list|(
 name|BytesWritable
 name|sourceBw
 parameter_list|)
 block|{
-comment|//TODO should use BytesWritable.copyData() here once Hive
-comment|// removes support for the Hadoop 0.20 series.
-name|byte
-index|[]
-name|newData
-init|=
+comment|//TODO should replace with BytesWritable.copyData() once Hive
+comment|//removes support for the Hadoop 0.20 series.
+return|return
 name|Arrays
 operator|.
 name|copyOf
@@ -1889,23 +1887,6 @@ operator|.
 name|getLength
 argument_list|()
 argument_list|)
-decl_stmt|;
-name|ByteArrayRef
-name|bar
-init|=
-operator|new
-name|ByteArrayRef
-argument_list|()
-decl_stmt|;
-name|bar
-operator|.
-name|setData
-argument_list|(
-name|newData
-argument_list|)
-expr_stmt|;
-return|return
-name|bar
 return|;
 block|}
 specifier|private

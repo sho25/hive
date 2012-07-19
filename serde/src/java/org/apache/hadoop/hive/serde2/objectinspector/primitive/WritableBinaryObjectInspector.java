@@ -23,19 +23,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|lazy
-operator|.
-name|ByteArrayRef
+name|Arrays
 import|;
 end_import
 
@@ -70,6 +62,10 @@ operator|.
 name|BytesWritable
 import|;
 end_import
+
+begin_comment
+comment|/**  * A WritableBinaryObjectInspector inspects a BytesWritable Object.  */
+end_comment
 
 begin_class
 specifier|public
@@ -165,28 +161,24 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|ByteArrayRef
+name|byte
+index|[]
 name|getPrimitiveJavaObject
 parameter_list|(
 name|Object
 name|o
 parameter_list|)
 block|{
-if|if
-condition|(
-literal|null
-operator|==
+return|return
 name|o
-condition|)
-block|{
-return|return
+operator|==
 literal|null
-return|;
-block|}
-return|return
+condition|?
+literal|null
+else|:
 name|LazyUtils
 operator|.
-name|createByteArrayRef
+name|createByteArray
 argument_list|(
 operator|(
 name|BytesWritable
@@ -218,6 +210,7 @@ operator|)
 name|o
 return|;
 block|}
+comment|/*    * {@inheritDoc}    */
 annotation|@
 name|Override
 specifier|public
@@ -227,7 +220,8 @@ parameter_list|(
 name|Object
 name|o
 parameter_list|,
-name|ByteArrayRef
+name|byte
+index|[]
 name|bb
 parameter_list|)
 block|{
@@ -251,16 +245,10 @@ operator|.
 name|set
 argument_list|(
 name|bb
-operator|.
-name|getData
-argument_list|()
 argument_list|,
 literal|0
 argument_list|,
 name|bb
-operator|.
-name|getData
-argument_list|()
 operator|.
 name|length
 argument_list|)
@@ -270,6 +258,7 @@ return|return
 name|incoming
 return|;
 block|}
+comment|/*    * {@inheritDoc}    */
 annotation|@
 name|Override
 specifier|public
@@ -310,13 +299,15 @@ return|return
 name|incoming
 return|;
 block|}
+comment|/*    * {@inheritDoc}    */
 annotation|@
 name|Override
 specifier|public
 name|BytesWritable
 name|create
 parameter_list|(
-name|ByteArrayRef
+name|byte
+index|[]
 name|bb
 parameter_list|)
 block|{
@@ -324,13 +315,20 @@ return|return
 operator|new
 name|BytesWritable
 argument_list|(
+name|Arrays
+operator|.
+name|copyOf
+argument_list|(
+name|bb
+argument_list|,
 name|bb
 operator|.
-name|getData
-argument_list|()
+name|length
+argument_list|)
 argument_list|)
 return|;
 block|}
+comment|/*    * {@inheritDoc}    */
 annotation|@
 name|Override
 specifier|public

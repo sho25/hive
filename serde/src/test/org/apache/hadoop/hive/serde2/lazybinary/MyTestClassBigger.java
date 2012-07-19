@@ -57,24 +57,6 @@ name|MyTestInnerStruct
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|lazy
-operator|.
-name|ByteArrayRef
-import|;
-end_import
-
 begin_comment
 comment|/**  * MyTestClassBigger.  *  */
 end_comment
@@ -114,7 +96,8 @@ name|Integer
 argument_list|>
 name|myList
 decl_stmt|;
-name|ByteArrayRef
+name|byte
+index|[]
 name|myBA
 decl_stmt|;
 name|Map
@@ -165,7 +148,8 @@ name|Integer
 argument_list|>
 name|li
 parameter_list|,
-name|ByteArrayRef
+name|byte
+index|[]
 name|ba
 parameter_list|,
 name|Map
