@@ -1588,6 +1588,8 @@ operator|=
 operator|new
 name|PrunedPartitionList
 argument_list|(
+name|tab
+argument_list|,
 name|true_parts
 argument_list|,
 name|unkn_parts

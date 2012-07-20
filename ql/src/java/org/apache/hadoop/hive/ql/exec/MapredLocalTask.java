@@ -2069,7 +2069,10 @@ name|generateDummyHashTable
 argument_list|(
 name|alias
 argument_list|,
+name|getFileName
+argument_list|(
 name|bigTableBucket
+argument_list|)
 argument_list|)
 expr_stmt|;
 continue|continue;
@@ -2457,13 +2460,6 @@ operator|.
 name|getOutputObjectInspector
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|objectInspector
-operator|!=
-literal|null
-condition|)
-block|{
 name|forwardOp
 operator|.
 name|initialize
@@ -2492,17 +2488,6 @@ operator|+
 literal|" initialized"
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-name|fetchOp
-operator|.
-name|setEmptyTable
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 block|}
 specifier|private

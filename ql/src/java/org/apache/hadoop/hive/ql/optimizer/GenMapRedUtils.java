@@ -5326,6 +5326,18 @@ operator|==
 literal|null
 condition|)
 block|{
+name|tblDesc
+operator|=
+name|Utilities
+operator|.
+name|getTableDesc
+argument_list|(
+name|partsList
+operator|.
+name|getSourceTable
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|localPlan
 operator|.
 name|getAliasToFetchWork
@@ -5346,6 +5358,8 @@ name|partDir
 argument_list|)
 argument_list|,
 name|partDesc
+argument_list|,
+name|tblDesc
 argument_list|)
 argument_list|)
 expr_stmt|;

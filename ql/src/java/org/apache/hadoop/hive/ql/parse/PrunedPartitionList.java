@@ -67,6 +67,24 @@ name|Partition
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Table
+import|;
+end_import
+
 begin_comment
 comment|/**  * The list of pruned partitions.  */
 end_comment
@@ -76,6 +94,11 @@ specifier|public
 class|class
 name|PrunedPartitionList
 block|{
+comment|// source table
+specifier|private
+name|Table
+name|source
+decl_stmt|;
 comment|// confirmed partitions - satisfy the partition criteria
 specifier|private
 name|Set
@@ -105,6 +128,9 @@ comment|/**    * @param confirmedPartns    *          confirmed paritions    * @
 specifier|public
 name|PrunedPartitionList
 parameter_list|(
+name|Table
+name|source
+parameter_list|,
 name|Set
 argument_list|<
 name|Partition
@@ -126,6 +152,12 @@ parameter_list|)
 block|{
 name|this
 operator|.
+name|source
+operator|=
+name|source
+expr_stmt|;
+name|this
+operator|.
 name|confirmedPartns
 operator|=
 name|confirmedPartns
@@ -142,6 +174,15 @@ name|deniedPartns
 operator|=
 name|deniedPartns
 expr_stmt|;
+block|}
+specifier|public
+name|Table
+name|getSourceTable
+parameter_list|()
+block|{
+return|return
+name|source
+return|;
 block|}
 comment|/**    * get confirmed partitions.    *     * @return confirmedPartns confirmed paritions    */
 specifier|public
