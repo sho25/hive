@@ -14240,6 +14240,10 @@ condition|)
 block|{
 name|colAlias
 operator|=
+name|BaseSemanticAnalyzer
+operator|.
+name|unescapeIdentifier
+argument_list|(
 name|root
 operator|.
 name|getChild
@@ -14249,6 +14253,7 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+argument_list|)
 expr_stmt|;
 name|colRef
 index|[
