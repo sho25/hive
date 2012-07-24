@@ -169,6 +169,10 @@ name|ShowTablesDesc
 name|showTblsDesc
 decl_stmt|;
 specifier|private
+name|ShowColumnsDesc
+name|showColumnsDesc
+decl_stmt|;
+specifier|private
 name|ShowTblPropertiesDesc
 name|showTblPropertiesDesc
 decl_stmt|;
@@ -839,6 +843,40 @@ operator|.
 name|showTblsDesc
 operator|=
 name|showTblsDesc
+expr_stmt|;
+block|}
+comment|/**    * @param showColumnsDesc    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|HashSet
+argument_list|<
+name|ReadEntity
+argument_list|>
+name|inputs
+parameter_list|,
+name|HashSet
+argument_list|<
+name|WriteEntity
+argument_list|>
+name|outputs
+parameter_list|,
+name|ShowColumnsDesc
+name|showColumnsDesc
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|inputs
+argument_list|,
+name|outputs
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|showColumnsDesc
+operator|=
+name|showColumnsDesc
 expr_stmt|;
 block|}
 comment|/**    * @param lockTblDesc    */
@@ -1867,6 +1905,39 @@ operator|.
 name|showTblsDesc
 operator|=
 name|showTblsDesc
+expr_stmt|;
+block|}
+comment|/**    * @return the showColumnsDesc    */
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Show Columns Operator"
+argument_list|)
+specifier|public
+name|ShowColumnsDesc
+name|getShowColumnsDesc
+parameter_list|()
+block|{
+return|return
+name|showColumnsDesc
+return|;
+block|}
+comment|/**    * @param showColumnsDesc    *          the showColumnsDesc to set    */
+specifier|public
+name|void
+name|setShowColumnsDesc
+parameter_list|(
+name|ShowColumnsDesc
+name|showColumnsDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|showColumnsDesc
+operator|=
+name|showColumnsDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the showFuncsDesc    */

@@ -456,6 +456,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|SHOWCOLUMNS
+argument_list|(
+literal|"SHOWCOLUMNS"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|SHOW_TABLESTATUS
 argument_list|(
 literal|"SHOW_TABLESTATUS"
