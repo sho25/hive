@@ -4010,6 +4010,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|//map may not contain all sources, since input list may have been optimized out
+comment|//or non-existent tho such sources may still be referenced by the TableScanOperator
+comment|//if it's null then the partition probably doesn't exist so let's use table permission
 if|if
 condition|(
 name|tbl
@@ -4026,6 +4029,10 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+operator|==
+name|Boolean
+operator|.
+name|TRUE
 condition|)
 block|{
 name|String
@@ -4276,6 +4283,10 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+operator|==
+name|Boolean
+operator|.
+name|TRUE
 condition|)
 block|{
 name|List
