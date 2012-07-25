@@ -337,7 +337,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|FileUtils
+name|CompressionUtils
 import|;
 end_import
 
@@ -2719,7 +2719,7 @@ argument_list|(
 name|stageId
 argument_list|)
 expr_stmt|;
-name|FileUtils
+name|CompressionUtils
 operator|.
 name|tar
 argument_list|(
