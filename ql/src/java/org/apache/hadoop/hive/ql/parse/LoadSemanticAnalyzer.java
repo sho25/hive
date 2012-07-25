@@ -389,6 +389,20 @@ name|MoveWork
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|Shell
+import|;
+end_import
+
 begin_comment
 comment|/**  * LoadSemanticAnalyzer.  *  */
 end_comment
@@ -578,6 +592,9 @@ argument_list|)
 argument_list|,
 name|path
 argument_list|)
+operator|.
+name|toUri
+argument_list|()
 operator|.
 name|toString
 argument_list|()

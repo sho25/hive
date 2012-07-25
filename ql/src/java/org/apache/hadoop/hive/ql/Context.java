@@ -541,7 +541,7 @@ name|executionId
 operator|=
 name|executionId
 expr_stmt|;
-comment|// non-local tmp location is configurable. however it is the same across
+comment|// local& non-local tmp location is configurable. however it is the same across
 comment|// all external file systems
 name|nonLocalScratchPath
 operator|=
@@ -564,32 +564,32 @@ argument_list|,
 name|executionId
 argument_list|)
 expr_stmt|;
-comment|// local tmp location is not configurable for now
 name|localScratchDir
 operator|=
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"java.io.tmpdir"
-argument_list|)
-operator|+
+operator|new
 name|Path
-operator|.
-name|SEPARATOR
-operator|+
-name|System
-operator|.
-name|getProperty
 argument_list|(
-literal|"user.name"
-argument_list|)
-operator|+
-name|Path
+name|HiveConf
 operator|.
-name|SEPARATOR
-operator|+
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LOCALSCRATCHDIR
+argument_list|)
+argument_list|,
 name|executionId
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Set the context on whether the current query is an explain query.    * @param value true if the query is an explain query, false if not    */

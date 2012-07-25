@@ -257,6 +257,20 @@ name|UserGroupInformation
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|Shell
+import|;
+end_import
+
 begin_comment
 comment|/**  * Hive Configuration.  */
 end_comment
@@ -792,6 +806,20 @@ argument_list|(
 literal|"hive.exec.scratchdir"
 argument_list|,
 literal|"/tmp/hive-"
+operator|+
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"user.name"
+argument_list|)
+argument_list|)
+block|,
+name|LOCALSCRATCHDIR
+argument_list|(
+literal|"hive.exec.local.scratchdir"
+argument_list|,
+literal|"/tmp/"
 operator|+
 name|System
 operator|.
@@ -3356,7 +3384,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// and if all else fails we can at least try /usr/bin/hadoop
-return|return
+name|val
+operator|=
 operator|(
 name|val
 operator|==
@@ -3382,6 +3411,20 @@ operator|.
 name|separator
 operator|+
 literal|"hadoop"
+expr_stmt|;
+comment|// Launch hadoop command file on windows.
+return|return
+name|val
+operator|+
+operator|(
+name|Shell
+operator|.
+name|WINDOWS
+condition|?
+literal|".cmd"
+else|:
+literal|""
+operator|)
 return|;
 block|}
 enum|enum

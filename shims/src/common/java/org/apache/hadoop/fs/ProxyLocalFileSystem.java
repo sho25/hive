@@ -21,7 +21,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|*
+name|IOException
 import|;
 end_import
 
@@ -32,16 +32,6 @@ operator|.
 name|net
 operator|.
 name|URI
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URISyntaxException
 import|;
 end_import
 
@@ -67,30 +57,14 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|fs
-operator|.
-name|permission
-operator|.
-name|FsPermission
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|util
 operator|.
-name|Progressable
+name|Shell
 import|;
 end_import
 
 begin_comment
-comment|/****************************************************************  * A Proxy for LocalFileSystem  *  * Serves uri's corresponding to 'pfile:///' namespace with using  * a LocalFileSystem   *****************************************************************/
+comment|/****************************************************************  * A Proxy for LocalFileSystem  *  * Serves uri's corresponding to 'pfile:///' namespace with using  * a LocalFileSystem  *****************************************************************/
 end_comment
 
 begin_class
@@ -157,6 +131,66 @@ name|getScheme
 argument_list|()
 decl_stmt|;
 name|String
+name|nameUriString
+init|=
+name|name
+operator|.
+name|toString
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|Shell
+operator|.
+name|WINDOWS
+condition|)
+block|{
+comment|// Replace the encoded backward slash with forward slash
+comment|// Remove the windows drive letter
+comment|// replace the '=' with special string '------' to handle the unsupported char '=' in windows.
+name|nameUriString
+operator|=
+name|nameUriString
+operator|.
+name|replaceAll
+argument_list|(
+literal|"%5C"
+argument_list|,
+literal|"/"
+argument_list|)
+operator|.
+name|replaceFirst
+argument_list|(
+literal|"/[c-zC-Z]:"
+argument_list|,
+literal|"/"
+argument_list|)
+operator|.
+name|replaceFirst
+argument_list|(
+literal|"^[c-zC-Z]:"
+argument_list|,
+literal|""
+argument_list|)
+operator|.
+name|replaceAll
+argument_list|(
+literal|"="
+argument_list|,
+literal|"------"
+argument_list|)
+expr_stmt|;
+name|name
+operator|=
+name|URI
+operator|.
+name|create
+argument_list|(
+name|nameUriString
+argument_list|)
+expr_stmt|;
+block|}
+name|String
 name|authority
 init|=
 name|name
@@ -176,7 +210,7 @@ decl_stmt|;
 name|String
 name|proxyUriString
 init|=
-name|name
+name|nameUriString
 operator|+
 literal|"://"
 operator|+
