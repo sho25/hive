@@ -2581,6 +2581,13 @@ literal|""
 argument_list|)
 block|,
 comment|//Subset of counters that should be of interest for hive.client.stats.publishers (when one wants to limit their publishing). Non-display names should be used".
+name|HIVE_STATS_RELIABLE
+argument_list|(
+literal|"hive.stats.reliable"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
@@ -3432,6 +3439,8 @@ name|VarType
 block|{
 name|STRING
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -3445,6 +3454,8 @@ block|}
 block|,
 name|INT
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -3466,6 +3477,8 @@ block|}
 block|,
 name|LONG
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -3487,6 +3500,8 @@ block|}
 block|,
 name|FLOAT
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -3508,6 +3523,8 @@ block|}
 block|,
 name|BOOLEAN
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(

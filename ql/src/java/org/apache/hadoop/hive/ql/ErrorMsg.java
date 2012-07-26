@@ -130,7 +130,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * List of error messages thrown by the parser.  **/
+comment|/**  * List of all error messages.  * This list contains both compile time and run-time errors.  **/
 end_comment
 
 begin_enum
@@ -1184,7 +1184,72 @@ literal|"An error occurred when trying to close the Operator "
 operator|+
 literal|"running your custom script."
 argument_list|)
-block|;
+block|,
+name|STATSPUBLISHER_NOT_OBTAINED
+argument_list|(
+literal|30000
+argument_list|,
+literal|"StatsPublisher cannot be obtained. "
+operator|+
+literal|"There was a error to retrieve the StatsPublisher, and retrying "
+operator|+
+literal|"might help. If you dont want the query to fail because accurate statistics "
+operator|+
+literal|"could not be collected, set hive.stats.reliable=false"
+argument_list|)
+block|,
+name|STATSPUBLISHER_INITIALIZATION_ERROR
+argument_list|(
+literal|30001
+argument_list|,
+literal|"StatsPublisher cannot be initialized. "
+operator|+
+literal|"There was a error in the initialization of StatsPublisher, and retrying "
+operator|+
+literal|"might help. If you dont want the query to fail because accurate statistics "
+operator|+
+literal|"could not be collected, set hive.stats.reliable=false"
+argument_list|)
+block|,
+name|STATSPUBLISHER_CONNECTION_ERROR
+argument_list|(
+literal|30002
+argument_list|,
+literal|"StatsPublisher cannot be connected to."
+operator|+
+literal|"There was a error while connecting to the StatsPublisher, and retrying "
+operator|+
+literal|"might help. If you dont want the query to fail because accurate statistics "
+operator|+
+literal|"could not be collected, set hive.stats.reliable=false"
+argument_list|)
+block|,
+name|STATSPUBLISHER_PUBLISHING_ERROR
+argument_list|(
+literal|30003
+argument_list|,
+literal|"Error in publishing stats. There was an "
+operator|+
+literal|"error in publishing stats via StatsPublisher, and retrying "
+operator|+
+literal|"might help. If you dont want the query to fail because accurate statistics "
+operator|+
+literal|"could not be collected, set hive.stats.reliable=false"
+argument_list|)
+block|,
+name|STATSPUBLISHER_CLOSING_ERROR
+argument_list|(
+literal|30004
+argument_list|,
+literal|"StatsPublisher cannot be closed."
+operator|+
+literal|"There was a error while closing the StatsPublisher, and retrying "
+operator|+
+literal|"might help. If you dont want the query to fail because accurate statistics "
+operator|+
+literal|"could not be collected, set hive.stats.reliable=false"
+argument_list|)
+block|,      ;
 specifier|private
 name|int
 name|errorCode

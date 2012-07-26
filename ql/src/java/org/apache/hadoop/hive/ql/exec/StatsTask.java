@@ -1263,9 +1263,11 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|workComponentsPresent
 operator|++
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|work
@@ -1275,9 +1277,11 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|workComponentsPresent
 operator|++
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|work
@@ -1287,9 +1291,11 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 name|workComponentsPresent
 operator|++
 expr_stmt|;
+block|}
 assert|assert
 operator|(
 name|workComponentsPresent
@@ -1454,6 +1460,11 @@ name|StatsAggregator
 name|statsAggregator
 init|=
 literal|null
+decl_stmt|;
+name|int
+name|ret
+init|=
+literal|0
 decl_stmt|;
 try|try
 block|{
@@ -2419,7 +2430,6 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-comment|// return 0 since StatsTask should not fail the whole job
 name|console
 operator|.
 name|printInfo
@@ -2443,6 +2453,20 @@ name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// Fail the query if the stats are supposed to be reliable
+if|if
+condition|(
+name|work
+operator|.
+name|isStatsReliable
+argument_list|()
+condition|)
+block|{
+name|ret
+operator|=
+literal|1
+expr_stmt|;
+block|}
 block|}
 finally|finally
 block|{
@@ -2460,9 +2484,10 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|// StatsTask always return 0 so that the whole job won't fail
+comment|// The return value of 0 indicates success,
+comment|// anything else indicates failure
 return|return
-literal|0
+name|ret
 return|;
 block|}
 specifier|private
