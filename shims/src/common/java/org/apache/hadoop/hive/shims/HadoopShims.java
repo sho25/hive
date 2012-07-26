@@ -564,6 +564,15 @@ name|JobConf
 name|conf
 parameter_list|)
 function_decl|;
+comment|/**    * Used by TaskLogProcessor to Remove HTML quoting from a string    * @param item the string to unquote    * @return the unquoted string    *    */
+specifier|public
+name|String
+name|unquoteHtmlChars
+parameter_list|(
+name|String
+name|item
+parameter_list|)
+function_decl|;
 comment|/**    * Get the UGI that the given job configuration will run as.    *    * In secure versions of Hadoop, this simply returns the current    * access control context's user, ignoring the configuration.    */
 specifier|public
 name|UserGroupInformation
