@@ -51,6 +51,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -117,15 +127,15 @@ argument_list|)
 decl_stmt|;
 comment|//MAPPING: bucket_file_name_in_big_table->{alias_table->corresonding_bucket_file_names}
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -134,7 +144,7 @@ argument_list|>
 name|aliasBucketMapping
 decl_stmt|;
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -261,15 +271,15 @@ specifier|public
 name|void
 name|setAliasBucketFileNameMapping
 parameter_list|(
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -286,7 +296,7 @@ name|aliasBucketFileNameMapping
 expr_stmt|;
 block|}
 specifier|public
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -303,7 +313,7 @@ specifier|public
 name|void
 name|setBucketFileNameMapping
 parameter_list|(
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

@@ -937,6 +937,16 @@ name|getInputFileChangeSensitive
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|newLocalWork
+operator|.
+name|setBucketMapjoinContext
+argument_list|(
+name|localwork
+operator|.
+name|copyPartSpecMappingOnly
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|mapredWork
 operator|.
 name|setMapLocalWork

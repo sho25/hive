@@ -125,7 +125,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredLocalWork
+name|BucketMapJoinContext
 import|;
 end_import
 
@@ -144,8 +144,6 @@ operator|.
 name|plan
 operator|.
 name|MapredLocalWork
-operator|.
-name|BucketMapJoinContext
 import|;
 end_import
 
@@ -215,16 +213,14 @@ name|inputFileChecked
 init|=
 literal|false
 decl_stmt|;
+comment|// for SMB join, replaced with number part of task-id , making output file name
+comment|// if big alias is not partitioned table, it's bucket number
+comment|// if big alias is partitioned table, it's partition spec + bucket number
 specifier|private
-name|Integer
+name|String
 name|fileId
 init|=
-operator|new
-name|Integer
-argument_list|(
-operator|-
-literal|1
-argument_list|)
+literal|null
 decl_stmt|;
 specifier|private
 name|MapredLocalWork
@@ -571,7 +567,7 @@ name|localWork
 expr_stmt|;
 block|}
 specifier|public
-name|Integer
+name|String
 name|getFileId
 parameter_list|()
 block|{
@@ -583,7 +579,7 @@ specifier|public
 name|void
 name|setFileId
 parameter_list|(
-name|Integer
+name|String
 name|fileId
 parameter_list|)
 block|{

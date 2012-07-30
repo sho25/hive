@@ -2357,8 +2357,7 @@ operator|.
 name|getFileId
 argument_list|()
 operator|!=
-operator|-
-literal|1
+literal|null
 condition|)
 block|{
 name|LOG
