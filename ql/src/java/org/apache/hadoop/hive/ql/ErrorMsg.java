@@ -1151,6 +1151,34 @@ operator|+
 literal|"older partitions"
 argument_list|)
 block|,
+name|ALTER_COMMAND_FOR_VIEWS
+argument_list|(
+literal|10131
+argument_list|,
+literal|"To alter a view you need to use the ALTER VIEW command."
+argument_list|)
+block|,
+name|ALTER_COMMAND_FOR_TABLES
+argument_list|(
+literal|10132
+argument_list|,
+literal|"To alter a base table you need to use the ALTER TABLE command."
+argument_list|)
+block|,
+name|ALTER_VIEW_DISALLOWED_OP
+argument_list|(
+literal|10133
+argument_list|,
+literal|"Cannot use this form of ALTER on a view"
+argument_list|)
+block|,
+name|ALTER_TABLE_NON_NATIVE
+argument_list|(
+literal|10134
+argument_list|,
+literal|"ALTER TABLE cannot be used for a non-native table"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
