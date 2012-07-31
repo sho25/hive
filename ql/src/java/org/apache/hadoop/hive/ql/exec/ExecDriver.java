@@ -3018,10 +3018,12 @@ block|{
 comment|// creating stats table if not exists
 if|if
 condition|(
-name|conf
+name|HiveConf
 operator|.
 name|getBoolVar
 argument_list|(
+name|job
+argument_list|,
 name|HiveConf
 operator|.
 name|ConfVars
