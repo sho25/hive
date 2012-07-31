@@ -627,8 +627,6 @@ name|boolean
 name|hasNonPartCols
 decl_stmt|;
 specifier|private
-name|SemanticAnalyzer
-operator|.
 name|GlobalLimitCtx
 name|globalLimitCtx
 decl_stmt|;
@@ -806,8 +804,6 @@ name|sampleDesc
 argument_list|>
 name|opToSamplePruner
 parameter_list|,
-name|SemanticAnalyzer
-operator|.
 name|GlobalLimitCtx
 name|globalLimitCtx
 parameter_list|,
@@ -1791,8 +1787,6 @@ name|mapJoinContext
 expr_stmt|;
 block|}
 specifier|public
-name|SemanticAnalyzer
-operator|.
 name|GlobalLimitCtx
 name|getGlobalLimitCtx
 parameter_list|()
@@ -1805,8 +1799,6 @@ specifier|public
 name|void
 name|setGlobalLimitCtx
 parameter_list|(
-name|SemanticAnalyzer
-operator|.
 name|GlobalLimitCtx
 name|globalLimitCtx
 parameter_list|)
