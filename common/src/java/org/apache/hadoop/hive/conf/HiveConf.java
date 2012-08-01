@@ -2305,6 +2305,13 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.io.DefaultHivePartitioner"
 argument_list|)
 block|,
+name|HIVEENFORCESORTMERGEBUCKETMAPJOIN
+argument_list|(
+literal|"hive.enforce.sortmergebucketmapjoin"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVESCRIPTOPERATORTRUST
 argument_list|(
 literal|"hive.exec.script.trust"

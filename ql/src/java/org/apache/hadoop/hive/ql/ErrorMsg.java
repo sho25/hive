@@ -1179,6 +1179,19 @@ argument_list|,
 literal|"ALTER TABLE cannot be used for a non-native table"
 argument_list|)
 block|,
+name|SORTMERGE_MAPJOIN_FAILED
+argument_list|(
+literal|10135
+argument_list|,
+literal|"Sort merge bucketed join could not be performed. "
+operator|+
+literal|"If you really want to perform the operation, either set "
+operator|+
+literal|"hive.optimize.bucketmapjoin.sortedmerge=false, or set "
+operator|+
+literal|"hive.enforce.sortmergebucketmapjoin=false."
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
