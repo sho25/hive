@@ -359,11 +359,15 @@ name|File
 name|file
 parameter_list|)
 block|{
-try|try
-block|{
 name|BufferedReader
 name|reader
 init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|reader
+operator|=
 operator|new
 name|BufferedReader
 argument_list|(
@@ -377,7 +381,7 @@ name|file
 argument_list|)
 argument_list|)
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|char
 index|[]
 name|buffer
@@ -464,7 +468,32 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-comment|// ignore error reading file, if we can't read it then it isn't a windows script
+comment|// It means, It is not a valid windows script file so ignore the exception and return false.
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|reader
+operator|!=
+literal|null
+condition|)
+block|{
+try|try
+block|{
+name|reader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{         }
+block|}
 block|}
 return|return
 literal|false
