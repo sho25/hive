@@ -1771,6 +1771,20 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|Shell
+import|;
+end_import
+
 begin_comment
 comment|/**  * Utilities.  *  */
 end_comment
@@ -4164,6 +4178,14 @@ specifier|public
 specifier|static
 specifier|final
 name|int
+name|carriageReturnCode
+init|=
+literal|13
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
 name|newLineCode
 init|=
 literal|10
@@ -5347,6 +5369,11 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|boolean
+name|foundCrChar
+init|=
+literal|false
+decl_stmt|;
 while|while
 condition|(
 literal|true
@@ -5376,6 +5403,58 @@ name|StreamStatus
 operator|.
 name|EOF
 return|;
+block|}
+comment|// Default new line characters on windows are "CRLF" so detect if there are any windows
+comment|// native newline characters and handle them.
+if|if
+condition|(
+name|Shell
+operator|.
+name|WINDOWS
+condition|)
+block|{
+comment|// if the CR is not followed by the LF on windows then add it back to the stream and
+comment|// proceed with next characters in the input stream.
+if|if
+condition|(
+name|foundCrChar
+operator|&&
+name|b
+operator|!=
+name|Utilities
+operator|.
+name|newLineCode
+condition|)
+block|{
+name|out
+operator|.
+name|write
+argument_list|(
+name|Utilities
+operator|.
+name|carriageReturnCode
+argument_list|)
+expr_stmt|;
+name|foundCrChar
+operator|=
+literal|false
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|b
+operator|==
+name|Utilities
+operator|.
+name|carriageReturnCode
+condition|)
+block|{
+name|foundCrChar
+operator|=
+literal|true
+expr_stmt|;
+continue|continue;
+block|}
 block|}
 if|if
 condition|(
