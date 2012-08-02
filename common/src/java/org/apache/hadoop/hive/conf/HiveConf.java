@@ -2312,6 +2312,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEENFORCEBUCKETMAPJOIN
+argument_list|(
+literal|"hive.enforce.bucketmapjoin"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVESCRIPTOPERATORTRUST
 argument_list|(
 literal|"hive.exec.script.trust"

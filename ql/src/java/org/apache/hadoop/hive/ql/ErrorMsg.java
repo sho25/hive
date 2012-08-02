@@ -1192,6 +1192,23 @@ operator|+
 literal|"hive.enforce.sortmergebucketmapjoin=false."
 argument_list|)
 block|,
+name|BUCKET_MAPJOIN_NOT_POSSIBLE
+argument_list|(
+literal|10136
+argument_list|,
+literal|"Bucketed mapjoin cannot be performed. "
+operator|+
+literal|"This can be due to multiple reasons: "
+operator|+
+literal|" . Join columns dont match bucketed columns. "
+operator|+
+literal|" . Number of buckets are not a multiple of each other. "
+operator|+
+literal|"If you really want to perform the operation, either remove the "
+operator|+
+literal|"mapjoin hint from your query or set hive.enforce.bucketmapjoin to false."
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
