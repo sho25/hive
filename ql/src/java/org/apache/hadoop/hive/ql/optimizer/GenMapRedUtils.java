@@ -2210,6 +2210,15 @@ name|getBigTablePartSpecToFileMapping
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|plan
+operator|.
+name|setSmbJoin
+argument_list|(
+name|currMapJoinOp
+operator|instanceof
+name|SMBMapJoinOperator
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}
