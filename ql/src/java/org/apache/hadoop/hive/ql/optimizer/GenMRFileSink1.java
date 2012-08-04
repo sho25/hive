@@ -2158,7 +2158,7 @@ name|getDirName
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|LinkMoveTask
+name|linkMoveTask
 argument_list|(
 name|ctx
 argument_list|,
@@ -2895,7 +2895,7 @@ expr_stmt|;
 comment|//
 comment|// 3. add the moveTask as the children of the conditional task
 comment|//
-name|LinkMoveTask
+name|linkMoveTask
 argument_list|(
 name|ctx
 argument_list|,
@@ -2905,9 +2905,10 @@ name|cndTsk
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Make the move task in the GenMRProcContext following the FileSinkOperator a dependent of all    * possible subtrees branching from the ConditionalTask.    *    * @param ctx    * @param newOutput    * @param cndTsk    */
 specifier|private
 name|void
-name|LinkMoveTask
+name|linkMoveTask
 parameter_list|(
 name|GenMRProcContext
 name|ctx
@@ -2962,7 +2963,7 @@ name|getListTasks
 argument_list|()
 control|)
 block|{
-name|addDependentMoveTasks
+name|linkMoveTask
 argument_list|(
 name|ctx
 argument_list|,
@@ -2971,6 +2972,89 @@ argument_list|,
 name|tsk
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+comment|/**    * Follows the task tree down from task and makes all leaves parents of mvTask    *    * @param ctx    * @param mvTask    * @param task    */
+specifier|private
+name|void
+name|linkMoveTask
+parameter_list|(
+name|GenMRProcContext
+name|ctx
+parameter_list|,
+name|Task
+argument_list|<
+name|MoveWork
+argument_list|>
+name|mvTask
+parameter_list|,
+name|Task
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|task
+parameter_list|)
+block|{
+if|if
+condition|(
+name|task
+operator|.
+name|getDependentTasks
+argument_list|()
+operator|==
+literal|null
+operator|||
+name|task
+operator|.
+name|getDependentTasks
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// If it's a leaf, add the move task as a child
+name|addDependentMoveTasks
+argument_list|(
+name|ctx
+argument_list|,
+name|mvTask
+argument_list|,
+name|task
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Otherwise, for each child run this method recursively
+for|for
+control|(
+name|Task
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|childTask
+range|:
+name|task
+operator|.
+name|getDependentTasks
+argument_list|()
+control|)
+block|{
+name|linkMoveTask
+argument_list|(
+name|ctx
+argument_list|,
+name|mvTask
+argument_list|,
+name|childTask
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Adds the dependencyTaskForMultiInsert in ctx as a dependent of parentTask.  If mvTask is a    * load table, and HIVE_MULTI_INSERT_ATOMIC_OUTPUTS is set, adds mvTask as a dependent of    * dependencyTaskForMultiInsert in ctx, otherwise adds mvTask as a dependent of parentTask as    * well.    * @param ctx    * @param mvTask    * @param parentTask    */
@@ -3439,13 +3523,19 @@ name|String
 name|inputPath
 parameter_list|)
 block|{
+comment|// There are 3 options for this ConditionalTask:
+comment|// 1) Merge the partitions
+comment|// 2) Move the partitions (i.e. don't merge the partitions)
+comment|// 3) Merge some partitions and move other partitions (i.e. merge some partitions and don't
+comment|//    merge others) in this case the merge is done first followed by the move to prevent
+comment|//    conflicts.
 name|Task
 argument_list|<
 name|?
 extends|extends
 name|Serializable
 argument_list|>
-name|mergeTask
+name|mergeOnlyMergeTask
 init|=
 name|TaskFactory
 operator|.
@@ -3462,7 +3552,7 @@ name|?
 extends|extends
 name|Serializable
 argument_list|>
-name|moveTask
+name|moveOnlyMoveTask
 init|=
 name|TaskFactory
 operator|.
@@ -3473,6 +3563,50 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+name|Task
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|mergeAndMoveMergeTask
+init|=
+name|TaskFactory
+operator|.
+name|get
+argument_list|(
+name|mergeWork
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
+name|Task
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|mergeAndMoveMoveTask
+init|=
+name|TaskFactory
+operator|.
+name|get
+argument_list|(
+name|mvWork
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
+comment|// NOTE! It is necessary merge task is the parent of the move task, and not
+comment|// the other way around, for the proper execution of the execute method of
+comment|// ConditionalTask
+name|mergeAndMoveMergeTask
+operator|.
+name|addDependentTask
+argument_list|(
+name|mergeAndMoveMoveTask
+argument_list|)
+expr_stmt|;
 name|List
 argument_list|<
 name|Serializable
@@ -3536,14 +3670,21 @@ name|listTasks
 operator|.
 name|add
 argument_list|(
-name|moveTask
+name|moveOnlyMoveTask
 argument_list|)
 expr_stmt|;
 name|listTasks
 operator|.
 name|add
 argument_list|(
-name|mergeTask
+name|mergeOnlyMergeTask
+argument_list|)
+expr_stmt|;
+name|listTasks
+operator|.
+name|add
+argument_list|(
+name|mergeAndMoveMergeTask
 argument_list|)
 expr_stmt|;
 name|ConditionalTask
