@@ -100,6 +100,17 @@ name|boolean
 name|statsReliable
 decl_stmt|;
 comment|// are stats completely reliable
+comment|// If stats aggregator is not present, clear the current aggregator stats.
+comment|// For eg. if a merge is being performed, stats already collected by aggregator (numrows etc.)
+comment|// are still valid. However, if a load file is being performed, the old stats collected by
+comment|// aggregator are not valid. It might be a good idea to clear them instead of leaving wrong
+comment|// and old stats.
+specifier|private
+name|boolean
+name|clearAggregatorStats
+init|=
+literal|false
+decl_stmt|;
 specifier|private
 name|boolean
 name|noStatsAggregator
@@ -272,6 +283,30 @@ operator|.
 name|statsReliable
 operator|=
 name|statsReliable
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isClearAggregatorStats
+parameter_list|()
+block|{
+return|return
+name|clearAggregatorStats
+return|;
+block|}
+specifier|public
+name|void
+name|setClearAggregatorStats
+parameter_list|(
+name|boolean
+name|clearAggregatorStats
+parameter_list|)
+block|{
+name|this
+operator|.
+name|clearAggregatorStats
+operator|=
+name|clearAggregatorStats
 expr_stmt|;
 block|}
 block|}
