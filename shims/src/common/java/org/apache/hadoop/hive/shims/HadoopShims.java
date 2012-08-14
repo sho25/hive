@@ -51,6 +51,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|net
+operator|.
+name|MalformedURLException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|security
 operator|.
 name|PrivilegedExceptionAction
@@ -402,6 +412,22 @@ comment|/**    * Return true if the current version of Hadoop uses the JobShell 
 name|boolean
 name|usesJobShell
 parameter_list|()
+function_decl|;
+comment|/**    * Constructs and Returns TaskAttempt Log Url    * or null if the TaskLogServlet is not available    *    *  @return TaskAttempt Log Url    */
+name|String
+name|getTaskAttemptLogUrl
+parameter_list|(
+name|JobConf
+name|conf
+parameter_list|,
+name|String
+name|taskTrackerHttpAddress
+parameter_list|,
+name|String
+name|taskAttemptId
+parameter_list|)
+throws|throws
+name|MalformedURLException
 function_decl|;
 comment|/**    * Return true if the job has not switched to RUNNING state yet    * and is still in PREP state    */
 name|boolean

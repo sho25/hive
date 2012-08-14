@@ -141,6 +141,34 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -190,6 +218,20 @@ specifier|public
 class|class
 name|TaskLogProcessor
 block|{
+specifier|private
+specifier|final
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|TaskLogProcessor
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|final
 name|Map
@@ -459,15 +501,16 @@ name|MalformedURLException
 name|e
 parameter_list|)
 block|{
-throw|throw
-operator|new
-name|RuntimeException
+name|LOG
+operator|.
+name|error
 argument_list|(
-literal|"Bad task log url"
+literal|"Bad task log URL"
 argument_list|,
 name|e
 argument_list|)
-throw|;
+expr_stmt|;
+continue|continue;
 block|}
 name|BufferedReader
 name|in
@@ -538,15 +581,16 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-throw|throw
-operator|new
-name|RuntimeException
+name|LOG
+operator|.
+name|error
 argument_list|(
-literal|"Error while reading from task log url"
+literal|"Error while reading from task log URL"
 argument_list|,
 name|e
 argument_list|)
-throw|;
+expr_stmt|;
+continue|continue;
 block|}
 comment|// Once the lines of the log file have been fed into the ErrorHeuristics,
 comment|// see if they have detected anything. If any has, record
