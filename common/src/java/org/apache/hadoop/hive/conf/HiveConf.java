@@ -1561,6 +1561,14 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// Parameters to copy over when creating a table with Create Table Like.
+name|DDL_CTL_PARAMETERS_WHITELIST
+argument_list|(
+literal|"hive.ddl.createtablelike.properties.whitelist"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 name|METASTORE_RAW_STORE_IMPL
 argument_list|(
 literal|"hive.metastore.rawstore.impl"
