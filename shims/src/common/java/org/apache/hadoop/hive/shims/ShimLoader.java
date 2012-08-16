@@ -21,6 +21,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|lang
+operator|.
+name|IllegalArgumentException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|HashMap
@@ -399,7 +409,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Return the major version of Hadoop currently on the classpath.    * This is simply the first two components of the version number    * (e.g "0.18" or "0.20")    */
+comment|/**    * Return the "major" version of Hadoop currently on the classpath.    * For releases in the 0.x series this is simply the first two    * components of the version, e.g. "0.20" or "0.23". Releases in    * the 1.x and 2.x series are mapped to the appropriate    * 0.x release series, e.g. 1.x is mapped to "0.20S" and 2.x    * is mapped to "0.23".    */
 specifier|public
 specifier|static
 name|String
@@ -446,7 +456,8 @@ literal|" (expected A.B.* format)"
 argument_list|)
 throw|;
 block|}
-if|if
+comment|// Special handling for Hadoop 1.x and 2.x
+switch|switch
 condition|(
 name|Integer
 operator|.
@@ -457,13 +468,34 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
-literal|0
 condition|)
 block|{
+case|case
+literal|0
+case|:
+break|break;
+case|case
+literal|1
+case|:
 return|return
 literal|"0.20S"
 return|;
+case|case
+literal|2
+case|:
+return|return
+literal|"0.23"
+return|;
+default|default:
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Unrecognized Hadoop major version number: "
+operator|+
+name|vers
+argument_list|)
+throw|;
 block|}
 name|String
 name|majorVersion
