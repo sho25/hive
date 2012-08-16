@@ -1209,6 +1209,34 @@ operator|+
 literal|"mapjoin hint from your query or set hive.enforce.bucketmapjoin to false."
 argument_list|)
 block|,
+name|EXPRESSIONS_NOT_ALLOWED_CLUSTERBY
+argument_list|(
+literal|10137
+argument_list|,
+literal|"Expressions are not allowed in a cluster by clause. Use a column alias instead"
+argument_list|)
+block|,
+name|EXPRESSIONS_NOT_ALLOWED_DISTRIBUTEBY
+argument_list|(
+literal|10138
+argument_list|,
+literal|"Expressions are not allowed in a distribute by clause. Use a column alias instead"
+argument_list|)
+block|,
+name|EXPRESSIONS_NOT_ALLOWED_ORDERBY
+argument_list|(
+literal|10139
+argument_list|,
+literal|"Expressions are not allowed in an order by clause. Use a column alias instead"
+argument_list|)
+block|,
+name|EXPRESSIONS_NOT_ALLOWED_SORTBY
+argument_list|(
+literal|10140
+argument_list|,
+literal|"Expressions are not allowed in a sort by clause. Use a column alias instead"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

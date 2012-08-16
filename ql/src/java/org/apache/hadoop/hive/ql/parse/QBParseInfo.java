@@ -2256,6 +2256,19 @@ return|return
 name|nameToSample
 return|;
 block|}
+specifier|protected
+specifier|static
+enum|enum
+name|ClauseType
+block|{
+name|CLUSTER_BY_CLAUSE
+block|,
+name|DISTRIBUTE_BY_CLAUSE
+block|,
+name|ORDER_BY_CLAUSE
+block|,
+name|SORT_BY_CLAUSE
+block|}
 block|}
 end_class
 
