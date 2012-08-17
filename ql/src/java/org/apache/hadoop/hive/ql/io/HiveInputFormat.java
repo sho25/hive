@@ -1919,7 +1919,8 @@ return|return
 name|partDesc
 return|;
 block|}
-specifier|protected
+specifier|public
+specifier|static
 name|void
 name|pushFilters
 parameter_list|(

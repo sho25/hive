@@ -2898,42 +2898,6 @@ name|DRIVER_RUN
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// initialize FetchTask right here
-if|if
-condition|(
-name|plan
-operator|.
-name|getFetchTask
-argument_list|()
-operator|!=
-literal|null
-condition|)
-block|{
-name|plan
-operator|.
-name|getFetchTask
-argument_list|()
-operator|.
-name|initialize
-argument_list|(
-name|conf
-argument_list|,
-name|plan
-argument_list|,
-literal|null
-argument_list|)
-expr_stmt|;
-block|}
-comment|// get the output schema
-name|schema
-operator|=
-name|getSchema
-argument_list|(
-name|sem
-argument_list|,
-name|conf
-argument_list|)
-expr_stmt|;
 comment|// test Only - serialize the query plan and deserialize it
 if|if
 condition|(
@@ -3072,6 +3036,16 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|// get the output schema
+name|schema
+operator|=
+name|getSchema
+argument_list|(
+name|sem
+argument_list|,
+name|conf
+argument_list|)
+expr_stmt|;
 comment|//do the authorization check
 if|if
 condition|(

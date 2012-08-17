@@ -287,6 +287,21 @@ name|get
 argument_list|()
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|clear
+parameter_list|()
+block|{
+name|IOContext
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|ioCxt
+operator|=
+literal|null
+expr_stmt|;
+block|}
 comment|/**    * For CompbineFileInputFormat, the mapper's input file will be changed on the    * fly, and the input file name is passed to jobConf by shims/initNextRecordReader.    * If the map local work has any mapping depending on the current    * mapper's input file, the work need to clear context and re-initialization    * after the input file changed. This is first introduced to process bucket    * map join.    *    * @return is the input file changed?    */
 specifier|public
 name|boolean

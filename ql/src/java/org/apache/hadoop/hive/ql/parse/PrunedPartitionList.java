@@ -249,14 +249,14 @@ name|partitions
 operator|.
 name|addAll
 argument_list|(
-name|unknownPartns
+name|confirmedPartns
 argument_list|)
 expr_stmt|;
 name|partitions
 operator|.
 name|addAll
 argument_list|(
-name|confirmedPartns
+name|unknownPartns
 argument_list|)
 expr_stmt|;
 return|return

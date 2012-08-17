@@ -2728,6 +2728,14 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// 'minimal', 'more' (and 'all' later)
+name|HIVEFETCHTASKCONVERSION
+argument_list|(
+literal|"hive.fetch.task.conversion"
+argument_list|,
+literal|"minimal"
+argument_list|)
+block|,
 comment|// Serde for FetchTask
 name|HIVEFETCHOUTPUTSERDE
 argument_list|(

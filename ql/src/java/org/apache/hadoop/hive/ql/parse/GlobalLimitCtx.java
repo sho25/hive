@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  */
+comment|/**  * context for pruning inputs. populated by GlobalLimitOptimizer  */
 end_comment
 
 begin_class
