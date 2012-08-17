@@ -1237,6 +1237,17 @@ argument_list|,
 literal|"Expressions are not allowed in a sort by clause. Use a column alias instead"
 argument_list|)
 block|,
+name|BUCKETED_TABLE_METADATA_INCORRECT
+argument_list|(
+literal|10141
+argument_list|,
+literal|"Bucketed table metadata is not correct. "
+operator|+
+literal|"Fix the metadata or don't use bucketed mapjoin, by setting "
+operator|+
+literal|"hive.enforce.bucketmapjoin to false."
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
