@@ -574,6 +574,24 @@ name|getLateralViewJoinProc
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|opRules
+operator|.
+name|put
+argument_list|(
+operator|new
+name|RuleRegExp
+argument_list|(
+literal|"R9"
+argument_list|,
+literal|"LVF%"
+argument_list|)
+argument_list|,
+name|ColumnPrunerProcFactory
+operator|.
+name|getLateralViewForwardProc
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
 name|Dispatcher

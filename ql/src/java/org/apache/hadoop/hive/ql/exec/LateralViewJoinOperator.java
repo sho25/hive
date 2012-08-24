@@ -205,6 +205,7 @@ literal|1L
 decl_stmt|;
 comment|// The expected tags from the parent operators. See processOp() before
 comment|// changing the tags.
+specifier|public
 specifier|static
 specifier|final
 name|int
@@ -212,6 +213,7 @@ name|SELECT_TAG
 init|=
 literal|0
 decl_stmt|;
+specifier|public
 specifier|static
 specifier|final
 name|int
