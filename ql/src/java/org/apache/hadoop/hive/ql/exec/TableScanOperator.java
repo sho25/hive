@@ -413,11 +413,6 @@ name|hconf
 decl_stmt|;
 specifier|private
 specifier|transient
-name|String
-name|partitionSpecs
-decl_stmt|;
-specifier|private
-specifier|transient
 name|boolean
 name|inputFileChanged
 init|=
@@ -546,6 +541,9 @@ operator|||
 name|inputFileChanged
 condition|)
 block|{
+name|String
+name|partitionSpecs
+decl_stmt|;
 name|inputFileChanged
 operator|=
 literal|false
@@ -1108,10 +1106,6 @@ argument_list|,
 name|Stat
 argument_list|>
 argument_list|()
-expr_stmt|;
-name|partitionSpecs
-operator|=
-literal|null
 expr_stmt|;
 if|if
 condition|(
