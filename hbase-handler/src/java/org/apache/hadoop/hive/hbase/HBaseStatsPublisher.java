@@ -348,6 +348,19 @@ block|{
 comment|// Write in HBase
 if|if
 condition|(
+name|stats
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// If there are no stats to publish, nothing to do.
+return|return
+literal|true
+return|;
+block|}
+if|if
+condition|(
 operator|!
 name|HBaseStatsUtils
 operator|.
