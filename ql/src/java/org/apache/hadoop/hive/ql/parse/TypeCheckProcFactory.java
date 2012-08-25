@@ -2427,8 +2427,10 @@ name|possibleColumnNames
 init|=
 name|input
 operator|.
-name|getNonHiddenColumnNames
+name|getReferenceableColumnAliases
 argument_list|(
+name|tableOrCol
+argument_list|,
 operator|-
 literal|1
 argument_list|)
