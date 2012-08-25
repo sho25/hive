@@ -2960,6 +2960,14 @@ literal|"hive.multi.insert.move.tasks.share.dependencies"
 argument_list|,
 literal|false
 argument_list|)
+block|,
+comment|/**      * Enable list bucketing DDL. Default value is false so that we disable it by default.      *      * This will be removed once the rest of the DML changes are committed.      */
+name|HIVE_INTERNAL_DDL_LIST_BUCKETING_ENABLE
+argument_list|(
+literal|"hive.internal.ddl.list.bucketing.enable"
+argument_list|,
+literal|false
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final

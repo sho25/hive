@@ -1248,6 +1248,71 @@ operator|+
 literal|"hive.enforce.bucketmapjoin to false."
 argument_list|)
 block|,
+name|CREATE_SKEWED_TABLE_NO_COLUMN_NAME
+argument_list|(
+literal|10200
+argument_list|,
+literal|"No skewed column name."
+argument_list|)
+block|,
+name|CREATE_SKEWED_TABLE_NO_COLUMN_VALUE
+argument_list|(
+literal|10201
+argument_list|,
+literal|"No skewed values."
+argument_list|)
+block|,
+name|CREATE_SKEWED_TABLE_DUPLICATE_COLUMN_NAMES
+argument_list|(
+literal|10202
+argument_list|,
+literal|"Duplicate skewed column name:"
+argument_list|)
+block|,
+name|CREATE_SKEWED_TABLE_INVALID_COLUMN
+argument_list|(
+literal|10203
+argument_list|,
+literal|"Invalid skewed column name:"
+argument_list|)
+block|,
+name|CREATE_SKEWED_TABLE_SKEWED_COL_NAME_VALUE_MISMATCH_1
+argument_list|(
+literal|10204
+argument_list|,
+literal|"Skewed column name is empty but skewed value is not."
+argument_list|)
+block|,
+name|CREATE_SKEWED_TABLE_SKEWED_COL_NAME_VALUE_MISMATCH_2
+argument_list|(
+literal|10205
+argument_list|,
+literal|"Skewed column value is empty but skewed name is not."
+argument_list|)
+block|,
+name|CREATE_SKEWED_TABLE_SKEWED_COL_NAME_VALUE_MISMATCH_3
+argument_list|(
+literal|10206
+argument_list|,
+literal|"The number of skewed column names and the number of "
+operator|+
+literal|"skewed column values are different: "
+argument_list|)
+block|,
+name|ALTER_TABLE_NOT_ALLOWED_RENAME_SKEWED_COLUMN
+argument_list|(
+literal|10207
+argument_list|,
+literal|" is a skewed column. It's not allowed to rename skewed column."
+argument_list|)
+block|,
+name|HIVE_INTERNAL_DDL_LIST_BUCKETING_DISABLED
+argument_list|(
+literal|10208
+argument_list|,
+literal|"List Bucketing DDL is not allowed to use since feature is not completed yet."
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

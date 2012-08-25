@@ -132,6 +132,11 @@ literal|null
 decl_stmt|;
 comment|// [optional] alias of the column (external name
 comment|// as seen by the users)
+comment|/**    * Indicates whether the column is a skewed column.    */
+specifier|private
+name|boolean
+name|isSkewedCol
+decl_stmt|;
 comment|/**    * Store the alias of the table where available.    */
 specifier|private
 name|String
@@ -514,6 +519,32 @@ operator|.
 name|isHiddenVirtualCol
 operator|=
 name|isHiddenVirtualCol
+expr_stmt|;
+block|}
+comment|/**    * @return the isSkewedCol    */
+specifier|public
+name|boolean
+name|isSkewedCol
+parameter_list|()
+block|{
+return|return
+name|isSkewedCol
+return|;
+block|}
+comment|/**    * @param isSkewedCol the isSkewedCol to set    */
+specifier|public
+name|void
+name|setSkewedCol
+parameter_list|(
+name|boolean
+name|isSkewedCol
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isSkewedCol
+operator|=
+name|isSkewedCol
 expr_stmt|;
 block|}
 block|}
