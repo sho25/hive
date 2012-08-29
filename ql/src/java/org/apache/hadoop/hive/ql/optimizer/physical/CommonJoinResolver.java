@@ -461,6 +461,26 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|ConditionalResolverCommonJoin
+operator|.
+name|ConditionalResolverCommonJoinCtx
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|ConditionalWork
 import|;
 end_import
@@ -515,9 +535,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|ConditionalResolverCommonJoin
-operator|.
-name|ConditionalResolverCommonJoinCtx
+name|OperatorDesc
 import|;
 end_import
 
@@ -1835,7 +1853,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|reducerOp
 init|=

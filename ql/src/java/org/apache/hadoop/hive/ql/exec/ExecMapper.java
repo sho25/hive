@@ -33,16 +33,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|lang
 operator|.
 name|management
@@ -164,6 +154,24 @@ operator|.
 name|plan
 operator|.
 name|MapredWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|OperatorDesc
 import|;
 end_import
 
@@ -600,7 +608,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|dummyOps
@@ -616,7 +624,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|dummyOp
 range|:
@@ -960,7 +968,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|dummyOps
@@ -976,7 +984,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|dummyOp
 range|:
@@ -1032,7 +1040,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|forwardOp
 init|=

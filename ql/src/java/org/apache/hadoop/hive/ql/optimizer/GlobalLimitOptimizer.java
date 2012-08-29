@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -317,21 +327,19 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|io
+name|apache
 operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|hadoop
 operator|.
-name|util
+name|hive
 operator|.
-name|Map
+name|ql
+operator|.
+name|plan
+operator|.
+name|OperatorDesc
 import|;
 end_import
 
@@ -389,7 +397,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|topOps

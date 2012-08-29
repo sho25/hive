@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -80,8 +70,8 @@ argument_list|)
 specifier|public
 class|class
 name|ScriptDesc
-implements|implements
-name|Serializable
+extends|extends
+name|AbstractOperatorDesc
 block|{
 specifier|private
 specifier|static

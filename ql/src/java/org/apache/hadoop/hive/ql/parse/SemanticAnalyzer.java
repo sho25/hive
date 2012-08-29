@@ -2113,6 +2113,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|OperatorDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|PlanUtils
 import|;
 end_import
@@ -2645,7 +2663,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|topOps
@@ -2659,7 +2677,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|topSelOps
@@ -2671,7 +2689,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|OpParseContext
@@ -2924,7 +2942,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2940,7 +2958,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2972,7 +2990,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|OpParseContext
@@ -10592,7 +10610,7 @@ specifier|public
 parameter_list|<
 name|T
 extends|extends
-name|Serializable
+name|OperatorDesc
 parameter_list|>
 name|Operator
 argument_list|<
@@ -39970,7 +39988,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|child
@@ -39982,7 +40000,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -40007,7 +40025,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|parent
@@ -40067,7 +40085,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|child
@@ -40079,7 +40097,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -40104,7 +40122,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|parent
@@ -40161,7 +40179,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|unionforward
 init|=
@@ -40190,7 +40208,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|child
@@ -40202,7 +40220,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -40230,7 +40248,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -40255,7 +40273,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|parent
@@ -40267,7 +40285,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -40742,7 +40760,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|top
 init|=
@@ -40757,7 +40775,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|dummySel
 init|=
@@ -41187,7 +41205,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|tableOp
 init|=
@@ -44106,7 +44124,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|Task
@@ -44125,7 +44143,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -44143,7 +44161,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|GenMapRedCtx
@@ -45074,7 +45092,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|opMap
@@ -45107,7 +45125,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 range|:
@@ -45128,7 +45146,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|reducer
 init|=
@@ -45266,7 +45284,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 parameter_list|)
@@ -45294,7 +45312,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|child
 range|:
@@ -45340,7 +45358,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|opMap
@@ -45373,7 +45391,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 range|:
@@ -45484,7 +45502,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|topOp
 parameter_list|)
@@ -45522,7 +45540,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 range|:
@@ -45584,7 +45602,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|opMap
@@ -45609,7 +45627,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 range|:
@@ -50594,7 +50612,7 @@ argument_list|)
 expr_stmt|;
 comment|// If all the tasks can be run locally, we can use local disk for
 comment|// storing intermediate data.
-comment|/**        * This code is commented out pending further testing/development        * for (Task<? extends Serializable> t: rootTasks)        * t.localizeMRTmpFiles(ctx);        */
+comment|/**        * This code is commented out pending further testing/development        * for (Task<? extends SerializableCloneable> t: rootTasks)        * t.localizeMRTmpFiles(ctx);        */
 block|}
 block|}
 comment|/**    * Make a best guess at trying to find the number of reducers    */

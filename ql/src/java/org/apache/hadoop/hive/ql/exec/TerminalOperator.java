@@ -29,6 +29,24 @@ name|Serializable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|OperatorDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * Terminal Operator Base Class.  **/
 end_comment
@@ -41,7 +59,7 @@ name|TerminalOperator
 parameter_list|<
 name|T
 extends|extends
-name|Serializable
+name|OperatorDesc
 parameter_list|>
 extends|extends
 name|Operator

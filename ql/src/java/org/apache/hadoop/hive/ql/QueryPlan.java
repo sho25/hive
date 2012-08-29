@@ -361,6 +361,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|OperatorDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|api
 operator|.
 name|AdjacencyType
@@ -934,7 +952,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|topOps
@@ -981,7 +999,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|opsToVisit
@@ -993,7 +1011,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -1004,7 +1022,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|opsVisited
@@ -1016,7 +1034,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -1042,7 +1060,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 init|=
@@ -1192,7 +1210,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|childOp
 range|:
@@ -1607,7 +1625,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|reducerTopOps
@@ -1619,7 +1637,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2316,6 +2334,18 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|task
+operator|.
+name|getOperatorList
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 for|for
 control|(
 name|org
@@ -2706,7 +2736,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|reducerTopOps
@@ -2718,7 +2748,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2857,7 +2887,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|topOps
@@ -2872,7 +2902,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|opsToVisit
@@ -2884,7 +2914,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2895,7 +2925,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|opsVisited
@@ -2907,7 +2937,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2933,7 +2963,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 init|=
@@ -2999,7 +3029,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|childOp
 range|:

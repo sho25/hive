@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -429,6 +419,24 @@ name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|OperatorDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * Expression factory for predicate pushdown processing. Each processor  * determines whether the expression is a possible candidate for predicate  * pushdown optimization for the given operator  */
 end_comment
@@ -519,7 +527,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 init|=
@@ -1264,7 +1272,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 parameter_list|,
@@ -1318,7 +1326,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 parameter_list|,

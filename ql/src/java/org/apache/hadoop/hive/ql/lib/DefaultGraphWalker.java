@@ -55,16 +55,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -164,7 +154,7 @@ specifier|final
 name|Dispatcher
 name|dispatcher
 decl_stmt|;
-comment|/**    * Constructor.    *     * @param disp    *          dispatcher to call for each op encountered    */
+comment|/**    * Constructor.    *    * @param disp    *          dispatcher to call for each op encountered    */
 specifier|public
 name|DefaultGraphWalker
 parameter_list|(
@@ -215,7 +205,7 @@ name|keySet
 argument_list|()
 return|;
 block|}
-comment|/**    * Dispatch the current operator.    *     * @param nd    *          node being walked    * @param ndStack    *          stack of nodes encountered    * @throws SemanticException    */
+comment|/**    * Dispatch the current operator.    *    * @param nd    *          node being walked    * @param ndStack    *          stack of nodes encountered    * @throws SemanticException    */
 specifier|public
 name|void
 name|dispatch
@@ -317,7 +307,7 @@ name|retVal
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * starting point for walking.    *     * @throws SemanticException    */
+comment|/**    * starting point for walking.    *    * @throws SemanticException    */
 specifier|public
 name|void
 name|startWalking
@@ -395,7 +385,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * walk the current operator and its descendants.    *     * @param nd    *          current operator in the graph    * @throws SemanticException    */
+comment|/**    * walk the current operator and its descendants.    *    * @param nd    *          current operator in the graph    * @throws SemanticException    */
 specifier|public
 name|void
 name|walk

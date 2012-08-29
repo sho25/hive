@@ -67,6 +67,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -98,16 +108,6 @@ operator|.
 name|util
 operator|.
 name|Stack
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
 import|;
 end_import
 
@@ -240,6 +240,24 @@ operator|.
 name|io
 operator|.
 name|HiveIgnoreKeyTextOutputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|OneNullRowInputFormat
 import|;
 end_import
 
@@ -491,7 +509,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PartitionDesc
+name|OperatorDesc
 import|;
 end_import
 
@@ -507,9 +525,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|io
+name|plan
 operator|.
-name|OneNullRowInputFormat
+name|PartitionDesc
 import|;
 end_import
 
@@ -1004,6 +1022,7 @@ implements|implements
 name|Dispatcher
 block|{
 specifier|private
+specifier|final
 name|PhysicalContext
 name|physicalContext
 decl_stmt|;
@@ -1045,7 +1064,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|entry
@@ -1446,7 +1465,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|topOperators
@@ -1589,7 +1608,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|workOperator
 range|:

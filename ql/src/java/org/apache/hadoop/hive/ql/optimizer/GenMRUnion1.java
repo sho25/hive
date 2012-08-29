@@ -359,7 +359,9 @@ name|optimizer
 operator|.
 name|unionproc
 operator|.
-name|UnionProcFactory
+name|UnionProcContext
+operator|.
+name|UnionParseContext
 import|;
 end_import
 
@@ -379,9 +381,7 @@ name|optimizer
 operator|.
 name|unionproc
 operator|.
-name|UnionProcContext
-operator|.
-name|UnionParseContext
+name|UnionProcFactory
 import|;
 end_import
 
@@ -472,6 +472,24 @@ operator|.
 name|plan
 operator|.
 name|MapredWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|OperatorDesc
 import|;
 end_import
 
@@ -729,7 +747,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 operator|)
 name|union
@@ -868,7 +886,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|parent
 parameter_list|,
@@ -876,7 +894,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|child
 parameter_list|,
@@ -945,7 +963,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|fs_op
 init|=
@@ -1010,7 +1028,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|parentOpList
@@ -1022,7 +1040,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -1046,7 +1064,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|ts_op
 init|=
@@ -1070,7 +1088,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|childOpList
@@ -1082,7 +1100,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -1267,7 +1285,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|>
 name|seenOps
@@ -1281,7 +1299,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|topOp
 init|=
@@ -1549,7 +1567,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|GenMapRedCtx
@@ -1878,7 +1896,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 operator|)
 name|nd

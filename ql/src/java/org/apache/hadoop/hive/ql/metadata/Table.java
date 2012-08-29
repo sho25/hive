@@ -3031,7 +3031,7 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|getSkewedColName
+name|getSkewedColNames
 parameter_list|()
 block|{
 return|return

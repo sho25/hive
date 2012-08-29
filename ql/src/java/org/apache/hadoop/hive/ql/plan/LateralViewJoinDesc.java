@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -54,8 +44,8 @@ argument_list|)
 specifier|public
 class|class
 name|LateralViewJoinDesc
-implements|implements
-name|Serializable
+extends|extends
+name|AbstractOperatorDesc
 block|{
 specifier|private
 specifier|static

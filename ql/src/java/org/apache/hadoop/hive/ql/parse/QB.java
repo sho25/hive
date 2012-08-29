@@ -934,7 +934,7 @@ name|skewedColNames
 operator|=
 name|tbl
 operator|.
-name|getSkewedColName
+name|getSkewedColNames
 argument_list|()
 expr_stmt|;
 block|}

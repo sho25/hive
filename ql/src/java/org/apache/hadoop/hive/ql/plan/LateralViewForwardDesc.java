@@ -19,16 +19,6 @@ name|plan
 package|;
 end_package
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
 begin_comment
 comment|/**  * LateralViewForwardDesc.  *  */
 end_comment
@@ -44,8 +34,8 @@ argument_list|)
 specifier|public
 class|class
 name|LateralViewForwardDesc
-implements|implements
-name|Serializable
+extends|extends
+name|AbstractOperatorDesc
 block|{
 specifier|private
 specifier|static

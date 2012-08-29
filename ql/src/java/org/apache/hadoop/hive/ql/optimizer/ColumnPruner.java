@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -339,6 +329,24 @@ name|SemanticException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|OperatorDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implementation of one of the rule-based optimization steps. ColumnPruner gets  * the current operator tree. The \ tree is traversed to find out the columns  * used for all the base tables. If all the columns for a table are not used, a  * select is pushed on top of that table (to select only those columns). Since  * this changes the row resolver, the tree is built again. This can be optimized  * later to patch the tree.  */
 end_comment
@@ -361,7 +369,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|OpParseContext

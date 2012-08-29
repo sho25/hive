@@ -1339,9 +1339,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PlanUtils
-operator|.
-name|ExpressionTypes
+name|TableDesc
 import|;
 end_import
 
@@ -1359,7 +1357,9 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|TableDesc
+name|PlanUtils
+operator|.
+name|ExpressionTypes
 import|;
 end_import
 
@@ -1635,9 +1635,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|SequenceFile
-operator|.
-name|CompressionType
+name|Writable
 import|;
 end_import
 
@@ -1651,7 +1649,9 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|Writable
+name|SequenceFile
+operator|.
+name|CompressionType
 import|;
 end_import
 

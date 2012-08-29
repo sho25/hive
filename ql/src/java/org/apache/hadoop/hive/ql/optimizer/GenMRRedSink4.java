@@ -223,6 +223,24 @@ name|MapredWork
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|OperatorDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * Processor for the rule - map join followed by reduce sink.  */
 end_comment
@@ -238,7 +256,7 @@ specifier|public
 name|GenMRRedSink4
 parameter_list|()
 block|{   }
-comment|/**    * Reduce Scan encountered.    *     * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * Reduce Scan encountered.    *    * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -289,7 +307,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|reducer
 init|=
@@ -309,7 +327,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|GenMapRedCtx
@@ -369,7 +387,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|Task

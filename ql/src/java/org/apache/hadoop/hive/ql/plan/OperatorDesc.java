@@ -19,51 +19,34 @@ name|plan
 package|;
 end_package
 
-begin_comment
-comment|/**  * ForwardDesc.  *  */
-end_comment
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
 
-begin_class
-annotation|@
-name|Explain
-argument_list|(
-name|displayName
-operator|=
-literal|"Forward"
-argument_list|)
+begin_interface
 specifier|public
-class|class
-name|ForwardDesc
+interface|interface
+name|OperatorDesc
 extends|extends
-name|AbstractOperatorDesc
+name|Serializable
+extends|,
+name|Cloneable
 block|{
-specifier|private
-specifier|static
-specifier|final
-name|long
-name|serialVersionUID
-init|=
-literal|1L
-decl_stmt|;
 specifier|public
-name|ForwardDesc
-parameter_list|()
-block|{   }
-annotation|@
-name|Override
-specifier|public
-name|ForwardDesc
+name|Object
 name|clone
 parameter_list|()
-block|{
-return|return
-operator|new
-name|ForwardDesc
-argument_list|()
-return|;
+throws|throws
+name|CloneNotSupportedException
+function_decl|;
 block|}
-block|}
-end_class
+end_interface
 
 end_unit
 

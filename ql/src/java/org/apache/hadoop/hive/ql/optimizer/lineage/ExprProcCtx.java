@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -67,6 +57,24 @@ name|NodeProcessorCtx
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|OperatorDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * The processor context for the lineage information. This contains the  * lineage context and the column info and operator information that is  * being used for the current expression.  */
 end_comment
@@ -80,20 +88,22 @@ name|NodeProcessorCtx
 block|{
 comment|/**    * The lineage context that is being populated.    */
 specifier|private
+specifier|final
 name|LineageCtx
 name|lctx
 decl_stmt|;
 comment|/**    * The input operator in case the current operator is not a leaf.    */
 specifier|private
+specifier|final
 name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|inpOp
 decl_stmt|;
-comment|/**    * Constructor.    *     * @param lctx The lineage context thatcontains the dependencies for the inputs.    * @param inpOp The input operator to the current operator.    */
+comment|/**    * Constructor.    *    * @param lctx The lineage context thatcontains the dependencies for the inputs.    * @param inpOp The input operator to the current operator.    */
 specifier|public
 name|ExprProcCtx
 parameter_list|(
@@ -104,7 +114,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|inpOp
 parameter_list|)
@@ -122,7 +132,7 @@ operator|=
 name|inpOp
 expr_stmt|;
 block|}
-comment|/**    * Gets the lineage context.    *     * @return LineageCtx The lineage context.    */
+comment|/**    * Gets the lineage context.    *    * @return LineageCtx The lineage context.    */
 specifier|public
 name|LineageCtx
 name|getLineageCtx
@@ -132,13 +142,13 @@ return|return
 name|lctx
 return|;
 block|}
-comment|/**    * Gets the input operator.    *     * @return Operator The input operator - this is null in case the current     * operator is a leaf.    */
+comment|/**    * Gets the input operator.    *    * @return Operator The input operator - this is null in case the current    * operator is a leaf.    */
 specifier|public
 name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|getInputOperator
 parameter_list|()

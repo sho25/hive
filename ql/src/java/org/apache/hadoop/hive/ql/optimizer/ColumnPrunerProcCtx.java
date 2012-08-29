@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -245,6 +235,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|OperatorDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|SelectDesc
 import|;
 end_import
@@ -268,7 +276,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|List
@@ -286,7 +294,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|OpParseContext
@@ -320,7 +328,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|OpParseContext
@@ -337,7 +345,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|List
@@ -405,7 +413,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|op
 parameter_list|)
@@ -426,7 +434,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|OpParseContext
@@ -445,7 +453,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 argument_list|,
 name|List
@@ -460,7 +468,7 @@ return|return
 name|prunedColLists
 return|;
 block|}
-comment|/**    * Creates the list of internal column names(these names are used in the    * RowResolver and are different from the external column names) that are    * needed in the subtree. These columns eventually have to be selected from    * the table scan.    *     * @param curOp    *          The root of the operator subtree.    * @return List<String> of the internal column names.    * @throws SemanticException    */
+comment|/**    * Creates the list of internal column names(these names are used in the    * RowResolver and are different from the external column names) that are    * needed in the subtree. These columns eventually have to be selected from    * the table scan.    *    * @param curOp    *          The root of the operator subtree.    * @return List<String> of the internal column names.    * @throws SemanticException    */
 specifier|public
 name|List
 argument_list|<
@@ -472,7 +480,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|curOp
 parameter_list|)
@@ -508,7 +516,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|child
 range|:
@@ -596,7 +604,7 @@ return|return
 name|colList
 return|;
 block|}
-comment|/**    * Creates the list of internal column names from select expressions in a    * select operator. This function is used for the select operator instead of    * the genColLists function (which is used by the rest of the operators).    *     * @param op    *          The select operator.    * @return List<String> of the internal column names.    */
+comment|/**    * Creates the list of internal column names from select expressions in a    * select operator. This function is used for the select operator instead of    * the genColLists function (which is used by the rest of the operators).    *    * @param op    *          The select operator.    * @return List<String> of the internal column names.    */
 specifier|public
 name|List
 argument_list|<
@@ -667,7 +675,7 @@ return|return
 name|cols
 return|;
 block|}
-comment|/**    * Creates the list of internal column names for select * expressions.    *     * @param op    *          The select operator.    * @param colList    *          The list of internal column names returned by the children of the    *          select operator.    * @return List<String> of the internal column names.    */
+comment|/**    * Creates the list of internal column names for select * expressions.    *    * @param op    *          The select operator.    * @param colList    *          The list of internal column names returned by the children of the    *          select operator.    * @return List<String> of the internal column names.    */
 specifier|public
 name|List
 argument_list|<

@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -297,6 +287,24 @@ name|ExprNodeDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|OperatorDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * PcrOpProcFactory contains processors that process expression tree of filter operators  * following table scan operators. It walks the expression tree of the filter operator  * to remove partition predicates when possible. If the filter operator can be removed,  * the whole operator is marked to be removed later on, otherwise the predicate is changed  */
 end_comment
@@ -405,7 +413,7 @@ name|Operator
 argument_list|<
 name|?
 extends|extends
-name|Serializable
+name|OperatorDesc
 argument_list|>
 name|pop
 init|=
