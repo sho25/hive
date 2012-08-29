@@ -1934,6 +1934,15 @@ argument_list|(
 name|queryId
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|ji
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 for|for
 control|(
 name|String
