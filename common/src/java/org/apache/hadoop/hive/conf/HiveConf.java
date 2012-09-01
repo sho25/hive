@@ -1625,6 +1625,22 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// Parameters for exporting metadata on table drop (requires the use of the)
+comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
+name|METADATA_EXPORT_LOCATION
+argument_list|(
+literal|"hive.metadata.export.location"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+name|MOVE_EXPORTED_METADATA_TO_TRASH
+argument_list|(
+literal|"hive.metadata.move.exported.metadata.to.trash"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// CLI
 name|CLIIGNOREERRORS
 argument_list|(
