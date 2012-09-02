@@ -2722,13 +2722,6 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-name|HIVEHARPARENTDIRSETTABLE
-argument_list|(
-literal|"hive.archive.har.parentdir.settable"
-argument_list|,
-literal|false
-argument_list|)
-block|,
 comment|//Enable/Disable gbToIdx rewrite rule
 name|HIVEOPTGBYUSINGINDEX
 argument_list|(

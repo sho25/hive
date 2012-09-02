@@ -8721,6 +8721,14 @@ comment|// Create an archived version of the partition in a directory ending in
 comment|// ARCHIVE_INTERMEDIATE_DIR_SUFFIX that's the same level as the partition,
 comment|// if it does not already exist. If it does exist, we assume the dir is good
 comment|// to use as the move operation that created it is atomic.
+name|HadoopShims
+name|shim
+init|=
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -8793,14 +8801,6 @@ literal|"Please wait... (this may take a while)"
 argument_list|)
 expr_stmt|;
 comment|// Create the Hadoop archive
-name|HadoopShims
-name|shim
-init|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-decl_stmt|;
 name|int
 name|ret
 init|=
@@ -9125,6 +9125,17 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 name|URI
+name|test
+init|=
+name|p
+operator|.
+name|getPartitionPath
+argument_list|()
+operator|.
+name|toUri
+argument_list|()
+decl_stmt|;
+name|URI
 name|harPartitionDir
 init|=
 name|harHelper
@@ -9132,6 +9143,8 @@ operator|.
 name|getHarUri
 argument_list|(
 name|originalPartitionUri
+argument_list|,
+name|shim
 argument_list|)
 decl_stmt|;
 name|Path
@@ -9680,6 +9693,14 @@ argument_list|,
 name|originalUri
 argument_list|)
 decl_stmt|;
+name|HadoopShims
+name|shim
+init|=
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+decl_stmt|;
 name|URI
 name|sourceUri
 init|=
@@ -9688,6 +9709,8 @@ operator|.
 name|getHarUri
 argument_list|(
 name|originalUri
+argument_list|,
+name|shim
 argument_list|)
 decl_stmt|;
 name|Path
