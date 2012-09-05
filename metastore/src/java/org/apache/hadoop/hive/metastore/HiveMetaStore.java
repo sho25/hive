@@ -3823,21 +3823,7 @@ literal|": "
 operator|+
 name|db
 operator|.
-name|getName
-argument_list|()
-operator|+
-literal|" "
-operator|+
-name|db
-operator|.
-name|getLocationUri
-argument_list|()
-operator|+
-literal|" "
-operator|+
-name|db
-operator|.
-name|getDescription
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -5094,7 +5080,7 @@ literal|": "
 operator|+
 name|type
 operator|.
-name|getName
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -6114,18 +6100,11 @@ name|startFunction
 argument_list|(
 literal|"create_table"
 argument_list|,
-literal|": db="
+literal|": "
 operator|+
 name|tbl
 operator|.
-name|getDbName
-argument_list|()
-operator|+
-literal|" tbl="
-operator|+
-name|tbl
-operator|.
-name|getTableName
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -12756,25 +12735,18 @@ name|startFunction
 argument_list|(
 literal|"add_index"
 argument_list|,
-literal|": db="
+literal|": "
 operator|+
 name|newIndex
 operator|.
-name|getDbName
+name|toString
 argument_list|()
 operator|+
-literal|" tbl="
+literal|" "
 operator|+
-name|newIndex
+name|indexTable
 operator|.
-name|getOrigTableName
-argument_list|()
-operator|+
-literal|" index="
-operator|+
-name|newIndex
-operator|.
-name|getIndexName
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
