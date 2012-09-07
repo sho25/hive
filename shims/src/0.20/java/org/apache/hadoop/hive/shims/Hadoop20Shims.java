@@ -2880,6 +2880,19 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|closeAllForUGI
+parameter_list|(
+name|UserGroupInformation
+name|ugi
+parameter_list|)
+block|{
+comment|// No such functionality in ancient hadoop
+return|return;
+block|}
 block|}
 end_class
 

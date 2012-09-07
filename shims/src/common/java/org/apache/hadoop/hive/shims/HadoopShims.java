@@ -637,6 +637,14 @@ parameter_list|)
 function_decl|;
 comment|/**    * Get the UGI that the given job configuration will run as.    *    * In secure versions of Hadoop, this simply returns the current    * access control context's user, ignoring the configuration.    */
 specifier|public
+name|void
+name|closeAllForUGI
+parameter_list|(
+name|UserGroupInformation
+name|ugi
+parameter_list|)
+function_decl|;
+specifier|public
 name|UserGroupInformation
 name|getUGIForConf
 parameter_list|(

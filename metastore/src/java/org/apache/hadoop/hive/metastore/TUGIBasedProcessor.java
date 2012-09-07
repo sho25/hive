@@ -934,6 +934,16 @@ argument_list|)
 throw|;
 comment|// unexpected!
 block|}
+finally|finally
+block|{
+name|shim
+operator|.
+name|closeAllForUGI
+argument_list|(
+name|clientUgi
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private
