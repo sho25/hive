@@ -679,6 +679,32 @@ name|primitiveCategory
 argument_list|)
 return|;
 block|}
+comment|// Enum class?
+if|if
+condition|(
+name|Enum
+operator|.
+name|class
+operator|.
+name|isAssignableFrom
+argument_list|(
+name|c
+argument_list|)
+condition|)
+block|{
+return|return
+name|PrimitiveObjectInspectorFactory
+operator|.
+name|getPrimitiveJavaObjectInspector
+argument_list|(
+name|PrimitiveObjectInspector
+operator|.
+name|PrimitiveCategory
+operator|.
+name|STRING
+argument_list|)
+return|;
+block|}
 comment|// Must be struct because List and Map need to be ParameterizedType
 assert|assert
 operator|(
