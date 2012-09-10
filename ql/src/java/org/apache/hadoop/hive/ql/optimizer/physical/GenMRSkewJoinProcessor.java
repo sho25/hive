@@ -2697,9 +2697,9 @@ block|{
 return|return
 name|baseDir
 operator|+
-name|File
+name|Path
 operator|.
-name|separator
+name|SEPARATOR
 operator|+
 name|skewJoinPrefix
 operator|+
@@ -2726,9 +2726,9 @@ block|{
 return|return
 name|baseDir
 operator|+
-name|File
+name|Path
 operator|.
-name|separator
+name|SEPARATOR
 operator|+
 name|skewJoinPrefix
 operator|+
@@ -2762,9 +2762,9 @@ block|{
 return|return
 name|baseDir
 operator|+
-name|File
+name|Path
 operator|.
-name|separator
+name|SEPARATOR
 operator|+
 name|skewJoinPrefix
 operator|+
