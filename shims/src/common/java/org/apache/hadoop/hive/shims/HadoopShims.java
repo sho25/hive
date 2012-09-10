@@ -754,6 +754,45 @@ name|Job
 name|job
 parameter_list|)
 function_decl|;
+comment|/**    * Check wether MR is configured to run in local-mode    * @param conf    * @return    */
+specifier|public
+name|boolean
+name|isLocalMode
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+function_decl|;
+comment|/**    * All retrieval of jobtracker/resource manager rpc address    * in the configuration should be done through this shim    * @param conf    * @return    */
+specifier|public
+name|String
+name|getJobLauncherRpcAddress
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+function_decl|;
+comment|/**    * All updates to jobtracker/resource manager rpc address    * in the configuration should be done through this shim    * @param conf    * @return    */
+specifier|public
+name|void
+name|setJobLauncherRpcAddress
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|String
+name|val
+parameter_list|)
+function_decl|;
+comment|/**    * All references to jobtracker/resource manager http address    * in the configuration should be done through this shim    * @param conf    * @return    */
+specifier|public
+name|String
+name|getJobLauncherHttpAddress
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+function_decl|;
 comment|/**    * InputSplitShim.    *    */
 specifier|public
 interface|interface

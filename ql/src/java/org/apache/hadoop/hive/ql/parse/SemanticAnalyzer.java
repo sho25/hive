@@ -2619,6 +2619,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapred
 operator|.
 name|InputFormat
@@ -50571,34 +50587,31 @@ operator|!
 name|hasNonLocalJob
 condition|)
 block|{
-comment|// none of the mapred tasks needs to be run locally. That means that the
-comment|// query can be executed entirely in local mode. Save the current tracker
-comment|// value and restore it when done
+comment|// Entire query can be run locally.
+comment|// Save the current tracker value and restore it when done.
 name|ctx
 operator|.
 name|setOriginalTracker
 argument_list|(
-name|conf
+name|ShimLoader
 operator|.
-name|getVar
+name|getHadoopShims
+argument_list|()
+operator|.
+name|getJobLauncherRpcAddress
 argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HADOOPJT
+name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|conf
+name|ShimLoader
 operator|.
-name|setVar
+name|getHadoopShims
+argument_list|()
+operator|.
+name|setJobLauncherRpcAddress
 argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HADOOPJT
+name|conf
 argument_list|,
 literal|"local"
 argument_list|)

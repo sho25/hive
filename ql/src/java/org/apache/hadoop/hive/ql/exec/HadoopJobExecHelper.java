@@ -2241,18 +2241,14 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|isLocalMode
+argument_list|(
 name|job
-operator|.
-name|get
-argument_list|(
-literal|"mapred.job.tracker"
-argument_list|,
-literal|"local"
-argument_list|)
-operator|.
-name|equals
-argument_list|(
-literal|"local"
 argument_list|)
 condition|)
 block|{
@@ -2266,16 +2262,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|String
-name|hp
-init|=
-name|job
-operator|.
-name|get
-argument_list|(
-literal|"mapred.job.tracker"
-argument_list|)
-decl_stmt|;
 if|if
 condition|(
 name|SessionState
@@ -2357,11 +2343,7 @@ operator|.
 name|HADOOPBIN
 argument_list|)
 operator|+
-literal|" job  -Dmapred.job.tracker="
-operator|+
-name|hp
-operator|+
-literal|" -kill "
+literal|" job  -kill "
 operator|+
 name|rj
 operator|.
