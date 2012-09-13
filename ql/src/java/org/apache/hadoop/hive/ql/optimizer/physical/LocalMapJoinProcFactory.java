@@ -1298,7 +1298,12 @@ name|RuleRegExp
 argument_list|(
 literal|"R1"
 argument_list|,
-literal|"GBY%"
+name|GroupByOperator
+operator|.
+name|getOperatorName
+argument_list|()
+operator|+
+literal|"%"
 argument_list|)
 argument_list|,
 name|LocalMapJoinProcFactory

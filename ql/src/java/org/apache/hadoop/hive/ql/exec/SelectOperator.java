@@ -459,6 +459,17 @@ name|getName
 parameter_list|()
 block|{
 return|return
+name|getOperatorName
+argument_list|()
+return|;
+block|}
+specifier|static
+specifier|public
+name|String
+name|getOperatorName
+parameter_list|()
+block|{
+return|return
 literal|"SEL"
 return|;
 block|}

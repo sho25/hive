@@ -738,7 +738,12 @@ name|RuleRegExp
 argument_list|(
 literal|"R1"
 argument_list|,
-literal|"MAPJOIN%"
+name|MapJoinOperator
+operator|.
+name|getOperatorName
+argument_list|()
+operator|+
+literal|"%"
 argument_list|)
 argument_list|,
 name|getSortedMergeBucketMapjoinProc
