@@ -5621,6 +5621,8 @@ operator|new
 name|HiveDriverRunHookContextImpl
 argument_list|(
 name|conf
+argument_list|,
+name|command
 argument_list|)
 decl_stmt|;
 comment|// Get all the driver run hooks and pre-execute them.

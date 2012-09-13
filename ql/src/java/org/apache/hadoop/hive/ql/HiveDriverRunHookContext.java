@@ -41,7 +41,21 @@ interface|interface
 name|HiveDriverRunHookContext
 extends|extends
 name|Configurable
-block|{  }
+block|{
+specifier|public
+name|String
+name|getCommand
+parameter_list|()
+function_decl|;
+specifier|public
+name|void
+name|setCommand
+parameter_list|(
+name|String
+name|command
+parameter_list|)
+function_decl|;
+block|}
 end_interface
 
 end_unit
