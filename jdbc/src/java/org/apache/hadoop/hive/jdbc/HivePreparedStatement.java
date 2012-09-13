@@ -1973,14 +1973,20 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
 argument_list|(
-literal|"Method not supported"
+name|parameterIndex
+argument_list|,
+name|x
+operator|.
+name|toString
+argument_list|()
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.PreparedStatement#setTimestamp(int, java.sql.Timestamp,    * java.util.Calendar)    */
 specifier|public

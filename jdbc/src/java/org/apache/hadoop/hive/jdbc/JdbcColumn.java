@@ -253,6 +253,17 @@ operator|+
 literal|1
 return|;
 comment|// allow +/-
+case|case
+name|Types
+operator|.
+name|TIMESTAMP
+case|:
+return|return
+name|columnPrecision
+argument_list|(
+name|columnType
+argument_list|)
+return|;
 comment|// see http://download.oracle.com/javase/6/docs/api/constant-values.html#java.lang.Float.MAX_EXPONENT
 case|case
 name|Types
@@ -368,6 +379,14 @@ case|:
 return|return
 literal|15
 return|;
+case|case
+name|Types
+operator|.
+name|TIMESTAMP
+case|:
+return|return
+literal|29
+return|;
 default|default:
 throw|throw
 operator|new
@@ -444,6 +463,14 @@ name|DOUBLE
 case|:
 return|return
 literal|15
+return|;
+case|case
+name|Types
+operator|.
+name|TIMESTAMP
+case|:
+return|return
+literal|9
 return|;
 default|default:
 throw|throw

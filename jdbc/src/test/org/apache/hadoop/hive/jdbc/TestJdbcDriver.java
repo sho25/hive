@@ -777,7 +777,9 @@ literal|" c14 map<int, map<int,int>>,"
 operator|+
 literal|" c15 struct<r:int,s:struct<a:int,b:string>>,"
 operator|+
-literal|" c16 array<struct<m:map<string,string>,n:int>>) comment '"
+literal|" c16 array<struct<m:map<string,string>,n:int>>,"
+operator|+
+literal|" c17 timestamp) comment '"
 operator|+
 name|dataTypeTableComment
 operator|+
@@ -2031,6 +2033,30 @@ literal|16
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getTimestamp
+argument_list|(
+literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// row 3
 name|assertTrue
 argument_list|(
@@ -2230,6 +2256,33 @@ name|getString
 argument_list|(
 literal|16
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"2012-04-22 09:00:00.123456789"
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"2012-04-22 09:00:00.123456789"
+argument_list|,
+name|res
+operator|.
+name|getTimestamp
+argument_list|(
+literal|17
+argument_list|)
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// test getBoolean rules on non-boolean columns
@@ -4706,7 +4759,7 @@ name|executeQuery
 argument_list|(
 literal|"select c1, c2, c3, c4, c5 as a, c6, c7, c8, c9, c10, c11, c12, "
 operator|+
-literal|"c1*2, sentences(null, null, null) as b from "
+literal|"c1*2, sentences(null, null, null) as b, c17 from "
 operator|+
 name|dataTypeTableName
 operator|+
@@ -4745,7 +4798,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|14
+literal|15
 argument_list|,
 name|meta
 operator|.
@@ -6806,6 +6859,80 @@ operator|.
 name|getScale
 argument_list|(
 literal|14
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"c17"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|15
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|Types
+operator|.
+name|TIMESTAMP
+argument_list|,
+name|meta
+operator|.
+name|getColumnType
+argument_list|(
+literal|15
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"timestamp"
+argument_list|,
+name|meta
+operator|.
+name|getColumnTypeName
+argument_list|(
+literal|15
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|29
+argument_list|,
+name|meta
+operator|.
+name|getColumnDisplaySize
+argument_list|(
+literal|15
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|29
+argument_list|,
+name|meta
+operator|.
+name|getPrecision
+argument_list|(
+literal|15
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|9
+argument_list|,
+name|meta
+operator|.
+name|getScale
+argument_list|(
+literal|15
 argument_list|)
 argument_list|)
 expr_stmt|;
