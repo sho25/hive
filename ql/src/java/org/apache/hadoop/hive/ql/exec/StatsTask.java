@@ -2958,6 +2958,14 @@ literal|0
 condition|)
 block|{
 comment|// dynamic partitions
+comment|// If no dynamic partitions are generated, dpPartSpecs may not be initialized
+if|if
+condition|(
+name|dpPartSpecs
+operator|!=
+literal|null
+condition|)
+block|{
 comment|// load the list of DP partitions and return the list of partition specs
 for|for
 control|(
@@ -2993,6 +3001,7 @@ argument_list|(
 name|partn
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
