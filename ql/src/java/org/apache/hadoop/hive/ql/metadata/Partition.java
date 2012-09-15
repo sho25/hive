@@ -1844,14 +1844,16 @@ return|return
 name|outputFormatClass
 return|;
 block|}
-comment|/**    * The number of buckets is a property of the partition. However - internally    * we are just storing it as a property of the table as a short term measure.    */
 specifier|public
 name|int
 name|getBucketCount
 parameter_list|()
 block|{
 return|return
-name|table
+name|tPartition
+operator|.
+name|getSd
+argument_list|()
 operator|.
 name|getNumBuckets
 argument_list|()

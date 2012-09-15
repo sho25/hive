@@ -1140,17 +1140,6 @@ argument_list|,
 literal|"Drop partitions for a non string partition columns is not allowed using non-equality"
 argument_list|)
 block|,
-name|NUM_BUCKETS_CHANGE_NOT_ALLOWED
-argument_list|(
-literal|10130
-argument_list|,
-literal|"Changing the number of buckets for a "
-operator|+
-literal|"partitioned table is not allowed. It may lead to wrong results for "
-operator|+
-literal|"older partitions"
-argument_list|)
-block|,
 name|ALTER_COMMAND_FOR_VIEWS
 argument_list|(
 literal|10131
