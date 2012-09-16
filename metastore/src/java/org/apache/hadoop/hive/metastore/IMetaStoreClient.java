@@ -1402,6 +1402,30 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * updates a list of partitions    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newParts    *          list of partitions    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+specifier|public
+name|void
+name|alter_partitions
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|newParts
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * rename a partition to a new partition    *    * @param dbname    *          database of the old partition    * @param name    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
 specifier|public
 name|void
