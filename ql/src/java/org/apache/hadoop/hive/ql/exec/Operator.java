@@ -6829,6 +6829,15 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{   }
+specifier|public
+name|boolean
+name|supportSkewJoinOptimization
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

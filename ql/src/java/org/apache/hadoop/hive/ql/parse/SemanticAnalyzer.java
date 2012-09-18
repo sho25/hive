@@ -50801,7 +50801,7 @@ argument_list|)
 expr_stmt|;
 comment|// If all the tasks can be run locally, we can use local disk for
 comment|// storing intermediate data.
-comment|/**        * This code is commented out pending further testing/development        * for (Task<? extends SerializableCloneable> t: rootTasks)        * t.localizeMRTmpFiles(ctx);        */
+comment|/**        * This code is commented out pending further testing/development        * for (Task<? extends OperatorDesc> t: rootTasks)        * t.localizeMRTmpFiles(ctx);        */
 block|}
 block|}
 comment|/**    * Make a best guess at trying to find the number of reducers    */

@@ -2458,6 +2458,14 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// optimize skewed join by changing the query plan at compile time
+name|HIVE_OPTIMIZE_SKEWJOIN_COMPILETIME
+argument_list|(
+literal|"hive.optimize.skewjoin.compiletime"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Indexes
 name|HIVEOPTINDEXFILTER_COMPACT_MINSIZE
 argument_list|(

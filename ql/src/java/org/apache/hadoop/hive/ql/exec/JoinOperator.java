@@ -1376,6 +1376,20 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|supportSkewJoinOptimization
+parameter_list|()
+block|{
+comment|// Since skew join optimization makes a copy of the tree above joins, and
+comment|// there is no multi-query optimization in place, let us not use skew join
+comment|// optimizations for now.
+return|return
+literal|false
+return|;
+block|}
 block|}
 end_class
 
