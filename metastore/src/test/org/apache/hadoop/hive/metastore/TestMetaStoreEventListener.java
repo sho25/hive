@@ -672,11 +672,7 @@ name|System
 operator|.
 name|setProperty
 argument_list|(
-name|ConfVars
-operator|.
-name|METASTORE_EVENT_LISTENERS
-operator|.
-name|varname
+literal|"hive.metastore.event.listeners"
 argument_list|,
 name|DummyListener
 operator|.
@@ -690,11 +686,7 @@ name|System
 operator|.
 name|setProperty
 argument_list|(
-name|ConfVars
-operator|.
-name|METASTORE_PRE_EVENT_LISTENERS
-operator|.
-name|varname
+literal|"hive.metastore.pre.event.listeners"
 argument_list|,
 name|DummyPreListener
 operator|.

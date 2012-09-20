@@ -318,11 +318,7 @@ name|System
 operator|.
 name|setProperty
 argument_list|(
-name|ConfVars
-operator|.
-name|METASTORE_EVENT_CLEAN_FREQ
-operator|.
-name|varname
+literal|"hive.metastore.event.clean.freq"
 argument_list|,
 literal|"2"
 argument_list|)
@@ -331,11 +327,7 @@ name|System
 operator|.
 name|setProperty
 argument_list|(
-name|ConfVars
-operator|.
-name|METASTORE_EVENT_EXPIRY_DURATION
-operator|.
-name|varname
+literal|"hive.metastore.event.expiry.duration"
 argument_list|,
 literal|"5"
 argument_list|)
