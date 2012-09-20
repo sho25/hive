@@ -2243,6 +2243,29 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{   }
+specifier|private
+name|boolean
+name|jobCloseDone
+init|=
+literal|false
+decl_stmt|;
+comment|// Operator specific logic goes here
+specifier|public
+name|void
+name|jobCloseOp
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|boolean
+name|success
+parameter_list|,
+name|JobCloseFeedBack
+name|feedBack
+parameter_list|)
+throws|throws
+name|HiveException
+block|{   }
 comment|/**    * Unlike other operator interfaces which are called from map or reduce task,    * jobClose is called from the jobclient side once the job has completed.    *    * @param conf    *          Configuration with with which job was submitted    * @param success    *          whether the job was completed successfully or not    */
 specifier|public
 name|void
@@ -2260,15 +2283,34 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|// JobClose has already been performed on this operator
 if|if
 condition|(
-name|childOperators
-operator|==
-literal|null
+name|jobCloseDone
 condition|)
 block|{
 return|return;
 block|}
+name|jobCloseOp
+argument_list|(
+name|conf
+argument_list|,
+name|success
+argument_list|,
+name|feedBack
+argument_list|)
+expr_stmt|;
+name|jobCloseDone
+operator|=
+literal|true
+expr_stmt|;
+if|if
+condition|(
+name|childOperators
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|Operator
@@ -2293,6 +2335,7 @@ argument_list|,
 name|feedBack
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Cache childOperators in an array for faster access. childOperatorsArray is    * accessed per row, so it's important to make the access efficient.    */

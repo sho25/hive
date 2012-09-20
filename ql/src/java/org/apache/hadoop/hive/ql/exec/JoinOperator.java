@@ -754,7 +754,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|jobClose
+name|jobCloseOp
 parameter_list|(
 name|Configuration
 name|hconf
@@ -1016,7 +1016,7 @@ block|}
 block|}
 name|super
 operator|.
-name|jobClose
+name|jobCloseOp
 argument_list|(
 name|hconf
 argument_list|,
