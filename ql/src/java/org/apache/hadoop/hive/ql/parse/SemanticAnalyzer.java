@@ -50128,7 +50128,7 @@ name|colList
 operator|.
 name|add
 argument_list|(
-name|unescapeIdentifier
+name|stripQuotes
 argument_list|(
 name|child
 operator|.
