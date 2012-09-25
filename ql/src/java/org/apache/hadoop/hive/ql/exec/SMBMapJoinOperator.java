@@ -811,7 +811,11 @@ name|spillTableDesc
 argument_list|,
 name|conf
 argument_list|,
-name|noOuterJoin
+operator|!
+name|hasFilter
+argument_list|(
+name|storePos
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|nextGroupStorage
@@ -848,7 +852,11 @@ name|spillTableDesc
 argument_list|,
 name|conf
 argument_list|,
-name|noOuterJoin
+operator|!
+name|hasFilter
+argument_list|(
+name|storePos
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|candidateStorage
@@ -1510,7 +1518,16 @@ argument_list|(
 name|alias
 argument_list|)
 argument_list|,
-name|noOuterJoin
+name|filterMap
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|filterMap
+index|[
+name|alias
+index|]
 argument_list|)
 decl_stmt|;
 comment|//have we reached a new key group?

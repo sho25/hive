@@ -1237,6 +1237,15 @@ operator|+
 literal|"hive.enforce.bucketmapjoin to false."
 argument_list|)
 block|,
+name|JOINNODE_OUTERJOIN_MORETHAN_8
+argument_list|(
+literal|10142
+argument_list|,
+literal|"Single join node containing outer join(s) "
+operator|+
+literal|"cannot have more than 8 aliases"
+argument_list|)
+block|,
 name|CREATE_SKEWED_TABLE_NO_COLUMN_NAME
 argument_list|(
 literal|10200

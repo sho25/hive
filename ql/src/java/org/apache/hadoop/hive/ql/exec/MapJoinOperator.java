@@ -1551,7 +1551,16 @@ argument_list|(
 name|alias
 argument_list|)
 argument_list|,
-name|noOuterJoin
+name|filterMap
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|filterMap
+index|[
+name|alias
+index|]
 argument_list|)
 decl_stmt|;
 comment|// Add the value to the ArrayList

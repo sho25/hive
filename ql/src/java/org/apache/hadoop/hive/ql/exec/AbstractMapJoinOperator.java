@@ -547,7 +547,11 @@ name|spillTableDesc
 argument_list|,
 name|conf
 argument_list|,
-name|noOuterJoin
+operator|!
+name|hasFilter
+argument_list|(
+name|posBigTable
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|storage
