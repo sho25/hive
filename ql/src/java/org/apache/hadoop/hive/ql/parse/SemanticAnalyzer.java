@@ -5769,6 +5769,8 @@ name|getChild
 argument_list|(
 literal|0
 argument_list|)
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|qbp
@@ -7140,6 +7142,11 @@ argument_list|()
 operator|.
 name|isInsertIntoTable
 argument_list|(
+name|tab
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
 name|tab_name
 argument_list|)
 operator|&&
@@ -25321,6 +25328,11 @@ name|isInsertIntoTable
 argument_list|(
 name|dest_tab
 operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|dest_tab
+operator|.
 name|getTableName
 argument_list|()
 argument_list|)
@@ -25758,6 +25770,11 @@ argument_list|()
 operator|.
 name|isInsertIntoTable
 argument_list|(
+name|dest_tab
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
 name|dest_tab
 operator|.
 name|getTableName
