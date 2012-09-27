@@ -11504,10 +11504,10 @@ operator|instanceof
 name|GenericUDFOPOr
 return|;
 block|}
-comment|/**    * Check if the partition pruning expression can be pushed down to JDO filtering.    * The partition expression contains only partition columns.    * The criteria that an expression can be pushed down are that:    *  1) the expression only contains function specified in supportedJDOFuncs().    *     Now only {=, AND, OR} can be pushed down.    *  2) the partition column type and the constant type have to be String. This is    *     restriction by the current JDO filtering implementation.    * @param tab The table that contains the partition columns.    * @param expr the partition pruning expression    * @return true if the partition pruning expression can be pushed down to JDO filtering.    */
+comment|/**    * Check if the partition pruning expression can be pushed down to JDO filtering.    * The partition expression contains only partition columns.    * The criteria that an expression can be pushed down are that:    *  1) the expression only contains function specified in supportedJDOFuncs().    *     Now only {=, AND, OR} can be pushed down.    *  2) the partition column type and the constant type have to be String. This is    *     restriction by the current JDO filtering implementation.    * @param tab The table that contains the partition columns.    * @param expr the partition pruning expression    * @return null if the partition pruning expression can be pushed down to JDO filtering.    */
 specifier|public
 specifier|static
-name|boolean
+name|String
 name|checkJDOPushDown
 parameter_list|(
 name|Table
@@ -11538,12 +11538,23 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-return|return
-operator|(
+if|if
+condition|(
 name|value
 operator|instanceof
 name|String
-operator|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+return|return
+literal|"Constant "
+operator|+
+name|value
+operator|+
+literal|" is not string type"
 return|;
 block|}
 elseif|else
@@ -11615,7 +11626,8 @@ name|colName
 argument_list|)
 condition|)
 block|{
-return|return
+if|if
+condition|(
 name|fs
 operator|.
 name|getType
@@ -11627,6 +11639,21 @@ name|Constants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+return|return
+literal|"Partition column "
+operator|+
+name|fs
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" is not string type"
 return|;
 block|}
 block|}
@@ -11640,7 +11667,14 @@ block|}
 else|else
 block|{
 return|return
-literal|false
+literal|"Column "
+operator|+
+name|expr
+operator|.
+name|getExprString
+argument_list|()
+operator|+
+literal|" is not string type"
 return|;
 block|}
 block|}
@@ -11678,7 +11712,14 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|false
+literal|"Expression "
+operator|+
+name|expr
+operator|.
+name|getExprString
+argument_list|()
+operator|+
+literal|" cannot be evaluated"
 return|;
 block|}
 name|List
@@ -11700,28 +11741,41 @@ range|:
 name|children
 control|)
 block|{
-if|if
-condition|(
-operator|!
+name|String
+name|message
+init|=
 name|checkJDOPushDown
 argument_list|(
 name|tab
 argument_list|,
 name|child
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|message
+operator|!=
+literal|null
 condition|)
 block|{
 return|return
-literal|false
+name|message
 return|;
 block|}
 block|}
 return|return
-literal|true
+literal|null
 return|;
 block|}
 return|return
-literal|false
+literal|"Expression "
+operator|+
+name|expr
+operator|.
+name|getExprString
+argument_list|()
+operator|+
+literal|" cannot be evaluated"
 return|;
 block|}
 comment|/**    * The check here is kind of not clean. It first use a for loop to go through    * all input formats, and choose the ones that extend ReworkMapredInputFormat    * to a set. And finally go through the ReworkMapredInputFormat set, and call    * rework for each one.    *    * Technically all these can be avoided if all Hive's input formats can share    * a same interface. As in today's hive and Hadoop, it is not possible because    * a lot of Hive's input formats are in Hadoop's code. And most of Hadoop's    * input formats just extend InputFormat interface.    *    * @param task    * @param reworkMapredWork    * @param conf    * @throws SemanticException    */

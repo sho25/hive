@@ -1246,6 +1246,13 @@ operator|+
 literal|"cannot have more than 8 aliases"
 argument_list|)
 block|,
+name|INVALID_JDO_FILTER_EXPRESSION
+argument_list|(
+literal|10043
+argument_list|,
+literal|"Invalid expression for JDO filter"
+argument_list|)
+block|,
 name|CREATE_SKEWED_TABLE_NO_COLUMN_NAME
 argument_list|(
 literal|10200
