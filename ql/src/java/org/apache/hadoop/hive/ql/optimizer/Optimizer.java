@@ -209,6 +209,24 @@ name|PredicatePushDown
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ppd
+operator|.
+name|PredicateTransitivePropagate
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implementation of the optimizer.  */
 end_comment
@@ -299,6 +317,15 @@ name|HIVEOPTPPD
 argument_list|)
 condition|)
 block|{
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
+name|PredicateTransitivePropagate
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|transformations
 operator|.
 name|add
