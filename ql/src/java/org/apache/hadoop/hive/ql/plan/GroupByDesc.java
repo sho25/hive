@@ -123,6 +123,7 @@ specifier|private
 name|boolean
 name|groupKeyNotReductionKey
 decl_stmt|;
+comment|// no hash aggregations for group by
 specifier|private
 name|boolean
 name|bucketGroup
@@ -687,12 +688,14 @@ name|void
 name|setBucketGroup
 parameter_list|(
 name|boolean
-name|dataSorted
+name|bucketGroup
 parameter_list|)
 block|{
+name|this
+operator|.
 name|bucketGroup
 operator|=
-name|dataSorted
+name|bucketGroup
 expr_stmt|;
 block|}
 comment|/**    * Checks if this grouping is like distinct, which means that all non-distinct grouping    * columns behave like they were distinct - for example min and max operators.    */

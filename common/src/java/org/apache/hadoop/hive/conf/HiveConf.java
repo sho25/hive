@@ -1909,6 +1909,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_MAP_GROUPBY_SORT
+argument_list|(
+literal|"hive.map.groupby.sorted"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// for hive udtf operator
 name|HIVEUDTFAUTOPROGRESS
 argument_list|(

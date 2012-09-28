@@ -2282,7 +2282,7 @@ condition|(
 name|getWork
 argument_list|()
 operator|.
-name|isSmbJoin
+name|isUseBucketizedHiveInputFormat
 argument_list|()
 condition|)
 block|{

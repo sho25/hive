@@ -1011,10 +1011,6 @@ name|keysCurrentGroup
 decl_stmt|;
 specifier|transient
 name|boolean
-name|bucketGroup
-decl_stmt|;
-specifier|transient
-name|boolean
 name|firstRow
 decl_stmt|;
 specifier|transient
@@ -2247,13 +2243,6 @@ name|roi
 argument_list|)
 expr_stmt|;
 block|}
-name|bucketGroup
-operator|=
-name|conf
-operator|.
-name|getBucketGroup
-argument_list|()
-expr_stmt|;
 name|aggregationsParametersLastInvoke
 operator|=
 operator|new
@@ -2282,7 +2271,10 @@ name|Mode
 operator|.
 name|HASH
 operator|||
-name|bucketGroup
+name|conf
+operator|.
+name|getBucketGroup
+argument_list|()
 condition|)
 block|{
 name|aggregations

@@ -2230,7 +2230,7 @@ argument_list|)
 expr_stmt|;
 name|plan
 operator|.
-name|setSmbJoin
+name|setUseBucketizedHiveInputFormat
 argument_list|(
 name|currMapJoinOp
 operator|instanceof
