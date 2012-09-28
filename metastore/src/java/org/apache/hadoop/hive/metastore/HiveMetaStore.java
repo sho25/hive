@@ -3070,6 +3070,22 @@ argument_list|)
 expr_stmt|;
 name|logInfo
 argument_list|(
+operator|(
+name|getIpAddress
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|""
+else|:
+literal|"source:"
+operator|+
+name|getIpAddress
+argument_list|()
+operator|+
+literal|" "
+operator|)
+operator|+
 name|function
 operator|+
 name|extraLogInfo
