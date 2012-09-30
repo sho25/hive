@@ -336,6 +336,10 @@ name|needsTagging
 decl_stmt|;
 specifier|private
 name|boolean
+name|needsOperationPathTagging
+decl_stmt|;
+specifier|private
+name|boolean
 name|hadoopSupportsSplittable
 decl_stmt|;
 specifier|private
@@ -1399,6 +1403,32 @@ operator|.
 name|needsTagging
 operator|=
 name|needsTagging
+expr_stmt|;
+block|}
+comment|//TODO: enable the annotation shown below
+comment|// @Explain(displayName = "Needs Operation Paths Tagging", normalExplain = false)
+specifier|public
+name|boolean
+name|getNeedsOperationPathTagging
+parameter_list|()
+block|{
+return|return
+name|needsOperationPathTagging
+return|;
+block|}
+specifier|public
+name|void
+name|setNeedsOperationPathTagging
+parameter_list|(
+name|boolean
+name|needsOperationPathTagging
+parameter_list|)
+block|{
+name|this
+operator|.
+name|needsOperationPathTagging
+operator|=
+name|needsOperationPathTagging
 expr_stmt|;
 block|}
 specifier|public
