@@ -1082,16 +1082,6 @@ specifier|private
 name|float
 name|memoryThreshold
 decl_stmt|;
-specifier|private
-name|boolean
-name|forcedForward
-decl_stmt|;
-comment|// only used by CorrelationReducerDispatchOperator to make
-comment|// GroupByOperator has the same pace with other
-comment|// GroupByOperators and JoinOperators.
-comment|// If true and newKeys is different from currentKeys,
-comment|// data associated with currentKeys will be
-comment|// forwarded, otherwise, nothing happens.
 comment|/**    * This is used to store the position and field names for variable length    * fields.    **/
 class|class
 name|varLenFields
@@ -2589,10 +2579,6 @@ argument_list|()
 operator|.
 name|getMemoryThreshold
 argument_list|()
-expr_stmt|;
-name|forcedForward
-operator|=
-literal|false
 expr_stmt|;
 name|initializeChildren
 argument_list|(
@@ -4550,21 +4536,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|public
-name|void
-name|setForcedForward
-parameter_list|(
-name|boolean
-name|forcedForward
-parameter_list|)
-block|{
-name|this
-operator|.
-name|forcedForward
-operator|=
-name|forcedForward
-expr_stmt|;
-block|}
 comment|// Non-hash aggregation
 specifier|private
 name|void
@@ -4627,12 +4598,8 @@ name|currentKeys
 operator|!=
 literal|null
 operator|&&
-operator|(
 operator|!
 name|keysAreEqual
-operator|||
-name|forcedForward
-operator|)
 condition|)
 block|{
 name|forward
@@ -4649,17 +4616,6 @@ name|countAfterReport
 operator|=
 literal|0
 expr_stmt|;
-block|}
-if|if
-condition|(
-name|forcedForward
-condition|)
-block|{
-name|currentKeys
-operator|=
-literal|null
-expr_stmt|;
-return|return;
 block|}
 comment|// Need to update the keys?
 if|if

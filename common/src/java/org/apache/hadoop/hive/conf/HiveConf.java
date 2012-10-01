@@ -2465,14 +2465,6 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-name|HIVEOPTCORRELATION
-argument_list|(
-literal|"hive.optimize.correlation"
-argument_list|,
-literal|false
-argument_list|)
-block|,
-comment|// exploit intra-query correlations
 comment|// optimize skewed join by changing the query plan at compile time
 name|HIVE_OPTIMIZE_SKEWJOIN_COMPILETIME
 argument_list|(

@@ -2052,13 +2052,6 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|mr
-operator|.
-name|setNeedsOperationPathTagging
-argument_list|(
-literal|false
-argument_list|)
-expr_stmt|;
 name|ArrayList
 argument_list|<
 name|String
