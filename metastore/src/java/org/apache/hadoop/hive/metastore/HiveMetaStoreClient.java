@@ -1009,10 +1009,9 @@ comment|// instantiate the metastore server handler directly instead of connecti
 comment|// through the network
 name|client
 operator|=
-operator|new
 name|HiveMetaStore
 operator|.
-name|HMSHandler
+name|newHMSHandler
 argument_list|(
 literal|"hive client"
 argument_list|,

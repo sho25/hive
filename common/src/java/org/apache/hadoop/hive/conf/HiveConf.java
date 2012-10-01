@@ -742,6 +742,24 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_PRE_EVENT_LISTENERS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HMSHANDLERATTEMPTS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HMSHANDLERINTERVAL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HMSHANDLERFORCERELOADCONF
 block|,       }
 decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
@@ -1296,11 +1314,38 @@ argument_list|)
 block|,
 comment|// Whether to force reloading of the metastore configuration (including
 comment|// the connection URL, before the next metastore query that accesses the
-comment|// datastore. Once reloaded, the  this value is reset to false. Used for
+comment|// datastore. Once reloaded, this value is reset to false. Used for
 comment|// testing only.
 name|METASTOREFORCERELOADCONF
 argument_list|(
 literal|"hive.metastore.force.reload.conf"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// Number of attempts to retry connecting after there is a JDO datastore err
+name|HMSHANDLERATTEMPTS
+argument_list|(
+literal|"hive.hmshandler.retry.attempts"
+argument_list|,
+literal|1
+argument_list|)
+block|,
+comment|// Number of miliseconds to wait between attepting
+name|HMSHANDLERINTERVAL
+argument_list|(
+literal|"hive.hmshandler.retry.interval"
+argument_list|,
+literal|1000
+argument_list|)
+block|,
+comment|// Whether to force reloading of the HMSHandler configuration (including
+comment|// the connection URL, before the next metastore query that accesses the
+comment|// datastore. Once reloaded, this value is reset to false. Used for
+comment|// testing only.
+name|HMSHANDLERFORCERELOADCONF
+argument_list|(
+literal|"hive.hmshandler.force.reload.conf"
 argument_list|,
 literal|false
 argument_list|)
