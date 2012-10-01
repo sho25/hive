@@ -17216,6 +17216,8 @@ comment|// This is the GenericUDAF name
 name|String
 name|aggName
 init|=
+name|unescapeIdentifier
+argument_list|(
 name|value
 operator|.
 name|getChild
@@ -17225,6 +17227,7 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|boolean
 name|isDistinct
@@ -18035,6 +18038,8 @@ decl_stmt|;
 name|String
 name|aggName
 init|=
+name|unescapeIdentifier
+argument_list|(
 name|value
 operator|.
 name|getChild
@@ -18044,6 +18049,7 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|ArrayList
 argument_list|<
@@ -22030,6 +22036,8 @@ expr_stmt|;
 name|String
 name|aggName
 init|=
+name|unescapeIdentifier
+argument_list|(
 name|value
 operator|.
 name|getChild
@@ -22039,6 +22047,7 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|boolean
 name|isDistinct
@@ -37599,16 +37608,6 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-name|value
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getText
-argument_list|()
-expr_stmt|;
 comment|// 0 is the function name
 for|for
 control|(
