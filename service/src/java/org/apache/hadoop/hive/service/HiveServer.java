@@ -1053,6 +1053,25 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+comment|// Close the existing driver object (CommandProcessor) before creating
+comment|// the new driver (CommandProcessor) object to clean-up the resources
+if|if
+condition|(
+name|driver
+operator|!=
+literal|null
+condition|)
+block|{
+name|driver
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|driver
+operator|=
+literal|null
+expr_stmt|;
+block|}
 name|CommandProcessor
 name|proc
 init|=
