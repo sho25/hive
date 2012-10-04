@@ -2670,7 +2670,7 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-comment|// should the raw data size be collected when analayzing tables
+comment|// should the raw data size be collected when analyzing tables
 name|CLIENT_STATS_COUNTERS
 argument_list|(
 literal|"hive.client.stats.counters"
@@ -2682,6 +2682,14 @@ comment|//Subset of counters that should be of interest for hive.client.stats.pu
 name|HIVE_STATS_RELIABLE
 argument_list|(
 literal|"hive.stats.reliable"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// Collect table access keys information for operators that can benefit from bucketing
+name|HIVE_STATS_COLLECT_TABLEKEYS
+argument_list|(
+literal|"hive.stats.collect.tablekeys"
 argument_list|,
 literal|false
 argument_list|)

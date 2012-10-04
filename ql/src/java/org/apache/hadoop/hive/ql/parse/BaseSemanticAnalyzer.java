@@ -756,6 +756,10 @@ name|LineageInfo
 name|linfo
 decl_stmt|;
 specifier|protected
+name|TableAccessInfo
+name|tableAccessInfo
+decl_stmt|;
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -4578,6 +4582,32 @@ operator|.
 name|linfo
 operator|=
 name|linfo
+expr_stmt|;
+block|}
+comment|/**    * Gets the table access information.    *    * @return TableAccessInfo associated with the query.    */
+specifier|public
+name|TableAccessInfo
+name|getTableAccessInfo
+parameter_list|()
+block|{
+return|return
+name|tableAccessInfo
+return|;
+block|}
+comment|/**    * Sets the table access information.    *    * @param taInfo The TableAccessInfo structure that is set in the optimization phase.    */
+specifier|public
+name|void
+name|setTableAccessInfo
+parameter_list|(
+name|TableAccessInfo
+name|tableAccessInfo
+parameter_list|)
+block|{
+name|this
+operator|.
+name|tableAccessInfo
+operator|=
+name|tableAccessInfo
 expr_stmt|;
 block|}
 specifier|protected

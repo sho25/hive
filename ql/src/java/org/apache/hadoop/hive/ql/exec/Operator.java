@@ -7164,6 +7164,7 @@ return|return
 name|ret
 return|;
 block|}
+comment|/*    * True only for operators which produce atmost 1 output row per input    * row to it. This will allow the output column names to be directly    * translated to input column names.    */
 specifier|public
 name|boolean
 name|columnNamesRowResolvedCanBeObtained
