@@ -1244,7 +1244,7 @@ operator|.
 name|getMode
 argument_list|()
 argument_list|,
-literal|false
+name|keepAlive
 argument_list|,
 literal|true
 argument_list|)
