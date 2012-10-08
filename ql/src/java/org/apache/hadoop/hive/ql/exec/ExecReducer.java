@@ -1153,6 +1153,16 @@ name|IOException
 block|{
 if|if
 condition|(
+name|reducer
+operator|.
+name|getDone
+argument_list|()
+condition|)
+block|{
+return|return;
+block|}
+if|if
+condition|(
 name|oc
 operator|==
 literal|null
