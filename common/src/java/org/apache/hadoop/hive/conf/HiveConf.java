@@ -3029,6 +3029,13 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|HIVE_ENTITY_SEPARATOR
+argument_list|(
+literal|"hive.entity.separator"
+argument_list|,
+literal|"@"
+argument_list|)
+block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
 comment|// outputs are ready
 name|HIVE_MULTI_INSERT_MOVE_TASKS_SHARE_DEPENDENCIES
