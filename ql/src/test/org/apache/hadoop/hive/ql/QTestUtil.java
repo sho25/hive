@@ -2733,6 +2733,16 @@ expr_stmt|;
 name|initConf
 argument_list|()
 expr_stmt|;
+name|db
+operator|=
+name|Hive
+operator|.
+name|get
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+comment|// propagate new conf to meta store
 name|setup
 operator|.
 name|preTest
