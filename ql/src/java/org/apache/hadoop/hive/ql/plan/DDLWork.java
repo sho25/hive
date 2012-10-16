@@ -201,6 +201,10 @@ name|ShowPartitionsDesc
 name|showPartsDesc
 decl_stmt|;
 specifier|private
+name|ShowCreateTableDesc
+name|showCreateTblDesc
+decl_stmt|;
+specifier|private
 name|DescTableDesc
 name|descTblDesc
 decl_stmt|;
@@ -1079,6 +1083,40 @@ operator|.
 name|showPartsDesc
 operator|=
 name|showPartsDesc
+expr_stmt|;
+block|}
+comment|/**    * @param showCreateTblDesc    */
+specifier|public
+name|DDLWork
+parameter_list|(
+name|HashSet
+argument_list|<
+name|ReadEntity
+argument_list|>
+name|inputs
+parameter_list|,
+name|HashSet
+argument_list|<
+name|WriteEntity
+argument_list|>
+name|outputs
+parameter_list|,
+name|ShowCreateTableDesc
+name|showCreateTblDesc
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|inputs
+argument_list|,
+name|outputs
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|showCreateTblDesc
+operator|=
+name|showCreateTblDesc
 expr_stmt|;
 block|}
 comment|/**    * @param addPartitionDesc    *          information about the partitions we want to add.    */
@@ -2134,6 +2172,39 @@ operator|.
 name|showPartsDesc
 operator|=
 name|showPartsDesc
+expr_stmt|;
+block|}
+comment|/**    * @return the showCreateTblDesc    */
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Show Create Table Operator"
+argument_list|)
+specifier|public
+name|ShowCreateTableDesc
+name|getShowCreateTblDesc
+parameter_list|()
+block|{
+return|return
+name|showCreateTblDesc
+return|;
+block|}
+comment|/**    * @param showCreateTblDesc    *          the showCreateTblDesc to set    */
+specifier|public
+name|void
+name|setShowCreateTblDesc
+parameter_list|(
+name|ShowCreateTableDesc
+name|showCreateTblDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|showCreateTblDesc
+operator|=
+name|showCreateTblDesc
 expr_stmt|;
 block|}
 comment|/**    * @return the showIndexesDesc    */
