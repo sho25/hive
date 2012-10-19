@@ -3052,7 +3052,22 @@ literal|"hive.internal.ddl.list.bucketing.enable"
 argument_list|,
 literal|false
 argument_list|)
-block|,     ;
+block|,
+comment|// Allow TCP Keep alive socket option for for HiveServer or a maximum timeout for the socket.
+name|SERVER_READ_SOCKET_TIMEOUT
+argument_list|(
+literal|"hive.server.read.socket.timeout"
+argument_list|,
+literal|10
+argument_list|)
+block|,
+name|SERVER_TCP_KEEP_ALIVE
+argument_list|(
+literal|"hive.server.tcp.keepalive"
+argument_list|,
+literal|true
+argument_list|)
+block|,      ;
 specifier|public
 specifier|final
 name|String
