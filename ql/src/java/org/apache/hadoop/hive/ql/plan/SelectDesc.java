@@ -29,6 +29,16 @@ name|ArrayList
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
 begin_comment
 comment|/**  * SelectDesc.  *  */
 end_comment
@@ -56,7 +66,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|org
 operator|.
@@ -75,7 +85,7 @@ argument_list|>
 name|colList
 decl_stmt|;
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|java
 operator|.
@@ -116,7 +126,7 @@ specifier|public
 name|SelectDesc
 parameter_list|(
 specifier|final
-name|ArrayList
+name|List
 argument_list|<
 name|org
 operator|.
@@ -135,7 +145,7 @@ argument_list|>
 name|colList
 parameter_list|,
 specifier|final
-name|ArrayList
+name|List
 argument_list|<
 name|java
 operator|.
@@ -160,7 +170,7 @@ specifier|public
 name|SelectDesc
 parameter_list|(
 specifier|final
-name|ArrayList
+name|List
 argument_list|<
 name|org
 operator|.
@@ -178,7 +188,7 @@ name|ExprNodeDesc
 argument_list|>
 name|colList
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|java
 operator|.
@@ -216,7 +226,7 @@ specifier|public
 name|SelectDesc
 parameter_list|(
 specifier|final
-name|ArrayList
+name|List
 argument_list|<
 name|org
 operator|.
@@ -280,34 +290,30 @@ name|ret
 operator|.
 name|setColList
 argument_list|(
-operator|(
+operator|new
 name|ArrayList
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
-operator|)
+argument_list|(
 name|getColList
 argument_list|()
-operator|.
-name|clone
-argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|ret
 operator|.
 name|setOutputColumnNames
 argument_list|(
-operator|(
+operator|new
 name|ArrayList
 argument_list|<
 name|String
 argument_list|>
-operator|)
+argument_list|(
 name|getOutputColumnNames
 argument_list|()
-operator|.
-name|clone
-argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|ret
@@ -336,7 +342,7 @@ operator|=
 literal|"expressions"
 argument_list|)
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|org
 operator|.
@@ -364,7 +370,7 @@ name|void
 name|setColList
 parameter_list|(
 specifier|final
-name|ArrayList
+name|List
 argument_list|<
 name|org
 operator|.
@@ -398,7 +404,7 @@ operator|=
 literal|"outputColumnNames"
 argument_list|)
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|java
 operator|.
@@ -417,7 +423,7 @@ specifier|public
 name|void
 name|setOutputColumnNames
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|java
 operator|.

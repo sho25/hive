@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|List
 import|;
 end_import
 
@@ -208,7 +208,7 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>

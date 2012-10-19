@@ -3028,7 +3028,7 @@ expr_stmt|;
 block|}
 comment|// by now, 'prunedCols' are columns used by child operators, and 'columns'
 comment|// are columns used by this select operator.
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

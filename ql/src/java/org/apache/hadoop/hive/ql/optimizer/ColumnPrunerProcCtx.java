@@ -637,7 +637,7 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -733,7 +733,7 @@ return|return
 name|cols
 return|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -748,7 +748,7 @@ comment|// The colList is the output columns used by child operators, they are
 comment|// different
 comment|// from input columns of the current operator. we need to find out which
 comment|// input columns are used.
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
