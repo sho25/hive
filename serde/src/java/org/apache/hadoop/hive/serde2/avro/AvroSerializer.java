@@ -343,7 +343,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Hashtable
+name|HashMap
 import|;
 end_import
 
@@ -1790,7 +1790,7 @@ argument_list|>
 name|deserialized
 init|=
 operator|new
-name|Hashtable
+name|HashMap
 argument_list|<
 name|Object
 argument_list|,

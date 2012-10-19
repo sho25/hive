@@ -633,6 +633,36 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|MAP_WITH_NULLABLE_PRIMITIVE_VALUE_TYPE_SCHEMA
+init|=
+literal|"{\n"
+operator|+
+literal|"  \"namespace\": \"testing\",\n"
+operator|+
+literal|"  \"name\": \"mapWithNullableUnionTest\",\n"
+operator|+
+literal|"  \"type\": \"record\",\n"
+operator|+
+literal|"  \"fields\": [\n"
+operator|+
+literal|"    {\n"
+operator|+
+literal|"      \"name\":\"aMap\",\n"
+operator|+
+literal|"      \"type\":{\"type\":\"map\",\n"
+operator|+
+literal|"      \"values\":[\"null\",\"long\"]}\n"
+operator|+
+literal|"\t}\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|BYTES_SCHEMA
 init|=
 literal|"{\n"
@@ -1283,6 +1313,28 @@ argument_list|(
 name|s
 argument_list|)
 decl_stmt|;
+name|verifyMap
+argument_list|(
+name|aoig
+argument_list|,
+literal|"aMap"
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Check a given AvroObjectInspectorGenerator to verify that it matches our test    * schema's expected map.    * @param aoig should already have been intitialized, may not be null    * @param fieldName name of the contianed column, will always fail if null.    */
+specifier|private
+name|void
+name|verifyMap
+parameter_list|(
+specifier|final
+name|AvroObjectInspectorGenerator
+name|aoig
+parameter_list|,
+specifier|final
+name|String
+name|fieldName
+parameter_list|)
+block|{
 comment|// Column names
 name|assertEquals
 argument_list|(
@@ -1299,7 +1351,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"aMap"
+name|fieldName
 argument_list|,
 name|aoig
 operator|.
@@ -2388,6 +2440,43 @@ name|pti
 operator|.
 name|getPrimitiveCategory
 argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+comment|// That Union[T, NULL] is converted to just T, within a Map
+specifier|public
+name|void
+name|convertsMapsWithNullablePrimitiveTypes
+parameter_list|()
+throws|throws
+name|SerDeException
+block|{
+name|Schema
+name|s
+init|=
+name|Schema
+operator|.
+name|parse
+argument_list|(
+name|MAP_WITH_NULLABLE_PRIMITIVE_VALUE_TYPE_SCHEMA
+argument_list|)
+decl_stmt|;
+name|AvroObjectInspectorGenerator
+name|aoig
+init|=
+operator|new
+name|AvroObjectInspectorGenerator
+argument_list|(
+name|s
+argument_list|)
+decl_stmt|;
+name|verifyMap
+argument_list|(
+name|aoig
+argument_list|,
+literal|"aMap"
 argument_list|)
 expr_stmt|;
 block|}
