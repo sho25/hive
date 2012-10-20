@@ -4268,6 +4268,13 @@ argument_list|,
 name|compressedKeyLen
 argument_list|)
 expr_stmt|;
+name|CodecPool
+operator|.
+name|returnCompressor
+argument_list|(
+name|compressor
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
