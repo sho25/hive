@@ -147,24 +147,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStore
-operator|.
-name|HMSHandler
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|MetaStorePreEventListener
 import|;
 end_import
@@ -182,6 +164,24 @@ operator|.
 name|metastore
 operator|.
 name|Warehouse
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|HiveMetaStore
+operator|.
+name|HMSHandler
 import|;
 end_import
 
@@ -332,7 +332,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class listens for drop events and, if set, exports the table's metadata as JSON  * to the trash of the user performing the drop */
+comment|/**  * This class listens for drop events and, if set, exports the table's metadata as JSON to the trash  * of the user performing the drop  */
 end_comment
 
 begin_class

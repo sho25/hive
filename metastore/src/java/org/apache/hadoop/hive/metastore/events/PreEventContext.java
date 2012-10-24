@@ -69,7 +69,7 @@ block|,
 name|DROP_DATABASE
 block|,
 name|LOAD_PARTITION_DONE
-block|,   }
+block|}
 specifier|private
 specifier|final
 name|PreEventType

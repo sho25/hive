@@ -77,9 +77,6 @@ decl_stmt|;
 specifier|public
 name|PreLoadPartitionDoneEvent
 parameter_list|(
-name|HMSHandler
-name|handler
-parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -93,6 +90,9 @@ argument_list|,
 name|String
 argument_list|>
 name|partSpec
+parameter_list|,
+name|HMSHandler
+name|handler
 parameter_list|)
 block|{
 name|super

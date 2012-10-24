@@ -1598,6 +1598,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|METASTORE_PARTITION_NAME_WHITELIST_PATTERN
+argument_list|(
+literal|"hive.metastore.partition.name.whitelist.pattern"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// Default parameters for creating tables
 name|NEWTABLEDEFAULTPARA
 argument_list|(

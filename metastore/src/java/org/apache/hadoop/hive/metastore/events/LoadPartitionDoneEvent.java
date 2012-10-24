@@ -93,9 +93,6 @@ parameter_list|(
 name|boolean
 name|status
 parameter_list|,
-name|HMSHandler
-name|handler
-parameter_list|,
 name|Table
 name|table
 parameter_list|,
@@ -106,6 +103,9 @@ argument_list|,
 name|String
 argument_list|>
 name|partSpec
+parameter_list|,
+name|HMSHandler
+name|handler
 parameter_list|)
 block|{
 name|super

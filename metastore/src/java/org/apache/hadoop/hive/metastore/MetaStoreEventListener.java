@@ -257,7 +257,6 @@ expr_stmt|;
 block|}
 comment|/**    * @param tableEvent table event.    * @throws MetaException    */
 specifier|public
-specifier|abstract
 name|void
 name|onCreateTable
 parameter_list|(
@@ -266,10 +265,9 @@ name|tableEvent
 parameter_list|)
 throws|throws
 name|MetaException
-function_decl|;
+block|{   }
 comment|/**    * @param tableEvent table event.    * @throws MetaException    */
 specifier|public
-specifier|abstract
 name|void
 name|onDropTable
 parameter_list|(
@@ -278,11 +276,10 @@ name|tableEvent
 parameter_list|)
 throws|throws
 name|MetaException
-function_decl|;
+block|{   }
 comment|/**    * @param add partition event    * @throws MetaException    */
 comment|/**    * @param tableEvent alter table event    * @throws MetaException    */
 specifier|public
-specifier|abstract
 name|void
 name|onAlterTable
 parameter_list|(
@@ -291,9 +288,8 @@ name|tableEvent
 parameter_list|)
 throws|throws
 name|MetaException
-function_decl|;
+block|{   }
 specifier|public
-specifier|abstract
 name|void
 name|onAddPartition
 parameter_list|(
@@ -302,10 +298,9 @@ name|partitionEvent
 parameter_list|)
 throws|throws
 name|MetaException
-function_decl|;
+block|{   }
 comment|/**    * @param partitionEvent partition event    * @throws MetaException    */
 specifier|public
-specifier|abstract
 name|void
 name|onDropPartition
 parameter_list|(
@@ -314,10 +309,9 @@ name|partitionEvent
 parameter_list|)
 throws|throws
 name|MetaException
-function_decl|;
+block|{   }
 comment|/**    * @param partitionEvent partition event    * @throws MetaException    */
 specifier|public
-specifier|abstract
 name|void
 name|onAlterPartition
 parameter_list|(
@@ -326,10 +320,9 @@ name|partitionEvent
 parameter_list|)
 throws|throws
 name|MetaException
-function_decl|;
+block|{   }
 comment|/**    * @param dbEvent database event    * @throws MetaException    */
 specifier|public
-specifier|abstract
 name|void
 name|onCreateDatabase
 parameter_list|(
@@ -338,10 +331,9 @@ name|dbEvent
 parameter_list|)
 throws|throws
 name|MetaException
-function_decl|;
+block|{   }
 comment|/**    * @param dbEvent database event    * @throws MetaException    */
 specifier|public
-specifier|abstract
 name|void
 name|onDropDatabase
 parameter_list|(
@@ -350,10 +342,9 @@ name|dbEvent
 parameter_list|)
 throws|throws
 name|MetaException
-function_decl|;
+block|{   }
 comment|/**    * @param partSetDoneEvent    * @throws MetaException    */
 specifier|public
-specifier|abstract
 name|void
 name|onLoadPartitionDone
 parameter_list|(
@@ -362,7 +353,7 @@ name|partSetDoneEvent
 parameter_list|)
 throws|throws
 name|MetaException
-function_decl|;
+block|{    }
 annotation|@
 name|Override
 specifier|public

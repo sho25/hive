@@ -109,16 +109,6 @@ operator|=
 name|handler
 expr_stmt|;
 block|}
-comment|/**    * @return the handler    */
-specifier|public
-name|HMSHandler
-name|getHandler
-parameter_list|()
-block|{
-return|return
-name|handler
-return|;
-block|}
 comment|/**    * @return the status of event.    */
 specifier|public
 name|boolean
@@ -152,6 +142,16 @@ parameter_list|()
 block|{
 return|return
 name|environmentContext
+return|;
+block|}
+comment|/**    * @return the handler    */
+specifier|public
+name|HMSHandler
+name|getHandler
+parameter_list|()
+block|{
+return|return
+name|handler
 return|;
 block|}
 block|}
