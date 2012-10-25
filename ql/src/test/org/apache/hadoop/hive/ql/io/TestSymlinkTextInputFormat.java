@@ -1257,6 +1257,13 @@ operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
+name|fail
+argument_list|(
+literal|"Caught exception "
+operator|+
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 finally|finally
 block|{
@@ -1269,7 +1276,7 @@ name|drv
 operator|.
 name|run
 argument_list|(
-literal|"drop table text_symlink_text;"
+literal|"drop table text_symlink_text"
 argument_list|)
 operator|.
 name|getResponseCode
