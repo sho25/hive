@@ -1297,6 +1297,24 @@ argument_list|,
 literal|"List Bucketing DDL is not allowed to use since feature is not completed yet."
 argument_list|)
 block|,
+name|HIVE_GROUPING_SETS_AGGR_NOMAPAGGR
+argument_list|(
+literal|10209
+argument_list|,
+literal|"Grouping sets aggregations (with rollups or cubes) are not allowed if map-side "
+operator|+
+literal|" aggregation is turned off. Set hive.map.aggr=true if you want to use grouping sets"
+argument_list|)
+block|,
+name|HIVE_GROUPING_SETS_AGGR_EXPRESSION_INVALID
+argument_list|(
+literal|10210
+argument_list|,
+literal|"Grouping sets aggregations (with rollups or cubes) are not allowed if aggregation function "
+operator|+
+literal|"parameters overlap with the aggregation functions columns"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
