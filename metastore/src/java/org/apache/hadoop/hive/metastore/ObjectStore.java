@@ -11285,7 +11285,7 @@ argument_list|)
 expr_stmt|;
 comment|// Fully copy over the contents of the new SD into the old SD,
 comment|// so we don't create an extra SD in the metastore db that has no references.
-name|fullCopyMSD
+name|copyMSD
 argument_list|(
 name|newt
 operator|.
@@ -12135,26 +12135,6 @@ name|newSd
 operator|.
 name|getSkewedColValueLocationMaps
 argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-comment|/**    * copy over all fields from newSd to oldSd    * @param newSd the new storage descriptor    * @param oldSd the old descriptor that gets copied over    */
-specifier|private
-name|void
-name|fullCopyMSD
-parameter_list|(
-name|MStorageDescriptor
-name|newSd
-parameter_list|,
-name|MStorageDescriptor
-name|oldSd
-parameter_list|)
-block|{
-name|copyMSD
-argument_list|(
-name|newSd
-argument_list|,
-name|oldSd
 argument_list|)
 expr_stmt|;
 name|oldSd
