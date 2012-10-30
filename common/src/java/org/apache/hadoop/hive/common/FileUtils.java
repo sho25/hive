@@ -113,6 +113,20 @@ name|Path
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|Shell
+import|;
+end_import
+
 begin_comment
 comment|/**  * Collection of file manipulation utilities common across Hive.  */
 end_comment
@@ -460,6 +474,11 @@ comment|// In the future, it's OK to add new chars to the escape list, and old d
 comment|// won't be corrupt, because the full path name in metastore is stored.
 comment|// In that case, Hive will continue to read the old data, but when it creates
 comment|// new partitions, it will use new names.
+comment|// edit : There are some use cases for which adding new chars does not seem
+comment|// to be backward compatible - Eg. if partition was created with name having
+comment|// a special char that you want to start escaping, and then you try dropping
+comment|// the partition with a hive version that now escapes the special char using
+comment|// the list below, then the drop partition fails to work.
 specifier|static
 name|BitSet
 name|charToEscape
@@ -612,6 +631,45 @@ argument_list|(
 name|c
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|Shell
+operator|.
+name|WINDOWS
+condition|)
+block|{
+comment|//On windows, following chars need to be escaped as well
+name|char
+index|[]
+name|winClist
+init|=
+block|{
+literal|' '
+block|,
+literal|'<'
+block|,
+literal|'>'
+block|,
+literal|'|'
+block|}
+decl_stmt|;
+for|for
+control|(
+name|char
+name|c
+range|:
+name|winClist
+control|)
+block|{
+name|charToEscape
+operator|.
+name|set
+argument_list|(
+name|c
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 specifier|static
