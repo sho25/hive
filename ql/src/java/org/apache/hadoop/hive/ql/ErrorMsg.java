@@ -1315,6 +1315,19 @@ operator|+
 literal|"parameters overlap with the aggregation functions columns"
 argument_list|)
 block|,
+name|HIVE_UNION_REMOVE_OPTIMIZATION_NEEDS_SUBDIRECTORIES
+argument_list|(
+literal|10212
+argument_list|,
+literal|"In order to use hive.optimize.union.remove, the hadoop version that you are using "
+operator|+
+literal|"should support sub-directories for tables/partitions. If that is true, set "
+operator|+
+literal|"hive.hadoop.supports.subdirectories to true. Otherwise, set hive.optimize.union.remove "
+operator|+
+literal|"to false"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

@@ -77,6 +77,24 @@ name|NodeProcessorCtx
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|ParseContext
+import|;
+end_import
+
 begin_comment
 comment|/**  * UnionProcContext.  *  */
 end_comment
@@ -416,6 +434,11 @@ specifier|private
 name|boolean
 name|mapOnlySubq
 decl_stmt|;
+comment|// ParseContext
+specifier|private
+name|ParseContext
+name|parseContext
+decl_stmt|;
 comment|/**    * @return the mapOnlySubq    */
 specifier|public
 name|boolean
@@ -509,6 +532,30 @@ argument_list|(
 name|u
 argument_list|)
 return|;
+block|}
+specifier|public
+name|ParseContext
+name|getParseContext
+parameter_list|()
+block|{
+return|return
+name|parseContext
+return|;
+block|}
+specifier|public
+name|void
+name|setParseContext
+parameter_list|(
+name|ParseContext
+name|parseContext
+parameter_list|)
+block|{
+name|this
+operator|.
+name|parseContext
+operator|=
+name|parseContext
+expr_stmt|;
 block|}
 block|}
 end_class

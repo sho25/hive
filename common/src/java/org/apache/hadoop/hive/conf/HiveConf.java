@@ -2517,6 +2517,26 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// whether to optimize union followed by select followed by filesink
+comment|// It creates sub-directories in the final output, so should not be turned on in systems
+comment|// where MAPREDUCE-1501 is not present
+name|HIVE_OPTIMIZE_UNION_REMOVE
+argument_list|(
+literal|"hive.optimize.union.remove"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// whether hadoop map-reduce supports sub-directories. It was added by MAPREDUCE-1501.
+comment|// Some optimizations can only be performed if the version of hadoop being used supports
+comment|// sub-directories
+name|HIVE_HADOOP_SUPPORTS_SUBDIRECTORIES
+argument_list|(
+literal|"hive.mapred.supports.subdirectories"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// optimize skewed join by changing the query plan at compile time
 name|HIVE_OPTIMIZE_SKEWJOIN_COMPILETIME
 argument_list|(

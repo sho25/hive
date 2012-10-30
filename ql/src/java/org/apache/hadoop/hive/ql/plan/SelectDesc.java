@@ -290,6 +290,13 @@ name|ret
 operator|.
 name|setColList
 argument_list|(
+name|getColList
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 operator|new
 name|ArrayList
 argument_list|<
@@ -305,6 +312,13 @@ name|ret
 operator|.
 name|setOutputColumnNames
 argument_list|(
+name|getOutputColumnNames
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 operator|new
 name|ArrayList
 argument_list|<

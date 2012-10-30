@@ -5461,6 +5461,8 @@ name|Hive
 operator|.
 name|copyFiles
 argument_list|(
+name|conf
+argument_list|,
 name|loadPath
 argument_list|,
 name|newPartPath
@@ -5660,12 +5662,25 @@ range|:
 name|leafStatus
 control|)
 block|{
+comment|// Check if the hadoop version supports sub-directories for tables/partitions
 if|if
 condition|(
 name|s
 operator|.
 name|isDir
 argument_list|()
+operator|&&
+operator|!
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_HADOOP_SUPPORTS_SUBDIRECTORIES
+argument_list|)
 condition|)
 block|{
 comment|// No leaves in this directory
@@ -8943,6 +8958,9 @@ specifier|private
 name|void
 name|checkPaths
 parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|,
 name|FileSystem
 name|fs
 parameter_list|,
@@ -9025,6 +9043,18 @@ continue|continue;
 block|}
 if|if
 condition|(
+operator|!
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_HADOOP_SUPPORTS_SUBDIRECTORIES
+argument_list|)
+operator|&&
 name|item
 operator|.
 name|isDir
@@ -9293,6 +9323,9 @@ specifier|protected
 name|void
 name|copyFiles
 parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|,
 name|Path
 name|srcf
 parameter_list|,
@@ -9410,6 +9443,8 @@ block|}
 comment|// check that source and target paths exist
 name|checkPaths
 argument_list|(
+name|conf
+argument_list|,
 name|fs
 argument_list|,
 name|srcs
@@ -9539,7 +9574,7 @@ parameter_list|,
 name|Path
 name|oldPath
 parameter_list|,
-name|Configuration
+name|HiveConf
 name|conf
 parameter_list|)
 throws|throws
@@ -9615,6 +9650,8 @@ return|return;
 block|}
 name|checkPaths
 argument_list|(
+name|conf
+argument_list|,
 name|fs
 argument_list|,
 name|srcs

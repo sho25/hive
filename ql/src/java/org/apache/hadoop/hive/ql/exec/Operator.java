@@ -7198,6 +7198,15 @@ operator|=
 name|useBucketizedHiveInputFormat
 expr_stmt|;
 block|}
+specifier|public
+name|boolean
+name|supportUnionRemoveOptimization
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
 block|}
 end_class
 

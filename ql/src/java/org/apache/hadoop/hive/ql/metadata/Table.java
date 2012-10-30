@@ -3402,6 +3402,14 @@ name|Hive
 operator|.
 name|copyFiles
 argument_list|(
+name|Hive
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|srcf
 argument_list|,
 operator|new
