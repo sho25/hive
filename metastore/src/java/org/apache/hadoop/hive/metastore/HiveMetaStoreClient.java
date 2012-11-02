@@ -36,6 +36,24 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|MetaStoreUtils
+operator|.
+name|isIndexTable
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -2430,6 +2448,8 @@ range|:
 name|tableList
 control|)
 block|{
+try|try
+block|{
 name|dropTable
 argument_list|(
 name|name
@@ -2441,6 +2461,15 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|UnsupportedOperationException
+name|e
+parameter_list|)
+block|{
+comment|// Ignore Index tables, those will be dropped with parent tables
+block|}
 block|}
 block|}
 name|client
@@ -2659,6 +2688,8 @@ throws|,
 name|TException
 throws|,
 name|NoSuchObjectException
+throws|,
+name|UnsupportedOperationException
 block|{
 name|Table
 name|tbl
@@ -2692,6 +2723,22 @@ name|e
 throw|;
 block|}
 return|return;
+block|}
+if|if
+condition|(
+name|isIndexTable
+argument_list|(
+name|tbl
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"Cannot drop index tables"
+argument_list|)
+throw|;
 block|}
 name|HiveMetaHook
 name|hook
