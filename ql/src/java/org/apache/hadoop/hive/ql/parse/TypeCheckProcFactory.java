@@ -2504,7 +2504,9 @@ block|}
 else|else
 block|{
 comment|// It's a column.
-return|return
+name|ExprNodeColumnDesc
+name|exprNodColDesc
+init|=
 operator|new
 name|ExprNodeColumnDesc
 argument_list|(
@@ -2528,6 +2530,19 @@ operator|.
 name|getIsVirtualCol
 argument_list|()
 argument_list|)
+decl_stmt|;
+name|exprNodColDesc
+operator|.
+name|setSkewedCol
+argument_list|(
+name|colInfo
+operator|.
+name|isSkewedCol
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|exprNodColDesc
 return|;
 block|}
 block|}

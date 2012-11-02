@@ -3072,10 +3072,29 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-comment|/**      * Enable list bucketing DDL. Default value is false so that we disable it by default.      *      * This will be removed once the rest of the DML changes are committed.      */
+comment|/* The following section contains all configurations used for list bucketing feature.*/
+comment|// Enable list bucketing DDL. Default value is false so that we disable it by default.
+comment|// This will be removed once the rest of the DML changes are committed.
 name|HIVE_INTERNAL_DDL_LIST_BUCKETING_ENABLE
 argument_list|(
 literal|"hive.internal.ddl.list.bucketing.enable"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// Default list bucketing directory name.
+name|HIVE_LIST_BUCKETING_DEFAULT_DIR_NAME
+argument_list|(
+literal|"hive.exec.list.bucketing.default.dir"
+argument_list|,
+literal|"HIVE_DEFAULT_LIST_BUCKETING_DIR_NAME"
+argument_list|)
+block|,
+comment|// Enable list bucketing optimizer. Default value is false so that we disable it by default.
+comment|// This will be removed once the rest of the DML changes are committed.
+name|HIVEOPTLISTBUCKETING
+argument_list|(
+literal|"hive.optimize.listbucketing"
 argument_list|,
 literal|false
 argument_list|)

@@ -1232,49 +1232,74 @@ argument_list|,
 literal|"SHOW CREATE TABLE does not support tables of type INDEX_TABLE."
 argument_list|)
 block|,
-name|CREATE_SKEWED_TABLE_NO_COLUMN_NAME
+name|ALTER_TBL_SKEWED_LOC_NO_LOC
+argument_list|(
+literal|10197
+argument_list|,
+literal|"Alter table skewed location doesn't have locations."
+argument_list|)
+block|,
+name|ALTER_TBL_SKEWED_LOC_NO_MAP
+argument_list|(
+literal|10198
+argument_list|,
+literal|"Alter table skewed location doesn't have location map."
+argument_list|)
+block|,
+name|SUPPORT_DIR_MUST_TRUE_FOR_LIST_BUCKETING
+argument_list|(
+literal|10199
+argument_list|,
+literal|"hive.mapred.supports.subdirectories must be true"
+operator|+
+literal|" if any one of following is true: hive.internal.ddl.list.bucketing.enable,"
+operator|+
+literal|" hive.optimize.listbucketing and mapred.input.dir.recursive"
+argument_list|)
+block|,
+name|SKEWED_TABLE_NO_COLUMN_NAME
 argument_list|(
 literal|10200
 argument_list|,
 literal|"No skewed column name."
 argument_list|)
 block|,
-name|CREATE_SKEWED_TABLE_NO_COLUMN_VALUE
+name|SKEWED_TABLE_NO_COLUMN_VALUE
 argument_list|(
 literal|10201
 argument_list|,
 literal|"No skewed values."
 argument_list|)
 block|,
-name|CREATE_SKEWED_TABLE_DUPLICATE_COLUMN_NAMES
+name|SKEWED_TABLE_DUPLICATE_COLUMN_NAMES
 argument_list|(
 literal|10202
 argument_list|,
 literal|"Duplicate skewed column name:"
 argument_list|)
 block|,
-name|CREATE_SKEWED_TABLE_INVALID_COLUMN
+name|SKEWED_TABLE_INVALID_COLUMN
 argument_list|(
 literal|10203
 argument_list|,
 literal|"Invalid skewed column name:"
 argument_list|)
 block|,
-name|CREATE_SKEWED_TABLE_SKEWED_COL_NAME_VALUE_MISMATCH_1
+name|SKEWED_TABLE_SKEWED_COL_NAME_VALUE_MISMATCH_1
 argument_list|(
 literal|10204
 argument_list|,
 literal|"Skewed column name is empty but skewed value is not."
 argument_list|)
 block|,
-name|CREATE_SKEWED_TABLE_SKEWED_COL_NAME_VALUE_MISMATCH_2
+name|SKEWED_TABLE_SKEWED_COL_NAME_VALUE_MISMATCH_2
 argument_list|(
 literal|10205
 argument_list|,
 literal|"Skewed column value is empty but skewed name is not."
 argument_list|)
 block|,
-name|CREATE_SKEWED_TABLE_SKEWED_COL_NAME_VALUE_MISMATCH_3
+name|SKEWED_TABLE_SKEWED_COL_NAME_VALUE_MISMATCH_3
 argument_list|(
 literal|10206
 argument_list|,
@@ -1287,7 +1312,9 @@ name|ALTER_TABLE_NOT_ALLOWED_RENAME_SKEWED_COLUMN
 argument_list|(
 literal|10207
 argument_list|,
-literal|" is a skewed column. It's not allowed to rename skewed column."
+literal|" is a skewed column. It's not allowed to rename skewed column"
+operator|+
+literal|" or change skewed column type."
 argument_list|)
 block|,
 name|HIVE_INTERNAL_DDL_LIST_BUCKETING_DISABLED
