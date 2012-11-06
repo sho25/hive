@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|Map
 import|;
 end_import
 
@@ -77,7 +77,7 @@ specifier|public
 name|void
 name|setPartSpec
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -104,7 +104,7 @@ decl_stmt|;
 name|String
 name|tableName
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -114,6 +114,9 @@ name|partSpec
 decl_stmt|;
 name|String
 name|resFile
+decl_stmt|;
+name|String
+name|colPath
 decl_stmt|;
 name|boolean
 name|isExt
@@ -153,13 +156,16 @@ parameter_list|,
 name|String
 name|tableName
 parameter_list|,
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
 name|String
 argument_list|>
 name|partSpec
+parameter_list|,
+name|String
+name|colPath
 parameter_list|)
 block|{
 name|this
@@ -194,6 +200,12 @@ operator|.
 name|tableName
 operator|=
 name|tableName
+expr_stmt|;
+name|this
+operator|.
+name|colPath
+operator|=
+name|colPath
 expr_stmt|;
 block|}
 specifier|public
@@ -300,6 +312,32 @@ operator|=
 name|tableName
 expr_stmt|;
 block|}
+comment|/**    * @param colPath    *          the colPath to set    */
+specifier|public
+name|void
+name|setColPath
+parameter_list|(
+name|String
+name|colPath
+parameter_list|)
+block|{
+name|this
+operator|.
+name|colPath
+operator|=
+name|colPath
+expr_stmt|;
+block|}
+comment|/**    * @return the columnPath    */
+specifier|public
+name|String
+name|getColumnPath
+parameter_list|()
+block|{
+return|return
+name|colPath
+return|;
+block|}
 comment|/**    * @return the partSpec    */
 annotation|@
 name|Explain
@@ -309,7 +347,7 @@ operator|=
 literal|"partition"
 argument_list|)
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -327,7 +365,7 @@ specifier|public
 name|void
 name|setPartSpecs
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
