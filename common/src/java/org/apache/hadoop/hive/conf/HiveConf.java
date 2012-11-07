@@ -2721,6 +2721,18 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+comment|// standard error allowed for ndv estimates. A lower value indicates higher accuracy and a
+comment|// higher compute cost.
+name|HIVE_STATS_NDV_ERROR
+argument_list|(
+literal|"hive.stats.ndv.error"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|20.0
+argument_list|)
+block|,
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(

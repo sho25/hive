@@ -20,26 +20,6 @@ package|;
 end_package
 
 begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|HiveParser
-operator|.
-name|TOK_IFEXISTS
-import|;
-end_import
-
-begin_import
 import|import
 name|org
 operator|.
@@ -410,6 +390,8 @@ name|ast
 operator|.
 name|getFirstChildWithType
 argument_list|(
+name|HiveParser
+operator|.
 name|TOK_IFEXISTS
 argument_list|)
 operator|!=

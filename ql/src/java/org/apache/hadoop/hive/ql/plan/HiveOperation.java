@@ -431,6 +431,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|ANALYZE_TABLE
+argument_list|(
+literal|"ANALYZE_TABLE"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|SHOWDATABASES
 argument_list|(
 literal|"SHOWDATABASES"

@@ -1453,7 +1453,57 @@ literal|"might help. If you dont want the query to fail because accurate statist
 operator|+
 literal|"could not be collected, set hive.stats.reliable=false"
 argument_list|)
-block|,      ;
+block|,
+name|COLUMNSTATSCOLLECTOR_INVALID_PART_KEY
+argument_list|(
+literal|30005
+argument_list|,
+literal|"Invalid partitioning key specified in ANALYZE "
+operator|+
+literal|"statement"
+argument_list|)
+block|,
+name|COLUMNSTATSCOLLECTOR_INCORRECT_NUM_PART_KEY
+argument_list|(
+literal|30006
+argument_list|,
+literal|"Incorrect number of partitioning key "
+operator|+
+literal|"specified in ANALYZE statement"
+argument_list|)
+block|,
+name|COLUMNSTATSCOLLECTOR_INVALID_PARTITION
+argument_list|(
+literal|30007
+argument_list|,
+literal|"Invalid partitioning key/value specified in "
+operator|+
+literal|"ANALYZE statement"
+argument_list|)
+block|,
+name|COLUMNSTATSCOLLECTOR_INVALID_SYNTAX
+argument_list|(
+literal|30008
+argument_list|,
+literal|"Dynamic partitioning is not supported yet while "
+operator|+
+literal|"gathering column statistics through ANALYZE statement"
+argument_list|)
+block|,
+name|COLUMNSTATSCOLLECTOR_PARSE_ERROR
+argument_list|(
+literal|30009
+argument_list|,
+literal|"Encountered parse error while parsing rewritten query"
+argument_list|)
+block|,
+name|COLUMNSTATSCOLLECTOR_IO_ERROR
+argument_list|(
+literal|30010
+argument_list|,
+literal|"Encountered I/O exception while parsing rewritten query"
+argument_list|)
+block|;
 specifier|private
 name|int
 name|errorCode

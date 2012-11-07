@@ -120,6 +120,11 @@ name|DEPENDENCY_COLLECTION
 argument_list|(
 literal|10
 argument_list|)
+block|,
+name|COLUMNSTATS
+argument_list|(
+literal|11
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -230,6 +235,12 @@ literal|10
 case|:
 return|return
 name|DEPENDENCY_COLLECTION
+return|;
+case|case
+literal|11
+case|:
+return|return
+name|COLUMNSTATS
 return|;
 default|default:
 return|return

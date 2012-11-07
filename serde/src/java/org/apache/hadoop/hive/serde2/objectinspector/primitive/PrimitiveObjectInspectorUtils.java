@@ -3553,7 +3553,7 @@ name|oi
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the String value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * NumberFormatException will be thrown if o is not a valid number.    */
+comment|/**    * Get the String value out of a primitive object. Note that    * NullPointerException will be thrown if o is null. Note that    * RuntimeException will be thrown if o is not a valid string.    */
 specifier|public
 specifier|static
 name|String
