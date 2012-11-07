@@ -17811,6 +17811,8 @@ argument_list|,
 name|statsObj
 operator|!=
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -17945,6 +17947,8 @@ literal|"get_column_statistics_by_partition: "
 argument_list|,
 name|statsObj
 operator|!=
+literal|null
+argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
@@ -18141,6 +18145,8 @@ argument_list|,
 name|ret
 operator|!=
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -18379,6 +18385,8 @@ argument_list|,
 name|ret
 operator|!=
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -18519,6 +18527,8 @@ argument_list|,
 name|ret
 operator|!=
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -18625,6 +18635,8 @@ argument_list|,
 name|ret
 operator|!=
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
