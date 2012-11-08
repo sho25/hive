@@ -67,7 +67,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -270,7 +270,7 @@ argument_list|()
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BINARY_TYPE_NAME
 argument_list|)

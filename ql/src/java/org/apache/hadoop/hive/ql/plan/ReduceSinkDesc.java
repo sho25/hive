@@ -936,7 +936,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_SORT_ORDER
 argument_list|)
@@ -967,7 +967,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_SORT_ORDER
 argument_list|,

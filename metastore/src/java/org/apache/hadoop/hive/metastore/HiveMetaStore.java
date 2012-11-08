@@ -575,7 +575,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 import|;
 end_import
 
@@ -6651,7 +6651,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|)
@@ -6663,7 +6663,7 @@ name|tbl
 operator|.
 name|putToParameters
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|,
@@ -8968,7 +8968,7 @@ name|part
 operator|.
 name|putToParameters
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|,
@@ -10053,7 +10053,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|)
@@ -10065,7 +10065,7 @@ name|part
 operator|.
 name|putToParameters
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|,
@@ -12926,7 +12926,7 @@ name|newIndex
 operator|.
 name|putToParameters
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|,
@@ -13234,7 +13234,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|)
@@ -13246,7 +13246,7 @@ name|newTable
 operator|.
 name|putToParameters
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|,
@@ -16480,7 +16480,7 @@ name|index
 operator|.
 name|putToParameters
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|,

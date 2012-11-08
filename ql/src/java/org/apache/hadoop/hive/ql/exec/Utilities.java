@@ -1509,7 +1509,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -4737,7 +4737,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -4757,7 +4757,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|,
@@ -4773,7 +4773,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|,
@@ -9220,7 +9220,7 @@ name|props
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|)
@@ -9318,7 +9318,7 @@ name|props
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|)
@@ -11143,7 +11143,7 @@ name|jobConf
 operator|.
 name|set
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|,
@@ -11242,7 +11242,7 @@ name|jobConf
 operator|.
 name|set
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|,
@@ -11761,7 +11761,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -11813,7 +11813,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)

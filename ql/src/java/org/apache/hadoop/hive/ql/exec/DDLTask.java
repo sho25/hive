@@ -2171,7 +2171,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -7753,7 +7753,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|IS_ARCHIVED
 argument_list|,
@@ -7795,7 +7795,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|IS_ARCHIVED
 argument_list|)
@@ -7850,7 +7850,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|ORIGINAL_LOCATION
 argument_list|)
@@ -7904,7 +7904,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|ORIGINAL_LOCATION
 argument_list|)
@@ -7928,7 +7928,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|ORIGINAL_LOCATION
 argument_list|,
@@ -12145,7 +12145,7 @@ name|delims
 operator|.
 name|containsKey
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|)
@@ -12165,7 +12165,7 @@ name|delims
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|)
@@ -12181,7 +12181,7 @@ name|delims
 operator|.
 name|containsKey
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|)
@@ -12201,7 +12201,7 @@ name|delims
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|)
@@ -12217,7 +12217,7 @@ name|delims
 operator|.
 name|containsKey
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|)
@@ -12237,7 +12237,7 @@ name|delims
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|)
@@ -12253,7 +12253,7 @@ name|delims
 operator|.
 name|containsKey
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|)
@@ -12273,7 +12273,7 @@ name|delims
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|)
@@ -12348,7 +12348,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_STORAGE
 argument_list|)
@@ -12392,7 +12392,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_STORAGE
 argument_list|)
@@ -13910,7 +13910,7 @@ name|sortedFuncs
 operator|.
 name|removeAll
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|PrimitiveTypes
 argument_list|)
@@ -20998,7 +20998,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_STORAGE
 argument_list|,
@@ -21146,7 +21146,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -21160,7 +21160,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -21185,7 +21185,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
@@ -21210,7 +21210,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|,
@@ -21235,7 +21235,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|,
@@ -21260,7 +21260,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|,

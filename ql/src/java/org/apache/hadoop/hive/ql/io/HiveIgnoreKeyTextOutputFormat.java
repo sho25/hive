@@ -127,7 +127,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -320,7 +320,7 @@ name|tableProperties
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|,

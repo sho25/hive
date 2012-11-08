@@ -1051,7 +1051,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|IS_ARCHIVED
 argument_list|)

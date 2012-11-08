@@ -2463,7 +2463,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -2483,7 +2483,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|,
@@ -2502,7 +2502,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|,

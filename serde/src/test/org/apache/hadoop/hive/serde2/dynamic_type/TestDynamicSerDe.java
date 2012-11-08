@@ -127,7 +127,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -731,7 +731,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -754,7 +754,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -765,7 +765,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -776,7 +776,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -1257,7 +1257,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -1297,7 +1297,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -1308,7 +1308,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -1319,7 +1319,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -1335,7 +1335,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_SORT_ORDER
 argument_list|,
@@ -2915,7 +2915,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -2955,7 +2955,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -2966,7 +2966,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -2977,7 +2977,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -2996,7 +2996,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -3007,7 +3007,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|,
@@ -3018,7 +3018,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|,
@@ -3029,7 +3029,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|,
@@ -3448,7 +3448,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -3488,7 +3488,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -3499,7 +3499,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -3510,7 +3510,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -3692,7 +3692,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -3732,7 +3732,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -3743,7 +3743,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -3754,7 +3754,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -3996,7 +3996,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -4036,7 +4036,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -4047,7 +4047,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -4058,7 +4058,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -4311,7 +4311,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -4351,7 +4351,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -4362,7 +4362,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -4373,7 +4373,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -4598,13 +4598,13 @@ operator|new
 name|Properties
 argument_list|()
 decl_stmt|;
-comment|// schema.setProperty(Constants.SERIALIZATION_FORMAT,
+comment|// schema.setProperty(serdeConstants.SERIALIZATION_FORMAT,
 comment|// org.apache.thrift.protocol.TJSONProtocol.class.getName());
 name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -4640,7 +4640,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -4651,7 +4651,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -4662,7 +4662,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -5093,7 +5093,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -5133,7 +5133,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -5144,7 +5144,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -5155,7 +5155,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -5174,7 +5174,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -5185,7 +5185,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|,
@@ -5196,7 +5196,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|,
@@ -5207,7 +5207,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|,
@@ -5381,7 +5381,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,

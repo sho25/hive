@@ -269,7 +269,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 import|;
 end_import
 
@@ -785,7 +785,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -838,7 +838,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -901,7 +901,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -1031,7 +1031,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|)
@@ -2051,7 +2051,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 argument_list|,
@@ -2072,7 +2072,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 argument_list|,
@@ -2093,7 +2093,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 argument_list|,
@@ -2114,7 +2114,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -2135,7 +2135,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 argument_list|,
@@ -2156,7 +2156,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|,
@@ -2177,7 +2177,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 argument_list|,
@@ -2198,7 +2198,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_TYPE_NAME
 argument_list|,
@@ -2219,7 +2219,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|MAP_TYPE_NAME
 argument_list|,
@@ -2240,7 +2240,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -2261,7 +2261,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|BINARY_TYPE_NAME
 argument_list|,
@@ -2286,7 +2286,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|DATE_TYPE_NAME
 argument_list|,
@@ -2307,7 +2307,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|DATETIME_TYPE_NAME
 argument_list|,
@@ -2328,7 +2328,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|TIMESTAMP_TYPE_NAME
 argument_list|,
@@ -2992,7 +2992,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|FILE_INPUT_FORMAT
 argument_list|)
@@ -3046,7 +3046,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|FILE_INPUT_FORMAT
 argument_list|,
@@ -3095,7 +3095,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|FILE_OUTPUT_FORMAT
 argument_list|)
@@ -3149,7 +3149,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|FILE_OUTPUT_FORMAT
 argument_list|,
@@ -3183,7 +3183,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_LOCATION
 argument_list|,
@@ -3211,7 +3211,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|BUCKET_COUNT
 argument_list|,
@@ -3262,7 +3262,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|BUCKET_FIELD_NAME
 argument_list|,
@@ -3307,7 +3307,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_COLUMNS
 decl_stmt|;
@@ -3326,7 +3326,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_COLUMN_TYPES
 decl_stmt|;
@@ -3345,7 +3345,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_PARTITION_COLUMNS
 decl_stmt|;
@@ -3469,7 +3469,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -3649,7 +3649,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|FILE_INPUT_FORMAT
 argument_list|,
@@ -3712,7 +3712,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|FILE_OUTPUT_FORMAT
 argument_list|,
@@ -3735,7 +3735,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -3772,7 +3772,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_LOCATION
 argument_list|,
@@ -3799,7 +3799,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|BUCKET_COUNT
 argument_list|,
@@ -3850,7 +3850,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|BUCKET_FIELD_NAME
 argument_list|,
@@ -3954,7 +3954,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
@@ -4077,7 +4077,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_COLUMNS
 argument_list|,
@@ -4100,7 +4100,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_COLUMN_TYPES
 argument_list|,
@@ -4131,7 +4131,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_DDL
 argument_list|,
@@ -4228,7 +4228,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_PARTITION_COLUMNS
 argument_list|,
@@ -5304,7 +5304,7 @@ name|params
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|IS_ARCHIVED
 argument_list|)
@@ -5371,7 +5371,7 @@ name|params
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|ORIGINAL_LOCATION
 argument_list|)
@@ -5420,7 +5420,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_STORAGE
 argument_list|)

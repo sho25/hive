@@ -215,7 +215,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -576,7 +576,7 @@ name|FieldSchema
 argument_list|(
 literal|"col1"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -593,7 +593,7 @@ name|FieldSchema
 argument_list|(
 literal|"col2"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -610,7 +610,7 @@ name|FieldSchema
 argument_list|(
 literal|"col3"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|,
@@ -723,7 +723,7 @@ name|FieldSchema
 argument_list|(
 literal|"ds"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -768,7 +768,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -779,7 +779,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|,
@@ -790,7 +790,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|,
@@ -801,7 +801,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|,
@@ -812,7 +812,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -1279,7 +1279,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_CLASS
 argument_list|,
@@ -1295,7 +1295,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -1686,7 +1686,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_CLASS
 argument_list|,
@@ -1702,7 +1702,7 @@ name|tbl
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,

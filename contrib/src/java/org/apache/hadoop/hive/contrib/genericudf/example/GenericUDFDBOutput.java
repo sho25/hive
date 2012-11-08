@@ -213,7 +213,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -496,7 +496,7 @@ name|i
 argument_list|,
 literal|"The argument of function  should be \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 operator|+

@@ -2519,7 +2519,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -12492,7 +12492,7 @@ argument_list|()
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -12506,7 +12506,7 @@ argument_list|()
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -12546,7 +12546,7 @@ argument_list|()
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
@@ -12567,7 +12567,7 @@ argument_list|()
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|,
@@ -12598,7 +12598,7 @@ argument_list|()
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|,
@@ -12645,7 +12645,7 @@ argument_list|()
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|,
@@ -28245,7 +28245,7 @@ name|tName
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|VOID_TYPE_NAME
 argument_list|)
@@ -28257,7 +28257,7 @@ name|colTypes
 operator|.
 name|concat
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)

@@ -227,7 +227,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -376,7 +376,7 @@ name|FieldSchema
 argument_list|(
 name|partDateName
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -393,7 +393,7 @@ name|FieldSchema
 argument_list|(
 name|partCityName
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,

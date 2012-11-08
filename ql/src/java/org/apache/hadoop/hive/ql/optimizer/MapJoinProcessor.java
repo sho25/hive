@@ -955,7 +955,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -3111,7 +3111,7 @@ name|TypeInfoFactory
 operator|.
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 argument_list|)

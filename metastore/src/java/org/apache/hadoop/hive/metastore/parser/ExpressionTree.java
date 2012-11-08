@@ -149,7 +149,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 import|;
 end_import
 
@@ -717,7 +717,7 @@ name|keyName
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_OWNER
 argument_list|)
@@ -735,7 +735,7 @@ name|keyName
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_LAST_ACCESS
 argument_list|)
@@ -771,7 +771,7 @@ name|keyName
 operator|.
 name|startsWith
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 argument_list|)
@@ -809,7 +809,7 @@ name|keyName
 operator|.
 name|substring
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|.
@@ -1132,7 +1132,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)

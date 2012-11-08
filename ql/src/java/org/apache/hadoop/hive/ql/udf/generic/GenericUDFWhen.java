@@ -69,7 +69,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -191,7 +191,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 argument_list|)
@@ -205,7 +205,7 @@ name|i
 argument_list|,
 literal|"\""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 operator|+

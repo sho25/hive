@@ -123,7 +123,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -571,7 +571,7 @@ operator|.
 name|getTypeName
 argument_list|()
 operator|!=
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 operator|&&
@@ -583,7 +583,7 @@ operator|.
 name|getTypeName
 argument_list|()
 operator|!=
-name|Constants
+name|serdeConstants
 operator|.
 name|VOID_TYPE_NAME
 condition|)
@@ -598,7 +598,7 @@ literal|"Argument 1"
 operator|+
 literal|" of function PRINTF must be \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 operator|+

@@ -623,7 +623,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -1242,7 +1242,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -1262,7 +1262,7 @@ name|FieldSchema
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -1435,7 +1435,7 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -1571,7 +1571,7 @@ name|FieldSchema
 argument_list|(
 literal|"ds"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -1591,7 +1591,7 @@ name|FieldSchema
 argument_list|(
 literal|"hr"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -4420,7 +4420,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -4437,7 +4437,7 @@ name|FieldSchema
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -4600,7 +4600,7 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -4645,7 +4645,7 @@ name|FieldSchema
 argument_list|(
 literal|"ds"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -4665,7 +4665,7 @@ name|FieldSchema
 argument_list|(
 literal|"hr"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -5138,7 +5138,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -5155,7 +5155,7 @@ name|FieldSchema
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -5318,7 +5318,7 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -5363,7 +5363,7 @@ name|FieldSchema
 argument_list|(
 literal|"ds"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -5383,7 +5383,7 @@ name|FieldSchema
 argument_list|(
 literal|"hr"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -6722,7 +6722,7 @@ name|client
 operator|.
 name|dropType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -6738,7 +6738,7 @@ name|typ1
 operator|.
 name|setName
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -6767,7 +6767,7 @@ name|client
 operator|.
 name|getType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -6796,7 +6796,7 @@ name|client
 operator|.
 name|dropType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -6819,7 +6819,7 @@ name|client
 operator|.
 name|getType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -6935,7 +6935,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -6955,7 +6955,7 @@ name|FieldSchema
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -7122,7 +7122,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -7483,7 +7483,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -7503,7 +7503,7 @@ name|FieldSchema
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -7686,7 +7686,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -7912,7 +7912,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -10312,7 +10312,7 @@ name|FieldSchema
 argument_list|(
 literal|"n-ame"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -10329,7 +10329,7 @@ name|FieldSchema
 argument_list|(
 literal|"in.come"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -10502,7 +10502,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -10575,7 +10575,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -10592,7 +10592,7 @@ name|FieldSchema
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -11253,7 +11253,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -11273,7 +11273,7 @@ name|FieldSchema
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -11456,7 +11456,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -11526,7 +11526,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|DATE_TYPE_NAME
 argument_list|,
@@ -11556,7 +11556,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -11708,7 +11708,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|DATE_TYPE_NAME
 argument_list|,
@@ -11728,7 +11728,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -12142,7 +12142,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -12159,7 +12159,7 @@ name|FieldSchema
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -12247,7 +12247,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -12515,7 +12515,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|TException
+name|ConfigValSecurityException
 name|e
 parameter_list|)
 block|{
@@ -12532,7 +12532,7 @@ assert|;
 block|}
 catch|catch
 parameter_list|(
-name|ConfigValSecurityException
+name|TException
 name|e
 parameter_list|)
 block|{
@@ -12568,6 +12568,17 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
+name|ConfigValSecurityException
+name|e
+parameter_list|)
+block|{
+name|threwException
+operator|=
+literal|true
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
 name|TException
 name|e
 parameter_list|)
@@ -12582,17 +12593,6 @@ operator|(
 literal|false
 operator|)
 assert|;
-block|}
-catch|catch
-parameter_list|(
-name|ConfigValSecurityException
-name|e
-parameter_list|)
-block|{
-name|threwException
-operator|=
-literal|true
-expr_stmt|;
 block|}
 assert|assert
 operator|(
@@ -12667,7 +12667,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|,
@@ -13028,7 +13028,7 @@ name|FieldSchema
 argument_list|(
 literal|"c1"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -13045,7 +13045,7 @@ name|FieldSchema
 argument_list|(
 literal|"c2"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -13077,7 +13077,7 @@ name|FieldSchema
 argument_list|(
 literal|"p1"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -13094,7 +13094,7 @@ name|FieldSchema
 argument_list|(
 literal|"p2"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -13111,7 +13111,7 @@ name|FieldSchema
 argument_list|(
 literal|"p3"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -13250,7 +13250,7 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -14005,7 +14005,7 @@ name|FieldSchema
 argument_list|(
 literal|"c1"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -14022,7 +14022,7 @@ name|FieldSchema
 argument_list|(
 literal|"c2"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -14054,7 +14054,7 @@ name|FieldSchema
 argument_list|(
 literal|"p1"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -14193,7 +14193,7 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -14534,7 +14534,7 @@ name|FieldSchema
 argument_list|(
 literal|"c1"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -14551,7 +14551,7 @@ name|FieldSchema
 argument_list|(
 literal|"c2"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -14583,7 +14583,7 @@ name|FieldSchema
 argument_list|(
 literal|"p1"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -14600,7 +14600,7 @@ name|FieldSchema
 argument_list|(
 literal|"p2"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -14629,7 +14629,7 @@ name|serdParams
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -15306,7 +15306,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_OWNER
 operator|+
@@ -15324,7 +15324,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_OWNER
 operator|+
@@ -15411,7 +15411,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_OWNER
 operator|+
@@ -15485,7 +15485,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_LAST_ACCESS
 operator|+
@@ -15559,7 +15559,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_LAST_ACCESS
 operator|+
@@ -15608,7 +15608,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
@@ -15682,7 +15682,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
@@ -15730,7 +15730,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
@@ -15778,7 +15778,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
@@ -15824,7 +15824,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
@@ -15871,7 +15871,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_OWNER
 operator|+
@@ -15889,7 +15889,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_LAST_ACCESS
 operator|+
@@ -15907,7 +15907,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
@@ -16142,7 +16142,7 @@ name|FieldSchema
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -16159,7 +16159,7 @@ name|FieldSchema
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -16214,7 +16214,7 @@ name|serdParams
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -16258,7 +16258,7 @@ name|put
 argument_list|(
 literal|"ds"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -16269,7 +16269,7 @@ name|put
 argument_list|(
 literal|"hr"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -16423,7 +16423,7 @@ name|FieldSchema
 argument_list|(
 literal|"c1"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -16440,7 +16440,7 @@ name|FieldSchema
 argument_list|(
 literal|"c2"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -16495,7 +16495,7 @@ name|serdParams
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -17297,7 +17297,7 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -17546,7 +17546,7 @@ name|put
 argument_list|(
 literal|"name"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -17557,7 +17557,7 @@ name|put
 argument_list|(
 literal|"income"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -17595,7 +17595,7 @@ name|put
 argument_list|(
 literal|"ds"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -17606,7 +17606,7 @@ name|put
 argument_list|(
 literal|"hr"
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -17658,7 +17658,7 @@ name|serdParams
 operator|.
 name|put
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,

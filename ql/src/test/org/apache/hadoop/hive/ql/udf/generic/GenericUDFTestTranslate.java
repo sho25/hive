@@ -125,7 +125,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -349,7 +349,7 @@ operator|.
 name|getTypeName
 argument_list|()
 operator|!=
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 operator|&&
@@ -361,7 +361,7 @@ operator|.
 name|getTypeName
 argument_list|()
 operator|!=
-name|Constants
+name|serdeConstants
 operator|.
 name|VOID_TYPE_NAME
 condition|)
@@ -383,7 +383,7 @@ argument_list|)
 operator|+
 literal|" argument of function TRANSLATE is expected to \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 operator|+

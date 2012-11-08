@@ -286,7 +286,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|)
@@ -579,7 +579,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|)
@@ -648,7 +648,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_STORAGE
 argument_list|)

@@ -102,7 +102,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|MAP_TYPE_NAME
 operator|+

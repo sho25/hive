@@ -123,7 +123,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -1021,7 +1021,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -1029,7 +1029,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|)
@@ -1054,7 +1054,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|)
@@ -1078,7 +1078,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|)
@@ -1133,7 +1133,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_NULL_FORMAT
 argument_list|,
@@ -1159,7 +1159,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LAST_COLUMN_TAKES_REST
 argument_list|)
@@ -1218,7 +1218,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|)

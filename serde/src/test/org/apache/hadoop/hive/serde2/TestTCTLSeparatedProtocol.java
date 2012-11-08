@@ -63,7 +63,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -1419,7 +1419,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|QUOTE_CHAR
 argument_list|,
@@ -1430,7 +1430,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -1825,7 +1825,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|QUOTE_CHAR
 argument_list|,
@@ -1836,7 +1836,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -1847,7 +1847,7 @@ name|schema
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_NULL_FORMAT
 argument_list|,

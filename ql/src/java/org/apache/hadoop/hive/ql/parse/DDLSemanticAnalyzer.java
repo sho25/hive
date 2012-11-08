@@ -1799,7 +1799,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -1913,7 +1913,7 @@ name|HiveParser
 operator|.
 name|TOK_BOOLEAN
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 argument_list|)
@@ -1926,7 +1926,7 @@ name|HiveParser
 operator|.
 name|TOK_TINYINT
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 argument_list|)
@@ -1939,7 +1939,7 @@ name|HiveParser
 operator|.
 name|TOK_SMALLINT
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 argument_list|)
@@ -1952,7 +1952,7 @@ name|HiveParser
 operator|.
 name|TOK_INT
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -1965,7 +1965,7 @@ name|HiveParser
 operator|.
 name|TOK_BIGINT
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 argument_list|)
@@ -1978,7 +1978,7 @@ name|HiveParser
 operator|.
 name|TOK_FLOAT
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 argument_list|)
@@ -1991,7 +1991,7 @@ name|HiveParser
 operator|.
 name|TOK_DOUBLE
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|)
@@ -2004,7 +2004,7 @@ name|HiveParser
 operator|.
 name|TOK_STRING
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -2017,7 +2017,7 @@ name|HiveParser
 operator|.
 name|TOK_BINARY
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|BINARY_TYPE_NAME
 argument_list|)
@@ -2030,7 +2030,7 @@ name|HiveParser
 operator|.
 name|TOK_DATE
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|DATE_TYPE_NAME
 argument_list|)
@@ -2043,7 +2043,7 @@ name|HiveParser
 operator|.
 name|TOK_DATETIME
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|DATETIME_TYPE_NAME
 argument_list|)
@@ -2056,7 +2056,7 @@ name|HiveParser
 operator|.
 name|TOK_TIMESTAMP
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|TIMESTAMP_TYPE_NAME
 argument_list|)
@@ -10833,7 +10833,7 @@ name|prop
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -10844,7 +10844,7 @@ name|prop
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_NULL_FORMAT
 argument_list|,

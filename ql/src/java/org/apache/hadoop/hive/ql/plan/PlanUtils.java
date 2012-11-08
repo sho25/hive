@@ -431,7 +431,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -1101,13 +1101,13 @@ name|Utilities
 operator|.
 name|makeProperties
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
 name|separatorCode
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|,
@@ -1136,7 +1136,7 @@ name|properties
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
@@ -1155,7 +1155,7 @@ name|properties
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|,
@@ -1172,7 +1172,7 @@ name|properties
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_LAST_COLUMN_TAKES_REST
 argument_list|,
@@ -1335,7 +1335,7 @@ argument_list|()
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
@@ -1492,7 +1492,7 @@ name|properties
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|,
@@ -1517,7 +1517,7 @@ name|properties
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|,
@@ -1542,7 +1542,7 @@ name|properties
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
@@ -1567,7 +1567,7 @@ name|properties
 operator|.
 name|setProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|,
@@ -1611,7 +1611,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|,
@@ -1751,7 +1751,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
@@ -1796,7 +1796,7 @@ name|Utilities
 operator|.
 name|makeProperties
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|,
@@ -1807,7 +1807,7 @@ argument_list|(
 name|fieldSchemas
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|,
@@ -1818,7 +1818,7 @@ argument_list|(
 name|fieldSchemas
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_SORT_ORDER
 argument_list|,
@@ -1878,7 +1878,7 @@ argument_list|(
 name|fieldSchemas
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
@@ -1938,7 +1938,7 @@ argument_list|(
 name|fieldSchemas
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
@@ -1980,7 +1980,7 @@ name|Utilities
 operator|.
 name|makeProperties
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|,
@@ -1991,7 +1991,7 @@ argument_list|(
 name|fieldSchemas
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|,
@@ -2002,7 +2002,7 @@ argument_list|(
 name|fieldSchemas
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
@@ -2044,7 +2044,7 @@ name|Utilities
 operator|.
 name|makeProperties
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|,
@@ -2055,7 +2055,7 @@ argument_list|(
 name|fieldSchemas
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|,
@@ -2066,7 +2066,7 @@ argument_list|(
 name|fieldSchemas
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
@@ -3525,7 +3525,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_STORAGE
 argument_list|)

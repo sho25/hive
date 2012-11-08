@@ -31,7 +31,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 import|;

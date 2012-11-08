@@ -123,7 +123,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -474,7 +474,7 @@ literal|"Argument 1"
 operator|+
 literal|" of function FORMAT_NUMBER must be \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 operator|+
@@ -482,7 +482,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 operator|+
@@ -490,7 +490,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 operator|+
@@ -498,7 +498,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 operator|+
@@ -506,7 +506,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 operator|+
@@ -514,7 +514,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 operator|+
@@ -558,7 +558,7 @@ literal|"Argument 2"
 operator|+
 literal|" of function FORMAT_NUMBER must be \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 operator|+
@@ -566,7 +566,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 operator|+
@@ -574,7 +574,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 operator|+
@@ -582,7 +582,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 operator|+
@@ -663,7 +663,7 @@ literal|"Argument 1"
 operator|+
 literal|" of function FORMAT_NUMBER must be \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 operator|+
@@ -671,7 +671,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 operator|+
@@ -679,7 +679,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 operator|+
@@ -687,7 +687,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 operator|+
@@ -695,7 +695,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 operator|+
@@ -703,7 +703,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 operator|+
@@ -756,7 +756,7 @@ literal|"Argument 2"
 operator|+
 literal|" of function FORMAT_NUMBER must be \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 operator|+
@@ -764,7 +764,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 operator|+
@@ -772,7 +772,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 operator|+
@@ -780,7 +780,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 operator|+
@@ -1127,7 +1127,7 @@ name|HiveException
 argument_list|(
 literal|"Argument 1 of function FORMAT_NUMBER must be "
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 operator|+
@@ -1135,7 +1135,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 operator|+
@@ -1143,7 +1143,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 operator|+
@@ -1151,7 +1151,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 operator|+
@@ -1159,7 +1159,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 operator|+
@@ -1167,7 +1167,7 @@ literal|"\""
 operator|+
 literal|" or \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 operator|+

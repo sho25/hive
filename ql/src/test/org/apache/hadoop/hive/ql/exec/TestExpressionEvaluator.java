@@ -159,7 +159,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -1032,7 +1032,7 @@ name|DefaultExprProcessor
 operator|.
 name|getFuncExprNodeDesc
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|,

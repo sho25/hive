@@ -57,7 +57,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -374,7 +374,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)

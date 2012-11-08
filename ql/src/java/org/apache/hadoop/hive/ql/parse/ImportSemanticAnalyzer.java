@@ -581,7 +581,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -3418,7 +3418,7 @@ name|table
 operator|.
 name|getSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|)
@@ -3433,7 +3433,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|)

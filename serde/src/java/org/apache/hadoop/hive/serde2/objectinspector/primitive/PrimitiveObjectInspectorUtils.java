@@ -93,7 +93,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -921,7 +921,7 @@ name|PrimitiveCategory
 operator|.
 name|BINARY
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|BINARY_TYPE_NAME
 argument_list|,
@@ -953,7 +953,7 @@ name|PrimitiveCategory
 operator|.
 name|STRING
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -981,7 +981,7 @@ name|PrimitiveCategory
 operator|.
 name|BOOLEAN
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 argument_list|,
@@ -1011,7 +1011,7 @@ name|PrimitiveCategory
 operator|.
 name|INT
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -1041,7 +1041,7 @@ name|PrimitiveCategory
 operator|.
 name|LONG
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 argument_list|,
@@ -1071,7 +1071,7 @@ name|PrimitiveCategory
 operator|.
 name|FLOAT
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 argument_list|,
@@ -1101,7 +1101,7 @@ name|PrimitiveCategory
 operator|.
 name|VOID
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|VOID_TYPE_NAME
 argument_list|,
@@ -1132,7 +1132,7 @@ name|PrimitiveCategory
 operator|.
 name|DOUBLE
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|,
@@ -1162,7 +1162,7 @@ name|PrimitiveCategory
 operator|.
 name|BYTE
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 argument_list|,
@@ -1192,7 +1192,7 @@ name|PrimitiveCategory
 operator|.
 name|SHORT
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 argument_list|,
@@ -1222,7 +1222,7 @@ name|PrimitiveCategory
 operator|.
 name|TIMESTAMP
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|TIMESTAMP_TYPE_NAME
 argument_list|,

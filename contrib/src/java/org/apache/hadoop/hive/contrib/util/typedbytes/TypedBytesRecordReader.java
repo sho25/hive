@@ -173,7 +173,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -589,7 +589,7 @@ argument_list|(
 literal|1
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 argument_list|)
@@ -603,7 +603,7 @@ argument_list|(
 literal|2
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 argument_list|)
@@ -617,7 +617,7 @@ argument_list|(
 literal|3
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -631,7 +631,7 @@ argument_list|(
 literal|4
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 argument_list|)
@@ -645,7 +645,7 @@ argument_list|(
 literal|5
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 argument_list|)
@@ -659,7 +659,7 @@ argument_list|(
 literal|6
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|)
@@ -673,7 +673,7 @@ argument_list|(
 literal|7
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -687,7 +687,7 @@ argument_list|(
 literal|11
 argument_list|)
 argument_list|,
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 argument_list|)
@@ -740,7 +740,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|)
@@ -1344,7 +1344,7 @@ name|typ
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 argument_list|)
@@ -1368,7 +1368,7 @@ name|typ
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 argument_list|)
@@ -1392,7 +1392,7 @@ name|typ
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 argument_list|)
@@ -1416,7 +1416,7 @@ name|typ
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -1440,7 +1440,7 @@ name|typ
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 argument_list|)
@@ -1464,7 +1464,7 @@ name|typ
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 argument_list|)
@@ -1488,7 +1488,7 @@ name|typ
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|)
@@ -1512,7 +1512,7 @@ name|typ
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)

@@ -51,7 +51,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_STORAGE
 import|;
@@ -69,7 +69,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 import|;
@@ -87,7 +87,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 import|;
@@ -105,7 +105,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|FIELD_DELIM
 import|;
@@ -123,7 +123,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|LINE_DELIM
 import|;
@@ -141,7 +141,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 import|;
@@ -159,7 +159,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 import|;
@@ -177,7 +177,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 import|;
@@ -563,7 +563,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 import|;
 end_import
 
@@ -1916,7 +1916,7 @@ argument_list|()
 operator|.
 name|remove
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|)
@@ -2093,7 +2093,7 @@ argument_list|()
 operator|.
 name|remove
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|)
@@ -2246,7 +2246,7 @@ argument_list|()
 operator|.
 name|remove
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|)
@@ -2782,7 +2782,7 @@ argument_list|()
 operator|.
 name|remove
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|DDL_TIME
 argument_list|)

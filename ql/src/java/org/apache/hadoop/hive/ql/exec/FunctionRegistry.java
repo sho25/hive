@@ -3653,7 +3653,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -5129,7 +5129,7 @@ comment|// Aliases for Java Class Names
 comment|// These are used in getImplicitConvertUDFMethod
 name|registerUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 argument_list|,
@@ -5149,7 +5149,7 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 argument_list|,
@@ -5169,7 +5169,7 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 argument_list|,
@@ -5189,7 +5189,7 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -5209,7 +5209,7 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 argument_list|,
@@ -5229,7 +5229,7 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 argument_list|,
@@ -5249,7 +5249,7 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|,
@@ -5269,7 +5269,7 @@ argument_list|)
 expr_stmt|;
 name|registerUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,
@@ -5289,7 +5289,7 @@ argument_list|)
 expr_stmt|;
 name|registerGenericUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|TIMESTAMP_TYPE_NAME
 argument_list|,
@@ -5300,7 +5300,7 @@ argument_list|)
 expr_stmt|;
 name|registerGenericUDF
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BINARY_TYPE_NAME
 argument_list|,
@@ -6631,7 +6631,7 @@ static|static
 block|{
 name|registerNumericType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 argument_list|,
@@ -6640,7 +6640,7 @@ argument_list|)
 expr_stmt|;
 name|registerNumericType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 argument_list|,
@@ -6649,7 +6649,7 @@ argument_list|)
 expr_stmt|;
 name|registerNumericType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|,
@@ -6658,7 +6658,7 @@ argument_list|)
 expr_stmt|;
 name|registerNumericType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 argument_list|,
@@ -6667,7 +6667,7 @@ argument_list|)
 expr_stmt|;
 name|registerNumericType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 argument_list|,
@@ -6676,7 +6676,7 @@ argument_list|)
 expr_stmt|;
 name|registerNumericType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|,
@@ -6685,7 +6685,7 @@ argument_list|)
 expr_stmt|;
 name|registerNumericType
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|,

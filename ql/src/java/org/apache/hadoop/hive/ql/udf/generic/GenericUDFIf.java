@@ -105,7 +105,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -309,7 +309,7 @@ literal|0
 argument_list|,
 literal|"The first argument of function IF should be \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 operator|+

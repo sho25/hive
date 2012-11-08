@@ -61,7 +61,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -197,7 +197,7 @@ name|voidTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|VOID_TYPE_NAME
 argument_list|)
@@ -210,7 +210,7 @@ name|booleanTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 argument_list|)
@@ -223,7 +223,7 @@ name|intTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 argument_list|)
@@ -236,7 +236,7 @@ name|longTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 argument_list|)
@@ -249,7 +249,7 @@ name|stringTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -262,7 +262,7 @@ name|floatTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 argument_list|)
@@ -275,7 +275,7 @@ name|doubleTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|)
@@ -288,7 +288,7 @@ name|byteTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 argument_list|)
@@ -301,7 +301,7 @@ name|shortTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 argument_list|)
@@ -314,7 +314,7 @@ name|timestampTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|TIMESTAMP_TYPE_NAME
 argument_list|)
@@ -327,7 +327,7 @@ name|binaryTypeInfo
 init|=
 name|getPrimitiveTypeInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|BINARY_TYPE_NAME
 argument_list|)

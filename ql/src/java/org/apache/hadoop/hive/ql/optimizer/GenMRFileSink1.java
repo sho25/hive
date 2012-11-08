@@ -2453,7 +2453,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_PARTITION_COLUMNS
 argument_list|)
@@ -3028,7 +3028,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_PARTITION_COLUMNS
 argument_list|,
@@ -3065,7 +3065,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_PARTITION_COLUMNS
 argument_list|)

@@ -61,7 +61,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -136,7 +136,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|UNION_TYPE_NAME
 operator|+

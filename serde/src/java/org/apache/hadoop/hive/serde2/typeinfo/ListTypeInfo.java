@@ -98,7 +98,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_TYPE_NAME
 operator|+

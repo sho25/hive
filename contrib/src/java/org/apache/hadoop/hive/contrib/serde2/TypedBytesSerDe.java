@@ -219,7 +219,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -903,7 +903,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|)
@@ -915,7 +915,7 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|)

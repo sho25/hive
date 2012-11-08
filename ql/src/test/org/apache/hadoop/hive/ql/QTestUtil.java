@@ -733,7 +733,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -3612,7 +3612,7 @@ name|srcThrift
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_CLASS
 argument_list|,
@@ -3628,7 +3628,7 @@ name|srcThrift
 operator|.
 name|setSerdeParam
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,

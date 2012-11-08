@@ -133,7 +133,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -308,7 +308,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -322,7 +322,7 @@ literal|0
 argument_list|,
 literal|"Argument 1 of function evaluate_npe must be \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 operator|+

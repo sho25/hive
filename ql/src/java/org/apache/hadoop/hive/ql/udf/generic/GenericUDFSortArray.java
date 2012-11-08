@@ -163,7 +163,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -456,7 +456,7 @@ literal|"Argument 1"
 operator|+
 literal|" of function SORT_ARRAY must be "
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_TYPE_NAME
 operator|+

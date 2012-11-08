@@ -59,7 +59,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -388,7 +388,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 return|;
@@ -405,7 +405,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|FLOAT_TYPE_NAME
 return|;
@@ -422,7 +422,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 return|;
@@ -439,7 +439,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|BOOLEAN_TYPE_NAME
 return|;
@@ -456,7 +456,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|TINYINT_TYPE_NAME
 return|;
@@ -473,7 +473,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|SMALLINT_TYPE_NAME
 return|;
@@ -490,7 +490,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|INT_TYPE_NAME
 return|;
@@ -507,7 +507,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
 return|;
@@ -524,7 +524,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|TIMESTAMP_TYPE_NAME
 return|;
@@ -541,7 +541,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 return|;
@@ -558,7 +558,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 return|;
@@ -575,7 +575,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 return|;

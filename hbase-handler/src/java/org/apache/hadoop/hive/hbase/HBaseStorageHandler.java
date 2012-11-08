@@ -279,7 +279,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Constants
+name|hive_metastoreConstants
 import|;
 end_import
 
@@ -1584,7 +1584,7 @@ name|tableProperties
 operator|.
 name|getProperty
 argument_list|(
-name|Constants
+name|hive_metastoreConstants
 operator|.
 name|META_TABLE_NAME
 argument_list|)
@@ -1658,7 +1658,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMNS
 argument_list|)
@@ -1714,7 +1714,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
 argument_list|)

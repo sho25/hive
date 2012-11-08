@@ -131,7 +131,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -1553,7 +1553,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_TYPE_NAME
 operator|.
@@ -1565,7 +1565,7 @@ name|text
 argument_list|)
 operator|&&
 operator|!
-name|Constants
+name|serdeConstants
 operator|.
 name|MAP_TYPE_NAME
 operator|.
@@ -1577,7 +1577,7 @@ name|text
 argument_list|)
 operator|&&
 operator|!
-name|Constants
+name|serdeConstants
 operator|.
 name|STRUCT_TYPE_NAME
 operator|.
@@ -1589,7 +1589,7 @@ name|text
 argument_list|)
 operator|&&
 operator|!
-name|Constants
+name|serdeConstants
 operator|.
 name|UNION_TYPE_NAME
 operator|.
@@ -1829,7 +1829,7 @@ block|}
 comment|// Is this a list type?
 if|if
 condition|(
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_TYPE_NAME
 operator|.
@@ -1869,7 +1869,7 @@ block|}
 comment|// Is this a map type?
 if|if
 condition|(
-name|Constants
+name|serdeConstants
 operator|.
 name|MAP_TYPE_NAME
 operator|.
@@ -1922,7 +1922,7 @@ block|}
 comment|// Is this a struct type?
 if|if
 condition|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRUCT_TYPE_NAME
 operator|.
@@ -2060,7 +2060,7 @@ block|}
 comment|// Is this a union type?
 if|if
 condition|(
-name|Constants
+name|serdeConstants
 operator|.
 name|UNION_TYPE_NAME
 operator|.

@@ -611,7 +611,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -3294,7 +3294,7 @@ operator|.
 name|TOK_LIST
 case|:
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_TYPE_NAME
 operator|+
@@ -3321,7 +3321,7 @@ operator|.
 name|TOK_MAP
 case|:
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|MAP_TYPE_NAME
 operator|+
@@ -3407,7 +3407,7 @@ block|{
 name|String
 name|typeStr
 init|=
-name|Constants
+name|serdeConstants
 operator|.
 name|STRUCT_TYPE_NAME
 operator|+
@@ -3572,7 +3572,7 @@ block|{
 name|String
 name|typeStr
 init|=
-name|Constants
+name|serdeConstants
 operator|.
 name|UNION_TYPE_NAME
 operator|+

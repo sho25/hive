@@ -477,7 +477,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -1190,7 +1190,7 @@ name|FunctionRegistry
 operator|.
 name|getFunctionInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|)
@@ -1248,7 +1248,7 @@ name|FunctionRegistry
 operator|.
 name|getFunctionInfo
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 argument_list|)

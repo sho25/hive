@@ -123,7 +123,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -358,7 +358,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -381,7 +381,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|VOID_TYPE_NAME
 argument_list|)
@@ -402,7 +402,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
@@ -417,7 +417,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|Constants
+name|serdeConstants
 operator|.
 name|VOID_TYPE_NAME
 argument_list|)
@@ -440,19 +440,19 @@ operator|)
 operator|+
 literal|" of function CONCAT_WS must be \""
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 operator|+
 literal|" or "
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_TYPE_NAME
 operator|+
 literal|"<"
 operator|+
-name|Constants
+name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 operator|+

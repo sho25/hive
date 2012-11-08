@@ -51,7 +51,7 @@ name|hive
 operator|.
 name|serde
 operator|.
-name|Constants
+name|serdeConstants
 import|;
 end_import
 
@@ -297,7 +297,7 @@ name|toString
 parameter_list|()
 block|{
 return|return
-name|Constants
+name|serdeConstants
 operator|.
 name|LIST_TYPE_NAME
 operator|+
