@@ -157,27 +157,6 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
-comment|// Some of the file paths (Files with partition option) in HDFS '='
-comment|// but Windows file path doesn't support '=' so replace it with special string.
-name|pathUriString
-operator|=
-name|pathUriString
-operator|.
-name|replaceAll
-argument_list|(
-literal|"="
-argument_list|,
-literal|"------"
-argument_list|)
-expr_stmt|;
-block|}
 name|URI
 name|newPathUri
 init|=
@@ -222,27 +201,6 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
-comment|// Revert back the special string '------' with '=' when we do the reverse conversion
-comment|// from Windows path to HDFS
-name|pathUriString
-operator|=
-name|pathUriString
-operator|.
-name|replaceAll
-argument_list|(
-literal|"------"
-argument_list|,
-literal|"="
-argument_list|)
-expr_stmt|;
-block|}
 name|URI
 name|newPathUri
 init|=

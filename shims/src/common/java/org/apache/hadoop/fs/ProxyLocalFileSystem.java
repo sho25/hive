@@ -147,7 +147,6 @@ condition|)
 block|{
 comment|// Replace the encoded backward slash with forward slash
 comment|// Remove the windows drive letter
-comment|// replace the '=' with special string '------' to handle the unsupported char '=' in windows.
 name|nameUriString
 operator|=
 name|nameUriString
@@ -171,13 +170,6 @@ argument_list|(
 literal|"^[c-zC-Z]:"
 argument_list|,
 literal|""
-argument_list|)
-operator|.
-name|replaceAll
-argument_list|(
-literal|"="
-argument_list|,
-literal|"------"
 argument_list|)
 expr_stmt|;
 name|name
