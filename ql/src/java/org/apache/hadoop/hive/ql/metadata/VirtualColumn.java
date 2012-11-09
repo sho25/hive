@@ -202,6 +202,25 @@ operator|.
 name|longTypeInfo
 argument_list|)
 decl_stmt|;
+comment|/**    * GROUPINGID is used with GROUP BY GROUPINGS SETS, ROLLUP and CUBE.    * It composes a bit vector with the "0" and "1" values for every    * column which is GROUP BY section. "1" is for a row in the result    * set if that column has been aggregated in that row. Otherwise the    * value is "0".  Returns the decimal representation of the bit vector.    */
+specifier|public
+specifier|static
+name|VirtualColumn
+name|GROUPINGID
+init|=
+operator|new
+name|VirtualColumn
+argument_list|(
+literal|"GROUPING__ID"
+argument_list|,
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|TypeInfoFactory
+operator|.
+name|intTypeInfo
+argument_list|)
+decl_stmt|;
 specifier|private
 name|String
 name|name
