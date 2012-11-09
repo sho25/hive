@@ -1173,6 +1173,25 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+name|storageDesc
+operator|.
+name|isStoredAsSubDirectories
+argument_list|()
+condition|)
+block|{
+comment|// optional parameter
+name|formatOutput
+argument_list|(
+literal|"Stored As SubDirectories:"
+argument_list|,
+literal|"Yes"
+argument_list|,
+name|tableInfo
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 literal|null
 operator|!=
 name|storageDesc

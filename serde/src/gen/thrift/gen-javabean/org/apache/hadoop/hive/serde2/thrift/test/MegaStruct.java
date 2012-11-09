@@ -13396,7 +13396,7 @@ comment|// required
 name|String
 name|_val3
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key2
 operator|=
 name|iprot
@@ -13543,7 +13543,7 @@ comment|// required
 name|MyEnum
 name|_val7
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key6
 operator|=
 name|iprot
@@ -13695,7 +13695,7 @@ comment|// required
 name|String
 name|_val11
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key10
 operator|=
 name|MyEnum
@@ -13847,7 +13847,7 @@ comment|// required
 name|MiniStruct
 name|_val15
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key14
 operator|=
 name|MyEnum
@@ -14011,7 +14011,7 @@ name|String
 argument_list|>
 name|_val19
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key18
 operator|=
 name|MyEnum
@@ -14234,7 +14234,7 @@ name|MiniStruct
 argument_list|>
 name|_val26
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key25
 operator|=
 name|MyEnum
@@ -18599,7 +18599,7 @@ comment|// required
 name|String
 name|_val79
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key78
 operator|=
 name|iprot
@@ -18741,7 +18741,7 @@ comment|// required
 name|MyEnum
 name|_val83
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key82
 operator|=
 name|iprot
@@ -18888,7 +18888,7 @@ comment|// required
 name|String
 name|_val87
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key86
 operator|=
 name|MyEnum
@@ -19035,7 +19035,7 @@ comment|// required
 name|MiniStruct
 name|_val91
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key90
 operator|=
 name|MyEnum
@@ -19194,7 +19194,7 @@ name|String
 argument_list|>
 name|_val95
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key94
 operator|=
 name|MyEnum
@@ -19431,7 +19431,7 @@ name|MiniStruct
 argument_list|>
 name|_val102
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key101
 operator|=
 name|MyEnum

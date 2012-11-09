@@ -367,7 +367,12 @@ argument_list|>
 name|skewedLocations
 decl_stmt|;
 name|boolean
-name|turnOffSkewed
+name|isTurnOffSkewed
+init|=
+literal|false
+decl_stmt|;
+name|boolean
+name|isStoredAsSubDirectories
 init|=
 literal|false
 decl_stmt|;
@@ -843,7 +848,7 @@ name|ADDSKEWEDBY
 expr_stmt|;
 name|this
 operator|.
-name|turnOffSkewed
+name|isTurnOffSkewed
 operator|=
 name|turnOffSkewed
 expr_stmt|;
@@ -1668,7 +1673,7 @@ name|isTurnOffSkewed
 parameter_list|()
 block|{
 return|return
-name|turnOffSkewed
+name|isTurnOffSkewed
 return|;
 block|}
 comment|/**    * @param turnOffSkewed the turnOffSkewed to set    */
@@ -1682,7 +1687,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|turnOffSkewed
+name|isTurnOffSkewed
 operator|=
 name|turnOffSkewed
 expr_stmt|;
@@ -1824,6 +1829,32 @@ operator|.
 name|table
 operator|=
 name|table
+expr_stmt|;
+block|}
+comment|/**    * @return the isStoredAsSubDirectories    */
+specifier|public
+name|boolean
+name|isStoredAsSubDirectories
+parameter_list|()
+block|{
+return|return
+name|isStoredAsSubDirectories
+return|;
+block|}
+comment|/**    * @param isStoredAsSubDirectories the isStoredAsSubDirectories to set    */
+specifier|public
+name|void
+name|setStoredAsSubDirectories
+parameter_list|(
+name|boolean
+name|isStoredAsSubDirectories
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isStoredAsSubDirectories
+operator|=
+name|isStoredAsSubDirectories
 expr_stmt|;
 block|}
 block|}

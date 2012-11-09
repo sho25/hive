@@ -426,6 +426,11 @@ argument_list|>
 argument_list|>
 name|skewedColValues
 decl_stmt|;
+name|boolean
+name|isStoredAsSubDirectories
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|CreateTableDesc
 parameter_list|()
@@ -2272,6 +2277,32 @@ operator|.
 name|getSkewedColValues
 argument_list|()
 argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * @return the isStoredAsSubDirectories    */
+specifier|public
+name|boolean
+name|isStoredAsSubDirectories
+parameter_list|()
+block|{
+return|return
+name|isStoredAsSubDirectories
+return|;
+block|}
+comment|/**    * @param isStoredAsSubDirectories the isStoredAsSubDirectories to set    */
+specifier|public
+name|void
+name|setStoredAsSubDirectories
+parameter_list|(
+name|boolean
+name|isStoredAsSubDirectories
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isStoredAsSubDirectories
+operator|=
+name|isStoredAsSubDirectories
 expr_stmt|;
 block|}
 block|}

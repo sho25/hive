@@ -2894,7 +2894,7 @@ comment|// required
 name|String
 name|_val234
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key233
 operator|=
 name|iprot
@@ -3740,7 +3740,7 @@ comment|// required
 name|String
 name|_val245
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key244
 operator|=
 name|iprot

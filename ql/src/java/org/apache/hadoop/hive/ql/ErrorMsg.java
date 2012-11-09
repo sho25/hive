@@ -1232,6 +1232,20 @@ argument_list|,
 literal|"SHOW CREATE TABLE does not support tables of type INDEX_TABLE."
 argument_list|)
 block|,
+name|LOAD_INTO_STORED_AS_DIR
+argument_list|(
+literal|10195
+argument_list|,
+literal|"A stored-as-directories table cannot be used as target for LOAD"
+argument_list|)
+block|,
+name|ALTER_TBL_STOREDASDIR_NOT_SKEWED
+argument_list|(
+literal|10196
+argument_list|,
+literal|"This operation is only valid on skewed table."
+argument_list|)
+block|,
 name|ALTER_TBL_SKEWED_LOC_NO_LOC
 argument_list|(
 literal|10197

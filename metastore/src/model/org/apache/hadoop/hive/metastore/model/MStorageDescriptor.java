@@ -122,6 +122,10 @@ name|String
 argument_list|>
 name|skewedColValueLocationMaps
 decl_stmt|;
+specifier|private
+name|boolean
+name|isStoredAsSubDirectories
+decl_stmt|;
 specifier|public
 name|MStorageDescriptor
 parameter_list|()
@@ -190,6 +194,9 @@ argument_list|,
 name|String
 argument_list|>
 name|skewedColValueLocationMaps
+parameter_list|,
+name|boolean
+name|storedAsSubDirectories
 parameter_list|)
 block|{
 name|this
@@ -269,6 +276,12 @@ operator|.
 name|skewedColValueLocationMaps
 operator|=
 name|skewedColValueLocationMaps
+expr_stmt|;
+name|this
+operator|.
+name|isStoredAsSubDirectories
+operator|=
+name|storedAsSubDirectories
 expr_stmt|;
 block|}
 comment|/**    * @return the location    */
@@ -651,6 +664,32 @@ operator|.
 name|skewedColValueLocationMaps
 operator|=
 name|listBucketColValuesMapping
+expr_stmt|;
+block|}
+comment|/**    * @return the storedAsSubDirectories    */
+specifier|public
+name|boolean
+name|isStoredAsSubDirectories
+parameter_list|()
+block|{
+return|return
+name|isStoredAsSubDirectories
+return|;
+block|}
+comment|/**    * @param storedAsSubDirectories the storedAsSubDirectories to set    */
+specifier|public
+name|void
+name|setStoredAsSubDirectories
+parameter_list|(
+name|boolean
+name|storedAsSubDirectories
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isStoredAsSubDirectories
+operator|=
+name|storedAsSubDirectories
 expr_stmt|;
 block|}
 block|}

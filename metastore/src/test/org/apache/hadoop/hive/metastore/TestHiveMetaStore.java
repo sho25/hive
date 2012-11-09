@@ -1454,6 +1454,13 @@ argument_list|>
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|sd
+operator|.
+name|setStoredAsSubDirectories
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 comment|//skewed information
 name|SkewedInfo
 name|skewInfor
@@ -11633,6 +11640,17 @@ name|getSd
 argument_list|()
 operator|.
 name|isCompressed
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertFalse
+argument_list|(
+name|tbl2
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|isStoredAsSubDirectories
 argument_list|()
 argument_list|)
 expr_stmt|;

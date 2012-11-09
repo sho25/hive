@@ -831,6 +831,13 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|tbl
+operator|.
+name|setStoredAsSubDirectories
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 comment|// create table
 try|try
 block|{
@@ -1305,6 +1312,13 @@ name|class
 operator|.
 name|getName
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|tbl
+operator|.
+name|setStoredAsSubDirectories
+argument_list|(
+literal|false
 argument_list|)
 expr_stmt|;
 try|try
