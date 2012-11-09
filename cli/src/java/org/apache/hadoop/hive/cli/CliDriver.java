@@ -697,14 +697,14 @@ specifier|static
 name|String
 name|prompt
 init|=
-literal|"hive"
+literal|null
 decl_stmt|;
 specifier|public
 specifier|static
 name|String
 name|prompt2
 init|=
-literal|"    "
+literal|null
 decl_stmt|;
 comment|// when ';' is not yet seen
 specifier|public
@@ -3852,6 +3852,40 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// read prompt configuration and substitute variables.
+name|prompt
+operator|=
+name|conf
+operator|.
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|CLIPROMPT
+argument_list|)
+expr_stmt|;
+name|prompt
+operator|=
+operator|new
+name|VariableSubstitution
+argument_list|()
+operator|.
+name|substitute
+argument_list|(
+name|conf
+argument_list|,
+name|prompt
+argument_list|)
+expr_stmt|;
+name|prompt2
+operator|=
+name|spacesForString
+argument_list|(
+name|prompt
+argument_list|)
+expr_stmt|;
 name|SessionState
 operator|.
 name|start

@@ -1708,6 +1708,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|CLIPROMPT
+argument_list|(
+literal|"hive.cli.prompt"
+argument_list|,
+literal|"hive"
+argument_list|)
+block|,
 name|HIVE_METASTORE_FS_HANDLER_CLS
 argument_list|(
 literal|"hive.metastore.fs.handler.class"
