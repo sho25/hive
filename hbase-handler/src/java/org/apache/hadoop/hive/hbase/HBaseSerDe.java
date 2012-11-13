@@ -990,6 +990,9 @@ name|columnSpecs
 index|[
 name|i
 index|]
+operator|.
+name|trim
+argument_list|()
 decl_stmt|;
 name|String
 index|[]
