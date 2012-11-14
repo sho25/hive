@@ -1387,7 +1387,7 @@ parameter_list|()
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Closing current thread's connection to Hive Metastore."
 argument_list|)

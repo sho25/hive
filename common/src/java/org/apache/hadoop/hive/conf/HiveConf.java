@@ -4925,63 +4925,6 @@ literal|"connecting to a remote metastore."
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-literal|null
-operator|!=
-name|this
-operator|.
-name|get
-argument_list|(
-name|ConfVars
-operator|.
-name|METASTOREURIS
-operator|.
-name|varname
-argument_list|,
-literal|null
-argument_list|)
-operator|&&
-literal|null
-operator|!=
-name|this
-operator|.
-name|get
-argument_list|(
-name|ConfVars
-operator|.
-name|METASTORECONNECTURLKEY
-operator|.
-name|varname
-argument_list|,
-literal|null
-argument_list|)
-condition|)
-block|{
-name|l4j
-operator|.
-name|error
-argument_list|(
-literal|"Found both "
-operator|+
-name|ConfVars
-operator|.
-name|METASTOREURIS
-operator|.
-name|varname
-operator|+
-literal|" and "
-operator|+
-name|ConfVars
-operator|.
-name|METASTORECONNECTURLKEY
-operator|+
-literal|" Recommended to have exactly one of those config key"
-operator|+
-literal|"in configuration"
-argument_list|)
-expr_stmt|;
-block|}
 comment|// if the running class was loaded directly (through eclipse) rather than through a
 comment|// jar then this would be needed
 if|if

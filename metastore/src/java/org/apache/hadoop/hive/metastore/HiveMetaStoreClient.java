@@ -1417,7 +1417,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Trying to connect to metastore with URI "
+literal|"Trying to connect to HiveMetaStore with URI "
 operator|+
 name|store
 argument_list|)
@@ -1440,7 +1440,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Unable to connect to metastore with URI "
+literal|"Unable to connect to HiveMetaStore with URI "
 operator|+
 name|store
 argument_list|,
@@ -1453,6 +1453,15 @@ condition|(
 name|isConnected
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Connected to HiveMetaStore with URI "
+operator|+
+name|store
+argument_list|)
+expr_stmt|;
 break|break;
 block|}
 block|}
@@ -1466,17 +1475,17 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Could not connect to meta store using any of the URIs provided"
+literal|"Could not connect to HiveMetaStore using any of the provided URIs: "
+operator|+
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|metastoreUris
+argument_list|)
 argument_list|)
 throw|;
 block|}
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Connected to metastore."
-argument_list|)
-expr_stmt|;
 block|}
 specifier|private
 name|void
