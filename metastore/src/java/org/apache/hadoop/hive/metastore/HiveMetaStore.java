@@ -8700,6 +8700,11 @@ name|partLocation
 init|=
 literal|null
 decl_stmt|;
+name|Table
+name|tbl
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
 name|ms
@@ -8744,9 +8749,8 @@ argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
-name|Table
 name|tbl
-init|=
+operator|=
 name|ms
 operator|.
 name|getTable
@@ -8761,7 +8765,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|tbl
@@ -9046,6 +9050,8 @@ init|=
 operator|new
 name|AddPartitionEvent
 argument_list|(
+name|tbl
+argument_list|,
 name|part
 argument_list|,
 name|success
@@ -9729,6 +9735,11 @@ name|partLocation
 init|=
 literal|null
 decl_stmt|;
+name|Table
+name|tbl
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
 name|firePreEvent
@@ -9801,9 +9812,8 @@ name|part
 argument_list|)
 throw|;
 block|}
-name|Table
 name|tbl
-init|=
+operator|=
 name|ms
 operator|.
 name|getTable
@@ -9818,7 +9828,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|tbl
@@ -10237,6 +10247,8 @@ init|=
 operator|new
 name|AddPartitionEvent
 argument_list|(
+name|tbl
+argument_list|,
 name|part
 argument_list|,
 name|success
@@ -10985,6 +10997,8 @@ argument_list|(
 operator|new
 name|DropPartitionEvent
 argument_list|(
+name|tbl
+argument_list|,
 name|part
 argument_list|,
 name|success
