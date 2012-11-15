@@ -1356,6 +1356,13 @@ operator|+
 literal|"parameters overlap with the aggregation functions columns"
 argument_list|)
 block|,
+name|HIVE_GROUPING_SETS_AGGR_NOFUNC
+argument_list|(
+literal|10211
+argument_list|,
+literal|"Grouping sets aggregations are not allowed if no aggregation function is presented"
+argument_list|)
+block|,
 name|HIVE_UNION_REMOVE_OPTIMIZATION_NEEDS_SUBDIRECTORIES
 argument_list|(
 literal|10212
@@ -1367,6 +1374,13 @@ operator|+
 literal|"hive.hadoop.supports.subdirectories to true. Otherwise, set hive.optimize.union.remove "
 operator|+
 literal|"to false"
+argument_list|)
+block|,
+name|HIVE_GROUPING_SETS_EXPR_NOT_IN_GROUPBY
+argument_list|(
+literal|10213
+argument_list|,
+literal|"Grouping sets expression is not in GROUP BY key"
 argument_list|)
 block|,
 name|SCRIPT_INIT_ERROR
