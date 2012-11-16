@@ -5839,6 +5839,14 @@ operator|.
 name|TOK_INSERT_INTO
 case|:
 name|String
+name|currentDatabase
+init|=
+name|db
+operator|.
+name|getCurrentDatabase
+argument_list|()
+decl_stmt|;
+name|String
 name|tab_name
 init|=
 name|getUnescapedName
@@ -5858,7 +5866,7 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|,
-literal|true
+name|currentDatabase
 argument_list|)
 decl_stmt|;
 name|qbp
@@ -7337,7 +7345,10 @@ operator|.
 name|getDbName
 argument_list|()
 argument_list|,
-name|tab_name
+name|tab
+operator|.
+name|getTableName
+argument_list|()
 argument_list|)
 operator|&&
 name|tab
