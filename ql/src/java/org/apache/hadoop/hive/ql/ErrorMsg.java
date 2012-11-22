@@ -1383,6 +1383,13 @@ argument_list|,
 literal|"Grouping sets expression is not in GROUP BY key"
 argument_list|)
 block|,
+name|INVALID_PARTITION_SPEC
+argument_list|(
+literal|10214
+argument_list|,
+literal|"Invalid partition spec specified"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
