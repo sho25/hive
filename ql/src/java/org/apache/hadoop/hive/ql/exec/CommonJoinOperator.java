@@ -1699,6 +1699,8 @@ name|hasFilter
 argument_list|(
 name|pos
 argument_list|)
+argument_list|,
+name|reporter
 argument_list|)
 decl_stmt|;
 name|values
@@ -1758,6 +1760,8 @@ name|hasFilter
 argument_list|(
 name|pos
 argument_list|)
+argument_list|,
+name|reporter
 argument_list|)
 decl_stmt|;
 name|storage

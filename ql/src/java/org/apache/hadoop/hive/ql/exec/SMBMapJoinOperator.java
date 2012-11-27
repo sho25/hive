@@ -816,6 +816,8 @@ name|hasFilter
 argument_list|(
 name|storePos
 argument_list|)
+argument_list|,
+name|reporter
 argument_list|)
 decl_stmt|;
 name|nextGroupStorage
@@ -857,6 +859,8 @@ name|hasFilter
 argument_list|(
 name|storePos
 argument_list|)
+argument_list|,
+name|reporter
 argument_list|)
 decl_stmt|;
 name|candidateStorage

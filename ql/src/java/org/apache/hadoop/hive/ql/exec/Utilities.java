@@ -1739,6 +1739,20 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
+name|Reporter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|SequenceFileInputFormat
 import|;
 end_import
@@ -7406,6 +7420,9 @@ name|dpCtx
 parameter_list|,
 name|FileSinkDesc
 name|conf
+parameter_list|,
+name|Reporter
+name|reporter
 parameter_list|)
 throws|throws
 name|IOException
@@ -7554,6 +7571,8 @@ argument_list|,
 name|emptyBuckets
 argument_list|,
 name|conf
+argument_list|,
+name|reporter
 argument_list|)
 expr_stmt|;
 block|}
@@ -7606,7 +7625,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Check the existence of buckets according to bucket specification. Create empty buckets if    * needed.    *    * @param specPath    *          The final path where the dynamic partitions should be in.    * @param conf    *          FileSinkDesc.    * @param dpCtx    *          dynamic partition context.    * @throws HiveException    * @throws IOException    */
+comment|/**    * Check the existence of buckets according to bucket specification. Create empty buckets if    * needed.    *    * @param hconf    * @param paths A list of empty buckets to create    * @param conf The definition of the FileSink.    * @param reporter The mapreduce reporter object    * @throws HiveException    * @throws IOException    */
 specifier|private
 specifier|static
 name|void
@@ -7623,6 +7642,9 @@ name|paths
 parameter_list|,
 name|FileSinkDesc
 name|conf
+parameter_list|,
+name|Reporter
+name|reporter
 parameter_list|)
 throws|throws
 name|HiveException
@@ -7829,6 +7851,8 @@ name|getProperties
 argument_list|()
 argument_list|,
 name|path
+argument_list|,
+name|reporter
 argument_list|)
 decl_stmt|;
 name|writer

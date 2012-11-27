@@ -515,6 +515,8 @@ argument_list|(
 literal|1
 argument_list|,
 name|hconf
+argument_list|,
+name|reporter
 argument_list|)
 expr_stmt|;
 name|RowContainer
@@ -552,6 +554,8 @@ name|hasFilter
 argument_list|(
 name|posBigTable
 argument_list|)
+argument_list|,
+name|reporter
 argument_list|)
 decl_stmt|;
 name|storage

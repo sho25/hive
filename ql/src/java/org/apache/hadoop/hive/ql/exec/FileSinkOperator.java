@@ -2873,6 +2873,8 @@ name|outPaths
 index|[
 name|filesIdx
 index|]
+argument_list|,
+name|reporter
 argument_list|)
 expr_stmt|;
 comment|// increment the CREATED_FILES counter
@@ -2965,7 +2967,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**    * Report status to JT so that JT won't kill this task if closing takes too long    * due to too many files to close and the NN is overloaded.    *    * @param lastUpdateTime    *          the time (msec) that progress update happened.    * @return true if a new progress update is reported, false otherwise.    */
+comment|/**    * Report status to JT so that JT won't kill this task if closing takes too long    * due to too many files to close and the NN is overloaded.    *    * @return true if a new progress update is reported, false otherwise.    */
 specifier|private
 name|boolean
 name|updateProgress
@@ -4371,6 +4373,8 @@ argument_list|,
 name|dpCtx
 argument_list|,
 name|conf
+argument_list|,
+name|reporter
 argument_list|)
 expr_stmt|;
 block|}

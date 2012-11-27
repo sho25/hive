@@ -1276,6 +1276,9 @@ name|console
 parameter_list|,
 name|DynamicPartitionCtx
 name|dynPartCtx
+parameter_list|,
+name|Reporter
+name|reporter
 parameter_list|)
 throws|throws
 name|HiveException
@@ -1328,6 +1331,8 @@ argument_list|,
 name|dynPartCtx
 argument_list|,
 literal|null
+argument_list|,
+name|reporter
 argument_list|)
 expr_stmt|;
 name|fs
