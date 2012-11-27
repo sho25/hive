@@ -793,6 +793,30 @@ name|Configuration
 name|conf
 parameter_list|)
 function_decl|;
+comment|/**    * Get the default block size for the path. FileSystem alone is not sufficient to    * determine the same, as in case of CSMT the underlying file system determines that.    * @param fs    * @param path    * @return    */
+specifier|public
+name|long
+name|getDefaultBlockSize
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|Path
+name|path
+parameter_list|)
+function_decl|;
+comment|/**    * Get the default replication for a path. In case of CSMT the given path will be used to    * locate the actual filesystem.    * @param fs    * @param path    * @return    */
+specifier|public
+name|short
+name|getDefaultReplication
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|Path
+name|path
+parameter_list|)
+function_decl|;
 comment|/**    * InputSplitShim.    *    */
 specifier|public
 interface|interface
