@@ -793,6 +793,23 @@ name|Configuration
 name|conf
 parameter_list|)
 function_decl|;
+comment|/**    * Move the directory/file to trash. In case of the symlinks or mount points, the file is    * moved to the trashbin in the actual volume of the path p being deleted    * @param fs    * @param path    * @param conf    * @return false if the item is already in the trash or trash is disabled    * @throws IOException    */
+specifier|public
+name|boolean
+name|moveToAppropriateTrash
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|Path
+name|path
+parameter_list|,
+name|Configuration
+name|conf
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Get the default block size for the path. FileSystem alone is not sufficient to    * determine the same, as in case of CSMT the underlying file system determines that.    * @param fs    * @param path    * @return    */
 specifier|public
 name|long

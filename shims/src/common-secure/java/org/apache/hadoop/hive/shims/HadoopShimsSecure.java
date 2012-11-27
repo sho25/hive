@@ -2904,6 +2904,25 @@ name|Path
 name|path
 parameter_list|)
 function_decl|;
+annotation|@
+name|Override
+specifier|abstract
+specifier|public
+name|boolean
+name|moveToAppropriateTrash
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|Path
+name|path
+parameter_list|,
+name|Configuration
+name|conf
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 block|}
 end_class
 
