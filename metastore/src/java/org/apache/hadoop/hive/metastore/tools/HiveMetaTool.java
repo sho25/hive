@@ -2564,7 +2564,7 @@ literal|"tablePropKey"
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*          * validate input - if the old uri contains a valid port, the new uri          * should contain a valid port as well. Both new and old uri should          * contain valid host names and valid schemes.          */
+comment|/*          * validate input - Both new and old URI should contain valid host names and valid schemes.          * port is optional in both the URIs since HDFS HA NN URI doesn't have a port.          */
 if|if
 condition|(
 name|oldURI
@@ -2589,36 +2589,6 @@ operator|.
 name|println
 argument_list|(
 literal|"HiveMetaTool:A valid host is required in both old-loc and new-loc"
-argument_list|)
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|oldURI
-operator|.
-name|getPort
-argument_list|()
-operator|>
-literal|0
-operator|&&
-name|newURI
-operator|.
-name|getPort
-argument_list|()
-operator|<
-literal|0
-condition|)
-block|{
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"HiveMetaTool:old-loc has a valid port, new-loc should "
-operator|+
-literal|"also contain a valid port"
 argument_list|)
 expr_stmt|;
 block|}
