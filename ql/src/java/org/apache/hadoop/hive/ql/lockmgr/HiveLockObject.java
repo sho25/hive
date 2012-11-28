@@ -477,6 +477,16 @@ expr_stmt|;
 block|}
 specifier|public
 name|String
+index|[]
+name|getPaths
+parameter_list|()
+block|{
+return|return
+name|pathNames
+return|;
+block|}
+specifier|public
+name|String
 name|getName
 parameter_list|()
 block|{
