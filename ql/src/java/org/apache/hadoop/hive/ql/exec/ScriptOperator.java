@@ -510,6 +510,13 @@ decl_stmt|;
 specifier|static
 specifier|final
 name|String
+name|IO_EXCEPTION_STREAM_CLOSED
+init|=
+literal|"Stream closed"
+decl_stmt|;
+specifier|static
+specifier|final
+name|String
 name|IO_EXCEPTION_PIPE_ENDED_WIN
 init|=
 literal|"The pipe has been ended"
@@ -1261,6 +1268,16 @@ operator|.
 name|equalsIgnoreCase
 argument_list|(
 name|IO_EXCEPTION_BROKEN_PIPE_STRING
+argument_list|)
+operator|||
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|IO_EXCEPTION_STREAM_CLOSED
 argument_list|)
 operator|)
 return|;
