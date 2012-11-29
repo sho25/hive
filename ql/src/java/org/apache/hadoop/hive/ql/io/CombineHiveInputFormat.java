@@ -3033,9 +3033,6 @@ argument_list|()
 operator|.
 name|getPath
 argument_list|()
-operator|.
-name|toString
-argument_list|()
 decl_stmt|;
 name|pStrings
 operator|.
@@ -3078,7 +3075,10 @@ name|contains
 argument_list|(
 name|path
 operator|.
-name|toString
+name|toUri
+argument_list|()
+operator|.
+name|getPath
 argument_list|()
 argument_list|)
 condition|)
