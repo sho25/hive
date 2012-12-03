@@ -625,6 +625,24 @@ operator|=
 name|hookType
 expr_stmt|;
 block|}
+specifier|public
+name|String
+name|getOperationName
+parameter_list|()
+block|{
+return|return
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getHiveOperation
+argument_list|()
+operator|.
+name|name
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 
