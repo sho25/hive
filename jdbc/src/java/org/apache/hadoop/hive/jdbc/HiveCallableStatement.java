@@ -1010,6 +1010,62 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
+specifier|public
+parameter_list|<
+name|T
+parameter_list|>
+name|T
+name|getObject
+parameter_list|(
+name|int
+name|parameterIndex
+parameter_list|,
+name|Class
+argument_list|<
+name|T
+argument_list|>
+name|type
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|// TODO JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
+specifier|public
+parameter_list|<
+name|T
+parameter_list|>
+name|T
+name|getObject
+parameter_list|(
+name|String
+name|parameterName
+parameter_list|,
+name|Class
+argument_list|<
+name|T
+argument_list|>
+name|type
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|// TODO JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
 comment|/*    * (non-Javadoc)    *     * @see java.sql.CallableStatement#getObject(int, java.util.Map)    */
 specifier|public
 name|Object
@@ -4096,6 +4152,38 @@ throws|throws
 name|SQLException
 block|{
 comment|// TODO Auto-generated method stub
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
+specifier|public
+name|void
+name|closeOnCompletion
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
+specifier|public
+name|boolean
+name|isCloseOnCompletion
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
 throw|throw
 operator|new
 name|SQLException
