@@ -1992,6 +1992,25 @@ name|HIVE_STATS_RELIABLE
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|nd
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setMaxStatsKeyPrefixLength
+argument_list|(
+name|hconf
+operator|.
+name|getIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_KEY_PREFIX_MAX_LENGTH
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// mrWork.addDestinationTable(nd.getConf().getTableInfo().getTableName());
 comment|// subscribe feeds from the MoveTask so that MoveTask can forward the list
 comment|// of dynamic partition list to the StatsTask

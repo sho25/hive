@@ -4708,14 +4708,29 @@ condition|)
 block|{
 comment|// for non-partitioned/static partitioned table, the key for temp storage is
 comment|// common key prefix + static partition spec + taskID
-name|key
-operator|=
+name|String
+name|keyPrefix
+init|=
+name|Utilities
+operator|.
+name|getHashedStatsPrefix
+argument_list|(
 name|conf
 operator|.
 name|getStatsAggPrefix
 argument_list|()
 operator|+
 name|spSpec
+argument_list|,
+name|conf
+operator|.
+name|getMaxStatsKeyPrefixLength
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|key
+operator|=
+name|keyPrefix
 operator|+
 name|taskID
 expr_stmt|;
@@ -4724,8 +4739,13 @@ else|else
 block|{
 comment|// for partitioned table, the key is
 comment|// common key prefix + static partition spec + DynamicPartSpec + taskID
-name|key
-operator|=
+name|String
+name|keyPrefix
+init|=
+name|Utilities
+operator|.
+name|getHashedStatsPrefix
+argument_list|(
 name|conf
 operator|.
 name|getStatsAggPrefix
@@ -4738,6 +4758,16 @@ operator|+
 name|Path
 operator|.
 name|SEPARATOR
+argument_list|,
+name|conf
+operator|.
+name|getMaxStatsKeyPrefixLength
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|key
+operator|=
+name|keyPrefix
 operator|+
 name|taskID
 expr_stmt|;

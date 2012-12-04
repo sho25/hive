@@ -123,6 +123,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|ErrorMsg
@@ -1383,12 +1399,27 @@ condition|)
 block|{
 comment|// In case of a non-partitioned table, the key for temp storage is just
 comment|// "tableName + taskID"
-name|key
-operator|=
+name|String
+name|keyPrefix
+init|=
+name|Utilities
+operator|.
+name|getHashedStatsPrefix
+argument_list|(
 name|conf
 operator|.
 name|getStatsAggPrefix
 argument_list|()
+argument_list|,
+name|conf
+operator|.
+name|getMaxStatsKeyPrefixLength
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|key
+operator|=
+name|keyPrefix
 operator|+
 name|taskID
 expr_stmt|;
@@ -1397,8 +1428,13 @@ else|else
 block|{
 comment|// In case of a partition, the key for temp storage is
 comment|// "tableName + partitionSpecs + taskID"
-name|key
-operator|=
+name|String
+name|keyPrefix
+init|=
+name|Utilities
+operator|.
+name|getHashedStatsPrefix
+argument_list|(
 name|conf
 operator|.
 name|getStatsAggPrefix
@@ -1409,6 +1445,16 @@ operator|+
 name|Path
 operator|.
 name|SEPARATOR
+argument_list|,
+name|conf
+operator|.
+name|getMaxStatsKeyPrefixLength
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|key
+operator|=
+name|keyPrefix
 operator|+
 name|taskID
 expr_stmt|;

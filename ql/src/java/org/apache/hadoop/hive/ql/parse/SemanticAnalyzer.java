@@ -45126,6 +45126,22 @@ name|HIVE_STATS_RELIABLE
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|tsDesc
+operator|.
+name|setMaxStatsKeyPrefixLength
+argument_list|(
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_KEY_PREFIX_MAX_LENGTH
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// append additional virtual columns for storing statistics
 name|Iterator
 argument_list|<
