@@ -255,7 +255,9 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|WriteEntity
+name|LineageInfo
+operator|.
+name|DataContainer
 import|;
 end_import
 
@@ -273,9 +275,7 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|LineageInfo
-operator|.
-name|DataContainer
+name|WriteEntity
 import|;
 end_import
 
@@ -1754,6 +1754,11 @@ name|tbd
 operator|.
 name|getHoldDDLTime
 argument_list|()
+argument_list|,
+name|isSkewedStoredAsDirs
+argument_list|(
+name|tbd
+argument_list|)
 argument_list|)
 decl_stmt|;
 if|if
@@ -1996,6 +2001,11 @@ name|tbd
 operator|.
 name|getInheritTableSpecs
 argument_list|()
+argument_list|,
+name|isSkewedStoredAsDirs
+argument_list|(
+name|tbd
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|Partition
@@ -2137,6 +2147,35 @@ literal|1
 operator|)
 return|;
 block|}
+block|}
+specifier|private
+name|boolean
+name|isSkewedStoredAsDirs
+parameter_list|(
+name|LoadTableDesc
+name|tbd
+parameter_list|)
+block|{
+return|return
+operator|(
+name|tbd
+operator|.
+name|getLbCtx
+argument_list|()
+operator|==
+literal|null
+operator|)
+condition|?
+literal|false
+else|:
+name|tbd
+operator|.
+name|getLbCtx
+argument_list|()
+operator|.
+name|isSkewedStoredAsDir
+argument_list|()
+return|;
 block|}
 comment|/*    * Does the move task involve moving to a local file system    */
 specifier|public

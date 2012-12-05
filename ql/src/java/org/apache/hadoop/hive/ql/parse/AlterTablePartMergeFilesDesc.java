@@ -67,6 +67,24 @@ name|Explain
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|ListBucketingCtx
+import|;
+end_import
+
 begin_class
 annotation|@
 name|Explain
@@ -92,6 +110,11 @@ name|String
 argument_list|>
 name|partSpec
 decl_stmt|;
+specifier|private
+name|ListBucketingCtx
+name|lbCtx
+decl_stmt|;
+comment|// context for list bucketing.
 specifier|private
 name|List
 argument_list|<
@@ -264,6 +287,32 @@ operator|.
 name|inputDir
 operator|=
 name|inputDir
+expr_stmt|;
+block|}
+comment|/**    * @return the lbCtx    */
+specifier|public
+name|ListBucketingCtx
+name|getLbCtx
+parameter_list|()
+block|{
+return|return
+name|lbCtx
+return|;
+block|}
+comment|/**    * @param lbCtx the lbCtx to set    */
+specifier|public
+name|void
+name|setLbCtx
+parameter_list|(
+name|ListBucketingCtx
+name|lbCtx
+parameter_list|)
+block|{
+name|this
+operator|.
+name|lbCtx
+operator|=
+name|lbCtx
 expr_stmt|;
 block|}
 block|}

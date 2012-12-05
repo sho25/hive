@@ -3110,25 +3110,27 @@ literal|false
 argument_list|)
 block|,
 comment|/* The following section contains all configurations used for list bucketing feature.*/
-comment|// Enable list bucketing DDL. Default value is false so that we disable it by default.
-comment|// This will be removed once the rest of the DML changes are committed.
-name|HIVE_INTERNAL_DDL_LIST_BUCKETING_ENABLE
+comment|/* This is not for clients. but only for block merge task. */
+comment|/* This is used by BlockMergeTask to send out flag to RCFileMergeMapper */
+comment|/* about alter table...concatenate and list bucketing case. */
+name|HIVEMERGECURRENTJOBCONCATENATELISTBUCKETING
 argument_list|(
-literal|"hive.internal.ddl.list.bucketing.enable"
+literal|"hive.merge.current.job.concatenate.list.bucketing"
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 block|,
-comment|// Default list bucketing directory name.
-name|HIVE_LIST_BUCKETING_DEFAULT_DIR_NAME
+comment|/* This is not for clients. but only for block merge task. */
+comment|/* This is used by BlockMergeTask to send out flag to RCFileMergeMapper */
+comment|/* about depth of list bucketing. */
+name|HIVEMERGECURRENTJOBCONCATENATELISTBUCKETINGDEPTH
 argument_list|(
-literal|"hive.exec.list.bucketing.default.dir"
+literal|"hive.merge.current.job.concatenate.list.bucketing.depth"
 argument_list|,
-literal|"HIVE_DEFAULT_LIST_BUCKETING_DIR_NAME"
+literal|0
 argument_list|)
 block|,
 comment|// Enable list bucketing optimizer. Default value is false so that we disable it by default.
-comment|// This will be removed once the rest of the DML changes are committed.
 name|HIVEOPTLISTBUCKETING
 argument_list|(
 literal|"hive.optimize.listbucketing"

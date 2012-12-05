@@ -1798,7 +1798,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Add the StatsTask as a dependent task of the MoveTask    * because StatsTask will change the Table/Partition metadata. For atomicity, we    * should not change it before the data is actually there done by MoveTask.    * @param nd the FileSinkOperator whose results are taken care of by the MoveTask.    * @param mvTask The MoveTask that moves the FileSinkOperator's results.    * @param currTask The MapRedTask that the FileSinkOperator belongs to.    * @param hconf HiveConf    */
+comment|/**    * Add the StatsTask as a dependent task of the MoveTask    * because StatsTask will change the Table/Partition metadata. For atomicity, we    * should not change it before the data is actually there done by MoveTask.    *    * @param nd    *          the FileSinkOperator whose results are taken care of by the MoveTask.    * @param mvTask    *          The MoveTask that moves the FileSinkOperator's results.    * @param currTask    *          The MapRedTask that the FileSinkOperator belongs to.    * @param hconf    *          HiveConf    */
 specifier|private
 name|void
 name|addStatsTask
@@ -2144,6 +2144,11 @@ argument_list|,
 name|ci
 operator|.
 name|getIsVirtualCol
+argument_list|()
+argument_list|,
+name|ci
+operator|.
+name|isSkewedCol
 argument_list|()
 argument_list|)
 argument_list|)
@@ -2609,7 +2614,7 @@ name|cndTsk
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Create a MapReduce job for a particular partition if Hadoop version is pre 0.20,    * otherwise create a Map-only job using CombineHiveInputFormat for all partitions.    * @param fsOp The FileSink operator.    * @param ctx The MR processing context.    * @param finalName the final destination path the merge job should output.    * @throws SemanticException    */
+comment|/**    * Create a MapReduce job for a particular partition if Hadoop version is pre 0.20,    * otherwise create a Map-only job using CombineHiveInputFormat for all partitions.    *    * @param fsOp    *          The FileSink operator.    * @param ctx    *          The MR processing context.    * @param finalName    *          the final destination path the merge job should output.    * @throws SemanticException    */
 specifier|private
 name|void
 name|createMergeJob
@@ -2727,7 +2732,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * create a Map-only merge job with the following operators:    * @param fsInput    * @param ctx    * @param finalName    *  MR job J0:    *          ...    *              |    *              v    *         FileSinkOperator_1 (fsInput)    *             |    *             v    *  Merge job J1:    *             |    *             v    *         TableScan (using CombineHiveInputFormat) (tsMerge)    *             |    *             v    *         FileSinkOperator (fsMerge)    *    * Here the pathToPartitionInfo& pathToAlias will remain the same, which means the paths do    * not contain the dynamic partitions (their parent). So after the dynamic partitions are    * created (after the first job finished before the moveTask or ConditionalTask start),    * we need to change the pathToPartitionInfo& pathToAlias to include the dynamic partition    * directories.    *    */
+comment|/**    * create a Map-only merge job with the following operators:    *    * @param fsInput    * @param ctx    * @param finalName    *          MR job J0:    *          ...    *          |    *          v    *          FileSinkOperator_1 (fsInput)    *          |    *          v    *          Merge job J1:    *          |    *          v    *          TableScan (using CombineHiveInputFormat) (tsMerge)    *          |    *          v    *          FileSinkOperator (fsMerge)    *    *          Here the pathToPartitionInfo& pathToAlias will remain the same, which means the paths    *          do    *          not contain the dynamic partitions (their parent). So after the dynamic partitions are    *          created (after the first job finished before the moveTask or ConditionalTask start),    *          we need to change the pathToPartitionInfo& pathToAlias to include the dynamic    *          partition    *          directories.    *    */
 specifier|private
 name|void
 name|createMap4Merge
@@ -3333,6 +3338,16 @@ name|getDynPartCtx
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|mrCtx
+operator|.
+name|setLbCtx
+argument_list|(
+name|fsInputDesc
+operator|.
+name|getLbCtx
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|//
 comment|// 3. add the moveTask as the children of the conditional task
 comment|//
@@ -3498,7 +3513,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Adds the dependencyTaskForMultiInsert in ctx as a dependent of parentTask.  If mvTask is a    * load table, and HIVE_MULTI_INSERT_ATOMIC_OUTPUTS is set, adds mvTask as a dependent of    * dependencyTaskForMultiInsert in ctx, otherwise adds mvTask as a dependent of parentTask as    * well.    * @param ctx    * @param mvTask    * @param parentTask    */
+comment|/**    * Adds the dependencyTaskForMultiInsert in ctx as a dependent of parentTask. If mvTask is a    * load table, and HIVE_MULTI_INSERT_ATOMIC_OUTPUTS is set, adds mvTask as a dependent of    * dependencyTaskForMultiInsert in ctx, otherwise adds mvTask as a dependent of parentTask as    * well.    *    * @param ctx    * @param mvTask    * @param parentTask    */
 specifier|private
 name|void
 name|addDependentMoveTasks
@@ -3607,7 +3622,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Create a MapredWork based on input path, the top operator and the input    * table descriptor.    * @param conf    * @param topOp the table scan operator that is the root of the MapReduce task.    * @param fsDesc the file sink descriptor that serves as the input to this merge task.    * @param parentMR the parent MapReduce work    * @param parentFS the last FileSinkOperator in the parent MapReduce work    * @return the MapredWork    */
+comment|/**    * Create a MapredWork based on input path, the top operator and the input    * table descriptor.    *    * @param conf    * @param topOp    *          the table scan operator that is the root of the MapReduce task.    * @param fsDesc    *          the file sink descriptor that serves as the input to this merge task.    * @param parentMR    *          the parent MapReduce work    * @param parentFS    *          the last FileSinkOperator in the parent MapReduce work    * @return the MapredWork    */
 specifier|private
 name|MapredWork
 name|createMergeTask
@@ -3735,7 +3750,7 @@ return|return
 name|cplan
 return|;
 block|}
-comment|/**    * Create a block level merge task for RCFiles.    * @param fsInputDesc    * @param finalName    * @return MergeWork if table is stored as RCFile,    *         null otherwise    */
+comment|/**    * Create a block level merge task for RCFiles.    *    * @param fsInputDesc    * @param finalName    * @return MergeWork if table is stored as RCFile,    *         null otherwise    */
 specifier|private
 name|MapredWork
 name|createRCFileMergeTask
@@ -3800,6 +3815,12 @@ if|if
 condition|(
 operator|!
 name|hasDynamicPartitions
+operator|&&
+operator|!
+name|isSkewedStoredAsDirs
+argument_list|(
+name|fsInputDesc
+argument_list|)
 condition|)
 block|{
 name|inputDirs
@@ -3905,6 +3926,11 @@ expr_stmt|;
 if|if
 condition|(
 name|hasDynamicPartitions
+operator|||
+name|isSkewedStoredAsDirs
+argument_list|(
+name|fsInputDesc
+argument_list|)
 condition|)
 block|{
 name|work
@@ -3926,6 +3952,16 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|work
+operator|.
+name|setListBucketingCtx
+argument_list|(
+name|fsInputDesc
+operator|.
+name|getLbCtx
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|work
 return|;
@@ -3938,7 +3974,37 @@ literal|"createRCFileMergeTask called on non-RCFile table"
 argument_list|)
 throw|;
 block|}
-comment|/**    * Construct a conditional task given the current leaf task, the MoveWork and the MapredWork.    * @param conf HiveConf    * @param currTask current leaf task    * @param mvWork MoveWork for the move task    * @param mergeWork MapredWork for the merge task.    * @param inputPath the input directory of the merge/move task    * @return The conditional task    */
+comment|/**    * check if it is skewed table and stored as dirs.    *    * @param fsInputDesc    * @return    */
+specifier|private
+name|boolean
+name|isSkewedStoredAsDirs
+parameter_list|(
+name|FileSinkDesc
+name|fsInputDesc
+parameter_list|)
+block|{
+return|return
+operator|(
+name|fsInputDesc
+operator|.
+name|getLbCtx
+argument_list|()
+operator|==
+literal|null
+operator|)
+condition|?
+literal|false
+else|:
+name|fsInputDesc
+operator|.
+name|getLbCtx
+argument_list|()
+operator|.
+name|isSkewedStoredAsDir
+argument_list|()
+return|;
+block|}
+comment|/**    * Construct a conditional task given the current leaf task, the MoveWork and the MapredWork.    *    * @param conf    *          HiveConf    * @param currTask    *          current leaf task    * @param mvWork    *          MoveWork for the move task    * @param mergeWork    *          MapredWork for the merge task.    * @param inputPath    *          the input directory of the merge/move task    * @return The conditional task    */
 specifier|private
 name|ConditionalTask
 name|createCondTask
@@ -3968,8 +4034,8 @@ comment|// There are 3 options for this ConditionalTask:
 comment|// 1) Merge the partitions
 comment|// 2) Move the partitions (i.e. don't merge the partitions)
 comment|// 3) Merge some partitions and move other partitions (i.e. merge some partitions and don't
-comment|//    merge others) in this case the merge is done first followed by the move to prevent
-comment|//    conflicts.
+comment|// merge others) in this case the merge is done first followed by the move to prevent
+comment|// conflicts.
 name|Task
 argument_list|<
 name|?
@@ -4316,7 +4382,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Process the FileSink operator to generate a MoveTask if necessary.    * @param nd current FileSink operator    * @param stack parent operators    * @param opProcCtx    * @param chDir whether the operator should be first output to a tmp dir and then merged    *        to the final dir later    * @return the final file name to which the FileSinkOperator should store.    * @throws SemanticException    */
+comment|/**    * Process the FileSink operator to generate a MoveTask if necessary.    *    * @param nd    *          current FileSink operator    * @param stack    *          parent operators    * @param opProcCtx    * @param chDir    *          whether the operator should be first output to a tmp dir and then merged    *          to the final dir later    * @return the final file name to which the FileSinkOperator should store.    * @throws SemanticException    */
 specifier|private
 name|String
 name|processFS

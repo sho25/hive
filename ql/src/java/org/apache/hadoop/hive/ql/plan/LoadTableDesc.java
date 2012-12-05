@@ -95,6 +95,10 @@ name|DynamicPartitionCtx
 name|dpCtx
 decl_stmt|;
 specifier|private
+name|ListBucketingCtx
+name|lbCtx
+decl_stmt|;
+specifier|private
 name|boolean
 name|holdDDLTime
 decl_stmt|;
@@ -650,6 +654,32 @@ operator|.
 name|inheritTableSpecs
 operator|=
 name|inheritTableSpecs
+expr_stmt|;
+block|}
+comment|/**    * @return the lbCtx    */
+specifier|public
+name|ListBucketingCtx
+name|getLbCtx
+parameter_list|()
+block|{
+return|return
+name|lbCtx
+return|;
+block|}
+comment|/**    * @param lbCtx the lbCtx to set    */
+specifier|public
+name|void
+name|setLbCtx
+parameter_list|(
+name|ListBucketingCtx
+name|lbCtx
+parameter_list|)
+block|{
+name|this
+operator|.
+name|lbCtx
+operator|=
+name|lbCtx
 expr_stmt|;
 block|}
 block|}

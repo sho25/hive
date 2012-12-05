@@ -205,6 +205,22 @@ specifier|final
 class|class
 name|ListBucketingPrunerUtils
 block|{
+comment|/* Default list bucketing directory name. internal use only not for client. */
+specifier|public
+specifier|static
+name|String
+name|HIVE_LIST_BUCKETING_DEFAULT_DIR_NAME
+init|=
+literal|"HIVE_DEFAULT_LIST_BUCKETING_DIR_NAME"
+decl_stmt|;
+comment|/* Default list bucketing directory key. internal use only not for client. */
+specifier|public
+specifier|static
+name|String
+name|HIVE_LIST_BUCKETING_DEFAULT_KEY
+init|=
+literal|"HIVE_DEFAULT_LIST_BUCKETING_KEY"
+decl_stmt|;
 comment|/**    * Decide if pruner skips the skewed directory    * Input: if the skewed value matches the expression tree    * Ouput: if pruner should skip the directory represented by the skewed value    * If match result is unknown(null) or true, pruner doesn't skip the directory    * If match result is false, pruner skips the dir.    * @param bool    *          if the skewed value matches the expression tree    * @return    */
 specifier|public
 specifier|static
@@ -1013,9 +1029,9 @@ name|cellValueInPosition
 operator|.
 name|equals
 argument_list|(
-name|ListBucketingPruner
+name|ListBucketingPrunerUtils
 operator|.
-name|DEFAULT_SKEWED_KEY
+name|HIVE_LIST_BUCKETING_DEFAULT_KEY
 argument_list|)
 condition|)
 block|{
@@ -1033,9 +1049,9 @@ name|cellValueInPosition
 operator|.
 name|equals
 argument_list|(
-name|ListBucketingPruner
+name|ListBucketingPrunerUtils
 operator|.
-name|DEFAULT_SKEWED_KEY
+name|HIVE_LIST_BUCKETING_DEFAULT_KEY
 argument_list|)
 operator|&&
 operator|!

@@ -1266,7 +1266,7 @@ literal|10199
 argument_list|,
 literal|"hive.mapred.supports.subdirectories must be true"
 operator|+
-literal|" if any one of following is true: hive.internal.ddl.list.bucketing.enable,"
+literal|" if any one of following is true: "
 operator|+
 literal|" hive.optimize.listbucketing and mapred.input.dir.recursive"
 argument_list|)
@@ -1329,13 +1329,6 @@ argument_list|,
 literal|" is a skewed column. It's not allowed to rename skewed column"
 operator|+
 literal|" or change skewed column type."
-argument_list|)
-block|,
-name|HIVE_INTERNAL_DDL_LIST_BUCKETING_DISABLED
-argument_list|(
-literal|10208
-argument_list|,
-literal|"List Bucketing DDL is not allowed to use since feature is not completed yet."
 argument_list|)
 block|,
 name|HIVE_GROUPING_SETS_AGGR_NOMAPAGGR

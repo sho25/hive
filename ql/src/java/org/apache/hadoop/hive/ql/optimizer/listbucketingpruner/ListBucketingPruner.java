@@ -129,24 +129,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
-operator|.
-name|HiveConf
-operator|.
-name|ConfVars
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|lib
@@ -281,24 +263,6 @@ name|ExprNodeDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|SessionState
-import|;
-end_import
-
 begin_comment
 comment|/**  * The transformation step that does list bucketing pruning.  *  */
 end_comment
@@ -310,35 +274,6 @@ name|ListBucketingPruner
 implements|implements
 name|Transform
 block|{
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|DEFAULT_SKEWED_DIRECTORY
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_LIST_BUCKETING_DEFAULT_DIR_NAME
-argument_list|)
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|DEFAULT_SKEWED_KEY
-init|=
-literal|"HIVE_DEFAULT_LIST_BUCKETING_KEY"
-decl_stmt|;
 specifier|static
 specifier|final
 name|Log
@@ -965,22 +900,21 @@ name|matchResult
 condition|)
 block|{
 comment|// add directory to path unless value is false
-assert|assert
-operator|(
+comment|/* It's valid case if a partition: */
+comment|/* 1. is defined with skewed columns and skewed values in metadata */
+comment|/* 2. doesn't have all skewed values within its data */
+if|if
+condition|(
 name|mappings
 operator|.
-name|containsKey
+name|get
 argument_list|(
 name|cell
 argument_list|)
-operator|)
-operator|:
-literal|"Skewed location mappings doesn't have an entry "
-operator|+
-literal|"for a skewed value: "
-operator|+
-name|cell
-assert|;
+operator|!=
+literal|null
+condition|)
+block|{
 name|selectedPaths
 operator|.
 name|add
@@ -997,6 +931,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
@@ -1115,13 +1050,9 @@ operator|.
 name|getSkewedColNames
 argument_list|()
 argument_list|,
-name|SessionState
+name|ListBucketingPrunerUtils
 operator|.
-name|get
-argument_list|()
-operator|.
-name|getConf
-argument_list|()
+name|HIVE_LIST_BUCKETING_DEFAULT_DIR_NAME
 argument_list|)
 operator|)
 argument_list|)
@@ -1261,7 +1192,9 @@ name|uniqueElementsList
 argument_list|(
 name|values
 argument_list|,
-name|DEFAULT_SKEWED_KEY
+name|ListBucketingPrunerUtils
+operator|.
+name|HIVE_LIST_BUCKETING_DEFAULT_KEY
 argument_list|)
 decl_stmt|;
 comment|// Calculate complete dynamic-multi-dimension collection.
