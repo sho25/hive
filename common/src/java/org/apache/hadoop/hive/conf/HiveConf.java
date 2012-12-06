@@ -3023,7 +3023,7 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
-comment|//prefix used to auto generated column aliases
+comment|// prefix used to auto generated column aliases (this should be started with '_')
 name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
 argument_list|(
 literal|"hive.autogen.columnalias.prefix.label"
