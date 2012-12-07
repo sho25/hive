@@ -260,7 +260,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORETHRIFTRETRIES
+name|METASTORETHRIFTCONNECTIONRETRIES
 argument_list|,
 literal|3
 argument_list|)

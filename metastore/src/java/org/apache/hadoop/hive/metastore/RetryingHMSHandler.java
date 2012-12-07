@@ -695,6 +695,8 @@ operator|>=
 name|retryLimit
 condition|)
 block|{
+comment|// Since returning exceptions with a nested "cause" can be a problem in
+comment|// Thrift, we are stuffing the stack trace into the message itself.
 throw|throw
 operator|new
 name|MetaException

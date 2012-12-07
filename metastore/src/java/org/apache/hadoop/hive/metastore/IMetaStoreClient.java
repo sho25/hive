@@ -490,6 +490,14 @@ specifier|public
 interface|interface
 name|IMetaStoreClient
 block|{
+comment|/**    *  Tries to reconnect this MetaStoreClient to the MetaStore.    */
+specifier|public
+name|void
+name|reconnect
+parameter_list|()
+throws|throws
+name|MetaException
+function_decl|;
 specifier|public
 name|void
 name|close
