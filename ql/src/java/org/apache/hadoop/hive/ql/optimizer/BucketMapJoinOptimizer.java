@@ -295,7 +295,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UnionOperator
+name|Operator
 import|;
 end_import
 
@@ -331,7 +331,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Operator
+name|TableScanOperator
 import|;
 end_import
 
@@ -349,7 +349,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|TableScanOperator
+name|UnionOperator
 import|;
 end_import
 
@@ -2571,6 +2571,14 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// successfully convert to bucket map join
+name|desc
+operator|.
+name|setBucketMapJoin
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 return|return
 literal|true
 return|;
