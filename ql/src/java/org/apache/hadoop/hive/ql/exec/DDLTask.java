@@ -13741,7 +13741,7 @@ name|writeBytes
 argument_list|(
 name|MetaDataFormatUtils
 operator|.
-name|displayColsUnformatted
+name|getAllColumnsInformation
 argument_list|(
 name|cols
 argument_list|)
