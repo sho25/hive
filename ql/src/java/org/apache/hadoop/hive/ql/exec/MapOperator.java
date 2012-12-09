@@ -1430,14 +1430,13 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// for partitionless table, initialize partValue to null
 name|partValues
 index|[
 name|i
 index|]
 operator|=
-operator|new
-name|Text
-argument_list|()
+literal|null
 expr_stmt|;
 block|}
 else|else
