@@ -588,9 +588,6 @@ argument_list|(
 literal|"MetaStoreClient lost connection. Attempting to reconnect."
 argument_list|,
 name|caughtException
-operator|.
-name|getCause
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|Thread
