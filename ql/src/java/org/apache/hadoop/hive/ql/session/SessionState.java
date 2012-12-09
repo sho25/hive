@@ -1222,6 +1222,12 @@ name|startSs
 operator|.
 name|getConf
 argument_list|()
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_AUTHENTICATOR_MANAGER
 argument_list|)
 expr_stmt|;
 name|startSs
@@ -1236,6 +1242,12 @@ name|startSs
 operator|.
 name|getConf
 argument_list|()
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_AUTHORIZATION_MANAGER
 argument_list|,
 name|startSs
 operator|.

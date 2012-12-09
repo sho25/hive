@@ -643,6 +643,14 @@ name|DEFAULT_DATABASE_COMMENT
 init|=
 literal|"Default Hive database"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|DATABASE_WAREHOUSE_SUFFIX
+init|=
+literal|".db"
+decl_stmt|;
 comment|/**    * printStackTrace    *    * Helper function to print an exception stack trace to the log and not stderr    *    * @param e    *          the exception    *    */
 specifier|static
 specifier|public
