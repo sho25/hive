@@ -758,8 +758,7 @@ expr_stmt|;
 try|try
 block|{
 comment|// NOTE: It is critical to do this here so that log4j is reinitialized
-comment|// before
-comment|// any of the other core hive classes are loaded
+comment|// before any of the other core hive classes are loaded
 try|try
 block|{
 name|LogUtils
@@ -773,9 +772,7 @@ parameter_list|(
 name|LogInitializationException
 name|e
 parameter_list|)
-block|{
-comment|// ignore
-block|}
+block|{       }
 name|CliSessionState
 name|ss
 init|=

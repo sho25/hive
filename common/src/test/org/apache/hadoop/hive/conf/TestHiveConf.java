@@ -121,7 +121,10 @@ operator|new
 name|HiveConf
 argument_list|()
 operator|.
-name|getHiveSitePath
+name|getHiveSiteLocation
+argument_list|()
+operator|.
+name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;

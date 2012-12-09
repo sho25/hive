@@ -23321,8 +23321,8 @@ operator|.
 name|addHiveconfToSystemProperties
 argument_list|()
 decl_stmt|;
-comment|// If the log4j.configuration property hasn't already been explicitly set, use Hive's default
-comment|// log4j configuration
+comment|// If the log4j.configuration property hasn't already been explicitly set,
+comment|// use Hive's default log4j configuration
 if|if
 condition|(
 name|System
