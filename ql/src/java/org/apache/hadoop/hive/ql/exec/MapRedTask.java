@@ -2538,7 +2538,7 @@ name|allSample
 operator|=
 literal|true
 expr_stmt|;
-name|double
+name|Double
 name|rate
 init|=
 name|work
@@ -2556,6 +2556,10 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
+name|rate
+operator|!=
+literal|null
+operator|&&
 name|rate
 operator|>
 name|highestSamplePercentage

@@ -1055,7 +1055,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"Percentage Sample"
+literal|"Split Sample"
 argument_list|)
 specifier|public
 name|HashMap

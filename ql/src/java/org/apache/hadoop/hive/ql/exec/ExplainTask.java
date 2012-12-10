@@ -1746,6 +1746,10 @@ name|Integer
 operator|||
 name|val
 operator|instanceof
+name|Long
+operator|||
+name|val
+operator|instanceof
 name|Byte
 operator|||
 name|val
