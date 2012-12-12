@@ -1801,6 +1801,11 @@ argument_list|,
 name|out
 argument_list|)
 expr_stmt|;
+name|int
+name|counter
+init|=
+literal|0
+decl_stmt|;
 try|try
 block|{
 while|while
@@ -1829,6 +1834,13 @@ name|r
 argument_list|)
 expr_stmt|;
 block|}
+name|counter
+operator|+=
+name|res
+operator|.
+name|size
+argument_list|()
+expr_stmt|;
 name|res
 operator|.
 name|clear
@@ -1924,13 +1936,6 @@ operator|.
 name|currentTimeMillis
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|end
-operator|>
-name|start
-condition|)
-block|{
 name|double
 name|timeTaken
 init|=
@@ -1951,11 +1956,22 @@ operator|+
 name|timeTaken
 operator|+
 literal|" seconds"
-argument_list|,
-literal|null
+operator|+
+operator|(
+name|counter
+operator|==
+literal|0
+condition|?
+literal|""
+else|:
+literal|", Fetched: "
+operator|+
+name|counter
+operator|+
+literal|" row(s)"
+operator|)
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 else|else
 block|{
