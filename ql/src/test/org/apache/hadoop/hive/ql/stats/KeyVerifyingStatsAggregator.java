@@ -95,6 +95,7 @@ argument_list|()
 decl_stmt|;
 comment|// Have to use the length instead of the actual prefix because the prefix is location dependent
 comment|// 17 is 16 (16 byte MD5 hash) + 1 for the path separator
+comment|// Can be less than 17 due to unicode characters
 name|ss
 operator|.
 name|out
@@ -110,7 +111,7 @@ name|keyPrefix
 operator|.
 name|length
 argument_list|()
-operator|==
+operator|<=
 literal|17
 argument_list|)
 argument_list|)
