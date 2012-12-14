@@ -747,6 +747,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_INIT_HOOKS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_PRE_EVENT_LISTENERS
 block|,
 name|HiveConf
@@ -1567,6 +1573,15 @@ argument_list|(
 literal|"hive.metastore.batch.retrieve.table.partition.max"
 argument_list|,
 literal|1000
+argument_list|)
+block|,
+comment|// A comma separated list of hooks which implement MetaStoreInitListener and will be run at
+comment|// the beginning of HMSHandler initialization
+name|METASTORE_INIT_HOOKS
+argument_list|(
+literal|"hive.metastore.init.hooks"
+argument_list|,
+literal|""
 argument_list|)
 block|,
 name|METASTORE_PRE_EVENT_LISTENERS
