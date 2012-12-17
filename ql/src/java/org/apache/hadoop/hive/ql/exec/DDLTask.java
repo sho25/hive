@@ -20402,6 +20402,15 @@ block|{
 break|break;
 block|}
 block|}
+if|if
+condition|(
+operator|!
+name|dropTbl
+operator|.
+name|getIgnoreProtection
+argument_list|()
+condition|)
+block|{
 for|for
 control|(
 name|Partition
@@ -20482,6 +20491,7 @@ name|getName
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 block|}

@@ -93,6 +93,9 @@ name|boolean
 name|ifExists
 decl_stmt|;
 name|boolean
+name|ignoreProtection
+decl_stmt|;
+name|boolean
 name|stringPartitionColumns
 decl_stmt|;
 comment|// This is due to JDO not working very well with
@@ -143,6 +146,12 @@ name|ifExists
 expr_stmt|;
 name|this
 operator|.
+name|ignoreProtection
+operator|=
+literal|false
+expr_stmt|;
+name|this
+operator|.
 name|stringPartitionColumns
 operator|=
 name|stringPartitionColumns
@@ -165,6 +174,9 @@ name|expectView
 parameter_list|,
 name|boolean
 name|stringPartitionColumns
+parameter_list|,
+name|boolean
+name|ignoreProtection
 parameter_list|)
 block|{
 name|this
@@ -222,6 +234,12 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|this
+operator|.
+name|ignoreProtection
+operator|=
+name|ignoreProtection
+expr_stmt|;
 name|this
 operator|.
 name|expectView
@@ -298,6 +316,32 @@ operator|.
 name|partSpecs
 operator|=
 name|partSpecs
+expr_stmt|;
+block|}
+comment|/**    * @return whether or not protection will be ignored for the partition    */
+specifier|public
+name|boolean
+name|getIgnoreProtection
+parameter_list|()
+block|{
+return|return
+name|ignoreProtection
+return|;
+block|}
+comment|/**    * @param ignoreProtection    *          set whether or not protection will be ignored for the partition    */
+specifier|public
+name|void
+name|setIgnoreProtection
+parameter_list|(
+name|boolean
+name|ignoreProtection
+parameter_list|)
+block|{
+name|this
+operator|.
+name|ignoreProtection
+operator|=
+name|ignoreProtection
 expr_stmt|;
 block|}
 comment|/**    * @return whether to expect a view being dropped    */
