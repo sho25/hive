@@ -1232,6 +1232,13 @@ argument_list|,
 literal|"SHOW CREATE TABLE does not support tables of type INDEX_TABLE."
 argument_list|)
 block|,
+name|ALTER_BUCKETNUM_NONBUCKETIZED_TBL
+argument_list|(
+literal|10145
+argument_list|,
+literal|"Table is not bucketized"
+argument_list|)
+block|,
 name|LOAD_INTO_STORED_AS_DIR
 argument_list|(
 literal|10195
