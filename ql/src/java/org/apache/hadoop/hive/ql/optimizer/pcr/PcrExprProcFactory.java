@@ -885,8 +885,14 @@ name|Boolean
 name|op2
 parameter_list|)
 block|{
+comment|// When people forget to quote a string, op1/op2 is null.
+comment|// For example, select * from some_table where ds> 2012-12-1 and ds< 2012-12-2 .
 if|if
 condition|(
+name|op1
+operator|!=
+literal|null
+operator|&&
 name|op1
 operator|.
 name|equals
@@ -896,6 +902,10 @@ operator|.
 name|FALSE
 argument_list|)
 operator|||
+name|op2
+operator|!=
+literal|null
+operator|&&
 name|op2
 operator|.
 name|equals
@@ -944,8 +954,14 @@ name|Boolean
 name|op2
 parameter_list|)
 block|{
+comment|// When people forget to quote a string, op1/op2 is null.
+comment|// For example, select * from some_table where ds> 2012-12-1 or ds< 2012-12-2 .
 if|if
 condition|(
+name|op1
+operator|!=
+literal|null
+operator|&&
 name|op1
 operator|.
 name|equals
@@ -955,6 +971,10 @@ operator|.
 name|TRUE
 argument_list|)
 operator|||
+name|op2
+operator|!=
+literal|null
+operator|&&
 name|op2
 operator|.
 name|equals
@@ -1000,6 +1020,15 @@ name|Boolean
 name|op
 parameter_list|)
 block|{
+comment|// When people forget to quote a string, op1/op2 is null.
+comment|// For example, select * from some_table where not ds> 2012-12-1 .
+if|if
+condition|(
+name|op
+operator|!=
+literal|null
+condition|)
+block|{
 if|if
 condition|(
 name|op
@@ -1035,6 +1064,7 @@ name|Boolean
 operator|.
 name|TRUE
 return|;
+block|}
 block|}
 return|return
 literal|null
