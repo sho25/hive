@@ -961,7 +961,7 @@ name|void
 name|initializeMapredLocalWork
 parameter_list|(
 name|MapJoinDesc
-name|conf
+name|mjConf
 parameter_list|,
 name|Configuration
 name|hconf
@@ -1039,6 +1039,24 @@ operator|.
 name|getAliasToWork
 argument_list|()
 decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|DummyStoreOperator
+argument_list|>
+name|aliasToSinkWork
+init|=
+name|conf
+operator|.
+name|getAliasToSink
+argument_list|()
+decl_stmt|;
+comment|// The operator tree till the sink operator needs to be processed while
+comment|// fetching the next row to fetch from the priority queue (possibly containing
+comment|// multiple files in the small table given a file in the big table). The remaining
+comment|// tree will be processed while processing the join.
+comment|// Look at comments in DummyStoreOperator for additional explanation.
 for|for
 control|(
 name|Map
@@ -1139,6 +1157,16 @@ operator|.
 name|clearFetchContext
 argument_list|()
 expr_stmt|;
+name|DummyStoreOperator
+name|sinkOp
+init|=
+name|aliasToSinkWork
+operator|.
+name|get
+argument_list|(
+name|alias
+argument_list|)
+decl_stmt|;
 name|MergeQueue
 name|mergeQueue
 init|=
@@ -1150,6 +1178,10 @@ argument_list|,
 name|fetchWork
 argument_list|,
 name|jobClone
+argument_list|,
+name|forwardOp
+argument_list|,
+name|sinkOp
 argument_list|)
 decl_stmt|;
 name|aliasToMergeQueue
@@ -2917,6 +2949,11 @@ argument_list|(
 name|table
 argument_list|)
 decl_stmt|;
+comment|// The operator tree till the sink operator has already been processed while
+comment|// fetching the next row to fetch from the priority queue (possibly containing
+comment|// multiple files in the small table given a file in the big table). Now, process
+comment|// the remaining tree. Look at comments in DummyStoreOperator for additional
+comment|// explanation.
 name|Operator
 argument_list|<
 name|?
@@ -2925,14 +2962,22 @@ name|OperatorDesc
 argument_list|>
 name|forwardOp
 init|=
-name|localWork
+name|conf
 operator|.
-name|getAliasToWork
+name|getAliasToSink
 argument_list|()
 operator|.
 name|get
 argument_list|(
 name|table
+argument_list|)
+operator|.
+name|getChildOperators
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
 argument_list|)
 decl_stmt|;
 try|try
@@ -2969,7 +3014,7 @@ name|row
 operator|.
 name|o
 argument_list|,
-literal|0
+name|tag
 argument_list|)
 expr_stmt|;
 comment|// check if any operator had a fatal error or early exit during
@@ -3348,6 +3393,19 @@ name|ObjectInspector
 argument_list|>
 name|keyFieldOIs
 decl_stmt|;
+specifier|transient
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|OperatorDesc
+argument_list|>
+name|forwardOp
+decl_stmt|;
+specifier|transient
+name|DummyStoreOperator
+name|sinkOp
+decl_stmt|;
 comment|// index of FetchOperator which is providing smallest one
 specifier|transient
 name|Integer
@@ -3377,6 +3435,17 @@ name|fetchWork
 parameter_list|,
 name|JobConf
 name|jobConf
+parameter_list|,
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|OperatorDesc
+argument_list|>
+name|forwardOp
+parameter_list|,
+name|DummyStoreOperator
+name|sinkOp
 parameter_list|)
 block|{
 name|this
@@ -3396,6 +3465,18 @@ operator|.
 name|jobConf
 operator|=
 name|jobConf
+expr_stmt|;
+name|this
+operator|.
+name|forwardOp
+operator|=
+name|forwardOp
+expr_stmt|;
+name|this
+operator|.
+name|sinkOp
+operator|=
+name|sinkOp
 expr_stmt|;
 block|}
 comment|// paths = bucket files of small table for current bucket file of big table
@@ -3690,6 +3771,8 @@ block|}
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|boolean
 name|lessThan
@@ -3914,7 +3997,6 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// joinKeys/joinKeysOI are initialized after making merge queue, so setup lazily at runtime
 name|byte
 name|tag
 init|=
@@ -3923,6 +4005,7 @@ argument_list|(
 name|alias
 argument_list|)
 decl_stmt|;
+comment|// joinKeys/joinKeysOI are initialized after making merge queue, so setup lazily at runtime
 name|keyFields
 operator|=
 name|joinKeys
@@ -3953,13 +4036,18 @@ operator|.
 name|getNextRow
 argument_list|()
 decl_stmt|;
-if|if
+while|while
 condition|(
 name|nextRow
 operator|!=
 literal|null
 condition|)
 block|{
+name|sinkOp
+operator|.
+name|reset
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|keys
@@ -3988,6 +4076,36 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
+comment|// Pass the row though the operator tree. It is guaranteed that not more than 1 row can
+comment|// be produced from a input row.
+name|forwardOp
+operator|.
+name|process
+argument_list|(
+name|nextRow
+operator|.
+name|o
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|nextRow
+operator|=
+name|sinkOp
+operator|.
+name|getResult
+argument_list|()
+expr_stmt|;
+comment|// It is possible that the row got absorbed in the operator tree.
+if|if
+condition|(
+name|nextRow
+operator|.
+name|o
+operator|!=
+literal|null
+condition|)
+block|{
 comment|// todo this should be changed to be evaluated lazily, especially for single segment case
 name|keys
 index|[
@@ -4023,6 +4141,17 @@ expr_stmt|;
 return|return
 literal|true
 return|;
+block|}
+name|nextRow
+operator|=
+name|segments
+index|[
+name|current
+index|]
+operator|.
+name|getNextRow
+argument_list|()
+expr_stmt|;
 block|}
 name|keys
 index|[

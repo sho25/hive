@@ -1282,7 +1282,7 @@ return|;
 block|}
 block|}
 comment|/**    * This method traces up from the given operator to the root    * of the operator graph until a TableScanOperator is reached.    * Along the way, if any operators are present that do not    * provide a direct mapping from columns of the base table to    * the keys on the input operator, the trace-back is stopped at that    * point. If the trace back can be done successfully, the method    * returns the root TableScanOperator as well as the list of column    * names on that table that map to the keys used for the input    * operator (which is currently only a join or group by).    */
-specifier|private
+specifier|public
 specifier|static
 name|TableScanOperator
 name|genRootTableScan
@@ -1302,11 +1302,6 @@ argument_list|>
 name|keyNames
 parameter_list|)
 block|{
-name|boolean
-name|complexTree
-init|=
-literal|false
-decl_stmt|;
 name|Operator
 argument_list|<
 name|?
@@ -1344,8 +1339,7 @@ comment|// joins or aggregations. Only allowed operators are selects
 comment|// and filters.
 while|while
 condition|(
-operator|!
-name|complexTree
+literal|true
 condition|)
 block|{
 name|parentOps
@@ -1362,7 +1356,12 @@ operator|==
 literal|null
 condition|)
 block|{
-break|break;
+return|return
+operator|(
+name|TableScanOperator
+operator|)
+name|currOp
+return|;
 block|}
 if|if
 condition|(
@@ -1382,10 +1381,9 @@ argument_list|()
 operator|)
 condition|)
 block|{
-name|complexTree
-operator|=
-literal|true
-expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 else|else
 block|{
@@ -1404,10 +1402,9 @@ name|currColNames
 argument_list|)
 condition|)
 block|{
-name|complexTree
-operator|=
-literal|true
-expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 name|currOp
 operator|=
@@ -1420,16 +1417,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-return|return
-name|complexTree
-condition|?
-literal|null
-else|:
-operator|(
-name|TableScanOperator
-operator|)
-name|currOp
-return|;
 block|}
 comment|/*    * This method takes in an input operator and a subset of its output    * column names, and generates the input column names for the operator    * corresponding to those outputs. If the mapping from the input column    * name to the output column name is not simple, the method returns    * false, else it returns true. The list of output column names is    * modified by this method to be the list of corresponding input column    * names.    */
 specifier|private

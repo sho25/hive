@@ -381,6 +381,36 @@ argument_list|()
 expr_stmt|;
 name|id
 operator|=
+name|getAppendedAliasFromId
+argument_list|(
+name|outer_id
+argument_list|,
+name|alias
+argument_list|)
+expr_stmt|;
+block|}
+comment|// For sub-queries, the id. and alias should be appended since same aliases can be re-used
+comment|// within different sub-queries.
+comment|// For a query like:
+comment|// select ...
+comment|//   (select * from T1 a where ...) subq1
+comment|//  join
+comment|//   (select * from T2 a where ...) subq2
+comment|// ..
+comment|// the alias is modified to subq1:a and subq2:a from a, to identify the right sub-query.
+specifier|public
+specifier|static
+name|String
+name|getAppendedAliasFromId
+parameter_list|(
+name|String
+name|outer_id
+parameter_list|,
+name|String
+name|alias
+parameter_list|)
+block|{
+return|return
 operator|(
 name|outer_id
 operator|==
@@ -394,7 +424,7 @@ literal|":"
 operator|+
 name|alias
 operator|)
-expr_stmt|;
+return|;
 block|}
 specifier|public
 name|QBParseInfo
