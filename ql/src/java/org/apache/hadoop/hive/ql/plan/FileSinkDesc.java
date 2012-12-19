@@ -113,6 +113,12 @@ specifier|private
 name|boolean
 name|multiFileSpray
 decl_stmt|;
+comment|// Whether the files output by this FileSink can be merged, e.g. if they are to be put into a
+comment|// bucketed or sorted table/partition they cannot be merged.
+specifier|private
+name|boolean
+name|canBeMerged
+decl_stmt|;
 specifier|private
 name|int
 name|totalFiles
@@ -210,6 +216,10 @@ name|boolean
 name|multiFileSpray
 parameter_list|,
 specifier|final
+name|boolean
+name|canBeMerged
+parameter_list|,
+specifier|final
 name|int
 name|numFiles
 parameter_list|,
@@ -258,6 +268,12 @@ operator|.
 name|multiFileSpray
 operator|=
 name|multiFileSpray
+expr_stmt|;
+name|this
+operator|.
+name|canBeMerged
+operator|=
+name|canBeMerged
 expr_stmt|;
 name|this
 operator|.
@@ -330,6 +346,12 @@ literal|false
 expr_stmt|;
 name|this
 operator|.
+name|canBeMerged
+operator|=
+literal|false
+expr_stmt|;
+name|this
+operator|.
 name|numFiles
 operator|=
 literal|1
@@ -371,6 +393,8 @@ argument_list|,
 name|destTableId
 argument_list|,
 name|multiFileSpray
+argument_list|,
+name|canBeMerged
 argument_list|,
 name|numFiles
 argument_list|,
@@ -680,6 +704,30 @@ operator|.
 name|multiFileSpray
 operator|=
 name|multiFileSpray
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|canBeMerged
+parameter_list|()
+block|{
+return|return
+name|canBeMerged
+return|;
+block|}
+specifier|public
+name|void
+name|setCanBeMerged
+parameter_list|(
+name|boolean
+name|canBeMerged
+parameter_list|)
+block|{
+name|this
+operator|.
+name|canBeMerged
+operator|=
+name|canBeMerged
 expr_stmt|;
 block|}
 comment|/**    * @return the totalFiles    */

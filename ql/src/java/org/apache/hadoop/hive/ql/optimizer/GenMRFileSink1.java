@@ -1344,6 +1344,14 @@ name|mvTask
 operator|.
 name|isLocal
 argument_list|()
+operator|&&
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|canBeMerged
+argument_list|()
 condition|)
 block|{
 if|if
