@@ -2190,7 +2190,7 @@ name|sortCols
 operator|.
 name|size
 argument_list|()
-operator|!=
+operator|<
 name|joinCols
 operator|.
 name|size
@@ -2201,6 +2201,10 @@ return|return
 literal|false
 return|;
 block|}
+comment|// A join is eligible for a sort-merge join, only if it is eligible for
+comment|// a bucketized map join. So, we dont need to check for bucketized map
+comment|// join here. We are guaranteed that the join keys contain all the
+comment|// bucketized keys (note that the order need not be the same).
 name|List
 argument_list|<
 name|String
@@ -2279,9 +2283,24 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// The column names and order (ascending/descending) matched
-comment|// The join columns should contain sort columns
+comment|// The first 'n' sorted columns should be the same as the joinCols, where
+comment|// 'n' is the size of join columns.
+comment|// For eg: if the table is sorted by (a,b,c), it is OK to convert if the join is
+comment|// on (a), (a,b), or any combination of (a,b,c):
+comment|//   (a,b,c), (a,c,b), (c,a,b), (c,b,a), (b,c,a), (b,a,c)
+comment|// but it is not OK to convert if the join is on (a,c)
 return|return
 name|sortColNames
+operator|.
+name|subList
+argument_list|(
+literal|0
+argument_list|,
+name|joinCols
+operator|.
+name|size
+argument_list|()
+argument_list|)
 operator|.
 name|containsAll
 argument_list|(
