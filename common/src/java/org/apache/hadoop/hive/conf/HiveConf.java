@@ -1908,6 +1908,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVE_OPTIMIZE_MULTI_GROUPBY_COMMON_DISTINCTS
+argument_list|(
+literal|"hive.optimize.multigroupby.common.distincts"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVEJOINEMITINTERVAL
 argument_list|(
 literal|"hive.join.emit.interval"

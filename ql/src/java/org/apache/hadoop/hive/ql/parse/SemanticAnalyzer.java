@@ -41604,12 +41604,34 @@ argument_list|,
 name|input
 argument_list|)
 decl_stmt|;
+comment|// Consider a query like:
+comment|//
+comment|//  from src
+comment|//    insert overwrite table dest1 select col1, count(distinct colx) group by col1
+comment|//    insert overwrite table dest2 select col2, count(distinct colx) group by col2;
+comment|//
+comment|// With HIVE_OPTIMIZE_MULTI_GROUPBY_COMMON_DISTINCTS set to true, first we spray by the distinct
+comment|// value (colx), and then perform the 2 groups bys. This makes sense if map-side aggregation is
+comment|// turned off. However, with maps-side aggregation, it might be useful in some cases to treat
+comment|// the 2 inserts independently, thereby performing the query above in 2MR jobs instead of 3
+comment|// (due to spraying by distinct key first).
 name|boolean
 name|optimizeMultiGroupBy
 init|=
 name|commonDistinctExprs
 operator|!=
 literal|null
+operator|&&
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_OPTIMIZE_MULTI_GROUPBY_COMMON_DISTINCTS
+argument_list|)
 decl_stmt|;
 name|Operator
 name|curr
