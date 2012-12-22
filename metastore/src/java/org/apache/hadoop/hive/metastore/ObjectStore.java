@@ -2698,6 +2698,14 @@ operator|.
 name|rollback
 argument_list|()
 expr_stmt|;
+comment|// remove all detached objects from the cache, since the transaction is
+comment|// being rolled back they are no longer relevant, and this prevents them
+comment|// from reattaching in future transactions
+name|pm
+operator|.
+name|evictAll
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 specifier|public
