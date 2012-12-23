@@ -1215,7 +1215,11 @@ try|try
 block|{
 if|if
 condition|(
+operator|(
 name|bDynParts
+operator|||
+name|isSkewedStoredAsSubDirectories
+operator|)
 operator|&&
 operator|!
 name|fs
