@@ -1390,6 +1390,17 @@ argument_list|,
 literal|"Invalid partition spec specified"
 argument_list|)
 block|,
+name|ALTER_TBL_UNSET_NON_EXIST_PROPERTY
+argument_list|(
+literal|10215
+argument_list|,
+literal|"Please use the following syntax if not sure "
+operator|+
+literal|"whether the property existed or not:\n"
+operator|+
+literal|"ALTER TABLE tableName UNSET TBLPROPERTIES IF EXISTS (key1, key2, ...)\n"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

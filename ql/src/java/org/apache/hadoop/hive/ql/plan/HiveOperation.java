@@ -648,6 +648,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|DROPVIEW_PROPERTIES
+argument_list|(
+literal|"DROPVIEW_PROPERTIES"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|LOCKTABLE
 argument_list|(
 literal|"LOCKTABLE"

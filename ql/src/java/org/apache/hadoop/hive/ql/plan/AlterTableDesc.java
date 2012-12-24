@@ -219,6 +219,8 @@ name|REPLACECOLS
 block|,
 name|ADDPROPS
 block|,
+name|DROPPROPS
+block|,
 name|ADDSERDE
 block|,
 name|ADDSERDEPROPS
@@ -393,6 +395,11 @@ name|skewedColValues
 decl_stmt|;
 name|Table
 name|table
+decl_stmt|;
+name|boolean
+name|isDropIfExists
+init|=
+literal|false
 decl_stmt|;
 specifier|public
 name|AlterTableDesc
@@ -1899,6 +1906,32 @@ name|isStoredAsSubDirectories
 operator|=
 name|isStoredAsSubDirectories
 expr_stmt|;
+block|}
+comment|/**    * @param isDropIfExists the isDropIfExists to set    */
+specifier|public
+name|void
+name|setDropIfExists
+parameter_list|(
+name|boolean
+name|isDropIfExists
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isDropIfExists
+operator|=
+name|isDropIfExists
+expr_stmt|;
+block|}
+comment|/**    * @return isDropIfExists    */
+specifier|public
+name|boolean
+name|getIsDropIfExists
+parameter_list|()
+block|{
+return|return
+name|isDropIfExists
+return|;
 block|}
 block|}
 end_class
