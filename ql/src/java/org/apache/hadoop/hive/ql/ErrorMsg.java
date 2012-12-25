@@ -1401,6 +1401,29 @@ operator|+
 literal|"ALTER TABLE tableName UNSET TBLPROPERTIES IF EXISTS (key1, key2, ...)\n"
 argument_list|)
 block|,
+name|ALTER_VIEW_AS_SELECT_NOT_EXIST
+argument_list|(
+literal|10216
+argument_list|,
+literal|"Cannot ALTER VIEW AS SELECT if view currently does not exist\n"
+argument_list|)
+block|,
+name|REPLACE_VIEW_WITH_PARTITION
+argument_list|(
+literal|10217
+argument_list|,
+literal|"Cannot replace a view with CREATE VIEW or REPLACE VIEW or "
+operator|+
+literal|"ALTER VIEW AS SELECT if the view has paritions\n"
+argument_list|)
+block|,
+name|EXISTING_TABLE_IS_NOT_VIEW
+argument_list|(
+literal|10218
+argument_list|,
+literal|"Existing table is not a view\n"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
