@@ -2011,6 +2011,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVE_GROUPBY_ORDERBY_POSITION_ALIAS
+argument_list|(
+literal|"hive.groupby.orderby.position.alias"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// for hive udtf operator
 name|HIVEUDTFAUTOPROGRESS
 argument_list|(

@@ -1424,6 +1424,27 @@ argument_list|,
 literal|"Existing table is not a view\n"
 argument_list|)
 block|,
+name|NO_SUPPORTED_ORDERBY_ALLCOLREF_POS
+argument_list|(
+literal|10219
+argument_list|,
+literal|"Position in ORDER BY is not supported when using SELECT *"
+argument_list|)
+block|,
+name|INVALID_POSITION_ALIAS_IN_GROUPBY
+argument_list|(
+literal|10220
+argument_list|,
+literal|"Invalid position alias in Group By\n"
+argument_list|)
+block|,
+name|INVALID_POSITION_ALIAS_IN_ORDERBY
+argument_list|(
+literal|10221
+argument_list|,
+literal|"Invalid position alias in Order By\n"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
