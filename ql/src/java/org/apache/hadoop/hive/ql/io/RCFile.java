@@ -2346,6 +2346,14 @@ argument_list|(
 name|decompressBuffer
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|valDecompressor
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Make sure we only return valDecompressor once.
 name|CodecPool
 operator|.
 name|returnDecompressor
@@ -2353,6 +2361,11 @@ argument_list|(
 name|valDecompressor
 argument_list|)
 expr_stmt|;
+name|valDecompressor
+operator|=
+literal|null
+expr_stmt|;
+block|}
 block|}
 block|}
 annotation|@
@@ -7422,6 +7435,14 @@ argument_list|(
 name|keyDecompressedData
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|keyDecompressor
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Make sure we only return keyDecompressor once.
 name|CodecPool
 operator|.
 name|returnDecompressor
@@ -7429,6 +7450,11 @@ argument_list|(
 name|keyDecompressor
 argument_list|)
 expr_stmt|;
+name|keyDecompressor
+operator|=
+literal|null
+expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**      * return the KeyBuffer object used in the reader. Internally in each      * reader, there is only one KeyBuffer object, which gets reused for every      * block.      */
