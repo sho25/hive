@@ -1228,7 +1228,7 @@ name|TIMESTAMP_TYPE_NAME
 argument_list|,
 literal|null
 argument_list|,
-name|Object
+name|Timestamp
 operator|.
 name|class
 argument_list|,
