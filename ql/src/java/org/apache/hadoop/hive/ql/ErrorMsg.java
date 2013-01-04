@@ -1630,7 +1630,14 @@ literal|30010
 argument_list|,
 literal|"Encountered I/O exception while parsing rewritten query"
 argument_list|)
-block|;
+block|,
+name|DROP_COMMAND_NOT_ALLOWED_FOR_PARTITION
+argument_list|(
+literal|30011
+argument_list|,
+literal|"Partition protected from being dropped"
+argument_list|)
+block|,     ;
 specifier|private
 name|int
 name|errorCode
