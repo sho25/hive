@@ -338,6 +338,35 @@ literal|"Unsupported constructor"
 argument_list|)
 throw|;
 block|}
+comment|/**    *    * @param p    * @return    * @throws IOException    */
+specifier|public
+name|Path
+name|resolvePath
+parameter_list|(
+specifier|final
+name|Path
+name|p
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+comment|// Return the fully-qualified path of path f resolving the path
+comment|// through any symlinks or mount point
+name|checkPath
+argument_list|(
+name|p
+argument_list|)
+expr_stmt|;
+return|return
+name|getFileStatus
+argument_list|(
+name|p
+argument_list|)
+operator|.
+name|getPath
+argument_list|()
+return|;
+block|}
 comment|/**    * Create a proxy file system for fs.    *    * @param fs FileSystem to create proxy for    * @param myUri URI to use as proxy. Only the scheme and authority from    *              this are used right now    */
 specifier|public
 name|ProxyFileSystem
@@ -536,6 +565,7 @@ specifier|protected
 name|void
 name|checkPath
 parameter_list|(
+specifier|final
 name|Path
 name|path
 parameter_list|)
