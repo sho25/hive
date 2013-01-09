@@ -1482,6 +1482,32 @@ argument_list|,
 literal|"Invalid position alias in Order By\n"
 argument_list|)
 block|,
+name|HIVE_GROUPING_SETS_THRESHOLD_NOT_ALLOWED_WITH_SKEW
+argument_list|(
+literal|10225
+argument_list|,
+literal|"An additional MR job is introduced since the number of rows created per input row "
+operator|+
+literal|"due to grouping sets is more than hive.new.job.grouping.set.cardinality. There is no need "
+operator|+
+literal|"to handle skew separately. set hive.groupby.skewindata to false."
+argument_list|)
+block|,
+name|HIVE_GROUPING_SETS_THRESHOLD_NOT_ALLOWED_WITH_DISTINCTS
+argument_list|(
+literal|10226
+argument_list|,
+literal|"An additional MR job is introduced since the cardinality of grouping sets "
+operator|+
+literal|"is more than hive.new.job.grouping.set.cardinality. This functionality is not supported "
+operator|+
+literal|"with distincts. Either set hive.new.job.grouping.set.cardinality to a high number "
+operator|+
+literal|"(higher than the number of rows per input row due to grouping sets in the query), or "
+operator|+
+literal|"rewrite the query to not use distincts."
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

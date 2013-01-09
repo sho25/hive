@@ -2018,6 +2018,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVE_NEW_JOB_GROUPING_SET_CARDINALITY
+argument_list|(
+literal|"hive.new.job.grouping.set.cardinality"
+argument_list|,
+literal|30
+argument_list|)
+block|,
 comment|// for hive udtf operator
 name|HIVEUDTFAUTOPROGRESS
 argument_list|(
