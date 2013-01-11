@@ -1976,6 +1976,8 @@ parameter_list|(
 name|HiveConf
 name|conf
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|int
 name|numBitVectors
@@ -1999,6 +2001,22 @@ decl_stmt|;
 if|if
 condition|(
 name|percentageError
+operator|<
+literal|0.0
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"hive.stats.ndv.error can't be negative"
+argument_list|)
+throw|;
+block|}
+elseif|else
+if|if
+condition|(
+name|percentageError
 operator|<=
 literal|2.4
 condition|)
@@ -2006,6 +2024,24 @@ block|{
 name|numBitVectors
 operator|=
 literal|1024
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Lowest error achievable is 2.4% but error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 1024 bit vectors.."
+argument_list|)
 expr_stmt|;
 block|}
 elseif|else
@@ -2020,6 +2056,24 @@ name|numBitVectors
 operator|=
 literal|1024
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 1024 bit vectors.."
+argument_list|)
+expr_stmt|;
 block|}
 elseif|else
 if|if
@@ -2032,6 +2086,24 @@ block|{
 name|numBitVectors
 operator|=
 literal|512
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 512 bit vectors.."
+argument_list|)
 expr_stmt|;
 block|}
 elseif|else
@@ -2046,6 +2118,24 @@ name|numBitVectors
 operator|=
 literal|256
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 256 bit vectors.."
+argument_list|)
+expr_stmt|;
 block|}
 elseif|else
 if|if
@@ -2058,6 +2148,24 @@ block|{
 name|numBitVectors
 operator|=
 literal|128
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 128 bit vectors.."
+argument_list|)
 expr_stmt|;
 block|}
 elseif|else
@@ -2072,6 +2180,24 @@ name|numBitVectors
 operator|=
 literal|64
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 64 bit vectors.."
+argument_list|)
+expr_stmt|;
 block|}
 elseif|else
 if|if
@@ -2084,6 +2210,24 @@ block|{
 name|numBitVectors
 operator|=
 literal|32
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 32 bit vectors.."
+argument_list|)
 expr_stmt|;
 block|}
 elseif|else
@@ -2098,6 +2242,24 @@ name|numBitVectors
 operator|=
 literal|16
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 16 bit vectors.."
+argument_list|)
+expr_stmt|;
 block|}
 elseif|else
 if|if
@@ -2110,6 +2272,24 @@ block|{
 name|numBitVectors
 operator|=
 literal|8
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 8 bit vectors.."
+argument_list|)
 expr_stmt|;
 block|}
 elseif|else
@@ -2124,12 +2304,48 @@ name|numBitVectors
 operator|=
 literal|4
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 4 bit vectors.."
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
 name|numBitVectors
 operator|=
 literal|2
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error requested is "
+operator|+
+name|percentageError
+operator|+
+literal|"%"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Choosing 2 bit vectors.."
+argument_list|)
 expr_stmt|;
 block|}
 return|return
