@@ -698,6 +698,15 @@ name|PrunedPartitionList
 argument_list|>
 name|prunedPartitions
 decl_stmt|;
+specifier|private
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|ReadEntity
+argument_list|>
+name|viewAliasToInput
+decl_stmt|;
 comment|/**    * The lineage information.    */
 specifier|private
 name|LineageInfo
@@ -936,6 +945,14 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|>
 name|opToPartToSkewedPruner
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|ReadEntity
+argument_list|>
+name|viewAliasToInput
 parameter_list|)
 block|{
 name|this
@@ -1091,6 +1108,12 @@ operator|.
 name|opToPartToSkewedPruner
 operator|=
 name|opToPartToSkewedPruner
+expr_stmt|;
+name|this
+operator|.
+name|viewAliasToInput
+operator|=
+name|viewAliasToInput
 expr_stmt|;
 block|}
 comment|/**    * @return the qb    */
@@ -2118,6 +2141,20 @@ name|opToPartToSkewedPruner
 operator|=
 name|opToPartToSkewedPruner
 expr_stmt|;
+block|}
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|ReadEntity
+argument_list|>
+name|getViewAliasToInput
+parameter_list|()
+block|{
+return|return
+name|viewAliasToInput
+return|;
 block|}
 block|}
 end_class

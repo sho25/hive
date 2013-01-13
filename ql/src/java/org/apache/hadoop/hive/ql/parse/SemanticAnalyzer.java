@@ -3037,6 +3037,30 @@ specifier|final
 name|boolean
 name|autogenColAliasPrfxIncludeFuncName
 decl_stmt|;
+comment|// Keep track of view alias to read entity corresponding to the view
+comment|// For eg: for a query like 'select * from V3', where V3 -> V2, V2 -> V1, V1 -> T
+comment|// keeps track of aliases for V3, V3:V2, V3:V2:V1.
+comment|// This is used when T is added as an input for the query, the parents of T is
+comment|// derived from the alias V3:V2:V1:T
+specifier|private
+specifier|final
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|ReadEntity
+argument_list|>
+name|viewAliasToInput
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|ReadEntity
+argument_list|>
+argument_list|()
+decl_stmt|;
 comment|// Max characters when auto generating the column name with func name
 specifier|private
 specifier|static
@@ -3585,6 +3609,8 @@ argument_list|,
 name|rootTasks
 argument_list|,
 name|opToPartToSkewedPruner
+argument_list|,
+name|viewAliasToInput
 argument_list|)
 return|;
 block|}
@@ -7427,6 +7453,27 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+name|getMetaData
+argument_list|(
+name|qbexpr
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|getMetaData
+parameter_list|(
+name|QBExpr
+name|qbexpr
+parameter_list|,
+name|ReadEntity
+name|parentInput
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
 if|if
 condition|(
 name|qbexpr
@@ -7447,6 +7494,8 @@ name|qbexpr
 operator|.
 name|getQB
 argument_list|()
+argument_list|,
+name|parentInput
 argument_list|)
 expr_stmt|;
 block|}
@@ -7458,6 +7507,8 @@ name|qbexpr
 operator|.
 name|getQBExpr1
 argument_list|()
+argument_list|,
+name|parentInput
 argument_list|)
 expr_stmt|;
 name|getMetaData
@@ -7466,9 +7517,29 @@ name|qbexpr
 operator|.
 name|getQBExpr2
 argument_list|()
+argument_list|,
+name|parentInput
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|public
+name|void
+name|getMetaData
+parameter_list|(
+name|QB
+name|qb
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+name|getMetaData
+argument_list|(
+name|qb
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|SuppressWarnings
@@ -7481,6 +7552,9 @@ name|getMetaData
 parameter_list|(
 name|QB
 name|qb
+parameter_list|,
+name|ReadEntity
+name|parentInput
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -7515,20 +7589,34 @@ name|getTabAliases
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// Keep track of view alias to view name and read entity
+comment|// For eg: for a query like 'select * from V3', where V3 -> V2, V2 -> V1, V1 -> T
+comment|// keeps track of full view name and read entity corresponding to alias V3, V3:V2, V3:V2:V1.
+comment|// This is needed for tracking the dependencies for inputs, along with their parents.
 name|Map
 argument_list|<
 name|String
 argument_list|,
+name|ObjectPair
+argument_list|<
 name|String
+argument_list|,
+name|ReadEntity
 argument_list|>
-name|aliasToViewName
+argument_list|>
+name|aliasToViewInfo
 init|=
 operator|new
 name|HashMap
 argument_list|<
 name|String
 argument_list|,
+name|ObjectPair
+argument_list|<
 name|String
+argument_list|,
+name|ReadEntity
+argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -7781,26 +7869,62 @@ argument_list|,
 name|alias
 argument_list|)
 expr_stmt|;
-name|aliasToViewName
+comment|// This is the last time we'll see the Table objects for views, so add it to the inputs
+comment|// now
+name|ReadEntity
+name|viewInput
+init|=
+operator|new
+name|ReadEntity
+argument_list|(
+name|tab
+argument_list|,
+name|parentInput
+argument_list|)
+decl_stmt|;
+name|viewInput
+operator|=
+name|PlanUtils
+operator|.
+name|addInput
+argument_list|(
+name|inputs
+argument_list|,
+name|viewInput
+argument_list|)
+expr_stmt|;
+name|aliasToViewInfo
 operator|.
 name|put
 argument_list|(
 name|alias
 argument_list|,
+operator|new
+name|ObjectPair
+argument_list|<
+name|String
+argument_list|,
+name|ReadEntity
+argument_list|>
+argument_list|(
 name|fullViewName
+argument_list|,
+name|viewInput
+argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// This is the last time we'll see the Table objects for views, so add it to the inputs
-comment|// now
-name|inputs
+name|viewAliasToInput
 operator|.
-name|add
+name|put
 argument_list|(
-operator|new
-name|ReadEntity
+name|getAliasId
 argument_list|(
-name|tab
+name|alias
+argument_list|,
+name|qb
 argument_list|)
+argument_list|,
+name|viewInput
 argument_list|)
 expr_stmt|;
 continue|continue;
@@ -7993,12 +8117,17 @@ block|{
 name|boolean
 name|wasView
 init|=
-name|aliasToViewName
+name|aliasToViewInfo
 operator|.
 name|containsKey
 argument_list|(
 name|alias
 argument_list|)
+decl_stmt|;
+name|ReadEntity
+name|newParentInput
+init|=
+literal|null
 decl_stmt|;
 if|if
 condition|(
@@ -8009,13 +8138,28 @@ name|viewsExpanded
 operator|.
 name|add
 argument_list|(
-name|aliasToViewName
+name|aliasToViewInfo
 operator|.
 name|get
 argument_list|(
 name|alias
 argument_list|)
+operator|.
+name|getFirst
+argument_list|()
 argument_list|)
+expr_stmt|;
+name|newParentInput
+operator|=
+name|aliasToViewInfo
+operator|.
+name|get
+argument_list|(
+name|alias
+argument_list|)
+operator|.
+name|getSecond
+argument_list|()
 expr_stmt|;
 block|}
 name|QBExpr
@@ -8031,6 +8175,8 @@ decl_stmt|;
 name|getMetaData
 argument_list|(
 name|qbexpr
+argument_list|,
+name|newParentInput
 argument_list|)
 expr_stmt|;
 if|if
@@ -42289,7 +42435,7 @@ comment|// There is no other subquery with the same group by/distinct keys or
 comment|// (There are no aggregations in a representative query for the group and
 comment|// There is no group by in that representative query) or
 comment|// The data is skewed or
-comment|// The conf variable used to control combining group bys into a signle reducer is false
+comment|// The conf variable used to control combining group bys into a single reducer is false
 if|if
 condition|(
 name|commonGroupByDestGroup
@@ -50770,6 +50916,8 @@ argument_list|,
 name|rootTasks
 argument_list|,
 name|opToPartToSkewedPruner
+argument_list|,
+name|viewAliasToInput
 argument_list|)
 decl_stmt|;
 comment|// Generate table access stats if required

@@ -91,6 +91,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -236,6 +246,24 @@ operator|.
 name|exec
 operator|.
 name|Utilities
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|hooks
+operator|.
+name|ReadEntity
 import|;
 end_import
 
@@ -3883,6 +3911,128 @@ name|PlanUtils
 parameter_list|()
 block|{
 comment|// prevent instantiation
+block|}
+comment|// Add the input 'newInput' to the set of inputs for the query.
+comment|// The input may or may not be already present.
+comment|// The ReadEntity also contains the parents from it is derived (only populated
+comment|// in case of views). The equals method for ReadEntity does not compare the parents
+comment|// so that the same input with different parents cannot be added twice. If the input
+comment|// is already present, make sure the parents are added.
+comment|// Consider the query:
+comment|// select * from (select * from V2 union all select * from V3) subq;
+comment|// where both V2 and V3 depend on V1
+comment|// addInput would be called twice for V1 (one with parent V2 and the other with parent V3).
+comment|// When addInput is called for the first time for V1, V1 (parent V2) is added to inputs.
+comment|// When addInput is called for the second time for V1, the input V1 from inputs is picked up,
+comment|// and it's parents are enhanced to include V2 and V3
+comment|// The inputs will contain: (V2, no parent), (V3, no parent), (v1, parents(V2, v3))
+specifier|public
+specifier|static
+name|ReadEntity
+name|addInput
+parameter_list|(
+name|Set
+argument_list|<
+name|ReadEntity
+argument_list|>
+name|inputs
+parameter_list|,
+name|ReadEntity
+name|newInput
+parameter_list|)
+block|{
+comment|// If the input is already present, make sure the new parent is added to the input.
+if|if
+condition|(
+name|inputs
+operator|.
+name|contains
+argument_list|(
+name|newInput
+argument_list|)
+condition|)
+block|{
+for|for
+control|(
+name|ReadEntity
+name|input
+range|:
+name|inputs
+control|)
+block|{
+if|if
+condition|(
+name|input
+operator|.
+name|equals
+argument_list|(
+name|newInput
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
+operator|(
+name|newInput
+operator|.
+name|getParents
+argument_list|()
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+operator|!
+name|newInput
+operator|.
+name|getParents
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|)
+block|{
+name|input
+operator|.
+name|getParents
+argument_list|()
+operator|.
+name|addAll
+argument_list|(
+name|newInput
+operator|.
+name|getParents
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|input
+return|;
+block|}
+block|}
+assert|assert
+literal|false
+assert|;
+block|}
+else|else
+block|{
+name|inputs
+operator|.
+name|add
+argument_list|(
+name|newInput
+argument_list|)
+expr_stmt|;
+return|return
+name|newInput
+return|;
+block|}
+comment|// make compile happy
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class
