@@ -2328,7 +2328,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get the list of operatators from the opeerator tree that are needed for the path    * @param pathToAliases  mapping from path to aliases    * @param aliasToWork    The operator tree to be invoked for a given alias    * @param dir            The path to look for    **/
+comment|/**    * Get the list of operators from the operator tree that are needed for the path    * @param pathToAliases  mapping from path to aliases    * @param aliasToWork    The operator tree to be invoked for a given alias    * @param dir            The path to look for    **/
 specifier|public
 specifier|static
 name|List
