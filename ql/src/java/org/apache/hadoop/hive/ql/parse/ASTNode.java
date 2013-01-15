@@ -69,6 +69,20 @@ begin_import
 import|import
 name|org
 operator|.
+name|antlr
+operator|.
+name|runtime
+operator|.
+name|tree
+operator|.
+name|Tree
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|apache
 operator|.
 name|hadoop
@@ -114,6 +128,19 @@ specifier|public
 name|ASTNode
 parameter_list|()
 block|{   }
+specifier|public
+name|ASTNode
+parameter_list|(
+name|ASTNode
+name|copy
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|copy
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * Constructor.    *    * @param t    *          Token for the CommonTree Node    */
 specifier|public
 name|ASTNode
@@ -129,6 +156,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see org.apache.hadoop.hive.ql.lib.Node#getChildren()    */
+annotation|@
+name|Override
 specifier|public
 name|ArrayList
 argument_list|<
@@ -253,6 +282,21 @@ name|origin
 operator|=
 name|origin
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|Tree
+name|dupNode
+parameter_list|()
+block|{
+return|return
+operator|new
+name|ASTNode
+argument_list|(
+name|this
+argument_list|)
+return|;
 block|}
 specifier|public
 name|String

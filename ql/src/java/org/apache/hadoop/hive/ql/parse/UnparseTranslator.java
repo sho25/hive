@@ -100,7 +100,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UnparseTranslator is used to "unparse" objects such as views when their  * definition is stored.  */
+comment|/**  * UnparseTranslator is used to "unparse" objects such as views when their  * definition is stored. It has a translations map where its possible to replace all the  * text with the appropriate escaped version [say invites.ds will be replaced with  * `invites`.`ds` and the entire query is processed like this and stored as  * Extended text in table's metadata]. This holds all individual translations and  * where they apply in the stream. The unparse is lazy and happens when  * SemanticAnalyzer.saveViewDefinition() calls TokenRewriteStream.toString().  *  */
 end_comment
 
 begin_class
@@ -174,7 +174,7 @@ return|return
 name|enabled
 return|;
 block|}
-comment|/**    * Register a translation to be performed as part of unparse.    * If the translation overlaps with any previously    * registered translation, then it must be either    * identical or a prefix (in which cases it is ignored),    * or else it must extend the existing translation (i.e.    * the existing translation must be a prefix of the new translation).    * All other overlap cases result in assertion failures.    *    * @param node    *          target node whose subtree is to be replaced    *    * @param replacementText    *          text to use as replacement    */
+comment|/**    * Register a translation to be performed as part of unparse. ANTLR imposes    * strict conditions on the translations and errors out during    * TokenRewriteStream.toString() if there is an overlap. It expects all    * the translations to be disjoint (See HIVE-2439).    * If the translation overlaps with any previously    * registered translation, then it must be either    * identical or a prefix (in which cases it is ignored),    * or else it must extend the existing translation (i.e.    * the existing translation must be a prefix/suffix of the new translation).    * All other overlap cases result in assertion failures.    *    * @param node    *          target node whose subtree is to be replaced    *    * @param replacementText    *          text to use as replacement    */
 name|void
 name|addTranslation
 parameter_list|(
@@ -439,6 +439,79 @@ operator|>
 name|tokenStopIndex
 operator|)
 assert|;
+block|}
+block|}
+comment|// Is existing entry a suffix of the newer entry and a subset of it?
+name|existingEntry
+operator|=
+name|translations
+operator|.
+name|floorEntry
+argument_list|(
+name|tokenStopIndex
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|existingEntry
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|existingEntry
+operator|.
+name|getKey
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|tokenStopIndex
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
+name|tokenStartIndex
+operator|<
+name|existingEntry
+operator|.
+name|getKey
+argument_list|()
+operator|&&
+name|tokenStopIndex
+operator|==
+name|existingEntry
+operator|.
+name|getKey
+argument_list|()
+condition|)
+block|{
+comment|// Seems newer entry is a super-set of existing entry, remove existing entry
+assert|assert
+operator|(
+name|replacementText
+operator|.
+name|endsWith
+argument_list|(
+name|existingEntry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|replacementText
+argument_list|)
+operator|)
+assert|;
+name|translations
+operator|.
+name|remove
+argument_list|(
+name|tokenStopIndex
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 comment|// It's all good: create a new entry in the map (or update existing one)
