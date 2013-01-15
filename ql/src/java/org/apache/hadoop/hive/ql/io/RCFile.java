@@ -1306,6 +1306,26 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+specifier|public
+name|int
+index|[]
+name|getEachColumnUncompressedValueLen
+parameter_list|()
+block|{
+return|return
+name|eachColumnUncompressedValueLen
+return|;
+block|}
+specifier|public
+name|int
+index|[]
+name|getEachColumnValueLen
+parameter_list|()
+block|{
+return|return
+name|eachColumnValueLen
+return|;
+block|}
 block|}
 comment|/**    * ValueBuffer is the value of each record in RCFile. Its on-disk layout is as    * below:    *<ul>    *<li>Compressed or plain data of [column_1_row_1_value,    * column_1_row_2_value,....]</li>    *<li>Compressed or plain data of [column_2_row_1_value,    * column_2_row_2_value,....]</li>    *</ul>    */
 specifier|public
