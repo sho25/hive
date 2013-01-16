@@ -2298,7 +2298,7 @@ argument_list|,
 literal|"binary"
 argument_list|)
 expr_stmt|;
-comment|// These 3 types are not supported yet.
+comment|// These 4 types are not supported yet.
 comment|// We should define a complex type date in thrift that contains a single int
 comment|// member, and DynamicSerDe
 comment|// should convert it to date type at runtime.
@@ -2363,6 +2363,27 @@ operator|.
 name|TIMESTAMP_TYPE_NAME
 argument_list|,
 literal|"timestamp"
+argument_list|)
+expr_stmt|;
+name|typeToThriftTypeMap
+operator|.
+name|put
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|serdeConstants
+operator|.
+name|DECIMAL_TYPE_NAME
+argument_list|,
+literal|"decimal"
 argument_list|)
 expr_stmt|;
 block|}

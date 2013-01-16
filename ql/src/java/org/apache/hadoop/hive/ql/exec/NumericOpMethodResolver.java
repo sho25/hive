@@ -202,8 +202,8 @@ name|TypeInfo
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// If either argument is a string, we convert to a double because a number
-comment|// in string form should always be convertible into a double
+comment|// If either argument is a string, we convert to a double or decimal because a number
+comment|// in string form should always be convertible into either of those
 if|if
 condition|(
 name|argTypeInfos
@@ -235,6 +235,60 @@ name|stringTypeInfo
 argument_list|)
 condition|)
 block|{
+comment|// Default is double, but if one of the sides is already in decimal we
+comment|// complete the operation in that type.
+if|if
+condition|(
+name|argTypeInfos
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|decimalTypeInfo
+argument_list|)
+operator|||
+name|argTypeInfos
+operator|.
+name|get
+argument_list|(
+literal|1
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|decimalTypeInfo
+argument_list|)
+condition|)
+block|{
+name|modArgTypeInfos
+operator|.
+name|add
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|decimalTypeInfo
+argument_list|)
+expr_stmt|;
+name|modArgTypeInfos
+operator|.
+name|add
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|decimalTypeInfo
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|modArgTypeInfos
 operator|.
 name|add
@@ -253,6 +307,7 @@ operator|.
 name|doubleTypeInfo
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{

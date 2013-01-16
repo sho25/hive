@@ -157,7 +157,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|LazyBooleanObjectInspector
+name|LazyBigDecimalObjectInspector
 import|;
 end_import
 
@@ -180,6 +180,28 @@ operator|.
 name|primitive
 operator|.
 name|LazyBinaryObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazy
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|LazyBooleanObjectInspector
 import|;
 end_import
 
@@ -949,6 +971,19 @@ name|LazyBinary
 argument_list|(
 operator|(
 name|LazyBinaryObjectInspector
+operator|)
+name|oi
+argument_list|)
+return|;
+case|case
+name|DECIMAL
+case|:
+return|return
+operator|new
+name|LazyBigDecimal
+argument_list|(
+operator|(
+name|LazyBigDecimalObjectInspector
 operator|)
 name|oi
 argument_list|)

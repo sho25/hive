@@ -434,7 +434,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Computes an approximate percentile (quantile) from an approximate histogram, for very  * large numbers of rows where the regular percentile() UDAF might run out of memory.  *   * The input is a single double value or an array of double values representing the quantiles  * requested. The output, corresponding to the input, is either an single double value or an  * array of doubles that are the quantile values.  */
+comment|/**  * Computes an approximate percentile (quantile) from an approximate histogram, for very  * large numbers of rows where the regular percentile() UDAF might run out of memory.  *  * The input is a single double value or an array of double values representing the quantiles  * requested. The output, corresponding to the input, is either an single double value or an  * array of doubles that are the quantile values.  */
 end_comment
 
 begin_class
@@ -627,6 +627,9 @@ name|DOUBLE
 case|:
 case|case
 name|TIMESTAMP
+case|:
+case|case
+name|DECIMAL
 case|:
 break|break;
 default|default:

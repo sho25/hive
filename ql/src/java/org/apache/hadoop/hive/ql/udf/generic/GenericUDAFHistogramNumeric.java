@@ -426,7 +426,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Computes an approximate histogram of a numerical column using a user-specified number of bins.  *   * The output is an array of (x,y) pairs as Hive struct objects that represents the histogram's  * bin centers and heights.  */
+comment|/**  * Computes an approximate histogram of a numerical column using a user-specified number of bins.  *  * The output is an array of (x,y) pairs as Hive struct objects that represents the histogram's  * bin centers and heights.  */
 end_comment
 
 begin_class
@@ -599,6 +599,9 @@ name|DOUBLE
 case|:
 case|case
 name|TIMESTAMP
+case|:
+case|case
+name|DECIMAL
 case|:
 break|break;
 case|case

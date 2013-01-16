@@ -328,6 +328,9 @@ case|:
 case|case
 name|TIMESTAMP
 case|:
+case|case
+name|DECIMAL
+case|:
 switch|switch
 condition|(
 operator|(
@@ -364,6 +367,9 @@ name|DOUBLE
 case|:
 case|case
 name|TIMESTAMP
+case|:
+case|case
+name|DECIMAL
 case|:
 return|return
 operator|new

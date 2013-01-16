@@ -148,7 +148,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Compute the sample standard deviation by extending GenericUDAFVariance and  * overriding the terminate() method of the evaluator.  *   */
+comment|/**  * Compute the sample standard deviation by extending GenericUDAFVariance and  * overriding the terminate() method of the evaluator.  *  */
 end_comment
 
 begin_class
@@ -281,6 +281,9 @@ name|STRING
 case|:
 case|case
 name|TIMESTAMP
+case|:
+case|case
+name|DECIMAL
 case|:
 return|return
 operator|new

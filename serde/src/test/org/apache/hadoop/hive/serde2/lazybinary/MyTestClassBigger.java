@@ -23,6 +23,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|math
+operator|.
+name|BigDecimal
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|List
@@ -87,6 +97,9 @@ decl_stmt|;
 name|String
 name|myString
 decl_stmt|;
+name|BigDecimal
+name|myDecimal
+decl_stmt|;
 name|MyTestInnerStruct
 name|myStruct
 decl_stmt|;
@@ -114,7 +127,7 @@ decl_stmt|;
 specifier|public
 name|MyTestClassBigger
 parameter_list|()
-block|{   }
+block|{     }
 specifier|public
 name|MyTestClassBigger
 parameter_list|(
@@ -138,6 +151,9 @@ name|d
 parameter_list|,
 name|String
 name|st
+parameter_list|,
+name|BigDecimal
+name|bd
 parameter_list|,
 name|MyTestInnerStruct
 name|is
@@ -191,6 +207,10 @@ expr_stmt|;
 name|myString
 operator|=
 name|st
+expr_stmt|;
+name|myDecimal
+operator|=
+name|bd
 expr_stmt|;
 name|myStruct
 operator|=
