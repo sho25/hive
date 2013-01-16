@@ -12033,6 +12033,11 @@ operator|+
 literal|" cannot be evaluated"
 return|;
 block|}
+name|boolean
+name|allChildrenConstant
+init|=
+literal|true
+decl_stmt|;
 name|List
 argument_list|<
 name|ExprNodeDesc
@@ -12052,6 +12057,21 @@ range|:
 name|children
 control|)
 block|{
+if|if
+condition|(
+operator|!
+operator|(
+name|child
+operator|instanceof
+name|ExprNodeConstantDesc
+operator|)
+condition|)
+block|{
+name|allChildrenConstant
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|String
 name|message
 init|=
@@ -12073,6 +12093,24 @@ return|return
 name|message
 return|;
 block|}
+block|}
+comment|// If all the children of the expression are constants then JDO cannot parse the expression
+comment|// see Filter.g
+if|if
+condition|(
+name|allChildrenConstant
+condition|)
+block|{
+return|return
+literal|"Expression "
+operator|+
+name|expr
+operator|.
+name|getExprString
+argument_list|()
+operator|+
+literal|" has only constants as children."
+return|;
 block|}
 return|return
 literal|null
