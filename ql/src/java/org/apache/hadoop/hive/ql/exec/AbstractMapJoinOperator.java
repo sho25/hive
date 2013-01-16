@@ -464,8 +464,6 @@ operator|.
 name|getKeys
 argument_list|()
 argument_list|,
-name|order
-argument_list|,
 name|NOTSKIPBIGTABLE
 argument_list|)
 expr_stmt|;

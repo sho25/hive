@@ -2176,7 +2176,7 @@ name|grandParentOp
 argument_list|)
 expr_stmt|;
 block|}
-name|int
+name|byte
 name|pos
 init|=
 literal|0
@@ -2309,17 +2309,6 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
-name|Byte
-name|tag
-init|=
-operator|(
-name|byte
-operator|)
-name|rsconf
-operator|.
-name|getTag
-argument_list|()
-decl_stmt|;
 name|List
 argument_list|<
 name|ExprNodeDesc
@@ -2335,7 +2324,7 @@ name|keyExprMap
 operator|.
 name|put
 argument_list|(
-name|tag
+name|pos
 argument_list|,
 name|keys
 argument_list|)
@@ -2366,7 +2355,7 @@ name|columnTransfer
 operator|.
 name|put
 argument_list|(
-name|tag
+name|pos
 argument_list|,
 name|map
 argument_list|)

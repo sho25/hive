@@ -1453,15 +1453,13 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|// get alias
 name|alias
 operator|=
-name|order
-index|[
+operator|(
+name|byte
+operator|)
 name|tag
-index|]
 expr_stmt|;
-comment|// alias = (byte)tag;
 if|if
 condition|(
 operator|(
@@ -1568,10 +1566,7 @@ name|storage
 operator|.
 name|get
 argument_list|(
-operator|(
-name|byte
-operator|)
-name|tag
+name|alias
 argument_list|)
 operator|.
 name|add
@@ -1594,7 +1589,7 @@ operator|.
 name|intValue
 argument_list|()
 operator|!=
-name|tag
+name|alias
 condition|)
 block|{
 name|MapJoinObjectValue

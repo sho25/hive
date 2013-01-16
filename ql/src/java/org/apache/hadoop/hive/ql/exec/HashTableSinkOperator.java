@@ -613,15 +613,6 @@ decl_stmt|;
 specifier|protected
 specifier|transient
 name|int
-name|posBigTableTag
-init|=
-operator|-
-literal|1
-decl_stmt|;
-comment|// one of the tables that is not in memory
-specifier|protected
-specifier|transient
-name|int
 name|posBigTableAlias
 init|=
 operator|-
@@ -1023,7 +1014,7 @@ operator|=
 literal|true
 expr_stmt|;
 comment|// for small tables only; so get the big table position first
-name|posBigTableTag
+name|posBigTableAlias
 operator|=
 name|conf
 operator|.
@@ -1036,13 +1027,6 @@ name|conf
 operator|.
 name|getTagOrder
 argument_list|()
-expr_stmt|;
-name|posBigTableAlias
-operator|=
-name|order
-index|[
-name|posBigTableTag
-index|]
 expr_stmt|;
 comment|// initialize some variables, which used to be initialized in CommonJoinOperator
 name|numAliases
@@ -1105,8 +1089,6 @@ operator|.
 name|getKeys
 argument_list|()
 argument_list|,
-name|order
-argument_list|,
 name|posBigTableAlias
 argument_list|)
 expr_stmt|;
@@ -1160,8 +1142,6 @@ operator|.
 name|getExprs
 argument_list|()
 argument_list|,
-name|order
-argument_list|,
 name|posBigTableAlias
 argument_list|)
 expr_stmt|;
@@ -1214,8 +1194,6 @@ name|conf
 operator|.
 name|getFilters
 argument_list|()
-argument_list|,
-name|order
 argument_list|,
 name|posBigTableAlias
 argument_list|)
@@ -1483,7 +1461,7 @@ if|if
 condition|(
 name|pos
 operator|==
-name|posBigTableTag
+name|posBigTableAlias
 condition|)
 block|{
 continue|continue;
@@ -1802,12 +1780,11 @@ expr_stmt|;
 block|}
 name|alias
 operator|=
-name|order
-index|[
+operator|(
+name|byte
+operator|)
 name|tag
-index|]
 expr_stmt|;
-comment|// alias = (byte)tag;
 comment|// compute keys and values as StandardObjects
 name|AbstractMapJoinKey
 name|keyMap
@@ -1895,10 +1872,7 @@ name|mapJoinTables
 operator|.
 name|get
 argument_list|(
-operator|(
-name|byte
-operator|)
-name|tag
+name|alias
 argument_list|)
 decl_stmt|;
 name|MapJoinObjectValue

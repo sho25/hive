@@ -1325,6 +1325,19 @@ operator|.
 name|isNoOuterJoin
 argument_list|()
 expr_stmt|;
+name|Byte
+index|[]
+name|reorder
+init|=
+name|getExecContext
+argument_list|()
+operator|==
+literal|null
+condition|?
+name|order
+else|:
+literal|null
+decl_stmt|;
 name|totalSz
 operator|=
 name|JoinUtil
@@ -1338,7 +1351,7 @@ operator|.
 name|getExprs
 argument_list|()
 argument_list|,
-name|order
+name|reorder
 argument_list|,
 name|NOTSKIPBIGTABLE
 argument_list|)
@@ -1369,7 +1382,7 @@ operator|.
 name|getFilters
 argument_list|()
 argument_list|,
-name|order
+name|reorder
 argument_list|,
 name|NOTSKIPBIGTABLE
 argument_list|)
