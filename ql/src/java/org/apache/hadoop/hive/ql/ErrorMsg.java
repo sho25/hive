@@ -586,7 +586,7 @@ name|INVALID_MAPJOIN_HINT
 argument_list|(
 literal|10058
 argument_list|,
-literal|"Neither table specified as map-table"
+literal|"All tables are specified as map-table for join"
 argument_list|)
 block|,
 name|INVALID_MAPJOIN_TABLE
