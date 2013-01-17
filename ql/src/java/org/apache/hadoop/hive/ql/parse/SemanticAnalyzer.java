@@ -40880,13 +40880,6 @@ argument_list|,
 name|inputRR
 argument_list|)
 decl_stmt|;
-name|reduceKeys
-operator|.
-name|add
-argument_list|(
-name|distExpr
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|reduceSinkOutputRowResolver
@@ -40899,6 +40892,13 @@ operator|==
 literal|null
 condition|)
 block|{
+name|reduceKeys
+operator|.
+name|add
+argument_list|(
+name|distExpr
+argument_list|)
+expr_stmt|;
 name|outputColumnNames
 operator|.
 name|add
