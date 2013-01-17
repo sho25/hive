@@ -74,16 +74,24 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * VerifyNumReducersForBucketsHook.  *  * This hook is meant to be used with bucket_num_reducers.q . It checks whether the  * number of reducers has been correctly set.  */
+comment|/**  *  * VerifyNumReducersHook.  *  * Provided a query involves exactly 1 map reduce job, this hook can be used to verify that the  * number of reducers matches what is expected.  *  * Use the config VerifyNumReducersHook.num.reducers to specify the expected number of reducers.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|VerifyNumReducersForBucketsHook
+name|VerifyNumReducersHook
 implements|implements
 name|ExecuteWithHookContext
 block|{
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|BUCKET_CONFIG
+init|=
+literal|"VerifyNumReducersHook.num.reducers"
+decl_stmt|;
 specifier|public
 name|void
 name|run
@@ -107,6 +115,21 @@ argument_list|(
 literal|"SessionState returned null"
 argument_list|)
 expr_stmt|;
+name|int
+name|expectedReducers
+init|=
+name|hookContext
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getInt
+argument_list|(
+name|BUCKET_CONFIG
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
 name|List
 argument_list|<
 name|MapRedStats
@@ -138,7 +161,7 @@ name|assertEquals
 argument_list|(
 literal|"NumReducers is incorrect"
 argument_list|,
-literal|10
+name|expectedReducers
 argument_list|,
 name|stats
 operator|.
