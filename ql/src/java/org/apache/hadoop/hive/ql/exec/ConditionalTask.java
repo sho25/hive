@@ -395,21 +395,12 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-name|HadoopJobExecHelper
+name|tsk
 operator|.
-name|getJobEndMsg
-argument_list|(
-literal|""
-operator|+
-name|Utilities
-operator|.
-name|randGen
-operator|.
-name|nextInt
+name|getId
 argument_list|()
-argument_list|)
 operator|+
-literal|", job is filtered out (removed at runtime)."
+literal|" is filtered out by condition resolver."
 argument_list|)
 expr_stmt|;
 if|if
@@ -452,6 +443,18 @@ name|tsk
 argument_list|)
 condition|)
 block|{
+name|console
+operator|.
+name|printInfo
+argument_list|(
+name|tsk
+operator|.
+name|getId
+argument_list|()
+operator|+
+literal|" is selected by condition resolver."
+argument_list|)
+expr_stmt|;
 name|driverContext
 operator|.
 name|addToRunnable

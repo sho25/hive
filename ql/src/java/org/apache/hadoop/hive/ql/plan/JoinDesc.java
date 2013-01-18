@@ -360,6 +360,16 @@ name|filters
 operator|=
 name|filters
 expr_stmt|;
+name|resetOrder
+argument_list|()
+expr_stmt|;
+block|}
+comment|// called by late-MapJoin processor (hive.auto.convert.join=true for example)
+specifier|public
+name|void
+name|resetOrder
+parameter_list|()
+block|{
 name|tagOrder
 operator|=
 operator|new

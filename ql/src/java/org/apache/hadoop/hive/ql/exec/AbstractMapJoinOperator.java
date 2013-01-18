@@ -337,7 +337,7 @@ name|joinKeysStandardObjectInspectors
 decl_stmt|;
 specifier|protected
 specifier|transient
-name|int
+name|byte
 name|posBigTable
 init|=
 operator|-
@@ -494,6 +494,9 @@ expr_stmt|;
 comment|// all other tables are small, and are cached in the hash table
 name|posBigTable
 operator|=
+operator|(
+name|byte
+operator|)
 name|conf
 operator|.
 name|getPosBigTable
@@ -530,16 +533,10 @@ name|rowContainerStandardObjectInspectors
 operator|.
 name|get
 argument_list|(
-operator|(
-name|byte
-operator|)
 name|posBigTable
 argument_list|)
 argument_list|,
-name|order
-index|[
 name|posBigTable
-index|]
 argument_list|,
 name|joinCacheSize
 argument_list|,
@@ -560,9 +557,6 @@ name|storage
 operator|.
 name|put
 argument_list|(
-operator|(
-name|byte
-operator|)
 name|posBigTable
 argument_list|,
 name|bigPosRC

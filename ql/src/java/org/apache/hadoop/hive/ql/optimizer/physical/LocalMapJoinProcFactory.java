@@ -794,6 +794,15 @@ name|printStackTrace
 argument_list|()
 expr_stmt|;
 block|}
+comment|// mapjoin should not affected by join reordering
+name|mapJoinOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|resetOrder
+argument_list|()
+expr_stmt|;
 name|HashTableSinkDesc
 name|hashTableSinkDesc
 init|=
