@@ -7025,6 +7025,24 @@ name|getRootTasks
 argument_list|()
 control|)
 block|{
+comment|// This should never happen, if it does, it's a bug with the potential to produce
+comment|// incorrect results.
+assert|assert
+name|tsk
+operator|.
+name|getParentTasks
+argument_list|()
+operator|==
+literal|null
+operator|||
+name|tsk
+operator|.
+name|getParentTasks
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+assert|;
 name|driverCxt
 operator|.
 name|addToRunnable

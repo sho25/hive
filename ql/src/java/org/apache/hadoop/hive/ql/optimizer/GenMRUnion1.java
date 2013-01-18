@@ -1208,6 +1208,11 @@ name|contains
 argument_list|(
 name|currTask
 argument_list|)
+operator|&&
+name|shouldBeRootTask
+argument_list|(
+name|currTask
+argument_list|)
 condition|)
 block|{
 name|ctx
@@ -1785,8 +1790,6 @@ condition|(
 name|shouldBeRootTask
 argument_list|(
 name|currTask
-argument_list|,
-name|parseCtx
 argument_list|)
 operator|&&
 operator|(
@@ -1930,9 +1933,6 @@ extends|extends
 name|Serializable
 argument_list|>
 name|currTask
-parameter_list|,
-name|ParseContext
-name|parseContext
 parameter_list|)
 block|{
 return|return
