@@ -11694,6 +11694,17 @@ operator|.
 name|KW_EXTENDED
 argument_list|)
 expr_stmt|;
+name|descTblDesc
+operator|.
+name|setPretty
+argument_list|(
+name|descOptions
+operator|==
+name|HiveParser
+operator|.
+name|KW_PRETTY
+argument_list|)
+expr_stmt|;
 block|}
 name|rootTasks
 operator|.

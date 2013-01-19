@@ -1744,6 +1744,14 @@ argument_list|,
 literal|"hive"
 argument_list|)
 block|,
+name|CLIPRETTYOUTPUTNUMCOLS
+argument_list|(
+literal|"hive.cli.pretty.output.num.cols"
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+block|,
 name|HIVE_METASTORE_FS_HANDLER_CLS
 argument_list|(
 literal|"hive.metastore.fs.handler.class"

@@ -362,6 +362,9 @@ name|isFormatted
 parameter_list|,
 name|boolean
 name|isExt
+parameter_list|,
+name|boolean
+name|isPretty
 parameter_list|)
 throws|throws
 name|HiveException
