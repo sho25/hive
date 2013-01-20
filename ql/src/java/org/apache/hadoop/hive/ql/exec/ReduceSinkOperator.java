@@ -963,9 +963,10 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|evals
+name|outputColNames
 operator|.
-name|length
+name|size
+argument_list|()
 operator|>
 name|length
 condition|)
