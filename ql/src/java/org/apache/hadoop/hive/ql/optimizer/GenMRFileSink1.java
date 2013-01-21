@@ -4966,6 +4966,8 @@ name|initUnionPlan
 argument_list|(
 name|ctx
 argument_list|,
+name|currUnionOp
+argument_list|,
 name|currTask
 argument_list|,
 literal|false
@@ -5014,6 +5016,8 @@ operator|.
 name|initUnionPlan
 argument_list|(
 name|ctx
+argument_list|,
+name|currUnionOp
 argument_list|,
 name|currTask
 argument_list|,
