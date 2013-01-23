@@ -762,13 +762,13 @@ name|columnSizes
 condition|)
 block|{
 comment|// Print out the un/compressed sizes of each column
-name|int
+name|long
 index|[]
 name|compressedColumnSizes
 init|=
 literal|null
 decl_stmt|;
-name|int
+name|long
 index|[]
 name|uncompressedColumnSizes
 init|=
@@ -802,7 +802,7 @@ block|{
 name|uncompressedColumnSizes
 operator|=
 operator|new
-name|int
+name|long
 index|[
 name|keyBuffer
 operator|.
@@ -821,7 +821,7 @@ block|{
 name|compressedColumnSizes
 operator|=
 operator|new
-name|int
+name|long
 index|[
 name|keyBuffer
 operator|.
