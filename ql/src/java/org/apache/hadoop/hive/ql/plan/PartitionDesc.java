@@ -546,7 +546,7 @@ name|properties
 operator|=
 name|part
 operator|.
-name|getSchema
+name|getMetadataFromPartitionSchema
 argument_list|()
 expr_stmt|;
 name|partSpec

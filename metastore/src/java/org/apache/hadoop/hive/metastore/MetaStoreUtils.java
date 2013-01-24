@@ -1029,7 +1029,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *    * Get the Deserializer for a table given its name and properties.    *    * @param conf    *          hadoop config    * @param schema    *          the properties to use to instantiate the deserializer    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *    *              todo - this should move somewhere into serde.jar    *    */
+comment|/**    * getDeserializer    *    * Get the Deserializer for a table given its name and properties.    *    * @param conf    *          hadoop config    * @param schema    *          the properties to use to instantiate the deserializer    * @return    *   Returns instantiated deserializer by looking up class name of deserializer stored in passed    *   in properties. Also, initializes the deserializer with schema stored in passed in properties.    * @exception MetaException    *              if any problems instantiating the Deserializer    *    *              todo - this should move somewhere into serde.jar    *    */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1150,7 +1150,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *    * Get the Deserializer for a table.    *    * @param conf    *          - hadoop config    * @param table    *          the table    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *    *              todo - this should move somewhere into serde.jar    *    */
+comment|/**    * getDeserializer    *    * Get the Deserializer for a table.    *    * @param conf    *          - hadoop config    * @param table    *          the table    * @return    *   Returns instantiated deserializer by looking up class name of deserializer stored in    *   storage descriptor of passed in table. Also, initializes the deserializer with schema    *   of table.    * @exception MetaException    *              if any problems instantiating the Deserializer    *    *              todo - this should move somewhere into serde.jar    *    */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1222,7 +1222,7 @@ name|conf
 argument_list|,
 name|MetaStoreUtils
 operator|.
-name|getSchema
+name|getTableMetadata
 argument_list|(
 name|table
 argument_list|)
@@ -1299,7 +1299,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * getDeserializer    *    * Get the Deserializer for a partition.    *    * @param conf    *          - hadoop config    * @param part    *          the partition    * @param table the table    * @return the Deserializer    * @exception MetaException    *              if any problems instantiating the Deserializer    *    */
+comment|/**    * getDeserializer    *    * Get the Deserializer for a partition.    *    * @param conf    *          - hadoop config    * @param part    *          the partition    * @param table the table    * @return    *   Returns instantiated deserializer by looking up class name of deserializer stored in    *   storage descriptor of passed in partition. Also, initializes the deserializer with    *   schema of partition.    * @exception MetaException    *              if any problems instantiating the Deserializer    *    */
 specifier|static
 specifier|public
 name|Deserializer
@@ -1375,7 +1375,7 @@ name|conf
 argument_list|,
 name|MetaStoreUtils
 operator|.
-name|getSchema
+name|getPartitionMetadata
 argument_list|(
 name|part
 argument_list|,
@@ -2798,7 +2798,7 @@ block|}
 specifier|public
 specifier|static
 name|Properties
-name|getSchema
+name|getTableMetadata
 parameter_list|(
 name|org
 operator|.
@@ -2832,6 +2832,79 @@ name|getSd
 argument_list|()
 argument_list|,
 name|table
+operator|.
+name|getParameters
+argument_list|()
+argument_list|,
+name|table
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|table
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
+name|table
+operator|.
+name|getPartitionKeys
+argument_list|()
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|Properties
+name|getPartitionMetadata
+parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Partition
+name|partition
+parameter_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Table
+name|table
+parameter_list|)
+block|{
+return|return
+name|MetaStoreUtils
+operator|.
+name|getSchema
+argument_list|(
+name|partition
+operator|.
+name|getSd
+argument_list|()
+argument_list|,
+name|partition
+operator|.
+name|getSd
+argument_list|()
+argument_list|,
+name|partition
 operator|.
 name|getParameters
 argument_list|()

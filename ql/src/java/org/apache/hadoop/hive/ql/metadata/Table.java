@@ -1525,13 +1525,13 @@ block|}
 specifier|final
 specifier|public
 name|Properties
-name|getSchema
+name|getMetadata
 parameter_list|()
 block|{
 return|return
 name|MetaStoreUtils
 operator|.
-name|getSchema
+name|getTableMetadata
 argument_list|(
 name|tTable
 argument_list|)

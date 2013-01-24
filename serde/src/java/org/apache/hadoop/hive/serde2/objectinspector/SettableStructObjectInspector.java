@@ -54,6 +54,17 @@ name|Object
 name|fieldValue
 parameter_list|)
 function_decl|;
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isSettable
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
 block|}
 end_class
 

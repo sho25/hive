@@ -13,9 +13,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|util
+name|common
 package|;
 end_package
 
