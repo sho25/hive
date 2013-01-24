@@ -816,6 +816,32 @@ name|e
 parameter_list|)
 block|{
 comment|// ignore if the parent already exists
+if|if
+condition|(
+name|e
+operator|.
+name|code
+argument_list|()
+operator|!=
+name|KeeperException
+operator|.
+name|Code
+operator|.
+name|NODEEXISTS
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Unexpected ZK exception when creating parent node /"
+operator|+
+name|parent
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch
@@ -1397,6 +1423,15 @@ name|e
 parameter_list|)
 block|{
 comment|// The lock may have been released. Ignore and continue
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Error when releasing lock"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}
@@ -1538,6 +1573,26 @@ argument_list|(
 name|sleepTime
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|zooKeeper
+operator|.
+name|getState
+argument_list|()
+operator|==
+name|ZooKeeper
+operator|.
+name|States
+operator|.
+name|CLOSED
+condition|)
+block|{
+comment|// Reconnect if the connection is closed.
+name|zooKeeper
+operator|=
+literal|null
+expr_stmt|;
+block|}
 name|prepareRetry
 argument_list|()
 expr_stmt|;
@@ -2957,9 +3012,7 @@ argument_list|(
 literal|"Error in getting data for "
 operator|+
 name|curChild
-operator|+
-literal|" "
-operator|+
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -3047,7 +3100,15 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-comment|// ignore all errors
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Exception while removing all redundant nodes"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 specifier|private
@@ -3156,7 +3217,17 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-comment|// ignore all errors
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Error in checkRedundantNode for node "
+operator|+
+name|node
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|/* Release all transient locks, by simply closing the client */
