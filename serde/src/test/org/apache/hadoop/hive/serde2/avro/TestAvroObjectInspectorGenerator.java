@@ -663,6 +663,40 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|NULLABLE_ENUM_SCHEMA
+init|=
+literal|"{\n"
+operator|+
+literal|"  \"namespace\": \"clever.namespace.name.in.space\",\n"
+operator|+
+literal|"  \"name\": \"nullableUnionTest\",\n"
+operator|+
+literal|"  \"type\": \"record\",\n"
+operator|+
+literal|"  \"fields\": [\n"
+operator|+
+literal|"   {\n"
+operator|+
+literal|"      \"name\":\"nullableEnum\",\n"
+operator|+
+literal|"      \"type\": [\"null\", {\"type\":\"enum\",\"name\":\"villians\", \"symbols\": "
+operator|+
+literal|"[\"DALEKS\", \"CYBERMEN\", \"SLITHEEN\", \"JAGRAFESS\"]}]\n"
+operator|+
+literal|"      \n"
+operator|+
+literal|"      \n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|BYTES_SCHEMA
 init|=
 literal|"{\n"
@@ -2477,6 +2511,121 @@ argument_list|(
 name|aoig
 argument_list|,
 literal|"aMap"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+comment|// That Union[T, NULL] is converted to just T.
+specifier|public
+name|void
+name|convertsNullableEnum
+parameter_list|()
+throws|throws
+name|SerDeException
+block|{
+name|Schema
+name|s
+init|=
+name|Schema
+operator|.
+name|parse
+argument_list|(
+name|NULLABLE_ENUM_SCHEMA
+argument_list|)
+decl_stmt|;
+name|AvroObjectInspectorGenerator
+name|aoig
+init|=
+operator|new
+name|AvroObjectInspectorGenerator
+argument_list|(
+name|s
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|aoig
+operator|.
+name|getColumnNames
+argument_list|()
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"nullableEnum"
+argument_list|,
+name|aoig
+operator|.
+name|getColumnNames
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Column types
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|aoig
+operator|.
+name|getColumnTypes
+argument_list|()
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|TypeInfo
+name|typeInfo
+init|=
+name|aoig
+operator|.
+name|getColumnTypes
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|typeInfo
+operator|instanceof
+name|PrimitiveTypeInfo
+argument_list|)
+expr_stmt|;
+name|PrimitiveTypeInfo
+name|pti
+init|=
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|typeInfo
+decl_stmt|;
+comment|// Verify the union has been hidden and just the main type has been returned.
+name|assertEquals
+argument_list|(
+name|PrimitiveObjectInspector
+operator|.
+name|PrimitiveCategory
+operator|.
+name|STRING
+argument_list|,
+name|pti
+operator|.
+name|getPrimitiveCategory
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
