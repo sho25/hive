@@ -952,6 +952,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|OPERATORHOOKS
+argument_list|(
+literal|"hive.exec.operator.hooks"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 name|CLIENTSTATSPUBLISHERS
 argument_list|(
 literal|"hive.client.stats.publishers"

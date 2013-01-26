@@ -2793,6 +2793,14 @@ argument_list|(
 name|th
 argument_list|)
 decl_stmt|;
+name|this
+operator|.
+name|task
+operator|.
+name|taskHandle
+operator|=
+name|th
+expr_stmt|;
 comment|// Not always there is a SessionState. Sometimes ExeDriver is directly invoked
 comment|// for special modes. In that case, SessionState.get() is empty.
 if|if

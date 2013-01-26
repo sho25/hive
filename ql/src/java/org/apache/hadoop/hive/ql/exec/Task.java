@@ -668,6 +668,15 @@ name|NO_TAG
 expr_stmt|;
 block|}
 specifier|public
+name|TaskHandle
+name|getTaskHandle
+parameter_list|()
+block|{
+return|return
+name|taskHandle
+return|;
+block|}
+specifier|public
 name|void
 name|initialize
 parameter_list|(
