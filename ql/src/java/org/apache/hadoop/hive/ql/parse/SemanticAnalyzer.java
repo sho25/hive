@@ -54072,6 +54072,13 @@ case|case
 name|CTLT
 case|:
 comment|// create table like<tbl_name>
+name|tblProps
+operator|=
+name|addDefaultProperties
+argument_list|(
+name|tblProps
+argument_list|)
+expr_stmt|;
 name|CreateTableLikeDesc
 name|crtTblLikeDesc
 init|=
@@ -54099,6 +54106,8 @@ argument_list|,
 name|shared
 operator|.
 name|serdeProps
+argument_list|,
+name|tblProps
 argument_list|,
 name|ifNotExists
 argument_list|,
