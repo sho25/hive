@@ -53,6 +53,18 @@ begin_import
 import|import
 name|java
 operator|.
+name|lang
+operator|.
+name|reflect
+operator|.
+name|InvocationTargetException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|net
 operator|.
 name|InetSocketAddress
@@ -5993,6 +6005,29 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
+name|InvocationTargetException
+name|ie
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Failed to instantiate listener named: "
+operator|+
+name|listenerImpl
+operator|+
+literal|", reason: "
+operator|+
+name|ie
+operator|.
+name|getCause
+argument_list|()
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
 name|Exception
 name|e
 parameter_list|)
@@ -6005,10 +6040,9 @@ literal|"Failed to instantiate listener named: "
 operator|+
 name|listenerImpl
 operator|+
+literal|", reason: "
+operator|+
 name|e
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 throw|;
 block|}
