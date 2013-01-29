@@ -256,7 +256,7 @@ specifier|public
 name|GenMRRedSink1
 parameter_list|()
 block|{   }
-comment|/**    * Reduce Scan encountered.    *    * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
+comment|/**    * Reduce Sink encountered.    * a) If we are seeing this RS for first time, we initialize plan corresponding to this RS.    * b) If we are seeing this RS for second or later time then either query had a join in which    *    case we will merge this plan with earlier plan involving this RS or plan for this RS    *    needs to be split in two branches.    *    * @param nd    *          the reduce sink operator encountered    * @param opProcCtx    *          context    */
 specifier|public
 name|Object
 name|process
@@ -517,10 +517,6 @@ operator|-
 literal|1
 argument_list|,
 literal|false
-argument_list|,
-literal|false
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 name|currTask

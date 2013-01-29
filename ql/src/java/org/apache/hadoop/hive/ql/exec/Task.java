@@ -570,6 +570,17 @@ name|LOCAL_MAPJOIN
 init|=
 literal|5
 decl_stmt|;
+comment|// The join task is converted to a mapjoin task. This can only happen if
+comment|// hive.auto.convert.join.noconditionaltask is set to true. No conditional task was
+comment|// created in case the mapjoin failed.
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|MAPJOIN_ONLY_NOBACKUP
+init|=
+literal|6
+decl_stmt|;
 comment|// Descendants tasks who subscribe feeds from this task
 specifier|protected
 specifier|transient

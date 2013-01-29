@@ -834,6 +834,29 @@ operator|.
 name|UNION
 return|;
 block|}
+comment|/**    * Union operators are not allowed either before or after a explicit mapjoin hint.    * Note that, the same query would just work without the mapjoin hint (by setting    * hive.auto.convert.join to true).    **/
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|opAllowedBeforeMapJoin
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|opAllowedAfterMapJoin
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
 block|}
 end_class
 

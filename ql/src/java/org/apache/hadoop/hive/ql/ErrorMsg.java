@@ -1508,6 +1508,13 @@ operator|+
 literal|"rewrite the query to not use distincts."
 argument_list|)
 block|,
+name|OPERATOR_NOT_ALLOWED_WITH_MAPJOIN
+argument_list|(
+literal|10227
+argument_list|,
+literal|"Not all clauses are supported with mapjoin hint. Please remove mapjoin hint."
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

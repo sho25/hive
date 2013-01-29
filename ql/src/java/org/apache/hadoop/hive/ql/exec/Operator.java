@@ -7422,6 +7422,26 @@ return|return
 literal|false
 return|;
 block|}
+comment|/*    * This operator is allowed before mapjoin. Eventually, mapjoin hint should be done away with.    * But, since bucketized mapjoin and sortmerge join depend on it completely. it is needed.    * Check the operators which are allowed before mapjoin.    */
+specifier|public
+name|boolean
+name|opAllowedBeforeMapJoin
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
+comment|/*    * This operator is allowed after mapjoin. Eventually, mapjoin hint should be done away with.    * But, since bucketized mapjoin and sortmerge join depend on it completely. it is needed.    * Check the operators which are allowed after mapjoin.    */
+specifier|public
+name|boolean
+name|opAllowedAfterMapJoin
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
 block|}
 end_class
 
