@@ -810,6 +810,10 @@ name|TableAccessInfo
 name|tableAccessInfo
 decl_stmt|;
 specifier|protected
+name|ColumnAccessInfo
+name|columnAccessInfo
+decl_stmt|;
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -4706,6 +4710,32 @@ operator|.
 name|tableAccessInfo
 operator|=
 name|tableAccessInfo
+expr_stmt|;
+block|}
+comment|/**    * Gets the column access information.    *    * @return ColumnAccessInfo associated with the query.    */
+specifier|public
+name|ColumnAccessInfo
+name|getColumnAccessInfo
+parameter_list|()
+block|{
+return|return
+name|columnAccessInfo
+return|;
+block|}
+comment|/**    * Sets the column access information.    *    * @param columnAccessInfo The ColumnAccessInfo structure that is set immediately after    * the optimization phase.    */
+specifier|public
+name|void
+name|setColumnAccessInfo
+parameter_list|(
+name|ColumnAccessInfo
+name|columnAccessInfo
+parameter_list|)
+block|{
+name|this
+operator|.
+name|columnAccessInfo
+operator|=
+name|columnAccessInfo
 expr_stmt|;
 block|}
 specifier|protected

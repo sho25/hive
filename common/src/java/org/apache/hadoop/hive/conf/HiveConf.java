@@ -2766,6 +2766,14 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+comment|// Collect column access information
+name|HIVE_STATS_COLLECT_SCANCOLS
+argument_list|(
+literal|"hive.stats.collect.scancols"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// standard error allowed for ndv estimates. A lower value indicates higher accuracy and a
 comment|// higher compute cost.
 name|HIVE_STATS_NDV_ERROR
