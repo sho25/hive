@@ -2309,13 +2309,6 @@ literal|33554432L
 argument_list|)
 block|,
 comment|//32M
-name|HIVEMERGEMAPONLY
-argument_list|(
-literal|"hive.mergejob.maponly"
-argument_list|,
-literal|true
-argument_list|)
-block|,
 name|HIVESENDHEARTBEAT
 argument_list|(
 literal|"hive.heartbeat.interval"

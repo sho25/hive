@@ -10731,24 +10731,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-specifier|public
-specifier|static
-name|boolean
-name|supportCombineFileInputFormat
-parameter_list|()
-block|{
-return|return
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|getCombineFileInputFormat
-argument_list|()
-operator|!=
-literal|null
-return|;
-block|}
 comment|/**    * Construct a list of full partition spec from Dynamic Partition Context and the directory names    * corresponding to these dynamic partitions.    */
 specifier|public
 specifier|static

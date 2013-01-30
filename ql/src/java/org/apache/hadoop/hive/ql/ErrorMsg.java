@@ -889,17 +889,6 @@ operator|+
 literal|"static partition column. To turn this off set hive.exec.dynamic.partition.mode=nonstrict"
 argument_list|)
 block|,
-name|DYNAMIC_PARTITION_MERGE
-argument_list|(
-literal|10097
-argument_list|,
-literal|"Dynamic partition does not support merging using "
-operator|+
-literal|"non-CombineHiveInputFormat. Please check your hive.input.format setting and "
-operator|+
-literal|"make sure your Hadoop version support CombineFileInputFormat"
-argument_list|)
-block|,
 name|NONEXISTPARTCOL
 argument_list|(
 literal|10098
