@@ -2137,7 +2137,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Updates the existing table metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Updates the existing partition metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
 specifier|public
 name|void
 name|alterPartition
@@ -2161,6 +2161,41 @@ argument_list|(
 name|tblName
 argument_list|)
 decl_stmt|;
+name|alterPartition
+argument_list|(
+name|t
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|t
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
+name|newPart
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Updates the existing partition metadata with the new metadata.    *    * @param dbName    *          name of the exiting table's database    * @param tblName    *          name of the existing table    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+specifier|public
+name|void
+name|alterPartition
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|Partition
+name|newPart
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|HiveException
+block|{
 try|try
 block|{
 comment|// Remove the DDL time so that it gets refreshed
@@ -2192,15 +2227,9 @@ argument_list|()
 operator|.
 name|alter_partition
 argument_list|(
-name|t
-operator|.
-name|getDbName
-argument_list|()
+name|dbName
 argument_list|,
-name|t
-operator|.
-name|getTableName
-argument_list|()
+name|tblName
 argument_list|,
 name|newPart
 operator|.

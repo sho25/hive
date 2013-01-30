@@ -930,6 +930,22 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
+comment|// Mark this task as a final map reduce task (ignoring the optional merge task)
+operator|(
+operator|(
+name|MapredWork
+operator|)
+name|currTask
+operator|.
+name|getWork
+argument_list|()
+operator|)
+operator|.
+name|setFinalMapRed
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 comment|// If this file sink desc has been processed due to a linked file sink desc,
 comment|// use that task
 name|Map

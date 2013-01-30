@@ -2285,7 +2285,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Estimate the number of reducers needed for this job, based on job input,    * and configuration parameters.    *    * @return the number of reducers.    */
+comment|/**    * Estimate the number of reducers needed for this job, based on job input,    * and configuration parameters.    *    * The output of this method should only be used if the output of this    * MapRedTask is not being used to populate a bucketed table and the user    * has not specified the number of reducers to use.    *    * @return the number of reducers.    */
 specifier|private
 name|int
 name|estimateNumberOfReducers
@@ -2438,6 +2438,117 @@ argument_list|,
 name|reducers
 argument_list|)
 expr_stmt|;
+comment|// If this map reduce job writes final data to a table and bucketing is being inferred,
+comment|// and the user has configured Hive to do this, make sure the number of reducers is a
+comment|// power of two
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_INFER_BUCKET_SORT_NUM_BUCKETS_POWER_TWO
+argument_list|)
+operator|&&
+name|work
+operator|.
+name|isFinalMapRed
+argument_list|()
+operator|&&
+operator|!
+name|work
+operator|.
+name|getBucketedColsByDirectory
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|int
+name|reducersLog
+init|=
+call|(
+name|int
+call|)
+argument_list|(
+name|Math
+operator|.
+name|log
+argument_list|(
+name|reducers
+argument_list|)
+operator|/
+name|Math
+operator|.
+name|log
+argument_list|(
+literal|2
+argument_list|)
+argument_list|)
+operator|+
+literal|1
+decl_stmt|;
+name|int
+name|reducersPowerTwo
+init|=
+operator|(
+name|int
+operator|)
+name|Math
+operator|.
+name|pow
+argument_list|(
+literal|2
+argument_list|,
+name|reducersLog
+argument_list|)
+decl_stmt|;
+comment|// If the original number of reducers was a power of two, use that
+if|if
+condition|(
+name|reducersPowerTwo
+operator|/
+literal|2
+operator|==
+name|reducers
+condition|)
+block|{
+return|return
+name|reducers
+return|;
+block|}
+elseif|else
+if|if
+condition|(
+name|reducersPowerTwo
+operator|>
+name|maxReducers
+condition|)
+block|{
+comment|// If the next power of two greater than the original number of reducers is greater
+comment|// than the max number of reducers, use the preceding power of two, which is strictly
+comment|// less than the original number of reducers and hence the max
+name|reducers
+operator|=
+name|reducersPowerTwo
+operator|/
+literal|2
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Otherwise use the smallest power of two greater than the original number of reducers
+name|reducers
+operator|=
+name|reducersPowerTwo
+expr_stmt|;
+block|}
+block|}
 return|return
 name|reducers
 return|;

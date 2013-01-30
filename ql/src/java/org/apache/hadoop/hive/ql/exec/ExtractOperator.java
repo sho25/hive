@@ -211,6 +211,29 @@ operator|.
 name|EXTRACT
 return|;
 block|}
+comment|/**    * @return the name of the operator    */
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getName
+parameter_list|()
+block|{
+return|return
+name|getOperatorName
+argument_list|()
+return|;
+block|}
+specifier|static
+specifier|public
+name|String
+name|getOperatorName
+parameter_list|()
+block|{
+return|return
+literal|"EX"
+return|;
+block|}
 block|}
 end_class
 

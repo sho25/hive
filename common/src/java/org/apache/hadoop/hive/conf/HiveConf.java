@@ -3167,6 +3167,27 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+comment|// If this is set, when writing partitions, the metadata will include the bucketing/sorting
+comment|// properties with which the data was written if any (this will not overwrite the metadata
+comment|// inherited from the table if the table is bucketed/sorted)
+name|HIVE_INFER_BUCKET_SORT
+argument_list|(
+literal|"hive.exec.infer.bucket.sort"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// If this is set, when setting the number of reducers for the map reduce task which writes the
+comment|// final output files, it will choose a number which is a power of two.  The number of reducers
+comment|// may be set to a power of two, only to be followed by a merge task meaning preventing
+comment|// anything from being inferred.
+name|HIVE_INFER_BUCKET_SORT_NUM_BUCKETS_POWER_TWO
+argument_list|(
+literal|"hive.exec.infer.bucket.sort.num.buckets.power.two"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|/* The following section contains all configurations used for list bucketing feature.*/
 comment|/* This is not for clients. but only for block merge task. */
 comment|/* This is used by BlockMergeTask to send out flag to RCFileMergeMapper */
