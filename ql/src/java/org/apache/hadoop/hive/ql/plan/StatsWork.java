@@ -117,6 +117,12 @@ name|noStatsAggregator
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+name|boolean
+name|isNoScanAnalyzeCommand
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|StatsWork
 parameter_list|()
@@ -307,6 +313,32 @@ operator|.
 name|clearAggregatorStats
 operator|=
 name|clearAggregatorStats
+expr_stmt|;
+block|}
+comment|/**    * @return the isNoScanAnalyzeCommand    */
+specifier|public
+name|boolean
+name|isNoScanAnalyzeCommand
+parameter_list|()
+block|{
+return|return
+name|isNoScanAnalyzeCommand
+return|;
+block|}
+comment|/**    * @param isNoScanAnalyzeCommand the isNoScanAnalyzeCommand to set    */
+specifier|public
+name|void
+name|setNoScanAnalyzeCommand
+parameter_list|(
+name|boolean
+name|isNoScanAnalyzeCommand
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isNoScanAnalyzeCommand
+operator|=
+name|isNoScanAnalyzeCommand
 expr_stmt|;
 block|}
 block|}

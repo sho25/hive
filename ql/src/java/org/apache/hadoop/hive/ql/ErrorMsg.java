@@ -1504,6 +1504,15 @@ argument_list|,
 literal|"Not all clauses are supported with mapjoin hint. Please remove mapjoin hint."
 argument_list|)
 block|,
+name|ANALYZE_TABLE_NOSCAN_NON_NATIVE
+argument_list|(
+literal|10228
+argument_list|,
+literal|"ANALYZE TABLE NOSCAN cannot be used for "
+operator|+
+literal|"a non-native table"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

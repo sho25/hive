@@ -297,6 +297,11 @@ name|isInsertToTable
 decl_stmt|;
 comment|// used for insert overwrite command (statistics)
 specifier|private
+name|boolean
+name|isNoScanAnalyzeCommand
+decl_stmt|;
+comment|// used for the analyze command (statistics) (noscan)
+specifier|private
 specifier|final
 name|HashMap
 argument_list|<
@@ -2416,6 +2421,32 @@ operator|.
 name|colType
 operator|=
 name|colType
+expr_stmt|;
+block|}
+comment|/**    * @return the isNoScanAnalyzeCommand    */
+specifier|public
+name|boolean
+name|isNoScanAnalyzeCommand
+parameter_list|()
+block|{
+return|return
+name|isNoScanAnalyzeCommand
+return|;
+block|}
+comment|/**    * @param isNoScanAnalyzeCommand the isNoScanAnalyzeCommand to set    */
+specifier|public
+name|void
+name|setNoScanAnalyzeCommand
+parameter_list|(
+name|boolean
+name|isNoScanAnalyzeCommand
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isNoScanAnalyzeCommand
+operator|=
+name|isNoScanAnalyzeCommand
 expr_stmt|;
 block|}
 block|}

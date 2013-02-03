@@ -3021,6 +3021,14 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+comment|// check if it is no scan. grammar prevents coexit noscan/columns
+name|super
+operator|.
+name|processNoScanCommand
+argument_list|(
+name|tree
+argument_list|)
+expr_stmt|;
 comment|/* Rewrite only analyze table<> column<> compute statistics; Don't rewrite analyze table      * command - table stats are collected by the table scan operator and is not rewritten to      * an aggregation.      */
 if|if
 condition|(
