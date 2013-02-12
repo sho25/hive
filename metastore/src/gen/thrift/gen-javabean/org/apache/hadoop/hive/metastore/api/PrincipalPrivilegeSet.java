@@ -3764,7 +3764,7 @@ name|PrivilegeGrantInfo
 argument_list|>
 name|_val27
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key26
 operator|=
 name|iprot
@@ -3988,7 +3988,7 @@ name|PrivilegeGrantInfo
 argument_list|>
 name|_val34
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key33
 operator|=
 name|iprot
@@ -4212,7 +4212,7 @@ name|PrivilegeGrantInfo
 argument_list|>
 name|_val41
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key40
 operator|=
 name|iprot
@@ -5521,7 +5521,7 @@ name|PrivilegeGrantInfo
 argument_list|>
 name|_val60
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key59
 operator|=
 name|iprot
@@ -5759,7 +5759,7 @@ name|PrivilegeGrantInfo
 argument_list|>
 name|_val67
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key66
 operator|=
 name|iprot
@@ -5997,7 +5997,7 @@ name|PrivilegeGrantInfo
 argument_list|>
 name|_val74
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key73
 operator|=
 name|iprot
