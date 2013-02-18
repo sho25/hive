@@ -176,6 +176,10 @@ block|{
 if|if
 condition|(
 name|info
+operator|==
+literal|null
+operator|||
+name|info
 operator|.
 name|getConnection
 argument_list|()
@@ -415,6 +419,10 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|info
+operator|==
+literal|null
+operator|||
 name|info
 operator|.
 name|getConnection
