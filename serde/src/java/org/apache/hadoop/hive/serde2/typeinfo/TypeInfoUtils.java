@@ -85,6 +85,18 @@ name|java
 operator|.
 name|util
 operator|.
+name|concurrent
+operator|.
+name|ConcurrentHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|ArrayList
 import|;
 end_import
@@ -2178,7 +2190,7 @@ throw|;
 block|}
 block|}
 specifier|static
-name|HashMap
+name|Map
 argument_list|<
 name|TypeInfo
 argument_list|,
@@ -2187,7 +2199,7 @@ argument_list|>
 name|cachedStandardObjectInspector
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|TypeInfo
 argument_list|,
@@ -2539,7 +2551,7 @@ name|result
 return|;
 block|}
 specifier|static
-name|HashMap
+name|Map
 argument_list|<
 name|TypeInfo
 argument_list|,
@@ -2548,7 +2560,7 @@ argument_list|>
 name|cachedStandardJavaObjectInspector
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|TypeInfo
 argument_list|,
