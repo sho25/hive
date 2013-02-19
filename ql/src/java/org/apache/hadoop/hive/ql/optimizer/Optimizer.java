@@ -510,6 +510,11 @@ name|MapJoinProcessor
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|boolean
+name|bucketMapJoinOptimizer
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 name|HiveConf
@@ -535,6 +540,13 @@ name|BucketMapJoinOptimizer
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|bucketMapJoinOptimizer
+operator|=
+literal|true
+expr_stmt|;
+block|}
+comment|// If optimize hive.optimize.bucketmapjoin.sortedmerge is set, add both
+comment|// BucketMapJoinOptimizer and SortedMergeBucketMapJoinOptimizer
 if|if
 condition|(
 name|HiveConf
@@ -551,6 +563,23 @@ name|HIVEOPTSORTMERGEBUCKETMAPJOIN
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|bucketMapJoinOptimizer
+condition|)
+block|{
+comment|// No need to add BucketMapJoinOptimizer twice
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
+name|BucketMapJoinOptimizer
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|transformations
 operator|.
 name|add
@@ -560,7 +589,6 @@ name|SortedMergeBucketMapJoinOptimizer
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|transformations
 operator|.

@@ -7413,6 +7413,16 @@ operator|=
 name|useBucketizedHiveInputFormat
 expr_stmt|;
 block|}
+comment|/**    * Whether this operator supports automatic sort merge join.    * The stack is traversed, and this method is invoked for all the operators.    * @return TRUE if yes, FALSE otherwise.    */
+specifier|public
+name|boolean
+name|supportAutomaticSortMergeJoin
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
 specifier|public
 name|boolean
 name|supportUnionRemoveOptimization
@@ -7436,6 +7446,16 @@ comment|/*    * This operator is allowed after mapjoin. Eventually, mapjoin hint
 specifier|public
 name|boolean
 name|opAllowedAfterMapJoin
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
+comment|/*    * If this task contains a join, it can be converted to a map-join task if this operator is    * present in the mapper. For eg. if a sort-merge join operator is present followed by a regular    * join, it cannot be converted to a auto map-join.    */
+specifier|public
+name|boolean
+name|opAllowedConvertMapJoin
 parameter_list|()
 block|{
 return|return

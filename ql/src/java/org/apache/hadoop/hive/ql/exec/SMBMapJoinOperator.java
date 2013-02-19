@@ -613,6 +613,22 @@ name|localWorkInited
 init|=
 literal|false
 decl_stmt|;
+specifier|transient
+name|boolean
+name|initDone
+init|=
+literal|false
+decl_stmt|;
+comment|// This join has been converted to a SMB join by the hive optimizer. The user did not
+comment|// give a mapjoin hint in the query. The hive optimizer figured out that the join can be
+comment|// performed as a smb join, based on all the tables/partitions being joined.
+specifier|private
+specifier|transient
+name|boolean
+name|convertedAutomaticallySMBJoin
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|SMBMapJoinOperator
 parameter_list|()
@@ -647,6 +663,14 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|// If there is a sort-merge join followed by a regular join, the SMBJoinOperator may not
+comment|// get initialized at all. Consider the following query:
+comment|// A SMB B JOIN C
+comment|// For the mapper processing C, The SMJ is not initialized, no need to close it either.
+name|initDone
+operator|=
+literal|true
+expr_stmt|;
 name|super
 operator|.
 name|initializeOp
@@ -3138,6 +3162,18 @@ name|closeCalled
 operator|=
 literal|true
 expr_stmt|;
+comment|// If there is a sort-merge join followed by a regular join, the SMBJoinOperator may not
+comment|// get initialized at all. Consider the following query:
+comment|// A SMB B JOIN C
+comment|// For the mapper processing C, The SMJ is not initialized, no need to close it either.
+if|if
+condition|(
+operator|!
+name|initDone
+condition|)
+block|{
+return|return;
+block|}
 if|if
 condition|(
 name|inputFileChanged
@@ -3391,6 +3427,30 @@ name|OperatorType
 operator|.
 name|MAPJOIN
 return|;
+block|}
+specifier|public
+name|boolean
+name|isConvertedAutomaticallySMBJoin
+parameter_list|()
+block|{
+return|return
+name|convertedAutomaticallySMBJoin
+return|;
+block|}
+specifier|public
+name|void
+name|setConvertedAutomaticallySMBJoin
+parameter_list|(
+name|boolean
+name|convertedAutomaticallySMBJoin
+parameter_list|)
+block|{
+name|this
+operator|.
+name|convertedAutomaticallySMBJoin
+operator|=
+name|convertedAutomaticallySMBJoin
+expr_stmt|;
 block|}
 comment|// returns rows from possibly multiple bucket files of small table in ascending order
 comment|// by utilizing primary queue (borrowed from hadoop)
@@ -4214,6 +4274,17 @@ return|return
 literal|false
 return|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|opAllowedConvertMapJoin
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
 block|}
 block|}
 end_class
