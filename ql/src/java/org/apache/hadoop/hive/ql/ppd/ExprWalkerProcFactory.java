@@ -660,9 +660,9 @@ operator|==
 literal|null
 condition|)
 block|{
-assert|assert
+return|return
 literal|false
-assert|;
+return|;
 block|}
 name|ctx
 operator|.
