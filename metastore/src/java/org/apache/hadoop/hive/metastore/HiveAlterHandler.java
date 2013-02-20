@@ -430,7 +430,7 @@ operator|||
 operator|!
 name|MetaStoreUtils
 operator|.
-name|validateColNames
+name|validateTblColumns
 argument_list|(
 name|newt
 operator|.

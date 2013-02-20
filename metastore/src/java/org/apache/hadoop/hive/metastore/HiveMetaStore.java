@@ -6261,7 +6261,7 @@ operator|||
 operator|!
 name|MetaStoreUtils
 operator|.
-name|validateColNames
+name|validateTblColumns
 argument_list|(
 name|tbl
 operator|.
@@ -6283,7 +6283,7 @@ operator|&&
 operator|!
 name|MetaStoreUtils
 operator|.
-name|validateColNames
+name|validateTblColumns
 argument_list|(
 name|tbl
 operator|.
