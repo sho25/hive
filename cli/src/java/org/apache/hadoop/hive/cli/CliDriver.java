@@ -475,7 +475,7 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ParseDriver
+name|HiveParser
 import|;
 end_import
 
@@ -3113,7 +3113,7 @@ control|(
 name|String
 name|s
 range|:
-name|ParseDriver
+name|HiveParser
 operator|.
 name|getKeywords
 argument_list|()
