@@ -1301,7 +1301,9 @@ literal|"hive.mapred.supports.subdirectories must be true"
 operator|+
 literal|" if any one of following is true: "
 operator|+
-literal|" hive.optimize.listbucketing and mapred.input.dir.recursive"
+literal|" hive.optimize.listbucketing , mapred.input.dir.recursive"
+operator|+
+literal|" and hive.optimize.union.remove."
 argument_list|)
 block|,
 name|SKEWED_TABLE_NO_COLUMN_NAME
