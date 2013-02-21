@@ -8672,7 +8672,7 @@ comment|// required
 name|String
 name|_val152
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key151
 operator|=
 name|iprot
@@ -10842,7 +10842,7 @@ comment|// required
 name|String
 name|_val173
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key172
 operator|=
 name|iprot

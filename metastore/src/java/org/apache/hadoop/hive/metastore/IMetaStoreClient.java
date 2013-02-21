@@ -1240,6 +1240,22 @@ name|UnknownPartitionException
 throws|,
 name|InvalidPartitionException
 function_decl|;
+comment|/**    * @param partVals    * @throws TException    * @throws MetaException    */
+specifier|public
+name|void
+name|validatePartitionNameCharacters
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partVals
+parameter_list|)
+throws|throws
+name|TException
+throws|,
+name|MetaException
+function_decl|;
 comment|/**    * @param tbl    * @throws AlreadyExistsException    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_table(org.apache.hadoop.hive.metastore.api.Table)    */
 specifier|public
 name|void

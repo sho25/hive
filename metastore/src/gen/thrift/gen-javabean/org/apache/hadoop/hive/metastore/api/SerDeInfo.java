@@ -3189,7 +3189,7 @@ comment|// required
 name|String
 name|_val91
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key90
 operator|=
 name|iprot
@@ -3960,7 +3960,7 @@ comment|// required
 name|String
 name|_val97
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_key96
 operator|=
 name|iprot

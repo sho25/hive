@@ -3891,7 +3891,7 @@ comment|// required
 name|String
 name|_val110
 decl_stmt|;
-comment|// required
+comment|// optional
 block|{
 name|org
 operator|.
@@ -5305,7 +5305,7 @@ comment|// required
 name|String
 name|_val136
 decl_stmt|;
-comment|// required
+comment|// optional
 block|{
 name|org
 operator|.
