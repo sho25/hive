@@ -2665,6 +2665,8 @@ operator|.
 name|next
 argument_list|()
 expr_stmt|;
+comment|// Alter table can change the type of partition key now.
+comment|// So check the column name only.
 if|if
 condition|(
 operator|!
@@ -2678,20 +2680,6 @@ argument_list|(
 name|newFs
 operator|.
 name|getName
-argument_list|()
-argument_list|)
-operator|||
-operator|!
-name|oldFs
-operator|.
-name|getType
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-name|newFs
-operator|.
-name|getType
 argument_list|()
 argument_list|)
 condition|)

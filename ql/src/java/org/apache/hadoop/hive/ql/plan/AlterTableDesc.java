@@ -254,6 +254,8 @@ block|,
 name|ALTERSKEWEDLOCATION
 block|,
 name|ALTERBUCKETNUM
+block|,
+name|ALTERPARTITION
 block|}
 specifier|public
 specifier|static

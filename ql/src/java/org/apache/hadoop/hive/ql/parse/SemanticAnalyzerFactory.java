@@ -1468,6 +1468,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_ALTERTABLE_ALTERPARTS
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_LOCKTABLE
 case|:
 case|case
