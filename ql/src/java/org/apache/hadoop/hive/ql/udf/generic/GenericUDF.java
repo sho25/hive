@@ -23,6 +23,44 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Closeable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|MapredContext
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -163,6 +201,8 @@ specifier|public
 specifier|abstract
 class|class
 name|GenericUDF
+implements|implements
+name|Closeable
 block|{
 comment|/**    * A Defered Object allows us to do lazy-evaluation and short-circuiting.    * GenericUDF use DeferedObject to pass arguments.    */
 specifier|public
@@ -236,6 +276,15 @@ parameter_list|)
 throws|throws
 name|UDFArgumentException
 function_decl|;
+comment|/**    * Additionally setup GenericUDF with MapredContext before initializing.    * This is only called in runtime of MapRedTask.    *    * @param context context    */
+specifier|public
+name|void
+name|configure
+parameter_list|(
+name|MapredContext
+name|context
+parameter_list|)
+block|{   }
 comment|/**    * Initialize this GenericUDF.  Additionally, if the arguments are constant    * and the function is eligible to be folded, then the constant value    * returned by this UDF will be computed and stored in the    * ConstantObjectInspector returned.  Otherwise, the function behaves exactly    * like initialize().    */
 specifier|public
 name|ObjectInspector
@@ -491,6 +540,14 @@ index|[]
 name|children
 parameter_list|)
 function_decl|;
+comment|/**    * Close GenericUDF.    * This is only called in runtime of MapRedTask.    */
+specifier|public
+name|void
+name|close
+parameter_list|()
+throws|throws
+name|IOException
+block|{   }
 block|}
 end_class
 
