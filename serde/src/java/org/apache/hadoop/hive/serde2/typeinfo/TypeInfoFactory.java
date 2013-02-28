@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|List
 import|;
 end_import
 
@@ -45,7 +45,9 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|concurrent
+operator|.
+name|ConcurrentHashMap
 import|;
 end_import
 
@@ -96,7 +98,7 @@ class|class
 name|TypeInfoFactory
 block|{
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -105,7 +107,7 @@ argument_list|>
 name|cachedPrimitiveTypeInfo
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -427,7 +429,7 @@ argument_list|)
 return|;
 block|}
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -442,7 +444,7 @@ argument_list|>
 name|cachedStructTypeInfo
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -551,7 +553,7 @@ name|result
 return|;
 block|}
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|List
 argument_list|<
@@ -563,7 +565,7 @@ argument_list|>
 name|cachedUnionTypeInfo
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|List
 argument_list|<
@@ -626,7 +628,7 @@ name|result
 return|;
 block|}
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|TypeInfo
 argument_list|,
@@ -635,7 +637,7 @@ argument_list|>
 name|cachedListTypeInfo
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|TypeInfo
 argument_list|,
@@ -692,7 +694,7 @@ name|result
 return|;
 block|}
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -704,7 +706,7 @@ argument_list|>
 name|cachedMapTypeInfo
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
