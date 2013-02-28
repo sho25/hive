@@ -1992,6 +1992,62 @@ name|allowPartialConsumption
 argument_list|()
 condition|)
 block|{
+comment|// Give the outThread a chance to finish before marking the operator as done
+try|try
+block|{
+name|scriptPid
+operator|.
+name|waitFor
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|interruptedException
+parameter_list|)
+block|{         }
+comment|// best effort attempt to write all output from the script before marking the operator
+comment|// as done
+try|try
+block|{
+if|if
+condition|(
+name|outThread
+operator|!=
+literal|null
+condition|)
+block|{
+name|outThread
+operator|.
+name|join
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e2
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Exception in closing outThread: "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e2
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|setDone
 argument_list|(
 literal|true
