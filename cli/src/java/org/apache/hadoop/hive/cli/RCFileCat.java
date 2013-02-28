@@ -462,6 +462,11 @@ name|pretty
 init|=
 literal|false
 decl_stmt|;
+name|boolean
+name|fileSizes
+init|=
+literal|false
+decl_stmt|;
 comment|//get options from arguments
 if|if
 condition|(
@@ -626,6 +631,22 @@ block|}
 elseif|else
 if|if
 condition|(
+name|arg
+operator|.
+name|equals
+argument_list|(
+literal|"--file-sizes"
+argument_list|)
+condition|)
+block|{
+name|fileSizes
+operator|=
+literal|true
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
 name|fileName
 operator|==
 literal|null
@@ -759,6 +780,8 @@ decl_stmt|;
 if|if
 condition|(
 name|columnSizes
+operator|||
+name|fileSizes
 condition|)
 block|{
 comment|// Print out the un/compressed sizes of each column
@@ -773,6 +796,22 @@ index|[]
 name|uncompressedColumnSizes
 init|=
 literal|null
+decl_stmt|;
+comment|// un/compressed sizes of file and no. of rows
+name|long
+name|rowNo
+init|=
+literal|0
+decl_stmt|;
+name|long
+name|uncompressedFileSize
+init|=
+literal|0
+decl_stmt|;
+name|long
+name|compressedFileSize
+init|=
+literal|0
 decl_stmt|;
 comment|// Skip from block to block since we only need the header
 while|while
@@ -875,9 +914,18 @@ name|i
 index|]
 expr_stmt|;
 block|}
+name|rowNo
+operator|+=
+name|keyBuffer
+operator|.
+name|getNumberRows
+argument_list|()
+expr_stmt|;
 block|}
 if|if
 condition|(
+name|columnSizes
+operator|&&
 name|uncompressedColumnSizes
 operator|!=
 literal|null
@@ -966,6 +1014,79 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+if|if
+condition|(
+name|fileSizes
+condition|)
+block|{
+if|if
+condition|(
+name|uncompressedColumnSizes
+operator|!=
+literal|null
+operator|&&
+name|compressedColumnSizes
+operator|!=
+literal|null
+condition|)
+block|{
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|uncompressedColumnSizes
+operator|.
+name|length
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|uncompressedFileSize
+operator|+=
+name|uncompressedColumnSizes
+index|[
+name|i
+index|]
+expr_stmt|;
+name|compressedFileSize
+operator|+=
+name|compressedColumnSizes
+index|[
+name|i
+index|]
+expr_stmt|;
+block|}
+block|}
+name|System
+operator|.
+name|out
+operator|.
+name|print
+argument_list|(
+literal|"File size (uncompressed): "
+operator|+
+name|uncompressedFileSize
+operator|+
+literal|". File size (compressed): "
+operator|+
+name|compressedFileSize
+operator|+
+literal|". Number of rows: "
+operator|+
+name|rowNo
+operator|+
+literal|"."
+operator|+
+name|NEWLINE
+argument_list|)
+expr_stmt|;
 block|}
 name|System
 operator|.
@@ -1357,7 +1478,7 @@ name|Usage
 init|=
 literal|"RCFileCat [--start=start_offet] [--length=len] [--verbose] "
 operator|+
-literal|"[--column-sizes | --column-sizes-pretty] fileName"
+literal|"[--column-sizes | --column-sizes-pretty] [--file-sizes] fileName"
 decl_stmt|;
 specifier|public
 specifier|static

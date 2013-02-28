@@ -1326,6 +1326,16 @@ return|return
 name|eachColumnValueLen
 return|;
 block|}
+comment|/**      * @return the numberRows      */
+specifier|public
+name|int
+name|getNumberRows
+parameter_list|()
+block|{
+return|return
+name|numberRows
+return|;
+block|}
 block|}
 comment|/**    * ValueBuffer is the value of each record in RCFile. Its on-disk layout is as    * below:    *<ul>    *<li>Compressed or plain data of [column_1_row_1_value,    * column_1_row_2_value,....]</li>    *<li>Compressed or plain data of [column_2_row_1_value,    * column_2_row_2_value,....]</li>    *</ul>    */
 specifier|public
