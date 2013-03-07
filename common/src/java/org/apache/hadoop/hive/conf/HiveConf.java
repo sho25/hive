@@ -2276,7 +2276,7 @@ name|HIVECONVERTJOIN
 argument_list|(
 literal|"hive.auto.convert.join"
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 block|,
 name|HIVECONVERTJOINNOCONDITIONALTASK
