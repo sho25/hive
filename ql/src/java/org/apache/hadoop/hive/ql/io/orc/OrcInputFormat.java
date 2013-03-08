@@ -699,6 +699,16 @@ condition|(
 name|includedStr
 operator|==
 literal|null
+operator|||
+name|includedStr
+operator|.
+name|trim
+argument_list|()
+operator|.
+name|length
+argument_list|()
+operator|==
+literal|0
 condition|)
 block|{
 return|return
