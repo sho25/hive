@@ -2502,6 +2502,16 @@ name|getPartition
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|validateTableInDropPartition
+argument_list|(
+name|tbl
+argument_list|,
+name|preDropPart
+operator|.
+name|getTable
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|driver
 operator|.
 name|run
