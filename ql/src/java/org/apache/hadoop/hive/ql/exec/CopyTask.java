@@ -438,11 +438,9 @@ range|:
 name|srcs
 control|)
 block|{
-name|System
+name|console
 operator|.
-name|out
-operator|.
-name|println
+name|printInfo
 argument_list|(
 literal|"Copying file: "
 operator|+

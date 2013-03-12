@@ -656,9 +656,12 @@ name|LoginException
 throws|,
 name|IOException
 function_decl|;
-comment|/**    * Used by metastore server to perform requested rpc in client context.    * @param ugi    * @param pvea    * @throws IOException    * @throws InterruptedException    */
+comment|/**    * Used by metastore server to perform requested rpc in client context.    * @param<T>    * @param ugi    * @param pvea    * @throws IOException    * @throws InterruptedException    */
 specifier|public
-name|void
+parameter_list|<
+name|T
+parameter_list|>
+name|T
 name|doAs
 parameter_list|(
 name|UserGroupInformation
@@ -666,7 +669,7 @@ name|ugi
 parameter_list|,
 name|PrivilegedExceptionAction
 argument_list|<
-name|Void
+name|T
 argument_list|>
 name|pvea
 parameter_list|)
@@ -705,12 +708,34 @@ name|boolean
 name|isSecureShimImpl
 parameter_list|()
 function_decl|;
+comment|/**    * Return true if the hadoop configuration has security enabled    * @return    */
+specifier|public
+name|boolean
+name|isSecurityEnabled
+parameter_list|()
+function_decl|;
 comment|/**    * Get the string form of the token given a token signature.    * The signature is used as the value of the "service" field in the token for lookup.    * Ref: AbstractDelegationTokenSelector in Hadoop. If there exists such a token    * in the token cache (credential store) of the job, the lookup returns that.    * This is relevant only when running against a "secure" hadoop release    * The method gets hold of the tokens if they are set up by hadoop - this should    * happen on the map/reduce tasks if the client added the tokens into hadoop's    * credential store in the front end during job submission. The method will    * select the hive delegation token among the set of tokens and return the string    * form of it    * @param tokenSignature    * @return the string form of the token found    * @throws IOException    */
 name|String
 name|getTokenStrForm
 parameter_list|(
 name|String
 name|tokenSignature
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Add a delegation token to the given ugi    * @param ugi    * @param tokenStr    * @param tokenService    * @throws IOException    */
+name|void
+name|setTokenStr
+parameter_list|(
+name|UserGroupInformation
+name|ugi
+parameter_list|,
+name|String
+name|tokenStr
+parameter_list|,
+name|String
+name|tokenService
 parameter_list|)
 throws|throws
 name|IOException
@@ -793,6 +818,20 @@ name|Configuration
 name|conf
 parameter_list|)
 function_decl|;
+comment|/**   *  Perform kerberos login using the given principal and keytab  * @throws IOException   */
+specifier|public
+name|void
+name|loginUserFromKeytab
+parameter_list|(
+name|String
+name|principal
+parameter_list|,
+name|String
+name|keytabFile
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Move the directory/file to trash. In case of the symlinks or mount points, the file is    * moved to the trashbin in the actual volume of the path p being deleted    * @param fs    * @param path    * @param conf    * @return false if the item is already in the trash or trash is disabled    * @throws IOException    */
 specifier|public
 name|boolean
@@ -833,6 +872,16 @@ parameter_list|,
 name|Path
 name|path
 parameter_list|)
+function_decl|;
+comment|/**    * Create the proxy ugi for the given userid    * @param userName    * @return    */
+name|UserGroupInformation
+name|createProxyUser
+parameter_list|(
+name|String
+name|userName
+parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 comment|/**    * InputSplitShim.    *    */
 specifier|public

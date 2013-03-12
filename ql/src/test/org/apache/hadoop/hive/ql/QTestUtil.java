@@ -1414,7 +1414,6 @@ block|}
 block|}
 else|else
 block|{
-comment|// System.out.println("Trying to match: " + path.getPath());
 name|Matcher
 name|m
 init|=
@@ -1455,7 +1454,6 @@ argument_list|(
 literal|3
 argument_list|)
 decl_stmt|;
-comment|// System.out.println("Matched new name: " + name);
 name|path
 operator|.
 name|renameTo
@@ -1514,7 +1512,6 @@ argument_list|(
 literal|3
 argument_list|)
 decl_stmt|;
-comment|// System.out.println("Matched new name: " + name);
 name|path
 operator|.
 name|renameTo
@@ -1558,6 +1555,24 @@ argument_list|,
 literal|"0.20"
 argument_list|)
 expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getOutputDirectory
+parameter_list|()
+block|{
+return|return
+name|outDir
+return|;
+block|}
+specifier|public
+name|String
+name|getLogDirectory
+parameter_list|()
+block|{
+return|return
+name|logDir
+return|;
 block|}
 specifier|private
 name|String
