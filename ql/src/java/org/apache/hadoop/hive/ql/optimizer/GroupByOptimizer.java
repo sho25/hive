@@ -1172,9 +1172,19 @@ operator|.
 name|HIVE_MAP_GROUPBY_SORT
 argument_list|)
 decl_stmt|;
+comment|// Dont remove the operator for distincts
 if|if
 condition|(
 name|useMapperSort
+operator|&&
+operator|!
+name|groupByOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|isDistinct
+argument_list|()
 operator|&&
 operator|(
 name|match

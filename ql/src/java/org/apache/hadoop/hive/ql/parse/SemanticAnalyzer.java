@@ -19200,6 +19200,10 @@ argument_list|,
 literal|false
 argument_list|,
 literal|0
+argument_list|,
+name|numDistinctUDFs
+operator|>
+literal|0
 argument_list|)
 argument_list|,
 operator|new
@@ -20030,6 +20034,11 @@ name|numDistinctUDFs
 init|=
 literal|0
 decl_stmt|;
+name|boolean
+name|containsDistinctAggr
+init|=
+literal|false
+decl_stmt|;
 for|for
 control|(
 name|Map
@@ -20099,6 +20108,12 @@ operator|.
 name|TOK_FUNCTIONDI
 operator|)
 decl_stmt|;
+name|containsDistinctAggr
+operator|=
+name|containsDistinctAggr
+operator|||
+name|isDistinct
+expr_stmt|;
 comment|// If the function is distinct, partial aggregation has not been done on
 comment|// the client side.
 comment|// If distPartAgg is set, the client is letting us know that partial
@@ -20643,6 +20658,8 @@ operator|&&
 name|groupingSetsNeedAdditionalMRJob
 argument_list|,
 name|groupingSetsPosition
+argument_list|,
+name|containsDistinctAggr
 argument_list|)
 argument_list|,
 operator|new
@@ -21239,6 +21256,11 @@ operator|!=
 literal|null
 operator|)
 assert|;
+name|boolean
+name|containsDistinctAggr
+init|=
+literal|false
+decl_stmt|;
 for|for
 control|(
 name|Map
@@ -21366,6 +21388,12 @@ name|HiveParser
 operator|.
 name|TOK_FUNCTIONDI
 decl_stmt|;
+name|containsDistinctAggr
+operator|=
+name|containsDistinctAggr
+operator|||
+name|isDistinct
+expr_stmt|;
 name|boolean
 name|isAllColumns
 init|=
@@ -21581,6 +21609,8 @@ argument_list|,
 name|groupingSetsPresent
 argument_list|,
 name|groupingSetsPosition
+argument_list|,
+name|containsDistinctAggr
 argument_list|)
 argument_list|,
 operator|new
@@ -24265,6 +24295,11 @@ argument_list|(
 name|dest
 argument_list|)
 decl_stmt|;
+name|boolean
+name|containsDistinctAggr
+init|=
+literal|false
+decl_stmt|;
 for|for
 control|(
 name|Map
@@ -24405,6 +24440,12 @@ name|HiveParser
 operator|.
 name|TOK_FUNCTIONDI
 decl_stmt|;
+name|containsDistinctAggr
+operator|=
+name|containsDistinctAggr
+operator|||
+name|isDistinct
+expr_stmt|;
 name|boolean
 name|isStar
 init|=
@@ -24615,6 +24656,8 @@ argument_list|,
 literal|false
 argument_list|,
 literal|0
+argument_list|,
+name|containsDistinctAggr
 argument_list|)
 argument_list|,
 operator|new
@@ -35935,6 +35978,8 @@ argument_list|,
 literal|false
 argument_list|,
 literal|0
+argument_list|,
+literal|false
 argument_list|)
 argument_list|,
 operator|new
