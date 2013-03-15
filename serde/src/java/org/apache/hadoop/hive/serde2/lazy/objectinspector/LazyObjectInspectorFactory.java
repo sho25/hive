@@ -37,7 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|List
 import|;
 end_import
 
@@ -47,7 +47,9 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|concurrent
+operator|.
+name|ConcurrentHashMap
 import|;
 end_import
 
@@ -84,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector  * instances.  *   * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  *   * The reason of having caches here is that ObjectInspectors do not have an  * internal state - so ObjectInspectors with the same construction parameters  * should result in exactly the same ObjectInspector.  */
+comment|/**  * ObjectInspectorFactory is the primary way to create new ObjectInspector  * instances.  *  * SerDe classes should call the static functions in this library to create an  * ObjectInspector to return to the caller of SerDe2.getObjectInspector().  *  * The reason of having caches here is that ObjectInspectors do not have an  * internal state - so ObjectInspectors with the same construction parameters  * should result in exactly the same ObjectInspector.  */
 end_comment
 
 begin_class
@@ -94,7 +96,7 @@ class|class
 name|LazyObjectInspectorFactory
 block|{
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -106,7 +108,7 @@ argument_list|>
 name|cachedLazySimpleStructObjectInspector
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -364,7 +366,7 @@ name|result
 return|;
 block|}
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -376,7 +378,7 @@ argument_list|>
 name|cachedLazySimpleListObjectInspector
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -522,7 +524,7 @@ name|result
 return|;
 block|}
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -534,7 +536,7 @@ argument_list|>
 name|cachedLazySimpleMapObjectInspector
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|ArrayList
 argument_list|<
@@ -709,7 +711,7 @@ name|result
 return|;
 block|}
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|List
 argument_list|<
@@ -721,7 +723,7 @@ argument_list|>
 name|cachedLazyUnionObjectInspector
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|List
 argument_list|<
