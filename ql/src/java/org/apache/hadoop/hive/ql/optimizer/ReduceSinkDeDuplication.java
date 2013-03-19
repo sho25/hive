@@ -2609,6 +2609,13 @@ operator|.
 name|getCols
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|cols
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|String
@@ -2626,6 +2633,7 @@ argument_list|,
 name|col
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -2655,6 +2663,13 @@ operator|.
 name|getCols
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|cols
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|String
@@ -2672,6 +2687,7 @@ argument_list|,
 name|col
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
