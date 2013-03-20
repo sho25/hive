@@ -2354,7 +2354,7 @@ name|HIVECONVERTJOINNOCONDITIONALTASK
 argument_list|(
 literal|"hive.auto.convert.join.noconditionaltask"
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 block|,
 name|HIVECONVERTJOINNOCONDITIONALTASKTHRESHOLD
