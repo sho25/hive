@@ -19064,6 +19064,16 @@ break|break;
 case|case
 name|HiveParser
 operator|.
+name|DecimalLiteral
+case|:
+name|result
+operator|=
+literal|true
+expr_stmt|;
+break|break;
+case|case
+name|HiveParser
+operator|.
 name|CharSetName
 case|:
 name|result
