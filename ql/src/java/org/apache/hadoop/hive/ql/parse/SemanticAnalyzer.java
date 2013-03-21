@@ -40105,7 +40105,7 @@ if|if
 condition|(
 name|node
 operator|.
-name|getRightAliases
+name|getLeftAliases
 argument_list|()
 operator|.
 name|length
