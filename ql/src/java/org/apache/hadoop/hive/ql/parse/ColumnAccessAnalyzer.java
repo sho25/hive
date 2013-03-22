@@ -223,7 +223,7 @@ name|tableName
 init|=
 name|table
 operator|.
-name|getTableName
+name|getCompleteName
 argument_list|()
 decl_stmt|;
 name|List
