@@ -1225,7 +1225,7 @@ name|add
 argument_list|(
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|writableByteObjectInspector
+name|writableShortObjectInspector
 argument_list|)
 expr_stmt|;
 block|}

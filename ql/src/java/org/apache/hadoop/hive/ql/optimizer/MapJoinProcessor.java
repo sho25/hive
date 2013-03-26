@@ -3234,7 +3234,7 @@ name|getPrimitiveTypeInfo
 argument_list|(
 name|serdeConstants
 operator|.
-name|TINYINT_TYPE_NAME
+name|SMALLINT_TYPE_NAME
 argument_list|)
 argument_list|,
 literal|"filter"

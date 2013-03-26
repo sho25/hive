@@ -273,7 +273,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|ByteWritable
+name|ShortWritable
 import|;
 end_import
 
@@ -1436,14 +1436,14 @@ name|alias
 index|]
 argument_list|)
 expr_stmt|;
-comment|// for each alias, add object inspector for boolean as the last element
+comment|// for each alias, add object inspector for short as the last element
 name|rcOIs
 operator|.
 name|add
 argument_list|(
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|writableByteObjectInspector
+name|writableShortObjectInspector
 argument_list|)
 expr_stmt|;
 name|rowContainerObjectInspectors
@@ -1598,7 +1598,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|ByteWritable
+name|ShortWritable
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4742,11 +4742,11 @@ name|size
 argument_list|()
 condition|)
 block|{
-name|ByteWritable
+name|ShortWritable
 name|filter
 init|=
 operator|(
-name|ByteWritable
+name|ShortWritable
 operator|)
 name|leftObj
 operator|.
@@ -4815,11 +4815,11 @@ name|size
 argument_list|()
 condition|)
 block|{
-name|ByteWritable
+name|ShortWritable
 name|filter
 init|=
 operator|(
-name|ByteWritable
+name|ShortWritable
 operator|)
 name|rightObj
 operator|.
@@ -4885,7 +4885,7 @@ name|hasAnyFiltered
 argument_list|(
 operator|(
 operator|(
-name|ByteWritable
+name|ShortWritable
 operator|)
 name|row
 operator|.

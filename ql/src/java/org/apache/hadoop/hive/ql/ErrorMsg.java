@@ -1208,13 +1208,13 @@ operator|+
 literal|"hive.enforce.bucketmapjoin to false."
 argument_list|)
 block|,
-name|JOINNODE_OUTERJOIN_MORETHAN_8
+name|JOINNODE_OUTERJOIN_MORETHAN_32
 argument_list|(
 literal|10142
 argument_list|,
 literal|"Single join node containing outer join(s) "
 operator|+
-literal|"cannot have more than 8 aliases"
+literal|"cannot have more than 32 aliases"
 argument_list|)
 block|,
 name|INVALID_JDO_FILTER_EXPRESSION

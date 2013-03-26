@@ -40119,7 +40119,7 @@ name|length
 operator|+
 literal|1
 operator|>=
-literal|8
+literal|32
 condition|)
 block|{
 name|LOG
@@ -40128,7 +40128,7 @@ name|info
 argument_list|(
 name|ErrorMsg
 operator|.
-name|JOINNODE_OUTERJOIN_MORETHAN_8
+name|JOINNODE_OUTERJOIN_MORETHAN_32
 argument_list|)
 expr_stmt|;
 return|return
