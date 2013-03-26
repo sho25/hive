@@ -185,6 +185,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|AbstractSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|ByteStream
 import|;
 end_import
@@ -571,8 +587,8 @@ begin_class
 specifier|public
 class|class
 name|HBaseSerDe
-implements|implements
-name|SerDe
+extends|extends
+name|AbstractSerDe
 block|{
 specifier|public
 specifier|static
@@ -3015,6 +3031,7 @@ name|putTimestamp
 operator|>=
 literal|0
 condition|)
+block|{
 name|put
 operator|=
 operator|new
@@ -3025,7 +3042,9 @@ argument_list|,
 name|putTimestamp
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|put
 operator|=
 operator|new
@@ -3034,6 +3053,7 @@ argument_list|(
 name|key
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Serialize each field
 for|for
 control|(

@@ -55,7 +55,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|Deserializer
+name|AbstractDeserializer
 import|;
 end_import
 
@@ -145,8 +145,8 @@ begin_class
 specifier|public
 class|class
 name|ThriftDeserializer
-implements|implements
-name|Deserializer
+extends|extends
+name|AbstractDeserializer
 block|{
 specifier|private
 name|ThriftByteStreamTypedSerDe
@@ -156,6 +156,8 @@ specifier|public
 name|ThriftDeserializer
 parameter_list|()
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -293,6 +295,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|deserialize
@@ -312,6 +316,8 @@ name|field
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ObjectInspector
 name|getObjectInspector
@@ -326,6 +332,8 @@ name|getObjectInspector
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|SerDeStats
 name|getSerDeStats

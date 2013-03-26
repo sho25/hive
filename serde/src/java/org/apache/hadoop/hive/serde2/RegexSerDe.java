@@ -285,8 +285,8 @@ begin_class
 specifier|public
 class|class
 name|RegexSerDe
-implements|implements
-name|SerDe
+extends|extends
+name|AbstractSerDe
 block|{
 specifier|public
 specifier|static
@@ -1379,6 +1379,8 @@ literal|"Regex SerDe doesn't support the serialize() method"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|SerDeStats
 name|getSerDeStats

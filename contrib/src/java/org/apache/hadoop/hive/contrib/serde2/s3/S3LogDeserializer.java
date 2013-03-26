@@ -131,7 +131,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|Deserializer
+name|AbstractDeserializer
 import|;
 end_import
 
@@ -289,8 +289,8 @@ begin_class
 specifier|public
 class|class
 name|S3LogDeserializer
-implements|implements
-name|Deserializer
+extends|extends
+name|AbstractDeserializer
 block|{
 specifier|public
 specifier|static
@@ -377,6 +377,8 @@ operator|new
 name|S3LogStruct
 argument_list|()
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -744,6 +746,8 @@ name|c
 operator|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|deserialize
@@ -879,6 +883,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ObjectInspector
 name|getObjectInspector
@@ -1122,6 +1128,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|SerDeStats
 name|getSerDeStats

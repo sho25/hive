@@ -18,10 +18,12 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * A union of HiveDeserializer and HiveSerializer interface.  *   * If a developer wants his hive table to be read-only, then he just want to  * return  *   * both readable and writable, then  *   *   */
+comment|/**  * A union of HiveDeserializer and HiveSerializer interface.  *  * If a developer wants his hive table to be read-only, then he just want to  * return  *  * both readable and writable, then  *  * All serdes should extend the abstract class AbstractSerDe, and eventually SerDe interface  * should be removed  */
 end_comment
 
 begin_interface
+annotation|@
+name|Deprecated
 specifier|public
 interface|interface
 name|SerDe

@@ -271,8 +271,8 @@ begin_class
 specifier|public
 class|class
 name|TestSerDe
-implements|implements
-name|SerDe
+extends|extends
+name|AbstractSerDe
 block|{
 specifier|public
 specifier|static
@@ -445,6 +445,8 @@ operator|=
 name|DefaultSeparator
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -739,6 +741,8 @@ operator|new
 name|ColumnSet
 argument_list|()
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|deserialize
@@ -901,6 +905,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ObjectInspector
 name|getObjectInspector
@@ -912,6 +918,8 @@ return|return
 name|cachedObjectInspector
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Class
 argument_list|<
@@ -935,6 +943,8 @@ operator|new
 name|Text
 argument_list|()
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|Writable
 name|serialize
@@ -1136,6 +1146,8 @@ return|return
 name|serializeCache
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|SerDeStats
 name|getSerDeStats

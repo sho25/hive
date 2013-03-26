@@ -151,8 +151,8 @@ begin_class
 specifier|public
 class|class
 name|NullStructSerDe
-implements|implements
-name|SerDe
+extends|extends
+name|AbstractSerDe
 block|{
 class|class
 name|NullStructField

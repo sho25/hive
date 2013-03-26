@@ -31,7 +31,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|ByteStream
+name|AbstractSerDe
 import|;
 end_import
 
@@ -47,7 +47,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|ByteStream
 import|;
 end_import
 
@@ -120,8 +120,8 @@ specifier|public
 specifier|abstract
 class|class
 name|ColumnarSerDeBase
-implements|implements
-name|SerDe
+extends|extends
+name|AbstractSerDe
 block|{
 comment|// The object for storing row data
 name|ColumnarStructBase

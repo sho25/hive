@@ -74,17 +74,20 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveSerializer is used to serialize data to a Hadoop Writable object. The  * serialize In addition to the interface below, all implementations are assume  * to have a ctor that takes a single 'Table' object as argument.  * All serializers should extend the abstract class AbstractSerializer, and eventually  * Serializer interface should be removed  */
+comment|/**  * Abstract class for implementing Deserializer. The abstract class has been created, so that  * new methods can be added in the underlying interface, Deserializer, and only implementations  * that need those methods overwrite it.  */
 end_comment
 
-begin_interface
-annotation|@
-name|Deprecated
+begin_class
 specifier|public
-interface|interface
-name|Serializer
+specifier|abstract
+class|class
+name|AbstractDeserializer
+implements|implements
+name|Deserializer
 block|{
-comment|/**    * Initialize the HiveSerializer.    *    * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
+comment|/**    * Initialize the HiveDeserializer.    *    * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
+specifier|public
+specifier|abstract
 name|void
 name|initialize
 parameter_list|(
@@ -97,36 +100,36 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
-comment|/**    * Returns the Writable class that would be returned by the serialize method.    * This is used to initialize SequenceFile header.    */
-name|Class
-argument_list|<
-name|?
-extends|extends
-name|Writable
-argument_list|>
-name|getSerializedClass
-parameter_list|()
-function_decl|;
-comment|/**    * Serialize an object by navigating inside the Object with the    * ObjectInspector. In most cases, the return value of this function will be    * constant since the function will reuse the Writable object. If the client    * wants to keep a copy of the Writable, the client needs to clone the    * returned value.    */
-name|Writable
-name|serialize
-parameter_list|(
+comment|/**    * Deserialize an object out of a Writable blob. In most cases, the return    * value of this function will be constant since the function will reuse the    * returned object. If the client wants to keep a copy of the object, the    * client needs to clone the returned value by calling    * ObjectInspectorUtils.getStandardObject().    *    * @param blob    *          The Writable object containing a serialized object    * @return A Java object representing the contents in the blob.    */
+specifier|public
+specifier|abstract
 name|Object
-name|obj
-parameter_list|,
-name|ObjectInspector
-name|objInspector
+name|deserialize
+parameter_list|(
+name|Writable
+name|blob
 parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
+comment|/**    * Get the object inspector that can be used to navigate through the internal    * structure of the Object returned from deserialize(...).    */
+specifier|public
+specifier|abstract
+name|ObjectInspector
+name|getObjectInspector
+parameter_list|()
+throws|throws
+name|SerDeException
+function_decl|;
 comment|/**    * Returns statistics collected when serializing    */
+specifier|public
+specifier|abstract
 name|SerDeStats
 name|getSerDeStats
 parameter_list|()
 function_decl|;
 block|}
-end_interface
+end_class
 
 end_unit
 

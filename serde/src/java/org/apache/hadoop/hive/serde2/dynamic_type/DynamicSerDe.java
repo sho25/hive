@@ -33,16 +33,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -139,7 +129,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|ByteStream
+name|AbstractSerDe
 import|;
 end_import
 
@@ -155,7 +145,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|ByteStream
 import|;
 end_import
 
@@ -409,10 +399,8 @@ begin_class
 specifier|public
 class|class
 name|DynamicSerDe
-implements|implements
-name|SerDe
-implements|,
-name|Serializable
+extends|extends
+name|AbstractSerDe
 block|{
 specifier|public
 specifier|static

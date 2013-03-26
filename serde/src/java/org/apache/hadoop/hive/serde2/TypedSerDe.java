@@ -152,8 +152,8 @@ specifier|public
 specifier|abstract
 class|class
 name|TypedSerDe
-implements|implements
-name|SerDe
+extends|extends
+name|AbstractSerDe
 block|{
 specifier|protected
 name|Type
@@ -245,6 +245,8 @@ specifier|protected
 name|Object
 name|deserializeCache
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|deserialize
@@ -293,6 +295,8 @@ name|deserializeCache
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ObjectInspector
 name|getObjectInspector
@@ -327,6 +331,8 @@ operator|.
 name|JAVA
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -342,6 +348,8 @@ name|SerDeException
 block|{
 comment|// do nothing
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Class
 argument_list|<
@@ -358,6 +366,8 @@ operator|.
 name|class
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Writable
 name|serialize
@@ -379,6 +389,8 @@ literal|"not supported"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|SerDeStats
 name|getSerDeStats

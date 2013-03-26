@@ -21,6 +21,26 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -85,7 +105,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -171,26 +191,6 @@ name|Writable
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Properties
-import|;
-end_import
-
 begin_comment
 comment|/**  * Read or write Avro data from Hive.  */
 end_comment
@@ -199,8 +199,8 @@ begin_class
 specifier|public
 class|class
 name|AvroSerDe
-implements|implements
-name|SerDe
+extends|extends
+name|AbstractSerDe
 block|{
 specifier|private
 specifier|static
@@ -279,6 +279,7 @@ name|schema
 operator|!=
 literal|null
 condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -286,6 +287,7 @@ argument_list|(
 literal|"Resetting already initialized AvroSerDe"
 argument_list|)
 expr_stmt|;
+block|}
 name|schema
 operator|=
 literal|null
@@ -440,11 +442,13 @@ if|if
 condition|(
 name|badSchema
 condition|)
+block|{
 throw|throw
 operator|new
 name|BadSchemaException
 argument_list|()
 throw|;
+block|}
 return|return
 name|getSerializer
 argument_list|()
@@ -479,11 +483,13 @@ if|if
 condition|(
 name|badSchema
 condition|)
+block|{
 throw|throw
 operator|new
 name|BadSchemaException
 argument_list|()
 throw|;
+block|}
 return|return
 name|getDeserializer
 argument_list|()
@@ -536,12 +542,14 @@ name|avroDeserializer
 operator|==
 literal|null
 condition|)
+block|{
 name|avroDeserializer
 operator|=
 operator|new
 name|AvroDeserializer
 argument_list|()
 expr_stmt|;
+block|}
 return|return
 name|avroDeserializer
 return|;
@@ -557,12 +565,14 @@ name|avroSerializer
 operator|==
 literal|null
 condition|)
+block|{
 name|avroSerializer
 operator|=
 operator|new
 name|AvroSerializer
 argument_list|()
 expr_stmt|;
+block|}
 return|return
 name|avroSerializer
 return|;

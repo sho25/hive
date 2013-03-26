@@ -74,10 +74,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveDeserializer is used to deserialize the data from hadoop Writable to a  * custom java object that can be of any type that the developer wants.  *  * HiveDeserializer also provides the ObjectInspector which can be used to  * inspect the internal structure of the object (that is returned by deserialize  * function).  *  */
+comment|/**  * HiveDeserializer is used to deserialize the data from hadoop Writable to a  * custom java object that can be of any type that the developer wants.  *  * HiveDeserializer also provides the ObjectInspector which can be used to  * inspect the internal structure of the object (that is returned by deserialize  * function).  * All deserializers should extend the abstract class AbstractDeserializer, and eventually  * Deserializer interface should be removed  */
 end_comment
 
 begin_interface
+annotation|@
+name|Deprecated
 specifier|public
 interface|interface
 name|Deserializer
@@ -95,7 +97,7 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
-comment|/**    * Deserialize an object out of a Writable blob. In most cases, the return    * value of this function will be constant since the function will reuse the    * returned object. If the client wants to keep a copy of the object, the    * client needs to clone the returned value by calling    * ObjectInspectorUtils.getStandardObject().    *    * @param blob    *          The Writable object containing a serialized object    * @return A Java object representing the contents in the blob.    */
+comment|/**    * Deserialize an object out of a Writable blob. In most cases, the return    * value of this function will be constant since the function will reuse the    * returned object. If the client wants to keep a copy of the object, the    * client needs to clone the returnDeserializered value by calling    * ObjectInspectorUtils.getStandardObject().    *    * @param blob    *          The Writable object containing a serialized object    * @return A Java object representing the contents in the blob.    */
 name|Object
 name|deserialize
 parameter_list|(
