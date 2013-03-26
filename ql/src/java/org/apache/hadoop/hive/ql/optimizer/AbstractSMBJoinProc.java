@@ -695,6 +695,8 @@ block|{
 comment|// Check whether the mapjoin is a bucketed mapjoin.
 comment|// The above can be ascertained by checking the big table bucket -> small table buckets
 comment|// mapping in the mapjoin descriptor.
+comment|// First check if this map-join operator is already a BucketMapJoin or not. If not give up
+comment|// we are only trying to convert a BucketMapJoin to sort-BucketMapJoin.
 if|if
 condition|(
 name|mapJoinOp
@@ -726,7 +728,7 @@ literal|false
 return|;
 block|}
 name|boolean
-name|tableSorted
+name|tableEligibleForBucketedSortMergeJoin
 init|=
 literal|true
 decl_stmt|;
@@ -837,11 +839,11 @@ name|pos
 operator|++
 control|)
 block|{
-name|tableSorted
+name|tableEligibleForBucketedSortMergeJoin
 operator|=
-name|tableSorted
+name|tableEligibleForBucketedSortMergeJoin
 operator|&&
-name|isTableSorted
+name|isEligibleForBucketSortMergeJoin
 argument_list|(
 name|smbJoinContext
 argument_list|,
@@ -876,7 +878,7 @@ block|}
 if|if
 condition|(
 operator|!
-name|tableSorted
+name|tableEligibleForBucketedSortMergeJoin
 condition|)
 block|{
 comment|// this is a mapjoin but not suited for a sort merge bucket map join. check outer joins
@@ -1468,7 +1470,7 @@ block|}
 comment|/**    * Whether this table is eligible for a sort-merge join.    *    * @param pctx                  parse context    * @param op                    map join operator being considered    * @param joinTree              join tree being considered    * @param alias                 table alias in the join tree being checked    * @param pos                   position of the table    * @param sortColumnsFirstTable The names and order of the sorted columns for the first table.    *                              It is not initialized when pos = 0.    * @return    * @throws SemanticException    */
 specifier|private
 name|boolean
-name|isTableSorted
+name|isEligibleForBucketSortMergeJoin
 parameter_list|(
 name|SortBucketJoinProcCtx
 name|smbJoinContext
@@ -2107,7 +2109,7 @@ throws|throws
 name|SemanticException
 block|{
 name|boolean
-name|tableSorted
+name|tableEligibleForBucketedSortMergeJoin
 init|=
 literal|true
 decl_stmt|;
@@ -2178,11 +2180,11 @@ name|pos
 operator|++
 control|)
 block|{
-name|tableSorted
+name|tableEligibleForBucketedSortMergeJoin
 operator|=
-name|tableSorted
+name|tableEligibleForBucketedSortMergeJoin
 operator|&&
-name|isTableSorted
+name|isEligibleForBucketSortMergeJoin
 argument_list|(
 name|smbJoinContext
 argument_list|,

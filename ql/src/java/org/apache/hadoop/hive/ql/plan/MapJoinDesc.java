@@ -190,6 +190,7 @@ specifier|transient
 name|String
 name|bigTableAlias
 decl_stmt|;
+comment|// table alias (small) --> input file name (big) --> target file names (small)
 specifier|private
 name|Map
 argument_list|<

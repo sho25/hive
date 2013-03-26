@@ -673,7 +673,7 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|getOnePartitionBucketFileNames
+name|getBucketFilePathsOfPartition
 parameter_list|(
 name|URI
 name|location
@@ -781,6 +781,7 @@ return|return
 name|fileNames
 return|;
 block|}
+comment|// This function checks whether all bucketing columns are also in join keys and are in same order
 specifier|private
 name|boolean
 name|checkBucketColumns
@@ -795,16 +796,16 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|keys
+name|joinKeys
 parameter_list|,
 name|Integer
 index|[]
-name|orders
+name|joinKeyOrders
 parameter_list|)
 block|{
 if|if
 condition|(
-name|keys
+name|joinKeys
 operator|==
 literal|null
 operator|||
@@ -831,7 +832,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|keys
+name|joinKeys
 operator|.
 name|size
 argument_list|()
@@ -847,7 +848,7 @@ name|bucketColumns
 operator|.
 name|indexOf
 argument_list|(
-name|keys
+name|joinKeys
 operator|.
 name|get
 argument_list|(
@@ -857,14 +858,14 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|orders
+name|joinKeyOrders
 index|[
 name|i
 index|]
 operator|!=
 literal|null
 operator|&&
-name|orders
+name|joinKeyOrders
 index|[
 name|i
 index|]
@@ -876,7 +877,7 @@ return|return
 literal|false
 return|;
 block|}
-name|orders
+name|joinKeyOrders
 index|[
 name|i
 index|]
@@ -888,7 +889,7 @@ comment|// Check if the join columns contains all bucket columns.
 comment|// If a table is bucketized on column B, but the join key is A and B,
 comment|// it is easy to see joining on different buckets yield empty results.
 return|return
-name|keys
+name|joinKeys
 operator|.
 name|containsAll
 argument_list|(
@@ -898,7 +899,7 @@ return|;
 block|}
 specifier|private
 name|boolean
-name|checkBucketNumberAgainstBigTable
+name|checkNumberOfBucketsAgainstBigTable
 parameter_list|(
 name|Map
 argument_list|<
@@ -909,10 +910,10 @@ argument_list|<
 name|Integer
 argument_list|>
 argument_list|>
-name|aliasToBucketNumber
+name|tblAliasToNumberOfBucketsInEachPartition
 parameter_list|,
 name|int
-name|bucketNumberInPart
+name|numberOfBucketsInPartitionOfBigTable
 parameter_list|)
 block|{
 for|for
@@ -923,7 +924,7 @@ name|Integer
 argument_list|>
 name|bucketNums
 range|:
-name|aliasToBucketNumber
+name|tblAliasToNumberOfBucketsInEachPartition
 operator|.
 name|values
 argument_list|()
@@ -943,16 +944,16 @@ init|=
 operator|(
 name|nxt
 operator|>=
-name|bucketNumberInPart
+name|numberOfBucketsInPartitionOfBigTable
 operator|)
 condition|?
 name|nxt
 operator|%
-name|bucketNumberInPart
+name|numberOfBucketsInPartitionOfBigTable
 operator|==
 literal|0
 else|:
-name|bucketNumberInPart
+name|numberOfBucketsInPartitionOfBigTable
 operator|%
 name|nxt
 operator|==
@@ -1279,7 +1280,7 @@ argument_list|<
 name|Integer
 argument_list|>
 argument_list|>
-name|aliasToPartitionBucketNumberMapping
+name|tblAliasToNumberOfBucketsInEachPartition
 init|=
 operator|new
 name|LinkedHashMap
@@ -1305,7 +1306,7 @@ name|String
 argument_list|>
 argument_list|>
 argument_list|>
-name|aliasToPartitionBucketFileNamesMapping
+name|tblAliasToBucketedFilePathsInEachPartition
 init|=
 operator|new
 name|LinkedHashMap
@@ -1397,7 +1398,7 @@ argument_list|()
 decl_stmt|;
 name|Integer
 index|[]
-name|orders
+name|joinKeyOrder
 init|=
 literal|null
 decl_stmt|;
@@ -1453,6 +1454,7 @@ argument_list|(
 name|alias
 argument_list|)
 decl_stmt|;
+comment|// The alias may not be present in case of a sub-query
 if|if
 condition|(
 name|topOp
@@ -1526,6 +1528,8 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// We cannot get to root TableScan operator, likely because there is a join or group-by
+comment|// between topOp and root TableScan operator. We don't handle that case, and simply return
 return|return
 literal|false
 return|;
@@ -1642,12 +1646,12 @@ return|;
 block|}
 if|if
 condition|(
-name|orders
+name|joinKeyOrder
 operator|==
 literal|null
 condition|)
 block|{
-name|orders
+name|joinKeyOrder
 operator|=
 operator|new
 name|Integer
@@ -1818,7 +1822,7 @@ name|baseBigAlias
 argument_list|)
 condition|)
 block|{
-name|aliasToPartitionBucketNumberMapping
+name|tblAliasToNumberOfBucketsInEachPartition
 operator|.
 name|put
 argument_list|(
@@ -1833,7 +1837,7 @@ name|asList
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|aliasToPartitionBucketFileNamesMapping
+name|tblAliasToBucketedFilePathsInEachPartition
 operator|.
 name|put
 argument_list|(
@@ -1906,7 +1910,7 @@ argument_list|()
 argument_list|,
 name|keys
 argument_list|,
-name|orders
+name|joinKeyOrder
 argument_list|)
 condition|)
 block|{
@@ -1920,7 +1924,7 @@ name|String
 argument_list|>
 name|fileNames
 init|=
-name|getOnePartitionBucketFileNames
+name|getBucketFilePathsOfPartition
 argument_list|(
 name|p
 operator|.
@@ -2053,7 +2057,7 @@ name|baseBigAlias
 argument_list|)
 condition|)
 block|{
-name|aliasToPartitionBucketNumberMapping
+name|tblAliasToNumberOfBucketsInEachPartition
 operator|.
 name|put
 argument_list|(
@@ -2062,7 +2066,7 @@ argument_list|,
 name|buckets
 argument_list|)
 expr_stmt|;
-name|aliasToPartitionBucketFileNamesMapping
+name|tblAliasToBucketedFilePathsInEachPartition
 operator|.
 name|put
 argument_list|(
@@ -2088,7 +2092,7 @@ argument_list|()
 argument_list|,
 name|keys
 argument_list|,
-name|orders
+name|joinKeyOrder
 argument_list|)
 condition|)
 block|{
@@ -2102,7 +2106,7 @@ name|String
 argument_list|>
 name|fileNames
 init|=
-name|getOnePartitionBucketFileNames
+name|getBucketFilePathsOfPartition
 argument_list|(
 name|tbl
 operator|.
@@ -2212,7 +2216,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|aliasToPartitionBucketNumberMapping
+name|tblAliasToNumberOfBucketsInEachPartition
 operator|.
 name|put
 argument_list|(
@@ -2226,7 +2230,7 @@ name|num
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|aliasToPartitionBucketFileNamesMapping
+name|tblAliasToBucketedFilePathsInEachPartition
 operator|.
 name|put
 argument_list|(
@@ -2249,7 +2253,7 @@ comment|// the big table can be divided by no of buckets in small tables.
 for|for
 control|(
 name|Integer
-name|bucketNumber
+name|numBucketsInPartitionOfBigTable
 range|:
 name|bigTblPartsToBucketNumber
 operator|.
@@ -2260,11 +2264,11 @@ block|{
 if|if
 condition|(
 operator|!
-name|checkBucketNumberAgainstBigTable
+name|checkNumberOfBucketsAgainstBigTable
 argument_list|(
-name|aliasToPartitionBucketNumberMapping
+name|tblAliasToNumberOfBucketsInEachPartition
 argument_list|,
-name|bucketNumber
+name|numBucketsInPartitionOfBigTable
 argument_list|)
 condition|)
 block|{
@@ -2275,16 +2279,16 @@ block|}
 block|}
 name|context
 operator|.
-name|setAliasToPartitionBucketNumberMapping
+name|setTblAliasToNumberOfBucketsInEachPartition
 argument_list|(
-name|aliasToPartitionBucketNumberMapping
+name|tblAliasToNumberOfBucketsInEachPartition
 argument_list|)
 expr_stmt|;
 name|context
 operator|.
-name|setAliasToPartitionBucketFileNamesMapping
+name|setTblAliasToBucketedFilePathsInEachPartition
 argument_list|(
-name|aliasToPartitionBucketFileNamesMapping
+name|tblAliasToBucketedFilePathsInEachPartition
 argument_list|)
 expr_stmt|;
 name|context
@@ -2390,11 +2394,11 @@ argument_list|<
 name|Integer
 argument_list|>
 argument_list|>
-name|aliasToPartitionBucketNumberMapping
+name|tblAliasToNumberOfBucketsInEachPartition
 init|=
 name|context
 operator|.
-name|getAliasToPartitionBucketNumberMapping
+name|getTblAliasToNumberOfBucketsInEachPartition
 argument_list|()
 decl_stmt|;
 name|Map
@@ -2409,11 +2413,11 @@ name|String
 argument_list|>
 argument_list|>
 argument_list|>
-name|aliasToPartitionBucketFileNamesMapping
+name|tblAliasToBucketedFilePathsInEachPartition
 init|=
 name|context
 operator|.
-name|getAliasToPartitionBucketFileNamesMapping
+name|getTblAliasToBucketedFilePathsInEachPartition
 argument_list|()
 decl_stmt|;
 name|Map
@@ -2537,7 +2541,7 @@ name|String
 argument_list|>
 name|names
 range|:
-name|aliasToPartitionBucketFileNamesMapping
+name|tblAliasToBucketedFilePathsInEachPartition
 operator|.
 name|get
 argument_list|(
@@ -2559,7 +2563,7 @@ name|Integer
 argument_list|>
 name|smallTblBucketNums
 init|=
-name|aliasToPartitionBucketNumberMapping
+name|tblAliasToNumberOfBucketsInEachPartition
 operator|.
 name|get
 argument_list|(
@@ -2575,7 +2579,7 @@ argument_list|>
 argument_list|>
 name|smallTblFilesList
 init|=
-name|aliasToPartitionBucketFileNamesMapping
+name|tblAliasToBucketedFilePathsInEachPartition
 operator|.
 name|get
 argument_list|(
@@ -2591,7 +2595,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|>
-name|mapping
+name|mappingBigTableBucketFileNameToSmallTableBucketFileNames
 init|=
 operator|new
 name|LinkedHashMap
@@ -2611,7 +2615,7 @@ name|put
 argument_list|(
 name|alias
 argument_list|,
-name|mapping
+name|mappingBigTableBucketFileNameToSmallTableBucketFileNames
 argument_list|)
 expr_stmt|;
 comment|// for each bucket file in big table, get the corresponding bucket file
@@ -2697,13 +2701,13 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-name|fillMapping
+name|fillMappingBigTableBucketFileNameToSmallTableBucketFileNames
 argument_list|(
 name|smallTblBucketNums
 argument_list|,
 name|smallTblFilesList
 argument_list|,
-name|mapping
+name|mappingBigTableBucketFileNameToSmallTableBucketFileNames
 argument_list|,
 name|bigTblBucketNum
 argument_list|,
@@ -2930,7 +2934,7 @@ comment|// called for each partition of big table and populates mapping for each
 specifier|private
 specifier|static
 name|void
-name|fillMapping
+name|fillMappingBigTableBucketFileNameToSmallTableBucketFileNames
 parameter_list|(
 name|List
 argument_list|<
@@ -2956,7 +2960,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|>
-name|mapping
+name|bigTableBucketFileNameToSmallTableBucketFileNames
 parameter_list|,
 name|int
 name|bigTblBucketNum
@@ -3134,7 +3138,7 @@ argument_list|(
 name|bindex
 argument_list|)
 decl_stmt|;
-name|mapping
+name|bigTableBucketFileNameToSmallTableBucketFileNames
 operator|.
 name|put
 argument_list|(
