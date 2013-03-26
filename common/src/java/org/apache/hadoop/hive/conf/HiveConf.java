@@ -1174,6 +1174,14 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// ignore the mapjoin hint
+name|HIVEIGNOREMAPJOINHINT
+argument_list|(
+literal|"hive.ignore.mapjoin.hint"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// Hadoop Configuration Properties
 comment|// Properties with null values are ignored and exist only for the purpose of giving us
 comment|// a symbolic name to reference in the Hive source code. Properties with non-null
