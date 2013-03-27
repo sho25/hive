@@ -123,6 +123,12 @@ name|isNoScanAnalyzeCommand
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+name|boolean
+name|isPartialScanAnalyzeCommand
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|StatsWork
 parameter_list|()
@@ -339,6 +345,32 @@ operator|.
 name|isNoScanAnalyzeCommand
 operator|=
 name|isNoScanAnalyzeCommand
+expr_stmt|;
+block|}
+comment|/**    * @return the isPartialScanAnalyzeCommand    */
+specifier|public
+name|boolean
+name|isPartialScanAnalyzeCommand
+parameter_list|()
+block|{
+return|return
+name|isPartialScanAnalyzeCommand
+return|;
+block|}
+comment|/**    * @param isPartialScanAnalyzeCommand the isPartialScanAnalyzeCommand to set    */
+specifier|public
+name|void
+name|setPartialScanAnalyzeCommand
+parameter_list|(
+name|boolean
+name|isPartialScanAnalyzeCommand
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isPartialScanAnalyzeCommand
+operator|=
+name|isPartialScanAnalyzeCommand
 expr_stmt|;
 block|}
 block|}

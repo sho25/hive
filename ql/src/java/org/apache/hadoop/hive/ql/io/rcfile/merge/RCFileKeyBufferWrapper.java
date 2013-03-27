@@ -244,6 +244,15 @@ name|keyBuffer
 argument_list|)
 return|;
 block|}
+specifier|public
+name|KeyBuffer
+name|getKeyBuffer
+parameter_list|()
+block|{
+return|return
+name|keyBuffer
+return|;
+block|}
 block|}
 end_class
 

@@ -2939,6 +2939,14 @@ argument_list|,
 literal|200
 argument_list|)
 block|,
+name|HIVE_STATS_KEY_PREFIX
+argument_list|(
+literal|"hive.stats.key.prefix"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+comment|// internal usage only
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(

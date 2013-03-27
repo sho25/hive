@@ -1202,6 +1202,19 @@ operator|>=
 name|maxRetries
 condition|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error during clean-up after "
+operator|+
+name|maxRetries
+operator|+
+literal|" retries. "
+operator|+
+name|e
+argument_list|)
+expr_stmt|;
 return|return
 literal|false
 return|;
