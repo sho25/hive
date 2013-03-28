@@ -629,6 +629,11 @@ argument_list|)
 condition|)
 block|{
 return|return
+name|arrayElements
+index|[
+name|index
+index|]
+operator|=
 literal|null
 return|;
 block|}
