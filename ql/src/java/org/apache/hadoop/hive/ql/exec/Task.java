@@ -2154,6 +2154,11 @@ name|jobID
 return|;
 block|}
 specifier|public
+name|void
+name|shutdown
+parameter_list|()
+block|{   }
+specifier|public
 name|List
 argument_list|<
 name|FieldSchema
