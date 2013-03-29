@@ -54124,31 +54124,26 @@ condition|)
 block|{
 try|try
 block|{
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|tables
+name|Table
+name|table
 init|=
 name|db
 operator|.
-name|getTablesByPattern
+name|getTable
 argument_list|(
 name|tableName
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
+comment|// use getTable(final String tableName, boolean
+comment|// throwException) which doesn't throw
+comment|// exception but null if table doesn't exist
 if|if
 condition|(
-name|tables
+name|table
 operator|!=
 literal|null
-operator|&&
-name|tables
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
 condition|)
 block|{
 comment|// table exists
