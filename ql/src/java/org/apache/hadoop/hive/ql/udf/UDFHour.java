@@ -359,7 +359,7 @@ name|get
 argument_list|(
 name|Calendar
 operator|.
-name|HOUR
+name|HOUR_OF_DAY
 argument_list|)
 argument_list|)
 expr_stmt|;
