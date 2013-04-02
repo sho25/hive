@@ -3486,7 +3486,40 @@ literal|"hive.decode.partition.name"
 argument_list|,
 literal|false
 argument_list|)
-block|,     ;
+block|,
+comment|// ptf partition constants
+name|HIVE_PTF_PARTITION_PERSISTENCE_CLASS
+argument_list|(
+literal|"hive.ptf.partition.persistence"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.exec.PTFPersistence$PartitionedByteBasedList"
+argument_list|)
+block|,
+name|HIVE_PTF_PARTITION_PERSISTENT_SIZE
+argument_list|(
+literal|"hive.ptf.partition.persistence.memsize"
+argument_list|,
+operator|(
+name|int
+operator|)
+name|Math
+operator|.
+name|pow
+argument_list|(
+literal|2
+argument_list|,
+operator|(
+literal|5
+operator|+
+literal|10
+operator|+
+literal|10
+operator|)
+argument_list|)
+argument_list|)
+block|,
+comment|// 32MB
+block|;
 specifier|public
 specifier|final
 name|String

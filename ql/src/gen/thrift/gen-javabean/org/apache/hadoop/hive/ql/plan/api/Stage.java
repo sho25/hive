@@ -5483,7 +5483,7 @@ comment|// required
 name|String
 name|_val75
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key74
 operator|=
 name|iprot
@@ -5630,7 +5630,7 @@ comment|// required
 name|long
 name|_val79
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key78
 operator|=
 name|iprot
@@ -7122,7 +7122,7 @@ comment|// required
 name|String
 name|_val92
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key91
 operator|=
 name|iprot
@@ -7264,7 +7264,7 @@ comment|// required
 name|long
 name|_val96
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key95
 operator|=
 name|iprot

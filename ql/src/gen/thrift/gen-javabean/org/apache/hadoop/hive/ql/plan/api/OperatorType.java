@@ -155,6 +155,11 @@ name|HASHTABLEDUMMY
 argument_list|(
 literal|17
 argument_list|)
+block|,
+name|PTF
+argument_list|(
+literal|18
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -307,6 +312,12 @@ literal|17
 case|:
 return|return
 name|HASHTABLEDUMMY
+return|;
+case|case
+literal|18
+case|:
+return|return
+name|PTF
 return|;
 default|default:
 return|return
