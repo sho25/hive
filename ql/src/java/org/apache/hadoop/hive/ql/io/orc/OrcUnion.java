@@ -558,7 +558,7 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"union{"
+literal|"uniontype<"
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -590,7 +590,7 @@ name|builder
 operator|.
 name|append
 argument_list|(
-literal|", "
+literal|","
 argument_list|)
 expr_stmt|;
 block|}
@@ -609,7 +609,7 @@ name|builder
 operator|.
 name|append
 argument_list|(
-literal|"}"
+literal|">"
 argument_list|)
 expr_stmt|;
 return|return

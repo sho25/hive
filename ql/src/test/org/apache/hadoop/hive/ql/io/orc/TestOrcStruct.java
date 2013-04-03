@@ -519,7 +519,7 @@ literal|"struct<c1:boolean,c2:tinyint,c3:smallint,c4:int,c5:"
 operator|+
 literal|"bigint,c6:float,c7:double,c8:binary,c9:string,c10:struct<"
 operator|+
-literal|"c1:int>,c11:map<int,int>,c12:union{int},c13:array<timestamp>>"
+literal|"c1:int>,c11:map<int,int>,c12:uniontype<int>,c13:array<timestamp>>"
 argument_list|,
 name|inspector
 operator|.

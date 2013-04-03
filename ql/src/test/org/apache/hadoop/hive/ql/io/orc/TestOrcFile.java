@@ -5913,7 +5913,7 @@ argument_list|()
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"struct<time:timestamp,union:union{int, string}>"
+literal|"struct<time:timestamp,union:uniontype<int,string>>"
 argument_list|,
 name|inspector
 operator|.
