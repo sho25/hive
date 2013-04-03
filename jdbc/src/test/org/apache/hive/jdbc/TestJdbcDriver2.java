@@ -729,7 +729,9 @@ literal|" c16 array<struct<m:map<string,string>,n:int>>,"
 operator|+
 literal|" c17 timestamp, "
 operator|+
-literal|" c18 decimal) comment'"
+literal|" c18 decimal, "
+operator|+
+literal|" c19 binary) comment'"
 operator|+
 name|dataTypeTableComment
 operator|+
@@ -2099,6 +2101,42 @@ literal|16
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|19
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// row 2
 name|assertTrue
 argument_list|(
@@ -2339,6 +2377,18 @@ operator|.
 name|getBigDecimal
 argument_list|(
 literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|19
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2583,6 +2633,18 @@ argument_list|)
 operator|.
 name|toString
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"abcd"
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|19
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// test getBoolean rules on non-boolean columns
