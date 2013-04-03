@@ -2234,7 +2234,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"[null, null, null]"
+literal|"{\"r\":null,\"s\":null,\"t\":null}"
 argument_list|,
 name|res
 operator|.
@@ -2322,7 +2322,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"[null, null]"
+literal|"{\"r\":null,\"s\":null}"
 argument_list|,
 name|res
 operator|.
@@ -2451,7 +2451,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"[1, 2]"
+literal|"[1,2]"
 argument_list|,
 name|res
 operator|.
@@ -2463,7 +2463,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"{1=x, 2=y}"
+literal|"{1:\"x\",2:\"y\"}"
 argument_list|,
 name|res
 operator|.
@@ -2475,7 +2475,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"{k=v}"
+literal|"{\"k\":\"v\"}"
 argument_list|,
 name|res
 operator|.
@@ -2487,7 +2487,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"[a, 9, 2.2]"
+literal|"{\"r\":\"a\",\"s\":9,\"t\":2.2}"
 argument_list|,
 name|res
 operator|.
@@ -2547,7 +2547,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"[[a, b], [c, d]]"
+literal|"[[\"a\",\"b\"],[\"c\",\"d\"]]"
 argument_list|,
 name|res
 operator|.
@@ -2559,7 +2559,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"{1={11=12, 13=14}, 2={21=22}}"
+literal|"{1:{11:12,13:14},2:{21:22}}"
 argument_list|,
 name|res
 operator|.
@@ -2571,7 +2571,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"[1, [2, x]]"
+literal|"{\"r\":1,\"s\":{\"a\":2,\"b\":\"x\"}}"
 argument_list|,
 name|res
 operator|.
@@ -2583,7 +2583,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"[[{}, 1], [{c=d, a=b}, 2]]"
+literal|"[{\"m\":{},\"n\":1},{\"m\":{\"a\":\"b\",\"c\":\"d\"},\"n\":2}]"
 argument_list|,
 name|res
 operator|.
