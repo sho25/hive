@@ -2511,6 +2511,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEOPTIMIZEBUCKETINGSORTING
+argument_list|(
+literal|"hive.optimize.bucketingsorting"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVEPARTITIONER
 argument_list|(
 literal|"hive.mapred.partitioner"

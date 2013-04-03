@@ -1965,20 +1965,17 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * mapping from bucket number to bucket path    */
-comment|// TODO: add test case and clean it up
+comment|/**    * get all paths for this partition in a sorted manner    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"nls"
 argument_list|)
 specifier|public
-name|Path
-name|getBucketPath
-parameter_list|(
-name|int
-name|bucketNum
-parameter_list|)
+name|FileStatus
+index|[]
+name|getSortedPaths
+parameter_list|()
 block|{
 try|try
 block|{
@@ -2097,12 +2094,6 @@ return|;
 block|}
 return|return
 name|srcs
-index|[
-name|bucketNum
-index|]
-operator|.
-name|getPath
-argument_list|()
 return|;
 block|}
 catch|catch
@@ -2115,14 +2106,55 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Cannot get bucket path for bucket "
-operator|+
-name|bucketNum
+literal|"Cannot get path "
 argument_list|,
 name|e
 argument_list|)
 throw|;
 block|}
+block|}
+comment|/**    * mapping from bucket number to bucket path    */
+comment|// TODO: add test case and clean it up
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"nls"
+argument_list|)
+specifier|public
+name|Path
+name|getBucketPath
+parameter_list|(
+name|int
+name|bucketNum
+parameter_list|)
+block|{
+name|FileStatus
+name|srcs
+index|[]
+init|=
+name|getSortedPaths
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|srcs
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+return|return
+name|srcs
+index|[
+name|bucketNum
+index|]
+operator|.
+name|getPath
+argument_list|()
+return|;
 block|}
 annotation|@
 name|SuppressWarnings

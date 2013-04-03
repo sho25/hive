@@ -41,6 +41,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -107,7 +117,7 @@ name|String
 argument_list|>
 name|partColumns
 decl_stmt|;
-comment|/**    * Used for split sampling (row count per split)    * For example,    *   select count(1) from ss_src2 tablesample(10 ROWS);    * provides first 10 rows from all input splits    */
+comment|/**    * Used for split sampling (row count per split)    * For example,    *   select count(1) from ss_src2 tablesample (10 ROWS) s;    * provides first 10 rows from all input splits    */
 specifier|private
 name|int
 name|rowLimit
@@ -150,6 +160,16 @@ name|String
 name|FILTER_TEXT_CONF_STR
 init|=
 literal|"hive.io.filter.text"
+decl_stmt|;
+comment|// input file name (big) to bucket number
+specifier|private
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|Integer
+argument_list|>
+name|bucketFileNameMapping
 decl_stmt|;
 annotation|@
 name|SuppressWarnings
@@ -540,6 +560,40 @@ name|rowLimit
 else|:
 literal|null
 return|;
+block|}
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|Integer
+argument_list|>
+name|getBucketFileNameMapping
+parameter_list|()
+block|{
+return|return
+name|bucketFileNameMapping
+return|;
+block|}
+specifier|public
+name|void
+name|setBucketFileNameMapping
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|Integer
+argument_list|>
+name|bucketFileNameMapping
+parameter_list|)
+block|{
+name|this
+operator|.
+name|bucketFileNameMapping
+operator|=
+name|bucketFileNameMapping
+expr_stmt|;
 block|}
 block|}
 end_class

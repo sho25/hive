@@ -554,6 +554,82 @@ name|inputFileChanged
 operator|=
 literal|true
 expr_stmt|;
+comment|// If the file name to bucket number mapping is maintained, store the bucket number
+comment|// in the execution context. This is needed for the following scenario:
+comment|// insert overwrite table T1 select * from T2;
+comment|// where T1 and T2 are sorted/bucketed by the same keys into the same number of buckets
+comment|// Although one mapper per file is used (bucketizedinputhiveinput), it is possible that
+comment|// any mapper can pick up any file (depending on the size of the files). The bucket number
+comment|// corresponding to the input file is stored to name the output bucket file appropriately.
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|Integer
+argument_list|>
+name|bucketNameMapping
+init|=
+name|conf
+operator|!=
+literal|null
+condition|?
+name|conf
+operator|.
+name|getBucketFileNameMapping
+argument_list|()
+else|:
+literal|null
+decl_stmt|;
+if|if
+condition|(
+operator|(
+name|bucketNameMapping
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+operator|!
+name|bucketNameMapping
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|)
+block|{
+name|String
+name|currentInputFile
+init|=
+name|getExecContext
+argument_list|()
+operator|.
+name|getCurrentInputFile
+argument_list|()
+decl_stmt|;
+name|getExecContext
+argument_list|()
+operator|.
+name|setFileId
+argument_list|(
+name|Integer
+operator|.
+name|toString
+argument_list|(
+name|bucketNameMapping
+operator|.
+name|get
+argument_list|(
+name|Utilities
+operator|.
+name|getFileNameFromDirName
+argument_list|(
+name|currentInputFile
+argument_list|)
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|void
