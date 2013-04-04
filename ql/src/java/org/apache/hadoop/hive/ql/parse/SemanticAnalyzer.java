@@ -4203,6 +4203,8 @@ argument_list|,
 name|viewAliasToInput
 argument_list|,
 name|reduceSinkOperatorsAddedByEnforceBucketingSorting
+argument_list|,
+name|queryProperties
 argument_list|)
 return|;
 block|}
@@ -52463,6 +52465,8 @@ argument_list|,
 name|viewAliasToInput
 argument_list|,
 name|reduceSinkOperatorsAddedByEnforceBucketingSorting
+argument_list|,
+name|queryProperties
 argument_list|)
 decl_stmt|;
 comment|// Generate table access stats if required

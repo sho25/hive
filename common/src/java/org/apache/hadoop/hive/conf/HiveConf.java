@@ -2077,6 +2077,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVE_MAP_GROUPBY_SORT_TESTMODE
+argument_list|(
+literal|"hive.map.groupby.sorted.testmode"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVE_GROUPBY_ORDERBY_POSITION_ALIAS
 argument_list|(
 literal|"hive.groupby.orderby.position.alias"
