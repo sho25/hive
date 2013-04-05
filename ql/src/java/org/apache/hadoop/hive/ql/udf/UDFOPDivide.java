@@ -160,7 +160,8 @@ operator|new
 name|BigDecimalWritable
 argument_list|()
 decl_stmt|;
-specifier|private
+specifier|public
+specifier|static
 specifier|final
 name|int
 name|MAX_SCALE
