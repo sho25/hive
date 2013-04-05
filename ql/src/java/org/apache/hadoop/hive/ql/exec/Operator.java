@@ -2122,6 +2122,8 @@ argument_list|(
 name|this
 argument_list|,
 name|row
+argument_list|,
+name|tag
 argument_list|)
 decl_stmt|;
 name|preProcessCounter
@@ -2435,8 +2437,6 @@ operator|new
 name|OperatorHookContext
 argument_list|(
 name|this
-argument_list|,
-literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
