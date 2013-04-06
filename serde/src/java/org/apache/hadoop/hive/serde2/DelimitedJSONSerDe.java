@@ -277,6 +277,7 @@ argument_list|)
 operator|)
 condition|)
 block|{
+comment|//do this for all complex types and binary
 try|try
 block|{
 name|serialize
@@ -290,6 +291,14 @@ argument_list|(
 name|obj
 argument_list|,
 name|objInspector
+argument_list|,
+name|serdeParams
+operator|.
+name|getNullSequence
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 argument_list|,
 name|PrimitiveObjectInspectorFactory
@@ -342,6 +351,7 @@ block|}
 block|}
 else|else
 block|{
+comment|//primitives except binary
 name|super
 operator|.
 name|serializeField

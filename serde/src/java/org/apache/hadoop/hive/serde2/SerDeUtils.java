@@ -561,6 +561,15 @@ name|RBRACE
 init|=
 literal|"}"
 decl_stmt|;
+comment|// lower case null is used within json objects
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|JSON_NULL
+init|=
+literal|"null"
+decl_stmt|;
 specifier|private
 specifier|static
 name|ConcurrentHashMap
@@ -1412,6 +1421,33 @@ name|ObjectInspector
 name|oi
 parameter_list|)
 block|{
+return|return
+name|getJSONString
+argument_list|(
+name|o
+argument_list|,
+name|oi
+argument_list|,
+name|JSON_NULL
+argument_list|)
+return|;
+block|}
+comment|/**    * Use this if you need to have custom representation of top level null .    * (ie something other than 'null')    * eg, for hive output, we want to to print NULL for a null map object.    * @param o Object    * @param oi ObjectInspector    * @param nullStr The custom string used to represent null value    * @return    */
+specifier|public
+specifier|static
+name|String
+name|getJSONString
+parameter_list|(
+name|Object
+name|o
+parameter_list|,
+name|ObjectInspector
+name|oi
+parameter_list|,
+name|String
+name|nullStr
+parameter_list|)
+block|{
 name|StringBuilder
 name|sb
 init|=
@@ -1426,6 +1462,8 @@ argument_list|,
 name|o
 argument_list|,
 name|oi
+argument_list|,
+name|nullStr
 argument_list|)
 expr_stmt|;
 return|return
@@ -1447,6 +1485,9 @@ name|o
 parameter_list|,
 name|ObjectInspector
 name|oi
+parameter_list|,
+name|String
+name|nullStr
 parameter_list|)
 block|{
 switch|switch
@@ -1480,7 +1521,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"null"
+name|nullStr
 argument_list|)
 expr_stmt|;
 block|}
@@ -1880,7 +1921,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"null"
+name|nullStr
 argument_list|)
 expr_stmt|;
 block|}
@@ -1938,6 +1979,8 @@ name|i
 argument_list|)
 argument_list|,
 name|listElementObjectInspector
+argument_list|,
+name|JSON_NULL
 argument_list|)
 expr_stmt|;
 block|}
@@ -2005,7 +2048,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"null"
+name|nullStr
 argument_list|)
 expr_stmt|;
 block|}
@@ -2086,6 +2129,8 @@ name|getKey
 argument_list|()
 argument_list|,
 name|mapKeyObjectInspector
+argument_list|,
+name|JSON_NULL
 argument_list|)
 expr_stmt|;
 name|sb
@@ -2105,6 +2150,8 @@ name|getValue
 argument_list|()
 argument_list|,
 name|mapValueObjectInspector
+argument_list|,
+name|JSON_NULL
 argument_list|)
 expr_stmt|;
 block|}
@@ -2154,7 +2201,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"null"
+name|nullStr
 argument_list|)
 expr_stmt|;
 block|}
@@ -2263,6 +2310,8 @@ argument_list|)
 operator|.
 name|getFieldObjectInspector
 argument_list|()
+argument_list|,
+name|JSON_NULL
 argument_list|)
 expr_stmt|;
 block|}
@@ -2299,7 +2348,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"null"
+name|nullStr
 argument_list|)
 expr_stmt|;
 block|}
@@ -2356,6 +2405,8 @@ argument_list|(
 name|o
 argument_list|)
 argument_list|)
+argument_list|,
+name|JSON_NULL
 argument_list|)
 expr_stmt|;
 name|sb
