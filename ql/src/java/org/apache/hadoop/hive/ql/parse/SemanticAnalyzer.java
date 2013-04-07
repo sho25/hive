@@ -44625,6 +44625,25 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getHiveOperation
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|HiveOperation
+operator|.
+name|CREATEVIEW
+argument_list|)
+condition|)
+block|{
 name|curr
 operator|=
 name|genFileSinkPlan
@@ -44636,6 +44655,7 @@ argument_list|,
 name|curr
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// change curr ops row resolver's tab aliases to query alias if it
 comment|// exists
