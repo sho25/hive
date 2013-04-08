@@ -2351,6 +2351,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVEUSERCFILESYNCCACHE
+argument_list|(
+literal|"hive.exec.rcfile.use.sync.cache"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"
