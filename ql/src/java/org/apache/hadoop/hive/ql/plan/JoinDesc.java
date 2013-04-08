@@ -295,6 +295,12 @@ specifier|private
 name|TableDesc
 name|keyTableDesc
 decl_stmt|;
+comment|// this operator cannot be converted to mapjoin cause output is expected to be sorted on join key
+comment|// it's resulted from RS-dedup optimization, which removes following RS under some condition
+specifier|private
+name|boolean
+name|fixedAsSorted
+decl_stmt|;
 specifier|public
 name|JoinDesc
 parameter_list|()
@@ -2427,6 +2433,30 @@ block|}
 return|return
 name|result
 return|;
+block|}
+specifier|public
+name|boolean
+name|isFixedAsSorted
+parameter_list|()
+block|{
+return|return
+name|fixedAsSorted
+return|;
+block|}
+specifier|public
+name|void
+name|setFixedAsSorted
+parameter_list|(
+name|boolean
+name|fixedAsSorted
+parameter_list|)
+block|{
+name|this
+operator|.
+name|fixedAsSorted
+operator|=
+name|fixedAsSorted
+expr_stmt|;
 block|}
 block|}
 end_class

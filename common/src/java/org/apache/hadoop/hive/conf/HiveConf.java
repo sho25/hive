@@ -2682,6 +2682,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVEOPTREDUCEDEDUPLICATIONMINREDUCER
+argument_list|(
+literal|"hive.optimize.reducededuplication.min.reducer"
+argument_list|,
+literal|4
+argument_list|)
+block|,
 comment|// whether to optimize union followed by select followed by filesink
 comment|// It creates sub-directories in the final output, so should not be turned on in systems
 comment|// where MAPREDUCE-1501 is not present

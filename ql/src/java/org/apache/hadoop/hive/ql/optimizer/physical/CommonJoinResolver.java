@@ -1516,6 +1516,14 @@ condition|(
 name|joinOp
 operator|==
 literal|null
+operator|||
+name|joinOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|isFixedAsSorted
+argument_list|()
 condition|)
 block|{
 return|return
