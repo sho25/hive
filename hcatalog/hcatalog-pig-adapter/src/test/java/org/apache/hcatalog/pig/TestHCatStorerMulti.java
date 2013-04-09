@@ -304,6 +304,17 @@ argument_list|>
 argument_list|>
 name|basicInputData
 decl_stmt|;
+specifier|protected
+name|String
+name|storageFormat
+parameter_list|()
+block|{
+return|return
+literal|"RCFILE tblproperties('hcat.isd'='org.apache.hcatalog.rcfile.RCFileInputDriver',"
+operator|+
+literal|"'hcat.osd'='org.apache.hcatalog.rcfile.RCFileOutputDriver')"
+return|;
+block|}
 specifier|private
 name|void
 name|dropTable
@@ -394,9 +405,10 @@ name|createTable
 operator|=
 name|createTable
 operator|+
-literal|"stored as RCFILE tblproperties('hcat.isd'='org.apache.hcatalog.rcfile.RCFileInputDriver',"
+literal|"stored as "
 operator|+
-literal|"'hcat.osd'='org.apache.hcatalog.rcfile.RCFileOutputDriver') "
+name|storageFormat
+argument_list|()
 expr_stmt|;
 name|int
 name|retCode

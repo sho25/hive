@@ -337,7 +337,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|int
@@ -345,7 +345,7 @@ name|NUM_RECORDS
 init|=
 literal|20
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|int
@@ -380,7 +380,7 @@ name|generateDataColumns
 argument_list|()
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 specifier|static
 name|void
 name|generateDataColumns
@@ -464,7 +464,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 specifier|static
 name|void
 name|generateWriteRecords
