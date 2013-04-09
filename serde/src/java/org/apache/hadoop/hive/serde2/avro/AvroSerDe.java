@@ -330,16 +330,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// force output files to have a .avro extension
-name|configuration
-operator|.
-name|set
-argument_list|(
-literal|"hive.output.file.extension"
-argument_list|,
-literal|".avro"
-argument_list|)
-expr_stmt|;
 name|configuration
 operator|.
 name|set
