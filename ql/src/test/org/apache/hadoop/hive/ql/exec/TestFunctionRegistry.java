@@ -145,7 +145,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -221,10 +221,10 @@ specifier|public
 name|void
 name|same
 parameter_list|(
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|x
 parameter_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|y
 parameter_list|)
 block|{}
@@ -235,7 +235,7 @@ parameter_list|(
 name|IntWritable
 name|x
 parameter_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|y
 parameter_list|)
 block|{}
@@ -268,7 +268,7 @@ parameter_list|(
 name|TimestampWritable
 name|x
 parameter_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|y
 parameter_list|)
 block|{}
@@ -600,11 +600,11 @@ name|TypeInfoFactory
 operator|.
 name|decimalTypeInfo
 argument_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|.
 name|class
 argument_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|.
 name|class
 argument_list|,
@@ -627,11 +627,11 @@ name|TypeInfoFactory
 operator|.
 name|doubleTypeInfo
 argument_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|.
 name|class
 argument_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|.
 name|class
 argument_list|,
@@ -654,11 +654,11 @@ name|TypeInfoFactory
 operator|.
 name|decimalTypeInfo
 argument_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|.
 name|class
 argument_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|.
 name|class
 argument_list|,
@@ -685,7 +685,7 @@ name|IntWritable
 operator|.
 name|class
 argument_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|.
 name|class
 argument_list|,

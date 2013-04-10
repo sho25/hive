@@ -223,7 +223,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -407,7 +407,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 import|;
 end_import
 
@@ -2187,15 +2187,15 @@ case|case
 name|DECIMAL
 case|:
 block|{
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 name|bdoi
 init|=
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|poi
 decl_stmt|;
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|t
 init|=
 name|bdoi

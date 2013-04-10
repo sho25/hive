@@ -49,19 +49,27 @@ begin_import
 import|import
 name|java
 operator|.
-name|math
+name|sql
 operator|.
-name|BigDecimal
+name|Timestamp
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
 operator|.
-name|Timestamp
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|HiveDecimal
 import|;
 end_import
 
@@ -187,7 +195,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -1190,7 +1198,7 @@ name|DECIMAL
 case|:
 operator|(
 operator|(
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|)
 name|returnObj
 operator|)
@@ -1198,7 +1206,7 @@ operator|.
 name|set
 argument_list|(
 operator|(
-name|BigDecimal
+name|HiveDecimal
 operator|)
 name|result
 argument_list|)

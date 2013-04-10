@@ -53,16 +53,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|math
-operator|.
-name|BigDecimal
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|nio
 operator|.
 name|ByteBuffer
@@ -124,6 +114,24 @@ operator|.
 name|binary
 operator|.
 name|Base64
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|HiveDecimal
 import|;
 end_import
 
@@ -213,7 +221,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 import|;
 end_import
 
@@ -1373,12 +1381,12 @@ case|case
 name|DECIMAL
 case|:
 block|{
-name|BigDecimal
+name|HiveDecimal
 name|bd
 init|=
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)

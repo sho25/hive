@@ -189,7 +189,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|WritableBigDecimalObjectInspector
+name|WritableHiveDecimalObjectInspector
 import|;
 end_import
 
@@ -618,10 +618,10 @@ name|DECIMAL
 case|:
 return|return
 operator|new
-name|LazyBinaryBigDecimal
+name|LazyBinaryHiveDecimal
 argument_list|(
 operator|(
-name|WritableBigDecimalObjectInspector
+name|WritableHiveDecimalObjectInspector
 operator|)
 name|oi
 argument_list|)

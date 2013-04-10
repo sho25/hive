@@ -163,7 +163,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -261,7 +261,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 import|;
 end_import
 
@@ -2957,7 +2957,7 @@ case|:
 return|return
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|poi
 operator|)
@@ -4183,12 +4183,12 @@ case|case
 name|DECIMAL
 case|:
 block|{
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|t1
 init|=
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|poi1
 operator|)
@@ -4198,12 +4198,12 @@ argument_list|(
 name|o1
 argument_list|)
 decl_stmt|;
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|t2
 init|=
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|poi2
 operator|)

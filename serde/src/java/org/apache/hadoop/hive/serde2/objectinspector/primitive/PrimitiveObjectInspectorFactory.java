@@ -45,7 +45,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -420,11 +420,11 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
-name|JavaBigDecimalObjectInspector
-name|javaBigDecimalObjectInspector
+name|JavaHiveDecimalObjectInspector
+name|javaHiveDecimalObjectInspector
 init|=
 operator|new
-name|JavaBigDecimalObjectInspector
+name|JavaHiveDecimalObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|public
@@ -540,11 +540,11 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
-name|WritableBigDecimalObjectInspector
-name|writableBigDecimalObjectInspector
+name|WritableHiveDecimalObjectInspector
+name|writableHiveDecimalObjectInspector
 init|=
 operator|new
-name|WritableBigDecimalObjectInspector
+name|WritableHiveDecimalObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|private
@@ -697,7 +697,7 @@ name|PrimitiveCategory
 operator|.
 name|DECIMAL
 argument_list|,
-name|writableBigDecimalObjectInspector
+name|writableHiveDecimalObjectInspector
 argument_list|)
 expr_stmt|;
 block|}
@@ -851,7 +851,7 @@ name|PrimitiveCategory
 operator|.
 name|DECIMAL
 argument_list|,
-name|javaBigDecimalObjectInspector
+name|javaHiveDecimalObjectInspector
 argument_list|)
 expr_stmt|;
 block|}
@@ -1038,10 +1038,10 @@ name|DECIMAL
 case|:
 return|return
 operator|new
-name|WritableConstantBigDecimalObjectInspector
+name|WritableConstantHiveDecimalObjectInspector
 argument_list|(
 operator|(
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|)
 name|value
 argument_list|)

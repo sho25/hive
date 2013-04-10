@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|math
-operator|.
-name|BigDecimal
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -130,6 +120,24 @@ operator|.
 name|conf
 operator|.
 name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|HiveDecimal
 import|;
 end_import
 
@@ -1436,7 +1444,7 @@ argument_list|(
 name|r
 argument_list|)
 decl_stmt|;
-name|BigDecimal
+name|HiveDecimal
 name|bd
 init|=
 name|randField
@@ -1447,7 +1455,7 @@ literal|null
 else|:
 name|TestBinarySortableSerDe
 operator|.
-name|getRandBigDecimal
+name|getRandHiveDecimal
 argument_list|(
 name|r
 argument_list|)
@@ -2045,7 +2053,7 @@ argument_list|(
 name|r
 argument_list|)
 decl_stmt|;
-name|BigDecimal
+name|HiveDecimal
 name|bd
 init|=
 name|randField
@@ -2056,7 +2064,7 @@ literal|null
 else|:
 name|TestBinarySortableSerDe
 operator|.
-name|getRandBigDecimal
+name|getRandHiveDecimal
 argument_list|(
 name|r
 argument_list|)
@@ -2543,7 +2551,7 @@ argument_list|(
 name|r
 argument_list|)
 decl_stmt|;
-name|BigDecimal
+name|HiveDecimal
 name|bd
 init|=
 name|randField
@@ -2554,7 +2562,7 @@ literal|null
 else|:
 name|TestBinarySortableSerDe
 operator|.
-name|getRandBigDecimal
+name|getRandHiveDecimal
 argument_list|(
 name|r
 argument_list|)
@@ -3041,7 +3049,7 @@ argument_list|(
 name|r
 argument_list|)
 decl_stmt|;
-name|BigDecimal
+name|HiveDecimal
 name|bd
 init|=
 name|randField
@@ -3052,7 +3060,7 @@ literal|null
 else|:
 name|TestBinarySortableSerDe
 operator|.
-name|getRandBigDecimal
+name|getRandHiveDecimal
 argument_list|(
 name|r
 argument_list|)
@@ -3964,7 +3972,7 @@ argument_list|(
 name|r
 argument_list|)
 decl_stmt|;
-name|BigDecimal
+name|HiveDecimal
 name|bd
 init|=
 name|randField
@@ -3975,7 +3983,7 @@ literal|null
 else|:
 name|TestBinarySortableSerDe
 operator|.
-name|getRandBigDecimal
+name|getRandHiveDecimal
 argument_list|(
 name|r
 argument_list|)

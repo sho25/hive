@@ -69,7 +69,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -182,11 +182,11 @@ argument_list|()
 decl_stmt|;
 specifier|private
 specifier|final
-name|BigDecimalWritable
-name|resultBigDecimal
+name|HiveDecimalWritable
+name|resultHiveDecimal
 init|=
 operator|new
-name|BigDecimalWritable
+name|HiveDecimalWritable
 argument_list|()
 decl_stmt|;
 specifier|public
@@ -304,10 +304,10 @@ name|resultInt
 return|;
 block|}
 specifier|public
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|evaluate
 parameter_list|(
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|n
 parameter_list|)
 block|{
@@ -322,13 +322,13 @@ return|return
 literal|null
 return|;
 block|}
-name|resultBigDecimal
+name|resultHiveDecimal
 operator|.
 name|set
 argument_list|(
 name|n
 operator|.
-name|getBigDecimal
+name|getHiveDecimal
 argument_list|()
 operator|.
 name|abs
@@ -336,7 +336,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
-name|resultBigDecimal
+name|resultHiveDecimal
 return|;
 block|}
 block|}

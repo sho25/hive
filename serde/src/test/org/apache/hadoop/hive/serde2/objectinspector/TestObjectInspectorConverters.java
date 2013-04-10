@@ -31,11 +31,19 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|math
+name|apache
 operator|.
-name|BigDecimal
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|HiveDecimal
 import|;
 end_import
 
@@ -895,7 +903,7 @@ name|getConverter
 argument_list|(
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaBigDecimalObjectInspector
+name|javaHiveDecimalObjectInspector
 argument_list|,
 name|PrimitiveObjectInspectorFactory
 operator|.
@@ -917,7 +925,7 @@ operator|.
 name|convert
 argument_list|(
 operator|new
-name|BigDecimal
+name|HiveDecimal
 argument_list|(
 literal|"100.001"
 argument_list|)

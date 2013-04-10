@@ -176,11 +176,11 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
-name|LazyBigDecimalObjectInspector
+name|LazyHiveDecimalObjectInspector
 name|LAZY_BIG_DECIMAL_OBJECT_INSPECTOR
 init|=
 operator|new
-name|LazyBigDecimalObjectInspector
+name|LazyHiveDecimalObjectInspector
 argument_list|()
 decl_stmt|;
 specifier|static

@@ -21,31 +21,19 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|math
+name|apache
 operator|.
-name|BigDecimal
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|hadoop
 operator|.
-name|math
+name|hive
 operator|.
-name|MathContext
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|common
 operator|.
-name|math
+name|type
 operator|.
-name|RoundingMode
+name|HiveDecimal
 import|;
 end_import
 
@@ -99,7 +87,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|DoubleWritable
 import|;
 end_import
 
@@ -117,7 +105,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DoubleWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -180,11 +168,11 @@ argument_list|()
 decl_stmt|;
 specifier|private
 specifier|final
-name|BigDecimalWritable
-name|bigDecimalWritable
+name|HiveDecimalWritable
+name|decimalWritable
 init|=
 operator|new
-name|BigDecimalWritable
+name|HiveDecimalWritable
 argument_list|()
 decl_stmt|;
 specifier|public
@@ -236,10 +224,10 @@ return|;
 block|}
 block|}
 specifier|public
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|evaluate
 parameter_list|(
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|i
 parameter_list|)
 block|{
@@ -256,12 +244,12 @@ return|;
 block|}
 else|else
 block|{
-name|BigDecimal
+name|HiveDecimal
 name|bd
 init|=
 name|i
 operator|.
-name|getBigDecimal
+name|getHiveDecimal
 argument_list|()
 decl_stmt|;
 name|int
@@ -272,7 +260,7 @@ operator|.
 name|scale
 argument_list|()
 decl_stmt|;
-name|bigDecimalWritable
+name|decimalWritable
 operator|.
 name|set
 argument_list|(
@@ -282,7 +270,7 @@ name|setScale
 argument_list|(
 literal|0
 argument_list|,
-name|BigDecimal
+name|HiveDecimal
 operator|.
 name|ROUND_CEILING
 argument_list|)
@@ -294,7 +282,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
-name|bigDecimalWritable
+name|decimalWritable
 return|;
 block|}
 block|}

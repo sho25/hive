@@ -147,7 +147,7 @@ name|primitive
 operator|.
 name|PrimitiveObjectInspectorConverter
 operator|.
-name|BigDecimalConverter
+name|HiveDecimalConverter
 import|;
 end_import
 
@@ -194,7 +194,7 @@ name|PrimitiveObjectInspector
 name|argumentOI
 decl_stmt|;
 specifier|private
-name|BigDecimalConverter
+name|HiveDecimalConverter
 name|bdConverter
 decl_stmt|;
 annotation|@
@@ -261,19 +261,19 @@ block|}
 name|bdConverter
 operator|=
 operator|new
-name|BigDecimalConverter
+name|HiveDecimalConverter
 argument_list|(
 name|argumentOI
 argument_list|,
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|writableBigDecimalObjectInspector
+name|writableHiveDecimalObjectInspector
 argument_list|)
 expr_stmt|;
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|writableBigDecimalObjectInspector
+name|writableHiveDecimalObjectInspector
 return|;
 block|}
 annotation|@

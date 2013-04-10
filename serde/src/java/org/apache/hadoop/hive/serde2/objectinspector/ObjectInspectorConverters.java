@@ -125,7 +125,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|SettableBigDecimalObjectInspector
+name|SettableHiveDecimalObjectInspector
 import|;
 end_import
 
@@ -612,7 +612,7 @@ return|return
 operator|new
 name|PrimitiveObjectInspectorConverter
 operator|.
-name|BigDecimalConverter
+name|HiveDecimalConverter
 argument_list|(
 operator|(
 name|PrimitiveObjectInspector
@@ -620,7 +620,7 @@ operator|)
 name|inputOI
 argument_list|,
 operator|(
-name|SettableBigDecimalObjectInspector
+name|SettableHiveDecimalObjectInspector
 operator|)
 name|outputOI
 argument_list|)

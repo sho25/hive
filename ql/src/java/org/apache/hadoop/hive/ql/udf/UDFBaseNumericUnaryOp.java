@@ -51,7 +51,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -221,11 +221,11 @@ name|DoubleWritable
 argument_list|()
 decl_stmt|;
 specifier|protected
-name|BigDecimalWritable
-name|bigDecimalWritable
+name|HiveDecimalWritable
+name|decimalWritable
 init|=
 operator|new
-name|BigDecimalWritable
+name|HiveDecimalWritable
 argument_list|()
 decl_stmt|;
 specifier|public
@@ -284,10 +284,10 @@ parameter_list|)
 function_decl|;
 specifier|public
 specifier|abstract
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|evaluate
 parameter_list|(
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|a
 parameter_list|)
 function_decl|;

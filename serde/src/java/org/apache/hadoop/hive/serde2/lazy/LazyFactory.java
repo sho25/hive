@@ -157,7 +157,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|LazyBigDecimalObjectInspector
+name|LazyHiveDecimalObjectInspector
 import|;
 end_import
 
@@ -980,10 +980,10 @@ name|DECIMAL
 case|:
 return|return
 operator|new
-name|LazyBigDecimal
+name|LazyHiveDecimal
 argument_list|(
 operator|(
-name|LazyBigDecimalObjectInspector
+name|LazyHiveDecimalObjectInspector
 operator|)
 name|oi
 argument_list|)

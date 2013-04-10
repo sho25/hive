@@ -21,11 +21,19 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|math
+name|apache
 operator|.
-name|BigDecimal
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|HiveDecimal
 import|;
 end_import
 
@@ -73,7 +81,7 @@ decl_stmt|;
 name|String
 name|myString
 decl_stmt|;
-name|BigDecimal
+name|HiveDecimal
 name|myDecimal
 decl_stmt|;
 name|MyTestInnerStruct
@@ -107,7 +115,7 @@ parameter_list|,
 name|String
 name|st
 parameter_list|,
-name|BigDecimal
+name|HiveDecimal
 name|bd
 parameter_list|,
 name|MyTestInnerStruct

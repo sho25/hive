@@ -51,7 +51,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -402,10 +402,10 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|evaluate
 parameter_list|(
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|a
 parameter_list|)
 block|{
@@ -420,13 +420,13 @@ return|return
 literal|null
 return|;
 block|}
-name|bigDecimalWritable
+name|decimalWritable
 operator|.
 name|set
 argument_list|(
 name|a
 operator|.
-name|getBigDecimal
+name|getHiveDecimal
 argument_list|()
 operator|.
 name|negate
@@ -434,7 +434,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
-name|bigDecimalWritable
+name|decimalWritable
 return|;
 block|}
 block|}

@@ -21,19 +21,27 @@ begin_import
 import|import
 name|java
 operator|.
-name|math
+name|sql
 operator|.
-name|BigDecimal
+name|Timestamp
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
 operator|.
-name|Timestamp
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|HiveDecimal
 import|;
 end_import
 
@@ -635,7 +643,7 @@ specifier|static
 name|ColumnValue
 name|stringValue
 parameter_list|(
-name|BigDecimal
+name|HiveDecimal
 name|value
 parameter_list|)
 block|{
@@ -659,7 +667,7 @@ name|setValue
 argument_list|(
 operator|(
 operator|(
-name|BigDecimal
+name|HiveDecimal
 operator|)
 name|value
 operator|)
@@ -815,7 +823,7 @@ name|stringValue
 argument_list|(
 operator|(
 operator|(
-name|BigDecimal
+name|HiveDecimal
 operator|)
 name|value
 operator|)

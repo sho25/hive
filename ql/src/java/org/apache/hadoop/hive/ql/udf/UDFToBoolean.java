@@ -21,11 +21,19 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|math
+name|apache
 operator|.
-name|BigDecimal
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|HiveDecimal
 import|;
 end_import
 
@@ -61,7 +69,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|BigDecimalWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -580,7 +588,7 @@ specifier|public
 name|BooleanWritable
 name|evaluate
 parameter_list|(
-name|BigDecimalWritable
+name|HiveDecimalWritable
 name|i
 parameter_list|)
 block|{
@@ -601,7 +609,7 @@ name|booleanWritable
 operator|.
 name|set
 argument_list|(
-name|BigDecimal
+name|HiveDecimal
 operator|.
 name|ZERO
 operator|.
@@ -609,7 +617,7 @@ name|compareTo
 argument_list|(
 name|i
 operator|.
-name|getBigDecimal
+name|getHiveDecimal
 argument_list|()
 argument_list|)
 operator|!=

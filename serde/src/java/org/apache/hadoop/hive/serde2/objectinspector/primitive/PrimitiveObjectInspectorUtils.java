@@ -55,16 +55,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|math
-operator|.
-name|BigDecimal
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|sql
 operator|.
 name|Timestamp
@@ -101,9 +91,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde
+name|common
 operator|.
-name|serdeConstants
+name|type
+operator|.
+name|HiveDecimal
 import|;
 end_import
 
@@ -117,11 +109,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde2
+name|serde
 operator|.
-name|io
-operator|.
-name|BigDecimalWritable
+name|serdeConstants
 import|;
 end_import
 
@@ -158,6 +148,24 @@ operator|.
 name|io
 operator|.
 name|DoubleWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -1284,11 +1292,11 @@ name|DECIMAL_TYPE_NAME
 argument_list|,
 literal|null
 argument_list|,
-name|BigDecimal
+name|HiveDecimal
 operator|.
 name|class
 argument_list|,
-name|BigDecimalWritable
+name|HiveDecimalWritable
 operator|.
 name|class
 argument_list|)
@@ -2149,7 +2157,7 @@ block|{
 return|return
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi1
 operator|)
@@ -2163,7 +2171,7 @@ name|compareTo
 argument_list|(
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi2
 operator|)
@@ -2366,7 +2374,7 @@ case|:
 return|return
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)
@@ -2750,7 +2758,7 @@ name|DECIMAL
 case|:
 name|result
 operator|=
-name|BigDecimal
+name|HiveDecimal
 operator|.
 name|ZERO
 operator|.
@@ -2758,7 +2766,7 @@ name|compareTo
 argument_list|(
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)
@@ -3138,7 +3146,7 @@ name|result
 operator|=
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)
@@ -3444,7 +3452,7 @@ name|result
 operator|=
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)
@@ -3701,7 +3709,7 @@ name|result
 operator|=
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)
@@ -4027,7 +4035,7 @@ name|result
 operator|=
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)
@@ -4174,8 +4182,8 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|BigDecimal
-name|getBigDecimal
+name|HiveDecimal
+name|getHiveDecimal
 parameter_list|(
 name|Object
 name|o
@@ -4195,11 +4203,13 @@ return|return
 literal|null
 return|;
 block|}
-name|BigDecimal
+name|HiveDecimal
 name|result
 init|=
 literal|null
 decl_stmt|;
+try|try
+block|{
 switch|switch
 condition|(
 name|oi
@@ -4233,11 +4243,11 @@ argument_list|(
 name|o
 argument_list|)
 condition|?
-name|BigDecimal
+name|HiveDecimal
 operator|.
 name|ONE
 else|:
-name|BigDecimal
+name|HiveDecimal
 operator|.
 name|ZERO
 expr_stmt|;
@@ -4248,7 +4258,7 @@ case|:
 name|result
 operator|=
 operator|new
-name|BigDecimal
+name|HiveDecimal
 argument_list|(
 operator|(
 operator|(
@@ -4270,7 +4280,7 @@ case|:
 name|result
 operator|=
 operator|new
-name|BigDecimal
+name|HiveDecimal
 argument_list|(
 operator|(
 operator|(
@@ -4292,7 +4302,7 @@ case|:
 name|result
 operator|=
 operator|new
-name|BigDecimal
+name|HiveDecimal
 argument_list|(
 operator|(
 operator|(
@@ -4314,7 +4324,7 @@ case|:
 name|result
 operator|=
 operator|new
-name|BigDecimal
+name|HiveDecimal
 argument_list|(
 operator|(
 operator|(
@@ -4351,7 +4361,7 @@ decl_stmt|;
 name|result
 operator|=
 operator|new
-name|BigDecimal
+name|HiveDecimal
 argument_list|(
 name|f
 operator|.
@@ -4381,7 +4391,7 @@ decl_stmt|;
 name|result
 operator|=
 operator|new
-name|BigDecimal
+name|HiveDecimal
 argument_list|(
 name|d
 operator|.
@@ -4396,7 +4406,7 @@ case|:
 name|result
 operator|=
 operator|new
-name|BigDecimal
+name|HiveDecimal
 argument_list|(
 operator|(
 operator|(
@@ -4436,7 +4446,7 @@ decl_stmt|;
 name|result
 operator|=
 operator|new
-name|BigDecimal
+name|HiveDecimal
 argument_list|(
 name|ts
 operator|.
@@ -4452,7 +4462,7 @@ name|result
 operator|=
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)
@@ -4476,6 +4486,15 @@ name|getTypeName
 argument_list|()
 argument_list|)
 throw|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|NumberFormatException
+name|e
+parameter_list|)
+block|{
+comment|// return null
 block|}
 return|return
 name|result
@@ -4696,7 +4715,7 @@ name|decimalToTimestamp
 argument_list|(
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)

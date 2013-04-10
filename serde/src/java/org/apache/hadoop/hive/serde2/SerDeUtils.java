@@ -263,7 +263,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 import|;
 end_import
 
@@ -1847,7 +1847,7 @@ name|append
 argument_list|(
 operator|(
 operator|(
-name|BigDecimalObjectInspector
+name|HiveDecimalObjectInspector
 operator|)
 name|oi
 operator|)
