@@ -103,13 +103,19 @@ comment|// select * from T
 comment|// The inputs will contain V and T (parent: V)
 comment|// For views, the entities can be nested - by default, entities are at the top level
 specifier|private
+specifier|final
 name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|parents
 init|=
-literal|null
+operator|new
+name|HashSet
+argument_list|<
+name|ReadEntity
+argument_list|>
+argument_list|()
 decl_stmt|;
 comment|/**    * For serialization only.    */
 specifier|public
@@ -149,17 +155,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|this
-operator|.
-name|parents
-operator|=
-operator|new
-name|HashSet
-argument_list|<
-name|ReadEntity
-argument_list|>
-argument_list|()
-expr_stmt|;
 name|this
 operator|.
 name|parents
