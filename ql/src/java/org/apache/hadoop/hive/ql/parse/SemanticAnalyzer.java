@@ -61757,15 +61757,6 @@ range|:
 name|colInfoList
 control|)
 block|{
-if|if
-condition|(
-operator|!
-name|colInfo
-operator|.
-name|isHiddenVirtualCol
-argument_list|()
-condition|)
-block|{
 name|String
 index|[]
 name|alias
@@ -61780,7 +61771,7 @@ name|getInternalName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/*          * if we have already encountered this colInfo internalName.          * We encounter it again because it must be put for the Having clause.          * We will add these entries in the end; in a loop on colsAddedByHaving. See below.          */
+comment|/*        * if we have already encountered this colInfo internalName.        * We encounter it again because it must be put for the Having clause.        * We will add these entries in the end; in a loop on colsAddedByHaving. See below.        */
 if|if
 condition|(
 name|colsAddedByHaving
@@ -61867,7 +61858,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|/*            * in case having clause refers to this column may have been added twice;            * once with the ASTNode.toStringTree as the alias            * and then with the real alias.            */
+comment|/*          * in case having clause refers to this column may have been added twice;          * once with the ASTNode.toStringTree as the alias          * and then with the real alias.          */
 name|extractRR
 operator|.
 name|putExpression
@@ -61906,7 +61897,6 @@ argument_list|,
 name|eColInfo
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 block|}

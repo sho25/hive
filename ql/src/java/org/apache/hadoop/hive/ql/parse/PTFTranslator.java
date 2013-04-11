@@ -5675,7 +5675,7 @@ block|{
 literal|"unchecked"
 block|}
 argument_list|)
-specifier|private
+specifier|public
 specifier|static
 name|void
 name|addOIPropertiestoSerDePropsMap
