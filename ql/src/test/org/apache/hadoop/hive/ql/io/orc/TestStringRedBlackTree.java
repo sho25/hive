@@ -1899,7 +1899,7 @@ argument_list|()
 decl_stmt|;
 name|serUtils
 operator|.
-name|TestDoubles
+name|testDoubles
 argument_list|()
 expr_stmt|;
 name|TestDynamicArray
