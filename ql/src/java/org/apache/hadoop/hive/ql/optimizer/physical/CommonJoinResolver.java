@@ -1380,47 +1380,15 @@ name|String
 argument_list|>
 name|convertTaskToMapJoinTask
 parameter_list|(
-name|String
-name|xml
+name|MapredWork
+name|newWork
 parameter_list|,
 name|int
 name|bigTablePosition
 parameter_list|)
 throws|throws
-name|UnsupportedEncodingException
-throws|,
 name|SemanticException
 block|{
-comment|// deep copy a new mapred work from xml
-name|InputStream
-name|in
-init|=
-operator|new
-name|ByteArrayInputStream
-argument_list|(
-name|xml
-operator|.
-name|getBytes
-argument_list|(
-literal|"UTF-8"
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|MapredWork
-name|newWork
-init|=
-name|Utilities
-operator|.
-name|deserializeMapRedWork
-argument_list|(
-name|in
-argument_list|,
-name|physicalContext
-operator|.
-name|getConf
-argument_list|()
-argument_list|)
-decl_stmt|;
 comment|// create a mapred task for this work
 name|MapRedTask
 name|newTask
@@ -2122,14 +2090,6 @@ argument_list|(
 name|joinTree
 argument_list|)
 expr_stmt|;
-name|String
-name|xml
-init|=
-name|currWork
-operator|.
-name|toXML
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
 name|convertJoinMapJoin
@@ -2141,7 +2101,7 @@ name|newTask
 init|=
 name|convertTaskToMapJoinTask
 argument_list|(
-name|xml
+name|currWork
 argument_list|,
 name|bigTablePosition
 argument_list|)
@@ -2240,6 +2200,14 @@ operator|.
 name|HIVESMALLTABLESFILESIZE
 argument_list|)
 decl_stmt|;
+name|String
+name|xml
+init|=
+name|currWork
+operator|.
+name|toXML
+argument_list|()
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -2269,6 +2237,36 @@ condition|)
 block|{
 continue|continue;
 block|}
+comment|// deep copy a new mapred work from xml
+name|InputStream
+name|in
+init|=
+operator|new
+name|ByteArrayInputStream
+argument_list|(
+name|xml
+operator|.
+name|getBytes
+argument_list|(
+literal|"UTF-8"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|MapredWork
+name|newWork
+init|=
+name|Utilities
+operator|.
+name|deserializeMapRedWork
+argument_list|(
+name|in
+argument_list|,
+name|physicalContext
+operator|.
+name|getConf
+argument_list|()
+argument_list|)
+decl_stmt|;
 comment|// create map join task and set big table as i
 name|ObjectPair
 argument_list|<
@@ -2280,7 +2278,7 @@ name|newTaskAlias
 init|=
 name|convertTaskToMapJoinTask
 argument_list|(
-name|xml
+name|newWork
 argument_list|,
 name|i
 argument_list|)
@@ -2831,20 +2829,20 @@ range|:
 name|parentTasks
 control|)
 block|{
-comment|// make new generated task depends on all the parent tasks of current task.
-name|tsk
-operator|.
-name|addDependentTask
-argument_list|(
-name|newTask
-argument_list|)
-expr_stmt|;
 comment|// remove the current task from its original parent task's dependent task
 name|tsk
 operator|.
 name|removeDependentTask
 argument_list|(
 name|currTask
+argument_list|)
+expr_stmt|;
+comment|// make new generated task depends on all the parent tasks of current task.
+name|tsk
+operator|.
+name|addDependentTask
+argument_list|(
+name|newTask
 argument_list|)
 expr_stmt|;
 block|}
@@ -2911,14 +2909,6 @@ range|:
 name|oldChildTasks
 control|)
 block|{
-comment|// make new generated task depends on all the parent tasks of current task.
-name|newTask
-operator|.
-name|addDependentTask
-argument_list|(
-name|tsk
-argument_list|)
-expr_stmt|;
 comment|// remove the current task from its original parent task's dependent task
 name|tsk
 operator|.
@@ -2928,6 +2918,14 @@ operator|.
 name|remove
 argument_list|(
 name|currTask
+argument_list|)
+expr_stmt|;
+comment|// make new generated task depends on all the parent tasks of current task.
+name|newTask
+operator|.
+name|addDependentTask
+argument_list|(
+name|tsk
 argument_list|)
 expr_stmt|;
 block|}
