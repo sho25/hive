@@ -2564,7 +2564,7 @@ name|HIVE_AUTO_SORTMERGE_JOIN_BIGTABLE_SELECTOR
 argument_list|(
 literal|"hive.auto.convert.sortmerge.join.bigtable.selection.policy"
 argument_list|,
-literal|"org.apache.hadoop.hive.ql.optimizer.LeftmostBigTableSelectorForAutoSMJ"
+literal|"org.apache.hadoop.hive.ql.optimizer.AvgPartitionSizeBasedBigTableSelectorForAutoSMJ"
 argument_list|)
 block|,
 name|HIVESCRIPTOPERATORTRUST
