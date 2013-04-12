@@ -129,6 +129,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|SkewedValueList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|lib
@@ -787,10 +805,7 @@ decl_stmt|;
 comment|// Retrieve skewed column.
 name|Map
 argument_list|<
-name|List
-argument_list|<
-name|String
-argument_list|>
+name|SkewedValueList
 argument_list|,
 name|String
 argument_list|>
@@ -843,6 +858,13 @@ name|ArrayList
 argument_list|<
 name|Boolean
 argument_list|>
+argument_list|()
+decl_stmt|;
+name|SkewedValueList
+name|skewedValueList
+init|=
+operator|new
+name|SkewedValueList
 argument_list|()
 decl_stmt|;
 for|for
@@ -903,13 +925,20 @@ comment|// add directory to path unless value is false
 comment|/* It's valid case if a partition: */
 comment|/* 1. is defined with skewed columns and skewed values in metadata */
 comment|/* 2. doesn't have all skewed values within its data */
+name|skewedValueList
+operator|.
+name|setSkewedValueList
+argument_list|(
+name|cell
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|mappings
 operator|.
 name|get
 argument_list|(
-name|cell
+name|skewedValueList
 argument_list|)
 operator|!=
 literal|null
@@ -926,7 +955,7 @@ name|mappings
 operator|.
 name|get
 argument_list|(
-name|cell
+name|skewedValueList
 argument_list|)
 argument_list|)
 argument_list|)
