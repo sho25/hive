@@ -558,7 +558,7 @@ comment|// If the file name to bucket number mapping is maintained, store the bu
 comment|// in the execution context. This is needed for the following scenario:
 comment|// insert overwrite table T1 select * from T2;
 comment|// where T1 and T2 are sorted/bucketed by the same keys into the same number of buckets
-comment|// Although one mapper per file is used (bucketizedinputhiveinput), it is possible that
+comment|// Although one mapper per file is used (BucketizedInputHiveInput), it is possible that
 comment|// any mapper can pick up any file (depending on the size of the files). The bucket number
 comment|// corresponding to the input file is stored to name the output bucket file appropriately.
 name|Map
@@ -569,9 +569,11 @@ name|Integer
 argument_list|>
 name|bucketNameMapping
 init|=
+operator|(
 name|conf
 operator|!=
 literal|null
+operator|)
 condition|?
 name|conf
 operator|.
