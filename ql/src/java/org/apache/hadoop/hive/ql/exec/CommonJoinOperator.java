@@ -1942,7 +1942,7 @@ decl_stmt|;
 comment|// all evaluation should be processed here for valid aliasFilterTags
 comment|//
 comment|// for MapJoin, filter tag is pre-calculated in MapredLocalTask and stored with value.
-comment|// when reading the hashtable, MapJoinObjectValue calcuates alias filter and provide it to join
+comment|// when reading the hashtable, MapJoinObjectValue calculates alias filter and provide it to join
 specifier|protected
 name|ArrayList
 argument_list|<

@@ -7686,6 +7686,13 @@ argument_list|(
 name|name
 argument_list|)
 expr_stmt|;
+name|start
+operator|+=
+name|name
+operator|.
+name|length
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|added
@@ -7785,11 +7792,6 @@ name|i
 argument_list|)
 argument_list|,
 name|start
-operator|+=
-name|name
-operator|.
-name|length
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
