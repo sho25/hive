@@ -569,13 +569,6 @@ name|fieldID
 index|]
 condition|)
 block|{
-name|fieldsInited
-index|[
-name|fieldID
-index|]
-operator|=
-literal|true
-expr_stmt|;
 name|ByteArrayRef
 name|ref
 init|=
@@ -729,6 +722,14 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// Has to be set last because of HIVE-3179: NULL fields would not work otherwise
+name|fieldsInited
+index|[
+name|fieldID
+index|]
+operator|=
+literal|true
+expr_stmt|;
 return|return
 name|fields
 index|[
