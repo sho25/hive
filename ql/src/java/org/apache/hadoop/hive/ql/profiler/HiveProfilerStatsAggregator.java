@@ -55,16 +55,6 @@ name|java
 operator|.
 name|sql
 operator|.
-name|ResultSetMetaData
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
 name|PreparedStatement
 import|;
 end_import
@@ -261,6 +251,8 @@ parameter_list|(
 name|HiveConf
 name|conf
 parameter_list|)
+throws|throws
+name|SQLException
 block|{
 name|int
 name|waitWindow
@@ -405,14 +397,6 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-name|rawProfileConnInfo
-operator|.
-name|getConnection
-argument_list|()
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -427,6 +411,16 @@ argument_list|(
 literal|"executing error: "
 argument_list|,
 name|e
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|HiveProfilerUtils
+operator|.
+name|closeConnection
+argument_list|(
+name|rawProfileConnInfo
 argument_list|)
 expr_stmt|;
 block|}
