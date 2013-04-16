@@ -37,7 +37,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|OutputStream
+name|IOException
 import|;
 end_import
 
@@ -47,7 +47,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
+name|OutputStream
 import|;
 end_import
 
@@ -764,6 +764,8 @@ argument_list|(
 name|cols
 argument_list|,
 name|partCols
+argument_list|,
+name|isFormatted
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -779,6 +781,8 @@ operator|.
 name|getAllColumnsInformation
 argument_list|(
 name|cols
+argument_list|,
+name|isFormatted
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2437,6 +2441,7 @@ name|comment
 operator|!=
 literal|null
 condition|)
+block|{
 name|outStream
 operator|.
 name|writeBytes
@@ -2444,6 +2449,7 @@ argument_list|(
 name|comment
 argument_list|)
 expr_stmt|;
+block|}
 name|outStream
 operator|.
 name|write
@@ -2457,6 +2463,7 @@ name|location
 operator|!=
 literal|null
 condition|)
+block|{
 name|outStream
 operator|.
 name|writeBytes
@@ -2464,6 +2471,7 @@ argument_list|(
 name|location
 argument_list|)
 expr_stmt|;
+block|}
 name|outStream
 operator|.
 name|write
