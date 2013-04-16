@@ -2205,7 +2205,7 @@ name|pathToAliases
 operator|.
 name|put
 argument_list|(
-literal|"/testDir"
+literal|"hdfs:///testDir"
 argument_list|,
 name|aliases
 argument_list|)
@@ -2275,7 +2275,7 @@ name|pathToPartitionInfo
 operator|.
 name|put
 argument_list|(
-literal|"/testDir"
+literal|"hdfs:///testDir"
 argument_list|,
 name|pd
 argument_list|)
