@@ -366,7 +366,7 @@ comment|/* Objective here is to ensure that when exceptions are thrown in HiveMe
 name|String
 name|dbName
 init|=
-literal|"tmpdb"
+literal|"hive3524"
 decl_stmt|;
 name|String
 name|tblName
@@ -628,7 +628,7 @@ name|msc
 operator|.
 name|getPartition
 argument_list|(
-literal|"tmpdb"
+literal|"hive3524"
 argument_list|,
 name|tblName
 argument_list|,

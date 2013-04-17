@@ -446,21 +446,21 @@ name|driver
 operator|.
 name|run
 argument_list|(
-literal|"drop database if exists tmpdb cascade"
+literal|"drop database if exists hive2215 cascade"
 argument_list|)
 expr_stmt|;
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create database tmpdb"
+literal|"create database hive2215"
 argument_list|)
 expr_stmt|;
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"use tmpdb"
+literal|"use hive2215"
 argument_list|)
 expr_stmt|;
 name|driver
@@ -514,7 +514,7 @@ name|msc
 operator|.
 name|markPartitionForEvent
 argument_list|(
-literal|"tmpdb"
+literal|"hive2215"
 argument_list|,
 literal|"tmptbl"
 argument_list|,
@@ -530,7 +530,7 @@ name|msc
 operator|.
 name|isPartitionMarkedForEvent
 argument_list|(
-literal|"tmpdb"
+literal|"hive2215"
 argument_list|,
 literal|"tmptbl"
 argument_list|,
@@ -554,7 +554,7 @@ name|msc
 operator|.
 name|isPartitionMarkedForEvent
 argument_list|(
-literal|"tmpdb"
+literal|"hive2215"
 argument_list|,
 literal|"tmptbl"
 argument_list|,
@@ -580,7 +580,7 @@ name|msc
 operator|.
 name|isPartitionMarkedForEvent
 argument_list|(
-literal|"tmpdb"
+literal|"hive2215"
 argument_list|,
 literal|"tmptbl"
 argument_list|,
@@ -597,7 +597,7 @@ name|msc
 operator|.
 name|markPartitionForEvent
 argument_list|(
-literal|"tmpdb"
+literal|"hive2215"
 argument_list|,
 literal|"tmptbl2"
 argument_list|,
@@ -630,7 +630,7 @@ name|msc
 operator|.
 name|isPartitionMarkedForEvent
 argument_list|(
-literal|"tmpdb"
+literal|"hive2215"
 argument_list|,
 literal|"tmptbl2"
 argument_list|,
@@ -672,7 +672,7 @@ name|msc
 operator|.
 name|isPartitionMarkedForEvent
 argument_list|(
-literal|"tmpdb"
+literal|"hive2215"
 argument_list|,
 literal|"tmptbl"
 argument_list|,
@@ -713,7 +713,7 @@ name|driver
 operator|.
 name|run
 argument_list|(
-literal|"drop database if exists tmpdb cascade"
+literal|"drop database if exists hive2215 cascade"
 argument_list|)
 expr_stmt|;
 name|super

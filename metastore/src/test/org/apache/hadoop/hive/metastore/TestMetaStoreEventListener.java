@@ -610,7 +610,7 @@ specifier|final
 name|String
 name|dbName
 init|=
-literal|"tmpdb"
+literal|"hive2038"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -1617,7 +1617,7 @@ name|msc
 operator|.
 name|getPartition
 argument_list|(
-literal|"tmpdb"
+literal|"hive2038"
 argument_list|,
 literal|"tmptbl"
 argument_list|,
@@ -2292,7 +2292,7 @@ name|msc
 operator|.
 name|markPartitionForEvent
 argument_list|(
-literal|"tmpdb"
+literal|"hive2038"
 argument_list|,
 literal|"tmptbl"
 argument_list|,
