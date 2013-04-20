@@ -724,16 +724,6 @@ name|LogHelper
 name|console
 parameter_list|)
 block|{
-name|System
-operator|.
-name|gc
-argument_list|()
-expr_stmt|;
-name|System
-operator|.
-name|gc
-argument_list|()
-expr_stmt|;
 name|int
 name|size
 init|=
