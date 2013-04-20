@@ -2351,6 +2351,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// Maximum fraction of heap that can be used by ORC file writers
+name|HIVE_ORC_FILE_MEMORY_POOL
+argument_list|(
+literal|"hive.exec.orc.memory.pool"
+argument_list|,
+literal|0.5f
+argument_list|)
+block|,
+comment|// 50%
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"

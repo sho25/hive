@@ -484,6 +484,10 @@ name|fs
 argument_list|,
 name|path
 argument_list|,
+name|this
+operator|.
+name|conf
+argument_list|,
 name|row
 operator|.
 name|getInspector
@@ -546,6 +550,10 @@ argument_list|(
 name|fs
 argument_list|,
 name|path
+argument_list|,
+name|this
+operator|.
+name|conf
 argument_list|,
 name|serdeRow
 operator|.
@@ -644,6 +652,10 @@ argument_list|(
 name|fs
 argument_list|,
 name|path
+argument_list|,
+name|this
+operator|.
+name|conf
 argument_list|,
 name|inspector
 argument_list|,
