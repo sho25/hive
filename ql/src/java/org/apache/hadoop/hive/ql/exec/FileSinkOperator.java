@@ -4150,6 +4150,13 @@ name|maxPartitions
 condition|)
 block|{
 comment|// throw fatal error
+if|if
+condition|(
+name|counterNameToEnum
+operator|!=
+literal|null
+condition|)
+block|{
 name|incrCounter
 argument_list|(
 name|fatalErrorCntr
@@ -4157,6 +4164,7 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
+block|}
 name|fatalError
 operator|=
 literal|true

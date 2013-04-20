@@ -5969,6 +5969,10 @@ comment|// are sent to jt as counters
 if|if
 condition|(
 name|hashAggr
+operator|&&
+name|counterNameToEnum
+operator|!=
+literal|null
 condition|)
 block|{
 name|incrCounter
