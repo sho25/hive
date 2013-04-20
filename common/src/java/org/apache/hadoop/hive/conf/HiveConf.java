@@ -995,13 +995,6 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
-name|OPERATORHOOKS
-argument_list|(
-literal|"hive.exec.operator.hooks"
-argument_list|,
-literal|""
-argument_list|)
-block|,
 name|CLIENTSTATSPUBLISHERS
 argument_list|(
 literal|"hive.client.stats.publishers"
@@ -2782,53 +2775,6 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-comment|//Profiler
-name|HIVEPROFILERDBCLASS
-argument_list|(
-literal|"hive.profiler.dbclass"
-argument_list|,
-literal|"jdbc:derby"
-argument_list|)
-block|,
-name|HIVEPROFILERJDBCDRIVER
-argument_list|(
-literal|"hive.profiler.jdbcdriver"
-argument_list|,
-literal|"org.apache.derby.jdbc.EmbeddedDriver"
-argument_list|)
-block|,
-name|HIVEPROFILERDBCONNECTIONSTRING
-argument_list|(
-literal|"hive.profiler.dbconnectionstring"
-argument_list|,
-literal|"jdbc:derby:;databaseName=TempProfilerStore;create=true"
-argument_list|)
-block|,
-comment|// automatically create database
-comment|// default timeout for JDBC connection
-name|HIVE_PROFILER_JDBC_TIMEOUT
-argument_list|(
-literal|"hive.profiler.jdbc.timeout"
-argument_list|,
-literal|30
-argument_list|)
-block|,
-name|HIVE_PROFILER_RETRIES_MAX
-argument_list|(
-literal|"hive.stats.retries.max"
-argument_list|,
-literal|0
-argument_list|)
-block|,
-comment|// maximum # of retries to insert/select/delete the stats DB
-name|HIVE_PROFILER_RETRIES_WAIT
-argument_list|(
-literal|"hive.stats.retries.wait"
-argument_list|,
-literal|3000
-argument_list|)
-block|,
-comment|// # milliseconds to wait before the next retry
 comment|// Statistics
 name|HIVESTATSAUTOGATHER
 argument_list|(
