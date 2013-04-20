@@ -12904,23 +12904,6 @@ name|toString
 argument_list|()
 return|;
 block|}
-specifier|public
-specifier|static
-name|Class
-name|getBuiltinUtilsClass
-parameter_list|()
-throws|throws
-name|ClassNotFoundException
-block|{
-return|return
-name|Class
-operator|.
-name|forName
-argument_list|(
-literal|"org.apache.hive.builtins.BuiltinUtils"
-argument_list|)
-return|;
-block|}
 block|}
 end_class
 
