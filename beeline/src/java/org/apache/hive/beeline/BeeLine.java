@@ -769,6 +769,30 @@ init|=
 literal|5
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|int
+name|ERRNO_OK
+init|=
+literal|0
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|ERRNO_ARGS
+init|=
+literal|1
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|ERRNO_OTHER
+init|=
+literal|2
+decl_stmt|;
+specifier|private
 specifier|final
 name|Map
 argument_list|<
@@ -2164,7 +2188,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Starts the program with redirected input. For redirected output,    * setOutputStream() and setErrorStream can be used.    *    * @param args    *          same as main()    *    * @param inputStream    *          redirected input, or null to use standard input    */
+comment|/**    * Starts the program with redirected input. For redirected output,    * setOutputStream() and setErrorStream can be used.    * Exits with 0 on success, 1 on invalid arguments, and 2 on any other error    *    * @param args    *          same as main()    *    * @param inputStream    *          redirected input, or null to use standard input    */
 specifier|public
 specifier|static
 name|void
@@ -2187,6 +2211,9 @@ operator|new
 name|BeeLine
 argument_list|()
 decl_stmt|;
+name|int
+name|status
+init|=
 name|beeLine
 operator|.
 name|begin
@@ -2195,9 +2222,7 @@ name|args
 argument_list|,
 name|inputStream
 argument_list|)
-expr_stmt|;
-comment|// exit the system: useful for Hypersonic and other
-comment|// badly-behaving systems
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -2215,7 +2240,7 @@ name|System
 operator|.
 name|exit
 argument_list|(
-literal|0
+name|status
 argument_list|)
 expr_stmt|;
 block|}
@@ -3208,7 +3233,7 @@ return|;
 block|}
 comment|/**    * Start accepting input from stdin, and dispatch it    * to the appropriate {@link CommandHandler} until the    * global variable<code>exit</code> is true.    */
 specifier|public
-name|void
+name|int
 name|begin
 parameter_list|(
 name|String
@@ -3221,6 +3246,11 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|int
+name|status
+init|=
+name|ERRNO_OK
+decl_stmt|;
 try|try
 block|{
 comment|// load the options first, so we can override on the command line
@@ -3253,7 +3283,9 @@ block|{
 name|usage
 argument_list|()
 expr_stmt|;
-return|return;
+return|return
+name|ERRNO_ARGS
+return|;
 block|}
 name|ConsoleReader
 name|reader
@@ -3319,6 +3351,10 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+name|status
+operator|=
+name|ERRNO_OTHER
+expr_stmt|;
 block|}
 block|}
 else|else
@@ -3381,6 +3417,10 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+name|status
+operator|=
+name|ERRNO_OTHER
+expr_stmt|;
 block|}
 block|}
 catch|catch
@@ -3409,6 +3449,10 @@ argument_list|(
 name|t
 argument_list|)
 expr_stmt|;
+name|status
+operator|=
+name|ERRNO_OTHER
+expr_stmt|;
 block|}
 block|}
 comment|// ### NOTE jvs 10-Aug-2004: Clean up any outstanding
@@ -3420,6 +3464,9 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+return|return
+name|status
+return|;
 block|}
 specifier|public
 name|void
