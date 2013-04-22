@@ -36331,6 +36331,13 @@ argument_list|(
 name|colExprMap
 argument_list|)
 expr_stmt|;
+name|rsOp
+operator|.
+name|setInputAlias
+argument_list|(
+name|srcName
+argument_list|)
+expr_stmt|;
 return|return
 name|rsOp
 return|;
