@@ -2422,6 +2422,18 @@ argument_list|,
 name|joinOp
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|bigTablePosition
+operator|<
+literal|0
+condition|)
+block|{
+comment|// contains aliases from sub-query
+return|return
+literal|false
+return|;
+block|}
 name|context
 operator|.
 name|setBigTablePosition
