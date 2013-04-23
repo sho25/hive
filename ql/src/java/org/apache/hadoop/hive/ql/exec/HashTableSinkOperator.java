@@ -535,6 +535,15 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|protected
+specifier|static
+name|MapJoinMetaData
+name|metadata
+init|=
+operator|new
+name|MapJoinMetaData
+argument_list|()
+decl_stmt|;
 comment|// from abstract map join operator
 comment|/**    * The expressions for join inputs's join keys.    */
 specifier|protected
@@ -856,6 +865,16 @@ return|return
 name|conf
 return|;
 block|}
+block|}
+specifier|public
+specifier|static
+name|MapJoinMetaData
+name|getMetadata
+parameter_list|()
+block|{
+return|return
+name|metadata
+return|;
 block|}
 specifier|private
 specifier|static
@@ -1613,12 +1632,7 @@ name|getProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|MapJoinMetaData
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
-name|MapJoinMetaData
+name|metadata
 operator|.
 name|put
 argument_list|(
@@ -2120,11 +2134,19 @@ name|tag
 index|]
 argument_list|)
 decl_stmt|;
-name|MapJoinMetaData
+name|metadata
 operator|.
 name|put
 argument_list|(
-name|alias
+name|Integer
+operator|.
+name|valueOf
+argument_list|(
+name|metadataValueTag
+index|[
+name|tag
+index|]
+argument_list|)
 argument_list|,
 operator|new
 name|HashTableSinkObjectCtx
@@ -2400,6 +2422,8 @@ operator|.
 name|error
 argument_list|(
 literal|"Generate Hashtable error"
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 name|e

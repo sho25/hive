@@ -468,6 +468,25 @@ argument_list|>
 index|[]
 name|mapJoinTables
 decl_stmt|;
+specifier|protected
+specifier|static
+name|MapJoinMetaData
+name|metadata
+init|=
+operator|new
+name|MapJoinMetaData
+argument_list|()
+decl_stmt|;
+specifier|public
+specifier|static
+name|MapJoinMetaData
+name|getMetadata
+parameter_list|()
+block|{
+return|return
+name|metadata
+return|;
+block|}
 specifier|private
 specifier|static
 specifier|final
@@ -785,7 +804,7 @@ name|getProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|MapJoinMetaData
+name|metadata
 operator|.
 name|put
 argument_list|(
@@ -926,7 +945,7 @@ operator|.
 name|getObjectInspector
 argument_list|()
 decl_stmt|;
-name|MapJoinMetaData
+name|metadata
 operator|.
 name|put
 argument_list|(
@@ -1290,6 +1309,8 @@ operator|.
 name|error
 argument_list|(
 literal|"Load Distributed Cache Error"
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -1297,9 +1318,6 @@ operator|new
 name|HiveException
 argument_list|(
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 throw|;
 block|}
