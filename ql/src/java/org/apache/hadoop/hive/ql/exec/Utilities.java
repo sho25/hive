@@ -3187,6 +3187,12 @@ condition|(
 name|planPath
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|planPath
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 return|return

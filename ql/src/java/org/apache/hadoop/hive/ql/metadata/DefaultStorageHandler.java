@@ -175,6 +175,20 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
+name|JobConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|OutputFormat
 import|;
 end_import
@@ -357,6 +371,21 @@ argument_list|,
 name|String
 argument_list|>
 name|jobProperties
+parameter_list|)
+block|{
+comment|//do nothing by default
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|configureJobConf
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|JobConf
+name|jobConf
 parameter_list|)
 block|{
 comment|//do nothing by default
