@@ -2991,7 +2991,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"0\tNULL\tNULL\tNULL\tNULL\tnull\tnull"
+literal|"0\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL"
 argument_list|,
 name|itr
 operator|.
@@ -3003,7 +3003,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"NULL\t4.2\t2.2\t4\tlets hcat\tbinary-data\tnull"
+literal|"NULL\t4.2\t2.2\t4\tlets hcat\tbinary-data\tNULL"
 argument_list|,
 name|itr
 operator|.
@@ -3015,7 +3015,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"3\t6.2999997\t3.3000000000000003\t6\tlets hcat\tbinary-data\tnull"
+literal|"3\t6.2999997\t3.3000000000000003\t6\tlets hcat\tbinary-data\tNULL"
 argument_list|,
 name|itr
 operator|.
