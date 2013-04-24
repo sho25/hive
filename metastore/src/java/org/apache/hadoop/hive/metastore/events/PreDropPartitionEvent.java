@@ -90,11 +90,19 @@ specifier|final
 name|Table
 name|table
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|deleteData
+decl_stmt|;
 specifier|public
 name|PreDropPartitionEvent
 parameter_list|(
 name|Partition
 name|partition
+parameter_list|,
+name|boolean
+name|deleteData
 parameter_list|,
 name|HMSHandler
 name|handler
@@ -121,6 +129,14 @@ name|table
 operator|=
 literal|null
 expr_stmt|;
+comment|// In HiveMetaStore, the deleteData flag indicates whether DFS data should be
+comment|// removed on a drop.
+name|this
+operator|.
+name|deleteData
+operator|=
+literal|false
+expr_stmt|;
 block|}
 specifier|public
 name|PreDropPartitionEvent
@@ -130,6 +146,9 @@ name|table
 parameter_list|,
 name|Partition
 name|partition
+parameter_list|,
+name|boolean
+name|deleteData
 parameter_list|,
 name|HMSHandler
 name|handler
@@ -156,6 +175,12 @@ name|table
 operator|=
 name|table
 expr_stmt|;
+name|this
+operator|.
+name|deleteData
+operator|=
+literal|false
+expr_stmt|;
 block|}
 comment|/**    * @return the partition    */
 specifier|public
@@ -175,6 +200,16 @@ parameter_list|()
 block|{
 return|return
 name|table
+return|;
+block|}
+comment|/**    * @return the deleteData flag    */
+specifier|public
+name|boolean
+name|getDeleteData
+parameter_list|()
+block|{
+return|return
+name|deleteData
 return|;
 block|}
 block|}

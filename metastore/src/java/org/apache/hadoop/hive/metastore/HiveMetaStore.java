@@ -7215,6 +7215,8 @@ name|PreDropTableEvent
 argument_list|(
 name|tbl
 argument_list|,
+name|deleteData
+argument_list|,
 name|this
 argument_list|)
 argument_list|)
@@ -7520,6 +7522,8 @@ argument_list|(
 name|tbl
 argument_list|,
 name|success
+argument_list|,
+name|deleteData
 argument_list|,
 name|this
 argument_list|)
@@ -11011,6 +11015,8 @@ name|tbl
 argument_list|,
 name|part
 argument_list|,
+name|deleteData
+argument_list|,
 name|this
 argument_list|)
 argument_list|)
@@ -11306,6 +11312,8 @@ argument_list|,
 name|part
 argument_list|,
 name|success
+argument_list|,
+name|deleteData
 argument_list|,
 name|this
 argument_list|)
