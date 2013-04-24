@@ -114,13 +114,13 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * Convert tasks involving JOIN into MAPJOIN.  * If hive.auto.convert.join is true, the tasks involving join are converted.  * Consider the query:  * select .... from T1 join T2 on T1.key = T2.key join T3 on T1.key = T3.key  *  * There is a map-reduce task which performs a 3-way join (T1, T2, T3).  * The task would be converted to a conditional task which would have 4 children  * a. Mapjoin considering T1 as the big table  * b. Mapjoin considering T2 as the big table  * c. Mapjoin considering T3 as the big table  * d. Map-reduce join (the original task).  *  *  Note that the sizes of all the inputs may not be available at compile time. At runtime, it is  *  determined which branch we want to pick up from the above.  *  * However, if hive.auto.convert.join.noconditionaltask is set to true, and  * the sum of any n-1 tables is smaller than hive.auto.convert.join.noconditionaltask.size,  * then a mapjoin is created instead of the conditional task. For the above, if the size of  * T1 + T2 is less than the threshold, then the task is converted to a mapjoin task with T3 as  * the big table.  *  * In this case, further optimization is performed by merging 2 consecutive map-only jobs.  * Consider the query:  * select ... from T1 join T2 on T1.key1 = T2.key1 join T3 on T1.key2 = T3.key2  *  * Initially, the plan would consist of 2 Map-reduce jobs (1 to perform join for T1 and T2)  * followed by another map-reduce job (to perform join of the result with T3). After the  * optimization, both these tasks would be converted to map-only tasks. These 2 map-only jobs  * are then merged into a single map-only job. As a followup (HIVE-3952), it would be possible to  * merge a map-only task with a map-reduce task.  * Consider the query:  * select T1.key2, count(*) from T1 join T2 on T1.key1 = T2.key1 group by T1.key2;  * Initially, the plan would consist of 2 Map-reduce jobs (1 to perform join for T1 and T2)  * followed by another map-reduce job (to perform groupby of the result). After the  * optimization, the join task would be converted to map-only tasks. After HIVE-3952, the map-only  * task would be merged with the map-reduce task to create a single map-reduce task.  */
+comment|/*  * If a join has been automatically converted into a sort-merge join, create a conditional  * task to try map-side join with each table as the big table. It is similar to  * hive.auto.convert.join, but is only applicable to joins which have been automatically  * converted to sort-merge joins. For hive.auto.convert.join, the backup task is the  * map-reduce join, whereas here, the backup task is the sort-merge join.  *  * Depending on the inputs, a sort-merge join may be faster or slower than the map-side join.  * The other advantage of sort-merge join is that the output is also bucketed and sorted.  * Consider a very big table, say 1TB with 10 buckets being joined with a very small table, say  * 10MB with 10 buckets, the sort-merge join may perform slower since it will be restricted to  * 10 mappers.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|CommonJoinResolver
+name|SortMergeJoinResolver
 implements|implements
 name|PhysicalPlanResolver
 block|{
@@ -141,7 +141,7 @@ name|Dispatcher
 name|disp
 init|=
 operator|new
-name|CommonJoinTaskDispatcher
+name|SortMergeJoinTaskDispatcher
 argument_list|(
 name|pctx
 argument_list|)

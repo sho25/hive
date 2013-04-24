@@ -147,6 +147,19 @@ specifier|private
 name|boolean
 name|gatherStats
 decl_stmt|;
+comment|// Consider a query like:
+comment|// insert overwrite table T3 select ... from T1 join T2 on T1.key = T2.key;
+comment|// where T1, T2 and T3 are sorted and bucketed by key into the same number of buckets,
+comment|// We dont need a reducer to enforce bucketing and sorting for T3.
+comment|// The field below captures the fact that the reducer introduced to enforce sorting/
+comment|// bucketing of T3 has been removed.
+comment|// In this case, a sort-merge join is needed, and so the sort-merge join between T1 and T2
+comment|// cannot be performed as a map-only job
+specifier|private
+specifier|transient
+name|boolean
+name|removedReduceSinkBucketSort
+decl_stmt|;
 comment|// This file descriptor is linked to other file descriptors.
 comment|// One use case is that, a union->select (star)->file sink, is broken down.
 comment|// For eg: consider a query like:
@@ -1179,6 +1192,30 @@ operator|.
 name|statsCollectRawDataSize
 operator|=
 name|statsCollectRawDataSize
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isRemovedReduceSinkBucketSort
+parameter_list|()
+block|{
+return|return
+name|removedReduceSinkBucketSort
+return|;
+block|}
+specifier|public
+name|void
+name|setRemovedReduceSinkBucketSort
+parameter_list|(
+name|boolean
+name|removedReduceSinkBucketSort
+parameter_list|)
+block|{
+name|this
+operator|.
+name|removedReduceSinkBucketSort
+operator|=
+name|removedReduceSinkBucketSort
 expr_stmt|;
 block|}
 block|}

@@ -1562,6 +1562,16 @@ argument_list|(
 literal|1
 argument_list|)
 expr_stmt|;
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setRemovedReduceSinkBucketSort
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|tsOp
 operator|.
 name|setUseBucketizedHiveInputFormat

@@ -857,6 +857,20 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|opAllowedBeforeSortMergeJoin
+parameter_list|()
+block|{
+comment|// If a union occurs before the sort-merge join, it is not useful to convert the the
+comment|// sort-merge join to a mapjoin. The number of inputs for the union is more than 1 so
+comment|// it would be difficult to figure out the big table for the mapjoin.
+return|return
+literal|false
+return|;
+block|}
 block|}
 end_class
 

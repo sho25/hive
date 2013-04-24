@@ -7311,6 +7311,16 @@ return|return
 literal|true
 return|;
 block|}
+comment|/*    * If this task contains a sortmergejoin, it can be converted to a map-join task if this operator    * is present in the mapper. For eg. if a sort-merge join operator is present followed by a    * regular join, it cannot be converted to a auto map-join.    */
+specifier|public
+name|boolean
+name|opAllowedBeforeSortMergeJoin
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
 specifier|public
 name|String
 name|toString

@@ -2569,6 +2569,13 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.optimizer.AvgPartitionSizeBasedBigTableSelectorForAutoSMJ"
 argument_list|)
 block|,
+name|HIVE_AUTO_SORTMERGE_JOIN_TOMAPJOIN
+argument_list|(
+literal|"hive.auto.convert.sortmerge.join.to.mapjoin"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVESCRIPTOPERATORTRUST
 argument_list|(
 literal|"hive.exec.script.trust"

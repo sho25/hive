@@ -1354,6 +1354,22 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|opAllowedBeforeSortMergeJoin
+parameter_list|()
+block|{
+comment|// If a join occurs before the sort-merge join, it is not useful to convert the the sort-merge
+comment|// join to a mapjoin. It might be simpler to perform the join and then a sort-merge join
+comment|// join. By converting the sort-merge join to a map-join, the job will be executed in 2
+comment|// mapjoins in the best case. The number of inputs for the join is more than 1 so it would
+comment|// be difficult to figure out the big table for the mapjoin.
+return|return
+literal|false
+return|;
+block|}
 block|}
 end_class
 
