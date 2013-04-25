@@ -1499,6 +1499,41 @@ operator|+
 literal|"rewrite the query to not use distincts."
 argument_list|)
 block|,
+name|TRUNCATE_COLUMN_INDEXED_TABLE
+argument_list|(
+literal|10227
+argument_list|,
+literal|"Can not truncate columns from table with indexes"
+argument_list|)
+block|,
+name|TRUNCATE_COLUMN_NOT_RC
+argument_list|(
+literal|10228
+argument_list|,
+literal|"Only RCFileFormat supports column truncation."
+argument_list|)
+block|,
+name|TRUNCATE_COLUMN_ARCHIVED
+argument_list|(
+literal|10229
+argument_list|,
+literal|"Column truncation cannot be performed on archived partitions."
+argument_list|)
+block|,
+name|TRUNCATE_BUCKETED_COLUMN
+argument_list|(
+literal|10230
+argument_list|,
+literal|"A column on which a partition/table is bucketed cannot be truncated."
+argument_list|)
+block|,
+name|TRUNCATE_LIST_BUCKETED_COLUMN
+argument_list|(
+literal|10231
+argument_list|,
+literal|"A column on which a partition/table is list bucketed cannot be truncated."
+argument_list|)
+block|,
 name|OPERATOR_NOT_ALLOWED_WITH_MAPJOIN
 argument_list|(
 literal|10227

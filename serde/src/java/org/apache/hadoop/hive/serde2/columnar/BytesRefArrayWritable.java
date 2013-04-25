@@ -102,7 +102,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *<tt>BytesRefArrayWritable</tt> holds an array reference to BytesRefWritable,  * and is able to resize without recreating new array if not necessary.  *<p>  *   * Each<tt>BytesRefArrayWritable holds</tt> instance has a<i>valid</i> field,  * which is the desired valid number of<tt>BytesRefWritable</tt> it holds.  *<tt>resetValid</tt> can reset the valid, but it will not care the underlying  * BytesRefWritable.  */
+comment|/**  *<tt>BytesRefArrayWritable</tt> holds an array reference to BytesRefWritable,  * and is able to resize without recreating new array if not necessary.  *<p>  *  * Each<tt>BytesRefArrayWritable holds</tt> instance has a<i>valid</i> field,  * which is the desired valid number of<tt>BytesRefWritable</tt> it holds.  *<tt>resetValid</tt> can reset the valid, but it will not care the underlying  * BytesRefWritable.  */
 end_comment
 
 begin_class
@@ -130,7 +130,7 @@ name|valid
 init|=
 literal|0
 decl_stmt|;
-comment|/**    * Constructs an empty array with the specified capacity.    *     * @param capacity    *          initial capacity    * @exception IllegalArgumentException    *              if the specified initial capacity is negative    */
+comment|/**    * Constructs an empty array with the specified capacity.    *    * @param capacity    *          initial capacity    * @exception IllegalArgumentException    *              if the specified initial capacity is negative    */
 specifier|public
 name|BytesRefArrayWritable
 parameter_list|(
@@ -178,7 +178,7 @@ literal|10
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns the number of valid elements.    *     * @return the number of valid elements    */
+comment|/**    * Returns the number of valid elements.    *    * @return the number of valid elements    */
 specifier|public
 name|int
 name|size
@@ -188,7 +188,7 @@ return|return
 name|valid
 return|;
 block|}
-comment|/**    * Gets the BytesRefWritable at the specified position. Make sure the position    * is valid by first call resetValid.    *     * @param index    *          the position index, starting from zero    * @throws IndexOutOfBoundsException    */
+comment|/**    * Gets the BytesRefWritable at the specified position. Make sure the position    * is valid by first call resetValid.    *    * @param index    *          the position index, starting from zero    * @throws IndexOutOfBoundsException    */
 specifier|public
 name|BytesRefWritable
 name|get
@@ -223,7 +223,7 @@ name|index
 index|]
 return|;
 block|}
-comment|/**    * Gets the BytesRefWritable at the specified position without checking.    *     * @param index    *          the position index, starting from zero    * @throws IndexOutOfBoundsException    */
+comment|/**    * Gets the BytesRefWritable at the specified position without checking.    *    * @param index    *          the position index, starting from zero    * @throws IndexOutOfBoundsException    */
 specifier|public
 name|BytesRefWritable
 name|unCheckedGet
@@ -239,7 +239,7 @@ name|index
 index|]
 return|;
 block|}
-comment|/**    * Set the BytesRefWritable at the specified position with the specified    * BytesRefWritable.    *     * @param index    *          index position    * @param bytesRefWritable    *          the new element    * @throws IllegalArgumentException    *           if the specified new element is null    */
+comment|/**    * Set the BytesRefWritable at the specified position with the specified    * BytesRefWritable.    *    * @param index    *          index position    * @param bytesRefWritable    *          the new element    * @throws IllegalArgumentException    *           if the specified new element is null    */
 specifier|public
 name|void
 name|set
@@ -251,21 +251,6 @@ name|BytesRefWritable
 name|bytesRefWritable
 parameter_list|)
 block|{
-if|if
-condition|(
-name|bytesRefWritable
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|IllegalArgumentException
-argument_list|(
-literal|"Can not assign null."
-argument_list|)
-throw|;
-block|}
 name|ensureCapacity
 argument_list|(
 name|index
@@ -393,7 +378,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Returns<tt>true</tt> if this instance contains one or more the specified    * BytesRefWritable.    *     * @param bytesRefWritable    *          BytesRefWritable element to be tested    * @return<tt>true</tt> if contains the specified element    * @throws IllegalArgumentException    *           if the specified element is null    */
+comment|/**    * Returns<tt>true</tt> if this instance contains one or more the specified    * BytesRefWritable.    *    * @param bytesRefWritable    *          BytesRefWritable element to be tested    * @return<tt>true</tt> if contains the specified element    * @throws IllegalArgumentException    *           if the specified element is null    */
 specifier|public
 name|boolean
 name|contains
@@ -506,7 +491,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-comment|/**    * enlarge the capacity if necessary, to ensure that it can hold the number of    * elements specified by newValidCapacity argument. It will also narrow the    * valid capacity when needed. Notice: it only enlarge or narrow the valid    * capacity with no care of the already stored invalid BytesRefWritable.    *     * @param newValidCapacity    *          the desired capacity    */
+comment|/**    * enlarge the capacity if necessary, to ensure that it can hold the number of    * elements specified by newValidCapacity argument. It will also narrow the    * valid capacity when needed. Notice: it only enlarge or narrow the valid    * capacity with no care of the already stored invalid BytesRefWritable.    *    * @param newValidCapacity    *          the desired capacity    */
 specifier|public
 name|void
 name|resetValid
