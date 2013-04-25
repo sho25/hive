@@ -1442,7 +1442,7 @@ literal|10217
 argument_list|,
 literal|"Cannot replace a view with CREATE VIEW or REPLACE VIEW or "
 operator|+
-literal|"ALTER VIEW AS SELECT if the view has paritions\n"
+literal|"ALTER VIEW AS SELECT if the view has partitions\n"
 argument_list|)
 block|,
 name|EXISTING_TABLE_IS_NOT_VIEW
@@ -1593,6 +1593,24 @@ argument_list|,
 literal|"Analyze partialscan is not allowed "
 operator|+
 literal|"if hive.stats.autogather is set to false"
+argument_list|)
+block|,
+name|PARTITION_VALUE_NOT_CONTINUOUS
+argument_list|(
+literal|10234
+argument_list|,
+literal|"Parition values specifed are not continuous."
+operator|+
+literal|" A subpartition value is specified without specififying the parent partition's value"
+argument_list|)
+block|,
+name|TABLES_INCOMPATIBLE_SCHEMAS
+argument_list|(
+literal|10235
+argument_list|,
+literal|"Tables have incompatible schemas and their partitions "
+operator|+
+literal|" cannot be exchanged."
 argument_list|)
 block|,
 name|SCRIPT_INIT_ERROR

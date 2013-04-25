@@ -1535,6 +1535,11 @@ name|HiveParser
 operator|.
 name|TOK_TRUNCATETABLE
 case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_EXCHANGEPARTITION
+case|:
 return|return
 operator|new
 name|DDLSemanticAnalyzer
