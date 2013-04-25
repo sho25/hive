@@ -1128,7 +1128,7 @@ return|return
 name|op
 return|;
 block|}
-comment|/**    * Generate the MapRed Local Work    * @param newWork    * @param mapJoinOp    * @param bigTablePos    * @return    * @throws SemanticException    */
+comment|/**    * Generate the MapRed Local Work for the given map-join operator    *    * @param newWork    * @param mapJoinOp    *          map-join operator for which local work needs to be generated.    * @param bigTablePos    * @return    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|String
@@ -1754,6 +1754,7 @@ return|return
 name|bigTableAlias
 return|;
 block|}
+comment|/**    * Convert the join to a map-join and also generate any local work needed.    *    * @param newWork MapredWork in which the conversion is to happen    * @param op    *          The join operator that needs to be converted to map-join    * @param bigTablePos    * @return the alias to the big table    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|String

@@ -1149,6 +1149,7 @@ return|return
 name|keyDesc
 return|;
 block|}
+comment|/**    * If the plan has a reducer and correspondingly a reduce-sink, then store the TableDesc pointing    * to keySerializeInfo of the ReduceSink    *    * @param keyDesc    */
 specifier|public
 name|void
 name|setKeyDesc
