@@ -98,6 +98,8 @@ class|class
 name|UDFLower
 extends|extends
 name|UDF
+implements|implements
+name|IUDFUnaryString
 block|{
 specifier|private
 name|Text
