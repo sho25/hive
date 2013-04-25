@@ -62209,6 +62209,13 @@ operator|.
 name|getRr
 argument_list|()
 decl_stmt|;
+name|ptfDesc
+operator|.
+name|setMapSide
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|input
 operator|=
 name|putOpInsertMap
