@@ -2909,6 +2909,13 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|work
+operator|.
+name|configureJobConf
+argument_list|(
+name|job
+argument_list|)
+expr_stmt|;
 name|addInputPaths
 argument_list|(
 name|job

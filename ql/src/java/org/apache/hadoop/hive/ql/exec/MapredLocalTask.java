@@ -617,6 +617,38 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|HadoopShims
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapred
 operator|.
 name|JobConf
@@ -1401,6 +1433,50 @@ comment|// nothing to do - we are not running in local mode - only submitting
 comment|// the job via a child process. in this case it's appropriate that the
 comment|// child jvm use the same memory as the parent jvm
 comment|// }
+comment|//Set HADOOP_USER_NAME env variable for child process, so that
+comment|// it also runs with hadoop permissions for the user the job is running as
+comment|// This will be used by hadoop only in unsecure(/non kerberos) mode
+name|HadoopShims
+name|shim
+init|=
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+decl_stmt|;
+name|String
+name|endUserName
+init|=
+name|shim
+operator|.
+name|getShortUserName
+argument_list|(
+name|shim
+operator|.
+name|getUGIForConf
+argument_list|(
+name|job
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|console
+operator|.
+name|printInfo
+argument_list|(
+literal|"setting HADOOP_USER_NAME\t"
+operator|+
+name|endUserName
+argument_list|)
+expr_stmt|;
+name|variables
+operator|.
+name|put
+argument_list|(
+literal|"HADOOP_USER_NAME"
+argument_list|,
+name|endUserName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|variables

@@ -1442,7 +1442,7 @@ literal|10217
 argument_list|,
 literal|"Cannot replace a view with CREATE VIEW or REPLACE VIEW or "
 operator|+
-literal|"ALTER VIEW AS SELECT if the view has paritions\n"
+literal|"ALTER VIEW AS SELECT if the view has partitions\n"
 argument_list|)
 block|,
 name|EXISTING_TABLE_IS_NOT_VIEW
@@ -1497,6 +1497,41 @@ operator|+
 literal|"(higher than the number of rows per input row due to grouping sets in the query), or "
 operator|+
 literal|"rewrite the query to not use distincts."
+argument_list|)
+block|,
+name|TRUNCATE_COLUMN_INDEXED_TABLE
+argument_list|(
+literal|10227
+argument_list|,
+literal|"Can not truncate columns from table with indexes"
+argument_list|)
+block|,
+name|TRUNCATE_COLUMN_NOT_RC
+argument_list|(
+literal|10228
+argument_list|,
+literal|"Only RCFileFormat supports column truncation."
+argument_list|)
+block|,
+name|TRUNCATE_COLUMN_ARCHIVED
+argument_list|(
+literal|10229
+argument_list|,
+literal|"Column truncation cannot be performed on archived partitions."
+argument_list|)
+block|,
+name|TRUNCATE_BUCKETED_COLUMN
+argument_list|(
+literal|10230
+argument_list|,
+literal|"A column on which a partition/table is bucketed cannot be truncated."
+argument_list|)
+block|,
+name|TRUNCATE_LIST_BUCKETED_COLUMN
+argument_list|(
+literal|10231
+argument_list|,
+literal|"A column on which a partition/table is list bucketed cannot be truncated."
 argument_list|)
 block|,
 name|OPERATOR_NOT_ALLOWED_WITH_MAPJOIN
@@ -1558,6 +1593,24 @@ argument_list|,
 literal|"Analyze partialscan is not allowed "
 operator|+
 literal|"if hive.stats.autogather is set to false"
+argument_list|)
+block|,
+name|PARTITION_VALUE_NOT_CONTINUOUS
+argument_list|(
+literal|10234
+argument_list|,
+literal|"Parition values specifed are not continuous."
+operator|+
+literal|" A subpartition value is specified without specififying the parent partition's value"
+argument_list|)
+block|,
+name|TABLES_INCOMPATIBLE_SCHEMAS
+argument_list|(
+literal|10235
+argument_list|,
+literal|"Tables have incompatible schemas and their partitions "
+operator|+
+literal|" cannot be exchanged."
 argument_list|)
 block|,
 name|SCRIPT_INIT_ERROR

@@ -53,7 +53,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|HiveException
+name|DefaultStorageHandler
 import|;
 end_import
 
@@ -71,7 +71,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|HiveStorageHandler
+name|HiveException
 import|;
 end_import
 
@@ -136,8 +136,8 @@ specifier|public
 specifier|abstract
 class|class
 name|HCatStorageHandler
-implements|implements
-name|HiveStorageHandler
+extends|extends
+name|DefaultStorageHandler
 block|{
 comment|//TODO move this to HiveStorageHandler
 comment|/**      * This method is called to allow the StorageHandlers the chance      * to populate the JobContext.getConfiguration() with properties that      * maybe be needed by the handler's bundled artifacts (ie InputFormat, SerDe, etc).      * Key value pairs passed into jobProperties is guaranteed to be set in the job's      * configuration object. User's can retrieve "context" information from tableDesc.      * User's should avoid mutating tableDesc and only make changes in jobProperties.      * This method is expected to be idempotent such that a job called with the      * same tableDesc values should return the same key-value pairs in jobProperties.      * Any external state set by this method should remain the same if this method is      * called again. It is up to the user to determine how best guarantee this invariant.      *      * This method in particular is to create a configuration for input.      * @param tableDesc      * @param jobProperties      */

@@ -659,11 +659,13 @@ name|doAsEnabled
 operator|=
 name|conf
 operator|.
-name|getBoolean
+name|getBoolVar
 argument_list|(
-literal|"hive.server2.enable.doAs"
-argument_list|,
-literal|false
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_ENABLE_DOAS
 argument_list|)
 expr_stmt|;
 block|}

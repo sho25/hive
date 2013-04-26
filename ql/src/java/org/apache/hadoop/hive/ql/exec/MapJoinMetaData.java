@@ -74,7 +74,6 @@ specifier|public
 class|class
 name|MapJoinMetaData
 block|{
-specifier|static
 specifier|transient
 name|Map
 argument_list|<
@@ -112,7 +111,6 @@ name|MapJoinMetaData
 parameter_list|()
 block|{    }
 specifier|public
-specifier|static
 name|void
 name|put
 parameter_list|(
@@ -134,7 +132,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 name|HashTableSinkObjectCtx
 name|get
 parameter_list|(
@@ -152,7 +149,6 @@ argument_list|)
 return|;
 block|}
 specifier|public
-specifier|static
 name|void
 name|clear
 parameter_list|()

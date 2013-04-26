@@ -75,7 +75,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MapJoinMetaData
+name|HashTableSinkOperator
 import|;
 end_import
 
@@ -96,6 +96,24 @@ operator|.
 name|HashTableSinkOperator
 operator|.
 name|HashTableSinkObjectCtx
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|MapJoinOperator
 import|;
 end_import
 
@@ -449,7 +467,10 @@ comment|// get the tableDesc from the map stored in the mapjoin operator
 name|HashTableSinkObjectCtx
 name|ctx
 init|=
-name|MapJoinMetaData
+name|MapJoinOperator
+operator|.
+name|getMetadata
+argument_list|()
 operator|.
 name|get
 argument_list|(
@@ -584,7 +605,10 @@ comment|// get the tableDesc from the map stored in the mapjoin operator
 name|HashTableSinkObjectCtx
 name|ctx
 init|=
-name|MapJoinMetaData
+name|HashTableSinkOperator
+operator|.
+name|getMetadata
+argument_list|()
 operator|.
 name|get
 argument_list|(

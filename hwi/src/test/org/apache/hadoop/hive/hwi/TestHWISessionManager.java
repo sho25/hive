@@ -634,11 +634,6 @@ operator|.
 name|getResultBucket
 argument_list|()
 decl_stmt|;
-comment|// "describe [table_name]" result format
-comment|// first line should be format name:
-comment|// "# col_name             data_type               comment"
-comment|// second line is empty
-comment|// the following lines contain the values
 name|String
 name|resLine
 init|=
@@ -651,7 +646,7 @@ argument_list|)
 operator|.
 name|get
 argument_list|(
-literal|2
+literal|0
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -690,7 +685,7 @@ argument_list|)
 operator|.
 name|get
 argument_list|(
-literal|3
+literal|1
 argument_list|)
 decl_stmt|;
 name|assertEquals

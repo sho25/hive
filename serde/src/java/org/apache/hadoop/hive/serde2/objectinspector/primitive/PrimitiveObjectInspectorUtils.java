@@ -4208,8 +4208,6 @@ name|result
 init|=
 literal|null
 decl_stmt|;
-try|try
-block|{
 switch|switch
 condition|(
 name|oi
@@ -4486,15 +4484,6 @@ name|getTypeName
 argument_list|()
 argument_list|)
 throw|;
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|NumberFormatException
-name|e
-parameter_list|)
-block|{
-comment|// return null
 block|}
 return|return
 name|result

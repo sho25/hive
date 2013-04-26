@@ -203,6 +203,33 @@ name|CommonJoinResolver
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// The joins have been automatically converted to map-joins.
+comment|// However, if the joins were converted to sort-merge joins automatically,
+comment|// they should also be tried as map-joins.
+if|if
+condition|(
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_AUTO_SORTMERGE_JOIN_TOMAPJOIN
+argument_list|)
+condition|)
+block|{
+name|resolvers
+operator|.
+name|add
+argument_list|(
+operator|new
+name|SortMergeJoinResolver
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -262,7 +289,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Physical optimizers which follow this need to be careful not to invalidate the inferences
-comment|// made by this optimizer.  Only optimizers which depend on the results of this one should
+comment|// made by this optimizer. Only optimizers which depend on the results of this one should
 comment|// follow it.
 if|if
 condition|(

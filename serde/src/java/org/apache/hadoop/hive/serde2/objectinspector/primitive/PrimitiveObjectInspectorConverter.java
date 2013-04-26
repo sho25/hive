@@ -1045,6 +1045,8 @@ return|return
 literal|null
 return|;
 block|}
+try|try
+block|{
 return|return
 name|outputOI
 operator|.
@@ -1062,6 +1064,17 @@ name|inputOI
 argument_list|)
 argument_list|)
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|NumberFormatException
+name|e
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 block|}
 specifier|public

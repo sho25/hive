@@ -4659,18 +4659,6 @@ operator|.
 name|next
 argument_list|()
 expr_stmt|;
-comment|// skip header 1
-name|res
-operator|.
-name|next
-argument_list|()
-expr_stmt|;
-comment|// skip header 2
-name|res
-operator|.
-name|next
-argument_list|()
-expr_stmt|;
 name|assertEquals
 argument_list|(
 literal|"Column name 'under_col' not found"

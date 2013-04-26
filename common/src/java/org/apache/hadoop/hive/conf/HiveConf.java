@@ -779,6 +779,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_PARTITION_NAME_WHITELIST_PATTERN
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 block|}
 decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
@@ -991,13 +997,6 @@ block|,
 name|ONFAILUREHOOKS
 argument_list|(
 literal|"hive.exec.failure.hooks"
-argument_list|,
-literal|""
-argument_list|)
-block|,
-name|OPERATORHOOKS
-argument_list|(
-literal|"hive.exec.operator.hooks"
 argument_list|,
 literal|""
 argument_list|)
@@ -1692,6 +1691,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
+argument_list|(
+literal|"hive.metastore.disallow.incompatible.col.type.changes"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Default parameters for creating tables
 name|NEWTABLEDEFAULTPARA
 argument_list|(
@@ -2358,6 +2364,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// Maximum fraction of heap that can be used by ORC file writers
+name|HIVE_ORC_FILE_MEMORY_POOL
+argument_list|(
+literal|"hive.exec.orc.memory.pool"
+argument_list|,
+literal|0.5f
+argument_list|)
+block|,
+comment|// 50%
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"
@@ -2384,6 +2399,13 @@ argument_list|(
 literal|"hive.auto.convert.join.noconditionaltask.size"
 argument_list|,
 literal|10000000L
+argument_list|)
+block|,
+name|HIVEOPTIMIZEMAPJOINFOLLOWEDBYMR
+argument_list|(
+literal|"hive.optimize.mapjoin.mapreduce"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVESKEWJOINKEY
@@ -2565,6 +2587,13 @@ argument_list|(
 literal|"hive.auto.convert.sortmerge.join.bigtable.selection.policy"
 argument_list|,
 literal|"org.apache.hadoop.hive.ql.optimizer.AvgPartitionSizeBasedBigTableSelectorForAutoSMJ"
+argument_list|)
+block|,
+name|HIVE_AUTO_SORTMERGE_JOIN_TOMAPJOIN
+argument_list|(
+literal|"hive.auto.convert.sortmerge.join.to.mapjoin"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVESCRIPTOPERATORTRUST
@@ -2782,53 +2811,6 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-comment|//Profiler
-name|HIVEPROFILERDBCLASS
-argument_list|(
-literal|"hive.profiler.dbclass"
-argument_list|,
-literal|"jdbc:derby"
-argument_list|)
-block|,
-name|HIVEPROFILERJDBCDRIVER
-argument_list|(
-literal|"hive.profiler.jdbcdriver"
-argument_list|,
-literal|"org.apache.derby.jdbc.EmbeddedDriver"
-argument_list|)
-block|,
-name|HIVEPROFILERDBCONNECTIONSTRING
-argument_list|(
-literal|"hive.profiler.dbconnectionstring"
-argument_list|,
-literal|"jdbc:derby:;databaseName=TempProfilerStore;create=true"
-argument_list|)
-block|,
-comment|// automatically create database
-comment|// default timeout for JDBC connection
-name|HIVE_PROFILER_JDBC_TIMEOUT
-argument_list|(
-literal|"hive.profiler.jdbc.timeout"
-argument_list|,
-literal|30
-argument_list|)
-block|,
-name|HIVE_PROFILER_RETRIES_MAX
-argument_list|(
-literal|"hive.stats.retries.max"
-argument_list|,
-literal|0
-argument_list|)
-block|,
-comment|// maximum # of retries to insert/select/delete the stats DB
-name|HIVE_PROFILER_RETRIES_WAIT
-argument_list|(
-literal|"hive.stats.retries.wait"
-argument_list|,
-literal|3000
-argument_list|)
-block|,
-comment|// # milliseconds to wait before the next retry
 comment|// Statistics
 name|HIVESTATSAUTOGATHER
 argument_list|(
@@ -3412,18 +3394,18 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
-name|HIVE_SERVER2_KERBEROS_IMPERSONATION
-argument_list|(
-literal|"hive.server2.enable.impersonation"
-argument_list|,
-literal|false
-argument_list|)
-block|,
 name|HIVE_SERVER2_CUSTOM_AUTHENTICATION_CLASS
 argument_list|(
 literal|"hive.server2.custom.authentication.class"
 argument_list|,
 literal|null
+argument_list|)
+block|,
+name|HIVE_SERVER2_ENABLE_DOAS
+argument_list|(
+literal|"hive.server2.enable.doAs"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|HIVE_CONF_RESTRICTED_LIST

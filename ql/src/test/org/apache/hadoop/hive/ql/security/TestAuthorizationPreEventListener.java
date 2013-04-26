@@ -1002,7 +1002,7 @@ block|{
 name|String
 name|dbName
 init|=
-literal|"tmpdb"
+literal|"hive3705"
 decl_stmt|;
 name|String
 name|tblName
@@ -1185,7 +1185,7 @@ name|msc
 operator|.
 name|getPartition
 argument_list|(
-literal|"tmpdb"
+literal|"hive3705"
 argument_list|,
 literal|"tmptbl"
 argument_list|,

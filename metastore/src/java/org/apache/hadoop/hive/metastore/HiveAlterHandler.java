@@ -161,6 +161,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -639,6 +655,48 @@ operator|+
 literal|" doesn't exist"
 argument_list|)
 throw|;
+block|}
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
+argument_list|,
+literal|false
+argument_list|)
+condition|)
+block|{
+comment|// Throws InvalidOperationException if the new column types are not
+comment|// compatible with the current column types.
+name|MetaStoreUtils
+operator|.
+name|throwExceptionIfIncompatibleColTypeChange
+argument_list|(
+name|oldt
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getCols
+argument_list|()
+argument_list|,
+name|newt
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getCols
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|//check that partition keys have not changed, except for virtual views
 comment|//however, allow the partition comments to change

@@ -3802,8 +3802,9 @@ operator|-
 name|offset
 expr_stmt|;
 block|}
-comment|// If the column is just empty strings, the size will be zero, so the buffer will be null,
-comment|// in that case just return result as it will default to empty
+comment|// If the column is just empty strings, the size will be zero,
+comment|// so the buffer will be null, in that case just return result
+comment|// as it will default to empty
 if|if
 condition|(
 name|dictionaryBuffer
@@ -4104,6 +4105,31 @@ name|OrcStruct
 operator|)
 name|previous
 expr_stmt|;
+comment|// If the input format was initialized with a file with a
+comment|// different number of fields, the number of fields needs to
+comment|// be updated to the correct number
+if|if
+condition|(
+name|result
+operator|.
+name|getNumFields
+argument_list|()
+operator|!=
+name|fields
+operator|.
+name|length
+condition|)
+block|{
+name|result
+operator|.
+name|setNumFields
+argument_list|(
+name|fields
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 for|for
 control|(

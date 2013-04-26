@@ -486,7 +486,7 @@ specifier|final
 name|String
 name|dbName
 init|=
-literal|"tmpdb"
+literal|"hive3252"
 decl_stmt|;
 specifier|private
 specifier|static

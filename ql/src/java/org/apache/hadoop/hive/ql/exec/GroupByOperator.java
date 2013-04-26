@@ -613,6 +613,46 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
+name|ObjectInspectorUtils
+operator|.
+name|ObjectInspectorCopyOption
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|PrimitiveObjectInspector
+operator|.
+name|PrimitiveCategory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
 name|StandardStructObjectInspector
 import|;
 end_import
@@ -668,46 +708,6 @@ operator|.
 name|objectinspector
 operator|.
 name|UnionObject
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ObjectInspectorUtils
-operator|.
-name|ObjectInspectorCopyOption
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|PrimitiveObjectInspector
-operator|.
-name|PrimitiveCategory
 import|;
 end_import
 
@@ -891,8 +891,6 @@ index|[]
 index|[]
 name|aggregationParameterObjects
 decl_stmt|;
-comment|// In the future, we may allow both count(DISTINCT a) and sum(DISTINCT a) in
-comment|// the same SQL clause,
 comment|// so aggregationIsDistinct is a boolean array instead of a single number.
 specifier|protected
 specifier|transient
@@ -5040,6 +5038,20 @@ operator|!
 name|keysAreEqual
 condition|)
 block|{
+comment|// This is to optimize queries of the form:
+comment|// select count(distinct key) from T
+comment|// where T is sorted and bucketized by key
+comment|// Partial aggregation is performed on the mapper, and the
+comment|// reducer gets 1 row (partial result) per mapper.
+if|if
+condition|(
+operator|!
+name|conf
+operator|.
+name|isDontResetAggrsDistinct
+argument_list|()
+condition|)
+block|{
 name|forward
 argument_list|(
 name|currentKeys
@@ -5054,6 +5066,7 @@ name|countAfterReport
 operator|=
 literal|0
 expr_stmt|;
+block|}
 block|}
 comment|// Need to update the keys?
 if|if
@@ -5092,11 +5105,22 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Reset the aggregations
+comment|// For distincts optimization with sorting/bucketing, perform partial aggregation
+if|if
+condition|(
+operator|!
+name|conf
+operator|.
+name|isDontResetAggrsDistinct
+argument_list|()
+condition|)
+block|{
 name|resetAggregations
 argument_list|(
 name|aggregations
 argument_list|)
 expr_stmt|;
+block|}
 comment|// clear parameters in last-invoke
 for|for
 control|(
@@ -5969,6 +5993,10 @@ comment|// are sent to jt as counters
 if|if
 condition|(
 name|hashAggr
+operator|&&
+name|counterNameToEnum
+operator|!=
+literal|null
 condition|)
 block|{
 name|incrCounter

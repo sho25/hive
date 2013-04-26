@@ -83,9 +83,9 @@ specifier|final
 name|int
 name|MAX_PRECISION
 init|=
-literal|36
+literal|38
 decl_stmt|;
-comment|// multiple of 9 for compact representation
+comment|// fits into 128 bits
 specifier|public
 specifier|static
 specifier|final

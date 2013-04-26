@@ -1378,7 +1378,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_SERVER2_KERBEROS_IMPERSONATION
+name|HIVE_SERVER2_ENABLE_DOAS
 argument_list|)
 condition|)
 block|{

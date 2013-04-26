@@ -406,7 +406,7 @@ block|{
 name|String
 name|dbName
 init|=
-literal|"tmpdb"
+literal|"hive4159"
 decl_stmt|;
 name|String
 name|tblName

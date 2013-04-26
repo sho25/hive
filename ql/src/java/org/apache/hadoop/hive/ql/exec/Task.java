@@ -581,6 +581,14 @@ name|MAPJOIN_ONLY_NOBACKUP
 init|=
 literal|6
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|CONVERTED_SORTMERGEJOIN
+init|=
+literal|7
+decl_stmt|;
 comment|// Descendants tasks who subscribe feeds from this task
 specifier|protected
 specifier|transient
