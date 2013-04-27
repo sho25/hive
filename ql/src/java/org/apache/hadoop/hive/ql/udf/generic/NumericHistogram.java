@@ -1307,6 +1307,24 @@ return|return
 name|result
 return|;
 block|}
+specifier|public
+name|int
+name|getNumBins
+parameter_list|()
+block|{
+return|return
+name|bins
+operator|==
+literal|null
+condition|?
+literal|0
+else|:
+name|bins
+operator|.
+name|size
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 
