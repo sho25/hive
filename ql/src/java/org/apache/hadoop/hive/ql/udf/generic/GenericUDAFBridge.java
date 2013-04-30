@@ -715,8 +715,8 @@ comment|/** class for storing UDAFEvaluator value. */
 specifier|static
 class|class
 name|UDAFAgg
-implements|implements
-name|AggregationBuffer
+extends|extends
+name|AbstractAggregationBuffer
 block|{
 name|UDAFEvaluator
 name|ueObject

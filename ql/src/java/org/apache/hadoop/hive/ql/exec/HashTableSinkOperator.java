@@ -584,11 +584,6 @@ operator|-
 literal|1
 decl_stmt|;
 comment|// one of the tables that is not in memory
-specifier|transient
-name|int
-name|mapJoinRowsKey
-decl_stmt|;
-comment|// rows for a given key
 specifier|protected
 specifier|transient
 name|RowContainer

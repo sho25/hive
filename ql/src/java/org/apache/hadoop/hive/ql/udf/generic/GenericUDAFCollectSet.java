@@ -550,8 +550,8 @@ block|}
 specifier|static
 class|class
 name|MkArrayAggregationBuffer
-implements|implements
-name|AggregationBuffer
+extends|extends
+name|AbstractAggregationBuffer
 block|{
 name|Set
 argument_list|<

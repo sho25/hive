@@ -227,6 +227,12 @@ init|=
 literal|null
 decl_stmt|;
 comment|// table descriptor of the final
+specifier|private
+name|CreateTableDesc
+name|localDirectoryDesc
+init|=
+literal|null
+decl_stmt|;
 comment|// used by PTFs
 comment|/*    * This map maintains the PTFInvocationSpec for each PTF chain invocation in this QB.    */
 specifier|private
@@ -938,6 +944,30 @@ block|{
 name|tblDesc
 operator|=
 name|desc
+expr_stmt|;
+block|}
+specifier|public
+name|CreateTableDesc
+name|getLLocalDirectoryDesc
+parameter_list|()
+block|{
+return|return
+name|localDirectoryDesc
+return|;
+block|}
+specifier|public
+name|void
+name|setLocalDirectoryDesc
+parameter_list|(
+name|CreateTableDesc
+name|localDirectoryDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|localDirectoryDesc
+operator|=
+name|localDirectoryDesc
 expr_stmt|;
 block|}
 comment|/**    * Whether this QB is for a CREATE-TABLE-AS-SELECT.    */

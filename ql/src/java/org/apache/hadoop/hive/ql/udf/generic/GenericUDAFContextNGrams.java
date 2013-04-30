@@ -2546,8 +2546,8 @@ comment|// Aggregation buffer methods.
 specifier|static
 class|class
 name|NGramAggBuf
-implements|implements
-name|AggregationBuffer
+extends|extends
+name|AbstractAggregationBuffer
 block|{
 name|ArrayList
 argument_list|<

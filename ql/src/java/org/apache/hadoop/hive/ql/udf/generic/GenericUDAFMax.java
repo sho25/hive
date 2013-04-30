@@ -431,8 +431,8 @@ comment|/** class for storing the current max value */
 specifier|static
 class|class
 name|MaxAgg
-implements|implements
-name|AggregationBuffer
+extends|extends
+name|AbstractAggregationBuffer
 block|{
 name|Object
 name|o
