@@ -312,11 +312,6 @@ operator|-
 literal|1
 decl_stmt|;
 comment|// one of the tables that is not in memory
-specifier|transient
-name|int
-name|mapJoinRowsKey
-decl_stmt|;
-comment|// rows for a given key
 specifier|protected
 specifier|transient
 name|RowContainer
@@ -536,21 +531,6 @@ name|posBigTable
 index|]
 operator|=
 name|bigPosRC
-expr_stmt|;
-name|mapJoinRowsKey
-operator|=
-name|HiveConf
-operator|.
-name|getIntVar
-argument_list|(
-name|hconf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEMAPJOINROWSIZE
-argument_list|)
 expr_stmt|;
 name|List
 argument_list|<

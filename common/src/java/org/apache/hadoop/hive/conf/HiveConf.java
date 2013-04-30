@@ -2008,13 +2008,6 @@ argument_list|,
 literal|100
 argument_list|)
 block|,
-name|HIVEMAPJOINROWSIZE
-argument_list|(
-literal|"hive.mapjoin.size.key"
-argument_list|,
-literal|10000
-argument_list|)
-block|,
 name|HIVEMAPJOINCACHEROWS
 argument_list|(
 literal|"hive.mapjoin.cache.numrows"
