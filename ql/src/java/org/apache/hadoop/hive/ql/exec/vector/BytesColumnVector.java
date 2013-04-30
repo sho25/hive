@@ -31,12 +31,26 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|Text
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|Writable
 import|;
 end_import
 
 begin_comment
-comment|/**  * This class supports string and binary data by value reference -- i.e. each field is   * explicitly present, as opposed to provided by a dictionary reference.  * In some cases, all the values will be in the same byte array to begin with,  * but this need not be the case. If each value is in a separate byte   * array to start with, or not all of the values are in the same original  * byte array, you can still assign data by reference into this column vector.  * This gives flexibility to use this in multiple situations.   *<p>  * When setting data by reference, the caller  * is responsible for allocating the byte arrays used to hold the data.  * You can also set data by value, as long as you call the initBuffer() method first.  * You can mix "by value" and "by reference" in the same column vector,  * though that use is probably not typical.  */
+comment|/**  * This class supports string and binary data by value reference -- i.e. each field is  * explicitly present, as opposed to provided by a dictionary reference.  * In some cases, all the values will be in the same byte array to begin with,  * but this need not be the case. If each value is in a separate byte  * array to start with, or not all of the values are in the same original  * byte array, you can still assign data by reference into this column vector.  * This gives flexibility to use this in multiple situations.  *<p>  * When setting data by reference, the caller  * is responsible for allocating the byte arrays used to hold the data.  * You can also set data by value, as long as you call the initBuffer() method first.  * You can mix "by value" and "by reference" in the same column vector,  * though that use is probably not typical.  */
 end_comment
 
 begin_class
@@ -58,7 +72,7 @@ index|[]
 name|start
 decl_stmt|;
 comment|// start offset of each field
-comment|/*    * The length of each field. If the value repeats for every entry, then it is stored     * in vector[0] and isRepeating from the superclass is set to true.    */
+comment|/*    * The length of each field. If the value repeats for every entry, then it is stored    * in vector[0] and isRepeating from the superclass is set to true.    */
 specifier|public
 name|int
 index|[]
@@ -111,7 +125,7 @@ name|DEFAULT_SIZE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Don't call this constructor except for testing purposes.    *     * @param size  number of elements in the column vector    */
+comment|/**    * Don't call this constructor except for testing purposes.    *    * @param size  number of elements in the column vector    */
 specifier|public
 name|BytesColumnVector
 parameter_list|(
@@ -150,7 +164,7 @@ name|size
 index|]
 expr_stmt|;
 block|}
-comment|/** Set a field by reference.    *      * @param elementNum index within column vector to set    * @param sourceBuf container of source data    * @param start start byte position within source    * @param length  length of source byte sequence    */
+comment|/** Set a field by reference.    *    * @param elementNum index within column vector to set    * @param sourceBuf container of source data    * @param start start byte position within source    * @param length  length of source byte sequence    */
 specifier|public
 name|void
 name|setRef
@@ -195,7 +209,7 @@ operator|=
 name|length
 expr_stmt|;
 block|}
-comment|/**     * You must call initBuffer first before using setVal().    * Provide the estimated number of bytes needed to hold    * a full column vector worth of byte string data.    *     * @param estimatedValueSize  Estimated size of buffer space needed    */
+comment|/**    * You must call initBuffer first before using setVal().    * Provide the estimated number of bytes needed to hold    * a full column vector worth of byte string data.    *    * @param estimatedValueSize  Estimated size of buffer space needed    */
 specifier|public
 name|void
 name|initBuffer
@@ -293,7 +307,7 @@ operator|.
 name|length
 return|;
 block|}
-comment|/**    * Set a field by actually copying in to a local buffer.    * If you must actually copy data in to the array, use this method.    * DO NOT USE this method unless it's not practical to set data by reference with setRef().    * Setting data by reference tends to run a lot faster than copying data in.    *     * @param elementNum index within column vector to set    * @param sourceBuf container of source data    * @param start start byte position within source    * @param length  length of source byte sequence    */
+comment|/**    * Set a field by actually copying in to a local buffer.    * If you must actually copy data in to the array, use this method.    * DO NOT USE this method unless it's not practical to set data by reference with setRef().    * Setting data by reference tends to run a lot faster than copying data in.    *    * @param elementNum index within column vector to set    * @param sourceBuf container of source data    * @param start start byte position within source    * @param length  length of source byte sequence    */
 specifier|public
 name|void
 name|setVal
@@ -376,7 +390,7 @@ operator|+=
 name|length
 expr_stmt|;
 block|}
-comment|/**    * Increase buffer space enough to accommodate next element.    * This uses an exponential increase mechanism to rapidly     * increase buffer size to enough to hold all data.    * As batches get re-loaded, buffer space allocated will quickly    * stabilize.    *     * @param nextElemLength size of next element to be added    */
+comment|/**    * Increase buffer space enough to accommodate next element.    * This uses an exponential increase mechanism to rapidly    * increase buffer size to enough to hold all data.    * As batches get re-loaded, buffer space allocated will quickly    * stabilize.    *    * @param nextElemLength size of next element to be added    */
 specifier|public
 name|void
 name|increaseBufferSpace
@@ -452,14 +466,50 @@ name|int
 name|index
 parameter_list|)
 block|{
-comment|// TODO finish this
-throw|throw
+name|Text
+name|result
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|isNull
+index|[
+name|index
+index|]
+condition|)
+block|{
+name|result
+operator|=
 operator|new
-name|UnsupportedOperationException
+name|Text
+argument_list|()
+expr_stmt|;
+name|result
+operator|.
+name|append
 argument_list|(
-literal|"unfinished"
+name|vector
+index|[
+name|index
+index|]
+argument_list|,
+name|start
+index|[
+name|index
+index|]
+argument_list|,
+name|length
+index|[
+name|index
+index|]
 argument_list|)
-throw|;
+expr_stmt|;
+block|}
+return|return
+name|result
+return|;
 block|}
 block|}
 end_class
