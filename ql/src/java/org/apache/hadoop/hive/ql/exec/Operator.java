@@ -512,6 +512,7 @@ name|State
 operator|.
 name|UNINIT
 decl_stmt|;
+specifier|protected
 specifier|static
 specifier|transient
 name|boolean
@@ -7321,6 +7322,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

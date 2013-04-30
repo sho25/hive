@@ -3515,7 +3515,14 @@ argument_list|)
 argument_list|)
 block|,
 comment|// 32MB
-block|;
+comment|//Vectorization enabled
+name|HIVE_VECTORIZATION_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.enabled"
+argument_list|,
+literal|false
+argument_list|)
+block|,     ;
 specifier|public
 specifier|final
 name|String
