@@ -2008,13 +2008,6 @@ argument_list|,
 literal|100
 argument_list|)
 block|,
-name|HIVEMAPJOINCACHEROWS
-argument_list|(
-literal|"hive.mapjoin.cache.numrows"
-argument_list|,
-literal|25000
-argument_list|)
-block|,
 name|HIVEGROUPBYMAPINTERVAL
 argument_list|(
 literal|"hive.groupby.mapaggr.checkinterval"
