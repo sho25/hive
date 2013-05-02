@@ -1018,6 +1018,20 @@ index|]
 operator|=
 literal|true
 expr_stmt|;
+name|lcv2
+operator|.
+name|isRepeating
+operator|=
+literal|true
+expr_stmt|;
+comment|// set output isRepeating to true to make sure it gets over-written
+name|lcv2
+operator|.
+name|noNulls
+operator|=
+literal|true
+expr_stmt|;
+comment|// similarly with noNulls
 name|expr
 operator|.
 name|evaluate
@@ -1040,6 +1054,13 @@ argument_list|(
 name|lcv2
 operator|.
 name|noNulls
+argument_list|)
+expr_stmt|;
+name|assertFalse
+argument_list|(
+name|lcv2
+operator|.
+name|isRepeating
 argument_list|)
 expr_stmt|;
 comment|//Now set other column nullable too

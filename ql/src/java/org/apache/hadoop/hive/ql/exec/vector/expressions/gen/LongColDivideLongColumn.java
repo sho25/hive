@@ -248,6 +248,13 @@ condition|)
 block|{
 return|return;
 block|}
+comment|/* Set repeating property to false (the default).      * It will be set to true later if needed later.      */
+name|outputColVector
+operator|.
+name|isRepeating
+operator|=
+literal|false
+expr_stmt|;
 comment|//Handle nulls first
 if|if
 condition|(
