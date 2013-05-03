@@ -234,7 +234,7 @@ name|tableCols
 init|=
 name|table
 operator|.
-name|getAllCols
+name|getCols
 argument_list|()
 decl_stmt|;
 for|for
