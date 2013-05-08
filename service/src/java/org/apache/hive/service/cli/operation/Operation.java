@@ -199,7 +199,7 @@ specifier|abstract
 class|class
 name|Operation
 block|{
-specifier|private
+specifier|protected
 specifier|final
 name|HiveSession
 name|parentSession
