@@ -562,6 +562,19 @@ name|toString
 argument_list|()
 return|;
 block|}
+specifier|public
+name|int
+name|getSizeInBytes
+parameter_list|()
+block|{
+return|return
+literal|4
+operator|*
+name|initializedChunks
+operator|*
+name|chunkSize
+return|;
+block|}
 block|}
 end_class
 

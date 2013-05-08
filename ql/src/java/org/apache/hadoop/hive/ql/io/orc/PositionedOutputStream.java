@@ -48,6 +48,7 @@ name|PositionedOutputStream
 extends|extends
 name|OutputStream
 block|{
+comment|/**    * Record the current position to the recorder.    * @param recorder the object that receives the position    * @throws IOException    */
 specifier|abstract
 name|void
 name|getPosition
@@ -58,9 +59,10 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Get the memory size currently allocated as buffer associated with this    * stream.    * @return the number of bytes used by buffers.    */
 specifier|abstract
 name|long
-name|getSize
+name|getBufferSize
 parameter_list|()
 function_decl|;
 block|}
