@@ -3070,6 +3070,13 @@ argument_list|,
 literal|"org.apache.hadoop.hive.serde2.DelimitedJSONSerDe"
 argument_list|)
 block|,
+name|HIVEEXPREVALUATIONCACHE
+argument_list|(
+literal|"hive.cache.expr.evaluation"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// Hive Variables
 name|HIVEVARIABLESUBSTITUTE
 argument_list|(

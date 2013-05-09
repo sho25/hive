@@ -210,6 +210,15 @@ specifier|static
 interface|interface
 name|DeferredObject
 block|{
+name|void
+name|prepare
+parameter_list|(
+name|int
+name|version
+parameter_list|)
+throws|throws
+name|HiveException
+function_decl|;
 name|Object
 name|get
 parameter_list|()
@@ -244,6 +253,18 @@ operator|=
 name|value
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|prepare
+parameter_list|(
+name|int
+name|version
+parameter_list|)
+throws|throws
+name|HiveException
+block|{     }
 annotation|@
 name|Override
 specifier|public
