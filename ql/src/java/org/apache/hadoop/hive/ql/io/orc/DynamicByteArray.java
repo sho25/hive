@@ -452,7 +452,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Copy a slice of a byte array into our buffer.    * @param value the array to copy from    * @param valueOffset the first location to copy from value    * @param valueLength the number of bytes to copy from value    * @return    */
+comment|/**    * Copy a slice of a byte array into our buffer.    * @param value the array to copy from    * @param valueOffset the first location to copy from value    * @param valueLength the number of bytes to copy from value    * @return the offset of the start of the value    */
 specifier|public
 name|int
 name|add
@@ -1351,6 +1351,18 @@ block|}
 block|}
 return|return
 name|result
+return|;
+block|}
+comment|/**    * Get the size of the buffers.    */
+specifier|public
+name|long
+name|getSizeInBytes
+parameter_list|()
+block|{
+return|return
+name|initializedChunks
+operator|*
+name|chunkSize
 return|;
 block|}
 block|}
