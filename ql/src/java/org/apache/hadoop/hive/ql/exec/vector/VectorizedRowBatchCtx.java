@@ -478,7 +478,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Context for Vectorized row batch. this calss does eager deserialization of row data using serde in the RecordReader layer.  * It has supports partitions in this layer so that the vectorized batch is populated correctly with the partition column.  * VectorizedRowBatchCtx.  *  */
+comment|/**  * Context for Vectorized row batch. this calss does eager deserialization of row data using serde  * in the RecordReader layer.  * It has supports partitions in this layer so that the vectorized batch is populated correctly with  * the partition column.  * VectorizedRowBatchCtx.  *  */
 end_comment
 
 begin_class
@@ -1842,25 +1842,59 @@ literal|true
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Deserialized set of rows and populates the batch    * @param rowBlob to deserialize    * @param batch Vectorized row batch which contains deserialized data    * @throws SerDeException    */
 specifier|public
 name|void
 name|ConvertRowBatchBlobToVectorizedBatch
 parameter_list|(
-name|Writable
-index|[]
-name|rowBlobs
+name|Object
+name|rowBlob
 parameter_list|,
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|SerDeException
 block|{
-comment|// No reader supports this operation. If a reader returns a set of rows then
-comment|// this function can be used to converts that row blob batch into vectorized batch.
+if|if
+condition|(
+name|deserializer
+operator|instanceof
+name|VectorizedSerde
+condition|)
+block|{
+name|batch
+operator|=
+operator|(
+operator|(
+name|VectorizedSerde
+operator|)
+name|deserializer
+operator|)
+operator|.
+name|deserializeVector
+argument_list|(
+name|rowBlob
+argument_list|,
+name|deserializer
+operator|.
+name|getObjectInspector
+argument_list|()
+argument_list|,
+name|batch
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 throw|throw
 operator|new
-name|UnsupportedOperationException
-argument_list|()
+name|SerDeException
+argument_list|(
+literal|"Not able to deserialize row batch. Serde does not implement VectorizedSerde"
+argument_list|)
 throw|;
+block|}
 block|}
 specifier|private
 name|int
@@ -1951,6 +1985,13 @@ decl_stmt|;
 name|BytesColumnVector
 name|bcv
 decl_stmt|;
+if|if
+condition|(
+name|partitionValues
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|String
@@ -2030,6 +2071,7 @@ name|noNulls
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private

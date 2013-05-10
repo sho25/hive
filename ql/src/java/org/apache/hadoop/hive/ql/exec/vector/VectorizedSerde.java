@@ -86,6 +86,21 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
+name|VectorizedRowBatch
+name|deserializeVector
+parameter_list|(
+name|Object
+name|rowBlob
+parameter_list|,
+name|ObjectInspector
+name|objInspector
+parameter_list|,
+name|VectorizedRowBatch
+name|reuseBatch
+parameter_list|)
+throws|throws
+name|SerDeException
+function_decl|;
 block|}
 end_interface
 
