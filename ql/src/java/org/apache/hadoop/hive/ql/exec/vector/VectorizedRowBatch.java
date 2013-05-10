@@ -108,7 +108,7 @@ specifier|public
 name|boolean
 name|endOfFile
 decl_stmt|;
-comment|/*     * This number is carefully chosen to minimize overhead and typically allows     * one VectorizedRowBatch to fit in cache.    */
+comment|/*    * This number is carefully chosen to minimize overhead and typically allows    * one VectorizedRowBatch to fit in cache.    */
 specifier|public
 specifier|static
 specifier|final
@@ -118,6 +118,7 @@ init|=
 literal|1024
 decl_stmt|;
 specifier|private
+specifier|final
 name|Writable
 index|[]
 name|writableRow
@@ -128,7 +129,7 @@ name|rowIteratorIndex
 init|=
 literal|0
 decl_stmt|;
-comment|/**     * Return a batch with the specified number of columns.    * This is the standard constructor -- all batches should be the same size    *     * @param numCols the number of columns to include in the batch    */
+comment|/**    * Return a batch with the specified number of columns.    * This is the standard constructor -- all batches should be the same size    *    * @param numCols the number of columns to include in the batch    */
 specifier|public
 name|VectorizedRowBatch
 parameter_list|(
@@ -144,7 +145,7 @@ name|DEFAULT_SIZE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Return a batch with the specified number of columns and rows.    * Only call this constructor directly for testing purposes.    * Batch size should normally always be defaultSize.    *     * @param numCols the number of columns to include in the batch    * @param size  the number of rows to include in the batch    */
+comment|/**    * Return a batch with the specified number of columns and rows.    * Only call this constructor directly for testing purposes.    * Batch size should normally always be defaultSize.    *    * @param numCols the number of columns to include in the batch    * @param size  the number of rows to include in the batch    */
 specifier|public
 name|VectorizedRowBatch
 parameter_list|(
@@ -315,7 +316,7 @@ return|return
 name|writableRow
 return|;
 block|}
-comment|/**     * Return count of qualifying rows.    *     * @return number of rows that have not been filtered out    */
+comment|/**    * Return count of qualifying rows.    *    * @return number of rows that have not been filtered out    */
 specifier|public
 name|long
 name|count
@@ -393,6 +394,31 @@ range|:
 name|cols
 control|)
 block|{
+if|if
+condition|(
+name|cv
+operator|.
+name|isRepeating
+condition|)
+block|{
+name|b
+operator|.
+name|append
+argument_list|(
+name|cv
+operator|.
+name|getWritableObject
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|b
 operator|.
 name|append
@@ -408,6 +434,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|colIndex
 operator|++
 expr_stmt|;
@@ -478,6 +505,31 @@ range|:
 name|cols
 control|)
 block|{
+if|if
+condition|(
+name|cv
+operator|.
+name|isRepeating
+condition|)
+block|{
+name|b
+operator|.
+name|append
+argument_list|(
+name|cv
+operator|.
+name|getWritableObject
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|b
 operator|.
 name|append
@@ -493,6 +545,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|colIndex
 operator|++
 expr_stmt|;

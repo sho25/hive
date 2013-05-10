@@ -235,6 +235,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|ExprNodeColumnDesc
@@ -448,6 +466,8 @@ specifier|public
 name|void
 name|testArithmeticExpressionVectorization
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|/**      * Create original expression tree for following      * (plus (minus (plus col1 col2) col3) (multiply col4 (mod col5 col6)) )      */
 name|GenericUDFBridge
@@ -1145,6 +1165,8 @@ specifier|public
 name|void
 name|testStringFilterExpressions
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|ExprNodeColumnDesc
 name|col1Expr
