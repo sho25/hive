@@ -830,6 +830,8 @@ parameter_list|,
 name|int
 name|posBigTableAlias
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 return|return
 name|populateJoinKeyValue
@@ -874,6 +876,8 @@ parameter_list|,
 name|int
 name|posBigTableAlias
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|int
 name|total
