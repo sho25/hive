@@ -1076,16 +1076,7 @@ name|DOWNLOADED_RESOURCES_DIR
 argument_list|(
 literal|"hive.downloaded.resources.dir"
 argument_list|,
-literal|"/tmp/"
-operator|+
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"user.name"
-argument_list|)
-operator|+
-literal|"/hive_resources"
+literal|"/tmp/${hive.session.id}_resources"
 argument_list|)
 block|,
 name|DEFAULTPARTITIONNAME
