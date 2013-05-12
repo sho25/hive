@@ -95,7 +95,9 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|VectorizedRowGroupGenUtil
+name|gen
+operator|.
+name|LongColAddLongColumn
 import|;
 end_import
 
@@ -115,11 +117,9 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
+name|util
 operator|.
-name|gen
-operator|.
-name|LongColAddLongColumn
+name|VectorizedRowGroupGenUtil
 import|;
 end_import
 

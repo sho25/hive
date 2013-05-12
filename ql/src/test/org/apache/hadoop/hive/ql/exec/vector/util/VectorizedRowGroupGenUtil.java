@@ -19,7 +19,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
+name|util
 package|;
 end_package
 
