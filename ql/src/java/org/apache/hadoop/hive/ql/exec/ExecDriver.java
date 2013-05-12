@@ -3936,7 +3936,12 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Cannot vectorize the plan"
+literal|"Cannot vectorize the plan: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
@@ -3945,15 +3950,6 @@ return|;
 block|}
 block|}
 block|}
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Query can be vectorized"
-argument_list|)
-expr_stmt|;
 return|return
 literal|true
 return|;
@@ -3973,20 +3969,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-if|if
-condition|(
-operator|!
-name|vectorOp
-operator|.
-name|getName
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-literal|"TS"
-argument_list|)
-condition|)
-block|{
 name|vectorOp
 operator|.
 name|initialize
@@ -3996,7 +3978,6 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|vectorOp

@@ -20,8 +20,6 @@ operator|.
 name|vector
 operator|.
 name|expressions
-operator|.
-name|gen
 package|;
 end_package
 
@@ -41,29 +39,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
-operator|.
-name|VectorExpression
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|LongColumnVector
+name|DoubleColumnVector
 import|;
 end_import
 
@@ -107,33 +83,40 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Implements a vectorized arithmetic operator with a scalar on the left and a  * column vector on the right. The result is output to an output column vector.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
-name|LongColDivideLongScalar
+name|LongScalarDivideLongColumn
 extends|extends
 name|VectorExpression
 block|{
 specifier|private
+specifier|final
 name|int
 name|colNum
 decl_stmt|;
 specifier|private
-name|long
+specifier|final
+name|double
 name|value
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 name|outputColumn
 decl_stmt|;
 specifier|public
-name|LongColDivideLongScalar
+name|LongScalarDivideLongColumn
 parameter_list|(
-name|int
-name|colNum
-parameter_list|,
 name|long
 name|value
+parameter_list|,
+name|int
+name|colNum
 parameter_list|,
 name|int
 name|outputColumn
@@ -160,6 +143,7 @@ expr_stmt|;
 block|}
 annotation|@
 name|Override
+comment|/**    * Method to evaluate scalar-column operation in vectorized fashion.    *    * @batch a package of rows with each column stored in a vector    */
 specifier|public
 name|void
 name|evaluate
@@ -196,11 +180,11 @@ index|[
 name|colNum
 index|]
 decl_stmt|;
-name|LongColumnVector
+name|DoubleColumnVector
 name|outputColVector
 init|=
 operator|(
-name|LongColumnVector
+name|DoubleColumnVector
 operator|)
 name|batch
 operator|.
@@ -256,7 +240,7 @@ name|inputColVector
 operator|.
 name|vector
 decl_stmt|;
-name|long
+name|double
 index|[]
 name|outputVector
 init|=
@@ -281,19 +265,18 @@ operator|.
 name|isRepeating
 condition|)
 block|{
-comment|//All must be selected otherwise size would be zero
-comment|//Repeating property will not change.
+comment|/*        * All must be selected otherwise size would be zero        * Repeating property will not change.        */
 name|outputVector
 index|[
 literal|0
 index|]
 operator|=
+name|value
+operator|/
 name|vector
 index|[
 literal|0
 index|]
-operator|/
-name|value
 expr_stmt|;
 comment|// Even if there are no nulls, we always copy over entry 0. Simplifies code.
 name|outputIsNull
@@ -356,12 +339,12 @@ index|[
 name|i
 index|]
 operator|=
+name|value
+operator|/
 name|vector
 index|[
 name|i
 index|]
-operator|/
-name|value
 expr_stmt|;
 block|}
 block|}
@@ -387,12 +370,12 @@ index|[
 name|i
 index|]
 operator|=
+name|value
+operator|/
 name|vector
 index|[
 name|i
 index|]
-operator|/
-name|value
 expr_stmt|;
 block|}
 block|}
@@ -404,8 +387,8 @@ literal|false
 expr_stmt|;
 block|}
 else|else
-comment|/* there are nulls */
 block|{
+comment|/* there are nulls */
 if|if
 condition|(
 name|batch
@@ -441,12 +424,12 @@ index|[
 name|i
 index|]
 operator|=
+name|value
+operator|/
 name|vector
 index|[
 name|i
 index|]
-operator|/
-name|value
 expr_stmt|;
 name|outputIsNull
 index|[
@@ -482,12 +465,12 @@ index|[
 name|i
 index|]
 operator|=
+name|value
+operator|/
 name|vector
 index|[
 name|i
 index|]
-operator|/
-name|value
 expr_stmt|;
 block|}
 name|System
@@ -533,7 +516,7 @@ name|getOutputType
 parameter_list|()
 block|{
 return|return
-literal|"long"
+literal|"double"
 return|;
 block|}
 block|}

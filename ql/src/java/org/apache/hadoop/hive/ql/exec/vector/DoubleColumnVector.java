@@ -54,7 +54,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class represents a nullable double precision floating point column vector.  * This class will be used for operations on all floating point types (float, double)  * and as such will use a 64-bit double value to hold the biggest possible value.  * During copy-in/copy-out, smaller types (i.e. float) will be converted as needed. This will  * reduce the amount of code that needs to be generated and also will run fast since the  * machine operates with 64-bit words.  *   * The vector[] field is public by design for high-performance access in the inner  * loop of query execution.  */
+comment|/**  * This class represents a nullable double precision floating point column vector.  * This class will be used for operations on all floating point types (float, double)  * and as such will use a 64-bit double value to hold the biggest possible value.  * During copy-in/copy-out, smaller types (i.e. float) will be converted as needed. This will  * reduce the amount of code that needs to be generated and also will run fast since the  * machine operates with 64-bit words.  *  * The vector[] field is public by design for high-performance access in the inner  * loop of query execution.  */
 end_comment
 
 begin_class
@@ -70,6 +70,7 @@ index|[]
 name|vector
 decl_stmt|;
 specifier|private
+specifier|final
 name|DoubleWritable
 name|writableObj
 init|=
@@ -90,7 +91,7 @@ name|DEFAULT_SIZE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**     * Don't use this except for testing purposes.    *     * @param len    */
+comment|/**    * Don't use this except for testing purposes.    *    * @param len    */
 specifier|public
 name|DoubleColumnVector
 parameter_list|(
@@ -122,6 +123,18 @@ name|int
 name|index
 parameter_list|)
 block|{
+if|if
+condition|(
+name|this
+operator|.
+name|isRepeating
+condition|)
+block|{
+name|index
+operator|=
+literal|0
+expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!

@@ -20,8 +20,6 @@ operator|.
 name|vector
 operator|.
 name|expressions
-operator|.
-name|gen
 package|;
 end_package
 
@@ -41,9 +39,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
-operator|.
-name|VectorExpression
+name|DoubleColumnVector
 import|;
 end_import
 
@@ -63,7 +59,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|*
+name|LongColumnVector
 import|;
 end_import
 
@@ -186,11 +182,11 @@ index|[
 name|colNum2
 index|]
 decl_stmt|;
-name|LongColumnVector
+name|DoubleColumnVector
 name|outputColVector
 init|=
 operator|(
-name|LongColumnVector
+name|DoubleColumnVector
 operator|)
 name|batch
 operator|.
@@ -230,7 +226,7 @@ name|inputColVector2
 operator|.
 name|vector
 decl_stmt|;
-name|long
+name|double
 index|[]
 name|outputVector
 init|=
@@ -682,6 +678,9 @@ index|[
 literal|0
 index|]
 operator|/
+operator|(
+name|double
+operator|)
 name|vector2
 index|[
 literal|0
@@ -742,6 +741,9 @@ index|[
 literal|0
 index|]
 operator|/
+operator|(
+name|double
+operator|)
 name|vector2
 index|[
 name|i
@@ -776,6 +778,9 @@ index|[
 literal|0
 index|]
 operator|/
+operator|(
+name|double
+operator|)
 name|vector2
 index|[
 name|i
@@ -832,6 +837,9 @@ index|[
 name|i
 index|]
 operator|/
+operator|(
+name|double
+operator|)
 name|vector2
 index|[
 literal|0
@@ -866,6 +874,9 @@ index|[
 name|i
 index|]
 operator|/
+operator|(
+name|double
+operator|)
 name|vector2
 index|[
 literal|0
@@ -916,6 +927,9 @@ index|[
 name|i
 index|]
 operator|/
+operator|(
+name|double
+operator|)
 name|vector2
 index|[
 name|i
@@ -950,6 +964,9 @@ index|[
 name|i
 index|]
 operator|/
+operator|(
+name|double
+operator|)
 name|vector2
 index|[
 name|i
@@ -978,7 +995,7 @@ name|getOutputType
 parameter_list|()
 block|{
 return|return
-literal|"long"
+literal|"double"
 return|;
 block|}
 block|}

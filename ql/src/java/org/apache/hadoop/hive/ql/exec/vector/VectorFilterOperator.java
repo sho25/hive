@@ -359,23 +359,6 @@ argument_list|(
 name|oldExpression
 argument_list|)
 expr_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Filter class name ="
-operator|+
-name|conditionEvaluator
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getCanonicalName
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|statsMap
 operator|.
 name|put
