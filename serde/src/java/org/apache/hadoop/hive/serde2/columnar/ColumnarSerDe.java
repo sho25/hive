@@ -113,22 +113,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|ByteStream
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|ColumnProjectionUtils
 import|;
 end_import
@@ -162,22 +146,6 @@ operator|.
 name|serde2
 operator|.
 name|SerDeException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|SerDeStats
 import|;
 end_import
 
@@ -491,12 +459,15 @@ parameter_list|()
 throws|throws
 name|SerDeException
 block|{   }
+specifier|protected
 name|SerDeParameters
 name|serdeParams
 init|=
 literal|null
 decl_stmt|;
 comment|/**    * Initialize the SerDe given the parameters.    *    * @see SerDe#initialize(Configuration, Properties)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -656,6 +627,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Serialize a row of data.    *    * @param obj    *          The row object    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @see SerDe#serialize(Object, ObjectInspector)    */
+annotation|@
+name|Override
 specifier|public
 name|Writable
 name|serialize

@@ -86,14 +86,14 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
-name|VectorizedRowBatch
+name|void
 name|deserializeVector
 parameter_list|(
 name|Object
 name|rowBlob
 parameter_list|,
-name|ObjectInspector
-name|objInspector
+name|int
+name|rowsInBlob
 parameter_list|,
 name|VectorizedRowBatch
 name|reuseBatch

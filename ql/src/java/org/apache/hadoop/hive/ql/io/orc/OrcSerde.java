@@ -631,7 +631,7 @@ return|return
 name|inspector
 return|;
 block|}
-comment|/**    * Always returns null, since serialized size doesn't make sense in the    * context of ORC files.    * @return null    */
+comment|/**    * Always returns null, since serialized size doesn't make sense in the    * context of ORC files.    *    * @return null    */
 annotation|@
 name|Override
 specifier|public
@@ -686,14 +686,14 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|VectorizedRowBatch
+name|void
 name|deserializeVector
 parameter_list|(
 name|Object
 name|rowBlob
 parameter_list|,
-name|ObjectInspector
-name|objInspector
+name|int
+name|rowsInBatch
 parameter_list|,
 name|VectorizedRowBatch
 name|reuseBatch
@@ -701,14 +701,7 @@ parameter_list|)
 throws|throws
 name|SerDeException
 block|{
-return|return
-operator|(
-operator|(
-name|VectorizedRowBatch
-operator|)
-name|rowBlob
-operator|)
-return|;
+comment|// nothing to do here
 block|}
 block|}
 end_class
