@@ -784,6 +784,12 @@ index|]
 expr_stmt|;
 name|int
 name|bucketSize
+decl_stmt|;
+comment|// For backwards compatibility reasons we honor the older
+comment|// HIVEMAPJOINBUCKETCACHESIZE if set different from default.
+comment|// By hive 0.13 we should remove this code.
+name|int
+name|oldVar
 init|=
 name|HiveConf
 operator|.
@@ -798,6 +804,36 @@ operator|.
 name|HIVEMAPJOINBUCKETCACHESIZE
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|oldVar
+operator|!=
+literal|100
+condition|)
+block|{
+name|bucketSize
+operator|=
+name|oldVar
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bucketSize
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVESMBJOINCACHEROWS
+argument_list|)
+expr_stmt|;
+block|}
 for|for
 control|(
 name|byte

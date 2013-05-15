@@ -1992,11 +1992,20 @@ argument_list|,
 literal|25000
 argument_list|)
 block|,
+comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
+comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE
 argument_list|(
 literal|"hive.mapjoin.bucket.cache.size"
 argument_list|,
 literal|100
+argument_list|)
+block|,
+name|HIVESMBJOINCACHEROWS
+argument_list|(
+literal|"hive.smbjoin.cache.rows"
+argument_list|,
+literal|10000
 argument_list|)
 block|,
 name|HIVEGROUPBYMAPINTERVAL
