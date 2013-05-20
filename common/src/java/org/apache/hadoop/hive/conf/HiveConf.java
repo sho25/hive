@@ -2121,6 +2121,14 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// default serde for rcfile
+name|HIVEDEFAULTRCFILESERDE
+argument_list|(
+literal|"hive.default.rcfile.serde"
+argument_list|,
+literal|"org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe"
+argument_list|)
+block|,
 comment|//Location of Hive run time structured log file
 name|HIVEHISTORYFILELOC
 argument_list|(

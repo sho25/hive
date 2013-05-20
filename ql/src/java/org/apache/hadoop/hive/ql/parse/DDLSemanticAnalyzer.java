@@ -9883,7 +9883,16 @@ name|RCFILE_OUTPUT
 expr_stmt|;
 name|serde
 operator|=
-name|COLUMNAR_SERDE
+name|conf
+operator|.
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEDEFAULTRCFILESERDE
+argument_list|)
 expr_stmt|;
 break|break;
 case|case
