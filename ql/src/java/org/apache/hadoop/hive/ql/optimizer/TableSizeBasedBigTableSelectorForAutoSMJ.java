@@ -253,7 +253,8 @@ decl_stmt|;
 name|long
 name|maxSize
 init|=
-literal|0
+operator|-
+literal|1
 decl_stmt|;
 name|HiveConf
 name|conf

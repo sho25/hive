@@ -2553,7 +2553,8 @@ decl_stmt|;
 name|long
 name|largestBigTableCandidateSize
 init|=
-literal|0
+operator|-
+literal|1
 decl_stmt|;
 name|long
 name|sumTableSizes
