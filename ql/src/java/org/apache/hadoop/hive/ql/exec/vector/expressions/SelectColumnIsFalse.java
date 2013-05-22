@@ -63,6 +63,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * This expression selects a row if the given boolean column is false.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -70,6 +74,8 @@ name|SelectColumnIsFalse
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
+specifier|final
 name|int
 name|colNum1
 decl_stmt|;
@@ -163,7 +169,7 @@ operator|<=
 literal|0
 condition|)
 block|{
-comment|//Nothing to do
+comment|// Nothing to do
 return|return;
 block|}
 if|if
@@ -180,8 +186,6 @@ operator|.
 name|isRepeating
 condition|)
 block|{
-comment|// All must be selected otherwise size would be zero
-comment|// Repeating property will not change.
 if|if
 condition|(
 name|vector1
@@ -199,6 +203,12 @@ name|size
 operator|=
 literal|0
 expr_stmt|;
+return|return;
+block|}
+else|else
+block|{
+comment|// All are selected;
+return|return;
 block|}
 block|}
 elseif|else
@@ -209,16 +219,6 @@ operator|.
 name|selectedInUse
 condition|)
 block|{
-name|int
-index|[]
-name|newSelected
-init|=
-operator|new
-name|int
-index|[
-name|n
-index|]
-decl_stmt|;
 name|int
 name|newSize
 init|=
@@ -257,7 +257,7 @@ operator|==
 literal|0
 condition|)
 block|{
-name|newSelected
+name|sel
 index|[
 name|newSize
 operator|++
@@ -272,12 +272,6 @@ operator|.
 name|size
 operator|=
 name|newSize
-expr_stmt|;
-name|batch
-operator|.
-name|selected
-operator|=
-name|newSelected
 expr_stmt|;
 block|}
 else|else
@@ -353,13 +347,36 @@ operator|.
 name|isRepeating
 condition|)
 block|{
-comment|//Repeating and null value
+if|if
+condition|(
+name|nullVector
+index|[
+literal|0
+index|]
+operator|||
+operator|(
+name|vector1
+index|[
+literal|0
+index|]
+operator|==
+literal|1
+operator|)
+condition|)
+block|{
+comment|// All are filtered out
 name|batch
 operator|.
 name|size
 operator|=
 literal|0
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|// All are selected;
+return|return;
+block|}
 block|}
 elseif|else
 if|if
@@ -369,16 +386,6 @@ operator|.
 name|selectedInUse
 condition|)
 block|{
-name|int
-index|[]
-name|newSelected
-init|=
-operator|new
-name|int
-index|[
-name|n
-index|]
-decl_stmt|;
 name|int
 name|newSize
 init|=
@@ -423,7 +430,7 @@ name|i
 index|]
 condition|)
 block|{
-name|newSelected
+name|sel
 index|[
 name|newSize
 operator|++
@@ -438,12 +445,6 @@ operator|.
 name|size
 operator|=
 name|newSize
-expr_stmt|;
-name|batch
-operator|.
-name|selected
-operator|=
-name|newSelected
 expr_stmt|;
 block|}
 else|else

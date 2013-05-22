@@ -54,12 +54,16 @@ name|FilterNotExpr
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
+specifier|final
 name|VectorExpression
 name|childExpr1
 decl_stmt|;
+specifier|private
+specifier|final
 name|int
 index|[]
-name|tmpSelect1
+name|initialSelected
 init|=
 operator|new
 name|int
@@ -69,6 +73,7 @@ operator|.
 name|DEFAULT_SIZE
 index|]
 decl_stmt|;
+specifier|private
 name|int
 index|[]
 name|unselected
@@ -81,6 +86,8 @@ operator|.
 name|DEFAULT_SIZE
 index|]
 decl_stmt|;
+specifier|private
+specifier|final
 name|int
 index|[]
 name|tmp
@@ -133,7 +140,7 @@ condition|)
 block|{
 return|return;
 block|}
-comment|//Clone the selected vector
+comment|// Clone the selected vector
 name|int
 index|[]
 name|sel
@@ -149,32 +156,21 @@ operator|.
 name|selectedInUse
 condition|)
 block|{
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|n
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|tmpSelect1
-index|[
-name|i
-index|]
-operator|=
+name|System
+operator|.
+name|arraycopy
+argument_list|(
 name|sel
-index|[
-name|i
-index|]
+argument_list|,
+literal|0
+argument_list|,
+name|initialSelected
+argument_list|,
+literal|0
+argument_list|,
+name|n
+argument_list|)
 expr_stmt|;
-block|}
 block|}
 else|else
 block|{
@@ -193,7 +189,7 @@ name|i
 operator|++
 control|)
 block|{
-name|tmpSelect1
+name|initialSelected
 index|[
 name|i
 index|]
@@ -222,7 +218,7 @@ argument_list|(
 name|batch
 argument_list|)
 expr_stmt|;
-comment|//Calculate unselected ones in last evaluate.
+comment|// Calculate unselected ones in last evaluate.
 for|for
 control|(
 name|int
@@ -232,9 +228,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|tmp
-operator|.
-name|length
+name|n
 condition|;
 name|i
 operator|++
@@ -242,12 +236,23 @@ control|)
 block|{
 name|tmp
 index|[
+name|initialSelected
+index|[
 name|i
+index|]
 index|]
 operator|=
 literal|0
 expr_stmt|;
 block|}
+comment|// Need to set sel reference again, because the child expression might
+comment|// have invalidated the earlier reference
+name|sel
+operator|=
+name|batch
+operator|.
+name|selected
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -304,7 +309,7 @@ block|{
 name|int
 name|i
 init|=
-name|tmpSelect1
+name|initialSelected
 index|[
 name|j
 index|]
@@ -329,12 +334,16 @@ name|i
 expr_stmt|;
 block|}
 block|}
-comment|//The unselected is the new selected
+comment|// The unselected is the new selected, swap the arrays
 name|batch
 operator|.
 name|selected
 operator|=
 name|unselected
+expr_stmt|;
+name|unselected
+operator|=
+name|sel
 expr_stmt|;
 name|batch
 operator|.

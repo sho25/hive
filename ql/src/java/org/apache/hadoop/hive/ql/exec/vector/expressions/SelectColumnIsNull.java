@@ -63,6 +63,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * This expression selects a row if the given column is null.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -70,6 +74,8 @@ name|SelectColumnIsNull
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
+specifier|final
 name|int
 name|colNum
 decl_stmt|;
@@ -130,8 +136,6 @@ name|batch
 operator|.
 name|selected
 decl_stmt|;
-comment|//Note: if type of isNull could be long[], could we just re-use this
-comment|//vector as the output vector. No iterations would be needed.
 name|boolean
 index|[]
 name|nullPos
@@ -154,7 +158,7 @@ operator|<=
 literal|0
 condition|)
 block|{
-comment|//Nothing to do
+comment|// Nothing to do
 return|return;
 block|}
 if|if
@@ -179,9 +183,28 @@ operator|.
 name|isRepeating
 condition|)
 block|{
-comment|//All must be selected otherwise size would be zero
-comment|//Selection property will not change.
+if|if
+condition|(
+name|nullPos
+index|[
+literal|0
+index|]
+condition|)
+block|{
+comment|// All are null, so all must be selected.
 return|return;
+block|}
+else|else
+block|{
+comment|// None are null, so none are selected
+name|batch
+operator|.
+name|size
+operator|=
+literal|0
+expr_stmt|;
+return|return;
+block|}
 block|}
 elseif|else
 if|if
@@ -191,16 +214,6 @@ operator|.
 name|selectedInUse
 condition|)
 block|{
-name|int
-index|[]
-name|newSelected
-init|=
-operator|new
-name|int
-index|[
-name|n
-index|]
-decl_stmt|;
 name|int
 name|newSize
 init|=
@@ -237,7 +250,7 @@ name|i
 index|]
 condition|)
 block|{
-name|newSelected
+name|sel
 index|[
 name|newSize
 operator|++
@@ -247,12 +260,6 @@ name|i
 expr_stmt|;
 block|}
 block|}
-name|batch
-operator|.
-name|selected
-operator|=
-name|newSelected
-expr_stmt|;
 name|batch
 operator|.
 name|size
