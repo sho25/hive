@@ -709,6 +709,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|ExprNodeDescUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|GroupByDesc
 import|;
 end_import
@@ -4737,6 +4755,22 @@ operator|.
 name|getColumnExprMap
 argument_list|()
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"RS "
+operator|+
+name|reduce
+operator|.
+name|getIdentifier
+argument_list|()
+operator|+
+literal|" oldColExprMap: "
+operator|+
+name|oldMap
+argument_list|)
+expr_stmt|;
 name|RowResolver
 name|oldRR
 init|=
@@ -4789,6 +4823,17 @@ name|ArrayList
 argument_list|<
 name|String
 argument_list|>
+argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|ExprNodeDesc
+argument_list|>
+name|keyExprs
+init|=
+name|reduceConf
+operator|.
+name|getKeyCols
 argument_list|()
 decl_stmt|;
 name|List
@@ -4904,6 +4949,23 @@ name|outputCol
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Only remove information of a column if it is not a key,
+comment|// i.e. this column is not appearing in keyExprs of the RS
+if|if
+condition|(
+name|ExprNodeDescUtils
+operator|.
+name|indexOf
+argument_list|(
+name|outputColExpr
+argument_list|,
+name|keyExprs
+argument_list|)
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
 name|ColumnInfo
 name|colInfo
 init|=
@@ -4952,6 +5014,7 @@ argument_list|(
 name|colInfo
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -5014,6 +5077,22 @@ operator|.
 name|setValueSerializeInfo
 argument_list|(
 name|newValueTable
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"RS "
+operator|+
+name|reduce
+operator|.
+name|getIdentifier
+argument_list|()
+operator|+
+literal|" newColExprMap: "
+operator|+
+name|oldMap
 argument_list|)
 expr_stmt|;
 block|}
