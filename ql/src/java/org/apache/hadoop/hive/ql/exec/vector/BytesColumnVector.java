@@ -103,6 +103,16 @@ name|int
 name|nextFree
 decl_stmt|;
 comment|// next free position in buffer
+comment|// Reusable text object
+specifier|private
+specifier|final
+name|Text
+name|textObject
+init|=
+operator|new
+name|Text
+argument_list|()
+decl_stmt|;
 comment|// Estimate that there will be 16 bytes per entry
 specifier|static
 specifier|final
@@ -632,18 +642,12 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|result
-operator|=
-operator|new
-name|Text
+name|textObject
+operator|.
+name|clear
 argument_list|()
 expr_stmt|;
-operator|(
-operator|(
-name|Text
-operator|)
-name|result
-operator|)
+name|textObject
 operator|.
 name|append
 argument_list|(
@@ -662,6 +666,10 @@ index|[
 name|index
 index|]
 argument_list|)
+expr_stmt|;
+name|result
+operator|=
+name|textObject
 expr_stmt|;
 block|}
 else|else
