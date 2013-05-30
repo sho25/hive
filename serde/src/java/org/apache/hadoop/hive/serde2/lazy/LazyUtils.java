@@ -749,7 +749,7 @@ literal|null
 return|;
 block|}
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|byte
 index|[]
@@ -768,7 +768,7 @@ block|,
 literal|'e'
 block|}
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 name|byte
 index|[]

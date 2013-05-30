@@ -963,7 +963,7 @@ operator|)
 name|foi
 decl_stmt|;
 comment|// Vectorization currently only supports the following data types:
-comment|// SHORT, INT, LONG, FLOAT, DOUBLE, STRING
+comment|// BOOLEAN, BYTE, SHORT, INT, LONG, FLOAT, DOUBLE, STRING and TIMESTAMP
 switch|switch
 condition|(
 name|poi
@@ -973,6 +973,12 @@ argument_list|()
 condition|)
 block|{
 case|case
+name|BOOLEAN
+case|:
+case|case
+name|BYTE
+case|:
+case|case
 name|SHORT
 case|:
 case|case
@@ -980,6 +986,9 @@ name|INT
 case|:
 case|case
 name|LONG
+case|:
+case|case
+name|TIMESTAMP
 case|:
 name|result
 operator|.
