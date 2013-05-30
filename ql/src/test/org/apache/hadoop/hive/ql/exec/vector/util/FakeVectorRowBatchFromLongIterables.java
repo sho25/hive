@@ -120,13 +120,13 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|FakeVectorRowBatchFromIterables
+name|FakeVectorRowBatchFromLongIterables
 extends|extends
 name|FakeVectorRowBatchBase
 block|{
 specifier|private
 name|VectorizedRowBatch
-name|vrg
+name|batch
 decl_stmt|;
 specifier|private
 specifier|final
@@ -153,7 +153,7 @@ name|boolean
 name|eof
 decl_stmt|;
 specifier|public
-name|FakeVectorRowBatchFromIterables
+name|FakeVectorRowBatchFromLongIterables
 parameter_list|(
 name|int
 name|batchSize
@@ -190,7 +190,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|vrg
+name|batch
 operator|=
 operator|new
 name|VectorizedRowBatch
@@ -215,7 +215,7 @@ name|i
 operator|++
 control|)
 block|{
-name|vrg
+name|batch
 operator|.
 name|cols
 index|[
@@ -250,13 +250,13 @@ name|VectorizedRowBatch
 name|produceNextBatch
 parameter_list|()
 block|{
-name|vrg
+name|batch
 operator|.
 name|size
 operator|=
 literal|0
 expr_stmt|;
-name|vrg
+name|batch
 operator|.
 name|selectedInUse
 operator|=
@@ -280,7 +280,7 @@ block|{
 name|ColumnVector
 name|col
 init|=
-name|vrg
+name|batch
 operator|.
 name|cols
 index|[
@@ -305,7 +305,7 @@ condition|(
 operator|!
 name|eof
 operator|&&
-name|vrg
+name|batch
 operator|.
 name|size
 operator|<
@@ -317,7 +317,7 @@ block|{
 name|int
 name|r
 init|=
-name|vrg
+name|batch
 operator|.
 name|size
 decl_stmt|;
@@ -370,7 +370,7 @@ init|=
 operator|(
 name|LongColumnVector
 operator|)
-name|vrg
+name|batch
 operator|.
 name|cols
 index|[
@@ -402,7 +402,7 @@ name|col
 operator|.
 name|isNull
 index|[
-name|vrg
+name|batch
 operator|.
 name|size
 index|]
@@ -431,7 +431,7 @@ name|col
 operator|.
 name|isNull
 index|[
-name|vrg
+name|batch
 operator|.
 name|size
 index|]
@@ -446,7 +446,7 @@ operator|!
 name|eof
 condition|)
 block|{
-name|vrg
+name|batch
 operator|.
 name|size
 operator|+=
@@ -455,7 +455,7 @@ expr_stmt|;
 block|}
 block|}
 return|return
-name|vrg
+name|batch
 return|;
 block|}
 block|}
