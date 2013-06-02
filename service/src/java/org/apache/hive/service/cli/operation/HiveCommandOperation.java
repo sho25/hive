@@ -515,6 +515,15 @@ name|UnsupportedEncodingException
 name|ee
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error creating PrintStream"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 name|ee
 operator|.
 name|printStackTrace
@@ -728,6 +737,8 @@ name|e
 operator|.
 name|toString
 argument_list|()
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

@@ -447,6 +447,8 @@ name|toString
 argument_list|()
 argument_list|,
 literal|"08S01"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
@@ -558,6 +560,8 @@ name|toString
 argument_list|()
 argument_list|,
 literal|"08S01"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
@@ -698,6 +702,8 @@ name|toString
 argument_list|()
 argument_list|,
 literal|"08S01"
+argument_list|,
+name|ex
 argument_list|)
 throw|;
 block|}
