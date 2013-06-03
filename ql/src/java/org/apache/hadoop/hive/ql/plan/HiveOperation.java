@@ -1043,6 +1043,22 @@ block|}
 argument_list|,
 literal|null
 argument_list|)
+block|,
+name|ALTERVIEW_RENAME
+argument_list|(
+literal|"ALTERVIEW_RENAME"
+argument_list|,
+operator|new
+name|Privilege
+index|[]
+block|{
+name|Privilege
+operator|.
+name|ALTER_METADATA
+block|}
+argument_list|,
+literal|null
+argument_list|)
 block|,   ;
 specifier|private
 name|String
