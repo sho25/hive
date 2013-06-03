@@ -1076,16 +1076,7 @@ name|DOWNLOADED_RESOURCES_DIR
 argument_list|(
 literal|"hive.downloaded.resources.dir"
 argument_list|,
-literal|"/tmp/"
-operator|+
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"user.name"
-argument_list|)
-operator|+
-literal|"/hive_resources"
+literal|"/tmp/${hive.session.id}_resources"
 argument_list|)
 block|,
 name|DEFAULTPARTITIONNAME
@@ -2001,11 +1992,20 @@ argument_list|,
 literal|25000
 argument_list|)
 block|,
+comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
+comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE
 argument_list|(
 literal|"hive.mapjoin.bucket.cache.size"
 argument_list|,
 literal|100
+argument_list|)
+block|,
+name|HIVESMBJOINCACHEROWS
+argument_list|(
+literal|"hive.smbjoin.cache.rows"
+argument_list|,
+literal|10000
 argument_list|)
 block|,
 name|HIVEGROUPBYMAPINTERVAL
@@ -2119,6 +2119,14 @@ argument_list|(
 literal|"hive.fileformat.check"
 argument_list|,
 literal|true
+argument_list|)
+block|,
+comment|// default serde for rcfile
+name|HIVEDEFAULTRCFILESERDE
+argument_list|(
+literal|"hive.default.rcfile.serde"
+argument_list|,
+literal|"org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe"
 argument_list|)
 block|,
 comment|//Location of Hive run time structured log file
@@ -4213,12 +4221,15 @@ condition|)
 block|{
 try|try
 block|{
+comment|// Create a Hadoop configuration without inheriting default settings.
 name|Configuration
 name|conf
 init|=
 operator|new
 name|Configuration
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 decl_stmt|;
 name|applyDefaultNonNullConfVars
 argument_list|(
@@ -5622,51 +5633,6 @@ condition|)
 block|{
 comment|// Don't override ConfVars with null values
 continue|continue;
-block|}
-if|if
-condition|(
-name|conf
-operator|.
-name|get
-argument_list|(
-name|var
-operator|.
-name|varname
-argument_list|)
-operator|!=
-literal|null
-condition|)
-block|{
-name|l4j
-operator|.
-name|debug
-argument_list|(
-literal|"Overriding Hadoop conf property "
-operator|+
-name|var
-operator|.
-name|varname
-operator|+
-literal|"='"
-operator|+
-name|conf
-operator|.
-name|get
-argument_list|(
-name|var
-operator|.
-name|varname
-argument_list|)
-operator|+
-literal|"' with Hive default value '"
-operator|+
-name|var
-operator|.
-name|defaultVal
-operator|+
-literal|"'"
-argument_list|)
-expr_stmt|;
 block|}
 name|conf
 operator|.

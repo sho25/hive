@@ -1033,6 +1033,8 @@ name|getMessage
 argument_list|()
 argument_list|,
 literal|" 08S01"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
@@ -1070,11 +1072,6 @@ name|TTransportException
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 throw|throw
 operator|new
 name|SQLException
@@ -1091,6 +1088,8 @@ name|getMessage
 argument_list|()
 argument_list|,
 literal|" 08S01"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
@@ -1189,6 +1188,8 @@ name|getMessage
 argument_list|()
 argument_list|,
 literal|" 08S01"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

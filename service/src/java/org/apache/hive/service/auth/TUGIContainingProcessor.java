@@ -410,29 +410,6 @@ argument_list|)
 throw|;
 comment|// unexpected!
 block|}
-finally|finally
-block|{
-comment|// cleanup the filesystem handles at the end if they are cached
-comment|// clientUgi will be null if createRemoteUser() fails
-if|if
-condition|(
-name|clientUgi
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|isFsCacheDisabled
-condition|)
-block|{
-name|shim
-operator|.
-name|closeAllForUGI
-argument_list|(
-name|clientUgi
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 block|}
 block|}
 end_class

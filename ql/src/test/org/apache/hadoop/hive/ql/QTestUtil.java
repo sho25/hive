@@ -6016,7 +6016,9 @@ literal|".*grantTime.*"
 block|,
 literal|".*[.][.][.] [0-9]* more.*"
 block|,
-literal|".*job_[0-9]*_[0-9]*.*"
+literal|".*job_[0-9_]*.*"
+block|,
+literal|".*job_local[0-9_]*.*"
 block|,
 literal|".*USING 'java -cp.*"
 block|,

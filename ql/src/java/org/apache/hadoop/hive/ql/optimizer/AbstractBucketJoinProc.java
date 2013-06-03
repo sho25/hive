@@ -1950,6 +1950,13 @@ operator|.
 name|size
 argument_list|()
 operator|!=
+literal|0
+operator|&&
+name|fileNames
+operator|.
+name|size
+argument_list|()
+operator|!=
 name|bucketCount
 condition|)
 block|{
@@ -2131,6 +2138,13 @@ decl_stmt|;
 comment|// The number of files for the table should be same as number of buckets.
 if|if
 condition|(
+name|fileNames
+operator|.
+name|size
+argument_list|()
+operator|!=
+literal|0
+operator|&&
 name|fileNames
 operator|.
 name|size

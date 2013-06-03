@@ -299,7 +299,8 @@ decl_stmt|;
 name|long
 name|maxSize
 init|=
-literal|0
+operator|-
+literal|1
 decl_stmt|;
 name|int
 name|numPartitionsCurrentBigTable
@@ -487,6 +488,12 @@ expr_stmt|;
 block|}
 name|averageSize
 operator|=
+name|numPartitions
+operator|==
+literal|0
+condition|?
+literal|0
+else|:
 name|totalSize
 operator|/
 name|numPartitions
