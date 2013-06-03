@@ -1365,6 +1365,29 @@ operator|.
 name|getName
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|MetaStoreUtils
+operator|.
+name|validateName
+argument_list|(
+name|colName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Invalid column name '"
+operator|+
+name|colName
+operator|+
+literal|"' in the table definition"
+argument_list|)
+throw|;
+block|}
 name|Iterator
 argument_list|<
 name|String
