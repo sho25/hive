@@ -107,6 +107,28 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|NullUtil
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -241,6 +263,14 @@ name|inputColVector
 operator|.
 name|noNulls
 expr_stmt|;
+name|outputColVector
+operator|.
+name|isRepeating
+operator|=
+name|inputColVector
+operator|.
+name|isRepeating
+expr_stmt|;
 name|int
 name|n
 init|=
@@ -281,8 +311,6 @@ operator|.
 name|isRepeating
 condition|)
 block|{
-comment|//All must be selected otherwise size would be zero
-comment|//Repeating property will not change.
 name|outputVector
 index|[
 literal|0
@@ -305,12 +333,6 @@ name|inputIsNull
 index|[
 literal|0
 index|]
-expr_stmt|;
-name|outputColVector
-operator|.
-name|isRepeating
-operator|=
-literal|true
 expr_stmt|;
 block|}
 elseif|else
@@ -396,12 +418,6 @@ name|value
 expr_stmt|;
 block|}
 block|}
-name|outputColVector
-operator|.
-name|isRepeating
-operator|=
-literal|false
-expr_stmt|;
 block|}
 else|else
 comment|/* there are nulls */
@@ -506,13 +522,22 @@ name|n
 argument_list|)
 expr_stmt|;
 block|}
-name|outputColVector
-operator|.
-name|isRepeating
-operator|=
-literal|false
-expr_stmt|;
 block|}
+name|NullUtil
+operator|.
+name|setNullOutputEntriesColScalar
+argument_list|(
+name|outputColVector
+argument_list|,
+name|batch
+operator|.
+name|selectedInUse
+argument_list|,
+name|sel
+argument_list|,
+name|n
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override

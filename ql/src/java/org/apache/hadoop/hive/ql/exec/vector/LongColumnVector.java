@@ -88,6 +88,14 @@ operator|new
 name|LongWritable
 argument_list|()
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|long
+name|NULL_VALUE
+init|=
+literal|1
+decl_stmt|;
 comment|/**    * Use this constructor by default. All column vectors    * should normally be the default size.    */
 specifier|public
 name|LongColumnVector

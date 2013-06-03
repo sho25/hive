@@ -92,6 +92,16 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|double
+name|NULL_VALUE
+init|=
+name|Double
+operator|.
+name|NaN
+decl_stmt|;
 comment|/**    * Use this constructor by default. All column vectors    * should normally be the default size.    */
 specifier|public
 name|DoubleColumnVector

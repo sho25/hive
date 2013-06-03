@@ -39,7 +39,9 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|DoubleColumnVector
+name|expressions
+operator|.
+name|VectorExpression
 import|;
 end_import
 
@@ -79,12 +81,54 @@ name|exec
 operator|.
 name|vector
 operator|.
+name|DoubleColumnVector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
 name|VectorizedRowBatch
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|NullUtil
+import|;
+end_import
+
 begin_comment
-comment|/**  * Implements a vectorized arithmetic operator with a scalar on the left and a  * column vector on the right. The result is output to an output column vector.  */
+comment|/**  * This operation is handled as a special case because Hive  * long/long division returns double. This file is thus not generated  * from a template like the other arithmetic operations are.  */
 end_comment
 
 begin_class
@@ -95,7 +139,6 @@ extends|extends
 name|VectorExpression
 block|{
 specifier|private
-specifier|final
 name|int
 name|colNum
 decl_stmt|;
@@ -105,7 +148,6 @@ name|double
 name|value
 decl_stmt|;
 specifier|private
-specifier|final
 name|int
 name|outputColumn
 decl_stmt|;
@@ -132,6 +174,9 @@ name|this
 operator|.
 name|value
 operator|=
+operator|(
+name|double
+operator|)
 name|value
 expr_stmt|;
 name|this
@@ -143,7 +188,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Override
-comment|/**    * Method to evaluate scalar-column operation in vectorized fashion.    *    * @batch a package of rows with each column stored in a vector    */
 specifier|public
 name|void
 name|evaluate
@@ -225,6 +269,14 @@ name|inputColVector
 operator|.
 name|noNulls
 expr_stmt|;
+name|outputColVector
+operator|.
+name|isRepeating
+operator|=
+name|inputColVector
+operator|.
+name|isRepeating
+expr_stmt|;
 name|int
 name|n
 init|=
@@ -265,7 +317,6 @@ operator|.
 name|isRepeating
 condition|)
 block|{
-comment|/*        * All must be selected otherwise size would be zero        * Repeating property will not change.        */
 name|outputVector
 index|[
 literal|0
@@ -288,12 +339,6 @@ name|inputIsNull
 index|[
 literal|0
 index|]
-expr_stmt|;
-name|outputColVector
-operator|.
-name|isRepeating
-operator|=
-literal|true
 expr_stmt|;
 block|}
 elseif|else
@@ -379,16 +424,10 @@ index|]
 expr_stmt|;
 block|}
 block|}
-name|outputColVector
-operator|.
-name|isRepeating
-operator|=
-literal|false
-expr_stmt|;
 block|}
 else|else
-block|{
 comment|/* there are nulls */
+block|{
 if|if
 condition|(
 name|batch
@@ -489,13 +528,23 @@ name|n
 argument_list|)
 expr_stmt|;
 block|}
-name|outputColVector
-operator|.
-name|isRepeating
-operator|=
-literal|false
-expr_stmt|;
 block|}
+comment|/* Set double data vector array entries for NULL elements to the correct value.      * Unlike other col-scalar operations, this one doesn't benefit from carrying       * over NaN values from the input array.      */
+name|NullUtil
+operator|.
+name|setNullDataEntriesDouble
+argument_list|(
+name|outputColVector
+argument_list|,
+name|batch
+operator|.
+name|selectedInUse
+argument_list|,
+name|sel
+argument_list|,
+name|n
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
