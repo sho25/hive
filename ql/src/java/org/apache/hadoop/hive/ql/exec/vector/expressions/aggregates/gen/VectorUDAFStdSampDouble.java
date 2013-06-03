@@ -247,10 +247,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|io
 operator|.
 name|DoubleWritable

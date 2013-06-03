@@ -450,8 +450,8 @@ extends|extends
 name|VectorAggregateExpression
 block|{
 comment|/**      /* class for storing the current aggregate value.     */
-specifier|static
 specifier|private
+specifier|static
 specifier|final
 class|class
 name|Aggregation
