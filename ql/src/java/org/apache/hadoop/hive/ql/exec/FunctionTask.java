@@ -661,24 +661,6 @@ return|return
 literal|"FUNCTION"
 return|;
 block|}
-annotation|@
-name|Override
-specifier|protected
-name|void
-name|localizeMRTmpFilesImpl
-parameter_list|(
-name|Context
-name|ctx
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Unexpected call"
-argument_list|)
-throw|;
-block|}
 block|}
 end_class
 

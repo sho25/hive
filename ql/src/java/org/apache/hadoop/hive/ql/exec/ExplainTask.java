@@ -4028,26 +4028,6 @@ return|;
 block|}
 annotation|@
 name|Override
-specifier|protected
-name|void
-name|localizeMRTmpFilesImpl
-parameter_list|(
-name|Context
-name|ctx
-parameter_list|)
-block|{
-comment|// explain task has nothing to localize
-comment|// we don't expect to enter this code path at all
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Unexpected call"
-argument_list|)
-throw|;
-block|}
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<

@@ -169,27 +169,6 @@ return|return
 literal|"DEPENDENCY_COLLECTION"
 return|;
 block|}
-annotation|@
-name|Override
-specifier|protected
-name|void
-name|localizeMRTmpFilesImpl
-parameter_list|(
-name|Context
-name|ctx
-parameter_list|)
-block|{
-comment|// copy task doesn't have any execution and so
-comment|// does not use any map-reduce tmp files
-comment|// we don't expect to enter this code path at all
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Unexpected call"
-argument_list|)
-throw|;
-block|}
 block|}
 end_class
 

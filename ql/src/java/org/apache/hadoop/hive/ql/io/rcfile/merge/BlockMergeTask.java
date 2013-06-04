@@ -2328,18 +2328,6 @@ name|IOException
 block|{
 comment|// no op
 block|}
-annotation|@
-name|Override
-specifier|protected
-name|void
-name|localizeMRTmpFilesImpl
-parameter_list|(
-name|Context
-name|ctx
-parameter_list|)
-block|{
-comment|// no op
-block|}
 block|}
 end_class
 
