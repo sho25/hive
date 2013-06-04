@@ -247,10 +247,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|io
 operator|.
 name|DoubleWritable
@@ -607,11 +603,11 @@ argument_list|(
 name|batch
 argument_list|)
 expr_stmt|;
-name|LongColumnVector
+name|DoubleColumnVector
 name|inputVector
 init|=
 operator|(
-name|LongColumnVector
+name|DoubleColumnVector
 operator|)
 name|batch
 operator|.
@@ -625,7 +621,7 @@ name|getOutputColumn
 argument_list|()
 index|]
 decl_stmt|;
-name|long
+name|double
 index|[]
 name|vector
 init|=
@@ -825,7 +821,7 @@ parameter_list|,
 name|int
 name|aggregateIndex
 parameter_list|,
-name|long
+name|double
 name|value
 parameter_list|,
 name|int
@@ -879,7 +875,7 @@ parameter_list|,
 name|int
 name|aggregateIndex
 parameter_list|,
-name|long
+name|double
 index|[]
 name|values
 parameter_list|,
@@ -944,7 +940,7 @@ parameter_list|,
 name|int
 name|aggregateIndex
 parameter_list|,
-name|long
+name|double
 index|[]
 name|values
 parameter_list|,
@@ -1002,7 +998,7 @@ parameter_list|,
 name|int
 name|aggregateIndex
 parameter_list|,
-name|long
+name|double
 name|value
 parameter_list|,
 name|int
@@ -1077,7 +1073,7 @@ parameter_list|,
 name|int
 name|aggregateIndex
 parameter_list|,
-name|long
+name|double
 name|value
 parameter_list|,
 name|int
@@ -1145,7 +1141,7 @@ parameter_list|,
 name|int
 name|aggregateIndex
 parameter_list|,
-name|long
+name|double
 index|[]
 name|values
 parameter_list|,
@@ -1229,7 +1225,7 @@ parameter_list|,
 name|int
 name|aggregateIndex
 parameter_list|,
-name|long
+name|double
 index|[]
 name|values
 parameter_list|,
