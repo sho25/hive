@@ -816,7 +816,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * If two reducer sink operators share the same partition/sort columns and order,  * they can be merged. This should happen after map join optimization because map  * join optimization will remove reduce sink operators.  */
+comment|/**  * If two reducer sink operators share the same partition/sort columns and order,  * they can be merged. This should happen after map join optimization because map  * join optimization will remove reduce sink operators.  *  * This optimizer removes/replaces child-RS (not parent) which is safer way for DefaultGraphWalker.  */
 end_comment
 
 begin_class
@@ -889,6 +889,7 @@ argument_list|(
 name|pGraphContext
 argument_list|)
 decl_stmt|;
+comment|// for auto convert map-joins, it not safe to dedup in here (todo)
 name|boolean
 name|mergeJoins
 init|=
@@ -914,6 +915,8 @@ argument_list|(
 name|HIVECONVERTJOINNOCONDITIONALTASK
 argument_list|)
 decl_stmt|;
+comment|// If multiple rules can be matched with same cost, last rule will be choosen as a processor
+comment|// see DefaultRuleDispatcher#dispatch()
 name|Map
 argument_list|<
 name|Rule
@@ -1089,10 +1092,14 @@ block|{
 name|ParseContext
 name|pctx
 decl_stmt|;
+comment|// For queries using script, the optimization cannot be applied without user's confirmation
+comment|// If script preserves alias and value for columns related to keys, user can set this true
 name|boolean
 name|trustScript
 decl_stmt|;
-comment|// min reducer num for merged RS (to avoid query contains "order by" executed by one reducer)
+comment|// This is min number of reducer for deduped RS to avoid query executed on
+comment|// too small number of reducers. For example, queries GroupBy+OrderBy can be executed by
+comment|// only one reducer if this configuration does not prevents
 name|int
 name|minReducer
 decl_stmt|;
@@ -1314,7 +1321,7 @@ specifier|public
 specifier|abstract
 specifier|static
 class|class
-name|AbsctractReducerReducerProc
+name|AbstractReducerReducerProc
 implements|implements
 name|NodeProcessor
 block|{
@@ -2287,6 +2294,8 @@ return|return
 name|result
 return|;
 block|}
+comment|// for left outer joins, left alias is sorted but right alias might be not
+comment|// (nulls, etc.). vice versa.
 specifier|private
 name|boolean
 name|isSortedTag
@@ -2474,6 +2483,7 @@ operator|-
 literal|1
 return|;
 block|}
+comment|/**      * Current RSDedup remove/replace child RS. So always copies      * more specific part of configurations of child RS to that of parent RS.      */
 specifier|protected
 name|boolean
 name|merge
@@ -2660,7 +2670,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|// -1 for p to c, 1 for c to p
+comment|/**      * Returns merge directions between two RSs for criterias (ordering, number of reducers,      * reducer keys, partition keys). Returns null if any of categories is not mergeable.      *      * Values for each index can be -1, 0, 1      * 1. 0 means two configuration in the category is the same      * 2. for -1, configuration of parent RS is more specific than child RS      * 3. for 1, configuration of child RS is more specific than parent RS      */
 specifier|private
 name|int
 index|[]
@@ -2868,6 +2878,7 @@ name|moveReducerNumTo
 block|}
 return|;
 block|}
+comment|/**      * Overlapping part of keys should be the same between parent and child.      * And if child has more keys than parent, non-overlapping part of keys      * should be backtrackable to parent.      */
 specifier|private
 name|Integer
 name|checkExprs
@@ -2968,6 +2979,7 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// cKey is not present in parent
 return|return
 literal|null
 return|;
@@ -2999,6 +3011,7 @@ return|return
 name|moveKeyColTo
 return|;
 block|}
+comment|// backtrack key exprs of child to parent and compare it with parent's
 specifier|protected
 name|Integer
 name|sameKeys
@@ -3113,6 +3126,10 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|cexpr
+operator|==
+literal|null
+operator|||
 operator|!
 name|pexpr
 operator|.
@@ -3172,6 +3189,7 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// cKey is not present in parent
 return|return
 literal|null
 return|;
@@ -3198,6 +3216,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|// order of overlapping keys should be exactly the same
 specifier|protected
 name|Integer
 name|checkOrder
@@ -3354,6 +3373,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|/**      * If number of reducers for RS is -1, the RS can have any number of reducers.      * It's generally true except for order-by or forced bucketing cases.      * if both of num-reducers are not -1, those number should be the same.      */
 specifier|protected
 name|Integer
 name|checkNumReducer
@@ -3880,6 +3900,8 @@ return|return
 name|select
 return|;
 block|}
+comment|// replace the cRS to SEL operator
+comment|// If child if cRS is EXT, EXT also should be removed
 specifier|private
 name|SelectOperator
 name|replaceOperatorWithSelect
@@ -4118,6 +4140,8 @@ operator|instanceof
 name|GroupByOperator
 condition|)
 block|{
+comment|// pRS-cGBYm-cRS-cGBYr (map aggregation) --> pRS-cGBYr(COMPLETE)
+comment|// copies desc of cGBYm to cGBYr and remove cGBYm and cRS
 name|GroupByOperator
 name|cGBYm
 init|=
@@ -4238,6 +4262,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// pRS-cRS-cGBYr (no map aggregation) --> pRS-cGBYr(COMPLETE)
+comment|// revert expressions of cGBYr to that of cRS
 name|cGBYr
 operator|.
 name|getConf
@@ -4728,7 +4754,7 @@ specifier|static
 class|class
 name|GroupbyReducerProc
 extends|extends
-name|AbsctractReducerReducerProc
+name|AbstractReducerReducerProc
 block|{
 comment|// pRS-pGBY-cRS
 specifier|public
@@ -4922,7 +4948,7 @@ specifier|static
 class|class
 name|JoinReducerProc
 extends|extends
-name|AbsctractReducerReducerProc
+name|AbstractReducerReducerProc
 block|{
 comment|// pRS-pJOIN-cRS
 specifier|public
@@ -5087,7 +5113,7 @@ specifier|static
 class|class
 name|ReducerReducerProc
 extends|extends
-name|AbsctractReducerReducerProc
+name|AbstractReducerReducerProc
 block|{
 comment|// pRS-cRS
 specifier|public
