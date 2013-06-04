@@ -8448,6 +8448,12 @@ name|VectorizedRowBatch
 operator|)
 name|previous
 expr_stmt|;
+name|result
+operator|.
+name|selectedInUse
+operator|=
+literal|false
+expr_stmt|;
 name|reader
 operator|.
 name|nextVector
