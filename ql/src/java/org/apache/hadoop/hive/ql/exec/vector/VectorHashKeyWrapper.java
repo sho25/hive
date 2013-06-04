@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|vector
 package|;
 end_package
 
@@ -26,6 +28,24 @@ operator|.
 name|util
 operator|.
 name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|KeyWrapper
 import|;
 end_import
 
@@ -206,6 +226,7 @@ parameter_list|()
 block|{   }
 annotation|@
 name|Override
+specifier|public
 name|void
 name|getNewKey
 parameter_list|(
@@ -228,6 +249,7 @@ throw|;
 block|}
 annotation|@
 name|Override
+specifier|public
 name|void
 name|setHashKey
 parameter_list|()
@@ -749,6 +771,7 @@ return|;
 block|}
 annotation|@
 name|Override
+specifier|public
 name|void
 name|copyKey
 parameter_list|(
@@ -756,19 +779,25 @@ name|KeyWrapper
 name|oldWrapper
 parameter_list|)
 block|{
-comment|// TODO Auto-generated method stub
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|()
+throw|;
 block|}
 annotation|@
 name|Override
+specifier|public
 name|Object
 index|[]
 name|getKeyArray
 parameter_list|()
 block|{
-comment|// TODO Auto-generated method stub
-return|return
-literal|null
-return|;
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|()
+throw|;
 block|}
 specifier|public
 name|void

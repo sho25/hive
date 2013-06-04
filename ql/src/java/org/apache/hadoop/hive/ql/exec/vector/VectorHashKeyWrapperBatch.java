@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|vector
 package|;
 end_package
 
@@ -263,7 +265,7 @@ name|int
 index|[]
 name|doubleIndices
 decl_stmt|;
-comment|/*    * indices of stirng (byte[]) primitive keys    */
+comment|/*    * indices of string (byte[]) primitive keys    */
 specifier|private
 name|int
 index|[]
