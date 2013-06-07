@@ -397,7 +397,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|BytesWritable
+name|Text
 import|;
 end_import
 
@@ -595,7 +595,7 @@ name|VectorExpression
 name|inputExpression
 decl_stmt|;
 specifier|private
-name|BytesWritable
+name|Text
 name|result
 decl_stmt|;
 specifier|public
@@ -617,7 +617,7 @@ expr_stmt|;
 name|result
 operator|=
 operator|new
-name|BytesWritable
+name|Text
 argument_list|()
 expr_stmt|;
 block|}
@@ -1830,7 +1830,7 @@ block|{
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|writableBinaryObjectInspector
+name|writableStringObjectInspector
 return|;
 block|}
 block|}
