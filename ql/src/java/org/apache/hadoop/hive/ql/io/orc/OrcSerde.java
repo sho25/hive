@@ -669,7 +669,9 @@ name|vos
 operator|=
 operator|new
 name|VectorizedOrcSerde
-argument_list|()
+argument_list|(
+name|objInspector
+argument_list|)
 expr_stmt|;
 block|}
 return|return

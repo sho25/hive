@@ -2763,7 +2763,7 @@ index|]
 operator|=
 name|SerializationUtils
 operator|.
-name|readDouble
+name|readFloat
 argument_list|(
 name|stream
 argument_list|)
