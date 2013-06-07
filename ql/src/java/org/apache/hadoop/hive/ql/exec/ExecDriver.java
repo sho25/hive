@@ -2056,11 +2056,9 @@ name|validateVectorPath
 argument_list|()
 condition|)
 block|{
-name|System
+name|LOG
 operator|.
-name|out
-operator|.
-name|println
+name|debug
 argument_list|(
 literal|"Going down the vectorization path"
 argument_list|)
@@ -3637,18 +3635,9 @@ name|boolean
 name|validateVectorPath
 parameter_list|()
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Validating if vectorized execution is applicable"
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Validating if vectorized execution is applicable"
 argument_list|)
@@ -3723,25 +3712,9 @@ name|class
 argument_list|)
 condition|)
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Input format: "
-operator|+
-name|pd
-operator|.
-name|getInputFileFormatClassName
-argument_list|()
-operator|+
-literal|", doesn't provide vectorized input"
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Input format: "
 operator|+
@@ -3857,21 +3830,10 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Cannot vectorize the plan"
 argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Cannot vectorize the plan: "
-operator|+
 name|e
 argument_list|)
 expr_stmt|;
@@ -3888,16 +3850,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
-argument_list|(
-literal|"Cannot vectorize the plan"
-argument_list|)
-expr_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
+name|debug
 argument_list|(
 literal|"Cannot vectorize the plan"
 argument_list|)
@@ -3923,25 +3876,11 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Cannot vectorize the plan"
 argument_list|,
 name|e
-argument_list|)
-expr_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Cannot vectorize the plan: "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
