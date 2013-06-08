@@ -2058,7 +2058,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Going down the vectorization path"
 argument_list|)
