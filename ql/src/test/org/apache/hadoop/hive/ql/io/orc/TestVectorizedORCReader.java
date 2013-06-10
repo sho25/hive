@@ -1078,6 +1078,9 @@ operator|)
 name|a
 operator|)
 decl_stmt|;
+comment|// Timestamp.getTime() is overriden and is
+comment|// long time = super.getTime();
+comment|// return (time + (nanos / 1000000));
 name|Long
 name|timeInNanoSec
 init|=
@@ -1090,10 +1093,14 @@ operator|*
 literal|1000000
 operator|)
 operator|+
+operator|(
 name|t
 operator|.
 name|getNanos
 argument_list|()
+operator|%
+literal|1000000
+operator|)
 decl_stmt|;
 name|Assert
 operator|.
