@@ -111,7 +111,12 @@ specifier|public
 specifier|static
 interface|interface
 name|AggregationBuffer
-block|{   }
+block|{
+name|int
+name|getVariableSize
+parameter_list|()
+function_decl|;
+block|}
 empty_stmt|;
 specifier|public
 specifier|abstract
@@ -181,6 +186,21 @@ name|ObjectInspector
 name|getOutputObjectInspector
 parameter_list|()
 function_decl|;
+specifier|public
+specifier|abstract
+name|int
+name|getAggregationBufferFixedSize
+parameter_list|()
+function_decl|;
+specifier|public
+name|boolean
+name|hasVariableSize
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
 block|}
 end_class
 
