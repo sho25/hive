@@ -182,7 +182,7 @@ argument_list|()
 operator|.
 name|addStringColumn
 argument_list|(
-literal|"TABLE_SCHEMA"
+literal|"TABLE_SCHEM"
 argument_list|,
 literal|"Schema name."
 argument_list|)
