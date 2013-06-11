@@ -243,22 +243,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|SerDeException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|NullWritable
@@ -420,6 +404,12 @@ specifier|private
 name|VectorizedRowBatchCtx
 name|rbCtx
 decl_stmt|;
+specifier|private
+name|boolean
+name|addPartitionCols
+init|=
+literal|true
+decl_stmt|;
 name|VectorizedOrcRecordReader
 parameter_list|(
 name|Reader
@@ -536,6 +526,30 @@ return|return
 literal|false
 return|;
 block|}
+try|try
+block|{
+comment|// Check and update partition cols if necessary. Ideally, this should be done
+comment|// in CreateValue as the partition is constant per split. But since Hive uses
+comment|// CombineHiveRecordReader and
+comment|// as this does not call CreateValue for each new RecordReader it creates, this check is
+comment|// required in next()
+if|if
+condition|(
+name|addPartitionCols
+condition|)
+block|{
+name|rbCtx
+operator|.
+name|AddPartitionColsToBatch
+argument_list|(
+name|value
+argument_list|)
+expr_stmt|;
+name|addPartitionCols
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|reader
 operator|.
 name|nextBatch
@@ -543,8 +557,6 @@ argument_list|(
 name|value
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|rbCtx
 operator|.
 name|ConvertRowBatchBlobToVectorizedBatch
@@ -564,7 +576,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|SerDeException
+name|Exception
 name|e
 parameter_list|)
 block|{
@@ -620,16 +632,6 @@ name|rbCtx
 operator|.
 name|CreateVectorizedRowBatch
 argument_list|()
-expr_stmt|;
-comment|// Since the record reader works only on one split and
-comment|// given a split the partition cannot change, we are setting the partition
-comment|// values only once during batch creation
-name|rbCtx
-operator|.
-name|AddPartitionColsToBatch
-argument_list|(
-name|result
-argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -715,7 +717,7 @@ literal|1024
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Recurse down into a type subtree turning on all of the sub-columns.    * @param types the types of the file    * @param result the global view of columns that should be included    * @param typeId the root of tree to enable    */
+comment|/**    * Recurse down into a type subtree turning on all of the sub-columns.    *    * @param types    *          the types of the file    * @param result    *          the global view of columns that should be included    * @param typeId    *          the root of tree to enable    */
 specifier|private
 specifier|static
 name|void
@@ -795,7 +797,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Take the configuration and figure out which columns we need to include.    * @param types the types of the file    * @param conf the configuration    * @return true for each column that should be included    */
+comment|/**    * Take the configuration and figure out which columns we need to include.    *    * @param types    *          the types of the file    * @param conf    *          the configuration    * @return true for each column that should be included    */
 specifier|private
 specifier|static
 name|boolean

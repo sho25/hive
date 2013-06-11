@@ -397,6 +397,12 @@ name|BytesRefArrayWritable
 argument_list|()
 decl_stmt|;
 specifier|private
+name|boolean
+name|addPartitionCols
+init|=
+literal|true
+decl_stmt|;
+specifier|private
 specifier|static
 name|RCFileSyncCache
 name|syncCache
@@ -876,16 +882,6 @@ operator|.
 name|CreateVectorizedRowBatch
 argument_list|()
 expr_stmt|;
-comment|// Since the record reader works only on one split and
-comment|// given a split the partition cannot change, we are setting the partition
-comment|// values only once during batch creation
-name|rbCtx
-operator|.
-name|AddPartitionColsToBatch
-argument_list|(
-name|result
-argument_list|)
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1012,6 +1008,27 @@ condition|(
 name|more
 condition|)
 block|{
+comment|// Check and update partition cols if necessary. Ideally this should be done
+comment|// in CreateValue() as the partition is constant per split. But since Hive uses
+comment|// CombineHiveRecordReader and as this does not call CreateValue() for
+comment|// each new RecordReader it creates, this check is required in next()
+if|if
+condition|(
+name|addPartitionCols
+condition|)
+block|{
+name|rbCtx
+operator|.
+name|AddPartitionColsToBatch
+argument_list|(
+name|value
+argument_list|)
+expr_stmt|;
+name|addPartitionCols
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|in
 operator|.
 name|getCurrentRow

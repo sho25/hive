@@ -1261,8 +1261,11 @@ argument_list|)
 operator|.
 name|getFieldName
 argument_list|()
-operator|==
+operator|.
+name|equals
+argument_list|(
 name|colName
+argument_list|)
 condition|)
 block|{
 return|return
