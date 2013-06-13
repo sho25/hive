@@ -3541,15 +3541,15 @@ elseif|else
 if|if
 condition|(
 operator|(
-name|rightExpr
-operator|instanceof
-name|ExprNodeColumnDesc
-operator|)
-operator|&&
-operator|(
 name|leftExpr
 operator|instanceof
 name|ExprNodeConstantDesc
+operator|)
+operator|&&
+operator|(
+name|rightExpr
+operator|instanceof
+name|ExprNodeColumnDesc
 operator|)
 condition|)
 block|{
@@ -3599,7 +3599,7 @@ decl_stmt|;
 name|String
 name|className
 init|=
-name|getBinaryColumnScalarExpressionClassName
+name|getBinaryScalarColumnExpressionClassName
 argument_list|(
 name|colType
 argument_list|,
@@ -3652,12 +3652,12 @@ index|]
 operator|.
 name|newInstance
 argument_list|(
-name|inputCol
-argument_list|,
 name|getScalarValue
 argument_list|(
 name|constDesc
 argument_list|)
+argument_list|,
+name|inputCol
 argument_list|,
 name|outputCol
 argument_list|)
@@ -3673,6 +3673,10 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
+literal|"Could not instantiate: "
+operator|+
+name|className
+argument_list|,
 name|ex
 argument_list|)
 throw|;
