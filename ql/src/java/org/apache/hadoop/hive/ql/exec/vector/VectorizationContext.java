@@ -7709,6 +7709,13 @@ else|:
 literal|null
 argument_list|)
 decl_stmt|;
+name|aggExpr
+operator|.
+name|init
+argument_list|(
+name|desc
+argument_list|)
+expr_stmt|;
 return|return
 name|aggExpr
 return|;
