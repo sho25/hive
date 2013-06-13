@@ -2538,10 +2538,10 @@ literal|1
 expr_stmt|;
 name|stringIndices
 index|[
-name|i
+name|stringIndicesIndex
 index|]
 operator|=
-name|stringIndicesIndex
+name|i
 expr_stmt|;
 operator|++
 name|stringIndicesIndex

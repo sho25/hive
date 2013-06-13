@@ -716,6 +716,14 @@ condition|(
 operator|!
 name|isNull
 index|[
+name|longValues
+operator|.
+name|length
+operator|+
+name|doubleValues
+operator|.
+name|length
+operator|+
 name|i
 index|]
 condition|)
