@@ -4544,6 +4544,13 @@ name|RunLengthIntegerReader
 name|reader
 decl_stmt|;
 specifier|private
+name|byte
+index|[]
+name|dictionaryBufferInBytesCache
+init|=
+literal|null
+decl_stmt|;
+specifier|private
 specifier|final
 name|LongColumnVector
 name|scratchlcv
@@ -4668,6 +4675,11 @@ name|readAll
 argument_list|(
 name|in
 argument_list|)
+expr_stmt|;
+comment|// Since its start of strip invalidate the cache.
+name|dictionaryBufferInBytesCache
+operator|=
+literal|null
 expr_stmt|;
 block|}
 else|else
@@ -5043,15 +5055,22 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|byte
-index|[]
-name|dictionaryBytes
-init|=
+comment|// Load dictionaryBuffer into cache.
+if|if
+condition|(
+name|dictionaryBufferInBytesCache
+operator|==
+literal|null
+condition|)
+block|{
+name|dictionaryBufferInBytesCache
+operator|=
 name|dictionaryBuffer
 operator|.
 name|get
 argument_list|()
-decl_stmt|;
+expr_stmt|;
+block|}
 comment|// Read string offsets
 name|scratchlcv
 operator|.
@@ -5144,7 +5163,7 @@ name|setRef
 argument_list|(
 name|i
 argument_list|,
-name|dictionaryBytes
+name|dictionaryBufferInBytesCache
 argument_list|,
 name|offset
 argument_list|,
@@ -5161,7 +5180,7 @@ name|setRef
 argument_list|(
 name|i
 argument_list|,
-name|dictionaryBytes
+name|dictionaryBufferInBytesCache
 argument_list|,
 literal|0
 argument_list|,
@@ -5214,7 +5233,7 @@ name|setRef
 argument_list|(
 literal|0
 argument_list|,
-name|dictionaryBytes
+name|dictionaryBufferInBytesCache
 argument_list|,
 name|offset
 argument_list|,
