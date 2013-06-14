@@ -41,6 +41,7 @@ name|VectorUDFWeekOfYearLong
 extends|extends
 name|VectorUDFTimestampFieldLong
 block|{
+specifier|public
 name|VectorUDFWeekOfYearLong
 parameter_list|(
 name|int

@@ -41,6 +41,7 @@ name|VectorUDFDayOfMonthLong
 extends|extends
 name|VectorUDFTimestampFieldLong
 block|{
+specifier|public
 name|VectorUDFDayOfMonthLong
 parameter_list|(
 name|int

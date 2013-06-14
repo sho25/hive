@@ -208,6 +208,7 @@ name|year
 return|;
 block|}
 block|}
+specifier|public
 name|VectorUDFYearLong
 parameter_list|(
 name|int

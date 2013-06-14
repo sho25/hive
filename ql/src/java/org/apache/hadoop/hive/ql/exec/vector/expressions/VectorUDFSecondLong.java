@@ -41,6 +41,7 @@ name|VectorUDFSecondLong
 extends|extends
 name|VectorUDFTimestampFieldLong
 block|{
+specifier|public
 name|VectorUDFSecondLong
 parameter_list|(
 name|int

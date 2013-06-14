@@ -41,6 +41,7 @@ name|VectorUDFMinuteLong
 extends|extends
 name|VectorUDFTimestampFieldLong
 block|{
+specifier|public
 name|VectorUDFMinuteLong
 parameter_list|(
 name|int

@@ -82,6 +82,7 @@ operator|/
 literal|1000
 return|;
 block|}
+specifier|public
 name|VectorUDFUnixTimeStampLong
 parameter_list|(
 name|int
