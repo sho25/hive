@@ -772,6 +772,11 @@ comment|/**  * BaseSemanticAnalyzer.  *  */
 end_comment
 
 begin_class
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"deprecation"
+argument_list|)
 specifier|public
 specifier|abstract
 class|class
@@ -3168,8 +3173,8 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-name|String
-name|name
+name|Tree
+name|grandChild
 init|=
 name|child
 operator|.
@@ -3177,6 +3182,18 @@ name|getChild
 argument_list|(
 literal|0
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|grandChild
+operator|!=
+literal|null
+condition|)
+block|{
+name|String
+name|name
+init|=
+name|grandChild
 operator|.
 name|getText
 argument_list|()
@@ -3260,6 +3277,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|colList
 operator|.
