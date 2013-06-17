@@ -3395,6 +3395,13 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|HIVE_SERVER2_PLAIN_LDAP_DOMAIN
+argument_list|(
+literal|"hive.server2.authentication.ldap.Domain"
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|HIVE_SERVER2_CUSTOM_AUTHENTICATION_CLASS
 argument_list|(
 literal|"hive.server2.custom.authentication.class"
