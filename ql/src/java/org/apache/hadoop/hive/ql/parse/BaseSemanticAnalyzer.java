@@ -481,7 +481,7 @@ name|io
 operator|.
 name|orc
 operator|.
-name|CommonOrcInputFormat
+name|OrcInputFormat
 import|;
 end_import
 
@@ -957,7 +957,7 @@ specifier|final
 name|String
 name|ORCFILE_INPUT
 init|=
-name|CommonOrcInputFormat
+name|OrcInputFormat
 operator|.
 name|class
 operator|.
