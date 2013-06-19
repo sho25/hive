@@ -1056,6 +1056,23 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// Must reset the isNull, could be set from prev batch use
+name|batch
+operator|.
+name|cols
+index|[
+name|i
+index|]
+operator|.
+name|isNull
+index|[
+name|batch
+operator|.
+name|size
+index|]
+operator|=
+literal|false
+expr_stmt|;
 name|columnAssign
 index|[
 name|i
