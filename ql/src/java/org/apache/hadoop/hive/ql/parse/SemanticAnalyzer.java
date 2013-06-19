@@ -6530,6 +6530,18 @@ operator|==
 name|HiveParser
 operator|.
 name|TOK_LATERAL_VIEW
+operator|||
+name|child
+operator|.
+name|getToken
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|TOK_LATERAL_VIEW_OUTER
 condition|)
 block|{
 comment|// SELECT * FROM src1 LATERAL VIEW udtf() AS myTable JOIN src2 ...
@@ -6662,6 +6674,11 @@ case|case
 name|HiveParser
 operator|.
 name|TOK_LATERAL_VIEW
+case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_LATERAL_VIEW_OUTER
 case|:
 name|alias
 operator|=
@@ -7213,6 +7230,18 @@ operator|==
 name|HiveParser
 operator|.
 name|TOK_LATERAL_VIEW
+operator|||
+name|frm
+operator|.
+name|getToken
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|TOK_LATERAL_VIEW_OUTER
 condition|)
 block|{
 name|processLateralView
@@ -8302,6 +8331,11 @@ case|case
 name|HiveParser
 operator|.
 name|TOK_LATERAL_VIEW
+case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_LATERAL_VIEW_OUTER
 case|:
 comment|// todo: nested LV
 assert|assert
@@ -17363,6 +17397,8 @@ argument_list|,
 name|qb
 argument_list|,
 name|input
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 if|if
@@ -17410,6 +17446,9 @@ argument_list|<
 name|?
 argument_list|>
 name|input
+parameter_list|,
+name|boolean
+name|outerLV
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -18991,6 +19030,8 @@ argument_list|,
 name|qb
 argument_list|,
 name|output
+argument_list|,
+name|outerLV
 argument_list|)
 expr_stmt|;
 block|}
@@ -32754,6 +32795,9 @@ name|qb
 parameter_list|,
 name|Operator
 name|input
+parameter_list|,
+name|boolean
+name|outerLV
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -33232,6 +33276,8 @@ operator|new
 name|UDTFDesc
 argument_list|(
 name|genericUDTF
+argument_list|,
+name|outerLV
 argument_list|)
 argument_list|,
 operator|new
@@ -49724,6 +49770,15 @@ argument_list|,
 name|blankQb
 argument_list|,
 name|lvForward
+argument_list|,
+name|lateralViewTree
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|TOK_LATERAL_VIEW_OUTER
 argument_list|)
 decl_stmt|;
 comment|// add udtf aliases to QB
