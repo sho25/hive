@@ -523,6 +523,20 @@ name|ZooKeeper
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -2229,7 +2243,8 @@ do|;
 return|return;
 block|}
 comment|/* Remove the lock specified */
-specifier|private
+annotation|@
+name|VisibleForTesting
 specifier|static
 name|void
 name|unlockPrimitive
@@ -2322,6 +2337,8 @@ argument_list|()
 operator|)
 condition|)
 block|{
+try|try
+block|{
 name|zkpClient
 operator|.
 name|delete
@@ -2332,6 +2349,27 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|KeeperException
+operator|.
+name|NoNodeException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Node "
+operator|+
+name|name
+operator|+
+literal|" previously deleted when attempting to delete."
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch
