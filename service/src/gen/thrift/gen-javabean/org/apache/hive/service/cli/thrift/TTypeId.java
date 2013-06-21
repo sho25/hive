@@ -143,6 +143,11 @@ name|DECIMAL_TYPE
 argument_list|(
 literal|15
 argument_list|)
+block|,
+name|NULL_TYPE
+argument_list|(
+literal|16
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -283,6 +288,12 @@ literal|15
 case|:
 return|return
 name|DECIMAL_TYPE
+return|;
+case|case
+literal|16
+case|:
+return|return
+name|NULL_TYPE
 return|;
 default|default:
 return|return
