@@ -211,20 +211,6 @@ name|LongWritable
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|NullWritable
-import|;
-end_import
-
 begin_comment
 comment|/** * VectorUDAFCountStar. Vectorized implementation for COUNT(*) aggregates. */
 end_comment
@@ -536,10 +522,7 @@ name|isNull
 condition|)
 block|{
 return|return
-name|NullWritable
-operator|.
-name|get
-argument_list|()
+literal|null
 return|;
 block|}
 else|else
