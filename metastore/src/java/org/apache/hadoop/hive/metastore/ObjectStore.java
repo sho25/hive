@@ -2247,6 +2247,7 @@ return|;
 block|}
 specifier|private
 specifier|static
+specifier|synchronized
 name|PersistenceManagerFactory
 name|getPMF
 parameter_list|()
