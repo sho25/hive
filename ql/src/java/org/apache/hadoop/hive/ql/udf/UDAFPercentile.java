@@ -673,7 +673,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Percentile value must be wihin the range of 0 to 1."
+literal|"Percentile value must be within the range of 0 to 1."
 argument_list|)
 throw|;
 block|}
@@ -1166,7 +1166,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Percentile value must be wihin the range of 0 to 1."
+literal|"Percentile value must be within the range of 0 to 1."
 argument_list|)
 throw|;
 block|}

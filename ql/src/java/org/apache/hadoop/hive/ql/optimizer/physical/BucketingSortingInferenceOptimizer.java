@@ -596,12 +596,28 @@ condition|)
 block|{
 continue|continue;
 block|}
+comment|// uses sampling, which means it's not bucketed
+name|boolean
+name|disableBucketing
+init|=
+name|mapRedTask
+operator|.
+name|getWork
+argument_list|()
+operator|.
+name|getSamplingType
+argument_list|()
+operator|>
+literal|0
+decl_stmt|;
 name|BucketingSortingCtx
 name|bCtx
 init|=
 operator|new
 name|BucketingSortingCtx
-argument_list|()
+argument_list|(
+name|disableBucketing
+argument_list|)
 decl_stmt|;
 comment|// RuleRegExp rules are used to match operators anywhere in the tree
 comment|// RuleExactMatch rules are used to specify exactly what the tree should look like

@@ -2741,6 +2741,27 @@ argument_list|,
 literal|4
 argument_list|)
 block|,
+name|HIVESAMPLINGFORORDERBY
+argument_list|(
+literal|"hive.optimize.sampling.orderby"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVESAMPLINGNUMBERFORORDERBY
+argument_list|(
+literal|"hive.optimize.sampling.orderby.number"
+argument_list|,
+literal|1000
+argument_list|)
+block|,
+name|HIVESAMPLINGPERCENTFORORDERBY
+argument_list|(
+literal|"hive.optimize.sampling.orderby.percent"
+argument_list|,
+literal|0.1f
+argument_list|)
+block|,
 comment|// whether to optimize union followed by select followed by filesink
 comment|// It creates sub-directories in the final output, so should not be turned on in systems
 comment|// where MAPREDUCE-1501 is not present
