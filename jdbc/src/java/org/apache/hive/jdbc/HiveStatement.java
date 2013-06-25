@@ -601,6 +601,22 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|closeOnCompletion
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String)    */
 specifier|public
 name|boolean
@@ -1199,6 +1215,22 @@ block|{
 return|return
 name|isClosed
 return|;
+block|}
+specifier|public
+name|boolean
+name|isCloseOnCompletion
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#isPoolable()    */
 specifier|public

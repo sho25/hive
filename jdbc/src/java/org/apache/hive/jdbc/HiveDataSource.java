@@ -47,6 +47,28 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|SQLFeatureNotSupportedException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|logging
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|sql
@@ -162,6 +184,22 @@ comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
 name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
+specifier|public
+name|Logger
+name|getParentLogger
+parameter_list|()
+throws|throws
+name|SQLFeatureNotSupportedException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
