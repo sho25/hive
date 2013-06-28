@@ -270,6 +270,12 @@ name|getProperty
 argument_list|(
 literal|"test.build.resources"
 argument_list|,
+literal|"ql"
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
 literal|"src"
 operator|+
 name|File

@@ -78,6 +78,11 @@ specifier|final
 name|OutputReceiver
 name|receiver
 decl_stmt|;
+comment|// if enabled the stream will be suppressed when writing stripe
+specifier|private
+name|boolean
+name|suppress
+decl_stmt|;
 comment|/**    * Stores the uncompressed bytes that have been serialized, but not    * compressed yet. When this fills, we compress the entire buffer.    */
 specifier|private
 name|ByteBuffer
@@ -162,6 +167,12 @@ name|receiver
 operator|=
 name|receiver
 expr_stmt|;
+name|this
+operator|.
+name|suppress
+operator|=
+literal|false
+expr_stmt|;
 block|}
 specifier|public
 name|void
@@ -189,6 +200,10 @@ expr_stmt|;
 name|current
 operator|=
 literal|null
+expr_stmt|;
+name|suppress
+operator|=
+literal|false
 expr_stmt|;
 block|}
 comment|/**    * Write the length of the compressed bytes. Life is much easier if the    * header is constant length, so just use 3 bytes. Considering most of the    * codecs want between 32k (snappy) and 256k (lzo, zlib), 3 bytes should    * be plenty. We also use the low bit for whether it is the original or    * compressed bytes.    * @param buffer the buffer to write the header to    * @param position the position in the buffer to write at    * @param val the size in the file    * @param original is it uncompressed    */
@@ -1052,6 +1067,27 @@ expr_stmt|;
 block|}
 return|return
 name|result
+return|;
+block|}
+comment|/**    * Set suppress flag    */
+specifier|public
+name|void
+name|suppress
+parameter_list|()
+block|{
+name|suppress
+operator|=
+literal|true
+expr_stmt|;
+block|}
+comment|/**    * Returns the state of suppress flag    * @return value of suppress flag    */
+specifier|public
+name|boolean
+name|isSuppressed
+parameter_list|()
+block|{
+return|return
+name|suppress
 return|;
 block|}
 block|}
