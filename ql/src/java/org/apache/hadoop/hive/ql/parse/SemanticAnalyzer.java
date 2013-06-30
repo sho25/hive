@@ -19817,7 +19817,10 @@ name|String
 name|dest
 parameter_list|,
 name|Operator
-name|reduceSinkOperatorInfo
+name|input
+parameter_list|,
+name|ReduceSinkOperator
+name|rs
 parameter_list|,
 name|GroupByDesc
 operator|.
@@ -19842,7 +19845,7 @@ name|opParseCtx
 operator|.
 name|get
 argument_list|(
-name|reduceSinkOperatorInfo
+name|input
 argument_list|)
 operator|.
 name|getRowResolver
@@ -20103,24 +20106,6 @@ literal|null
 decl_stmt|;
 name|List
 argument_list|<
-name|ExprNodeDesc
-argument_list|>
-name|reduceValues
-init|=
-literal|null
-decl_stmt|;
-if|if
-condition|(
-name|reduceSinkOperatorInfo
-operator|.
-name|getConf
-argument_list|()
-operator|instanceof
-name|ReduceSinkDesc
-condition|)
-block|{
-name|List
-argument_list|<
 name|String
 argument_list|>
 name|inputKeyCols
@@ -20129,7 +20114,7 @@ operator|(
 operator|(
 name|ReduceSinkDesc
 operator|)
-name|reduceSinkOperatorInfo
+name|rs
 operator|.
 name|getConf
 argument_list|()
@@ -20163,13 +20148,17 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+name|List
+argument_list|<
+name|ExprNodeDesc
+argument_list|>
 name|reduceValues
-operator|=
+init|=
 operator|(
 operator|(
 name|ReduceSinkDesc
 operator|)
-name|reduceSinkOperatorInfo
+name|rs
 operator|.
 name|getConf
 argument_list|()
@@ -20177,8 +20166,7 @@ operator|)
 operator|.
 name|getValueCols
 argument_list|()
-expr_stmt|;
-block|}
+decl_stmt|;
 name|int
 name|numDistinctUDFs
 init|=
@@ -20669,7 +20657,7 @@ name|getColumnInfos
 argument_list|()
 argument_list|)
 argument_list|,
-name|reduceSinkOperatorInfo
+name|input
 argument_list|)
 argument_list|,
 name|groupByOutputRowResolver
@@ -23100,7 +23088,7 @@ argument_list|(
 literal|"nls"
 argument_list|)
 specifier|private
-name|Operator
+name|ReduceSinkOperator
 name|genGroupByPlanReduceSinkOperator
 parameter_list|(
 name|QB
@@ -24316,7 +24304,7 @@ argument_list|(
 literal|"nls"
 argument_list|)
 specifier|private
-name|Operator
+name|ReduceSinkOperator
 name|genCommonGroupByPlanReduceSinkOperator
 parameter_list|(
 name|QB
@@ -26258,7 +26246,7 @@ argument_list|)
 throw|;
 block|}
 comment|// ////// 1. Generate ReduceSinkOperator
-name|Operator
+name|ReduceSinkOperator
 name|reduceSinkOperatorInfo
 init|=
 name|genGroupByPlanReduceSinkOperator
@@ -26294,6 +26282,8 @@ argument_list|(
 name|parseInfo
 argument_list|,
 name|dest
+argument_list|,
+name|reduceSinkOperatorInfo
 argument_list|,
 name|reduceSinkOperatorInfo
 argument_list|,
@@ -26624,7 +26614,7 @@ name|selectInput
 argument_list|)
 decl_stmt|;
 comment|// Generate ReduceSinkOperator
-name|Operator
+name|ReduceSinkOperator
 name|reduceSinkOperatorInfo
 init|=
 name|genCommonGroupByPlanReduceSinkOperator
@@ -26731,6 +26721,8 @@ argument_list|,
 name|dest
 argument_list|,
 name|curr
+argument_list|,
+name|reduceSinkOperatorInfo
 argument_list|,
 name|GroupByDesc
 operator|.
@@ -27072,7 +27064,7 @@ comment|// reducers for load balancing problem. That happens when there is no
 comment|// DISTINCT
 comment|// operator. We set the numPartitionColumns to -1 for this purpose. This is
 comment|// captured by WritableComparableHiveObject.hashCode() function.
-name|Operator
+name|ReduceSinkOperator
 name|reduceSinkOperatorInfo
 init|=
 name|genGroupByPlanReduceSinkOperator
@@ -27143,6 +27135,8 @@ argument_list|(
 name|parseInfo
 argument_list|,
 name|dest
+argument_list|,
+name|reduceSinkOperatorInfo
 argument_list|,
 name|reduceSinkOperatorInfo
 argument_list|,
