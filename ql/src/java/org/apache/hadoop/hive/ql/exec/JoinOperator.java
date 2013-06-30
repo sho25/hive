@@ -536,6 +536,9 @@ name|currBigKeyTag
 operator|>=
 literal|0
 operator|)
+operator|&&
+operator|!
+name|hasLeftSemiJoin
 condition|)
 block|{
 if|if
