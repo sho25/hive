@@ -892,6 +892,40 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// If the url format contains like this, then condition will get execute.
+comment|// jdbc:hive2://localhost:10000;principal=hive/HiveServer2Host@YOUR-REALM.COM
+if|if
+condition|(
+operator|(
+name|jdbcURI
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|""
+argument_list|)
+operator|)
+operator|&&
+operator|(
+name|jdbcURI
+operator|.
+name|getHost
+argument_list|()
+operator|==
+literal|null
+operator|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Bad URL format and it should be in the format of jdbc:hive2://<hostame>:<port>/<DB_name>"
+argument_list|)
+throw|;
+block|}
 name|connParams
 operator|.
 name|setHost
