@@ -526,7 +526,7 @@ name|Aggregation
 implements|implements
 name|AggregationBuffer
 block|{
-name|long
+name|double
 name|sum
 decl_stmt|;
 name|long

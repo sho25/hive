@@ -979,7 +979,7 @@ parameter_list|,
 name|int
 name|aggregateIndex
 parameter_list|,
-name|long
+name|double
 name|value
 parameter_list|,
 name|int
@@ -1161,7 +1161,7 @@ name|i
 index|]
 condition|)
 block|{
-name|long
+name|double
 name|value
 init|=
 name|vector
@@ -1297,7 +1297,7 @@ argument_list|,
 name|i
 argument_list|)
 decl_stmt|;
-name|long
+name|double
 name|value
 init|=
 name|vector
@@ -1444,7 +1444,7 @@ argument_list|,
 name|i
 argument_list|)
 decl_stmt|;
-name|long
+name|double
 name|value
 init|=
 name|vector
@@ -1589,7 +1589,7 @@ name|init
 argument_list|()
 expr_stmt|;
 block|}
-name|long
+name|double
 name|value
 init|=
 name|vector
@@ -1865,7 +1865,7 @@ parameter_list|(
 name|Aggregation
 name|myagg
 parameter_list|,
-name|long
+name|double
 name|value
 parameter_list|,
 name|int
@@ -2074,7 +2074,7 @@ name|i
 index|]
 condition|)
 block|{
-name|long
+name|double
 name|value
 init|=
 name|vector
@@ -2192,7 +2192,7 @@ name|init
 argument_list|()
 expr_stmt|;
 block|}
-name|long
+name|double
 name|value
 init|=
 name|vector
@@ -2389,7 +2389,7 @@ name|i
 index|]
 condition|)
 block|{
-name|long
+name|double
 name|value
 init|=
 name|vector
@@ -2503,7 +2503,7 @@ name|init
 argument_list|()
 expr_stmt|;
 block|}
-name|long
+name|double
 name|value
 init|=
 name|vector
