@@ -796,7 +796,7 @@ argument_list|()
 expr_stmt|;
 name|rbCtx
 operator|.
-name|Init
+name|init
 argument_list|(
 name|conf
 argument_list|,
@@ -879,7 +879,7 @@ name|result
 operator|=
 name|rbCtx
 operator|.
-name|CreateVectorizedRowBatch
+name|createVectorizedRowBatch
 argument_list|()
 expr_stmt|;
 block|}
@@ -1019,7 +1019,7 @@ condition|)
 block|{
 name|rbCtx
 operator|.
-name|AddPartitionColsToBatch
+name|addPartitionColsToBatch
 argument_list|(
 name|value
 argument_list|)
@@ -1040,7 +1040,7 @@ comment|// Currently RCFile reader does not support reading vectorized
 comment|// data. Populating the batch by adding one row at a time.
 name|rbCtx
 operator|.
-name|AddRowToBatch
+name|addRowToBatch
 argument_list|(
 name|i
 argument_list|,

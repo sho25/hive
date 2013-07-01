@@ -475,7 +475,7 @@ argument_list|()
 expr_stmt|;
 name|rbCtx
 operator|.
-name|Init
+name|init
 argument_list|(
 name|conf
 argument_list|,
@@ -540,7 +540,7 @@ condition|)
 block|{
 name|rbCtx
 operator|.
-name|AddPartitionColsToBatch
+name|addPartitionColsToBatch
 argument_list|(
 name|value
 argument_list|)
@@ -559,7 +559,7 @@ argument_list|)
 expr_stmt|;
 name|rbCtx
 operator|.
-name|ConvertRowBatchBlobToVectorizedBatch
+name|convertRowBatchBlobToVectorizedBatch
 argument_list|(
 operator|(
 name|Object
@@ -580,12 +580,13 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
 name|e
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
 name|progress
 operator|=
@@ -630,7 +631,7 @@ name|result
 operator|=
 name|rbCtx
 operator|.
-name|CreateVectorizedRowBatch
+name|createVectorizedRowBatch
 argument_list|()
 expr_stmt|;
 block|}
@@ -640,6 +641,7 @@ name|HiveException
 name|e
 parameter_list|)
 block|{
+throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
@@ -647,7 +649,7 @@ literal|"Error creating a batch"
 argument_list|,
 name|e
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
 return|return
 name|result

@@ -1655,7 +1655,7 @@ name|batch
 init|=
 name|ctx
 operator|.
-name|CreateVectorizedRowBatch
+name|createVectorizedRowBatch
 argument_list|()
 decl_stmt|;
 name|VectorizedBatchUtil
@@ -1720,7 +1720,7 @@ argument_list|)
 expr_stmt|;
 name|ctx
 operator|.
-name|AddRowToBatch
+name|addRowToBatch
 argument_list|(
 name|i
 argument_list|,

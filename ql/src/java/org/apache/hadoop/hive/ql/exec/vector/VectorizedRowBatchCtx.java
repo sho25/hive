@@ -207,6 +207,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|ColumnProjectionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|Deserializer
 import|;
 end_import
@@ -399,6 +415,15 @@ name|String
 argument_list|>
 name|partitionValues
 decl_stmt|;
+comment|// Column projection list - List of column indexes to include. This
+comment|// list does not contain partition columns
+specifier|private
+name|List
+argument_list|<
+name|Integer
+argument_list|>
+name|colsToInclude
+decl_stmt|;
 comment|/**    * Constructor for VectorizedRowBatchCtx    *    * @param rawRowOI    *          OI for raw row data (EG without partition cols)    * @param rowOI    *          OI for the row (Raw row OI + partition OI)    * @param deserializer    *          Deserializer for the row data    * @param partitionValues    *          Hash map of partition values. Key=TblColName value=PartitionValue    */
 specifier|public
 name|VectorizedRowBatchCtx
@@ -454,7 +479,7 @@ block|{    }
 comment|/**    * Initializes VectorizedRowBatch context based on the    * split and Hive configuration (Job conf with hive Plan).    *    * @param hiveConf    *          Hive configuration using Hive plan is extracted    * @param split    *          File split of the file being read    * @throws ClassNotFoundException    * @throws IOException    * @throws SerDeException    * @throws InstantiationException    * @throws IllegalAccessException    * @throws HiveException    */
 specifier|public
 name|void
-name|Init
+name|init
 parameter_list|(
 name|Configuration
 name|hiveConf
@@ -796,6 +821,29 @@ argument_list|(
 name|key
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|partSpec
+operator|==
+literal|null
+condition|)
+block|{
+comment|// for partitionless table, initialize partValue to empty string.
+comment|// We can have partitionless table even if we have partition keys
+comment|// when there is only only partition selected and the partition key is not
+comment|// part of the projection/include list.
+name|partitionValues
+operator|.
+name|put
+argument_list|(
+name|key
+argument_list|,
+literal|""
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|partitionValues
 operator|.
 name|put
@@ -810,6 +858,7 @@ name|key
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|partObjectInspectors
 operator|.
 name|add
@@ -877,11 +926,20 @@ operator|=
 name|partRawRowObjectInspector
 expr_stmt|;
 block|}
+name|colsToInclude
+operator|=
+name|ColumnProjectionUtils
+operator|.
+name|getReadColumnIDs
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Creates a Vectorized row batch and the column vectors.    *    * @return VectorizedRowBatch    * @throws HiveException    */
 specifier|public
 name|VectorizedRowBatch
-name|CreateVectorizedRowBatch
+name|createVectorizedRowBatch
 parameter_list|()
 throws|throws
 name|HiveException
@@ -928,6 +986,52 @@ condition|;
 name|j
 operator|++
 control|)
+block|{
+comment|// If the column is included in the include list or if the column is a
+comment|// partition column then create the column vector. Also note that partition columns are not
+comment|// in the included list.
+if|if
+condition|(
+operator|(
+name|colsToInclude
+operator|==
+literal|null
+operator|)
+operator|||
+name|colsToInclude
+operator|.
+name|contains
+argument_list|(
+name|j
+argument_list|)
+operator|||
+operator|(
+operator|(
+name|partitionValues
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|partitionValues
+operator|.
+name|get
+argument_list|(
+name|fieldRefs
+operator|.
+name|get
+argument_list|(
+name|j
+argument_list|)
+operator|.
+name|getFieldName
+argument_list|()
+argument_list|)
+operator|!=
+literal|null
+operator|)
+operator|)
+condition|)
 block|{
 name|ObjectInspector
 name|foi
@@ -1097,6 +1201,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+block|}
 name|result
 operator|.
 name|numCols
@@ -1113,7 +1218,7 @@ block|}
 comment|/**    * Adds the row to the batch after deserializing the row    *    * @param rowIndex    *          Row index in the batch to which the row is added    * @param rowBlob    *          Row blob (serialized version of row)    * @param batch    *          Vectorized batch to which the row is added    * @throws HiveException    * @throws SerDeException    */
 specifier|public
 name|void
-name|AddRowToBatch
+name|addRowToBatch
 parameter_list|(
 name|int
 name|rowIndex
@@ -1160,7 +1265,7 @@ block|}
 comment|/**    * Deserialized set of rows and populates the batch    *    * @param rowBlob    *          to deserialize    * @param batch    *          Vectorized row batch which contains deserialized data    * @throws SerDeException    */
 specifier|public
 name|void
-name|ConvertRowBatchBlobToVectorizedBatch
+name|convertRowBatchBlobToVectorizedBatch
 parameter_list|(
 name|Object
 name|rowBlob
@@ -1211,7 +1316,7 @@ block|}
 block|}
 specifier|private
 name|int
-name|GetColIndexBasedOnColName
+name|getColIndexBasedOnColName
 parameter_list|(
 name|String
 name|colName
@@ -1284,7 +1389,7 @@ block|}
 comment|/**    * Add the partition values to the batch    *    * @param batch    * @throws HiveException    */
 specifier|public
 name|void
-name|AddPartitionColsToBatch
+name|addPartitionColsToBatch
 parameter_list|(
 name|VectorizedRowBatch
 name|batch
@@ -1321,7 +1426,7 @@ control|)
 block|{
 name|colIndex
 operator|=
-name|GetColIndexBasedOnColName
+name|getColIndexBasedOnColName
 argument_list|(
 name|key
 argument_list|)
