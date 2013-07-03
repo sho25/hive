@@ -519,6 +519,14 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
+name|String
+name|SERIALIZATION_EXTEND_NESTING_LEVELS
+init|=
+literal|"hive.serialization.extend.nesting.levels"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
 name|byte
 index|[]
 name|DefaultSeparators
@@ -837,6 +845,8 @@ init|=
 literal|null
 decl_stmt|;
 comment|/**    * Initialize the SerDe given the parameters. serialization.format: separator    * char or byte code (only supports byte-value up to 127) columns:    * ","-separated column names columns.types: ",", ":", or ";"-separated column    * types    *    * @see SerDe#initialize(Configuration, Properties)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -1011,9 +1021,12 @@ operator|new
 name|SerDeParameters
 argument_list|()
 decl_stmt|;
-comment|// Read the separators: We use 8 levels of separators by default, but we
-comment|// should change this when we allow users to specify more than 10 levels
-comment|// of separators through DDL.
+comment|// Read the separators: We use 8 levels of separators by default,
+comment|// and 24 if SERIALIZATION_EXTEND_NESTING_LEVELS is set to true
+comment|// The levels possible are the set of control chars that we can use as
+comment|// special delimiters, ie they should absent in the data or escaped.
+comment|// To increase this level further, we need to stop relying
+comment|// on single control chars delimiters
 name|serdeParams
 operator|.
 name|separators
@@ -1105,6 +1118,32 @@ literal|2
 index|]
 argument_list|)
 expr_stmt|;
+name|String
+name|extendedNesting
+init|=
+name|tbl
+operator|.
+name|getProperty
+argument_list|(
+name|SERIALIZATION_EXTEND_NESTING_LEVELS
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|extendedNesting
+operator|==
+literal|null
+operator|||
+operator|!
+name|extendedNesting
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"true"
+argument_list|)
+condition|)
+block|{
+comment|//use the default smaller set of separators for backward compatibility
 for|for
 control|(
 name|int
@@ -1138,6 +1177,133 @@ argument_list|(
 name|i
 operator|+
 literal|1
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+comment|//If extended nesting is enabled, set the extended set of separator chars
+specifier|final
+name|int
+name|MAX_CTRL_CHARS
+init|=
+literal|29
+decl_stmt|;
+name|byte
+index|[]
+name|extendedSeparators
+init|=
+operator|new
+name|byte
+index|[
+name|MAX_CTRL_CHARS
+index|]
+decl_stmt|;
+name|int
+name|extendedSeparatorsIdx
+init|=
+literal|0
+decl_stmt|;
+comment|//get the first 3 separators that have already been set (defaults to 1,2,3)
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+literal|3
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|extendedSeparators
+index|[
+name|extendedSeparatorsIdx
+operator|++
+index|]
+operator|=
+name|serdeParams
+operator|.
+name|separators
+index|[
+name|i
+index|]
+expr_stmt|;
+block|}
+for|for
+control|(
+name|byte
+name|asciival
+init|=
+literal|4
+init|;
+name|asciival
+operator|<=
+name|MAX_CTRL_CHARS
+condition|;
+name|asciival
+operator|++
+control|)
+block|{
+comment|//use only control chars that are very unlikely to be part of the string
+comment|// the following might/likely to be used in text files for strings
+comment|// 9 (horizontal tab, HT, \t, ^I)
+comment|// 10 (line feed, LF, \n, ^J),
+comment|// 12 (form feed, FF, \f, ^L),
+comment|// 13 (carriage return, CR, \r, ^M),
+comment|// 27 (escape, ESC, \e [GCC only], ^[).
+comment|//reserving the following values for future dynamic level impl
+comment|// 30
+comment|// 31
+switch|switch
+condition|(
+name|asciival
+condition|)
+block|{
+case|case
+literal|9
+case|:
+case|case
+literal|10
+case|:
+case|case
+literal|12
+case|:
+case|case
+literal|13
+case|:
+case|case
+literal|27
+case|:
+continue|continue;
+block|}
+name|extendedSeparators
+index|[
+name|extendedSeparatorsIdx
+operator|++
+index|]
+operator|=
+name|asciival
+expr_stmt|;
+block|}
+name|serdeParams
+operator|.
+name|separators
+operator|=
+name|Arrays
+operator|.
+name|copyOfRange
+argument_list|(
+name|extendedSeparators
+argument_list|,
+literal|0
+argument_list|,
+name|extendedSeparatorsIdx
 argument_list|)
 expr_stmt|;
 block|}
@@ -1372,6 +1538,8 @@ name|ByteArrayRef
 name|byteArrayRef
 decl_stmt|;
 comment|/**    * Deserialize a row from the Writable to a LazyObject.    *    * @param field    *          the Writable that contains the data    * @return The deserialized row Object.    * @see SerDe#deserialize(Writable)    */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|deserialize
@@ -1507,6 +1675,8 @@ name|cachedLazyStruct
 return|;
 block|}
 comment|/**    * Returns the ObjectInspector for the row.    */
+annotation|@
+name|Override
 specifier|public
 name|ObjectInspector
 name|getObjectInspector
@@ -1519,6 +1689,8 @@ name|cachedObjectInspector
 return|;
 block|}
 comment|/**    * Returns the Writable Class after serialization.    *    * @see SerDe#getSerializedClass()    */
+annotation|@
+name|Override
 specifier|public
 name|Class
 argument_list|<
@@ -1554,6 +1726,8 @@ name|Output
 argument_list|()
 decl_stmt|;
 comment|/**    * Serialize a row of data.    *    * @param obj    *          The row object    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @throws IOException    * @see SerDe#serialize(Object, ObjectInspector)    */
+annotation|@
+name|Override
 specifier|public
 name|Writable
 name|serialize
@@ -1939,7 +2113,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Serialize the row into the StringBuilder.    *    * @param out    *          The StringBuilder to store the serialized data.    * @param obj    *          The object for the current field.    * @param objInspector    *          The ObjectInspector for the current Object.    * @param separators    *          The separators array.    * @param level    *          The current level of separator.    * @param nullSequence    *          The byte sequence representing the NULL value.    * @param escaped    *          Whether we need to escape the data when writing out    * @param escapeChar    *          Which char to use as the escape char, e.g. '\\'    * @param needsEscape    *          Which chars needs to be escaped. This array should have size of    *          128. Negative byte values (or byte values>= 128) are never    *          escaped.    * @throws IOException    */
+comment|/**    * Serialize the row into the StringBuilder.    *    * @param out    *          The StringBuilder to store the serialized data.    * @param obj    *          The object for the current field.    * @param objInspector    *          The ObjectInspector for the current Object.    * @param separators    *          The separators array.    * @param level    *          The current level of separator.    * @param nullSequence    *          The byte sequence representing the NULL value.    * @param escaped    *          Whether we need to escape the data when writing out    * @param escapeChar    *          Which char to use as the escape char, e.g. '\\'    * @param needsEscape    *          Which chars needs to be escaped. This array should have size of    *          128. Negative byte values (or byte values>= 128) are never    *          escaped.    * @throws IOException    * @throws SerDeException    */
 specifier|public
 specifier|static
 name|void
@@ -1978,6 +2152,8 @@ name|needsEscape
 parameter_list|)
 throws|throws
 name|IOException
+throws|,
+name|SerDeException
 block|{
 if|if
 condition|(
@@ -2054,10 +2230,14 @@ operator|=
 operator|(
 name|char
 operator|)
+name|LazyUtils
+operator|.
+name|getSeparator
+argument_list|(
 name|separators
-index|[
+argument_list|,
 name|level
-index|]
+argument_list|)
 expr_stmt|;
 name|ListObjectInspector
 name|loi
@@ -2183,10 +2363,14 @@ operator|=
 operator|(
 name|char
 operator|)
+name|LazyUtils
+operator|.
+name|getSeparator
+argument_list|(
 name|separators
-index|[
+argument_list|,
 name|level
-index|]
+argument_list|)
 expr_stmt|;
 name|char
 name|keyValueSeparator
@@ -2194,12 +2378,16 @@ init|=
 operator|(
 name|char
 operator|)
+name|LazyUtils
+operator|.
+name|getSeparator
+argument_list|(
 name|separators
-index|[
+argument_list|,
 name|level
 operator|+
 literal|1
-index|]
+argument_list|)
 decl_stmt|;
 name|MapObjectInspector
 name|moi
@@ -2380,10 +2568,14 @@ operator|=
 operator|(
 name|char
 operator|)
+name|LazyUtils
+operator|.
+name|getSeparator
+argument_list|(
 name|separators
-index|[
+argument_list|,
 name|level
-index|]
+argument_list|)
 expr_stmt|;
 name|StructObjectInspector
 name|soi
@@ -2522,10 +2714,14 @@ operator|=
 operator|(
 name|char
 operator|)
+name|LazyUtils
+operator|.
+name|getSeparator
+argument_list|(
 name|separators
-index|[
+argument_list|,
 name|level
-index|]
+argument_list|)
 expr_stmt|;
 name|UnionObjectInspector
 name|uoi
@@ -2667,6 +2863,8 @@ argument_list|)
 throw|;
 block|}
 comment|/**    * Returns the statistics after (de)serialization)    */
+annotation|@
+name|Override
 specifier|public
 name|SerDeStats
 name|getSerDeStats

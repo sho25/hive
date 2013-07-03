@@ -496,11 +496,13 @@ name|TestLazyHBaseObject
 extends|extends
 name|TestCase
 block|{
-comment|/**    * Test the LazyMap class with Integer-to-String.    */
+comment|/**    * Test the LazyMap class with Integer-to-String.    * @throws SerDeException    */
 specifier|public
 name|void
 name|testLazyHBaseCellMap1
 parameter_list|()
+throws|throws
+name|SerDeException
 block|{
 comment|// Map of Integer to String
 name|Text
@@ -1028,11 +1030,13 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test the LazyMap class with String-to-String.    */
+comment|/**    * Test the LazyMap class with String-to-String.    * @throws SerDeException    */
 specifier|public
 name|void
 name|testLazyHBaseCellMap2
 parameter_list|()
+throws|throws
+name|SerDeException
 block|{
 comment|// Map of String to String
 name|Text
@@ -1559,11 +1563,13 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test the LazyHBaseCellMap class for the case where both the key and the value in the family    * map are stored in binary format using the appropriate LazyPrimitive objects.    */
+comment|/**    * Test the LazyHBaseCellMap class for the case where both the key and the value in the family    * map are stored in binary format using the appropriate LazyPrimitive objects.    * @throws SerDeException    */
 specifier|public
 name|void
 name|testLazyHBaseCellMap3
 parameter_list|()
+throws|throws
+name|SerDeException
 block|{
 name|Text
 name|nullSequence
@@ -3924,11 +3930,13 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test the LazyHBaseRow class with one-for-one mappings between    * Hive fields and HBase columns.    */
+comment|/**    * Test the LazyHBaseRow class with one-for-one mappings between    * Hive fields and HBase columns.    * @throws SerDeException    */
 specifier|public
 name|void
 name|testLazyHBaseRow1
 parameter_list|()
+throws|throws
+name|SerDeException
 block|{
 name|List
 argument_list|<
@@ -4960,11 +4968,13 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test the LazyHBaseRow class with a mapping from a Hive field to    * an HBase column family.    */
+comment|/**    * Test the LazyHBaseRow class with a mapping from a Hive field to    * an HBase column family.    * @throws SerDeException    */
 specifier|public
 name|void
 name|testLazyHBaseRow2
 parameter_list|()
+throws|throws
+name|SerDeException
 block|{
 comment|// column family is mapped to Map<string,string>
 name|List
@@ -6008,11 +6018,13 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test the LazyHBaseRow class with a one-to-one/onto mapping between Hive columns and    * HBase column family/column qualifier pairs. The column types are primitive and fields    * are stored in binary format in HBase.    */
+comment|/**    * Test the LazyHBaseRow class with a one-to-one/onto mapping between Hive columns and    * HBase column family/column qualifier pairs. The column types are primitive and fields    * are stored in binary format in HBase.    * @throws SerDeException    */
 specifier|public
 name|void
 name|testLazyHBaseRow3
 parameter_list|()
+throws|throws
+name|SerDeException
 block|{
 name|List
 argument_list|<
