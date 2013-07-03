@@ -546,6 +546,12 @@ condition|(
 name|sz
 operator|==
 name|joinEmitInterval
+operator|&&
+operator|!
+name|hasFilter
+argument_list|(
+name|alias
+argument_list|)
 condition|)
 block|{
 comment|// The input is sorted by alias, so if we are already in the last join
