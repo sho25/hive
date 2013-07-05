@@ -675,6 +675,23 @@ name|k
 operator|++
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|k
+operator|>=
+name|sorted
+operator|.
+name|length
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"not enough number of sample"
+argument_list|)
+throw|;
+block|}
 name|partitionKeys
 index|[
 name|i

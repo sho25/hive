@@ -2983,6 +2983,13 @@ name|getSamplingType
 argument_list|()
 operator|>
 literal|0
+operator|&&
+name|work
+operator|.
+name|getNumReduceTasks
+argument_list|()
+operator|>
+literal|1
 condition|)
 block|{
 try|try
@@ -3018,13 +3025,11 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|LOG
+name|console
 operator|.
-name|info
+name|printInfo
 argument_list|(
-literal|"Failed to use sampling"
-argument_list|,
-name|e
+literal|"Not enough sampling data.. Rolling back to single reducer task"
 argument_list|)
 expr_stmt|;
 name|work
@@ -3034,7 +3039,13 @@ argument_list|(
 literal|1
 argument_list|)
 expr_stmt|;
-comment|// rollback
+name|job
+operator|.
+name|setNumReduceTasks
+argument_list|(
+literal|1
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|// remove the pwd from conf file so that job tracker doesn't show this
