@@ -3743,6 +3743,15 @@ name|k
 init|=
 literal|0
 decl_stmt|;
+name|Table
+name|metaBaseTbl
+init|=
+operator|new
+name|Table
+argument_list|(
+name|baseTbl
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -3752,7 +3761,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|storageDescriptor
+name|metaBaseTbl
 operator|.
 name|getCols
 argument_list|()
@@ -3767,7 +3776,7 @@ block|{
 name|FieldSchema
 name|col
 init|=
-name|storageDescriptor
+name|metaBaseTbl
 operator|.
 name|getCols
 argument_list|()
