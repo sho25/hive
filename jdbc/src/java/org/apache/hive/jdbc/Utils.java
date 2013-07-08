@@ -892,20 +892,19 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|// If the url format contains like this, then condition will get execute.
+comment|//Check to prevent unintentional use of embedded mode. A missing "/" can
+comment|// to separate the 'path' portion of URI can result in this.
+comment|//The missing "/" common typo while using secure mode, eg of such url -
 comment|// jdbc:hive2://localhost:10000;principal=hive/HiveServer2Host@YOUR-REALM.COM
 if|if
 condition|(
 operator|(
 name|jdbcURI
 operator|.
-name|getPath
+name|getAuthority
 argument_list|()
-operator|.
-name|equals
-argument_list|(
-literal|""
-argument_list|)
+operator|!=
+literal|null
 operator|)
 operator|&&
 operator|(
@@ -922,7 +921,16 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Bad URL format and it should be in the format of jdbc:hive2://<hostame>:<port>/<DB_name>"
+literal|"Bad URL format. Hostname not found "
+operator|+
+literal|" in authority part of the url: "
+operator|+
+name|jdbcURI
+operator|.
+name|getAuthority
+argument_list|()
+operator|+
+literal|". Are you missing a '/' after the hostname ?"
 argument_list|)
 throw|;
 block|}
