@@ -2274,6 +2274,7 @@ name|hiveLock
 decl_stmt|;
 try|try
 block|{
+comment|// can throw KeeperException.NoNodeException, which might mean something is wrong
 name|zkpClient
 operator|.
 name|delete
@@ -2306,6 +2307,8 @@ argument_list|,
 name|obj
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|List
 argument_list|<
 name|String
@@ -2323,21 +2326,15 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-operator|(
 name|children
 operator|==
 literal|null
-operator|)
 operator|||
-operator|(
 name|children
 operator|.
 name|isEmpty
 argument_list|()
-operator|)
 condition|)
-block|{
-try|try
 block|{
 name|zkpClient
 operator|.
@@ -2349,6 +2346,7 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2369,7 +2367,6 @@ operator|+
 literal|" previously deleted when attempting to delete."
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 catch|catch
