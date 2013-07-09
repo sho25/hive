@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|mr
 package|;
 end_package
 

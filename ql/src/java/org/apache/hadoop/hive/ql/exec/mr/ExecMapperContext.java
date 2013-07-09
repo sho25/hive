@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|mr
 package|;
 end_package
 
@@ -40,6 +42,24 @@ operator|.
 name|logging
 operator|.
 name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|FetchOperator
 import|;
 end_import
 

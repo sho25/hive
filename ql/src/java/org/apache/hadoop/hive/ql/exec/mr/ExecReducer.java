@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|mr
 package|;
 end_package
 
@@ -95,16 +97,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -144,6 +136,62 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|Operator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|MapredContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|mr
 operator|.
 name|ExecMapper
 operator|.
@@ -456,7 +504,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ExecReducer.  *  */
+comment|/**  * ExecReducer is the generic Reducer class for Hive. Together with ExecMapper it is   * the bridge between the map-reduce framework and the Hive operator pipeline at  * execution time. It's main responsabilities are:  *   * - Load and setup the operator pipeline from XML  * - Run the pipeline by transforming key, value pairs to records and forwarding them to the operators  * - Sending start and end group messages to separate records with same key from one another  * - Catch and handle errors during execution of the operators.  *  */
 end_comment
 
 begin_class
