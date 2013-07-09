@@ -631,16 +631,6 @@ operator|.
 name|DDL
 return|;
 block|}
-annotation|@
-name|Override
-specifier|protected
-name|void
-name|localizeMRTmpFilesImpl
-parameter_list|(
-name|Context
-name|ctx
-parameter_list|)
-block|{   }
 block|}
 end_class
 

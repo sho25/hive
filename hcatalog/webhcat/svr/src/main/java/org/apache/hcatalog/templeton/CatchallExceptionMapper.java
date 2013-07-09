@@ -85,6 +85,20 @@ name|LogFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|eclipse
+operator|.
+name|jetty
+operator|.
+name|http
+operator|.
+name|HttpStatus
+import|;
+end_import
+
 begin_comment
 comment|/**  * Map all exceptions to the Jersey response.  This lets us have nice  * results in the error body.  */
 end_comment
@@ -141,7 +155,9 @@ name|SimpleWebException
 operator|.
 name|buildMessage
 argument_list|(
-literal|500
+name|HttpStatus
+operator|.
+name|INTERNAL_SERVER_ERROR_500
 argument_list|,
 literal|null
 argument_list|,

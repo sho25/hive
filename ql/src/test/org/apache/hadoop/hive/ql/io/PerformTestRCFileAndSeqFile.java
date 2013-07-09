@@ -41,16 +41,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -237,6 +227,18 @@ name|DefaultCodec
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|*
+import|;
+end_import
+
 begin_comment
 comment|/**  * PerformTestRCFileAndSeqFile.  *  */
 end_comment
@@ -245,8 +247,6 @@ begin_class
 specifier|public
 class|class
 name|PerformTestRCFileAndSeqFile
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|final

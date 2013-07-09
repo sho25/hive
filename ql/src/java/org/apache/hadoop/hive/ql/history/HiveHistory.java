@@ -1304,9 +1304,14 @@ name|val
 operator|.
 name|replace
 argument_list|(
-literal|'\n'
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"line.separator"
+argument_list|)
 argument_list|,
-literal|' '
+literal|" "
 argument_list|)
 expr_stmt|;
 block|}

@@ -2685,6 +2685,16 @@ name|getStringVal
 argument_list|()
 argument_list|)
 return|;
+case|case
+name|NULL_TYPE
+case|:
+name|wasNull
+operator|=
+literal|true
+expr_stmt|;
+return|return
+literal|null
+return|;
 default|default:
 throw|throw
 operator|new

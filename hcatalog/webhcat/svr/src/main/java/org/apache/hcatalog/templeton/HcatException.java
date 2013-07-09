@@ -17,6 +17,20 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|eclipse
+operator|.
+name|jetty
+operator|.
+name|http
+operator|.
+name|HttpStatus
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -61,7 +75,9 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-literal|500
+name|HttpStatus
+operator|.
+name|INTERNAL_SERVER_ERROR_500
 argument_list|,
 name|msg
 argument_list|,

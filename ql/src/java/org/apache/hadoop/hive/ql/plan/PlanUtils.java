@@ -1704,6 +1704,7 @@ argument_list|,
 name|fileFormat
 argument_list|)
 decl_stmt|;
+comment|//enable escaping
 name|tblDesc
 operator|.
 name|getProperties
@@ -1716,6 +1717,21 @@ operator|.
 name|ESCAPE_CHAR
 argument_list|,
 literal|"\\"
+argument_list|)
+expr_stmt|;
+comment|//enable extended nesting levels
+name|tblDesc
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|setProperty
+argument_list|(
+name|LazySimpleSerDe
+operator|.
+name|SERIALIZATION_EXTEND_NESTING_LEVELS
+argument_list|,
+literal|"true"
 argument_list|)
 expr_stmt|;
 return|return

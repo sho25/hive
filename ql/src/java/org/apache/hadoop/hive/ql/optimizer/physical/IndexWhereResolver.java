@@ -199,7 +199,8 @@ name|addAll
 argument_list|(
 name|physicalContext
 operator|.
-name|rootTasks
+name|getRootTasks
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|opGraphWalker

@@ -1368,6 +1368,62 @@ return|return
 name|fetchSize
 return|;
 block|}
+specifier|public
+parameter_list|<
+name|T
+parameter_list|>
+name|T
+name|getObject
+parameter_list|(
+name|String
+name|columnLabel
+parameter_list|,
+name|Class
+argument_list|<
+name|T
+argument_list|>
+name|type
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|//JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
+specifier|public
+parameter_list|<
+name|T
+parameter_list|>
+name|T
+name|getObject
+parameter_list|(
+name|int
+name|columnIndex
+parameter_list|,
+name|Class
+argument_list|<
+name|T
+argument_list|>
+name|type
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|//JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 

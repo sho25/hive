@@ -206,31 +206,7 @@ specifier|public
 interface|interface
 name|MetaDataFormatter
 block|{
-comment|/**      * Generic error code.  This and the other error codes are      * designed to match the HTTP status codes.      */
-specifier|static
-specifier|final
-name|int
-name|ERROR
-init|=
-literal|500
-decl_stmt|;
-comment|/**      * Missing error code.      */
-specifier|static
-specifier|final
-name|int
-name|MISSING
-init|=
-literal|404
-decl_stmt|;
-comment|/**      * Conflict error code.      */
-specifier|static
-specifier|final
-name|int
-name|CONFLICT
-init|=
-literal|409
-decl_stmt|;
-comment|/**      * Write an error message.      */
+comment|/**      * Write an error message.      * @param sqlState if {@code null}, will be ignored      */
 specifier|public
 name|void
 name|error
@@ -243,76 +219,35 @@ name|msg
 parameter_list|,
 name|int
 name|errorCode
+parameter_list|,
+name|String
+name|sqlState
 parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**      * Write a log warn message.      */
+comment|/**    * @param sqlState if {@code null}, will be skipped in output    * @param errorDetail usually string version of some Exception, if {@code null}, will be ignored    */
 specifier|public
 name|void
-name|logWarn
+name|error
 parameter_list|(
 name|OutputStream
 name|out
 parameter_list|,
 name|String
-name|msg
+name|errorMessage
 parameter_list|,
 name|int
 name|errorCode
+parameter_list|,
+name|String
+name|sqlState
+parameter_list|,
+name|String
+name|errorDetail
 parameter_list|)
 throws|throws
 name|HiveException
-function_decl|;
-comment|/**      * Write a log info message.      */
-specifier|public
-name|void
-name|logInfo
-parameter_list|(
-name|OutputStream
-name|out
-parameter_list|,
-name|String
-name|msg
-parameter_list|,
-name|int
-name|errorCode
-parameter_list|)
-throws|throws
-name|HiveException
-function_decl|;
-comment|/**      * Write a console error message.      */
-specifier|public
-name|void
-name|consoleError
-parameter_list|(
-name|LogHelper
-name|console
-parameter_list|,
-name|String
-name|msg
-parameter_list|,
-name|int
-name|errorCode
-parameter_list|)
-function_decl|;
-comment|/**      * Write a console error message.      */
-specifier|public
-name|void
-name|consoleError
-parameter_list|(
-name|LogHelper
-name|console
-parameter_list|,
-name|String
-name|msg
-parameter_list|,
-name|String
-name|detail
-parameter_list|,
-name|int
-name|errorCode
-parameter_list|)
 function_decl|;
 comment|/**      * Show a list of tables.      */
 specifier|public

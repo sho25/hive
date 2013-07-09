@@ -588,27 +588,6 @@ return|return
 literal|"COPY"
 return|;
 block|}
-annotation|@
-name|Override
-specifier|protected
-name|void
-name|localizeMRTmpFilesImpl
-parameter_list|(
-name|Context
-name|ctx
-parameter_list|)
-block|{
-comment|// copy task is only used by the load command and
-comment|// does not use any map-reduce tmp files
-comment|// we don't expect to enter this code path at all
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Unexpected call"
-argument_list|)
-throw|;
-block|}
 block|}
 end_class
 

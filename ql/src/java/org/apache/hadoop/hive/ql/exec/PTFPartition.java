@@ -644,6 +644,17 @@ name|end
 argument_list|)
 return|;
 block|}
+specifier|public
+name|void
+name|close
+parameter_list|()
+block|{
+name|elems
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 class|class
 name|PItr
 implements|implements

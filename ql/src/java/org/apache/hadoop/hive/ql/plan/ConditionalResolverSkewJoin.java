@@ -177,6 +177,24 @@ name|Task
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
 begin_comment
 comment|/**  * ConditionalResolverSkewJoin.  *  */
 end_comment
@@ -465,11 +483,13 @@ name|FileStatus
 index|[]
 name|fstatus
 init|=
-name|inpFs
+name|Utilities
 operator|.
-name|listStatus
+name|listStatusIfExists
 argument_list|(
 name|dirPath
+argument_list|,
+name|inpFs
 argument_list|)
 decl_stmt|;
 if|if

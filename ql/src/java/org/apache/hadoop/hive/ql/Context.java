@@ -303,6 +303,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|TaskRunner
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|hooks
 operator|.
 name|WriteEntity
@@ -535,6 +553,12 @@ init|=
 literal|false
 decl_stmt|;
 specifier|protected
+name|boolean
+name|explainLogical
+init|=
+literal|false
+decl_stmt|;
+specifier|protected
 name|String
 name|cmd
 init|=
@@ -762,6 +786,32 @@ return|return
 name|explain
 return|;
 block|}
+comment|/**    * Find whether the current query is a logical explain query    */
+specifier|public
+name|boolean
+name|getExplainLogical
+parameter_list|()
+block|{
+return|return
+name|explainLogical
+return|;
+block|}
+comment|/**    * Set the context on whether the current query is a logical    * explain query.    */
+specifier|public
+name|void
+name|setExplainLogical
+parameter_list|(
+name|boolean
+name|explainLogical
+parameter_list|)
+block|{
+name|this
+operator|.
+name|explainLogical
+operator|=
+name|explainLogical
+expr_stmt|;
+block|}
 comment|/**    * Set the original query command.    * @param cmd the original query command string    */
 specifier|public
 name|void
@@ -788,7 +838,7 @@ return|return
 name|cmd
 return|;
 block|}
-comment|/**    * Get a tmp directory on specified URI    *    * @param scheme Scheme of the target FS    * @param authority Authority of the target FS    * @param mkdir create the directory if true    * @param scratchdir path of tmp directory    */
+comment|/**    * Get a tmp directory on specified URI    *    * @param scheme Scheme of the target FS    * @param authority Authority of the target FS    * @param mkdir create the directory if true    * @param scratchDir path of tmp directory    */
 specifier|private
 name|String
 name|getScratchDir
@@ -823,6 +873,13 @@ operator|.
 name|get
 argument_list|(
 name|fileSystem
+operator|+
+literal|"-"
+operator|+
+name|TaskRunner
+operator|.
+name|getTaskRunnerID
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -843,6 +900,13 @@ argument_list|,
 name|authority
 argument_list|,
 name|scratchDir
+operator|+
+literal|"-"
+operator|+
+name|TaskRunner
+operator|.
+name|getTaskRunnerID
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -943,6 +1007,13 @@ operator|.
 name|put
 argument_list|(
 name|fileSystem
+operator|+
+literal|"-"
+operator|+
+name|TaskRunner
+operator|.
+name|getTaskRunnerID
+argument_list|()
 argument_list|,
 name|dir
 argument_list|)
@@ -1059,7 +1130,9 @@ operator|.
 name|toUri
 argument_list|()
 decl_stmt|;
-return|return
+name|String
+name|newScratchDir
+init|=
 name|getScratchDir
 argument_list|(
 name|uri
@@ -1080,6 +1153,18 @@ operator|.
 name|getPath
 argument_list|()
 argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"New scratch dir is "
+operator|+
+name|newScratchDir
+argument_list|)
+expr_stmt|;
+return|return
+name|newScratchDir
 return|;
 block|}
 catch|catch

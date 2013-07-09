@@ -523,6 +523,20 @@ name|ZooKeeper
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -2229,7 +2243,8 @@ do|;
 return|return;
 block|}
 comment|/* Remove the lock specified */
-specifier|private
+annotation|@
+name|VisibleForTesting
 specifier|static
 name|void
 name|unlockPrimitive
@@ -2259,6 +2274,7 @@ name|hiveLock
 decl_stmt|;
 try|try
 block|{
+comment|// can throw KeeperException.NoNodeException, which might mean something is wrong
 name|zkpClient
 operator|.
 name|delete
@@ -2291,6 +2307,8 @@ argument_list|,
 name|obj
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|List
 argument_list|<
 name|String
@@ -2308,18 +2326,14 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-operator|(
 name|children
 operator|==
 literal|null
-operator|)
 operator|||
-operator|(
 name|children
 operator|.
 name|isEmpty
 argument_list|()
-operator|)
 condition|)
 block|{
 name|zkpClient
@@ -2330,6 +2344,27 @@ name|name
 argument_list|,
 operator|-
 literal|1
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|KeeperException
+operator|.
+name|NoNodeException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Node "
+operator|+
+name|name
+operator|+
+literal|" previously deleted when attempting to delete."
 argument_list|)
 expr_stmt|;
 block|}

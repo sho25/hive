@@ -724,6 +724,19 @@ name|appConf
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// Hadoop queue information
+name|addDef
+argument_list|(
+name|args
+argument_list|,
+literal|"mapred.job.queue.name"
+argument_list|,
+name|appConf
+operator|.
+name|hadoopQueueName
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Job vars
 name|addStorageVars
 argument_list|(

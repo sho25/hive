@@ -125,6 +125,8 @@ name|procCtx
 expr_stmt|;
 block|}
 comment|/**    * Dispatcher function.    *     * @param nd    *          operator to process    * @param ndStack    *          the operators encountered so far    * @throws SemanticException    */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|dispatch

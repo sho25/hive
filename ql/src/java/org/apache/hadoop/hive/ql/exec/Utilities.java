@@ -7367,6 +7367,45 @@ name|toString
 argument_list|()
 return|;
 block|}
+comment|/**    * returns null if path is not exist    */
+specifier|public
+specifier|static
+name|FileStatus
+index|[]
+name|listStatusIfExists
+parameter_list|(
+name|Path
+name|path
+parameter_list|,
+name|FileSystem
+name|fs
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+try|try
+block|{
+return|return
+name|fs
+operator|.
+name|listStatus
+argument_list|(
+name|path
+argument_list|)
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|FileNotFoundException
+name|e
+parameter_list|)
+block|{
+comment|// FS in hadoop 2.0 throws FNF instead of returning null
+return|return
+literal|null
+return|;
+block|}
+block|}
 comment|/**    * Get all file status from a root path and recursively go deep into certain levels.    *    * @param path    *          the root path    * @param level    *          the depth of directory should explore    * @param fs    *          the file system    * @return array of FileStatus    * @throws IOException    */
 specifier|public
 specifier|static

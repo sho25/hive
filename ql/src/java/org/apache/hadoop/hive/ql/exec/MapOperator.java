@@ -1249,7 +1249,9 @@ operator|.
 name|getPartSpec
 argument_list|()
 decl_stmt|;
-comment|// Use tblProps in case of unpartitioned tables
+comment|// Use table properties in case of unpartitioned tables,
+comment|// and the union of table properties and partition properties, with partition
+comment|// taking precedence
 name|Properties
 name|partProps
 init|=
@@ -1280,7 +1282,7 @@ argument_list|()
 else|:
 name|pd
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 decl_stmt|;
 name|Class
@@ -2300,7 +2302,7 @@ name|tblProps
 else|:
 name|pd
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 decl_stmt|;
 name|Class

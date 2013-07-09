@@ -106,11 +106,20 @@ name|LdapAuthenticationProviderImpl
 implements|implements
 name|PasswdAuthenticationProvider
 block|{
+specifier|private
+specifier|final
 name|String
 name|ldapURL
 decl_stmt|;
+specifier|private
+specifier|final
 name|String
 name|baseDN
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|ldapDomain
 decl_stmt|;
 name|LdapAuthenticationProviderImpl
 parameter_list|()
@@ -150,6 +159,21 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_PLAIN_LDAP_BASEDN
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|ldapDomain
+operator|=
+name|conf
+operator|.
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_PLAIN_LDAP_DOMAIN
 argument_list|)
 expr_stmt|;
 block|}
@@ -207,6 +231,24 @@ argument_list|,
 name|ldapURL
 argument_list|)
 expr_stmt|;
+comment|//  If the domain is supplied, then append it. LDAP providers like Active Directory
+comment|// use a fully qualified user name like foo@bar.com.
+if|if
+condition|(
+name|ldapDomain
+operator|!=
+literal|null
+condition|)
+block|{
+name|user
+operator|=
+name|user
+operator|+
+literal|"@"
+operator|+
+name|ldapDomain
+expr_stmt|;
+block|}
 comment|// setup the security principal
 name|String
 name|bindDN

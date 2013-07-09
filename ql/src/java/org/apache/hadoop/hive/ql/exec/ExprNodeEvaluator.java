@@ -264,6 +264,16 @@ return|return
 literal|true
 return|;
 block|}
+comment|/**    * Return whether this node (or any children nodes) are stateful.    */
+specifier|public
+name|boolean
+name|isStateful
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
 comment|/**    * Return child evaluators if exist    */
 specifier|public
 name|ExprNodeEvaluator
