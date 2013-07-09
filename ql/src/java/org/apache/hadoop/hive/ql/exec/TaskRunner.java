@@ -237,6 +237,11 @@ operator|.
 name|setExitVal
 argument_list|(
 name|exitVal
+argument_list|,
+name|tsk
+operator|.
+name|getException
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

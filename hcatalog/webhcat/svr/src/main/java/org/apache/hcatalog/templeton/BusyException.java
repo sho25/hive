@@ -15,6 +15,20 @@ name|templeton
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|eclipse
+operator|.
+name|jetty
+operator|.
+name|http
+operator|.
+name|HttpStatus
+import|;
+end_import
+
 begin_comment
 comment|/**  * Simple "we are busy, try again" exception.  */
 end_comment
@@ -32,7 +46,9 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-literal|503
+name|HttpStatus
+operator|.
+name|SERVICE_UNAVAILABLE_503
 argument_list|,
 literal|"Busy, please retry"
 argument_list|)

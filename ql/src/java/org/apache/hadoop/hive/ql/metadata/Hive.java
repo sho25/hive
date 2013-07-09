@@ -4765,12 +4765,6 @@ throw|throw
 operator|new
 name|InvalidTableException
 argument_list|(
-literal|"Table "
-operator|+
-name|tableName
-operator|+
-literal|" not found "
-argument_list|,
 name|tableName
 argument_list|)
 throw|;

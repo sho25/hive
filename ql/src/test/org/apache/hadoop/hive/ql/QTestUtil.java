@@ -5942,8 +5942,6 @@ literal|".*transient_lastDdlTime.*"
 block|,
 literal|".*last_modified_.*"
 block|,
-literal|".*java.lang.RuntimeException.*"
-block|,
 literal|".*at org.*"
 block|,
 literal|".*at sun.*"

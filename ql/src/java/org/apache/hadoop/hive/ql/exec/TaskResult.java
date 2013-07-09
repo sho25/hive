@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * TaskResult implementation.  **/
+comment|/**  * TaskResult implementation.  * Note that different threads may be reading/writing this object  **/
 end_comment
 
 begin_class
@@ -29,12 +29,19 @@ class|class
 name|TaskResult
 block|{
 specifier|protected
+specifier|volatile
 name|int
 name|exitVal
 decl_stmt|;
 specifier|protected
+specifier|volatile
 name|boolean
 name|runStatus
+decl_stmt|;
+specifier|private
+specifier|volatile
+name|Throwable
+name|taskError
 decl_stmt|;
 specifier|public
 name|TaskResult
@@ -72,12 +79,47 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
+name|void
+name|setExitVal
+parameter_list|(
+name|int
+name|exitVal
+parameter_list|,
+name|Throwable
+name|taskError
+parameter_list|)
+block|{
+name|this
+operator|.
+name|setExitVal
+argument_list|(
+name|exitVal
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|taskError
+operator|=
+name|taskError
+expr_stmt|;
+block|}
+specifier|public
 name|int
 name|getExitVal
 parameter_list|()
 block|{
 return|return
 name|exitVal
+return|;
+block|}
+comment|/**    * @return may contain details of the error which caused the task to fail or null    */
+specifier|public
+name|Throwable
+name|getTaskError
+parameter_list|()
+block|{
+return|return
+name|taskError
 return|;
 block|}
 specifier|public
