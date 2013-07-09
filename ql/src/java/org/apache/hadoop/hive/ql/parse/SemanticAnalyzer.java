@@ -50135,6 +50135,15 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|ctx
+operator|.
+name|getExplainLogical
+argument_list|()
+condition|)
+block|{
 comment|// At this point we have the complete operator tree
 comment|// from which we want to create the map-reduce plan
 name|MapReduceCompiler
@@ -50175,6 +50184,7 @@ operator|.
 name|getFetchTask
 argument_list|()
 expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info

@@ -553,6 +553,12 @@ init|=
 literal|false
 decl_stmt|;
 specifier|protected
+name|boolean
+name|explainLogical
+init|=
+literal|false
+decl_stmt|;
+specifier|protected
 name|String
 name|cmd
 init|=
@@ -780,6 +786,32 @@ return|return
 name|explain
 return|;
 block|}
+comment|/**    * Find whether the current query is a logical explain query    */
+specifier|public
+name|boolean
+name|getExplainLogical
+parameter_list|()
+block|{
+return|return
+name|explainLogical
+return|;
+block|}
+comment|/**    * Set the context on whether the current query is a logical    * explain query.    */
+specifier|public
+name|void
+name|setExplainLogical
+parameter_list|(
+name|boolean
+name|explainLogical
+parameter_list|)
+block|{
+name|this
+operator|.
+name|explainLogical
+operator|=
+name|explainLogical
+expr_stmt|;
+block|}
 comment|/**    * Set the original query command.    * @param cmd the original query command string    */
 specifier|public
 name|void
@@ -806,7 +838,7 @@ return|return
 name|cmd
 return|;
 block|}
-comment|/**    * Get a tmp directory on specified URI    *    * @param scheme Scheme of the target FS    * @param authority Authority of the target FS    * @param mkdir create the directory if true    * @param scratchdir path of tmp directory    */
+comment|/**    * Get a tmp directory on specified URI    *    * @param scheme Scheme of the target FS    * @param authority Authority of the target FS    * @param mkdir create the directory if true    * @param scratchDir path of tmp directory    */
 specifier|private
 name|String
 name|getScratchDir
