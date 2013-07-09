@@ -1046,7 +1046,7 @@ operator|instanceof
 name|ExprNodeFieldDesc
 condition|)
 block|{
-comment|// field epression should be resolved
+comment|// field expression should be resolved
 name|ExprNodeFieldDesc
 name|field
 init|=

@@ -120,6 +120,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * This function returns the cost of the rule for the specified stack. Lower    * the cost, the better the rule is matched    *     * @param stack    *          Node stack encountered so far    * @return cost of the function    * @throws SemanticException    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|cost
@@ -152,9 +154,7 @@ decl_stmt|;
 name|String
 name|name
 init|=
-operator|new
-name|String
-argument_list|()
+literal|""
 decl_stmt|;
 for|for
 control|(
@@ -224,6 +224,8 @@ literal|1
 return|;
 block|}
 comment|/**    * @return the name of the Node    **/
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getName
