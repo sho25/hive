@@ -1549,7 +1549,7 @@ name|METASTORE_CONNECTION_POOLING_TYPE
 argument_list|(
 literal|"datanucleus.connectionPoolingType"
 argument_list|,
-literal|"DBCP"
+literal|"BONECP"
 argument_list|)
 block|,
 name|METASTORE_VALIDATE_TABLES
