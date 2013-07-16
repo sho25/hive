@@ -163,6 +163,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|BeforeClass
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Ignore
 import|;
 end_import
@@ -322,8 +332,8 @@ name|charSet
 init|=
 literal|"UTF-8"
 decl_stmt|;
-comment|//  "not ready due to HIVE-4820"
-comment|//@BeforeClass
+annotation|@
+name|BeforeClass
 specifier|public
 specifier|static
 name|void
@@ -405,11 +415,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-annotation|@
-name|Ignore
-argument_list|(
-literal|"not ready due to HIVE-4820"
-argument_list|)
 annotation|@
 name|Test
 specifier|public
@@ -560,11 +565,6 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**      * Check that we return correct status code when the URL doesn't map to any method      * in {@link Server}      */
-annotation|@
-name|Ignore
-argument_list|(
-literal|"not ready due to HIVE-4820"
-argument_list|)
 annotation|@
 name|Test
 specifier|public
