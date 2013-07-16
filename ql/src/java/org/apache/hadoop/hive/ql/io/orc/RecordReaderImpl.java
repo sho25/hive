@@ -1024,6 +1024,14 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|ColumnVector
+name|result
+init|=
+operator|(
+name|ColumnVector
+operator|)
+name|previousVector
+decl_stmt|;
 if|if
 condition|(
 name|present
@@ -1033,14 +1041,6 @@ condition|)
 block|{
 comment|// Set noNulls and isNull vector of the ColumnVector based on
 comment|// present stream
-name|ColumnVector
-name|result
-init|=
-operator|(
-name|ColumnVector
-operator|)
-name|previousVector
-decl_stmt|;
 name|result
 operator|.
 name|noNulls
@@ -1099,6 +1099,42 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+block|}
+block|}
+else|else
+block|{
+comment|// There is not present stream, this means that all the values are
+comment|// present.
+name|result
+operator|.
+name|noNulls
+operator|=
+literal|true
+expr_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|batchSize
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|result
+operator|.
+name|isNull
+index|[
+name|i
+index|]
+operator|=
+literal|false
+expr_stmt|;
 block|}
 block|}
 return|return
