@@ -66,6 +66,7 @@ name|StringUpper
 extends|extends
 name|StringUnaryUDF
 block|{
+specifier|public
 name|StringUpper
 parameter_list|(
 name|int

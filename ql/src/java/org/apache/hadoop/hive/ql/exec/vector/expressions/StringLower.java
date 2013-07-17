@@ -66,6 +66,7 @@ name|StringLower
 extends|extends
 name|StringUnaryUDF
 block|{
+specifier|public
 name|StringLower
 parameter_list|(
 name|int
