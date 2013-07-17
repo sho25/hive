@@ -8055,7 +8055,7 @@ block|,
 block|{
 literal|"std"
 block|,
-literal|"Long"
+literal|"Double"
 block|,
 name|VectorUDAFStdPopDouble
 operator|.
@@ -8065,7 +8065,7 @@ block|,
 block|{
 literal|"stddev"
 block|,
-literal|"Long"
+literal|"Double"
 block|,
 name|VectorUDAFStdPopDouble
 operator|.
@@ -8075,7 +8075,7 @@ block|,
 block|{
 literal|"stddev_pop"
 block|,
-literal|"Long"
+literal|"Double"
 block|,
 name|VectorUDAFStdPopDouble
 operator|.
