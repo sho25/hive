@@ -3515,7 +3515,7 @@ literal|"FilterStringCol"
 operator|+
 name|operatorName
 operator|+
-literal|"StringCol"
+literal|"StringColumn"
 decl_stmt|;
 name|generateFilterStringColumnCompareScalar
 argument_list|(

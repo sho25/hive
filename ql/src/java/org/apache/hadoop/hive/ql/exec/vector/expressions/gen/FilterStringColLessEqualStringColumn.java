@@ -116,7 +116,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|FilterStringColLessEqualStringCol
+name|FilterStringColLessEqualStringColumn
 extends|extends
 name|VectorExpression
 block|{
@@ -129,7 +129,7 @@ name|int
 name|colNum2
 decl_stmt|;
 specifier|public
-name|FilterStringColLessEqualStringCol
+name|FilterStringColLessEqualStringColumn
 parameter_list|(
 name|int
 name|colNum1

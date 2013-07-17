@@ -116,7 +116,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|FilterStringColGreaterStringCol
+name|FilterStringColNotEqualStringColumn
 extends|extends
 name|VectorExpression
 block|{
@@ -129,7 +129,7 @@ name|int
 name|colNum2
 decl_stmt|;
 specifier|public
-name|FilterStringColGreaterStringCol
+name|FilterStringColNotEqualStringColumn
 parameter_list|(
 name|int
 name|colNum1
@@ -355,7 +355,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 operator|)
 condition|)
@@ -447,7 +447,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -526,7 +526,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -643,7 +643,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -722,7 +722,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -832,7 +832,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -911,7 +911,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -1012,7 +1012,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 operator|)
 condition|)
@@ -1114,7 +1114,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -1203,7 +1203,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -1338,7 +1338,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -1417,7 +1417,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -1538,7 +1538,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -1627,7 +1627,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -1730,7 +1730,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 operator|)
 condition|)
@@ -1840,7 +1840,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -1919,7 +1919,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -2045,7 +2045,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -2134,7 +2134,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -2256,7 +2256,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -2345,7 +2345,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -2447,7 +2447,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 operator|)
 condition|)
@@ -2564,7 +2564,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -2653,7 +2653,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -2796,7 +2796,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -2885,7 +2885,7 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -3013,7 +3013,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
@@ -3108,7 +3108,7 @@ index|[
 name|i
 index|]
 argument_list|)
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{

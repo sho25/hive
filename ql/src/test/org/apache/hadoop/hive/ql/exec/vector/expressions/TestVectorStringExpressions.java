@@ -181,7 +181,7 @@ name|expressions
 operator|.
 name|gen
 operator|.
-name|FilterStringColLessStringCol
+name|FilterStringColLessStringColumn
 import|;
 end_import
 
@@ -1125,7 +1125,7 @@ expr_stmt|;
 name|expr
 operator|=
 operator|new
-name|FilterStringColLessStringCol
+name|FilterStringColLessStringColumn
 argument_list|(
 literal|0
 argument_list|,
