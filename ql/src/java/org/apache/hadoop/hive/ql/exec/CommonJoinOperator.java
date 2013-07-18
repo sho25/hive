@@ -1841,6 +1841,11 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
+name|super
+operator|.
+name|startGroup
+argument_list|()
+expr_stmt|;
 block|}
 specifier|protected
 name|int

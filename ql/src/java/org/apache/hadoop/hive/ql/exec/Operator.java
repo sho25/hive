@@ -1810,7 +1810,7 @@ block|}
 block|}
 block|}
 comment|/**    * Collects all the parent's output object inspectors and calls actual    * initialization method.    *    * @param hconf    * @param inputOI    *          OI of the row that this parent will pass to this op    * @param parentId    *          parent operator id    * @throws HiveException    */
-specifier|private
+specifier|protected
 name|void
 name|initialize
 parameter_list|(
@@ -2107,7 +2107,7 @@ literal|"Start group Done"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// If a operator wants to do some work at the end of a group
+comment|// If an operator wants to do some work at the end of a group
 specifier|public
 name|void
 name|endGroup
@@ -2171,6 +2171,66 @@ argument_list|(
 literal|"End group Done"
 argument_list|)
 expr_stmt|;
+block|}
+comment|// an blocking operator (e.g. GroupByOperator and JoinOperator) can
+comment|// override this method to forward its outputs
+specifier|public
+name|void
+name|flush
+parameter_list|()
+throws|throws
+name|HiveException
+block|{   }
+specifier|public
+name|void
+name|processGroup
+parameter_list|(
+name|int
+name|tag
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+if|if
+condition|(
+name|childOperators
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|childOperatorsArray
+operator|.
+name|length
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|childOperatorsArray
+index|[
+name|i
+index|]
+operator|.
+name|processGroup
+argument_list|(
+name|childOperatorsTag
+index|[
+name|i
+index|]
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 specifier|protected
 name|boolean
@@ -7341,6 +7401,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

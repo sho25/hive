@@ -50,6 +50,14 @@ specifier|transient
 name|int
 name|numInputs
 decl_stmt|;
+comment|// If this UnionOperator is inside the reduce side of an MR job generated
+comment|// by Correlation Optimizer, which means all inputs of this UnionOperator are
+comment|// from DemuxOperator. If so, we should not touch this UnionOperator in genMapRedTasks.
+specifier|private
+specifier|transient
+name|boolean
+name|allInputsInSameReducer
+decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -62,6 +70,10 @@ block|{
 name|numInputs
 operator|=
 literal|2
+expr_stmt|;
+name|allInputsInSameReducer
+operator|=
+literal|false
 expr_stmt|;
 block|}
 comment|/**    * @return the numInputs    */
@@ -88,6 +100,30 @@ operator|.
 name|numInputs
 operator|=
 name|numInputs
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isAllInputsInSameReducer
+parameter_list|()
+block|{
+return|return
+name|allInputsInSameReducer
+return|;
+block|}
+specifier|public
+name|void
+name|setAllInputsInSameReducer
+parameter_list|(
+name|boolean
+name|allInputsInSameReducer
+parameter_list|)
+block|{
+name|this
+operator|.
+name|allInputsInSameReducer
+operator|=
+name|allInputsInSameReducer
 expr_stmt|;
 block|}
 block|}
