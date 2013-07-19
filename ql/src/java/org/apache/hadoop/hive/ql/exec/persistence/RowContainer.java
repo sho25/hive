@@ -517,7 +517,7 @@ name|numFlushedBlocks
 decl_stmt|;
 comment|// total # of blocks
 specifier|private
-name|int
+name|long
 name|size
 decl_stmt|;
 comment|// total # of elements in the RowContainer
@@ -1464,6 +1464,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|Object
@@ -1888,7 +1890,7 @@ comment|/**    * Get the number of elements in the RowContainer.    *    * @retu
 annotation|@
 name|Override
 specifier|public
-name|int
+name|long
 name|size
 parameter_list|()
 block|{
