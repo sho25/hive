@@ -111,6 +111,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -496,7 +510,7 @@ name|execContext
 decl_stmt|;
 specifier|private
 specifier|static
-name|int
+name|AtomicInteger
 name|seqId
 decl_stmt|;
 comment|// It can be optimized later so that an operator operator (init/close) is performed
@@ -545,7 +559,11 @@ static|static
 block|{
 name|seqId
 operator|=
+operator|new
+name|AtomicInteger
+argument_list|(
 literal|0
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private
@@ -563,7 +581,9 @@ operator|.
 name|valueOf
 argument_list|(
 name|seqId
-operator|++
+operator|.
+name|getAndIncrement
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -574,8 +594,11 @@ name|resetId
 parameter_list|()
 block|{
 name|seqId
-operator|=
+operator|.
+name|set
+argument_list|(
 literal|0
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Create an operator with a reporter.    *    * @param reporter    *          Used to report progress of certain operators.    */
@@ -587,20 +610,13 @@ name|reporter
 parameter_list|)
 block|{
 name|this
-operator|.
-name|reporter
-operator|=
-name|reporter
+argument_list|()
 expr_stmt|;
-name|id
-operator|=
-name|String
+name|this
 operator|.
-name|valueOf
-argument_list|(
-name|seqId
-operator|++
-argument_list|)
+name|reporter
+operator|=
+name|reporter
 expr_stmt|;
 block|}
 specifier|public
