@@ -3221,7 +3221,7 @@ name|newParent
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 name|long
 name|getNextCntr
 parameter_list|(

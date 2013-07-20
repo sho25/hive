@@ -147,7 +147,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Operator
+name|MapredContext
 import|;
 end_import
 
@@ -165,7 +165,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MapredContext
+name|Operator
 import|;
 end_import
 
@@ -339,24 +339,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|io
-operator|.
-name|ByteWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
@@ -378,26 +360,6 @@ operator|.
 name|objectinspector
 operator|.
 name|ObjectInspectorFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorFactory
 import|;
 end_import
 
@@ -514,7 +476,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ExecReducer is the generic Reducer class for Hive. Together with ExecMapper it is   * the bridge between the map-reduce framework and the Hive operator pipeline at  * execution time. It's main responsabilities are:  *   * - Load and setup the operator pipeline from XML  * - Run the pipeline by transforming key, value pairs to records and forwarding them to the operators  * - Sending start and end group messages to separate records with same key from one another  * - Catch and handle errors during execution of the operators.  *  */
+comment|/**  * ExecReducer is the generic Reducer class for Hive. Together with ExecMapper it is  * the bridge between the map-reduce framework and the Hive operator pipeline at  * execution time. It's main responsabilities are:  *  * - Load and setup the operator pipeline from XML  * - Run the pipeline by transforming key, value pairs to records and forwarding them to the operators  * - Sending start and end group messages to separate records with same key from one another  * - Catch and handle errors during execution of the operators.  *  */
 end_comment
 
 begin_class
@@ -987,15 +949,6 @@ name|tag
 index|]
 argument_list|)
 expr_stmt|;
-name|ois
-operator|.
-name|add
-argument_list|(
-name|PrimitiveObjectInspectorFactory
-operator|.
-name|writableByteObjectInspector
-argument_list|)
-expr_stmt|;
 name|rowObjectInspector
 index|[
 name|tag
@@ -1007,7 +960,7 @@ name|getStandardStructObjectInspector
 argument_list|(
 name|Utilities
 operator|.
-name|fieldNameList
+name|reduceFieldNameList
 argument_list|,
 name|ois
 argument_list|)
@@ -1139,15 +1092,13 @@ argument_list|<
 name|Object
 argument_list|>
 argument_list|(
-literal|3
-argument_list|)
-decl_stmt|;
-name|ByteWritable
-name|tag
-init|=
-operator|new
-name|ByteWritable
+name|Utilities
+operator|.
+name|reduceFieldNameList
+operator|.
+name|size
 argument_list|()
+argument_list|)
 decl_stmt|;
 specifier|public
 name|void
@@ -1185,7 +1136,7 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// propagete reporter and output collector to all operators
+comment|// propagate reporter and output collector to all operators
 name|oc
 operator|=
 name|output
@@ -1229,22 +1180,18 @@ name|BytesWritable
 operator|)
 name|key
 decl_stmt|;
-name|tag
-operator|.
-name|set
-argument_list|(
-operator|(
 name|byte
-operator|)
+name|tag
+init|=
 literal|0
-argument_list|)
-expr_stmt|;
+decl_stmt|;
 if|if
 condition|(
 name|isTagged
 condition|)
 block|{
-comment|// remove the tag
+comment|// remove the tag from key coming out of reducer
+comment|// and store it in separate variable.
 name|int
 name|size
 init|=
@@ -1256,9 +1203,7 @@ operator|-
 literal|1
 decl_stmt|;
 name|tag
-operator|.
-name|set
-argument_list|(
+operator|=
 name|keyWritable
 operator|.
 name|get
@@ -1266,7 +1211,6 @@ argument_list|()
 index|[
 name|size
 index|]
-argument_list|)
 expr_stmt|;
 name|keyWritable
 operator|.
@@ -1434,17 +1378,11 @@ block|{
 name|valueObject
 index|[
 name|tag
-operator|.
-name|get
-argument_list|()
 index|]
 operator|=
 name|inputValueDeserializer
 index|[
 name|tag
-operator|.
-name|get
-argument_list|()
 index|]
 operator|.
 name|deserialize
@@ -1466,9 +1404,6 @@ argument_list|(
 literal|"Hive Runtime Error: Unable to deserialize reduce input value (tag="
 operator|+
 name|tag
-operator|.
-name|get
-argument_list|()
 operator|+
 literal|") from "
 operator|+
@@ -1494,9 +1429,6 @@ operator|+
 name|valueTableDesc
 index|[
 name|tag
-operator|.
-name|get
-argument_list|()
 index|]
 operator|.
 name|getProperties
@@ -1525,18 +1457,7 @@ argument_list|(
 name|valueObject
 index|[
 name|tag
-operator|.
-name|get
-argument_list|()
 index|]
-argument_list|)
-expr_stmt|;
-comment|// The tag is not used any more, we should remove it.
-name|row
-operator|.
-name|add
-argument_list|(
-name|tag
 argument_list|)
 expr_stmt|;
 if|if
@@ -1596,9 +1517,6 @@ argument_list|(
 name|row
 argument_list|,
 name|tag
-operator|.
-name|get
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1626,9 +1544,6 @@ argument_list|,
 name|rowObjectInspector
 index|[
 name|tag
-operator|.
-name|get
-argument_list|()
 index|]
 argument_list|)
 expr_stmt|;
@@ -1660,9 +1575,6 @@ argument_list|(
 literal|"Hive Runtime Error while processing row (tag="
 operator|+
 name|tag
-operator|.
-name|get
-argument_list|()
 operator|+
 literal|") "
 operator|+

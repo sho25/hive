@@ -205,24 +205,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|io
-operator|.
-name|ByteWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
@@ -244,26 +226,6 @@ operator|.
 name|objectinspector
 operator|.
 name|ObjectInspectorFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorFactory
 import|;
 end_import
 
@@ -309,7 +271,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/**    * Handler is used to construct key-value-tag structure and assign original tag to a row.    */
+comment|/**    * Handler is used to construct the key-value structure.    * This structure is needed by child JoinOperators and GroupByOperators of    * a MuxOperator to function correctly.    */
 specifier|protected
 specifier|static
 class|class
@@ -324,11 +286,6 @@ specifier|private
 specifier|final
 name|int
 name|tag
-decl_stmt|;
-specifier|private
-specifier|final
-name|ByteWritable
-name|tagByteWritable
 decl_stmt|;
 comment|/**      * The evaluators for the key columns. Key columns decide the sort order on      * the reducer side. Key columns are passed to the reducer in the "key".      */
 specifier|private
@@ -501,22 +458,6 @@ name|tag
 operator|=
 name|tag
 expr_stmt|;
-name|this
-operator|.
-name|tagByteWritable
-operator|=
-operator|new
-name|ByteWritable
-argument_list|(
-operator|(
-name|byte
-operator|)
-name|tag
-operator|.
-name|intValue
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|ObjectInspector
 name|keyObjectInspector
 init|=
@@ -568,15 +509,6 @@ argument_list|(
 name|valueObjectInspector
 argument_list|)
 expr_stmt|;
-name|ois
-operator|.
-name|add
-argument_list|(
-name|PrimitiveObjectInspectorFactory
-operator|.
-name|writableByteObjectInspector
-argument_list|)
-expr_stmt|;
 name|this
 operator|.
 name|outputObjInspector
@@ -587,7 +519,7 @@ name|getStandardStructObjectInspector
 argument_list|(
 name|Utilities
 operator|.
-name|fieldNameList
+name|reduceFieldNameList
 argument_list|,
 name|ois
 argument_list|)
@@ -602,7 +534,12 @@ argument_list|<
 name|Object
 argument_list|>
 argument_list|(
-literal|3
+name|Utilities
+operator|.
+name|reduceFieldNameList
+operator|.
+name|size
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -734,13 +671,6 @@ name|outputValue
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|forwardedRow
-operator|.
-name|add
-argument_list|(
-name|tagByteWritable
-argument_list|)
-expr_stmt|;
 return|return
 name|forwardedRow
 return|;
@@ -774,49 +704,20 @@ name|Handler
 index|[]
 name|handlers
 decl_stmt|;
-comment|//counters for debugging
+comment|// Counters for debugging, we cannot use existing counters (cntr and nextCntr)
+comment|// in Operator since we want to individually track the number of rows from different inputs.
 specifier|private
 specifier|transient
 name|long
 index|[]
-name|cntr
+name|cntrs
 decl_stmt|;
 specifier|private
 specifier|transient
 name|long
 index|[]
-name|nextCntr
+name|nextCntrs
 decl_stmt|;
-specifier|private
-name|long
-name|getNextCntr
-parameter_list|(
-name|long
-name|cntr
-parameter_list|)
-block|{
-comment|// A very simple counter to keep track of number of rows processed by an
-comment|// operator. It dumps
-comment|// every 1 million times, and quickly before that
-if|if
-condition|(
-name|cntr
-operator|>=
-literal|1000000
-condition|)
-block|{
-return|return
-name|cntr
-operator|+
-literal|1000000
-return|;
-block|}
-return|return
-literal|10
-operator|*
-name|cntr
-return|;
-block|}
 annotation|@
 name|Override
 specifier|protected
@@ -829,7 +730,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// A MuxOperator should only has a single child
+comment|// A MuxOperator should only have a single child
 if|if
 condition|(
 name|childOperatorsArray
@@ -888,7 +789,7 @@ index|[
 name|numParents
 index|]
 expr_stmt|;
-name|cntr
+name|cntrs
 operator|=
 operator|new
 name|long
@@ -896,7 +797,7 @@ index|[
 name|numParents
 index|]
 expr_stmt|;
-name|nextCntr
+name|nextCntrs
 operator|=
 operator|new
 name|long
@@ -1055,14 +956,14 @@ name|getOutputObjInspector
 argument_list|()
 expr_stmt|;
 block|}
-name|cntr
+name|cntrs
 index|[
 name|i
 index|]
 operator|=
 literal|0
 expr_stmt|;
-name|nextCntr
+name|nextCntrs
 index|[
 name|i
 index|]
@@ -1180,61 +1081,64 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|forward
-argument_list|(
-name|row
-argument_list|,
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
+name|cntrs
+index|[
 name|tag
+index|]
+operator|++
+expr_stmt|;
+if|if
+condition|(
+name|cntrs
+index|[
+name|tag
+index|]
+operator|==
+name|nextCntrs
+index|[
+name|tag
+index|]
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|id
+operator|+
+literal|", tag="
+operator|+
+name|tag
+operator|+
+literal|", forwarding "
+operator|+
+name|cntrs
+index|[
+name|tag
+index|]
+operator|+
+literal|" rows"
+argument_list|)
+expr_stmt|;
+name|nextCntrs
+index|[
+name|tag
+index|]
+operator|=
+name|getNextCntr
+argument_list|(
+name|cntrs
+index|[
+name|tag
+index|]
 argument_list|)
 expr_stmt|;
 block|}
-specifier|protected
-name|void
-name|forward
-parameter_list|(
-name|Object
-name|row
-parameter_list|,
-name|int
-name|tag
-parameter_list|)
-throws|throws
-name|HiveException
-block|{
-if|if
-condition|(
-name|childOperatorsArray
-operator|==
-literal|null
-operator|&&
-name|childOperators
-operator|!=
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Internal Hive error during operator initialization."
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
-operator|(
-name|childOperatorsArray
-operator|==
-literal|null
-operator|)
-operator|||
-operator|(
-name|getDone
-argument_list|()
-operator|)
-condition|)
-block|{
-return|return;
 block|}
 name|int
 name|childrenDone
@@ -1264,7 +1168,7 @@ name|?
 extends|extends
 name|OperatorDesc
 argument_list|>
-name|o
+name|child
 init|=
 name|childOperatorsArray
 index|[
@@ -1273,7 +1177,7 @@ index|]
 decl_stmt|;
 if|if
 condition|(
-name|o
+name|child
 operator|.
 name|getDone
 argument_list|()
@@ -1294,7 +1198,7 @@ index|]
 condition|)
 block|{
 comment|// No need to evaluate, just forward it.
-name|o
+name|child
 operator|.
 name|process
 argument_list|(
@@ -1308,7 +1212,7 @@ else|else
 block|{
 comment|// Call the corresponding handler to evaluate this row and
 comment|// forward the result
-name|o
+name|child
 operator|.
 name|process
 argument_list|(
@@ -1334,65 +1238,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-if|if
-condition|(
-name|isLogInfoEnabled
-condition|)
-block|{
-name|cntr
-index|[
-name|tag
-index|]
-operator|++
-expr_stmt|;
-if|if
-condition|(
-name|cntr
-index|[
-name|tag
-index|]
-operator|==
-name|nextCntr
-index|[
-name|tag
-index|]
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-name|id
-operator|+
-literal|", tag="
-operator|+
-name|tag
-operator|+
-literal|", forwarding "
-operator|+
-name|cntr
-index|[
-name|tag
-index|]
-operator|+
-literal|" rows"
-argument_list|)
-expr_stmt|;
-name|nextCntr
-index|[
-name|tag
-index|]
-operator|=
-name|getNextCntr
-argument_list|(
-name|cntr
-index|[
-name|tag
-index|]
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 comment|// if all children are done, this operator is also done
 if|if
 condition|(
@@ -1409,6 +1254,27 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|forward
+parameter_list|(
+name|Object
+name|row
+parameter_list|,
+name|ObjectInspector
+name|rowInspector
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+comment|// Because we need to revert the tag of a row to its old tag and
+comment|// we cannot pass new tag to this method which is used to get
+comment|// the old tag from the mapping of newTagToOldTag, we bypass
+comment|// this method in MuxOperator and directly call process on children
+comment|// in processOp() method..
 block|}
 annotation|@
 name|Override
@@ -1598,7 +1464,7 @@ name|i
 operator|+
 literal|", forwarded "
 operator|+
-name|cntr
+name|cntrs
 index|[
 name|i
 index|]

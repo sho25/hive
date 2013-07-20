@@ -1419,6 +1419,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|TableDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|api
 operator|.
 name|Adjacency
@@ -1442,24 +1460,6 @@ operator|.
 name|api
 operator|.
 name|Graph
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|TableDesc
 import|;
 end_import
 
@@ -1922,7 +1922,7 @@ name|HADOOP_LOCAL_FS
 init|=
 literal|"file:///"
 decl_stmt|;
-comment|/**    * ReduceField:    * KEY: record key    * VALUE: record value    * ALIAS: the tag identifying the source of a record    */
+comment|/**    * ReduceField:    * KEY: record key    * VALUE: record value    */
 specifier|public
 specifier|static
 enum|enum
@@ -1931,8 +1931,6 @@ block|{
 name|KEY
 block|,
 name|VALUE
-block|,
-name|ALIAS
 block|}
 empty_stmt|;
 specifier|public
@@ -1941,11 +1939,11 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|fieldNameList
+name|reduceFieldNameList
 decl_stmt|;
 static|static
 block|{
-name|fieldNameList
+name|reduceFieldNameList
 operator|=
 operator|new
 name|ArrayList
@@ -1965,7 +1963,7 @@ name|values
 argument_list|()
 control|)
 block|{
-name|fieldNameList
+name|reduceFieldNameList
 operator|.
 name|add
 argument_list|(
