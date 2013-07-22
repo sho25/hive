@@ -66,9 +66,6 @@ comment|/**      * Create a connection to the Job Tracker.      */
 specifier|public
 name|TempletonJobTracker
 parameter_list|(
-name|InetSocketAddress
-name|addr
-parameter_list|,
 name|Configuration
 name|conf
 parameter_list|)
