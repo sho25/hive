@@ -15,30 +15,6 @@ name|templeton
 package|;
 end_package
 
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|InetSocketAddress
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
 begin_comment
 comment|/**  * The helper class for all the Templeton delegator classes. A  * delegator will call the underlying Templeton service such as hcat  * or hive.  */
 end_comment
