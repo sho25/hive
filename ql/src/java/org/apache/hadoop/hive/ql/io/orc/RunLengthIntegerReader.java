@@ -479,6 +479,9 @@ operator|=
 literal|1
 expr_stmt|;
 block|}
+comment|// The default value for nulls in Vectorization for int types is 1
+comment|// and given that non null value can also be 1, we need to check for isNull also
+comment|// when determining the isRepeating flag.
 if|if
 condition|(
 name|previous
@@ -502,6 +505,22 @@ operator|!=
 name|previous
 operator|.
 name|vector
+index|[
+name|i
+index|]
+operator|||
+name|previous
+operator|.
+name|isNull
+index|[
+name|i
+operator|-
+literal|1
+index|]
+operator|!=
+name|previous
+operator|.
+name|isNull
 index|[
 name|i
 index|]
