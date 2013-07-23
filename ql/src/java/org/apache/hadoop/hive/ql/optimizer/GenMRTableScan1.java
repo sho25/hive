@@ -719,8 +719,6 @@ name|GenMapRedCtx
 argument_list|(
 name|currTask
 argument_list|,
-name|currTopOp
-argument_list|,
 name|currAliasId
 argument_list|)
 argument_list|)
@@ -1081,7 +1079,7 @@ name|currAliasId
 argument_list|,
 name|currTopOp
 argument_list|,
-name|currWork
+name|currTask
 argument_list|,
 literal|false
 argument_list|,
@@ -1102,7 +1100,7 @@ name|currAliasId
 argument_list|,
 name|currTopOp
 argument_list|,
-name|currWork
+name|currTask
 argument_list|,
 literal|false
 argument_list|,
@@ -1112,7 +1110,7 @@ expr_stmt|;
 block|}
 block|}
 return|return
-literal|null
+literal|true
 return|;
 block|}
 block|}
