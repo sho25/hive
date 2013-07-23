@@ -4081,13 +4081,9 @@ name|i
 index|]
 condition|)
 block|{
-name|result
-operator|.
-name|vector
-index|[
-name|i
-index|]
-operator|=
+name|long
+name|ms
+init|=
 operator|(
 name|result
 operator|.
@@ -4110,14 +4106,10 @@ operator|*
 name|WriterImpl
 operator|.
 name|MILLIS_PER_SECOND
-expr_stmt|;
-name|nanoVector
-operator|.
-name|vector
-index|[
-name|i
-index|]
-operator|=
+decl_stmt|;
+name|long
+name|ns
+init|=
 name|parseNanos
 argument_list|(
 name|nanoVector
@@ -4133,9 +4125,29 @@ else|:
 name|i
 index|]
 argument_list|)
+decl_stmt|;
+comment|// the rounding error exists because java always rounds up when dividing integers
+comment|// -42001/1000 = -42; and -42001 % 1000 = -1 (+ 1000)
+comment|// to get the correct value we need
+comment|// (-42 - 1)*1000 + 999 = -42001
+comment|// (42)*1000 + 1 = 42001
+if|if
+condition|(
+name|ms
+operator|<
+literal|0
+operator|&&
+name|ns
+operator|!=
+literal|0
+condition|)
+block|{
+name|ms
+operator|-=
+literal|1000
 expr_stmt|;
+block|}
 comment|// Convert millis into nanos and add the nano vector value to it
-comment|// since we don't use sql.Timestamp, rounding errors don't apply here
 name|result
 operator|.
 name|vector
@@ -4144,22 +4156,12 @@ name|i
 index|]
 operator|=
 operator|(
-name|result
-operator|.
-name|vector
-index|[
-name|i
-index|]
+name|ms
 operator|*
 literal|1000000
 operator|)
 operator|+
-name|nanoVector
-operator|.
-name|vector
-index|[
-name|i
-index|]
+name|ns
 expr_stmt|;
 block|}
 block|}
