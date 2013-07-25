@@ -737,6 +737,14 @@ init|=
 literal|"testHandle"
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|String
+name|CLEAR_LIBRARY_CACHE
+init|=
+literal|"clearLibraryCache"
+decl_stmt|;
+specifier|private
 specifier|final
 name|String
 name|mApiEndPoint
@@ -880,6 +888,9 @@ name|patch
 parameter_list|,
 name|String
 name|testOutputDir
+parameter_list|,
+name|boolean
+name|clearLibraryCache
 parameter_list|)
 throws|throws
 name|Exception
@@ -955,6 +966,8 @@ argument_list|,
 name|jira
 argument_list|,
 name|patch
+argument_list|,
+name|clearLibraryCache
 argument_list|)
 decl_stmt|;
 name|post
@@ -2007,6 +2020,19 @@ argument_list|,
 literal|"Directory to download and save test-results.tar.gz to. (Optional for testStart)"
 argument_list|)
 expr_stmt|;
+name|options
+operator|.
+name|addOption
+argument_list|(
+literal|null
+argument_list|,
+name|CLEAR_LIBRARY_CACHE
+argument_list|,
+literal|false
+argument_list|,
+literal|"Before starting the test, delete the ivy and maven directories (Optional for testStart)"
+argument_list|)
+expr_stmt|;
 name|CommandLine
 name|commandLine
 init|=
@@ -2168,6 +2194,13 @@ operator|.
 name|getOptionValue
 argument_list|(
 name|OUTPUT_DIR
+argument_list|)
+argument_list|,
+name|commandLine
+operator|.
+name|hasOption
+argument_list|(
+name|CLEAR_LIBRARY_CACHE
 argument_list|)
 argument_list|)
 expr_stmt|;

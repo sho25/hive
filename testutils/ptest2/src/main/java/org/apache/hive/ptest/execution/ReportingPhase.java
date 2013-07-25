@@ -118,7 +118,7 @@ argument_list|)
 expr_stmt|;
 name|execLocally
 argument_list|(
-literal|"find $logDir/{failed,succeeded} -name 'TEST*.xml' -exec cp {} $logDir/test-results \\; 2>/dev/null"
+literal|"find $logDir/{failed,succeeded} -maxdepth 2 -name 'TEST*.xml' -exec cp {} $logDir/test-results \\; 2>/dev/null"
 argument_list|)
 expr_stmt|;
 name|execLocally

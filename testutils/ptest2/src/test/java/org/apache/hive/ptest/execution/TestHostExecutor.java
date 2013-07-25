@@ -77,6 +77,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|concurrent
 operator|.
 name|BlockingQueue
@@ -308,6 +318,20 @@ operator|.
 name|collect
 operator|.
 name|Lists
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Sets
 import|;
 end_import
 
@@ -562,7 +586,7 @@ argument_list|>
 name|isolatedWorkQueue
 decl_stmt|;
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|TestBatch
 argument_list|>
@@ -686,9 +710,9 @@ argument_list|()
 expr_stmt|;
 name|failedTestResults
 operator|=
-name|Lists
+name|Sets
 operator|.
-name|newArrayList
+name|newHashSet
 argument_list|()
 expr_stmt|;
 name|testBatchParallel1
@@ -1083,7 +1107,7 @@ name|assertEquals
 argument_list|(
 name|Collections
 operator|.
-name|emptyList
+name|emptySet
 argument_list|()
 argument_list|,
 name|failedTestResults
@@ -1156,7 +1180,7 @@ name|assertEquals
 argument_list|(
 name|Collections
 operator|.
-name|emptyList
+name|emptySet
 argument_list|()
 argument_list|,
 name|failedTestResults
@@ -1244,7 +1268,7 @@ name|assertEquals
 argument_list|(
 name|Collections
 operator|.
-name|emptyList
+name|emptySet
 argument_list|()
 argument_list|,
 name|failedTestResults
@@ -1334,7 +1358,7 @@ name|assertEquals
 argument_list|(
 name|Collections
 operator|.
-name|emptyList
+name|emptySet
 argument_list|()
 argument_list|,
 name|failedTestResults
@@ -1424,7 +1448,7 @@ name|assertEquals
 argument_list|(
 name|Collections
 operator|.
-name|emptyList
+name|emptySet
 argument_list|()
 argument_list|,
 name|failedTestResults
@@ -1512,7 +1536,7 @@ name|assertEquals
 argument_list|(
 name|Collections
 operator|.
-name|emptyList
+name|emptySet
 argument_list|()
 argument_list|,
 name|failedTestResults
