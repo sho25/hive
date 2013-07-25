@@ -1382,7 +1382,7 @@ operator|.
 name|getTFunction
 argument_list|()
 decl_stmt|;
-comment|//TableFunctionResolver tResolver = FunctionRegistry.getTableFunctionResolver(def.getName());
+comment|// TableFunctionResolver tResolver = FunctionRegistry.getTableFunctionResolver(def.getName());
 name|TableFunctionResolver
 name|tResolver
 init|=

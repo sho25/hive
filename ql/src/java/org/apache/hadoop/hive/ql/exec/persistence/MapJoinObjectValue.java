@@ -791,6 +791,9 @@ name|out
 operator|.
 name|writeInt
 argument_list|(
+operator|(
+name|int
+operator|)
 name|v
 operator|.
 name|size

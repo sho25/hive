@@ -82,7 +82,7 @@ function_decl|;
 comment|/**    * Get the number of elements in the RowContainer.    *    * @return number of elements in the RowContainer    */
 specifier|public
 specifier|abstract
-name|int
+name|long
 name|size
 parameter_list|()
 function_decl|;

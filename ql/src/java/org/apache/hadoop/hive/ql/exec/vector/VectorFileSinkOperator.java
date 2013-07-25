@@ -241,6 +241,8 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|mr
+operator|.
 name|ExecDriver
 import|;
 end_import

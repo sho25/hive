@@ -463,7 +463,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// number of rows for the key in the given table
-name|int
+name|long
 name|sz
 init|=
 name|storage

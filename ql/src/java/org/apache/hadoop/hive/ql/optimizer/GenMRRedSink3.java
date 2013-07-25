@@ -606,11 +606,6 @@ argument_list|()
 argument_list|,
 name|ctx
 operator|.
-name|getCurrTopOp
-argument_list|()
-argument_list|,
-name|ctx
-operator|.
 name|getCurrAliasId
 argument_list|()
 argument_list|)
@@ -625,7 +620,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 return|return
-literal|null
+literal|true
 return|;
 block|}
 block|}

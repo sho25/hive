@@ -499,6 +499,8 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|mr
+operator|.
 name|ExecDriver
 import|;
 end_import
@@ -516,6 +518,8 @@ operator|.
 name|ql
 operator|.
 name|exec
+operator|.
+name|mr
 operator|.
 name|MapRedTask
 import|;
@@ -2019,18 +2023,6 @@ argument_list|<
 name|?
 extends|extends
 name|Serializable
-argument_list|>
-argument_list|>
-argument_list|()
-condition|,
-operator|new
-name|ArrayList
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -4272,9 +4264,6 @@ name|getInputSummary
 argument_list|(
 name|ctx
 argument_list|,
-operator|(
-name|MapredWork
-operator|)
 name|mrtask
 operator|.
 name|getWork

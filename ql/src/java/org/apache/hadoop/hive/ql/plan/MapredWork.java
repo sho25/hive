@@ -516,7 +516,7 @@ specifier|private
 name|boolean
 name|mapperCannotSpanPartns
 decl_stmt|;
-comment|// used to indicate the input is sorted, and so a BinarySearchRecordReader shoudl be used
+comment|// used to indicate the input is sorted, and so a BinarySearchRecordReader should be used
 specifier|private
 name|boolean
 name|inputFormatSorted
@@ -2814,6 +2814,22 @@ literal|"SAMPLING_ON_START"
 else|:
 literal|null
 return|;
+block|}
+specifier|public
+name|void
+name|mergingInto
+parameter_list|(
+name|MapredWork
+name|mapred
+parameter_list|)
+block|{
+comment|// currently, this is sole field affecting mergee task
+name|mapred
+operator|.
+name|useBucketizedHiveInputFormat
+operator||=
+name|useBucketizedHiveInputFormat
+expr_stmt|;
 block|}
 block|}
 end_class

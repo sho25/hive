@@ -793,6 +793,20 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|InetSocketAddress
+name|getAddress
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_class
 

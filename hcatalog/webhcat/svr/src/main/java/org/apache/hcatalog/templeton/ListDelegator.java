@@ -168,11 +168,6 @@ operator|=
 operator|new
 name|TempletonJobTracker
 argument_list|(
-name|getAddress
-argument_list|(
-name|appConf
-argument_list|)
-argument_list|,
 name|appConf
 argument_list|)
 expr_stmt|;

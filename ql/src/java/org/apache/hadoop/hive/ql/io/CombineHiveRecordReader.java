@@ -57,6 +57,8 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|mr
+operator|.
 name|ExecMapper
 import|;
 end_import

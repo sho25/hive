@@ -1549,7 +1549,7 @@ name|METASTORE_CONNECTION_POOLING_TYPE
 argument_list|(
 literal|"datanucleus.connectionPoolingType"
 argument_list|,
-literal|"DBCP"
+literal|"BONECP"
 argument_list|)
 block|,
 name|METASTORE_VALIDATE_TABLES
@@ -2772,6 +2772,14 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEOPTCORRELATION
+argument_list|(
+literal|"hive.optimize.correlation"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// exploit intra-query correlations
 comment|// whether hadoop map-reduce supports sub-directories. It was added by MAPREDUCE-1501.
 comment|// Some optimizations can only be performed if the version of hadoop being used supports
 comment|// sub-directories

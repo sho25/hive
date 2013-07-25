@@ -27,16 +27,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|net
-operator|.
-name|InetSocketAddress
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -91,6 +81,20 @@ name|UserGroupInformation
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hcatalog
+operator|.
+name|shims
+operator|.
+name|HCatHadoopShims
+import|;
+end_import
+
 begin_comment
 comment|/*  * Communicate with the JobTracker as a specific user.  */
 end_comment
@@ -108,9 +112,6 @@ comment|/**      * Create a connection to the Job Tracker.      */
 specifier|public
 name|TempletonJobTracker
 parameter_list|(
-name|InetSocketAddress
-name|addr
-parameter_list|,
 name|Configuration
 name|conf
 parameter_list|)
@@ -142,7 +143,17 @@ name|JobSubmissionProtocol
 operator|.
 name|versionID
 argument_list|,
-name|addr
+name|HCatHadoopShims
+operator|.
+name|Instance
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getAddress
+argument_list|(
+name|conf
+argument_list|)
 argument_list|,
 name|ugi
 argument_list|,

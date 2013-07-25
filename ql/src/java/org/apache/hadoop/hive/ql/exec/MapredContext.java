@@ -225,6 +225,7 @@ name|MapredContext
 argument_list|>
 argument_list|()
 decl_stmt|;
+specifier|public
 specifier|static
 name|MapredContext
 name|get
@@ -237,6 +238,7 @@ name|get
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|MapredContext
 name|init
@@ -270,6 +272,7 @@ return|return
 name|context
 return|;
 block|}
+specifier|public
 specifier|static
 name|void
 name|close
@@ -388,6 +391,7 @@ return|return
 name|jobConf
 return|;
 block|}
+specifier|public
 name|void
 name|setReporter
 parameter_list|(

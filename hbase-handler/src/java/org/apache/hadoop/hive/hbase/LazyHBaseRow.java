@@ -620,7 +620,9 @@ literal|null
 condition|)
 block|{
 comment|// it is a column family
-comment|// primitive type for Map<Key, Value> can be stored in binary format
+comment|// primitive type for Map<Key, Value> can be stored in binary format. Pass in the
+comment|// qualifier prefix to cherry pick the qualifiers that match the prefix instead of picking
+comment|// up everything
 operator|(
 operator|(
 name|LazyHBaseCellMap
@@ -642,6 +644,10 @@ argument_list|,
 name|colMap
 operator|.
 name|binaryStorage
+argument_list|,
+name|colMap
+operator|.
+name|qualifierPrefixBytes
 argument_list|)
 expr_stmt|;
 block|}

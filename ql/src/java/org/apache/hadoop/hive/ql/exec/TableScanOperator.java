@@ -1204,10 +1204,6 @@ operator|new
 name|JobConf
 argument_list|(
 name|hconf
-argument_list|,
-name|ExecDriver
-operator|.
-name|class
 argument_list|)
 expr_stmt|;
 block|}

@@ -1898,7 +1898,9 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Generate New MapJoin Opertor Exeception "
+literal|"Failed to generate new mapJoin operator "
+operator|+
+literal|"by exception : "
 operator|+
 name|e
 operator|.
