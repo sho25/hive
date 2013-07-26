@@ -1619,7 +1619,14 @@ name|METASTORE_IDENTIFIER_FACTORY
 argument_list|(
 literal|"datanucleus.identifierFactory"
 argument_list|,
-literal|"datanucleus"
+literal|"datanucleus1"
+argument_list|)
+block|,
+name|METASTORE_USE_LEGACY_VALUE_STRATEGY
+argument_list|(
+literal|"datanucleus.rdbms.useLegacyNativeValueStrategy"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|METASTORE_PLUGIN_REGISTRY_BUNDLE_CHECK
@@ -1743,7 +1750,7 @@ name|METASTORE_MANAGER_FACTORY_CLASS
 argument_list|(
 literal|"javax.jdo.PersistenceManagerFactoryClass"
 argument_list|,
-literal|"org.datanucleus.jdo.JDOPersistenceManagerFactory"
+literal|"org.datanucleus.api.jdo.JDOPersistenceManagerFactory"
 argument_list|)
 block|,
 name|METASTORE_DETACH_ALL_ON_COMMIT
