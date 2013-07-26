@@ -1342,6 +1342,8 @@ argument_list|,
 name|prunerExpr
 argument_list|,
 name|rowObjectInspector
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -1705,7 +1707,7 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-comment|/**    * Pruning partition by getting the partition names first and pruning using Hive expression    * evaluator.    * @param tab the table containing the partitions.    * @param true_parts the resulting partitions if the partition pruning expression only contains    *        partition columns.    * @param unkn_parts the resulting partitions if the partition pruning expression that only contains    *        non-partition columns.    * @param denied_parts pruned out partitions.    * @param prunerExpr the SQL predicate that involves partition columns.    * @param rowObjectInspector object inspector used by the evaluator    * @throws Exception    */
+comment|/**    * Pruning partition by getting the partition names first and pruning using Hive expression    * evaluator.    * @param tab the table containing the partitions.    * @param true_parts the resulting partitions if the partition pruning expression only contains    *        partition columns.    * @param unkn_parts the resulting partitions if the partition pruning expression that only contains    *        non-partition columns.    * @param denied_parts pruned out partitions.    * @param prunerExpr the SQL predicate that involves partition columns.    * @param rowObjectInspector object inspector used by the evaluator    * @param conf Hive Configuration object, can not be NULL.    * @throws Exception    */
 specifier|static
 specifier|private
 name|void
@@ -1737,6 +1739,9 @@ name|prunerExpr
 parameter_list|,
 name|StructObjectInspector
 name|rowObjectInspector
+parameter_list|,
+name|HiveConf
+name|conf
 parameter_list|)
 throws|throws
 name|Exception
@@ -1862,6 +1867,20 @@ name|Object
 index|[
 literal|2
 index|]
+decl_stmt|;
+name|String
+name|defaultPartitionName
+init|=
+name|conf
+operator|.
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|DEFAULTPARTITIONNAME
+argument_list|)
 decl_stmt|;
 for|for
 control|(
@@ -1989,6 +2008,30 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// Reject default partitions if we couldn't determine whether we should include it or not.
+comment|// Note that predicate would only contains partition column parts of original predicate.
+if|if
+condition|(
+name|values
+operator|.
+name|contains
+argument_list|(
+name|defaultPartitionName
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"skipping default/bad partition: "
+operator|+
+name|partName
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 if|if
 condition|(
 name|unknNames
@@ -2022,6 +2065,7 @@ operator|+
 name|partName
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
