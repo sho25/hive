@@ -695,6 +695,16 @@ block|}
 block|}
 specifier|static
 specifier|public
+name|boolean
+name|pigHasBooleanSupport
+parameter_list|()
+block|{
+return|return
+name|pigHasBooleanSupport
+return|;
+block|}
+specifier|static
+specifier|public
 name|Pair
 argument_list|<
 name|String

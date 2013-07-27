@@ -3469,9 +3469,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"llama\t1"
+literal|"llama\ttrue"
 block|,
-literal|"alpaca\t0"
+literal|"alpaca\tfalse"
 block|}
 decl_stmt|;
 name|HcatTestUtils
@@ -3633,6 +3633,33 @@ operator|.
 name|alias
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|PigHCatUtil
+operator|.
+name|pigHasBooleanSupport
+argument_list|()
+condition|)
+block|{
+name|assertEquals
+argument_list|(
+name|DataType
+operator|.
+name|BOOLEAN
+argument_list|,
+name|schema
+operator|.
+name|getField
+argument_list|(
+literal|1
+argument_list|)
+operator|.
+name|type
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|assertEquals
 argument_list|(
 name|DataType
@@ -3649,6 +3676,7 @@ operator|.
 name|type
 argument_list|)
 expr_stmt|;
+block|}
 name|Iterator
 argument_list|<
 name|Tuple
@@ -3682,8 +3710,6 @@ literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// TODO: Figure out how to load a text file into Hive with boolean columns. This next assert
-comment|// passes because data was loaded as integers, not because it was converted.
 name|assertEquals
 argument_list|(
 literal|1
