@@ -791,7 +791,11 @@ literal|" c16 array<struct<m:map<string,string>,n:int>>,"
 operator|+
 literal|" c17 timestamp, "
 operator|+
-literal|" c18 decimal) comment'"
+literal|" c18 decimal,"
+operator|+
+literal|" c19 binary,"
+operator|+
+literal|" c20 date) comment'"
 operator|+
 name|dataTypeTableComment
 operator|+
@@ -1118,6 +1122,8 @@ operator|+
 literal|" where   'not?param?not?param'<> 'not_param??not_param' and ?=? "
 operator|+
 literal|" and 1=? and 2=? and 3.0=? and 4.0=? and 'test\\'string\"'=? and 5=? and ?=? "
+operator|+
+literal|" and date '2012-01-01' = date ?"
 operator|+
 literal|" ) t  select '2011-03-25' ddate,'China',true bv, 10 num limit 10"
 decl_stmt|;
@@ -1569,6 +1575,16 @@ expr_stmt|;
 comment|//setByte
 name|ps
 operator|.
+name|setString
+argument_list|(
+literal|11
+argument_list|,
+literal|"2012-01-01"
+argument_list|)
+expr_stmt|;
+comment|//setString
+name|ps
+operator|.
 name|setMaxRows
 argument_list|(
 literal|2
@@ -1714,6 +1730,16 @@ literal|1
 argument_list|)
 expr_stmt|;
 comment|//setByte
+name|ps
+operator|.
+name|setString
+argument_list|(
+literal|11
+argument_list|,
+literal|"2012-01-01"
+argument_list|)
+expr_stmt|;
+comment|//setString
 name|ps
 operator|.
 name|setMaxRows
@@ -2400,6 +2426,30 @@ literal|18
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|20
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getDate
+argument_list|(
+literal|20
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// row 3
 name|assertTrue
 argument_list|(
@@ -2637,6 +2687,33 @@ operator|.
 name|getBigDecimal
 argument_list|(
 literal|18
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"2013-01-01"
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|20
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"2013-01-01"
+argument_list|,
+name|res
+operator|.
+name|getDate
+argument_list|(
+literal|20
 argument_list|)
 operator|.
 name|toString
@@ -5129,7 +5206,7 @@ name|executeQuery
 argument_list|(
 literal|"select c1, c2, c3, c4, c5 as a, c6, c7, c8, c9, c10, c11, c12, "
 operator|+
-literal|"c1*2, sentences(null, null, null) as b, c17, c18 from "
+literal|"c1*2, sentences(null, null, null) as b, c17, c18, c20 from "
 operator|+
 name|dataTypeTableName
 operator|+
@@ -5168,7 +5245,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|16
+literal|17
 argument_list|,
 name|meta
 operator|.
@@ -7383,6 +7460,80 @@ operator|.
 name|getScale
 argument_list|(
 literal|16
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"c20"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|Types
+operator|.
+name|DATE
+argument_list|,
+name|meta
+operator|.
+name|getColumnType
+argument_list|(
+literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"date"
+argument_list|,
+name|meta
+operator|.
+name|getColumnTypeName
+argument_list|(
+literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|10
+argument_list|,
+name|meta
+operator|.
+name|getColumnDisplaySize
+argument_list|(
+literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|10
+argument_list|,
+name|meta
+operator|.
+name|getPrecision
+argument_list|(
+literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|0
+argument_list|,
+name|meta
+operator|.
+name|getScale
+argument_list|(
+literal|17
 argument_list|)
 argument_list|)
 expr_stmt|;

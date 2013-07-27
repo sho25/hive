@@ -21,6 +21,26 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|Date
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -34,16 +54,6 @@ operator|.
 name|type
 operator|.
 name|HiveDecimal
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
 import|;
 end_import
 
@@ -75,6 +85,9 @@ name|myString
 decl_stmt|;
 name|HiveDecimal
 name|myDecimal
+decl_stmt|;
+name|Date
+name|myDate
 decl_stmt|;
 name|MyTestInnerStruct
 name|myStruct
@@ -119,6 +132,9 @@ name|st
 parameter_list|,
 name|HiveDecimal
 name|bd
+parameter_list|,
+name|Date
+name|date
 parameter_list|,
 name|MyTestInnerStruct
 name|is
@@ -165,6 +181,10 @@ expr_stmt|;
 name|myDecimal
 operator|=
 name|bd
+expr_stmt|;
+name|myDate
+operator|=
+name|date
 expr_stmt|;
 name|myStruct
 operator|=

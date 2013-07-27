@@ -900,9 +900,9 @@ name|UNSUPPORTED_TYPE
 argument_list|(
 literal|10099
 argument_list|,
-literal|"DATE and DATETIME types aren't supported yet. Please use "
+literal|"DATETIME type isn't supported yet. Please use "
 operator|+
-literal|"TIMESTAMP instead"
+literal|"DATE or TIMESTAMP instead"
 argument_list|)
 block|,
 name|CREATE_NON_NATIVE_AS
