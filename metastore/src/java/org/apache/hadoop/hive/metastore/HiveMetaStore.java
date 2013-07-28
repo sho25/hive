@@ -25011,11 +25011,24 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// start delegation token manager
+name|HMSHandler
+name|hmsHandler
+init|=
+operator|new
+name|HMSHandler
+argument_list|(
+literal|"new db based metaserver"
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
 name|saslServer
 operator|.
 name|startDelegationTokenSecretManager
 argument_list|(
 name|conf
+argument_list|,
+name|hmsHandler
 argument_list|)
 expr_stmt|;
 name|transFactory
@@ -25036,15 +25049,10 @@ name|ThriftHiveMetastore
 operator|.
 name|Processor
 argument_list|<
-name|IHMSHandler
+name|HMSHandler
 argument_list|>
 argument_list|(
-name|newHMSHandler
-argument_list|(
-literal|"new db based metaserver"
-argument_list|,
-name|conf
-argument_list|)
+name|hmsHandler
 argument_list|)
 argument_list|)
 expr_stmt|;
