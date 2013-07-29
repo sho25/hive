@@ -1215,6 +1215,9 @@ name|entry
 range|:
 name|newWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getAliasToWork
 argument_list|()
 operator|.
@@ -1396,6 +1399,9 @@ argument_list|>
 name|pathToAliases
 init|=
 name|newWork
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|getPathToAliases
 argument_list|()
@@ -1587,6 +1593,9 @@ name|partitionDesc
 init|=
 name|newWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getPathToPartitionInfo
 argument_list|()
 operator|.
@@ -1660,6 +1669,9 @@ name|table
 init|=
 name|newWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getAliasToPartnInfo
 argument_list|()
 operator|.
@@ -1709,6 +1721,9 @@ control|)
 block|{
 name|newWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getAliasToWork
 argument_list|()
 operator|.
@@ -1721,6 +1736,9 @@ block|}
 comment|// set up local work
 name|newWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|setMapLocalWork
 argument_list|(
 name|newLocalWork
@@ -1729,7 +1747,7 @@ expr_stmt|;
 comment|// remove reducer
 name|newWork
 operator|.
-name|setReducer
+name|setReduceWork
 argument_list|(
 literal|null
 argument_list|)
@@ -1787,6 +1805,9 @@ name|opParseCtxMap
 init|=
 name|newWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getOpParseCtxMap
 argument_list|()
 decl_stmt|;
@@ -1794,6 +1815,9 @@ name|QBJoinTree
 name|newJoinTree
 init|=
 name|newWork
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|getJoinTree
 argument_list|()
@@ -1867,12 +1891,18 @@ decl_stmt|;
 comment|// clean up the mapred work
 name|newWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|setOpParseCtxMap
 argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
 name|newWork
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|setJoinTree
 argument_list|(
@@ -1898,7 +1928,9 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Generate New MapJoin Opertor Exeception "
+literal|"Failed to generate new mapJoin operator "
+operator|+
+literal|"by exception : "
 operator|+
 name|e
 operator|.

@@ -288,6 +288,30 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVESAMPLINGFORORDERBY
+argument_list|)
+condition|)
+block|{
+name|resolvers
+operator|.
+name|add
+argument_list|(
+operator|new
+name|SamplingOptimizer
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Physical optimizers which follow this need to be careful not to invalidate the inferences
 comment|// made by this optimizer. Only optimizers which depend on the results of this one should
 comment|// follow it.

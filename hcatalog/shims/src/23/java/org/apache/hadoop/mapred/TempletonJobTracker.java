@@ -27,16 +27,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|net
-operator|.
-name|InetSocketAddress
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -66,9 +56,6 @@ comment|/**      * Create a connection to the Job Tracker.      */
 specifier|public
 name|TempletonJobTracker
 parameter_list|(
-name|InetSocketAddress
-name|addr
-parameter_list|,
 name|Configuration
 name|conf
 parameter_list|)

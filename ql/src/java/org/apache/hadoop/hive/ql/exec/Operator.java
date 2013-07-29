@@ -111,6 +111,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -148,6 +162,26 @@ operator|.
 name|conf
 operator|.
 name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|mr
+operator|.
+name|ExecMapperContext
 import|;
 end_import
 
@@ -476,7 +510,7 @@ name|execContext
 decl_stmt|;
 specifier|private
 specifier|static
-name|int
+name|AtomicInteger
 name|seqId
 decl_stmt|;
 comment|// It can be optimized later so that an operator operator (init/close) is performed
@@ -525,7 +559,11 @@ static|static
 block|{
 name|seqId
 operator|=
+operator|new
+name|AtomicInteger
+argument_list|(
 literal|0
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private
@@ -543,7 +581,9 @@ operator|.
 name|valueOf
 argument_list|(
 name|seqId
-operator|++
+operator|.
+name|getAndIncrement
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -554,8 +594,11 @@ name|resetId
 parameter_list|()
 block|{
 name|seqId
-operator|=
+operator|.
+name|set
+argument_list|(
 literal|0
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Create an operator with a reporter.    *    * @param reporter    *          Used to report progress of certain operators.    */
@@ -567,20 +610,13 @@ name|reporter
 parameter_list|)
 block|{
 name|this
-operator|.
-name|reporter
-operator|=
-name|reporter
+argument_list|()
 expr_stmt|;
-name|id
-operator|=
-name|String
+name|this
 operator|.
-name|valueOf
-argument_list|(
-name|seqId
-operator|++
-argument_list|)
+name|reporter
+operator|=
+name|reporter
 expr_stmt|;
 block|}
 specifier|public
@@ -1790,7 +1826,7 @@ block|}
 block|}
 block|}
 comment|/**    * Collects all the parent's output object inspectors and calls actual    * initialization method.    *    * @param hconf    * @param inputOI    *          OI of the row that this parent will pass to this op    * @param parentId    *          parent operator id    * @throws HiveException    */
-specifier|private
+specifier|protected
 name|void
 name|initialize
 parameter_list|(
@@ -2087,7 +2123,7 @@ literal|"Start group Done"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// If a operator wants to do some work at the end of a group
+comment|// If an operator wants to do some work at the end of a group
 specifier|public
 name|void
 name|endGroup
@@ -2151,6 +2187,66 @@ argument_list|(
 literal|"End group Done"
 argument_list|)
 expr_stmt|;
+block|}
+comment|// an blocking operator (e.g. GroupByOperator and JoinOperator) can
+comment|// override this method to forward its outputs
+specifier|public
+name|void
+name|flush
+parameter_list|()
+throws|throws
+name|HiveException
+block|{   }
+specifier|public
+name|void
+name|processGroup
+parameter_list|(
+name|int
+name|tag
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+if|if
+condition|(
+name|childOperators
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|childOperatorsArray
+operator|.
+name|length
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|childOperatorsArray
+index|[
+name|i
+index|]
+operator|.
+name|processGroup
+argument_list|(
+name|childOperatorsTag
+index|[
+name|i
+index|]
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 specifier|protected
 name|boolean
@@ -3125,7 +3221,7 @@ name|newParent
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 name|long
 name|getNextCntr
 parameter_list|(
@@ -7321,6 +7417,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

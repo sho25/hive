@@ -684,10 +684,6 @@ operator|new
 name|JobConf
 argument_list|(
 name|conf
-argument_list|,
-name|ExecDriver
-operator|.
-name|class
 argument_list|)
 decl_stmt|;
 name|ftOp

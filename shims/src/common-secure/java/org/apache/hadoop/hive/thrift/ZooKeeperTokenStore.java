@@ -589,7 +589,7 @@ return|return
 name|zkSession
 return|;
 block|}
-comment|/**    * Create a ZooKeeper session that is in connected state.    *     * @param connectString ZooKeeper connect String    * @param sessionTimeout ZooKeeper session timeout    * @param connectTimeout milliseconds to wait for connection, 0 or negative value means no wait    * @param watchers    * @return    * @throws InterruptedException    * @throws IOException    */
+comment|/**    * Create a ZooKeeper session that is in connected state.    *    * @param connectString ZooKeeper connect String    * @param sessionTimeout ZooKeeper session timeout    * @param connectTimeout milliseconds to wait for connection, 0 or negative value means no wait    * @param watchers    * @return    * @throws InterruptedException    * @throws IOException    */
 specifier|public
 specifier|static
 name|ZooKeeper
@@ -2420,6 +2420,20 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|setStore
+parameter_list|(
+name|Object
+name|hmsHandler
+parameter_list|)
+throws|throws
+name|TokenStoreException
+block|{
+comment|// no-op.
 block|}
 block|}
 end_class

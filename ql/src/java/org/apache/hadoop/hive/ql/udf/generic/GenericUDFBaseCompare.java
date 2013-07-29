@@ -1042,8 +1042,63 @@ name|CompareType
 operator|.
 name|NEED_CONVERT
 expr_stmt|;
-comment|// If either argument is a string, we convert to a double because a number
-comment|// in string form should always be convertible into a double
+if|if
+condition|(
+operator|(
+name|oiTypeInfo0
+operator|.
+name|equals
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|stringTypeInfo
+argument_list|)
+operator|&&
+name|oiTypeInfo1
+operator|.
+name|equals
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|dateTypeInfo
+argument_list|)
+operator|)
+operator|||
+operator|(
+name|oiTypeInfo0
+operator|.
+name|equals
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|dateTypeInfo
+argument_list|)
+operator|&&
+name|oiTypeInfo1
+operator|.
+name|equals
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|stringTypeInfo
+argument_list|)
+operator|)
+condition|)
+block|{
+comment|// Date should be comparable with string
+name|compareOI
+operator|=
+name|TypeInfoUtils
+operator|.
+name|getStandardWritableObjectInspectorFromTypeInfo
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|stringTypeInfo
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
 if|if
 condition|(
 name|oiTypeInfo0
@@ -1065,6 +1120,8 @@ name|stringTypeInfo
 argument_list|)
 condition|)
 block|{
+comment|// If either argument is a string, we convert to a double because a number
+comment|// in string form should always be convertible into a double
 name|compareOI
 operator|=
 name|TypeInfoUtils

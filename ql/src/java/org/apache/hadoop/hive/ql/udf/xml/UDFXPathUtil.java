@@ -583,6 +583,8 @@ literal|"Stream closed"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|read
@@ -613,6 +615,8 @@ operator|++
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|read
@@ -743,6 +747,8 @@ return|return
 name|n
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|long
 name|skip
@@ -800,6 +806,8 @@ return|return
 name|n
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|ready
@@ -814,6 +822,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|markSupported
@@ -823,6 +833,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|mark
@@ -856,6 +868,8 @@ operator|=
 name|next
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|reset
@@ -871,6 +885,8 @@ operator|=
 name|mark
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close

@@ -195,6 +195,9 @@ name|getWork
 argument_list|()
 operator|)
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|isInputFormatSorted
 argument_list|()
 argument_list|)

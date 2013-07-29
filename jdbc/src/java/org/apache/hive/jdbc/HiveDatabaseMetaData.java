@@ -850,6 +850,50 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
+specifier|public
+name|ResultSet
+name|getPseudoColumns
+parameter_list|(
+name|String
+name|catalog
+parameter_list|,
+name|String
+name|schemaPattern
+parameter_list|,
+name|String
+name|tableNamePattern
+parameter_list|,
+name|String
+name|columnNamePattern
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
+specifier|public
+name|boolean
+name|generatedKeyAlwaysReturned
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
 comment|/**    * Convert a pattern containing JDBC catalog search wildcards into    * Java regex patterns.    *    * @param pattern input which may contain '%' or '_' wildcard characters, or    * these characters escaped using {@link #getSearchStringEscape()}.    * @return replace %/_ with regex search characters, also handle escaped    * characters.    */
 specifier|private
 name|String
@@ -3391,6 +3435,62 @@ block|{
 return|return
 literal|false
 return|;
+block|}
+specifier|public
+parameter_list|<
+name|T
+parameter_list|>
+name|T
+name|getObject
+parameter_list|(
+name|String
+name|columnLabel
+parameter_list|,
+name|Class
+argument_list|<
+name|T
+argument_list|>
+name|type
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
+specifier|public
+parameter_list|<
+name|T
+parameter_list|>
+name|T
+name|getObject
+parameter_list|(
+name|int
+name|columnIndex
+parameter_list|,
+name|Class
+argument_list|<
+name|T
+argument_list|>
+name|type
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
 block|}
 block|}
 return|;

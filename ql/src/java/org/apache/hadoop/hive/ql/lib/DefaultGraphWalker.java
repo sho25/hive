@@ -222,6 +222,34 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+name|dispatchAndReturn
+argument_list|(
+name|nd
+argument_list|,
+name|ndStack
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Returns dispatch result    */
+specifier|public
+parameter_list|<
+name|T
+parameter_list|>
+name|T
+name|dispatchAndReturn
+parameter_list|(
+name|Node
+name|nd
+parameter_list|,
+name|Stack
+argument_list|<
+name|Node
+argument_list|>
+name|ndStack
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
 name|Object
 index|[]
 name|nodeOutputs
@@ -306,6 +334,12 @@ argument_list|,
 name|retVal
 argument_list|)
 expr_stmt|;
+return|return
+operator|(
+name|T
+operator|)
+name|retVal
+return|;
 block|}
 comment|/**    * starting point for walking.    *    * @throws SemanticException    */
 specifier|public

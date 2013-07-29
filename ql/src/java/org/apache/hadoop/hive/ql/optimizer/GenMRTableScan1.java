@@ -719,8 +719,6 @@ name|GenMapRedCtx
 argument_list|(
 name|currTask
 argument_list|,
-name|currTopOp
-argument_list|,
 name|currAliasId
 argument_list|)
 argument_list|)
@@ -921,11 +919,35 @@ expr_stmt|;
 block|}
 name|currWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|setGatheringStats
 argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|currWork
+operator|.
+name|getReduceWork
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|currWork
+operator|.
+name|getReduceWork
+argument_list|()
+operator|.
+name|setGatheringStats
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 comment|// NOTE: here we should use the new partition predicate pushdown API to get a list of pruned list,
 comment|// and pass it to setTaskPlan as the last parameter
 name|Set
@@ -1081,7 +1103,7 @@ name|currAliasId
 argument_list|,
 name|currTopOp
 argument_list|,
-name|currWork
+name|currTask
 argument_list|,
 literal|false
 argument_list|,
@@ -1102,7 +1124,7 @@ name|currAliasId
 argument_list|,
 name|currTopOp
 argument_list|,
-name|currWork
+name|currTask
 argument_list|,
 literal|false
 argument_list|,
@@ -1112,7 +1134,7 @@ expr_stmt|;
 block|}
 block|}
 return|return
-literal|null
+literal|true
 return|;
 block|}
 block|}

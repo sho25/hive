@@ -198,7 +198,7 @@ comment|/**    * Get the number of elements in the RowContainer.    *    * @retu
 annotation|@
 name|Override
 specifier|public
-name|int
+name|long
 name|size
 parameter_list|()
 block|{

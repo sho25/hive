@@ -1295,6 +1295,13 @@ try|try
 block|{
 comment|// The following closes the derby connection. It throws an exception that has to be caught
 comment|// and ignored.
+synchronized|synchronized
+init|(
+name|DriverManager
+operator|.
+name|class
+init|)
+block|{
 name|DriverManager
 operator|.
 name|getConnection
@@ -1304,6 +1311,7 @@ operator|+
 literal|";shutdown=true"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1398,6 +1406,13 @@ operator|.
 name|newInstance
 argument_list|()
 expr_stmt|;
+synchronized|synchronized
+init|(
+name|DriverManager
+operator|.
+name|class
+init|)
+block|{
 name|DriverManager
 operator|.
 name|setLoginTimeout
@@ -1498,6 +1513,7 @@ block|}
 name|closeConnection
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

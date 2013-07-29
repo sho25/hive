@@ -503,7 +503,7 @@ if|if
 condition|(
 name|plan
 operator|.
-name|getReducer
+name|getReduceWork
 argument_list|()
 operator|==
 literal|null
@@ -541,6 +541,16 @@ elseif|else
 if|if
 condition|(
 name|plan
+operator|.
+name|getReduceWork
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|plan
+operator|.
+name|getReduceWork
+argument_list|()
 operator|.
 name|getReducer
 argument_list|()
@@ -606,11 +616,6 @@ argument_list|()
 argument_list|,
 name|ctx
 operator|.
-name|getCurrTopOp
-argument_list|()
-argument_list|,
-name|ctx
-operator|.
 name|getCurrAliasId
 argument_list|()
 argument_list|)
@@ -625,7 +630,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 return|return
-literal|null
+literal|true
 return|;
 block|}
 block|}

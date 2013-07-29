@@ -448,6 +448,20 @@ name|IOException
 block|{
 comment|//no-op
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|setStore
+parameter_list|(
+name|Object
+name|hmsHandler
+parameter_list|)
+throws|throws
+name|TokenStoreException
+block|{
+comment|// no-op
+block|}
 block|}
 end_class
 

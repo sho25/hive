@@ -898,7 +898,16 @@ name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
 argument_list|,
-literal|"/tmp/"
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"java.io.tmpdir"
+argument_list|)
+operator|+
+name|File
+operator|.
+name|separator
 operator|+
 name|System
 operator|.
@@ -927,6 +936,20 @@ argument_list|(
 literal|"hive.exec.script.allow.partial.consumption"
 argument_list|,
 literal|false
+argument_list|)
+block|,
+name|STREAMREPORTERPERFIX
+argument_list|(
+literal|"stream.stderr.reporter.prefix"
+argument_list|,
+literal|"reporter:"
+argument_list|)
+block|,
+name|STREAMREPORTERENABLED
+argument_list|(
+literal|"stream.stderr.reporter.enabled"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|COMPRESSRESULT
@@ -1076,7 +1099,18 @@ name|DOWNLOADED_RESOURCES_DIR
 argument_list|(
 literal|"hive.downloaded.resources.dir"
 argument_list|,
-literal|"/tmp/${hive.session.id}_resources"
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"java.io.tmpdir"
+argument_list|)
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
+literal|"${hive.session.id}_resources"
 argument_list|)
 block|,
 name|DEFAULTPARTITIONNAME
@@ -1529,7 +1563,7 @@ name|METASTORE_CONNECTION_POOLING_TYPE
 argument_list|(
 literal|"datanucleus.connectionPoolingType"
 argument_list|,
-literal|"DBCP"
+literal|"BONECP"
 argument_list|)
 block|,
 name|METASTORE_VALIDATE_TABLES
@@ -1599,7 +1633,14 @@ name|METASTORE_IDENTIFIER_FACTORY
 argument_list|(
 literal|"datanucleus.identifierFactory"
 argument_list|,
-literal|"datanucleus"
+literal|"datanucleus1"
+argument_list|)
+block|,
+name|METASTORE_USE_LEGACY_VALUE_STRATEGY
+argument_list|(
+literal|"datanucleus.rdbms.useLegacyNativeValueStrategy"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|METASTORE_PLUGIN_REGISTRY_BUNDLE_CHECK
@@ -1723,7 +1764,7 @@ name|METASTORE_MANAGER_FACTORY_CLASS
 argument_list|(
 literal|"javax.jdo.PersistenceManagerFactoryClass"
 argument_list|,
-literal|"org.datanucleus.jdo.JDOPersistenceManagerFactory"
+literal|"org.datanucleus.api.jdo.JDOPersistenceManagerFactory"
 argument_list|)
 block|,
 name|METASTORE_DETACH_ALL_ON_COMMIT
@@ -2134,7 +2175,16 @@ name|HIVEHISTORYFILELOC
 argument_list|(
 literal|"hive.querylog.location"
 argument_list|,
-literal|"/tmp/"
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"java.io.tmpdir"
+argument_list|)
+operator|+
+name|File
+operator|.
+name|separator
 operator|+
 name|System
 operator|.
@@ -2712,6 +2762,27 @@ argument_list|,
 literal|4
 argument_list|)
 block|,
+name|HIVESAMPLINGFORORDERBY
+argument_list|(
+literal|"hive.optimize.sampling.orderby"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVESAMPLINGNUMBERFORORDERBY
+argument_list|(
+literal|"hive.optimize.sampling.orderby.number"
+argument_list|,
+literal|1000
+argument_list|)
+block|,
+name|HIVESAMPLINGPERCENTFORORDERBY
+argument_list|(
+literal|"hive.optimize.sampling.orderby.percent"
+argument_list|,
+literal|0.1f
+argument_list|)
+block|,
 comment|// whether to optimize union followed by select followed by filesink
 comment|// It creates sub-directories in the final output, so should not be turned on in systems
 comment|// where MAPREDUCE-1501 is not present
@@ -2722,6 +2793,14 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEOPTCORRELATION
+argument_list|(
+literal|"hive.optimize.correlation"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// exploit intra-query correlations
 comment|// whether hadoop map-reduce supports sub-directories. It was added by MAPREDUCE-1501.
 comment|// Some optimizations can only be performed if the version of hadoop being used supports
 comment|// sub-directories

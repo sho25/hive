@@ -269,6 +269,24 @@ name|cli
 operator|.
 name|thrift
 operator|.
+name|TCLIService
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
+name|thrift
+operator|.
 name|TExecuteStatementReq
 import|;
 end_import
@@ -306,24 +324,6 @@ operator|.
 name|thrift
 operator|.
 name|TOperationHandle
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|cli
-operator|.
-name|thrift
-operator|.
-name|TCLIService
 import|;
 end_import
 
@@ -1499,14 +1499,20 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
 argument_list|(
-literal|"Method not supported"
+name|parameterIndex
+argument_list|,
+name|x
+operator|.
+name|toString
+argument_list|()
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.PreparedStatement#setDate(int, java.sql.Date,    * java.util.Calendar)    */
 specifier|public
@@ -2275,6 +2281,22 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|closeOnCompletion
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
 comment|/**    *  Closes the prepared statement.    *    *  @throws SQLException    */
 specifier|public
 name|void
@@ -2782,6 +2804,22 @@ block|{
 return|return
 name|isClosed
 return|;
+block|}
+specifier|public
+name|boolean
+name|isCloseOnCompletion
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+comment|//JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#isPoolable()    */
 specifier|public

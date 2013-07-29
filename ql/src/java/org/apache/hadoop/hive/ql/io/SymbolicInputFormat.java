@@ -227,6 +227,9 @@ name|pathToParts
 init|=
 name|work
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getPathToPartitionInfo
 argument_list|()
 decl_stmt|;
@@ -272,6 +275,9 @@ argument_list|>
 name|pathToAliases
 init|=
 name|work
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|getPathToAliases
 argument_list|()

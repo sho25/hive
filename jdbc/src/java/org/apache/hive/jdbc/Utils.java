@@ -599,6 +599,23 @@ block|}
 elseif|else
 if|if
 condition|(
+literal|"date"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|type
+argument_list|)
+condition|)
+block|{
+return|return
+name|Types
+operator|.
+name|DATE
+return|;
+block|}
+elseif|else
+if|if
+condition|(
 literal|"timestamp"
 operator|.
 name|equalsIgnoreCase
@@ -892,6 +909,48 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|//Check to prevent unintentional use of embedded mode. A missing "/" can
+comment|// to separate the 'path' portion of URI can result in this.
+comment|//The missing "/" common typo while using secure mode, eg of such url -
+comment|// jdbc:hive2://localhost:10000;principal=hive/HiveServer2Host@YOUR-REALM.COM
+if|if
+condition|(
+operator|(
+name|jdbcURI
+operator|.
+name|getAuthority
+argument_list|()
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|jdbcURI
+operator|.
+name|getHost
+argument_list|()
+operator|==
+literal|null
+operator|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Bad URL format. Hostname not found "
+operator|+
+literal|" in authority part of the url: "
+operator|+
+name|jdbcURI
+operator|.
+name|getAuthority
+argument_list|()
+operator|+
+literal|". Are you missing a '/' after the hostname ?"
+argument_list|)
+throw|;
+block|}
 name|connParams
 operator|.
 name|setHost

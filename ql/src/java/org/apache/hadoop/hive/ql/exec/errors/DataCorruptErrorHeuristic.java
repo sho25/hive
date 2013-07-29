@@ -82,7 +82,7 @@ specifier|final
 name|String
 name|SPLIT_REGEX
 init|=
-literal|"split:.*"
+literal|"split:\\s*([^\\s]+)"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -178,21 +178,6 @@ literal|0
 condition|)
 block|{
 comment|// There should only be a single split line...
-assert|assert
-operator|(
-name|rll
-operator|.
-name|get
-argument_list|(
-name|SPLIT_REGEX
-argument_list|)
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|1
-operator|)
-assert|;
 name|String
 name|splitLogLine
 init|=
@@ -244,7 +229,9 @@ init|=
 name|m
 operator|.
 name|group
-argument_list|()
+argument_list|(
+literal|1
+argument_list|)
 decl_stmt|;
 name|es
 operator|=

@@ -15,6 +15,20 @@ name|templeton
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|eclipse
+operator|.
+name|jetty
+operator|.
+name|http
+operator|.
+name|HttpStatus
+import|;
+end_import
+
 begin_comment
 comment|/**  * The callback failed when it tried to reach the callback URL.  */
 end_comment
@@ -35,7 +49,9 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-literal|400
+name|HttpStatus
+operator|.
+name|BAD_REQUEST_400
 argument_list|,
 name|msg
 argument_list|)

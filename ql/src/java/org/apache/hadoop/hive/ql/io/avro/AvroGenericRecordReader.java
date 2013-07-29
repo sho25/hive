@@ -23,6 +23,36 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -191,7 +221,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
+name|MapWork
 import|;
 end_import
 
@@ -291,37 +321,63 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|*
+name|FileSplit
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|io
+name|apache
 operator|.
-name|IOException
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobConf
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Map
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobConfigurable
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Properties
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|RecordReader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|Reporter
 import|;
 end_import
 
@@ -457,6 +513,7 @@ name|latest
 operator|!=
 literal|null
 condition|)
+block|{
 name|gdr
 operator|.
 name|setExpected
@@ -464,6 +521,7 @@ argument_list|(
 name|latest
 argument_list|)
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|reader
@@ -564,12 +622,12 @@ name|job
 argument_list|)
 condition|)
 block|{
-name|MapredWork
-name|mapRedWork
+name|MapWork
+name|mapWork
 init|=
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getMapWork
 argument_list|(
 name|job
 argument_list|)
@@ -588,7 +646,7 @@ name|PartitionDesc
 argument_list|>
 name|pathsAndParts
 range|:
-name|mapRedWork
+name|mapWork
 operator|.
 name|getPathToPartitionInfo
 argument_list|()
@@ -682,10 +740,12 @@ argument_list|)
 return|;
 block|}
 else|else
+block|{
 return|return
 literal|null
 return|;
 comment|// If it's not in this property, it won't be in any others
+block|}
 block|}
 block|}
 if|if
@@ -695,6 +755,7 @@ operator|.
 name|isInfoEnabled
 argument_list|()
 condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -706,6 +767,7 @@ operator|+
 literal|" with a partition."
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// In "select * from table" situations (non-MR), we can add things to the job
 comment|// It's safe to add this to the job since it's not *actually* a mapred job.

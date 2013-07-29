@@ -653,7 +653,7 @@ name|pathToPartitionInfo
 init|=
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getMapWork
 argument_list|(
 name|job
 argument_list|)
@@ -1009,7 +1009,7 @@ name|pathToPartitionInfo
 init|=
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getMapWork
 argument_list|(
 name|getJob
 argument_list|()

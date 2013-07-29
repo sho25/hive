@@ -301,6 +301,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Reads a boolean from this stream.    *     * @return the next boolean value from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|boolean
@@ -337,6 +339,8 @@ literal|0
 return|;
 block|}
 comment|/**    * Reads an 8-bit byte value from this stream.    *     * @return the next byte value from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|byte
@@ -433,6 +437,8 @@ return|return
 name|offset
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|char
@@ -487,6 +493,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Reads a 64-bit<code>double</code> value from this stream.    *     * @return the next<code>double</code> value from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|double
@@ -506,6 +514,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Reads a 32-bit<code>float</code> value from this stream.    *     * @return the next<code>float</code> value from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|float
@@ -525,6 +535,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Reads bytes from this stream into the byte array<code>buffer</code>. This    * method will block until<code>buffer.length</code> number of bytes have    * been read.    *     * @param buffer    *          to read bytes into    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|void
@@ -550,6 +562,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Reads bytes from this stream and stores them in the byte array    *<code>buffer</code> starting at the position<code>offset</code>. This    * method blocks until<code>count</code> bytes have been read.    *     * @param buffer    *          the byte array into which the data is read    * @param offset    *          the offset the operation start at    * @param length    *          the maximum number of bytes to read    *     * @throws IOException    *           if a problem occurs while reading from this stream    * @throws EOFException    *           if reaches the end of the stream before enough bytes have been    *           read    */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|void
@@ -675,6 +689,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Reads a 32-bit integer value from this stream.    *     * @return the next<code>int</code> value from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|int
@@ -752,6 +768,8 @@ block|}
 comment|/**    * Answers a<code>String</code> representing the next line of text available    * in this BufferedReader. A line is represented by 0 or more characters    * followed by<code>'\n'</code>,<code>'\r'</code>,<code>"\n\r"</code> or    * end of stream. The<code>String</code> does not include the newline    * sequence.    *     * @return the contents of the line or null if no characters were read before    *         end of stream.    *     * @throws IOException    *           If the DataInputStream is already closed or some other IO error    *           occurs.    *     * @deprecated Use BufferedReader    */
 annotation|@
 name|Deprecated
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|String
@@ -931,6 +949,8 @@ block|}
 block|}
 block|}
 comment|/**    * Reads a 64-bit<code>long</code> value from this stream.    *     * @return the next<code>long</code> value from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|long
@@ -1076,6 +1096,8 @@ operator|)
 return|;
 block|}
 comment|/**    * Reads a 16-bit<code>short</code> value from this stream.    *     * @return the next<code>short</code> value from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|short
@@ -1130,6 +1152,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Reads an unsigned 8-bit<code>byte</code> value from this stream and    * returns it as an int.    *     * @return the next unsigned byte value from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|int
@@ -1164,6 +1188,8 @@ name|temp
 return|;
 block|}
 comment|/**    * Reads a 16-bit unsigned<code>short</code> value from this stream and    * returns it as an int.    *     * @return the next unsigned<code>short</code> value from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|int
@@ -1218,6 +1244,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Reads a UTF format String from this Stream.    *     * @return the next UTF String from the source stream.    *     * @throws IOException    *           If a problem occurs reading from this DataInputStream.    *     */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|String
@@ -1336,6 +1364,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Skips<code>count</code> number of bytes in this stream. Subsequent    *<code>read()</code>'s will not return these bytes unless    *<code>reset()</code> is used.    *     * @param count    *          the number of bytes to skip.    * @return the number of bytes actually skipped.    *     * @throws IOException    *           If the stream is already closed or another IOException occurs.    */
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|int

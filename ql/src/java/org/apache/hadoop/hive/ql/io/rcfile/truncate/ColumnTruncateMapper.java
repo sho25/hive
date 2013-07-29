@@ -521,7 +521,7 @@ name|ColumnTruncateWork
 operator|)
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getMapWork
 argument_list|(
 name|job
 argument_list|)

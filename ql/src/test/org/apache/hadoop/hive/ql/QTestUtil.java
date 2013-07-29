@@ -5372,7 +5372,7 @@ control|)
 block|{
 name|Utilities
 operator|.
-name|serializeTasks
+name|serializeObject
 argument_list|(
 name|plan
 argument_list|,
@@ -5941,8 +5941,6 @@ block|,
 literal|".*transient_lastDdlTime.*"
 block|,
 literal|".*last_modified_.*"
-block|,
-literal|".*java.lang.RuntimeException.*"
 block|,
 literal|".*at org.*"
 block|,

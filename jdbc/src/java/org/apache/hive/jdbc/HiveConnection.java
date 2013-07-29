@@ -171,6 +171,18 @@ name|java
 operator|.
 name|util
 operator|.
+name|concurrent
+operator|.
+name|Executor
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedList
 import|;
 end_import
@@ -1198,6 +1210,25 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|abort
+parameter_list|(
+name|Executor
+name|executor
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#clearWarnings()    */
 specifier|public
 name|void
@@ -1590,6 +1621,38 @@ argument_list|,
 name|sessHandle
 argument_list|)
 return|;
+block|}
+specifier|public
+name|int
+name|getNetworkTimeout
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
+specifier|public
+name|String
+name|getSchema
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getTransactionIsolation()    */
 specifier|public
@@ -2105,6 +2168,28 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
+specifier|public
+name|void
+name|setNetworkTimeout
+parameter_list|(
+name|Executor
+name|executor
+parameter_list|,
+name|int
+name|milliseconds
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setReadOnly(boolean)    */
 specifier|public
 name|void
@@ -2154,6 +2239,25 @@ throws|throws
 name|SQLException
 block|{
 comment|// TODO Auto-generated method stub
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method not supported"
+argument_list|)
+throw|;
+block|}
+specifier|public
+name|void
+name|setSchema
+parameter_list|(
+name|String
+name|schema
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|// JDK 1.7
 throw|throw
 operator|new
 name|SQLException

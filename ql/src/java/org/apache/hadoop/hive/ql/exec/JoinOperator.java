@@ -463,7 +463,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// number of rows for the key in the given table
-name|int
+name|long
 name|sz
 init|=
 name|storage
@@ -536,6 +536,9 @@ name|currBigKeyTag
 operator|>=
 literal|0
 operator|)
+operator|&&
+operator|!
+name|hasLeftSemiJoin
 condition|)
 block|{
 if|if
@@ -543,6 +546,12 @@ condition|(
 name|sz
 operator|==
 name|joinEmitInterval
+operator|&&
+operator|!
+name|hasFilter
+argument_list|(
+name|alias
+argument_list|)
 condition|)
 block|{
 comment|// The input is sorted by alias, so if we are already in the last join

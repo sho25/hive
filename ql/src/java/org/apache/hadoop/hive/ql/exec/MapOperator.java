@@ -187,6 +187,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|mr
+operator|.
+name|ExecMapperContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -225,7 +245,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
+name|MapWork
 import|;
 end_import
 
@@ -582,7 +602,7 @@ name|MapOperator
 extends|extends
 name|Operator
 argument_list|<
-name|MapredWork
+name|MapWork
 argument_list|>
 implements|implements
 name|Serializable
@@ -1167,15 +1187,15 @@ parameter_list|(
 name|Configuration
 name|hconf
 parameter_list|,
-name|MapredWork
-name|mrwork
+name|MapWork
+name|mapWork
 parameter_list|)
 throws|throws
 name|HiveException
 block|{
 name|setConf
 argument_list|(
-name|mrwork
+name|mapWork
 argument_list|)
 expr_stmt|;
 name|setChildren
@@ -1195,7 +1215,7 @@ specifier|private
 name|MapOpCtx
 name|initObjectInspector
 parameter_list|(
-name|MapredWork
+name|MapWork
 name|conf
 parameter_list|,
 name|Configuration
@@ -1249,7 +1269,9 @@ operator|.
 name|getPartSpec
 argument_list|()
 decl_stmt|;
-comment|// Use tblProps in case of unpartitioned tables
+comment|// Use table properties in case of unpartitioned tables,
+comment|// and the union of table properties and partition properties, with partition
+comment|// taking precedence
 name|Properties
 name|partProps
 init|=
@@ -1280,7 +1302,7 @@ argument_list|()
 else|:
 name|pd
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 decl_stmt|;
 name|Class
@@ -2300,7 +2322,7 @@ name|tblProps
 else|:
 name|pd
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 decl_stmt|;
 name|Class

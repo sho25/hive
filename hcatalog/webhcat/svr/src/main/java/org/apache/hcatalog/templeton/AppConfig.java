@@ -476,6 +476,14 @@ name|HADOOP_CHILD_JAVA_OPTS
 init|=
 literal|"mapred.child.java.opts"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|UNIT_TEST_MODE
+init|=
+literal|"templeton.unit.test.mode"
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final

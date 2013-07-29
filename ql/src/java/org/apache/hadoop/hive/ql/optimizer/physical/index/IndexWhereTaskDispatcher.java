@@ -649,6 +649,9 @@ name|getWork
 argument_list|()
 operator|)
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getAliasToWork
 argument_list|()
 operator|.

@@ -140,7 +140,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * List of all error messages.  * This list contains both compile time and run-time errors.  **/
+comment|/**  * List of all error messages.  * This list contains both compile time and run-time errors.  *  * This class supports parametrized messages such as (@link #TRUNCATE_FOR_NON_MANAGED_TABLE}.  These are  * preferable over un-parametrized ones where arbitrary String is appended to the end of the message,  * for example {@link #getMsg(String)} and {@link #INVALID_TABLE}.  */
 end_comment
 
 begin_enum
@@ -149,7 +149,7 @@ enum|enum
 name|ErrorMsg
 block|{
 comment|// The error codes are Hive-specific and partitioned into the following ranges:
-comment|// 10000 to 19999: Errors occuring during semantic analysis and compilation of the query.
+comment|// 10000 to 19999: Errors occurring during semantic analysis and compilation of the query.
 comment|// 20000 to 29999: Runtime errors where Hive believes that retries are unlikely to succeed.
 comment|// 30000 to 39999: Runtime errors which Hive thinks may be transient and retrying may succeed.
 comment|// 40000 to 49999: Errors where Hive is unable to advise about retries.
@@ -900,9 +900,9 @@ name|UNSUPPORTED_TYPE
 argument_list|(
 literal|10099
 argument_list|,
-literal|"DATE and DATETIME types aren't supported yet. Please use "
+literal|"DATETIME type isn't supported yet. Please use "
 operator|+
-literal|"TIMESTAMP instead"
+literal|"DATE or TIMESTAMP instead"
 argument_list|)
 block|,
 name|CREATE_NON_NATIVE_AS
@@ -1613,6 +1613,47 @@ argument_list|,
 literal|"A column on which a partition/table is list bucketed cannot be truncated."
 argument_list|)
 block|,
+name|TABLE_NOT_PARTITIONED
+argument_list|(
+literal|10241
+argument_list|,
+literal|"Table {0} is not a partitioned table"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|DATABSAE_ALREADY_EXISTS
+argument_list|(
+literal|10242
+argument_list|,
+literal|"Database {0} already exists"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|CANNOT_REPLACE_COLUMNS
+argument_list|(
+literal|10243
+argument_list|,
+literal|"Replace columns is not supported for table {0}. SerDe may be incompatible."
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|BAD_LOCATION_VALUE
+argument_list|(
+literal|10244
+argument_list|,
+literal|"{0}  is not absolute or has no scheme information.  Please specify a complete absolute uri with scheme information."
+argument_list|)
+block|,
+name|UNSUPPORTED_ALTER_TBL_OP
+argument_list|(
+literal|10245
+argument_list|,
+literal|"{0} alter table options is not supported"
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
@@ -2206,7 +2247,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * For a given error message string, searches for a<code>ErrorMsg</code> enum    * that appears to be a match. If an match is found, returns the    *<code>SQLState</code> associated with the<code>ErrorMsg</code>. If a match    * is not found or<code>ErrorMsg</code> has no<code>SQLState</code>, returns    * the<code>SQLState</code> bound to the<code>GENERIC_ERROR</code>    *<code>ErrorMsg</code>.    *    * @param mesg    *          An error message string    * @return SQLState    */
+comment|/**    * For a given error message string, searches for a<code>ErrorMsg</code> enum    * that appears to be a match. If a match is found, returns the    *<code>SQLState</code> associated with the<code>ErrorMsg</code>. If a match    * is not found or<code>ErrorMsg</code> has no<code>SQLState</code>, returns    * the<code>SQLState</code> bound to the<code>GENERIC_ERROR</code>    *<code>ErrorMsg</code>.    *    * @param mesg    *          An error message string    * @return SQLState    */
 specifier|public
 specifier|static
 name|String
@@ -2848,6 +2889,7 @@ block|}
 argument_list|)
 return|;
 block|}
+comment|/**    * If the message is parametrized, this will fill the parameters with supplied     * {@code reasons}, otherwise {@code reasons} are appended at the end of the     * message.    */
 specifier|public
 name|String
 name|format
@@ -2857,17 +2899,116 @@ modifier|...
 name|reasons
 parameter_list|)
 block|{
-assert|assert
+comment|/* Not all messages are parametrized even those that should have been, e.g {@link #INVALID_TABLE}.      INVALID_TABLE is usually used with {@link #getMsg(String)}.      This method can also be used with INVALID_TABLE and the like and will match getMsg(String) behavior.       Another example: {@link #INVALID_PARTITION}.  Ideally you want the message to have 2 parameters one for      partition name one for table name.  Since this is already defined w/o any parameters, one can still call      {@code INVALID_PARTITION.format("<partName><table Name>"}.  This way the message text will be slightly      different but at least the errorCode will match.  Note this, should not be abused by adding anything other      than what should have been parameter names to keep msg text standardized.      */
+if|if
+condition|(
+name|reasons
+operator|==
+literal|null
+operator|||
+name|reasons
+operator|.
+name|length
+operator|==
+literal|0
+condition|)
+block|{
+return|return
+name|getMsg
+argument_list|()
+return|;
+block|}
+if|if
+condition|(
 name|format
 operator|!=
 literal|null
-assert|;
+condition|)
+block|{
 return|return
 name|format
 operator|.
 name|format
 argument_list|(
 name|reasons
+argument_list|)
+return|;
+block|}
+if|if
+condition|(
+name|reasons
+operator|.
+name|length
+operator|>
+literal|1
+condition|)
+block|{
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|String
+name|re
+range|:
+name|reasons
+control|)
+block|{
+if|if
+condition|(
+name|re
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|sb
+operator|.
+name|length
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|" "
+argument_list|)
+expr_stmt|;
+block|}
+name|sb
+operator|.
+name|append
+argument_list|(
+name|re
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+return|return
+name|getMsg
+argument_list|(
+name|sb
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+return|;
+block|}
+return|return
+name|getMsg
+argument_list|(
+name|reasons
+index|[
+literal|0
+index|]
 argument_list|)
 return|;
 block|}

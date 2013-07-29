@@ -1841,6 +1841,11 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
+name|super
+operator|.
+name|startGroup
+argument_list|()
+expr_stmt|;
 block|}
 specifier|protected
 name|int
@@ -1913,26 +1918,7 @@ name|short
 index|[]
 name|filterTags
 decl_stmt|;
-comment|// ANDed value of all filter tags in current join group
-comment|// if any of values passes on outer join alias (which makes zero for the tag alias),
-comment|// it means there exists a pair for it, and no need to check outer join (just do inner join)
-comment|//
-comment|// for example, with table a, b something like,
-comment|//   a, b = 100, 10 | 100, 20 | 100, 30
-comment|//
-comment|// the query "a FOJ b ON a.k=b.k AND a.v>0 AND b.v>20" makes values with tag
-comment|//
-comment|//   a = 100, 10, 00000010 | 100, 20, 00000010 | 100, 30, 00000010 : 0/1 for 'b' (alias 1)
-comment|//   b = 100, 10, 00000001 | 100, 20, 00000001 | 100, 30, 00000000 : 0/1 for 'a' (alias 0)
-comment|//
-comment|// which makes aliasFilterTags for a = 00000010, for b = 00000000
-comment|//
-comment|// for LO, b = 0000000(0) means there is a pair object(s) in 'b' (has no 'a'-null case)
-comment|// for RO, a = 000000(1)0 means there is no pair object in 'a' (has null-'b' case)
-comment|//
-comment|// result : 100, 10 + 100, 30 | 100, 20 + 100, 30 | 100, 30 + 100, 30 |
-comment|//          N       + 100, 10 | N       + 100, 20
-comment|//
+comment|/**    * On filterTags    *    * ANDed value of all filter tags in current join group    * if any of values passes on outer join alias (which makes zero for the tag alias),    * it means there exists a pair for it and safely regarded as a inner join    *    * for example, with table a, b something like,    *   a = 100, 10 | 100, 20 | 100, 30    *   b = 100, 10 | 100, 20 | 100, 30    *    * the query "a FO b ON a.k=b.k AND a.v>10 AND b.v>30" makes filter map    *   0(a) = [1(b),1] : a.v>10    *   1(b) = [0(a),1] : b.v>30    *    * for filtered rows in a (100,10) create a-NULL    * for filtered rows in b (100,10) (100,20) (100,30) create NULL-b    *    * with 0(a) = [1(b),1] : a.v>10    *   100, 10 = 00000010 (filtered)    *   100, 20 = 00000000 (valid)    *   100, 30 = 00000000 (valid)    * -------------------------    *       sum = 00000000 : for valid rows in b, there is at least one pair in a    *    * with 1(b) = [0(a),1] : b.v>30    *   100, 10 = 00000001 (filtered)    *   100, 20 = 00000001 (filtered)    *   100, 30 = 00000001 (filtered)    * -------------------------    *       sum = 00000001 : for valid rows in a (100,20) (100,30), there is no pair in b    *    * result :    *   100, 10 :   N,  N    *     N,  N : 100, 10    *     N,  N : 100, 20    *     N,  N : 100, 30    *   100, 20 :   N,  N    *   100, 30 :   N,  N    */
 specifier|protected
 specifier|transient
 name|short
