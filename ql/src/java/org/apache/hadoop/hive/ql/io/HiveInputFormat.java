@@ -273,7 +273,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
+name|MapWork
 import|;
 end_import
 
@@ -1396,7 +1396,7 @@ name|PartitionDesc
 argument_list|>
 name|pathToPartitionInfo
 decl_stmt|;
-name|MapredWork
+name|MapWork
 name|mrwork
 init|=
 literal|null
@@ -1413,7 +1413,7 @@ name|mrwork
 operator|=
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getMapWork
 argument_list|(
 name|job
 argument_list|)

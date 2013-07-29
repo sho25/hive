@@ -241,7 +241,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
+name|ReduceWork
 import|;
 end_import
 
@@ -736,12 +736,12 @@ name|jc
 operator|=
 name|job
 expr_stmt|;
-name|MapredWork
+name|ReduceWork
 name|gWork
 init|=
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getReduceWork
 argument_list|(
 name|job
 argument_list|)

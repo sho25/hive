@@ -503,7 +503,7 @@ if|if
 condition|(
 name|plan
 operator|.
-name|getReducer
+name|getReduceWork
 argument_list|()
 operator|==
 literal|null
@@ -541,6 +541,16 @@ elseif|else
 if|if
 condition|(
 name|plan
+operator|.
+name|getReduceWork
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|plan
+operator|.
+name|getReduceWork
+argument_list|()
 operator|.
 name|getReducer
 argument_list|()

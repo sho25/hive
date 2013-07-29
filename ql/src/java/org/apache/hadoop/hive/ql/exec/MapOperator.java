@@ -245,7 +245,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
+name|MapWork
 import|;
 end_import
 
@@ -602,7 +602,7 @@ name|MapOperator
 extends|extends
 name|Operator
 argument_list|<
-name|MapredWork
+name|MapWork
 argument_list|>
 implements|implements
 name|Serializable
@@ -1187,15 +1187,15 @@ parameter_list|(
 name|Configuration
 name|hconf
 parameter_list|,
-name|MapredWork
-name|mrwork
+name|MapWork
+name|mapWork
 parameter_list|)
 throws|throws
 name|HiveException
 block|{
 name|setConf
 argument_list|(
-name|mrwork
+name|mapWork
 argument_list|)
 expr_stmt|;
 name|setChildren
@@ -1215,7 +1215,7 @@ specifier|private
 name|MapOpCtx
 name|initObjectInspector
 parameter_list|(
-name|MapredWork
+name|MapWork
 name|conf
 parameter_list|,
 name|Configuration

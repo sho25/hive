@@ -1481,6 +1481,7 @@ name|ret
 return|;
 block|}
 comment|/**    * Attempt to derive a virtual<code>base file name</code> property from the    * path. If path format is unrecognized, just use the full path.    *    * @param path    *          URI to the partition file    */
+specifier|public
 name|void
 name|deriveBaseFileName
 parameter_list|(

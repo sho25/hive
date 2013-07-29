@@ -235,7 +235,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
+name|MapWork
 import|;
 end_import
 
@@ -315,7 +315,7 @@ specifier|public
 class|class
 name|MergeWork
 extends|extends
-name|MapredWork
+name|MapWork
 implements|implements
 name|Serializable
 block|{
@@ -467,24 +467,6 @@ argument_list|,
 name|PartitionDesc
 argument_list|>
 argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|this
-operator|.
-name|getNumReduceTasks
-argument_list|()
-operator|==
-literal|null
-condition|)
-block|{
-name|this
-operator|.
-name|setNumReduceTasks
-argument_list|(
-literal|0
 argument_list|)
 expr_stmt|;
 block|}
