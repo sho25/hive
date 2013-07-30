@@ -1637,6 +1637,26 @@ name|udf
 operator|.
 name|generic
 operator|.
+name|GenericUDFBaseCompare
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|generic
+operator|.
 name|GenericUDFOPAnd
 import|;
 end_import
@@ -1658,6 +1678,26 @@ operator|.
 name|generic
 operator|.
 name|GenericUDFOPEqual
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|generic
+operator|.
+name|GenericUDFOPNotEqual
 import|;
 end_import
 
@@ -12197,7 +12237,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Check if a function can be pushed down to JDO.    * Now only {=, AND, OR} are supported.    * @param func a generic function.    * @return true if this function can be pushed down to JDO filter.    */
+comment|/**    * Check if a function can be pushed down to JDO.    * Now only {compares, AND, OR} are supported.    * @param func a generic function.    * @return true if this function can be pushed down to JDO filter.    */
 specifier|private
 specifier|static
 name|boolean
@@ -12207,10 +12247,17 @@ name|GenericUDF
 name|func
 parameter_list|)
 block|{
+comment|// TODO: we might also want to add "not" and "between" here in future.
+comment|// TODO: change to GenericUDFBaseCompare once DN is upgraded
+comment|//       (see HIVE-2609 - in DN 2.0, substrings do not work in MySQL).
 return|return
 name|func
 operator|instanceof
 name|GenericUDFOPEqual
+operator|||
+name|func
+operator|instanceof
+name|GenericUDFOPNotEqual
 operator|||
 name|func
 operator|instanceof
@@ -12221,7 +12268,76 @@ operator|instanceof
 name|GenericUDFOPOr
 return|;
 block|}
-comment|/**    * Check if the partition pruning expression can be pushed down to JDO filtering.    * The partition expression contains only partition columns.    * The criteria that an expression can be pushed down are that:    *  1) the expression only contains function specified in supportedJDOFuncs().    *     Now only {=, AND, OR} can be pushed down.    *  2) the partition column type and the constant type have to be String. This is    *     restriction by the current JDO filtering implementation.    * @param tab The table that contains the partition columns.    * @param expr the partition pruning expression    * @return null if the partition pruning expression can be pushed down to JDO filtering.    */
+comment|/**    * Check if a function can be pushed down to JDO for integral types.    * Only {=, !=} are supported. lt/gt/etc. to be dealt with in HIVE-4888.    * @param func a generic function.    * @return true iff this function can be pushed down to JDO filter for integral types.    */
+specifier|private
+specifier|static
+name|boolean
+name|doesJDOFuncSupportIntegral
+parameter_list|(
+name|GenericUDF
+name|func
+parameter_list|)
+block|{
+comment|// AND, OR etc. don't need to be specified here.
+return|return
+name|func
+operator|instanceof
+name|GenericUDFOPEqual
+operator|||
+name|func
+operator|instanceof
+name|GenericUDFOPNotEqual
+return|;
+block|}
+comment|/**    * @param type type    * @param constant The constant, if any.    * @return true iff type is an integral type.    */
+specifier|private
+specifier|static
+name|boolean
+name|isIntegralType
+parameter_list|(
+name|String
+name|type
+parameter_list|)
+block|{
+return|return
+name|type
+operator|.
+name|equals
+argument_list|(
+name|serdeConstants
+operator|.
+name|TINYINT_TYPE_NAME
+argument_list|)
+operator|||
+name|type
+operator|.
+name|equals
+argument_list|(
+name|serdeConstants
+operator|.
+name|SMALLINT_TYPE_NAME
+argument_list|)
+operator|||
+name|type
+operator|.
+name|equals
+argument_list|(
+name|serdeConstants
+operator|.
+name|INT_TYPE_NAME
+argument_list|)
+operator|||
+name|type
+operator|.
+name|equals
+argument_list|(
+name|serdeConstants
+operator|.
+name|BIGINT_TYPE_NAME
+argument_list|)
+return|;
+block|}
+comment|/**    * Check if the partition pruning expression can be pushed down to JDO filtering.    * The partition expression contains only partition columns.    * The criteria that an expression can be pushed down are that:    *  1) the expression only contains function specified in supportedJDOFuncs().    *     Now only {=, AND, OR} can be pushed down.    *  2) the partition column type and the constant type have to be String. This is    *     restriction by the current JDO filtering implementation.    * @param tab The table that contains the partition columns.    * @param expr the partition pruning expression    * @param parent parent UDF of expr if parent exists and contains a UDF; otherwise null.    * @return null if the partition pruning expression can be pushed down to JDO filtering.    */
 specifier|public
 specifier|static
 name|String
@@ -12232,16 +12348,57 @@ name|tab
 parameter_list|,
 name|ExprNodeDesc
 name|expr
+parameter_list|,
+name|GenericUDF
+name|parent
 parameter_list|)
 block|{
-if|if
-condition|(
+name|boolean
+name|isConst
+init|=
 name|expr
 operator|instanceof
 name|ExprNodeConstantDesc
+decl_stmt|;
+name|boolean
+name|isCol
+init|=
+operator|!
+name|isConst
+operator|&&
+operator|(
+name|expr
+operator|instanceof
+name|ExprNodeColumnDesc
+operator|)
+decl_stmt|;
+name|boolean
+name|isIntegralSupported
+init|=
+operator|(
+name|parent
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|isConst
+operator|||
+name|isCol
+operator|)
+operator|&&
+name|doesJDOFuncSupportIntegral
+argument_list|(
+name|parent
+argument_list|)
+decl_stmt|;
+comment|// JDO filter now only support String typed literals, as well as integers
+comment|// for some operators; see Filter.g and ExpressionTree.java.
+if|if
+condition|(
+name|isConst
 condition|)
 block|{
-comment|// JDO filter now only support String typed literal -- see Filter.g and ExpressionTree.java
 name|Object
 name|value
 init|=
@@ -12266,23 +12423,58 @@ return|return
 literal|null
 return|;
 block|}
+if|if
+condition|(
+name|isIntegralSupported
+operator|&&
+name|isIntegralType
+argument_list|(
+name|expr
+operator|.
+name|getTypeInfo
+argument_list|()
+operator|.
+name|getTypeName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 return|return
 literal|"Constant "
 operator|+
 name|value
 operator|+
-literal|" is not string type"
+literal|" is not string "
+operator|+
+operator|(
+name|isIntegralSupported
+condition|?
+literal|"or integral "
+else|:
+literal|""
+operator|)
+operator|+
+literal|"type: "
+operator|+
+name|expr
+operator|.
+name|getTypeInfo
+argument_list|()
+operator|.
+name|getTypeName
+argument_list|()
 return|;
 block|}
 elseif|else
 if|if
 condition|(
-name|expr
-operator|instanceof
-name|ExprNodeColumnDesc
+name|isCol
 condition|)
 block|{
-comment|// JDO filter now only support String typed literal -- see Filter.g and ExpressionTree.java
 name|TypeInfo
 name|type
 init|=
@@ -12304,6 +12496,18 @@ name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
+operator|||
+operator|(
+name|isIntegralSupported
+operator|&&
+name|isIntegralType
+argument_list|(
+name|type
+operator|.
+name|getTypeName
+argument_list|()
+argument_list|)
+operator|)
 condition|)
 block|{
 name|String
@@ -12356,6 +12560,18 @@ name|serdeConstants
 operator|.
 name|STRING_TYPE_NAME
 argument_list|)
+operator|||
+operator|(
+name|isIntegralSupported
+operator|&&
+name|isIntegralType
+argument_list|(
+name|fs
+operator|.
+name|getType
+argument_list|()
+argument_list|)
+operator|)
 condition|)
 block|{
 return|return
@@ -12370,7 +12586,22 @@ operator|.
 name|getName
 argument_list|()
 operator|+
-literal|" is not string type"
+literal|" is not string "
+operator|+
+operator|(
+name|isIntegralSupported
+condition|?
+literal|"or integral "
+else|:
+literal|""
+operator|)
+operator|+
+literal|"type: "
+operator|+
+name|fs
+operator|.
+name|getType
+argument_list|()
 return|;
 block|}
 block|}
@@ -12391,7 +12622,22 @@ operator|.
 name|getExprString
 argument_list|()
 operator|+
-literal|" is not string type"
+literal|" is not string "
+operator|+
+operator|(
+name|isIntegralSupported
+condition|?
+literal|"or integral "
+else|:
+literal|""
+operator|)
+operator|+
+literal|"type: "
+operator|+
+name|type
+operator|.
+name|getTypeName
+argument_list|()
 return|;
 block|}
 block|}
@@ -12486,6 +12732,8 @@ argument_list|(
 name|tab
 argument_list|,
 name|child
+argument_list|,
+name|func
 argument_list|)
 decl_stmt|;
 if|if
