@@ -594,6 +594,9 @@ name|intWritable
 operator|.
 name|set
 argument_list|(
+operator|(
+name|int
+operator|)
 name|i
 operator|.
 name|getSeconds

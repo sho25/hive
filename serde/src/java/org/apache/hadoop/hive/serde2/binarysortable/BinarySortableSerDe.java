@@ -2538,7 +2538,9 @@ init|=
 operator|new
 name|byte
 index|[
-literal|8
+name|TimestampWritable
+operator|.
+name|BINARY_SORTABLE_LENGTH
 index|]
 decl_stmt|;
 for|for
