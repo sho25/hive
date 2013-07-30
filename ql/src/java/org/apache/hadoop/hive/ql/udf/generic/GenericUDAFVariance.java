@@ -564,6 +564,9 @@ return|;
 case|case
 name|BOOLEAN
 case|:
+case|case
+name|DATE
+case|:
 default|default:
 throw|throw
 operator|new

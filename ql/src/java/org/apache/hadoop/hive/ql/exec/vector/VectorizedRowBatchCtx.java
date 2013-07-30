@@ -515,6 +515,9 @@ argument_list|(
 name|hiveConf
 argument_list|)
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getPathToPartitionInfo
 argument_list|()
 decl_stmt|;

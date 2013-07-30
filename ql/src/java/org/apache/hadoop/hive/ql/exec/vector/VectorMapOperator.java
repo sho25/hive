@@ -191,9 +191,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|mr
-operator|.
-name|ExecMapperContext
+name|Operator
 import|;
 end_import
 
@@ -211,7 +209,9 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Operator
+name|mr
+operator|.
+name|ExecMapperContext
 import|;
 end_import
 
@@ -1235,6 +1235,9 @@ name|pd
 init|=
 name|conf
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getPathToPartitionInfo
 argument_list|()
 operator|.
@@ -1797,6 +1800,9 @@ name|onefile
 range|:
 name|conf
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getPathToAliases
 argument_list|()
 operator|.
@@ -1808,6 +1814,9 @@ name|PartitionDesc
 name|pd
 init|=
 name|conf
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|getPathToPartitionInfo
 argument_list|()
@@ -2327,6 +2336,9 @@ name|onefile
 range|:
 name|conf
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getPathToAliases
 argument_list|()
 operator|.
@@ -2471,6 +2483,9 @@ name|aliases
 init|=
 name|conf
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getPathToAliases
 argument_list|()
 operator|.
@@ -2506,6 +2521,9 @@ argument_list|>
 name|op
 init|=
 name|conf
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|getAliasToWork
 argument_list|()
@@ -3776,6 +3794,9 @@ name|onefile
 range|:
 name|conf
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getPathToAliases
 argument_list|()
 operator|.
@@ -3834,6 +3855,9 @@ name|onealias
 init|=
 name|conf
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getPathToAliases
 argument_list|()
 operator|.
@@ -3856,6 +3880,9 @@ argument_list|>
 name|op
 init|=
 name|conf
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|getAliasToWork
 argument_list|()

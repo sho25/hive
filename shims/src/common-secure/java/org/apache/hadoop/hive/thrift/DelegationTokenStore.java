@@ -212,6 +212,17 @@ name|DelegationTokenIdentifier
 argument_list|>
 name|getAllDelegationTokenIdentifiers
 parameter_list|()
+throws|throws
+name|TokenStoreException
+function_decl|;
+name|void
+name|setStore
+parameter_list|(
+name|Object
+name|hmsHandler
+parameter_list|)
+throws|throws
+name|TokenStoreException
 function_decl|;
 block|}
 end_interface

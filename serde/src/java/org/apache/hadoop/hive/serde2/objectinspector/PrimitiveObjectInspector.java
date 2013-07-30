@@ -54,6 +54,8 @@ name|DOUBLE
 block|,
 name|STRING
 block|,
+name|DATE
+block|,
 name|TIMESTAMP
 block|,
 name|BINARY

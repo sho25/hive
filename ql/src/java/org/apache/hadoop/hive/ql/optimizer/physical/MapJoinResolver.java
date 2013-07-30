@@ -757,6 +757,9 @@ name|localwork
 init|=
 name|mapredWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getMapLocalWork
 argument_list|()
 decl_stmt|;
@@ -820,6 +823,9 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 name|mapredWork
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|setTmpHDFSFileURI
 argument_list|(
@@ -987,6 +993,9 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|mapredWork
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|setMapLocalWork
 argument_list|(

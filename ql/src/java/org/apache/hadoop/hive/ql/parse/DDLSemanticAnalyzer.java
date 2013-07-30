@@ -2080,15 +2080,9 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|// date and datetime types aren't currently supported
+comment|// datetime type isn't currently supported
 if|if
 condition|(
-name|token
-operator|==
-name|HiveParser
-operator|.
-name|TOK_DATE
-operator|||
 name|token
 operator|==
 name|HiveParser

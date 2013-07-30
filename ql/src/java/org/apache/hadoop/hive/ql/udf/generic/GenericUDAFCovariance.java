@@ -639,6 +639,9 @@ case|:
 case|case
 name|BOOLEAN
 case|:
+case|case
+name|DATE
+case|:
 default|default:
 throw|throw
 operator|new
@@ -665,6 +668,9 @@ name|STRING
 case|:
 case|case
 name|BOOLEAN
+case|:
+case|case
+name|DATE
 case|:
 default|default:
 throw|throw

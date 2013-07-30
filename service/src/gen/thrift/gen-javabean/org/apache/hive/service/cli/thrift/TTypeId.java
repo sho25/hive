@@ -148,6 +148,11 @@ name|NULL_TYPE
 argument_list|(
 literal|16
 argument_list|)
+block|,
+name|DATE_TYPE
+argument_list|(
+literal|17
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -294,6 +299,12 @@ literal|16
 case|:
 return|return
 name|NULL_TYPE
+return|;
+case|case
+literal|17
+case|:
+return|return
+name|DATE_TYPE
 return|;
 default|default:
 return|return

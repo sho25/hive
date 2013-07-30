@@ -769,6 +769,16 @@ name|getJiraName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|testConfiguration
+operator|.
+name|setClearLibraryCache
+argument_list|(
+name|startRequest
+operator|.
+name|isClearLibraryCache
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|PTest
 name|ptest
 init|=

@@ -232,7 +232,7 @@ return|return
 name|revisionMgr
 return|;
 block|}
-comment|/**      * Internally used by endpoint implementation to instantiate from different configuration setting.      * @param className      * @param conf      * @return      * @throws IOException      */
+comment|/**      * Internally used by endpoint implementation to instantiate from different configuration setting.      * @param className      * @param conf      * @return the opened revision manager      * @throws IOException      */
 specifier|static
 name|RevisionManager
 name|getOpenedRevisionManager

@@ -1682,6 +1682,9 @@ operator|.
 name|getWork
 argument_list|()
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getAliasToWork
 argument_list|()
 operator|.
@@ -1791,6 +1794,9 @@ argument_list|(
 name|mrTask
 operator|.
 name|getWork
+argument_list|()
+operator|.
+name|getReduceWork
 argument_list|()
 operator|.
 name|getReducer
@@ -2832,6 +2838,9 @@ operator|.
 name|getWork
 argument_list|()
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|getAliasToWork
 argument_list|()
 operator|.
@@ -2926,6 +2935,9 @@ argument_list|(
 name|mrTask
 operator|.
 name|getWork
+argument_list|()
+operator|.
+name|getReduceWork
 argument_list|()
 operator|.
 name|getReducer

@@ -919,11 +919,35 @@ expr_stmt|;
 block|}
 name|currWork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|setGatheringStats
 argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|currWork
+operator|.
+name|getReduceWork
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|currWork
+operator|.
+name|getReduceWork
+argument_list|()
+operator|.
+name|setGatheringStats
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 comment|// NOTE: here we should use the new partition predicate pushdown API to get a list of pruned list,
 comment|// and pass it to setTaskPlan as the last parameter
 name|Set

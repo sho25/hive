@@ -173,7 +173,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Operator
+name|MapredContext
 import|;
 end_import
 
@@ -191,7 +191,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MapredContext
+name|Operator
 import|;
 end_import
 
@@ -227,7 +227,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredLocalWork
+name|MapWork
 import|;
 end_import
 
@@ -245,7 +245,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
+name|MapredLocalWork
 import|;
 end_import
 
@@ -366,7 +366,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ExecMapper is the generic Map class for Hive. Together with ExecReducer it is   * the bridge between the map-reduce framework and the Hive operator pipeline at  * execution time. It's main responsabilities are:  *   * - Load and setup the operator pipeline from XML  * - Run the pipeline by transforming key value pairs to records and forwarding them to the operators  * - Stop execution when the "limit" is reached  * - Catch and handle errors during execution of the operators.  *  */
+comment|/**  * ExecMapper is the generic Map class for Hive. Together with ExecReducer it is  * the bridge between the map-reduce framework and the Hive operator pipeline at  * execution time. It's main responsabilities are:  *  * - Load and setup the operator pipeline from XML  * - Run the pipeline by transforming key value pairs to records and forwarding them to the operators  * - Stop execution when the "limit" is reached  * - Catch and handle errors during execution of the operators.  *  */
 end_comment
 
 begin_class
@@ -597,12 +597,12 @@ name|jc
 argument_list|)
 expr_stmt|;
 comment|// create map and fetch operators
-name|MapredWork
+name|MapWork
 name|mrwork
 init|=
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getMapWork
 argument_list|(
 name|job
 argument_list|)

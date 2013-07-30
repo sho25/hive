@@ -1338,7 +1338,7 @@ argument_list|)
 expr_stmt|;
 name|Utilities
 operator|.
-name|setMapRedWork
+name|setMapWork
 argument_list|(
 name|job
 argument_list|,

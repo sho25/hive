@@ -1151,7 +1151,7 @@ argument_list|)
 expr_stmt|;
 name|Utilities
 operator|.
-name|serializeMapRedLocalWork
+name|serializeObject
 argument_list|(
 name|plan
 argument_list|,

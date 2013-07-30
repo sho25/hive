@@ -277,6 +277,24 @@ name|MapredWork
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|MapWork
+import|;
+end_import
+
 begin_comment
 comment|/**  * Common iteration methods for converting joins and sort-merge joins.  */
 end_comment
@@ -684,7 +702,7 @@ parameter_list|(
 name|Context
 name|context
 parameter_list|,
-name|MapredWork
+name|MapWork
 name|currWork
 parameter_list|,
 name|Map

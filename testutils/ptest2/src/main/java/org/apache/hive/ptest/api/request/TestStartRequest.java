@@ -40,6 +40,10 @@ specifier|private
 name|String
 name|jiraName
 decl_stmt|;
+specifier|private
+name|boolean
+name|clearLibraryCache
+decl_stmt|;
 specifier|public
 name|TestStartRequest
 parameter_list|()
@@ -58,6 +62,9 @@ name|jiraName
 parameter_list|,
 name|String
 name|patchURL
+parameter_list|,
+name|boolean
+name|clearLibraryCache
 parameter_list|)
 block|{
 name|this
@@ -83,6 +90,12 @@ operator|.
 name|patchURL
 operator|=
 name|patchURL
+expr_stmt|;
+name|this
+operator|.
+name|clearLibraryCache
+operator|=
+name|clearLibraryCache
 expr_stmt|;
 block|}
 specifier|public
@@ -131,6 +144,30 @@ operator|.
 name|patchURL
 operator|=
 name|patchURL
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isClearLibraryCache
+parameter_list|()
+block|{
+return|return
+name|clearLibraryCache
+return|;
+block|}
+specifier|public
+name|void
+name|setClearLibraryCache
+parameter_list|(
+name|boolean
+name|clearLibraryCache
+parameter_list|)
+block|{
+name|this
+operator|.
+name|clearLibraryCache
+operator|=
+name|clearLibraryCache
 expr_stmt|;
 block|}
 specifier|public
@@ -204,6 +241,10 @@ operator|+
 literal|", jiraName="
 operator|+
 name|jiraName
+operator|+
+literal|", clearLibraryCache="
+operator|+
+name|clearLibraryCache
 operator|+
 literal|"]"
 return|;

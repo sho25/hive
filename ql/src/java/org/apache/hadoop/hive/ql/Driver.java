@@ -3039,7 +3039,7 @@ argument_list|)
 decl_stmt|;
 name|Utilities
 operator|.
-name|serializeQueryPlan
+name|serializeObject
 argument_list|(
 name|plan
 argument_list|,
@@ -3066,11 +3066,9 @@ name|newPlan
 init|=
 name|Utilities
 operator|.
-name|deserializeQueryPlan
+name|deserializeObject
 argument_list|(
 name|fis
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|fis
@@ -5678,9 +5676,11 @@ argument_list|()
 operator|==
 literal|0
 condition|)
+block|{
 return|return
 name|cpr
 return|;
+block|}
 name|SessionState
 name|ss
 init|=
@@ -5695,9 +5695,11 @@ name|ss
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 name|cpr
 return|;
+block|}
 name|MetaDataFormatter
 name|mdf
 init|=
@@ -5720,9 +5722,11 @@ operator|instanceof
 name|JsonMetaDataFormatter
 operator|)
 condition|)
+block|{
 return|return
 name|cpr
 return|;
+block|}
 comment|/*Here we want to encode the error in machine readable way (e.g. JSON)      * Ideally, errorCode would always be set to a canonical error defined in ErrorMsg.      * In practice that is rarely the case, so the messy logic below tries to tease      * out canonical error code if it can.  Exclude stack trace from output when      * the error is a specific/expected one.      * It's written to stdout for backward compatibility (WebHCat consumes it).*/
 try|try
 block|{

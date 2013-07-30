@@ -447,7 +447,7 @@ if|if
 condition|(
 name|currPlan
 operator|.
-name|getReducer
+name|getReduceWork
 argument_list|()
 operator|==
 literal|null

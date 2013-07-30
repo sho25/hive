@@ -502,6 +502,9 @@ argument_list|()
 decl_stmt|;
 name|mrwork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|setPathToAliases
 argument_list|(
 name|pa
@@ -509,12 +512,18 @@ argument_list|)
 expr_stmt|;
 name|mrwork
 operator|.
+name|getMapWork
+argument_list|()
+operator|.
 name|setPathToPartitionInfo
 argument_list|(
 name|pt
 argument_list|)
 expr_stmt|;
 name|mrwork
+operator|.
+name|getMapWork
+argument_list|()
 operator|.
 name|setAliasToWork
 argument_list|(
@@ -531,7 +540,7 @@ argument_list|()
 decl_stmt|;
 name|Utilities
 operator|.
-name|serializeMapRedWork
+name|serializeObject
 argument_list|(
 name|mrwork
 argument_list|,
@@ -617,7 +626,7 @@ argument_list|)
 decl_stmt|;
 name|Utilities
 operator|.
-name|clearMapRedWork
+name|clearWork
 argument_list|(
 name|job
 argument_list|)
@@ -633,7 +642,7 @@ argument_list|()
 expr_stmt|;
 name|Utilities
 operator|.
-name|serializeMapRedWork
+name|serializeObject
 argument_list|(
 name|mrwork2
 argument_list|,
