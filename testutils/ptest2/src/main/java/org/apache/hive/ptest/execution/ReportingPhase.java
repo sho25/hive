@@ -19,25 +19,21 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|slf4j
+name|util
 operator|.
-name|Logger
+name|List
 import|;
 end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|google
+name|slf4j
 operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|ImmutableList
+name|Logger
 import|;
 end_import
 
@@ -69,7 +65,7 @@ block|{
 specifier|public
 name|ReportingPhase
 parameter_list|(
-name|ImmutableList
+name|List
 argument_list|<
 name|HostExecutor
 argument_list|>

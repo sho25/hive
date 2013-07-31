@@ -378,6 +378,10 @@ name|ExecutionPhase
 argument_list|(
 name|hostExecutors
 argument_list|,
+name|executionContext
+argument_list|,
+name|hostExecutorBuilder
+argument_list|,
 name|localCommandFactory
 argument_list|,
 name|templateDefaults

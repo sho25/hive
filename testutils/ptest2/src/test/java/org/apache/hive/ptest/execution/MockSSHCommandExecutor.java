@@ -187,6 +187,7 @@ argument_list|()
 expr_stmt|;
 block|}
 specifier|public
+specifier|synchronized
 name|List
 argument_list|<
 name|String

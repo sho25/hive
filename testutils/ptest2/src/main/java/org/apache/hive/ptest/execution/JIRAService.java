@@ -43,6 +43,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -63,7 +73,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Set
+name|SortedSet
 import|;
 end_import
 
@@ -608,7 +618,7 @@ parameter_list|,
 name|int
 name|numExecutesTests
 parameter_list|,
-name|Set
+name|SortedSet
 argument_list|<
 name|String
 argument_list|>
@@ -1212,7 +1222,7 @@ decl_stmt|;
 specifier|public
 name|Body
 parameter_list|()
-block|{            }
+block|{      }
 specifier|public
 name|Body
 parameter_list|(
@@ -1670,7 +1680,7 @@ argument_list|,
 literal|"msg2"
 argument_list|)
 decl_stmt|;
-name|Set
+name|SortedSet
 argument_list|<
 name|String
 argument_list|>
@@ -1678,9 +1688,14 @@ name|failedTests
 init|=
 name|Sets
 operator|.
-name|newHashSet
+name|newTreeSet
+argument_list|(
+name|Collections
+operator|.
+name|singleton
 argument_list|(
 literal|"failed"
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|service
