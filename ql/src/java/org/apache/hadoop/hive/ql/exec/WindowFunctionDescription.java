@@ -160,6 +160,13 @@ parameter_list|()
 default|default
 literal|false
 function_decl|;
+comment|/** 	 * Used in translations process to validate arguments 	 * @return true if ranking function 	 */
+name|boolean
+name|rankingFunction
+parameter_list|()
+default|default
+literal|false
+function_decl|;
 block|}
 end_annotation_defn
 
