@@ -120,21 +120,21 @@ specifier|public
 class|class
 name|VectorHashKeyWrapperBatch
 block|{
-comment|/**    * Helper class for looking up a key value based on key index    *    */
+comment|/**    * Helper class for looking up a key value based on key index.    */
 specifier|private
 specifier|static
 class|class
 name|KeyLookupHelper
 block|{
-specifier|public
+specifier|private
 name|int
 name|longIndex
 decl_stmt|;
-specifier|public
+specifier|private
 name|int
 name|doubleIndex
 decl_stmt|;
-specifier|public
+specifier|private
 name|int
 name|stringIndex
 decl_stmt|;
@@ -145,31 +145,31 @@ name|VectorExpression
 index|[]
 name|keyExpressions
 decl_stmt|;
-comment|/**    * indices of LONG primitive keys    */
+comment|/**    * indices of LONG primitive keys.    */
 specifier|private
 name|int
 index|[]
 name|longIndices
 decl_stmt|;
-comment|/**    * indices of DOUBLE primitive keys    */
+comment|/**    * indices of DOUBLE primitive keys.    */
 specifier|private
 name|int
 index|[]
 name|doubleIndices
 decl_stmt|;
-comment|/*    * indices of string (byte[]) primitive keys    */
+comment|/**    * indices of string (byte[]) primitive keys.    */
 specifier|private
 name|int
 index|[]
 name|stringIndices
 decl_stmt|;
-comment|/**    * pre-allocated batch size vector of keys wrappers.    * N.B. these keys are **mutable** and should never be used in a HashMap.    * Always clone the key wrapper to obtain an immutable keywrapper suitable    * to use a key in a HashMap.    */
+comment|/**    * Pre-allocated batch size vector of keys wrappers.    * N.B. these keys are **mutable** and should never be used in a HashMap.    * Always clone the key wrapper to obtain an immutable keywrapper suitable    * to use a key in a HashMap.    */
 specifier|private
 name|VectorHashKeyWrapper
 index|[]
 name|vectorHashKeyWrappers
 decl_stmt|;
-comment|/**    * lookup vector to map from key index to primitive type index    */
+comment|/**    * Lookup vector to map from key index to primitive type index.    */
 specifier|private
 name|KeyLookupHelper
 index|[]
@@ -190,7 +190,7 @@ return|return
 name|keysFixedSize
 return|;
 block|}
-comment|/**    * Accessor for the batch-sized array of key wrappers    */
+comment|/**    * Accessor for the batch-sized array of key wrappers.    */
 specifier|public
 name|VectorHashKeyWrapper
 index|[]

@@ -63,6 +63,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * This class performs OR expression on two input columns and stores,  * the boolean output in a separate output column. The boolean values  * are supposed to be represented as 0/1 in a long vector.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -70,12 +74,18 @@ name|ColOrCol
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
+specifier|final
 name|int
 name|colNum1
 decl_stmt|;
+specifier|private
+specifier|final
 name|int
 name|colNum2
 decl_stmt|;
+specifier|private
+specifier|final
 name|int
 name|outputColumn
 decl_stmt|;
@@ -221,7 +231,7 @@ operator|<=
 literal|0
 condition|)
 block|{
-comment|//Nothing to do
+comment|// Nothing to do
 return|return;
 block|}
 if|if
@@ -250,8 +260,8 @@ name|isRepeating
 operator|)
 condition|)
 block|{
-comment|//All must be selected otherwise size would be zero
-comment|//Repeating property will not change.
+comment|// All must be selected otherwise size would be zero
+comment|// Repeating property will not change.
 name|outV
 operator|.
 name|isRepeating
@@ -603,8 +613,8 @@ name|isRepeating
 operator|)
 condition|)
 block|{
-comment|//All must be selected otherwise size would be zero
-comment|//Repeating property will not change.
+comment|// All must be selected otherwise size would be zero
+comment|// Repeating property will not change.
 name|outV
 operator|.
 name|isRepeating
@@ -1117,8 +1127,8 @@ name|isRepeating
 operator|)
 condition|)
 block|{
-comment|//All must be selected otherwise size would be zero
-comment|//Repeating property will not change.
+comment|// All must be selected otherwise size would be zero
+comment|// Repeating property will not change.
 name|outV
 operator|.
 name|isRepeating
@@ -1621,8 +1631,8 @@ name|isRepeating
 operator|)
 condition|)
 block|{
-comment|//All must be selected otherwise size would be zero
-comment|//Repeating property will not change.
+comment|// All must be selected otherwise size would be zero
+comment|// Repeating property will not change.
 name|outV
 operator|.
 name|isRepeating

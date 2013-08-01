@@ -212,7 +212,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** * VectorUDAFCountStar. Vectorized implementation for COUNT(*) aggregates. */
+comment|/**  * VectorUDAFCountStar. Vectorized implementation for COUNT(*) aggregates.  */
 end_comment
 
 begin_class
@@ -233,16 +233,18 @@ name|VectorUDAFCountStar
 extends|extends
 name|VectorAggregateExpression
 block|{
-comment|/**     /* class for storing the current aggregate value.     */
+comment|/**      * class for storing the current aggregate value.      */
 specifier|static
 class|class
 name|Aggregation
 implements|implements
 name|AggregationBuffer
 block|{
+specifier|private
 name|long
 name|value
 decl_stmt|;
+specifier|private
 name|boolean
 name|isNull
 decl_stmt|;

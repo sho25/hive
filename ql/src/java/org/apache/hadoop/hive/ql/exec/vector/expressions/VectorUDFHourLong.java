@@ -33,6 +33,10 @@ name|Calendar
 import|;
 end_import
 
+begin_comment
+comment|/**  * Returns hour of day.  * Extends {@link VectorUDFTimestampFieldLong}  */
+end_comment
+
 begin_class
 specifier|public
 specifier|final

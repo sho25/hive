@@ -43,6 +43,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * An expression representing a column, only children are evaluated.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -50,9 +54,13 @@ name|IdentityExpression
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
+specifier|final
 name|int
 name|colNum
 decl_stmt|;
+specifier|private
+specifier|final
 name|String
 name|type
 decl_stmt|;

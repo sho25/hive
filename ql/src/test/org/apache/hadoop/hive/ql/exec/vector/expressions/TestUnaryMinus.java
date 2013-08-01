@@ -131,6 +131,10 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * Unit tests for unary minus.  */
+end_comment
+
 begin_class
 specifier|public
 class|class

@@ -572,7 +572,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Class that tests the functionality of VectorizedRowBatchCtx  */
+comment|/**  * Class that tests the functionality of VectorizedRowBatchCtx.  */
 end_comment
 
 begin_class
@@ -683,7 +683,7 @@ expr_stmt|;
 block|}
 specifier|private
 name|void
-name|InitSerde
+name|initSerde
 parameter_list|()
 block|{
 name|tbl
@@ -2621,7 +2621,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|InitSerde
+name|initSerde
 argument_list|()
 expr_stmt|;
 name|WriteRCFile

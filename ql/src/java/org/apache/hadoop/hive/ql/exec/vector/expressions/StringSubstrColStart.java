@@ -1,4 +1,8 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
+begin_comment
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+end_comment
+
 begin_package
 package|package
 name|org
@@ -70,7 +74,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class provides the implementation of vectorized substring, with a single start index parameter.  * If the start index is invalid (outside of the string boundaries) then an empty string will be in the output.  */
+comment|/**  * This class provides the implementation of vectorized substring, with a single start index  * parameter. If the start index is invalid (outside of the string boundaries) then an empty  * string will be in the output.  */
 end_comment
 
 begin_class
@@ -99,14 +103,15 @@ specifier|private
 specifier|static
 name|byte
 index|[]
-name|EMPTY_STRING
+name|EMPTYSTRING
 decl_stmt|;
-comment|// Populating the Empty string bytes. Putting it as static since it should be immutable and can be shared
+comment|// Populating the Empty string bytes. Putting it as static since it should be immutable and can
+comment|// be shared.
 static|static
 block|{
 try|try
 block|{
-name|EMPTY_STRING
+name|EMPTYSTRING
 operator|=
 literal|""
 operator|.
@@ -161,7 +166,7 @@ operator|=
 name|outputColumn
 expr_stmt|;
 block|}
-comment|/**    * Given the substring start index param it finds the starting offset of the passed in utf8 string byte array    * that matches the index.    * @param utf8String byte array that holds the utf8 string    * @param start start offset of the byte array the string starts at    * @param len length of the bytes the string holds in the byte array    * @param substrStart the Start index for the substring operation    */
+comment|/**    * Given the substring start index param it finds the starting offset of the passed in utf8    * string byte array that matches the index.    * @param utf8String byte array that holds the utf8 string    * @param start start offset of the byte array the string starts at    * @param len length of the bytes the string holds in the byte array    * @param substrStart the Start index for the substring operation    */
 specifier|static
 name|int
 name|getSubstrStartOffset
@@ -458,11 +463,11 @@ name|setRef
 argument_list|(
 literal|0
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 argument_list|,
 literal|0
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 operator|.
 name|length
 argument_list|)
@@ -538,11 +543,11 @@ name|setRef
 argument_list|(
 literal|0
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 argument_list|,
 literal|0
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 operator|.
 name|length
 argument_list|)
@@ -683,11 +688,11 @@ name|setRef
 argument_list|(
 name|selected
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 argument_list|,
 literal|0
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 operator|.
 name|length
 argument_list|)
@@ -800,11 +805,11 @@ name|setRef
 argument_list|(
 name|selected
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 argument_list|,
 literal|0
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 operator|.
 name|length
 argument_list|)
@@ -935,11 +940,11 @@ name|setRef
 argument_list|(
 name|i
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 argument_list|,
 literal|0
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 operator|.
 name|length
 argument_list|)
@@ -1032,11 +1037,11 @@ name|setRef
 argument_list|(
 name|i
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 argument_list|,
 literal|0
 argument_list|,
-name|EMPTY_STRING
+name|EMPTYSTRING
 operator|.
 name|length
 argument_list|)

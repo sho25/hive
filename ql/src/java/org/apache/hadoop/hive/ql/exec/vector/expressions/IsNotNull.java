@@ -94,9 +94,13 @@ name|IsNotNull
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
+specifier|final
 name|int
 name|colNum
 decl_stmt|;
+specifier|private
+specifier|final
 name|int
 name|outputColumn
 decl_stmt|;

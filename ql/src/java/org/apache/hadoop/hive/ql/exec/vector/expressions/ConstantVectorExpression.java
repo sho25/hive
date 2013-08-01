@@ -103,6 +103,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Constant is represented as a vector with repeating values.  */
+end_comment
+
 begin_class
 specifier|public
 class|class

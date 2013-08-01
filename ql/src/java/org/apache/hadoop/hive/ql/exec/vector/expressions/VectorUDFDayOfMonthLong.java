@@ -33,6 +33,10 @@ name|Calendar
 import|;
 end_import
 
+begin_comment
+comment|/**  * Expression to get day of month.  * Extends {@link VectorUDFTimestampFieldLong}  */
+end_comment
+
 begin_class
 specifier|public
 specifier|final

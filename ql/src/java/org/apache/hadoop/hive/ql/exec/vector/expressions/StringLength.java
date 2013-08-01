@@ -83,6 +83,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Calculate the length of the strings in the input column vector, and store  * it in the output column vector.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -91,10 +95,12 @@ extends|extends
 name|VectorExpression
 block|{
 specifier|private
+specifier|final
 name|int
 name|colNum
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 name|outputColumn
 decl_stmt|;
@@ -198,16 +204,16 @@ operator|.
 name|vector
 decl_stmt|;
 name|int
-name|start
 index|[]
+name|start
 init|=
 name|inputColVector
 operator|.
 name|start
 decl_stmt|;
 name|int
-name|length
 index|[]
+name|length
 init|=
 name|inputColVector
 operator|.
@@ -262,7 +268,7 @@ index|[
 literal|0
 index|]
 operator|=
-name|UTF8StringLength
+name|utf8StringLength
 argument_list|(
 name|vector
 index|[
@@ -317,7 +323,7 @@ index|[
 name|i
 index|]
 operator|=
-name|UTF8StringLength
+name|utf8StringLength
 argument_list|(
 name|vector
 index|[
@@ -365,7 +371,7 @@ index|[
 name|i
 index|]
 operator|=
-name|UTF8StringLength
+name|utf8StringLength
 argument_list|(
 name|vector
 index|[
@@ -444,7 +450,7 @@ index|[
 literal|0
 index|]
 operator|=
-name|UTF8StringLength
+name|utf8StringLength
 argument_list|(
 name|vector
 index|[
@@ -511,7 +517,7 @@ index|[
 name|i
 index|]
 operator|=
-name|UTF8StringLength
+name|utf8StringLength
 argument_list|(
 name|vector
 index|[
@@ -585,7 +591,7 @@ index|[
 name|i
 index|]
 operator|=
-name|UTF8StringLength
+name|utf8StringLength
 argument_list|(
 name|vector
 index|[
@@ -628,10 +634,10 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/*     * Return length in characters of UTF8 string in byte array    * beginning at start that is len bytes long.    */
+comment|/*    * Return length in characters of UTF8 string in byte array    * beginning at start that is len bytes long.    */
 specifier|static
 name|long
-name|UTF8StringLength
+name|utf8StringLength
 parameter_list|(
 name|byte
 index|[]
@@ -666,7 +672,7 @@ name|i
 operator|++
 control|)
 block|{
-comment|/* Byte bit patterns of the form 10xxxxxx are continuation         * bytes. All other bit patterns are the first byte of         * a character.        */
+comment|/* Byte bit patterns of the form 10xxxxxx are continuation        * bytes. All other bit patterns are the first byte of        * a character.        */
 if|if
 condition|(
 operator|(

@@ -115,6 +115,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|hive_metastoreConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -382,7 +400,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Context for Vectorized row batch. this calss does eager deserialization of row data using serde  * in the RecordReader layer.  * It has supports partitions in this layer so that the vectorized batch is populated correctly with  * the partition column.  * VectorizedRowBatchCtx.  *  */
+comment|/**  * Context for Vectorized row batch. this calss does eager deserialization of row data using serde  * in the RecordReader layer.  * It has supports partitions in this layer so that the vectorized batch is populated correctly  * with the partition column.  */
 end_comment
 
 begin_class
@@ -407,7 +425,7 @@ name|deserializer
 decl_stmt|;
 comment|// Hash map of partition values. Key=TblColName value=PartitionValue
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -437,7 +455,7 @@ parameter_list|,
 name|Deserializer
 name|deserializer
 parameter_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -687,18 +705,6 @@ name|partProps
 operator|.
 name|getProperty
 argument_list|(
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|hive_metastoreConstants
 operator|.
 name|META_TABLE_PARTITION_COLUMNS

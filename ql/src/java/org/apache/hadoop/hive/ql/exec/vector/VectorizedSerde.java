@@ -69,6 +69,10 @@ name|Writable
 import|;
 end_import
 
+begin_comment
+comment|/**  * Serdes that support vectorized {@link VectorizedRowBatch} must implement this interface.  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface

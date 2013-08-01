@@ -169,6 +169,10 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * Test vector expressions with constants.  */
+end_comment
+
 begin_class
 specifier|public
 class|class

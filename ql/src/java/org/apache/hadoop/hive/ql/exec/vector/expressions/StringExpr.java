@@ -24,7 +24,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**   * String expression evaluation helper functions  */
+comment|/**  * String expression evaluation helper functions.  */
 end_comment
 
 begin_class
@@ -32,7 +32,7 @@ specifier|public
 class|class
 name|StringExpr
 block|{
-comment|/* Compare two strings from two byte arrays each     * with their own start position and length.     * Use lexicographic unsigned byte value order.     * This is what's used for UTF-8 sort order.    * Return negative value if arg1< arg2, 0 if arg1 = arg2,     * positive if arg1> arg2.    */
+comment|/* Compare two strings from two byte arrays each    * with their own start position and length.    * Use lexicographic unsigned byte value order.    * This is what's used for UTF-8 sort order.    * Return negative value if arg1< arg2, 0 if arg1 = arg2,    * positive if arg1> arg2.    */
 specifier|public
 specifier|static
 name|int

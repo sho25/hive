@@ -37,7 +37,7 @@ name|ql
 operator|.
 name|udf
 operator|.
-name|UDFUpper
+name|IUDFUnaryString
 import|;
 end_import
 
@@ -55,9 +55,13 @@ name|ql
 operator|.
 name|udf
 operator|.
-name|IUDFUnaryString
+name|UDFUpper
 import|;
 end_import
+
+begin_comment
+comment|/**  * Expression to convert a string to lower case.  * Extends {@link StringUnaryUDF}.  */
+end_comment
 
 begin_class
 specifier|public

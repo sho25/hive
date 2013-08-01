@@ -547,7 +547,7 @@ specifier|transient
 name|int
 name|avgVariableSize
 decl_stmt|;
-comment|/**    * Current number of entries in the hash table    */
+comment|/**    * Current number of entries in the hash table.    */
 specifier|private
 specifier|transient
 name|int
@@ -574,7 +574,7 @@ name|FLUSH_CHECK_THRESHOLD
 init|=
 literal|10000
 decl_stmt|;
-comment|/**    * Percent of entries to flush when memory threshold exceeded    */
+comment|/**    * Percent of entries to flush when memory threshold exceeded.    */
 specifier|private
 specifier|static
 specifier|final

@@ -129,6 +129,10 @@ name|NullUtil
 import|;
 end_import
 
+begin_comment
+comment|/**  * Generated from template ColumnArithmeticScalar.txt, which covers binary arithmetic   * expressions between a column and a scalar.  */
+end_comment
+
 begin_class
 specifier|public
 class|class

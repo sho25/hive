@@ -43,6 +43,10 @@ name|Calendar
 import|;
 end_import
 
+begin_comment
+comment|/**  * Expression to get year as a long.  * Extends {@link VectorUDFTimestampFieldLong}  */
+end_comment
+
 begin_class
 specifier|public
 specifier|final
@@ -56,32 +60,32 @@ specifier|static
 specifier|final
 name|long
 index|[]
-name|yearBoundaries
+name|YEAR_BOUNDARIES
 decl_stmt|;
 specifier|static
 specifier|final
 name|int
-name|minYear
+name|MIN_YEAR
 init|=
 literal|1901
 decl_stmt|;
 specifier|static
 specifier|final
 name|int
-name|maxYear
+name|MAX_YEAR
 init|=
 literal|2038
 decl_stmt|;
 static|static
 block|{
-name|yearBoundaries
+name|YEAR_BOUNDARIES
 operator|=
 operator|new
 name|long
 index|[
-name|maxYear
+name|MAX_YEAR
 operator|-
-name|minYear
+name|MIN_YEAR
 index|]
 expr_stmt|;
 name|Calendar
@@ -106,7 +110,7 @@ control|(
 name|int
 name|year
 init|=
-name|minYear
+name|MIN_YEAR
 operator|+
 literal|1
 init|;
@@ -137,11 +141,11 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
-name|yearBoundaries
+name|YEAR_BOUNDARIES
 index|[
 name|year
 operator|-
-name|minYear
+name|MIN_YEAR
 operator|-
 literal|1
 index|]
@@ -175,7 +179,7 @@ name|Arrays
 operator|.
 name|binarySearch
 argument_list|(
-name|yearBoundaries
+name|YEAR_BOUNDARIES
 argument_list|,
 name|time
 argument_list|)
@@ -189,7 +193,7 @@ condition|)
 block|{
 comment|/* 0 == 1902 etc */
 return|return
-name|minYear
+name|MIN_YEAR
 operator|+
 literal|1
 operator|+
@@ -200,7 +204,7 @@ else|else
 block|{
 comment|/* -1 == 1901, -2 == 1902 */
 return|return
-name|minYear
+name|MIN_YEAR
 operator|-
 literal|1
 operator|-

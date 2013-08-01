@@ -59,6 +59,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Random
 import|;
 end_import
@@ -347,6 +357,10 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * Unit tests for timestamp expressions.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -446,7 +460,7 @@ index|[]
 name|getAllBoundaries
 parameter_list|()
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|Long
 argument_list|>
@@ -956,6 +970,7 @@ index|]
 operator|.
 name|noNulls
 operator|||
+operator|!
 name|batch
 operator|.
 name|cols
@@ -967,8 +982,6 @@ name|isNull
 index|[
 name|i
 index|]
-operator|==
-literal|false
 condition|)
 block|{
 if|if
@@ -1491,6 +1504,7 @@ index|]
 operator|.
 name|noNulls
 operator|||
+operator|!
 name|batch
 operator|.
 name|cols
@@ -1502,8 +1516,6 @@ name|isNull
 index|[
 name|i
 index|]
-operator|==
-literal|false
 condition|)
 block|{
 if|if
@@ -2025,6 +2037,7 @@ index|]
 operator|.
 name|noNulls
 operator|||
+operator|!
 name|batch
 operator|.
 name|cols
@@ -2036,8 +2049,6 @@ name|isNull
 index|[
 name|i
 index|]
-operator|==
-literal|false
 condition|)
 block|{
 if|if
@@ -2559,6 +2570,7 @@ index|]
 operator|.
 name|noNulls
 operator|||
+operator|!
 name|batch
 operator|.
 name|cols
@@ -2570,8 +2582,6 @@ name|isNull
 index|[
 name|i
 index|]
-operator|==
-literal|false
 condition|)
 block|{
 if|if
@@ -3093,6 +3103,7 @@ index|]
 operator|.
 name|noNulls
 operator|||
+operator|!
 name|batch
 operator|.
 name|cols
@@ -3104,8 +3115,6 @@ name|isNull
 index|[
 name|i
 index|]
-operator|==
-literal|false
 condition|)
 block|{
 if|if
@@ -3627,6 +3636,7 @@ index|]
 operator|.
 name|noNulls
 operator|||
+operator|!
 name|batch
 operator|.
 name|cols
@@ -3638,8 +3648,6 @@ name|isNull
 index|[
 name|i
 index|]
-operator|==
-literal|false
 condition|)
 block|{
 if|if
@@ -4200,6 +4208,7 @@ index|]
 operator|.
 name|noNulls
 operator|||
+operator|!
 name|batch
 operator|.
 name|cols
@@ -4211,8 +4220,6 @@ name|isNull
 index|[
 name|i
 index|]
-operator|==
-literal|false
 condition|)
 block|{
 if|if
@@ -4731,6 +4738,7 @@ index|]
 operator|.
 name|noNulls
 operator|||
+operator|!
 name|batch
 operator|.
 name|cols
@@ -4742,8 +4750,6 @@ name|isNull
 index|[
 name|i
 index|]
-operator|==
-literal|false
 condition|)
 block|{
 if|if

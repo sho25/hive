@@ -135,30 +135,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
-name|gen
-operator|.
-name|FilterLongColGreaterLongScalar
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -175,23 +151,32 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * Test cases for vectorized filter operator.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestVectorFilterOperator
 block|{
-comment|/*    * Fundamental logic and performance tests for vector filters belong here.    *     * For tests about filters to cover specific operator and data type combinations,    * see also the other filter tests under org.apache.hadoop.hive.ql.exec.vector.expressions    */
+comment|/**    * Fundamental logic and performance tests for vector filters belong here.    *    * For tests about filters to cover specific operator and data type combinations,    * see also the other filter tests under org.apache.hadoop.hive.ql.exec.vector.expressions    */
 specifier|public
 specifier|static
 class|class
 name|FakeDataReader
 block|{
+specifier|private
+specifier|final
 name|int
 name|size
 decl_stmt|;
+specifier|private
+specifier|final
 name|VectorizedRowBatch
 name|vrg
 decl_stmt|;
+specifier|private
 name|int
 name|currentSize
 init|=
@@ -269,9 +254,9 @@ block|}
 catch|catch
 parameter_list|(
 name|InterruptedException
-name|e
+name|ignore
 parameter_list|)
-block|{          }
+block|{}
 name|vrg
 operator|.
 name|cols

@@ -39,9 +39,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
-operator|.
-name|VectorExpression
+name|DoubleColumnVector
 import|;
 end_import
 
@@ -61,29 +59,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
-operator|.
-name|NullUtil
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|*
+name|LongColumnVector
 import|;
 end_import
 
@@ -304,7 +280,7 @@ operator|.
 name|selectedInUse
 argument_list|)
 expr_stmt|;
-comment|/* Disregard nulls for processing. In other words,      * the arithmetic operation is performed even if one or       * more inputs are null. This is to improve speed by avoiding      * conditional checks in the inner loop.      */
+comment|/* Disregard nulls for processing. In other words,      * the arithmetic operation is performed even if one or      * more inputs are null. This is to improve speed by avoiding      * conditional checks in the inner loop.      */
 if|if
 condition|(
 name|inputColVector1
@@ -617,7 +593,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/* For the case when the output can have null values, follow       * the convention that the data values must be 1 for long and       * NaN for double. This is to prevent possible later zero-divide errors      * in complex arithmetic expressions like col2 / (col1 - 1)      * in the case when some col1 entries are null.      */
+comment|/* For the case when the output can have null values, follow      * the convention that the data values must be 1 for long and      * NaN for double. This is to prevent possible later zero-divide errors      * in complex arithmetic expressions like col2 / (col1 - 1)      * in the case when some col1 entries are null.      */
 name|NullUtil
 operator|.
 name|setNullDataEntriesDouble

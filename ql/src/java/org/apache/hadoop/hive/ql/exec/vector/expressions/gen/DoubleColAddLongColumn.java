@@ -109,6 +109,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Generated from template ColumnArithmeticColumn.txt, which covers binary arithmetic   * expressions between columns.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -116,12 +120,15 @@ name|DoubleColAddLongColumn
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
 name|int
 name|colNum1
 decl_stmt|;
+specifier|private
 name|int
 name|colNum2
 decl_stmt|;
+specifier|private
 name|int
 name|outputColumn
 decl_stmt|;

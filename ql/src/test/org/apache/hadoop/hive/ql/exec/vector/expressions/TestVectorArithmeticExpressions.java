@@ -85,7 +85,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|LongColumnVector
+name|DoubleColumnVector
 import|;
 end_import
 
@@ -105,7 +105,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|DoubleColumnVector
+name|LongColumnVector
 import|;
 end_import
 
@@ -213,28 +213,6 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
-operator|.
-name|LongColDivideLongColumn
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
 name|util
 operator|.
 name|VectorizedRowGroupGenUtil
@@ -250,6 +228,10 @@ operator|.
 name|Test
 import|;
 end_import
+
+begin_comment
+comment|/**  * Unit tests for vectori arithmetic expressions.  */
+end_comment
 
 begin_class
 specifier|public
@@ -1033,7 +1015,7 @@ name|size
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* Make sure all the NULL entries in this long column output vector have their data vector     * element set to the correct value, as per the specification, to prevent later arithmetic     * errors (e.g. zero-divide).    */
+comment|/* Make sure all the NULL entries in this long column output vector have their data vector    * element set to the correct value, as per the specification, to prevent later arithmetic    * errors (e.g. zero-divide).    */
 specifier|public
 specifier|static
 name|void

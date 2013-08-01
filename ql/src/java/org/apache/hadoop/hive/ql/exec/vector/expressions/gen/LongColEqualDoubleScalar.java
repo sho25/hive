@@ -107,6 +107,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Generated from template ColumnCompareScalar.txt, which covers binary comparison   * expressions between a column and a scalar. The boolean output is stored in a   * separate boolean column.  */
+end_comment
+
 begin_class
 specifier|public
 class|class

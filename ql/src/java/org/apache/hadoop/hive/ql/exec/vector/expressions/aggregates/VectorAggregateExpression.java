@@ -119,12 +119,17 @@ name|ObjectInspector
 import|;
 end_import
 
+begin_comment
+comment|/**  * Base class for aggregation expressions.  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract
 class|class
 name|VectorAggregateExpression
 block|{
+comment|/**    * Buffer interface to store aggregates.    */
 specifier|public
 specifier|static
 interface|interface

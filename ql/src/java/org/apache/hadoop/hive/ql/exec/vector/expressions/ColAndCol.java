@@ -63,6 +63,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Evaluate AND of two boolean columns and store result in the output boolean column.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -70,12 +74,18 @@ name|ColAndCol
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
+specifier|final
 name|int
 name|colNum1
 decl_stmt|;
+specifier|private
+specifier|final
 name|int
 name|colNum2
 decl_stmt|;
+specifier|private
+specifier|final
 name|int
 name|outputColumn
 decl_stmt|;
@@ -221,10 +231,10 @@ operator|<=
 literal|0
 condition|)
 block|{
-comment|//Nothing to do
+comment|// Nothing to do
 return|return;
 block|}
-comment|//Handle null
+comment|// Handle null
 if|if
 condition|(
 name|inputColVector1
@@ -618,7 +628,7 @@ block|}
 block|}
 block|}
 block|}
-comment|//Now disregard null in second pass.
+comment|// Now disregard null in second pass.
 if|if
 condition|(
 operator|(
@@ -634,8 +644,8 @@ name|isRepeating
 operator|)
 condition|)
 block|{
-comment|//All must be selected otherwise size would be zero
-comment|//Repeating property will not change.
+comment|// All must be selected otherwise size would be zero
+comment|// Repeating property will not change.
 name|outV
 operator|.
 name|isRepeating

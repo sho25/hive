@@ -87,6 +87,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Generated from template FilterScalarCompareColumn.txt, which covers binary comparison   * expressions between a scalar and a column, however output is not produced in a separate column.   * The selected vector of the input {@link VectorizedRowBatch} is updated for in-place filtering.  */
+end_comment
+
 begin_class
 specifier|public
 class|class

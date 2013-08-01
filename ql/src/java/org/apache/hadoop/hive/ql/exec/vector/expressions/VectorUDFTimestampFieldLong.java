@@ -83,6 +83,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Abstract class to return various fields from a Timestamp.  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

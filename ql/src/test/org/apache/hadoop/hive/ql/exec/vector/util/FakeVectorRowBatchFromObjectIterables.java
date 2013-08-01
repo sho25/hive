@@ -261,7 +261,6 @@ specifier|static
 interface|interface
 name|ColumnVectorAssign
 block|{
-specifier|public
 name|void
 name|assign
 parameter_list|(

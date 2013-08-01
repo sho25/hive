@@ -39,9 +39,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
-operator|.
-name|VectorExpression
+name|DoubleColumnVector
 import|;
 end_import
 
@@ -81,49 +79,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|DoubleColumnVector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
 name|VectorizedRowBatch
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
-name|NullUtil
 import|;
 end_import
 
@@ -139,14 +95,17 @@ extends|extends
 name|VectorExpression
 block|{
 specifier|private
+specifier|final
 name|int
 name|colNum
 decl_stmt|;
 specifier|private
+specifier|final
 name|long
 name|value
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 name|outputColumn
 decl_stmt|;
@@ -540,7 +499,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/* Set double data vector array entries for NULL elements to the correct value.      * Unlike other col-scalar operations, this one doesn't benefit from carrying       * over NaN values from the input array.      */
+comment|/* Set double data vector array entries for NULL elements to the correct value.      * Unlike other col-scalar operations, this one doesn't benefit from carrying      * over NaN values from the input array.      */
 name|NullUtil
 operator|.
 name|setNullDataEntriesDouble

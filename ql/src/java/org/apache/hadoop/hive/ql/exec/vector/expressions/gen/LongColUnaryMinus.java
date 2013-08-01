@@ -87,6 +87,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Generated from template ColumnUnaryMinus.txt, which covers unary negation operator.   */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -94,9 +98,11 @@ name|LongColUnaryMinus
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
 name|int
 name|colNum
 decl_stmt|;
+specifier|private
 name|int
 name|outputColumn
 decl_stmt|;

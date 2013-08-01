@@ -134,7 +134,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implements a vectorized arithmetic operator with a scalar on the left and a  * column vector on the right. The result is output to an output column vector.  */
+comment|/**  * Generated from template ScalarArithmeticColumn.txt.  * Implements a vectorized arithmetic operator with a scalar on the left and a  * column vector on the right. The result is output to an output column vector.  */
 end_comment
 
 begin_class

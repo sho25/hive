@@ -87,6 +87,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/**  * Generated from template FilterColumnCompareColumn.txt, which covers binary comparison   * expressions between two columns, however output is not produced in a separate column.   * The selected vector of the input {@link VectorizedRowBatch} is updated for in-place filtering.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -94,9 +98,11 @@ name|FilterLongColLessEqualLongColumn
 extends|extends
 name|VectorExpression
 block|{
+specifier|private
 name|int
 name|colNum1
 decl_stmt|;
+specifier|private
 name|int
 name|colNum2
 decl_stmt|;
