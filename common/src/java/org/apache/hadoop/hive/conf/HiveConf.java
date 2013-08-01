@@ -2445,13 +2445,6 @@ argument_list|,
 literal|10000000L
 argument_list|)
 block|,
-name|HIVEOPTIMIZEMAPJOINFOLLOWEDBYMR
-argument_list|(
-literal|"hive.optimize.mapjoin.mapreduce"
-argument_list|,
-literal|false
-argument_list|)
-block|,
 name|HIVESKEWJOINKEY
 argument_list|(
 literal|"hive.skewjoin.key"
