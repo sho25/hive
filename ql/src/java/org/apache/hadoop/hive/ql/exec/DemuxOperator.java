@@ -425,6 +425,11 @@ specifier|private
 name|int
 name|childrenDone
 decl_stmt|;
+comment|// The index of the child which the last row was forwarded to in a key group.
+specifier|private
+name|int
+name|lastChildIndex
+decl_stmt|;
 comment|// Since DemuxOperator may appear multiple times in MuxOperator's parents list.
 comment|// We use newChildIndexTag instead of childOperatorsTag.
 comment|// Example:
@@ -1263,7 +1268,7 @@ throws|throws
 name|HiveException
 block|{
 name|int
-name|childIndex
+name|currentChildIndex
 init|=
 name|newTagToChildIndex
 operator|.
@@ -1272,6 +1277,16 @@ argument_list|(
 name|tag
 argument_list|)
 decl_stmt|;
+comment|// Check if we start to forward rows to a new child.
+comment|// If so, in the current key group, rows will not be forwarded
+comment|// to those children which have an index less than the currentChildIndex.
+comment|// We can call flush the buffer of children from lastChildIndex (inclusive)
+comment|// to currentChildIndex (exclusive) and propagate processGroup to those children.
+name|endGroupIfNecessary
+argument_list|(
+name|currentChildIndex
+argument_list|)
+expr_stmt|;
 name|int
 name|oldTag
 init|=
@@ -1318,7 +1333,7 @@ name|tag
 operator|+
 literal|", "
 operator|+
-name|childIndex
+name|currentChildIndex
 operator|+
 literal|", "
 operator|+
@@ -1359,7 +1374,7 @@ name|child
 init|=
 name|childOperatorsArray
 index|[
-name|childIndex
+name|currentChildIndex
 index|]
 decl_stmt|;
 if|if
@@ -1506,6 +1521,109 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * We assume that the input rows associated with the same key are ordered by    * the tag. Because a tag maps to a childindex, when we see a new childIndex,    * we will not see the last childIndex (lastChildIndex) again before we start    * a new key group. So, we can call flush the buffer of children    * from lastChildIndex (inclusive) to currentChildIndex (exclusive) and    * propagate processGroup to those children.    * @param currentChildIndex the childIndex we have right now.    * @throws HiveException    */
+specifier|private
+name|void
+name|endGroupIfNecessary
+parameter_list|(
+name|int
+name|currentChildIndex
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+if|if
+condition|(
+name|lastChildIndex
+operator|!=
+name|currentChildIndex
+condition|)
+block|{
+for|for
+control|(
+name|int
+name|i
+init|=
+name|lastChildIndex
+init|;
+name|i
+operator|<
+name|currentChildIndex
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|OperatorDesc
+argument_list|>
+name|child
+init|=
+name|childOperatorsArray
+index|[
+name|i
+index|]
+decl_stmt|;
+name|child
+operator|.
+name|flush
+argument_list|()
+expr_stmt|;
+name|child
+operator|.
+name|endGroup
+argument_list|()
+expr_stmt|;
+for|for
+control|(
+name|Integer
+name|childTag
+range|:
+name|newChildOperatorsTag
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+control|)
+block|{
+name|child
+operator|.
+name|processGroup
+argument_list|(
+name|childTag
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+name|lastChildIndex
+operator|=
+name|currentChildIndex
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|startGroup
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+name|lastChildIndex
+operator|=
+literal|0
+expr_stmt|;
+name|super
+operator|.
+name|startGroup
+argument_list|()
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -1531,12 +1649,15 @@ condition|)
 block|{
 return|return;
 block|}
+comment|// We will start a new key group. We can call flush the buffer
+comment|// of children from lastChildIndex (inclusive) to the last child and
+comment|// propagate processGroup to those children.
 for|for
 control|(
 name|int
 name|i
 init|=
-literal|0
+name|lastChildIndex
 init|;
 name|i
 operator|<

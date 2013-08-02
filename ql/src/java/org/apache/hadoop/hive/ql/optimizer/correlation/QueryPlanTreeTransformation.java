@@ -1248,7 +1248,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// childOp is a JoinOperator
 name|List
 argument_list|<
 name|Operator
