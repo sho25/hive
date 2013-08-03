@@ -649,6 +649,9 @@ name|startDelegationTokenSecretManager
 parameter_list|(
 name|Configuration
 name|conf
+parameter_list|,
+name|Object
+name|hms
 parameter_list|)
 throws|throws
 name|IOException
@@ -658,6 +661,8 @@ operator|.
 name|startDelegationTokenSecretManager
 argument_list|(
 name|conf
+argument_list|,
+name|hms
 argument_list|)
 expr_stmt|;
 name|isMetastoreTokenManagerInited
