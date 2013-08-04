@@ -1238,6 +1238,17 @@ name|Object
 name|input
 parameter_list|)
 block|{
+if|if
+condition|(
+name|input
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 return|return
 name|outputOI
 operator|.
