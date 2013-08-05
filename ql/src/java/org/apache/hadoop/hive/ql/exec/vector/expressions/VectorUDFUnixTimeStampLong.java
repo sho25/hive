@@ -48,13 +48,19 @@ block|{
 name|long
 name|ms
 init|=
+operator|(
 name|time
 operator|/
 operator|(
 literal|1000
 operator|*
 literal|1000
+operator|*
+literal|1000
 operator|)
+operator|)
+operator|*
+literal|1000
 decl_stmt|;
 name|long
 name|remainder
@@ -62,6 +68,8 @@ init|=
 name|time
 operator|%
 operator|(
+literal|1000
+operator|*
 literal|1000
 operator|*
 literal|1000
@@ -77,7 +85,7 @@ condition|)
 block|{
 name|ms
 operator|-=
-literal|1
+literal|1000
 expr_stmt|;
 block|}
 return|return
