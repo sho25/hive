@@ -1304,12 +1304,14 @@ name|val
 operator|.
 name|replace
 argument_list|(
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"line.separator"
+literal|"\r"
+argument_list|,
+literal|""
 argument_list|)
+operator|.
+name|replace
+argument_list|(
+literal|"\n"
 argument_list|,
 literal|" "
 argument_list|)
