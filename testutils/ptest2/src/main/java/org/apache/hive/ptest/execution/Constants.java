@@ -26,6 +26,15 @@ specifier|public
 specifier|static
 specifier|final
 name|int
+name|EXIT_CODE_EXCEPTION
+init|=
+operator|-
+literal|1
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
 name|EXIT_CODE_SUCCESS
 init|=
 literal|0

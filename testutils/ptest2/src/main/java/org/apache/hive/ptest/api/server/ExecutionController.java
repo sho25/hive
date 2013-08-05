@@ -821,6 +821,13 @@ name|void
 name|run
 parameter_list|()
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Shutdown hook called"
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|mTestExecutor

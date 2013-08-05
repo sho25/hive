@@ -683,7 +683,6 @@ name|String
 name|item
 parameter_list|)
 function_decl|;
-comment|/**    * Get the UGI that the given job configuration will run as.    *    * In secure versions of Hadoop, this simply returns the current    * access control context's user, ignoring the configuration.    */
 specifier|public
 name|void
 name|closeAllForUGI
@@ -692,6 +691,7 @@ name|UserGroupInformation
 name|ugi
 parameter_list|)
 function_decl|;
+comment|/**    * Get the UGI that the given job configuration will run as.    *    * In secure versions of Hadoop, this simply returns the current    * access control context's user, ignoring the configuration.    */
 specifier|public
 name|UserGroupInformation
 name|getUGIForConf
@@ -725,6 +725,24 @@ throws|throws
 name|IOException
 throws|,
 name|InterruptedException
+function_decl|;
+comment|/**    * Once a delegation token is stored in a file, the location is specified    * for a child process that runs hadoop operations, using an environment    * variable .    * @return Return the name of environment variable used by hadoop to find    *  location of token file    */
+specifier|public
+name|String
+name|getTokenFileLocEnvName
+parameter_list|()
+function_decl|;
+comment|/**    * Get delegation token from filesystem and write the token along with    * metastore tokens into a file    * @param conf    * @return Path of the file with token credential    * @throws IOException    */
+specifier|public
+name|Path
+name|createDelegationTokenFile
+parameter_list|(
+specifier|final
+name|Configuration
+name|conf
+parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 comment|/**    * Used by metastore server to creates UGI object for a remote user.    * @param userName remote User Name    * @param groupNames group names associated with remote user name    * @return UGI created for the remote user.    */
 specifier|public

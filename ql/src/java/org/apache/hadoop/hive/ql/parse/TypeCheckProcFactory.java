@@ -2354,16 +2354,6 @@ operator|)
 name|nd
 decl_stmt|;
 comment|// Get the string value and convert to a Date value.
-if|if
-condition|(
-name|expr
-operator|.
-name|getChildCount
-argument_list|()
-operator|==
-literal|1
-condition|)
-block|{
 try|try
 block|{
 name|String
@@ -2374,11 +2364,6 @@ operator|.
 name|stripQuotes
 argument_list|(
 name|expr
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
 operator|.
 name|getText
 argument_list|()
@@ -2419,17 +2404,6 @@ argument_list|(
 literal|"Unable to convert date literal string to date value."
 argument_list|,
 name|err
-argument_list|)
-throw|;
-block|}
-block|}
-else|else
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"Expected date string after DATE keyword"
 argument_list|)
 throw|;
 block|}

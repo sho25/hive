@@ -428,7 +428,6 @@ operator|.
 name|getTag
 argument_list|()
 decl_stmt|;
-comment|// if this child of dispatcher does not use tag, we just set the oldTag to 0;
 if|if
 condition|(
 name|oldTag
@@ -437,6 +436,7 @@ operator|-
 literal|1
 condition|)
 block|{
+comment|// if this child of DemuxOperator does not use tag, we just set the oldTag to 0.
 name|oldTag
 operator|=
 literal|0
@@ -510,7 +510,7 @@ name|newTag
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Based on the correlation, we transform the query plan tree (operator tree).    * In here, we first create DemuxOperator and all bottom ReduceSinkOperators    * (bottom means near TableScanOperaotr) in the correlation will be be    * the parents of the DemuxOperaotr. We also reassign tags to those    * ReduceSinkOperators. Then, we use MuxOperators to replace ReduceSinkOperators    * which are not bottom ones in this correlation.    * Example: The original operator tree is ...    *      JOIN2    *      /    \    *     RS4   RS5    *    /        \    *   GBY1     JOIN1    *    |       /    \    *   RS1     RS2   RS3    * If GBY1, JOIN1, and JOIN2 can be executed in the same reducer    * (optimized by Correlation Optimizer).    * The new operator tree will be ...    *      JOIN2    *        |    *       MUX    *      /   \    *    GBY1  JOIN1    *      \    /    *       DEMUX    *      /  |  \    *     /   |   \    *    /    |    \    *   RS1   RS2   RS3    * @param pCtx    * @param corrCtx    * @param correlation    * @throws SemanticException    */
+comment|/**    * Based on the correlation, we transform the query plan tree (operator tree).    * In here, we first create DemuxOperator and all bottom ReduceSinkOperators    * (bottom means near TableScanOperaotr) in the correlation will be be    * the parents of the DemuxOperaotr. We also reassign tags to those    * ReduceSinkOperators. Then, we use MuxOperators to replace ReduceSinkOperators    * which are not bottom ones in this correlation.    * Example: The original operator tree is ...    *      JOIN2    *      /    \    *     RS4   RS5    *    /        \    *   GBY1     JOIN1    *    |       /    \    *   RS1     RS2   RS3    * If GBY1, JOIN1, and JOIN2 can be executed in the same reducer    * (optimized by Correlation Optimizer).    * The new operator tree will be ...    *      JOIN2    *        |    *       MUX    *      /   \    *    GBY1  JOIN1    *      \    /    *       DEMUX    *      /  |  \    *     /   |   \    *    /    |    \    *   RS1   RS2   RS3    * @param pCtx    * @param corrCtx    * @param correlation    * @throws SemanticException    */
 specifier|protected
 specifier|static
 name|void
@@ -1248,7 +1248,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// childOp is a JoinOperator
 name|List
 argument_list|<
 name|Operator

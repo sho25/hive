@@ -18,6 +18,22 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|CommonConfigurationKeys
+operator|.
+name|HADOOP_SECURITY_AUTHENTICATION
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -266,38 +282,6 @@ operator|.
 name|conf
 operator|.
 name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|FileSystem
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|thrift
-operator|.
-name|HadoopThriftAuthBridge
-operator|.
-name|Client
 import|;
 end_import
 
@@ -622,22 +606,6 @@ operator|.
 name|transport
 operator|.
 name|TTransportFactory
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|CommonConfigurationKeys
-operator|.
-name|HADOOP_SECURITY_AUTHENTICATION
 import|;
 end_import
 
@@ -1980,7 +1948,14 @@ throw|throw
 operator|new
 name|AuthorizationException
 argument_list|(
-literal|"Delegation Token can be issued only with kerberos authentication"
+literal|"Delegation Token can be issued only with kerberos authentication. "
+operator|+
+literal|"Current AuthenticationMethod: "
+operator|+
+name|authenticationMethod
+operator|.
+name|get
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -2126,7 +2101,14 @@ throw|throw
 operator|new
 name|AuthorizationException
 argument_list|(
-literal|"Delegation Token can be issued only with kerberos authentication"
+literal|"Delegation Token can be issued only with kerberos authentication. "
+operator|+
+literal|"Current AuthenticationMethod: "
+operator|+
+name|authenticationMethod
+operator|.
+name|get
+argument_list|()
 argument_list|)
 throw|;
 block|}

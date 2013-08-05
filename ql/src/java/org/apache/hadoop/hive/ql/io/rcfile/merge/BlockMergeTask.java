@@ -1348,6 +1348,8 @@ name|ctx
 operator|.
 name|getMRTmpFileURI
 argument_list|()
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// remove the pwd from conf file so that job tracker doesn't show this

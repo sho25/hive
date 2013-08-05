@@ -160,6 +160,20 @@ parameter_list|()
 default|default
 literal|false
 function_decl|;
+comment|/** 	 * Used in translations process to validate arguments 	 * @return true if ranking function 	 */
+name|boolean
+name|rankingFunction
+parameter_list|()
+default|default
+literal|false
+function_decl|;
+comment|/** 	  * Using in analytical functions to specify that UDF implies an ordering 	  * @return true if the function implies order 	  */
+name|boolean
+name|impliesOrder
+parameter_list|()
+default|default
+literal|false
+function_decl|;
 block|}
 end_annotation_defn
 
