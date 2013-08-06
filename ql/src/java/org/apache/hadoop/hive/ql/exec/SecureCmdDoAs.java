@@ -103,20 +103,6 @@ name|ShimLoader
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|security
-operator|.
-name|UserGroupInformation
-import|;
-end_import
-
 begin_comment
 comment|/**  * SecureCmdDoAs - Helper class for setting parameters and env necessary for  * being able to run child jvm as intended user.  * Used only when kerberos security is used  *  */
 end_comment
@@ -223,9 +209,13 @@ name|env
 operator|.
 name|put
 argument_list|(
-name|UserGroupInformation
+name|ShimLoader
 operator|.
-name|HADOOP_TOKEN_FILE_LOCATION
+name|getHadoopShims
+argument_list|()
+operator|.
+name|getTokenFileLocEnvName
+argument_list|()
 argument_list|,
 name|tokenPath
 operator|.
