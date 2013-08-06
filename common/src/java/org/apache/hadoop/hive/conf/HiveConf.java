@@ -3488,6 +3488,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_SERVER2_TABLE_TYPE_MAPPING
+argument_list|(
+literal|"hive.server2.table.type.mapping"
+argument_list|,
+literal|"HIVE"
+argument_list|)
+block|,
 name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
