@@ -66,7 +66,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|ZNodeNameTest
+name|TestZNodeName
 extends|extends
 name|TestCase
 block|{

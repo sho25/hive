@@ -106,7 +106,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|WriteLockTest
+name|TestWriteLock
 extends|extends
 name|ClientBase
 block|{
