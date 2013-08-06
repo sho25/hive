@@ -3609,7 +3609,13 @@ argument_list|)
 argument_list|)
 block|,
 comment|// 32MB
-block|;
+name|HIVE_OPTIMIZE_TEZ
+argument_list|(
+literal|"hive.optimize.tez"
+argument_list|,
+literal|false
+argument_list|)
+block|,     ;
 specifier|public
 specifier|final
 name|String
