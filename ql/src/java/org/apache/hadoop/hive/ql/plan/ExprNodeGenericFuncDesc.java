@@ -434,6 +434,7 @@ name|childExprs
 decl_stmt|;
 comment|/**    * This class uses a writableObjectInspector rather than a TypeInfo to store    * the canonical type information for this NodeDesc.    */
 specifier|private
+specifier|transient
 name|ObjectInspector
 name|writableObjectInspector
 decl_stmt|;

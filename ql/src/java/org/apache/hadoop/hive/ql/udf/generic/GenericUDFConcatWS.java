@@ -270,6 +270,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|ObjectInspector
 index|[]
 name|argumentOIs
@@ -386,7 +387,9 @@ operator|.
 name|VOID_TYPE_NAME
 argument_list|)
 condition|)
+block|{
 break|break;
+block|}
 case|case
 name|PRIMITIVE
 case|:
@@ -422,7 +425,9 @@ operator|.
 name|VOID_TYPE_NAME
 argument_list|)
 condition|)
+block|{
 break|break;
+block|}
 default|default:
 throw|throw
 operator|new

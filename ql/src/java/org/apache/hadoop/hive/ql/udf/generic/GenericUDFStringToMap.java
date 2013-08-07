@@ -231,6 +231,8 @@ name|GenericUDFStringToMap
 extends|extends
 name|GenericUDF
 block|{
+specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|Object
@@ -248,6 +250,8 @@ name|Object
 argument_list|>
 argument_list|()
 decl_stmt|;
+specifier|private
+specifier|transient
 name|StringObjectInspector
 name|soi_text
 decl_stmt|,

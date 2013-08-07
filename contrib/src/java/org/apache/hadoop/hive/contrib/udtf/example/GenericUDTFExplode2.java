@@ -209,6 +209,8 @@ name|GenericUDTFExplode2
 extends|extends
 name|GenericUDTF
 block|{
+specifier|private
+specifier|transient
 name|ListObjectInspector
 name|listOI
 init|=

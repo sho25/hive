@@ -250,6 +250,7 @@ extends|extends
 name|GenericUDTF
 block|{
 specifier|private
+specifier|transient
 name|ObjectInspector
 name|inputOI
 init|=

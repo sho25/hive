@@ -25,6 +25,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|text
+operator|.
+name|BreakIterator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -38,16 +48,6 @@ operator|.
 name|util
 operator|.
 name|Locale
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|text
-operator|.
-name|BreakIterator
 import|;
 end_import
 
@@ -258,6 +258,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|ObjectInspectorConverters
 operator|.
 name|Converter

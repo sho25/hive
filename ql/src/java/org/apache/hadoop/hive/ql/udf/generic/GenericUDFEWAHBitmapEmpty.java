@@ -209,7 +209,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|PrimitiveObjectInspector
+name|ObjectInspector
+operator|.
+name|Category
 import|;
 end_import
 
@@ -227,9 +229,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
-operator|.
-name|Category
+name|PrimitiveObjectInspector
 import|;
 end_import
 
@@ -341,9 +341,13 @@ name|GenericUDFEWAHBitmapEmpty
 extends|extends
 name|GenericUDF
 block|{
+specifier|private
+specifier|transient
 name|ObjectInspector
 name|bitmapOI
 decl_stmt|;
+specifier|private
+specifier|transient
 name|BooleanObjectInspector
 name|boolOI
 decl_stmt|;

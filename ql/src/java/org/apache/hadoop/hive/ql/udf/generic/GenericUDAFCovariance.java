@@ -713,22 +713,27 @@ name|yInputOI
 decl_stmt|;
 comment|// For PARTIAL2 and FINAL
 specifier|private
+specifier|transient
 name|StructObjectInspector
 name|soi
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StructField
 name|countField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StructField
 name|xavgField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StructField
 name|yavgField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StructField
 name|covarField
 decl_stmt|;
@@ -1234,6 +1239,7 @@ literal|0
 expr_stmt|;
 block|}
 specifier|private
+specifier|final
 name|boolean
 name|warned
 init|=

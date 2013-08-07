@@ -224,6 +224,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|ObjectInspectorConverters
 operator|.
 name|Converter

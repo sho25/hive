@@ -452,6 +452,8 @@ index|[]
 name|nullCols
 decl_stmt|;
 comment|// array of null column values
+specifier|private
+specifier|transient
 name|ObjectInspector
 index|[]
 name|inputOIs
