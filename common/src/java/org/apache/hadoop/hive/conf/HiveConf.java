@@ -1723,6 +1723,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|METASTORE_TRY_DIRECT_SQL
+argument_list|(
+literal|"hive.metastore.try.direct.sql"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 argument_list|(
 literal|"hive.metastore.disallow.incompatible.col.type.changes"
