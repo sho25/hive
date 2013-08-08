@@ -1677,7 +1677,7 @@ comment|/*    * Helper function to create Vertex for given ReduceWork.    */
 specifier|private
 specifier|static
 name|Vertex
-name|creatVertex
+name|createVertex
 parameter_list|(
 name|JobConf
 name|conf
@@ -1707,7 +1707,7 @@ name|Context
 name|ctx
 parameter_list|)
 throws|throws
-name|IOException
+name|Exception
 block|{
 comment|// write out the operator plan
 name|Path
@@ -2468,6 +2468,8 @@ parameter_list|,
 name|Context
 name|ctx
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 comment|// simply dispatch the call to the right method for the actual (sub-) type of
 comment|// BaseWork.
@@ -2488,8 +2490,6 @@ name|MapWork
 operator|)
 name|work
 argument_list|,
-name|scratchDir
-argument_list|,
 name|seqNo
 argument_list|,
 name|appJarLr
@@ -2497,6 +2497,8 @@ argument_list|,
 name|additionalLr
 argument_list|,
 name|fileSystem
+argument_list|,
+name|scratchDir
 argument_list|,
 name|ctx
 argument_list|)
@@ -2520,8 +2522,6 @@ name|ReduceWork
 operator|)
 name|work
 argument_list|,
-name|scratchDir
-argument_list|,
 name|seqNo
 argument_list|,
 name|appJarLr
@@ -2529,6 +2529,8 @@ argument_list|,
 name|additionalLr
 argument_list|,
 name|fileSystem
+argument_list|,
+name|scratchDir
 argument_list|,
 name|ctx
 argument_list|)

@@ -601,7 +601,7 @@ name|Context
 name|ctx
 parameter_list|)
 throws|throws
-name|IOException
+name|Exception
 block|{
 name|Map
 argument_list|<
