@@ -4475,6 +4475,13 @@ range|:
 name|fields
 control|)
 block|{
+if|if
+condition|(
+name|kid
+operator|!=
+literal|null
+condition|)
+block|{
 name|kid
 operator|.
 name|seek
@@ -4482,6 +4489,7 @@ argument_list|(
 name|index
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 annotation|@
@@ -4707,6 +4715,13 @@ range|:
 name|fields
 control|)
 block|{
+if|if
+condition|(
+name|field
+operator|!=
+literal|null
+condition|)
+block|{
 name|field
 operator|.
 name|skipRows
@@ -4714,6 +4729,7 @@ argument_list|(
 name|items
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -7522,6 +7538,8 @@ operator|=
 name|rowNumber
 operator|-
 name|rowBaseInStripe
+operator|-
+name|firstRow
 expr_stmt|;
 if|if
 condition|(
