@@ -691,6 +691,20 @@ name|ToolRunner
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|VersionInfo
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implemention of shims against Hadoop 0.20.0.  */
 end_comment
@@ -2991,11 +3005,44 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|throwKerberosUnsupportedError
+argument_list|()
+expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|reLoginUserFromKeytab
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|throwKerberosUnsupportedError
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|throwKerberosUnsupportedError
+parameter_list|()
+throws|throws
+name|UnsupportedOperationException
+block|{
 throw|throw
 operator|new
 name|UnsupportedOperationException
 argument_list|(
-literal|"Kerberos login is not supported in current hadoop version"
+literal|"Kerberos login is not supported"
+operator|+
+literal|" in this hadoop version ("
+operator|+
+name|VersionInfo
+operator|.
+name|getVersion
+argument_list|()
+operator|+
+literal|")"
 argument_list|)
 throw|;
 block|}

@@ -884,7 +884,7 @@ name|Configuration
 name|conf
 parameter_list|)
 function_decl|;
-comment|/**   *  Perform kerberos login using the given principal and keytab  * @throws IOException   */
+comment|/**    *  Perform kerberos login using the given principal and keytab    * @throws IOException    */
 specifier|public
 name|void
 name|loginUserFromKeytab
@@ -895,6 +895,14 @@ parameter_list|,
 name|String
 name|keytabFile
 parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Perform kerberos re-login using the given principal and keytab, to renew    * the credentials    * @throws IOException    */
+specifier|public
+name|void
+name|reLoginUserFromKeytab
+parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
