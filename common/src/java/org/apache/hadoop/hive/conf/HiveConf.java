@@ -3438,6 +3438,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_SASL_QOP
+argument_list|(
+literal|"hive.server2.thrift.sasl.qop"
+argument_list|,
+literal|"auth"
+argument_list|)
+block|,
 comment|// HiveServer2 auth configuration
 name|HIVE_SERVER2_AUTHENTICATION
 argument_list|(

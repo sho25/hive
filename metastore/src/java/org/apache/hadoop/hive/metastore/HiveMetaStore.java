@@ -25036,7 +25036,14 @@ operator|=
 name|saslServer
 operator|.
 name|createTransportFactory
-argument_list|()
+argument_list|(
+name|MetaStoreUtils
+operator|.
+name|getMetaStoreSaslProperties
+argument_list|(
+name|conf
+argument_list|)
+argument_list|)
 expr_stmt|;
 name|processor
 operator|=

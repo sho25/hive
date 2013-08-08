@@ -129,6 +129,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|junit
 operator|.
 name|framework
@@ -564,7 +574,15 @@ name|Override
 specifier|public
 name|TTransportFactory
 name|createTransportFactory
-parameter_list|()
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|saslProps
+parameter_list|)
 throws|throws
 name|TTransportException
 block|{
@@ -596,9 +614,7 @@ name|SaslRpcServer
 operator|.
 name|SASL_DEFAULT_REALM
 argument_list|,
-name|SaslRpcServer
-operator|.
-name|SASL_PROPS
+name|saslProps
 argument_list|,
 operator|new
 name|SaslDigestCallbackHandler

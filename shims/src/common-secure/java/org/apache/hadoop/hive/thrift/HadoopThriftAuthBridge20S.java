@@ -85,6 +85,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -711,6 +721,36 @@ name|principalConf
 argument_list|)
 return|;
 block|}
+comment|/**     * Read and return Hadoop SASL configuration which can be configured using     * "hadoop.rpc.protection"     * @param conf     * @return Hadoop SASL configuration     */
+annotation|@
+name|Override
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|getHadoopSaslProperties
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+comment|// Initialize the SaslRpcServer to ensure QOP parameters are read from conf
+name|SaslRpcServer
+operator|.
+name|init
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+return|return
+name|SaslRpcServer
+operator|.
+name|SASL_PROPS
+return|;
+block|}
 specifier|public
 specifier|static
 class|class
@@ -720,7 +760,7 @@ name|HadoopThriftAuthBridge
 operator|.
 name|Client
 block|{
-comment|/**       * Create a client-side SASL transport that wraps an underlying transport.       *       * @param method The authentication method to use. Currently only KERBEROS is       *               supported.       * @param serverPrincipal The Kerberos principal of the target server.       * @param underlyingTransport The underlying transport mechanism, usually a TSocket.       */
+comment|/**       * Create a client-side SASL transport that wraps an underlying transport.       *       * @param method The authentication method to use. Currently only KERBEROS is       *               supported.       * @param serverPrincipal The Kerberos principal of the target server.       * @param underlyingTransport The underlying transport mechanism, usually a TSocket.       * @param saslProps the sasl properties to create the client with       */
 annotation|@
 name|Override
 specifier|public
@@ -741,6 +781,14 @@ name|tokenStrForm
 parameter_list|,
 name|TTransport
 name|underlyingTransport
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|saslProps
 parameter_list|)
 throws|throws
 name|IOException
@@ -810,9 +858,7 @@ name|SaslRpcServer
 operator|.
 name|SASL_DEFAULT_REALM
 argument_list|,
-name|SaslRpcServer
-operator|.
-name|SASL_PROPS
+name|saslProps
 argument_list|,
 operator|new
 name|SaslClientCallbackHandler
@@ -904,9 +950,7 @@ index|[
 literal|1
 index|]
 argument_list|,
-name|SaslRpcServer
-operator|.
-name|SASL_PROPS
+name|saslProps
 argument_list|,
 literal|null
 argument_list|,
@@ -1551,13 +1595,21 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**       * Create a TTransportFactory that, upon connection of a client socket,       * negotiates a Kerberized SASL transport. The resulting TTransportFactory       * can be passed as both the input and output transport factory when       * instantiating a TThreadPoolServer, for example.       *       */
+comment|/**       * Create a TTransportFactory that, upon connection of a client socket,       * negotiates a Kerberized SASL transport. The resulting TTransportFactory       * can be passed as both the input and output transport factory when       * instantiating a TThreadPoolServer, for example.       *       * @param saslProps Map of SASL properties       */
 annotation|@
 name|Override
 specifier|public
 name|TTransportFactory
 name|createTransportFactory
-parameter_list|()
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|saslProps
+parameter_list|)
 throws|throws
 name|TTransportException
 block|{
@@ -1634,9 +1686,7 @@ literal|1
 index|]
 argument_list|,
 comment|// two parts of kerberos principal
-name|SaslRpcServer
-operator|.
-name|SASL_PROPS
+name|saslProps
 argument_list|,
 operator|new
 name|SaslRpcServer
@@ -1662,9 +1712,7 @@ name|SaslRpcServer
 operator|.
 name|SASL_DEFAULT_REALM
 argument_list|,
-name|SaslRpcServer
-operator|.
-name|SASL_PROPS
+name|saslProps
 argument_list|,
 operator|new
 name|SaslDigestCallbackHandler
