@@ -9087,6 +9087,8 @@ name|fs
 argument_list|,
 name|testFilePath
 argument_list|,
+name|conf
+argument_list|,
 name|inspector
 argument_list|,
 literal|50000

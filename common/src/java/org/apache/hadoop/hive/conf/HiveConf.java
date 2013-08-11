@@ -2424,6 +2424,13 @@ literal|0.5f
 argument_list|)
 block|,
 comment|// 50%
+name|HIVE_ORC_DICTIONARY_KEY_SIZE_THRESHOLD
+argument_list|(
+literal|"hive.exec.orc.dictionary.key.size.threshold"
+argument_list|,
+literal|0.8f
+argument_list|)
+block|,
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"
