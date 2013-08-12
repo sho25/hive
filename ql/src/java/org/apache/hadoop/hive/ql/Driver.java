@@ -3254,6 +3254,45 @@ operator|+
 literal|"]:"
 expr_stmt|;
 block|}
+comment|// HIVE-4889
+if|if
+condition|(
+operator|(
+name|e
+operator|instanceof
+name|IllegalArgumentException
+operator|)
+operator|&&
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|==
+literal|null
+operator|&&
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|errorMessage
+operator|+=
+literal|" "
+operator|+
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|.
+name|getMessage
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
 name|errorMessage
 operator|+=
 literal|" "
@@ -3263,6 +3302,7 @@ operator|.
 name|getMessage
 argument_list|()
 expr_stmt|;
+block|}
 name|SQLState
 operator|=
 name|error
