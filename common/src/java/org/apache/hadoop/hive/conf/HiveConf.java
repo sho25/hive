@@ -3615,6 +3615,20 @@ literal|"hive.optimize.tez"
 argument_list|,
 literal|false
 argument_list|)
+block|,
+name|HIVE_JAR_DIRECTORY
+argument_list|(
+literal|"hive.jar.directory"
+argument_list|,
+literal|"hdfs:///user/hive/"
+argument_list|)
+block|,
+name|HIVE_USER_INSTALL_DIR
+argument_list|(
+literal|"hive.user.install.directory"
+argument_list|,
+literal|"hdfs:///user/"
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final

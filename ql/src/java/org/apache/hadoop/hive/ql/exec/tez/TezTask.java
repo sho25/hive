@@ -475,7 +475,7 @@ name|DagUtils
 operator|.
 name|createHiveExecLocalResource
 argument_list|(
-name|scratchDir
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// next we translate the TezWork to a Tez DAG

@@ -1654,6 +1654,35 @@ argument_list|,
 literal|"{0} alter table options is not supported"
 argument_list|)
 block|,
+name|INVALID_HDFS_URI
+argument_list|(
+literal|10247
+argument_list|,
+literal|"{0} is not a hdfs uri"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|INVALID_DIR
+argument_list|(
+literal|10248
+argument_list|,
+literal|"{0} is not a directory"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|NO_VALID_LOCATIONS
+argument_list|(
+literal|10249
+argument_list|,
+literal|"Could not find any valid location to place the jars. "
+operator|+
+literal|"Please update hive.jar.directory or hive.user.install.directory with a valid location"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
@@ -2889,7 +2918,7 @@ block|}
 argument_list|)
 return|;
 block|}
-comment|/**    * If the message is parametrized, this will fill the parameters with supplied     * {@code reasons}, otherwise {@code reasons} are appended at the end of the     * message.    */
+comment|/**    * If the message is parametrized, this will fill the parameters with supplied    * {@code reasons}, otherwise {@code reasons} are appended at the end of the    * message.    */
 specifier|public
 name|String
 name|format
