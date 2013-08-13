@@ -1879,6 +1879,14 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+comment|// Whether to enable history for this session
+name|HIVE_SESSION_HISTORY_ENABLED
+argument_list|(
+literal|"hive.session.history.enabled"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// query being executed (multiple per session)
 name|HIVEQUERYSTRING
 argument_list|(
