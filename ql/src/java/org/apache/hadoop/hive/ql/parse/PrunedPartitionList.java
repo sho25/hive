@@ -94,38 +94,25 @@ specifier|public
 class|class
 name|PrunedPartitionList
 block|{
-comment|// source table
+comment|/** Source table. */
 specifier|private
 specifier|final
 name|Table
 name|source
 decl_stmt|;
-comment|// confirmed partitions - satisfy the partition criteria
+comment|/** Partitions that either satisfy the partition criteria, or may satisfy it. */
 specifier|private
 name|Set
 argument_list|<
 name|Partition
 argument_list|>
-name|confirmedPartns
+name|partitions
 decl_stmt|;
-comment|// unknown partitions - may/may not satisfy the partition criteria
+comment|/** Whether there are partitions in the list that may or may not satisfy the criteria. */
 specifier|private
-name|Set
-argument_list|<
-name|Partition
-argument_list|>
-name|unknownPartns
+name|boolean
+name|hasUnknowns
 decl_stmt|;
-comment|// denied partitions - do not satisfy the partition criteria
-specifier|private
-specifier|final
-name|Set
-argument_list|<
-name|Partition
-argument_list|>
-name|deniedPartns
-decl_stmt|;
-comment|/**    * @param confirmedPartns    *          confirmed partitions    * @param unknownPartns    *          unknown partitions    */
 specifier|public
 name|PrunedPartitionList
 parameter_list|(
@@ -136,19 +123,10 @@ name|Set
 argument_list|<
 name|Partition
 argument_list|>
-name|confirmedPartns
+name|partitions
 parameter_list|,
-name|Set
-argument_list|<
-name|Partition
-argument_list|>
-name|unknownPartns
-parameter_list|,
-name|Set
-argument_list|<
-name|Partition
-argument_list|>
-name|deniedPartns
+name|boolean
+name|hasUnknowns
 parameter_list|)
 block|{
 name|this
@@ -159,21 +137,15 @@ name|source
 expr_stmt|;
 name|this
 operator|.
-name|confirmedPartns
+name|partitions
 operator|=
-name|confirmedPartns
+name|partitions
 expr_stmt|;
 name|this
 operator|.
-name|unknownPartns
+name|hasUnknowns
 operator|=
-name|unknownPartns
-expr_stmt|;
-name|this
-operator|.
-name|deniedPartns
-operator|=
-name|deniedPartns
+name|hasUnknowns
 expr_stmt|;
 block|}
 specifier|public
@@ -185,46 +157,20 @@ return|return
 name|source
 return|;
 block|}
-comment|/**    * get confirmed partitions.    *    * @return confirmedPartns confirmed paritions    */
+comment|/**    * @return partitions    */
 specifier|public
 name|Set
 argument_list|<
 name|Partition
 argument_list|>
-name|getConfirmedPartns
+name|getPartitions
 parameter_list|()
 block|{
 return|return
-name|confirmedPartns
+name|partitions
 return|;
 block|}
-comment|/**    * get unknown partitions.    *    * @return unknownPartns unknown paritions    */
-specifier|public
-name|Set
-argument_list|<
-name|Partition
-argument_list|>
-name|getUnknownPartns
-parameter_list|()
-block|{
-return|return
-name|unknownPartns
-return|;
-block|}
-comment|/**    * get denied partitions.    *    * @return deniedPartns denied paritions    */
-specifier|public
-name|Set
-argument_list|<
-name|Partition
-argument_list|>
-name|getDeniedPartns
-parameter_list|()
-block|{
-return|return
-name|deniedPartns
-return|;
-block|}
-comment|/**    * return all not-denied(confirmed + unknown) partitions.    */
+comment|/**    * @return all partitions.    */
 specifier|public
 name|List
 argument_list|<
@@ -233,74 +179,26 @@ argument_list|>
 name|getNotDeniedPartns
 parameter_list|()
 block|{
-name|List
-argument_list|<
-name|Partition
-argument_list|>
-name|partitions
-init|=
+return|return
 operator|new
 name|ArrayList
 argument_list|<
 name|Partition
 argument_list|>
-argument_list|()
-decl_stmt|;
-name|partitions
-operator|.
-name|addAll
 argument_list|(
-name|confirmedPartns
-argument_list|)
-expr_stmt|;
 name|partitions
-operator|.
-name|addAll
-argument_list|(
-name|unknownPartns
 argument_list|)
-expr_stmt|;
-return|return
-name|partitions
 return|;
 block|}
-comment|/**    * set confirmed partitions.    *    * @param confirmedPartns    *          confirmed paritions    */
+comment|/**    * @return Whether there are unknown partitions in {@link #getPartitions()} result.    */
 specifier|public
-name|void
-name|setConfirmedPartns
-parameter_list|(
-name|Set
-argument_list|<
-name|Partition
-argument_list|>
-name|confirmedPartns
-parameter_list|)
+name|boolean
+name|hasUnknownPartitions
+parameter_list|()
 block|{
-name|this
-operator|.
-name|confirmedPartns
-operator|=
-name|confirmedPartns
-expr_stmt|;
-block|}
-comment|/**    * set unknown partitions.    *    * @param unknownPartns    *          unknown partitions    */
-specifier|public
-name|void
-name|setUnknownPartns
-parameter_list|(
-name|Set
-argument_list|<
-name|Partition
-argument_list|>
-name|unknownPartns
-parameter_list|)
-block|{
-name|this
-operator|.
-name|unknownPartns
-operator|=
-name|unknownPartns
-expr_stmt|;
+return|return
+name|hasUnknowns
+return|;
 block|}
 block|}
 end_class

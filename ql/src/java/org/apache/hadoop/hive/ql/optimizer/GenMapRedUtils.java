@@ -3002,33 +3002,19 @@ throw|;
 block|}
 block|}
 comment|// Generate the map work for this alias_id
+comment|// pass both confirmed and unknown partitions through the map-reduce
+comment|// framework
 name|Set
 argument_list|<
 name|Partition
 argument_list|>
 name|parts
 init|=
-literal|null
+name|partsList
+operator|.
+name|getPartitions
+argument_list|()
 decl_stmt|;
-comment|// pass both confirmed and unknown partitions through the map-reduce
-comment|// framework
-name|parts
-operator|=
-name|partsList
-operator|.
-name|getConfirmedPartns
-argument_list|()
-expr_stmt|;
-name|parts
-operator|.
-name|addAll
-argument_list|(
-name|partsList
-operator|.
-name|getUnknownPartns
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|PartitionDesc
 name|aliasPartnDesc
 init|=

@@ -699,17 +699,11 @@ comment|// If there is any unknown partition, create a map-reduce job for
 comment|// the filter to prune correctly
 if|if
 condition|(
-operator|(
+operator|!
 name|partsList
 operator|.
-name|getUnknownPartns
+name|hasUnknownPartitions
 argument_list|()
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|0
-operator|)
 condition|)
 block|{
 name|globalLimitCtx
