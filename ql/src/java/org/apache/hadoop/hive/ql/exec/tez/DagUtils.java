@@ -1894,6 +1894,16 @@ argument_list|,
 name|reduceWork
 argument_list|)
 expr_stmt|;
+comment|// Call once here, will be updated when we find edges
+name|MultiStageMRConfToTezTranslator
+operator|.
+name|translateVertexConfToTez
+argument_list|(
+name|conf
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
 comment|// create the vertex
 name|Vertex
 name|reducer
