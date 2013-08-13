@@ -1460,7 +1460,15 @@ name|generateInputSplits
 argument_list|(
 name|conf
 argument_list|,
+operator|new
+name|Path
+argument_list|(
 name|tezDir
+argument_list|,
+literal|""
+operator|+
+name|seqNo
+argument_list|)
 argument_list|)
 decl_stmt|;
 comment|// create the directories FileSinkOperators need
