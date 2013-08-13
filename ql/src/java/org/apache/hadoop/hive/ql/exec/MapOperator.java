@@ -2966,17 +2966,7 @@ return|return
 operator|new
 name|Path
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|onefile
-argument_list|)
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getPath
-argument_list|()
 argument_list|)
 return|;
 block|}
