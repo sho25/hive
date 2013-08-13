@@ -957,6 +957,17 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * The method sets to set the partition file has a different signature between    * hadoop versions.    * @param jobConf    * @param partition    */
+name|void
+name|setTotalOrderPartitionFile
+parameter_list|(
+name|JobConf
+name|jobConf
+parameter_list|,
+name|Path
+name|partition
+parameter_list|)
+function_decl|;
 comment|/**    * InputSplitShim.    *    */
 specifier|public
 interface|interface
