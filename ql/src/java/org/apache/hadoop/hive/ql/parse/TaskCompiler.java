@@ -829,6 +829,15 @@ condition|)
 block|{
 return|return;
 block|}
+name|optimizeOperatorPlan
+argument_list|(
+name|pCtx
+argument_list|,
+name|inputs
+argument_list|,
+name|outputs
+argument_list|)
+expr_stmt|;
 comment|/*      * In case of a select, use a fetch task instead of a move task.      * If the select is from analyze table column rewrite, don't create a fetch task. Instead create      * a column stats task later.      */
 if|if
 condition|(
@@ -2219,6 +2228,29 @@ argument_list|>
 name|rootTask
 parameter_list|)
 function_decl|;
+comment|/*    * Called at the beginning of the compile phase to have another chance to optimize the operator plan    */
+specifier|protected
+name|void
+name|optimizeOperatorPlan
+parameter_list|(
+name|ParseContext
+name|pCtxSet
+parameter_list|,
+name|Set
+argument_list|<
+name|ReadEntity
+argument_list|>
+name|inputs
+parameter_list|,
+name|Set
+argument_list|<
+name|WriteEntity
+argument_list|>
+name|outputs
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{   }
 comment|/*    * Called after the tasks have been generated to run another round of optimization    */
 specifier|protected
 specifier|abstract
