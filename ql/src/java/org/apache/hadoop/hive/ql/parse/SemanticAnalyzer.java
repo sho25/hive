@@ -44665,6 +44665,15 @@ literal|true
 decl_stmt|;
 if|if
 condition|(
+name|qbp
+operator|.
+name|getOrderByForClause
+argument_list|(
+name|dest
+argument_list|)
+operator|!=
+literal|null
+operator|||
 name|qb
 operator|.
 name|getIsQuery
