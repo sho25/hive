@@ -46942,7 +46942,7 @@ name|nameToSplitSample
 operator|.
 name|get
 argument_list|(
-name|alias
+name|alias_id
 argument_list|)
 decl_stmt|;
 if|if
@@ -46973,7 +46973,7 @@ name|nameToSplitSample
 operator|.
 name|remove
 argument_list|(
-name|alias
+name|alias_id
 argument_list|)
 expr_stmt|;
 block|}
