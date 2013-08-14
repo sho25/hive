@@ -1260,8 +1260,6 @@ name|class
 operator|.
 name|getName
 argument_list|()
-argument_list|,
-literal|null
 argument_list|)
 argument_list|,
 operator|new
@@ -1273,8 +1271,6 @@ name|class
 operator|.
 name|getName
 argument_list|()
-argument_list|,
-literal|null
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1525,7 +1521,10 @@ name|class
 operator|.
 name|getName
 argument_list|()
-argument_list|,
+argument_list|)
+operator|.
+name|setUserPayload
+argument_list|(
 name|MRHelpers
 operator|.
 name|createUserPayloadFromConf
@@ -1924,7 +1923,10 @@ name|class
 operator|.
 name|getName
 argument_list|()
-argument_list|,
+argument_list|)
+operator|.
+name|setUserPayload
+argument_list|(
 name|MRHelpers
 operator|.
 name|createUserPayloadFromConf
