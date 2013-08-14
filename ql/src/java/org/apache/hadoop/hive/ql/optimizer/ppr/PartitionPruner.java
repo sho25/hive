@@ -1221,11 +1221,16 @@ operator|.
 name|getGenericUDF
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
+name|boolean
+name|isAnd
+init|=
 name|udf
 operator|instanceof
 name|GenericUDFOPAnd
+decl_stmt|;
+if|if
+condition|(
+name|isAnd
 operator|||
 name|udf
 operator|instanceof
@@ -1238,7 +1243,12 @@ name|ExprNodeDesc
 argument_list|>
 name|children
 init|=
+operator|(
+operator|(
+name|ExprNodeGenericFuncDesc
+operator|)
 name|expr
+operator|)
 operator|.
 name|getChildren
 argument_list|()
@@ -1287,6 +1297,8 @@ name|right
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// Note that one does not simply compact (not-null or null) to not-null.
+comment|// Only if we have an "and" is it valid to send one side to metastore.
 if|if
 condition|(
 name|children
@@ -1326,12 +1338,16 @@ literal|null
 condition|)
 block|{
 return|return
+name|isAnd
+condition|?
 name|children
 operator|.
 name|get
 argument_list|(
 literal|1
 argument_list|)
+else|:
+literal|null
 return|;
 block|}
 elseif|else
@@ -1348,12 +1364,16 @@ literal|null
 condition|)
 block|{
 return|return
+name|isAnd
+condition|?
 name|children
 operator|.
 name|get
 argument_list|(
 literal|0
 argument_list|)
+else|:
+literal|null
 return|;
 block|}
 block|}
