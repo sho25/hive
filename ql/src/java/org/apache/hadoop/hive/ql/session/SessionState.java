@@ -1297,7 +1297,7 @@ throws|throws
 name|IOException
 block|{
 name|String
-name|hHistDir
+name|lScratchDir
 init|=
 name|HiveConf
 operator|.
@@ -1309,7 +1309,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVEHISTORYFILELOC
+name|LOCALSCRATCHDIR
 argument_list|)
 decl_stmt|;
 name|File
@@ -1318,7 +1318,7 @@ init|=
 operator|new
 name|File
 argument_list|(
-name|hHistDir
+name|lScratchDir
 argument_list|)
 decl_stmt|;
 name|String
@@ -1371,7 +1371,7 @@ name|RuntimeException
 argument_list|(
 literal|"Unable to create log directory "
 operator|+
-name|hHistDir
+name|lScratchDir
 argument_list|)
 throw|;
 block|}
