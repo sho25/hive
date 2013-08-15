@@ -17356,7 +17356,6 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-comment|// Require an AS for UDTFs for column aliases
 name|ASTNode
 name|selExpr
 init|=
@@ -17370,36 +17369,9 @@ argument_list|(
 name|posn
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|selExpr
-operator|.
-name|getChildCount
-argument_list|()
-operator|<
-literal|2
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|generateErrorMessage
-argument_list|(
-name|udtfExpr
-argument_list|,
-name|ErrorMsg
-operator|.
-name|UDTF_REQUIRE_AS
-operator|.
-name|getMsg
-argument_list|()
-argument_list|)
-argument_list|)
-throw|;
-block|}
 comment|// Get the column / table aliases from the expression. Start from 1 as
 comment|// 0 is the TOK_FUNCTION
+comment|// column names also can be inferred from result of UDTF
 for|for
 control|(
 name|int
@@ -32562,8 +32534,6 @@ argument_list|(
 name|colOIs
 argument_list|)
 decl_stmt|;
-comment|// Make sure that the number of column aliases in the AS clause matches
-comment|// the number of columns output by the UDTF
 name|int
 name|numUdtfCols
 init|=
@@ -32575,6 +32545,40 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|colAliases
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// user did not specfied alias names, infer names from outputOI
+for|for
+control|(
+name|StructField
+name|field
+range|:
+name|outputOI
+operator|.
+name|getAllStructFieldRefs
+argument_list|()
+control|)
+block|{
+name|colAliases
+operator|.
+name|add
+argument_list|(
+name|field
+operator|.
+name|getFieldName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|// Make sure that the number of column aliases in the AS clause matches
+comment|// the number of columns output by the UDTF
 name|int
 name|numSuppliedAliases
 init|=

@@ -730,6 +730,8 @@ operator|+
 literal|"supported with UDTF's"
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|UDTF_REQUIRE_AS
 argument_list|(
 literal|10076
