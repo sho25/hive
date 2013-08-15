@@ -396,6 +396,35 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**      * Does the RecordReader need to include this set of records?      * @return true unless none of the rows qualify      */
+specifier|public
+name|boolean
+name|isNotNeeded
+parameter_list|()
+block|{
+switch|switch
+condition|(
+name|this
+condition|)
+block|{
+case|case
+name|NO
+case|:
+case|case
+name|NULL
+case|:
+case|case
+name|NO_NULL
+case|:
+return|return
+literal|false
+return|;
+default|default:
+return|return
+literal|true
+return|;
+block|}
+block|}
 block|}
 comment|/**    * Get the leaf predicates that are required to evaluate the predicate. The    * list will have the duplicates removed.    * @return the list of leaf predicates    */
 specifier|public

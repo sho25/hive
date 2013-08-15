@@ -31,6 +31,26 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|sarg
+operator|.
+name|SearchArgument
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|objectinspector
@@ -159,7 +179,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Create a RecordReader that will start reading at the first stripe after    * offset up to the stripe that starts at offset + length. This is intended    * to work with MapReduce's FileInputFormat where divisions are picked    * blindly, but they must cover all of the rows.    * @param offset a byte offset in the file    * @param length a number of bytes in the file    * @param include true for each column that should be included    * @return a new RecordReader that will read the specified rows.    * @throws IOException    */
+comment|/**    * Create a RecordReader that will start reading at the first stripe after    * offset up to the stripe that starts at offset + length. This is intended    * to work with MapReduce's FileInputFormat where divisions are picked    * blindly, but they must cover all of the rows.    * @param offset a byte offset in the file    * @param length a number of bytes in the file    * @param include true for each column that should be included    * @return a new RecordReader that will read the specified rows.    * @throws IOException    * @deprecated    */
 name|RecordReader
 name|rows
 parameter_list|(
@@ -172,6 +192,30 @@ parameter_list|,
 name|boolean
 index|[]
 name|include
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Create a RecordReader that will read a section of a file. It starts reading    * at the first stripe after the offset and continues to the stripe that    * starts at offset + length. It also accepts a list of columns to read and a    * search argument.    * @param offset the minimum offset of the first stripe to read    * @param length the distance from offset of the first address to stop reading    *               at    * @param include true for each column that should be included    * @param sarg a search argument that limits the rows that should be read.    * @param neededColumns the names of the included columns    * @return the record reader for the rows    */
+name|RecordReader
+name|rows
+parameter_list|(
+name|long
+name|offset
+parameter_list|,
+name|long
+name|length
+parameter_list|,
+name|boolean
+index|[]
+name|include
+parameter_list|,
+name|SearchArgument
+name|sarg
+parameter_list|,
+name|String
+index|[]
+name|neededColumns
 parameter_list|)
 throws|throws
 name|IOException
