@@ -590,19 +590,14 @@ name|reduceWork
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// All parents should be reduce sinks. We pick the first to choose the
-comment|// number of reducers. In the join/union case they will all be -1. In
-comment|// sort/order case where it matters there will be only one parent.
+comment|// All parents should be reduce sinks. We pick the one we just walked
+comment|// to choose the number of reducers. In the join/union case they will
+comment|// all be -1. In sort/order case where it matters there will be only
+comment|// one parent.
 assert|assert
-name|root
+name|context
 operator|.
-name|getParentOperators
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
+name|parentOfRoot
 operator|instanceof
 name|ReduceSinkOperator
 assert|;
@@ -612,15 +607,9 @@ init|=
 operator|(
 name|ReduceSinkOperator
 operator|)
-name|root
+name|context
 operator|.
-name|getParentOperators
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
+name|parentOfRoot
 decl_stmt|;
 name|reduceWork
 operator|.
@@ -880,6 +869,12 @@ literal|1
 assert|;
 name|context
 operator|.
+name|parentOfRoot
+operator|=
+name|operator
+expr_stmt|;
+name|context
+operator|.
 name|currentRootOperator
 operator|=
 name|operator
@@ -901,6 +896,12 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|context
+operator|.
+name|parentOfRoot
+operator|=
+literal|null
+expr_stmt|;
 name|context
 operator|.
 name|currentRootOperator

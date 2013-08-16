@@ -384,6 +384,19 @@ name|OperatorDesc
 argument_list|>
 name|currentRootOperator
 decl_stmt|;
+comment|// this is the original parent of the currentRootOperator as we scan
+comment|// through the graph. A root operator might have multiple parents and
+comment|// we just use this one to remember where we came from in the current
+comment|// walk.
+specifier|public
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|OperatorDesc
+argument_list|>
+name|parentOfRoot
+decl_stmt|;
 comment|// tez task we're currently processing
 specifier|public
 name|TezTask
