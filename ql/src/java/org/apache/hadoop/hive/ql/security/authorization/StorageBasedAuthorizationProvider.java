@@ -332,6 +332,56 @@ specifier|private
 name|Warehouse
 name|wh
 decl_stmt|;
+comment|/**    * Make sure that the warehouse variable is set up properly.    * @throws MetaException if unable to instantiate    */
+specifier|private
+name|void
+name|initWh
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+if|if
+condition|(
+name|wh
+operator|==
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+operator|!
+name|hive_db
+operator|.
+name|isRunFromMetaStore
+argument_list|()
+condition|)
+block|{
+name|this
+operator|.
+name|wh
+operator|=
+operator|new
+name|Warehouse
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// not good if we reach here, this was initialized at setMetaStoreHandler() time.
+comment|// this means handler.getWh() is returning null. Error out.
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Unitialized Warehouse from MetastoreHandler"
+argument_list|)
+throw|;
+block|}
+block|}
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -465,6 +515,9 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+name|initWh
+argument_list|()
+expr_stmt|;
 name|String
 name|location
 init|=
@@ -1361,6 +1414,9 @@ name|HiveException
 block|{
 try|try
 block|{
+name|initWh
+argument_list|()
+expr_stmt|;
 name|String
 name|location
 init|=
