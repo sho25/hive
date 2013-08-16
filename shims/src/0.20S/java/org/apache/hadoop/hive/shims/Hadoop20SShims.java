@@ -231,6 +231,22 @@ name|Progressable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|lib
+operator|.
+name|TotalOrderPartitioner
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implemention of shims against Hadoop 0.20 with Security.  */
 end_comment
@@ -633,6 +649,29 @@ operator|.
 name|getDefaultReplication
 argument_list|()
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|setTotalOrderPartitionFile
+parameter_list|(
+name|JobConf
+name|jobConf
+parameter_list|,
+name|Path
+name|partitionFile
+parameter_list|)
+block|{
+name|TotalOrderPartitioner
+operator|.
+name|setPartitionFile
+argument_list|(
+name|jobConf
+argument_list|,
+name|partitionFile
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Returns a shim to wrap MiniMrCluster    */
 specifier|public

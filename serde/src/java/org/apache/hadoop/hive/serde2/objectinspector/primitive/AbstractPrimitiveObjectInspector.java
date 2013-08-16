@@ -73,6 +73,7 @@ name|AbstractPrimitiveObjectInspector
 implements|implements
 name|PrimitiveObjectInspector
 block|{
+specifier|transient
 name|PrimitiveTypeEntry
 name|typeEntry
 decl_stmt|;

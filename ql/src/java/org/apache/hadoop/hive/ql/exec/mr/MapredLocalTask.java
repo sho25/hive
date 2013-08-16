@@ -417,6 +417,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|SecureCmdDoAs
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|TableScanOperator
 import|;
 end_import
@@ -798,7 +816,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * MapredLocalTask represents any local work (i.e.: client side work) that hive needs to  * execute. E.g.: This is used for generating Hashtables for Mapjoins on the client  * before the Join is executed on the cluster.  *   * MapRedLocalTask does not actually execute the work in process, but rather generates   * a command using ExecDriver. ExecDriver is what will finally drive processing the records.  */
+comment|/**  * MapredLocalTask represents any local work (i.e.: client side work) that hive needs to  * execute. E.g.: This is used for generating Hashtables for Mapjoins on the client  * before the Join is executed on the cluster.  *  * MapRedLocalTask does not actually execute the work in process, but rather generates  * a command using ExecDriver. ExecDriver is what will finally drive processing the records.  */
 end_comment
 
 begin_class
@@ -1399,15 +1417,6 @@ throw|;
 block|}
 block|}
 block|}
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Executing: "
-operator|+
-name|cmdLine
-argument_list|)
-expr_stmt|;
 comment|// Inherit Java system variables
 name|String
 name|hadoopOpts
@@ -1668,6 +1677,59 @@ name|variables
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|isSecurityEnabled
+argument_list|()
+operator|&&
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_ENABLE_DOAS
+argument_list|)
+operator|==
+literal|true
+condition|)
+block|{
+comment|//If kerberos security is enabled, and HS2 doAs is enabled,
+comment|// then additional params need to be set so that the command is run as
+comment|// intended user
+name|SecureCmdDoAs
+name|secureDoAs
+init|=
+operator|new
+name|SecureCmdDoAs
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|cmdLine
+operator|=
+name|secureDoAs
+operator|.
+name|addArg
+argument_list|(
+name|cmdLine
+argument_list|)
+expr_stmt|;
+name|secureDoAs
+operator|.
+name|addEnv
+argument_list|(
+name|variables
+argument_list|)
+expr_stmt|;
+block|}
 name|env
 operator|=
 operator|new
@@ -1730,7 +1792,30 @@ literal|"="
 operator|+
 name|value
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Setting env: "
+operator|+
+name|env
+index|[
+name|pos
+operator|-
+literal|1
+index|]
+argument_list|)
+expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Executing: "
+operator|+
+name|cmdLine
+argument_list|)
+expr_stmt|;
 comment|// Run ExecDriver in another JVM
 name|executor
 operator|=

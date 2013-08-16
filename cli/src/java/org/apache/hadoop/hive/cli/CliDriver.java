@@ -3573,6 +3573,10 @@ block|{
 name|int
 name|ret
 init|=
+operator|new
+name|CliDriver
+argument_list|()
+operator|.
 name|run
 argument_list|(
 name|args
@@ -3587,7 +3591,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 name|int
 name|run
 parameter_list|(
@@ -3957,7 +3960,6 @@ return|;
 block|}
 comment|/**    * Execute the cli work    * @param ss CliSessionState of the CLI driver    * @param conf HiveConf for the driver sionssion    * @param oproc Opetion processor of the CLI invocation    * @return status of the CLI comman execution    * @throws Exception    */
 specifier|private
-specifier|static
 name|int
 name|executeDriver
 parameter_list|(
@@ -4209,9 +4211,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|int
-name|fileProcessStatus
-init|=
+return|return
 name|cli
 operator|.
 name|processFile
@@ -4220,9 +4220,6 @@ name|ss
 operator|.
 name|fileName
 argument_list|)
-decl_stmt|;
-return|return
-name|fileProcessStatus
 return|;
 block|}
 block|}
@@ -4255,8 +4252,7 @@ block|}
 name|ConsoleReader
 name|reader
 init|=
-operator|new
-name|ConsoleReader
+name|getConsoleReader
 argument_list|()
 decl_stmt|;
 name|reader
@@ -4561,6 +4557,19 @@ block|}
 block|}
 return|return
 name|ret
+return|;
+block|}
+specifier|protected
+name|ConsoleReader
+name|getConsoleReader
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+return|return
+operator|new
+name|ConsoleReader
+argument_list|()
 return|;
 block|}
 comment|/**    * Retrieve the current database name string to display, based on the    * configuration value.    * @param conf storing whether or not to show current db    * @param ss CliSessionState to query for db name    * @return String to show user for current db value    */

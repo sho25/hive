@@ -155,7 +155,7 @@ name|primitive
 operator|.
 name|PrimitiveObjectInspectorUtils
 operator|.
-name|*
+name|PrimitiveTypeEntry
 import|;
 end_import
 
@@ -172,21 +172,25 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 index|[]
 name|parameterOIs
 decl_stmt|;
 specifier|private
+specifier|transient
 name|PrimitiveTypeEntry
 index|[]
 name|parameterTypes
 decl_stmt|;
 specifier|private
+specifier|transient
 name|Class
 index|[]
 name|parameterClasses
 decl_stmt|;
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|parameterJavaValues

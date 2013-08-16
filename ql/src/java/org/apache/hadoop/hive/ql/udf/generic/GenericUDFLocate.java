@@ -143,7 +143,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorConverters
+name|ObjectInspector
+operator|.
+name|Category
 import|;
 end_import
 
@@ -161,9 +163,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
-operator|.
-name|Category
+name|ObjectInspectorConverters
 import|;
 end_import
 
@@ -248,6 +248,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|ObjectInspectorConverters
 operator|.
 name|Converter
@@ -467,6 +468,7 @@ name|writableIntObjectInspector
 return|;
 block|}
 specifier|private
+specifier|final
 name|IntWritable
 name|intWritable
 init|=

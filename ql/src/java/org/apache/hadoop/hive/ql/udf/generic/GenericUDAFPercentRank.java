@@ -230,6 +230,14 @@ argument_list|,
 name|pivotResult
 operator|=
 literal|true
+argument_list|,
+name|rankingFunction
+operator|=
+literal|true
+argument_list|,
+name|impliesOrder
+operator|=
+literal|true
 argument_list|)
 specifier|public
 class|class

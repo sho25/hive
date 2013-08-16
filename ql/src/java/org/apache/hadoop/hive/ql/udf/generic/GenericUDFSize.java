@@ -258,11 +258,13 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|ObjectInspector
 name|returnOI
 decl_stmt|;
 specifier|private
 specifier|final
+specifier|transient
 name|IntWritable
 name|result
 init|=

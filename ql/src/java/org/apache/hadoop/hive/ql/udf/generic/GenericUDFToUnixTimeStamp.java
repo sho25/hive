@@ -276,18 +276,22 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|StringObjectInspector
 name|intputTextOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|DateObjectInspector
 name|inputDateOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|TimestampObjectInspector
 name|inputTimestampOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StringObjectInspector
 name|patternOI
 decl_stmt|;
@@ -298,6 +302,8 @@ init|=
 literal|"yyyy-MM-dd HH:mm:ss"
 decl_stmt|;
 specifier|private
+specifier|transient
+specifier|final
 name|SimpleDateFormat
 name|formatter
 init|=

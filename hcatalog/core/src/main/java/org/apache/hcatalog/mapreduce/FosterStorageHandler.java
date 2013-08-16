@@ -631,6 +631,12 @@ name|outputLocation
 decl_stmt|;
 if|if
 condition|(
+operator|(
+name|dynHash
+operator|==
+literal|null
+operator|)
+operator|&&
 name|Boolean
 operator|.
 name|valueOf
@@ -667,7 +673,8 @@ operator|>
 literal|0
 condition|)
 block|{
-comment|// honor external table that specifies the location
+comment|// honor custom location for external table apart from what metadata specifies
+comment|// only if we're not using dynamic partitioning - see HIVE-5011
 name|outputLocation
 operator|=
 name|jobInfo

@@ -327,6 +327,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|VirtualColumn
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|optimizer
 operator|.
 name|ppr
@@ -532,6 +550,12 @@ name|expr
 parameter_list|,
 name|Partition
 name|p
+parameter_list|,
+name|List
+argument_list|<
+name|VirtualColumn
+argument_list|>
+name|vcs
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -600,6 +624,8 @@ argument_list|(
 name|expr
 argument_list|,
 name|partSpec
+argument_list|,
+name|vcs
 argument_list|,
 name|rowObjectInspector
 argument_list|)
@@ -2279,6 +2305,11 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+argument_list|,
+name|ctx
+operator|.
+name|getVirtualColumns
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2351,6 +2382,11 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+argument_list|,
+name|ctx
+operator|.
+name|getVirtualColumns
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2674,7 +2710,7 @@ name|ColumnExprProcessor
 argument_list|()
 return|;
 block|}
-comment|/**    * Remove partition conditions when necessary from the the expression tree.    *    * @param tabAlias    *          the table alias    * @param parts    *          the list of all pruned partitions for the    * @param pred    *          expression tree of the target filter operator    * @return the node information of the root expression    * @throws SemanticException    */
+comment|/**    * Remove partition conditions when necessary from the the expression tree.    *    * @param tabAlias    *          the table alias    * @param parts    *          the list of all pruned partitions for the table    * @param vcs    *          virtual columns referenced    * @param pred    *          expression tree of the target filter operator    * @return the node information of the root expression    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|NodeInfoWrapper
@@ -2688,6 +2724,12 @@ argument_list|<
 name|Partition
 argument_list|>
 name|parts
+parameter_list|,
+name|List
+argument_list|<
+name|VirtualColumn
+argument_list|>
+name|vcs
 parameter_list|,
 name|ExprNodeDesc
 name|pred
@@ -2705,6 +2747,8 @@ argument_list|(
 name|tabAlias
 argument_list|,
 name|parts
+argument_list|,
+name|vcs
 argument_list|)
 decl_stmt|;
 name|Map

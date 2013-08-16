@@ -1020,6 +1020,20 @@ name|empty
 init|=
 literal|true
 decl_stmt|;
+comment|// The list of families that have been added to the scan
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|addedFamilies
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -1071,9 +1085,32 @@ operator|.
 name|familyNameBytes
 argument_list|)
 expr_stmt|;
+name|addedFamilies
+operator|.
+name|add
+argument_list|(
+name|colMap
+operator|.
+name|familyName
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+operator|!
+name|addedFamilies
+operator|.
+name|contains
+argument_list|(
+name|colMap
+operator|.
+name|familyName
+argument_list|)
+condition|)
+block|{
+comment|// add only if the corresponding family has not already been added
 name|scan
 operator|.
 name|addColumn
@@ -1087,6 +1124,7 @@ operator|.
 name|qualifierNameBytes
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|empty
 operator|=
@@ -2642,6 +2680,20 @@ operator|new
 name|Scan
 argument_list|()
 decl_stmt|;
+comment|// The list of families that have been added to the scan
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|addedFamilies
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
 comment|// REVIEW:  are we supposed to be applying the getReadColumnIDs
 comment|// same as in getRecordReader?
 for|for
@@ -2699,9 +2751,32 @@ operator|.
 name|familyNameBytes
 argument_list|)
 expr_stmt|;
+name|addedFamilies
+operator|.
+name|add
+argument_list|(
+name|colMap
+operator|.
+name|familyName
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+operator|!
+name|addedFamilies
+operator|.
+name|contains
+argument_list|(
+name|colMap
+operator|.
+name|familyName
+argument_list|)
+condition|)
+block|{
+comment|// add the column only if the family has not already been added
 name|scan
 operator|.
 name|addColumn
@@ -2715,6 +2790,7 @@ operator|.
 name|qualifierNameBytes
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|// Take filter pushdown into account while calculating splits; this

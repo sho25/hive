@@ -196,6 +196,8 @@ operator|new
 name|BooleanWritable
 argument_list|()
 decl_stmt|;
+specifier|private
+specifier|transient
 name|BooleanObjectInspector
 name|boi0
 decl_stmt|,

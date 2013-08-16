@@ -212,6 +212,8 @@ name|GenericUDFTestTranslate
 extends|extends
 name|GenericUDF
 block|{
+specifier|private
+specifier|transient
 name|ObjectInspector
 index|[]
 name|argumentOIs

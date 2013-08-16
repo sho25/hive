@@ -171,7 +171,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorFactory
+name|ObjectInspector
+operator|.
+name|Category
 import|;
 end_import
 
@@ -189,9 +191,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
-operator|.
-name|Category
+name|ObjectInspectorFactory
 import|;
 end_import
 
@@ -220,6 +220,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|MapObjectInspector
 name|mapOI
 decl_stmt|;

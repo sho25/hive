@@ -599,23 +599,28 @@ name|GenericUDAFEvaluator
 block|{
 comment|// For PARTIAL1 and COMPLETE
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
 comment|// For PARTIAL2 and FINAL
 specifier|private
+specifier|transient
 name|StructObjectInspector
 name|soi
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StructField
 name|countField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StructField
 name|sumField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StructField
 name|varianceField
 decl_stmt|;
@@ -626,10 +631,6 @@ decl_stmt|;
 specifier|private
 name|DoubleObjectInspector
 name|sumFieldOI
-decl_stmt|;
-specifier|private
-name|DoubleObjectInspector
-name|varianceFieldOI
 decl_stmt|;
 comment|// For PARTIAL1 and PARTIAL2
 specifier|private
@@ -758,16 +759,6 @@ operator|(
 name|DoubleObjectInspector
 operator|)
 name|sumField
-operator|.
-name|getFieldObjectInspector
-argument_list|()
-expr_stmt|;
-name|varianceFieldOI
-operator|=
-operator|(
-name|DoubleObjectInspector
-operator|)
-name|varianceField
 operator|.
 name|getFieldObjectInspector
 argument_list|()

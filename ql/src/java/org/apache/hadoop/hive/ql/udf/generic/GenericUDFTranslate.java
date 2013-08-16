@@ -431,6 +431,7 @@ comment|// need to represent each character (called a code point from hereon) as
 comment|// http://docs.oracle.com/javase/7/docs/api/java/lang/Character.html
 comment|/**    * If a code point needs to be replaced with another code point, this map with store the mapping.    */
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|Integer
@@ -450,6 +451,7 @@ argument_list|()
 decl_stmt|;
 comment|/**    * This set stores all the code points which needed to be deleted from the input string. The    * objects in deletionSet and keys in replacementMap are mutually exclusive    */
 specifier|private
+specifier|final
 name|Set
 argument_list|<
 name|Integer
@@ -465,6 +467,7 @@ argument_list|()
 decl_stmt|;
 comment|/**    * A placeholder for result.    */
 specifier|private
+specifier|final
 name|Text
 name|result
 init|=
@@ -488,6 +491,7 @@ literal|null
 decl_stmt|;
 comment|/**    * Converters for retrieving the arguments to the UDF.    */
 specifier|private
+specifier|transient
 name|ObjectInspectorConverters
 operator|.
 name|Converter

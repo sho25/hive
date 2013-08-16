@@ -68,6 +68,8 @@ end_comment
 begin_class
 class|class
 name|RunLengthIntegerReader
+implements|implements
+name|IntegerReader
 block|{
 specifier|private
 specifier|final
@@ -336,6 +338,9 @@ block|}
 block|}
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
 name|boolean
 name|hasNext
 parameter_list|()
@@ -355,6 +360,9 @@ operator|>
 literal|0
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
 name|long
 name|next
 parameter_list|()
@@ -410,6 +418,9 @@ return|return
 name|result
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|nextVector
 parameter_list|(
@@ -536,6 +547,9 @@ expr_stmt|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|seek
 parameter_list|(
@@ -603,6 +617,9 @@ literal|0
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|skip
 parameter_list|(

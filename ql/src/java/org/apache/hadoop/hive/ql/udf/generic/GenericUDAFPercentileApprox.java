@@ -1473,6 +1473,7 @@ literal|10000
 decl_stmt|;
 comment|// For PARTIAL2 and FINAL: ObjectInspectors for partial aggregations (list of doubles)
 specifier|protected
+specifier|transient
 name|StandardListObjectInspector
 name|loi
 decl_stmt|;

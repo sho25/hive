@@ -91,16 +91,6 @@ name|java
 operator|.
 name|sql
 operator|.
-name|Connection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
 name|Date
 import|;
 end_import
@@ -191,16 +181,6 @@ name|java
 operator|.
 name|sql
 operator|.
-name|SQLWarning
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
 name|SQLXML
 import|;
 end_import
@@ -247,16 +227,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -270,60 +240,6 @@ operator|.
 name|thrift
 operator|.
 name|TCLIService
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|cli
-operator|.
-name|thrift
-operator|.
-name|TExecuteStatementReq
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|cli
-operator|.
-name|thrift
-operator|.
-name|TExecuteStatementResp
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|cli
-operator|.
-name|thrift
-operator|.
-name|TOperationHandle
 import|;
 end_import
 
@@ -353,6 +269,8 @@ begin_class
 specifier|public
 class|class
 name|HivePreparedStatement
+extends|extends
+name|HiveStatement
 implements|implements
 name|PreparedStatement
 block|{
@@ -360,38 +278,6 @@ specifier|private
 specifier|final
 name|String
 name|sql
-decl_stmt|;
-specifier|private
-name|TCLIService
-operator|.
-name|Iface
-name|client
-decl_stmt|;
-specifier|private
-specifier|final
-name|TSessionHandle
-name|sessHandle
-decl_stmt|;
-specifier|private
-name|TOperationHandle
-name|stmtHandle
-decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|sessConf
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
 decl_stmt|;
 comment|/**    * save the SQL parameters {paramLoc:paramValue}    */
 specifier|private
@@ -413,43 +299,6 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * We need to keep a reference to the result set to support the following:    *<code>    * statement.execute(String sql);    * statement.getResultSet();    *</code>.    */
-specifier|private
-name|ResultSet
-name|resultSet
-init|=
-literal|null
-decl_stmt|;
-comment|/**    * The maximum number of rows this statement should return (0 => all rows).    */
-specifier|private
-name|int
-name|maxRows
-init|=
-literal|0
-decl_stmt|;
-comment|/**    * Add SQLWarnings to the warningChain if needed.    */
-specifier|private
-name|SQLWarning
-name|warningChain
-init|=
-literal|null
-decl_stmt|;
-comment|/**    * Keep state so we can fail certain calls made after close().    */
-specifier|private
-name|boolean
-name|isClosed
-init|=
-literal|false
-decl_stmt|;
-comment|/**    * keep the current ResultRet update count    */
-specifier|private
-specifier|final
-name|int
-name|updateCount
-init|=
-literal|0
-decl_stmt|;
-comment|/**    *    */
 specifier|public
 name|HivePreparedStatement
 parameter_list|(
@@ -465,17 +314,12 @@ name|String
 name|sql
 parameter_list|)
 block|{
-name|this
-operator|.
+name|super
+argument_list|(
 name|client
-operator|=
-name|client
-expr_stmt|;
-name|this
-operator|.
+argument_list|,
 name|sessHandle
-operator|=
-name|sessHandle
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -525,18 +369,18 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-name|ResultSet
-name|rs
-init|=
-name|executeImmediate
+return|return
+name|super
+operator|.
+name|execute
+argument_list|(
+name|updateSql
 argument_list|(
 name|sql
+argument_list|,
+name|parameters
 argument_list|)
-decl_stmt|;
-return|return
-name|rs
-operator|!=
-literal|null
+argument_list|)
 return|;
 block|}
 comment|/**    *  Invokes executeQuery(sql) using the sql provided to the constructor.    *    *  @return ResultSet    *  @throws SQLException    */
@@ -548,9 +392,16 @@ throws|throws
 name|SQLException
 block|{
 return|return
-name|executeImmediate
+name|super
+operator|.
+name|executeQuery
+argument_list|(
+name|updateSql
 argument_list|(
 name|sql
+argument_list|,
+name|parameters
+argument_list|)
 argument_list|)
 return|;
 block|}
@@ -562,178 +413,20 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-name|executeImmediate
-argument_list|(
-name|sql
-argument_list|)
-expr_stmt|;
-return|return
-name|updateCount
-return|;
-block|}
-comment|/**    *  Executes the SQL statement.    *    *  @param sql The sql, as a string, to execute    *  @return ResultSet    *  @throws SQLException if the prepared statement is closed or there is a database error.    *                       caught Exceptions are thrown as SQLExceptions with the description    *                       "08S01".    */
-specifier|protected
-name|ResultSet
-name|executeImmediate
-parameter_list|(
-name|String
-name|sql
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-if|if
-condition|(
-name|isClosed
-condition|)
-block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Can't execute after statement has been closed"
-argument_list|)
-throw|;
-block|}
-try|try
-block|{
-name|clearWarnings
-argument_list|()
-expr_stmt|;
-name|resultSet
-operator|=
-literal|null
-expr_stmt|;
-if|if
-condition|(
-name|sql
+name|super
 operator|.
-name|contains
+name|executeUpdate
 argument_list|(
-literal|"?"
-argument_list|)
-condition|)
-block|{
-name|sql
-operator|=
 name|updateSql
 argument_list|(
 name|sql
 argument_list|,
 name|parameters
 argument_list|)
-expr_stmt|;
-block|}
-name|TExecuteStatementReq
-name|execReq
-init|=
-operator|new
-name|TExecuteStatementReq
-argument_list|(
-name|sessHandle
-argument_list|,
-name|sql
 argument_list|)
-decl_stmt|;
-name|execReq
-operator|.
-name|setConfOverlay
-argument_list|(
-name|sessConf
-argument_list|)
-expr_stmt|;
-name|TExecuteStatementResp
-name|execResp
-init|=
-name|client
-operator|.
-name|ExecuteStatement
-argument_list|(
-name|execReq
-argument_list|)
-decl_stmt|;
-name|Utils
-operator|.
-name|verifySuccessWithInfo
-argument_list|(
-name|execResp
-operator|.
-name|getStatus
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|stmtHandle
-operator|=
-name|execResp
-operator|.
-name|getOperationHandle
-argument_list|()
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|es
-parameter_list|)
-block|{
-throw|throw
-name|es
-throw|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|ex
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-name|ex
-operator|.
-name|toString
-argument_list|()
-argument_list|,
-literal|"08S01"
-argument_list|,
-name|ex
-argument_list|)
-throw|;
-block|}
-name|resultSet
-operator|=
-operator|new
-name|HiveQueryResultSet
-operator|.
-name|Builder
-argument_list|()
-operator|.
-name|setClient
-argument_list|(
-name|client
-argument_list|)
-operator|.
-name|setSessionHandle
-argument_list|(
-name|sessHandle
-argument_list|)
-operator|.
-name|setStmtHandle
-argument_list|(
-name|stmtHandle
-argument_list|)
-operator|.
-name|setMaxRows
-argument_list|(
-name|maxRows
-argument_list|)
-operator|.
-name|build
-argument_list|()
 expr_stmt|;
 return|return
-name|resultSet
+literal|0
 return|;
 block|}
 comment|/**    * update the SQL string with parameters set by setXXX methods of {@link PreparedStatement}    *    * @param sql    * @param parameters    * @return updated SQL string    */
@@ -754,6 +447,21 @@ argument_list|>
 name|parameters
 parameter_list|)
 block|{
+if|if
+condition|(
+operator|!
+name|sql
+operator|.
+name|contains
+argument_list|(
+literal|"?"
+argument_list|)
+condition|)
+block|{
+return|return
+name|sql
+return|;
+block|}
 name|StringBuffer
 name|newSql
 init|=
@@ -2201,846 +1909,6 @@ name|x
 parameter_list|,
 name|int
 name|length
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#addBatch(java.lang.String)    */
-specifier|public
-name|void
-name|addBatch
-parameter_list|(
-name|String
-name|sql
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#cancel()    */
-specifier|public
-name|void
-name|cancel
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#clearBatch()    */
-specifier|public
-name|void
-name|clearBatch
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#clearWarnings()    */
-specifier|public
-name|void
-name|clearWarnings
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-name|warningChain
-operator|=
-literal|null
-expr_stmt|;
-block|}
-specifier|public
-name|void
-name|closeOnCompletion
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// JDK 1.7
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/**    *  Closes the prepared statement.    *    *  @throws SQLException    */
-specifier|public
-name|void
-name|close
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-name|client
-operator|=
-literal|null
-expr_stmt|;
-if|if
-condition|(
-name|resultSet
-operator|!=
-literal|null
-condition|)
-block|{
-name|resultSet
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-name|resultSet
-operator|=
-literal|null
-expr_stmt|;
-block|}
-name|isClosed
-operator|=
-literal|true
-expr_stmt|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String)    */
-specifier|public
-name|boolean
-name|execute
-parameter_list|(
-name|String
-name|sql
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String, int)    */
-specifier|public
-name|boolean
-name|execute
-parameter_list|(
-name|String
-name|sql
-parameter_list|,
-name|int
-name|autoGeneratedKeys
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String, int[])    */
-specifier|public
-name|boolean
-name|execute
-parameter_list|(
-name|String
-name|sql
-parameter_list|,
-name|int
-index|[]
-name|columnIndexes
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String, java.lang.String[])    */
-specifier|public
-name|boolean
-name|execute
-parameter_list|(
-name|String
-name|sql
-parameter_list|,
-name|String
-index|[]
-name|columnNames
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeBatch()    */
-specifier|public
-name|int
-index|[]
-name|executeBatch
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeQuery(java.lang.String)    */
-specifier|public
-name|ResultSet
-name|executeQuery
-parameter_list|(
-name|String
-name|sql
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String)    */
-specifier|public
-name|int
-name|executeUpdate
-parameter_list|(
-name|String
-name|sql
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, int)    */
-specifier|public
-name|int
-name|executeUpdate
-parameter_list|(
-name|String
-name|sql
-parameter_list|,
-name|int
-name|autoGeneratedKeys
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, int[])    */
-specifier|public
-name|int
-name|executeUpdate
-parameter_list|(
-name|String
-name|sql
-parameter_list|,
-name|int
-index|[]
-name|columnIndexes
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, java.lang.String[])    */
-specifier|public
-name|int
-name|executeUpdate
-parameter_list|(
-name|String
-name|sql
-parameter_list|,
-name|String
-index|[]
-name|columnNames
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getConnection()    */
-specifier|public
-name|Connection
-name|getConnection
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getFetchDirection()    */
-specifier|public
-name|int
-name|getFetchDirection
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getFetchSize()    */
-specifier|public
-name|int
-name|getFetchSize
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getGeneratedKeys()    */
-specifier|public
-name|ResultSet
-name|getGeneratedKeys
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMaxFieldSize()    */
-specifier|public
-name|int
-name|getMaxFieldSize
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMaxRows()    */
-specifier|public
-name|int
-name|getMaxRows
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-return|return
-name|this
-operator|.
-name|maxRows
-return|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMoreResults()    */
-specifier|public
-name|boolean
-name|getMoreResults
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMoreResults(int)    */
-specifier|public
-name|boolean
-name|getMoreResults
-parameter_list|(
-name|int
-name|current
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getQueryTimeout()    */
-specifier|public
-name|int
-name|getQueryTimeout
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSet()    */
-specifier|public
-name|ResultSet
-name|getResultSet
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-return|return
-name|this
-operator|.
-name|resultSet
-return|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSetConcurrency()    */
-specifier|public
-name|int
-name|getResultSetConcurrency
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSetHoldability()    */
-specifier|public
-name|int
-name|getResultSetHoldability
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSetType()    */
-specifier|public
-name|int
-name|getResultSetType
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getUpdateCount()    */
-specifier|public
-name|int
-name|getUpdateCount
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-return|return
-name|updateCount
-return|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getWarnings()    */
-specifier|public
-name|SQLWarning
-name|getWarnings
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-return|return
-name|warningChain
-return|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#isClosed()    */
-specifier|public
-name|boolean
-name|isClosed
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-return|return
-name|isClosed
-return|;
-block|}
-specifier|public
-name|boolean
-name|isCloseOnCompletion
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|//JDK 1.7
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#isPoolable()    */
-specifier|public
-name|boolean
-name|isPoolable
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setCursorName(java.lang.String)    */
-specifier|public
-name|void
-name|setCursorName
-parameter_list|(
-name|String
-name|name
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setEscapeProcessing(boolean)    */
-specifier|public
-name|void
-name|setEscapeProcessing
-parameter_list|(
-name|boolean
-name|enable
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setFetchDirection(int)    */
-specifier|public
-name|void
-name|setFetchDirection
-parameter_list|(
-name|int
-name|direction
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setFetchSize(int)    */
-specifier|public
-name|void
-name|setFetchSize
-parameter_list|(
-name|int
-name|rows
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setMaxFieldSize(int)    */
-specifier|public
-name|void
-name|setMaxFieldSize
-parameter_list|(
-name|int
-name|max
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setMaxRows(int)    */
-specifier|public
-name|void
-name|setMaxRows
-parameter_list|(
-name|int
-name|max
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-if|if
-condition|(
-name|max
-operator|<
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"max must be>= 0"
-argument_list|)
-throw|;
-block|}
-name|this
-operator|.
-name|maxRows
-operator|=
-name|max
-expr_stmt|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setPoolable(boolean)    */
-specifier|public
-name|void
-name|setPoolable
-parameter_list|(
-name|boolean
-name|poolable
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setQueryTimeout(int)    */
-specifier|public
-name|void
-name|setQueryTimeout
-parameter_list|(
-name|int
-name|seconds
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-comment|// throw new SQLException("Method not supported");
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
-specifier|public
-name|boolean
-name|isWrapperFor
-parameter_list|(
-name|Class
-argument_list|<
-name|?
-argument_list|>
-name|iface
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
-block|}
-comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
-specifier|public
-parameter_list|<
-name|T
-parameter_list|>
-name|T
-name|unwrap
-parameter_list|(
-name|Class
-argument_list|<
-name|T
-argument_list|>
-name|iface
 parameter_list|)
 throws|throws
 name|SQLException

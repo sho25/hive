@@ -129,6 +129,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|junit
 operator|.
 name|framework
@@ -564,7 +574,15 @@ name|Override
 specifier|public
 name|TTransportFactory
 name|createTransportFactory
-parameter_list|()
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|saslProps
+parameter_list|)
 throws|throws
 name|TTransportException
 block|{
@@ -596,9 +614,7 @@ name|SaslRpcServer
 operator|.
 name|SASL_DEFAULT_REALM
 argument_list|,
-name|SaslRpcServer
-operator|.
-name|SASL_PROPS
+name|saslProps
 argument_list|,
 operator|new
 name|SaslDigestCallbackHandler
@@ -649,6 +665,9 @@ name|startDelegationTokenSecretManager
 parameter_list|(
 name|Configuration
 name|conf
+parameter_list|,
+name|Object
+name|hms
 parameter_list|)
 throws|throws
 name|IOException
@@ -658,6 +677,8 @@ operator|.
 name|startDelegationTokenSecretManager
 argument_list|(
 name|conf
+argument_list|,
+name|hms
 argument_list|)
 expr_stmt|;
 name|isMetastoreTokenManagerInited

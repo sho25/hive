@@ -360,9 +360,13 @@ name|GenericUDAFMaxEvaluator
 extends|extends
 name|GenericUDAFEvaluator
 block|{
+specifier|private
+specifier|transient
 name|ObjectInspector
 name|inputOI
 decl_stmt|;
+specifier|private
+specifier|transient
 name|ObjectInspector
 name|outputOI
 decl_stmt|;

@@ -189,7 +189,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorFactory
+name|ObjectInspectorConverters
+operator|.
+name|Converter
 import|;
 end_import
 
@@ -207,9 +209,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorConverters
-operator|.
-name|Converter
+name|ObjectInspectorFactory
 import|;
 end_import
 
@@ -311,6 +311,7 @@ name|emptyList
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|transient
 specifier|final
 name|UDFXPathUtil
 name|xpath
@@ -337,10 +338,12 @@ literal|10
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|transient
 name|Converter
 name|converterArg0
 decl_stmt|;
 specifier|private
+specifier|transient
 name|Converter
 name|converterArg1
 decl_stmt|;

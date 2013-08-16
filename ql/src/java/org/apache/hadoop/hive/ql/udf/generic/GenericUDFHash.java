@@ -182,6 +182,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|ObjectInspector
 index|[]
 name|argumentOIs
@@ -210,6 +211,7 @@ name|writableIntObjectInspector
 return|;
 block|}
 specifier|private
+specifier|final
 name|IntWritable
 name|result
 init|=

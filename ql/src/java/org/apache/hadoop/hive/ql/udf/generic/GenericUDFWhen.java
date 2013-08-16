@@ -123,11 +123,13 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|ObjectInspector
 index|[]
 name|argumentOIs
 decl_stmt|;
 specifier|private
+specifier|transient
 name|GenericUDFUtils
 operator|.
 name|ReturnObjectInspectorResolver

@@ -254,10 +254,12 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|argumentOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|BinaryConverter
 name|baConverter
 decl_stmt|;

@@ -190,10 +190,12 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|argumentOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|HiveDecimalConverter
 name|bdConverter
 decl_stmt|;
