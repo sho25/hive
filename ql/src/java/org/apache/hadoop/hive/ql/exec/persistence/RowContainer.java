@@ -450,7 +450,7 @@ specifier|public
 class|class
 name|RowContainer
 parameter_list|<
-name|Row
+name|ROW
 extends|extends
 name|List
 parameter_list|<
@@ -460,7 +460,7 @@ parameter_list|>
 extends|extends
 name|AbstractRowContainer
 argument_list|<
-name|Row
+name|ROW
 argument_list|>
 block|{
 specifier|protected
@@ -487,13 +487,13 @@ init|=
 literal|25000
 decl_stmt|;
 specifier|private
-name|Row
+name|ROW
 index|[]
 name|currentWriteBlock
 decl_stmt|;
 comment|// the last block that add() should append to
 specifier|private
-name|Row
+name|ROW
 index|[]
 name|currentReadBlock
 decl_stmt|;
@@ -501,7 +501,7 @@ comment|// the current block where the cursor is in
 comment|// since currentReadBlock may assigned to currentWriteBlock, we need to store
 comment|// original read block
 specifier|private
-name|Row
+name|ROW
 index|[]
 name|firstReadBlockPointer
 decl_stmt|;
@@ -624,7 +624,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-name|Row
+name|ROW
 name|dummyRow
 init|=
 literal|null
@@ -737,7 +737,7 @@ operator|.
 name|currentWriteBlock
 operator|=
 operator|(
-name|Row
+name|ROW
 index|[]
 operator|)
 operator|new
@@ -885,7 +885,7 @@ specifier|public
 name|void
 name|add
 parameter_list|(
-name|Row
+name|ROW
 name|t
 parameter_list|)
 throws|throws
@@ -929,7 +929,7 @@ block|{
 name|currentWriteBlock
 operator|=
 operator|(
-name|Row
+name|ROW
 index|[]
 operator|)
 operator|new
@@ -974,7 +974,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|Row
+name|ROW
 name|first
 parameter_list|()
 throws|throws
@@ -1190,7 +1190,7 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|// we are guaranteed that we can get data here (since 'size' is not zero)
-name|Row
+name|ROW
 name|ret
 init|=
 name|currentReadBlock
@@ -1226,7 +1226,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|Row
+name|ROW
 name|next
 parameter_list|()
 throws|throws
@@ -1286,7 +1286,7 @@ return|return
 literal|null
 return|;
 block|}
-name|Row
+name|ROW
 name|ret
 decl_stmt|;
 if|if
@@ -1386,7 +1386,7 @@ specifier|private
 name|void
 name|removeKeys
 parameter_list|(
-name|Row
+name|ROW
 name|ret
 parameter_list|)
 block|{
@@ -1485,7 +1485,7 @@ specifier|private
 name|void
 name|spillBlock
 parameter_list|(
-name|Row
+name|ROW
 index|[]
 name|block
 parameter_list|,
@@ -1750,7 +1750,7 @@ operator|++
 name|i
 control|)
 block|{
-name|Row
+name|ROW
 name|currentValRow
 init|=
 name|block
@@ -1805,7 +1805,7 @@ operator|++
 name|i
 control|)
 block|{
-name|Row
+name|ROW
 name|currentValRow
 init|=
 name|block
@@ -2006,7 +2006,7 @@ operator|++
 index|]
 operator|=
 operator|(
-name|Row
+name|ROW
 operator|)
 name|ObjectInspectorUtils
 operator|.

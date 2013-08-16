@@ -538,7 +538,7 @@ name|emptyMap
 argument_list|()
 decl_stmt|;
 specifier|transient
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -546,7 +546,7 @@ index|[]
 name|keyWritables
 decl_stmt|;
 specifier|transient
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -555,7 +555,7 @@ name|nextKeyWritables
 decl_stmt|;
 name|RowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -565,7 +565,7 @@ name|nextGroupStorage
 decl_stmt|;
 name|RowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -852,6 +852,12 @@ operator|++
 control|)
 block|{
 name|RowContainer
+argument_list|<
+name|List
+argument_list|<
+name|Object
+argument_list|>
+argument_list|>
 name|rc
 init|=
 name|JoinUtil
@@ -890,6 +896,12 @@ operator|=
 name|rc
 expr_stmt|;
 name|RowContainer
+argument_list|<
+name|List
+argument_list|<
+name|Object
+argument_list|>
+argument_list|>
 name|candidateRC
 init|=
 name|JoinUtil
@@ -2380,7 +2392,7 @@ literal|null
 expr_stmt|;
 name|RowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -2655,7 +2667,7 @@ operator|.
 name|length
 index|]
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -2680,7 +2692,7 @@ name|pos
 operator|++
 control|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -2775,7 +2787,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
