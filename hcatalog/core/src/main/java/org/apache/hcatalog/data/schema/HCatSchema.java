@@ -118,6 +118,7 @@ name|HCatFieldSchema
 argument_list|>
 name|fieldSchemas
 decl_stmt|;
+comment|//HCatFieldSchema.getName()->position
 specifier|private
 specifier|final
 name|Map
@@ -490,6 +491,9 @@ operator|.
 name|remove
 argument_list|(
 name|hcatFieldSchema
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|fieldNames
