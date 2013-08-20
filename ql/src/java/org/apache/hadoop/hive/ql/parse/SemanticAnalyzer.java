@@ -39208,13 +39208,6 @@ argument_list|(
 name|children
 argument_list|)
 expr_stmt|;
-name|aliasToOpInfo
-operator|.
-name|get
-argument_list|(
-name|alias
-argument_list|)
-expr_stmt|;
 name|joinTree
 operator|.
 name|setId
