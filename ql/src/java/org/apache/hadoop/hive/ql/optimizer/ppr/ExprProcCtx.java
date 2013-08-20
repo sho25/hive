@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The processor context for partition pruner. This contains the table alias  * that is being currently processed.  */
+comment|/**  * The processor context for partition pruner. This contains the table alias  * that is being currently processed.  * TODO: this class may be not useful.  */
 end_comment
 
 begin_class
@@ -54,10 +54,6 @@ comment|/**    * The table alias that is being currently processed.    */
 name|String
 name|tabAlias
 decl_stmt|;
-comment|/**    * Flag to hold whether there are any non partition columns accessed in the    * expression.    */
-name|boolean
-name|hasNonPartCols
-decl_stmt|;
 specifier|public
 name|ExprProcCtx
 parameter_list|(
@@ -70,10 +66,6 @@ operator|.
 name|tabAlias
 operator|=
 name|tabAlias
-expr_stmt|;
-name|hasNonPartCols
-operator|=
-literal|false
 expr_stmt|;
 block|}
 specifier|public
@@ -98,28 +90,6 @@ operator|.
 name|tabAlias
 operator|=
 name|tabAlias
-expr_stmt|;
-block|}
-specifier|public
-name|boolean
-name|getHasNonPartCols
-parameter_list|()
-block|{
-return|return
-name|hasNonPartCols
-return|;
-block|}
-specifier|public
-name|void
-name|setHasNonPartCols
-parameter_list|(
-name|boolean
-name|val
-parameter_list|)
-block|{
-name|hasNonPartCols
-operator|=
-name|val
 expr_stmt|;
 block|}
 block|}

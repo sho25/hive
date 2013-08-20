@@ -821,17 +821,6 @@ specifier|private
 name|LineageInfo
 name|lInfo
 decl_stmt|;
-comment|// is set to true if the expression only contains partitioning columns and not
-comment|// any other column reference.
-comment|// This is used to optimize select * from table where ... scenario, when the
-comment|// where condition only references
-comment|// partitioning columns - the partitions are identified and streamed directly
-comment|// to the client without requiring
-comment|// a map-reduce job
-specifier|private
-name|boolean
-name|hasNonPartCols
-decl_stmt|;
 specifier|private
 name|GlobalLimitCtx
 name|globalLimitCtx
@@ -1225,10 +1214,6 @@ operator|.
 name|listMapJoinOpsNoReducer
 operator|=
 name|listMapJoinOpsNoReducer
-expr_stmt|;
-name|hasNonPartCols
-operator|=
-literal|false
 expr_stmt|;
 name|this
 operator|.
@@ -2062,30 +2047,6 @@ name|listMapJoinOpsNoReducer
 operator|=
 name|listMapJoinOpsNoReducer
 expr_stmt|;
-block|}
-comment|/**    * Sets the hasNonPartCols flag.    *    * @param val    */
-specifier|public
-name|void
-name|setHasNonPartCols
-parameter_list|(
-name|boolean
-name|val
-parameter_list|)
-block|{
-name|hasNonPartCols
-operator|=
-name|val
-expr_stmt|;
-block|}
-comment|/**    * Gets the value of the hasNonPartCols flag.    */
-specifier|public
-name|boolean
-name|getHasNonPartCols
-parameter_list|()
-block|{
-return|return
-name|hasNonPartCols
-return|;
 block|}
 comment|/**    * @return the opToSamplePruner    */
 specifier|public

@@ -768,16 +768,6 @@ name|getDefaultProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|pctx
-operator|.
-name|setHasNonPartCols
-argument_list|(
-name|opWalkerCtx
-operator|.
-name|getHasNonPartCols
-argument_list|()
-argument_list|)
-expr_stmt|;
 return|return
 name|pctx
 return|;
