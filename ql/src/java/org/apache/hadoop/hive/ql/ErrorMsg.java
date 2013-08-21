@@ -1665,6 +1665,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|MISSING_OVER_CLAUSE
+argument_list|(
+literal|10247
+argument_list|,
+literal|"Missing over clause for function : "
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
