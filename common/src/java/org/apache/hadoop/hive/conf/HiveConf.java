@@ -3533,6 +3533,13 @@ argument_list|,
 literal|"HIVE"
 argument_list|)
 block|,
+name|HIVE_SERVER2_SESSION_HOOK
+argument_list|(
+literal|"hive.server2.session.hook"
+argument_list|,
+literal|""
+argument_list|)
+block|,
 name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
