@@ -83,7 +83,7 @@ literal|"unhex"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(str) - Converts hexadecimal argument to string"
+literal|"_FUNC_(str) - Converts hexadecimal argument to binary"
 argument_list|,
 name|extended
 operator|=
@@ -91,23 +91,15 @@ literal|"Performs the inverse operation of HEX(str). That is, it interprets\n"
 operator|+
 literal|"each pair of hexadecimal digits in the argument as a number and\n"
 operator|+
-literal|"converts it to the character represented by the number. The\n"
+literal|"converts it to the byte representation of the number. The\n"
 operator|+
 literal|"resulting characters are returned as a binary string.\n\n"
 operator|+
 literal|"Example:\n"
 operator|+
-literal|"> SELECT UNHEX('4D7953514C') from src limit 1;\n"
+literal|"> SELECT DECODE(UNHEX('4D7953514C'), 'UTF-8') from src limit 1;\n"
 operator|+
-literal|"'MySQL'\n"
-operator|+
-literal|"> SELECT UNHEX(HEX('string')) from src limit 1;\n"
-operator|+
-literal|"'string'\n"
-operator|+
-literal|"> SELECT HEX(UNHEX('1267')) from src limit 1;\n"
-operator|+
-literal|"'1267'\n\n"
+literal|"'MySQL'\n\n"
 operator|+
 literal|"The characters in the argument string must be legal hexadecimal\n"
 operator|+
@@ -123,9 +115,10 @@ name|UDFUnhex
 extends|extends
 name|UDF
 block|{
-comment|/**    * Convert every two hex digits in s into.    *     */
+comment|/**    * Convert every two hex digits in s into.    *    */
 specifier|public
-name|Text
+name|byte
+index|[]
 name|evaluate
 parameter_list|(
 name|Text
@@ -259,11 +252,7 @@ return|;
 block|}
 block|}
 return|return
-operator|new
-name|Text
-argument_list|(
 name|result
-argument_list|)
 return|;
 block|}
 block|}

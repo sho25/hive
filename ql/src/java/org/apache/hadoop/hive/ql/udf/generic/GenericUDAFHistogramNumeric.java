@@ -634,11 +634,13 @@ name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|nbinsOI
 decl_stmt|;
 comment|// For PARTIAL2 and FINAL: ObjectInspectors for partial aggregations (list of doubles)
 specifier|private
+specifier|transient
 name|StandardListObjectInspector
 name|loi
 decl_stmt|;

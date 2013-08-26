@@ -332,6 +332,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|Converter
 index|[]
 name|converters
@@ -352,6 +353,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|transient
 name|ObjectInspector
 index|[]
 name|argumentOIs

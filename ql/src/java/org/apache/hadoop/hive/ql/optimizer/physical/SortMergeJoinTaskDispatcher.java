@@ -1826,18 +1826,6 @@ name|getConds
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// no table could be the big table; there is no need to convert
-if|if
-condition|(
-name|bigTableCandidates
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
 name|HashMap
 argument_list|<
 name|String

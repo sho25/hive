@@ -300,6 +300,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|ObjectInspector
 index|[]
 name|argumentOIs
@@ -318,6 +319,8 @@ init|=
 literal|true
 decl_stmt|;
 comment|//are variables from IN(...) constant
+specifier|private
+specifier|final
 name|BooleanWritable
 name|bw
 init|=
@@ -325,9 +328,13 @@ operator|new
 name|BooleanWritable
 argument_list|()
 decl_stmt|;
+specifier|private
+specifier|transient
 name|ReturnObjectInspectorResolver
 name|conversionHelper
 decl_stmt|;
+specifier|private
+specifier|transient
 name|ObjectInspector
 name|compareOI
 decl_stmt|;

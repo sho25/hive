@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Context class for operator tree walker for partition pruner.  */
+comment|/**  * Context class for operator tree walker for partition pruner.  * TODO: this class may be not useful.  */
 end_comment
 
 begin_class
@@ -96,10 +96,6 @@ name|OpWalkerCtx
 implements|implements
 name|NodeProcessorCtx
 block|{
-specifier|private
-name|boolean
-name|hasNonPartCols
-decl_stmt|;
 comment|/**    * Map from tablescan operator to partition pruning predicate that is    * initialized from the ParseContext.    */
 specifier|private
 specifier|final
@@ -130,10 +126,6 @@ name|opToPartPruner
 operator|=
 name|opToPartPruner
 expr_stmt|;
-name|hasNonPartCols
-operator|=
-literal|false
-expr_stmt|;
 block|}
 specifier|public
 name|HashMap
@@ -147,32 +139,6 @@ parameter_list|()
 block|{
 return|return
 name|opToPartPruner
-return|;
-block|}
-specifier|public
-name|void
-name|addHasNonPartCols
-parameter_list|(
-name|boolean
-name|val
-parameter_list|)
-block|{
-name|hasNonPartCols
-operator|=
-operator|(
-name|hasNonPartCols
-operator|||
-name|val
-operator|)
-expr_stmt|;
-block|}
-specifier|public
-name|boolean
-name|getHasNonPartCols
-parameter_list|()
-block|{
-return|return
-name|hasNonPartCols
 return|;
 block|}
 block|}

@@ -923,14 +923,17 @@ name|GenericUDAFEvaluator
 block|{
 comment|// For PARTIAL1 and COMPLETE: ObjectInspectors for original data
 specifier|private
+specifier|transient
 name|StandardListObjectInspector
 name|outerInputOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StandardListObjectInspector
 name|innerInputOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StandardListObjectInspector
 name|contextListOI
 decl_stmt|;
@@ -943,15 +946,18 @@ name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|kOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|pOI
 decl_stmt|;
 comment|// For PARTIAL2 and FINAL: ObjectInspectors for partial aggregations
 specifier|private
+specifier|transient
 name|StandardListObjectInspector
 name|loi
 decl_stmt|;

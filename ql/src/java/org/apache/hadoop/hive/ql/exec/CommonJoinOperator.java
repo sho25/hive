@@ -520,7 +520,7 @@ specifier|protected
 specifier|transient
 name|RowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -567,7 +567,7 @@ comment|// input is too large
 comment|// to fit in memory
 name|AbstractRowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -1489,7 +1489,7 @@ expr_stmt|;
 comment|// there should be only 1 dummy object in the RowContainer
 name|RowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -1544,6 +1544,12 @@ expr_stmt|;
 comment|// if serde is null, the input doesn't need to be spilled out
 comment|// e.g., the output columns does not contains the input table
 name|RowContainer
+argument_list|<
+name|List
+argument_list|<
+name|Object
+argument_list|>
+argument_list|>
 name|rc
 init|=
 name|JoinUtil
@@ -1823,7 +1829,7 @@ for|for
 control|(
 name|AbstractRowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -2173,7 +2179,7 @@ argument_list|)
 decl_stmt|;
 name|AbstractRowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -2352,7 +2358,7 @@ decl_stmt|;
 comment|// search for match in the rhs table
 name|AbstractRowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -3305,7 +3311,7 @@ name|HiveException
 block|{
 name|AbstractRowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -3322,7 +3328,7 @@ index|]
 decl_stmt|;
 for|for
 control|(
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -3469,7 +3475,7 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -3596,7 +3602,7 @@ index|]
 decl_stmt|;
 name|AbstractRowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -3762,7 +3768,7 @@ index|]
 decl_stmt|;
 name|AbstractRowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -3891,7 +3897,7 @@ condition|)
 block|{
 for|for
 control|(
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -4092,7 +4098,7 @@ for|for
 control|(
 name|AbstractRowContainer
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>

@@ -511,6 +511,8 @@ name|GenericUDAFNTileEvaluator
 extends|extends
 name|GenericUDAFEvaluator
 block|{
+specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;

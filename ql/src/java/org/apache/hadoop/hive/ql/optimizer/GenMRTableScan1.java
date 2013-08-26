@@ -1085,14 +1085,7 @@ name|source
 argument_list|,
 name|confirmedPartns
 argument_list|,
-operator|new
-name|HashSet
-argument_list|<
-name|Partition
-argument_list|>
-argument_list|()
-argument_list|,
-literal|null
+literal|false
 argument_list|)
 decl_stmt|;
 name|GenMapRedUtils

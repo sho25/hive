@@ -45,7 +45,7 @@ specifier|abstract
 class|class
 name|AbstractRowContainer
 parameter_list|<
-name|Row
+name|ROW
 parameter_list|>
 block|{
 specifier|public
@@ -57,7 +57,7 @@ specifier|abstract
 name|void
 name|add
 parameter_list|(
-name|Row
+name|ROW
 name|t
 parameter_list|)
 throws|throws
@@ -65,7 +65,7 @@ name|HiveException
 function_decl|;
 specifier|public
 specifier|abstract
-name|Row
+name|ROW
 name|first
 parameter_list|()
 throws|throws
@@ -73,7 +73,7 @@ name|HiveException
 function_decl|;
 specifier|public
 specifier|abstract
-name|Row
+name|ROW
 name|next
 parameter_list|()
 throws|throws

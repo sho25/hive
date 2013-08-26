@@ -8712,6 +8712,7 @@ operator|.
 name|METASTORE_BATCH_RETRIEVE_MAX
 argument_list|)
 decl_stmt|;
+comment|// TODO: might want to increase the default batch size. 1024 is viable; MS gets OOM if too high.
 name|int
 name|nParts
 init|=

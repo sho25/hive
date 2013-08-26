@@ -396,13 +396,17 @@ decl_stmt|;
 comment|// For PARTIAL2 and FINAL: ObjectInspectors for partial aggregations (list
 comment|// of objs)
 specifier|private
+specifier|transient
 name|StandardListObjectInspector
 name|loi
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StandardListObjectInspector
 name|internalMergeOI
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|ObjectInspector
 name|init

@@ -730,6 +730,8 @@ operator|+
 literal|"supported with UDTF's"
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|UDTF_REQUIRE_AS
 argument_list|(
 literal|10076
@@ -1654,9 +1656,25 @@ argument_list|,
 literal|"{0} alter table options is not supported"
 argument_list|)
 block|,
-name|INVALID_HDFS_URI
+name|INVALID_BIGTABLE_MAPJOIN
+argument_list|(
+literal|10246
+argument_list|,
+literal|"{0} table chosen for streaming is not valid"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|MISSING_OVER_CLAUSE
 argument_list|(
 literal|10247
+argument_list|,
+literal|"Missing over clause for function : "
+argument_list|)
+block|,
+name|INVALID_HDFS_URI
+argument_list|(
+literal|10248
 argument_list|,
 literal|"{0} is not a hdfs uri"
 argument_list|,
@@ -1665,7 +1683,7 @@ argument_list|)
 block|,
 name|INVALID_DIR
 argument_list|(
-literal|10248
+literal|10249
 argument_list|,
 literal|"{0} is not a directory"
 argument_list|,
@@ -1674,7 +1692,7 @@ argument_list|)
 block|,
 name|NO_VALID_LOCATIONS
 argument_list|(
-literal|10249
+literal|10250
 argument_list|,
 literal|"Could not find any valid location to place the jars. "
 operator|+

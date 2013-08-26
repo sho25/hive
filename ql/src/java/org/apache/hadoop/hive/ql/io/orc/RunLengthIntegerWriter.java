@@ -38,6 +38,8 @@ end_comment
 begin_class
 class|class
 name|RunLengthIntegerWriter
+implements|implements
+name|IntegerWriter
 block|{
 specifier|static
 specifier|final
@@ -292,6 +294,9 @@ literal|0
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|flush
 parameter_list|()
@@ -307,6 +312,9 @@ name|flush
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|write
 parameter_list|(
@@ -577,6 +585,9 @@ block|}
 block|}
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|getPosition
 parameter_list|(

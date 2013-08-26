@@ -266,6 +266,8 @@ name|fs
 argument_list|,
 name|path
 argument_list|,
+name|conf
+argument_list|,
 name|inspector
 argument_list|,
 name|stripeSize

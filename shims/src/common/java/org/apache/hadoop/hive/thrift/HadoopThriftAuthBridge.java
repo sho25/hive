@@ -39,6 +39,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -164,6 +174,28 @@ literal|"The current version of Hadoop does not support Authentication"
 argument_list|)
 throw|;
 block|}
+comment|/**    * Read and return Hadoop SASL configuration which can be configured using    * "hadoop.rpc.protection"    *    * @param conf    * @return Hadoop SASL configuration    */
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|getHadoopSaslProperties
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"The current version of Hadoop does not support Authentication"
+argument_list|)
+throw|;
+block|}
 specifier|public
 specifier|static
 specifier|abstract
@@ -190,6 +222,14 @@ name|tokenStrForm
 parameter_list|,
 name|TTransport
 name|underlyingTransport
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|saslProps
 parameter_list|)
 throws|throws
 name|IOException
@@ -205,7 +245,15 @@ specifier|public
 specifier|abstract
 name|TTransportFactory
 name|createTransportFactory
-parameter_list|()
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|saslProps
+parameter_list|)
 throws|throws
 name|TTransportException
 function_decl|;

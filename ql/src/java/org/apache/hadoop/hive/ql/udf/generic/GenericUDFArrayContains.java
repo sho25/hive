@@ -143,7 +143,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorUtils
+name|ObjectInspector
+operator|.
+name|Category
 import|;
 end_import
 
@@ -161,9 +163,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
-operator|.
-name|Category
+name|ObjectInspectorUtils
 import|;
 end_import
 
@@ -266,14 +266,17 @@ literal|"ARRAY_CONTAINS"
 decl_stmt|;
 comment|// External Name
 specifier|private
+specifier|transient
 name|ObjectInspector
 name|valueOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|ListObjectInspector
 name|arrayOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|ObjectInspector
 name|arrayElementOI
 decl_stmt|;

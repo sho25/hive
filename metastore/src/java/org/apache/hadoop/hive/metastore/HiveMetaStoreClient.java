@@ -1754,6 +1754,13 @@ argument_list|,
 name|tokenStrForm
 argument_list|,
 name|transport
+argument_list|,
+name|MetaStoreUtils
+operator|.
+name|getMetaStoreSaslProperties
+argument_list|(
+name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -1791,6 +1798,13 @@ argument_list|,
 literal|null
 argument_list|,
 name|transport
+argument_list|,
+name|MetaStoreUtils
+operator|.
+name|getMetaStoreSaslProperties
+argument_list|(
+name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

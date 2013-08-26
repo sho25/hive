@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -74,7 +84,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * This is a pluggable policy to chose the candidate map-join table for converting a join to a  * sort merge join. The policy can decide the big table position. Some of the existing polocies  * decide the big table based on size or position of the tables.  */
+comment|/*  * This is a plug-able policy to chose the candidate map-join table for converting a join to a  * sort merge join. The policy can decide the big table position. Some of the existing policies  * decide the big table based on size or position of the tables.  */
 end_comment
 
 begin_interface
@@ -91,6 +101,12 @@ name|parseContext
 parameter_list|,
 name|JoinOperator
 name|joinOp
+parameter_list|,
+name|Set
+argument_list|<
+name|Integer
+argument_list|>
+name|joinCandidates
 parameter_list|)
 throws|throws
 name|SemanticException

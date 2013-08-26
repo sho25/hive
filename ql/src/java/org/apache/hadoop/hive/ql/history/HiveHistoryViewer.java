@@ -55,6 +55,34 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -166,6 +194,21 @@ decl_stmt|;
 name|String
 name|sessionId
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|HiveHistoryViewer
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 comment|// Job Hash Map
 specifier|private
 specifier|final
@@ -265,7 +308,7 @@ parameter_list|()
 block|{
 try|try
 block|{
-name|HiveHistory
+name|HiveHistoryUtil
 operator|.
 name|parseHiveHistory
 argument_list|(
@@ -281,15 +324,24 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-comment|// TODO Auto-generated catch block
+comment|// TODO pass on this exception
 name|e
 operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error parsing hive history log file"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 block|}
-comment|/**    * Implementation Listner interface function.    *     * @see org.apache.hadoop.hive.ql.history.HiveHistory.Listener#handle(org.apache.hadoop.hive.ql.history.HiveHistory.RecordTypes,    *      java.util.Map)    */
+comment|/**    * Implementation Listener interface function.    *    * @see org.apache.hadoop.hive.ql.history.HiveHistory.Listener#handle(org.apache.hadoop.hive.ql.history.HiveHistory.RecordTypes,    *      java.util.Map)    */
 specifier|public
 name|void
 name|handle

@@ -36399,6 +36399,20 @@ literal|1
 argument_list|,
 literal|1
 argument_list|)
+block|,
+name|DIRECT_V2
+argument_list|(
+literal|2
+argument_list|,
+literal|2
+argument_list|)
+block|,
+name|DICTIONARY_V2
+argument_list|(
+literal|3
+argument_list|,
+literal|3
+argument_list|)
 block|,       ;
 specifier|public
 specifier|static
@@ -36415,6 +36429,22 @@ name|int
 name|DICTIONARY_VALUE
 init|=
 literal|1
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|DIRECT_V2_VALUE
+init|=
+literal|2
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|DICTIONARY_V2_VALUE
+init|=
+literal|3
 decl_stmt|;
 specifier|public
 specifier|final
@@ -36451,6 +36481,18 @@ literal|1
 case|:
 return|return
 name|DICTIONARY
+return|;
+case|case
+literal|2
+case|:
+return|return
+name|DIRECT_V2
+return|;
+case|case
+literal|3
+case|:
+return|return
+name|DICTIONARY_V2
 return|;
 default|default:
 return|return
@@ -36632,6 +36674,10 @@ block|{
 name|DIRECT
 block|,
 name|DICTIONARY
+block|,
+name|DIRECT_V2
+block|,
+name|DICTIONARY_V2
 block|,        }
 decl_stmt|;
 specifier|public
@@ -70997,77 +71043,77 @@ literal|"\"r\n\004Kind\022\013\n\007PRESENT\020\000\022\010\n\004DATA\020\001\02
 operator|+
 literal|"H\020\002\022\023\n\017DICTIONARY_DATA\020\003\022\024\n\020DICTIONARY_C"
 operator|+
-literal|"OUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\tROW_INDEX\020\006\"\221\001\n"
+literal|"OUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\tROW_INDEX\020\006\"\263\001\n"
 operator|+
 literal|"\016ColumnEncoding\022C\n\004kind\030\001 \002(\01625.org.apac"
 operator|+
 literal|"he.hadoop.hive.ql.io.orc.ColumnEncoding."
 operator|+
-literal|"Kind\022\026\n\016dictionarySize\030\002 \001(\r\"\"\n\004Kind\022\n\n\006"
+literal|"Kind\022\026\n\016dictionarySize\030\002 \001(\r\"D\n\004Kind\022\n\n\006"
 operator|+
-literal|"DIRECT\020\000\022\016\n\nDICTIONARY\020\001\"\214\001\n\014StripeFoote"
+literal|"DIRECT\020\000\022\016\n\nDICTIONARY\020\001\022\r\n\tDIRECT_V2\020\002\022"
 operator|+
-literal|"r\0229\n\007streams\030\001 \003(\0132(.org.apache.hadoop.h"
+literal|"\021\n\rDICTIONARY_V2\020\003\"\214\001\n\014StripeFooter\0229\n\007s"
 operator|+
-literal|"ive.ql.io.orc.Stream\022A\n\007columns\030\002 \003(\01320."
+literal|"treams\030\001 \003(\0132(.org.apache.hadoop.hive.ql"
 operator|+
-literal|"org.apache.hadoop.hive.ql.io.orc.ColumnE"
+literal|".io.orc.Stream\022A\n\007columns\030\002 \003(\01320.org.ap"
 block|,
-literal|"ncoding\"\250\002\n\004Type\0229\n\004kind\030\001 \002(\0162+.org.apa"
+literal|"ache.hadoop.hive.ql.io.orc.ColumnEncodin"
 operator|+
-literal|"che.hadoop.hive.ql.io.orc.Type.Kind\022\024\n\010s"
+literal|"g\"\250\002\n\004Type\0229\n\004kind\030\001 \002(\0162+.org.apache.ha"
 operator|+
-literal|"ubtypes\030\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\t\"\272\001"
+literal|"doop.hive.ql.io.orc.Type.Kind\022\024\n\010subtype"
 operator|+
-literal|"\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002"
+literal|"s\030\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\t\"\272\001\n\004Kind"
 operator|+
-literal|"\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE"
+literal|"\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002\022\007\n\003IN"
 operator|+
-literal|"\020\006\022\n\n\006STRING\020\007\022\n\n\006BINARY\020\010\022\r\n\tTIMESTAMP\020"
+literal|"T\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE\020\006\022\n\n\006"
 operator|+
-literal|"\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020\014\022\t\n\005UNIO"
+literal|"STRING\020\007\022\n\n\006BINARY\020\010\022\r\n\tTIMESTAMP\020\t\022\010\n\004L"
 operator|+
-literal|"N\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DATE\020\017\"x\n\021StripeInfo"
+literal|"IST\020\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020\014\022\t\n\005UNION\020\r\022\013\n"
 operator|+
-literal|"rmation\022\016\n\006offset\030\001 \001(\004\022\023\n\013indexLength\030\002"
+literal|"\007DECIMAL\020\016\022\010\n\004DATE\020\017\"x\n\021StripeInformatio"
 operator|+
-literal|" \001(\004\022\022\n\ndataLength\030\003 \001(\004\022\024\n\014footerLength"
+literal|"n\022\016\n\006offset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022"
 block|,
-literal|"\030\004 \001(\004\022\024\n\014numberOfRows\030\005 \001(\004\"/\n\020UserMeta"
+literal|"\n\ndataLength\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004"
 operator|+
-literal|"dataItem\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\014\"\356\002"
+literal|"\022\024\n\014numberOfRows\030\005 \001(\004\"/\n\020UserMetadataIt"
 operator|+
-literal|"\n\006Footer\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rconten"
+literal|"em\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\014\"\356\002\n\006Foot"
 operator|+
-literal|"tLength\030\002 \001(\004\022D\n\007stripes\030\003 \003(\01323.org.apa"
+literal|"er\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rcontentLengt"
 operator|+
-literal|"che.hadoop.hive.ql.io.orc.StripeInformat"
+literal|"h\030\002 \001(\004\022D\n\007stripes\030\003 \003(\01323.org.apache.ha"
 operator|+
-literal|"ion\0225\n\005types\030\004 \003(\0132&.org.apache.hadoop.h"
+literal|"doop.hive.ql.io.orc.StripeInformation\0225\n"
 operator|+
-literal|"ive.ql.io.orc.Type\022D\n\010metadata\030\005 \003(\01322.o"
+literal|"\005types\030\004 \003(\0132&.org.apache.hadoop.hive.ql"
 operator|+
-literal|"rg.apache.hadoop.hive.ql.io.orc.UserMeta"
+literal|".io.orc.Type\022D\n\010metadata\030\005 \003(\01322.org.apa"
 operator|+
-literal|"dataItem\022\024\n\014numberOfRows\030\006 \001(\004\022F\n\nstatis"
+literal|"che.hadoop.hive.ql.io.orc.UserMetadataIt"
 operator|+
-literal|"tics\030\007 \003(\01322.org.apache.hadoop.hive.ql.i"
+literal|"em\022\024\n\014numberOfRows\030\006 \001(\004\022F\n\nstatistics\030\007"
 block|,
-literal|"o.orc.ColumnStatistics\022\026\n\016rowIndexStride"
+literal|" \003(\01322.org.apache.hadoop.hive.ql.io.orc."
 operator|+
-literal|"\030\010 \001(\r\"\255\001\n\nPostScript\022\024\n\014footerLength\030\001 "
+literal|"ColumnStatistics\022\026\n\016rowIndexStride\030\010 \001(\r"
 operator|+
-literal|"\001(\004\022F\n\013compression\030\002 \001(\01621.org.apache.ha"
+literal|"\"\255\001\n\nPostScript\022\024\n\014footerLength\030\001 \001(\004\022F\n"
 operator|+
-literal|"doop.hive.ql.io.orc.CompressionKind\022\034\n\024c"
+literal|"\013compression\030\002 \001(\01621.org.apache.hadoop.h"
 operator|+
-literal|"ompressionBlockSize\030\003 \001(\004\022\023\n\007version\030\004 \003"
+literal|"ive.ql.io.orc.CompressionKind\022\034\n\024compres"
 operator|+
-literal|"(\rB\002\020\001\022\016\n\005magic\030\300> \001(\t*:\n\017CompressionKin"
+literal|"sionBlockSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001"
 operator|+
-literal|"d\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO"
+literal|"\022\016\n\005magic\030\300> \001(\t*:\n\017CompressionKind\022\010\n\004N"
 operator|+
-literal|"\020\003"
+literal|"ONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
 block|}
 decl_stmt|;
 name|com

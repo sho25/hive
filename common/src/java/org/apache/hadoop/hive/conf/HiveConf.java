@@ -1723,6 +1723,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|METASTORE_TRY_DIRECT_SQL
+argument_list|(
+literal|"hive.metastore.try.direct.sql"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 argument_list|(
 literal|"hive.metastore.disallow.incompatible.col.type.changes"
@@ -1868,6 +1875,14 @@ comment|// whether session is running in silent mode or not
 name|HIVESESSIONSILENT
 argument_list|(
 literal|"hive.session.silent"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// Whether to enable history for this session
+name|HIVE_SESSION_HISTORY_ENABLED
+argument_list|(
+literal|"hive.session.history.enabled"
 argument_list|,
 literal|false
 argument_list|)
@@ -2417,6 +2432,22 @@ literal|0.5f
 argument_list|)
 block|,
 comment|// 50%
+comment|// use 0.11 version of RLE encoding. if this conf is not defined or any
+comment|// other value specified, ORC will use the new RLE encoding
+name|HIVE_ORC_WRITE_FORMAT
+argument_list|(
+literal|"hive.exec.orc.write.format"
+argument_list|,
+literal|"0.11"
+argument_list|)
+block|,
+name|HIVE_ORC_DICTIONARY_KEY_SIZE_THRESHOLD
+argument_list|(
+literal|"hive.exec.orc.dictionary.key.size.threshold"
+argument_list|,
+literal|0.8f
+argument_list|)
+block|,
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"
@@ -3431,6 +3462,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_SASL_QOP
+argument_list|(
+literal|"hive.server2.thrift.sasl.qop"
+argument_list|,
+literal|"auth"
+argument_list|)
+block|,
 comment|// HiveServer2 auth configuration
 name|HIVE_SERVER2_AUTHENTICATION
 argument_list|(
@@ -3486,6 +3524,20 @@ argument_list|(
 literal|"hive.server2.enable.doAs"
 argument_list|,
 literal|true
+argument_list|)
+block|,
+name|HIVE_SERVER2_TABLE_TYPE_MAPPING
+argument_list|(
+literal|"hive.server2.table.type.mapping"
+argument_list|,
+literal|"HIVE"
+argument_list|)
+block|,
+name|HIVE_SERVER2_SESSION_HOOK
+argument_list|(
+literal|"hive.server2.session.hook"
+argument_list|,
+literal|""
 argument_list|)
 block|,
 name|HIVE_CONF_RESTRICTED_LIST
@@ -3577,38 +3629,6 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-comment|// ptf partition constants
-name|HIVE_PTF_PARTITION_PERSISTENCE_CLASS
-argument_list|(
-literal|"hive.ptf.partition.persistence"
-argument_list|,
-literal|"org.apache.hadoop.hive.ql.exec.PTFPersistence$PartitionedByteBasedList"
-argument_list|)
-block|,
-name|HIVE_PTF_PARTITION_PERSISTENT_SIZE
-argument_list|(
-literal|"hive.ptf.partition.persistence.memsize"
-argument_list|,
-operator|(
-name|int
-operator|)
-name|Math
-operator|.
-name|pow
-argument_list|(
-literal|2
-argument_list|,
-operator|(
-literal|5
-operator|+
-literal|10
-operator|+
-literal|10
-operator|)
-argument_list|)
-argument_list|)
-block|,
-comment|// 32MB
 name|HIVE_OPTIMIZE_TEZ
 argument_list|(
 literal|"hive.optimize.tez"

@@ -29,6 +29,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -303,6 +313,14 @@ parameter_list|,
 specifier|final
 name|TTransport
 name|underlyingTransport
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|saslProps
 parameter_list|)
 throws|throws
 name|SaslException
@@ -369,6 +387,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|underlyingTransport
+argument_list|,
+name|saslProps
 argument_list|)
 return|;
 block|}

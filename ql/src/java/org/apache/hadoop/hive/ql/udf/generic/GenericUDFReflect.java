@@ -127,9 +127,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|udf
+name|metadata
 operator|.
-name|UDFType
+name|HiveException
 import|;
 end_import
 
@@ -145,9 +145,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
+name|udf
 operator|.
-name|HiveException
+name|UDFType
 import|;
 end_import
 
@@ -294,9 +294,13 @@ name|GenericUDFReflect
 extends|extends
 name|AbstractGenericUDFReflect
 block|{
+specifier|private
+specifier|transient
 name|StringObjectInspector
 name|inputClassNameOI
 decl_stmt|;
+specifier|private
+specifier|transient
 name|StringObjectInspector
 name|inputMethodNameOI
 decl_stmt|;

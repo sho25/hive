@@ -354,6 +354,7 @@ name|GenericUDF
 block|{
 specifier|private
 specifier|static
+specifier|final
 name|Log
 name|LOG
 init|=
@@ -369,15 +370,14 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
+specifier|transient
 name|ObjectInspector
 index|[]
 name|argumentOI
 decl_stmt|;
-name|GenericUDFUtils
-operator|.
-name|ReturnObjectInspectorResolver
-name|returnOIResolver
-decl_stmt|;
+specifier|private
+specifier|transient
 name|Connection
 name|connection
 init|=

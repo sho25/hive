@@ -6030,8 +6030,6 @@ operator|.
 name|length
 operator|-
 name|prefix
-operator|-
-literal|1
 argument_list|,
 name|buffer
 argument_list|,

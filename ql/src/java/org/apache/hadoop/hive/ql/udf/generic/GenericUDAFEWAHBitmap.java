@@ -295,26 +295,6 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|LongObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|primitive
-operator|.
 name|PrimitiveObjectInspectorFactory
 import|;
 end_import
@@ -536,17 +516,15 @@ specifier|private
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
-specifier|private
-name|LongObjectInspector
-name|bitmapLongOI
-decl_stmt|;
 comment|// For PARTIAL2 and FINAL: ObjectInspectors for partial aggregations
 comment|// (lists of bitmaps)
 specifier|private
+specifier|transient
 name|StandardListObjectInspector
 name|loi
 decl_stmt|;
 specifier|private
+specifier|transient
 name|StandardListObjectInspector
 name|internalMergeOI
 decl_stmt|;
@@ -633,12 +611,6 @@ index|[
 literal|0
 index|]
 expr_stmt|;
-name|bitmapLongOI
-operator|=
-name|PrimitiveObjectInspectorFactory
-operator|.
-name|writableLongObjectInspector
-expr_stmt|;
 name|inputOI
 operator|=
 name|PrimitiveObjectInspectorFactory
@@ -666,12 +638,6 @@ block|}
 else|else
 block|{
 comment|// Mode.COMPLETE, ie. no map-side aggregation, requires ordering
-name|bitmapLongOI
-operator|=
-name|PrimitiveObjectInspectorFactory
-operator|.
-name|writableLongObjectInspector
-expr_stmt|;
 name|inputOI
 operator|=
 name|PrimitiveObjectInspectorFactory

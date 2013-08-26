@@ -2573,6 +2573,14 @@ assert|assert
 operator|!
 name|useBucketSortPositions
 assert|;
+name|TableScanOperator
+name|ts
+init|=
+operator|(
+name|TableScanOperator
+operator|)
+name|op
+decl_stmt|;
 name|Table
 name|srcTable
 init|=
@@ -2583,7 +2591,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|op
+name|ts
 argument_list|)
 decl_stmt|;
 comment|// Find the positions of the bucketed columns in the table corresponding
@@ -2779,7 +2787,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|op
+name|ts
 argument_list|)
 decl_stmt|;
 name|List
