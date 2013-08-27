@@ -233,6 +233,14 @@ name|VectorUDAFCountStar
 extends|extends
 name|VectorAggregateExpression
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
 comment|/**      * class for storing the current aggregate value.      */
 specifier|static
 class|class
@@ -241,9 +249,19 @@ implements|implements
 name|AggregationBuffer
 block|{
 specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
+specifier|transient
+specifier|private
 name|long
 name|value
 decl_stmt|;
+specifier|transient
 specifier|private
 name|boolean
 name|isNull
@@ -262,6 +280,7 @@ argument_list|()
 throw|;
 block|}
 block|}
+specifier|transient
 specifier|private
 specifier|final
 name|LongWritable
@@ -273,6 +292,14 @@ parameter_list|(
 name|VectorExpression
 name|inputExpression
 parameter_list|)
+block|{
+name|this
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|VectorUDAFCountStar
+parameter_list|()
 block|{
 name|super
 argument_list|()

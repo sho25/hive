@@ -55,14 +55,24 @@ name|VectorUDFYearLong
 extends|extends
 name|VectorUDFTimestampFieldLong
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
 comment|/* year boundaries in nanoseconds */
 specifier|static
+specifier|transient
 specifier|final
 name|long
 index|[]
 name|YEAR_BOUNDARIES
 decl_stmt|;
 specifier|static
+specifier|transient
 specifier|final
 name|int
 name|MIN_YEAR
@@ -70,6 +80,7 @@ init|=
 literal|1901
 decl_stmt|;
 specifier|static
+specifier|transient
 specifier|final
 name|int
 name|MAX_YEAR
@@ -232,6 +243,14 @@ name|colNum
 argument_list|,
 name|outputColumn
 argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|VectorUDFYearLong
+parameter_list|()
+block|{
+name|super
+argument_list|()
 expr_stmt|;
 block|}
 block|}
