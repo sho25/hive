@@ -148,6 +148,17 @@ operator|.
 name|FORWARD
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|acceptLimitPushdown
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
 comment|/**    * @return the name of the operator    */
 annotation|@
 name|Override

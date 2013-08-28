@@ -2533,6 +2533,14 @@ argument_list|,
 literal|50000
 argument_list|)
 block|,
+name|HIVELIMITPUSHDOWNMEMORYUSAGE
+argument_list|(
+literal|"hive.limit.pushdown.memory.usage"
+argument_list|,
+operator|-
+literal|1f
+argument_list|)
+block|,
 name|HIVEHASHTABLETHRESHOLD
 argument_list|(
 literal|"hive.hashtable.initialCapacity"
