@@ -10523,10 +10523,6 @@ name|getPartitionsViaSqlFilter
 argument_list|(
 name|table
 argument_list|,
-name|dbName
-argument_list|,
-name|tblName
-argument_list|,
 name|parser
 argument_list|)
 expr_stmt|;
