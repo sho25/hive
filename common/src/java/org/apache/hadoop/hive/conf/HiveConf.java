@@ -2432,13 +2432,12 @@ literal|0.5f
 argument_list|)
 block|,
 comment|// 50%
-comment|// use 0.11 version of RLE encoding. if this conf is not defined or any
-comment|// other value specified, ORC will use the new RLE encoding
+comment|// Define the version of the file to write
 name|HIVE_ORC_WRITE_FORMAT
 argument_list|(
 literal|"hive.exec.orc.write.format"
 argument_list|,
-literal|"0.11"
+literal|null
 argument_list|)
 block|,
 name|HIVE_ORC_DICTIONARY_KEY_SIZE_THRESHOLD
