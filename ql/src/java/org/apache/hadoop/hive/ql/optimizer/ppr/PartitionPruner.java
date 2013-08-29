@@ -906,7 +906,7 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Get the partition list for the table that satisfies the partition pruner    * condition.    *    * @param tab    *          the table object for the alias    * @param prunerExpr    *          the pruner expression for the alias    * @param conf    *          for checking whether "strict" mode is on.    * @param alias    *          for generating error message only.    * @param prunedPartitionsMap    *          cached result for the table    * @return the partition list for the table that satisfies the partition    *         pruner condition.    * @throws HiveException    */
-specifier|private
+specifier|public
 specifier|static
 name|PrunedPartitionList
 name|prune

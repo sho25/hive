@@ -47157,6 +47157,22 @@ argument_list|,
 name|tab
 argument_list|)
 expr_stmt|;
+comment|// set the table in the tablescan descriptor directly
+operator|(
+operator|(
+name|TableScanOperator
+operator|)
+name|top
+operator|)
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setTable
+argument_list|(
+name|tab
+argument_list|)
+expr_stmt|;
 name|Map
 argument_list|<
 name|String
