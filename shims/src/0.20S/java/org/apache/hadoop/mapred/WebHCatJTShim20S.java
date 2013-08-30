@@ -1,8 +1,4 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
-begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing,  * software distributed under the License is distributed on an  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY  * KIND, either express or implied.  See the License for the  * specific language governing permissions and limitations  * under the License.  */
-end_comment
-
 begin_package
 package|package
 name|org
@@ -17,11 +13,15 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|io
+name|apache
 operator|.
-name|IOException
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
 import|;
 end_import
 
@@ -33,9 +33,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
+name|hive
 operator|.
-name|Configuration
+name|shims
+operator|.
+name|HadoopShims
+operator|.
+name|WebHCatJTShim
 import|;
 end_import
 
@@ -83,26 +87,34 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|io
 operator|.
-name|hcatalog
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|shims
+name|net
 operator|.
-name|HCatHadoopShims
+name|InetSocketAddress
 import|;
 end_import
 
 begin_comment
-comment|/*  * Communicate with the JobTracker as a specific user.  */
+comment|/**  * This is in org.apache.hadoop.mapred package because it relies on   * JobSubmissionProtocol which is package private  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|TempletonJobTracker
+name|WebHCatJTShim20S
+implements|implements
+name|WebHCatJTShim
 block|{
 specifier|private
 name|JobSubmissionProtocol
@@ -110,7 +122,7 @@ name|cnx
 decl_stmt|;
 comment|/**      * Create a connection to the Job Tracker.      */
 specifier|public
-name|TempletonJobTracker
+name|WebHCatJTShim20S
 parameter_list|(
 name|Configuration
 name|conf
@@ -143,13 +155,6 @@ name|JobSubmissionProtocol
 operator|.
 name|versionID
 argument_list|,
-name|HCatHadoopShims
-operator|.
-name|Instance
-operator|.
-name|get
-argument_list|()
-operator|.
 name|getAddress
 argument_list|(
 name|conf
@@ -177,6 +182,14 @@ specifier|public
 name|JobProfile
 name|getJobProfile
 parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|JobID
 name|jobid
 parameter_list|)
@@ -194,9 +207,25 @@ return|;
 block|}
 comment|/**      * Grab a handle to a job that is already known to the JobTracker.      *      * @return Status of the job, or null if not found.      */
 specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|JobStatus
 name|getJobStatus
 parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|JobID
 name|jobid
 parameter_list|)
@@ -217,6 +246,14 @@ specifier|public
 name|void
 name|killJob
 parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|JobID
 name|jobid
 parameter_list|)
@@ -233,6 +270,14 @@ expr_stmt|;
 block|}
 comment|/**      * Get all the jobs submitted.      */
 specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|JobStatus
 index|[]
 name|getAllJobs
@@ -260,6 +305,35 @@ argument_list|(
 name|cnx
 argument_list|)
 expr_stmt|;
+block|}
+specifier|private
+name|InetSocketAddress
+name|getAddress
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+name|String
+name|jobTrackerStr
+init|=
+name|conf
+operator|.
+name|get
+argument_list|(
+literal|"mapred.job.tracker"
+argument_list|,
+literal|"localhost:8012"
+argument_list|)
+decl_stmt|;
+return|return
+name|NetUtils
+operator|.
+name|createSocketAddr
+argument_list|(
+name|jobTrackerStr
+argument_list|)
+return|;
 block|}
 block|}
 end_class
