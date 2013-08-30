@@ -1035,6 +1035,16 @@ name|valueMap
 argument_list|)
 expr_stmt|;
 block|}
+comment|// To get around hbase failure on single node, see BUG-4383
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"dfs.client.read.shortcircuit"
+argument_list|,
+literal|"false"
+argument_list|)
+expr_stmt|;
 name|HCatSchema
 name|tableSchema
 init|=

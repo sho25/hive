@@ -75,6 +75,7 @@ name|UserGroupInformation
 argument_list|>
 argument_list|()
 decl_stmt|;
+specifier|public
 specifier|static
 name|UserGroupInformation
 name|getUgi

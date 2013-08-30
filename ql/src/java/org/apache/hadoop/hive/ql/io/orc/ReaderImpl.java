@@ -1164,20 +1164,35 @@ name|major
 operator|>
 name|OrcFile
 operator|.
-name|MAJOR_VERSION
+name|Version
+operator|.
+name|CURRENT
+operator|.
+name|getMajor
+argument_list|()
 operator|||
 operator|(
 name|major
 operator|==
 name|OrcFile
 operator|.
-name|MAJOR_VERSION
+name|Version
+operator|.
+name|CURRENT
+operator|.
+name|getMajor
+argument_list|()
 operator|&&
 name|minor
 operator|>
 name|OrcFile
 operator|.
-name|MINOR_VERSION
+name|Version
+operator|.
+name|CURRENT
+operator|.
+name|getMinor
+argument_list|()
 operator|)
 condition|)
 block|{
@@ -1196,9 +1211,7 @@ argument_list|(
 name|version
 argument_list|)
 operator|+
-literal|". This file may not be readable by "
-operator|+
-literal|"this version of Hive."
+literal|". This file may not be readable by this version of Hive."
 argument_list|)
 expr_stmt|;
 block|}

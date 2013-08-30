@@ -1626,6 +1626,20 @@ name|convertPathsFromWindowsToHdfs
 argument_list|()
 expr_stmt|;
 block|}
+comment|// Plug verifying metastore in for testing.
+name|conf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_RAW_STORE_IMPL
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.VerifyingObjectStore"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|miniMr

@@ -3549,6 +3549,41 @@ literal|"Kerberos not supported in current hadoop version"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|HCatHadoopShims
+name|getHCatShim
+parameter_list|()
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"HCatalog does not support Hadoop 0.20.x"
+argument_list|)
+throw|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|WebHCatJTShim
+name|getWebHCatShim
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"WebHCat does not support Hadoop 0.20.x"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 

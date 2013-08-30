@@ -49,6 +49,24 @@ name|msg
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|NotFoundException
+parameter_list|(
+name|String
+name|msg
+parameter_list|,
+name|Throwable
+name|rootCause
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|msg
+argument_list|,
+name|rootCause
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

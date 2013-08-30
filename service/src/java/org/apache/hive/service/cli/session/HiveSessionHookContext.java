@@ -44,18 +44,6 @@ specifier|public
 interface|interface
 name|HiveSessionHookContext
 block|{
-enum|enum
-name|State
-block|{
-name|OPEN
-block|,
-name|CLOSE
-block|}
-specifier|public
-name|State
-name|getState
-parameter_list|()
-function_decl|;
 comment|/**    * Retrieve session conf    * @return    */
 specifier|public
 name|HiveConf
