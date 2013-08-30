@@ -607,6 +607,13 @@ argument_list|,
 name|fname
 argument_list|)
 expr_stmt|;
+name|ProxyUserSupport
+operator|.
+name|processProxyuserConfig
+argument_list|(
+name|this
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|void
