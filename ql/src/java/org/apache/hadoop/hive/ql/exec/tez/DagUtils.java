@@ -657,7 +657,7 @@ name|api
 operator|.
 name|EdgeProperty
 operator|.
-name|ConnectionPattern
+name|DataMovementType
 import|;
 end_import
 
@@ -675,7 +675,25 @@ name|api
 operator|.
 name|EdgeProperty
 operator|.
-name|SourceType
+name|DataSourceType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|dag
+operator|.
+name|api
+operator|.
+name|EdgeProperty
+operator|.
+name|SchedulingType
 import|;
 end_import
 
@@ -1243,13 +1261,17 @@ init|=
 operator|new
 name|EdgeProperty
 argument_list|(
-name|ConnectionPattern
+name|DataMovementType
 operator|.
-name|BIPARTITE
+name|SCATTER_GATHER
 argument_list|,
-name|SourceType
+name|DataSourceType
 operator|.
-name|STABLE
+name|PERSISTED
+argument_list|,
+name|SchedulingType
+operator|.
+name|SEQUENTIAL
 argument_list|,
 operator|new
 name|OutputDescriptor
