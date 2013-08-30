@@ -53,9 +53,29 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|mapred
+name|hive
 operator|.
-name|JobStatus
+name|shims
+operator|.
+name|HadoopShims
+operator|.
+name|WebHCatJTShim
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
 import|;
 end_import
 
@@ -69,7 +89,7 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|TempletonJobTracker
+name|JobStatus
 import|;
 end_import
 
@@ -156,7 +176,7 @@ argument_list|(
 name|user
 argument_list|)
 decl_stmt|;
-name|TempletonJobTracker
+name|WebHCatJTShim
 name|tracker
 init|=
 literal|null
@@ -165,8 +185,12 @@ try|try
 block|{
 name|tracker
 operator|=
-operator|new
-name|TempletonJobTracker
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|getWebHCatShim
 argument_list|(
 name|appConf
 argument_list|)
