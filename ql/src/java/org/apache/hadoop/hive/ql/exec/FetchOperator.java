@@ -2492,7 +2492,7 @@ name|job
 argument_list|,
 name|partDesc
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2608,7 +2608,7 @@ literal|"deserializer properties: "
 operator|+
 name|partDesc
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3641,7 +3641,7 @@ name|job
 argument_list|,
 name|listPart
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
