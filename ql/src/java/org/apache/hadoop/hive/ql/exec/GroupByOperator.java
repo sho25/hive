@@ -653,24 +653,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|StandardStructObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|StructField
 import|;
 end_import
@@ -1185,6 +1167,7 @@ specifier|transient
 name|int
 name|countAfterReport
 decl_stmt|;
+comment|// report or forward
 specifier|transient
 name|int
 name|heartbeatInterval
@@ -1522,7 +1505,7 @@ name|sfs
 init|=
 operator|(
 operator|(
-name|StandardStructObjectInspector
+name|StructObjectInspector
 operator|)
 name|rowInspector
 operator|)
@@ -1585,7 +1568,7 @@ if|if
 condition|(
 name|keyObjInspector
 operator|instanceof
-name|StandardStructObjectInspector
+name|StructObjectInspector
 condition|)
 block|{
 name|List
@@ -1598,7 +1581,7 @@ name|keysfs
 init|=
 operator|(
 operator|(
-name|StandardStructObjectInspector
+name|StructObjectInspector
 operator|)
 name|keyObjInspector
 operator|)

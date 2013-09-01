@@ -827,6 +827,32 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// must be called last
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEFETCHTASKAGGR
+argument_list|)
+condition|)
+block|{
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
+name|SimpleFetchAggregation
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|/**    * Invoke all the transformations one-by-one, and alter the query plan.    *    * @return ParseContext    * @throws SemanticException    */
 specifier|public

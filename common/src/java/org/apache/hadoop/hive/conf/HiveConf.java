@@ -3180,6 +3180,13 @@ argument_list|,
 literal|"minimal"
 argument_list|)
 block|,
+name|HIVEFETCHTASKAGGR
+argument_list|(
+literal|"hive.fetch.task.aggr"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Serde for FetchTask
 name|HIVEFETCHOUTPUTSERDE
 argument_list|(

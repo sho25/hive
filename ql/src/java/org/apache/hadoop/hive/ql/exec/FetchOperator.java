@@ -754,7 +754,7 @@ specifier|private
 name|FetchWork
 name|work
 decl_stmt|;
-specifier|private
+specifier|protected
 name|Operator
 argument_list|<
 name|?
@@ -3034,6 +3034,14 @@ name|pushRow
 argument_list|(
 name|row
 argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|operator
+operator|.
+name|flush
+argument_list|()
 expr_stmt|;
 block|}
 return|return
