@@ -137,9 +137,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hcatalog
 operator|.
-name|mapred
+name|mapreduce
 operator|.
 name|HCatMapRedUtil
 import|;
