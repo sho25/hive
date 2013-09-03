@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -75,7 +65,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Operator
+name|FilterOperator
 import|;
 end_import
 
@@ -215,20 +205,6 @@ name|OperatorType
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|LongWritable
-import|;
-end_import
-
 begin_comment
 comment|/**  * Filter operator implementation.  **/
 end_comment
@@ -238,12 +214,7 @@ specifier|public
 class|class
 name|VectorFilterOperator
 extends|extends
-name|Operator
-argument_list|<
-name|FilterDesc
-argument_list|>
-implements|implements
-name|Serializable
+name|FilterOperator
 block|{
 specifier|private
 specifier|static
@@ -253,33 +224,11 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**    * Counter.    *    */
-specifier|public
-specifier|static
-enum|enum
-name|Counter
-block|{
-name|FILTERED
-block|,
-name|PASSED
-block|}
-specifier|private
-specifier|final
-specifier|transient
-name|LongWritable
-name|filtered_count
-decl_stmt|,
-name|passed_count
-decl_stmt|;
 specifier|private
 name|VectorExpression
 name|conditionEvaluator
 init|=
 literal|null
-decl_stmt|;
-specifier|transient
-name|int
-name|heartbeatInterval
 decl_stmt|;
 comment|// filterMode is 1 if condition is always true, -1 if always false
 comment|// and 0 if condition needs to be computed.
@@ -342,18 +291,6 @@ name|VectorFilterOperator
 parameter_list|()
 block|{
 name|super
-argument_list|()
-expr_stmt|;
-name|filtered_count
-operator|=
-operator|new
-name|LongWritable
-argument_list|()
-expr_stmt|;
-name|passed_count
-operator|=
-operator|new
-name|LongWritable
 argument_list|()
 expr_stmt|;
 name|this
@@ -571,19 +508,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * @return the name of the operator    */
-annotation|@
-name|Override
-specifier|public
-name|String
-name|getName
-parameter_list|()
-block|{
-return|return
-name|getOperatorName
-argument_list|()
-return|;
-block|}
 specifier|static
 specifier|public
 name|String
@@ -592,19 +516,6 @@ parameter_list|()
 block|{
 return|return
 literal|"FIL"
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|OperatorType
-name|getType
-parameter_list|()
-block|{
-return|return
-name|OperatorType
-operator|.
-name|FILTER
 return|;
 block|}
 specifier|public

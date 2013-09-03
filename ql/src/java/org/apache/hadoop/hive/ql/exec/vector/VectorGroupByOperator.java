@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|lang
 operator|.
 name|management
@@ -171,7 +161,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|KeyWrapper
+name|GroupByOperator
 import|;
 end_import
 
@@ -189,7 +179,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Operator
+name|KeyWrapper
 import|;
 end_import
 
@@ -456,12 +446,7 @@ specifier|public
 class|class
 name|VectorGroupByOperator
 extends|extends
-name|Operator
-argument_list|<
-name|GroupByDesc
-argument_list|>
-implements|implements
-name|Serializable
+name|GroupByOperator
 block|{
 specifier|private
 specifier|static
@@ -511,24 +496,6 @@ specifier|transient
 name|VectorHashKeyWrapperBatch
 name|keyWrappersBatch
 decl_stmt|;
-comment|/**    * Total amount of memory allowed for JVM heap.    */
-specifier|private
-specifier|transient
-name|long
-name|maxMemory
-decl_stmt|;
-comment|/**    * configure percent of memory threshold usable by QP.    */
-specifier|private
-specifier|transient
-name|float
-name|memoryThreshold
-decl_stmt|;
-comment|/**    * Max memory usable by the hashtable before it should flush.    */
-specifier|private
-specifier|transient
-name|long
-name|maxHashTblMemory
-decl_stmt|;
 comment|/**    * Total per hashtable entry fixed memory (does not depend on key/agg values).    */
 specifier|private
 specifier|transient
@@ -540,12 +507,6 @@ specifier|private
 specifier|transient
 name|int
 name|avgVariableSize
-decl_stmt|;
-comment|/**    * Current number of entries in the hash table.    */
-specifier|private
-specifier|transient
-name|int
-name|numEntriesHashTable
 decl_stmt|;
 comment|/**    * Number of entries added to the hashtable since the last check if it should flush.    */
 specifier|private
@@ -2014,19 +1975,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * @return the name of the operator    */
-annotation|@
-name|Override
-specifier|public
-name|String
-name|getName
-parameter_list|()
-block|{
-return|return
-name|getOperatorName
-argument_list|()
-return|;
-block|}
 specifier|static
 specifier|public
 name|String
@@ -2035,19 +1983,6 @@ parameter_list|()
 block|{
 return|return
 literal|"GBY"
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|OperatorType
-name|getType
-parameter_list|()
-block|{
-return|return
-name|OperatorType
-operator|.
-name|GROUPBY
 return|;
 block|}
 specifier|public

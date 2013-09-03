@@ -468,14 +468,17 @@ name|partitionEval
 decl_stmt|;
 comment|// TODO: we use MetadataTypedColumnsetSerDe for now, till DynamicSerDe is
 comment|// ready
+specifier|protected
 specifier|transient
 name|Serializer
 name|keySerializer
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|boolean
 name|keyIsText
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|Serializer
 name|valueSerializer
@@ -484,6 +487,7 @@ specifier|transient
 name|int
 name|tag
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|byte
 index|[]
@@ -843,6 +847,7 @@ operator|new
 name|InspectableObject
 argument_list|()
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|HiveKey
 name|keyWritable
@@ -851,6 +856,7 @@ operator|new
 name|HiveKey
 argument_list|()
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|Writable
 name|value
@@ -868,17 +874,20 @@ name|ObjectInspector
 index|[]
 name|partitionObjectInspectors
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|Object
 index|[]
 index|[]
 name|cachedKeys
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|Object
 index|[]
 name|cachedValues
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|List
 argument_list|<
@@ -892,6 +901,7 @@ decl_stmt|;
 name|boolean
 name|firstRow
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|Random
 name|random
