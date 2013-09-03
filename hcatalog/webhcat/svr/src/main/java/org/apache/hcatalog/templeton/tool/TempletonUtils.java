@@ -1133,7 +1133,6 @@ specifier|static
 name|Path
 name|hadoopFsPath
 parameter_list|(
-specifier|final
 name|String
 name|fname
 parameter_list|,
@@ -1177,6 +1176,16 @@ name|user
 argument_list|)
 decl_stmt|;
 specifier|final
+name|String
+name|finalFName
+init|=
+operator|new
+name|String
+argument_list|(
+name|fname
+argument_list|)
+decl_stmt|;
+specifier|final
 name|FileSystem
 name|defaultFs
 init|=
@@ -1210,7 +1219,7 @@ argument_list|(
 operator|new
 name|URI
 argument_list|(
-name|fname
+name|finalFName
 argument_list|)
 argument_list|,
 name|conf
