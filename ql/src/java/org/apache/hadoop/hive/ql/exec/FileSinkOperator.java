@@ -824,7 +824,7 @@ specifier|transient
 name|boolean
 name|isSkewedStoredAsSubDirectories
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|boolean
 name|statsCollectRawDataSize
@@ -1419,6 +1419,15 @@ block|}
 block|}
 block|}
 block|}
+specifier|public
+name|Stat
+name|getStat
+parameter_list|()
+block|{
+return|return
+name|stat
+return|;
+block|}
 block|}
 comment|// class FSPaths
 specifier|private
@@ -1455,7 +1464,7 @@ name|tabIdEnum
 init|=
 literal|null
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|LongWritable
 name|row_count
@@ -1474,7 +1483,7 @@ name|ExprNodeEvaluator
 index|[]
 name|partitionEval
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|int
 name|totalFiles
@@ -1484,12 +1493,12 @@ specifier|transient
 name|int
 name|numFiles
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|boolean
 name|multiFileSpray
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 specifier|final
 name|Map
@@ -1515,7 +1524,7 @@ name|ObjectInspector
 index|[]
 name|partitionObjectInspectors
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|HivePartitioner
 argument_list|<
@@ -1525,7 +1534,7 @@ name|Object
 argument_list|>
 name|prtner
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 specifier|final
 name|HiveKey
@@ -1540,12 +1549,12 @@ specifier|transient
 name|Configuration
 name|hconf
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|FSPaths
 name|fsp
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|boolean
 name|bDynParts
@@ -1630,7 +1639,7 @@ decl_stmt|;
 name|String
 name|taskId
 decl_stmt|;
-specifier|private
+specifier|protected
 name|boolean
 name|filesCreated
 init|=
@@ -2452,7 +2461,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
+specifier|protected
 name|void
 name|createBucketFiles
 parameter_list|(
@@ -3058,7 +3067,7 @@ literal|true
 expr_stmt|;
 block|}
 comment|/**    * Report status to JT so that JT won't kill this task if closing takes too long    * due to too many files to close and the NN is overloaded.    *    * @return true if a new progress update is reported, false otherwise.    */
-specifier|private
+specifier|protected
 name|boolean
 name|updateProgress
 parameter_list|()
@@ -3104,6 +3113,7 @@ literal|false
 return|;
 block|}
 block|}
+specifier|protected
 name|Writable
 name|recordValue
 decl_stmt|;
@@ -3624,7 +3634,7 @@ throw|;
 block|}
 block|}
 comment|/**    * Lookup list bucketing path.    * @param lbDirName    * @return    * @throws HiveException    */
-specifier|private
+specifier|protected
 name|FSPaths
 name|lookupListBucketingPaths
 parameter_list|(
@@ -3781,7 +3791,7 @@ name|fsp2
 return|;
 block|}
 comment|/**    * Generate list bucketing directory name from a row.    * @param row row to process.    * @return directory name.    */
-specifier|private
+specifier|protected
 name|String
 name|generateListBucketingDirName
 parameter_list|(
@@ -4046,7 +4056,7 @@ return|return
 name|lbDirName
 return|;
 block|}
-specifier|private
+specifier|protected
 name|FSPaths
 name|getDynOutPaths
 parameter_list|(

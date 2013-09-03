@@ -55,6 +55,15 @@ extends|extends
 name|VectorExpression
 block|{
 specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
+specifier|private
+specifier|transient
 specifier|final
 name|int
 index|[]
@@ -69,6 +78,7 @@ name|DEFAULT_SIZE
 index|]
 decl_stmt|;
 specifier|private
+specifier|transient
 name|int
 index|[]
 name|unselected
@@ -82,6 +92,7 @@ name|DEFAULT_SIZE
 index|]
 decl_stmt|;
 specifier|private
+specifier|transient
 specifier|final
 name|int
 index|[]
@@ -106,6 +117,9 @@ name|childExpr2
 parameter_list|)
 block|{
 name|this
+argument_list|()
+expr_stmt|;
+name|this
 operator|.
 name|childExpressions
 operator|=
@@ -128,6 +142,14 @@ literal|1
 index|]
 operator|=
 name|childExpr2
+expr_stmt|;
+block|}
+specifier|public
+name|FilterExprOrExpr
+parameter_list|()
+block|{
+name|super
+argument_list|()
 expr_stmt|;
 block|}
 annotation|@
