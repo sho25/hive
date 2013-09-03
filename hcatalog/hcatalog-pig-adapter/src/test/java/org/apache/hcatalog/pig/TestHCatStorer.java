@@ -2774,7 +2774,7 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_unparted(a int, b float, c double, d bigint, e string, f binary, g binary) stored as RCFILE"
+literal|"create table junit_unparted(a int, b float, c double, d bigint, e string, h boolean, f binary, g binary) stored as RCFILE"
 decl_stmt|;
 name|int
 name|retCode
@@ -2825,7 +2825,7 @@ name|i
 operator|++
 index|]
 operator|=
-literal|"0\t\t\t\t\t\t"
+literal|"0\t\t\t\t\t\t\t"
 expr_stmt|;
 comment|//Empty values except first column
 name|input
@@ -2855,6 +2855,10 @@ operator|+
 literal|"\t"
 operator|+
 literal|"lets hcat"
+operator|+
+literal|"\t"
+operator|+
+literal|"true"
 operator|+
 literal|"\tbinary-data"
 expr_stmt|;
@@ -2888,6 +2892,10 @@ operator|+
 literal|"\t"
 operator|+
 literal|"lets hcat"
+operator|+
+literal|"\t"
+operator|+
+literal|"false"
 operator|+
 literal|"\tbinary-data"
 expr_stmt|;
@@ -2924,7 +2932,7 @@ literal|"A = load '"
 operator|+
 name|INPUT_FILE_NAME
 operator|+
-literal|"' as (a:int, b:float, c:double, d:long, e:chararray, f:bytearray);"
+literal|"' as (a:int, b:float, c:double, d:long, e:chararray, h:boolean, f:bytearray);"
 argument_list|)
 expr_stmt|;
 comment|//null gets stored into column g which is a binary field.
@@ -2941,7 +2949,7 @@ operator|.
 name|getName
 argument_list|()
 operator|+
-literal|"('','a:int, b:float, c:double, d:long, e:chararray,f:bytearray');"
+literal|"('','a:int, b:float, c:double, d:long, e:chararray, h:boolean, f:bytearray');"
 argument_list|)
 expr_stmt|;
 name|server
@@ -2987,11 +2995,28 @@ operator|.
 name|iterator
 argument_list|()
 decl_stmt|;
+name|String
+name|next
+init|=
+name|itr
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"0\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL"
+literal|"0\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL"
+argument_list|,
+name|next
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"NULL\t4.2\t2.2\t4\tlets hcat\ttrue\tbinary-data\tNULL"
 argument_list|,
 name|itr
 operator|.
@@ -3003,19 +3028,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"NULL\t4.2\t2.2\t4\tlets hcat\tbinary-data\tNULL"
-argument_list|,
-name|itr
-operator|.
-name|next
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"3\t6.2999997\t3.3000000000000003\t6\tlets hcat\tbinary-data\tNULL"
+literal|"3\t6.2999997\t3.3000000000000003\t6\tlets hcat\tfalse\tbinary-data\tNULL"
 argument_list|,
 name|itr
 operator|.
@@ -3094,7 +3107,7 @@ name|t
 operator|.
 name|get
 argument_list|(
-literal|5
+literal|6
 argument_list|)
 operator|==
 literal|null
@@ -3114,7 +3127,7 @@ name|t
 operator|.
 name|get
 argument_list|(
-literal|5
+literal|6
 argument_list|)
 operator|instanceof
 name|DataByteArray
@@ -3129,7 +3142,7 @@ name|t
 operator|.
 name|get
 argument_list|(
-literal|6
+literal|7
 argument_list|)
 argument_list|)
 expr_stmt|;
