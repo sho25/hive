@@ -3873,7 +3873,15 @@ argument_list|<
 name|String
 argument_list|>
 name|showQueueList
-parameter_list|()
+parameter_list|(
+annotation|@
+name|QueryParam
+argument_list|(
+literal|"showall"
+argument_list|)
+name|boolean
+name|showall
+parameter_list|)
 throws|throws
 name|NotAuthorizedException
 throws|,
@@ -3902,6 +3910,8 @@ name|run
 argument_list|(
 name|getDoAsUser
 argument_list|()
+argument_list|,
+name|showall
 argument_list|)
 return|;
 block|}

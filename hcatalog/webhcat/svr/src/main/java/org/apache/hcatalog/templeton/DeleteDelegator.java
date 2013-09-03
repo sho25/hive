@@ -149,9 +149,9 @@ block|{
 name|UserGroupInformation
 name|ugi
 init|=
-name|UserGroupInformation
+name|UgiFactory
 operator|.
-name|createRemoteUser
+name|getUgi
 argument_list|(
 name|user
 argument_list|)
@@ -178,6 +178,8 @@ operator|.
 name|getWebHCatShim
 argument_list|(
 name|appConf
+argument_list|,
+name|ugi
 argument_list|)
 expr_stmt|;
 name|JobID

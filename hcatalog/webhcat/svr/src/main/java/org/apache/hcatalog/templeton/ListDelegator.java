@@ -156,6 +156,9 @@ name|run
 parameter_list|(
 name|String
 name|user
+parameter_list|,
+name|boolean
+name|showall
 parameter_list|)
 throws|throws
 name|NotAuthorizedException
@@ -169,9 +172,9 @@ block|{
 name|UserGroupInformation
 name|ugi
 init|=
-name|UserGroupInformation
+name|UgiFactory
 operator|.
-name|createRemoteUser
+name|getUgi
 argument_list|(
 name|user
 argument_list|)
@@ -193,6 +196,8 @@ operator|.
 name|getWebHCatShim
 argument_list|(
 name|appConf
+argument_list|,
+name|ugi
 argument_list|)
 expr_stmt|;
 name|ArrayList
@@ -265,6 +270,8 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+name|showall
+operator|||
 name|user
 operator|.
 name|equals

@@ -367,6 +367,20 @@ name|TotalOrderPartitioner
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|security
+operator|.
+name|UserGroupInformation
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implemention of shims against Hadoop 0.20 with Security.  */
 end_comment
@@ -1750,6 +1764,9 @@ name|getWebHCatShim
 parameter_list|(
 name|Configuration
 name|conf
+parameter_list|,
+name|UserGroupInformation
+name|ugi
 parameter_list|)
 throws|throws
 name|IOException
@@ -1759,6 +1776,8 @@ operator|new
 name|WebHCatJTShim20S
 argument_list|(
 name|conf
+argument_list|,
+name|ugi
 argument_list|)
 return|;
 comment|//this has state, so can't be cached

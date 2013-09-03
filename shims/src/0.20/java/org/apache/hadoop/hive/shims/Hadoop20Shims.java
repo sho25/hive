@@ -3572,6 +3572,9 @@ name|getWebHCatShim
 parameter_list|(
 name|Configuration
 name|conf
+parameter_list|,
+name|UserGroupInformation
+name|ugi
 parameter_list|)
 throws|throws
 name|IOException
