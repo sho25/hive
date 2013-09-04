@@ -223,14 +223,7 @@ specifier|final
 name|String
 name|TEST_DATA_DIR
 init|=
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"user.dir"
-argument_list|)
-operator|+
-literal|"/build/test/data/"
+literal|"/tmp/build/test/data/"
 operator|+
 name|HCatBaseTest
 operator|.

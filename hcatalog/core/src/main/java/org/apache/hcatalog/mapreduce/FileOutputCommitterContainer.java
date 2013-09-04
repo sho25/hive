@@ -1115,11 +1115,16 @@ name|getConfiguration
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// Note fs.delete will fail on Windows. The reason is in OutputCommitter,
+comment|// Hadoop is still writing to _logs/history. On Linux, OS don't care file is still
+comment|// open and remove the directory anyway, but on Windows, OS refuse to remove a
+comment|// directory containing open files. So on Windows, we will leave output directory
+comment|// behind when job fail. User needs to remove the output directory manually
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Job failed. Cleaning up temporary directory [{}]."
+literal|"Job failed. Try cleaning up temporary directory [{}]."
 argument_list|,
 name|src
 argument_list|)
