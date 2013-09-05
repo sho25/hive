@@ -19,9 +19,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
-operator|.
-name|templates
+name|gen
 package|;
 end_package
 
@@ -74,7 +72,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|String
-name|templateDirectory
+name|testTemplateDirectory
 decl_stmt|;
 specifier|private
 specifier|final
@@ -93,7 +91,7 @@ name|String
 name|testOutputDir
 parameter_list|,
 name|String
-name|templateDirectory
+name|testTemplateDirectory
 parameter_list|)
 block|{
 name|this
@@ -104,9 +102,9 @@ name|testOutputDir
 expr_stmt|;
 name|this
 operator|.
-name|templateDirectory
+name|testTemplateDirectory
 operator|=
-name|templateDirectory
+name|testTemplateDirectory
 expr_stmt|;
 name|testsuites
 operator|=
@@ -182,7 +180,7 @@ name|joinPath
 argument_list|(
 name|this
 operator|.
-name|templateDirectory
+name|testTemplateDirectory
 argument_list|,
 name|template
 operator|.
@@ -529,7 +527,7 @@ name|joinPath
 argument_list|(
 name|this
 operator|.
-name|templateDirectory
+name|testTemplateDirectory
 argument_list|,
 name|template
 operator|.
@@ -728,9 +726,20 @@ name|testCase
 operator|.
 name|replaceAll
 argument_list|(
-literal|"<ConstructorParams>"
+literal|"<Operand1>"
 argument_list|,
-literal|"0, scalarValue"
+literal|"inputColumnVector.vector[i]"
+argument_list|)
+expr_stmt|;
+name|testCase
+operator|=
+name|testCase
+operator|.
+name|replaceAll
+argument_list|(
+literal|"<Operand2>"
+argument_list|,
+literal|"scalarValue"
 argument_list|)
 expr_stmt|;
 block|}
@@ -742,9 +751,20 @@ name|testCase
 operator|.
 name|replaceAll
 argument_list|(
-literal|"<ConstructorParams>"
+literal|"<Operand1>"
 argument_list|,
-literal|"scalarValue, 0"
+literal|"scalarValue"
+argument_list|)
+expr_stmt|;
+name|testCase
+operator|=
+name|testCase
+operator|.
+name|replaceAll
+argument_list|(
+literal|"<Operand2>"
+argument_list|,
+literal|"inputColumnVector.vector[i]"
 argument_list|)
 expr_stmt|;
 block|}
@@ -798,7 +818,7 @@ name|joinPath
 argument_list|(
 name|this
 operator|.
-name|templateDirectory
+name|testTemplateDirectory
 argument_list|,
 name|template
 operator|.
@@ -1179,7 +1199,7 @@ name|joinPath
 argument_list|(
 name|this
 operator|.
-name|templateDirectory
+name|testTemplateDirectory
 argument_list|,
 name|template
 operator|.
@@ -1456,7 +1476,7 @@ name|joinPath
 argument_list|(
 name|this
 operator|.
-name|templateDirectory
+name|testTemplateDirectory
 argument_list|,
 literal|"TestClass.txt"
 argument_list|)

@@ -81,7 +81,33 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|LongColumnVector
+name|expressions
+operator|.
+name|VectorExpression
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|aggregates
+operator|.
+name|VectorAggregateExpression
 import|;
 end_import
 
@@ -141,9 +167,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
-operator|.
-name|VectorExpression
+name|LongColumnVector
 import|;
 end_import
 
@@ -163,11 +187,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
-operator|.
-name|aggregates
-operator|.
-name|VectorAggregateExpression
+name|DoubleColumnVector
 import|;
 end_import
 
@@ -222,6 +242,20 @@ operator|.
 name|util
 operator|.
 name|JavaDataModel
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|LongWritable
 import|;
 end_import
 
@@ -317,20 +351,6 @@ name|PrimitiveObjectInspectorFactory
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|LongWritable
-import|;
-end_import
-
 begin_comment
 comment|/**  * Generated from template VectorUDAFAvg.txt.  */
 end_comment
@@ -380,15 +400,11 @@ specifier|transient
 specifier|private
 name|double
 name|sum
-init|=
-literal|0
 decl_stmt|;
 specifier|transient
 specifier|private
 name|long
 name|count
-init|=
-literal|0
 decl_stmt|;
 specifier|transient
 specifier|private
