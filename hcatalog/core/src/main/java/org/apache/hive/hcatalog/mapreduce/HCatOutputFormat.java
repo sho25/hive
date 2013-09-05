@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -303,6 +305,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -316,6 +320,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -331,6 +337,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -344,6 +352,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -359,6 +369,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|data
@@ -372,6 +384,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -439,7 +453,7 @@ specifier|static
 name|boolean
 name|harRequested
 decl_stmt|;
-comment|/**      * @see org.apache.hcatalog.mapreduce.HCatOutputFormat#setOutput(org.apache.hadoop.conf.Configuration, Credentials, OutputJobInfo)      */
+comment|/**      * @see org.apache.hive.hcatalog.mapreduce.HCatOutputFormat#setOutput(org.apache.hadoop.conf.Configuration, Credentials, OutputJobInfo)      */
 specifier|public
 specifier|static
 name|void
@@ -1311,7 +1325,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * @see org.apache.hcatalog.mapreduce.HCatOutputFormat#setSchema(org.apache.hadoop.conf.Configuration, org.apache.hcatalog.data.schema.HCatSchema)      */
+comment|/**      * @see org.apache.hive.hcatalog.mapreduce.HCatOutputFormat#setSchema(org.apache.hadoop.conf.Configuration, org.apache.hive.hcatalog.data.schema.HCatSchema)      */
 specifier|public
 specifier|static
 name|void

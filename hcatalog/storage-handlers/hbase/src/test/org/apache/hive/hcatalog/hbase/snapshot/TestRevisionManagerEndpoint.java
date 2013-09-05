@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -147,6 +149,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -201,7 +205,7 @@ name|CoprocessorHost
 operator|.
 name|REGION_COPROCESSOR_CONF_KEY
 argument_list|,
-literal|"org.apache.hcatalog.hbase.snapshot.RevisionManagerEndpoint"
+literal|"org.apache.hive.hcatalog.hbase.snapshot.RevisionManagerEndpoint"
 argument_list|,
 literal|"org.apache.hadoop.hbase.coprocessor.GenericEndpoint"
 argument_list|)

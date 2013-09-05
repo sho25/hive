@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|security
@@ -20,6 +22,8 @@ import|import static
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -35,6 +39,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|HcatTestUtils
@@ -48,6 +54,8 @@ import|import static
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -63,6 +71,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|HcatTestUtils
@@ -76,6 +86,8 @@ import|import static
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -369,6 +381,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|HcatTestUtils
@@ -380,6 +394,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -394,6 +410,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.

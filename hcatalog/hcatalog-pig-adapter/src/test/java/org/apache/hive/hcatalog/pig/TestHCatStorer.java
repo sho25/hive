@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|pig
@@ -87,6 +89,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|HcatTestUtils
@@ -98,6 +102,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.

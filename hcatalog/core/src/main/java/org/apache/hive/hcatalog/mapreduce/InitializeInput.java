@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -195,6 +197,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -208,6 +212,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -223,6 +229,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -237,6 +245,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -250,6 +260,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -304,7 +316,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**      * @see org.apache.hcatalog.mapreduce.InitializeInput#setInput(org.apache.hadoop.conf.Configuration, InputJobInfo)      */
+comment|/**      * @see org.apache.hive.hcatalog.mapreduce.InitializeInput#setInput(org.apache.hadoop.conf.Configuration, InputJobInfo)      */
 specifier|public
 specifier|static
 name|void

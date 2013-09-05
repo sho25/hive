@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -45,6 +47,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -62,6 +66,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -620,7 +626,7 @@ return|return
 name|curId
 return|;
 block|}
-comment|/*      * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockAcquired()      */
+comment|/*      * @see org.apache.hive.hcatalog.hbase.snapshot.lock.LockListener#lockAcquired()      */
 annotation|@
 name|Override
 specifier|public
@@ -628,7 +634,7 @@ name|void
 name|lockAcquired
 parameter_list|()
 block|{       }
-comment|/*      * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockReleased()      */
+comment|/*      * @see org.apache.hive.hcatalog.hbase.snapshot.lock.LockListener#lockReleased()      */
 annotation|@
 name|Override
 specifier|public

@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -106,6 +108,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -356,14 +360,14 @@ name|logAndRegister
 argument_list|(
 name|server
 argument_list|,
-literal|"store A into 'default.junit_unparted_noisd' using org.apache.hcatalog.pig.HCatStorer();"
+literal|"store A into 'default.junit_unparted_noisd' using org.apache.hive.hcatalog.pig.HCatStorer();"
 argument_list|)
 expr_stmt|;
 name|logAndRegister
 argument_list|(
 name|server
 argument_list|,
-literal|"B = load 'default.junit_unparted_noisd' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"B = load 'default.junit_unparted_noisd' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Iterator
@@ -587,14 +591,14 @@ name|logAndRegister
 argument_list|(
 name|server
 argument_list|,
-literal|"store A into 'default.junit_parted_noisd' using org.apache.hcatalog.pig.HCatStorer('b=42');"
+literal|"store A into 'default.junit_parted_noisd' using org.apache.hive.hcatalog.pig.HCatStorer('b=42');"
 argument_list|)
 expr_stmt|;
 name|logAndRegister
 argument_list|(
 name|server
 argument_list|,
-literal|"B = load 'default.junit_parted_noisd' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"B = load 'default.junit_parted_noisd' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Iterator

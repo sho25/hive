@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|pig
@@ -35,6 +37,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|HcatTestUtils
@@ -46,6 +50,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -415,7 +421,7 @@ literal|"data = load '"
 operator|+
 name|readTblName
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 comment|// Ensure Pig schema is correct.
@@ -992,7 +998,7 @@ name|server
 operator|.
 name|registerQuery
 argument_list|(
-literal|"store data into 'test_tbl' using org.apache.hcatalog.pig.HCatStorer();"
+literal|"store data into 'test_tbl' using org.apache.hive.hcatalog.pig.HCatStorer();"
 argument_list|)
 expr_stmt|;
 name|List

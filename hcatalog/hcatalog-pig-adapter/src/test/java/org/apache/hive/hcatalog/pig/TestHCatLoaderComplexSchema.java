@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|pig
@@ -446,9 +448,9 @@ name|storageFormat
 parameter_list|()
 block|{
 return|return
-literal|"RCFILE tblproperties('hcat.isd'='org.apache.hcatalog.rcfile.RCFileInputDriver',"
+literal|"RCFILE tblproperties('hcat.isd'='org.apache.hive.hcatalog.rcfile.RCFileInputDriver',"
 operator|+
-literal|"'hcat.osd'='org.apache.hcatalog.rcfile.RCFileOutputDriver')"
+literal|"'hcat.osd'='org.apache.hive.hcatalog.rcfile.RCFileOutputDriver')"
 return|;
 block|}
 specifier|private
@@ -1121,7 +1123,7 @@ literal|"A = load '"
 operator|+
 name|tablename
 operator|+
-literal|"Input' using org.apache.hcatalog.pig.MockLoader() AS ("
+literal|"Input' using org.apache.hive.hcatalog.pig.MockLoader() AS ("
 operator|+
 name|pigSchema
 operator|+
@@ -1146,7 +1148,7 @@ literal|"STORE A into '"
 operator|+
 name|tablename
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer("
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer("
 operator|+
 operator|(
 name|provideSchemaToStorer
@@ -1210,7 +1212,7 @@ literal|"X = load '"
 operator|+
 name|tablename
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|server

@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|data
@@ -113,6 +115,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|data
@@ -128,6 +132,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -1052,7 +1058,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"org.apache.hcatalog.data.DefaultHCatRecord"
+literal|"org.apache.hive.hcatalog.data.DefaultHCatRecord"
 argument_list|,
 name|r
 operator|.

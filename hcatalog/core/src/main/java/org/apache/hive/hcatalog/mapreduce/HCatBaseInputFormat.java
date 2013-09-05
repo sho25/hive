@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -277,6 +279,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -290,6 +294,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -305,6 +311,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|data
@@ -318,6 +326,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -334,6 +344,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -1077,7 +1089,7 @@ return|return
 name|vals
 return|;
 block|}
-comment|/**      * @see org.apache.hcatalog.mapreduce.HCatBaseInputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)      * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}      */
+comment|/**      * @see org.apache.hive.hcatalog.mapreduce.HCatBaseInputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)      * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}      */
 specifier|public
 specifier|static
 name|HCatSchema

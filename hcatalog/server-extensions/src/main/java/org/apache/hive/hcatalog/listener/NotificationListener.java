@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|listener
@@ -541,6 +543,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -555,6 +559,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|messaging
@@ -568,6 +574,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -947,7 +955,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Send dropped partition notifications. Subscribers can receive these notifications for a      * particular table by listening on a topic named "dbName.tableName" with message selector      * string {@value org.apache.hcatalog.common.HCatConstants#HCAT_EVENT} =      * {@value org.apache.hcatalog.common.HCatConstants#HCAT_DROP_PARTITION_EVENT}.      *</br>      * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been      * found to throw NPE when serializing objects that contain null. For this reason we override      * some fields in the StorageDescriptor of this notification. This should be fixed after      * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.      */
+comment|/**      * Send dropped partition notifications. Subscribers can receive these notifications for a      * particular table by listening on a topic named "dbName.tableName" with message selector      * string {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_EVENT} =      * {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_DROP_PARTITION_EVENT}.      *</br>      * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been      * found to throw NPE when serializing objects that contain null. For this reason we override      * some fields in the StorageDescriptor of this notification. This should be fixed after      * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.      */
 annotation|@
 name|Override
 specifier|public
@@ -1477,7 +1485,7 @@ name|HCAT_DEFAULT_TOPIC_PREFIX
 argument_list|)
 return|;
 block|}
-comment|/**      * Send dropped table notifications. Subscribers can receive these notifications for      * dropped tables by listening on topic "HCAT" with message selector string      * {@value org.apache.hcatalog.common.HCatConstants#HCAT_EVENT} =      * {@value org.apache.hcatalog.common.HCatConstants#HCAT_DROP_TABLE_EVENT}      *</br>      * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been      * found to throw NPE when serializing objects that contain null. For this reason we override      * some fields in the StorageDescriptor of this notification. This should be fixed after      * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.      */
+comment|/**      * Send dropped table notifications. Subscribers can receive these notifications for      * dropped tables by listening on topic "HCAT" with message selector string      * {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_EVENT} =      * {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_DROP_TABLE_EVENT}      *</br>      * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been      * found to throw NPE when serializing objects that contain null. For this reason we override      * some fields in the StorageDescriptor of this notification. This should be fixed after      * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.      */
 annotation|@
 name|Override
 specifier|public

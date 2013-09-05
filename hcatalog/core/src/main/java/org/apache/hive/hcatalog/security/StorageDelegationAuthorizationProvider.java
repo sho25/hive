@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|security
@@ -299,6 +301,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -435,14 +439,14 @@ name|registerAuthProvider
 argument_list|(
 literal|"org.apache.hadoop.hive.hbase.HBaseStorageHandler"
 argument_list|,
-literal|"org.apache.hcatalog.hbase.HBaseAuthorizationProvider"
+literal|"org.apache.hive.hcatalog.hbase.HBaseAuthorizationProvider"
 argument_list|)
 expr_stmt|;
 name|registerAuthProvider
 argument_list|(
-literal|"org.apache.hcatalog.hbase.HBaseHCatStorageHandler"
+literal|"org.apache.hive.hcatalog.hbase.HBaseHCatStorageHandler"
 argument_list|,
-literal|"org.apache.hcatalog.hbase.HBaseAuthorizationProvider"
+literal|"org.apache.hive.hcatalog.hbase.HBaseAuthorizationProvider"
 argument_list|)
 expr_stmt|;
 block|}

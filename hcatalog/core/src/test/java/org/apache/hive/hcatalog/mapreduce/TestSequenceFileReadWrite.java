@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -279,6 +281,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|HcatTestUtils
@@ -290,6 +294,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -305,6 +311,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -318,6 +326,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -333,6 +343,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|data
@@ -346,6 +358,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -362,6 +376,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -732,7 +748,7 @@ name|server
 operator|.
 name|registerQuery
 argument_list|(
-literal|"store A into 'demo_table' using org.apache.hcatalog.pig.HCatStorer();"
+literal|"store A into 'demo_table' using org.apache.hive.hcatalog.pig.HCatStorer();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -744,7 +760,7 @@ name|server
 operator|.
 name|registerQuery
 argument_list|(
-literal|"B = load 'demo_table' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"B = load 'demo_table' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Iterator
@@ -920,7 +936,7 @@ name|server
 operator|.
 name|registerQuery
 argument_list|(
-literal|"store A into 'demo_table_1' using org.apache.hcatalog.pig.HCatStorer();"
+literal|"store A into 'demo_table_1' using org.apache.hive.hcatalog.pig.HCatStorer();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -932,7 +948,7 @@ name|server
 operator|.
 name|registerQuery
 argument_list|(
-literal|"B = load 'demo_table_1' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"B = load 'demo_table_1' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Iterator
@@ -1275,7 +1291,7 @@ name|server
 operator|.
 name|registerQuery
 argument_list|(
-literal|"C = load 'default.demo_table_2' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"C = load 'default.demo_table_2' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -1623,7 +1639,7 @@ name|server
 operator|.
 name|registerQuery
 argument_list|(
-literal|"D = load 'default.demo_table_3' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"D = load 'default.demo_table_3' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|server

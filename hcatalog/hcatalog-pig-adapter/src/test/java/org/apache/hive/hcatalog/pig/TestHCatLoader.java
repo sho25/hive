@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|pig
@@ -241,6 +243,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|HcatTestUtils
@@ -252,6 +256,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -266,6 +272,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -502,9 +510,9 @@ name|storageFormat
 parameter_list|()
 block|{
 return|return
-literal|"RCFILE tblproperties('hcat.isd'='org.apache.hcatalog.rcfile.RCFileInputDriver',"
+literal|"RCFILE tblproperties('hcat.isd'='org.apache.hive.hcatalog.rcfile.RCFileInputDriver',"
 operator|+
-literal|"'hcat.osd'='org.apache.hcatalog.rcfile.RCFileOutputDriver')"
+literal|"'hcat.osd'='org.apache.hive.hcatalog.rcfile.RCFileOutputDriver')"
 return|;
 block|}
 specifier|private
@@ -1031,7 +1039,7 @@ literal|"store A into '"
 operator|+
 name|BASIC_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -1042,7 +1050,7 @@ literal|"store A into '"
 operator|+
 name|SPECIFIC_SIZE_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -1067,7 +1075,7 @@ literal|"store B2 into '"
 operator|+
 name|PARTITIONED_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer('bkt=0');"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer('bkt=0');"
 argument_list|)
 expr_stmt|;
 name|server
@@ -1092,7 +1100,7 @@ literal|"store C2 into '"
 operator|+
 name|PARTITIONED_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer('bkt=1');"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer('bkt=1');"
 argument_list|)
 expr_stmt|;
 name|server
@@ -1114,7 +1122,7 @@ literal|"store D into '"
 operator|+
 name|COMPLEX_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -1229,7 +1237,7 @@ literal|"X = load '"
 operator|+
 name|BASIC_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Schema
@@ -1356,7 +1364,7 @@ literal|"X = load '"
 operator|+
 name|BASIC_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Iterator
@@ -1517,7 +1525,7 @@ literal|"K = load '"
 operator|+
 name|COMPLEX_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Schema
@@ -2369,7 +2377,7 @@ literal|"W = load '"
 operator|+
 name|PARTITIONED_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Schema
@@ -2714,7 +2722,7 @@ literal|"P1 = load '"
 operator|+
 name|PARTITIONED_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -2801,7 +2809,7 @@ literal|"P2 = load '"
 operator|+
 name|PARTITIONED_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -2913,7 +2921,7 @@ literal|"Y1 = load '"
 operator|+
 name|BASIC_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -3563,7 +3571,7 @@ name|server
 operator|.
 name|registerQuery
 argument_list|(
-literal|"data = load 'test_convert_boolean_to_int' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"data = load 'test_convert_boolean_to_int' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Schema

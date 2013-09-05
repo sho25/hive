@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|messaging
@@ -105,6 +107,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|messaging
@@ -191,7 +195,7 @@ specifier|final
 name|String
 name|DEFAULT_MESSAGE_FACTORY_IMPL
 init|=
-literal|"org.apache.hcatalog.messaging.json.JSONMessageFactory"
+literal|"org.apache.hive.hcatalog.messaging.json.JSONMessageFactory"
 decl_stmt|;
 specifier|private
 specifier|static

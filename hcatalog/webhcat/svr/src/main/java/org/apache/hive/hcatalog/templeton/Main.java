@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|templeton
@@ -1076,7 +1078,7 @@ init|=
 operator|new
 name|PackagesResourceConfig
 argument_list|(
-literal|"org.apache.hcatalog.templeton"
+literal|"org.apache.hive.hcatalog.templeton"
 argument_list|)
 decl_stmt|;
 name|HashMap
@@ -1111,7 +1113,7 @@ name|put
 argument_list|(
 literal|"com.sun.jersey.config.property.WadlGeneratorConfig"
 argument_list|,
-literal|"org.apache.hcatalog.templeton.WadlConfig"
+literal|"org.apache.hive.hcatalog.templeton.WadlConfig"
 argument_list|)
 expr_stmt|;
 name|rc

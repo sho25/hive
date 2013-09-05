@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -505,7 +507,7 @@ name|pigServer
 operator|.
 name|registerQuery
 argument_list|(
-literal|"A = load 'test_thrift' using org.apache.hcatalog.pig.HCatLoader();"
+literal|"A = load 'test_thrift' using org.apache.hive.hcatalog.pig.HCatLoader();"
 argument_list|)
 expr_stmt|;
 name|Schema

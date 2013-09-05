@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -75,7 +77,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"org.apache.hcatalog.hbase.snapshot.ZKBasedRevisionManager"
+literal|"org.apache.hive.hcatalog.hbase.snapshot.ZKBasedRevisionManager"
 argument_list|,
 name|conf
 operator|.

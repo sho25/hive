@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|utils
@@ -300,7 +302,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A hive udf to check types of the fields read from hcat. A sample hive query which can use this is:  *  * create temporary function typecheck as 'org.apache.hcatalog.utils.HCatTypeCheckHive';  * select typecheck('map<string,string>+struct<num:int,str:string,dbl:double>+array<map<string,string>>+int',   * mymap, mytuple, bagofmap, rownum) from complex;  *  *  * The first argument to the UDF is a string representing the schema of the columns in the table.   * The columns in the tables are the remaining args to it.  * The schema specification consists of the types as given by "describe<table>"  * with each column's type separated from the next column's type by a '+'  *  * The UDF will throw an exception (and cause the query to fail) if it does not  * encounter the correct types.  *  * The output is a string representation of the data , type and hive category.  * It is not advisable to use this against large dataset since the output would also  * be large.   *  */
+comment|/**  * A hive udf to check types of the fields read from hcat. A sample hive query which can use this is:  *  * create temporary function typecheck as 'org.apache.hive.hcatalog.utils.HCatTypeCheckHive';  * select typecheck('map<string,string>+struct<num:int,str:string,dbl:double>+array<map<string,string>>+int',   * mymap, mytuple, bagofmap, rownum) from complex;  *  *  * The first argument to the UDF is a string representing the schema of the columns in the table.   * The columns in the tables are the remaining args to it.  * The schema specification consists of the types as given by "describe<table>"  * with each column's type separated from the next column's type by a '+'  *  * The UDF will throw an exception (and cause the query to fail) if it does not  * encounter the correct types.  *  * The output is a string representation of the data , type and hive category.  * It is not advisable to use this against large dataset since the output would also  * be large.   *  */
 end_comment
 
 begin_class

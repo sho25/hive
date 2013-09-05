@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -149,6 +151,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -162,6 +166,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -177,6 +183,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -190,6 +198,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -205,6 +215,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|data
@@ -218,6 +230,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -246,7 +260,7 @@ name|HCatRecord
 argument_list|>
 block|{
 comment|//  static final private Log LOG = LogFactory.getLog(HCatBaseOutputFormat.class);
-comment|/**      * @see org.apache.hcatalog.mapreduce.HCatBaseOutputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)      * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}      */
+comment|/**      * @see org.apache.hive.hcatalog.mapreduce.HCatBaseOutputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)      * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}      */
 specifier|public
 specifier|static
 name|HCatSchema
@@ -400,7 +414,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      * @see org.apache.hcatalog.mapreduce.HCatBaseOutputFormat#getJobInfo(org.apache.hadoop.conf.Configuration)      * @deprecated use {@link #getJobInfo(org.apache.hadoop.conf.Configuration)}      */
+comment|/**      * @see org.apache.hive.hcatalog.mapreduce.HCatBaseOutputFormat#getJobInfo(org.apache.hadoop.conf.Configuration)      * @deprecated use {@link #getJobInfo(org.apache.hadoop.conf.Configuration)}      */
 specifier|public
 specifier|static
 name|OutputJobInfo

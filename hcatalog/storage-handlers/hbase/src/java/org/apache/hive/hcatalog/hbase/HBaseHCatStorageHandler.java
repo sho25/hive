@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -513,6 +515,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -527,6 +531,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -540,6 +546,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -557,6 +565,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -572,6 +582,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -589,6 +601,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -604,6 +618,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -621,6 +637,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -637,6 +655,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -650,6 +670,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -665,6 +687,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -679,6 +703,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -692,6 +718,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -1438,7 +1466,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/*     * @return instance of HiveAuthorizationProvider     *     * @throws HiveException     *     * @see org.apache.hcatalog.storagehandler.HCatStorageHandler#     * getAuthorizationProvider()     */
+comment|/*     * @return instance of HiveAuthorizationProvider     *     * @throws HiveException     *     * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler#     * getAuthorizationProvider()     */
 annotation|@
 name|Override
 specifier|public
@@ -1467,7 +1495,7 @@ return|return
 name|hbaseAuth
 return|;
 block|}
-comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #commitCreateTable(org.apache.hadoop.hive.metastore.api.Table)      */
+comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler      * #commitCreateTable(org.apache.hadoop.hive.metastore.api.Table)      */
 annotation|@
 name|Override
 specifier|public
@@ -1480,7 +1508,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{     }
-comment|/*      * @param instance of table      *      * @param deleteData      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #commitDropTable(org.apache.hadoop.hive.metastore.api.Table, boolean)      */
+comment|/*      * @param instance of table      *      * @param deleteData      *      * @throws MetaException      *      * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler      * #commitDropTable(org.apache.hadoop.hive.metastore.api.Table, boolean)      */
 annotation|@
 name|Override
 specifier|public
@@ -1502,7 +1530,7 @@ name|tbl
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*      * @param instance of table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #preCreateTable(org.apache.hadoop.hive.metastore.api.Table)      */
+comment|/*      * @param instance of table      *      * @throws MetaException      *      * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler      * #preCreateTable(org.apache.hadoop.hive.metastore.api.Table)      */
 annotation|@
 name|Override
 specifier|public
@@ -1983,7 +2011,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #preDropTable(org.apache.hadoop.hive.metastore.api.Table)      */
+comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler      * #preDropTable(org.apache.hadoop.hive.metastore.api.Table)      */
 annotation|@
 name|Override
 specifier|public
@@ -1996,7 +2024,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{     }
-comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #rollbackCreateTable(org.apache.hadoop.hive.metastore.api.Table)      */
+comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler      * #rollbackCreateTable(org.apache.hadoop.hive.metastore.api.Table)      */
 annotation|@
 name|Override
 specifier|public
@@ -2015,7 +2043,7 @@ name|table
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #rollbackDropTable(org.apache.hadoop.hive.metastore.api.Table)      */
+comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler      * #rollbackDropTable(org.apache.hadoop.hive.metastore.api.Table)      */
 annotation|@
 name|Override
 specifier|public
@@ -2028,7 +2056,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{     }
-comment|/*      * @return instance of HiveMetaHook      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler#getMetaHook()      */
+comment|/*      * @return instance of HiveMetaHook      *      * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler#getMetaHook()      */
 annotation|@
 name|Override
 specifier|public
@@ -2354,7 +2382,7 @@ operator|.
 name|class
 return|;
 block|}
-comment|/*     * @return subclass of SerDe     *     * @throws UnsupportedOperationException     *     * @see     * org.apache.hcatalog.storagehandler.HCatStorageHandler#getSerDeClass()     */
+comment|/*     * @return subclass of SerDe     *     * @throws UnsupportedOperationException     *     * @see     * org.apache.hive.hcatalog.storagehandler.HCatStorageHandler#getSerDeClass()     */
 annotation|@
 name|Override
 specifier|public

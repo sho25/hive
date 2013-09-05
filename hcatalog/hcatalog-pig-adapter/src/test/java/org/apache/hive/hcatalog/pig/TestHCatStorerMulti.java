@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|pig
@@ -187,6 +189,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|data
@@ -303,9 +307,9 @@ name|storageFormat
 parameter_list|()
 block|{
 return|return
-literal|"RCFILE tblproperties('hcat.isd'='org.apache.hcatalog.rcfile.RCFileInputDriver',"
+literal|"RCFILE tblproperties('hcat.isd'='org.apache.hive.hcatalog.rcfile.RCFileInputDriver',"
 operator|+
-literal|"'hcat.osd'='org.apache.hcatalog.rcfile.RCFileOutputDriver')"
+literal|"'hcat.osd'='org.apache.hive.hcatalog.rcfile.RCFileOutputDriver')"
 return|;
 block|}
 specifier|private
@@ -642,7 +646,7 @@ literal|"store A into '"
 operator|+
 name|BASIC_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -754,7 +758,7 @@ literal|"store B2 into '"
 operator|+
 name|PARTITIONED_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer('bkt=0');"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer('bkt=0');"
 argument_list|)
 expr_stmt|;
 name|server
@@ -772,7 +776,7 @@ literal|"store C2 into '"
 operator|+
 name|PARTITIONED_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer('bkt=1');"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer('bkt=1');"
 argument_list|)
 expr_stmt|;
 name|server
@@ -884,7 +888,7 @@ literal|"store A into '"
 operator|+
 name|BASIC_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer();"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer();"
 argument_list|)
 expr_stmt|;
 name|server
@@ -902,7 +906,7 @@ literal|"store B2 into '"
 operator|+
 name|PARTITIONED_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer('bkt=0');"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer('bkt=0');"
 argument_list|)
 expr_stmt|;
 name|server
@@ -920,7 +924,7 @@ literal|"store C2 into '"
 operator|+
 name|PARTITIONED_TABLE
 operator|+
-literal|"' using org.apache.hcatalog.pig.HCatStorer('bkt=1');"
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer('bkt=1');"
 argument_list|)
 expr_stmt|;
 name|server

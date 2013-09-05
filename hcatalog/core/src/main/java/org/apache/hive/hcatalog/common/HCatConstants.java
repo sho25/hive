@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -215,7 +217,7 @@ name|HCAT_PIG_INNER_FIELD_NAME_DEFAULT
 init|=
 literal|"innerfield"
 decl_stmt|;
-comment|/**      * {@value} (default: null)      * When the property is set in the UDFContext of the org.apache.hcatalog.pig.HCatStorer, HCatStorer writes      * to the location it specifies instead of the default HCatalog location format. An example can be found      * in org.apache.hcatalog.pig.HCatStorerWrapper.      */
+comment|/**      * {@value} (default: null)      * When the property is set in the UDFContext of the org.apache.hive.hcatalog.pig.HCatStorer, HCatStorer writes      * to the location it specifies instead of the default HCatalog location format. An example can be found      * in org.apache.hive.hcatalog.pig.HCatStorerWrapper.      */
 specifier|public
 specifier|static
 specifier|final
@@ -575,7 +577,7 @@ specifier|final
 name|String
 name|DEFAULT_MESSAGE_FACTORY_IMPL
 init|=
-literal|"org.apache.hcatalog.messaging.json.JSONMessageFactory"
+literal|"org.apache.hive.hcatalog.messaging.json.JSONMessageFactory"
 decl_stmt|;
 comment|// System environment variables
 specifier|public
