@@ -172,13 +172,19 @@ comment|// Default location of HiveServer2
 specifier|final
 specifier|static
 name|String
-name|JDBC_URL
+name|BASE_JDBC_URL
 init|=
 name|BeeLine
 operator|.
 name|BEELINE_DEFAULT_JDBC_URL
 operator|+
 literal|"localhost:10000"
+decl_stmt|;
+comment|//set JDBC_URL to something else in test case, if it needs to be customized
+name|String
+name|JDBC_URL
+init|=
+name|BASE_JDBC_URL
 decl_stmt|;
 specifier|private
 specifier|static
@@ -378,7 +384,7 @@ return|return
 name|output
 return|;
 block|}
-comment|/**    * Attempt to execute a simple script file with the -f option to BeeLine    * Test for presence of an expected pattern    * in the output (stdout or stderr), fail if not found    * Print PASSED or FAILED    * @paramm testName Name of test to print    * @param expecttedPattern Text to look for in command output    * @param shouldMatch true if the pattern should be found, false if it should not    * @throws Exception on command execution error    */
+comment|/**    * Attempt to execute a simple script file with the -f option to BeeLine    * Test for presence of an expected pattern    * in the output (stdout or stderr), fail if not found    * Print PASSED or FAILED    * @paramm testName Name of test to print    * @param expectedPattern Text to look for in command output/error    * @param shouldMatch true if the pattern should be found, false if it should not    * @throws Exception on command execution error    */
 specifier|private
 name|void
 name|testScriptFile
@@ -1118,6 +1124,51 @@ argument_list|(
 literal|">>> PASSED "
 operator|+
 literal|"testNPE"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testHiveVarSubstitution
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|JDBC_URL
+operator|=
+name|BASE_JDBC_URL
+operator|+
+literal|"#D_TBL=dummy_t"
+expr_stmt|;
+specifier|final
+name|String
+name|TEST_NAME
+init|=
+literal|"testHiveVarSubstitution"
+decl_stmt|;
+specifier|final
+name|String
+name|SCRIPT_TEXT
+init|=
+literal|"create table ${D_TBL} (d int);\nshow tables;\n"
+decl_stmt|;
+specifier|final
+name|String
+name|EXPECTED_PATTERN
+init|=
+literal|"dummy_t"
+decl_stmt|;
+name|testScriptFile
+argument_list|(
+name|TEST_NAME
+argument_list|,
+name|SCRIPT_TEXT
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
