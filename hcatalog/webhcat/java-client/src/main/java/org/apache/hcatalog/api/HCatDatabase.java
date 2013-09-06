@@ -44,7 +44,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HCatDatabase is wrapper class around org.apache.hadoop.hive.metastore.api.Database.  */
+comment|/**  * HCatDatabase is wrapper class around org.apache.hadoop.hive.metastore.api.Database.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatDatabase} instead  */
 end_comment
 
 begin_class

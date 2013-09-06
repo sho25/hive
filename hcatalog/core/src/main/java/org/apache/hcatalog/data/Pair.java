@@ -26,7 +26,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Copy of C++ STL pair container.  */
+comment|/**  * Copy of C++ STL pair container.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.Pair} instead  */
 end_comment
 
 begin_class

@@ -36,7 +36,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** Information about the storer to use for writing the data. */
+comment|/**   * Information about the storer to use for writing the data.   * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.StorerInfo} instead  */
 end_comment
 
 begin_class

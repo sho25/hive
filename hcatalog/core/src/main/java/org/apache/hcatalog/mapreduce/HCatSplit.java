@@ -166,7 +166,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** The HCatSplit wrapper around the InputSplit returned by the underlying InputFormat */
+comment|/**   * The HCatSplit wrapper around the InputSplit returned by the underlying InputFormat   * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatSplit} instead  */
 end_comment
 
 begin_class

@@ -228,7 +228,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspectorFactory for HCatRecordObjectInspectors (and associated helper inspectors)  */
+comment|/**  * ObjectInspectorFactory for HCatRecordObjectInspectors (and associated helper inspectors)  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.HCatRecordObjectInspectorFactory} instead  */
 end_comment
 
 begin_class

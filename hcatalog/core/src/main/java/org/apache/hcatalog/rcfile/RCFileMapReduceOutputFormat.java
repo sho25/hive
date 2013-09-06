@@ -228,7 +228,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The RC file input format using new Hadoop mapreduce APIs.  */
+comment|/**  * The RC file input format using new Hadoop mapreduce APIs.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.rcfile.RCFileMapReduceOutputFormat} instead  */
 end_comment
 
 begin_class

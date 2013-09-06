@@ -16,7 +16,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Enum type representing the various errors throws by HCat.  */
+comment|/**  * Enum type representing the various errors throws by HCat.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.common.ErrorType} instead  */
 end_comment
 
 begin_enum

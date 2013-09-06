@@ -404,7 +404,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** The OutputFormat to use to write data to HCatalog. The key value is ignored and  *  should be given as null. The value is the HCatRecord to write.*/
+comment|/** The OutputFormat to use to write data to HCatalog. The key value is ignored and  *  should be given as null. The value is the HCatRecord to write.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatOutputFormat} instead  */
 end_comment
 
 begin_class

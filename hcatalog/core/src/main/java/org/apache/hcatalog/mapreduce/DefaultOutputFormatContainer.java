@@ -162,7 +162,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Bare bones implementation of OutputFormatContainer. Does only the required  * tasks to work properly with HCatalog. HCatalog features which require a  * storage specific implementation are unsupported (ie partitioning).  */
+comment|/**  * Bare bones implementation of OutputFormatContainer. Does only the required  * tasks to work properly with HCatalog. HCatalog features which require a  * storage specific implementation are unsupported (ie partitioning).  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.DefaultOutputFormatContainer} instead  */
 end_comment
 
 begin_class

@@ -221,6 +221,10 @@ name|TestCase
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.TestDefaultHCatRecord} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class

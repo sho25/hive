@@ -110,7 +110,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This abstract class is internal to HCatalog and abstracts away the notion of  * underlying system from which reads will be done.  */
+comment|/**  * This abstract class is internal to HCatalog and abstracts away the notion of  * underlying system from which reads will be done.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.HCatReader} instead  */
 end_comment
 
 begin_class

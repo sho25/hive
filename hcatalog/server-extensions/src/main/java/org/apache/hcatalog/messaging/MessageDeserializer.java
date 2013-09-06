@@ -16,7 +16,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Interface for converting HCat events from String-form back to HCatEventMessage instances.  */
+comment|/**  * Interface for converting HCat events from String-form back to HCatEventMessage instances.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.MessageDeserializer} instead  */
 end_comment
 
 begin_class

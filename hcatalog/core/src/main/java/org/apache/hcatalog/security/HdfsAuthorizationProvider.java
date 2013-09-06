@@ -468,7 +468,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An AuthorizationProvider, which checks against the data access level permissions on HDFS.  * It makes sense to eventually move this class to Hive, so that all hive users can  * use this authorization model.   */
+comment|/**  * An AuthorizationProvider, which checks against the data access level permissions on HDFS.  * It makes sense to eventually move this class to Hive, so that all hive users can  * use this authorization model.   * @deprecated Use/modify {@link org.apache.hive.hcatalog.security.HdfsAuthorizationProvider} instead  */
 end_comment
 
 begin_class

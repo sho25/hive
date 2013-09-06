@@ -106,7 +106,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The InputFormat to use to read data from HCatalog.  */
+comment|/**  * The InputFormat to use to read data from HCatalog.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatInputFormat} instead  */
 end_comment
 
 begin_class

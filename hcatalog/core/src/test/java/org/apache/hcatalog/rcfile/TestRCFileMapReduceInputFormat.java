@@ -364,7 +364,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TestRCFile.  *  */
+comment|/**  * TestRCFile.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.rcfile.TestRCFileMapReduceInputFormat} instead  */
 end_comment
 
 begin_class

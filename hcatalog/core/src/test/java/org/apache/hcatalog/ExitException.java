@@ -13,6 +13,10 @@ name|hcatalog
 package|;
 end_package
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.ExitException} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class

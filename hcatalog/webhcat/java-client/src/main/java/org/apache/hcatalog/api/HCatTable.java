@@ -146,7 +146,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The HCatTable is a wrapper around org.apache.hadoop.hive.metastore.api.Table.  */
+comment|/**  * The HCatTable is a wrapper around org.apache.hadoop.hive.metastore.api.Table.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatTable} instead  */
 end_comment
 
 begin_class

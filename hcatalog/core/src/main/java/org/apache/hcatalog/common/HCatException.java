@@ -26,7 +26,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Class representing exceptions thrown by HCat.  */
+comment|/**  * Class representing exceptions thrown by HCat.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.common.HCatException} instead  */
 end_comment
 
 begin_class

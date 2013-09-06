@@ -135,6 +135,10 @@ name|VLongWritable
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.ReaderWriter} instead  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract

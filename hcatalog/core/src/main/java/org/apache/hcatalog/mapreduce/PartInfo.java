@@ -62,7 +62,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** The Class used to serialize the partition information read from the metadata server that maps to a partition. */
+comment|/**   * The Class used to serialize the partition information read from the metadata server that maps to a partition.   * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.PartInfo} instead  */
 end_comment
 
 begin_class

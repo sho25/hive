@@ -296,7 +296,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This class is used to encapsulate the InputFormat, OutputFormat and SerDe  *  artifacts of tables which don't define a SerDe. This StorageHandler assumes  *  the supplied storage artifacts are for a file-based storage system.  */
+comment|/**  *  This class is used to encapsulate the InputFormat, OutputFormat and SerDe  *  artifacts of tables which don't define a SerDe. This StorageHandler assumes  *  the supplied storage artifacts are for a file-based storage system.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.FosterStorageHandler} instead  */
 end_comment
 
 begin_class

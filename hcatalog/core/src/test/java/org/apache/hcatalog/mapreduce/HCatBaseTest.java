@@ -194,7 +194,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Simplify writing HCatalog tests that require a HiveMetaStore.  */
+comment|/**  * Simplify writing HCatalog tests that require a HiveMetaStore.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatBaseTest} instead  */
 end_comment
 
 begin_class

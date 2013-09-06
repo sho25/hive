@@ -58,7 +58,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The Class HCatCreateDBDesc for defining database attributes.  */
+comment|/**  * The Class HCatCreateDBDesc for defining database attributes.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatCreateDBDesc} instead  */
 end_comment
 
 begin_class

@@ -358,7 +358,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Pig {@link org.apache.pig.LoadFunc} to read data from HCat  */
+comment|/**  * Pig {@link org.apache.pig.LoadFunc} to read data from HCat  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.HCatLoader} instead  */
 end_comment
 
 begin_class

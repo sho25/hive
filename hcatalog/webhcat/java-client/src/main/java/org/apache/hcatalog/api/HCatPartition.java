@@ -164,7 +164,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The HCatPartition is a wrapper around org.apache.hadoop.hive.metastore.api.Partition.  */
+comment|/**  * The HCatPartition is a wrapper around org.apache.hadoop.hive.metastore.api.Partition.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatPartition} instead  */
 end_comment
 
 begin_class

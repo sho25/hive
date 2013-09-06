@@ -116,7 +116,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Abstract Factory for the construction of HCatalog message instances.  */
+comment|/**  * Abstract Factory for the construction of HCatalog message instances.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.MessageFactory} instead  */
 end_comment
 
 begin_class

@@ -326,7 +326,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HCatStorer.  *  */
+comment|/**  * HCatStorer.  *  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.HCatStorer} instead  */
 end_comment
 
 begin_class

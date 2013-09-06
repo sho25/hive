@@ -328,7 +328,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Base class for HCatSemanticAnalyzer hooks.  */
+comment|/**  * Base class for HCatSemanticAnalyzer hooks.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.cli.SemanticAnalysis.HCatSemanticAnalyzerBase} instead  */
 end_comment
 
 begin_class

@@ -46,7 +46,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * JSON implementation of DropDatabaseMessage.  */
+comment|/**  * JSON implementation of DropDatabaseMessage.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONDropDatabaseMessage} instead  */
 end_comment
 
 begin_class

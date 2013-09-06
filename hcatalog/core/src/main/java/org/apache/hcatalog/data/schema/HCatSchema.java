@@ -92,7 +92,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HCatSchema. This class is NOT thread-safe.  */
+comment|/**  * HCatSchema. This class is NOT thread-safe.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.schema.HCatSchema} instead  */
 end_comment
 
 begin_class

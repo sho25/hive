@@ -36,7 +36,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HCat message sent when a partition is dropped in HCatalog.  */
+comment|/**  * HCat message sent when a partition is dropped in HCatalog.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.DropPartitionMessage} instead  */
 end_comment
 
 begin_class

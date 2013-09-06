@@ -188,7 +188,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is a dummy implementation of HiveAuthorizationProvider to provide  * dummy authorization functionality for other classes to extend and override.  */
+comment|/**  * This class is a dummy implementation of HiveAuthorizationProvider to provide  * dummy authorization functionality for other classes to extend and override.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.storagehandler.DummyHCatAuthProvider} instead  */
 end_comment
 
 begin_class

@@ -470,7 +470,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Base class for HCatStorer and HCatEximStorer  *  */
+comment|/**  * Base class for HCatStorer and HCatEximStorer  *  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.HCatBaseStorer} instead  */
 end_comment
 
 begin_class

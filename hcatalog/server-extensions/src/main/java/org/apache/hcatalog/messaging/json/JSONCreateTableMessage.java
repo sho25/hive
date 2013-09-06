@@ -46,7 +46,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * JSON implementation of CreateTableMessage.  */
+comment|/**  * JSON implementation of CreateTableMessage.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONCreateTableMessage} instead  */
 end_comment
 
 begin_class

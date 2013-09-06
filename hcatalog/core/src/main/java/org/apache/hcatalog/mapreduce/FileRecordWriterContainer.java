@@ -366,7 +366,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Part of the FileOutput*Container classes  * See {@link FileOutputFormatContainer} for more information  */
+comment|/**  * Part of the FileOutput*Container classes  * See {@link FileOutputFormatContainer} for more information  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.FileRecordWriterContainer} instead  */
 end_comment
 
 begin_class

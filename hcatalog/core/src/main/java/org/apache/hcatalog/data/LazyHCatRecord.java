@@ -206,7 +206,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of HCatRecord that wraps an Object returned by a SerDe  * and an ObjectInspector.  This delays deserialization of unused columns.  */
+comment|/**  * An implementation of HCatRecord that wraps an Object returned by a SerDe  * and an ObjectInspector.  This delays deserialization of unused columns.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.LazyHCatRecord} instead  */
 end_comment
 
 begin_class

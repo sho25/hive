@@ -604,7 +604,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Test for HCatOutputFormat. Writes a partition using HCatOutputFormat and reads  * it back using HCatInputFormat, checks the column values and counts.  */
+comment|/**  * Test for HCatOutputFormat. Writes a partition using HCatOutputFormat and reads  * it back using HCatInputFormat, checks the column values and counts.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatMapReduceTest} instead  */
 end_comment
 
 begin_class

@@ -108,7 +108,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** The class used to serialize and store the output related information  */
+comment|/**   * The class used to serialize and store the output related information    * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.OutputJobInfo} instead  */
 end_comment
 
 begin_class

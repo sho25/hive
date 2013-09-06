@@ -28,7 +28,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This is a base class for   * {@link ReadEntity.Builder} / {@link WriteEntity.Builder}.  * Many fields in them are common, so this class  * contains the common fields.  */
+comment|/**  * This is a base class for   * {@link ReadEntity.Builder} / {@link WriteEntity.Builder}.  * Many fields in them are common, so this class  * contains the common fields.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.EntityBase} instead  */
 end_comment
 
 begin_class

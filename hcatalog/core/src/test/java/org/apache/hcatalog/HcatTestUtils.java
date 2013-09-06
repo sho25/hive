@@ -196,7 +196,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Utility methods for tests  */
+comment|/**  * Utility methods for tests  * @deprecated Use/modify {@link org.apache.hive.hcatalog.HcatTestUtils} instead  */
 end_comment
 
 begin_class

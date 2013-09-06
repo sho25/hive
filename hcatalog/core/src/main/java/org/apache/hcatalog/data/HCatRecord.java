@@ -66,7 +66,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Abstract class exposing get and set semantics for basic record usage.  * Note :  *   HCatRecord is designed only to be used as in-memory representation only.  *   Don't use it to store data on the physical device.  */
+comment|/**  * Abstract class exposing get and set semantics for basic record usage.  * Note :  *   HCatRecord is designed only to be used as in-memory representation only.  *   Don't use it to store data on the physical device.   * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.HCatRecord} instead  */
 end_comment
 
 begin_class

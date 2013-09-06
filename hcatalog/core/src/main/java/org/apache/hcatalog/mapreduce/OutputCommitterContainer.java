@@ -44,7 +44,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This class will contain an implementation of an OutputCommitter.  *  See {@link OutputFormatContainer} for more information about containers.  */
+comment|/**  *  This class will contain an implementation of an OutputCommitter.  *  See {@link OutputFormatContainer} for more information about containers.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.OutputCommitterContainer} instead  */
 end_comment
 
 begin_class

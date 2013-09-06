@@ -320,7 +320,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A thread safe time expired cache for HiveMetaStoreClient  */
+comment|/**  * A thread safe time expired cache for HiveMetaStoreClient  * @deprecated Use/modify {@link org.apache.hive.hcatalog.common.HiveClientCache} instead  */
 end_comment
 
 begin_class

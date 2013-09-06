@@ -326,7 +326,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Base class for HCatLoader and HCatEximLoader  */
+comment|/**  * Base class for HCatLoader and HCatEximLoader  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.HCatBaseLoader} instead  */
 end_comment
 
 begin_class

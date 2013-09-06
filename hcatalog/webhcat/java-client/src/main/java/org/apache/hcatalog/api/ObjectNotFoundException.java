@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This exception is thrown when a Database, Table or Partition  * specified in an HCatalog query is not found.  */
+comment|/**  * This exception is thrown when a Database, Table or Partition  * specified in an HCatalog query is not found.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.ObjectNotFoundException} instead  */
 end_comment
 
 begin_class

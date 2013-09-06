@@ -128,7 +128,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Use this factory to get instances of {@link HCatReader} or {@link HCatWriter}  * at master and slave nodes.  */
+comment|/**  * Use this factory to get instances of {@link HCatReader} or {@link HCatWriter}  * at master and slave nodes.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.DataTransferFactory} instead  */
 end_comment
 
 begin_class

@@ -66,7 +66,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * JSON implementation of DropPartitionMessage.  */
+comment|/**  * JSON implementation of DropPartitionMessage.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONDropPartitionMessage} instead  */
 end_comment
 
 begin_class

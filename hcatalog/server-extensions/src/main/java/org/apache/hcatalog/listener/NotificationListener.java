@@ -598,7 +598,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of  * {@link org.apache.hadoop.hive.metastore.MetaStoreEventListener} It sends  * message on two type of topics. One has name of form dbName.tblName On this  * topic, two kind of messages are sent: add/drop partition and  * finalize_partition message. Second topic has name "HCAT" and messages sent on  * it are: add/drop database and add/drop table. All messages also has a  * property named "HCAT_EVENT" set on them whose value can be used to configure  * message selector on subscriber side.  */
+comment|/**  * Implementation of  * {@link org.apache.hadoop.hive.metastore.MetaStoreEventListener} It sends  * message on two type of topics. One has name of form dbName.tblName On this  * topic, two kind of messages are sent: add/drop partition and  * finalize_partition message. Second topic has name "HCAT" and messages sent on  * it are: add/drop database and add/drop table. All messages also has a  * property named "HCAT_EVENT" set on them whose value can be used to configure  * message selector on subscriber side.  *   * @deprecated Use/modify {@link org.apache.hive.hcatalog.listener.NotificationListener} instead  */
 end_comment
 
 begin_class

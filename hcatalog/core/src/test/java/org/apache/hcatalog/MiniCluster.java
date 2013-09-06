@@ -192,7 +192,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class builds a single instance of itself with the Singleton  * design pattern. While building the single instance, it sets up a  * mini cluster that actually consists of a mini DFS cluster and a  * mini MapReduce cluster on the local machine and also sets up the  * environment for Pig to run on top of the mini cluster.  */
+comment|/**  * This class builds a single instance of itself with the Singleton  * design pattern. While building the single instance, it sets up a  * mini cluster that actually consists of a mini DFS cluster and a  * mini MapReduce cluster on the local machine and also sets up the  * environment for Pig to run on top of the mini cluster.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.MiniCluster} instead  */
 end_comment
 
 begin_class

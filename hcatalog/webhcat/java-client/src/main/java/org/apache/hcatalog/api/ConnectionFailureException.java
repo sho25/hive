@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Class representing exceptions resulting from connection problems  * between HCat client and server.  */
+comment|/**  * Class representing exceptions resulting from connection problems  * between HCat client and server.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.ConnectionFailureException} instead  */
 end_comment
 
 begin_class

@@ -216,7 +216,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The Class HCatAddPartitionDesc helps users in defining partition attributes.  */
+comment|/**  * The Class HCatAddPartitionDesc helps users in defining partition attributes.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatAddPartitionDesc} instead  */
 end_comment
 
 begin_class

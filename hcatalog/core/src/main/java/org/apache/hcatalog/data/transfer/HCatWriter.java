@@ -110,7 +110,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This abstraction is internal to HCatalog. This is to facilitate writing to  * HCatalog from external systems. Don't try to instantiate this directly.  * Instead, use {@link DataTransferFactory}  */
+comment|/**  * This abstraction is internal to HCatalog. This is to facilitate writing to  * HCatalog from external systems. Don't try to instantiate this directly.  * Instead, use {@link DataTransferFactory}  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.HCatWriter} instead  */
 end_comment
 
 begin_class

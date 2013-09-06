@@ -286,7 +286,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This reader reads via {@link HCatInputFormat}  *  */
+comment|/**  * This reader reads via {@link HCatInputFormat}  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.impl.HCatInputFormatReader} instead  */
 end_comment
 
 begin_class

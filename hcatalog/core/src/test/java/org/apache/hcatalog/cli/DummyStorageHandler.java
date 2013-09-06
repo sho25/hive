@@ -481,6 +481,10 @@ name|HCatStorageHandler
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.cli.DummyStorageHandler} instead  */
+end_comment
+
 begin_class
 class|class
 name|DummyStorageHandler

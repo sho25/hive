@@ -46,7 +46,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * JSON Implementation of CreateDatabaseMessage.  */
+comment|/**  * JSON Implementation of CreateDatabaseMessage.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONCreateDatabaseMessage} instead  */
 end_comment
 
 begin_class

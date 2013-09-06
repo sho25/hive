@@ -450,7 +450,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The HCatClientHMSImpl is the Hive Metastore client based implementation of  * HCatClient.  */
+comment|/**  * The HCatClientHMSImpl is the Hive Metastore client based implementation of  * HCatClient.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatClientHMSImpl} instead  */
 end_comment
 
 begin_class

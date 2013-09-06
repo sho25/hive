@@ -166,7 +166,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Part of the DefaultOutput*Container classes  * See {@link DefaultOutputFormatContainer} for more information  */
+comment|/**  * Part of the DefaultOutput*Container classes  * See {@link DefaultOutputFormatContainer} for more information  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.DefaultOutputCommitterContainer} instead  */
 end_comment
 
 begin_class

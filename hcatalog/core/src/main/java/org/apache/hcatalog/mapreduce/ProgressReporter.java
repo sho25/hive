@@ -99,6 +99,10 @@ name|TaskInputOutputContext
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.ProgressReporter} instead  */
+end_comment
+
 begin_class
 class|class
 name|ProgressReporter

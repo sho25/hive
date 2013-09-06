@@ -36,7 +36,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The HCat message sent when partition(s) are added to a table.  */
+comment|/**  * The HCat message sent when partition(s) are added to a table.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.AddPartitionMessage} instead  */
 end_comment
 
 begin_class

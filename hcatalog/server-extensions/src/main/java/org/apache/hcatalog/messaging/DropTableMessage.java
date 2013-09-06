@@ -16,7 +16,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * HCat message sent when a Table is dropped in HCatalog.  */
+comment|/**  * HCat message sent when a Table is dropped in HCatalog.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.DropTableMessage} instead  */
 end_comment
 
 begin_class

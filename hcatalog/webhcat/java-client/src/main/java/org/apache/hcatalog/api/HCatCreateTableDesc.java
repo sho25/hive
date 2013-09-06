@@ -432,7 +432,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The Class HCatCreateTableDesc for defining attributes for a new table.  */
+comment|/**  * The Class HCatCreateTableDesc for defining attributes for a new table.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatCreateTableDesc} instead  */
 end_comment
 
 begin_class

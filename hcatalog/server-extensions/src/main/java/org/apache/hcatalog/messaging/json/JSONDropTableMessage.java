@@ -46,7 +46,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * JSON implementation of DropTableMessage.  */
+comment|/**  * JSON implementation of DropTableMessage.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONDropTableMessage} instead  */
 end_comment
 
 begin_class

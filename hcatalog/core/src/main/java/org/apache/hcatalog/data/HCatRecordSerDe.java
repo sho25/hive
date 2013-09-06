@@ -432,7 +432,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * SerDe class for serializing to and from HCatRecord  */
+comment|/**  * SerDe class for serializing to and from HCatRecord  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.HCatRecordSerDe} instead  */
 end_comment
 
 begin_class

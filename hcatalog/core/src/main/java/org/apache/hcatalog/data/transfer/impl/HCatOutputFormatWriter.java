@@ -316,7 +316,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This writer writes via {@link HCatOutputFormat}  *  */
+comment|/**  * This writer writes via {@link HCatOutputFormat}  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.impl.HCatOutputFormatWriter} instead  */
 end_comment
 
 begin_class

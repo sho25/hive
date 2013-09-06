@@ -114,7 +114,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The abstract class HCatClient containing APIs for HCatalog DDL commands.  */
+comment|/**  * The abstract class HCatClient containing APIs for HCatalog DDL commands.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatClient} instead  */
 end_comment
 
 begin_class

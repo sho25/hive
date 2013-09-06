@@ -128,7 +128,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The abstract Class HCatStorageHandler would server as the base class for all  * the storage handlers required for non-native tables in HCatalog.  */
+comment|/**  * The abstract Class HCatStorageHandler would server as the base class for all  * the storage handlers required for non-native tables in HCatalog.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatStorageHandler} instead  */
 end_comment
 
 begin_class

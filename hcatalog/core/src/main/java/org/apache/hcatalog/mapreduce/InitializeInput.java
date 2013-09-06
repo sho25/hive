@@ -282,7 +282,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The Class which handles querying the metadata server using the MetaStoreClient. The list of  * partitions matching the partition filter is fetched from the server and the information is  * serialized and written into the JobContext configuration. The inputInfo is also updated with  * info required in the client process context.  */
+comment|/**  * The Class which handles querying the metadata server using the MetaStoreClient. The list of  * partitions matching the partition filter is fetched from the server and the information is  * serialized and written into the JobContext configuration. The inputInfo is also updated with  * info required in the client process context.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.InitializeInput} instead  */
 end_comment
 
 begin_class

@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Interface that determines whether we can implement a HCatRecord on top of it  */
+comment|/**  * Interface that determines whether we can implement a HCatRecord on top of it  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.HCatRecordable} instead  */
 end_comment
 
 begin_interface

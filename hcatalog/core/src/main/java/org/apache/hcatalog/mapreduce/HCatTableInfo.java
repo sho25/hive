@@ -100,7 +100,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * HCatTableInfo - class to communicate table information to {@link HCatInputFormat}  * and {@link HCatOutputFormat}  *  */
+comment|/**  *  * HCatTableInfo - class to communicate table information to {@link HCatInputFormat}  * and {@link HCatOutputFormat}  *  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatTableInfo} instead  */
 end_comment
 
 begin_class

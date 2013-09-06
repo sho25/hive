@@ -66,7 +66,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * JSON implementation of AddPartitionMessage.  */
+comment|/**  * JSON implementation of AddPartitionMessage.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.jms.MessagingUtils} instead  */
 end_comment
 
 begin_class
