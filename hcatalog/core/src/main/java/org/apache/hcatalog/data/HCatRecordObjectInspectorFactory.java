@@ -287,7 +287,7 @@ name|ObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**      * Returns HCatRecordObjectInspector given a StructTypeInfo type definition for the record to look into      * @param typeInfo Type definition for the record to look into      * @return appropriate HCatRecordObjectInspector      * @throws SerDeException      */
+comment|/**    * Returns HCatRecordObjectInspector given a StructTypeInfo type definition for the record to look into    * @param typeInfo Type definition for the record to look into    * @return appropriate HCatRecordObjectInspector    * @throws SerDeException    */
 specifier|public
 specifier|static
 name|HCatRecordObjectInspector

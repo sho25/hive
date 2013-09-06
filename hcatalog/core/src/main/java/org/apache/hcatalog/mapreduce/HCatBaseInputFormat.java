@@ -362,7 +362,7 @@ argument_list|,
 name|HCatRecord
 argument_list|>
 block|{
-comment|/**      * get the schema for the HCatRecord data returned by HCatInputFormat.      *      * @param context the jobContext      * @throws IllegalArgumentException      */
+comment|/**    * get the schema for the HCatRecord data returned by HCatInputFormat.    *    * @param context the jobContext    * @throws IllegalArgumentException    */
 specifier|private
 name|Class
 argument_list|<
@@ -425,7 +425,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**      * Set the schema for the HCatRecord data returned by HCatInputFormat.      * @param job the job object      * @param hcatSchema the schema to use as the consolidated schema      */
+comment|/**    * Set the schema for the HCatRecord data returned by HCatInputFormat.    * @param job the job object    * @param hcatSchema the schema to use as the consolidated schema    */
 specifier|public
 specifier|static
 name|void
@@ -514,7 +514,7 @@ name|job
 argument_list|)
 return|;
 block|}
-comment|/**      * Logically split the set of input files for the job. Returns the      * underlying InputFormat's splits      * @param jobContext the job context object      * @return the splits, an HCatInputSplit wrapper over the storage      *         handler InputSplits      * @throws IOException or InterruptedException      */
+comment|/**    * Logically split the set of input files for the job. Returns the    * underlying InputFormat's splits    * @param jobContext the job context object    * @return the splits, an HCatInputSplit wrapper over the storage    *         handler InputSplits    * @throws IOException or InterruptedException    */
 annotation|@
 name|Override
 specifier|public
@@ -838,7 +838,7 @@ return|return
 name|splits
 return|;
 block|}
-comment|/**      * Create the RecordReader for the given InputSplit. Returns the underlying      * RecordReader if the required operations are supported and schema matches      * with HCatTable schema. Returns an HCatRecordReader if operations need to      * be implemented in HCat.      * @param split the split      * @param taskContext the task attempt context      * @return the record reader instance, either an HCatRecordReader(later) or      *         the underlying storage handler's RecordReader      * @throws IOException or InterruptedException      */
+comment|/**    * Create the RecordReader for the given InputSplit. Returns the underlying    * RecordReader if the required operations are supported and schema matches    * with HCatTable schema. Returns an HCatRecordReader if operations need to    * be implemented in HCat.    * @param split the split    * @param taskContext the task attempt context    * @return the record reader instance, either an HCatRecordReader(later) or    *         the underlying storage handler's RecordReader    * @throws IOException or InterruptedException    */
 annotation|@
 name|Override
 specifier|public
@@ -964,7 +964,7 @@ name|valuesNotInDataCols
 argument_list|)
 return|;
 block|}
-comment|/**      * gets values for fields requested by output schema which will not be in the data      */
+comment|/**    * gets values for fields requested by output schema which will not be in the data    */
 specifier|private
 specifier|static
 name|Map
@@ -1081,7 +1081,7 @@ return|return
 name|vals
 return|;
 block|}
-comment|/**      * @see org.apache.hcatalog.mapreduce.HCatBaseInputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)      * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}      */
+comment|/**    * @see org.apache.hcatalog.mapreduce.HCatBaseInputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)    * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}    */
 specifier|public
 specifier|static
 name|HCatSchema
@@ -1103,7 +1103,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Gets the HCatTable schema for the table specified in the HCatInputFormat.setInput call      * on the specified job context. This information is available only after HCatInputFormat.setInput      * has been called for a JobContext.      * @param conf the Configuration object      * @return the table schema      * @throws IOException if HCatInputFormat.setInput has not been called      *                     for the current context      */
+comment|/**    * Gets the HCatTable schema for the table specified in the HCatInputFormat.setInput call    * on the specified job context. This information is available only after HCatInputFormat.setInput    * has been called for a JobContext.    * @param conf the Configuration object    * @return the table schema    * @throws IOException if HCatInputFormat.setInput has not been called    *                     for the current context    */
 specifier|public
 specifier|static
 name|HCatSchema
@@ -1187,7 +1187,7 @@ return|return
 name|allCols
 return|;
 block|}
-comment|/**      * Gets the InputJobInfo object by reading the Configuration and deserializing      * the string. If InputJobInfo is not present in the configuration, throws an      * exception since that means HCatInputFormat.setInput has not been called.      * @param conf the Configuration object      * @return the InputJobInfo object      * @throws IOException the exception      */
+comment|/**    * Gets the InputJobInfo object by reading the Configuration and deserializing    * the string. If InputJobInfo is not present in the configuration, throws an    * exception since that means HCatInputFormat.setInput has not been called.    * @param conf the Configuration object    * @return the InputJobInfo object    * @throws IOException the exception    */
 specifier|private
 specifier|static
 name|InputJobInfo

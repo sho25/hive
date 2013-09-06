@@ -755,7 +755,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      * artificially complex nested schema to test nested schema conversion      * @throws Exception      */
+comment|/**    * artificially complex nested schema to test nested schema conversion    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -1513,7 +1513,7 @@ return|return
 name|message
 return|;
 block|}
-comment|/**      * tests that unnecessary tuples are drop while converting schema      * (Pig requires Tuples in Bags)      * @throws Exception      */
+comment|/**    * tests that unnecessary tuples are drop while converting schema    * (Pig requires Tuples in Bags)    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public

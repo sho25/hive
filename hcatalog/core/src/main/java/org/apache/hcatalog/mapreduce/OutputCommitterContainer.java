@@ -67,7 +67,7 @@ operator|.
 name|OutputCommitter
 name|committer
 decl_stmt|;
-comment|/**      * @param context current JobContext      * @param committer OutputCommitter that this instance will contain      */
+comment|/**    * @param context current JobContext    * @param committer OutputCommitter that this instance will contain    */
 specifier|public
 name|OutputCommitterContainer
 parameter_list|(
@@ -93,7 +93,7 @@ operator|=
 name|committer
 expr_stmt|;
 block|}
-comment|/**      * @return underlying OutputCommitter      */
+comment|/**    * @return underlying OutputCommitter    */
 specifier|public
 name|OutputCommitter
 name|getBaseOutputCommitter

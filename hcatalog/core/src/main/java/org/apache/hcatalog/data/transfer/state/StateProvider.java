@@ -28,7 +28,7 @@ specifier|public
 interface|interface
 name|StateProvider
 block|{
-comment|/**      * This method should return id assigned to slave node.      *      * @return id      */
+comment|/**    * This method should return id assigned to slave node.    *    * @return id    */
 specifier|public
 name|int
 name|getId

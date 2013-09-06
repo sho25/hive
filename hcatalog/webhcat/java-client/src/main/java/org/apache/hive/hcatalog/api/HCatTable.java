@@ -449,7 +449,7 @@ name|getLocation
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Gets the table name.      *      * @return the table name      */
+comment|/**    * Gets the table name.    *    * @return the table name    */
 specifier|public
 name|String
 name|getTableName
@@ -459,7 +459,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**      * Gets the db name.      *      * @return the db name      */
+comment|/**    * Gets the db name.    *    * @return the db name    */
 specifier|public
 name|String
 name|getDbName
@@ -469,7 +469,7 @@ return|return
 name|dbName
 return|;
 block|}
-comment|/**      * Gets the columns.      *      * @return the columns      */
+comment|/**    * Gets the columns.    *    * @return the columns    */
 specifier|public
 name|List
 argument_list|<
@@ -482,7 +482,7 @@ return|return
 name|cols
 return|;
 block|}
-comment|/**      * Gets the part columns.      *      * @return the part columns      */
+comment|/**    * Gets the part columns.    *    * @return the part columns    */
 specifier|public
 name|List
 argument_list|<
@@ -495,7 +495,7 @@ return|return
 name|partCols
 return|;
 block|}
-comment|/**      * Gets the bucket columns.      *      * @return the bucket columns      */
+comment|/**    * Gets the bucket columns.    *    * @return the bucket columns    */
 specifier|public
 name|List
 argument_list|<
@@ -508,7 +508,7 @@ return|return
 name|bucketCols
 return|;
 block|}
-comment|/**      * Gets the sort columns.      *      * @return the sort columns      */
+comment|/**    * Gets the sort columns.    *    * @return the sort columns    */
 specifier|public
 name|List
 argument_list|<
@@ -521,7 +521,7 @@ return|return
 name|sortCols
 return|;
 block|}
-comment|/**      * Gets the number of buckets.      *      * @return the number of buckets      */
+comment|/**    * Gets the number of buckets.    *    * @return the number of buckets    */
 specifier|public
 name|int
 name|getNumBuckets
@@ -531,7 +531,7 @@ return|return
 name|numBuckets
 return|;
 block|}
-comment|/**      * Gets the storage handler.      *      * @return the storage handler      */
+comment|/**    * Gets the storage handler.    *    * @return the storage handler    */
 specifier|public
 name|String
 name|getStorageHandler
@@ -541,7 +541,7 @@ return|return
 name|storageHandler
 return|;
 block|}
-comment|/**      * Gets the table props.      *      * @return the table props      */
+comment|/**    * Gets the table props.    *    * @return the table props    */
 specifier|public
 name|Map
 argument_list|<
@@ -556,7 +556,7 @@ return|return
 name|tblProps
 return|;
 block|}
-comment|/**      * Gets the tabletype.      *      * @return the tabletype      */
+comment|/**    * Gets the tabletype.    *    * @return the tabletype    */
 specifier|public
 name|String
 name|getTabletype
@@ -566,7 +566,7 @@ return|return
 name|tabletype
 return|;
 block|}
-comment|/**      * Gets the input file format.      *      * @return the input file format      */
+comment|/**    * Gets the input file format.    *    * @return the input file format    */
 specifier|public
 name|String
 name|getInputFileFormat
@@ -576,7 +576,7 @@ return|return
 name|inputFileFormat
 return|;
 block|}
-comment|/**      * Gets the output file format.      *      * @return the output file format      */
+comment|/**    * Gets the output file format.    *    * @return the output file format    */
 specifier|public
 name|String
 name|getOutputFileFormat
@@ -586,7 +586,7 @@ return|return
 name|outputFileFormat
 return|;
 block|}
-comment|/**      * Gets the serde lib.      *      * @return the serde lib      */
+comment|/**    * Gets the serde lib.    *    * @return the serde lib    */
 specifier|public
 name|String
 name|getSerdeLib
@@ -596,7 +596,7 @@ return|return
 name|serde
 return|;
 block|}
-comment|/**      * Gets the location.      *      * @return the location      */
+comment|/**    * Gets the location.    *    * @return the location    */
 specifier|public
 name|String
 name|getLocation

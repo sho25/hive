@@ -254,7 +254,7 @@ name|partition
 argument_list|)
 return|;
 block|}
-comment|/**      * Get the record writer for the job. Uses the storagehandler's OutputFormat      * to get the record writer.      * @param context the information about the current task.      * @return a RecordWriter to write the output for the job.      * @throws IOException      */
+comment|/**    * Get the record writer for the job. Uses the storagehandler's OutputFormat    * to get the record writer.    * @param context the information about the current task.    * @return a RecordWriter to write the output for the job.    * @throws IOException    */
 annotation|@
 name|Override
 specifier|public
@@ -328,7 +328,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      * Get the output committer for this output format. This is responsible      * for ensuring the output is committed correctly.      * @param context the task context      * @return an output committer      * @throws IOException      * @throws InterruptedException      */
+comment|/**    * Get the output committer for this output format. This is responsible    * for ensuring the output is committed correctly.    * @param context the task context    * @return an output committer    * @throws IOException    * @throws InterruptedException    */
 annotation|@
 name|Override
 specifier|public
@@ -363,7 +363,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Check for validity of the output-specification for the job.      * @param context information about the job      * @throws IOException when output should not be attempted      */
+comment|/**    * Check for validity of the output-specification for the job.    * @param context information about the job    * @throws IOException when output should not be attempted    */
 annotation|@
 name|Override
 specifier|public

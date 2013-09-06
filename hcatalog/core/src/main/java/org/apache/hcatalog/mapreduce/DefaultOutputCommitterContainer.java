@@ -190,7 +190,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**      * @param context current JobContext      * @param baseCommitter OutputCommitter to contain      * @throws IOException      */
+comment|/**    * @param context current JobContext    * @param baseCommitter OutputCommitter to contain    * @throws IOException    */
 specifier|public
 name|DefaultOutputCommitterContainer
 parameter_list|(

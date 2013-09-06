@@ -212,7 +212,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Get an instance of the selected storage class.  Defaults to      * HDFS storage if none is specified.      */
+comment|/**    * Get an instance of the selected storage class.  Defaults to    * HDFS storage if none is specified.    */
 specifier|public
 specifier|static
 name|TempletonStorage
@@ -298,7 +298,7 @@ return|return
 name|storage
 return|;
 block|}
-comment|/**      * Get an open instance of the selected storage class.  Defaults      * to HDFS storage if none is specified.      */
+comment|/**    * Get an open instance of the selected storage class.  Defaults    * to HDFS storage if none is specified.    */
 specifier|public
 specifier|static
 name|TempletonStorage
@@ -329,7 +329,7 @@ return|return
 name|storage
 return|;
 block|}
-comment|/**      * For storage methods that require a connection, this is a hint      * that it's time to close the connection.      */
+comment|/**    * For storage methods that require a connection, this is a hint    * that it's time to close the connection.    */
 specifier|public
 name|void
 name|close
@@ -346,7 +346,7 @@ block|}
 comment|//
 comment|// Properties
 comment|//
-comment|/**      * This job id.      */
+comment|/**    * This job id.    */
 specifier|public
 name|String
 name|getId
@@ -356,7 +356,7 @@ return|return
 name|id
 return|;
 block|}
-comment|/**      * The percent complete of a job      */
+comment|/**    * The percent complete of a job    */
 specifier|public
 name|String
 name|getPercentComplete
@@ -389,7 +389,7 @@ name|percent
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * The child id of TempletonControllerJob      */
+comment|/**    * The child id of TempletonControllerJob    */
 specifier|public
 name|String
 name|getChildId
@@ -422,7 +422,7 @@ name|childid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Add a jobid to the list of children of this job.      *      * @param jobid      * @throws IOException      */
+comment|/**    * Add a jobid to the list of children of this job.    *    * @param jobid    * @throws IOException    */
 specifier|public
 name|void
 name|addChild
@@ -484,7 +484,7 @@ name|jobids
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Get a list of jobstates for jobs that are children of this job.      * @throws IOException      */
+comment|/**    * Get a list of jobstates for jobs that are children of this job.    * @throws IOException    */
 specifier|public
 name|List
 argument_list|<
@@ -542,7 +542,7 @@ return|return
 name|children
 return|;
 block|}
-comment|/**      * Save a comma-separated list of jobids that are children      * of this job.      * @param jobids      * @throws IOException      */
+comment|/**    * Save a comma-separated list of jobids that are children    * of this job.    * @param jobids    * @throws IOException    */
 specifier|public
 name|void
 name|setChildren
@@ -561,7 +561,7 @@ name|jobids
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Set the list of child jobs of this job      * @param children      */
+comment|/**    * Set the list of child jobs of this job    * @param children    */
 specifier|public
 name|void
 name|setChildren
@@ -620,7 +620,7 @@ name|val
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * The system exit value of the job.      */
+comment|/**    * The system exit value of the job.    */
 specifier|public
 name|Long
 name|getExitValue
@@ -653,7 +653,7 @@ name|exitValue
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * When this job was created.      */
+comment|/**    * When this job was created.    */
 specifier|public
 name|Long
 name|getCreated
@@ -686,7 +686,7 @@ name|created
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * The user who started this job.      */
+comment|/**    * The user who started this job.    */
 specifier|public
 name|String
 name|getUser
@@ -719,7 +719,7 @@ name|user
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * The url callback      */
+comment|/**    * The url callback    */
 specifier|public
 name|String
 name|getCallback
@@ -752,7 +752,7 @@ name|callback
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * The status of a job once it is completed.      */
+comment|/**    * The status of a job once it is completed.    */
 specifier|public
 name|String
 name|getCompleteStatus
@@ -785,7 +785,7 @@ name|complete
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * The time when the callback was sent.      */
+comment|/**    * The time when the callback was sent.    */
 specifier|public
 name|Long
 name|getNotifiedTime
@@ -821,7 +821,7 @@ block|}
 comment|//
 comment|// Helpers
 comment|//
-comment|/**      * Fetch an integer field from the store.      */
+comment|/**    * Fetch an integer field from the store.    */
 specifier|public
 name|Long
 name|getLongField
@@ -896,7 +896,7 @@ return|;
 block|}
 block|}
 block|}
-comment|/**      * Store a String field from the store.      */
+comment|/**    * Store a String field from the store.    */
 specifier|public
 name|void
 name|setField
@@ -967,7 +967,7 @@ name|name
 argument_list|)
 return|;
 block|}
-comment|/**      * Store a long field.      *      * @param name      * @param val      * @throws IOException      */
+comment|/**    * Store a long field.    *    * @param name    * @param val    * @throws IOException    */
 specifier|public
 name|void
 name|setLongField
@@ -1026,7 +1026,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Get an id for each currently existing job, which can be used to create      * a JobState object.      *      * @param conf      * @throws IOException      */
+comment|/**    * Get an id for each currently existing job, which can be used to create    * a JobState object.    *    * @param conf    * @throws IOException    */
 specifier|public
 specifier|static
 name|List

@@ -176,7 +176,7 @@ name|Integer
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**      * It's expected that Hive (and thus HCat CLI) will return canonical error msgs/codes.      * Here they are mapped to appropriate HTTP Status Code.      */
+comment|/**    * It's expected that Hive (and thus HCat CLI) will return canonical error msgs/codes.    * Here they are mapped to appropriate HTTP Status Code.    */
 static|static
 block|{
 name|hiveError2HttpStatusCode
@@ -347,7 +347,7 @@ name|json
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Create a new map object from the existing json.      */
+comment|/**    * Create a new map object from the existing json.    */
 specifier|public
 specifier|static
 name|JsonBuilder
@@ -367,7 +367,7 @@ name|json
 argument_list|)
 return|;
 block|}
-comment|/**      * Create a new map object.      */
+comment|/**    * Create a new map object.    */
 specifier|public
 specifier|static
 name|JsonBuilder
@@ -384,7 +384,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**      * Create a new map error object.      */
+comment|/**    * Create a new map error object.    */
 specifier|public
 specifier|static
 name|JsonBuilder
@@ -421,7 +421,7 @@ name|errorCode
 argument_list|)
 return|;
 block|}
-comment|/**      * Add a non-null value to the map.      */
+comment|/**    * Add a non-null value to the map.    */
 specifier|public
 name|JsonBuilder
 name|put
@@ -452,7 +452,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * Remove a value from the map.      */
+comment|/**    * Remove a value from the map.    */
 specifier|public
 name|JsonBuilder
 name|remove
@@ -472,7 +472,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * Get the underlying map.      */
+comment|/**    * Get the underlying map.    */
 specifier|public
 name|Map
 name|getMap
@@ -482,7 +482,7 @@ return|return
 name|map
 return|;
 block|}
-comment|/**      * Turn the map back to response object.      */
+comment|/**    * Turn the map back to response object.    */
 specifier|public
 name|Response
 name|build
@@ -493,7 +493,7 @@ name|buildResponse
 argument_list|()
 return|;
 block|}
-comment|/**      * Turn the map back to json.      */
+comment|/**    * Turn the map back to json.    */
 specifier|public
 name|String
 name|buildJson
@@ -508,7 +508,7 @@ name|map
 argument_list|)
 return|;
 block|}
-comment|/**      * Turn the map back to response object.      */
+comment|/**    * Turn the map back to response object.    */
 specifier|public
 name|Response
 name|buildResponse
@@ -583,7 +583,7 @@ name|status
 argument_list|)
 return|;
 block|}
-comment|/**      * Turn the map back to response object.      */
+comment|/**    * Turn the map back to response object.    */
 specifier|public
 name|Response
 name|buildResponse
@@ -616,7 +616,7 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/**      * Is the object non-empty?      */
+comment|/**    * Is the object non-empty?    */
 specifier|public
 name|boolean
 name|isset
@@ -631,7 +631,7 @@ name|map
 argument_list|)
 return|;
 block|}
-comment|/**      * Check if this is an error doc.      */
+comment|/**    * Check if this is an error doc.    */
 specifier|public
 specifier|static
 name|boolean
@@ -656,7 +656,7 @@ literal|"error"
 argument_list|)
 return|;
 block|}
-comment|/**      * Convert a json string to a Map.      */
+comment|/**    * Convert a json string to a Map.    */
 specifier|public
 specifier|static
 name|Map
@@ -711,7 +711,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**      * Convert a map to a json string.      */
+comment|/**    * Convert a map to a json string.    */
 specifier|public
 specifier|static
 name|String

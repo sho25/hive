@@ -38,17 +38,17 @@ name|MaxByteArrayOutputStream
 extends|extends
 name|ByteArrayOutputStream
 block|{
-comment|/**      * The max number of bytes stored.      */
+comment|/**    * The max number of bytes stored.    */
 specifier|private
 name|int
 name|maxBytes
 decl_stmt|;
-comment|/**      * The number of bytes currently stored.      */
+comment|/**    * The number of bytes currently stored.    */
 specifier|private
 name|int
 name|nBytes
 decl_stmt|;
-comment|/**      * Create.      */
+comment|/**    * Create.    */
 specifier|public
 name|MaxByteArrayOutputStream
 parameter_list|(
@@ -67,7 +67,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
-comment|/**      * Writes the specified byte to this byte array output stream.      * Any bytes after the first maxBytes will be ignored.      *      * @param   b   the byte to be written.      */
+comment|/**    * Writes the specified byte to this byte array output stream.    * Any bytes after the first maxBytes will be ignored.    *    * @param   b   the byte to be written.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -96,7 +96,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Writes<code>len</code> bytes from the specified byte array      * starting at offset<code>off</code> to this byte array output stream.      * Any bytes after the first maxBytes will be ignored.      *      * @param   b     the data.      * @param   off   the start offset in the data.      * @param   len   the number of bytes to write.      */
+comment|/**    * Writes<code>len</code> bytes from the specified byte array    * starting at offset<code>off</code> to this byte array output stream.    * Any bytes after the first maxBytes will be ignored.    *    * @param   b     the data.    * @param   off   the start offset in the data.    * @param   len   the number of bytes to write.    */
 specifier|public
 specifier|synchronized
 name|void

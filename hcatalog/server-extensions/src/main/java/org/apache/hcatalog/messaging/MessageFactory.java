@@ -254,7 +254,7 @@ argument_list|,
 literal|""
 argument_list|)
 decl_stmt|;
-comment|/**      * Getter for MessageFactory instance.      */
+comment|/**    * Getter for MessageFactory instance.    */
 specifier|public
 specifier|static
 name|MessageFactory
@@ -327,7 +327,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Getter for MessageDeserializer, corresponding to the specified format and version.      * @param format Serialization format for notifications.      * @param version Version of serialization format (currently ignored.)      * @return MessageDeserializer.      */
+comment|/**    * Getter for MessageDeserializer, corresponding to the specified format and version.    * @param format Serialization format for notifications.    * @param version Version of serialization format (currently ignored.)    * @return MessageDeserializer.    */
 specifier|public
 specifier|static
 name|MessageDeserializer
@@ -365,21 +365,21 @@ name|MessageDeserializer
 name|getDeserializer
 parameter_list|()
 function_decl|;
-comment|/**      * Getter for version-string, corresponding to all constructed messages.      */
+comment|/**    * Getter for version-string, corresponding to all constructed messages.    */
 specifier|public
 specifier|abstract
 name|String
 name|getVersion
 parameter_list|()
 function_decl|;
-comment|/**      * Getter for message-format.      */
+comment|/**    * Getter for message-format.    */
 specifier|public
 specifier|abstract
 name|String
 name|getMessageFormat
 parameter_list|()
 function_decl|;
-comment|/**      * Factory method for CreateDatabaseMessage.      * @param db The Database being added.      * @return CreateDatabaseMessage instance.      */
+comment|/**    * Factory method for CreateDatabaseMessage.    * @param db The Database being added.    * @return CreateDatabaseMessage instance.    */
 specifier|public
 specifier|abstract
 name|CreateDatabaseMessage
@@ -389,7 +389,7 @@ name|Database
 name|db
 parameter_list|)
 function_decl|;
-comment|/**      * Factory method for DropDatabaseMessage.      * @param db The Database being dropped.      * @return DropDatabaseMessage instance.      */
+comment|/**    * Factory method for DropDatabaseMessage.    * @param db The Database being dropped.    * @return DropDatabaseMessage instance.    */
 specifier|public
 specifier|abstract
 name|DropDatabaseMessage
@@ -399,7 +399,7 @@ name|Database
 name|db
 parameter_list|)
 function_decl|;
-comment|/**      * Factory method for CreateTableMessage.      * @param table The Table being created.      * @return CreateTableMessage instance.      */
+comment|/**    * Factory method for CreateTableMessage.    * @param table The Table being created.    * @return CreateTableMessage instance.    */
 specifier|public
 specifier|abstract
 name|CreateTableMessage
@@ -409,7 +409,7 @@ name|Table
 name|table
 parameter_list|)
 function_decl|;
-comment|/**      * Factory method for DropTableMessage.      * @param table The Table being dropped.      * @return DropTableMessage instance.      */
+comment|/**    * Factory method for DropTableMessage.    * @param table The Table being dropped.    * @return DropTableMessage instance.    */
 specifier|public
 specifier|abstract
 name|DropTableMessage
@@ -419,7 +419,7 @@ name|Table
 name|table
 parameter_list|)
 function_decl|;
-comment|/**      * Factory method for AddPartitionMessage.      * @param table The Table to which the partition is added.      * @param partition The Partition being added.      * @return AddPartitionMessage instance.      */
+comment|/**    * Factory method for AddPartitionMessage.    * @param table The Table to which the partition is added.    * @param partition The Partition being added.    * @return AddPartitionMessage instance.    */
 specifier|public
 specifier|abstract
 name|AddPartitionMessage
@@ -432,7 +432,7 @@ name|Partition
 name|partition
 parameter_list|)
 function_decl|;
-comment|/**      * Factory method for DropPartitionMessage.      * @param table The Table from which the partition is dropped.      * @param partition The Partition being dropped.      * @return DropPartitionMessage instance.      */
+comment|/**    * Factory method for DropPartitionMessage.    * @param table The Table from which the partition is dropped.    * @param partition The Partition being dropped.    * @return DropPartitionMessage instance.    */
 specifier|public
 specifier|abstract
 name|DropPartitionMessage

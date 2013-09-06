@@ -1040,7 +1040,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|/**          *  This test has been added to account for HCATALOG-436          *  We write out columns with "internal column names" such          *  as "_col0", but try to read with retular column names.          */
+comment|/**      *  This test has been added to account for HCATALOG-436      *  We write out columns with "internal column names" such      *  as "_col0", but try to read with retular column names.      */
 name|Configuration
 name|conf
 init|=

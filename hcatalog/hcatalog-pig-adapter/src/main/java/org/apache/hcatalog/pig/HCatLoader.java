@@ -1297,7 +1297,7 @@ name|partitionFilterString
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Get statistics about the data to be loaded. Only input data size is implemented at this time.      */
+comment|/**    * Get statistics about the data to be loaded. Only input data size is implemented at this time.    */
 annotation|@
 name|Override
 specifier|public

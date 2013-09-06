@@ -72,7 +72,7 @@ name|JsonProperty
 name|Long
 name|timestamp
 decl_stmt|;
-comment|/**      * Default constructor, needed for Jackson.      */
+comment|/**    * Default constructor, needed for Jackson.    */
 specifier|public
 name|JSONCreateTableMessage
 parameter_list|()

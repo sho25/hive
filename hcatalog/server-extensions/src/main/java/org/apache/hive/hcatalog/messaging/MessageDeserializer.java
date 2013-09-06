@@ -27,7 +27,7 @@ specifier|abstract
 class|class
 name|MessageDeserializer
 block|{
-comment|/**      * Method to construct HCatEventMessage from string.      */
+comment|/**    * Method to construct HCatEventMessage from string.    */
 specifier|public
 name|HCatEventMessage
 name|getHCatEventMessage
@@ -117,7 +117,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Method to de-serialize CreateDatabaseMessage instance.      */
+comment|/**    * Method to de-serialize CreateDatabaseMessage instance.    */
 specifier|public
 specifier|abstract
 name|CreateDatabaseMessage
@@ -127,7 +127,7 @@ name|String
 name|messageBody
 parameter_list|)
 function_decl|;
-comment|/**      * Method to de-serialize DropDatabaseMessage instance.      */
+comment|/**    * Method to de-serialize DropDatabaseMessage instance.    */
 specifier|public
 specifier|abstract
 name|DropDatabaseMessage
@@ -137,7 +137,7 @@ name|String
 name|messageBody
 parameter_list|)
 function_decl|;
-comment|/**      * Method to de-serialize CreateTableMessage instance.      */
+comment|/**    * Method to de-serialize CreateTableMessage instance.    */
 specifier|public
 specifier|abstract
 name|CreateTableMessage
@@ -147,7 +147,7 @@ name|String
 name|messageBody
 parameter_list|)
 function_decl|;
-comment|/**      * Method to de-serialize DropTableMessage instance.      */
+comment|/**    * Method to de-serialize DropTableMessage instance.    */
 specifier|public
 specifier|abstract
 name|DropTableMessage
@@ -157,7 +157,7 @@ name|String
 name|messageBody
 parameter_list|)
 function_decl|;
-comment|/**      * Method to de-serialize AddPartitionMessage instance.      */
+comment|/**    * Method to de-serialize AddPartitionMessage instance.    */
 specifier|public
 specifier|abstract
 name|AddPartitionMessage
@@ -167,7 +167,7 @@ name|String
 name|messageBody
 parameter_list|)
 function_decl|;
-comment|/**      * Method to de-serialize DropPartitionMessage instance.      */
+comment|/**    * Method to de-serialize DropPartitionMessage instance.    */
 specifier|public
 specifier|abstract
 name|DropPartitionMessage

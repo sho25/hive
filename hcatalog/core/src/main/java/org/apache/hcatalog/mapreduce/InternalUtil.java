@@ -1279,7 +1279,7 @@ name|context
 argument_list|)
 return|;
 block|}
-comment|/**      * Casts an InputSplit into a HCatSplit, providing a useful error message if the cast fails.      * @param split the InputSplit      * @return the HCatSplit      * @throws IOException      */
+comment|/**    * Casts an InputSplit into a HCatSplit, providing a useful error message if the cast fails.    * @param split the InputSplit    * @return the HCatSplit    * @throws IOException    */
 specifier|public
 specifier|static
 name|HCatSplit

@@ -74,7 +74,7 @@ name|JsonProperty
 name|Long
 name|timestamp
 decl_stmt|;
-comment|/**      * Default constructor, required for Jackson.      */
+comment|/**    * Default constructor, required for Jackson.    */
 specifier|public
 name|JSONDropDatabaseMessage
 parameter_list|()

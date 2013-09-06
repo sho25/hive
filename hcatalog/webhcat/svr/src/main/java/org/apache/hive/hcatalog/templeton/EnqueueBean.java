@@ -34,7 +34,7 @@ specifier|public
 name|EnqueueBean
 parameter_list|()
 block|{}
-comment|/**      * Create a new EnqueueBean.      *      * @param id     job id      */
+comment|/**    * Create a new EnqueueBean.    *    * @param id     job id    */
 specifier|public
 name|EnqueueBean
 parameter_list|(

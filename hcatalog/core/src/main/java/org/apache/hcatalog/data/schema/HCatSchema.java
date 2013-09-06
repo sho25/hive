@@ -136,7 +136,7 @@ name|String
 argument_list|>
 name|fieldNames
 decl_stmt|;
-comment|/**      *      * @param fieldSchemas is now owned by HCatSchema. Any subsequent modifications      * on fieldSchemas won't get reflected in HCatSchema.  Each fieldSchema's name      * in the list must be unique, otherwise throws IllegalArgumentException.      */
+comment|/**    *    * @param fieldSchemas is now owned by HCatSchema. Any subsequent modifications    * on fieldSchemas won't get reflected in HCatSchema.  Each fieldSchema's name    * in the list must be unique, otherwise throws IllegalArgumentException.    */
 specifier|public
 name|HCatSchema
 parameter_list|(
@@ -345,7 +345,7 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *  Users are not allowed to modify the list directly, since HCatSchema      *  maintains internal state. Use append/remove to modify the schema.      */
+comment|/**    *  Users are not allowed to modify the list directly, since HCatSchema    *  maintains internal state. Use append/remove to modify the schema.    */
 specifier|public
 name|List
 argument_list|<
@@ -365,7 +365,7 @@ name|fieldSchemas
 argument_list|)
 return|;
 block|}
-comment|/**      * @param fieldName      * @return the index of field named fieldName in Schema. If field is not      * present, returns null.      */
+comment|/**    * @param fieldName    * @return the index of field named fieldName in Schema. If field is not    * present, returns null.    */
 specifier|public
 name|Integer
 name|getPosition

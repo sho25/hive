@@ -60,7 +60,7 @@ specifier|public
 interface|interface
 name|RevisionManager
 block|{
-comment|/**      * Version property required by HBase to use this interface      * for CoprocessorProtocol / RPC.      */
+comment|/**    * Version property required by HBase to use this interface    * for CoprocessorProtocol / RPC.    */
 specifier|public
 specifier|static
 specifier|final
@@ -70,7 +70,7 @@ init|=
 literal|1L
 decl_stmt|;
 comment|// do not change
-comment|/**      * Initialize the revision manager.      */
+comment|/**    * Initialize the revision manager.    */
 specifier|public
 name|void
 name|initialize
@@ -79,7 +79,7 @@ name|Configuration
 name|conf
 parameter_list|)
 function_decl|;
-comment|/**      * Opens the revision manager.      *      * @throws IOException      */
+comment|/**    * Opens the revision manager.    *    * @throws IOException    */
 specifier|public
 name|void
 name|open
@@ -87,7 +87,7 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Closes the revision manager.      *      * @throws IOException      */
+comment|/**    * Closes the revision manager.    *    * @throws IOException    */
 specifier|public
 name|void
 name|close
@@ -95,7 +95,7 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Setup revision management for a newly created hbase table.      * @param table the hbase table name      * @param columnFamilies the column families in the table      */
+comment|/**    * Setup revision management for a newly created hbase table.    * @param table the hbase table name    * @param columnFamilies the column families in the table    */
 specifier|public
 name|void
 name|createTable
@@ -112,7 +112,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Remove table data from revision manager for a dropped table.      * @param table the hbase table name      */
+comment|/**    * Remove table data from revision manager for a dropped table.    * @param table the hbase table name    */
 specifier|public
 name|void
 name|dropTable
@@ -123,7 +123,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Start the write transaction.      *      * @param table      * @param families      * @return a new Transaction      * @throws IOException      */
+comment|/**    * Start the write transaction.    *    * @param table    * @param families    * @return a new Transaction    * @throws IOException    */
 specifier|public
 name|Transaction
 name|beginWriteTransaction
@@ -140,7 +140,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Start the write transaction.      *      * @param table      * @param families      * @param keepAlive      * @return a new Transaction      * @throws IOException      */
+comment|/**    * Start the write transaction.    *    * @param table    * @param families    * @param keepAlive    * @return a new Transaction    * @throws IOException    */
 specifier|public
 name|Transaction
 name|beginWriteTransaction
@@ -160,7 +160,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Commit the write transaction.      *      * @param transaction      * @throws IOException      */
+comment|/**    * Commit the write transaction.    *    * @param transaction    * @throws IOException    */
 specifier|public
 name|void
 name|commitWriteTransaction
@@ -171,7 +171,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Abort the write transaction.      *      * @param transaction      * @throws IOException      */
+comment|/**    * Abort the write transaction.    *    * @param transaction    * @throws IOException    */
 specifier|public
 name|void
 name|abortWriteTransaction
@@ -182,7 +182,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Get the list of aborted Transactions for a column family      *      * @param table the table name      * @param columnFamily the column family name      * @return a list of aborted WriteTransactions      * @throws java.io.IOException      */
+comment|/**    * Get the list of aborted Transactions for a column family    *    * @param table the table name    * @param columnFamily the column family name    * @return a list of aborted WriteTransactions    * @throws java.io.IOException    */
 specifier|public
 name|List
 argument_list|<
@@ -199,7 +199,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Create the latest snapshot of the table.      *      * @param tableName      * @return a new snapshot      * @throws IOException      */
+comment|/**    * Create the latest snapshot of the table.    *    * @param tableName    * @return a new snapshot    * @throws IOException    */
 specifier|public
 name|TableSnapshot
 name|createSnapshot
@@ -210,7 +210,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Create the snapshot of the table using the revision number.      *      * @param tableName      * @param revision      * @return a new snapshot      * @throws IOException      */
+comment|/**    * Create the snapshot of the table using the revision number.    *    * @param tableName    * @param revision    * @return a new snapshot    * @throws IOException    */
 specifier|public
 name|TableSnapshot
 name|createSnapshot
@@ -224,7 +224,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Extends the expiration of a transaction by the time indicated by keep alive.      *      * @param transaction      * @throws IOException      */
+comment|/**    * Extends the expiration of a transaction by the time indicated by keep alive.    *    * @param transaction    * @throws IOException    */
 specifier|public
 name|void
 name|keepAlive

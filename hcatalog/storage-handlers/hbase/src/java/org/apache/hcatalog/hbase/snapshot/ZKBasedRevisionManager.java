@@ -221,7 +221,7 @@ specifier|private
 name|long
 name|writeTxnTimeout
 decl_stmt|;
-comment|/*      * @see org.apache.hcatalog.hbase.snapshot.RevisionManager#initialize()      */
+comment|/*    * @see org.apache.hcatalog.hbase.snapshot.RevisionManager#initialize()    */
 annotation|@
 name|Override
 specifier|public
@@ -409,7 +409,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Open a ZooKeeper connection      * @throws java.io.IOException      */
+comment|/**    * Open a ZooKeeper connection    * @throws java.io.IOException    */
 specifier|public
 name|void
 name|open
@@ -442,7 +442,7 @@ literal|"Created root znodes for revision manager."
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Close Zookeeper connection      */
+comment|/**    * Close Zookeeper connection    */
 specifier|public
 name|void
 name|close
@@ -557,7 +557,7 @@ name|table
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* @param table     /* @param families     /* @param keepAlive     /* @return     /* @throws IOException      * @see org.apache.hcatalog.hbase.snapshot.RevisionManager#beginWriteTransaction(java.lang.String, java.util.List, long)      */
+comment|/* @param table   /* @param families   /* @param keepAlive   /* @return   /* @throws IOException    * @see org.apache.hcatalog.hbase.snapshot.RevisionManager#beginWriteTransaction(java.lang.String, java.util.List, long)    */
 specifier|public
 name|Transaction
 name|beginWriteTransaction
@@ -836,7 +836,7 @@ return|return
 name|transaction
 return|;
 block|}
-comment|/* @param table The table name.     /* @param families The column families involved in the transaction.     /* @return transaction The transaction which was started.     /* @throws IOException      * @see org.apache.hcatalog.hbase.snapshot.RevisionManager#beginWriteTransaction(java.lang.String, java.util.List)      */
+comment|/* @param table The table name.   /* @param families The column families involved in the transaction.   /* @return transaction The transaction which was started.   /* @throws IOException    * @see org.apache.hcatalog.hbase.snapshot.RevisionManager#beginWriteTransaction(java.lang.String, java.util.List)    */
 specifier|public
 name|Transaction
 name|beginWriteTransaction
@@ -865,7 +865,7 @@ literal|1
 argument_list|)
 return|;
 block|}
-comment|/**      * This method commits a write transaction.      * @param transaction The revision information associated with transaction.      * @throws java.io.IOException      */
+comment|/**    * This method commits a write transaction.    * @param transaction The revision information associated with transaction.    * @throws java.io.IOException    */
 specifier|public
 name|void
 name|commitWriteTransaction
@@ -1080,7 +1080,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * This method aborts a write transaction.      * @param transaction      * @throws java.io.IOException      */
+comment|/**    * This method aborts a write transaction.    * @param transaction    * @throws java.io.IOException    */
 specifier|public
 name|void
 name|abortWriteTransaction
@@ -1323,7 +1323,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* @param transaction    /* @throws IOException     * @see org.apache.hcatalog.hbase.snapshot.RevsionManager#keepAlive(org.apache.hcatalog.hbase.snapshot.Transaction)     */
+comment|/* @param transaction    /* @throws IOException   * @see org.apache.hcatalog.hbase.snapshot.RevsionManager#keepAlive(org.apache.hcatalog.hbase.snapshot.Transaction)   */
 specifier|public
 name|void
 name|keepAlive
@@ -1531,7 +1531,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/* This method allows the user to create latest snapshot of a     /* table.     /* @param tableName The table whose snapshot is being created.     /* @return TableSnapshot An instance of TableSnaphot     /* @throws IOException      * @see org.apache.hcatalog.hbase.snapshot.RevsionManager#createSnapshot(java.lang.String)      */
+comment|/* This method allows the user to create latest snapshot of a   /* table.   /* @param tableName The table whose snapshot is being created.   /* @return TableSnapshot An instance of TableSnaphot   /* @throws IOException    * @see org.apache.hcatalog.hbase.snapshot.RevsionManager#createSnapshot(java.lang.String)    */
 specifier|public
 name|TableSnapshot
 name|createSnapshot
@@ -1709,7 +1709,7 @@ return|return
 name|snapshot
 return|;
 block|}
-comment|/* This method allows the user to create snapshot of a     /* table with a given revision number.     /* @param tableName     /* @param revision     /* @return TableSnapshot     /* @throws IOException      * @see org.apache.hcatalog.hbase.snapshot.RevsionManager#createSnapshot(java.lang.String, long)      */
+comment|/* This method allows the user to create snapshot of a   /* table with a given revision number.   /* @param tableName   /* @param revision   /* @return TableSnapshot   /* @throws IOException    * @see org.apache.hcatalog.hbase.snapshot.RevsionManager#createSnapshot(java.lang.String, long)    */
 specifier|public
 name|TableSnapshot
 name|createSnapshot
@@ -1813,7 +1813,7 @@ name|revision
 argument_list|)
 return|;
 block|}
-comment|/**      * Get the list of in-progress Transactions for a column family      * @param table the table name      * @param columnFamily the column family name      * @return a list of in-progress WriteTransactions      * @throws java.io.IOException      */
+comment|/**    * Get the list of in-progress Transactions for a column family    * @param table the table name    * @param columnFamily the column family name    * @return a list of in-progress WriteTransactions    * @throws java.io.IOException    */
 name|List
 argument_list|<
 name|FamilyRevision
@@ -2116,28 +2116,28 @@ return|return
 name|lockPath
 return|;
 block|}
-comment|/*      * This class is a listener class for the locks used in revision management.      * TBD: Use the following class to signal that that the lock is actually      * been granted.      */
+comment|/*    * This class is a listener class for the locks used in revision management.    * TBD: Use the following class to signal that that the lock is actually    * been granted.    */
 class|class
 name|RMLockListener
 implements|implements
 name|LockListener
 block|{
-comment|/*          * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockAcquired()          */
+comment|/*      * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockAcquired()      */
 annotation|@
 name|Override
 specifier|public
 name|void
 name|lockAcquired
 parameter_list|()
-block|{          }
-comment|/*          * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockReleased()          */
+block|{      }
+comment|/*      * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockReleased()      */
 annotation|@
 name|Override
 specifier|public
 name|void
 name|lockReleased
 parameter_list|()
-block|{          }
+block|{      }
 block|}
 block|}
 end_class

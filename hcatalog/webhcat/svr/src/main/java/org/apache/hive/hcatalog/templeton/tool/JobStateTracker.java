@@ -198,7 +198,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**      * Constructor for a new node -- takes the jobid of an existing job      *      */
+comment|/**    * Constructor for a new node -- takes the jobid of an existing job    *    */
 specifier|public
 name|JobStateTracker
 parameter_list|(
@@ -243,7 +243,7 @@ operator|=
 name|job_trackingpath
 expr_stmt|;
 block|}
-comment|/**      * Create the parent znode for this job state.      */
+comment|/**    * Create the parent znode for this job state.    */
 specifier|public
 name|void
 name|create
@@ -301,7 +301,7 @@ operator|.
 name|NodeExistsException
 name|e
 parameter_list|)
-block|{             }
+block|{       }
 catch|catch
 parameter_list|(
 name|Exception
@@ -405,7 +405,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Get the jobid for this tracking node      * @throws IOException      */
+comment|/**    * Get the jobid for this tracking node    * @throws IOException    */
 specifier|public
 name|String
 name|getJobID
@@ -471,7 +471,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Make a ZK path to a new tracking node      */
+comment|/**    * Make a ZK path to a new tracking node    */
 specifier|public
 name|String
 name|makeTrackingZnode
@@ -483,7 +483,7 @@ operator|+
 literal|"/"
 return|;
 block|}
-comment|/**      * Make a ZK path to an existing tracking node      */
+comment|/**    * Make a ZK path to an existing tracking node    */
 specifier|public
 name|String
 name|makeTrackingJobZnode
@@ -500,7 +500,7 @@ operator|+
 name|nodename
 return|;
 block|}
-comment|/*      * Get the list of tracking jobs.  These can be used to determine which jobs have      * expired.      */
+comment|/*    * Get the list of tracking jobs.  These can be used to determine which jobs have    * expired.    */
 specifier|public
 specifier|static
 name|List

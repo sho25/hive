@@ -648,7 +648,7 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * A utility method to get the size of inputs. This is accomplished by summing the      * size of all input paths on supported FileSystems. Locations whose size cannot be      * determined are ignored. Note non-FileSystem and unpartitioned locations will not      * report their input size by default.      */
+comment|/**    * A utility method to get the size of inputs. This is accomplished by summing the    * size of all input paths on supported FileSystems. Locations whose size cannot be    * determined are ignored. Note non-FileSystem and unpartitioned locations will not    * report their input size by default.    */
 specifier|protected
 specifier|static
 name|long

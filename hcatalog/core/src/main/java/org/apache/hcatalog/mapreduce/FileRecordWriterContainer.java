@@ -519,7 +519,7 @@ specifier|private
 name|TaskAttemptContext
 name|context
 decl_stmt|;
-comment|/**      * @param baseWriter RecordWriter to contain      * @param context current TaskAttemptContext      * @throws IOException      * @throws InterruptedException      */
+comment|/**    * @param baseWriter RecordWriter to contain    * @param context current TaskAttemptContext    * @throws IOException    * @throws InterruptedException    */
 specifier|public
 name|FileRecordWriterContainer
 parameter_list|(
@@ -877,7 +877,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**      * @return the storagehandler      */
+comment|/**    * @return the storagehandler    */
 specifier|public
 name|HCatStorageHandler
 name|getStorageHandler

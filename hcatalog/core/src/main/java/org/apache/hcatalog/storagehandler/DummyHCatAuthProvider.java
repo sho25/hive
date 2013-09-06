@@ -217,8 +217,8 @@ parameter_list|(
 name|Configuration
 name|conf
 parameter_list|)
-block|{     }
-comment|/*     * (non-Javadoc)     *     * @see     * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider     * #init(org.apache.hadoop.conf.Configuration)     */
+block|{   }
+comment|/*   * (non-Javadoc)   *   * @see   * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider   * #init(org.apache.hadoop.conf.Configuration)   */
 annotation|@
 name|Override
 specifier|public
@@ -230,7 +230,7 @@ name|conf
 parameter_list|)
 throws|throws
 name|HiveException
-block|{     }
+block|{   }
 annotation|@
 name|Override
 specifier|public
@@ -251,8 +251,8 @@ parameter_list|(
 name|HiveAuthenticationProvider
 name|authenticator
 parameter_list|)
-block|{     }
-comment|/*     * (non-Javadoc)     *     * @see     * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider     * #authorize(org.apache.hadoop.hive.ql.security.authorization.Privilege[],     * org.apache.hadoop.hive.ql.security.authorization.Privilege[])     */
+block|{   }
+comment|/*   * (non-Javadoc)   *   * @see   * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider   * #authorize(org.apache.hadoop.hive.ql.security.authorization.Privilege[],   * org.apache.hadoop.hive.ql.security.authorization.Privilege[])   */
 annotation|@
 name|Override
 specifier|public
@@ -271,8 +271,8 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{     }
-comment|/*     * (non-Javadoc)     *     * @see     * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider     * #authorize(org.apache.hadoop.hive.metastore.api.Database,     * org.apache.hadoop.hive.ql.security.authorization.Privilege[],     * org.apache.hadoop.hive.ql.security.authorization.Privilege[])     */
+block|{   }
+comment|/*   * (non-Javadoc)   *   * @see   * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider   * #authorize(org.apache.hadoop.hive.metastore.api.Database,   * org.apache.hadoop.hive.ql.security.authorization.Privilege[],   * org.apache.hadoop.hive.ql.security.authorization.Privilege[])   */
 annotation|@
 name|Override
 specifier|public
@@ -294,8 +294,8 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{     }
-comment|/*     * (non-Javadoc)     *     * @see     * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider     * #authorize(org.apache.hadoop.hive.ql.metadata.Table,     * org.apache.hadoop.hive.ql.security.authorization.Privilege[],     * org.apache.hadoop.hive.ql.security.authorization.Privilege[])     */
+block|{   }
+comment|/*   * (non-Javadoc)   *   * @see   * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider   * #authorize(org.apache.hadoop.hive.ql.metadata.Table,   * org.apache.hadoop.hive.ql.security.authorization.Privilege[],   * org.apache.hadoop.hive.ql.security.authorization.Privilege[])   */
 annotation|@
 name|Override
 specifier|public
@@ -317,8 +317,8 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{     }
-comment|/*     * (non-Javadoc)     *     * @see     * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider     * #authorize(org.apache.hadoop.hive.ql.metadata.Partition,     * org.apache.hadoop.hive.ql.security.authorization.Privilege[],     * org.apache.hadoop.hive.ql.security.authorization.Privilege[])     */
+block|{   }
+comment|/*   * (non-Javadoc)   *   * @see   * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider   * #authorize(org.apache.hadoop.hive.ql.metadata.Partition,   * org.apache.hadoop.hive.ql.security.authorization.Privilege[],   * org.apache.hadoop.hive.ql.security.authorization.Privilege[])   */
 annotation|@
 name|Override
 specifier|public
@@ -340,8 +340,8 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{     }
-comment|/*     * (non-Javadoc)     *     * @see     * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider     * #authorize(org.apache.hadoop.hive.ql.metadata.Table,     * org.apache.hadoop.hive.ql.metadata.Partition, java.util.List,     * org.apache.hadoop.hive.ql.security.authorization.Privilege[],     * org.apache.hadoop.hive.ql.security.authorization.Privilege[])     */
+block|{   }
+comment|/*   * (non-Javadoc)   *   * @see   * org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider   * #authorize(org.apache.hadoop.hive.ql.metadata.Table,   * org.apache.hadoop.hive.ql.metadata.Partition, java.util.List,   * org.apache.hadoop.hive.ql.security.authorization.Privilege[],   * org.apache.hadoop.hive.ql.security.authorization.Privilege[])   */
 annotation|@
 name|Override
 specifier|public
@@ -372,7 +372,7 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{     }
+block|{   }
 block|}
 end_class
 

@@ -908,7 +908,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 comment|//can fail with NoSuchObjectException
 name|Table
 name|tbl
@@ -1397,7 +1397,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**      * Run a local map reduce job to load data from in memory records to an HCatalog Table      * @param partitionValues      * @param partitionColumns      * @param records data to be written to HCatalog table      * @param writeCount      * @param assertWrite      * @param asSingleMapTask      * @return      * @throws Exception      */
+comment|/**    * Run a local map reduce job to load data from in memory records to an HCatalog Table    * @param partitionValues    * @param partitionColumns    * @param records data to be written to HCatalog table    * @param writeCount    * @param assertWrite    * @param asSingleMapTask    * @return    * @throws Exception    */
 name|Job
 name|runMRCreate
 parameter_list|(
@@ -1802,7 +1802,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**      * Run a local map reduce job to read records from HCatalog table and verify if the count is as expected      * @param readCount      * @param filter      * @return      * @throws Exception      */
+comment|/**    * Run a local map reduce job to read records from HCatalog table and verify if the count is as expected    * @param readCount    * @param filter    * @return    * @throws Exception    */
 name|List
 argument_list|<
 name|HCatRecord

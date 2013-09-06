@@ -59,14 +59,14 @@ name|ADD_PARTITION
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Getter for name of table (where partitions are added).      * @return Table-name (String).      */
+comment|/**    * Getter for name of table (where partitions are added).    * @return Table-name (String).    */
 specifier|public
 specifier|abstract
 name|String
 name|getTable
 parameter_list|()
 function_decl|;
-comment|/**      * Getter for list of partitions added.      * @return List of maps, where each map identifies values for each partition-key, for every added partition.      */
+comment|/**    * Getter for list of partitions added.    * @return List of maps, where each map identifies values for each partition-key, for every added partition.    */
 specifier|public
 specifier|abstract
 name|List

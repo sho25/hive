@@ -288,7 +288,7 @@ name|setUpComplete
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * Create an input sequence file with 100 records; every 10th record is bad.      * Load this table into Hive.      */
+comment|/**    * Create an input sequence file with 100 records; every 10th record is bad.    * Load this table into Hive.    */
 annotation|@
 name|Before
 annotation|@

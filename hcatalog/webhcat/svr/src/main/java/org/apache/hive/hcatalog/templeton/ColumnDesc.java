@@ -60,7 +60,7 @@ specifier|public
 name|ColumnDesc
 parameter_list|()
 block|{}
-comment|/**      * Create a new ColumnDesc      */
+comment|/**    * Create a new ColumnDesc    */
 specifier|public
 name|ColumnDesc
 parameter_list|(

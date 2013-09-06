@@ -195,7 +195,7 @@ specifier|final
 name|ObjectInspector
 name|hcatRecordOI
 decl_stmt|;
-comment|/**      * @param context current JobContext      * @param baseRecordWriter RecordWriter to contain      * @throws IOException      * @throws InterruptedException      */
+comment|/**    * @param context current JobContext    * @param baseRecordWriter RecordWriter to contain    * @throws IOException    * @throws InterruptedException    */
 specifier|public
 name|DefaultRecordWriterContainer
 parameter_list|(

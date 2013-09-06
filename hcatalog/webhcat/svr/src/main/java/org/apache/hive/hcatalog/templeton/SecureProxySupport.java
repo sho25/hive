@@ -312,7 +312,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**      * The file where we store the auth token      */
+comment|/**    * The file where we store the auth token    */
 specifier|public
 name|Path
 name|getTokenPath
@@ -324,7 +324,7 @@ name|tokenPath
 operator|)
 return|;
 block|}
-comment|/**      * The token to pass to hcat.      */
+comment|/**    * The token to pass to hcat.    */
 specifier|public
 name|String
 name|getHcatServiceStr
@@ -336,7 +336,7 @@ name|HCAT_SERVICE
 operator|)
 return|;
 block|}
-comment|/**      * Create the delegation token.      */
+comment|/**    * Create the delegation token.    */
 specifier|public
 name|Path
 name|open
@@ -472,7 +472,7 @@ return|return
 name|tokenPath
 return|;
 block|}
-comment|/**      * Cleanup      */
+comment|/**    * Cleanup    */
 specifier|public
 name|void
 name|close
@@ -503,7 +503,7 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Add Hadoop env variables.      */
+comment|/**    * Add Hadoop env variables.    */
 specifier|public
 name|void
 name|addEnv
@@ -542,7 +542,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Add hcat args.      */
+comment|/**    * Add hcat args.    */
 specifier|public
 name|void
 name|addArgs

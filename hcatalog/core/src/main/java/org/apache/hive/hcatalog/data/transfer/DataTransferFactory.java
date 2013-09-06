@@ -146,7 +146,7 @@ specifier|public
 class|class
 name|DataTransferFactory
 block|{
-comment|/**      * This should be called once from master node to obtain an instance of      * {@link HCatReader}.      *      * @param re      *          ReadEntity built using {@link ReadEntity.Builder}      * @param config      *          any configuration which master node wants to pass to HCatalog      * @return {@link HCatReader}      */
+comment|/**    * This should be called once from master node to obtain an instance of    * {@link HCatReader}.    *    * @param re    *          ReadEntity built using {@link ReadEntity.Builder}    * @param config    *          any configuration which master node wants to pass to HCatalog    * @return {@link HCatReader}    */
 specifier|public
 specifier|static
 name|HCatReader
@@ -178,7 +178,7 @@ name|config
 argument_list|)
 return|;
 block|}
-comment|/**      * This should only be called once from every slave node to obtain an instance      * of {@link HCatReader}.      *      * @param split      *          input split obtained at master node      * @param config      *          configuration obtained at master node      * @return {@link HCatReader}      */
+comment|/**    * This should only be called once from every slave node to obtain an instance    * of {@link HCatReader}.    *    * @param split    *          input split obtained at master node    * @param config    *          configuration obtained at master node    * @return {@link HCatReader}    */
 specifier|public
 specifier|static
 name|HCatReader
@@ -208,7 +208,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * This should only be called once from every slave node to obtain an instance      * of {@link HCatReader}. This should be called if an external system has some      * state to provide to HCatalog.      *      * @param split      *          input split obtained at master node      * @param config      *          configuration obtained at master node      * @param sp      *          {@link StateProvider}      * @return {@link HCatReader}      */
+comment|/**    * This should only be called once from every slave node to obtain an instance    * of {@link HCatReader}. This should be called if an external system has some    * state to provide to HCatalog.    *    * @param split    *          input split obtained at master node    * @param config    *          configuration obtained at master node    * @param sp    *          {@link StateProvider}    * @return {@link HCatReader}    */
 specifier|public
 specifier|static
 name|HCatReader
@@ -239,7 +239,7 @@ name|sp
 argument_list|)
 return|;
 block|}
-comment|/**      * This should be called at master node to obtain an instance of      * {@link HCatWriter}.      *      * @param we      *          WriteEntity built using {@link WriteEntity.Builder}      * @param config      *          any configuration which master wants to pass to HCatalog      * @return {@link HCatWriter}      */
+comment|/**    * This should be called at master node to obtain an instance of    * {@link HCatWriter}.    *    * @param we    *          WriteEntity built using {@link WriteEntity.Builder}    * @param config    *          any configuration which master wants to pass to HCatalog    * @return {@link HCatWriter}    */
 specifier|public
 specifier|static
 name|HCatWriter
@@ -271,7 +271,7 @@ name|config
 argument_list|)
 return|;
 block|}
-comment|/**      * This should be called at slave nodes to obtain an instance of      * {@link HCatWriter}.      *      * @param cntxt      *          {@link WriterContext} obtained at master node      * @return {@link HCatWriter}      */
+comment|/**    * This should be called at slave nodes to obtain an instance of    * {@link HCatWriter}.    *    * @param cntxt    *          {@link WriterContext} obtained at master node    * @return {@link HCatWriter}    */
 specifier|public
 specifier|static
 name|HCatWriter
@@ -295,7 +295,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * This should be called at slave nodes to obtain an instance of      * {@link HCatWriter}. If an external system has some mechanism for providing      * state to HCatalog, this constructor can be used.      *      * @param cntxt      *          {@link WriterContext} obtained at master node      * @param sp      *          {@link StateProvider}      * @return {@link HCatWriter}      */
+comment|/**    * This should be called at slave nodes to obtain an instance of    * {@link HCatWriter}. If an external system has some mechanism for providing    * state to HCatalog, this constructor can be used.    *    * @param cntxt    *          {@link WriterContext} obtained at master node    * @param sp    *          {@link StateProvider}    * @return {@link HCatWriter}    */
 specifier|public
 specifier|static
 name|HCatWriter

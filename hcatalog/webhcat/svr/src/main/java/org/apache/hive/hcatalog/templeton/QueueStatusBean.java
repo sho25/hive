@@ -121,8 +121,8 @@ decl_stmt|;
 specifier|public
 name|QueueStatusBean
 parameter_list|()
-block|{     }
-comment|/**      * Create a new QueueStatusBean      *      * @param state      store job state      * @param status     job status      * @param profile    job profile      */
+block|{   }
+comment|/**    * Create a new QueueStatusBean    *    * @param state      store job state    * @param status     job status    * @param profile    job profile    */
 specifier|public
 name|QueueStatusBean
 parameter_list|(

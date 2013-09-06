@@ -147,7 +147,7 @@ comment|/** the table info associated with this partition */
 name|HCatTableInfo
 name|tableInfo
 decl_stmt|;
-comment|/**      * Instantiates a new hcat partition info.      * @param partitionSchema the partition schema      * @param storageHandler the storage handler      * @param location the location      * @param hcatProperties hcat-specific properties at the partition      * @param jobProperties the job properties      * @param tableInfo the table information      */
+comment|/**    * Instantiates a new hcat partition info.    * @param partitionSchema the partition schema    * @param storageHandler the storage handler    * @param location the location    * @param hcatProperties hcat-specific properties at the partition    * @param jobProperties the job properties    * @param tableInfo the table information    */
 specifier|public
 name|PartInfo
 parameter_list|(
@@ -254,7 +254,7 @@ name|getName
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Gets the value of partitionSchema.      * @return the partitionSchema      */
+comment|/**    * Gets the value of partitionSchema.    * @return the partitionSchema    */
 specifier|public
 name|HCatSchema
 name|getPartitionSchema
@@ -264,7 +264,7 @@ return|return
 name|partitionSchema
 return|;
 block|}
-comment|/**      * @return the storage handler class name      */
+comment|/**    * @return the storage handler class name    */
 specifier|public
 name|String
 name|getStorageHandlerClassName
@@ -274,7 +274,7 @@ return|return
 name|storageHandlerClassName
 return|;
 block|}
-comment|/**      * @return the inputFormatClassName      */
+comment|/**    * @return the inputFormatClassName    */
 specifier|public
 name|String
 name|getInputFormatClassName
@@ -284,7 +284,7 @@ return|return
 name|inputFormatClassName
 return|;
 block|}
-comment|/**      * @return the outputFormatClassName      */
+comment|/**    * @return the outputFormatClassName    */
 specifier|public
 name|String
 name|getOutputFormatClassName
@@ -294,7 +294,7 @@ return|return
 name|outputFormatClassName
 return|;
 block|}
-comment|/**      * @return the serdeClassName      */
+comment|/**    * @return the serdeClassName    */
 specifier|public
 name|String
 name|getSerdeClassName
@@ -304,7 +304,7 @@ return|return
 name|serdeClassName
 return|;
 block|}
-comment|/**      * Gets the input storage handler properties.      * @return HCat-specific properties set at the partition      */
+comment|/**    * Gets the input storage handler properties.    * @return HCat-specific properties set at the partition    */
 specifier|public
 name|Properties
 name|getInputStorageHandlerProperties
@@ -314,7 +314,7 @@ return|return
 name|hcatProperties
 return|;
 block|}
-comment|/**      * Gets the value of location.      * @return the location      */
+comment|/**    * Gets the value of location.    * @return the location    */
 specifier|public
 name|String
 name|getLocation
@@ -324,7 +324,7 @@ return|return
 name|location
 return|;
 block|}
-comment|/**      * Sets the partition values.      * @param partitionValues the new partition values      */
+comment|/**    * Sets the partition values.    * @param partitionValues the new partition values    */
 specifier|public
 name|void
 name|setPartitionValues
@@ -345,7 +345,7 @@ operator|=
 name|partitionValues
 expr_stmt|;
 block|}
-comment|/**      * Gets the partition values.      * @return the partition values      */
+comment|/**    * Gets the partition values.    * @return the partition values    */
 specifier|public
 name|Map
 argument_list|<
@@ -360,7 +360,7 @@ return|return
 name|partitionValues
 return|;
 block|}
-comment|/**      * Gets the job properties.      * @return a map of the job properties      */
+comment|/**    * Gets the job properties.    * @return a map of the job properties    */
 specifier|public
 name|Map
 argument_list|<
@@ -375,7 +375,7 @@ return|return
 name|jobProperties
 return|;
 block|}
-comment|/**      * Gets the HCatalog table information.      * @return the table information      */
+comment|/**    * Gets the HCatalog table information.    * @return the table information    */
 specifier|public
 name|HCatTableInfo
 name|getTableInfo

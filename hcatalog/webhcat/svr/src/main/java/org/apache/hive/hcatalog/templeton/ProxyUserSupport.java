@@ -781,7 +781,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Verifies a that proxyUser is making the request from authorized host and that doAs user      * belongs to one of the groups for which proxyUser is allowed to impersonate users.      *      * @param proxyUser user name of the proxy (logged in) user.      * @param proxyHost host the proxy user is making the request from.      * @param doAsUser user the proxy user is impersonating.      * @throws NotAuthorizedException thrown if the user is not allowed to perform the proxyuser request.      */
+comment|/**    * Verifies a that proxyUser is making the request from authorized host and that doAs user    * belongs to one of the groups for which proxyUser is allowed to impersonate users.    *    * @param proxyUser user name of the proxy (logged in) user.    * @param proxyHost host the proxy user is making the request from.    * @param doAsUser user the proxy user is impersonating.    * @throws NotAuthorizedException thrown if the user is not allowed to perform the proxyuser request.    */
 specifier|static
 name|void
 name|validate
@@ -1212,7 +1212,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**      * Check that a string is not null and not empty. If null or empty       * throws an IllegalArgumentException.      *      * @param str value.      * @param name parameter name for the exception message.      * @return the given value.      */
+comment|/**    * Check that a string is not null and not empty. If null or empty     * throws an IllegalArgumentException.    *    * @param str value.    * @param name parameter name for the exception message.    * @return the given value.    */
 specifier|private
 specifier|static
 name|String
@@ -1236,7 +1236,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**      * Check that a string is not null and not empty. If null or empty       * throws an IllegalArgumentException.      *      * @param str value.      * @param name parameter name for the exception message.      * @param info additional information to be printed with the exception message      * @return the given value.      */
+comment|/**    * Check that a string is not null and not empty. If null or empty     * throws an IllegalArgumentException.    *    * @param str value.    * @param name parameter name for the exception message.    * @param info additional information to be printed with the exception message    * @return the given value.    */
 specifier|private
 specifier|static
 name|String

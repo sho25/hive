@@ -344,7 +344,7 @@ name|started
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * create a cluster instance using a builder which will expose configurable options      * @param workDir working directory ManyMiniCluster will use for all of it's *Minicluster instances      * @return a Builder instance      */
+comment|/**    * create a cluster instance using a builder which will expose configurable options    * @param workDir working directory ManyMiniCluster will use for all of it's *Minicluster instances    * @return a Builder instance    */
 specifier|public
 specifier|static
 name|Builder
@@ -680,7 +680,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**      * @return Configuration of mini HBase cluster      */
+comment|/**    * @return Configuration of mini HBase cluster    */
 specifier|public
 name|Configuration
 name|getHBaseConf
@@ -695,7 +695,7 @@ name|hbaseConf
 argument_list|)
 return|;
 block|}
-comment|/**      * @return Configuration of mini MR cluster      */
+comment|/**    * @return Configuration of mini MR cluster    */
 specifier|public
 name|Configuration
 name|getJobConf
@@ -709,7 +709,7 @@ name|jobConf
 argument_list|)
 return|;
 block|}
-comment|/**      * @return Configuration of Hive Metastore, this is a standalone not a daemon      */
+comment|/**    * @return Configuration of Hive Metastore, this is a standalone not a daemon    */
 specifier|public
 name|HiveConf
 name|getHiveConf
@@ -723,7 +723,7 @@ name|hiveConf
 argument_list|)
 return|;
 block|}
-comment|/**      * @return Filesystem used by MiniMRCluster and MiniHBaseCluster      */
+comment|/**    * @return Filesystem used by MiniMRCluster and MiniHBaseCluster    */
 specifier|public
 name|FileSystem
 name|getFileSystem
@@ -757,7 +757,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * @return Metastore client instance      */
+comment|/**    * @return Metastore client instance    */
 specifier|public
 name|HiveMetaStoreClient
 name|getHiveMetaStoreClient

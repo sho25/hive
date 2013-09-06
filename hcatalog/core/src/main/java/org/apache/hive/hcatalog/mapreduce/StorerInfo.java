@@ -78,7 +78,7 @@ specifier|private
 name|String
 name|storageHandlerClass
 decl_stmt|;
-comment|/**      * Initialize the storer information.      * @param ifClass the input format class      * @param ofClass the output format class      * @param serdeClass the SerDe class      * @param storageHandlerClass the storage handler class      * @param properties the properties for the storage handler      */
+comment|/**    * Initialize the storer information.    * @param ifClass the input format class    * @param ofClass the output format class    * @param serdeClass the SerDe class    * @param storageHandlerClass the storage handler class    * @param properties the properties for the storage handler    */
 specifier|public
 name|StorerInfo
 parameter_list|(
@@ -132,7 +132,7 @@ operator|=
 name|properties
 expr_stmt|;
 block|}
-comment|/**      * @return the input format class      */
+comment|/**    * @return the input format class    */
 specifier|public
 name|String
 name|getIfClass
@@ -142,7 +142,7 @@ return|return
 name|ifClass
 return|;
 block|}
-comment|/**      * @param ifClass the input format class      */
+comment|/**    * @param ifClass the input format class    */
 specifier|public
 name|void
 name|setIfClass
@@ -158,7 +158,7 @@ operator|=
 name|ifClass
 expr_stmt|;
 block|}
-comment|/**      * @return the output format class      */
+comment|/**    * @return the output format class    */
 specifier|public
 name|String
 name|getOfClass
@@ -168,7 +168,7 @@ return|return
 name|ofClass
 return|;
 block|}
-comment|/**      * @return the serdeClass      */
+comment|/**    * @return the serdeClass    */
 specifier|public
 name|String
 name|getSerdeClass
@@ -178,7 +178,7 @@ return|return
 name|serdeClass
 return|;
 block|}
-comment|/**      * @return the storageHandlerClass      */
+comment|/**    * @return the storageHandlerClass    */
 specifier|public
 name|String
 name|getStorageHandlerClass
@@ -188,7 +188,7 @@ return|return
 name|storageHandlerClass
 return|;
 block|}
-comment|/**      * @return the storer properties      */
+comment|/**    * @return the storer properties    */
 specifier|public
 name|Properties
 name|getProperties
@@ -198,7 +198,7 @@ return|return
 name|properties
 return|;
 block|}
-comment|/**      * @param properties the storer properties to set       */
+comment|/**    * @param properties the storer properties to set     */
 specifier|public
 name|void
 name|setProperties

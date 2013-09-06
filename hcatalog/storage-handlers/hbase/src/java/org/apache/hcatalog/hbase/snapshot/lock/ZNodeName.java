@@ -397,7 +397,7 @@ return|return
 name|answer
 return|;
 block|}
-comment|/**      * Returns the name of the znode      */
+comment|/**    * Returns the name of the znode    */
 specifier|public
 name|String
 name|getName
@@ -407,7 +407,7 @@ return|return
 name|name
 return|;
 block|}
-comment|/**      * Returns the sequence number      */
+comment|/**    * Returns the sequence number    */
 specifier|public
 name|int
 name|getZNodeName
@@ -417,7 +417,7 @@ return|return
 name|sequence
 return|;
 block|}
-comment|/**      * Returns the text prefix before the sequence number      */
+comment|/**    * Returns the text prefix before the sequence number    */
 specifier|public
 name|String
 name|getPrefix

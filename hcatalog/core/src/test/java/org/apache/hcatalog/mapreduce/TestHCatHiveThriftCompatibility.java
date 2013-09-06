@@ -410,7 +410,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**      *  Create a table with no explicit schema and ensure its correctly      *  discovered from the thrift struct.      */
+comment|/**    *  Create a table with no explicit schema and ensure its correctly    *  discovered from the thrift struct.    */
 annotation|@
 name|Test
 specifier|public

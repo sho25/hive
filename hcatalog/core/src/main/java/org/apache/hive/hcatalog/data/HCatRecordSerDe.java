@@ -470,7 +470,7 @@ name|HCatRecordSerDe
 parameter_list|()
 throws|throws
 name|SerDeException
-block|{     }
+block|{   }
 specifier|private
 name|List
 argument_list|<
@@ -726,7 +726,7 @@ name|rowTypeInfo
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * The purpose of a deserialize method is to turn a data blob      * which is a writable representation of the data into an      * object that can then be parsed using the appropriate      * ObjectInspector. In this case, since HCatRecord is directly      * already the Writable object, there's no extra work to be done      * here. Most of the logic resides in the ObjectInspector to be      * able to return values from within the HCatRecord to hive when      * it wants it.      */
+comment|/**    * The purpose of a deserialize method is to turn a data blob    * which is a writable representation of the data into an    * object that can then be parsed using the appropriate    * ObjectInspector. In this case, since HCatRecord is directly    * already the Writable object, there's no extra work to be done    * here. Most of the logic resides in the ObjectInspector to be    * able to return values from within the HCatRecord to hive when    * it wants it.    */
 annotation|@
 name|Override
 specifier|public
@@ -770,7 +770,7 @@ operator|)
 name|data
 return|;
 block|}
-comment|/**      * The purpose of the serialize method is to turn an object-representation      * with a provided ObjectInspector into a Writable format, which      * the underlying layer can then use to write out.      *      * In this case, it means that Hive will call this method to convert      * an object with appropriate objectinspectors that it knows about,      * to write out a HCatRecord.      */
+comment|/**    * The purpose of the serialize method is to turn an object-representation    * with a provided ObjectInspector into a Writable format, which    * the underlying layer can then use to write out.    *    * In this case, it means that Hive will call this method to convert    * an object with appropriate objectinspectors that it knows about,    * to write out a HCatRecord.    */
 annotation|@
 name|Override
 specifier|public
@@ -839,7 +839,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      * Return serialized HCatRecord from an underlying      * object-representation, and readable by an ObjectInspector      * @param obj : Underlying object-representation      * @param soi : StructObjectInspector      * @return HCatRecord      */
+comment|/**    * Return serialized HCatRecord from an underlying    * object-representation, and readable by an ObjectInspector    * @param obj : Underlying object-representation    * @param soi : StructObjectInspector    * @return HCatRecord    */
 specifier|private
 specifier|static
 name|List
@@ -986,7 +986,7 @@ return|return
 name|l
 return|;
 block|}
-comment|/**      * Return underlying Java Object from an object-representation      * that is readable by a provided ObjectInspector.      */
+comment|/**    * Return underlying Java Object from an object-representation    * that is readable by a provided ObjectInspector.    */
 specifier|public
 specifier|static
 name|Object
@@ -1137,7 +1137,7 @@ return|return
 name|res
 return|;
 block|}
-comment|/**      * Helper method to return underlying Java Map from      * an object-representation that is readable by a provided      * MapObjectInspector      */
+comment|/**    * Helper method to return underlying Java Map from    * an object-representation that is readable by a provided    * MapObjectInspector    */
 specifier|private
 specifier|static
 name|Map
@@ -1821,7 +1821,7 @@ return|return
 name|f
 return|;
 block|}
-comment|/**      * Return an object inspector that can read through the object      * that we return from deserialize(). To wit, that means we need      * to return an ObjectInspector that can read HCatRecord, given      * the type info for it during initialize(). This also means      * that this method cannot and should not be called before initialize()      */
+comment|/**    * Return an object inspector that can read through the object    * that we return from deserialize(). To wit, that means we need    * to return an ObjectInspector that can read HCatRecord, given    * the type info for it during initialize(). This also means    * that this method cannot and should not be called before initialize()    */
 annotation|@
 name|Override
 specifier|public

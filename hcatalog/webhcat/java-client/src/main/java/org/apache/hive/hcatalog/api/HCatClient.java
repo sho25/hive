@@ -145,7 +145,7 @@ name|HCAT_CLIENT_IMPL_CLASS
 init|=
 literal|"hcat.client.impl.class"
 decl_stmt|;
-comment|/**      * Creates an instance of HCatClient.      *      * @param conf An instance of configuration.      * @return An instance of HCatClient.      * @throws HCatException      */
+comment|/**    * Creates an instance of HCatClient.    *    * @param conf An instance of configuration.    * @return An instance of HCatClient.    * @throws HCatException    */
 specifier|public
 specifier|static
 name|HCatClient
@@ -298,7 +298,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Get all existing databases that match the given      * pattern. The matching occurs as per Java regular expressions      *      * @param pattern  java re pattern      * @return list of database names      * @throws HCatException      */
+comment|/**    * Get all existing databases that match the given    * pattern. The matching occurs as per Java regular expressions    *    * @param pattern  java re pattern    * @return list of database names    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|List
@@ -313,7 +313,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Gets the database.      *      * @param dbName The name of the database.      * @return An instance of HCatDatabaseInfo.      * @throws HCatException      */
+comment|/**    * Gets the database.    *    * @param dbName The name of the database.    * @return An instance of HCatDatabaseInfo.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|HCatDatabase
@@ -325,7 +325,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Creates the database.      *      * @param dbInfo An instance of HCatCreateDBDesc.      * @throws HCatException      */
+comment|/**    * Creates the database.    *    * @param dbInfo An instance of HCatCreateDBDesc.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -337,7 +337,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Drops a database.      *      * @param dbName The name of the database to delete.      * @param ifExists Hive returns an error if the database specified does not exist,      *                 unless ifExists is set to true.      * @param mode This is set to either "restrict" or "cascade". Restrict will      *             remove the schema if all the tables are empty. Cascade removes      *             everything including data and definitions.      * @throws HCatException      */
+comment|/**    * Drops a database.    *    * @param dbName The name of the database to delete.    * @param ifExists Hive returns an error if the database specified does not exist,    *                 unless ifExists is set to true.    * @param mode This is set to either "restrict" or "cascade". Restrict will    *             remove the schema if all the tables are empty. Cascade removes    *             everything including data and definitions.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -355,7 +355,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Returns all existing tables from the specified database which match the given      * pattern. The matching occurs as per Java regular expressions.      * @param dbName The name of the DB (to be searched)      * @param tablePattern The regex for the table-name      * @return list of table names      * @throws HCatException      */
+comment|/**    * Returns all existing tables from the specified database which match the given    * pattern. The matching occurs as per Java regular expressions.    * @param dbName The name of the DB (to be searched)    * @param tablePattern The regex for the table-name    * @return list of table names    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|List
@@ -373,7 +373,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Gets the table.      *      * @param dbName The name of the database.      * @param tableName The name of the table.      * @return An instance of HCatTableInfo.      * @throws HCatException      */
+comment|/**    * Gets the table.    *    * @param dbName The name of the database.    * @param tableName The name of the table.    * @return An instance of HCatTableInfo.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|HCatTable
@@ -388,7 +388,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Creates the table.      *      * @param createTableDesc An instance of HCatCreateTableDesc class.      * @throws HCatException      */
+comment|/**    * Creates the table.    *    * @param createTableDesc An instance of HCatCreateTableDesc class.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -400,7 +400,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Updates the Table's column schema to the specified definition.      *      * @param dbName The name of the database.      * @param tableName The name of the table.      * @param columnSchema The (new) definition of the column schema (i.e. list of fields).      *      */
+comment|/**    * Updates the Table's column schema to the specified definition.    *    * @param dbName The name of the database.    * @param tableName The name of the table.    * @param columnSchema The (new) definition of the column schema (i.e. list of fields).    *    */
 specifier|public
 specifier|abstract
 name|void
@@ -421,7 +421,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Creates the table like an existing table.      *      * @param dbName The name of the database.      * @param existingTblName The name of the existing table.      * @param newTableName The name of the new table.      * @param ifNotExists If true, then error related to already table existing is skipped.      * @param isExternal Set to "true", if table has be created at a different      *                   location other than default.      * @param location The location for the table.      * @throws HCatException      */
+comment|/**    * Creates the table like an existing table.    *    * @param dbName The name of the database.    * @param existingTblName The name of the existing table.    * @param newTableName The name of the new table.    * @param ifNotExists If true, then error related to already table existing is skipped.    * @param isExternal Set to "true", if table has be created at a different    *                   location other than default.    * @param location The location for the table.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -448,7 +448,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Drop table.      *      * @param dbName The name of the database.      * @param tableName The name of the table.      * @param ifExists Hive returns an error if the database specified does not exist,      *                 unless ifExists is set to true.      * @throws HCatException      */
+comment|/**    * Drop table.    *    * @param dbName The name of the database.    * @param tableName The name of the table.    * @param ifExists Hive returns an error if the database specified does not exist,    *                 unless ifExists is set to true.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -466,7 +466,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Renames a table.      *      * @param dbName The name of the database.      * @param oldName The name of the table to be renamed.      * @param newName The new name of the table.      * @throws HCatException      */
+comment|/**    * Renames a table.    *    * @param dbName The name of the database.    * @param oldName The name of the table to be renamed.    * @param newName The new name of the table.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -484,7 +484,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Gets all the partitions.      *      * @param dbName The name of the database.      * @param tblName The name of the table.      * @return A list of partitions.      * @throws HCatException      */
+comment|/**    * Gets all the partitions.    *    * @param dbName The name of the database.    * @param tblName The name of the table.    * @return A list of partitions.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|List
@@ -502,7 +502,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Gets all the partitions that match the specified (and possibly partial) partition specification.      * A partial partition-specification is one where not all partition-keys have associated values. For example,      * for a table ('myDb.myTable') with 2 partition keys (dt string, region string),      * if for each dt ('20120101', '20120102', etc.) there can exist 3 regions ('us', 'uk', 'in'), then,      *  1. Complete partition spec: getPartitions('myDb', 'myTable', {dt='20120101', region='us'}) would return 1 partition.      *  2. Partial  partition spec: getPartitions('myDb', 'myTable', {dt='20120101'}) would return all 3 partitions,      *                              with dt='20120101' (i.e. region = 'us', 'uk' and 'in').      * @param dbName The name of the database.      * @param tblName The name of the table.      * @param partitionSpec The partition specification. (Need not include all partition keys.)      * @return A list of partitions.      * @throws HCatException      */
+comment|/**    * Gets all the partitions that match the specified (and possibly partial) partition specification.    * A partial partition-specification is one where not all partition-keys have associated values. For example,    * for a table ('myDb.myTable') with 2 partition keys (dt string, region string),    * if for each dt ('20120101', '20120102', etc.) there can exist 3 regions ('us', 'uk', 'in'), then,    *  1. Complete partition spec: getPartitions('myDb', 'myTable', {dt='20120101', region='us'}) would return 1 partition.    *  2. Partial  partition spec: getPartitions('myDb', 'myTable', {dt='20120101'}) would return all 3 partitions,    *                              with dt='20120101' (i.e. region = 'us', 'uk' and 'in').    * @param dbName The name of the database.    * @param tblName The name of the table.    * @param partitionSpec The partition specification. (Need not include all partition keys.)    * @return A list of partitions.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|List
@@ -528,7 +528,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Gets the partition.      *      * @param dbName The database name.      * @param tableName The table name.      * @param partitionSpec The partition specification, {[col_name,value],[col_name2,value2]}. All partition-key-values      *                      must be specified.      * @return An instance of HCatPartitionInfo.      * @throws HCatException      */
+comment|/**    * Gets the partition.    *    * @param dbName The database name.    * @param tableName The table name.    * @param partitionSpec The partition specification, {[col_name,value],[col_name2,value2]}. All partition-key-values    *                      must be specified.    * @return An instance of HCatPartitionInfo.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|HCatPartition
@@ -551,7 +551,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Adds the partition.      *      * @param partInfo An instance of HCatAddPartitionDesc.      * @throws HCatException      */
+comment|/**    * Adds the partition.    *    * @param partInfo An instance of HCatAddPartitionDesc.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -563,7 +563,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Adds a list of partitions.      *      * @param partInfoList A list of HCatAddPartitionDesc.      * @return The number of partitions added.      * @throws HCatException      */
+comment|/**    * Adds a list of partitions.    *    * @param partInfoList A list of HCatAddPartitionDesc.    * @return The number of partitions added.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|int
@@ -578,7 +578,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Drops partition(s) that match the specified (and possibly partial) partition specification.      * A partial partition-specification is one where not all partition-keys have associated values. For example,      * for a table ('myDb.myTable') with 2 partition keys (dt string, region string),      * if for each dt ('20120101', '20120102', etc.) there can exist 3 regions ('us', 'uk', 'in'), then,      *  1. Complete partition spec: dropPartitions('myDb', 'myTable', {dt='20120101', region='us'}) would drop 1 partition.      *  2. Partial  partition spec: dropPartitions('myDb', 'myTable', {dt='20120101'}) would drop all 3 partitions,      *                              with dt='20120101' (i.e. region = 'us', 'uk' and 'in').      * @param dbName The database name.      * @param tableName The table name.      * @param partitionSpec The partition specification, {[col_name,value],[col_name2,value2]}.      * @param ifExists Hive returns an error if the partition specified does not exist, unless ifExists is set to true.      * @throws HCatException,ConnectionFailureException      */
+comment|/**    * Drops partition(s) that match the specified (and possibly partial) partition specification.    * A partial partition-specification is one where not all partition-keys have associated values. For example,    * for a table ('myDb.myTable') with 2 partition keys (dt string, region string),    * if for each dt ('20120101', '20120102', etc.) there can exist 3 regions ('us', 'uk', 'in'), then,    *  1. Complete partition spec: dropPartitions('myDb', 'myTable', {dt='20120101', region='us'}) would drop 1 partition.    *  2. Partial  partition spec: dropPartitions('myDb', 'myTable', {dt='20120101'}) would drop all 3 partitions,    *                              with dt='20120101' (i.e. region = 'us', 'uk' and 'in').    * @param dbName The database name.    * @param tableName The table name.    * @param partitionSpec The partition specification, {[col_name,value],[col_name2,value2]}.    * @param ifExists Hive returns an error if the partition specified does not exist, unless ifExists is set to true.    * @throws HCatException,ConnectionFailureException    */
 specifier|public
 specifier|abstract
 name|void
@@ -604,7 +604,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * List partitions by filter.      *      * @param dbName The database name.      * @param tblName The table name.      * @param filter The filter string,      *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can      *    be done only on string partition keys.      * @return list of partitions      * @throws HCatException      */
+comment|/**    * List partitions by filter.    *    * @param dbName The database name.    * @param tblName The table name.    * @param filter The filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return list of partitions    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|List
@@ -625,7 +625,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Mark partition for event.      *      * @param dbName The database name.      * @param tblName The table name.      * @param partKVs the key-values associated with the partition.      * @param eventType the event type      * @throws HCatException      */
+comment|/**    * Mark partition for event.    *    * @param dbName The database name.    * @param tblName The table name.    * @param partKVs the key-values associated with the partition.    * @param eventType the event type    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -651,7 +651,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Checks if a partition is marked for event.      *      * @param dbName the db name      * @param tblName the table name      * @param partKVs the key-values associated with the partition.      * @param eventType the event type      * @return true, if is partition marked for event      * @throws HCatException      */
+comment|/**    * Checks if a partition is marked for event.    *    * @param dbName the db name    * @param tblName the table name    * @param partKVs the key-values associated with the partition.    * @param eventType the event type    * @return true, if is partition marked for event    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|boolean
@@ -677,7 +677,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Gets the delegation token.      *      * @param owner the owner      * @param renewerKerberosPrincipalName the renewer kerberos principal name      * @return the delegation token      * @throws HCatException,ConnectionFailureException      */
+comment|/**    * Gets the delegation token.    *    * @param owner the owner    * @param renewerKerberosPrincipalName the renewer kerberos principal name    * @return the delegation token    * @throws HCatException,ConnectionFailureException    */
 specifier|public
 specifier|abstract
 name|String
@@ -692,7 +692,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Renew delegation token.      *      * @param tokenStrForm the token string      * @return the new expiration time      * @throws HCatException      */
+comment|/**    * Renew delegation token.    *    * @param tokenStrForm the token string    * @return the new expiration time    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|long
@@ -704,7 +704,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Cancel delegation token.      *      * @param tokenStrForm the token string      * @throws HCatException      */
+comment|/**    * Cancel delegation token.    *    * @param tokenStrForm the token string    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -716,7 +716,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Retrieve Message-bus topic for a table.      *      * @param dbName The name of the DB.      * @param tableName The name of the table.      * @return Topic-name for the message-bus on which messages will be sent for the specified table.      * By default, this is set to<db-name>.<table-name>. Returns null when not set.      */
+comment|/**    * Retrieve Message-bus topic for a table.    *    * @param dbName The name of the DB.    * @param tableName The name of the table.    * @return Topic-name for the message-bus on which messages will be sent for the specified table.    * By default, this is set to<db-name>.<table-name>. Returns null when not set.    */
 specifier|public
 specifier|abstract
 name|String
@@ -731,7 +731,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * Close the hcatalog client.      *      * @throws HCatException      */
+comment|/**    * Close the hcatalog client.    *    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void

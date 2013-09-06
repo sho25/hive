@@ -453,7 +453,7 @@ specifier|static
 name|boolean
 name|harRequested
 decl_stmt|;
-comment|/**      * @see org.apache.hive.hcatalog.mapreduce.HCatOutputFormat#setOutput(org.apache.hadoop.conf.Configuration, Credentials, OutputJobInfo)      */
+comment|/**    * @see org.apache.hive.hcatalog.mapreduce.HCatOutputFormat#setOutput(org.apache.hadoop.conf.Configuration, Credentials, OutputJobInfo)    */
 specifier|public
 specifier|static
 name|void
@@ -484,7 +484,7 @@ name|outputJobInfo
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Set the information about the output to write for the job. This queries the metadata server      * to find the StorageHandler to use for the table.  It throws an error if the      * partition is already published.      * @param conf the Configuration object      * @param credentials the Credentials object      * @param outputJobInfo the table output information for the job      * @throws IOException the exception in communicating with the metadata server      */
+comment|/**    * Set the information about the output to write for the job. This queries the metadata server    * to find the StorageHandler to use for the table.  It throws an error if the    * partition is already published.    * @param conf the Configuration object    * @param credentials the Credentials object    * @param outputJobInfo the table output information for the job    * @throws IOException the exception in communicating with the metadata server    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1217,7 +1217,7 @@ name|getLocation
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/*  Set the umask in conf such that files/dirs get created with table-dir             * permissions. Following three assumptions are made:             * 1. Actual files/dirs creation is done by RecordWriter of underlying             * output format. It is assumed that they use default permissions while creation.             * 2. Default Permissions = FsPermission.getDefault() = 777.             * 3. UMask is honored by underlying filesystem.             */
+comment|/*  Set the umask in conf such that files/dirs get created with table-dir       * permissions. Following three assumptions are made:       * 1. Actual files/dirs creation is done by RecordWriter of underlying       * output format. It is assumed that they use default permissions while creation.       * 2. Default Permissions = FsPermission.getDefault() = 777.       * 3. UMask is honored by underlying filesystem.       */
 name|FsPermission
 operator|.
 name|setUMask
@@ -1325,7 +1325,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * @see org.apache.hive.hcatalog.mapreduce.HCatOutputFormat#setSchema(org.apache.hadoop.conf.Configuration, org.apache.hive.hcatalog.data.schema.HCatSchema)      */
+comment|/**    * @see org.apache.hive.hcatalog.mapreduce.HCatOutputFormat#setSchema(org.apache.hadoop.conf.Configuration, org.apache.hive.hcatalog.data.schema.HCatSchema)    */
 specifier|public
 specifier|static
 name|void
@@ -1353,7 +1353,7 @@ name|schema
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Set the schema for the data being written out to the partition. The      * table schema is used by default for the partition if this is not called.      * @param conf the job Configuration object      * @param schema the schema for the data      * @throws IOException      */
+comment|/**    * Set the schema for the data being written out to the partition. The    * table schema is used by default for the partition if this is not called.    * @param conf the job Configuration object    * @param schema the schema for the data    * @throws IOException    */
 specifier|public
 specifier|static
 name|void
@@ -1417,7 +1417,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Get the record writer for the job. This uses the StorageHandler's default       * OutputFormat to get the record writer.      * @param context the information about the current task      * @return a RecordWriter to write the output for the job      * @throws IOException      * @throws InterruptedException      */
+comment|/**    * Get the record writer for the job. This uses the StorageHandler's default     * OutputFormat to get the record writer.    * @param context the information about the current task    * @return a RecordWriter to write the output for the job    * @throws IOException    * @throws InterruptedException    */
 annotation|@
 name|Override
 specifier|public
@@ -1452,7 +1452,7 @@ name|context
 argument_list|)
 return|;
 block|}
-comment|/**      * Get the output committer for this output format. This is responsible      * for ensuring the output is committed correctly.      * @param context the task context      * @return an output committer      * @throws IOException      * @throws InterruptedException      */
+comment|/**    * Get the output committer for this output format. This is responsible    * for ensuring the output is committed correctly.    * @param context the task context    * @return an output committer    * @throws IOException    * @throws InterruptedException    */
 annotation|@
 name|Override
 specifier|public

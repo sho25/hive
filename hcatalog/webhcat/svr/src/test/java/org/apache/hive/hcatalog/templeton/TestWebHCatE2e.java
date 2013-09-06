@@ -566,7 +566,7 @@ literal|"-listDataBases()"
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Check that we return correct status code when the URL doesn't map to any method      * in {@link Server}      */
+comment|/**    * Check that we return correct status code when the URL doesn't map to any method    * in {@link Server}    */
 annotation|@
 name|Test
 specifier|public
@@ -609,7 +609,7 @@ name|httpStatusCode
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * tries to drop table in a DB that doesn't exist      */
+comment|/**    * tries to drop table in a DB that doesn't exist    */
 annotation|@
 name|Ignore
 argument_list|(
@@ -681,7 +681,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * tries to drop table in a DB that doesn't exist      */
+comment|/**    * tries to drop table in a DB that doesn't exist    */
 annotation|@
 name|Ignore
 argument_list|(
@@ -768,7 +768,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * tries to drop table that doesn't exist (with ifExists=true)     */
+comment|/**    * tries to drop table that doesn't exist (with ifExists=true)   */
 annotation|@
 name|Ignore
 argument_list|(
@@ -1263,7 +1263,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * It's expected that Templeton returns a properly formatted JSON object when it      * encounters an error.  It should have {@code ERROR_CODE} element in it which      * should be the Hive canonical error msg code.      * @return the code or -1 if it cannot be found      */
+comment|/**    * It's expected that Templeton returns a properly formatted JSON object when it    * encounters an error.  It should have {@code ERROR_CODE} element in it which    * should be the Hive canonical error msg code.    * @return the code or -1 if it cannot be found    */
 specifier|private
 specifier|static
 name|int
@@ -1338,7 +1338,7 @@ return|return
 name|hiveRetCode
 return|;
 block|}
-comment|/**      * Encapsulates information from HTTP method call      */
+comment|/**    * Encapsulates information from HTTP method call    */
 specifier|private
 specifier|static
 class|class
@@ -1462,7 +1462,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**      * Does a basic HTTP GET and returns Http Status code + response body      * Will add the dummy user query string      */
+comment|/**    * Does a basic HTTP GET and returns Http Status code + response body    * Will add the dummy user query string    */
 specifier|private
 specifier|static
 name|MethodCallRetVal

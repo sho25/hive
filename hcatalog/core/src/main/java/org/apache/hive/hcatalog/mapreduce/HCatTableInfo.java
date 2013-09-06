@@ -157,7 +157,7 @@ specifier|private
 name|StorerInfo
 name|storerInfo
 decl_stmt|;
-comment|/**      * Initializes a new HCatTableInfo instance to be used with {@link HCatInputFormat}      * for reading data from a table.      * work with hadoop security, the kerberos principal name of the server - else null      * The principal name should be of the form:      *<servicename>/_HOST@<realm> like "hcat/_HOST@myrealm.com"      * The special string _HOST will be replaced automatically with the correct host name      * @param databaseName the db name      * @param tableName the table name      * @param dataColumns schema of columns which contain data      * @param partitionColumns schema of partition columns      * @param storerInfo information about storage descriptor      * @param table hive metastore table class      */
+comment|/**    * Initializes a new HCatTableInfo instance to be used with {@link HCatInputFormat}    * for reading data from a table.    * work with hadoop security, the kerberos principal name of the server - else null    * The principal name should be of the form:    *<servicename>/_HOST@<realm> like "hcat/_HOST@myrealm.com"    * The special string _HOST will be replaced automatically with the correct host name    * @param databaseName the db name    * @param tableName the table name    * @param dataColumns schema of columns which contain data    * @param partitionColumns schema of partition columns    * @param storerInfo information about storage descriptor    * @param table hive metastore table class    */
 name|HCatTableInfo
 parameter_list|(
 name|String
@@ -226,7 +226,7 @@ operator|=
 name|partitionColumns
 expr_stmt|;
 block|}
-comment|/**      * Gets the value of databaseName      * @return the databaseName      */
+comment|/**    * Gets the value of databaseName    * @return the databaseName    */
 specifier|public
 name|String
 name|getDatabaseName
@@ -236,7 +236,7 @@ return|return
 name|databaseName
 return|;
 block|}
-comment|/**      * Gets the value of tableName      * @return the tableName      */
+comment|/**    * Gets the value of tableName    * @return the tableName    */
 specifier|public
 name|String
 name|getTableName
@@ -246,7 +246,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**      * @return return schema of data columns as defined in meta store      */
+comment|/**    * @return return schema of data columns as defined in meta store    */
 specifier|public
 name|HCatSchema
 name|getDataColumns
@@ -256,7 +256,7 @@ return|return
 name|dataColumns
 return|;
 block|}
-comment|/**      * @return schema of partition columns      */
+comment|/**    * @return schema of partition columns    */
 specifier|public
 name|HCatSchema
 name|getPartitionColumns
@@ -266,7 +266,7 @@ return|return
 name|partitionColumns
 return|;
 block|}
-comment|/**      * @return the storerInfo      */
+comment|/**    * @return the storerInfo    */
 specifier|public
 name|StorerInfo
 name|getStorerInfo
@@ -291,7 +291,7 @@ name|getLocation
 argument_list|()
 return|;
 block|}
-comment|/**      * minimize dependency on hive classes so this is package private      * this should eventually no longer be used      * @return hive metastore representation of table      */
+comment|/**    * minimize dependency on hive classes so this is package private    * this should eventually no longer be used    * @return hive metastore representation of table    */
 name|Table
 name|getTable
 parameter_list|()
@@ -300,7 +300,7 @@ return|return
 name|table
 return|;
 block|}
-comment|/**      * create an HCatTableInfo instance from the supplied Hive Table instance      * @param table to create an instance from      * @return HCatTableInfo      * @throws IOException      */
+comment|/**    * create an HCatTableInfo instance from the supplied Hive Table instance    * @param table to create an instance from    * @return HCatTableInfo    * @throws IOException    */
 specifier|static
 name|HCatTableInfo
 name|valueOf

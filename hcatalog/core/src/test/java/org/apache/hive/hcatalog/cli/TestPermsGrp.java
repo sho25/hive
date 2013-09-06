@@ -1309,7 +1309,7 @@ parameter_list|(
 name|NoSuchObjectException
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 block|}
 specifier|private
 name|void

@@ -280,7 +280,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**      * Allow tests to alter the default MiniCluster configuration.      * (requires static initializer block as all setup here is static)      */
+comment|/**    * Allow tests to alter the default MiniCluster configuration.    * (requires static initializer block as all setup here is static)    */
 specifier|protected
 specifier|static
 name|Configuration
@@ -460,7 +460,7 @@ return|return
 name|name
 return|;
 block|}
-comment|/**      * startup an hbase cluster instance before a test suite runs      */
+comment|/**    * startup an hbase cluster instance before a test suite runs    */
 annotation|@
 name|BeforeClass
 specifier|public
@@ -507,7 +507,7 @@ name|start
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * shutdown an hbase cluster instance ant the end of the test suite      */
+comment|/**    * shutdown an hbase cluster instance ant the end of the test suite    */
 annotation|@
 name|AfterClass
 specifier|public
@@ -528,7 +528,7 @@ name|stop
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * override this with a different context handle if tests suites are run simultaneously      * and ManyMiniCluster instances shouldn't be shared      * @return      */
+comment|/**    * override this with a different context handle if tests suites are run simultaneously    * and ManyMiniCluster instances shouldn't be shared    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -539,7 +539,7 @@ return|return
 name|DEFAULT_CONTEXT_HANDLE
 return|;
 block|}
-comment|/**      * @return working directory for a given test context, which normally is a test suite      */
+comment|/**    * @return working directory for a given test context, which normally is a test suite    */
 specifier|public
 name|String
 name|getTestDir
@@ -558,7 +558,7 @@ name|getTestDir
 argument_list|()
 return|;
 block|}
-comment|/**      * @return ManyMiniCluster instance      */
+comment|/**    * @return ManyMiniCluster instance    */
 specifier|public
 name|ManyMiniCluster
 name|getCluster
@@ -577,7 +577,7 @@ name|getCluster
 argument_list|()
 return|;
 block|}
-comment|/**      * @return configuration of MiniHBaseCluster      */
+comment|/**    * @return configuration of MiniHBaseCluster    */
 specifier|public
 name|Configuration
 name|getHbaseConf
@@ -596,7 +596,7 @@ name|getHbaseConf
 argument_list|()
 return|;
 block|}
-comment|/**      * @return configuration of MiniMRCluster      */
+comment|/**    * @return configuration of MiniMRCluster    */
 specifier|public
 name|Configuration
 name|getJobConf
@@ -615,7 +615,7 @@ name|getJobConf
 argument_list|()
 return|;
 block|}
-comment|/**      * @return configuration of Hive Metastore      */
+comment|/**    * @return configuration of Hive Metastore    */
 specifier|public
 name|HiveConf
 name|getHiveConf
@@ -634,7 +634,7 @@ name|getHiveConf
 argument_list|()
 return|;
 block|}
-comment|/**      * @return filesystem used by ManyMiniCluster daemons      */
+comment|/**    * @return filesystem used by ManyMiniCluster daemons    */
 specifier|public
 name|FileSystem
 name|getFileSystem
@@ -653,7 +653,7 @@ name|getFileSystem
 argument_list|()
 return|;
 block|}
-comment|/**      * class used to encapsulate a context which is normally used by      * a single TestSuite or across TestSuites when multi-threaded testing is turned on      */
+comment|/**    * class used to encapsulate a context which is normally used by    * a single TestSuite or across TestSuites when multi-threaded testing is turned on    */
 specifier|public
 specifier|static
 class|class

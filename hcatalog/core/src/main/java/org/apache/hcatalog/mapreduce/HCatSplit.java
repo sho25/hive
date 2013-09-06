@@ -230,12 +230,12 @@ specifier|private
 name|HiveConf
 name|hiveConf
 decl_stmt|;
-comment|/**      * Instantiates a new hcat split.      */
+comment|/**    * Instantiates a new hcat split.    */
 specifier|public
 name|HCatSplit
 parameter_list|()
-block|{     }
-comment|/**      * Instantiates a new hcat split.      *      * @param partitionInfo the partition info      * @param baseMapRedSplit the base mapred split      * @param tableSchema the table level schema      */
+block|{   }
+comment|/**    * Instantiates a new hcat split.    *    * @param partitionInfo the partition info    * @param baseMapRedSplit the base mapred split    * @param tableSchema the table level schema    */
 specifier|public
 name|HCatSplit
 parameter_list|(
@@ -277,7 +277,7 @@ operator|=
 name|tableSchema
 expr_stmt|;
 block|}
-comment|/**      * Gets the partition info.      * @return the partitionInfo      */
+comment|/**    * Gets the partition info.    * @return the partitionInfo    */
 specifier|public
 name|PartInfo
 name|getPartitionInfo
@@ -287,7 +287,7 @@ return|return
 name|partitionInfo
 return|;
 block|}
-comment|/**      * Gets the underlying InputSplit.      * @return the baseMapRedSplit      */
+comment|/**    * Gets the underlying InputSplit.    * @return the baseMapRedSplit    */
 specifier|public
 name|org
 operator|.
@@ -305,7 +305,7 @@ return|return
 name|baseMapRedSplit
 return|;
 block|}
-comment|/**      * Gets the data schema.      * @return the table schema      */
+comment|/**    * Gets the data schema.    * @return the table schema    */
 specifier|public
 name|HCatSchema
 name|getDataSchema
@@ -320,7 +320,7 @@ name|getPartitionSchema
 argument_list|()
 return|;
 block|}
-comment|/**      * Gets the table schema.      * @return the table schema      */
+comment|/**    * Gets the table schema.    * @return the table schema    */
 specifier|public
 name|HCatSchema
 name|getTableSchema
@@ -332,7 +332,7 @@ operator|.
 name|tableSchema
 return|;
 block|}
-comment|/* (non-Javadoc)      * @see org.apache.hadoop.mapreduce.InputSplit#getLength()      */
+comment|/* (non-Javadoc)    * @see org.apache.hadoop.mapreduce.InputSplit#getLength()    */
 annotation|@
 name|Override
 specifier|public
@@ -370,7 +370,7 @@ literal|0
 return|;
 comment|// we errored
 block|}
-comment|/* (non-Javadoc)      * @see org.apache.hadoop.mapreduce.InputSplit#getLocations()      */
+comment|/* (non-Javadoc)    * @see org.apache.hadoop.mapreduce.InputSplit#getLocations()    */
 annotation|@
 name|Override
 specifier|public
@@ -413,7 +413,7 @@ index|]
 return|;
 comment|// we errored
 block|}
-comment|/* (non-Javadoc)      * @see org.apache.hadoop.io.Writable#readFields(java.io.DataInput)      */
+comment|/* (non-Javadoc)    * @see org.apache.hadoop.io.Writable#readFields(java.io.DataInput)    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -618,7 +618,7 @@ name|tableSchemaString
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)      * @see org.apache.hadoop.io.Writable#write(java.io.DataOutput)      */
+comment|/* (non-Javadoc)    * @see org.apache.hadoop.io.Writable#write(java.io.DataOutput)    */
 annotation|@
 name|Override
 specifier|public

@@ -3408,7 +3408,7 @@ parameter_list|(
 name|JobConf
 name|job
 parameter_list|)
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -3417,7 +3417,7 @@ name|close
 parameter_list|()
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public

@@ -64,7 +64,7 @@ specifier|volatile
 name|TrivialExecService
 name|theSingleton
 decl_stmt|;
-comment|/**      * Retrieve the singleton.      */
+comment|/**    * Retrieve the singleton.    */
 specifier|public
 specifier|static
 specifier|synchronized

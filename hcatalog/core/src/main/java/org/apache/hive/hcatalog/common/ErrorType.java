@@ -215,7 +215,7 @@ name|isRetriable
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * Instantiates a new error type.      * @param errorCode the error code      * @param errorMessage the error message      */
+comment|/**    * Instantiates a new error type.    * @param errorCode the error code    * @param errorMessage the error message    */
 specifier|private
 name|ErrorType
 parameter_list|(
@@ -239,7 +239,7 @@ operator|=
 name|errorMessage
 expr_stmt|;
 block|}
-comment|/**      * Instantiates a new error type.      * @param errorCode the error code      * @param errorMessage the error message      * @param appendCauseMessage should causal exception message be appended to error message      */
+comment|/**    * Instantiates a new error type.    * @param errorCode the error code    * @param errorMessage the error message    * @param appendCauseMessage should causal exception message be appended to error message    */
 specifier|private
 name|ErrorType
 parameter_list|(
@@ -272,7 +272,7 @@ operator|=
 name|appendCauseMessage
 expr_stmt|;
 block|}
-comment|/**      * Instantiates a new error type.      * @param errorCode the error code      * @param errorMessage the error message      * @param appendCauseMessage should causal exception message be appended to error message      * @param isRetriable is this a retriable error      */
+comment|/**    * Instantiates a new error type.    * @param errorCode the error code    * @param errorMessage the error message    * @param appendCauseMessage should causal exception message be appended to error message    * @param isRetriable is this a retriable error    */
 specifier|private
 name|ErrorType
 parameter_list|(
@@ -314,7 +314,7 @@ operator|=
 name|isRetriable
 expr_stmt|;
 block|}
-comment|/**      * Gets the error code.      * @return the error code      */
+comment|/**    * Gets the error code.    * @return the error code    */
 specifier|public
 name|int
 name|getErrorCode
@@ -324,7 +324,7 @@ return|return
 name|errorCode
 return|;
 block|}
-comment|/**      * Gets the error message.      * @return the error message      */
+comment|/**    * Gets the error message.    * @return the error message    */
 specifier|public
 name|String
 name|getErrorMessage
@@ -334,7 +334,7 @@ return|return
 name|errorMessage
 return|;
 block|}
-comment|/**      * Checks if this is a retriable error.      * @return true, if is a retriable error, false otherwise      */
+comment|/**    * Checks if this is a retriable error.    * @return true, if is a retriable error, false otherwise    */
 specifier|public
 name|boolean
 name|isRetriable
@@ -344,7 +344,7 @@ return|return
 name|isRetriable
 return|;
 block|}
-comment|/**      * Whether the cause of the exception should be added to the error message.      * @return true, if the cause should be added to the message, false otherwise      */
+comment|/**    * Whether the cause of the exception should be added to the error message.    * @return true, if the cause should be added to the message, false otherwise    */
 specifier|public
 name|boolean
 name|appendCauseMessage

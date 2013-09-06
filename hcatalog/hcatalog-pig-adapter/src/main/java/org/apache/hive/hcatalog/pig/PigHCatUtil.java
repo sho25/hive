@@ -637,7 +637,7 @@ name|pigHasBooleanSupport
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * Determine if the current Pig version supports boolean columns. This works around a      * dependency conflict preventing HCatalog from requiring a version of Pig with boolean      * field support and should be removed once HCATALOG-466 has been resolved.      */
+comment|/**    * Determine if the current Pig version supports boolean columns. This works around a    * dependency conflict preventing HCatalog from requiring a version of Pig with boolean    * field support and should be removed once HCATALOG-466 has been resolved.    */
 static|static
 block|{
 comment|// DETAILS:
@@ -1909,7 +1909,7 @@ return|return
 name|s
 return|;
 block|}
-comment|/**      * @param hfs the field schema of the column      * @return corresponding pig type      * @throws IOException      */
+comment|/**    * @param hfs the field schema of the column    * @return corresponding pig type    * @throws IOException    */
 specifier|static
 specifier|public
 name|byte

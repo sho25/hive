@@ -112,7 +112,7 @@ specifier|public
 class|class
 name|MessagingUtils
 block|{
-comment|/**      * Method to return HCatEventMessage contained in the JMS message.      * @param message The JMS Message instance      * @return The contained HCatEventMessage      */
+comment|/**    * Method to return HCatEventMessage contained in the JMS message.    * @param message The JMS Message instance    * @return The contained HCatEventMessage    */
 specifier|public
 specifier|static
 name|HCatEventMessage

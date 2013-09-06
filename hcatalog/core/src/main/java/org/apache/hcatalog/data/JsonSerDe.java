@@ -1101,7 +1101,7 @@ name|JsonFactory
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Takes JSON string in Text form, and has to return an object representation above      * it that's readable by the corresponding object inspector.      *      * For this implementation, since we're using the jackson parser, we can construct      * our own object implementation, and we use HCatRecord for it      */
+comment|/**    * Takes JSON string in Text form, and has to return an object representation above    * it that's readable by the corresponding object inspector.    *    * For this implementation, since we're using the jackson parser, we can construct    * our own object implementation, and we use HCatRecord for it    */
 annotation|@
 name|Override
 specifier|public
@@ -1553,7 +1553,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**      * Utility method to extract current expected field from given JsonParser      *      * To get the field, we need either a type or a hcatFieldSchema(necessary for complex types)      * It is possible that one of them can be null, and so, if so, the other is instantiated      * from the other      *      * isTokenCurrent is a boolean variable also passed in, which determines      * if the JsonParser is already at the token we expect to read next, or      * needs advancing to the next before we read.      */
+comment|/**    * Utility method to extract current expected field from given JsonParser    *    * To get the field, we need either a type or a hcatFieldSchema(necessary for complex types)    * It is possible that one of them can be null, and so, if so, the other is instantiated    * from the other    *    * isTokenCurrent is a boolean variable also passed in, which determines    * if the JsonParser is already at the token we expect to read next, or    * needs advancing to the next before we read.    */
 specifier|private
 name|Object
 name|extractCurrentField
@@ -2327,7 +2327,7 @@ name|t
 argument_list|)
 throw|;
 block|}
-comment|/**      * Given an object and object inspector pair, traverse the object      * and generate a Text representation of the object.      */
+comment|/**    * Given an object and object inspector pair, traverse the object    * and generate a Text representation of the object.    */
 annotation|@
 name|Override
 specifier|public
@@ -3560,7 +3560,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      *  Returns an object inspector for the specified schema that      *  is capable of reading in the object representation of the JSON string      */
+comment|/**    *  Returns an object inspector for the specified schema that    *  is capable of reading in the object representation of the JSON string    */
 annotation|@
 name|Override
 specifier|public

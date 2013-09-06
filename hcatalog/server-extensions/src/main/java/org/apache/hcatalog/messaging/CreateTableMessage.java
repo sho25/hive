@@ -39,7 +39,7 @@ name|CREATE_TABLE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Getter for the name of table created in HCatalog.      * @return Table-name (String).      */
+comment|/**    * Getter for the name of table created in HCatalog.    * @return Table-name (String).    */
 specifier|public
 specifier|abstract
 name|String

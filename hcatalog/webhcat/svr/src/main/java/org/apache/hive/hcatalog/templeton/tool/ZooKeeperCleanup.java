@@ -225,7 +225,7 @@ name|isRunning
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * Create a cleanup object.  We use the appConfig to configure JobState.      * @param appConf      */
+comment|/**    * Create a cleanup object.  We use the appConfig to configure JobState.    * @param appConf    */
 specifier|private
 name|ZooKeeperCleanup
 parameter_list|(
@@ -321,7 +321,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Run the cleanup loop.      *      * @throws IOException      */
+comment|/**    * Run the cleanup loop.    *    * @throws IOException    */
 specifier|public
 name|void
 name|run
@@ -526,7 +526,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**      * Get the list of jobs from JobState      *      * @throws IOException      */
+comment|/**    * Get the list of jobs from JobState    *    * @throws IOException    */
 specifier|public
 name|List
 argument_list|<
@@ -589,7 +589,7 @@ argument_list|>
 argument_list|()
 return|;
 block|}
-comment|/**      * Check to see if a job is more than maxage old, and delete it if so.      */
+comment|/**    * Check to see if a job is more than maxage old, and delete it if so.    */
 specifier|public
 name|boolean
 name|checkAndDelete

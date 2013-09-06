@@ -109,7 +109,7 @@ argument_list|>
 argument_list|>
 name|partitions
 decl_stmt|;
-comment|/**      * Default Constructor. Required for Jackson.      */
+comment|/**    * Default Constructor. Required for Jackson.    */
 specifier|public
 name|JSONAddPartitionMessage
 parameter_list|()

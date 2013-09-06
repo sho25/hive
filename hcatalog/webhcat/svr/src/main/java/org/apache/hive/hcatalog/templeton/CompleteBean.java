@@ -34,7 +34,7 @@ specifier|public
 name|CompleteBean
 parameter_list|()
 block|{}
-comment|/**      * Create a new CompleteBean      *      * @param status     run status      */
+comment|/**    * Create a new CompleteBean    *    * @param status     run status    */
 specifier|public
 name|CompleteBean
 parameter_list|(

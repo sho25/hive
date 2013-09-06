@@ -492,7 +492,7 @@ parameter_list|(
 name|LogInitializationException
 name|e
 parameter_list|)
-block|{          }
+block|{      }
 name|CliSessionState
 name|ss
 init|=

@@ -1427,7 +1427,7 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      *      */
+comment|/**    *    */
 specifier|private
 specifier|static
 name|void

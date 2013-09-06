@@ -544,7 +544,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 try|try
 block|{
 name|client
@@ -560,7 +560,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 name|client
 operator|.
 name|createDatabase

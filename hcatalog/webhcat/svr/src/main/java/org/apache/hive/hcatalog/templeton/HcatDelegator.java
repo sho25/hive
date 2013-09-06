@@ -289,7 +289,7 @@ operator|=
 name|execService
 expr_stmt|;
 block|}
-comment|/**      * Run the local hcat executable.      */
+comment|/**    * Run the local hcat executable.    */
 specifier|public
 name|ExecBean
 name|run
@@ -602,7 +602,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|/*when running in unit test mode, pass this property to HCat,             which will in turn pass it to Hive to make sure that Hive             tries to write to a directory that exists.*/
+comment|/*when running in unit test mode, pass this property to HCat,       which will in turn pass it to Hive to make sure that Hive       tries to write to a directory that exists.*/
 name|args
 operator|.
 name|add
@@ -629,7 +629,7 @@ return|return
 name|args
 return|;
 block|}
-comment|/**      * Return a json description of the database.      */
+comment|/**    * Return a json description of the database.    */
 specifier|public
 name|Response
 name|descDatabase
@@ -722,7 +722,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Return a json "show databases like".  This will return a list of      * databases.      */
+comment|/**    * Return a json "show databases like".  This will return a list of    * databases.    */
 specifier|public
 name|Response
 name|listDatabases
@@ -803,7 +803,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Create a database with the given name      */
+comment|/**    * Create a database with the given name    */
 specifier|public
 name|Response
 name|createDatabase
@@ -966,7 +966,7 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/**      * Drop the given database      */
+comment|/**    * Drop the given database    */
 specifier|public
 name|Response
 name|dropDatabase
@@ -1071,7 +1071,7 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/**      * Create a table.      */
+comment|/**    * Create a table.    */
 specifier|public
 name|Response
 name|createTable
@@ -1182,7 +1182,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Create a table like another.      */
+comment|/**    * Create a table like another.    */
 specifier|public
 name|Response
 name|createTableLike
@@ -1350,7 +1350,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Return a json description of the table.      */
+comment|/**    * Return a json description of the table.    */
 specifier|public
 name|Response
 name|descTable
@@ -1469,7 +1469,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Return a json "show table like".  This will return a list of      * tables.      */
+comment|/**    * Return a json "show table like".  This will return a list of    * tables.    */
 specifier|public
 name|Response
 name|listTables
@@ -1562,7 +1562,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Return a json "show table extended like".  This will return      * only the first single table.      */
+comment|/**    * Return a json "show table extended like".  This will return    * only the first single table.    */
 specifier|public
 name|Response
 name|descExtendedTable
@@ -2784,7 +2784,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**      * Drop a table.      */
+comment|/**    * Drop a table.    */
 specifier|public
 name|Response
 name|dropTable
@@ -2916,7 +2916,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Rename a table.      */
+comment|/**    * Rename a table.    */
 specifier|public
 name|Response
 name|renameTable
@@ -3033,7 +3033,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Describe one table property.      */
+comment|/**    * Describe one table property.    */
 specifier|public
 name|Response
 name|descTableProperty
@@ -3185,7 +3185,7 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/**      * List the table properties.      */
+comment|/**    * List the table properties.    */
 specifier|public
 name|Response
 name|listTableProperties
@@ -3280,7 +3280,7 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/**      * Add one table property.      */
+comment|/**    * Add one table property.    */
 specifier|public
 name|Response
 name|addOneTableProperty
@@ -3472,7 +3472,7 @@ literal|"parameters"
 argument_list|)
 return|;
 block|}
-comment|/**      * Return a json description of the partitions.      */
+comment|/**    * Return a json description of the partitions.    */
 specifier|public
 name|Response
 name|listPartitions
@@ -3575,7 +3575,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Return a json description of one partition.      */
+comment|/**    * Return a json description of one partition.    */
 specifier|public
 name|Response
 name|descOnePartition
@@ -3803,7 +3803,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Add one partition.      */
+comment|/**    * Add one partition.    */
 specifier|public
 name|Response
 name|addOnePartition
@@ -4042,7 +4042,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Drop a partition.      */
+comment|/**    * Drop a partition.    */
 specifier|public
 name|Response
 name|dropPartition
@@ -4186,7 +4186,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Return a json description of the columns.  Same as      * describeTable.      */
+comment|/**    * Return a json description of the columns.  Same as    * describeTable.    */
 specifier|public
 name|Response
 name|listColumns
@@ -4251,7 +4251,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Return a json description of one column.      */
+comment|/**    * Return a json description of one column.    */
 specifier|public
 name|Response
 name|descOneColumn
@@ -4486,7 +4486,7 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/**      * Add one column.      */
+comment|/**    * Add one column.    */
 specifier|public
 name|Response
 name|addOneColumn

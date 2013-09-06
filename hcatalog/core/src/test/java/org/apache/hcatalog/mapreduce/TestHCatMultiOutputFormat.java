@@ -996,7 +996,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Private class which holds all the data for the test cases      */
+comment|/**    * Private class which holds all the data for the test cases    */
 specifier|private
 specifier|static
 class|class
@@ -1862,7 +1862,7 @@ parameter_list|(
 name|NoSuchObjectException
 name|ignored
 parameter_list|)
-block|{             }
+block|{       }
 block|}
 for|for
 control|(
@@ -2211,7 +2211,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Simple test case.      *<ol>      *<li>Submits a mapred job which writes out one fixed line to each of the tables</li>      *<li>uses hive fetch task to read the data and see if it matches what was written</li>      *</ol>      *      * @throws Exception if any error occurs      */
+comment|/**    * Simple test case.    *<ol>    *<li>Submits a mapred job which writes out one fixed line to each of the tables</li>    *<li>uses hive fetch task to read the data and see if it matches what was written</li>    *</ol>    *    * @throws Exception if any error occurs    */
 annotation|@
 name|Test
 specifier|public
@@ -2771,7 +2771,7 @@ literal|"File permissions verified"
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Create a input file for map      *      * @return absolute path of the file.      * @throws IOException if any error encountered      */
+comment|/**    * Create a input file for map    *    * @return absolute path of the file.    * @throws IOException if any error encountered    */
 specifier|private
 name|Path
 name|createInputFile
@@ -2865,7 +2865,7 @@ return|return
 name|f
 return|;
 block|}
-comment|/**      * Method to fetch table data      *      * @param table table name      * @param database database      * @return list of columns in comma seperated way      * @throws Exception if any error occurs      */
+comment|/**    * Method to fetch table data    *    * @param table table name    * @param database database    * @return list of columns in comma seperated way    * @throws Exception if any error occurs    */
 specifier|private
 name|List
 argument_list|<

@@ -119,11 +119,11 @@ name|String
 argument_list|>
 name|tableProperties
 decl_stmt|;
-comment|/**      * Create a new TableDesc      */
+comment|/**    * Create a new TableDesc    */
 specifier|public
 name|TableDesc
 parameter_list|()
-block|{     }
+block|{   }
 specifier|public
 name|String
 name|toString
@@ -298,7 +298,7 @@ name|that
 argument_list|)
 return|;
 block|}
-comment|/**      * How to cluster the table.      */
+comment|/**    * How to cluster the table.    */
 annotation|@
 name|XmlRootElement
 specifier|public
@@ -327,7 +327,7 @@ decl_stmt|;
 specifier|public
 name|ClusteredByDesc
 parameter_list|()
-block|{         }
+block|{     }
 specifier|public
 name|String
 name|toString
@@ -426,7 +426,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**      * The clustered sort order.      */
+comment|/**    * The clustered sort order.    */
 annotation|@
 name|XmlRootElement
 specifier|public
@@ -445,7 +445,7 @@ decl_stmt|;
 specifier|public
 name|ClusterSortOrderDesc
 parameter_list|()
-block|{         }
+block|{     }
 specifier|public
 name|ClusterSortOrderDesc
 parameter_list|(
@@ -549,7 +549,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**      * Ther ASC or DESC sort order.      */
+comment|/**    * Ther ASC or DESC sort order.    */
 annotation|@
 name|XmlRootElement
 specifier|public
@@ -561,7 +561,7 @@ name|ASC
 block|,
 name|DESC
 block|}
-comment|/**      * The storage format.      */
+comment|/**    * The storage format.    */
 annotation|@
 name|XmlRootElement
 specifier|public
@@ -584,7 +584,7 @@ decl_stmt|;
 specifier|public
 name|StorageFormatDesc
 parameter_list|()
-block|{         }
+block|{     }
 specifier|public
 name|boolean
 name|equals
@@ -658,7 +658,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**      * The Row Format.      */
+comment|/**    * The Row Format.    */
 annotation|@
 name|XmlRootElement
 specifier|public
@@ -689,7 +689,7 @@ decl_stmt|;
 specifier|public
 name|RowFormatDesc
 parameter_list|()
-block|{         }
+block|{     }
 specifier|public
 name|boolean
 name|equals
@@ -785,7 +785,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**      * The SERDE Row Format.      */
+comment|/**    * The SERDE Row Format.    */
 annotation|@
 name|XmlRootElement
 specifier|public
@@ -809,7 +809,7 @@ decl_stmt|;
 specifier|public
 name|SerdeDesc
 parameter_list|()
-block|{         }
+block|{     }
 specifier|public
 name|boolean
 name|equals
@@ -872,7 +872,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**      * How to store the table.      */
+comment|/**    * How to store the table.    */
 annotation|@
 name|XmlRootElement
 specifier|public
@@ -896,7 +896,7 @@ decl_stmt|;
 specifier|public
 name|StoredByDesc
 parameter_list|()
-block|{         }
+block|{     }
 specifier|public
 name|boolean
 name|equals

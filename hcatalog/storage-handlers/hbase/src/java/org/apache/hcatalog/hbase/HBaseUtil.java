@@ -104,8 +104,8 @@ block|{
 specifier|private
 name|HBaseUtil
 parameter_list|()
-block|{     }
-comment|/**      * Parses the HBase columns mapping to identify the column families, qualifiers      * and also caches the byte arrays corresponding to them. One of the HCat table      * columns maps to the HBase row key, by default the first column.      *      * @param columnMapping - the column mapping specification to be parsed      * @param colFamilies - the list of HBase column family names      * @param colFamiliesBytes - the corresponding byte array      * @param colQualifiers - the list of HBase column qualifier names      * @param colQualifiersBytes - the corresponding byte array      * @return the row key index in the column names list      * @throws IOException      */
+block|{   }
+comment|/**    * Parses the HBase columns mapping to identify the column families, qualifiers    * and also caches the byte arrays corresponding to them. One of the HCat table    * columns maps to the HBase row key, by default the first column.    *    * @param columnMapping - the column mapping specification to be parsed    * @param colFamilies - the list of HBase column family names    * @param colFamiliesBytes - the corresponding byte array    * @param colQualifiers - the list of HBase column qualifier names    * @param colQualifiersBytes - the corresponding byte array    * @return the row key index in the column names list    * @throws IOException    */
 specifier|static
 name|int
 name|parseColumnMapping
@@ -584,7 +584,7 @@ return|return
 name|rowKeyIndex
 return|;
 block|}
-comment|/**      * Get delegation token from hbase and add it to JobConf      * @param job      * @throws IOException      */
+comment|/**    * Get delegation token from hbase and add it to JobConf    * @param job    * @throws IOException    */
 specifier|static
 name|void
 name|addHBaseDelegationToken

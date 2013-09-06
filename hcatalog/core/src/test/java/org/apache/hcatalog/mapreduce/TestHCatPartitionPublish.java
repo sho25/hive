@@ -1547,7 +1547,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 comment|// can fail with NoSuchObjectException
 name|Table
 name|tbl

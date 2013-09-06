@@ -144,7 +144,7 @@ specifier|protected
 name|StateProvider
 name|sp
 decl_stmt|;
-comment|/**      * External system should invoke this method exactly once from a master node.      *      * @return {@link WriterContext} This should be serialized and sent to slave      *         nodes to construct HCatWriter there.      * @throws HCatException      */
+comment|/**    * External system should invoke this method exactly once from a master node.    *    * @return {@link WriterContext} This should be serialized and sent to slave    *         nodes to construct HCatWriter there.    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|WriterContext
@@ -153,7 +153,7 @@ parameter_list|()
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * This method should be used at slave needs to perform writes.      *      * @param recordItr      *          {@link Iterator} records to be written into HCatalog.      * @throws {@link HCatException}      */
+comment|/**    * This method should be used at slave needs to perform writes.    *    * @param recordItr    *          {@link Iterator} records to be written into HCatalog.    * @throws {@link HCatException}    */
 specifier|public
 specifier|abstract
 name|void
@@ -169,7 +169,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * This method should be called at master node. Primary purpose of this is to      * do metadata commit.      *      * @throws {@link HCatException}      */
+comment|/**    * This method should be called at master node. Primary purpose of this is to    * do metadata commit.    *    * @throws {@link HCatException}    */
 specifier|public
 specifier|abstract
 name|void
@@ -182,7 +182,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * This method should be called at master node. Primary purpose of this is to      * do cleanups in case of failures.      *      * @throws {@link HCatException} *      */
+comment|/**    * This method should be called at master node. Primary purpose of this is to    * do cleanups in case of failures.    *    * @throws {@link HCatException} *    */
 specifier|public
 specifier|abstract
 name|void
@@ -195,7 +195,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * This constructor will be used at master node      *      * @param we      *          WriteEntity defines where in storage records should be written to.      * @param config      *          Any configuration which external system wants to communicate to      *          HCatalog for performing writes.      */
+comment|/**    * This constructor will be used at master node    *    * @param we    *          WriteEntity defines where in storage records should be written to.    * @param config    *          Any configuration which external system wants to communicate to    *          HCatalog for performing writes.    */
 specifier|protected
 name|HCatWriter
 parameter_list|(
@@ -225,7 +225,7 @@ operator|=
 name|we
 expr_stmt|;
 block|}
-comment|/**      * This constructor will be used at slave nodes.      *      * @param config      */
+comment|/**    * This constructor will be used at slave nodes.    *    * @param config    */
 specifier|protected
 name|HCatWriter
 parameter_list|(

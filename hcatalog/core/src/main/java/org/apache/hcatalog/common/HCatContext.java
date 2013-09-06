@@ -128,7 +128,7 @@ name|conf
 init|=
 literal|null
 decl_stmt|;
-comment|/**      * Use the given configuration for optional behavior. Keys exclusive to an existing config      * are set in the new conf. The job conf must be used to ensure properties are passed to      * backend MR tasks.      */
+comment|/**    * Use the given configuration for optional behavior. Keys exclusive to an existing config    * are set in the new conf. The job conf must be used to ensure properties are passed to    * backend MR tasks.    */
 specifier|public
 specifier|synchronized
 name|HCatContext
@@ -239,7 +239,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * Get the configuration, if there is one. Users are not required to setup HCatContext      * unless they wish to override default behavior, so the configuration may not be present.      *      * @return an Optional that might contain a Configuration      */
+comment|/**    * Get the configuration, if there is one. Users are not required to setup HCatContext    * unless they wish to override default behavior, so the configuration may not be present.    *    * @return an Optional that might contain a Configuration    */
 specifier|public
 name|Optional
 argument_list|<

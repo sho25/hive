@@ -286,7 +286,7 @@ specifier|public
 class|class
 name|TempletonUtils
 block|{
-comment|/**      * Is the object non-empty?      */
+comment|/**    * Is the object non-empty?    */
 specifier|public
 specifier|static
 name|boolean
@@ -313,7 +313,7 @@ literal|0
 operator|)
 return|;
 block|}
-comment|/**      * Is the object non-empty?      */
+comment|/**    * Is the object non-empty?    */
 specifier|public
 specifier|static
 name|boolean
@@ -331,7 +331,7 @@ literal|0
 operator|)
 return|;
 block|}
-comment|/**      * Is the object non-empty?      */
+comment|/**    * Is the object non-empty?    */
 specifier|public
 specifier|static
 parameter_list|<
@@ -361,7 +361,7 @@ literal|0
 operator|)
 return|;
 block|}
-comment|/**      * Is the object non-empty?      */
+comment|/**    * Is the object non-empty?    */
 specifier|public
 specifier|static
 parameter_list|<
@@ -393,7 +393,7 @@ argument_list|()
 operator|)
 return|;
 block|}
-comment|/**      * Is the object non-empty?      */
+comment|/**    * Is the object non-empty?    */
 specifier|public
 specifier|static
 parameter_list|<
@@ -455,7 +455,7 @@ argument_list|(
 literal|" \\d+% complete$"
 argument_list|)
 decl_stmt|;
-comment|/**      * Extract the percent complete line from Pig or Jar jobs.      */
+comment|/**    * Extract the percent complete line from Pig or Jar jobs.    */
 specifier|public
 specifier|static
 name|String
@@ -560,7 +560,7 @@ block|,
 name|PIG_ID
 block|}
 decl_stmt|;
-comment|/**      * Extract the job id from jar jobs.      */
+comment|/**    * Extract the job id from jar jobs.    */
 specifier|public
 specifier|static
 name|String
@@ -608,7 +608,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**      * Take an array of strings and encode it into one string.      */
+comment|/**    * Take an array of strings and encode it into one string.    */
 specifier|public
 specifier|static
 name|String
@@ -700,7 +700,7 @@ name|escaped
 argument_list|)
 return|;
 block|}
-comment|/**      * Encode a List into a string.      */
+comment|/**    * Encode a List into a string.    */
 specifier|public
 specifier|static
 name|String
@@ -747,7 +747,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      * Take an encode strings and decode it into an array of strings.      */
+comment|/**    * Take an encode strings and decode it into an array of strings.    */
 specifier|public
 specifier|static
 name|String
@@ -1030,7 +1030,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**      * @return true iff we are sure the file is not there.      */
+comment|/**    * @return true iff we are sure the file is not there.    */
 specifier|public
 specifier|static
 name|boolean
@@ -1337,7 +1337,7 @@ return|return
 name|p
 return|;
 block|}
-comment|/**      * GET the given url.  Returns the number of bytes received.      */
+comment|/**    * GET the given url.  Returns the number of bytes received.    */
 specifier|public
 specifier|static
 name|int
@@ -1408,7 +1408,7 @@ return|return
 name|total
 return|;
 block|}
-comment|/**      * Set the environment variables to specify the hadoop user.      */
+comment|/**    * Set the environment variables to specify the hadoop user.    */
 specifier|public
 specifier|static
 name|Map

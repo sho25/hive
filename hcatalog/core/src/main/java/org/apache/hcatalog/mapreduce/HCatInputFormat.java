@@ -132,7 +132,7 @@ specifier|private
 name|InputJobInfo
 name|inputJobInfo
 decl_stmt|;
-comment|/**      * @deprecated as of release 0.5, and will be removed in a future release      */
+comment|/**    * @deprecated as of release 0.5, and will be removed in a future release    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -160,7 +160,7 @@ name|inputJobInfo
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * @deprecated as of release 0.5, and will be removed in a future release      */
+comment|/**    * @deprecated as of release 0.5, and will be removed in a future release    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -209,7 +209,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * See {@link #setInput(org.apache.hadoop.conf.Configuration, String, String)}      */
+comment|/**    * See {@link #setInput(org.apache.hadoop.conf.Configuration, String, String)}    */
 specifier|public
 specifier|static
 name|HCatInputFormat
@@ -241,7 +241,7 @@ name|tableName
 argument_list|)
 return|;
 block|}
-comment|/**      * Set inputs to use for the job. This queries the metastore with the given input      * specification and serializes matching partitions into the job conf for use by MR tasks.      * @param conf the job configuration      * @param dbName database name, which if null 'default' is used      * @param tableName table name      * @throws IOException on all errors      */
+comment|/**    * Set inputs to use for the job. This queries the metastore with the given input    * specification and serializes matching partitions into the job conf for use by MR tasks.    * @param conf the job configuration    * @param dbName database name, which if null 'default' is used    * @param tableName table name    * @throws IOException on all errors    */
 specifier|public
 specifier|static
 name|HCatInputFormat
@@ -339,7 +339,7 @@ return|return
 name|hCatInputFormat
 return|;
 block|}
-comment|/**      * Set a filter on the input table.      * @param filter the filter specification, which may be null      * @return this      * @throws IOException on all errors      */
+comment|/**    * Set a filter on the input table.    * @param filter the filter specification, which may be null    * @return this    * @throws IOException on all errors    */
 specifier|public
 name|HCatInputFormat
 name|setFilter
@@ -413,7 +413,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * Set properties for the input format.      * @param properties properties for the input specification      * @return this      * @throws IOException on all errors      */
+comment|/**    * Set properties for the input format.    * @param properties properties for the input specification    * @return this    * @throws IOException on all errors    */
 specifier|public
 name|HCatInputFormat
 name|setProperties

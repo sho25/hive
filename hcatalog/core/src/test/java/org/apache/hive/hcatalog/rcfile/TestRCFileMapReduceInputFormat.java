@@ -498,7 +498,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 block|}
 specifier|private
 specifier|static
@@ -897,7 +897,7 @@ parameter_list|(
 name|UnsupportedEncodingException
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 block|}
 comment|/** For debugging and testing. */
 specifier|public

@@ -42,7 +42,7 @@ specifier|private
 name|String
 name|filterString
 decl_stmt|;
-comment|/**      * Don't instantiate {@link ReadEntity} directly. Use,      * {@link ReadEntity.Builder} instead.      *      */
+comment|/**    * Don't instantiate {@link ReadEntity} directly. Use,    * {@link ReadEntity.Builder} instead.    *    */
 specifier|private
 name|ReadEntity
 parameter_list|()
@@ -108,7 +108,7 @@ operator|.
 name|filterString
 return|;
 block|}
-comment|/**      * This class should be used to build {@link ReadEntity}. It follows builder      * pattern, letting you build your {@link ReadEntity} with whatever level of      * detail you want.      *      */
+comment|/**    * This class should be used to build {@link ReadEntity}. It follows builder    * pattern, letting you build your {@link ReadEntity} with whatever level of    * detail you want.    *    */
 specifier|public
 specifier|static
 class|class

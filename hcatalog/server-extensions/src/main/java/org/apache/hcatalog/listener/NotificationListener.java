@@ -641,7 +641,7 @@ operator|.
 name|getInstance
 argument_list|()
 decl_stmt|;
-comment|/**      * Create message bus connection and session in constructor.      */
+comment|/**    * Create message bus connection and session in constructor.    */
 specifier|public
 name|NotificationListener
 parameter_list|(
@@ -829,7 +829,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Send dropped partition notifications. Subscribers can receive these notifications for a      * particular table by listening on a topic named "dbName.tableName" with message selector      * string {@value org.apache.hcatalog.common.HCatConstants#HCAT_EVENT} =      * {@value org.apache.hcatalog.common.HCatConstants#HCAT_DROP_PARTITION_EVENT}.      *</br>      * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been      * found to throw NPE when serializing objects that contain null. For this reason we override      * some fields in the StorageDescriptor of this notification. This should be fixed after      * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.      */
+comment|/**    * Send dropped partition notifications. Subscribers can receive these notifications for a    * particular table by listening on a topic named "dbName.tableName" with message selector    * string {@value org.apache.hcatalog.common.HCatConstants#HCAT_EVENT} =    * {@value org.apache.hcatalog.common.HCatConstants#HCAT_DROP_PARTITION_EVENT}.    *</br>    * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been    * found to throw NPE when serializing objects that contain null. For this reason we override    * some fields in the StorageDescriptor of this notification. This should be fixed after    * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.    */
 annotation|@
 name|Override
 specifier|public
@@ -1359,7 +1359,7 @@ name|HCAT_DEFAULT_TOPIC_PREFIX
 argument_list|)
 return|;
 block|}
-comment|/**      * Send dropped table notifications. Subscribers can receive these notifications for      * dropped tables by listening on topic "HCAT" with message selector string      * {@value org.apache.hcatalog.common.HCatConstants#HCAT_EVENT} =      * {@value org.apache.hcatalog.common.HCatConstants#HCAT_DROP_TABLE_EVENT}      *</br>      * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been      * found to throw NPE when serializing objects that contain null. For this reason we override      * some fields in the StorageDescriptor of this notification. This should be fixed after      * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.      */
+comment|/**    * Send dropped table notifications. Subscribers can receive these notifications for    * dropped tables by listening on topic "HCAT" with message selector string    * {@value org.apache.hcatalog.common.HCatConstants#HCAT_EVENT} =    * {@value org.apache.hcatalog.common.HCatConstants#HCAT_DROP_TABLE_EVENT}    *</br>    * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been    * found to throw NPE when serializing objects that contain null. For this reason we override    * some fields in the StorageDescriptor of this notification. This should be fixed after    * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.    */
 annotation|@
 name|Override
 specifier|public
@@ -1431,7 +1431,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * @param hCatEventMessage The HCatEventMessage being sent over JMS.      * @param topicName is the name on message broker on which message is sent.      */
+comment|/**    * @param hCatEventMessage The HCatEventMessage being sent over JMS.    * @param topicName is the name on message broker on which message is sent.    */
 specifier|protected
 name|void
 name|send
@@ -1626,7 +1626,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Get the topic object for the topicName, it also tries to reconnect      * if the connection appears to be broken.      *      * @param topicName The String identifying the message-topic.      * @return A {@link Topic} object corresponding to the specified topicName.      * @throws JMSException      */
+comment|/**    * Get the topic object for the topicName, it also tries to reconnect    * if the connection appears to be broken.    *    * @param topicName The String identifying the message-topic.    * @return A {@link Topic} object corresponding to the specified topicName.    * @throws JMSException    */
 specifier|protected
 name|Topic
 name|getTopic
@@ -1899,8 +1899,8 @@ throws|throws
 name|MetaException
 block|{
 comment|//  TODO: Fix LoadPartitionDoneEvent. Currently, LPDE can only carry a single partition-spec. And that defeats the purpose.
-comment|//		if(lpde.getStatus())
-comment|//			send(lpde.getPartitionName(),lpde.getTable().getParameters().get(HCatConstants.HCAT_MSGBUS_TOPIC_NAME),HCatConstants.HCAT_PARTITION_DONE_EVENT);
+comment|//        if(lpde.getStatus())
+comment|//            send(lpde.getPartitionName(),lpde.getTable().getParameters().get(HCatConstants.HCAT_MSGBUS_TOPIC_NAME),HCatConstants.HCAT_PARTITION_DONE_EVENT);
 block|}
 annotation|@
 name|Override

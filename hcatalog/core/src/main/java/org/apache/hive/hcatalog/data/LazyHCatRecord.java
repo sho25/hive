@@ -669,7 +669,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**      * Convert this LazyHCatRecord to a DefaultHCatRecord.  This is required      * before you can write out a record via write.      * @return an HCatRecord that can be serialized      * @throws HCatException      */
+comment|/**    * Convert this LazyHCatRecord to a DefaultHCatRecord.  This is required    * before you can write out a record via write.    * @return an HCatRecord that can be serialized    * @throws HCatException    */
 specifier|public
 name|HCatRecord
 name|getWritable

@@ -283,7 +283,7 @@ name|close
 parameter_list|()
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -345,7 +345,7 @@ throws|throws
 name|IOException
 throws|,
 name|InterruptedException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -379,7 +379,7 @@ decl_stmt|;
 specifier|public
 name|MockInputSplit
 parameter_list|()
-block|{         }
+block|{     }
 specifier|public
 name|MockInputSplit
 parameter_list|(
@@ -799,7 +799,7 @@ name|arg1
 parameter_list|)
 throws|throws
 name|IOException
-block|{     }
+block|{   }
 block|}
 end_class
 

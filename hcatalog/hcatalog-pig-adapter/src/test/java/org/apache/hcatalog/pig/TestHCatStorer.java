@@ -4421,7 +4421,7 @@ argument_list|<
 name|Boolean
 argument_list|>
 block|{
-comment|/*          * @param Tuple /* @return null /* @throws IOException          *          * @see org.apache.pig.EvalFunc#exec(org.apache.pig.data.Tuple)          */
+comment|/*      * @param Tuple /* @return null /* @throws IOException      *      * @see org.apache.pig.EvalFunc#exec(org.apache.pig.data.Tuple)      */
 annotation|@
 name|Override
 specifier|public

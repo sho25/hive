@@ -93,7 +93,7 @@ name|ifNotExits
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * Gets the database properties.      *      * @return the database properties      */
+comment|/**    * Gets the database properties.    *    * @return the database properties    */
 specifier|public
 name|Map
 argument_list|<
@@ -110,7 +110,7 @@ operator|.
 name|dbProperties
 return|;
 block|}
-comment|/**      * Gets the if not exists.      *      * @return the if not exists      */
+comment|/**    * Gets the if not exists.    *    * @return the if not exists    */
 specifier|public
 name|boolean
 name|getIfNotExists
@@ -122,7 +122,7 @@ operator|.
 name|ifNotExits
 return|;
 block|}
-comment|/**      * Gets the comments.      *      * @return the comments      */
+comment|/**    * Gets the comments.    *    * @return the comments    */
 specifier|public
 name|String
 name|getComments
@@ -134,7 +134,7 @@ operator|.
 name|comment
 return|;
 block|}
-comment|/**      * Gets the location.      *      * @return the location      */
+comment|/**    * Gets the location.    *    * @return the location    */
 specifier|public
 name|String
 name|getLocation
@@ -146,7 +146,7 @@ operator|.
 name|locationUri
 return|;
 block|}
-comment|/**      * Gets the database name.      *      * @return the database name      */
+comment|/**    * Gets the database name.    *    * @return the database name    */
 specifier|public
 name|String
 name|getDatabaseName
@@ -245,7 +245,7 @@ operator|+
 literal|"]"
 return|;
 block|}
-comment|/**      * Creates the builder for defining attributes.      *      * @param dbName the db name      * @return the builder      */
+comment|/**    * Creates the builder for defining attributes.    *    * @param dbName the db name    * @return the builder    */
 specifier|public
 specifier|static
 name|Builder
@@ -360,7 +360,7 @@ operator|=
 name|dbName
 expr_stmt|;
 block|}
-comment|/**          * Location.          *          * @param value the location of the database.          * @return the builder          */
+comment|/**      * Location.      *      * @param value the location of the database.      * @return the builder      */
 specifier|public
 name|Builder
 name|location
@@ -379,7 +379,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Comment.          *          * @param value comments.          * @return the builder          */
+comment|/**      * Comment.      *      * @param value comments.      * @return the builder      */
 specifier|public
 name|Builder
 name|comment
@@ -398,7 +398,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * If not exists.          * @param ifNotExists If set to true, hive will not throw exception, if a          * database with the same name already exists.          * @return the builder          */
+comment|/**      * If not exists.      * @param ifNotExists If set to true, hive will not throw exception, if a      * database with the same name already exists.      * @return the builder      */
 specifier|public
 name|Builder
 name|ifNotExists
@@ -417,7 +417,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Database properties.          *          * @param dbProps the database properties          * @return the builder          */
+comment|/**      * Database properties.      *      * @param dbProps the database properties      * @return the builder      */
 specifier|public
 name|Builder
 name|databaseProperties
@@ -441,7 +441,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Builds the create database descriptor.          *          * @return An instance of HCatCreateDBDesc          * @throws HCatException          */
+comment|/**      * Builds the create database descriptor.      *      * @return An instance of HCatCreateDBDesc      * @throws HCatException      */
 specifier|public
 name|HCatCreateDBDesc
 name|build

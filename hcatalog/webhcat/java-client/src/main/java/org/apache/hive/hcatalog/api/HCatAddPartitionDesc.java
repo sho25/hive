@@ -310,7 +310,7 @@ operator|=
 name|spec
 expr_stmt|;
 block|}
-comment|/**      * Gets the location.      *      * @return the location      */
+comment|/**    * Gets the location.    *    * @return the location    */
 specifier|public
 name|String
 name|getLocation
@@ -322,7 +322,7 @@ operator|.
 name|location
 return|;
 block|}
-comment|/**      * Gets the partition spec.      *      * @return the partition spec      */
+comment|/**    * Gets the partition spec.    *    * @return the partition spec    */
 specifier|public
 name|Map
 argument_list|<
@@ -339,7 +339,7 @@ operator|.
 name|partSpec
 return|;
 block|}
-comment|/**      * Gets the table name.      *      * @return the table name      */
+comment|/**    * Gets the table name.    *    * @return the table name    */
 specifier|public
 name|String
 name|getTableName
@@ -351,7 +351,7 @@ operator|.
 name|tableName
 return|;
 block|}
-comment|/**      * Gets the database name.      *      * @return the database name      */
+comment|/**    * Gets the database name.    *    * @return the database name    */
 specifier|public
 name|String
 name|getDatabaseName
@@ -430,7 +430,7 @@ operator|+
 literal|"]"
 return|;
 block|}
-comment|/**      * Creates the builder for specifying attributes.      *      * @param dbName the db name      * @param tableName the table name      * @param location the location      * @param partSpec the part spec      * @return the builder      * @throws HCatException      */
+comment|/**    * Creates the builder for specifying attributes.    *    * @param dbName the db name    * @param tableName the table name    * @param location the location    * @param partSpec the part spec    * @return the builder    * @throws HCatException    */
 specifier|public
 specifier|static
 name|Builder
@@ -814,7 +814,7 @@ operator|=
 name|values
 expr_stmt|;
 block|}
-comment|/**          * Builds the HCatAddPartitionDesc.          *          * @return the h cat add partition desc          * @throws HCatException          */
+comment|/**      * Builds the HCatAddPartitionDesc.      *      * @return the h cat add partition desc      * @throws HCatException      */
 specifier|public
 name|HCatAddPartitionDesc
 name|build

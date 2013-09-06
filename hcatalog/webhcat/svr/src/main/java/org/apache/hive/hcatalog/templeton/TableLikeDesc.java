@@ -71,7 +71,7 @@ decl_stmt|;
 specifier|public
 name|TableLikeDesc
 parameter_list|()
-block|{     }
+block|{   }
 specifier|public
 name|String
 name|toString

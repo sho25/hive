@@ -36,7 +36,7 @@ specifier|final
 name|int
 name|status
 decl_stmt|;
-comment|/**      * @return the status      */
+comment|/**    * @return the status    */
 specifier|public
 name|int
 name|getStatus

@@ -282,7 +282,7 @@ specifier|private
 name|ZooKeeper
 name|zk
 decl_stmt|;
-comment|/**      * Open a ZooKeeper connection for the JobState.      */
+comment|/**    * Open a ZooKeeper connection for the JobState.    */
 specifier|public
 specifier|static
 name|ZooKeeper
@@ -319,12 +319,12 @@ parameter_list|(
 name|WatchedEvent
 name|event
 parameter_list|)
-block|{                 }
+block|{         }
 block|}
 argument_list|)
 return|;
 block|}
-comment|/**      * Open a ZooKeeper connection for the JobState.      */
+comment|/**    * Open a ZooKeeper connection for the JobState.    */
 specifier|public
 specifier|static
 name|ZooKeeper
@@ -364,7 +364,7 @@ block|{
 comment|// No-op -- this is needed to be able to instantiate the
 comment|// class from the name.
 block|}
-comment|/**      * Close this ZK connection.      */
+comment|/**    * Close this ZK connection.    */
 specifier|public
 name|void
 name|close
@@ -442,7 +442,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Create a node in ZooKeeper      */
+comment|/**    * Create a node in ZooKeeper    */
 specifier|public
 name|void
 name|create
@@ -520,7 +520,7 @@ operator|.
 name|NodeExistsException
 name|e
 parameter_list|)
-block|{                 }
+block|{         }
 block|}
 if|if
 condition|(
@@ -719,7 +719,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Get the path based on the job type.      *      * @param type      */
+comment|/**    * Get the path based on the job type.    *    * @param type    */
 specifier|public
 name|String
 name|getPath
@@ -872,7 +872,7 @@ name|strings
 argument_list|)
 return|;
 block|}
-comment|/**      * A helper method that sets a field value.      * @param type      * @param id      * @param name      * @param val      * @throws KeeperException      * @throws UnsupportedEncodingException      * @throws InterruptedException      */
+comment|/**    * A helper method that sets a field value.    * @param type    * @param id    * @param name    * @param val    * @throws KeeperException    * @throws UnsupportedEncodingException    * @throws InterruptedException    */
 specifier|private
 name|void
 name|setFieldData
@@ -962,7 +962,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Make a ZK path to the named field.      */
+comment|/**    * Make a ZK path to the named field.    */
 specifier|public
 name|String
 name|makeFieldZnode
@@ -990,7 +990,7 @@ operator|+
 name|name
 return|;
 block|}
-comment|/**      * Make a ZK path to job      */
+comment|/**    * Make a ZK path to job    */
 specifier|public
 name|String
 name|makeZnode

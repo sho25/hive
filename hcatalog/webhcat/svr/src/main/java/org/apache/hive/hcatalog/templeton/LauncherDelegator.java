@@ -356,7 +356,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Enqueue the TempletonControllerJob directly calling doAs.      */
+comment|/**    * Enqueue the TempletonControllerJob directly calling doAs.    */
 specifier|public
 name|EnqueueBean
 name|enqueueController
@@ -901,7 +901,7 @@ name|completedUrl
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Add files to the Distributed Cache for the controller job.      */
+comment|/**    * Add files to the Distributed Cache for the controller job.    */
 specifier|public
 specifier|static
 name|void
@@ -948,7 +948,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Create the override classpath, which will be added to      * HADOOP_CLASSPATH at runtime by the controller job.      */
+comment|/**    * Create the override classpath, which will be added to    * HADOOP_CLASSPATH at runtime by the controller job.    */
 specifier|public
 specifier|static
 name|String
@@ -1028,7 +1028,7 @@ name|cp
 argument_list|)
 return|;
 block|}
-comment|/**      * Add a Hadoop command line definition to args if the value is      * not null.      */
+comment|/**    * Add a Hadoop command line definition to args if the value is    * not null.    */
 specifier|public
 specifier|static
 name|void

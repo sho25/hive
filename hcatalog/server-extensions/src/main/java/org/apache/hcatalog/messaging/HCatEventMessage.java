@@ -39,7 +39,7 @@ specifier|abstract
 class|class
 name|HCatEventMessage
 block|{
-comment|/**      * Enumeration of all supported types of Metastore operations.      */
+comment|/**    * Enumeration of all supported types of Metastore operations.    */
 specifier|public
 specifier|static
 enum|enum
@@ -100,7 +100,7 @@ operator|.
 name|typeString
 operator|=
 name|typeString
-block|;         }
+block|;     }
 expr|@
 name|Override
 specifier|public
@@ -115,7 +115,7 @@ block|}
 end_expr_stmt
 
 begin_decl_stmt
-unit|}      protected
+unit|}    protected
 name|EventType
 name|eventType
 decl_stmt|;
@@ -151,7 +151,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**      * Getter for HCatalog Server's URL.      * (This is where the event originates from.)      * @return HCatalog Server's URL (String).      */
+comment|/**    * Getter for HCatalog Server's URL.    * (This is where the event originates from.)    * @return HCatalog Server's URL (String).    */
 end_comment
 
 begin_function_decl
@@ -164,7 +164,7 @@ function_decl|;
 end_function_decl
 
 begin_comment
-comment|/**      * Getter for the Kerberos principal of the HCatalog service.      * @return HCatalog Service Principal (String).      */
+comment|/**    * Getter for the Kerberos principal of the HCatalog service.    * @return HCatalog Service Principal (String).    */
 end_comment
 
 begin_function_decl
@@ -177,7 +177,7 @@ function_decl|;
 end_function_decl
 
 begin_comment
-comment|/**      * Getter for the name of the Database on which the Metastore operation is done.      * @return Database-name (String).      */
+comment|/**    * Getter for the name of the Database on which the Metastore operation is done.    * @return Database-name (String).    */
 end_comment
 
 begin_function_decl
@@ -190,7 +190,7 @@ function_decl|;
 end_function_decl
 
 begin_comment
-comment|/**      * Getter for the timestamp associated with the operation.      * @return Timestamp (Long - seconds since epoch).      */
+comment|/**    * Getter for the timestamp associated with the operation.    * @return Timestamp (Long - seconds since epoch).    */
 end_comment
 
 begin_function_decl
@@ -203,7 +203,7 @@ function_decl|;
 end_function_decl
 
 begin_comment
-comment|/**      * Class invariant. Checked after construction or deserialization.      */
+comment|/**    * Class invariant. Checked after construction or deserialization.    */
 end_comment
 
 begin_function

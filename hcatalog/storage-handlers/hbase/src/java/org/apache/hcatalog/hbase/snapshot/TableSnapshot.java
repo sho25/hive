@@ -137,7 +137,7 @@ operator|=
 name|latestRevision
 expr_stmt|;
 block|}
-comment|/**      * Gets the table name.      *      * @return String The name of the table.      */
+comment|/**    * Gets the table name.    *    * @return String The name of the table.    */
 specifier|public
 name|String
 name|getTableName
@@ -147,7 +147,7 @@ return|return
 name|name
 return|;
 block|}
-comment|/**      * Gets the column families.      *      * @return List<String> A list of column families associated with the snapshot.      */
+comment|/**    * Gets the column families.    *    * @return List<String> A list of column families associated with the snapshot.    */
 specifier|public
 name|List
 argument_list|<
@@ -172,7 +172,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Gets the revision.      *      * @param familyName The name of the column family.      * @return the revision      */
+comment|/**    * Gets the revision.    *    * @param familyName The name of the column family.    * @return the revision    */
 specifier|public
 name|long
 name|getRevision
@@ -202,7 +202,7 @@ return|return
 name|latestRevision
 return|;
 block|}
-comment|/**      * @return the latest committed revision when this snapshot was taken      */
+comment|/**    * @return the latest committed revision when this snapshot was taken    */
 specifier|public
 name|long
 name|getLatestRevision

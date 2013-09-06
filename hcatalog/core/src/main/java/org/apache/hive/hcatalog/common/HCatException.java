@@ -52,7 +52,7 @@ specifier|final
 name|ErrorType
 name|errorType
 decl_stmt|;
-comment|/**      * Instantiates a new hcat exception.      * @param errorType the error type      */
+comment|/**    * Instantiates a new hcat exception.    * @param errorType the error type    */
 specifier|public
 name|HCatException
 parameter_list|(
@@ -70,7 +70,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Instantiates a new hcat exception.      * @param errorType the error type      * @param cause the cause      */
+comment|/**    * Instantiates a new hcat exception.    * @param errorType the error type    * @param cause the cause    */
 specifier|public
 name|HCatException
 parameter_list|(
@@ -91,7 +91,7 @@ name|cause
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Instantiates a new hcat exception.      * @param errorType the error type      * @param extraMessage extra messages to add to the message string      */
+comment|/**    * Instantiates a new hcat exception.    * @param errorType the error type    * @param extraMessage extra messages to add to the message string    */
 specifier|public
 name|HCatException
 parameter_list|(
@@ -112,7 +112,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Instantiates a new hcat exception.      * @param errorType the error type      * @param extraMessage extra messages to add to the message string      * @param cause the cause      */
+comment|/**    * Instantiates a new hcat exception.    * @param errorType the error type    * @param extraMessage extra messages to add to the message string    * @param cause the cause    */
 specifier|public
 name|HCatException
 parameter_list|(
@@ -149,7 +149,7 @@ expr_stmt|;
 block|}
 comment|//TODO : remove default error type constructors after all exceptions
 comment|//are changed to use error types
-comment|/**      * Instantiates a new hcat exception.      * @param message the error message      */
+comment|/**    * Instantiates a new hcat exception.    * @param message the error message    */
 specifier|public
 name|HCatException
 parameter_list|(
@@ -169,7 +169,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Instantiates a new hcat exception.      * @param message the error message      * @param cause the cause      */
+comment|/**    * Instantiates a new hcat exception.    * @param message the error message    * @param cause the cause    */
 specifier|public
 name|HCatException
 parameter_list|(
@@ -192,7 +192,7 @@ name|cause
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Builds the error message string. The error type message is appended with the extra message. If appendCause      * is true for the error type, then the message of the cause also is added to the message.      * @param type the error type      * @param extraMessage the extra message string      * @param cause the cause for the exception      * @return the exception message string      */
+comment|/**    * Builds the error message string. The error type message is appended with the extra message. If appendCause    * is true for the error type, then the message of the cause also is added to the message.    * @param type the error type    * @param extraMessage the extra message string    * @param cause the cause for the exception    * @return the exception message string    */
 specifier|public
 specifier|static
 name|String
@@ -302,7 +302,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**      * Is this a retriable error.      * @return is it retriable      */
+comment|/**    * Is this a retriable error.    * @return is it retriable    */
 specifier|public
 name|boolean
 name|isRetriable
@@ -315,7 +315,7 @@ name|isRetriable
 argument_list|()
 return|;
 block|}
-comment|/**      * Gets the error type.      * @return the error type enum      */
+comment|/**    * Gets the error type.    * @return the error type enum    */
 specifier|public
 name|ErrorType
 name|getErrorType
@@ -325,7 +325,7 @@ return|return
 name|errorType
 return|;
 block|}
-comment|/**      * Gets the error code.      * @return the error code      */
+comment|/**    * Gets the error code.    * @return the error code    */
 specifier|public
 name|int
 name|getErrorCode
@@ -338,7 +338,7 @@ name|getErrorCode
 argument_list|()
 return|;
 block|}
-comment|/* (non-Javadoc)     * @see java.lang.Throwable#toString()     */
+comment|/* (non-Javadoc)   * @see java.lang.Throwable#toString()   */
 annotation|@
 name|Override
 specifier|public

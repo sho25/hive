@@ -1110,7 +1110,7 @@ return|return
 name|job
 return|;
 block|}
-comment|/**      * Method to run the Importer MapReduce Job. Normally will be called by another MR job      * during OutputCommitter.commitJob().      * @param parentContext JobContext of the parent job      * @param tableName name of table to bulk load data into      * @param InputDir path of SequenceFile formatted data to read      * @param scratchDir temporary path for the Importer MR job to build the HFiles which will be imported      * @return      */
+comment|/**    * Method to run the Importer MapReduce Job. Normally will be called by another MR job    * during OutputCommitter.commitJob().    * @param parentContext JobContext of the parent job    * @param tableName name of table to bulk load data into    * @param InputDir path of SequenceFile formatted data to read    * @param scratchDir temporary path for the Importer MR job to build the HFiles which will be imported    * @return    */
 specifier|static
 name|boolean
 name|runJob

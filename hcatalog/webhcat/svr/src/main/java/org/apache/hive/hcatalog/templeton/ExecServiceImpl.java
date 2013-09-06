@@ -229,7 +229,7 @@ specifier|volatile
 name|ExecServiceImpl
 name|theSingleton
 decl_stmt|;
-comment|/**      * Retrieve the singleton.      */
+comment|/**    * Retrieve the singleton.    */
 specifier|public
 specifier|static
 specifier|synchronized
@@ -281,7 +281,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Run the program synchronously as the given user. We rate limit      * the number of processes that can simultaneously created for      * this instance.      *      * @param program   The program to run      * @param args      Arguments to pass to the program      * @param env       Any extra environment variables to set      * @return The result of the run.      */
+comment|/**    * Run the program synchronously as the given user. We rate limit    * the number of processes that can simultaneously created for    * this instance.    *    * @param program   The program to run    * @param args      Arguments to pass to the program    * @param env       Any extra environment variables to set    * @return The result of the run.    */
 specifier|public
 name|ExecBean
 name|run
@@ -366,7 +366,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Run the program synchronously as the given user.  Warning:      * CommandLine will trim the argument strings.      *      * @param program   The program to run.      * @param args      Arguments to pass to the program      * @param env       Any extra environment variables to set      * @return The result of the run.      */
+comment|/**    * Run the program synchronously as the given user.  Warning:    * CommandLine will trim the argument strings.    *    * @param program   The program to run.    * @param args      Arguments to pass to the program    * @param env       Any extra environment variables to set    * @return The result of the run.    */
 specifier|public
 name|ExecBean
 name|runUnlimited
@@ -718,7 +718,7 @@ return|return
 name|cmd
 return|;
 block|}
-comment|/**      * Build the environment used for all exec calls.      *      * @return The environment variables.      */
+comment|/**    * Build the environment used for all exec calls.    *    * @return The environment variables.    */
 specifier|public
 name|Map
 argument_list|<
@@ -852,7 +852,7 @@ return|return
 name|res
 return|;
 block|}
-comment|/**      * Given a program name, lookup the fully qualified path.  Throws      * an exception if the program is missing or not authorized.      *      * @param path      The path of the program.      * @return The path of the validated program.      */
+comment|/**    * Given a program name, lookup the fully qualified path.  Throws    * an exception if the program is missing or not authorized.    *    * @param path      The path of the program.    * @return The path of the validated program.    */
 specifier|public
 name|String
 name|validateProgram

@@ -369,7 +369,7 @@ operator|=
 name|baseDir
 expr_stmt|;
 block|}
-comment|/**      * This method creates znodes related to table.      *      * @param table The name of the table.      * @param families The list of column families of the table.      * @throws IOException      */
+comment|/**    * This method creates znodes related to table.    *    * @param table The name of the table.    * @param families The list of column families of the table.    * @throws IOException    */
 name|void
 name|setUpZnodesForTable
 parameter_list|(
@@ -484,7 +484,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * This method ensures that a given path exists in zookeeper. If the path      * does not exists, it creates one.      *      * @param path The path of znode that is required to exist.      * @param data The data to be associated with the znode.      * @param acl The ACLs required.      * @param flags The CreateMode for the znode.      * @throws IOException      */
+comment|/**    * This method ensures that a given path exists in zookeeper. If the path    * does not exists, it creates one.    *    * @param path The path of znode that is required to exist.    * @param data The data to be associated with the znode.    * @param acl The ACLs required.    * @param flags The CreateMode for the znode.    * @throws IOException    */
 name|void
 name|ensurePathExists
 parameter_list|(
@@ -610,7 +610,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**      * This method returns a list of columns of a table which were used in any      * of the transactions.      *      * @param tableName The name of table.      * @return List<String> The list of column families in table.      * @throws IOException      */
+comment|/**    * This method returns a list of columns of a table which were used in any    * of the transactions.    *    * @param tableName The name of table.    * @return List<String> The list of column families in table.    * @throws IOException    */
 name|List
 argument_list|<
 name|String
@@ -767,7 +767,7 @@ return|return
 name|columnFamlies
 return|;
 block|}
-comment|/**      * This method returns a time stamp for use by the transactions.      *      * @return long The current timestamp in zookeeper.      * @throws IOException      */
+comment|/**    * This method returns a time stamp for use by the transactions.    *    * @return long The current timestamp in zookeeper.    * @throws IOException    */
 name|long
 name|getTimeStamp
 parameter_list|()
@@ -896,7 +896,7 @@ return|return
 name|timeStamp
 return|;
 block|}
-comment|/**      * This method returns the next revision number to be used for any      * transaction purposes.      *      * @param tableName The name of the table.      * @return revision number The revision number last used by any transaction.      * @throws IOException      */
+comment|/**    * This method returns the next revision number to be used for any    * transaction purposes.    *    * @param tableName The name of the table.    * @return revision number The revision number last used by any transaction.    * @throws IOException    */
 name|long
 name|nextId
 parameter_list|(
@@ -991,7 +991,7 @@ return|return
 name|id
 return|;
 block|}
-comment|/**      * The latest used revision id of the table.      *      * @param tableName The name of the table.      * @return the long The revision number to use by any transaction.      * @throws IOException Signals that an I/O exception has occurred.      */
+comment|/**    * The latest used revision id of the table.    *    * @param tableName The name of the table.    * @return the long The revision number to use by any transaction.    * @throws IOException Signals that an I/O exception has occurred.    */
 name|long
 name|currentID
 parameter_list|(
@@ -1086,7 +1086,7 @@ return|return
 name|id
 return|;
 block|}
-comment|/**      * This methods retrieves the list of transaction information associated      * with each column/column family of a table.      *      * @param path The znode path      * @return List of FamilyRevision The list of transactions in the given path.      * @throws IOException      */
+comment|/**    * This methods retrieves the list of transaction information associated    * with each column/column family of a table.    *    * @param path The znode path    * @return List of FamilyRevision The list of transactions in the given path.    * @throws IOException    */
 name|List
 argument_list|<
 name|FamilyRevision
@@ -1201,7 +1201,7 @@ return|return
 name|wtxnList
 return|;
 block|}
-comment|/**      * This method returns the data associated with the path in zookeeper.      *      * @param path The znode path      * @param stat Zookeeper stat      * @return byte array The data stored in the znode.      * @throws IOException      */
+comment|/**    * This method returns the data associated with the path in zookeeper.    *    * @param path The znode path    * @param stat Zookeeper stat    * @return byte array The data stored in the znode.    * @throws IOException    */
 name|byte
 index|[]
 name|getRawData
@@ -1260,7 +1260,7 @@ return|return
 name|data
 return|;
 block|}
-comment|/**      * This method created the basic znodes in zookeeper for revision      * management.      *      * @throws IOException      */
+comment|/**    * This method created the basic znodes in zookeeper for revision    * management.    *    * @throws IOException    */
 name|void
 name|createRootZNodes
 parameter_list|()
@@ -1322,7 +1322,7 @@ name|PERSISTENT
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * This method closes the zookeeper session.      */
+comment|/**    * This method closes the zookeeper session.    */
 name|void
 name|closeZKConnection
 parameter_list|()
@@ -1371,7 +1371,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * This method returns a zookeeper session. If the current session is closed,      * then a new session is created.      *      * @return ZooKeeper An instance of zookeeper client.      * @throws IOException      */
+comment|/**    * This method returns a zookeeper session. If the current session is closed,    * then a new session is created.    *    * @return ZooKeeper An instance of zookeeper client.    * @throws IOException    */
 name|ZooKeeper
 name|getSession
 parameter_list|()
@@ -1460,7 +1460,7 @@ parameter_list|(
 name|InterruptedException
 name|e
 parameter_list|)
-block|{                         }
+block|{             }
 block|}
 block|}
 block|}
@@ -1469,7 +1469,7 @@ return|return
 name|zkSession
 return|;
 block|}
-comment|/**      * This method updates the transaction data related to a znode.      *      * @param path The path to the transaction data.      * @param updateTx The FamilyRevision to be updated.      * @param mode The mode to update like append, update, remove.      * @throws IOException      */
+comment|/**    * This method updates the transaction data related to a znode.    *    * @param path The path to the transaction data.    * @param updateTx The FamilyRevision to be updated.    * @param mode The mode to update like append, update, remove.    * @throws IOException    */
 name|void
 name|updateData
 parameter_list|(
@@ -1823,7 +1823,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Refresh transactions on a given transaction data path.      *      * @param path The path to the transaction data.      * @throws IOException Signals that an I/O exception has occurred.      */
+comment|/**    * Refresh transactions on a given transaction data path.    *    * @param path The path to the transaction data.    * @throws IOException Signals that an I/O exception has occurred.    */
 name|void
 name|refreshTransactions
 parameter_list|(
@@ -2010,7 +2010,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**      * Delete table znodes.      *      * @param tableName the hbase table name      * @throws IOException Signals that an I/O exception has occurred.      */
+comment|/**    * Delete table znodes.    *    * @param tableName the hbase table name    * @throws IOException Signals that an I/O exception has occurred.    */
 name|void
 name|deleteZNodes
 parameter_list|(
@@ -2147,7 +2147,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * This method serializes a given instance of TBase object.      *      * @param obj An instance of TBase      * @return byte array The serialized data.      * @throws IOException      */
+comment|/**    * This method serializes a given instance of TBase object.    *    * @param obj An instance of TBase    * @return byte array The serialized data.    * @throws IOException    */
 specifier|static
 name|byte
 index|[]
@@ -2219,7 +2219,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * This method deserializes the given byte array into the TBase object.      *      * @param obj An instance of TBase      * @param data Output of deserialization.      * @throws IOException      */
+comment|/**    * This method deserializes the given byte array into the TBase object.    *    * @param obj An instance of TBase    * @param data Output of deserialization.    * @throws IOException    */
 specifier|static
 name|void
 name|deserialize

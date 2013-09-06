@@ -493,7 +493,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**      * @param m      * @throws IOException      */
+comment|/**    * @param m    * @throws IOException    */
 specifier|public
 specifier|static
 name|void

@@ -357,7 +357,7 @@ specifier|volatile
 name|AppConfig
 name|conf
 decl_stmt|;
-comment|/**      * Retrieve the config singleton.      */
+comment|/**    * Retrieve the config singleton.    */
 specifier|public
 specifier|static
 specifier|synchronized
@@ -830,7 +830,7 @@ init|=
 name|makeAuthFilter
 argument_list|()
 decl_stmt|;
-comment|/*           * We add filters for each of the URIs supported by templeton.          * If we added the entire sub-structure using '/*', the mapreduce           * notification cannot give the callback to templeton in secure mode.          * This is because mapreduce does not use secure credentials for           * callbacks. So jetty would fail the request as unauthorized.          */
+comment|/*       * We add filters for each of the URIs supported by templeton.      * If we added the entire sub-structure using '/*', the mapreduce       * notification cannot give the callback to templeton in secure mode.      * This is because mapreduce does not use secure credentials for       * callbacks. So jetty would fail the request as unauthorized.      */
 name|root
 operator|.
 name|addFilter

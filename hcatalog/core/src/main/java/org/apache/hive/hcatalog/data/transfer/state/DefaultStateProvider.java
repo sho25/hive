@@ -48,7 +48,7 @@ name|DefaultStateProvider
 implements|implements
 name|StateProvider
 block|{
-comment|/**      * Default implementation. Here, ids are generated randomly.      */
+comment|/**    * Default implementation. Here, ids are generated randomly.    */
 annotation|@
 name|Override
 specifier|public

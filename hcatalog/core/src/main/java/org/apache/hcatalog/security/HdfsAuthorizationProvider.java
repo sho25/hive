@@ -1279,7 +1279,7 @@ name|writeRequiredPriv
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Authorization privileges against a path.      * @param path a filesystem path      * @param readRequiredPriv a list of privileges needed for inputs.      * @param writeRequiredPriv a list of privileges needed for outputs.      */
+comment|/**    * Authorization privileges against a path.    * @param path a filesystem path    * @param readRequiredPriv a list of privileges needed for inputs.    * @param writeRequiredPriv a list of privileges needed for outputs.    */
 specifier|public
 name|void
 name|authorize
@@ -1391,7 +1391,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Checks the permissions for the given path and current user on Hadoop FS. If the given path      * does not exists, it checks for it's parent folder.      */
+comment|/**    * Checks the permissions for the given path and current user on Hadoop FS. If the given path    * does not exists, it checks for it's parent folder.    */
 specifier|protected
 specifier|static
 name|void
@@ -1597,7 +1597,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Checks the permissions for the given path and current user on Hadoop FS. If the given path      * does not exists, it returns.      */
+comment|/**    * Checks the permissions for the given path and current user on Hadoop FS. If the given path    * does not exists, it returns.    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

@@ -250,7 +250,7 @@ specifier|private
 name|String
 name|storage_root
 decl_stmt|;
-comment|/**      * Create a cleanup object.       */
+comment|/**    * Create a cleanup object.     */
 specifier|private
 name|HDFSCleanup
 parameter_list|(
@@ -357,7 +357,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Run the cleanup loop.      *      */
+comment|/**    * Run the cleanup loop.    *    */
 specifier|public
 name|void
 name|run
@@ -497,7 +497,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**      * Loop through all the files, deleting any that are older than      * maxage.      *       * @param fs      * @throws IOException      */
+comment|/**    * Loop through all the files, deleting any that are older than    * maxage.    *     * @param fs    * @throws IOException    */
 specifier|private
 name|void
 name|checkFiles

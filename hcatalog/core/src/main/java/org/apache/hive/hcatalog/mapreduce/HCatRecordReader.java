@@ -377,7 +377,7 @@ name|dataSchema
 init|=
 literal|null
 decl_stmt|;
-comment|/**      * Instantiates a new hcat record reader.      */
+comment|/**    * Instantiates a new hcat record reader.    */
 specifier|public
 name|HCatRecordReader
 parameter_list|(
@@ -406,7 +406,7 @@ operator|=
 name|valuesNotInDataCols
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)      * @see org.apache.hadoop.mapreduce.RecordReader#initialize(      * org.apache.hadoop.mapreduce.InputSplit,      * org.apache.hadoop.mapreduce.TaskAttemptContext)      */
+comment|/* (non-Javadoc)    * @see org.apache.hadoop.mapreduce.RecordReader#initialize(    * org.apache.hadoop.mapreduce.InputSplit,    * org.apache.hadoop.mapreduce.TaskAttemptContext)    */
 annotation|@
 name|Override
 specifier|public
@@ -703,7 +703,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/* (non-Javadoc)     * @see org.apache.hadoop.mapreduce.RecordReader#getCurrentKey()     */
+comment|/* (non-Javadoc)   * @see org.apache.hadoop.mapreduce.RecordReader#getCurrentKey()   */
 annotation|@
 name|Override
 specifier|public
@@ -719,7 +719,7 @@ return|return
 name|currentKey
 return|;
 block|}
-comment|/* (non-Javadoc)      * @see org.apache.hadoop.mapreduce.RecordReader#getCurrentValue()      */
+comment|/* (non-Javadoc)    * @see org.apache.hadoop.mapreduce.RecordReader#getCurrentValue()    */
 annotation|@
 name|Override
 specifier|public
@@ -735,7 +735,7 @@ return|return
 name|currentHCatRecord
 return|;
 block|}
-comment|/* (non-Javadoc)      * @see org.apache.hadoop.mapreduce.RecordReader#getProgress()      */
+comment|/* (non-Javadoc)    * @see org.apache.hadoop.mapreduce.RecordReader#getProgress()    */
 annotation|@
 name|Override
 specifier|public
@@ -773,7 +773,7 @@ literal|0.0f
 return|;
 comment|// errored
 block|}
-comment|/**      * Check if the wrapped RecordReader has another record, and if so convert it into an      * HCatRecord. We both check for records and convert here so a configurable percent of      * bad records can be tolerated.      *      * @return if there is a next record      * @throws IOException on error      * @throws InterruptedException on error      */
+comment|/**    * Check if the wrapped RecordReader has another record, and if so convert it into an    * HCatRecord. We both check for records and convert here so a configurable percent of    * bad records can be tolerated.    *    * @return if there is a next record    * @throws IOException on error    * @throws InterruptedException on error    */
 annotation|@
 name|Override
 specifier|public
@@ -977,7 +977,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/* (non-Javadoc)     * @see org.apache.hadoop.mapreduce.RecordReader#close()     */
+comment|/* (non-Javadoc)   * @see org.apache.hadoop.mapreduce.RecordReader#close()   */
 annotation|@
 name|Override
 specifier|public
@@ -993,7 +993,7 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Tracks number of of errors in input and throws a Runtime exception      * if the rate of errors crosses a limit.      *<br/>      * The intention is to skip over very rare file corruption or incorrect      * input, but catch programmer errors (incorrect format, or incorrect      * deserializers etc).      *      * This class was largely copied from Elephant-Bird (thanks @rangadi!)      * https://github.com/kevinweil/elephant-bird/blob/master/core/src/main/java/com/twitter/elephantbird/mapreduce/input/LzoRecordReader.java      */
+comment|/**    * Tracks number of of errors in input and throws a Runtime exception    * if the rate of errors crosses a limit.    *<br/>    * The intention is to skip over very rare file corruption or incorrect    * input, but catch programmer errors (incorrect format, or incorrect    * deserializers etc).    *    * This class was largely copied from Elephant-Bird (thanks @rangadi!)    * https://github.com/kevinweil/elephant-bird/blob/master/core/src/main/java/com/twitter/elephantbird/mapreduce/input/LzoRecordReader.java    */
 specifier|static
 class|class
 name|InputErrorTracker

@@ -513,7 +513,7 @@ parameter_list|(
 name|Configuration
 name|conf
 parameter_list|)
-block|{     }
+block|{   }
 annotation|@
 name|Override
 specifier|public
@@ -596,7 +596,7 @@ name|String
 argument_list|>
 name|jobProperties
 parameter_list|)
-block|{     }
+block|{   }
 annotation|@
 name|Override
 specifier|public
@@ -614,7 +614,7 @@ name|String
 argument_list|>
 name|jobProperties
 parameter_list|)
-block|{     }
+block|{   }
 annotation|@
 name|Override
 specifier|public
@@ -647,7 +647,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/* @param conf          * @see org.apache.hadoop.conf.Configurable#setConf(org.apache.hadoop.conf.Configuration)          */
+comment|/* @param conf      * @see org.apache.hadoop.conf.Configurable#setConf(org.apache.hadoop.conf.Configuration)      */
 annotation|@
 name|Override
 specifier|public
@@ -657,8 +657,8 @@ parameter_list|(
 name|Configuration
 name|conf
 parameter_list|)
-block|{         }
-comment|/* @param conf         /* @throws HiveException          * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#init(org.apache.hadoop.conf.Configuration)          */
+block|{     }
+comment|/* @param conf     /* @throws HiveException      * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#init(org.apache.hadoop.conf.Configuration)      */
 annotation|@
 name|Override
 specifier|public
@@ -670,8 +670,8 @@ name|conf
 parameter_list|)
 throws|throws
 name|HiveException
-block|{         }
-comment|/* @return HiveAuthenticationProvider          * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#getAuthenticator()          */
+block|{     }
+comment|/* @return HiveAuthenticationProvider      * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#getAuthenticator()      */
 annotation|@
 name|Override
 specifier|public
@@ -683,7 +683,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/* @param authenticator          * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#setAuthenticator(org.apache.hadoop.hive.ql.security.HiveAuthenticationProvider)          */
+comment|/* @param authenticator      * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#setAuthenticator(org.apache.hadoop.hive.ql.security.HiveAuthenticationProvider)      */
 annotation|@
 name|Override
 specifier|public
@@ -693,8 +693,8 @@ parameter_list|(
 name|HiveAuthenticationProvider
 name|authenticator
 parameter_list|)
-block|{         }
-comment|/* @param readRequiredPriv         /* @param writeRequiredPriv         /* @throws HiveException         /* @throws AuthorizationException          * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])          */
+block|{     }
+comment|/* @param readRequiredPriv     /* @param writeRequiredPriv     /* @throws HiveException     /* @throws AuthorizationException      * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])      */
 annotation|@
 name|Override
 specifier|public
@@ -713,8 +713,8 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{         }
-comment|/* @param db         /* @param readRequiredPriv         /* @param writeRequiredPriv         /* @throws HiveException         /* @throws AuthorizationException          * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.metastore.api.Database, org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])          */
+block|{     }
+comment|/* @param db     /* @param readRequiredPriv     /* @param writeRequiredPriv     /* @throws HiveException     /* @throws AuthorizationException      * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.metastore.api.Database, org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])      */
 annotation|@
 name|Override
 specifier|public
@@ -736,8 +736,8 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{         }
-comment|/* @param table         /* @param readRequiredPriv         /* @param writeRequiredPriv         /* @throws HiveException         /* @throws AuthorizationException          * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.ql.metadata.Table, org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])          */
+block|{     }
+comment|/* @param table     /* @param readRequiredPriv     /* @param writeRequiredPriv     /* @throws HiveException     /* @throws AuthorizationException      * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.ql.metadata.Table, org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])      */
 annotation|@
 name|Override
 specifier|public
@@ -771,8 +771,8 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{         }
-comment|/* @param part         /* @param readRequiredPriv         /* @param writeRequiredPriv         /* @throws HiveException         /* @throws AuthorizationException          * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.ql.metadata.Partition, org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])          */
+block|{     }
+comment|/* @param part     /* @param readRequiredPriv     /* @param writeRequiredPriv     /* @throws HiveException     /* @throws AuthorizationException      * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.ql.metadata.Partition, org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])      */
 annotation|@
 name|Override
 specifier|public
@@ -794,8 +794,8 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{         }
-comment|/* @param table         /* @param part         /* @param columns         /* @param readRequiredPriv         /* @param writeRequiredPriv         /* @throws HiveException         /* @throws AuthorizationException          * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.ql.metadata.Table, org.apache.hadoop.hive.ql.metadata.Partition, java.util.List, org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])          */
+block|{     }
+comment|/* @param table     /* @param part     /* @param columns     /* @param readRequiredPriv     /* @param writeRequiredPriv     /* @throws HiveException     /* @throws AuthorizationException      * @see org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider#authorize(org.apache.hadoop.hive.ql.metadata.Table, org.apache.hadoop.hive.ql.metadata.Partition, java.util.List, org.apache.hadoop.hive.ql.security.authorization.Privilege[], org.apache.hadoop.hive.ql.security.authorization.Privilege[])      */
 annotation|@
 name|Override
 specifier|public
@@ -838,9 +838,9 @@ throws|throws
 name|HiveException
 throws|,
 name|AuthorizationException
-block|{         }
+block|{     }
 block|}
-comment|/**      * The Class DummyInputFormat is a dummy implementation of the old hadoop      * mapred.InputFormat required by HiveStorageHandler.      */
+comment|/**    * The Class DummyInputFormat is a dummy implementation of the old hadoop    * mapred.InputFormat required by HiveStorageHandler.    */
 class|class
 name|DummyInputFormat
 implements|implements
@@ -851,7 +851,7 @@ argument_list|,
 name|HCatRecord
 argument_list|>
 block|{
-comment|/*          * @see          * org.apache.hadoop.mapred.InputFormat#getRecordReader(org.apache.hadoop          * .mapred.InputSplit, org.apache.hadoop.mapred.JobConf,          * org.apache.hadoop.mapred.Reporter)          */
+comment|/*      * @see      * org.apache.hadoop.mapred.InputFormat#getRecordReader(org.apache.hadoop      * .mapred.InputSplit, org.apache.hadoop.mapred.JobConf,      * org.apache.hadoop.mapred.Reporter)      */
 annotation|@
 name|Override
 specifier|public
@@ -883,7 +883,7 @@ literal|"This operation is not supported."
 argument_list|)
 throw|;
 block|}
-comment|/*          * @see          * org.apache.hadoop.mapred.InputFormat#getSplits(org.apache.hadoop.          * mapred .JobConf, int)          */
+comment|/*      * @see      * org.apache.hadoop.mapred.InputFormat#getSplits(org.apache.hadoop.      * mapred .JobConf, int)      */
 annotation|@
 name|Override
 specifier|public
@@ -909,7 +909,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * The Class DummyOutputFormat is a dummy implementation of the old hadoop      * mapred.OutputFormat and HiveOutputFormat required by HiveStorageHandler.      */
+comment|/**    * The Class DummyOutputFormat is a dummy implementation of the old hadoop    * mapred.OutputFormat and HiveOutputFormat required by HiveStorageHandler.    */
 class|class
 name|DummyOutputFormat
 implements|implements
@@ -933,7 +933,7 @@ argument_list|,
 name|HCatRecord
 argument_list|>
 block|{
-comment|/*          * @see          * org.apache.hadoop.mapred.OutputFormat#checkOutputSpecs(org.apache          * .hadoop .fs.FileSystem, org.apache.hadoop.mapred.JobConf)          */
+comment|/*      * @see      * org.apache.hadoop.mapred.OutputFormat#checkOutputSpecs(org.apache      * .hadoop .fs.FileSystem, org.apache.hadoop.mapred.JobConf)      */
 annotation|@
 name|Override
 specifier|public
@@ -957,7 +957,7 @@ literal|"This operation is not supported."
 argument_list|)
 throw|;
 block|}
-comment|/*          * @see          * org.apache.hadoop.mapred.OutputFormat#getRecordWriter(org.apache.          * hadoop .fs.FileSystem, org.apache.hadoop.mapred.JobConf,          * java.lang.String, org.apache.hadoop.util.Progressable)          */
+comment|/*      * @see      * org.apache.hadoop.mapred.OutputFormat#getRecordWriter(org.apache.      * hadoop .fs.FileSystem, org.apache.hadoop.mapred.JobConf,      * java.lang.String, org.apache.hadoop.util.Progressable)      */
 annotation|@
 name|Override
 specifier|public
@@ -995,7 +995,7 @@ literal|"This operation is not supported."
 argument_list|)
 throw|;
 block|}
-comment|/*          * @see          * org.apache.hadoop.hive.ql.io.HiveOutputFormat#getHiveRecordWriter(org          * .apache.hadoop.mapred.JobConf, org.apache.hadoop.fs.Path,          * java.lang.Class, boolean, java.util.Properties,          * org.apache.hadoop.util.Progressable)          */
+comment|/*      * @see      * org.apache.hadoop.hive.ql.io.HiveOutputFormat#getHiveRecordWriter(org      * .apache.hadoop.mapred.JobConf, org.apache.hadoop.fs.Path,      * java.lang.Class, boolean, java.util.Properties,      * org.apache.hadoop.util.Progressable)      */
 annotation|@
 name|Override
 specifier|public

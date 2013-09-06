@@ -220,7 +220,7 @@ specifier|private
 name|Properties
 name|properties
 decl_stmt|;
-comment|/**      * Initializes a new InputJobInfo      * for reading data from a table.      * @param databaseName the db name      * @param tableName the table name      * @param filter the partition filter      * @param properties implementation specific job properties      */
+comment|/**    * Initializes a new InputJobInfo    * for reading data from a table.    * @param databaseName the db name    * @param tableName the table name    * @param filter the partition filter    * @param properties implementation specific job properties    */
 specifier|public
 specifier|static
 name|InputJobInfo
@@ -253,7 +253,7 @@ name|properties
 argument_list|)
 return|;
 block|}
-comment|/**      * Initializes a new InputJobInfo      * for reading data from a table.      * @param databaseName the db name      * @param tableName the table name      * @param filter the partition filter      */
+comment|/**    * Initializes a new InputJobInfo    * for reading data from a table.    * @param databaseName the db name    * @param tableName the table name    * @param filter the partition filter    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -343,7 +343,7 @@ else|:
 name|properties
 expr_stmt|;
 block|}
-comment|/**      * Gets the value of databaseName      * @return the databaseName      */
+comment|/**    * Gets the value of databaseName    * @return the databaseName    */
 specifier|public
 name|String
 name|getDatabaseName
@@ -353,7 +353,7 @@ return|return
 name|databaseName
 return|;
 block|}
-comment|/**      * Gets the value of tableName      * @return the tableName      */
+comment|/**    * Gets the value of tableName    * @return the tableName    */
 specifier|public
 name|String
 name|getTableName
@@ -363,7 +363,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**      * Gets the table's meta information      * @return the HCatTableInfo      */
+comment|/**    * Gets the table's meta information    * @return the HCatTableInfo    */
 specifier|public
 name|HCatTableInfo
 name|getTableInfo
@@ -373,7 +373,7 @@ return|return
 name|tableInfo
 return|;
 block|}
-comment|/**      * set the tablInfo instance      * this should be the same instance      * determined by this object's DatabaseName and TableName      * @param tableInfo      */
+comment|/**    * set the tablInfo instance    * this should be the same instance    * determined by this object's DatabaseName and TableName    * @param tableInfo    */
 name|void
 name|setTableInfo
 parameter_list|(
@@ -388,7 +388,7 @@ operator|=
 name|tableInfo
 expr_stmt|;
 block|}
-comment|/**      * Gets the value of partition filter      * @return the filter string      */
+comment|/**    * Gets the value of partition filter    * @return the filter string    */
 specifier|public
 name|String
 name|getFilter
@@ -398,7 +398,7 @@ return|return
 name|filter
 return|;
 block|}
-comment|/**      * @return partition info      */
+comment|/**    * @return partition info    */
 specifier|public
 name|List
 argument_list|<
@@ -411,7 +411,7 @@ return|return
 name|partitions
 return|;
 block|}
-comment|/**      * @return partition info  list      */
+comment|/**    * @return partition info  list    */
 name|void
 name|setPartitions
 parameter_list|(
@@ -429,7 +429,7 @@ operator|=
 name|partitions
 expr_stmt|;
 block|}
-comment|/**      * Set/Get Property information to be passed down to *StorageHandler implementation      * put implementation specific storage handler configurations here      * @return the implementation specific job properties      */
+comment|/**    * Set/Get Property information to be passed down to *StorageHandler implementation    * put implementation specific storage handler configurations here    * @return the implementation specific job properties    */
 specifier|public
 name|Properties
 name|getProperties
@@ -439,7 +439,7 @@ return|return
 name|properties
 return|;
 block|}
-comment|/**      * Serialize this object, compressing the partitions which can exceed the      * allowed jobConf size.      * @see<a href="https://issues.apache.org/jira/browse/HCATALOG-453">HCATALOG-453</a>      */
+comment|/**    * Serialize this object, compressing the partitions which can exceed the    * allowed jobConf size.    * @see<a href="https://issues.apache.org/jira/browse/HCATALOG-453">HCATALOG-453</a>    */
 specifier|private
 name|void
 name|writeObject
@@ -494,7 +494,7 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Deserialize this object, decompressing the partitions which can exceed the      * allowed jobConf size.      * @see<a href="https://issues.apache.org/jira/browse/HCATALOG-453">HCATALOG-453</a>      */
+comment|/**    * Deserialize this object, decompressing the partitions which can exceed the    * allowed jobConf size.    * @see<a href="https://issues.apache.org/jira/browse/HCATALOG-453">HCATALOG-453</a>    */
 annotation|@
 name|SuppressWarnings
 argument_list|(

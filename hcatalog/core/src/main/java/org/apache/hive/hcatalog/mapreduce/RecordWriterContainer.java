@@ -133,7 +133,7 @@ name|Writable
 argument_list|>
 name|baseRecordWriter
 decl_stmt|;
-comment|/**      * @param context current JobContext      * @param baseRecordWriter RecordWriter that this instance will contain      */
+comment|/**    * @param context current JobContext    * @param baseRecordWriter RecordWriter that this instance will contain    */
 specifier|public
 name|RecordWriterContainer
 parameter_list|(
@@ -171,7 +171,7 @@ operator|=
 name|baseRecordWriter
 expr_stmt|;
 block|}
-comment|/**      * @return underlying RecordWriter      */
+comment|/**    * @return underlying RecordWriter    */
 specifier|public
 name|org
 operator|.

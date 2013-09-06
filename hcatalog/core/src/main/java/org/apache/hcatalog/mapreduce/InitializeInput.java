@@ -304,7 +304,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**      * @see org.apache.hcatalog.mapreduce.InitializeInput#setInput(org.apache.hadoop.conf.Configuration, InputJobInfo)      */
+comment|/**    * @see org.apache.hcatalog.mapreduce.InitializeInput#setInput(org.apache.hadoop.conf.Configuration, InputJobInfo)    */
 specifier|public
 specifier|static
 name|void
@@ -330,7 +330,7 @@ name|theirInputJobInfo
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Set the input to use for the Job. This queries the metadata server with the specified      * partition predicates, gets the matching partitions, and puts the information in the job      * configuration object.      *      * To ensure a known InputJobInfo state, only the database name, table name, filter, and      * properties are preserved. All other modification from the given InputJobInfo are discarded.      *      * After calling setInput, InputJobInfo can be retrieved from the job configuration as follows:      * {code}      * InputJobInfo inputInfo = (InputJobInfo) HCatUtil.deserialize(      *     job.getConfiguration().get(HCatConstants.HCAT_KEY_JOB_INFO));      * {code}      *      * @param conf the job Configuration object      * @param theirInputJobInfo information on the Input to read      * @throws Exception      */
+comment|/**    * Set the input to use for the Job. This queries the metadata server with the specified    * partition predicates, gets the matching partitions, and puts the information in the job    * configuration object.    *    * To ensure a known InputJobInfo state, only the database name, table name, filter, and    * properties are preserved. All other modification from the given InputJobInfo are discarded.    *    * After calling setInput, InputJobInfo can be retrieved from the job configuration as follows:    * {code}    * InputJobInfo inputInfo = (InputJobInfo) HCatUtil.deserialize(    *     job.getConfiguration().get(HCatConstants.HCAT_KEY_JOB_INFO));    * {code}    *    * @param conf the job Configuration object    * @param theirInputJobInfo information on the Input to read    * @throws Exception    */
 specifier|public
 specifier|static
 name|void
@@ -397,7 +397,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Returns the given InputJobInfo after populating with data queried from the metadata service.      */
+comment|/**    * Returns the given InputJobInfo after populating with data queried from the metadata service.    */
 specifier|private
 specifier|static
 name|InputJobInfo

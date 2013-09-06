@@ -55,7 +55,7 @@ name|String
 argument_list|>
 name|partitionKVs
 decl_stmt|;
-comment|/**      * Common methods for {@link ReadEntity} and {@link WriteEntity}      */
+comment|/**    * Common methods for {@link ReadEntity} and {@link WriteEntity}    */
 specifier|abstract
 specifier|static
 class|class

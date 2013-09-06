@@ -527,7 +527,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**      * @param of base OutputFormat to contain      */
+comment|/**    * @param of base OutputFormat to contain    */
 specifier|public
 name|FileOutputFormatContainer
 parameter_list|(
@@ -1065,7 +1065,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Handles duplicate publish of partition. Fails if partition already exists.      * For non partitioned tables, fails if files are present in table directory.      * For dynamic partitioned publish, does nothing - check would need to be done at recordwriter time      * @param context the job      * @param outputInfo the output info      * @param client the metastore client      * @param table the table being written to      * @throws IOException      * @throws org.apache.hadoop.hive.metastore.api.MetaException      * @throws org.apache.thrift.TException      */
+comment|/**    * Handles duplicate publish of partition. Fails if partition already exists.    * For non partitioned tables, fails if files are present in table directory.    * For dynamic partitioned publish, does nothing - check would need to be done at recordwriter time    * @param context the job    * @param outputInfo the output info    * @param client the metastore client    * @param table the table being written to    * @throws IOException    * @throws org.apache.hadoop.hive.metastore.api.MetaException    * @throws org.apache.thrift.TException    */
 specifier|private
 specifier|static
 name|void
@@ -1092,7 +1092,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 block|{
-comment|/*         * For fully specified ptn, follow strict checks for existence of partitions in metadata         * For unpartitioned tables, follow filechecks         * For partially specified tables:         *    This would then need filechecks at the start of a ptn write,         *    Doing metadata checks can get potentially very expensive (fat conf) if         *    there are a large number of partitions that match the partial specifications         */
+comment|/*     * For fully specified ptn, follow strict checks for existence of partitions in metadata     * For unpartitioned tables, follow filechecks     * For partially specified tables:     *    This would then need filechecks at the start of a ptn write,     *    Doing metadata checks can get potentially very expensive (fat conf) if     *    there are a large number of partitions that match the partial specifications     */
 if|if
 condition|(
 name|table
@@ -1295,7 +1295,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**      * Convert the partition value map to a value list in the partition key order.      * @param table the table being written to      * @param valueMap the partition value map      * @return the partition value list      * @throws java.io.IOException      */
+comment|/**    * Convert the partition value map to a value list in the partition key order.    * @param table the table being written to    * @param valueMap the partition value map    * @return the partition value list    * @throws java.io.IOException    */
 specifier|static
 name|List
 argument_list|<

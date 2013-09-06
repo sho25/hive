@@ -1287,7 +1287,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Hive represents tables in two ways:      *<ul>      *<li>org.apache.hadoop.hive.metastore.api.Table - exactly whats stored in the metastore</li>      *<li>org.apache.hadoop.hive.ql.metadata.Table - adds business logic over api.Table</li>      *</ul>      * Here we check SerDe-reported fields are included in the table schema.      */
+comment|/**    * Hive represents tables in two ways:    *<ul>    *<li>org.apache.hadoop.hive.metastore.api.Table - exactly whats stored in the metastore</li>    *<li>org.apache.hadoop.hive.ql.metadata.Table - adds business logic over api.Table</li>    *</ul>    * Here we check SerDe-reported fields are included in the table schema.    */
 annotation|@
 name|Test
 specifier|public

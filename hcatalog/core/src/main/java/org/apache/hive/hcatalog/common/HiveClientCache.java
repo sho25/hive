@@ -428,7 +428,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**      * @param timeout the length of time in seconds after a client is created that it should be automatically removed      */
+comment|/**    * @param timeout the length of time in seconds after a client is created that it should be automatically removed    */
 specifier|public
 name|HiveClientCache
 parameter_list|(
@@ -576,7 +576,7 @@ name|cleanupHiveClientShutdownThread
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Note: This doesn't check if they are being used or not, meant only to be called during shutdown etc.      */
+comment|/**    * Note: This doesn't check if they are being used or not, meant only to be called during shutdown etc.    */
 name|void
 name|closeAllClientsQuietly
 parameter_list|()
@@ -642,7 +642,7 @@ name|cleanUp
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Returns a cached client if exists or else creates one, caches and returns it. It also checks that the client is      * healthy and can be reused      * @param hiveConf      * @return the hive client      * @throws MetaException      * @throws IOException      * @throws LoginException      */
+comment|/**    * Returns a cached client if exists or else creates one, caches and returns it. It also checks that the client is    * healthy and can be reused    * @param hiveConf    * @return the hive client    * @throws MetaException    * @throws IOException    * @throws LoginException    */
 specifier|public
 name|HiveMetaStoreClient
 name|get
@@ -741,7 +741,7 @@ return|return
 name|hiveMetaStoreClient
 return|;
 block|}
-comment|/**      * Return from cache if exists else create/cache and return      * @param cacheKey      * @return      * @throws IOException      * @throws MetaException      * @throws LoginException      */
+comment|/**    * Return from cache if exists else create/cache and return    * @param cacheKey    * @return    * @throws IOException    * @throws MetaException    * @throws LoginException    */
 specifier|private
 name|CacheableHiveMetaStoreClient
 name|getOrCreate
@@ -871,7 +871,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**      * A class to wrap HiveConf and expose equality based only on UserGroupInformation and the metaStoreURIs.      * This becomes the key for the cache and this way the same HiveMetaStoreClient would be returned if      * UserGroupInformation and metaStoreURIs are same. This function can evolve to express      * the cases when HiveConf is different but the same hiveMetaStoreClient can be used      */
+comment|/**    * A class to wrap HiveConf and expose equality based only on UserGroupInformation and the metaStoreURIs.    * This becomes the key for the cache and this way the same HiveMetaStoreClient would be returned if    * UserGroupInformation and metaStoreURIs are same. This function can evolve to express    * the cases when HiveConf is different but the same hiveMetaStoreClient can be used    */
 specifier|public
 specifier|static
 class|class
@@ -1106,7 +1106,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**      * Add # of current users on HiveMetaStoreClient, so that the client can be cleaned when no one is using it.      */
+comment|/**    * Add # of current users on HiveMetaStoreClient, so that the client can be cleaned when no one is using it.    */
 specifier|public
 specifier|static
 class|class
@@ -1230,7 +1230,7 @@ return|return
 name|isClosed
 return|;
 block|}
-comment|/**          * Make a call to hive meta store and see if the client is still usable. Some calls where the user provides          * invalid data renders the client unusable for future use (example: create a table with very long table name)          * @return          */
+comment|/**      * Make a call to hive meta store and see if the client is still usable. Some calls where the user provides      * invalid data renders the client unusable for future use (example: create a table with very long table name)      * @return      */
 specifier|protected
 name|boolean
 name|isOpen
@@ -1282,7 +1282,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**          * Decrement the user count and piggyback this to set expiry flag as well, then  teardown(), if conditions are met.          * This *MUST* be called by anyone who uses this client.          */
+comment|/**      * Decrement the user count and piggyback this to set expiry flag as well, then  teardown(), if conditions are met.      * This *MUST* be called by anyone who uses this client.      */
 annotation|@
 name|Override
 specifier|public
@@ -1309,7 +1309,7 @@ name|tearDownIfUnused
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**          * Tear down only if          *  1. There are no active user          *  2. It has expired from the cache          */
+comment|/**      * Tear down only if      *  1. There are no active user      *  2. It has expired from the cache      */
 specifier|private
 name|void
 name|tearDownIfUnused
@@ -1334,7 +1334,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**          * Close if not closed already          */
+comment|/**      * Close if not closed already      */
 specifier|protected
 specifier|synchronized
 name|void
@@ -1377,7 +1377,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**          * Last effort to clean up, may not even get called.          * @throws Throwable          */
+comment|/**      * Last effort to clean up, may not even get called.      * @throws Throwable      */
 annotation|@
 name|Override
 specifier|protected

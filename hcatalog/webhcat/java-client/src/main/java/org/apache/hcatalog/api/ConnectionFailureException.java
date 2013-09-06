@@ -48,7 +48,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * @param message Exception message.      * @param cause The wrapped Throwable that caused this exception.      */
+comment|/**    * @param message Exception message.    * @param cause The wrapped Throwable that caused this exception.    */
 specifier|public
 name|ConnectionFailureException
 parameter_list|(

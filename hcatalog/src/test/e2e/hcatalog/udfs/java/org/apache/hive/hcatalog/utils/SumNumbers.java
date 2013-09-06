@@ -1225,7 +1225,7 @@ decl_stmt|;
 name|DoubleWritable
 name|doublenum
 decl_stmt|;
-comment|/**          *          */
+comment|/**      *      */
 specifier|public
 name|ArrayWritable
 parameter_list|()
@@ -1273,7 +1273,7 @@ name|DoubleWritable
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**          * @param id          * @param intnum5          * @param intnum100          * @param intnum          * @param longnum          * @param floatnum          * @param doublenum          */
+comment|/**      * @param id      * @param intnum5      * @param intnum100      * @param intnum      * @param longnum      * @param floatnum      * @param doublenum      */
 specifier|public
 name|ArrayWritable
 parameter_list|(

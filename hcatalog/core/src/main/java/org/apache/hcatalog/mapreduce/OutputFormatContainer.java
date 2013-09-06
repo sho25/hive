@@ -114,7 +114,7 @@ name|Writable
 argument_list|>
 name|of
 decl_stmt|;
-comment|/**      * @param of OutputFormat this instance will contain      */
+comment|/**    * @param of OutputFormat this instance will contain    */
 specifier|public
 name|OutputFormatContainer
 parameter_list|(
@@ -149,7 +149,7 @@ operator|=
 name|of
 expr_stmt|;
 block|}
-comment|/**      * @return underlying OutputFormat      */
+comment|/**    * @return underlying OutputFormat    */
 specifier|public
 name|org
 operator|.

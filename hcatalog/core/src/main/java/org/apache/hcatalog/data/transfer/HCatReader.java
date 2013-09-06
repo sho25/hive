@@ -119,7 +119,7 @@ specifier|abstract
 class|class
 name|HCatReader
 block|{
-comment|/**      * This should be called at master node to obtain {@link ReaderContext} which      * then should be serialized and sent to slave nodes.      *      * @return {@link ReaderContext}      * @throws HCatException      */
+comment|/**    * This should be called at master node to obtain {@link ReaderContext} which    * then should be serialized and sent to slave nodes.    *    * @return {@link ReaderContext}    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|ReaderContext
@@ -128,7 +128,7 @@ parameter_list|()
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * This should be called at slave nodes to read {@link HCatRecord}s      *      * @return {@link Iterator} of {@link HCatRecord}      * @throws HCatException      */
+comment|/**    * This should be called at slave nodes to read {@link HCatRecord}s    *    * @return {@link Iterator} of {@link HCatRecord}    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|Iterator
@@ -140,7 +140,7 @@ parameter_list|()
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**      * This constructor will be invoked by {@link DataTransferFactory} at master      * node. Don't use this constructor. Instead, use {@link DataTransferFactory}      *      * @param re      * @param config      */
+comment|/**    * This constructor will be invoked by {@link DataTransferFactory} at master    * node. Don't use this constructor. Instead, use {@link DataTransferFactory}    *    * @param re    * @param config    */
 specifier|protected
 name|HCatReader
 parameter_list|(
@@ -170,7 +170,7 @@ operator|=
 name|re
 expr_stmt|;
 block|}
-comment|/**      * This constructor will be invoked by {@link DataTransferFactory} at slave      * nodes. Don't use this constructor. Instead, use {@link DataTransferFactory}      *      * @param config      * @param sp      */
+comment|/**    * This constructor will be invoked by {@link DataTransferFactory} at slave    * nodes. Don't use this constructor. Instead, use {@link DataTransferFactory}    *    * @param config    * @param sp    */
 specifier|protected
 name|HCatReader
 parameter_list|(

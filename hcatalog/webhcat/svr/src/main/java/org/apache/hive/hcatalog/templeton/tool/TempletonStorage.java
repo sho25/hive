@@ -101,7 +101,7 @@ name|STORAGE_ROOT
 init|=
 literal|"templeton.storage.root"
 decl_stmt|;
-comment|/**      * Start the cleanup process for this storage type.      * @param config      */
+comment|/**    * Start the cleanup process for this storage type.    * @param config    */
 specifier|public
 name|void
 name|startCleanup
@@ -110,7 +110,7 @@ name|Configuration
 name|config
 parameter_list|)
 function_decl|;
-comment|/**      * Save a single key/value pair for a specific job id.      * @param type The data type (as listed above)      * @param id The String id of this data grouping (jobid, etc.)      * @param key The name of the field to save      * @param val The value of the field to save      */
+comment|/**    * Save a single key/value pair for a specific job id.    * @param type The data type (as listed above)    * @param id The String id of this data grouping (jobid, etc.)    * @param key The name of the field to save    * @param val The value of the field to save    */
 specifier|public
 name|void
 name|saveField
@@ -130,7 +130,7 @@ parameter_list|)
 throws|throws
 name|NotFoundException
 function_decl|;
-comment|/**      * Get the value of one field for a given data type.  If the type      * is UNKNOWN, search for the id in all types.      * @param type The data type (as listed above)      * @param id The String id of this data grouping (jobid, etc.)      * @param key The name of the field to retrieve      * @return The value of the field requested, or null if not      * found.      */
+comment|/**    * Get the value of one field for a given data type.  If the type    * is UNKNOWN, search for the id in all types.    * @param type The data type (as listed above)    * @param id The String id of this data grouping (jobid, etc.)    * @param key The name of the field to retrieve    * @return The value of the field requested, or null if not    * found.    */
 specifier|public
 name|String
 name|getField
@@ -145,7 +145,7 @@ name|String
 name|key
 parameter_list|)
 function_decl|;
-comment|/**      * Get all the name/value pairs stored for this id.      * Be careful using getFields() -- optimistic locking will mean that      * your odds of a conflict are decreased if you read/write one field      * at a time.  getFields() is intended for read-only usage.      *      * If the type is UNKNOWN, search for the id in all types.      *      * @param type The data type (as listed above)      * @param id The String id of this data grouping (jobid, etc.)      * @return A Map of key/value pairs found for this type/id.      */
+comment|/**    * Get all the name/value pairs stored for this id.    * Be careful using getFields() -- optimistic locking will mean that    * your odds of a conflict are decreased if you read/write one field    * at a time.  getFields() is intended for read-only usage.    *    * If the type is UNKNOWN, search for the id in all types.    *    * @param type The data type (as listed above)    * @param id The String id of this data grouping (jobid, etc.)    * @return A Map of key/value pairs found for this type/id.    */
 specifier|public
 name|Map
 argument_list|<
@@ -162,7 +162,7 @@ name|String
 name|id
 parameter_list|)
 function_decl|;
-comment|/**      * Delete a data grouping (all data for a jobid, all tracking data      * for a job, etc.).  If the type is UNKNOWN, search for the id      * in all types.      *      * @param type The data type (as listed above)      * @param id The String id of this data grouping (jobid, etc.)      * @return True if successful, false if not, throws NotFoundException      * if the id wasn't found.      */
+comment|/**    * Delete a data grouping (all data for a jobid, all tracking data    * for a job, etc.).  If the type is UNKNOWN, search for the id    * in all types.    *    * @param type The data type (as listed above)    * @param id The String id of this data grouping (jobid, etc.)    * @return True if successful, false if not, throws NotFoundException    * if the id wasn't found.    */
 specifier|public
 name|boolean
 name|delete
@@ -176,7 +176,7 @@ parameter_list|)
 throws|throws
 name|NotFoundException
 function_decl|;
-comment|/**      * Get the id of each data grouping in the storage system.      *      * @return An ArrayList<String> of ids.      */
+comment|/**    * Get the id of each data grouping in the storage system.    *    * @return An ArrayList<String> of ids.    */
 specifier|public
 name|List
 argument_list|<
@@ -185,7 +185,7 @@ argument_list|>
 name|getAll
 parameter_list|()
 function_decl|;
-comment|/**      * Get the id of each data grouping of a given type in the storage      * system.      * @param type The data type (as listed above)      * @return An ArrayList<String> of ids.      */
+comment|/**    * Get the id of each data grouping of a given type in the storage    * system.    * @param type The data type (as listed above)    * @return An ArrayList<String> of ids.    */
 specifier|public
 name|List
 argument_list|<
@@ -197,7 +197,7 @@ name|Type
 name|type
 parameter_list|)
 function_decl|;
-comment|/**      * Get the id of each data grouping that has the specific key/value      * pair.      * @param key The name of the field to search for      * @param value The value of the field to search for      * @return An ArrayList<String> of ids.      */
+comment|/**    * Get the id of each data grouping that has the specific key/value    * pair.    * @param key The name of the field to search for    * @param value The value of the field to search for    * @return An ArrayList<String> of ids.    */
 specifier|public
 name|List
 argument_list|<
@@ -212,7 +212,7 @@ name|String
 name|value
 parameter_list|)
 function_decl|;
-comment|/**      * Get the id of each data grouping of a given type that has the      * specific key/value pair.      * @param type The data type (as listed above)      * @param key The name of the field to search for      * @param value The value of the field to search for      * @return An ArrayList<String> of ids.      */
+comment|/**    * Get the id of each data grouping of a given type that has the    * specific key/value pair.    * @param type The data type (as listed above)    * @param key The name of the field to search for    * @param value The value of the field to search for    * @return An ArrayList<String> of ids.    */
 specifier|public
 name|List
 argument_list|<
@@ -230,7 +230,7 @@ name|String
 name|value
 parameter_list|)
 function_decl|;
-comment|/**      * For storage methods that require a connection, this is a hint      * that it's time to open a connection.      */
+comment|/**    * For storage methods that require a connection, this is a hint    * that it's time to open a connection.    */
 specifier|public
 name|void
 name|openStorage
@@ -241,7 +241,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * For storage methods that require a connection, this is a hint      * that it's time to close the connection.      */
+comment|/**    * For storage methods that require a connection, this is a hint    * that it's time to close the connection.    */
 specifier|public
 name|void
 name|closeStorage

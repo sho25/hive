@@ -369,7 +369,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Create a new HiveConf and set properties necessary for unit tests.      */
+comment|/**    * Create a new HiveConf and set properties necessary for unit tests.    */
 specifier|protected
 name|void
 name|setUpHiveConf

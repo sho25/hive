@@ -498,7 +498,7 @@ name|this
 return|;
 block|}
 block|}
-comment|/**      * Convert a HCatFieldSchema to a FieldSchema      * @param fs FieldSchema to convert      * @return HCatFieldSchema representation of FieldSchema      * @throws HCatException      */
+comment|/**    * Convert a HCatFieldSchema to a FieldSchema    * @param fs FieldSchema to convert    * @return HCatFieldSchema representation of FieldSchema    * @throws HCatException    */
 specifier|public
 specifier|static
 name|HCatFieldSchema

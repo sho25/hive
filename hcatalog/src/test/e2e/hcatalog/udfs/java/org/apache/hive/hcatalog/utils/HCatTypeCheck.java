@@ -662,7 +662,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**      * @param m      * @throws IOException      */
+comment|/**    * @param m    * @throws IOException    */
 specifier|private
 name|void
 name|check
@@ -797,7 +797,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-comment|/** ByteArrayInputStream stream = new ByteArrayInputStream(schemaString.getBytes()) ;          QueryParser queryParser = new QueryParser(stream) ;          Schema schema = queryParser.TupleSchema() ;          Schema.setSchemaDefaultType(schema, org.apache.pig.data.DataType.BYTEARRAY);          return schema;          */
+comment|/** ByteArrayInputStream stream = new ByteArrayInputStream(schemaString.getBytes()) ;      QueryParser queryParser = new QueryParser(stream) ;      Schema schema = queryParser.TupleSchema() ;      Schema.setSchemaDefaultType(schema, org.apache.pig.data.DataType.BYTEARRAY);      return schema;      */
 return|return
 name|Utils
 operator|.

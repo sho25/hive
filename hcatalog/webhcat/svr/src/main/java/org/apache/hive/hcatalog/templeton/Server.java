@@ -443,7 +443,7 @@ name|DO_AS_PARAM
 init|=
 literal|"doAs"
 decl_stmt|;
-comment|/**      * The status message.  Always "ok"      */
+comment|/**    * The status message.  Always "ok"    */
 specifier|public
 specifier|static
 specifier|final
@@ -458,7 +458,7 @@ init|=
 name|createStatusMsg
 argument_list|()
 decl_stmt|;
-comment|/**      * The list of supported api versions.      */
+comment|/**    * The list of supported api versions.    */
 specifier|public
 specifier|static
 specifier|final
@@ -473,7 +473,7 @@ init|=
 name|createVersions
 argument_list|()
 decl_stmt|;
-comment|/**      * The list of supported return formats.  Always json.      */
+comment|/**    * The list of supported return formats.  Always json.    */
 specifier|public
 specifier|static
 specifier|final
@@ -753,7 +753,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**      * Check the status of this server.  Always OK.      */
+comment|/**    * Check the status of this server.  Always OK.    */
 annotation|@
 name|GET
 annotation|@
@@ -784,7 +784,7 @@ return|return
 name|STATUS_OK
 return|;
 block|}
-comment|/**      * Check the supported request formats of this server.      */
+comment|/**    * Check the supported request formats of this server.    */
 annotation|@
 name|GET
 annotation|@
@@ -810,7 +810,7 @@ return|return
 name|SUPPORTED_FORMATS
 return|;
 block|}
-comment|/**      * Check the version(s) supported by this server.      */
+comment|/**    * Check the version(s) supported by this server.    */
 annotation|@
 name|GET
 annotation|@
@@ -841,7 +841,7 @@ return|return
 name|SUPPORTED_VERSIONS
 return|;
 block|}
-comment|/**      * Execute an hcat ddl expression on the local box.  It is run      * as the authenticated user and rate limited.      */
+comment|/**    * Execute an hcat ddl expression on the local box.  It is run    * as the authenticated user and rate limited.    */
 annotation|@
 name|POST
 annotation|@
@@ -936,7 +936,7 @@ name|permissions
 argument_list|)
 return|;
 block|}
-comment|/**      * List all the tables in an hcat database.      */
+comment|/**    * List all the tables in an hcat database.    */
 annotation|@
 name|GET
 annotation|@
@@ -1033,7 +1033,7 @@ name|tablePattern
 argument_list|)
 return|;
 block|}
-comment|/**      * Create a new table.      */
+comment|/**    * Create a new table.    */
 annotation|@
 name|PUT
 annotation|@
@@ -1132,7 +1132,7 @@ name|desc
 argument_list|)
 return|;
 block|}
-comment|/**      * Create a new table like another table.      */
+comment|/**    * Create a new table like another table.    */
 annotation|@
 name|PUT
 annotation|@
@@ -1252,7 +1252,7 @@ name|desc
 argument_list|)
 return|;
 block|}
-comment|/**      * Describe an hcat table.  This is normally a simple list of      * columns (using "desc table"), but the extended format will show      * more information (using "show table extended like").      */
+comment|/**    * Describe an hcat table.  This is normally a simple list of    * columns (using "desc table"), but the extended format will show    * more information (using "show table extended like").    */
 annotation|@
 name|GET
 annotation|@
@@ -1375,7 +1375,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**      * Drop an hcat table.      */
+comment|/**    * Drop an hcat table.    */
 annotation|@
 name|DELETE
 annotation|@
@@ -1495,7 +1495,7 @@ name|permissions
 argument_list|)
 return|;
 block|}
-comment|/**      * Rename an hcat table.      */
+comment|/**    * Rename an hcat table.    */
 annotation|@
 name|POST
 annotation|@
@@ -1622,7 +1622,7 @@ name|permissions
 argument_list|)
 return|;
 block|}
-comment|/**      * Describe a single property on an hcat table.      */
+comment|/**    * Describe a single property on an hcat table.    */
 annotation|@
 name|GET
 annotation|@
@@ -1729,7 +1729,7 @@ name|property
 argument_list|)
 return|;
 block|}
-comment|/**      * List all the properties on an hcat table.      */
+comment|/**    * List all the properties on an hcat table.    */
 annotation|@
 name|GET
 annotation|@
@@ -1819,7 +1819,7 @@ name|table
 argument_list|)
 return|;
 block|}
-comment|/**      * Add a single property on an hcat table.      */
+comment|/**    * Add a single property on an hcat table.    */
 annotation|@
 name|PUT
 annotation|@
@@ -1935,7 +1935,7 @@ name|desc
 argument_list|)
 return|;
 block|}
-comment|/**      * List all the partitions in an hcat table.      */
+comment|/**    * List all the partitions in an hcat table.    */
 annotation|@
 name|GET
 annotation|@
@@ -2025,7 +2025,7 @@ name|table
 argument_list|)
 return|;
 block|}
-comment|/**      * Describe a single partition in an hcat table.      */
+comment|/**    * Describe a single partition in an hcat table.    */
 annotation|@
 name|GET
 annotation|@
@@ -2132,7 +2132,7 @@ name|partition
 argument_list|)
 return|;
 block|}
-comment|/**      * Create a partition in an hcat table.      */
+comment|/**    * Create a partition in an hcat table.    */
 annotation|@
 name|PUT
 annotation|@
@@ -2248,7 +2248,7 @@ name|desc
 argument_list|)
 return|;
 block|}
-comment|/**      * Drop a partition in an hcat table.      */
+comment|/**    * Drop a partition in an hcat table.    */
 annotation|@
 name|DELETE
 annotation|@
@@ -2385,7 +2385,7 @@ name|permissions
 argument_list|)
 return|;
 block|}
-comment|/**      * List all databases, or those that match a pattern.      */
+comment|/**    * List all databases, or those that match a pattern.    */
 annotation|@
 name|GET
 annotation|@
@@ -2465,7 +2465,7 @@ name|dbPattern
 argument_list|)
 return|;
 block|}
-comment|/**      * Describe a database      */
+comment|/**    * Describe a database    */
 annotation|@
 name|GET
 annotation|@
@@ -2553,7 +2553,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      * Create a database      */
+comment|/**    * Create a database    */
 annotation|@
 name|PUT
 annotation|@
@@ -2635,7 +2635,7 @@ name|desc
 argument_list|)
 return|;
 block|}
-comment|/**      * Drop a database      */
+comment|/**    * Drop a database    */
 annotation|@
 name|DELETE
 annotation|@
@@ -2764,7 +2764,7 @@ name|permissions
 argument_list|)
 return|;
 block|}
-comment|/**      * List the columns in an hcat table.  Currently the same as      * describe table.      */
+comment|/**    * List the columns in an hcat table.  Currently the same as    * describe table.    */
 annotation|@
 name|GET
 annotation|@
@@ -2854,7 +2854,7 @@ name|table
 argument_list|)
 return|;
 block|}
-comment|/**      * Describe a single column in an hcat table.      */
+comment|/**    * Describe a single column in an hcat table.    */
 annotation|@
 name|GET
 annotation|@
@@ -2961,7 +2961,7 @@ name|column
 argument_list|)
 return|;
 block|}
-comment|/**      * Create a column in an hcat table.      */
+comment|/**    * Create a column in an hcat table.    */
 annotation|@
 name|PUT
 annotation|@
@@ -3086,7 +3086,7 @@ name|desc
 argument_list|)
 return|;
 block|}
-comment|/**      * Run a MapReduce Streaming job.      */
+comment|/**    * Run a MapReduce Streaming job.    */
 annotation|@
 name|POST
 annotation|@
@@ -3283,7 +3283,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Run a MapReduce Jar job.      */
+comment|/**    * Run a MapReduce Jar job.    */
 annotation|@
 name|POST
 annotation|@
@@ -3444,7 +3444,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Run a Pig job.      */
+comment|/**    * Run a Pig job.    */
 annotation|@
 name|POST
 annotation|@
@@ -3585,7 +3585,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Run a Hive job.      */
+comment|/**    * Run a Hive job.    */
 annotation|@
 name|POST
 annotation|@
@@ -3716,7 +3716,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Return the status of the jobid.      */
+comment|/**    * Return the status of the jobid.    */
 annotation|@
 name|GET
 annotation|@
@@ -3785,7 +3785,7 @@ name|jobid
 argument_list|)
 return|;
 block|}
-comment|/**      * Kill a job in the queue.      */
+comment|/**    * Kill a job in the queue.    */
 annotation|@
 name|DELETE
 annotation|@
@@ -3854,7 +3854,7 @@ name|jobid
 argument_list|)
 return|;
 block|}
-comment|/**      * Return all the known job ids for this user.      */
+comment|/**    * Return all the known job ids for this user.    */
 annotation|@
 name|GET
 annotation|@
@@ -3919,7 +3919,7 @@ name|showall
 argument_list|)
 return|;
 block|}
-comment|/**      * Notify on a completed job.      */
+comment|/**    * Notify on a completed job.    */
 annotation|@
 name|GET
 annotation|@
@@ -3971,7 +3971,7 @@ name|jobid
 argument_list|)
 return|;
 block|}
-comment|/**      * Verify that we have a valid user.  Throw an exception if invalid.      */
+comment|/**    * Verify that we have a valid user.  Throw an exception if invalid.    */
 specifier|public
 name|void
 name|verifyUser
@@ -4038,7 +4038,7 @@ name|requestingUser
 argument_list|)
 condition|)
 block|{
-comment|/*if doAs user is different than logged in user, need to check that             that logged in user is authorized to run as 'doAs'*/
+comment|/*if doAs user is different than logged in user, need to check that       that logged in user is authorized to run as 'doAs'*/
 name|ProxyUserSupport
 operator|.
 name|validate
@@ -4057,7 +4057,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * All 'tasks' spawned by WebHCat should be run as this user.  W/o doAs query parameter      * this is just the user making the request (or       * {@link org.apache.hadoop.security.authentication.client.PseudoAuthenticator#USER_NAME}      * query param).      * @return value of doAs query parameter or {@link #getRequestingUser()}      */
+comment|/**    * All 'tasks' spawned by WebHCat should be run as this user.  W/o doAs query parameter    * this is just the user making the request (or     * {@link org.apache.hadoop.security.authentication.client.PseudoAuthenticator#USER_NAME}    * query param).    * @return value of doAs query parameter or {@link #getRequestingUser()}    */
 specifier|private
 name|String
 name|getDoAsUser
@@ -4083,7 +4083,7 @@ name|getRequestingUser
 argument_list|()
 return|;
 block|}
-comment|/**      * Verify that the parameter exists.  Throw an exception if invalid.      */
+comment|/**    * Verify that the parameter exists.  Throw an exception if invalid.    */
 specifier|public
 name|void
 name|verifyParam
@@ -4115,7 +4115,7 @@ literal|" parameter"
 argument_list|)
 throw|;
 block|}
-comment|/**      * Verify that the parameter exists.  Throw an exception if invalid.      */
+comment|/**    * Verify that the parameter exists.  Throw an exception if invalid.    */
 specifier|public
 name|void
 name|verifyParam
@@ -4168,7 +4168,7 @@ argument_list|(
 literal|"[a-zA-Z]\\w*"
 argument_list|)
 decl_stmt|;
-comment|/**      * Verify that the parameter exists and is a simple DDL identifier      * name.  Throw an exception if invalid.      *      * Bug: This needs to allow for quoted ddl identifiers.      */
+comment|/**    * Verify that the parameter exists and is a simple DDL identifier    * name.  Throw an exception if invalid.    *    * Bug: This needs to allow for quoted ddl identifiers.    */
 specifier|public
 name|void
 name|verifyDdlParam
@@ -4217,7 +4217,7 @@ name|name
 argument_list|)
 throw|;
 block|}
-comment|/**      * Get the user name from the security context, i.e. the user making the HTTP request.      * With simple/pseudo security mode this should return the      * value of user.name query param, in kerberos mode it's the kinit'ed user.      */
+comment|/**    * Get the user name from the security context, i.e. the user making the HTTP request.    * With simple/pseudo security mode this should return the    * value of user.name query param, in kerberos mode it's the kinit'ed user.    */
 specifier|private
 name|String
 name|getRequestingUser
@@ -4264,7 +4264,7 @@ name|getShortUserName
 argument_list|()
 return|;
 block|}
-comment|/**      * The callback url on this server when a task is completed.      */
+comment|/**    * The callback url on this server when a task is completed.    */
 specifier|public
 name|String
 name|getCompletedUrl
@@ -4302,7 +4302,7 @@ operator|+
 literal|"/internal/complete/$jobId"
 return|;
 block|}
-comment|/**      * Returns canonical host name from which the request is made; used for doAs validation        */
+comment|/**    * Returns canonical host name from which the request is made; used for doAs validation      */
 specifier|private
 specifier|static
 name|String

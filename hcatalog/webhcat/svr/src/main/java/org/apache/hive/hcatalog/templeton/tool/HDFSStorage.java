@@ -1259,7 +1259,7 @@ name|IOException
 block|{
 comment|// Nothing to do here
 block|}
-comment|/**      * Get the path to storage based on the type.      * @param type      */
+comment|/**    * Get the path to storage based on the type.    * @param type    */
 specifier|public
 name|String
 name|getPath
@@ -1277,7 +1277,7 @@ name|storage_root
 argument_list|)
 return|;
 block|}
-comment|/**      * Static method to get the path based on the type.      *      * @param type      * @param root      */
+comment|/**    * Static method to get the path based on the type.    *    * @param type    * @param root    */
 specifier|public
 specifier|static
 name|String

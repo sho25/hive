@@ -42,7 +42,7 @@ specifier|public
 name|ExecBean
 parameter_list|()
 block|{}
-comment|/**      * Create a new ExecBean.      *      * @param stdout     standard output of the the program.      * @param stderr     error output of the the program.      * @param exitcode   exit code of the program.      */
+comment|/**    * Create a new ExecBean.    *    * @param stdout     standard output of the the program.    * @param stderr     error output of the the program.    * @param exitcode   exit code of the program.    */
 specifier|public
 name|ExecBean
 parameter_list|(

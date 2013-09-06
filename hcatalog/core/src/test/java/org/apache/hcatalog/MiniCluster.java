@@ -462,7 +462,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Returns the single instance of class MiniClusterBuilder that      * represents the resouces for a mini dfs cluster and a mini      * mapreduce cluster.      */
+comment|/**    * Returns the single instance of class MiniClusterBuilder that    * represents the resouces for a mini dfs cluster and a mini    * mapreduce cluster.    */
 specifier|public
 specifier|static
 name|MiniCluster
@@ -704,7 +704,7 @@ return|return
 name|m_fileSys
 return|;
 block|}
-comment|/**      * Throw RunTimeException if isSetup is false      */
+comment|/**    * Throw RunTimeException if isSetup is false    */
 specifier|private
 name|void
 name|errorIfNotSetup
@@ -874,7 +874,7 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Helper to remove a dfs file from the minicluster DFS      *      * @param miniCluster reference to the Minicluster where the file should be deleted      * @param fileName pathname of the file to be deleted      * @throws IOException      */
+comment|/**    * Helper to remove a dfs file from the minicluster DFS    *    * @param miniCluster reference to the Minicluster where the file should be deleted    * @param fileName pathname of the file to be deleted    * @throws IOException    */
 specifier|static
 specifier|public
 name|void

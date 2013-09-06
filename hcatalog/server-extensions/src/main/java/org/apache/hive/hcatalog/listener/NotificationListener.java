@@ -767,7 +767,7 @@ expr_stmt|;
 block|}
 block|}
 decl_stmt|;
-comment|/**      * Create message bus connection and session in constructor.      */
+comment|/**    * Create message bus connection and session in constructor.    */
 specifier|public
 name|NotificationListener
 parameter_list|(
@@ -955,7 +955,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Send dropped partition notifications. Subscribers can receive these notifications for a      * particular table by listening on a topic named "dbName.tableName" with message selector      * string {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_EVENT} =      * {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_DROP_PARTITION_EVENT}.      *</br>      * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been      * found to throw NPE when serializing objects that contain null. For this reason we override      * some fields in the StorageDescriptor of this notification. This should be fixed after      * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.      */
+comment|/**    * Send dropped partition notifications. Subscribers can receive these notifications for a    * particular table by listening on a topic named "dbName.tableName" with message selector    * string {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_EVENT} =    * {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_DROP_PARTITION_EVENT}.    *</br>    * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been    * found to throw NPE when serializing objects that contain null. For this reason we override    * some fields in the StorageDescriptor of this notification. This should be fixed after    * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.    */
 annotation|@
 name|Override
 specifier|public
@@ -1485,7 +1485,7 @@ name|HCAT_DEFAULT_TOPIC_PREFIX
 argument_list|)
 return|;
 block|}
-comment|/**      * Send dropped table notifications. Subscribers can receive these notifications for      * dropped tables by listening on topic "HCAT" with message selector string      * {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_EVENT} =      * {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_DROP_TABLE_EVENT}      *</br>      * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been      * found to throw NPE when serializing objects that contain null. For this reason we override      * some fields in the StorageDescriptor of this notification. This should be fixed after      * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.      */
+comment|/**    * Send dropped table notifications. Subscribers can receive these notifications for    * dropped tables by listening on topic "HCAT" with message selector string    * {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_EVENT} =    * {@value org.apache.hive.hcatalog.common.HCatConstants#HCAT_DROP_TABLE_EVENT}    *</br>    * TODO: DataNucleus 2.0.3, currently used by the HiveMetaStore for persistence, has been    * found to throw NPE when serializing objects that contain null. For this reason we override    * some fields in the StorageDescriptor of this notification. This should be fixed after    * HIVE-2084 "Upgrade datanucleus from 2.0.3 to 3.0.1" is resolved.    */
 annotation|@
 name|Override
 specifier|public
@@ -1557,7 +1557,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * @param hCatEventMessage The HCatEventMessage being sent over JMS.      * @param topicName is the name on message broker on which message is sent.      */
+comment|/**    * @param hCatEventMessage The HCatEventMessage being sent over JMS.    * @param topicName is the name on message broker on which message is sent.    */
 specifier|protected
 name|void
 name|send
@@ -1579,7 +1579,7 @@ name|NUM_RETRIES
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * @param hCatEventMessage The HCatEventMessage being sent over JMS, this method is threadsafe      * @param topicName is the name on message broker on which message is sent.      * @param retries the number of retry attempts      */
+comment|/**    * @param hCatEventMessage The HCatEventMessage being sent over JMS, this method is threadsafe    * @param topicName is the name on message broker on which message is sent.    * @param retries the number of retry attempts    */
 specifier|protected
 name|void
 name|send
@@ -1779,7 +1779,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Get the topic object for the topicName      *      * @param topicName The String identifying the message-topic.      * @return A {@link Topic} object corresponding to the specified topicName.      * @throws JMSException      */
+comment|/**    * Get the topic object for the topicName    *    * @param topicName The String identifying the message-topic.    * @return A {@link Topic} object corresponding to the specified topicName.    * @throws JMSException    */
 specifier|protected
 name|Topic
 name|createTopic
@@ -1803,7 +1803,7 @@ name|topicName
 argument_list|)
 return|;
 block|}
-comment|/**      * Does a health check on the connection by sending a dummy message.      * Create the connection if the connection is found to be bad      * Also recreates the session      */
+comment|/**    * Does a health check on the connection by sending a dummy message.    * Create the connection if the connection is found to be bad    * Also recreates the session    */
 specifier|protected
 specifier|synchronized
 name|void
@@ -1898,7 +1898,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Create the JMS connection      * @return newly created JMS connection      */
+comment|/**    * Create the JMS connection    * @return newly created JMS connection    */
 specifier|protected
 name|Connection
 name|createConnection
@@ -2040,7 +2040,7 @@ return|return
 name|jmsConnection
 return|;
 block|}
-comment|/**      * Send a dummy message to probe if the JMS connection is healthy      * @return true if connection is healthy, false otherwise      */
+comment|/**    * Send a dummy message to probe if the JMS connection is healthy    * @return true if connection is healthy, false otherwise    */
 specifier|protected
 name|boolean
 name|isConnectionHealthy
@@ -2115,7 +2115,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**      * Creates a JMS session      * @return newly create JMS session      * @throws JMSException      */
+comment|/**    * Creates a JMS session    * @return newly create JMS session    * @throws JMSException    */
 specifier|protected
 name|Session
 name|createSession
@@ -2138,7 +2138,7 @@ name|SESSION_TRANSACTED
 argument_list|)
 return|;
 block|}
-comment|/**      * Create a JMS producer      * @param topic      * @return newly created message producer      * @throws JMSException      */
+comment|/**    * Create a JMS producer    * @param topic    * @return newly created message producer    * @throws JMSException    */
 specifier|protected
 name|MessageProducer
 name|createProducer
@@ -2216,8 +2216,8 @@ throws|throws
 name|MetaException
 block|{
 comment|//  TODO: Fix LoadPartitionDoneEvent. Currently, LPDE can only carry a single partition-spec. And that defeats the purpose.
-comment|//		if(lpde.getStatus())
-comment|//			send(lpde.getPartitionName(),lpde.getTable().getParameters().get(HCatConstants.HCAT_MSGBUS_TOPIC_NAME),HCatConstants.HCAT_PARTITION_DONE_EVENT);
+comment|//        if(lpde.getStatus())
+comment|//            send(lpde.getPartitionName(),lpde.getTable().getParameters().get(HCatConstants.HCAT_MSGBUS_TOPIC_NAME),HCatConstants.HCAT_PARTITION_DONE_EVENT);
 block|}
 annotation|@
 name|Override

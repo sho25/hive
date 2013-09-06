@@ -198,7 +198,7 @@ specifier|public
 name|void
 name|lockReleased
 parameter_list|()
-block|{          }
+block|{      }
 block|}
 specifier|protected
 name|void

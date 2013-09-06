@@ -781,7 +781,7 @@ name|workDir
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * A test job that reads a input file and outputs each word and the index of      * the word encountered to a text file and sequence file with different key      * values.      */
+comment|/**    * A test job that reads a input file and outputs each word and the index of    * the word encountered to a text file and sequence file with different key    * values.    */
 annotation|@
 name|Test
 specifier|public
@@ -1397,7 +1397,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * A word count test job that reads a input file and outputs the count of      * words to a text file and sequence file with different key values.      */
+comment|/**    * A word count test job that reads a input file and outputs the count of    * words to a text file and sequence file with different key values.    */
 annotation|@
 name|Test
 specifier|public
@@ -1836,7 +1836,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Create a file for map input      *      * @return absolute path of the file.      * @throws IOException if any error encountered      */
+comment|/**    * Create a file for map input    *    * @return absolute path of the file.    * @throws IOException if any error encountered    */
 specifier|private
 name|String
 name|createInputFile
@@ -2330,7 +2330,7 @@ parameter_list|(
 name|TaskAttemptContext
 name|taskContext
 parameter_list|)
-block|{                 }
+block|{         }
 specifier|public
 name|void
 name|cleanupJob
@@ -2338,7 +2338,7 @@ parameter_list|(
 name|JobContext
 name|jobContext
 parameter_list|)
-block|{                 }
+block|{         }
 specifier|public
 name|void
 name|commitJob
@@ -2346,7 +2346,7 @@ parameter_list|(
 name|JobContext
 name|jobContext
 parameter_list|)
-block|{                 }
+block|{         }
 specifier|public
 name|void
 name|commitTask
@@ -2382,7 +2382,7 @@ parameter_list|(
 name|JobContext
 name|jobContext
 parameter_list|)
-block|{                 }
+block|{         }
 specifier|public
 name|void
 name|setupTask
@@ -2390,7 +2390,7 @@ parameter_list|(
 name|TaskAttemptContext
 name|taskContext
 parameter_list|)
-block|{                 }
+block|{         }
 block|}
 return|;
 block|}

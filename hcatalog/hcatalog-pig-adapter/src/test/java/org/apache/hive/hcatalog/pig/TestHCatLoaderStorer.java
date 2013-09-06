@@ -208,7 +208,7 @@ name|TestHCatLoaderStorer
 extends|extends
 name|HCatBaseTest
 block|{
-comment|/**      * Ensure Pig can read/write tinyint/smallint columns.      */
+comment|/**    * Ensure Pig can read/write tinyint/smallint columns.    */
 annotation|@
 name|Test
 specifier|public

@@ -678,7 +678,7 @@ name|jobInfo
 init|=
 literal|null
 decl_stmt|;
-comment|/**      * @param context current JobContext      * @param baseCommitter OutputCommitter to contain      * @throws IOException      */
+comment|/**    * @param context current JobContext    * @param baseCommitter OutputCommitter to contain    * @throws IOException    */
 specifier|public
 name|FileOutputCommitterContainer
 parameter_list|(
@@ -1471,7 +1471,7 @@ return|return
 name|ptnRootLocation
 return|;
 block|}
-comment|/**      * Generate partition metadata object to be used to add to metadata.      * @param context The job context.      * @param jobInfo The OutputJobInfo.      * @param partLocnRoot The table-equivalent location root of the partition      *                       (temporary dir if dynamic partition, table dir if static)      * @param partKVs The keyvalue pairs that form the partition      * @param outputSchema The output schema for the partition      * @param params The parameters to store inside the partition      * @param table The Table metadata object under which this Partition will reside      * @param fs FileSystem object to operate on the underlying filesystem      * @param grpName Group name that owns the table dir      * @param perms FsPermission that's the default permission of the table dir.      * @return Constructed Partition metadata object      * @throws java.io.IOException      */
+comment|/**    * Generate partition metadata object to be used to add to metadata.    * @param context The job context.    * @param jobInfo The OutputJobInfo.    * @param partLocnRoot The table-equivalent location root of the partition    *                       (temporary dir if dynamic partition, table dir if static)    * @param partKVs The keyvalue pairs that form the partition    * @param outputSchema The output schema for the partition    * @param params The parameters to store inside the partition    * @param table The Table metadata object under which this Partition will reside    * @param fs FileSystem object to operate on the underlying filesystem    * @param grpName Group name that owns the table dir    * @param perms FsPermission that's the default permission of the table dir.    * @return Constructed Partition metadata object    * @throws java.io.IOException    */
 specifier|private
 name|Partition
 name|constructPartition
@@ -2184,7 +2184,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Update table schema, adding new columns as added for the partition.      * @param client the client      * @param table the table      * @param partitionSchema the schema of the partition      * @throws java.io.IOException Signals that an I/O exception has occurred.      * @throws org.apache.hadoop.hive.metastore.api.InvalidOperationException the invalid operation exception      * @throws org.apache.hadoop.hive.metastore.api.MetaException the meta exception      * @throws org.apache.thrift.TException the t exception      */
+comment|/**    * Update table schema, adding new columns as added for the partition.    * @param client the client    * @param table the table    * @param partitionSchema the schema of the partition    * @throws java.io.IOException Signals that an I/O exception has occurred.    * @throws org.apache.hadoop.hive.metastore.api.InvalidOperationException the invalid operation exception    * @throws org.apache.hadoop.hive.metastore.api.MetaException the meta exception    * @throws org.apache.thrift.TException the t exception    */
 specifier|private
 name|void
 name|updateTableSchema
@@ -2299,7 +2299,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Move all of the files from the temp directory to the final location      * @param fs the output file system      * @param file the file to move      * @param srcDir the source directory      * @param destDir the target directory      * @param dryRun - a flag that simply tests if this move would succeed or not based      *                 on whether other files exist where we're trying to copy      * @throws java.io.IOException      */
+comment|/**    * Move all of the files from the temp directory to the final location    * @param fs the output file system    * @param file the file to move    * @param srcDir the source directory    * @param destDir the target directory    * @param dryRun - a flag that simply tests if this move would succeed or not based    *                 on whether other files exist where we're trying to copy    * @throws java.io.IOException    */
 specifier|private
 name|void
 name|moveTaskOutputs
@@ -2922,7 +2922,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Find the final name of a given output file, given the output directory      * and the work directory.      * @param file the file to move      * @param src the source directory      * @param dest the target directory      * @return the final path for the specific output file      * @throws java.io.IOException      */
+comment|/**    * Find the final name of a given output file, given the output directory    * and the work directory.    * @param file the file to move    * @param src the source directory    * @param dest the target directory    * @return the final path for the specific output file    * @throws java.io.IOException    */
 specifier|private
 name|Path
 name|getFinalPath
@@ -3018,7 +3018,7 @@ name|dest
 return|;
 block|}
 block|}
-comment|/**      * Run to discover dynamic partitions available      */
+comment|/**    * Run to discover dynamic partitions available    */
 specifier|private
 name|void
 name|discoverPartitions

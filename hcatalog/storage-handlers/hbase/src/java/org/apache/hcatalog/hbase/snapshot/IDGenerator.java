@@ -226,7 +226,7 @@ name|idGenNode
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * This method obtains a revision id for a transaction.      *      * @return revision ID      * @throws IOException      */
+comment|/**    * This method obtains a revision id for a transaction.    *    * @return revision ID    * @throws IOException    */
 specifier|public
 name|long
 name|obtainID
@@ -353,7 +353,7 @@ return|return
 name|id
 return|;
 block|}
-comment|/**      * This method reads the latest revision ID that has been used. The ID      * returned by this method cannot be used for transaction.      * @return revision ID      * @throws IOException      */
+comment|/**    * This method reads the latest revision ID that has been used. The ID    * returned by this method cannot be used for transaction.    * @return revision ID    * @throws IOException    */
 specifier|public
 name|long
 name|readID
@@ -620,22 +620,22 @@ return|return
 name|curId
 return|;
 block|}
-comment|/*      * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockAcquired()      */
+comment|/*    * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockAcquired()    */
 annotation|@
 name|Override
 specifier|public
 name|void
 name|lockAcquired
 parameter_list|()
-block|{       }
-comment|/*      * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockReleased()      */
+block|{     }
+comment|/*    * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockReleased()    */
 annotation|@
 name|Override
 specifier|public
 name|void
 name|lockReleased
 parameter_list|()
-block|{      }
+block|{    }
 block|}
 end_class
 
