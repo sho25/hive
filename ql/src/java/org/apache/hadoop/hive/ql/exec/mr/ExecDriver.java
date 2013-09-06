@@ -4661,7 +4661,7 @@ name|MapredLocalWork
 operator|)
 name|Utilities
 operator|.
-name|deserializeObject
+name|deserializePlan
 argument_list|(
 name|pathData
 argument_list|)
@@ -4701,7 +4701,7 @@ name|MapredWork
 operator|)
 name|Utilities
 operator|.
-name|deserializeObject
+name|deserializePlan
 argument_list|(
 name|pathData
 argument_list|)

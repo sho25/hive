@@ -2568,39 +2568,17 @@ continue|continue;
 block|}
 comment|// deep copy a new mapred work from xml
 comment|// Once HIVE-4396 is in, it would be faster to use a cheaper method to clone the plan
-name|String
-name|xml
-init|=
-name|currTask
-operator|.
-name|getWork
-argument_list|()
-operator|.
-name|toXML
-argument_list|()
-decl_stmt|;
-name|InputStream
-name|in
-init|=
-operator|new
-name|ByteArrayInputStream
-argument_list|(
-name|xml
-operator|.
-name|getBytes
-argument_list|(
-literal|"UTF-8"
-argument_list|)
-argument_list|)
-decl_stmt|;
 name|MapredWork
 name|newWork
 init|=
 name|Utilities
 operator|.
-name|deserializeObject
+name|clonePlan
 argument_list|(
-name|in
+name|currTask
+operator|.
+name|getWork
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// create map join task and set big table as i

@@ -1159,7 +1159,7 @@ argument_list|)
 expr_stmt|;
 name|Utilities
 operator|.
-name|serializeObject
+name|serializePlan
 argument_list|(
 name|plan
 argument_list|,
