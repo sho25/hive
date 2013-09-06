@@ -9,8 +9,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -232,8 +230,6 @@ import|import
 name|org
 operator|.
 name|apache
-operator|.
-name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -577,7 +573,7 @@ name|run
 argument_list|(
 literal|"create table test_table(key int, value string) STORED BY "
 operator|+
-literal|"'org.apache.hive.hcatalog.hbase.HBaseHCatStorageHandler'"
+literal|"'org.apache.hcatalog.hbase.HBaseHCatStorageHandler'"
 operator|+
 literal|"TBLPROPERTIES ('hbase.columns.mapping'=':key,cf1:val')"
 argument_list|)

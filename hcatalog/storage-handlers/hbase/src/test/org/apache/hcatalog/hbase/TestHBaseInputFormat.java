@@ -9,8 +9,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -707,8 +705,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -725,8 +721,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -742,8 +736,6 @@ import|import
 name|org
 operator|.
 name|apache
-operator|.
-name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -1551,7 +1543,7 @@ name|tableName
 operator|+
 literal|"(key string, testqualifier1 string, testqualifier2 string) STORED BY "
 operator|+
-literal|"'org.apache.hive.hcatalog.hbase.HBaseHCatStorageHandler'"
+literal|"'org.apache.hcatalog.hbase.HBaseHCatStorageHandler'"
 operator|+
 literal|"TBLPROPERTIES ('hbase.columns.mapping'=':key,testFamily:testQualifier1,testFamily:testQualifier2')"
 decl_stmt|;
@@ -1947,7 +1939,7 @@ name|tableName
 operator|+
 literal|"(key string, testqualifier1 string, testqualifier2 string) STORED BY "
 operator|+
-literal|"'org.apache.hive.hcatalog.hbase.HBaseHCatStorageHandler'"
+literal|"'org.apache.hcatalog.hbase.HBaseHCatStorageHandler'"
 operator|+
 literal|"TBLPROPERTIES ('hbase.columns.mapping'="
 operator|+
@@ -2298,7 +2290,7 @@ name|tableName
 operator|+
 literal|"(key string, testqualifier1 string, testqualifier2 string) STORED BY "
 operator|+
-literal|"'org.apache.hive.hcatalog.hbase.HBaseHCatStorageHandler'"
+literal|"'org.apache.hcatalog.hbase.HBaseHCatStorageHandler'"
 operator|+
 literal|"TBLPROPERTIES ('hbase.columns.mapping'=':key,"
 operator|+
@@ -2792,7 +2784,7 @@ name|tableName
 operator|+
 literal|"(key string, testqualifier1 string, testqualifier2 string) STORED BY "
 operator|+
-literal|"'org.apache.hive.hcatalog.hbase.HBaseHCatStorageHandler'"
+literal|"'org.apache.hcatalog.hbase.HBaseHCatStorageHandler'"
 operator|+
 literal|"TBLPROPERTIES ('hbase.columns.mapping'=':key,"
 operator|+
@@ -3151,7 +3143,7 @@ name|tableName
 operator|+
 literal|"(key string, testqualifier1 string, testqualifier2 string) STORED BY "
 operator|+
-literal|"'org.apache.hive.hcatalog.hbase.HBaseHCatStorageHandler'"
+literal|"'org.apache.hcatalog.hbase.HBaseHCatStorageHandler'"
 operator|+
 literal|"TBLPROPERTIES ('hbase.columns.mapping'=':key,"
 operator|+

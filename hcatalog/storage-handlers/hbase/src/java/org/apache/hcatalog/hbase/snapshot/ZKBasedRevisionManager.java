@@ -9,8 +9,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -93,8 +91,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -112,8 +108,6 @@ import|import
 name|org
 operator|.
 name|apache
-operator|.
-name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -227,7 +221,7 @@ specifier|private
 name|long
 name|writeTxnTimeout
 decl_stmt|;
-comment|/*      * @see org.apache.hive.hcatalog.hbase.snapshot.RevisionManager#initialize()      */
+comment|/*      * @see org.apache.hcatalog.hbase.snapshot.RevisionManager#initialize()      */
 annotation|@
 name|Override
 specifier|public
@@ -563,7 +557,7 @@ name|table
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* @param table     /* @param families     /* @param keepAlive     /* @return     /* @throws IOException      * @see org.apache.hive.hcatalog.hbase.snapshot.RevisionManager#beginWriteTransaction(java.lang.String, java.util.List, long)      */
+comment|/* @param table     /* @param families     /* @param keepAlive     /* @return     /* @throws IOException      * @see org.apache.hcatalog.hbase.snapshot.RevisionManager#beginWriteTransaction(java.lang.String, java.util.List, long)      */
 specifier|public
 name|Transaction
 name|beginWriteTransaction
@@ -842,7 +836,7 @@ return|return
 name|transaction
 return|;
 block|}
-comment|/* @param table The table name.     /* @param families The column families involved in the transaction.     /* @return transaction The transaction which was started.     /* @throws IOException      * @see org.apache.hive.hcatalog.hbase.snapshot.RevisionManager#beginWriteTransaction(java.lang.String, java.util.List)      */
+comment|/* @param table The table name.     /* @param families The column families involved in the transaction.     /* @return transaction The transaction which was started.     /* @throws IOException      * @see org.apache.hcatalog.hbase.snapshot.RevisionManager#beginWriteTransaction(java.lang.String, java.util.List)      */
 specifier|public
 name|Transaction
 name|beginWriteTransaction
@@ -1329,7 +1323,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* @param transaction    /* @throws IOException     * @see org.apache.hive.hcatalog.hbase.snapshot.RevsionManager#keepAlive(org.apache.hive.hcatalog.hbase.snapshot.Transaction)     */
+comment|/* @param transaction    /* @throws IOException     * @see org.apache.hcatalog.hbase.snapshot.RevsionManager#keepAlive(org.apache.hcatalog.hbase.snapshot.Transaction)     */
 specifier|public
 name|void
 name|keepAlive
@@ -1537,7 +1531,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/* This method allows the user to create latest snapshot of a     /* table.     /* @param tableName The table whose snapshot is being created.     /* @return TableSnapshot An instance of TableSnaphot     /* @throws IOException      * @see org.apache.hive.hcatalog.hbase.snapshot.RevsionManager#createSnapshot(java.lang.String)      */
+comment|/* This method allows the user to create latest snapshot of a     /* table.     /* @param tableName The table whose snapshot is being created.     /* @return TableSnapshot An instance of TableSnaphot     /* @throws IOException      * @see org.apache.hcatalog.hbase.snapshot.RevsionManager#createSnapshot(java.lang.String)      */
 specifier|public
 name|TableSnapshot
 name|createSnapshot
@@ -1715,7 +1709,7 @@ return|return
 name|snapshot
 return|;
 block|}
-comment|/* This method allows the user to create snapshot of a     /* table with a given revision number.     /* @param tableName     /* @param revision     /* @return TableSnapshot     /* @throws IOException      * @see org.apache.hive.hcatalog.hbase.snapshot.RevsionManager#createSnapshot(java.lang.String, long)      */
+comment|/* This method allows the user to create snapshot of a     /* table with a given revision number.     /* @param tableName     /* @param revision     /* @return TableSnapshot     /* @throws IOException      * @see org.apache.hcatalog.hbase.snapshot.RevsionManager#createSnapshot(java.lang.String, long)      */
 specifier|public
 name|TableSnapshot
 name|createSnapshot
@@ -2128,7 +2122,7 @@ name|RMLockListener
 implements|implements
 name|LockListener
 block|{
-comment|/*          * @see org.apache.hive.hcatalog.hbase.snapshot.lock.LockListener#lockAcquired()          */
+comment|/*          * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockAcquired()          */
 annotation|@
 name|Override
 specifier|public
@@ -2136,7 +2130,7 @@ name|void
 name|lockAcquired
 parameter_list|()
 block|{          }
-comment|/*          * @see org.apache.hive.hcatalog.hbase.snapshot.lock.LockListener#lockReleased()          */
+comment|/*          * @see org.apache.hcatalog.hbase.snapshot.lock.LockListener#lockReleased()          */
 annotation|@
 name|Override
 specifier|public
