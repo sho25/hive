@@ -63,9 +63,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
 operator|.
-name|mapred
+name|hcatalog
+operator|.
+name|mapreduce
 operator|.
 name|HCatMapRedUtil
 import|;

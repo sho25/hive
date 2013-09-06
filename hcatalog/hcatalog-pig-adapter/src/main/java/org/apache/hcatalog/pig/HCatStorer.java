@@ -225,11 +225,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hcatalog
+name|hadoop
+operator|.
+name|hive
 operator|.
 name|shims
 operator|.
-name|HCatHadoopShims
+name|ShimLoader
 import|;
 end_import
 
@@ -1025,11 +1027,12 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|commitJob
@@ -1056,11 +1059,12 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|abortJob

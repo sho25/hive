@@ -287,11 +287,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hcatalog
+name|hadoop
+operator|.
+name|hive
 operator|.
 name|shims
 operator|.
-name|HCatHadoopShims
+name|ShimLoader
 import|;
 end_import
 
@@ -821,11 +823,12 @@ name|SecurityUtil
 operator|.
 name|buildTokenService
 argument_list|(
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|getResourceManagerAddress

@@ -1636,7 +1636,7 @@ name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"create table junit_sem_analysis (a int, c string) partitioned by (b string) stored as RCFILE"
+literal|"create table junit_sem_analysis (a int, c string) partitioned by (b string)"
 argument_list|)
 expr_stmt|;
 name|CommandProcessorResponse

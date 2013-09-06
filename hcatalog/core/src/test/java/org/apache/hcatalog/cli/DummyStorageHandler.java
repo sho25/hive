@@ -624,6 +624,25 @@ name|DummyAuthProvider
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|configureJobConf
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|JobConf
+name|jobConf
+parameter_list|)
+block|{
+comment|//do nothing by default
+comment|//EK: added the same (no-op) implementation as in
+comment|// org.apache.hive.hcatalog.DefaultStorageHandler (hive 0.12)
+comment|// this is needed to get 0.11 API compat layer to work
+comment|// see HIVE-4896
+block|}
 specifier|private
 class|class
 name|DummyAuthProvider
