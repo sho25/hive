@@ -1393,7 +1393,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Get the record writer for the job. This uses the StorageHandler's default       * OutputFormat to get the record writer.      * @param context the information about the current task      * @return a RecordWriter to write the output for the job      * @throws IOException      * @throws InterruptedException      */
+comment|/**      * Get the record writer for the job. This uses the StorageHandler's default      * OutputFormat to get the record writer.      * @param context the information about the current task      * @return a RecordWriter to write the output for the job      * @throws IOException      * @throws InterruptedException      */
 annotation|@
 name|Override
 specifier|public
