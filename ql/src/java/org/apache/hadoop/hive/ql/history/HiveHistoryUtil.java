@@ -320,9 +320,21 @@ operator|+
 literal|"\""
 argument_list|)
 decl_stmt|;
-comment|// temp buffer for parsed dataa
+comment|/**   * Parse a single line of history.   *   * @param line   * @param l   * @throws IOException   */
 specifier|private
 specifier|static
+name|void
+name|parseLine
+parameter_list|(
+name|String
+name|line
+parameter_list|,
+name|Listener
+name|l
+parameter_list|)
+throws|throws
+name|IOException
+block|{
 name|Map
 argument_list|<
 name|String
@@ -340,21 +352,6 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**   * Parse a single line of history.   *   * @param line   * @param l   * @throws IOException   */
-specifier|private
-specifier|static
-name|void
-name|parseLine
-parameter_list|(
-name|String
-name|line
-parameter_list|,
-name|Listener
-name|l
-parameter_list|)
-throws|throws
-name|IOException
-block|{
 comment|// extract the record type
 name|int
 name|idx
@@ -478,11 +475,6 @@ argument_list|)
 argument_list|,
 name|parseBuffer
 argument_list|)
-expr_stmt|;
-name|parseBuffer
-operator|.
-name|clear
-argument_list|()
 expr_stmt|;
 block|}
 block|}
