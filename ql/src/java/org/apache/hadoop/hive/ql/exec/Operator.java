@@ -454,6 +454,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
+specifier|transient
 name|Configuration
 name|configuration
 decl_stmt|;
@@ -866,7 +867,6 @@ expr_stmt|;
 block|}
 comment|// non-bean fields needed during compilation
 specifier|private
-specifier|transient
 name|RowSchema
 name|rowSchema
 decl_stmt|;

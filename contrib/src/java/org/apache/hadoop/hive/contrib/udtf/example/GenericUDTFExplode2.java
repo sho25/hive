@@ -361,6 +361,8 @@ name|fieldOIs
 argument_list|)
 return|;
 block|}
+specifier|private
+specifier|transient
 name|Object
 name|forwardObj
 index|[]

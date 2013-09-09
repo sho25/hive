@@ -238,11 +238,13 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|Converter
 index|[]
 name|converters
 decl_stmt|;
 specifier|private
+specifier|transient
 name|ArrayList
 argument_list|<
 name|Object

@@ -172,6 +172,8 @@ name|GenericUDTFCount2
 extends|extends
 name|GenericUDTF
 block|{
+specifier|private
+specifier|transient
 name|Integer
 name|count
 init|=
@@ -182,6 +184,8 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+specifier|private
+specifier|transient
 name|Object
 name|forwardObj
 index|[]

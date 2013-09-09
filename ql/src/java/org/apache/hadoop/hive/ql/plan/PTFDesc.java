@@ -384,6 +384,7 @@ name|isMapSide
 init|=
 literal|false
 decl_stmt|;
+specifier|transient
 name|HiveConf
 name|cfg
 decl_stmt|;

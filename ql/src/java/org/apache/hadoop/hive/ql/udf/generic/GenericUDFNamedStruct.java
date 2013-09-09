@@ -225,6 +225,8 @@ name|GenericUDFNamedStruct
 extends|extends
 name|GenericUDF
 block|{
+specifier|private
+specifier|transient
 name|Object
 index|[]
 name|ret

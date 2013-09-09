@@ -880,6 +880,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|PLAN_SERIALIZATION
+argument_list|(
+literal|"hive.plan.serialization.format"
+argument_list|,
+literal|"kryo"
+argument_list|)
+block|,
 name|SCRATCHDIR
 argument_list|(
 literal|"hive.exec.scratchdir"

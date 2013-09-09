@@ -1106,9 +1106,6 @@ operator|.
 name|HADOOPBIN
 argument_list|)
 decl_stmt|;
-name|String
-name|libJarsOption
-decl_stmt|;
 comment|// write out the plan to a local file
 name|Path
 name|planPath
@@ -1164,6 +1161,8 @@ argument_list|(
 name|plan
 argument_list|,
 name|out
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|String

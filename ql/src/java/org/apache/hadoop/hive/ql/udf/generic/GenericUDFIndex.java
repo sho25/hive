@@ -246,6 +246,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|transient
 name|MapObjectInspector
 name|mapOI
 decl_stmt|;
@@ -254,14 +255,17 @@ name|boolean
 name|mapKeyPreferWritable
 decl_stmt|;
 specifier|private
+specifier|transient
 name|ListObjectInspector
 name|listOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|indexOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|ObjectInspector
 name|returnOI
 decl_stmt|;

@@ -157,6 +157,13 @@ argument_list|(
 literal|'('
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|signature
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|ColumnInfo
@@ -175,6 +182,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|sb
 operator|.

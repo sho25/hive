@@ -312,6 +312,7 @@ index|[]
 name|argumentOIs
 decl_stmt|;
 specifier|private
+specifier|transient
 specifier|final
 name|Text
 name|resultText
@@ -321,6 +322,7 @@ name|Text
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|transient
 specifier|final
 name|StringBuilder
 name|pattern
@@ -332,6 +334,7 @@ literal|""
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|transient
 specifier|final
 name|DecimalFormat
 name|numberFormat
@@ -343,6 +346,7 @@ literal|""
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|transient
 name|int
 name|lastDValue
 init|=

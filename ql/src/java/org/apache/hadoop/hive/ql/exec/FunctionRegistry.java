@@ -4955,6 +4955,9 @@ argument_list|,
 name|isOperator
 argument_list|,
 name|UDFClass
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -8797,7 +8800,7 @@ argument_list|()
 argument_list|,
 name|bridge
 operator|.
-name|getUdfClass
+name|getUdfClassName
 argument_list|()
 argument_list|)
 return|;

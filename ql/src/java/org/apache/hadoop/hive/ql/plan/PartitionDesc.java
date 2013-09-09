@@ -296,7 +296,6 @@ name|String
 name|serdeClassName
 decl_stmt|;
 specifier|private
-specifier|transient
 name|String
 name|baseFileName
 decl_stmt|;

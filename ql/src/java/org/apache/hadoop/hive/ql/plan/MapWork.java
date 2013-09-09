@@ -336,7 +336,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * MapWork represents all the information used to run a map task on the cluster.  * It is first used when the query planner breaks the logical plan into tasks and  * used throughout physical optimization to track map-side operator plans, input  * paths, aliases, etc.  *  * ExecDriver will serialize the contents of this class and make sure it is  * distributed on the cluster. The ExecMapper will ultimately deserialize this  * class on the data nodes and setup it's operator pipeline accordingly.  *  * This class is also used in the explain command any property with the   * appropriate annotation will be displayed in the explain output.  */
+comment|/**  * MapWork represents all the information used to run a map task on the cluster.  * It is first used when the query planner breaks the logical plan into tasks and  * used throughout physical optimization to track map-side operator plans, input  * paths, aliases, etc.  *  * ExecDriver will serialize the contents of this class and make sure it is  * distributed on the cluster. The ExecMapper will ultimately deserialize this  * class on the data nodes and setup it's operator pipeline accordingly.  *  * This class is also used in the explain command any property with the  * appropriate annotation will be displayed in the explain output.  */
 end_comment
 
 begin_class
@@ -357,7 +357,6 @@ name|BaseWork
 block|{
 specifier|private
 specifier|static
-specifier|transient
 specifier|final
 name|Log
 name|LOG
@@ -597,10 +596,12 @@ decl_stmt|;
 comment|// sampling on task running
 comment|// the following two are used for join processing
 specifier|private
+specifier|transient
 name|QBJoinTree
 name|joinTree
 decl_stmt|;
 specifier|private
+specifier|transient
 name|LinkedHashMap
 argument_list|<
 name|Operator
@@ -626,7 +627,6 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
-specifier|transient
 name|boolean
 name|useBucketizedHiveInputFormat
 decl_stmt|;
