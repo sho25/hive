@@ -2561,6 +2561,8 @@ name|getObjectInspector
 argument_list|()
 else|:
 name|partitionedTableOI
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|partTblObjectInspectorConverter
@@ -3665,6 +3667,8 @@ name|getObjectInspector
 argument_list|()
 argument_list|,
 name|tableOI
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 if|if

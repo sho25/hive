@@ -175,13 +175,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|metastore
 operator|.
-name|exec
+name|api
 operator|.
-name|mr
-operator|.
-name|ExecMapperContext
+name|hive_metastoreConstants
 import|;
 end_import
 
@@ -195,11 +193,13 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|ql
 operator|.
-name|api
+name|exec
 operator|.
-name|hive_metastoreConstants
+name|mr
+operator|.
+name|ExecMapperContext
 import|;
 end_import
 
@@ -1920,6 +1920,8 @@ name|tblDeserializer
 operator|.
 name|getObjectInspector
 argument_list|()
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 if|if
