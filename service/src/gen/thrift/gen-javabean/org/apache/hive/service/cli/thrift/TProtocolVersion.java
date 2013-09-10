@@ -68,6 +68,11 @@ name|HIVE_CLI_SERVICE_PROTOCOL_V1
 argument_list|(
 literal|0
 argument_list|)
+block|,
+name|HIVE_CLI_SERVICE_PROTOCOL_V2
+argument_list|(
+literal|1
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -118,6 +123,12 @@ literal|0
 case|:
 return|return
 name|HIVE_CLI_SERVICE_PROTOCOL_V1
+return|;
+case|case
+literal|1
+case|:
+return|return
+name|HIVE_CLI_SERVICE_PROTOCOL_V2
 return|;
 default|default:
 return|return

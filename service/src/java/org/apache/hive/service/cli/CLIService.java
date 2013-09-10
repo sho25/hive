@@ -670,7 +670,7 @@ return|return
 name|infoValue
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.ICLIService#executeStatement(org.apache.hive.service.cli.SessionHandle, java.lang.String, java.util.Map)    */
+comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.ICLIService#executeStatement(org.apache.hive.service.cli.SessionHandle,    *  java.lang.String, java.util.Map)    */
 annotation|@
 name|Override
 specifier|public
@@ -718,6 +718,60 @@ argument_list|(
 name|sessionHandle
 operator|+
 literal|": executeStatement()"
+argument_list|)
+expr_stmt|;
+return|return
+name|opHandle
+return|;
+block|}
+comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.ICLIService#executeStatementAsync(org.apache.hive.service.cli.SessionHandle,    *  java.lang.String, java.util.Map)    */
+annotation|@
+name|Override
+specifier|public
+name|OperationHandle
+name|executeStatementAsync
+parameter_list|(
+name|SessionHandle
+name|sessionHandle
+parameter_list|,
+name|String
+name|statement
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|confOverlay
+parameter_list|)
+throws|throws
+name|HiveSQLException
+block|{
+name|OperationHandle
+name|opHandle
+init|=
+name|sessionManager
+operator|.
+name|getSession
+argument_list|(
+name|sessionHandle
+argument_list|)
+operator|.
+name|executeStatementAsync
+argument_list|(
+name|statement
+argument_list|,
+name|confOverlay
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|sessionHandle
+operator|+
+literal|": executeStatementAsync()"
 argument_list|)
 expr_stmt|;
 return|return

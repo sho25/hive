@@ -3466,7 +3466,24 @@ name|HIVE_SERVER2_THRIFT_MAX_WORKER_THREADS
 argument_list|(
 literal|"hive.server2.thrift.max.worker.threads"
 argument_list|,
-literal|100
+literal|500
+argument_list|)
+block|,
+comment|// Configuration for async thread pool in SessionManager
+comment|// Number of async threads
+name|HIVE_SERVER2_ASYNC_EXEC_THREADS
+argument_list|(
+literal|"hive.server2.async.exec.threads"
+argument_list|,
+literal|50
+argument_list|)
+block|,
+comment|// Number of seconds HiveServer2 shutdown will wait for async threads to terminate
+name|HIVE_SERVER2_ASYNC_EXEC_SHUTDOWN_TIMEOUT
+argument_list|(
+literal|"hive.server2.async.exec.shutdown.timeout"
+argument_list|,
+literal|10
 argument_list|)
 block|,
 name|HIVE_SERVER2_THRIFT_PORT
