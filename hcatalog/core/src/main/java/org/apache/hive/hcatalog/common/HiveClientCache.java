@@ -1241,32 +1241,11 @@ block|{
 comment|// Look for an unlikely database name and see if either MetaException or TException is thrown
 name|this
 operator|.
-name|getDatabase
+name|getDatabases
 argument_list|(
 literal|"NonExistentDatabaseUsedForHealthCheck"
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NoSuchObjectException
-name|e
-parameter_list|)
-block|{
-return|return
-literal|true
-return|;
-comment|// It is okay if the database doesn't exist
-block|}
-catch|catch
-parameter_list|(
-name|MetaException
-name|e
-parameter_list|)
-block|{
-return|return
-literal|false
-return|;
 block|}
 catch|catch
 parameter_list|(
