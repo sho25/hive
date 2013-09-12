@@ -685,9 +685,6 @@ operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
 name|poi
-operator|.
-name|getPrimitiveCategory
-argument_list|()
 argument_list|)
 return|;
 block|}
@@ -778,9 +775,6 @@ operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
 name|poi
-operator|.
-name|getPrimitiveCategory
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -793,9 +787,6 @@ operator|.
 name|getPrimitiveJavaObjectInspector
 argument_list|(
 name|poi
-operator|.
-name|getPrimitiveCategory
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -812,9 +803,6 @@ operator|.
 name|getPrimitiveJavaObjectInspector
 argument_list|(
 name|poi
-operator|.
-name|getPrimitiveCategory
-argument_list|()
 argument_list|)
 expr_stmt|;
 break|break;
@@ -830,9 +818,6 @@ operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
 name|poi
-operator|.
-name|getPrimitiveCategory
-argument_list|()
 argument_list|)
 expr_stmt|;
 break|break;

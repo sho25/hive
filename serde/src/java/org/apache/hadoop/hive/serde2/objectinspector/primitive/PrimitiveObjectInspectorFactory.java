@@ -45,7 +45,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|HiveDecimalWritable
+name|ByteWritable
 import|;
 end_import
 
@@ -63,7 +63,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|ByteWritable
+name|DateWritable
 import|;
 end_import
 
@@ -99,7 +99,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|ShortWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -117,7 +117,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|ShortWritable
 import|;
 end_import
 
@@ -213,7 +213,65 @@ name|primitive
 operator|.
 name|PrimitiveObjectInspectorUtils
 operator|.
+name|ParameterizedObjectInspectorMap
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|PrimitiveObjectInspectorUtils
+operator|.
 name|PrimitiveTypeEntry
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|BaseTypeParams
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|PrimitiveTypeSpec
 import|;
 end_import
 
@@ -915,6 +973,26 @@ name|javaHiveDecimalObjectInspector
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Cached Writable object inspectors for parameterized primitive types.    */
+specifier|private
+specifier|static
+name|ParameterizedObjectInspectorMap
+name|cachedParameterizedPrimitiveWritableObjectInspectorCache
+init|=
+operator|new
+name|ParameterizedObjectInspectorMap
+argument_list|()
+decl_stmt|;
+comment|/**    * Cached Java object inspectors for parameterized primitive types.    */
+specifier|private
+specifier|static
+name|ParameterizedObjectInspectorMap
+name|cachedParameterizedPrimitiveJavaObjectInspectorCache
+init|=
+operator|new
+name|ParameterizedObjectInspectorMap
+argument_list|()
+decl_stmt|;
 comment|/**    * Returns the PrimitiveWritableObjectInspector for the PrimitiveCategory.    *    * @param primitiveCategory    */
 specifier|public
 specifier|static
@@ -957,6 +1035,97 @@ block|}
 return|return
 name|result
 return|;
+block|}
+comment|/**    * Returns the PrimitiveWritableObjectInspector for the PrimitiveCategory, with option to    * pass in parameters for the primitive type (such as char(10)).    * Ideally this method should be used over the method without type parameters,    * and the type parameters (or lack of parameters) can be determined from    * the input ObjectInspector, TypeInfo, or TypeEntry.    * However there are situations where it is not possible to get any information about    * type parameters, such as when getting an object inspector based on reflection from    * the java or primitive class.    * @param primitiveCategory    Primitve type category    * @param primitiveTypeParams  Type parameters for the primitve type.    *        Set to null if there are no type parameters    * @return    */
+specifier|public
+specifier|static
+name|AbstractPrimitiveWritableObjectInspector
+name|getPrimitiveWritableObjectInspector
+parameter_list|(
+name|PrimitiveTypeSpec
+name|typeSpec
+parameter_list|)
+block|{
+name|PrimitiveCategory
+name|primitiveCategory
+init|=
+name|typeSpec
+operator|.
+name|getPrimitiveCategory
+argument_list|()
+decl_stmt|;
+name|BaseTypeParams
+name|primitiveTypeParams
+init|=
+name|typeSpec
+operator|.
+name|getTypeParams
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|primitiveTypeParams
+operator|==
+literal|null
+condition|)
+block|{
+comment|// No type params, just search the unparameterized types
+return|return
+name|getPrimitiveWritableObjectInspector
+argument_list|(
+name|primitiveCategory
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+comment|// Check our cached set of parameterized object inspectors for the primitive category,
+comment|// or create a new object inspector if one doesn't exist yet.
+name|PrimitiveObjectInspector
+name|oi
+init|=
+name|cachedParameterizedPrimitiveWritableObjectInspectorCache
+operator|.
+name|getObjectInspector
+argument_list|(
+name|typeSpec
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|oi
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Do a bit of validation - not all primitive types use parameters.
+switch|switch
+condition|(
+name|primitiveCategory
+condition|)
+block|{
+comment|// Currently no parameterized types
+default|default:
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Primitve type "
+operator|+
+name|primitiveCategory
+operator|+
+literal|" should not take parameters"
+argument_list|)
+throw|;
+block|}
+block|}
+return|return
+operator|(
+name|AbstractPrimitiveWritableObjectInspector
+operator|)
+name|oi
+return|;
+block|}
 block|}
 comment|/**    * Returns a PrimitiveWritableObjectInspector which implements ConstantObjectInspector    * for the PrimitiveCategory.    *    * @param primitiveCategory    * @param value    */
 specifier|public
@@ -1196,6 +1365,98 @@ block|}
 return|return
 name|result
 return|;
+block|}
+comment|/**    * Returns the PrimitiveJavaObjectInspector for the PrimitiveCategory, with option to    * pass in parameters for the primitive type (such as char(10)).    * Ideally this method should be used over the method without type parameters,    * and the type parameters (or lack of parameters) can be determined from    * the input ObjectInspector, TypeInfo, or TypeEntry.    * However there are situations where it is not possible to get any information about    * type parameters, such as when getting an object inspector based on reflection from    * the java or primitive class.    * @param primitiveCategory    Primitve type category    * @param primitiveTypeParams  Type parameters for the primitve type.    *        Set to null if there are no type parameters    * @return    */
+specifier|public
+specifier|static
+name|AbstractPrimitiveJavaObjectInspector
+name|getPrimitiveJavaObjectInspector
+parameter_list|(
+name|PrimitiveTypeSpec
+name|typeSpec
+parameter_list|)
+block|{
+name|PrimitiveCategory
+name|primitiveCategory
+init|=
+name|typeSpec
+operator|.
+name|getPrimitiveCategory
+argument_list|()
+decl_stmt|;
+name|BaseTypeParams
+name|primitiveTypeParams
+init|=
+name|typeSpec
+operator|.
+name|getTypeParams
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|primitiveTypeParams
+operator|==
+literal|null
+condition|)
+block|{
+comment|// No type params, just search the unparameterized types
+return|return
+name|getPrimitiveJavaObjectInspector
+argument_list|(
+name|primitiveCategory
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+comment|// Check our cached set of parameterized object inspectors for the primitive category,
+comment|// or create a new object inspector if one doesn't exist yet.
+name|PrimitiveObjectInspector
+name|oi
+init|=
+name|cachedParameterizedPrimitiveJavaObjectInspectorCache
+operator|.
+name|getObjectInspector
+argument_list|(
+name|typeSpec
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|oi
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Do a bit of validation - not all primitive types use parameters.
+switch|switch
+condition|(
+name|primitiveCategory
+condition|)
+block|{
+comment|// Create type info and add to cache
+comment|// Currently no existing parameterized types
+default|default:
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Primitve type "
+operator|+
+name|primitiveCategory
+operator|+
+literal|" should not take parameters"
+argument_list|)
+throw|;
+block|}
+block|}
+return|return
+operator|(
+name|AbstractPrimitiveJavaObjectInspector
+operator|)
+name|oi
+return|;
+block|}
 block|}
 comment|/**    * Returns an ObjectInspector for a primitive Class. The Class can be a Hive    * Writable class, or a Java Primitive Class.    *    * A runtimeException will be thrown if the class is not recognized as a    * primitive type by Hive.    */
 specifier|public

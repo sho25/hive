@@ -874,9 +874,6 @@ operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
 name|primInputOI
-operator|.
-name|getPrimitiveCategory
-argument_list|()
 argument_list|)
 return|;
 case|case

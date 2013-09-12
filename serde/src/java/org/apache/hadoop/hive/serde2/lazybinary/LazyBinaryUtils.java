@@ -1890,9 +1890,6 @@ name|PrimitiveTypeInfo
 operator|)
 name|typeInfo
 operator|)
-operator|.
-name|getPrimitiveCategory
-argument_list|()
 argument_list|)
 expr_stmt|;
 break|break;
