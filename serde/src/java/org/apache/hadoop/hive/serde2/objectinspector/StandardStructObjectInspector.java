@@ -78,7 +78,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ListStructObjectInspector works on struct data that is stored as a Java List  * or Java Array object. Basically, the fields are stored sequentially in the  * List object.  *   * The names of the struct fields and the internal structure of the struct  * fields are specified in the ctor of the StructObjectInspector.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
+comment|/**  * ListStructObjectInspector works on struct data that is stored as a Java List  * or Java Array object. Basically, the fields are stored sequentially in the  * List object.  *  * The names of the struct fields and the internal structure of the struct  * fields are specified in the ctor of the StructObjectInspector.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -129,6 +129,14 @@ specifier|protected
 name|String
 name|fieldComment
 decl_stmt|;
+specifier|protected
+name|MyField
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 specifier|public
 name|MyField
 parameter_list|(
@@ -257,19 +265,13 @@ name|MyField
 argument_list|>
 name|fields
 decl_stmt|;
-specifier|public
-name|String
-name|getTypeName
+specifier|protected
+name|StandardStructObjectInspector
 parameter_list|()
 block|{
-return|return
-name|ObjectInspectorUtils
-operator|.
-name|getStandardStructTypeName
-argument_list|(
-name|this
-argument_list|)
-return|;
+name|super
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * Call ObjectInspectorFactory.getStandardListObjectInspector instead.    */
 specifier|protected
@@ -553,6 +555,20 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|public
+name|String
+name|getTypeName
+parameter_list|()
+block|{
+return|return
+name|ObjectInspectorUtils
+operator|.
+name|getStandardStructTypeName
+argument_list|(
+name|this
+argument_list|)
+return|;
 block|}
 specifier|public
 specifier|final

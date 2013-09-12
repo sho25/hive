@@ -525,6 +525,14 @@ specifier|public
 name|String
 name|typeName
 decl_stmt|;
+specifier|protected
+name|PrimitiveTypeEntry
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|PrimitiveTypeEntry
 parameter_list|(
 name|PrimitiveObjectInspector

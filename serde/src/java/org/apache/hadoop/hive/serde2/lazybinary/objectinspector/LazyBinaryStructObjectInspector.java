@@ -104,7 +104,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspector for LazyBinaryStruct.  *   * @see LazyBinaryStruct  */
+comment|/**  * ObjectInspector for LazyBinaryStruct.  *  * @see LazyBinaryStruct  */
 end_comment
 
 begin_class
@@ -114,6 +114,14 @@ name|LazyBinaryStructObjectInspector
 extends|extends
 name|StandardStructObjectInspector
 block|{
+specifier|protected
+name|LazyBinaryStructObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 specifier|protected
 name|LazyBinaryStructObjectInspector
 parameter_list|(

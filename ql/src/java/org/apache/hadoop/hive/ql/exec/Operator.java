@@ -990,7 +990,6 @@ name|outputObjInspector
 decl_stmt|;
 comment|/**    * A map of output column name to input expression map. This is used by    * optimizer and built during semantic analysis contains only key elements for    * reduce sink and group by op    */
 specifier|protected
-specifier|transient
 name|Map
 argument_list|<
 name|String

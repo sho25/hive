@@ -49,6 +49,14 @@ name|?
 argument_list|>
 name|value
 decl_stmt|;
+specifier|protected
+name|StandardConstantListObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 comment|/**    * Call ObjectInspectorFactory.getStandardListObjectInspector instead.    */
 specifier|protected
 name|StandardConstantListObjectInspector

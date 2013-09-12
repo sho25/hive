@@ -57,6 +57,14 @@ name|ObjectInspector
 argument_list|>
 name|children
 decl_stmt|;
+specifier|protected
+name|DelegatedUnionObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 specifier|public
 name|DelegatedUnionObjectInspector
 parameter_list|(

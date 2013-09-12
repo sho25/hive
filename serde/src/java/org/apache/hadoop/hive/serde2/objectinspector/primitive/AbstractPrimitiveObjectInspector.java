@@ -73,10 +73,18 @@ name|AbstractPrimitiveObjectInspector
 implements|implements
 name|PrimitiveObjectInspector
 block|{
-specifier|transient
+specifier|protected
 name|PrimitiveTypeEntry
 name|typeEntry
 decl_stmt|;
+specifier|protected
+name|AbstractPrimitiveObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 comment|/**    * Construct a AbstractPrimitiveObjectInspector.    */
 specifier|protected
 name|AbstractPrimitiveObjectInspector

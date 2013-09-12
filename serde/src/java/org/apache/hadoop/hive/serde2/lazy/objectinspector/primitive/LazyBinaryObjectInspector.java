@@ -125,7 +125,7 @@ argument_list|>
 implements|implements
 name|BinaryObjectInspector
 block|{
-specifier|protected
+specifier|public
 name|LazyBinaryObjectInspector
 parameter_list|()
 block|{

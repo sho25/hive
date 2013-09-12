@@ -70,6 +70,14 @@ specifier|private
 name|FloatWritable
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantFloatObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantFloatObjectInspector
 parameter_list|(
 name|FloatWritable

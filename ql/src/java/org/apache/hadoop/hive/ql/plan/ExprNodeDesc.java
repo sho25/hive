@@ -133,6 +133,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|protected
 name|TypeInfo
 name|typeInfo
 decl_stmt|;

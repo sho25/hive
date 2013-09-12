@@ -128,7 +128,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyListObjectInspector works on array data that is stored in LazyArray.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
+comment|/**  * LazyListObjectInspector works on array data that is stored in LazyArray.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -156,21 +156,34 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
 name|ObjectInspector
 name|listElementObjectInspector
 decl_stmt|;
+specifier|private
 name|byte
 name|separator
 decl_stmt|;
+specifier|private
 name|Text
 name|nullSequence
 decl_stmt|;
+specifier|private
 name|boolean
 name|escaped
 decl_stmt|;
+specifier|private
 name|byte
 name|escapeChar
 decl_stmt|;
+specifier|protected
+name|LazyListObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 comment|/**    * Call ObjectInspectorFactory.getLazySimpleListObjectInspector instead.    */
 specifier|protected
 name|LazyListObjectInspector

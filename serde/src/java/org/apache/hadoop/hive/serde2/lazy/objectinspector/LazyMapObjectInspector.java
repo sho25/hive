@@ -128,7 +128,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyMapObjectInspector works on struct data that is stored in LazyStruct.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
+comment|/**  * LazyMapObjectInspector works on struct data that is stored in LazyStruct.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -156,27 +156,42 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
 name|ObjectInspector
 name|mapKeyObjectInspector
 decl_stmt|;
+specifier|private
 name|ObjectInspector
 name|mapValueObjectInspector
 decl_stmt|;
+specifier|private
 name|byte
 name|itemSeparator
 decl_stmt|;
+specifier|private
 name|byte
 name|keyValueSeparator
 decl_stmt|;
+specifier|private
 name|Text
 name|nullSequence
 decl_stmt|;
+specifier|private
 name|boolean
 name|escaped
 decl_stmt|;
+specifier|private
 name|byte
 name|escapeChar
 decl_stmt|;
+specifier|protected
+name|LazyMapObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 comment|/**    * Call ObjectInspectorFactory.getStandardListObjectInspector instead.    */
 specifier|protected
 name|LazyMapObjectInspector
