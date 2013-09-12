@@ -1823,6 +1823,8 @@ operator|.
 name|getOutputFormatSubstitute
 argument_list|(
 name|origin
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 if|if

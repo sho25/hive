@@ -1591,6 +1591,8 @@ operator|.
 name|getOutputFormatSubstitute
 argument_list|(
 name|outputFormatClass
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|toString
@@ -1837,6 +1839,8 @@ operator|.
 name|getOutputFormatSubstitute
 argument_list|(
 name|c
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

@@ -1937,6 +1937,11 @@ name|getOutputFormatClass
 parameter_list|()
 block|{
 comment|// Replace FileOutputFormat for backward compatibility
+name|boolean
+name|storagehandler
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 name|outputFormatClass
@@ -2023,6 +2028,26 @@ name|c
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|getStorageHandler
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|storagehandler
+operator|=
+literal|true
+expr_stmt|;
+block|}
+else|else
+block|{
+name|storagehandler
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|outputFormatClass
 operator|=
 name|HiveFileFormatUtils
@@ -2030,6 +2055,8 @@ operator|.
 name|getOutputFormatSubstitute
 argument_list|(
 name|c
+argument_list|,
+name|storagehandler
 argument_list|)
 expr_stmt|;
 block|}
@@ -3709,6 +3736,8 @@ operator|.
 name|getOutputFormatSubstitute
 argument_list|(
 name|origin
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
