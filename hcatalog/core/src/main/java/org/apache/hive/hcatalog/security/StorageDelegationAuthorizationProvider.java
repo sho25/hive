@@ -295,22 +295,6 @@ name|ReflectionUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|hcatalog
-operator|.
-name|mapreduce
-operator|.
-name|HCatStorageHandler
-import|;
-end_import
-
 begin_comment
 comment|/**  * A HiveAuthorizationProvider which delegates the authorization requests to   * the underlying AuthorizationProviders obtained from the StorageHandler.  */
 end_comment
@@ -503,13 +487,13 @@ if|if
 condition|(
 name|handler
 operator|instanceof
-name|HCatStorageHandler
+name|HiveStorageHandler
 condition|)
 block|{
 return|return
 operator|(
 operator|(
-name|HCatStorageHandler
+name|HiveStorageHandler
 operator|)
 name|handler
 operator|)
