@@ -201,6 +201,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|HadoopShims
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|Text
@@ -369,11 +385,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hcatalog
+name|hadoop
+operator|.
+name|hive
 operator|.
 name|shims
 operator|.
-name|HCatHadoopShims
+name|ShimLoader
 import|;
 end_import
 
@@ -398,7 +416,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The MultiOutputFormat class simplifies writing output data to multiple  * outputs.  *<p>  * Multiple output formats can be defined each with its own  *<code>OutputFormat</code> class, own key class and own value class. Any  * configuration on these output format classes can be done without interfering  * with other output format's configuration.  *<p>  * Usage pattern for job submission:  *  *<pre>  *  * Job job = new Job();  *  * FileInputFormat.setInputPath(job, inDir);  *  * job.setMapperClass(WordCountMap.class);  * job.setReducerClass(WordCountReduce.class);  * job.setInputFormatClass(TextInputFormat.class);  * job.setOutputFormatClass(MultiOutputFormat.class);  * // Need not define OutputKeyClass and OutputValueClass. They default to  * // Writable.class  * job.setMapOutputKeyClass(Text.class);  * job.setMapOutputValueClass(IntWritable.class);  *  *  * // Create a JobConfigurer that will configure the job with the multiple  * // output format information.  * JobConfigurer configurer = MultiOutputFormat.createConfigurer(job);  *  * // Defines additional single text based output 'text' for the job.  * // Any configuration for the defined OutputFormat should be done with  * // the Job obtained with configurer.getJob() method.  * configurer.addOutputFormat("text", TextOutputFormat.class,  *                 IntWritable.class, Text.class);  * FileOutputFormat.setOutputPath(configurer.getJob("text"), textOutDir);  *  * // Defines additional sequence-file based output 'sequence' for the job  * configurer.addOutputFormat("sequence", SequenceFileOutputFormat.class,  *                 Text.class, IntWritable.class);  * FileOutputFormat.setOutputPath(configurer.getJob("sequence"), seqOutDir);  * ...  * // configure method to be called on the JobConfigurer once all the  * // output formats have been defined and configured.  * configurer.configure();  *  * job.waitForCompletion(true);  * ...  *</pre>  *<p>  * Usage in Reducer:  *  *<pre>  * public class WordCountReduce extends  *         Reducer&lt;Text, IntWritable, Writable, Writable&gt; {  *  *     private IntWritable count = new IntWritable();  *  *     public void reduce(Text word, Iterator&lt;IntWritable&gt; values,  *             Context context)  *             throws IOException {  *         int sum = 0;  *         for (IntWritable val : values) {  *             sum += val.get();  *         }  *         count.set(sum);  *         MultiOutputFormat.write(&quot;text&quot;, count, word, context);  *         MultiOutputFormat.write(&quot;sequence&quot;, word, count, context);  *     }  *  * }  *  *</pre>  *  * Map only jobs:  *<p>  * MultiOutputFormat.write("output", key, value, context); can be called similar  * to a reducer in map only jobs.  *  */
+comment|/**  * The MultiOutputFormat class simplifies writing output data to multiple  * outputs.  *<p>  * Multiple output formats can be defined each with its own  *<code>OutputFormat</code> class, own key class and own value class. Any  * configuration on these output format classes can be done without interfering  * with other output format's configuration.  *<p>  * Usage pattern for job submission:  *  *<pre>  *  * Job job = new Job();  *  * FileInputFormat.setInputPath(job, inDir);  *  * job.setMapperClass(WordCountMap.class);  * job.setReducerClass(WordCountReduce.class);  * job.setInputFormatClass(TextInputFormat.class);  * job.setOutputFormatClass(MultiOutputFormat.class);  * // Need not define OutputKeyClass and OutputValueClass. They default to  * // Writable.class  * job.setMapOutputKeyClass(Text.class);  * job.setMapOutputValueClass(IntWritable.class);  *  *  * // Create a JobConfigurer that will configure the job with the multiple  * // output format information.  * JobConfigurer configurer = MultiOutputFormat.createConfigurer(job);  *  * // Defines additional single text based output 'text' for the job.  * // Any configuration for the defined OutputFormat should be done with  * // the Job obtained with configurer.getJob() method.  * configurer.addOutputFormat("text", TextOutputFormat.class,  *                 IntWritable.class, Text.class);  * FileOutputFormat.setOutputPath(configurer.getJob("text"), textOutDir);  *  * // Defines additional sequence-file based output 'sequence' for the job  * configurer.addOutputFormat("sequence", SequenceFileOutputFormat.class,  *                 Text.class, IntWritable.class);  * FileOutputFormat.setOutputPath(configurer.getJob("sequence"), seqOutDir);  * ...  * // configure method to be called on the JobConfigurer once all the  * // output formats have been defined and configured.  * configurer.configure();  *  * job.waitForCompletion(true);  * ...  *</pre>  *<p>  * Usage in Reducer:  *  *<pre>  * public class WordCountReduce extends  *         Reducer&lt;Text, IntWritable, Writable, Writable&gt; {  *  *     private IntWritable count = new IntWritable();  *  *     public void reduce(Text word, Iterator&lt;IntWritable&gt; values,  *             Context context)  *             throws IOException {  *         int sum = 0;  *         for (IntWritable val : values) {  *             sum += val.get();  *         }  *         count.set(sum);  *         MultiOutputFormat.write(&quot;text&quot;, count, word, context);  *         MultiOutputFormat.write(&quot;sequence&quot;, word, count, context);  *     }  *  * }  *  *</pre>  *  * Map only jobs:  *<p>  * MultiOutputFormat.write("output", key, value, context); can be called similar  * to a reducer in map only jobs.  *  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.MultiOutputFormat} instead  */
 end_comment
 
 begin_class
@@ -520,15 +538,18 @@ name|configsToOverride
 operator|.
 name|add
 argument_list|(
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|getPropertyName
 argument_list|(
+name|HadoopShims
+operator|.
 name|HCatHadoopShims
 operator|.
 name|PropertyName
@@ -579,15 +600,18 @@ name|configsToMerge
 operator|.
 name|put
 argument_list|(
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|getPropertyName
 argument_list|(
+name|HadoopShims
+operator|.
 name|HCatHadoopShims
 operator|.
 name|PropertyName
@@ -602,15 +626,18 @@ name|configsToMerge
 operator|.
 name|put
 argument_list|(
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|getPropertyName
 argument_list|(
+name|HadoopShims
+operator|.
 name|HCatHadoopShims
 operator|.
 name|PropertyName
@@ -668,7 +695,7 @@ name|fileSep
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Get a JobConfigurer instance that will support configuration of the job      * for multiple output formats.      *      * @param job the mapreduce job to be submitted      * @return JobConfigurer      */
+comment|/**    * Get a JobConfigurer instance that will support configuration of the job    * for multiple output formats.    *    * @param job the mapreduce job to be submitted    * @return JobConfigurer    */
 specifier|public
 specifier|static
 name|JobConfigurer
@@ -687,7 +714,7 @@ name|job
 argument_list|)
 return|;
 block|}
-comment|/**      * Get the JobContext with the related OutputFormat configuration populated given the alias      * and the actual JobContext      * @param alias the name given to the OutputFormat configuration      * @param context the JobContext      * @return a copy of the JobContext with the alias configuration populated      */
+comment|/**    * Get the JobContext with the related OutputFormat configuration populated given the alias    * and the actual JobContext    * @param alias the name given to the OutputFormat configuration    * @param context the JobContext    * @return a copy of the JobContext with the alias configuration populated    */
 specifier|public
 specifier|static
 name|JobContext
@@ -719,11 +746,12 @@ decl_stmt|;
 name|JobContext
 name|aliasContext
 init|=
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|createJobContext
@@ -753,7 +781,7 @@ return|return
 name|aliasContext
 return|;
 block|}
-comment|/**      * Get the TaskAttemptContext with the related OutputFormat configuration populated given the alias      * and the actual TaskAttemptContext      * @param alias the name given to the OutputFormat configuration      * @param context the Mapper or Reducer Context      * @return a copy of the TaskAttemptContext with the alias configuration populated      */
+comment|/**    * Get the TaskAttemptContext with the related OutputFormat configuration populated given the alias    * and the actual TaskAttemptContext    * @param alias the name given to the OutputFormat configuration    * @param context the Mapper or Reducer Context    * @return a copy of the TaskAttemptContext with the alias configuration populated    */
 specifier|public
 specifier|static
 name|TaskAttemptContext
@@ -785,11 +813,12 @@ decl_stmt|;
 name|TaskAttemptContext
 name|aliasContext
 init|=
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|createTaskAttemptContext
@@ -819,7 +848,7 @@ return|return
 name|aliasContext
 return|;
 block|}
-comment|/**      * Write the output key and value using the OutputFormat defined by the      * alias.      *      * @param alias the name given to the OutputFormat configuration      * @param key the output key to be written      * @param value the output value to be written      * @param context the Mapper or Reducer Context      * @throws IOException      * @throws InterruptedException      */
+comment|/**    * Write the output key and value using the OutputFormat defined by the    * alias.    *    * @param alias the name given to the OutputFormat configuration    * @param key the output key to be written    * @param value the output value to be written    * @param context the Mapper or Reducer Context    * @throws IOException    * @throws InterruptedException    */
 specifier|public
 specifier|static
 parameter_list|<
@@ -1102,7 +1131,7 @@ name|MO_ALIASES
 argument_list|)
 return|;
 block|}
-comment|/**      * Compare the aliasContext with userJob and add the differing configuration      * as mapreduce.multiout.alias.<aliasname>.conf to the userJob.      *<p>      * Merge config like tmpjars, tmpfile, tmparchives,      * mapreduce.job.hdfs-servers that are directly handled by JobClient and add      * them to userJob.      *<p>      * Add mapred.output.dir config to userJob.      *      * @param alias alias name associated with a OutputFormat      * @param userJob reference to Job that the user is going to submit      * @param aliasContext JobContext populated with OutputFormat related      *            configuration.      */
+comment|/**    * Compare the aliasContext with userJob and add the differing configuration    * as mapreduce.multiout.alias.<aliasname>.conf to the userJob.    *<p>    * Merge config like tmpjars, tmpfile, tmparchives,    * mapreduce.job.hdfs-servers that are directly handled by JobClient and add    * them to userJob.    *<p>    * Add mapred.output.dir config to userJob.    *    * @param alias alias name associated with a OutputFormat    * @param userJob reference to Job that the user is going to submit    * @param aliasContext JobContext populated with OutputFormat related    *            configuration.    */
 specifier|private
 specifier|static
 name|void
@@ -1543,7 +1572,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Class that supports configuration of the job for multiple output formats.      */
+comment|/**    * Class that supports configuration of the job for multiple output formats.    */
 specifier|public
 specifier|static
 class|class
@@ -1608,7 +1637,7 @@ return|return
 name|configurer
 return|;
 block|}
-comment|/**          * Add a OutputFormat configuration to the Job with a alias name.          *          * @param alias the name to be given to the OutputFormat configuration          * @param outputFormatClass OutputFormat class          * @param keyClass the key class for the output data          * @param valueClass the value class for the output data          * @throws IOException          */
+comment|/**      * Add a OutputFormat configuration to the Job with a alias name.      *      * @param alias the name to be given to the OutputFormat configuration      * @param outputFormatClass OutputFormat class      * @param keyClass the key class for the output data      * @param valueClass the value class for the output data      * @throws IOException      */
 specifier|public
 name|void
 name|addOutputFormat
@@ -1684,7 +1713,7 @@ name|valueClass
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**          * Get the Job configuration for a OutputFormat defined by the alias          * name. The job returned by this method should be passed to the          * OutputFormat for any configuration instead of the Job that will be          * submitted to the JobClient.          *          * @param alias the name used for the OutputFormat during          *            addOutputFormat          * @return Job          */
+comment|/**      * Get the Job configuration for a OutputFormat defined by the alias      * name. The job returned by this method should be passed to the      * OutputFormat for any configuration instead of the Job that will be      * submitted to the JobClient.      *      * @param alias the name used for the OutputFormat during      *            addOutputFormat      * @return Job      */
 specifier|public
 name|Job
 name|getJob
@@ -1726,7 +1755,7 @@ return|return
 name|copy
 return|;
 block|}
-comment|/**          * Configure the job with the multiple output formats added. This method          * should be called after all the output formats have been added and          * configured and before the job submission.          */
+comment|/**      * Configure the job with the multiple output formats added. This method      * should be called after all the output formats have been added and      * configured and before the job submission.      */
 specifier|public
 name|void
 name|configure

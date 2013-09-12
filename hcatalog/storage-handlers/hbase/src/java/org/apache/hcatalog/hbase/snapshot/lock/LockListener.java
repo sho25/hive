@@ -28,13 +28,13 @@ specifier|public
 interface|interface
 name|LockListener
 block|{
-comment|/**      * call back called when the lock      * is acquired      */
+comment|/**    * call back called when the lock    * is acquired    */
 specifier|public
 name|void
 name|lockAcquired
 parameter_list|()
 function_decl|;
-comment|/**      * call back called when the lock is      * released.      */
+comment|/**    * call back called when the lock is    * released.    */
 specifier|public
 name|void
 name|lockReleased

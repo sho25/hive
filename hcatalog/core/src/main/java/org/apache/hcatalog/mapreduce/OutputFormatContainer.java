@@ -72,7 +72,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This container class is used to wrap OutputFormat implementations and augment them with  *  behavior necessary to work with HCatalog (ie metastore updates, hcatalog delegation tokens, etc).  *  Containers are also used to provide storage specific implementations of some HCatalog features (ie dynamic partitioning).  *  Hence users wishing to create storage specific implementations of HCatalog features should implement this class and override  *  HCatStorageHandler.getOutputFormatContainer(OutputFormat outputFormat) to return the implementation.  *  By default DefaultOutputFormatContainer is used, which only implements the bare minimum features HCatalog features  *  such as partitioning isn't supported.  */
+comment|/**  *  This container class is used to wrap OutputFormat implementations and augment them with  *  behavior necessary to work with HCatalog (ie metastore updates, hcatalog delegation tokens, etc).  *  Containers are also used to provide storage specific implementations of some HCatalog features (ie dynamic partitioning).  *  Hence users wishing to create storage specific implementations of HCatalog features should implement this class and override  *  HCatStorageHandler.getOutputFormatContainer(OutputFormat outputFormat) to return the implementation.  *  By default DefaultOutputFormatContainer is used, which only implements the bare minimum features HCatalog features  *  such as partitioning isn't supported.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.OutputFormatContainer} instead  */
 end_comment
 
 begin_class
@@ -114,7 +114,7 @@ name|Writable
 argument_list|>
 name|of
 decl_stmt|;
-comment|/**      * @param of OutputFormat this instance will contain      */
+comment|/**    * @param of OutputFormat this instance will contain    */
 specifier|public
 name|OutputFormatContainer
 parameter_list|(
@@ -149,7 +149,7 @@ operator|=
 name|of
 expr_stmt|;
 block|}
-comment|/**      * @return underlying OutputFormat      */
+comment|/**    * @return underlying OutputFormat    */
 specifier|public
 name|org
 operator|.

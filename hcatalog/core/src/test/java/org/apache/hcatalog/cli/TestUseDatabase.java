@@ -170,7 +170,7 @@ import|;
 end_import
 
 begin_comment
-comment|/* Unit test for GitHub Howl issue #3 */
+comment|/** Unit test for GitHub Howl issue #3   * @deprecated Use/modify {@link org.apache.hive.hcatalog.cli.TestUseDatabase} instead  */
 end_comment
 
 begin_class

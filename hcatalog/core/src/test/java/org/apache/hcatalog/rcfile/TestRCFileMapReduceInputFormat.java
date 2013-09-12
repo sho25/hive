@@ -333,11 +333,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hcatalog
+name|hadoop
+operator|.
+name|hive
 operator|.
 name|shims
 operator|.
-name|HCatHadoopShims
+name|ShimLoader
 import|;
 end_import
 
@@ -362,7 +364,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TestRCFile.  *  */
+comment|/**  * TestRCFile.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.rcfile.TestRCFileMapReduceInputFormat} instead  */
 end_comment
 
 begin_class
@@ -494,7 +496,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 block|}
 specifier|private
 specifier|static
@@ -893,7 +895,7 @@ parameter_list|(
 name|UnsupportedEncodingException
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 block|}
 comment|/** For debugging and testing. */
 specifier|public
@@ -1611,11 +1613,12 @@ block|{
 name|TaskAttemptContext
 name|tac
 init|=
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|createTaskAttemptContext

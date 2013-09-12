@@ -239,6 +239,10 @@ name|Iterator
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.TestHCatHiveThriftCompatibility} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -406,7 +410,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|/**      *  Create a table with no explicit schema and ensure its correctly      *  discovered from the thrift struct.      */
+comment|/**    *  Create a table with no explicit schema and ensure its correctly    *  discovered from the thrift struct.    */
 annotation|@
 name|Test
 specifier|public

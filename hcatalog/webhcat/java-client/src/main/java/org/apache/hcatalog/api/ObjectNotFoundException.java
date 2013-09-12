@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This exception is thrown when a Database, Table or Partition  * specified in an HCatalog query is not found.  */
+comment|/**  * This exception is thrown when a Database, Table or Partition  * specified in an HCatalog query is not found.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.ObjectNotFoundException} instead  */
 end_comment
 
 begin_class
@@ -48,7 +48,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * @param message Exception message.      * @param cause The wrapped Throwable that caused this exception.      */
+comment|/**    * @param message Exception message.    * @param cause The wrapped Throwable that caused this exception.    */
 specifier|public
 name|ObjectNotFoundException
 parameter_list|(

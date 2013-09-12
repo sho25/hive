@@ -223,7 +223,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Mock implementation to test the protocol/serialization      */
+comment|/**    * Mock implementation to test the protocol/serialization    */
 specifier|public
 specifier|static
 class|class
@@ -693,7 +693,7 @@ name|columnFamilies
 parameter_list|)
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -705,7 +705,7 @@ name|table
 parameter_list|)
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -780,7 +780,7 @@ name|transaction
 parameter_list|)
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -792,7 +792,7 @@ name|transaction
 parameter_list|)
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public

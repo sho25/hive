@@ -228,7 +228,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ObjectInspectorFactory for HCatRecordObjectInspectors (and associated helper inspectors)  */
+comment|/**  * ObjectInspectorFactory for HCatRecordObjectInspectors (and associated helper inspectors)  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.HCatRecordObjectInspectorFactory} instead  */
 end_comment
 
 begin_class
@@ -287,7 +287,7 @@ name|ObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**      * Returns HCatRecordObjectInspector given a StructTypeInfo type definition for the record to look into      * @param typeInfo Type definition for the record to look into      * @return appropriate HCatRecordObjectInspector      * @throws SerDeException      */
+comment|/**    * Returns HCatRecordObjectInspector given a StructTypeInfo type definition for the record to look into    * @param typeInfo Type definition for the record to look into    * @return appropriate HCatRecordObjectInspector    * @throws SerDeException    */
 specifier|public
 specifier|static
 name|HCatRecordObjectInspector

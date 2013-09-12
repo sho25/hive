@@ -880,6 +880,13 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|PLAN_SERIALIZATION
+argument_list|(
+literal|"hive.plan.serialization.format"
+argument_list|,
+literal|"kryo"
+argument_list|)
+block|,
 name|SCRATCHDIR
 argument_list|(
 literal|"hive.exec.scratchdir"
@@ -2432,13 +2439,12 @@ literal|0.5f
 argument_list|)
 block|,
 comment|// 50%
-comment|// use 0.11 version of RLE encoding. if this conf is not defined or any
-comment|// other value specified, ORC will use the new RLE encoding
+comment|// Define the version of the file to write
 name|HIVE_ORC_WRITE_FORMAT
 argument_list|(
 literal|"hive.exec.orc.write.format"
 argument_list|,
-literal|"0.11"
+literal|null
 argument_list|)
 block|,
 name|HIVE_ORC_DICTIONARY_KEY_SIZE_THRESHOLD
@@ -2531,6 +2537,14 @@ argument_list|(
 literal|"hive.limit.optimize.fetch.max"
 argument_list|,
 literal|50000
+argument_list|)
+block|,
+name|HIVELIMITPUSHDOWNMEMORYUSAGE
+argument_list|(
+literal|"hive.limit.pushdown.memory.usage"
+argument_list|,
+operator|-
+literal|1f
 argument_list|)
 block|,
 name|HIVEHASHTABLETHRESHOLD
@@ -3173,6 +3187,13 @@ argument_list|,
 literal|"minimal"
 argument_list|)
 block|,
+name|HIVEFETCHTASKAGGR
+argument_list|(
+literal|"hive.fetch.task.aggr"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Serde for FetchTask
 name|HIVEFETCHOUTPUTSERDE
 argument_list|(
@@ -3445,7 +3466,24 @@ name|HIVE_SERVER2_THRIFT_MAX_WORKER_THREADS
 argument_list|(
 literal|"hive.server2.thrift.max.worker.threads"
 argument_list|,
-literal|100
+literal|500
+argument_list|)
+block|,
+comment|// Configuration for async thread pool in SessionManager
+comment|// Number of async threads
+name|HIVE_SERVER2_ASYNC_EXEC_THREADS
+argument_list|(
+literal|"hive.server2.async.exec.threads"
+argument_list|,
+literal|50
+argument_list|)
+block|,
+comment|// Number of seconds HiveServer2 shutdown will wait for async threads to terminate
+name|HIVE_SERVER2_ASYNC_EXEC_SHUTDOWN_TIMEOUT
+argument_list|(
+literal|"hive.server2.async.exec.shutdown.timeout"
+argument_list|,
+literal|10
 argument_list|)
 block|,
 name|HIVE_SERVER2_THRIFT_PORT
@@ -3531,6 +3569,13 @@ argument_list|(
 literal|"hive.server2.table.type.mapping"
 argument_list|,
 literal|"HIVE"
+argument_list|)
+block|,
+name|HIVE_SERVER2_SESSION_HOOK
+argument_list|(
+literal|"hive.server2.session.hook"
+argument_list|,
+literal|""
 argument_list|)
 block|,
 name|HIVE_CONF_RESTRICTED_LIST
@@ -3622,38 +3667,6 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-comment|// ptf partition constants
-name|HIVE_PTF_PARTITION_PERSISTENCE_CLASS
-argument_list|(
-literal|"hive.ptf.partition.persistence"
-argument_list|,
-literal|"org.apache.hadoop.hive.ql.exec.PTFPersistence$PartitionedByteBasedList"
-argument_list|)
-block|,
-name|HIVE_PTF_PARTITION_PERSISTENT_SIZE
-argument_list|(
-literal|"hive.ptf.partition.persistence.memsize"
-argument_list|,
-operator|(
-name|int
-operator|)
-name|Math
-operator|.
-name|pow
-argument_list|(
-literal|2
-argument_list|,
-operator|(
-literal|5
-operator|+
-literal|10
-operator|+
-literal|10
-operator|)
-argument_list|)
-argument_list|)
-block|,
-comment|// 32MB
 comment|//Vectorization enabled
 name|HIVE_VECTORIZATION_ENABLED
 argument_list|(

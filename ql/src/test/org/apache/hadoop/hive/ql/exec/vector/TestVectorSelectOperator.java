@@ -735,6 +735,9 @@ argument_list|,
 name|UDFOPPlus
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|plusDesc

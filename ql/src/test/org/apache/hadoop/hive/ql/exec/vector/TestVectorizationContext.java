@@ -815,6 +815,9 @@ argument_list|,
 name|UDFOPPlus
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|GenericUDFBridge
@@ -830,6 +833,9 @@ argument_list|,
 name|UDFOPMinus
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|GenericUDFBridge
@@ -845,6 +851,9 @@ argument_list|,
 name|UDFOPMultiply
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|GenericUDFBridge
@@ -860,6 +869,9 @@ argument_list|,
 name|UDFOPPlus
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|GenericUDFBridge
@@ -875,6 +887,9 @@ argument_list|,
 name|UDFOPMod
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|ExprNodeGenericFuncDesc
@@ -1881,6 +1896,9 @@ argument_list|,
 name|UDFOPPlus
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|ExprNodeGenericFuncDesc
@@ -2501,6 +2519,9 @@ argument_list|,
 name|UDFOPMinus
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|scalarMinusConstant
@@ -2852,6 +2873,9 @@ argument_list|,
 name|UDFOPNegative
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|negExprDesc
@@ -3000,6 +3024,9 @@ argument_list|,
 name|UDFOPNegative
 operator|.
 name|class
+operator|.
+name|getCanonicalName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|negExprDesc

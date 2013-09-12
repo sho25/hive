@@ -189,22 +189,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|TableType
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|api
 operator|.
 name|FieldSchema
@@ -620,7 +604,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Test for HCatOutputFormat. Writes a partition using HCatOutputFormat and reads  * it back using HCatInputFormat, checks the column values and counts.  */
+comment|/**  * Test for HCatOutputFormat. Writes a partition using HCatOutputFormat and reads  * it back using HCatInputFormat, checks the column values and counts.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatMapReduceTest} instead  */
 end_comment
 
 begin_class
@@ -715,15 +699,6 @@ specifier|static
 name|FileSystem
 name|fs
 decl_stmt|;
-specifier|protected
-name|Boolean
-name|isTableExternal
-parameter_list|()
-block|{
-return|return
-literal|false
-return|;
-block|}
 specifier|protected
 name|String
 name|inputFormat
@@ -933,7 +908,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 comment|//can fail with NoSuchObjectException
 name|Table
 name|tbl
@@ -956,40 +931,13 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|isTableExternal
-argument_list|()
-condition|)
-block|{
 name|tbl
 operator|.
 name|setTableType
 argument_list|(
-name|TableType
-operator|.
-name|EXTERNAL_TABLE
-operator|.
-name|toString
-argument_list|()
+literal|"MANAGED_TABLE"
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-name|tbl
-operator|.
-name|setTableType
-argument_list|(
-name|TableType
-operator|.
-name|MANAGED_TABLE
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 name|StorageDescriptor
 name|sd
 init|=
@@ -1090,28 +1038,6 @@ argument_list|,
 literal|"1"
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|isTableExternal
-argument_list|()
-condition|)
-block|{
-name|sd
-operator|.
-name|getSerdeInfo
-argument_list|()
-operator|.
-name|getParameters
-argument_list|()
-operator|.
-name|put
-argument_list|(
-literal|"EXTERNAL"
-argument_list|,
-literal|"TRUE"
-argument_list|)
-expr_stmt|;
-block|}
 name|sd
 operator|.
 name|getSerdeInfo
@@ -1471,7 +1397,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**      * Run a local map reduce job to load data from in memory records to an HCatalog Table      * @param partitionValues      * @param partitionColumns      * @param records data to be written to HCatalog table      * @param writeCount      * @param assertWrite      * @param asSingleMapTask      * @return      * @throws Exception      */
+comment|/**    * Run a local map reduce job to load data from in memory records to an HCatalog Table    * @param partitionValues    * @param partitionColumns    * @param records data to be written to HCatalog table    * @param writeCount    * @param assertWrite    * @param asSingleMapTask    * @return    * @throws Exception    */
 name|Job
 name|runMRCreate
 parameter_list|(
@@ -1876,7 +1802,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**      * Run a local map reduce job to read records from HCatalog table and verify if the count is as expected      * @param readCount      * @param filter      * @return      * @throws Exception      */
+comment|/**    * Run a local map reduce job to read records from HCatalog table and verify if the count is as expected    * @param readCount    * @param filter    * @return    * @throws Exception    */
 name|List
 argument_list|<
 name|HCatRecord

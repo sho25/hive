@@ -328,7 +328,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Base class for HCatSemanticAnalyzer hooks.  */
+comment|/**  * Base class for HCatSemanticAnalyzer hooks.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.cli.SemanticAnalysis.HCatSemanticAnalyzerBase} instead  */
 end_comment
 
 begin_class
@@ -434,8 +434,8 @@ name|rootTasks
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Checks for the given rootTasks, and calls authorizeDDLWork() for each DDLWork to      * be authorized. The hooks should override this, or authorizeDDLWork to perform the      * actual authorization.      */
-comment|/*     * Impl note: Hive provides authorization with it's own model, and calls the defined     * HiveAuthorizationProvider from Driver.doAuthorization(). However, HCat has to     * do additional calls to the auth provider to implement expected behavior for     * StorageDelegationAuthorizationProvider. This means, that the defined auth provider     * is called by both Hive and HCat. The following are missing from Hive's implementation,     * and when they are fixed in Hive, we can remove the HCat-specific auth checks.     * 1. CREATE DATABASE/TABLE, ADD PARTITION statements does not call     * HiveAuthorizationProvider.authorize() with the candidate objects, which means that     * we cannot do checks against defined LOCATION.     * 2. HiveOperation does not define sufficient Privileges for most of the operations,     * especially database operations.     * 3. For some of the operations, Hive SemanticAnalyzer does not add the changed     * object as a WriteEntity or ReadEntity.     *     * @see https://issues.apache.org/jira/browse/HCATALOG-244     * @see https://issues.apache.org/jira/browse/HCATALOG-245     */
+comment|/**    * Checks for the given rootTasks, and calls authorizeDDLWork() for each DDLWork to    * be authorized. The hooks should override this, or authorizeDDLWork to perform the    * actual authorization.    */
+comment|/*   * Impl note: Hive provides authorization with it's own model, and calls the defined   * HiveAuthorizationProvider from Driver.doAuthorization(). However, HCat has to   * do additional calls to the auth provider to implement expected behavior for   * StorageDelegationAuthorizationProvider. This means, that the defined auth provider   * is called by both Hive and HCat. The following are missing from Hive's implementation,   * and when they are fixed in Hive, we can remove the HCat-specific auth checks.   * 1. CREATE DATABASE/TABLE, ADD PARTITION statements does not call   * HiveAuthorizationProvider.authorize() with the candidate objects, which means that   * we cannot do checks against defined LOCATION.   * 2. HiveOperation does not define sufficient Privileges for most of the operations,   * especially database operations.   * 3. For some of the operations, Hive SemanticAnalyzer does not add the changed   * object as a WriteEntity or ReadEntity.   *   * @see https://issues.apache.org/jira/browse/HCATALOG-244   * @see https://issues.apache.org/jira/browse/HCATALOG-245   */
 specifier|protected
 name|void
 name|authorizeDDL
@@ -580,7 +580,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Authorized the given DDLWork. Does nothing by default. Override this      * and delegate to the relevant method in HiveAuthorizationProvider obtained by      * getAuthProvider().      */
+comment|/**    * Authorized the given DDLWork. Does nothing by default. Override this    * and delegate to the relevant method in HiveAuthorizationProvider obtained by    * getAuthProvider().    */
 specifier|protected
 name|void
 name|authorizeDDLWork
@@ -596,7 +596,7 @@ name|work
 parameter_list|)
 throws|throws
 name|HiveException
-block|{     }
+block|{   }
 specifier|protected
 name|void
 name|authorize

@@ -193,9 +193,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
 operator|.
-name|mapred
+name|hcatalog
+operator|.
+name|mapreduce
 operator|.
 name|HCatMapRedUtil
 import|;
@@ -364,7 +366,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Part of the FileOutput*Container classes  * See {@link FileOutputFormatContainer} for more information  */
+comment|/**  * Part of the FileOutput*Container classes  * See {@link FileOutputFormatContainer} for more information  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.FileRecordWriterContainer} instead  */
 end_comment
 
 begin_class
@@ -517,7 +519,7 @@ specifier|private
 name|TaskAttemptContext
 name|context
 decl_stmt|;
-comment|/**      * @param baseWriter RecordWriter to contain      * @param context current TaskAttemptContext      * @throws IOException      * @throws InterruptedException      */
+comment|/**    * @param baseWriter RecordWriter to contain    * @param context current TaskAttemptContext    * @throws IOException    * @throws InterruptedException    */
 specifier|public
 name|FileRecordWriterContainer
 parameter_list|(
@@ -875,7 +877,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**      * @return the storagehandler      */
+comment|/**    * @return the storagehandler    */
 specifier|public
 name|HCatStorageHandler
 name|getStorageHandler

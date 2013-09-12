@@ -271,6 +271,10 @@ name|IOException
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.TestHCatInputFormat} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -284,7 +288,7 @@ name|setUpComplete
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * Create an input sequence file with 100 records; every 10th record is bad.      * Load this table into Hive.      */
+comment|/**    * Create an input sequence file with 100 records; every 10th record is bad.    * Load this table into Hive.    */
 annotation|@
 name|Before
 annotation|@

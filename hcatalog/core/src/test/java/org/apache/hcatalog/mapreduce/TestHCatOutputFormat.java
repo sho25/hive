@@ -343,6 +343,10 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.TestHCatOutputFormat} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -540,7 +544,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 try|try
 block|{
 name|client
@@ -556,7 +560,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 name|client
 operator|.
 name|createDatabase

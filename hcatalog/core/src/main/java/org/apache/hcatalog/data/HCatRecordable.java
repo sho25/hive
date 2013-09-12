@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Interface that determines whether we can implement a HCatRecord on top of it  */
+comment|/**  * Interface that determines whether we can implement a HCatRecord on top of it  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.HCatRecordable} instead  */
 end_comment
 
 begin_interface
@@ -50,7 +50,7 @@ name|HCatRecordable
 extends|extends
 name|Writable
 block|{
-comment|/**      * Gets the field at the specified index.      * @param fieldNum the field number      * @return the object at the specified index      */
+comment|/**    * Gets the field at the specified index.    * @param fieldNum the field number    * @return the object at the specified index    */
 name|Object
 name|get
 parameter_list|(
@@ -58,7 +58,7 @@ name|int
 name|fieldNum
 parameter_list|)
 function_decl|;
-comment|/**      * Gets all the fields of the hcat record.      * @return the list of fields      */
+comment|/**    * Gets all the fields of the hcat record.    * @return the list of fields    */
 name|List
 argument_list|<
 name|Object
@@ -66,7 +66,7 @@ argument_list|>
 name|getAll
 parameter_list|()
 function_decl|;
-comment|/**      * Sets the field at the specified index.      * @param fieldNum the field number      * @param value the value to set      */
+comment|/**    * Sets the field at the specified index.    * @param fieldNum the field number    * @param value the value to set    */
 name|void
 name|set
 parameter_list|(
@@ -77,7 +77,7 @@ name|Object
 name|value
 parameter_list|)
 function_decl|;
-comment|/**      * Gets the size of the hcat record.      * @return the size      */
+comment|/**    * Gets the size of the hcat record.    * @return the size    */
 name|int
 name|size
 parameter_list|()

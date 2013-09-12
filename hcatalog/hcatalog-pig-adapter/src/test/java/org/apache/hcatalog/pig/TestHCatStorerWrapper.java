@@ -166,7 +166,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This test checks the {@link HCatConstants#HCAT_PIG_STORER_EXTERNAL_LOCATION} that we can set in the  * UDFContext of {@link HCatStorer} so that it writes to the specified external location.  *  * Since {@link HCatStorer} does not allow extra parameters in the constructor, we use {@link HCatStorerWrapper}  * that always treats the last parameter as the external path.  */
+comment|/**  * This test checks the {@link HCatConstants#HCAT_PIG_STORER_EXTERNAL_LOCATION} that we can set in the  * UDFContext of {@link HCatStorer} so that it writes to the specified external location.  *  * Since {@link HCatStorer} does not allow extra parameters in the constructor, we use {@link HCatStorerWrapper}  * that always treats the last parameter as the external path.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.TestHCatStorerWrapper} instead  */
 end_comment
 
 begin_class

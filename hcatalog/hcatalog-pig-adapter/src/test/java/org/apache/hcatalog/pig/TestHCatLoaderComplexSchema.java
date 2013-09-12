@@ -391,6 +391,10 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.TestHCatLoaderComplexSchema} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -439,17 +443,6 @@ operator|+
 name|tablename
 argument_list|)
 expr_stmt|;
-block|}
-specifier|protected
-name|String
-name|storageFormat
-parameter_list|()
-block|{
-return|return
-literal|"RCFILE tblproperties('hcat.isd'='org.apache.hcatalog.rcfile.RCFileInputDriver',"
-operator|+
-literal|"'hcat.osd'='org.apache.hcatalog.rcfile.RCFileOutputDriver')"
-return|;
 block|}
 specifier|private
 name|void
@@ -519,10 +512,9 @@ name|createTable
 operator|=
 name|createTable
 operator|+
-literal|"stored as "
+literal|"stored as RCFILE tblproperties('hcat.isd'='org.apache.hcatalog.rcfile.RCFileInputDriver',"
 operator|+
-name|storageFormat
-argument_list|()
+literal|"'hcat.osd'='org.apache.hcatalog.rcfile.RCFileOutputDriver') "
 expr_stmt|;
 name|LOG
 operator|.
@@ -763,7 +755,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      * artificially complex nested schema to test nested schema conversion      * @throws Exception      */
+comment|/**    * artificially complex nested schema to test nested schema conversion    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -1521,7 +1513,7 @@ return|return
 name|message
 return|;
 block|}
-comment|/**      * tests that unnecessary tuples are drop while converting schema      * (Pig requires Tuples in Bags)      * @throws Exception      */
+comment|/**    * tests that unnecessary tuples are drop while converting schema    * (Pig requires Tuples in Bags)    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public

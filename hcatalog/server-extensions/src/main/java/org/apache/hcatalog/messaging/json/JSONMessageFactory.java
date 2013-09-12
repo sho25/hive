@@ -214,7 +214,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The JSON implementation of the MessageFactory. Constructs JSON implementations of  * each message-type.  */
+comment|/**  * The JSON implementation of the MessageFactory. Constructs JSON implementations of  * each message-type.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONMessageFactory} instead  */
 end_comment
 
 begin_class

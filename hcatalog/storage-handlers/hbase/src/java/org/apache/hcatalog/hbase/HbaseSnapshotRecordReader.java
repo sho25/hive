@@ -267,6 +267,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -328,6 +330,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -842,7 +846,7 @@ return|return
 name|maxRevision
 return|;
 block|}
-comment|/*      * @param htable The HTable ( of HBase) to use for the record reader.      *      */
+comment|/*    * @param htable The HTable ( of HBase) to use for the record reader.    *    */
 specifier|public
 name|void
 name|setHTable
@@ -858,7 +862,7 @@ operator|=
 name|htable
 expr_stmt|;
 block|}
-comment|/*      * @param scan The scan to be used for reading records.      *      */
+comment|/*    * @param scan The scan to be used for reading records.    *    */
 specifier|public
 name|void
 name|setScan
@@ -1377,7 +1381,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/*      * @see org.apache.hadoop.hbase.mapred.TableRecordReader#close()      */
+comment|/*    * @see org.apache.hadoop.hbase.mapred.TableRecordReader#close()    */
 annotation|@
 name|Override
 specifier|public

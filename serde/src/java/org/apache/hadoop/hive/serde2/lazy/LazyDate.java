@@ -266,6 +266,10 @@ name|s
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|isNull
+operator|=
+literal|false
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(

@@ -192,7 +192,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class builds a single instance of itself with the Singleton  * design pattern. While building the single instance, it sets up a  * mini cluster that actually consists of a mini DFS cluster and a  * mini MapReduce cluster on the local machine and also sets up the  * environment for Pig to run on top of the mini cluster.  */
+comment|/**  * This class builds a single instance of itself with the Singleton  * design pattern. While building the single instance, it sets up a  * mini cluster that actually consists of a mini DFS cluster and a  * mini MapReduce cluster on the local machine and also sets up the  * environment for Pig to run on top of the mini cluster.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.MiniCluster} instead  */
 end_comment
 
 begin_class
@@ -462,7 +462,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Returns the single instance of class MiniClusterBuilder that      * represents the resouces for a mini dfs cluster and a mini      * mapreduce cluster.      */
+comment|/**    * Returns the single instance of class MiniClusterBuilder that    * represents the resouces for a mini dfs cluster and a mini    * mapreduce cluster.    */
 specifier|public
 specifier|static
 name|MiniCluster
@@ -704,7 +704,7 @@ return|return
 name|m_fileSys
 return|;
 block|}
-comment|/**      * Throw RunTimeException if isSetup is false      */
+comment|/**    * Throw RunTimeException if isSetup is false    */
 specifier|private
 name|void
 name|errorIfNotSetup
@@ -874,7 +874,7 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Helper to remove a dfs file from the minicluster DFS      *      * @param miniCluster reference to the Minicluster where the file should be deleted      * @param fileName pathname of the file to be deleted      * @throws IOException      */
+comment|/**    * Helper to remove a dfs file from the minicluster DFS    *    * @param miniCluster reference to the Minicluster where the file should be deleted    * @param fileName pathname of the file to be deleted    * @throws IOException    */
 specifier|static
 specifier|public
 name|void

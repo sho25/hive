@@ -16,7 +16,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * HCat message sent when a Database is created in HCatalog.  */
+comment|/**  * HCat message sent when a Database is created in HCatalog.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.CreateDatabaseMessage} instead  */
 end_comment
 
 begin_class

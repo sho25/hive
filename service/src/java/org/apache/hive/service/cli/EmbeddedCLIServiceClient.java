@@ -186,7 +186,7 @@ name|getInfoType
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.CLIServiceClient#executeStatement(org.apache.hive.service.cli.SessionHandle, java.lang.String, java.util.Map)    */
+comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.CLIServiceClient#executeStatement(org.apache.hive.service.cli.SessionHandle,    *  java.lang.String, java.util.Map)    */
 annotation|@
 name|Override
 specifier|public
@@ -214,6 +214,43 @@ return|return
 name|cliService
 operator|.
 name|executeStatement
+argument_list|(
+name|sessionHandle
+argument_list|,
+name|statement
+argument_list|,
+name|confOverlay
+argument_list|)
+return|;
+block|}
+comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.CLIServiceClient#executeStatementAsync(org.apache.hive.service.cli.SessionHandle,    *  java.lang.String, java.util.Map)    */
+annotation|@
+name|Override
+specifier|public
+name|OperationHandle
+name|executeStatementAsync
+parameter_list|(
+name|SessionHandle
+name|sessionHandle
+parameter_list|,
+name|String
+name|statement
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|confOverlay
+parameter_list|)
+throws|throws
+name|HiveSQLException
+block|{
+return|return
+name|cliService
+operator|.
+name|executeStatementAsync
 argument_list|(
 name|sessionHandle
 argument_list|,

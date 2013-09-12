@@ -754,7 +754,7 @@ specifier|private
 name|FetchWork
 name|work
 decl_stmt|;
-specifier|private
+specifier|protected
 name|Operator
 argument_list|<
 name|?
@@ -2526,7 +2526,7 @@ name|job
 argument_list|,
 name|partDesc
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2595,6 +2595,8 @@ name|getObjectInspector
 argument_list|()
 else|:
 name|partitionedTableOI
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|partTblObjectInspectorConverter
@@ -2642,7 +2644,7 @@ literal|"deserializer properties: "
 operator|+
 name|partDesc
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3068,6 +3070,14 @@ name|pushRow
 argument_list|(
 name|row
 argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|operator
+operator|.
+name|flush
+argument_list|()
 expr_stmt|;
 block|}
 return|return
@@ -3675,7 +3685,7 @@ name|job
 argument_list|,
 name|listPart
 operator|.
-name|getProperties
+name|getOverlayedProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3691,6 +3701,8 @@ name|getObjectInspector
 argument_list|()
 argument_list|,
 name|tableOI
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 if|if

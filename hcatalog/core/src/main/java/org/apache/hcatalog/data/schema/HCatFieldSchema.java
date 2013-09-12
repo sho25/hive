@@ -57,6 +57,10 @@ name|HCatException
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.schema.HCatFieldSchema} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -91,7 +95,7 @@ block|,
 name|STRUCT
 block|,
 name|BINARY
-block|,     }
+block|,   }
 specifier|public
 enum|enum
 name|Category
@@ -182,7 +186,7 @@ else|:
 literal|true
 return|;
 block|}
-comment|/**      *      */
+comment|/**    *    */
 specifier|private
 specifier|static
 specifier|final
@@ -243,7 +247,7 @@ parameter_list|()
 block|{
 comment|// preventing empty ctor from being callable
 block|}
-comment|/**      * Returns type of the field      * @return type of the field      */
+comment|/**    * Returns type of the field    * @return type of the field    */
 specifier|public
 name|Type
 name|getType
@@ -253,7 +257,7 @@ return|return
 name|type
 return|;
 block|}
-comment|/**      * Returns category of the field      * @return category of the field      */
+comment|/**    * Returns category of the field    * @return category of the field    */
 specifier|public
 name|Category
 name|getCategory
@@ -263,7 +267,7 @@ return|return
 name|category
 return|;
 block|}
-comment|/**      * Returns name of the field      * @return name of the field      */
+comment|/**    * Returns name of the field    * @return name of the field    */
 specifier|public
 name|String
 name|getName
@@ -282,7 +286,7 @@ return|return
 name|comment
 return|;
 block|}
-comment|/**      * Constructor constructing a primitive datatype HCatFieldSchema      * @param fieldName Name of the primitive field      * @param type Type of the primitive field      * @throws HCatException if call made on non-primitive types      */
+comment|/**    * Constructor constructing a primitive datatype HCatFieldSchema    * @param fieldName Name of the primitive field    * @param type Type of the primitive field    * @throws HCatException if call made on non-primitive types    */
 specifier|public
 name|HCatFieldSchema
 parameter_list|(
@@ -336,7 +340,7 @@ operator|=
 name|comment
 expr_stmt|;
 block|}
-comment|/**      * Constructor for constructing a ARRAY type or STRUCT type HCatFieldSchema, passing type and subschema      * @param fieldName Name of the array or struct field      * @param type Type of the field - either Type.ARRAY or Type.STRUCT      * @param subSchema - subschema of the struct, or element schema of the elements in the array      * @throws HCatException if call made on Primitive or Map types      */
+comment|/**    * Constructor for constructing a ARRAY type or STRUCT type HCatFieldSchema, passing type and subschema    * @param fieldName Name of the array or struct field    * @param type Type of the field - either Type.ARRAY or Type.STRUCT    * @param subSchema - subschema of the struct, or element schema of the elements in the array    * @throws HCatException if call made on Primitive or Map types    */
 specifier|public
 name|HCatFieldSchema
 parameter_list|(
@@ -448,7 +452,7 @@ operator|=
 name|name
 expr_stmt|;
 block|}
-comment|/**      * Constructor for constructing a MAP type HCatFieldSchema, passing type of key and value      * @param fieldName Name of the array or struct field      * @param type Type of the field - must be Type.MAP      * @param mapKeyType - key type of the Map      * @param mapValueSchema - subschema of the value of the Map      * @throws HCatException if call made on non-Map types      */
+comment|/**    * Constructor for constructing a MAP type HCatFieldSchema, passing type of key and value    * @param fieldName Name of the array or struct field    * @param type Type of the field - must be Type.MAP    * @param mapKeyType - key type of the Map    * @param mapValueSchema - subschema of the value of the Map    * @throws HCatException if call made on non-Map types    */
 specifier|public
 name|HCatFieldSchema
 parameter_list|(

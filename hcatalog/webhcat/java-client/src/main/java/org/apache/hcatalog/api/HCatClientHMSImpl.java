@@ -450,7 +450,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The HCatClientHMSImpl is the Hive Metastore client based implementation of  * HCatClient.  */
+comment|/**  * The HCatClientHMSImpl is the Hive Metastore client based implementation of  * HCatClient.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatClientHMSImpl} instead  */
 end_comment
 
 begin_class
@@ -3176,7 +3176,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/*      * @param conf /* @throws HCatException,ConnectionFailureException      *      * @see      * org.apache.hcatalog.api.HCatClient#initialize(org.apache.hadoop.conf.      * Configuration)      */
+comment|/*    * @param conf /* @throws HCatException,ConnectionFailureException    *    * @see    * org.apache.hcatalog.api.HCatClient#initialize(org.apache.hadoop.conf.    * Configuration)    */
 annotation|@
 name|Override
 name|void
@@ -3508,7 +3508,7 @@ return|return
 name|newTable
 return|;
 block|}
-comment|/*      * @throws HCatException      *      * @see org.apache.hcatalog.api.HCatClient#closeClient()      */
+comment|/*    * @throws HCatException    *    * @see org.apache.hcatalog.api.HCatClient#closeClient()    */
 annotation|@
 name|Override
 specifier|public
@@ -3555,7 +3555,7 @@ name|name
 return|;
 block|}
 block|}
-comment|/*      * @param partInfoList      *  @return The size of the list of partitions.      * @throws HCatException,ConnectionFailureException      * @see org.apache.hcatalog.api.HCatClient#addPartitions(java.util.List)      */
+comment|/*    * @param partInfoList    *  @return The size of the list of partitions.    * @throws HCatException,ConnectionFailureException    * @see org.apache.hcatalog.api.HCatClient#addPartitions(java.util.List)    */
 annotation|@
 name|Override
 specifier|public

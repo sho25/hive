@@ -1260,7 +1260,7 @@ name|order
 operator|.
 name|length
 decl_stmt|;
-name|HashSet
+name|Set
 argument_list|<
 name|Integer
 argument_list|>

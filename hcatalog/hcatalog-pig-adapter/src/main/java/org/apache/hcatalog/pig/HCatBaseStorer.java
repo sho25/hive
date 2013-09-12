@@ -470,7 +470,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Base class for HCatStorer and HCatEximStorer  *  */
+comment|/**  * Base class for HCatStorer and HCatEximStorer  *  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.HCatBaseStorer} instead  */
 end_comment
 
 begin_class
@@ -735,7 +735,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|/*  Schema provided by user and the schema computed by Pig         * at the time of calling store must match.         */
+comment|/*  Schema provided by user and the schema computed by Pig     * at the time of calling store must match.     */
 name|Schema
 name|runtimeSchema
 init|=
@@ -837,7 +837,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Constructs HCatSchema from pigSchema. Passed tableSchema is the existing      * schema of the table in metastore.      */
+comment|/** Constructs HCatSchema from pigSchema. Passed tableSchema is the existing    * schema of the table in metastore.    */
 specifier|protected
 name|HCatSchema
 name|convertPigSchemaToHCatSchema
@@ -2942,7 +2942,7 @@ name|job
 parameter_list|)
 throws|throws
 name|IOException
-block|{     }
+block|{   }
 block|}
 end_class
 

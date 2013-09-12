@@ -991,6 +991,8 @@ parameter_list|(
 name|int
 name|amt
 parameter_list|)
+throws|throws
+name|HiveException
 function_decl|;
 specifier|protected
 specifier|abstract
@@ -1056,6 +1058,8 @@ parameter_list|(
 name|int
 name|amt
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 return|return
 name|pItr
@@ -1124,6 +1128,8 @@ parameter_list|(
 name|int
 name|amt
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 return|return
 name|pItr

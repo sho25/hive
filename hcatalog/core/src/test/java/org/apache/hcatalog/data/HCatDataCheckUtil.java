@@ -172,7 +172,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Helper class for Other Data Testers  */
+comment|/**  * Helper class for Other Data Testers  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.HCatDataCheckUtil} instead  */
 end_comment
 
 begin_class

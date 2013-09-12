@@ -730,6 +730,8 @@ operator|+
 literal|"supported with UDTF's"
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|UDTF_REQUIRE_AS
 argument_list|(
 literal|10076
@@ -1652,6 +1654,22 @@ argument_list|(
 literal|10245
 argument_list|,
 literal|"{0} alter table options is not supported"
+argument_list|)
+block|,
+name|INVALID_BIGTABLE_MAPJOIN
+argument_list|(
+literal|10246
+argument_list|,
+literal|"{0} table chosen for streaming is not valid"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|MISSING_OVER_CLAUSE
+argument_list|(
+literal|10247
+argument_list|,
+literal|"Missing over clause for function : "
 argument_list|)
 block|,
 name|SCRIPT_INIT_ERROR
@@ -2889,7 +2907,7 @@ block|}
 argument_list|)
 return|;
 block|}
-comment|/**    * If the message is parametrized, this will fill the parameters with supplied     * {@code reasons}, otherwise {@code reasons} are appended at the end of the     * message.    */
+comment|/**    * If the message is parametrized, this will fill the parameters with supplied    * {@code reasons}, otherwise {@code reasons} are appended at the end of the    * message.    */
 specifier|public
 name|String
 name|format

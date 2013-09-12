@@ -121,6 +121,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -1511,7 +1527,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**      * Current RSDedup remove/replace child RS. So always copies      * more specific part of configurations of child RS to that of parent RS.      */
+comment|/**      * Current RSDedup remove/replace child RS. For key columns,      * sorting order, and the number of reducers, copy      * more specific part of configurations of child RS to that of parent RS.      * For partitioning columns, if both child RS and parent RS have been assigned      * partitioning columns, we will choose the more general partitioning columns.      * If parent RS has not been assigned any partitioning column, we will use      * partitioning columns (if exist) of child RS.      */
 specifier|protected
 name|boolean
 name|merge
@@ -1562,7 +1578,10 @@ operator|>
 literal|0
 condition|)
 block|{
-name|ArrayList
+comment|// The sorting columns of the child RS are more specific than
+comment|// those of the parent RS. Assign sorting columns of the child RS
+comment|// to the parent RS.
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -1602,10 +1621,103 @@ name|result
 index|[
 literal|1
 index|]
+operator|<
+literal|0
+condition|)
+block|{
+comment|// The partitioning columns of the parent RS are more specific than
+comment|// those of the child RS.
+name|List
+argument_list|<
+name|ExprNodeDesc
+argument_list|>
+name|childPCs
+init|=
+name|cRS
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getPartitionCols
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|childPCs
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|childPCs
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// If partitioning columns of the child RS are assigned,
+comment|// assign these to the partitioning columns of the parent RS.
+name|pRS
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setPartitionCols
+argument_list|(
+name|ExprNodeDescUtils
+operator|.
+name|backtrack
+argument_list|(
+name|childPCs
+argument_list|,
+name|cRS
+argument_list|,
+name|pRS
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|result
+index|[
+literal|1
+index|]
 operator|>
 literal|0
 condition|)
 block|{
+comment|// The partitioning columns of the child RS are more specific than
+comment|// those of the parent RS.
+name|List
+argument_list|<
+name|ExprNodeDesc
+argument_list|>
+name|parentPCs
+init|=
+name|pRS
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getPartitionCols
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|parentPCs
+operator|==
+literal|null
+operator|||
+name|parentPCs
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// If partitioning columns of the parent RS are not assigned,
+comment|// assign partitioning columns of the child RS to the parent RS.
 name|ArrayList
 argument_list|<
 name|ExprNodeDesc
@@ -1640,6 +1752,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 if|if
 condition|(
 name|result
@@ -1650,6 +1763,40 @@ operator|>
 literal|0
 condition|)
 block|{
+comment|// The sorting order of the child RS is more specific than
+comment|// that of the parent RS. Assign the sorting order of the child RS
+comment|// to the parent RS.
+if|if
+condition|(
+name|result
+index|[
+literal|0
+index|]
+operator|<=
+literal|0
+condition|)
+block|{
+comment|// Sorting columns of the parent RS are more specific than those of the
+comment|// child RS but Sorting order of the child RS is more specific than
+comment|// that of the parent RS.
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Sorting columns and order don't match. "
+operator|+
+literal|"Try set "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTREDUCEDEDUPLICATION
+operator|+
+literal|"=false;"
+argument_list|)
+throw|;
+block|}
 name|pRS
 operator|.
 name|getConf
@@ -1677,6 +1824,9 @@ operator|>
 literal|0
 condition|)
 block|{
+comment|// The number of reducers of the child RS is more specific than
+comment|// that of the parent RS. Assign the number of reducers of the child RS
+comment|// to the parent RS.
 name|pRS
 operator|.
 name|getConf

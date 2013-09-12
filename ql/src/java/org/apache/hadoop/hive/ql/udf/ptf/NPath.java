@@ -4176,6 +4176,8 @@ parameter_list|,
 name|int
 name|sz
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|ArrayList
 argument_list|<
@@ -4261,6 +4263,8 @@ parameter_list|,
 name|int
 name|sz
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|int
 name|idx

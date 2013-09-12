@@ -237,11 +237,6 @@ name|getAlias
 argument_list|()
 decl_stmt|;
 comment|// Generate the partition pruning predicate
-name|boolean
-name|hasNonPartCols
-init|=
-literal|false
-decl_stmt|;
 name|ExprNodeDesc
 name|ppr_pred
 init|=
@@ -252,17 +247,8 @@ argument_list|(
 name|alias
 argument_list|,
 name|predicate
-argument_list|,
-name|hasNonPartCols
 argument_list|)
 decl_stmt|;
-name|owc
-operator|.
-name|addHasNonPartCols
-argument_list|(
-name|hasNonPartCols
-argument_list|)
-expr_stmt|;
 comment|// Add the pruning predicate to the table scan operator
 name|addPruningPred
 argument_list|(

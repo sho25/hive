@@ -137,9 +137,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
 operator|.
-name|mapred
+name|hcatalog
+operator|.
+name|mapreduce
 operator|.
 name|HCatMapRedUtil
 import|;
@@ -221,6 +223,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -235,6 +239,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -248,6 +254,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -288,7 +296,7 @@ name|TableInputFormat
 argument_list|()
 expr_stmt|;
 block|}
-comment|/*      * @param instance of InputSplit      *      * @param instance of TaskAttemptContext      *      * @return RecordReader      *      * @throws IOException      *      * @throws InterruptedException      *      * @see      * org.apache.hadoop.mapreduce.InputFormat#createRecordReader(org.apache      * .hadoop.mapreduce.InputSplit,      * org.apache.hadoop.mapreduce.TaskAttemptContext)      */
+comment|/*    * @param instance of InputSplit    *    * @param instance of TaskAttemptContext    *    * @return RecordReader    *    * @throws IOException    *    * @throws InterruptedException    *    * @see    * org.apache.hadoop.mapreduce.InputFormat#createRecordReader(org.apache    * .hadoop.mapreduce.InputSplit,    * org.apache.hadoop.mapreduce.TaskAttemptContext)    */
 annotation|@
 name|Override
 specifier|public
@@ -456,7 +464,7 @@ return|return
 name|recordReader
 return|;
 block|}
-comment|/*      * @param jobContext      *      * @return List of InputSplit      *      * @throws IOException      *      * @throws InterruptedException      *      * @see      * org.apache.hadoop.mapreduce.InputFormat#getSplits(org.apache.hadoop.mapreduce      * .JobContext)      */
+comment|/*    * @param jobContext    *    * @return List of InputSplit    *    * @throws IOException    *    * @throws InterruptedException    *    * @see    * org.apache.hadoop.mapreduce.InputFormat#getSplits(org.apache.hadoop.mapreduce    * .JobContext)    */
 annotation|@
 name|Override
 specifier|public

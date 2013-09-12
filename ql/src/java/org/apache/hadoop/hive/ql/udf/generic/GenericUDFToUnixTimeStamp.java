@@ -296,6 +296,7 @@ name|StringObjectInspector
 name|patternOI
 decl_stmt|;
 specifier|private
+specifier|transient
 name|String
 name|lasPattern
 init|=

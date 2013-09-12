@@ -597,6 +597,14 @@ extends|extends
 name|BaseSemanticAnalyzer
 block|{
 specifier|public
+specifier|static
+specifier|final
+name|String
+name|METADATA_NAME
+init|=
+literal|"_metadata"
+decl_stmt|;
+specifier|public
 name|ImportSemanticAnalyzer
 parameter_list|(
 name|HiveConf
@@ -741,7 +749,7 @@ name|Path
 argument_list|(
 name|fromPath
 argument_list|,
-literal|"_metadata"
+name|METADATA_NAME
 argument_list|)
 decl_stmt|;
 name|Map

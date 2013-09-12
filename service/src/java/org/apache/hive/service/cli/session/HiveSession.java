@@ -249,6 +249,12 @@ name|SessionManager
 name|sessionManager
 parameter_list|)
 function_decl|;
+comment|/**    * Get the session manager for the session    */
+specifier|public
+name|SessionManager
+name|getSessionManager
+parameter_list|()
+function_decl|;
 comment|/**    * Set operation manager for the session    * @param operationManager    */
 specifier|public
 name|void
@@ -300,6 +306,25 @@ comment|/**    * execute operation handler    * @param statement    * @param con
 specifier|public
 name|OperationHandle
 name|executeStatement
+parameter_list|(
+name|String
+name|statement
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|confOverlay
+parameter_list|)
+throws|throws
+name|HiveSQLException
+function_decl|;
+comment|/**    * execute operation handler    * @param statement    * @param confOverlay    * @return    * @throws HiveSQLException    */
+specifier|public
+name|OperationHandle
+name|executeStatementAsync
 parameter_list|(
 name|String
 name|statement

@@ -196,7 +196,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Utility methods for tests  */
+comment|/**  * Utility methods for tests  * @deprecated Use/modify {@link org.apache.hive.hcatalog.HcatTestUtils} instead  */
 end_comment
 
 begin_class
@@ -347,7 +347,7 @@ literal|0555
 argument_list|)
 decl_stmt|;
 comment|// -r-xr-xr-x
-comment|/**      * Returns the database path.      */
+comment|/**    * Returns the database path.    */
 specifier|public
 specifier|static
 name|Path
@@ -381,7 +381,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      * Removes all databases and tables from the metastore      */
+comment|/**    * Removes all databases and tables from the metastore    */
 specifier|public
 specifier|static
 name|void

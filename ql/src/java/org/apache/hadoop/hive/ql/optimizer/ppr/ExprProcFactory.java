@@ -287,13 +287,6 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-name|epc
-operator|.
-name|setHasNonPartCols
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 name|newcd
@@ -313,7 +306,7 @@ name|PPRColumnExprProcessor
 argument_list|()
 return|;
 block|}
-comment|/**    * Generates the partition pruner for the expression tree.    *    * @param tabAlias    *          The table alias of the partition table that is being considered    *          for pruning    * @param pred    *          The predicate from which the partition pruner needs to be    *          generated    * @return hasNonPartCols returns true/false depending upon whether this pred    *         has a non partition column    * @throws SemanticException    */
+comment|/**    * Generates the partition pruner for the expression tree.    *    * @param tabAlias    *          The table alias of the partition table that is being considered    *          for pruning    * @param pred    *          The predicate from which the partition pruner needs to be    *          generated    * @return The pruner expression.    */
 specifier|public
 specifier|static
 name|ExprNodeDesc
@@ -324,9 +317,6 @@ name|tabAlias
 parameter_list|,
 name|ExprNodeDesc
 name|pred
-parameter_list|,
-name|boolean
-name|hasNonPartCols
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -371,13 +361,6 @@ name|getDefaultExprProcessor
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|hasNonPartCols
-operator|=
-name|pprCtx
-operator|.
-name|getHasNonPartCols
-argument_list|()
-expr_stmt|;
 comment|// Get the exprNodeDesc corresponding to the first start node;
 return|return
 operator|(

@@ -205,7 +205,7 @@ name|String
 name|simpleStringPattern
 decl_stmt|;
 specifier|private
-specifier|transient
+specifier|final
 name|Text
 name|simplePattern
 init|=
@@ -225,6 +225,7 @@ name|charBuffer
 decl_stmt|;
 specifier|private
 specifier|transient
+specifier|final
 name|CharsetDecoder
 name|decoder
 decl_stmt|;

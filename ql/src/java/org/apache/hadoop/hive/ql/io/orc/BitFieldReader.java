@@ -163,7 +163,7 @@ name|EOFException
 argument_list|(
 literal|"Read past end of bit field from "
 operator|+
-name|input
+name|this
 argument_list|)
 throw|;
 block|}
@@ -527,6 +527,31 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"bit reader current: "
+operator|+
+name|current
+operator|+
+literal|" bits left: "
+operator|+
+name|bitsLeft
+operator|+
+literal|" bit size: "
+operator|+
+name|bitSize
+operator|+
+literal|" from "
+operator|+
+name|input
+return|;
 block|}
 block|}
 end_class

@@ -72,7 +72,7 @@ name|REVISION_MGR_IMPL_CLASS
 init|=
 literal|"revision.manager.impl.class"
 decl_stmt|;
-comment|/**      * Gets an instance of revision manager.      *      * @param conf The configuration required to created the revision manager.      * @return the revision manager An instance of revision manager.      * @throws IOException Signals that an I/O exception has occurred.      */
+comment|/**    * Gets an instance of revision manager.    *    * @param conf The configuration required to created the revision manager.    * @return the revision manager An instance of revision manager.    * @throws IOException Signals that an I/O exception has occurred.    */
 specifier|private
 specifier|static
 name|RevisionManager
@@ -232,7 +232,7 @@ return|return
 name|revisionMgr
 return|;
 block|}
-comment|/**      * Internally used by endpoint implementation to instantiate from different configuration setting.      * @param className      * @param conf      * @return the opened revision manager      * @throws IOException      */
+comment|/**    * Internally used by endpoint implementation to instantiate from different configuration setting.    * @param className    * @param conf    * @return the opened revision manager    * @throws IOException    */
 specifier|static
 name|RevisionManager
 name|getOpenedRevisionManager
@@ -287,7 +287,7 @@ return|return
 name|revisionMgr
 return|;
 block|}
-comment|/**      * Gets an instance of revision manager which is opened.      * The revision manager implementation can be specified as {@link #REVISION_MGR_IMPL_CLASS},      * default is {@link ZKBasedRevisionManager}.      * @param conf revision manager configuration      * @return RevisionManager An instance of revision manager.      * @throws IOException      */
+comment|/**    * Gets an instance of revision manager which is opened.    * The revision manager implementation can be specified as {@link #REVISION_MGR_IMPL_CLASS},    * default is {@link ZKBasedRevisionManager}.    * @param conf revision manager configuration    * @return RevisionManager An instance of revision manager.    * @throws IOException    */
 specifier|public
 specifier|static
 name|RevisionManager

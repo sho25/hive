@@ -77,7 +77,7 @@ return|return
 name|conf
 return|;
 block|}
-comment|/**      * Creates a Configuration with Revision Manager resources      * @return a Configuration with Revision Manager resources      */
+comment|/**    * Creates a Configuration with Revision Manager resources    * @return a Configuration with Revision Manager resources    */
 specifier|public
 specifier|static
 name|Configuration
@@ -98,7 +98,7 @@ name|conf
 argument_list|)
 return|;
 block|}
-comment|/**      * Creates a clone of passed configuration.      * @param that Configuration to clone.      * @return a Configuration created with the revision-manager-*.xml files plus      * the given configuration.      */
+comment|/**    * Creates a clone of passed configuration.    * @param that Configuration to clone.    * @return a Configuration created with the revision-manager-*.xml files plus    * the given configuration.    */
 specifier|public
 specifier|static
 name|Configuration

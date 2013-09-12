@@ -309,6 +309,9 @@ argument_list|,
 name|String
 argument_list|>
 name|confOverlay
+parameter_list|,
+name|boolean
+name|runAsync
 parameter_list|)
 block|{
 name|ExecuteStatementOperation
@@ -323,6 +326,8 @@ argument_list|,
 name|statement
 argument_list|,
 name|confOverlay
+argument_list|,
+name|runAsync
 argument_list|)
 decl_stmt|;
 name|addOperation

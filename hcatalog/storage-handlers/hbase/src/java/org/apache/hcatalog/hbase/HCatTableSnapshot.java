@@ -120,7 +120,7 @@ operator|=
 name|latestRevision
 expr_stmt|;
 block|}
-comment|/**      * @return The name of the table in the snapshot.      */
+comment|/**    * @return The name of the table in the snapshot.    */
 specifier|public
 name|String
 name|getTableName
@@ -132,7 +132,7 @@ operator|.
 name|tableName
 return|;
 block|}
-comment|/**      * @return The name of the database to which the table snapshot belongs.      */
+comment|/**    * @return The name of the database to which the table snapshot belongs.    */
 specifier|public
 name|String
 name|getDatabaseName
@@ -144,7 +144,7 @@ operator|.
 name|databaseName
 return|;
 block|}
-comment|/**      * @return The revision number of a column in a snapshot.      */
+comment|/**    * @return The revision number of a column in a snapshot.    */
 name|long
 name|getRevision
 parameter_list|(
@@ -175,7 +175,7 @@ return|return
 name|latestRevision
 return|;
 block|}
-comment|/**      * The method checks if the snapshot contains information about a data column.      *      * @param column The data column of the table      * @return true, if successful      */
+comment|/**    * The method checks if the snapshot contains information about a data column.    *    * @param column The data column of the table    * @return true, if successful    */
 name|boolean
 name|containsColumn
 parameter_list|(
@@ -194,7 +194,7 @@ name|column
 argument_list|)
 return|;
 block|}
-comment|/**      * @return latest committed revision when snapshot was taken      */
+comment|/**    * @return latest committed revision when snapshot was taken    */
 name|long
 name|getLatestRevision
 parameter_list|()

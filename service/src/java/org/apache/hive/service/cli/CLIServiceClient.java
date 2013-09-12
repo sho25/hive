@@ -147,13 +147,38 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.ICLIService#executeStatement(org.apache.hive.service.cli.SessionHandle, java.lang.String, java.util.Map)    */
+comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.ICLIService#executeStatement(org.apache.hive.service.cli.SessionHandle,    *  java.lang.String, java.util.Map)    */
 annotation|@
 name|Override
 specifier|public
 specifier|abstract
 name|OperationHandle
 name|executeStatement
+parameter_list|(
+name|SessionHandle
+name|sessionHandle
+parameter_list|,
+name|String
+name|statement
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|confOverlay
+parameter_list|)
+throws|throws
+name|HiveSQLException
+function_decl|;
+comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.ICLIService#executeStatementAsync(org.apache.hive.service.cli.SessionHandle,    *  java.lang.String, java.util.Map)    */
+annotation|@
+name|Override
+specifier|public
+specifier|abstract
+name|OperationHandle
+name|executeStatementAsync
 parameter_list|(
 name|SessionHandle
 name|sessionHandle

@@ -265,7 +265,9 @@ throw|throw
 operator|new
 name|EOFException
 argument_list|(
-literal|"Reading RLE byte literal got EOF"
+literal|"Reading RLE byte literal got EOF in "
+operator|+
+name|this
 argument_list|)
 throw|;
 block|}
@@ -594,6 +596,37 @@ operator|-=
 name|consume
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"byte rle "
+operator|+
+operator|(
+name|repeat
+condition|?
+literal|"repeat"
+else|:
+literal|"literal"
+operator|)
+operator|+
+literal|" used: "
+operator|+
+name|used
+operator|+
+literal|"/"
+operator|+
+name|numLiterals
+operator|+
+literal|" from "
+operator|+
+name|input
+return|;
 block|}
 block|}
 end_class

@@ -1109,6 +1109,10 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|mvTask
+operator|!=
+literal|null
+operator|&&
 name|isInsertTable
 operator|&&
 name|hconf

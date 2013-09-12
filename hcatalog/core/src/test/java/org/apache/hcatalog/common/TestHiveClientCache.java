@@ -537,6 +537,10 @@ name|Future
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.common.TestHiveClientCache} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -574,7 +578,7 @@ name|setUp
 parameter_list|()
 throws|throws
 name|Exception
-block|{     }
+block|{   }
 annotation|@
 name|AfterClass
 specifier|public
@@ -584,7 +588,7 @@ name|tearDown
 parameter_list|()
 throws|throws
 name|Exception
-block|{     }
+block|{   }
 annotation|@
 name|Test
 specifier|public
@@ -745,7 +749,7 @@ name|client2
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Check that a new client is returned for the same configuration after the expiry time.      * Also verify that the expiry time configuration is honoured      */
+comment|/**    * Check that a new client is returned for the same configuration after the expiry time.    * Also verify that the expiry time configuration is honoured    */
 annotation|@
 name|Test
 specifier|public
@@ -836,7 +840,7 @@ name|client2
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Check that a *new* client is created if asked from different threads even with      * the same hive configuration      * @throws ExecutionException      * @throws InterruptedException      */
+comment|/**    * Check that a *new* client is created if asked from different threads even with    * the same hive configuration    * @throws ExecutionException    * @throws InterruptedException    */
 annotation|@
 name|Test
 specifier|public
@@ -1072,7 +1076,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Test that a long table name actually breaks the HMSC. Subsequently check that isOpen() reflects      * and tells if the client is broken      */
+comment|/**    * Test that a long table name actually breaks the HMSC. Subsequently check that isOpen() reflects    * and tells if the client is broken    */
 annotation|@
 name|Ignore
 argument_list|(
@@ -1196,7 +1200,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 try|try
 block|{
 name|client
@@ -1212,7 +1216,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 name|client
 operator|.
 name|createDatabase
@@ -1332,7 +1336,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 name|assertFalse
 argument_list|(
 name|client

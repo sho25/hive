@@ -331,6 +331,24 @@ name|SessionState
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|ImportSemanticAnalyzer
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class listens for drop events and, if set, exports the table's metadata as JSON to the trash  * of the user performing the drop  */
 end_comment
@@ -355,18 +373,6 @@ argument_list|(
 name|MetaDataExportListener
 operator|.
 name|class
-argument_list|)
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|SimpleDateFormat
-name|sdf
-init|=
-operator|new
-name|SimpleDateFormat
-argument_list|(
-literal|"yyyy-MM-dd-HH-mm-ss"
 argument_list|)
 decl_stmt|;
 comment|/** Configure the export listener */
@@ -503,6 +509,15 @@ init|=
 operator|new
 name|Date
 argument_list|()
+decl_stmt|;
+name|SimpleDateFormat
+name|sdf
+init|=
+operator|new
+name|SimpleDateFormat
+argument_list|(
+literal|"yyyy-MM-dd-HH-mm-ss"
+argument_list|)
 decl_stmt|;
 name|String
 name|dateString
@@ -651,7 +666,9 @@ name|metaPath
 argument_list|,
 name|name
 operator|+
-literal|".metadata"
+name|ImportSemanticAnalyzer
+operator|.
+name|METADATA_NAME
 argument_list|)
 decl_stmt|;
 try|try

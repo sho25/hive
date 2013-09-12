@@ -571,6 +571,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|cli
@@ -584,6 +586,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -601,6 +605,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -614,6 +620,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -629,6 +637,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -643,6 +653,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|data
@@ -656,6 +668,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -672,6 +686,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -737,6 +753,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -751,6 +769,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -764,6 +784,8 @@ import|import
 name|org
 operator|.
 name|apache
+operator|.
+name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -1483,10 +1505,17 @@ decl_stmt|;
 name|String
 name|db_dir
 init|=
+operator|new
+name|Path
+argument_list|(
 name|getTestDir
 argument_list|()
-operator|+
-literal|"/hbasedb"
+argument_list|,
+literal|"hbasedb"
+argument_list|)
+operator|.
+name|toString
+argument_list|()
 decl_stmt|;
 name|String
 name|dbquery
@@ -3824,7 +3853,7 @@ parameter_list|(
 name|JobConf
 name|job
 parameter_list|)
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -3833,7 +3862,7 @@ name|close
 parameter_list|()
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public

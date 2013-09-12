@@ -454,6 +454,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
+specifier|transient
 name|Configuration
 name|configuration
 decl_stmt|;
@@ -867,7 +868,6 @@ expr_stmt|;
 block|}
 comment|// non-bean fields needed during compilation
 specifier|private
-specifier|transient
 name|RowSchema
 name|rowSchema
 decl_stmt|;
@@ -2366,6 +2366,12 @@ operator|+
 literal|" finished. closing... "
 argument_list|)
 expr_stmt|;
+comment|// call the operator specific close routine
+name|closeOp
+argument_list|(
+name|abort
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|counterNameToEnum
@@ -2406,12 +2412,6 @@ operator|+
 name|cntr
 operator|+
 literal|" rows"
-argument_list|)
-expr_stmt|;
-comment|// call the operator specific close routine
-name|closeOp
-argument_list|(
-name|abort
 argument_list|)
 expr_stmt|;
 try|try
@@ -3297,43 +3297,11 @@ literal|0
 expr_stmt|;
 block|}
 block|}
-if|if
-condition|(
-name|isLogInfoEnabled
-condition|)
-block|{
-name|cntr
-operator|++
-expr_stmt|;
-if|if
-condition|(
-name|cntr
-operator|==
-name|nextCntr
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
+name|increaseForward
 argument_list|(
-name|id
-operator|+
-literal|" forwarding "
-operator|+
-name|cntr
-operator|+
-literal|" rows"
+literal|1
 argument_list|)
 expr_stmt|;
-name|nextCntr
-operator|=
-name|getNextCntr
-argument_list|(
-name|cntr
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 comment|// For debugging purposes:
 comment|// System.out.println("" + this.getClass() + ": " +
 comment|// SerDeUtils.getJSONString(row, rowInspector));
@@ -3452,6 +3420,62 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+name|void
+name|increaseForward
+parameter_list|(
+name|long
+name|counter
+parameter_list|)
+block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
+name|cntr
+operator|+=
+name|counter
+expr_stmt|;
+if|if
+condition|(
+name|cntr
+operator|>=
+name|nextCntr
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|id
+operator|+
+literal|" forwarding "
+operator|+
+name|cntr
+operator|+
+literal|" rows"
+argument_list|)
+expr_stmt|;
+do|do
+block|{
+name|nextCntr
+operator|=
+name|getNextCntr
+argument_list|(
+name|nextCntr
+argument_list|)
+expr_stmt|;
+block|}
+do|while
+condition|(
+name|cntr
+operator|>=
+name|nextCntr
+condition|)
+do|;
+block|}
 block|}
 block|}
 specifier|public
@@ -7667,6 +7691,16 @@ parameter_list|()
 block|{
 return|return
 literal|true
+return|;
+block|}
+comment|/**    * used for LimitPushdownOptimizer    *    * if all of the operators between limit and reduce-sink does not remove any input rows    * in the range of limit count, limit can be pushed down to reduce-sink operator.    * forward, select, etc.    */
+specifier|public
+name|boolean
+name|acceptLimitPushdown
+parameter_list|()
+block|{
+return|return
+literal|false
 return|;
 block|}
 annotation|@

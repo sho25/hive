@@ -53,7 +53,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|DefaultStorageHandler
+name|HiveException
 import|;
 end_import
 
@@ -71,7 +71,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|HiveException
+name|HiveStorageHandler
 import|;
 end_import
 
@@ -128,7 +128,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The abstract Class HCatStorageHandler would server as the base class for all  * the storage handlers required for non-native tables in HCatalog.  */
+comment|/**  * The abstract Class HCatStorageHandler would server as the base class for all  * the storage handlers required for non-native tables in HCatalog.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatStorageHandler} instead  */
 end_comment
 
 begin_class
@@ -136,11 +136,11 @@ specifier|public
 specifier|abstract
 class|class
 name|HCatStorageHandler
-extends|extends
-name|DefaultStorageHandler
+implements|implements
+name|HiveStorageHandler
 block|{
 comment|//TODO move this to HiveStorageHandler
-comment|/**      * This method is called to allow the StorageHandlers the chance      * to populate the JobContext.getConfiguration() with properties that      * maybe be needed by the handler's bundled artifacts (ie InputFormat, SerDe, etc).      * Key value pairs passed into jobProperties is guaranteed to be set in the job's      * configuration object. User's can retrieve "context" information from tableDesc.      * User's should avoid mutating tableDesc and only make changes in jobProperties.      * This method is expected to be idempotent such that a job called with the      * same tableDesc values should return the same key-value pairs in jobProperties.      * Any external state set by this method should remain the same if this method is      * called again. It is up to the user to determine how best guarantee this invariant.      *      * This method in particular is to create a configuration for input.      * @param tableDesc      * @param jobProperties      */
+comment|/**    * This method is called to allow the StorageHandlers the chance    * to populate the JobContext.getConfiguration() with properties that    * maybe be needed by the handler's bundled artifacts (ie InputFormat, SerDe, etc).    * Key value pairs passed into jobProperties is guaranteed to be set in the job's    * configuration object. User's can retrieve "context" information from tableDesc.    * User's should avoid mutating tableDesc and only make changes in jobProperties.    * This method is expected to be idempotent such that a job called with the    * same tableDesc values should return the same key-value pairs in jobProperties.    * Any external state set by this method should remain the same if this method is    * called again. It is up to the user to determine how best guarantee this invariant.    *    * This method in particular is to create a configuration for input.    * @param tableDesc    * @param jobProperties    */
 specifier|public
 specifier|abstract
 name|void
@@ -159,7 +159,7 @@ name|jobProperties
 parameter_list|)
 function_decl|;
 comment|//TODO move this to HiveStorageHandler
-comment|/**      * This method is called to allow the StorageHandlers the chance      * to populate the JobContext.getConfiguration() with properties that      * maybe be needed by the handler's bundled artifacts (ie InputFormat, SerDe, etc).      * Key value pairs passed into jobProperties is guaranteed to be set in the job's      * configuration object. User's can retrieve "context" information from tableDesc.      * User's should avoid mutating tableDesc and only make changes in jobProperties.      * This method is expected to be idempotent such that a job called with the      * same tableDesc values should return the same key-value pairs in jobProperties.      * Any external state set by this method should remain the same if this method is      * called again. It is up to the user to determine how best guarantee this invariant.      *      * This method in particular is to create a configuration for output.      * @param tableDesc      * @param jobProperties      */
+comment|/**    * This method is called to allow the StorageHandlers the chance    * to populate the JobContext.getConfiguration() with properties that    * maybe be needed by the handler's bundled artifacts (ie InputFormat, SerDe, etc).    * Key value pairs passed into jobProperties is guaranteed to be set in the job's    * configuration object. User's can retrieve "context" information from tableDesc.    * User's should avoid mutating tableDesc and only make changes in jobProperties.    * This method is expected to be idempotent such that a job called with the    * same tableDesc values should return the same key-value pairs in jobProperties.    * Any external state set by this method should remain the same if this method is    * called again. It is up to the user to determine how best guarantee this invariant.    *    * This method in particular is to create a configuration for output.    * @param tableDesc    * @param jobProperties    */
 specifier|public
 specifier|abstract
 name|void
@@ -177,7 +177,7 @@ argument_list|>
 name|jobProperties
 parameter_list|)
 function_decl|;
-comment|/**      *      *      * @return authorization provider      * @throws HiveException      */
+comment|/**    *    *    * @return authorization provider    * @throws HiveException    */
 specifier|public
 specifier|abstract
 name|HiveAuthorizationProvider
@@ -186,7 +186,7 @@ parameter_list|()
 throws|throws
 name|HiveException
 function_decl|;
-comment|/*     * (non-Javadoc)     *     * @see org.apache.hadoop.hive.ql.metadata.HiveStorageHandler#     * configureTableJobProperties(org.apache.hadoop.hive.ql.plan.TableDesc,     * java.util.Map)     */
+comment|/*   * (non-Javadoc)   *   * @see org.apache.hadoop.hive.ql.metadata.HiveStorageHandler#   * configureTableJobProperties(org.apache.hadoop.hive.ql.plan.TableDesc,   * java.util.Map)   */
 annotation|@
 name|Override
 annotation|@
@@ -207,8 +207,8 @@ name|String
 argument_list|>
 name|jobProperties
 parameter_list|)
-block|{     }
-comment|/*     * (non-Javadoc)     *     * @see org.apache.hadoop.conf.Configurable#getConf()     */
+block|{   }
+comment|/*   * (non-Javadoc)   *   * @see org.apache.hadoop.conf.Configurable#getConf()   */
 annotation|@
 name|Override
 specifier|public
@@ -217,7 +217,7 @@ name|Configuration
 name|getConf
 parameter_list|()
 function_decl|;
-comment|/*     * (non-Javadoc)     *     * @see org.apache.hadoop.conf.Configurable#setConf(org.apache.hadoop.conf.     * Configuration)     */
+comment|/*   * (non-Javadoc)   *   * @see org.apache.hadoop.conf.Configurable#setConf(org.apache.hadoop.conf.   * Configuration)   */
 annotation|@
 name|Override
 specifier|public

@@ -46,7 +46,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * JSON implementation of DropTableMessage.  */
+comment|/**  * JSON implementation of DropTableMessage.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONDropTableMessage} instead  */
 end_comment
 
 begin_class
@@ -72,7 +72,7 @@ name|JsonProperty
 name|Long
 name|timestamp
 decl_stmt|;
-comment|/**      * Default constructor, needed for Jackson.      */
+comment|/**    * Default constructor, needed for Jackson.    */
 specifier|public
 name|JSONDropTableMessage
 parameter_list|()

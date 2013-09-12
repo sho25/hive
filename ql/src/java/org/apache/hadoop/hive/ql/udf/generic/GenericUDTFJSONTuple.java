@@ -437,16 +437,22 @@ index|[]
 name|paths
 decl_stmt|;
 comment|// array of path expressions, each of which corresponds to a column
+specifier|private
+specifier|transient
 name|Text
 index|[]
 name|retCols
 decl_stmt|;
 comment|// array of returned column values
+comment|//object pool of non-null Text, avoid creating objects all the time
+specifier|private
+specifier|transient
 name|Text
 index|[]
 name|cols
 decl_stmt|;
-comment|// object pool of non-null Text, avoid creating objects all the time
+specifier|private
+specifier|transient
 name|Object
 index|[]
 name|nullCols

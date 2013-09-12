@@ -275,16 +275,18 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hcatalog
+name|hadoop
+operator|.
+name|hive
 operator|.
 name|shims
 operator|.
-name|HCatHadoopShims
+name|ShimLoader
 import|;
 end_import
 
 begin_comment
-comment|/**  * This reader reads via {@link HCatInputFormat}  *  */
+comment|/**  * This reader reads via {@link HCatInputFormat}  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.impl.HCatInputFormatReader} instead  */
 end_comment
 
 begin_class
@@ -411,11 +413,12 @@ name|hcif
 operator|.
 name|getSplits
 argument_list|(
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|createJobContext
@@ -513,11 +516,12 @@ block|{
 name|TaskAttemptContext
 name|cntxt
 init|=
-name|HCatHadoopShims
+name|ShimLoader
 operator|.
-name|Instance
+name|getHadoopShims
+argument_list|()
 operator|.
-name|get
+name|getHCatShim
 argument_list|()
 operator|.
 name|createTaskAttemptContext

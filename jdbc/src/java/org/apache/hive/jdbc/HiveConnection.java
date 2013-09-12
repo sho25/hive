@@ -181,18 +181,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|concurrent
-operator|.
-name|Executor
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedList
 import|;
 end_import
@@ -236,6 +224,18 @@ operator|.
 name|util
 operator|.
 name|Properties
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Executor
 import|;
 end_import
 
@@ -779,7 +779,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// currently only V1 is supported
+comment|// add supported protocols: V1 and V2 supported
 name|supportedProtocols
 operator|.
 name|add
@@ -787,6 +787,15 @@ argument_list|(
 name|TProtocolVersion
 operator|.
 name|HIVE_CLI_SERVICE_PROTOCOL_V1
+argument_list|)
+expr_stmt|;
+name|supportedProtocols
+operator|.
+name|add
+argument_list|(
+name|TProtocolVersion
+operator|.
+name|HIVE_CLI_SERVICE_PROTOCOL_V2
 argument_list|)
 expr_stmt|;
 comment|// open client session
@@ -891,6 +900,51 @@ operator|+
 literal|"="
 operator|+
 name|hiveConf
+operator|.
+name|getValue
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+comment|// For remote JDBC client, try to set the hive var using 'set hivevar:key=value'
+for|for
+control|(
+name|Entry
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|hiveVar
+range|:
+name|connParams
+operator|.
+name|getHiveVars
+argument_list|()
+operator|.
+name|entrySet
+argument_list|()
+control|)
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"set hivevar:"
+operator|+
+name|hiveVar
+operator|.
+name|getKey
+argument_list|()
+operator|+
+literal|"="
+operator|+
+name|hiveVar
 operator|.
 name|getValue
 argument_list|()

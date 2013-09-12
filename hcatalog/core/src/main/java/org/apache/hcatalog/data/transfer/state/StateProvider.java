@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * If external system wants to communicate any state to slaves, they can do so  * via this interface. One example of this in case of Map-Reduce is ids assigned  * by JobTracker to TaskTracker.  */
+comment|/**  * If external system wants to communicate any state to slaves, they can do so  * via this interface. One example of this in case of Map-Reduce is ids assigned  * by JobTracker to TaskTracker.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.state.StateProvider} instead  */
 end_comment
 
 begin_interface
@@ -28,7 +28,7 @@ specifier|public
 interface|interface
 name|StateProvider
 block|{
-comment|/**      * This method should return id assigned to slave node.      *      * @return id      */
+comment|/**    * This method should return id assigned to slave node.    *    * @return id    */
 specifier|public
 name|int
 name|getId

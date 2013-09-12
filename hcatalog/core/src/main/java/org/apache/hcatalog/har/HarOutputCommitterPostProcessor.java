@@ -173,6 +173,10 @@ name|HCatException
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.har.HarOutputCommitterPostProcessor} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -359,7 +363,7 @@ return|return
 name|harLocn
 return|;
 block|}
-comment|/**      * Creates a har file from the contents of a given directory, using that as root.      * @param dir Directory to archive      * @param harFile The HAR file to create      */
+comment|/**    * Creates a har file from the contents of a given directory, using that as root.    * @param dir Directory to archive    * @param harFile The HAR file to create    */
 specifier|public
 specifier|static
 name|void

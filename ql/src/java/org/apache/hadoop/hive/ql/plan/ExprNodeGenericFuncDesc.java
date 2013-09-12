@@ -1475,14 +1475,14 @@ condition|(
 operator|!
 name|bridge
 operator|.
-name|getUdfClass
+name|getUdfClassName
 argument_list|()
 operator|.
 name|equals
 argument_list|(
 name|bridge2
 operator|.
-name|getUdfClass
+name|getUdfClassName
 argument_list|()
 argument_list|)
 operator|||

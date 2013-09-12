@@ -150,7 +150,7 @@ operator|=
 name|tableName
 expr_stmt|;
 block|}
-comment|/*      * @see java.lang.Runnable#run()      */
+comment|/*    * @see java.lang.Runnable#run()    */
 annotation|@
 name|Override
 specifier|public

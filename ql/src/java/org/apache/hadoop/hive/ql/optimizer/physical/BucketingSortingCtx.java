@@ -136,10 +136,12 @@ name|BucketingSortingCtx
 implements|implements
 name|NodeProcessorCtx
 block|{
+specifier|private
 name|boolean
 name|disableBucketing
 decl_stmt|;
 comment|// A mapping from an operator to the columns by which it's output is bucketed
+specifier|private
 name|Map
 argument_list|<
 name|Operator
@@ -158,6 +160,7 @@ name|bucketedColsByOp
 decl_stmt|;
 comment|// A mapping from a directory which a FileSinkOperator writes into to the columns by which that
 comment|// output is bucketed
+specifier|private
 name|Map
 argument_list|<
 name|String
@@ -170,6 +173,7 @@ argument_list|>
 name|bucketedColsByDirectory
 decl_stmt|;
 comment|// A mapping from an operator to the columns by which it's output is sorted
+specifier|private
 name|Map
 argument_list|<
 name|Operator
@@ -188,6 +192,7 @@ name|sortedColsByOp
 decl_stmt|;
 comment|// A mapping from a directory which a FileSinkOperator writes into to the columns by which that
 comment|// output is sorted
+specifier|private
 name|Map
 argument_list|<
 name|String
@@ -707,6 +712,14 @@ name|BucketSortCol
 implements|,
 name|Serializable
 block|{
+specifier|public
+name|SortCol
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 specifier|private
 specifier|static
 specifier|final
@@ -717,7 +730,6 @@ literal|1L
 decl_stmt|;
 comment|// Equivalent aliases for the column
 specifier|private
-specifier|final
 name|List
 argument_list|<
 name|String
@@ -733,7 +745,6 @@ argument_list|()
 decl_stmt|;
 comment|// Indexes of those equivalent columns
 specifier|private
-specifier|final
 name|List
 argument_list|<
 name|Integer
@@ -749,7 +760,6 @@ argument_list|()
 decl_stmt|;
 comment|// Sort order (+|-)
 specifier|private
-specifier|final
 name|char
 name|sortOrder
 decl_stmt|;

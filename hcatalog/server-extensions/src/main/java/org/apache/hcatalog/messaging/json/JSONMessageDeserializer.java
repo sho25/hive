@@ -144,7 +144,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * MessageDeserializer implementation, for deserializing from JSON strings.  */
+comment|/**  * MessageDeserializer implementation, for deserializing from JSON strings.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONMessageDeserializer} instead  */
 end_comment
 
 begin_class

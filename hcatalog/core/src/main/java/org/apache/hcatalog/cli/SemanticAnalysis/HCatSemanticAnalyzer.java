@@ -517,6 +517,10 @@ name|HCatException
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.cli.SemanticAnalysis.HCatSemanticAnalyzer} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -1308,7 +1312,7 @@ name|String
 name|compoundName
 parameter_list|)
 block|{
-comment|/*         * the table name can potentially be a dot-format one with column names         * specified as part of the table name. e.g. a.b.c where b is a column in         * a and c is a field of the object/column b etc. For authorization         * purposes, we should use only the first part of the dotted name format.         *         */
+comment|/*     * the table name can potentially be a dot-format one with column names     * specified as part of the table name. e.g. a.b.c where b is a column in     * a and c is a field of the object/column b etc. For authorization     * purposes, we should use only the first part of the dotted name format.     *     */
 name|String
 index|[]
 name|words
@@ -1812,7 +1816,7 @@ operator|.
 name|getNewLocation
 argument_list|()
 decl_stmt|;
-comment|/* Hcat requires ALTER_DATA privileges for ALTER TABLE LOCATION statements             * for the old table/partition location and the new location.             */
+comment|/* Hcat requires ALTER_DATA privileges for ALTER TABLE LOCATION statements       * for the old table/partition location and the new location.       */
 if|if
 condition|(
 name|alterTable

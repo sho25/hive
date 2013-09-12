@@ -63,9 +63,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
 operator|.
-name|mapred
+name|hcatalog
+operator|.
+name|mapreduce
 operator|.
 name|HCatMapRedUtil
 import|;
@@ -164,7 +166,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Part of the DefaultOutput*Container classes  * See {@link DefaultOutputFormatContainer} for more information  */
+comment|/**  * Part of the DefaultOutput*Container classes  * See {@link DefaultOutputFormatContainer} for more information  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.DefaultOutputCommitterContainer} instead  */
 end_comment
 
 begin_class
@@ -188,7 +190,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**      * @param context current JobContext      * @param baseCommitter OutputCommitter to contain      * @throws IOException      */
+comment|/**    * @param context current JobContext    * @param baseCommitter OutputCommitter to contain    * @throws IOException    */
 specifier|public
 name|DefaultOutputCommitterContainer
 parameter_list|(

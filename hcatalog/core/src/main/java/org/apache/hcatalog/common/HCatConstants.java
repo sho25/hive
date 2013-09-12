@@ -59,6 +59,10 @@ name|SequenceFileOutputFormat
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.common.HCatConstants} instead  */
+end_comment
+
 begin_class
 specifier|public
 specifier|final
@@ -215,7 +219,7 @@ name|HCAT_PIG_INNER_FIELD_NAME_DEFAULT
 init|=
 literal|"innerfield"
 decl_stmt|;
-comment|/**      * {@value} (default: null)      * When the property is set in the UDFContext of the org.apache.hcatalog.pig.HCatStorer, HCatStorer writes      * to the location it specifies instead of the default HCatalog location format. An example can be found      * in org.apache.hcatalog.pig.HCatStorerWrapper.      */
+comment|/**    * {@value} (default: null)    * When the property is set in the UDFContext of the org.apache.hcatalog.pig.HCatStorer, HCatStorer writes    * to the location it specifies instead of the default HCatalog location format. An example can be found    * in org.apache.hcatalog.pig.HCatStorerWrapper.    */
 specifier|public
 specifier|static
 specifier|final
@@ -338,7 +342,7 @@ name|METASTORE_KERBEROS_PRINCIPAL
 operator|.
 name|varname
 decl_stmt|;
-comment|/**      * The desired number of input splits produced for each partition. When the      * input files are large and few, we want to split them into many splits,      * so as to increase the parallelizm of loading the splits. Try also two      * other parameters, mapred.min.split.size and mapred.max.split.size, to      * control the number of input splits.      */
+comment|/**    * The desired number of input splits produced for each partition. When the    * input files are large and few, we want to split them into many splits,    * so as to increase the parallelizm of loading the splits. Try also two    * other parameters, mapred.min.split.size and mapred.max.split.size, to    * control the number of input splits.    */
 specifier|public
 specifier|static
 specifier|final
@@ -598,7 +602,7 @@ decl_stmt|;
 comment|//***************************************************************************
 comment|// Data-related configuration properties.
 comment|//***************************************************************************
-comment|/**      * {@value} (default: {@value #HCAT_DATA_CONVERT_BOOLEAN_TO_INTEGER_DEFAULT}).      * Pig< 0.10.0 does not have boolean support, and scripts written for pre-boolean Pig versions      * will not expect boolean values when upgrading Pig. For integration the option is offered to      * convert boolean fields to integers by setting this Hadoop configuration key.      */
+comment|/**    * {@value} (default: {@value #HCAT_DATA_CONVERT_BOOLEAN_TO_INTEGER_DEFAULT}).    * Pig< 0.10.0 does not have boolean support, and scripts written for pre-boolean Pig versions    * will not expect boolean values when upgrading Pig. For integration the option is offered to    * convert boolean fields to integers by setting this Hadoop configuration key.    */
 specifier|public
 specifier|static
 specifier|final
@@ -615,7 +619,7 @@ name|HCAT_DATA_CONVERT_BOOLEAN_TO_INTEGER_DEFAULT
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * {@value} (default: {@value #HCAT_DATA_TINY_SMALL_INT_PROMOTION_DEFAULT}).      * Hive tables support tinyint and smallint columns, while not all processing frameworks support      * these types (Pig only has integer for example). Enable this property to promote tinyint and      * smallint columns to integer at runtime. Note that writes to tinyint and smallint columns      * enforce bounds checking and jobs will fail if attempting to write values outside the column      * bounds.      */
+comment|/**    * {@value} (default: {@value #HCAT_DATA_TINY_SMALL_INT_PROMOTION_DEFAULT}).    * Hive tables support tinyint and smallint columns, while not all processing frameworks support    * these types (Pig only has integer for example). Enable this property to promote tinyint and    * smallint columns to integer at runtime. Note that writes to tinyint and smallint columns    * enforce bounds checking and jobs will fail if attempting to write values outside the column    * bounds.    */
 specifier|public
 specifier|static
 specifier|final
@@ -632,7 +636,7 @@ name|HCAT_DATA_TINY_SMALL_INT_PROMOTION_DEFAULT
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * {@value} (default: {@value #HCAT_INPUT_BAD_RECORD_THRESHOLD_DEFAULT}).      * Threshold for the ratio of bad records that will be silently skipped without causing a task      * failure. This is useful when processing large data sets with corrupt records, when its      * acceptable to skip some bad records.      */
+comment|/**    * {@value} (default: {@value #HCAT_INPUT_BAD_RECORD_THRESHOLD_DEFAULT}).    * Threshold for the ratio of bad records that will be silently skipped without causing a task    * failure. This is useful when processing large data sets with corrupt records, when its    * acceptable to skip some bad records.    */
 specifier|public
 specifier|static
 specifier|final
@@ -649,7 +653,7 @@ name|HCAT_INPUT_BAD_RECORD_THRESHOLD_DEFAULT
 init|=
 literal|0.0001f
 decl_stmt|;
-comment|/**      * {@value} (default: {@value #HCAT_INPUT_BAD_RECORD_MIN_DEFAULT}).      * Number of bad records that will be accepted before applying      * {@value #HCAT_INPUT_BAD_RECORD_THRESHOLD_KEY}. This is necessary to prevent an initial bad      * record from causing a task failure.      */
+comment|/**    * {@value} (default: {@value #HCAT_INPUT_BAD_RECORD_MIN_DEFAULT}).    * Number of bad records that will be accepted before applying    * {@value #HCAT_INPUT_BAD_RECORD_THRESHOLD_KEY}. This is necessary to prevent an initial bad    * record from causing a task failure.    */
 specifier|public
 specifier|static
 specifier|final

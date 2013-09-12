@@ -235,24 +235,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|StandardStructObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|StructField
 import|;
 end_import
@@ -388,7 +370,7 @@ name|inputFields
 init|=
 operator|(
 operator|(
-name|StandardStructObjectInspector
+name|StructObjectInspector
 operator|)
 name|inputObjInspectors
 index|[
@@ -609,11 +591,11 @@ throws|throws
 name|HiveException
 block|{
 comment|// The UDTF expects arguments in an object[]
-name|StandardStructObjectInspector
+name|StructObjectInspector
 name|soi
 init|=
 operator|(
-name|StandardStructObjectInspector
+name|StructObjectInspector
 operator|)
 name|inputObjInspectors
 index|[

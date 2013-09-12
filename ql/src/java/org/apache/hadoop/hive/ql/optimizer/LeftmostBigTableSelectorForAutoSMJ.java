@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -75,6 +85,12 @@ name|parseContext
 parameter_list|,
 name|JoinOperator
 name|joinOp
+parameter_list|,
+name|Set
+argument_list|<
+name|Integer
+argument_list|>
+name|bigTableCandidates
 parameter_list|)
 block|{
 return|return

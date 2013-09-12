@@ -357,7 +357,6 @@ name|BaseWork
 block|{
 specifier|private
 specifier|static
-specifier|transient
 specifier|final
 name|Log
 name|LOG
@@ -597,10 +596,12 @@ decl_stmt|;
 comment|// sampling on task running
 comment|// the following two are used for join processing
 specifier|private
+specifier|transient
 name|QBJoinTree
 name|joinTree
 decl_stmt|;
 specifier|private
+specifier|transient
 name|LinkedHashMap
 argument_list|<
 name|Operator
@@ -626,7 +627,6 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
-specifier|transient
 name|boolean
 name|useBucketizedHiveInputFormat
 decl_stmt|;

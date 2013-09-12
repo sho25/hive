@@ -27,6 +27,10 @@ name|Map
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.WriteEntity} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -36,7 +40,7 @@ name|EntityBase
 operator|.
 name|Entity
 block|{
-comment|/**      * Don't instantiate {@link WriteEntity} directly. Use, {@link Builder} to      * build {@link WriteEntity}.      */
+comment|/**    * Don't instantiate {@link WriteEntity} directly. Use, {@link Builder} to    * build {@link WriteEntity}.    */
 specifier|private
 name|WriteEntity
 parameter_list|()
@@ -83,7 +87,7 @@ operator|.
 name|partitionKVs
 expr_stmt|;
 block|}
-comment|/**      * This class should be used to build {@link WriteEntity}. It follows builder      * pattern, letting you build your {@link WriteEntity} with whatever level of      * detail you want.      *      */
+comment|/**    * This class should be used to build {@link WriteEntity}. It follows builder    * pattern, letting you build your {@link WriteEntity} with whatever level of    * detail you want.    *    */
 specifier|public
 specifier|static
 class|class

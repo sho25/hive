@@ -66,7 +66,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * JSON implementation of DropPartitionMessage.  */
+comment|/**  * JSON implementation of DropPartitionMessage.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONDropPartitionMessage} instead  */
 end_comment
 
 begin_class
@@ -105,7 +105,7 @@ argument_list|>
 argument_list|>
 name|partitions
 decl_stmt|;
-comment|/**      * Default Constructor. Required for Jackson.      */
+comment|/**    * Default Constructor. Required for Jackson.    */
 specifier|public
 name|JSONDropPartitionMessage
 parameter_list|()

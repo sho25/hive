@@ -53,6 +53,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|data
@@ -79,7 +81,7 @@ begin_interface
 interface|interface
 name|ResultConverter
 block|{
-comment|/**      * convert HCatRecord instance to an HBase Put, used when writing out data.      * @param record instance to convert      * @return converted Put instance      * @throws IOException      */
+comment|/**    * convert HCatRecord instance to an HBase Put, used when writing out data.    * @param record instance to convert    * @return converted Put instance    * @throws IOException    */
 name|Put
 name|convert
 parameter_list|(
@@ -89,7 +91,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * convert HBase Result to HCatRecord instance, used when reading data.      * @param result instance to convert      * @return converted Result instance      * @throws IOException      */
+comment|/**    * convert HBase Result to HCatRecord instance, used when reading data.    * @param result instance to convert    * @return converted Result instance    * @throws IOException    */
 name|HCatRecord
 name|convert
 parameter_list|(
@@ -99,7 +101,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * Returns the hbase columns that are required for the scan.      * @return String containing hbase columns delimited by space.      * @throws IOException      */
+comment|/**    * Returns the hbase columns that are required for the scan.    * @return String containing hbase columns delimited by space.    * @throws IOException    */
 name|String
 name|getHBaseScanColumns
 parameter_list|()

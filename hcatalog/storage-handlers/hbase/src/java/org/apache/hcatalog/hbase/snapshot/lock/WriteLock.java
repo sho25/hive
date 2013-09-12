@@ -225,7 +225,7 @@ specifier|private
 name|LockZooKeeperOperation
 name|zop
 decl_stmt|;
-comment|/**      * zookeeper contructor for writelock      * @param zookeeper zookeeper client instance      * @param dir the parent path you want to use for locking      * @param acl the acls that you want to use for all the paths,      * if null world read/write is used.      */
+comment|/**    * zookeeper contructor for writelock    * @param zookeeper zookeeper client instance    * @param dir the parent path you want to use for locking    * @param acl the acls that you want to use for all the paths,    * if null world read/write is used.    */
 specifier|public
 name|WriteLock
 parameter_list|(
@@ -275,7 +275,7 @@ name|LockZooKeeperOperation
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * zookeeper contructor for writelock with callback      * @param zookeeper the zookeeper client instance      * @param dir the parent path you want to use for locking      * @param acl the acls that you want to use for all the paths      * @param callback the call back instance      */
+comment|/**    * zookeeper contructor for writelock with callback    * @param zookeeper the zookeeper client instance    * @param dir the parent path you want to use for locking    * @param acl the acls that you want to use for all the paths    * @param callback the call back instance    */
 specifier|public
 name|WriteLock
 parameter_list|(
@@ -311,7 +311,7 @@ operator|=
 name|callback
 expr_stmt|;
 block|}
-comment|/**      * return the current locklistener      * @return the locklistener      */
+comment|/**    * return the current locklistener    * @return the locklistener    */
 specifier|public
 name|LockListener
 name|getLockListener
@@ -323,7 +323,7 @@ operator|.
 name|callback
 return|;
 block|}
-comment|/**      * register a different call back listener      * @param callback the call back instance      */
+comment|/**    * register a different call back listener    * @param callback the call back instance    */
 specifier|public
 name|void
 name|setLockListener
@@ -339,7 +339,7 @@ operator|=
 name|callback
 expr_stmt|;
 block|}
-comment|/**      * Removes the lock or associated znode if      * you no longer require the lock. this also      * removes your request in the queue for locking      * in case you do not already hold the lock.      * @throws RuntimeException throws a runtime exception      * if it cannot connect to zookeeper.      */
+comment|/**    * Removes the lock or associated znode if    * you no longer require the lock. this also    * removes your request in the queue for locking    * in case you do not already hold the lock.    * @throws RuntimeException throws a runtime exception    * if it cannot connect to zookeeper.    */
 specifier|public
 specifier|synchronized
 name|void
@@ -499,7 +499,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * the watcher called on      * getting watch while watching      * my predecessor      */
+comment|/**    * the watcher called on    * getting watch while watching    * my predecessor    */
 specifier|private
 class|class
 name|LockWatcher
@@ -567,14 +567,14 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * a zoookeeper operation that is mainly responsible      * for all the magic required for locking.      */
+comment|/**    * a zoookeeper operation that is mainly responsible    * for all the magic required for locking.    */
 specifier|private
 class|class
 name|LockZooKeeperOperation
 implements|implements
 name|ZooKeeperOperation
 block|{
-comment|/** find if we have been created earler if not create our node          *          * @param prefix the prefix node          * @param zookeeper teh zookeeper client          * @param dir the dir paretn          * @throws KeeperException          * @throws InterruptedException          */
+comment|/** find if we have been created earler if not create our node      *      * @param prefix the prefix node      * @param zookeeper teh zookeeper client      * @param dir the dir paretn      * @throws KeeperException      * @throws InterruptedException      */
 specifier|private
 name|void
 name|findPrefixInChildren
@@ -698,7 +698,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**          * the command that is run and retried for actually          * obtaining the lock          * @return if the command was successful or not          */
+comment|/**      * the command that is run and retried for actually      * obtaining the lock      * @return if the command was successful or not      */
 specifier|public
 name|boolean
 name|execute
@@ -1000,7 +1000,7 @@ return|;
 block|}
 block|}
 empty_stmt|;
-comment|/**      * Attempts to acquire the exclusive write lock returning whether or not it was      * acquired. Note that the exclusive lock may be acquired some time later after      * this method has been invoked due to the current lock owner going away.      */
+comment|/**    * Attempts to acquire the exclusive write lock returning whether or not it was    * acquired. Note that the exclusive lock may be acquired some time later after    * this method has been invoked due to the current lock owner going away.    */
 specifier|public
 specifier|synchronized
 name|boolean
@@ -1036,7 +1036,7 @@ name|zop
 argument_list|)
 return|;
 block|}
-comment|/**      * return the parent dir for lock      * @return the parent dir used for locks.      */
+comment|/**    * return the parent dir for lock    * @return the parent dir used for locks.    */
 specifier|public
 name|String
 name|getDir
@@ -1046,7 +1046,7 @@ return|return
 name|dir
 return|;
 block|}
-comment|/**      * Returns true if this node is the owner of the      *  lock (or the leader)      */
+comment|/**    * Returns true if this node is the owner of the    *  lock (or the leader)    */
 specifier|public
 name|boolean
 name|isOwner
@@ -1069,7 +1069,7 @@ name|ownerId
 argument_list|)
 return|;
 block|}
-comment|/**      * return the id for this lock      * @return the id for this lock      */
+comment|/**    * return the id for this lock    * @return the id for this lock    */
 specifier|public
 name|String
 name|getId
