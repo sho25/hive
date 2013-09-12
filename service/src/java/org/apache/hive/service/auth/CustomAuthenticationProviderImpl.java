@@ -114,8 +114,7 @@ name|ConfVars
 operator|.
 name|HIVE_SERVER2_CUSTOM_AUTHENTICATION_CLASS
 operator|.
-name|name
-argument_list|()
+name|varname
 argument_list|,
 name|PasswdAuthenticationProvider
 operator|.
