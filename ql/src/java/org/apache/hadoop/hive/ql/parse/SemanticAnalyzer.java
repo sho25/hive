@@ -5514,7 +5514,10 @@ name|addTableNameTranslation
 argument_list|(
 name|tableTree
 argument_list|,
-name|db
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()
@@ -6554,7 +6557,10 @@ case|:
 name|String
 name|currentDatabase
 init|=
-name|db
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()
@@ -50363,7 +50369,10 @@ name|viewsExpanded
 operator|.
 name|add
 argument_list|(
-name|db
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()
