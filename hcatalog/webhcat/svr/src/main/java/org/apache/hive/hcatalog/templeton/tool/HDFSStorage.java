@@ -550,6 +550,8 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+comment|//don't print stack trace since clients poll for 'exitValue', 'completed',
+comment|//files which are not there until job completes
 name|LOG
 operator|.
 name|info
@@ -564,8 +566,6 @@ name|e
 operator|.
 name|getMessage
 argument_list|()
-argument_list|,
-name|e
 argument_list|)
 expr_stmt|;
 block|}

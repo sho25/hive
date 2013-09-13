@@ -3919,7 +3919,7 @@ name|showall
 argument_list|)
 return|;
 block|}
-comment|/**    * Notify on a completed job.    */
+comment|/**    * Notify on a completed job.  Called by JobTracker.    */
 annotation|@
 name|GET
 annotation|@
