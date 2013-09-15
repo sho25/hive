@@ -109,6 +109,26 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
+name|PrimitiveObjectInspector
+operator|.
+name|PrimitiveCategory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
 name|primitive
 operator|.
 name|PrimitiveObjectInspectorUtils
@@ -346,6 +366,36 @@ block|}
 else|else
 block|{
 comment|// No type params
+comment|// Prevent creation of varchar TypeInfo with no length specification.
+comment|// This can happen if an old-style UDF uses a varchar type either as an
+comment|// argument or return type in an evaluate() function, or other instances
+comment|// of using reflection-based methods for retrieving a TypeInfo.
+if|if
+condition|(
+name|typeEntry
+operator|.
+name|primitiveCategory
+operator|==
+name|PrimitiveCategory
+operator|.
+name|VARCHAR
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"varchar type used with no type params"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"varchar type used with no type params"
+argument_list|)
+throw|;
+block|}
 name|result
 operator|=
 operator|new

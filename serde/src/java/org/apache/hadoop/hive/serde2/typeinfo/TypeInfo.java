@@ -87,6 +87,17 @@ name|String
 name|getTypeName
 parameter_list|()
 function_decl|;
+comment|/**    * String representing the qualified type name.    * Qualified types should override this method.    * @return    */
+specifier|public
+name|String
+name|getQualifiedName
+parameter_list|()
+block|{
+return|return
+name|getTypeName
+argument_list|()
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

@@ -100,6 +100,8 @@ name|BINARY
 block|,
 name|DECIMAL
 block|,
+name|VARCHAR
+block|,
 name|UNKNOWN
 block|}
 empty_stmt|;

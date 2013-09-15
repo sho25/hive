@@ -663,6 +663,9 @@ return|;
 case|case
 name|STRING
 case|:
+case|case
+name|VARCHAR
+case|:
 return|return
 operator|new
 name|GenericUDAFStringStatsEvaluator
@@ -710,11 +713,13 @@ name|GenericUDAFEvaluator
 block|{
 comment|/* Object Inspector corresponding to the input parameter.      */
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
 comment|/* Partial aggregation result returned by TerminatePartial. Partial result is a struct      * containing a long field named "count".      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|partialResult
@@ -731,6 +736,7 @@ name|StructField
 name|countTruesField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|countTruesFieldOI
 decl_stmt|;
@@ -740,6 +746,7 @@ name|StructField
 name|countFalsesField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|countFalsesFieldOI
 decl_stmt|;
@@ -749,11 +756,13 @@ name|StructField
 name|countNullsField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|countNullsFieldOI
 decl_stmt|;
 comment|/* Output of final result of the aggregation      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|result
@@ -1766,6 +1775,7 @@ name|GenericUDAFEvaluator
 block|{
 comment|/* Object Inspector corresponding to the input parameter.      */
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
@@ -1776,6 +1786,7 @@ name|numVectorsOI
 decl_stmt|;
 comment|/* Partial aggregation result returned by TerminatePartial. Partial result is a struct      * containing a long field named "count".      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|partialResult
@@ -1792,6 +1803,7 @@ name|StructField
 name|minField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|minFieldOI
 decl_stmt|;
@@ -1801,6 +1813,7 @@ name|StructField
 name|maxField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|maxFieldOI
 decl_stmt|;
@@ -1810,6 +1823,7 @@ name|StructField
 name|countNullsField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|countNullsFieldOI
 decl_stmt|;
@@ -1819,6 +1833,7 @@ name|StructField
 name|ndvField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableStringObjectInspector
 name|ndvFieldOI
 decl_stmt|;
@@ -1828,11 +1843,13 @@ name|StructField
 name|numBitVectorsField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableIntObjectInspector
 name|numBitVectorsFieldOI
 decl_stmt|;
 comment|/* Output of final result of the aggregation      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|result
@@ -3362,6 +3379,7 @@ name|GenericUDAFEvaluator
 block|{
 comment|/* Object Inspector corresponding to the input parameter.      */
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
@@ -3372,6 +3390,7 @@ name|numVectorsOI
 decl_stmt|;
 comment|/* Partial aggregation result returned by TerminatePartial. Partial result is a struct      * containing a long field named "count".      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|partialResult
@@ -3388,6 +3407,7 @@ name|StructField
 name|minField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableDoubleObjectInspector
 name|minFieldOI
 decl_stmt|;
@@ -3397,6 +3417,7 @@ name|StructField
 name|maxField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableDoubleObjectInspector
 name|maxFieldOI
 decl_stmt|;
@@ -3406,6 +3427,7 @@ name|StructField
 name|countNullsField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|countNullsFieldOI
 decl_stmt|;
@@ -3415,6 +3437,7 @@ name|StructField
 name|ndvField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableStringObjectInspector
 name|ndvFieldOI
 decl_stmt|;
@@ -3424,11 +3447,13 @@ name|StructField
 name|numBitVectorsField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableIntObjectInspector
 name|numBitVectorsFieldOI
 decl_stmt|;
 comment|/* Output of final result of the aggregation      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|result
@@ -4955,6 +4980,7 @@ name|GenericUDAFEvaluator
 block|{
 comment|/* Object Inspector corresponding to the input parameter.      */
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
@@ -4965,6 +4991,7 @@ name|numVectorsOI
 decl_stmt|;
 comment|/* Partial aggregation result returned by TerminatePartial. Partial result is a struct      * containing a long field named "count".      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|partialResult
@@ -4981,6 +5008,7 @@ name|StructField
 name|maxLengthField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|maxLengthFieldOI
 decl_stmt|;
@@ -4990,6 +5018,7 @@ name|StructField
 name|sumLengthField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|sumLengthFieldOI
 decl_stmt|;
@@ -4999,6 +5028,7 @@ name|StructField
 name|countField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|countFieldOI
 decl_stmt|;
@@ -5008,6 +5038,7 @@ name|StructField
 name|countNullsField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|countNullsFieldOI
 decl_stmt|;
@@ -5017,6 +5048,7 @@ name|StructField
 name|ndvField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableStringObjectInspector
 name|ndvFieldOI
 decl_stmt|;
@@ -5026,11 +5058,13 @@ name|StructField
 name|numBitVectorsField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableIntObjectInspector
 name|numBitVectorsFieldOI
 decl_stmt|;
 comment|/* Output of final result of the aggregation      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|result
@@ -6681,11 +6715,13 @@ name|GenericUDAFEvaluator
 block|{
 comment|/* Object Inspector corresponding to the input parameter.      */
 specifier|private
+specifier|transient
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
 comment|/* Partial aggregation result returned by TerminatePartial. Partial result is a struct      * containing a long field named "count".      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|partialResult
@@ -6702,6 +6738,7 @@ name|StructField
 name|maxLengthField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|maxLengthFieldOI
 decl_stmt|;
@@ -6711,6 +6748,7 @@ name|StructField
 name|sumLengthField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|sumLengthFieldOI
 decl_stmt|;
@@ -6720,6 +6758,7 @@ name|StructField
 name|countField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|countFieldOI
 decl_stmt|;
@@ -6729,11 +6768,13 @@ name|StructField
 name|countNullsField
 decl_stmt|;
 specifier|private
+specifier|transient
 name|WritableLongObjectInspector
 name|countNullsFieldOI
 decl_stmt|;
 comment|/* Output of final result of the aggregation      */
 specifier|private
+specifier|transient
 name|Object
 index|[]
 name|result
