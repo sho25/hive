@@ -3568,7 +3568,7 @@ name|HIVE_SERVER2_TABLE_TYPE_MAPPING
 argument_list|(
 literal|"hive.server2.table.type.mapping"
 argument_list|,
-literal|"HIVE"
+literal|"CLASSIC"
 argument_list|)
 block|,
 name|HIVE_SERVER2_SESSION_HOOK

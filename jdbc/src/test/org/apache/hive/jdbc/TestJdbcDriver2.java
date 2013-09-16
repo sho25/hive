@@ -4424,16 +4424,16 @@ name|SQLException
 block|{
 name|getTablesTest
 argument_list|(
-name|TableType
+name|ClassicTableTypes
 operator|.
-name|MANAGED_TABLE
+name|TABLE
 operator|.
 name|toString
 argument_list|()
 argument_list|,
-name|TableType
+name|ClassicTableTypes
 operator|.
-name|VIRTUAL_VIEW
+name|VIEW
 operator|.
 name|toString
 argument_list|()
@@ -4559,6 +4559,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Test the type returned for pre-created table type table and view type    * table    * @param tableTypeName expected table type    * @param viewTypeName expected view type    * @throws SQLException    */
 specifier|private
 name|void
 name|getTablesTest
@@ -5184,6 +5185,8 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
+comment|//test default table types returned in
+comment|// Connection.getMetaData().getTableTypes()
 specifier|public
 name|void
 name|testMetaDataGetTableTypes
@@ -5194,7 +5197,7 @@ block|{
 name|metaDataGetTableTypeTest
 argument_list|(
 operator|new
-name|HiveTableTypeMapping
+name|ClassicTableTypeMapping
 argument_list|()
 operator|.
 name|getTableTypeNames
@@ -5202,6 +5205,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|//test default table types returned in
+comment|// Connection.getMetaData().getTableTypes() when type config is set to "HIVE"
 specifier|public
 name|void
 name|testMetaDataGetHiveTableTypes
@@ -5257,6 +5262,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|//test default table types returned in
+comment|// Connection.getMetaData().getTableTypes() when type config is set to "CLASSIC"
 specifier|public
 name|void
 name|testMetaDataGetClassicTableTypes
@@ -5312,6 +5319,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Test if Connection.getMetaData().getTableTypes() returns expected    *  tabletypes    * @param tabletypes expected table types    * @throws SQLException    */
 specifier|private
 name|void
 name|metaDataGetTableTypeTest
