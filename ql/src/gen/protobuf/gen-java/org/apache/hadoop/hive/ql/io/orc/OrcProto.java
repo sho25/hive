@@ -50579,6 +50579,17 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
+comment|// optional uint32 maximumLength = 4;
+comment|/**      *<code>optional uint32 maximumLength = 4;</code>      */
+name|boolean
+name|hasMaximumLength
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional uint32 maximumLength = 4;</code>      */
+name|int
+name|getMaximumLength
+parameter_list|()
+function_decl|;
 block|}
 comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Type}    */
 specifier|public
@@ -51114,6 +51125,23 @@ argument_list|)
 expr_stmt|;
 break|break;
 block|}
+case|case
+literal|32
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000002
+expr_stmt|;
+name|maximumLength_
+operator|=
+name|input
+operator|.
+name|readUInt32
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
 block|}
 block|}
 block|}
@@ -51588,6 +51616,14 @@ literal|15
 argument_list|,
 literal|15
 argument_list|)
+block|,
+comment|/**        *<code>VARCHAR = 16;</code>        */
+name|VARCHAR
+argument_list|(
+literal|16
+argument_list|,
+literal|16
+argument_list|)
 block|,       ;
 comment|/**        *<code>BOOLEAN = 0;</code>        */
 specifier|public
@@ -51733,6 +51769,15 @@ name|DATE_VALUE
 init|=
 literal|15
 decl_stmt|;
+comment|/**        *<code>VARCHAR = 16;</code>        */
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|VARCHAR_VALUE
+init|=
+literal|16
+decl_stmt|;
 specifier|public
 specifier|final
 name|int
@@ -51852,6 +51897,12 @@ literal|15
 case|:
 return|return
 name|DATE
+return|;
+case|case
+literal|16
+case|:
+return|return
+name|VARCHAR
 return|;
 default|default:
 return|return
@@ -52380,6 +52431,47 @@ name|index
 argument_list|)
 return|;
 block|}
+comment|// optional uint32 maximumLength = 4;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|MAXIMUMLENGTH_FIELD_NUMBER
+init|=
+literal|4
+decl_stmt|;
+specifier|private
+name|int
+name|maximumLength_
+decl_stmt|;
+comment|/**      *<code>optional uint32 maximumLength = 4;</code>      */
+specifier|public
+name|boolean
+name|hasMaximumLength
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000002
+operator|)
+operator|==
+literal|0x00000002
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional uint32 maximumLength = 4;</code>      */
+specifier|public
+name|int
+name|getMaximumLength
+parameter_list|()
+block|{
+return|return
+name|maximumLength_
+return|;
+block|}
 specifier|private
 name|void
 name|initFields
@@ -52431,6 +52523,10 @@ operator|.
 name|LazyStringArrayList
 operator|.
 name|EMPTY
+expr_stmt|;
+name|maximumLength_
+operator|=
+literal|0
 expr_stmt|;
 block|}
 specifier|private
@@ -52622,6 +52718,29 @@ name|getByteString
 argument_list|(
 name|i
 argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000002
+operator|)
+operator|==
+literal|0x00000002
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeUInt32
+argument_list|(
+literal|4
+argument_list|,
+name|maximumLength_
 argument_list|)
 expr_stmt|;
 block|}
@@ -52841,6 +52960,37 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000002
+operator|)
+operator|==
+literal|0x00000002
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeUInt32Size
+argument_list|(
+literal|4
+argument_list|,
+name|maximumLength_
+argument_list|)
 expr_stmt|;
 block|}
 name|size
@@ -53804,6 +53954,19 @@ operator|~
 literal|0x00000004
 operator|)
 expr_stmt|;
+name|maximumLength_
+operator|=
+literal|0
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000008
+operator|)
+expr_stmt|;
 return|return
 name|this
 return|;
@@ -54145,6 +54308,30 @@ name|fieldNames_
 operator|=
 name|fieldNames_
 expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000008
+operator|)
+operator|==
+literal|0x00000008
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000002
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|maximumLength_
+operator|=
+name|maximumLength_
+expr_stmt|;
 name|result
 operator|.
 name|bitField0_
@@ -54410,6 +54597,23 @@ expr_stmt|;
 block|}
 name|onChanged
 argument_list|()
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
+name|hasMaximumLength
+argument_list|()
+condition|)
+block|{
+name|setMaximumLength
+argument_list|(
+name|other
+operator|.
+name|getMaximumLength
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 name|this
@@ -55380,6 +55584,89 @@ name|add
 argument_list|(
 name|value
 argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|// optional uint32 maximumLength = 4;
+specifier|private
+name|int
+name|maximumLength_
+decl_stmt|;
+comment|/**        *<code>optional uint32 maximumLength = 4;</code>        */
+specifier|public
+name|boolean
+name|hasMaximumLength
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000008
+operator|)
+operator|==
+literal|0x00000008
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional uint32 maximumLength = 4;</code>        */
+specifier|public
+name|int
+name|getMaximumLength
+parameter_list|()
+block|{
+return|return
+name|maximumLength_
+return|;
+block|}
+comment|/**        *<code>optional uint32 maximumLength = 4;</code>        */
+specifier|public
+name|Builder
+name|setMaximumLength
+parameter_list|(
+name|int
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000008
+expr_stmt|;
+name|maximumLength_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional uint32 maximumLength = 4;</code>        */
+specifier|public
+name|Builder
+name|clearMaximumLength
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000008
+operator|)
+expr_stmt|;
+name|maximumLength_
+operator|=
+literal|0
 expr_stmt|;
 name|onChanged
 argument_list|()
@@ -78960,59 +79247,61 @@ literal|".io.orc.Stream\022A\n\007columns\030\002 \003(\01320.org.ap"
 block|,
 literal|"ache.hadoop.hive.ql.io.orc.ColumnEncodin"
 operator|+
-literal|"g\"\250\002\n\004Type\0229\n\004kind\030\001 \002(\0162+.org.apache.ha"
+literal|"g\"\314\002\n\004Type\0229\n\004kind\030\001 \002(\0162+.org.apache.ha"
 operator|+
 literal|"doop.hive.ql.io.orc.Type.Kind\022\024\n\010subtype"
 operator|+
-literal|"s\030\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\t\"\272\001\n\004Kind"
+literal|"s\030\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\t\022\025\n\rmaxim"
 operator|+
-literal|"\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002\022\007\n\003IN"
+literal|"umLength\030\004 \001(\r\"\307\001\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004"
 operator|+
-literal|"T\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE\020\006\022\n\n\006"
+literal|"BYTE\020\001\022\t\n\005SHORT\020\002\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005"
 operator|+
-literal|"STRING\020\007\022\n\n\006BINARY\020\010\022\r\n\tTIMESTAMP\020\t\022\010\n\004L"
+literal|"FLOAT\020\005\022\n\n\006DOUBLE\020\006\022\n\n\006STRING\020\007\022\n\n\006BINAR"
 operator|+
-literal|"IST\020\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020\014\022\t\n\005UNION\020\r\022\013\n"
+literal|"Y\020\010\022\r\n\tTIMESTAMP\020\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n"
 operator|+
-literal|"\007DECIMAL\020\016\022\010\n\004DATE\020\017\"x\n\021StripeInformatio"
+literal|"\006STRUCT\020\014\022\t\n\005UNION\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DAT"
 operator|+
-literal|"n\022\016\n\006offset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022"
+literal|"E\020\017\022\013\n\007VARCHAR\020\020\"x\n\021StripeInformation\022\016\n"
 block|,
-literal|"\n\ndataLength\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004"
+literal|"\006offset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022\n\nda"
 operator|+
-literal|"\022\024\n\014numberOfRows\030\005 \001(\004\"/\n\020UserMetadataIt"
+literal|"taLength\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004\022\024\n\014"
 operator|+
-literal|"em\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\014\"\356\002\n\006Foot"
+literal|"numberOfRows\030\005 \001(\004\"/\n\020UserMetadataItem\022\014"
 operator|+
-literal|"er\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rcontentLengt"
+literal|"\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\014\"\356\002\n\006Footer\022\024"
 operator|+
-literal|"h\030\002 \001(\004\022D\n\007stripes\030\003 \003(\01323.org.apache.ha"
+literal|"\n\014headerLength\030\001 \001(\004\022\025\n\rcontentLength\030\002 "
 operator|+
-literal|"doop.hive.ql.io.orc.StripeInformation\0225\n"
+literal|"\001(\004\022D\n\007stripes\030\003 \003(\01323.org.apache.hadoop"
 operator|+
-literal|"\005types\030\004 \003(\0132&.org.apache.hadoop.hive.ql"
+literal|".hive.ql.io.orc.StripeInformation\0225\n\005typ"
 operator|+
-literal|".io.orc.Type\022D\n\010metadata\030\005 \003(\01322.org.apa"
+literal|"es\030\004 \003(\0132&.org.apache.hadoop.hive.ql.io."
 operator|+
-literal|"che.hadoop.hive.ql.io.orc.UserMetadataIt"
+literal|"orc.Type\022D\n\010metadata\030\005 \003(\01322.org.apache."
 operator|+
-literal|"em\022\024\n\014numberOfRows\030\006 \001(\004\022F\n\nstatistics\030\007"
+literal|"hadoop.hive.ql.io.orc.UserMetadataItem\022\024"
 block|,
-literal|" \003(\01322.org.apache.hadoop.hive.ql.io.orc."
+literal|"\n\014numberOfRows\030\006 \001(\004\022F\n\nstatistics\030\007 \003(\013"
 operator|+
-literal|"ColumnStatistics\022\026\n\016rowIndexStride\030\010 \001(\r"
+literal|"22.org.apache.hadoop.hive.ql.io.orc.Colu"
 operator|+
-literal|"\"\255\001\n\nPostScript\022\024\n\014footerLength\030\001 \001(\004\022F\n"
+literal|"mnStatistics\022\026\n\016rowIndexStride\030\010 \001(\r\"\255\001\n"
 operator|+
-literal|"\013compression\030\002 \001(\01621.org.apache.hadoop.h"
+literal|"\nPostScript\022\024\n\014footerLength\030\001 \001(\004\022F\n\013com"
 operator|+
-literal|"ive.ql.io.orc.CompressionKind\022\034\n\024compres"
+literal|"pression\030\002 \001(\01621.org.apache.hadoop.hive."
 operator|+
-literal|"sionBlockSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001"
+literal|"ql.io.orc.CompressionKind\022\034\n\024compression"
 operator|+
-literal|"\022\016\n\005magic\030\300> \001(\t*:\n\017CompressionKind\022\010\n\004N"
+literal|"BlockSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\016\n\005"
 operator|+
-literal|"ONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
+literal|"magic\030\300> \001(\t*:\n\017CompressionKind\022\010\n\004NONE\020"
+operator|+
+literal|"\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
 block|}
 decl_stmt|;
 name|com
@@ -79627,6 +79916,8 @@ block|,
 literal|"Subtypes"
 block|,
 literal|"FieldNames"
+block|,
+literal|"MaximumLength"
 block|, }
 argument_list|)
 expr_stmt|;
