@@ -1702,15 +1702,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|cmdLine
-operator|=
-name|secureDoAs
-operator|.
-name|addArg
-argument_list|(
-name|cmdLine
-argument_list|)
-expr_stmt|;
 name|secureDoAs
 operator|.
 name|addEnv
