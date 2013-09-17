@@ -4243,6 +4243,15 @@ argument_list|)
 expr_stmt|;
 name|registerGenericUDAF
 argument_list|(
+literal|"collect_list"
+argument_list|,
+operator|new
+name|GenericUDAFCollectList
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|registerGenericUDAF
+argument_list|(
 literal|"ngrams"
 argument_list|,
 operator|new
