@@ -3585,7 +3585,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a Hive job.    */
+comment|/**    * Run a Hive job.    * @param execute    SQL statement to run, equivalent to "-e" from hive command line    * @param srcFile    name of hive script file to run, equivalent to "-f" from hive    *                   command line    * @param hiveArgs   additional command line argument passed to the hive command line.     *                   Please check https://cwiki.apache.org/Hive/languagemanual-cli.html    *                   for detailed explanation of command line arguments    * @param otherFiles additional files to be shipped to the launcher, such as the jars    *                   used in "add jar" statement in hive script    * @param defines    shortcut for command line arguments "--define"    * @param statusdir  where the stderr/stdout of templeton controller job goes    * @param callback   callback url when the hive job finishes    */
 annotation|@
 name|POST
 annotation|@
@@ -3621,6 +3621,25 @@ literal|"file"
 argument_list|)
 name|String
 name|srcFile
+parameter_list|,
+annotation|@
+name|FormParam
+argument_list|(
+literal|"arg"
+argument_list|)
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|hiveArgs
+parameter_list|,
+annotation|@
+name|FormParam
+argument_list|(
+literal|"files"
+argument_list|)
+name|String
+name|otherFiles
 parameter_list|,
 annotation|@
 name|FormParam
@@ -3706,6 +3725,10 @@ argument_list|,
 name|srcFile
 argument_list|,
 name|defines
+argument_list|,
+name|hiveArgs
+argument_list|,
+name|otherFiles
 argument_list|,
 name|statusdir
 argument_list|,
