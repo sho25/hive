@@ -3718,6 +3718,8 @@ name|newInstance
 argument_list|(
 name|genericUDF
 argument_list|,
+name|udfName
+argument_list|,
 name|childrenList
 argument_list|)
 return|;
@@ -4140,6 +4142,8 @@ operator|.
 name|getGenericUDFForIndex
 argument_list|()
 argument_list|,
+name|funcText
+argument_list|,
 name|children
 argument_list|)
 expr_stmt|;
@@ -4267,6 +4271,8 @@ name|FunctionRegistry
 operator|.
 name|getGenericUDFForIndex
 argument_list|()
+argument_list|,
+name|funcText
 argument_list|,
 name|children
 argument_list|)
@@ -5041,6 +5047,8 @@ name|fi
 operator|.
 name|getGenericUDF
 argument_list|()
+argument_list|,
+name|funcText
 argument_list|,
 name|children
 argument_list|)
