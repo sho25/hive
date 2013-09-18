@@ -565,6 +565,19 @@ block|{
 specifier|public
 specifier|static
 specifier|final
+name|String
+name|CLASS_NAME
+init|=
+name|HiveInputFormat
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
 name|Log
 name|LOG
 init|=
@@ -572,7 +585,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"org.apache.hadoop.hive.ql.io.HiveInputFormat"
+name|CLASS_NAME
 argument_list|)
 decl_stmt|;
 comment|/**    * HiveInputSplit encapsulates an InputSplit with its corresponding    * inputFormatClass. The reason that it derives from FileSplit is to make sure    * "map.input.file" in MapTask.    */
@@ -1470,7 +1483,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -1752,7 +1765,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.

@@ -438,8 +438,8 @@ specifier|public
 name|void
 name|PerfLogBegin
 parameter_list|(
-name|Log
-name|_log
+name|String
+name|callerName
 parameter_list|,
 name|String
 name|method
@@ -453,13 +453,17 @@ operator|.
 name|currentTimeMillis
 argument_list|()
 decl_stmt|;
-name|_log
+name|LOG
 operator|.
 name|info
 argument_list|(
 literal|"<PERFLOG method="
 operator|+
 name|method
+operator|+
+literal|" from="
+operator|+
+name|callerName
 operator|+
 literal|">"
 argument_list|)
@@ -483,8 +487,8 @@ specifier|public
 name|long
 name|PerfLogEnd
 parameter_list|(
-name|Log
-name|_log
+name|String
+name|callerName
 parameter_list|,
 name|String
 name|method
@@ -606,10 +610,20 @@ name|sb
 operator|.
 name|append
 argument_list|(
+literal|" from="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|callerName
+argument_list|)
+operator|.
+name|append
+argument_list|(
 literal|">"
 argument_list|)
 expr_stmt|;
-name|_log
+name|LOG
 operator|.
 name|info
 argument_list|(
