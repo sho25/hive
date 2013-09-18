@@ -1011,7 +1011,15 @@ init|=
 operator|new
 name|FsPermission
 argument_list|(
+name|Short
+operator|.
+name|parseShort
+argument_list|(
 name|scratchDirPermission
+operator|.
+name|trim
+argument_list|()
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|fs
