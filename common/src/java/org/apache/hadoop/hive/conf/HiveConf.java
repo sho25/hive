@@ -924,6 +924,13 @@ literal|"user.name"
 argument_list|)
 argument_list|)
 block|,
+name|SCRATCHDIRPERMISSION
+argument_list|(
+literal|"hive.scratch.dir.permission"
+argument_list|,
+literal|"700"
+argument_list|)
+block|,
 name|SUBMITVIACHILD
 argument_list|(
 literal|"hive.exec.submitviachild"
