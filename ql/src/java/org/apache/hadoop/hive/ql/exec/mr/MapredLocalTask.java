@@ -1938,13 +1938,6 @@ argument_list|(
 literal|"Execution completed successfully"
 argument_list|)
 expr_stmt|;
-name|console
-operator|.
-name|printInfo
-argument_list|(
-literal|"Mapred Local Task Succeeded . Convert the Join into MapJoin"
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 name|exitVal
