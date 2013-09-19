@@ -790,15 +790,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"DEBUG XXXX SARG is not null"
-argument_list|)
-expr_stmt|;
 name|sargLeaves
 operator|=
 name|sarg
@@ -863,15 +854,6 @@ block|}
 block|}
 else|else
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"DEBUG XXXX SARG is null"
-argument_list|)
-expr_stmt|;
 name|sargLeaves
 operator|=
 literal|null

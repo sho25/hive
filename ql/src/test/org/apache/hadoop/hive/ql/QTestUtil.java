@@ -1093,9 +1093,7 @@ literal|"src_sequencefile"
 block|,
 literal|"srcpart"
 block|,
-name|AllVectorTypesRecord
-operator|.
-name|TABLE_NAME
+literal|"alltypesorc"
 block|}
 argument_list|)
 argument_list|)
