@@ -1019,6 +1019,8 @@ name|scratchDirPermission
 operator|.
 name|trim
 argument_list|()
+argument_list|,
+literal|8
 argument_list|)
 argument_list|)
 decl_stmt|;
