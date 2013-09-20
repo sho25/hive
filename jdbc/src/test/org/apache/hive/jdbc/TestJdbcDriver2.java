@@ -2507,9 +2507,6 @@ decl_stmt|;
 name|String
 name|testQuery
 decl_stmt|;
-name|boolean
-name|hasResultSet
-decl_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -2651,6 +2648,140 @@ name|stmt
 operator|.
 name|close
 argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|testCloseResultSet
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|Statement
+name|stmt
+init|=
+name|con
+operator|.
+name|createStatement
+argument_list|()
+decl_stmt|;
+comment|// execute query, ignore exception if any
+name|ResultSet
+name|res
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"select * from "
+operator|+
+name|tableName
+argument_list|)
+decl_stmt|;
+comment|// close ResultSet, ignore exception if any
+name|res
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+comment|// A statement should be open even after ResultSet#close
+name|assertFalse
+argument_list|(
+name|stmt
+operator|.
+name|isClosed
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// A Statement#cancel after ResultSet#close should be a no-op
+try|try
+block|{
+name|stmt
+operator|.
+name|cancel
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|failWithExceptionMsg
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|stmt
+operator|=
+name|con
+operator|.
+name|createStatement
+argument_list|()
+expr_stmt|;
+comment|// execute query, ignore exception if any
+name|res
+operator|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"select * from "
+operator|+
+name|tableName
+argument_list|)
+expr_stmt|;
+comment|// close ResultSet, ignore exception if any
+name|res
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+comment|// A Statement#execute after ResultSet#close should be fine too
+try|try
+block|{
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"select * from "
+operator|+
+name|tableName
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|failWithExceptionMsg
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+comment|// A Statement#close after ResultSet#close should close the statement
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|stmt
+operator|.
+name|isClosed
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -5900,7 +6031,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*   public void testConversionsBaseResultSet() throws SQLException {     ResultSet rs = new HiveMetaDataResultSet(Arrays.asList("key")             , Arrays.asList("long")             , Arrays.asList(1234, "1234", "abc")) {       private int cnt=1;       public boolean next() throws SQLException {         if (cnt<data.size()) {           row = Arrays.asList(data.get(cnt));           cnt++;           return true;         } else {           return false;         }       }     };      while (rs.next()) {       String key = rs.getString("key");       if ("1234".equals(key)) {         assertEquals("Converting a string column into a long failed.", rs.getLong("key"), 1234L);         assertEquals("Converting a string column into a int failed.", rs.getInt("key"), 1234);       } else if ("abc".equals(key)) {         Object result = null;         Exception expectedException = null;         try {           result = rs.getLong("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a long should not work.", expectedException!=null);         try {           result = rs.getInt("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a int should not work.", expectedException!=null);       }     }   }   */
+comment|/*   public void testConversionsBaseResultSet() throws SQLException {     ResultSet rs = new HiveMetaDataResultSet(Arrays.asList("key")             , Arrays.asList("long")             , Arrays.asList(1234, "1234", "abc")) {       private int cnt=1;       public boolean next() throws SQLException {         if (cnt<data.size()) {           row = Arrays.asList(data.get(cnt));           cnt++;           return true;         } else {           return false;         }       }     };      while (rs.next()) {       String key = rs.getString("key");       if ("1234".equals(key)) {         assertEquals("Converting a string column into a long failed.", rs.getLong("key"), 1234L);         assertEquals("Converting a string column into a int failed.", rs.getInt("key"), 1234);       } else if ("abc".equals(key)) {         Object result = null;         Exception expectedException = null;         try {           result = rs.getLong("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a long should not work.", expectedException!=null);         try {           result = rs.getInt("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a int should not work.", expectedException!=null);       }     }   }    */
 specifier|public
 name|void
 name|testDescribeTable
