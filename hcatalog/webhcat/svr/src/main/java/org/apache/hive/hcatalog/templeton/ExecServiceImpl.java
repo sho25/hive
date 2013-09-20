@@ -653,6 +653,77 @@ argument_list|(
 name|enc
 argument_list|)
 expr_stmt|;
+try|try
+block|{
+name|watchdog
+operator|.
+name|checkException
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Command: "
+operator|+
+name|cmd
+operator|+
+literal|" failed:"
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|watchdog
+operator|.
+name|killedProcess
+argument_list|()
+condition|)
+block|{
+name|String
+name|msg
+init|=
+literal|" was terminated due to timeout("
+operator|+
+name|timeout
+operator|+
+literal|"ms).  See "
+operator|+
+name|AppConfig
+operator|.
+name|EXEC_TIMEOUT_NAME
+operator|+
+literal|" property"
+decl_stmt|;
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Command: "
+operator|+
+name|cmd
+operator|+
+name|msg
+argument_list|)
+expr_stmt|;
+name|res
+operator|.
+name|stderr
+operator|+=
+literal|" Command "
+operator|+
+name|msg
+expr_stmt|;
+block|}
 return|return
 name|res
 return|;

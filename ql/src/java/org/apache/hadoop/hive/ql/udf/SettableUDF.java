@@ -27,27 +27,38 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
+name|hive
 operator|.
-name|Text
+name|ql
+operator|.
+name|exec
+operator|.
+name|UDFArgumentException
 import|;
 end_import
 
 begin_comment
-comment|/**  * Interface to support use of standard UDFs inside the vectorized execution code path.  */
+comment|/**  * THIS INTERFACE IS UNSTABLE AND SHOULD NOT BE USED BY 3RD PARTY UDFS.  * Interface to allow passing of parameters to the UDF, before it is initialized.  * For example, to be able to pass the char length parameters to a char type cast.  */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|IUDFUnaryString
+name|SettableUDF
 block|{
-name|Text
-name|evaluate
+comment|/**    * Add data to UDF prior to initialization.    * An exception may be thrown if the UDF doesn't know what to do with this data.    * @param params UDF-specific data to add to the UDF    */
+name|void
+name|setParams
 parameter_list|(
-name|Text
-name|s
+name|Object
+name|params
 parameter_list|)
+throws|throws
+name|UDFArgumentException
+function_decl|;
+name|Object
+name|getParams
+parameter_list|()
 function_decl|;
 block|}
 end_interface

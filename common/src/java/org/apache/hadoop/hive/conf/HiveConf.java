@@ -924,6 +924,13 @@ literal|"user.name"
 argument_list|)
 argument_list|)
 block|,
+name|SCRATCHDIRPERMISSION
+argument_list|(
+literal|"hive.scratch.dir.permission"
+argument_list|,
+literal|"700"
+argument_list|)
+block|,
 name|SUBMITVIACHILD
 argument_list|(
 literal|"hive.exec.submitviachild"
@@ -3568,7 +3575,7 @@ name|HIVE_SERVER2_TABLE_TYPE_MAPPING
 argument_list|(
 literal|"hive.server2.table.type.mapping"
 argument_list|,
-literal|"HIVE"
+literal|"CLASSIC"
 argument_list|)
 block|,
 name|HIVE_SERVER2_SESSION_HOOK

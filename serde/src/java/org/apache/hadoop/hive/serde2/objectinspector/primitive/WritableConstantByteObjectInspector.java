@@ -74,6 +74,14 @@ specifier|private
 name|ByteWritable
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantByteObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantByteObjectInspector
 parameter_list|(
 name|ByteWritable

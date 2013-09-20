@@ -70,6 +70,14 @@ specifier|private
 name|LongWritable
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantLongObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantLongObjectInspector
 parameter_list|(
 name|LongWritable

@@ -1702,15 +1702,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|cmdLine
-operator|=
-name|secureDoAs
-operator|.
-name|addArg
-argument_list|(
-name|cmdLine
-argument_list|)
-expr_stmt|;
 name|secureDoAs
 operator|.
 name|addEnv
@@ -1945,13 +1936,6 @@ operator|.
 name|info
 argument_list|(
 literal|"Execution completed successfully"
-argument_list|)
-expr_stmt|;
-name|console
-operator|.
-name|printInfo
-argument_list|(
-literal|"Mapred Local Task Succeeded . Convert the Join into MapJoin"
 argument_list|)
 expr_stmt|;
 block|}

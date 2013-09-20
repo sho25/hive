@@ -148,7 +148,6 @@ name|boolean
 name|isVirtualCol
 decl_stmt|;
 specifier|private
-specifier|transient
 name|ObjectInspector
 name|objectInspector
 decl_stmt|;

@@ -61,6 +61,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveStorageHandler
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|Deserializer
@@ -349,7 +367,7 @@ decl_stmt|;
 comment|/** The storage handler used */
 specifier|private
 specifier|final
-name|HCatStorageHandler
+name|HiveStorageHandler
 name|storageHandler
 decl_stmt|;
 specifier|private
@@ -381,7 +399,7 @@ comment|/**    * Instantiates a new hcat record reader.    */
 specifier|public
 name|HCatRecordReader
 parameter_list|(
-name|HCatStorageHandler
+name|HiveStorageHandler
 name|storageHandler
 parameter_list|,
 name|Map
@@ -536,7 +554,7 @@ parameter_list|(
 name|HCatSplit
 name|hcatSplit
 parameter_list|,
-name|HCatStorageHandler
+name|HiveStorageHandler
 name|storageHandler
 parameter_list|,
 name|TaskAttemptContext
@@ -621,7 +639,7 @@ parameter_list|(
 name|HCatSplit
 name|hcatSplit
 parameter_list|,
-name|HCatStorageHandler
+name|HiveStorageHandler
 name|storageHandler
 parameter_list|,
 name|TaskAttemptContext

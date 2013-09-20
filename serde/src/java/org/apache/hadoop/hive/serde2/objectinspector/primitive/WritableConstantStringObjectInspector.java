@@ -70,6 +70,14 @@ specifier|private
 name|Text
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantStringObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantStringObjectInspector
 parameter_list|(
 name|Text

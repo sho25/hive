@@ -568,6 +568,19 @@ argument_list|,
 name|V
 argument_list|>
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|CLASS_NAME
+init|=
+name|CombineHiveInputFormat
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
@@ -578,7 +591,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"org.apache.hadoop.hive.ql.io.CombineHiveInputFormat"
+name|CLASS_NAME
 argument_list|)
 decl_stmt|;
 comment|/**    * CombineHiveInputSplit encapsulates an InputSplit with its corresponding    * inputFormatClassName. A CombineHiveInputSplit comprises of multiple chunks    * from different files. Since, they belong to a single directory, there is a    * single inputformat for all the chunks.    */
@@ -1312,7 +1325,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -1397,7 +1410,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -1734,7 +1747,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -1856,7 +1869,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -1893,7 +1906,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -2291,7 +2304,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.

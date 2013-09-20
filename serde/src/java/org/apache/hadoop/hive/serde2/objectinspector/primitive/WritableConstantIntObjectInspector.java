@@ -70,6 +70,14 @@ specifier|private
 name|IntWritable
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantIntObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantIntObjectInspector
 parameter_list|(
 name|IntWritable

@@ -102,6 +102,14 @@ specifier|protected
 name|ObjectInspector
 name|fieldObjectInspector
 decl_stmt|;
+specifier|protected
+name|MyField
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 specifier|public
 name|MyField
 parameter_list|(

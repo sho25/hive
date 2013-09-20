@@ -74,6 +74,14 @@ specifier|private
 name|TimestampWritable
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantTimestampObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantTimestampObjectInspector
 parameter_list|(
 name|TimestampWritable

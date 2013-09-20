@@ -74,6 +74,14 @@ specifier|private
 name|DoubleWritable
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantDoubleObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantDoubleObjectInspector
 parameter_list|(
 name|DoubleWritable

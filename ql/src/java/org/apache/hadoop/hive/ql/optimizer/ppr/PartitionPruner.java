@@ -653,7 +653,20 @@ implements|implements
 name|Transform
 block|{
 comment|// The log
-specifier|private
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|CLASS_NAME
+init|=
+name|PartitionPruner
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+specifier|public
 specifier|static
 specifier|final
 name|Log
@@ -663,7 +676,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-literal|"hive.ql.optimizer.ppr.PartitionPruner"
+name|CLASS_NAME
 argument_list|)
 decl_stmt|;
 comment|/*    * (non-Javadoc)    *    * @see    * org.apache.hadoop.hive.ql.optimizer.Transform#transform(org.apache.hadoop    * .hive.ql.parse.ParseContext)    */
@@ -1828,7 +1841,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -1908,7 +1921,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -1919,7 +1932,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -1957,7 +1970,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.

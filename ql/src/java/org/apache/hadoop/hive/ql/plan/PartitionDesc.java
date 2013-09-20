@@ -457,6 +457,8 @@ operator|.
 name|getOutputFormatSubstitute
 argument_list|(
 name|outputFormat
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -1045,6 +1047,8 @@ operator|.
 name|getOutputFormatSubstitute
 argument_list|(
 name|outputFileFormatClass
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

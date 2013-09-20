@@ -57,6 +57,14 @@ name|AbstractPrimitiveObjectInspector
 block|{
 specifier|protected
 name|AbstractPrimitiveWritableObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
+specifier|protected
+name|AbstractPrimitiveWritableObjectInspector
 parameter_list|(
 name|PrimitiveTypeEntry
 name|typeEntry

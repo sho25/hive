@@ -596,12 +596,10 @@ decl_stmt|;
 comment|// sampling on task running
 comment|// the following two are used for join processing
 specifier|private
-specifier|transient
 name|QBJoinTree
 name|joinTree
 decl_stmt|;
 specifier|private
-specifier|transient
 name|LinkedHashMap
 argument_list|<
 name|Operator

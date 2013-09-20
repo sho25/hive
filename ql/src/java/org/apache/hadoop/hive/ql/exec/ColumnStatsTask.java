@@ -293,22 +293,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Context
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|DriverContext
 import|;
 end_import
@@ -379,7 +363,9 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|FetchWork
+name|api
+operator|.
+name|StageType
 import|;
 end_import
 
@@ -395,11 +381,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|session
 operator|.
-name|api
-operator|.
-name|StageType
+name|SessionState
 import|;
 end_import
 
@@ -2073,7 +2057,10 @@ block|}
 name|String
 name|dbName
 init|=
-name|db
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()

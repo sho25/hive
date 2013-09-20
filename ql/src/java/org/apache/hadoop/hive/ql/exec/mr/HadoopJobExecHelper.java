@@ -2709,7 +2709,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Mapred Local Task Succeeded . Convert the Join into MapJoin"
+literal|"MapredLocal task succeeded"
 argument_list|)
 expr_stmt|;
 block|}

@@ -4606,12 +4606,16 @@ return|return
 literal|""
 return|;
 block|}
+comment|//BUG: This will not work in remote mode - HIVE-5153
 name|String
 name|currDb
 init|=
-name|ss
+name|SessionState
 operator|.
-name|getCurrentDbName
+name|get
+argument_list|()
+operator|.
+name|getCurrentDatabase
 argument_list|()
 decl_stmt|;
 if|if

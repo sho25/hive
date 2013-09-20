@@ -171,6 +171,11 @@ operator|!=
 name|newConf
 condition|)
 block|{
+synchronized|synchronized
+init|(
+name|conf
+init|)
+block|{
 for|for
 control|(
 name|Map
@@ -230,6 +235,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|conf

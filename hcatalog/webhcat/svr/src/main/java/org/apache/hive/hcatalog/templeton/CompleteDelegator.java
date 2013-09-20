@@ -214,7 +214,9 @@ literal|null
 condition|)
 name|failed
 argument_list|(
-literal|"Job not yet complete"
+literal|"Job not yet complete. jobId="
+operator|+
+name|id
 argument_list|,
 literal|null
 argument_list|)
@@ -236,15 +238,16 @@ condition|)
 return|return
 name|acceptWithError
 argument_list|(
-literal|"Callback already run on "
+literal|"Callback already run for jobId="
+operator|+
+name|id
+operator|+
+literal|" at "
 operator|+
 operator|new
 name|Date
 argument_list|(
 name|notified
-operator|.
-name|longValue
-argument_list|()
 argument_list|)
 argument_list|)
 return|;

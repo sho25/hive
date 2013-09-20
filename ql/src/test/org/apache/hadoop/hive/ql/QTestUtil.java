@@ -2925,7 +2925,10 @@ name|getAllDatabases
 argument_list|()
 control|)
 block|{
-name|db
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|setCurrentDatabase
 argument_list|(
@@ -3080,7 +3083,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|Hive
+name|SessionState
 operator|.
 name|get
 argument_list|()
@@ -3810,7 +3813,10 @@ init|=
 operator|new
 name|Table
 argument_list|(
-name|db
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()

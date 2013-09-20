@@ -1491,6 +1491,19 @@ block|{
 specifier|static
 specifier|final
 specifier|private
+name|String
+name|CLASS_NAME
+init|=
+name|Driver
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+specifier|static
+specifier|final
+specifier|private
 name|Log
 name|LOG
 init|=
@@ -1498,12 +1511,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|Driver
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
+name|CLASS_NAME
 argument_list|)
 decl_stmt|;
 specifier|static
@@ -2718,7 +2726,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -2813,7 +2821,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -2852,7 +2860,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -2863,7 +2871,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -3010,7 +3018,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -3213,7 +3221,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -3260,7 +3268,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -3423,7 +3431,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -3534,7 +3542,10 @@ name|db
 operator|.
 name|getDatabase
 argument_list|(
-name|db
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()
@@ -3593,7 +3604,10 @@ name|db
 operator|.
 name|getDatabase
 argument_list|(
-name|db
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()
@@ -5083,7 +5097,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -5400,17 +5414,16 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Lock the database also
-try|try
-block|{
-name|Hive
-name|db
+name|String
+name|currentDb
 init|=
-name|Hive
+name|SessionState
 operator|.
 name|get
-argument_list|(
-name|conf
-argument_list|)
+argument_list|()
+operator|.
+name|getCurrentDatabase
+argument_list|()
 decl_stmt|;
 name|lockObjects
 operator|.
@@ -5422,10 +5435,7 @@ argument_list|(
 operator|new
 name|HiveLockObject
 argument_list|(
-name|db
-operator|.
-name|getCurrentDatabase
-argument_list|()
+name|currentDb
 argument_list|,
 name|lockData
 argument_list|)
@@ -5436,24 +5446,6 @@ name|SHARED
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|HiveException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|e
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-throw|;
-block|}
 name|List
 argument_list|<
 name|HiveLock
@@ -5636,7 +5628,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -5669,7 +5661,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -5705,7 +5697,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -6197,7 +6189,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -6208,7 +6200,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -6507,7 +6499,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -6842,7 +6834,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7080,7 +7072,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7111,7 +7103,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7139,7 +7131,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7193,7 +7185,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7476,7 +7468,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7487,7 +7479,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7547,7 +7539,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7623,7 +7615,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7812,7 +7804,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -7843,7 +7835,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -8015,7 +8007,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -8131,7 +8123,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -8162,7 +8154,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -8190,7 +8182,7 @@ name|perfLogger
 operator|.
 name|PerfLogBegin
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -8266,7 +8258,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.
@@ -8487,7 +8479,7 @@ name|perfLogger
 operator|.
 name|PerfLogEnd
 argument_list|(
-name|LOG
+name|CLASS_NAME
 argument_list|,
 name|PerfLogger
 operator|.

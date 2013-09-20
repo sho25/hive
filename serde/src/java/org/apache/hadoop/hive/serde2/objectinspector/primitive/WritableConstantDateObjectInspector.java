@@ -74,6 +74,14 @@ specifier|private
 name|DateWritable
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantDateObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantDateObjectInspector
 parameter_list|(
 name|DateWritable

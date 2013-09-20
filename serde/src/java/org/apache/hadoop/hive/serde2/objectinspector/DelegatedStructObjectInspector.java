@@ -57,6 +57,14 @@ name|DelegatedStructField
 argument_list|>
 name|fields
 decl_stmt|;
+specifier|protected
+name|DelegatedStructObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 specifier|public
 name|DelegatedStructObjectInspector
 parameter_list|(
@@ -195,6 +203,8 @@ argument_list|()
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -282,6 +292,8 @@ operator|=
 name|delegate
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|StructField
 name|getStructFieldRef
@@ -314,6 +326,8 @@ name|field
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|getStructFieldData
@@ -343,6 +357,8 @@ name|field
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
