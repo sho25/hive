@@ -95,6 +95,7 @@ name|byte
 index|[]
 name|value
 decl_stmt|;
+specifier|public
 name|StringConcatScalarCol
 parameter_list|(
 name|byte
