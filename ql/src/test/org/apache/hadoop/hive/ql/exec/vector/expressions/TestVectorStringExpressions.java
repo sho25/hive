@@ -7239,7 +7239,7 @@ name|StringSubstrColStart
 argument_list|(
 literal|0
 argument_list|,
-literal|5
+literal|6
 argument_list|,
 literal|1
 argument_list|)
@@ -7441,7 +7441,7 @@ operator|=
 literal|true
 expr_stmt|;
 comment|// Testing negative substring index.
-comment|// For a string with length 11, start idx 5 should yield same results as -6
+comment|// Start index -6 should yield the last 6 characters of the string
 name|expr
 operator|=
 operator|new
@@ -7638,7 +7638,7 @@ name|isRepeating
 operator|=
 literal|true
 expr_stmt|;
-comment|// Testing substring starting from index 0
+comment|// Testing substring starting from index 1
 name|expr
 operator|=
 operator|new
@@ -7646,7 +7646,7 @@ name|StringSubstrColStart
 argument_list|(
 literal|0
 argument_list|,
-literal|0
+literal|1
 argument_list|,
 literal|1
 argument_list|)
@@ -7830,7 +7830,7 @@ name|StringSubstrColStart
 argument_list|(
 literal|0
 argument_list|,
-literal|5
+literal|6
 argument_list|,
 literal|1
 argument_list|)
@@ -8205,7 +8205,7 @@ name|StringSubstrColStart
 argument_list|(
 literal|0
 argument_list|,
-literal|2
+literal|3
 argument_list|,
 literal|1
 argument_list|)
@@ -8314,6 +8314,7 @@ name|noNulls
 operator|=
 literal|true
 expr_stmt|;
+comment|// string is 2 chars long (a 3 byte and a 4 byte char)
 name|v
 operator|.
 name|setRef
@@ -8324,7 +8325,7 @@ name|multiByte
 argument_list|,
 literal|3
 argument_list|,
-literal|10
+literal|7
 argument_list|)
 expr_stmt|;
 name|batch
@@ -8376,7 +8377,7 @@ name|StringSubstrColStart
 argument_list|(
 literal|0
 argument_list|,
-literal|1
+literal|2
 argument_list|,
 literal|1
 argument_list|)
@@ -8416,15 +8417,12 @@ name|StringExpr
 operator|.
 name|compare
 argument_list|(
-comment|// Since references starts at index 3 (2nd char), substring with start idx 1
-comment|// will start at the 3rd char which starts at index 6
+comment|// the result is the last 1 character, which occupies 4 bytes
 name|multiByte
 argument_list|,
 literal|6
 argument_list|,
-literal|10
-operator|-
-literal|6
+literal|4
 argument_list|,
 name|outCol
 operator|.
@@ -8638,7 +8636,7 @@ name|StringSubstrColStartLen
 argument_list|(
 literal|0
 argument_list|,
-literal|5
+literal|6
 argument_list|,
 literal|6
 argument_list|,
@@ -9246,7 +9244,7 @@ name|StringSubstrColStartLen
 argument_list|(
 literal|0
 argument_list|,
-literal|5
+literal|6
 argument_list|,
 literal|10
 argument_list|,
@@ -9813,7 +9811,7 @@ name|StringSubstrColStartLen
 argument_list|(
 literal|0
 argument_list|,
-literal|2
+literal|3
 argument_list|,
 literal|2
 argument_list|,
@@ -9979,7 +9977,7 @@ name|StringSubstrColStartLen
 argument_list|(
 literal|0
 argument_list|,
-literal|1
+literal|2
 argument_list|,
 literal|2
 argument_list|,
