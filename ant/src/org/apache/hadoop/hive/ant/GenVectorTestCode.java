@@ -13,13 +13,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|gen
+name|ant
 package|;
 end_package
 
@@ -44,13 +38,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * TestCodeGen.  * This class is mutable and maintains a hashmap of TestSuiteClassName to test cases.  * The tests cases are added over the course of vectorized expressions class generation,  * with test classes being outputted at the end. For each column vector (inputs and/or outputs)  * a matrix of pairwise covering Booleans is used to generate test cases across nulls and  * repeating dimensions. Based on the input column vector(s) nulls and repeating states  * the states of the output column vector (if there is one) is validated, along with the null  * vector. For filter operations the selection vector is validated against the generated  * data. Each template corresponds to a class representing a test suite.  */
+comment|/**  *  * GenVectorTestCode.  * This class is mutable and maintains a hashmap of TestSuiteClassName to test cases.  * The tests cases are added over the course of vectorized expressions class generation,  * with test classes being outputted at the end. For each column vector (inputs and/or outputs)  * a matrix of pairwise covering Booleans is used to generate test cases across nulls and  * repeating dimensions. Based on the input column vector(s) nulls and repeating states  * the states of the output column vector (if there is one) is validated, along with the null  * vector. For filter operations the selection vector is validated against the generated  * data. Each template corresponds to a class representing a test suite.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|TestCodeGen
+name|GenVectorTestCode
 block|{
 specifier|public
 enum|enum
@@ -85,7 +79,7 @@ argument_list|>
 name|testsuites
 decl_stmt|;
 specifier|public
-name|TestCodeGen
+name|GenVectorTestCode
 parameter_list|(
 name|String
 name|testOutputDir
@@ -174,7 +168,7 @@ comment|//Read the template into a string;
 name|String
 name|templateFile
 init|=
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|joinPath
 argument_list|(
@@ -195,7 +189,7 @@ name|templateString
 init|=
 name|removeTemplateComments
 argument_list|(
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|readFile
 argument_list|(
@@ -367,7 +361,7 @@ name|replaceAll
 argument_list|(
 literal|"<CamelCaseScalarType>"
 argument_list|,
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|getCamelCaseType
 argument_list|(
@@ -521,7 +515,7 @@ comment|//Read the template into a string;
 name|String
 name|templateFile
 init|=
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|joinPath
 argument_list|(
@@ -542,7 +536,7 @@ name|templateString
 init|=
 name|removeTemplateComments
 argument_list|(
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|readFile
 argument_list|(
@@ -662,7 +656,7 @@ name|replaceAll
 argument_list|(
 literal|"<CamelCaseScalarType>"
 argument_list|,
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|getCamelCaseType
 argument_list|(
@@ -812,7 +806,7 @@ comment|//Read the template into a string;
 name|String
 name|templateFile
 init|=
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|joinPath
 argument_list|(
@@ -833,7 +827,7 @@ name|templateString
 init|=
 name|removeTemplateComments
 argument_list|(
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|readFile
 argument_list|(
@@ -1193,7 +1187,7 @@ comment|//Read the template into a string;
 name|String
 name|templateFile
 init|=
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|joinPath
 argument_list|(
@@ -1214,7 +1208,7 @@ name|templateString
 init|=
 name|removeTemplateComments
 argument_list|(
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|readFile
 argument_list|(
@@ -1470,7 +1464,7 @@ block|{
 name|String
 name|templateFile
 init|=
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|joinPath
 argument_list|(
@@ -1495,7 +1489,7 @@ block|{
 name|String
 name|templateString
 init|=
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|readFile
 argument_list|(
@@ -1538,7 +1532,7 @@ expr_stmt|;
 name|String
 name|outputFile
 init|=
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|joinPath
 argument_list|(
@@ -1551,7 +1545,7 @@ operator|+
 literal|".java"
 argument_list|)
 decl_stmt|;
-name|CodeGen
+name|GenVectorCode
 operator|.
 name|writeFile
 argument_list|(
