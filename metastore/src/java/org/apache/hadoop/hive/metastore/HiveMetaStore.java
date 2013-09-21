@@ -3069,6 +3069,11 @@ operator|=
 name|newRawStore
 argument_list|()
 expr_stmt|;
+name|ms
+operator|.
+name|verifySchema
+argument_list|()
+expr_stmt|;
 name|threadLocalMS
 operator|.
 name|set
