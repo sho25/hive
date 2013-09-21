@@ -873,7 +873,11 @@ literal|" c18 decimal, "
 operator|+
 literal|" c19 binary, "
 operator|+
-literal|" c20 date) comment'"
+literal|" c20 date,"
+operator|+
+literal|" c21 varchar(20)"
+operator|+
+literal|") comment'"
 operator|+
 name|dataTypeTableComment
 operator|+
@@ -3113,6 +3117,18 @@ literal|20
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|21
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// row 2
 name|assertTrue
 argument_list|(
@@ -3389,6 +3405,18 @@ operator|.
 name|getDate
 argument_list|(
 literal|20
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|21
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3672,6 +3700,18 @@ argument_list|)
 operator|.
 name|toString
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"abc123"
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|21
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// test getBoolean rules on non-boolean columns
@@ -6315,7 +6355,7 @@ name|executeQuery
 argument_list|(
 literal|"select c1, c2, c3, c4, c5 as a, c6, c7, c8, c9, c10, c11, c12, "
 operator|+
-literal|"c1*2, sentences(null, null, null) as b, c17, c18, c20 from "
+literal|"c1*2, sentences(null, null, null) as b, c17, c18, c20, c21 from "
 operator|+
 name|dataTypeTableName
 operator|+
@@ -6354,7 +6394,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|17
+literal|18
 argument_list|,
 name|meta
 operator|.
@@ -8490,6 +8530,81 @@ operator|.
 name|getScale
 argument_list|(
 literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"c21"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|Types
+operator|.
+name|VARCHAR
+argument_list|,
+name|meta
+operator|.
+name|getColumnType
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"varchar"
+argument_list|,
+name|meta
+operator|.
+name|getColumnTypeName
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// varchar columns should have correct display size/precision
+name|assertEquals
+argument_list|(
+literal|20
+argument_list|,
+name|meta
+operator|.
+name|getColumnDisplaySize
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|20
+argument_list|,
+name|meta
+operator|.
+name|getPrecision
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|0
+argument_list|,
+name|meta
+operator|.
+name|getScale
+argument_list|(
+literal|18
 argument_list|)
 argument_list|)
 expr_stmt|;

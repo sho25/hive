@@ -4042,7 +4042,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list116
+name|_list126
 init|=
 name|iprot
 operator|.
@@ -4059,7 +4059,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
-name|_list116
+name|_list126
 operator|.
 name|size
 argument_list|)
@@ -4067,25 +4067,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i117
+name|_i127
 init|=
 literal|0
 init|;
-name|_i117
+name|_i127
 operator|<
-name|_list116
+name|_list126
 operator|.
 name|size
 condition|;
 operator|++
-name|_i117
+name|_i127
 control|)
 block|{
 name|String
-name|_elem118
+name|_elem128
 decl_stmt|;
-comment|// required
-name|_elem118
+comment|// optional
+name|_elem128
 operator|=
 name|iprot
 operator|.
@@ -4098,7 +4098,7 @@ name|infoMessages
 operator|.
 name|add
 argument_list|(
-name|_elem118
+name|_elem128
 argument_list|)
 expr_stmt|;
 block|}
@@ -4503,7 +4503,7 @@ expr_stmt|;
 for|for
 control|(
 name|String
-name|_iter119
+name|_iter129
 range|:
 name|struct
 operator|.
@@ -4514,7 +4514,7 @@ name|oprot
 operator|.
 name|writeString
 argument_list|(
-name|_iter119
+name|_iter129
 argument_list|)
 expr_stmt|;
 block|}
@@ -4835,7 +4835,7 @@ expr_stmt|;
 for|for
 control|(
 name|String
-name|_iter120
+name|_iter130
 range|:
 name|struct
 operator|.
@@ -4846,7 +4846,7 @@ name|oprot
 operator|.
 name|writeString
 argument_list|(
-name|_iter120
+name|_iter130
 argument_list|)
 expr_stmt|;
 block|}
@@ -4995,7 +4995,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list121
+name|_list131
 init|=
 operator|new
 name|org
@@ -5036,7 +5036,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
-name|_list121
+name|_list131
 operator|.
 name|size
 argument_list|)
@@ -5044,25 +5044,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i122
+name|_i132
 init|=
 literal|0
 init|;
-name|_i122
+name|_i132
 operator|<
-name|_list121
+name|_list131
 operator|.
 name|size
 condition|;
 operator|++
-name|_i122
+name|_i132
 control|)
 block|{
 name|String
-name|_elem123
+name|_elem133
 decl_stmt|;
-comment|// required
-name|_elem123
+comment|// optional
+name|_elem133
 operator|=
 name|iprot
 operator|.
@@ -5075,7 +5075,7 @@ name|infoMessages
 operator|.
 name|add
 argument_list|(
-name|_elem123
+name|_elem133
 argument_list|)
 expr_stmt|;
 block|}

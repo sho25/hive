@@ -779,7 +779,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// add supported protocols: V1 and V2 supported
+comment|// add supported protocols
 name|supportedProtocols
 operator|.
 name|add
@@ -796,6 +796,15 @@ argument_list|(
 name|TProtocolVersion
 operator|.
 name|HIVE_CLI_SERVICE_PROTOCOL_V2
+argument_list|)
+expr_stmt|;
+name|supportedProtocols
+operator|.
+name|add
+argument_list|(
+name|TProtocolVersion
+operator|.
+name|HIVE_CLI_SERVICE_PROTOCOL_V3
 argument_list|)
 expr_stmt|;
 comment|// open client session
