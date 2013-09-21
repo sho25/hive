@@ -873,7 +873,11 @@ literal|" c18 decimal, "
 operator|+
 literal|" c19 binary, "
 operator|+
-literal|" c20 date) comment'"
+literal|" c20 date,"
+operator|+
+literal|" c21 varchar(20)"
+operator|+
+literal|") comment'"
 operator|+
 name|dataTypeTableComment
 operator|+
@@ -2507,9 +2511,6 @@ decl_stmt|;
 name|String
 name|testQuery
 decl_stmt|;
-name|boolean
-name|hasResultSet
-decl_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -2651,6 +2652,140 @@ name|stmt
 operator|.
 name|close
 argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|testCloseResultSet
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|Statement
+name|stmt
+init|=
+name|con
+operator|.
+name|createStatement
+argument_list|()
+decl_stmt|;
+comment|// execute query, ignore exception if any
+name|ResultSet
+name|res
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"select * from "
+operator|+
+name|tableName
+argument_list|)
+decl_stmt|;
+comment|// close ResultSet, ignore exception if any
+name|res
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+comment|// A statement should be open even after ResultSet#close
+name|assertFalse
+argument_list|(
+name|stmt
+operator|.
+name|isClosed
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// A Statement#cancel after ResultSet#close should be a no-op
+try|try
+block|{
+name|stmt
+operator|.
+name|cancel
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|failWithExceptionMsg
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|stmt
+operator|=
+name|con
+operator|.
+name|createStatement
+argument_list|()
+expr_stmt|;
+comment|// execute query, ignore exception if any
+name|res
+operator|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"select * from "
+operator|+
+name|tableName
+argument_list|)
+expr_stmt|;
+comment|// close ResultSet, ignore exception if any
+name|res
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+comment|// A Statement#execute after ResultSet#close should be fine too
+try|try
+block|{
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"select * from "
+operator|+
+name|tableName
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|failWithExceptionMsg
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+comment|// A Statement#close after ResultSet#close should close the statement
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|stmt
+operator|.
+name|isClosed
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -2982,6 +3117,18 @@ literal|20
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|21
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// row 2
 name|assertTrue
 argument_list|(
@@ -3258,6 +3405,18 @@ operator|.
 name|getDate
 argument_list|(
 literal|20
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|21
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3541,6 +3700,18 @@ argument_list|)
 operator|.
 name|toString
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"abc123"
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|21
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// test getBoolean rules on non-boolean columns
@@ -5900,7 +6071,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*   public void testConversionsBaseResultSet() throws SQLException {     ResultSet rs = new HiveMetaDataResultSet(Arrays.asList("key")             , Arrays.asList("long")             , Arrays.asList(1234, "1234", "abc")) {       private int cnt=1;       public boolean next() throws SQLException {         if (cnt<data.size()) {           row = Arrays.asList(data.get(cnt));           cnt++;           return true;         } else {           return false;         }       }     };      while (rs.next()) {       String key = rs.getString("key");       if ("1234".equals(key)) {         assertEquals("Converting a string column into a long failed.", rs.getLong("key"), 1234L);         assertEquals("Converting a string column into a int failed.", rs.getInt("key"), 1234);       } else if ("abc".equals(key)) {         Object result = null;         Exception expectedException = null;         try {           result = rs.getLong("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a long should not work.", expectedException!=null);         try {           result = rs.getInt("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a int should not work.", expectedException!=null);       }     }   }   */
+comment|/*   public void testConversionsBaseResultSet() throws SQLException {     ResultSet rs = new HiveMetaDataResultSet(Arrays.asList("key")             , Arrays.asList("long")             , Arrays.asList(1234, "1234", "abc")) {       private int cnt=1;       public boolean next() throws SQLException {         if (cnt<data.size()) {           row = Arrays.asList(data.get(cnt));           cnt++;           return true;         } else {           return false;         }       }     };      while (rs.next()) {       String key = rs.getString("key");       if ("1234".equals(key)) {         assertEquals("Converting a string column into a long failed.", rs.getLong("key"), 1234L);         assertEquals("Converting a string column into a int failed.", rs.getInt("key"), 1234);       } else if ("abc".equals(key)) {         Object result = null;         Exception expectedException = null;         try {           result = rs.getLong("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a long should not work.", expectedException!=null);         try {           result = rs.getInt("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a int should not work.", expectedException!=null);       }     }   }    */
 specifier|public
 name|void
 name|testDescribeTable
@@ -6184,7 +6355,7 @@ name|executeQuery
 argument_list|(
 literal|"select c1, c2, c3, c4, c5 as a, c6, c7, c8, c9, c10, c11, c12, "
 operator|+
-literal|"c1*2, sentences(null, null, null) as b, c17, c18, c20 from "
+literal|"c1*2, sentences(null, null, null) as b, c17, c18, c20, c21 from "
 operator|+
 name|dataTypeTableName
 operator|+
@@ -6223,7 +6394,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|17
+literal|18
 argument_list|,
 name|meta
 operator|.
@@ -8359,6 +8530,81 @@ operator|.
 name|getScale
 argument_list|(
 literal|17
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"c21"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|Types
+operator|.
+name|VARCHAR
+argument_list|,
+name|meta
+operator|.
+name|getColumnType
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"varchar"
+argument_list|,
+name|meta
+operator|.
+name|getColumnTypeName
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// varchar columns should have correct display size/precision
+name|assertEquals
+argument_list|(
+literal|20
+argument_list|,
+name|meta
+operator|.
+name|getColumnDisplaySize
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|20
+argument_list|,
+name|meta
+operator|.
+name|getPrecision
+argument_list|(
+literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|0
+argument_list|,
+name|meta
+operator|.
+name|getScale
+argument_list|(
+literal|18
 argument_list|)
 argument_list|)
 expr_stmt|;

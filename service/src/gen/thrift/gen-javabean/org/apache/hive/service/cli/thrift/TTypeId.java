@@ -153,6 +153,11 @@ name|DATE_TYPE
 argument_list|(
 literal|17
 argument_list|)
+block|,
+name|VARCHAR_TYPE
+argument_list|(
+literal|18
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -305,6 +310,12 @@ literal|17
 case|:
 return|return
 name|DATE_TYPE
+return|;
+case|case
+literal|18
+case|:
+return|return
+name|VARCHAR_TYPE
 return|;
 default|default:
 return|return

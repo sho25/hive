@@ -389,6 +389,13 @@ name|tableName
 expr_stmt|;
 block|}
 comment|/**    * @return location of partition in relation to table    */
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Location"
+argument_list|)
 specifier|public
 name|String
 name|getLocation
@@ -427,6 +434,25 @@ parameter_list|()
 block|{
 return|return
 name|partSpec
+return|;
+block|}
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Spec"
+argument_list|)
+specifier|public
+name|String
+name|getPartSpecString
+parameter_list|()
+block|{
+return|return
+name|partSpec
+operator|.
+name|toString
+argument_list|()
 return|;
 block|}
 comment|/**    * @param partSpec    *          partition specification    */
