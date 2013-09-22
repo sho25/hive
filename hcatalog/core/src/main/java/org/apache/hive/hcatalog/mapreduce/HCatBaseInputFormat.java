@@ -708,6 +708,7 @@ operator|.
 name|getFields
 argument_list|()
 control|)
+block|{
 name|allCols
 operator|.
 name|append
@@ -715,6 +716,7 @@ argument_list|(
 name|field
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|HCatFieldSchema
@@ -731,6 +733,7 @@ operator|.
 name|getFields
 argument_list|()
 control|)
+block|{
 name|allCols
 operator|.
 name|append
@@ -738,6 +741,7 @@ argument_list|(
 name|field
 argument_list|)
 expr_stmt|;
+block|}
 name|HCatUtil
 operator|.
 name|copyJobPropertiesToJobConf
@@ -1108,6 +1112,8 @@ name|vals
 return|;
 block|}
 comment|/**    * @see org.apache.hive.hcatalog.mapreduce.HCatBaseInputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)    * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}    */
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 name|HCatSchema
@@ -1179,6 +1185,7 @@ operator|.
 name|getFields
 argument_list|()
 control|)
+block|{
 name|allCols
 operator|.
 name|append
@@ -1186,6 +1193,7 @@ argument_list|(
 name|field
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|HCatFieldSchema
@@ -1202,6 +1210,7 @@ operator|.
 name|getFields
 argument_list|()
 control|)
+block|{
 name|allCols
 operator|.
 name|append
@@ -1209,6 +1218,7 @@ argument_list|(
 name|field
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|allCols
 return|;

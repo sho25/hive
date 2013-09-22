@@ -20,6 +20,90 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertArrayEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertSame
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -106,18 +190,6 @@ operator|.
 name|util
 operator|.
 name|Random
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|*
 import|;
 end_import
 
@@ -579,6 +651,20 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
+name|FileSplit
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|InputSplit
 import|;
 end_import
@@ -622,20 +708,6 @@ operator|.
 name|mapred
 operator|.
 name|Reporter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|FileSplit
 import|;
 end_import
 
@@ -717,6 +789,7 @@ name|tbl
 decl_stmt|;
 comment|// Data
 specifier|private
+specifier|final
 name|Writable
 index|[]
 name|expectedFieldsData
@@ -770,6 +843,7 @@ literal|null
 block|}
 decl_stmt|;
 specifier|private
+specifier|final
 name|Object
 index|[]
 name|expectedPartitalFieldsData
@@ -801,6 +875,7 @@ literal|null
 block|}
 decl_stmt|;
 specifier|private
+specifier|final
 name|BytesRefArrayWritable
 name|patialS
 init|=
@@ -832,6 +907,13 @@ operator|=
 operator|new
 name|Configuration
 argument_list|()
+expr_stmt|;
+name|ColumnProjectionUtils
+operator|.
+name|setReadAllColumns
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|fs
 operator|=
@@ -3913,7 +3995,7 @@ argument_list|()
 decl_stmt|;
 name|ColumnProjectionUtils
 operator|.
-name|setFullyReadColumns
+name|setReadAllColumns
 argument_list|(
 name|conf
 argument_list|)
@@ -4267,7 +4349,7 @@ argument_list|)
 expr_stmt|;
 name|ColumnProjectionUtils
 operator|.
-name|setReadColumnIDs
+name|appendReadColumns
 argument_list|(
 name|conf
 argument_list|,

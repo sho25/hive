@@ -2721,14 +2721,6 @@ literal|false
 argument_list|)
 block|,
 comment|// Optimizer
-name|HIVEOPTCP
-argument_list|(
-literal|"hive.optimize.cp"
-argument_list|,
-literal|true
-argument_list|)
-block|,
-comment|// column pruner
 name|HIVEOPTINDEXFILTER
 argument_list|(
 literal|"hive.optimize.index.filter"

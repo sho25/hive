@@ -20,6 +20,18 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -224,18 +236,6 @@ operator|.
 name|compress
 operator|.
 name|DefaultCodec
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|*
 import|;
 end_import
 
@@ -1776,7 +1776,7 @@ argument_list|)
 expr_stmt|;
 name|ColumnProjectionUtils
 operator|.
-name|setReadColumnIDs
+name|appendReadColumns
 argument_list|(
 name|conf
 argument_list|,
@@ -2001,7 +2001,7 @@ argument_list|)
 expr_stmt|;
 name|ColumnProjectionUtils
 operator|.
-name|setReadColumnIDs
+name|appendReadColumns
 argument_list|(
 name|conf
 argument_list|,
@@ -2204,7 +2204,7 @@ literal|0
 decl_stmt|;
 name|ColumnProjectionUtils
 operator|.
-name|setFullyReadColumns
+name|setReadAllColumns
 argument_list|(
 name|conf
 argument_list|)
