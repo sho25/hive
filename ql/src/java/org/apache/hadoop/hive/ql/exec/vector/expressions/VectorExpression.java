@@ -88,7 +88,7 @@ name|void
 name|evaluate
 parameter_list|(
 name|VectorizedRowBatch
-name|vrg
+name|batch
 parameter_list|)
 function_decl|;
 comment|/**    * Returns the index of the output column in the array    * of column vectors. If not applicable, -1 is returned.    * @return Index of the output column    */
