@@ -388,19 +388,9 @@ name|inputFormatClassName
 argument_list|)
 throw|;
 block|}
-comment|// clone a jobConf for setting needed columns for reading
-name|JobConf
-name|cloneJobConf
-init|=
-operator|new
-name|JobConf
-argument_list|(
-name|job
-argument_list|)
-decl_stmt|;
 name|pushProjectionsAndFilters
 argument_list|(
-name|cloneJobConf
+name|job
 argument_list|,
 name|inputFormatClass
 argument_list|,
@@ -431,7 +421,7 @@ name|getInputFormatFromCache
 argument_list|(
 name|inputFormatClass
 argument_list|,
-name|cloneJobConf
+name|job
 argument_list|)
 decl_stmt|;
 name|BucketizedHiveRecordReader
@@ -449,7 +439,7 @@ name|inputFormat
 argument_list|,
 name|hsplit
 argument_list|,
-name|cloneJobConf
+name|job
 argument_list|,
 name|reporter
 argument_list|)
@@ -460,7 +450,7 @@ name|initIOContext
 argument_list|(
 name|hsplit
 argument_list|,
-name|cloneJobConf
+name|job
 argument_list|,
 name|inputFormatClass
 argument_list|)

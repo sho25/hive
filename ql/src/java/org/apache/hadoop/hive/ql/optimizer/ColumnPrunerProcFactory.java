@@ -2150,11 +2150,11 @@ argument_list|,
 name|cols
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Integer
 argument_list|>
-name|needed_columns
+name|neededColumnIds
 init|=
 operator|new
 name|ArrayList
@@ -2399,7 +2399,7 @@ literal|0
 condition|)
 block|{
 comment|// get the needed columns by id and name
-name|needed_columns
+name|neededColumnIds
 operator|.
 name|add
 argument_list|(
@@ -2431,7 +2431,7 @@ name|scanOp
 operator|.
 name|setNeededColumnIDs
 argument_list|(
-name|needed_columns
+name|neededColumnIds
 argument_list|)
 expr_stmt|;
 name|scanOp

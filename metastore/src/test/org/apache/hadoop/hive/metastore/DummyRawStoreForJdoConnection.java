@@ -2381,6 +2381,43 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|verifySchema
+parameter_list|()
+throws|throws
+name|MetaException
+block|{   }
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getMetaStoreSchemaVersion
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+return|return
+literal|null
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|setMetaStoreSchemaVersion
+parameter_list|(
+name|String
+name|version
+parameter_list|,
+name|String
+name|comment
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
 block|}
 end_class
 
