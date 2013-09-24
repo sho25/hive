@@ -139,6 +139,12 @@ name|callback
 parameter_list|,
 name|String
 name|completedUrl
+parameter_list|,
+name|boolean
+name|enableLog
+parameter_list|,
+name|JobType
+name|jobType
 parameter_list|)
 throws|throws
 name|NotAuthorizedException
@@ -216,6 +222,10 @@ argument_list|,
 name|callback
 argument_list|,
 name|completedUrl
+argument_list|,
+name|enableLog
+argument_list|,
+name|jobType
 argument_list|)
 return|;
 block|}
