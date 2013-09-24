@@ -180,6 +180,12 @@ name|callback
 parameter_list|,
 name|String
 name|completedUrl
+parameter_list|,
+name|boolean
+name|enablelog
+parameter_list|,
+name|JobType
+name|jobType
 parameter_list|)
 throws|throws
 name|NotAuthorizedException
@@ -223,6 +229,10 @@ argument_list|,
 name|statusdir
 argument_list|,
 name|completedUrl
+argument_list|,
+name|enablelog
+argument_list|,
+name|jobType
 argument_list|)
 decl_stmt|;
 return|return
@@ -272,6 +282,12 @@ name|statusdir
 parameter_list|,
 name|String
 name|completedUrl
+parameter_list|,
+name|boolean
+name|enablelog
+parameter_list|,
+name|JobType
+name|jobType
 parameter_list|)
 throws|throws
 name|BadParam
@@ -334,6 +350,10 @@ argument_list|,
 name|completedUrl
 argument_list|,
 name|allFiles
+argument_list|,
+name|enablelog
+argument_list|,
+name|jobType
 argument_list|)
 argument_list|)
 expr_stmt|;

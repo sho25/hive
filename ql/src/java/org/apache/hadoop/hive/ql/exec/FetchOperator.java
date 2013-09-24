@@ -2251,6 +2251,26 @@ block|}
 block|}
 block|}
 block|}
+comment|/**    * A cache of Object Inspector Settable Properties.    */
+specifier|private
+specifier|static
+name|Map
+argument_list|<
+name|ObjectInspector
+argument_list|,
+name|Boolean
+argument_list|>
+name|oiSettableProperties
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|ObjectInspector
+argument_list|,
+name|Boolean
+argument_list|>
+argument_list|()
+decl_stmt|;
 specifier|private
 name|RecordReader
 argument_list|<
@@ -2593,7 +2613,7 @@ argument_list|()
 else|:
 name|partitionedTableOI
 argument_list|,
-literal|true
+name|oiSettableProperties
 argument_list|)
 decl_stmt|;
 name|partTblObjectInspectorConverter
@@ -3699,7 +3719,7 @@ argument_list|()
 argument_list|,
 name|tableOI
 argument_list|,
-literal|true
+name|oiSettableProperties
 argument_list|)
 expr_stmt|;
 if|if
