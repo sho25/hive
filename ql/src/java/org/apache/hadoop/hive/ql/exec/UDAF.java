@@ -24,6 +24,8 @@ comment|/**  * Base class for all User-defined Aggregation Function (UDAF) class
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|UDAF

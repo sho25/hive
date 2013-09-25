@@ -1618,7 +1618,7 @@ name|deserializerClassName
 init|=
 name|part
 operator|.
-name|getDeserializerClass
+name|getDeserializer
 argument_list|()
 operator|==
 literal|null
@@ -1627,7 +1627,10 @@ literal|null
 else|:
 name|part
 operator|.
-name|getDeserializerClass
+name|getDeserializer
+argument_list|()
+operator|.
+name|getClass
 argument_list|()
 operator|.
 name|getName

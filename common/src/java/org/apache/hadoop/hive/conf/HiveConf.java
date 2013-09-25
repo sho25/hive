@@ -1802,6 +1802,13 @@ argument_list|,
 literal|"org.datanucleus.api.jdo.JDOPersistenceManagerFactory"
 argument_list|)
 block|,
+name|METASTORE_EXPRESSION_PROXY_CLASS
+argument_list|(
+literal|"hive.metastore.expression.proxy"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.optimizer.ppr.PartitionExpressionForMetastore"
+argument_list|)
+block|,
 name|METASTORE_DETACH_ALL_ON_COMMIT
 argument_list|(
 literal|"javax.jdo.option.DetachAllOnCommit"

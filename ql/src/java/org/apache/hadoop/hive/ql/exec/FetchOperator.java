@@ -2529,10 +2529,7 @@ name|serde
 operator|=
 name|partDesc
 operator|.
-name|getDeserializerClass
-argument_list|()
-operator|.
-name|newInstance
+name|getDeserializer
 argument_list|()
 expr_stmt|;
 name|serde
@@ -3688,10 +3685,7 @@ name|partSerde
 init|=
 name|listPart
 operator|.
-name|getDeserializerClass
-argument_list|()
-operator|.
-name|newInstance
+name|getDeserializer
 argument_list|()
 decl_stmt|;
 name|partSerde

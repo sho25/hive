@@ -293,7 +293,7 @@ name|assertEquals
 argument_list|(
 name|PrimitiveGrouping
 operator|.
-name|UNKNOWN_GROUP
+name|VOID_GROUP
 argument_list|,
 name|PrimitiveObjectInspectorUtils
 operator|.
