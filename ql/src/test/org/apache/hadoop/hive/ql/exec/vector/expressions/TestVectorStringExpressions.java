@@ -2530,6 +2530,11 @@ operator|.
 name|DEFAULT_SIZE
 argument_list|)
 decl_stmt|;
+name|outV
+operator|.
+name|initBuffer
+argument_list|()
+expr_stmt|;
 name|batch
 operator|.
 name|cols
