@@ -6394,6 +6394,8 @@ name|DATE_GROUP
 block|,
 name|BINARY_GROUP
 block|,
+name|VOID_GROUP
+block|,
 name|UNKNOWN_GROUP
 block|}
 empty_stmt|;
@@ -6475,6 +6477,14 @@ return|return
 name|PrimitiveGrouping
 operator|.
 name|BINARY_GROUP
+return|;
+case|case
+name|VOID
+case|:
+return|return
+name|PrimitiveGrouping
+operator|.
+name|VOID_GROUP
 return|;
 default|default:
 return|return
