@@ -104,7 +104,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HCatContext is a singleton that provides global access to configuration data.  *  *<p>HCatalog provides a variety of functionality that users can configure at runtime through  * configuration properties. Available configuration properties are defined in  * {@link HCatConstants}. HCatContext allows users to enable optional functionality by  * setting properties in a provided configuration.</p>  *  *<p>HCatalog<em>users</em> (MR apps, processing framework adapters) should set properties  * in a configuration that has been provided to  * {@link #setConf(org.apache.hadoop.conf.Configuration)} to enable optional functionality.  * The job configuration must be used to ensure properties are passed to the backend MR tasks.</p>  *  *<p>HCatalog<em>developers</em> should enable optional functionality by checking properties  * from {@link #getConf()}. Since users are not obligated to set a configuration, optional  * functionality must provide a sensible default.</p>  */
+comment|/**  * HCatContext is a singleton that provides global access to configuration data.  *  *<p>HCatalog provides a variety of functionality that users can configure at runtime through  * configuration properties. Available configuration properties are defined in  * {@link HCatConstants}. HCatContext allows users to enable optional functionality by  * setting properties in a provided configuration.</p>  *  *<p>HCatalog<em>users</em> (MR apps, processing framework adapters) should set properties  * in a configuration that has been provided to  * {@link #setConf(org.apache.hadoop.conf.Configuration)} to enable optional functionality.  * The job configuration must be used to ensure properties are passed to the backend MR tasks.</p>  *  *<p>HCatalog<em>developers</em> should enable optional functionality by checking properties  * from {@link #getConf()}. Since users are not obligated to set a configuration, optional  * functionality must provide a sensible default.</p>  *  * @deprecated Use/modify {@link org.apache.hive.hcatalog.common.HCatContext} instead  */
 end_comment
 
 begin_enum
@@ -128,7 +128,7 @@ name|conf
 init|=
 literal|null
 decl_stmt|;
-comment|/**      * Use the given configuration for optional behavior. Keys exclusive to an existing config      * are set in the new conf. The job conf must be used to ensure properties are passed to      * backend MR tasks.      */
+comment|/**    * Use the given configuration for optional behavior. Keys exclusive to an existing config    * are set in the new conf. The job conf must be used to ensure properties are passed to    * backend MR tasks.    */
 specifier|public
 specifier|synchronized
 name|HCatContext
@@ -168,6 +168,11 @@ name|conf
 operator|!=
 name|newConf
 condition|)
+block|{
+synchronized|synchronized
+init|(
+name|conf
+init|)
 block|{
 for|for
 control|(
@@ -230,6 +235,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 name|conf
 operator|=
 name|newConf
@@ -239,7 +245,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * Get the configuration, if there is one. Users are not required to setup HCatContext      * unless they wish to override default behavior, so the configuration may not be present.      *      * @return an Optional that might contain a Configuration      */
+comment|/**    * Get the configuration, if there is one. Users are not required to setup HCatContext    * unless they wish to override default behavior, so the configuration may not be present.    *    * @return an Optional that might contain a Configuration    */
 specifier|public
 name|Optional
 argument_list|<

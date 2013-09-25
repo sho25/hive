@@ -449,6 +449,10 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.cli.TestSemanticAnalysis} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -514,21 +518,6 @@ argument_list|(
 name|hiveConf
 argument_list|)
 decl_stmt|;
-name|hcatConf
-operator|.
-name|set
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEDEFAULTRCFILESERDE
-operator|.
-name|varname
-argument_list|,
-literal|"org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe"
-argument_list|)
-expr_stmt|;
 name|hcatConf
 operator|.
 name|set
@@ -1651,7 +1640,7 @@ name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"create table junit_sem_analysis (a int, c string) partitioned by (b string) stored as RCFILE"
+literal|"create table junit_sem_analysis (a int, c string) partitioned by (b string)"
 argument_list|)
 expr_stmt|;
 name|CommandProcessorResponse

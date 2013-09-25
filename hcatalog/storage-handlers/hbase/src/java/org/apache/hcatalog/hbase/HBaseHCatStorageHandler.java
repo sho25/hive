@@ -559,6 +559,20 @@ name|apache
 operator|.
 name|hcatalog
 operator|.
+name|mapreduce
+operator|.
+name|HCatStorageHandler
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hcatalog
+operator|.
 name|hbase
 operator|.
 name|HBaseBulkOutputFormat
@@ -693,20 +707,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hcatalog
-operator|.
-name|mapreduce
-operator|.
-name|HCatStorageHandler
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|thrift
 operator|.
 name|TBase
@@ -754,7 +754,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class HBaseHCatStorageHandler provides functionality to create HBase  * tables through HCatalog. The implementation is very similar to the  * HiveHBaseStorageHandler, with more details to suit HCatalog.  */
+comment|/**  * This class HBaseHCatStorageHandler provides functionality to create HBase  * tables through HCatalog. The implementation is very similar to the  * HiveHBaseStorageHandler, with more details to suit HCatalog.  *  * Note : As of 0.12, this class is considered deprecated and a candidate for future removal  * All new code must use the Hive HBaseStorageHandler instead  *  * @deprecated Use/modify {@link org.apache.hadoop.hive.hbase.HBaseStorageHandler} instead  */
 end_comment
 
 begin_class
@@ -796,6 +796,8 @@ specifier|private
 name|HBaseAdmin
 name|admin
 decl_stmt|;
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -1079,6 +1081,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -1438,7 +1442,9 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/*     * @return instance of HiveAuthorizationProvider     *     * @throws HiveException     *     * @see org.apache.hcatalog.storagehandler.HCatStorageHandler#     * getAuthorizationProvider()     */
+comment|/*   * @return instance of HiveAuthorizationProvider   *   * @throws HiveException   *   * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler#   * getAuthorizationProvider()   */
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -1467,7 +1473,9 @@ return|return
 name|hbaseAuth
 return|;
 block|}
-comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #commitCreateTable(org.apache.hadoop.hive.metastore.api.Table)      */
+comment|/*    * @param table    *    * @throws MetaException    *    * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler    * #commitCreateTable(org.apache.hadoop.hive.metastore.api.Table)    */
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -1479,8 +1487,10 @@ name|table
 parameter_list|)
 throws|throws
 name|MetaException
-block|{     }
-comment|/*      * @param instance of table      *      * @param deleteData      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #commitDropTable(org.apache.hadoop.hive.metastore.api.Table, boolean)      */
+block|{   }
+comment|/*    * @param instance of table    *    * @param deleteData    *    * @throws MetaException    *    * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler    * #commitDropTable(org.apache.hadoop.hive.metastore.api.Table, boolean)    */
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -1502,7 +1512,9 @@ name|tbl
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*      * @param instance of table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #preCreateTable(org.apache.hadoop.hive.metastore.api.Table)      */
+comment|/*    * @param instance of table    *    * @throws MetaException    *    * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler    * #preCreateTable(org.apache.hadoop.hive.metastore.api.Table)    */
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -1983,7 +1995,9 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #preDropTable(org.apache.hadoop.hive.metastore.api.Table)      */
+comment|/*    * @param table    *    * @throws MetaException    *    * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler    * #preDropTable(org.apache.hadoop.hive.metastore.api.Table)    */
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -1995,8 +2009,10 @@ name|table
 parameter_list|)
 throws|throws
 name|MetaException
-block|{     }
-comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #rollbackCreateTable(org.apache.hadoop.hive.metastore.api.Table)      */
+block|{   }
+comment|/*    * @param table    *    * @throws MetaException    *    * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler    * #rollbackCreateTable(org.apache.hadoop.hive.metastore.api.Table)    */
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -2015,7 +2031,9 @@ name|table
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*      * @param table      *      * @throws MetaException      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler      * #rollbackDropTable(org.apache.hadoop.hive.metastore.api.Table)      */
+comment|/*    * @param table    *    * @throws MetaException    *    * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler    * #rollbackDropTable(org.apache.hadoop.hive.metastore.api.Table)    */
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -2027,8 +2045,10 @@ name|table
 parameter_list|)
 throws|throws
 name|MetaException
-block|{     }
-comment|/*      * @return instance of HiveMetaHook      *      * @see org.apache.hcatalog.storagehandler.HCatStorageHandler#getMetaHook()      */
+block|{   }
+comment|/*    * @return instance of HiveMetaHook    *    * @see org.apache.hive.hcatalog.storagehandler.HCatStorageHandler#getMetaHook()    */
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -2319,6 +2339,8 @@ name|qualifiedName
 return|;
 block|}
 annotation|@
+name|Deprecated
+annotation|@
 name|Override
 specifier|public
 name|Class
@@ -2337,6 +2359,8 @@ name|class
 return|;
 block|}
 annotation|@
+name|Deprecated
+annotation|@
 name|Override
 specifier|public
 name|Class
@@ -2354,7 +2378,9 @@ operator|.
 name|class
 return|;
 block|}
-comment|/*     * @return subclass of SerDe     *     * @throws UnsupportedOperationException     *     * @see     * org.apache.hcatalog.storagehandler.HCatStorageHandler#getSerDeClass()     */
+comment|/*   * @return subclass of SerDe   *   * @throws UnsupportedOperationException   *   * @see   * org.apache.hive.hcatalog.storagehandler.HCatStorageHandler#getSerDeClass()   */
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -2375,6 +2401,8 @@ operator|.
 name|class
 return|;
 block|}
+annotation|@
+name|Deprecated
 specifier|public
 name|Configuration
 name|getJobConf
@@ -2384,6 +2412,25 @@ return|return
 name|jobConf
 return|;
 block|}
+annotation|@
+name|Deprecated
+annotation|@
+name|Override
+specifier|public
+name|void
+name|configureJobConf
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|JobConf
+name|jobConf
+parameter_list|)
+block|{
+comment|// do nothing
+block|}
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -2410,6 +2457,8 @@ return|return
 name|hbaseConf
 return|;
 block|}
+annotation|@
+name|Deprecated
 annotation|@
 name|Override
 specifier|public
@@ -2576,7 +2625,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Helper method for users to add the required depedency jars to distributed cache.      * @param conf      * @throws IOException      */
+comment|/**    * Helper method for users to add the required depedency jars to distributed cache.    * @param conf    * @throws IOException    */
 specifier|private
 name|void
 name|addOutputDependencyJars
@@ -2650,7 +2699,7 @@ name|class
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Utility method to add hbase-default.xml and hbase-site.xml properties to a new map      * if they are not already present in the jobConf.      * @param jobConf Job configuration      * @param newJobProperties  Map to which new properties should be added      */
+comment|/**    * Utility method to add hbase-default.xml and hbase-site.xml properties to a new map    * if they are not already present in the jobConf.    * @param jobConf Job configuration    * @param newJobProperties  Map to which new properties should be added    */
 specifier|private
 name|void
 name|addResources

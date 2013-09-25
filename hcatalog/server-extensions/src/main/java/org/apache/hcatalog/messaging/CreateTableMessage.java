@@ -16,7 +16,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * HCat message sent when a table is created in HCatalog.  */
+comment|/**  * HCat message sent when a table is created in HCatalog.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.CreateTableMessage} instead  */
 end_comment
 
 begin_class
@@ -39,7 +39,7 @@ name|CREATE_TABLE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Getter for the name of table created in HCatalog.      * @return Table-name (String).      */
+comment|/**    * Getter for the name of table created in HCatalog.    * @return Table-name (String).    */
 specifier|public
 specifier|abstract
 name|String

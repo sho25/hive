@@ -199,6 +199,7 @@ decl_stmt|;
 comment|// keeps track of the right-hand-side table name of the left-semi-join, and
 comment|// its list of join keys
 specifier|private
+specifier|transient
 specifier|final
 name|HashMap
 argument_list|<
@@ -213,6 +214,7 @@ name|rhsSemijoin
 decl_stmt|;
 comment|// join conditions
 specifier|private
+specifier|transient
 name|ArrayList
 argument_list|<
 name|ArrayList
@@ -232,6 +234,7 @@ name|nullsafes
 decl_stmt|;
 comment|// filters
 specifier|private
+specifier|transient
 name|ArrayList
 argument_list|<
 name|ArrayList
@@ -250,6 +253,7 @@ name|filterMap
 decl_stmt|;
 comment|// filters for pushing
 specifier|private
+specifier|transient
 name|ArrayList
 argument_list|<
 name|ArrayList

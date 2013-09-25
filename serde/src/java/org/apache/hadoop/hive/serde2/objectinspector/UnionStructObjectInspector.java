@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UnionStructObjectInspector unions several struct data into a single struct.  * Basically, the fields of these structs are put together sequentially into a  * single struct.  *   * The object that can be acceptable by this ObjectInspector is a List of  * objects, each of which can be inspected by the ObjectInspector provided in  * the ctor of UnionStructObjectInspector.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
+comment|/**  * UnionStructObjectInspector unions several struct data into a single struct.  * Basically, the fields of these structs are put together sequentially into a  * single struct.  *  * The object that can be acceptable by this ObjectInspector is a List of  * objects, each of which can be inspected by the ObjectInspector provided in  * the ctor of UnionStructObjectInspector.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -58,13 +58,22 @@ name|MyField
 implements|implements
 name|StructField
 block|{
-specifier|public
+specifier|protected
 name|int
 name|structID
 decl_stmt|;
+specifier|protected
 name|StructField
 name|structField
 decl_stmt|;
+specifier|protected
+name|MyField
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 specifier|public
 name|MyField
 parameter_list|(
@@ -125,18 +134,28 @@ argument_list|()
 return|;
 block|}
 block|}
+specifier|private
 name|List
 argument_list|<
 name|StructObjectInspector
 argument_list|>
 name|unionObjectInspectors
 decl_stmt|;
+specifier|private
 name|List
 argument_list|<
 name|MyField
 argument_list|>
 name|fields
 decl_stmt|;
+specifier|protected
+name|UnionStructObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 specifier|protected
 name|UnionStructObjectInspector
 parameter_list|(

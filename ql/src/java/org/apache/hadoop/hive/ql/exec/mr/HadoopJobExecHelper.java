@@ -225,6 +225,26 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Operator
+operator|.
+name|ProgressCounter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|Task
 import|;
 end_import
@@ -262,26 +282,6 @@ operator|.
 name|exec
 operator|.
 name|Utilities
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Operator
-operator|.
-name|ProgressCounter
 import|;
 end_import
 
@@ -2709,7 +2709,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Mapred Local Task Succeeded . Convert the Join into MapJoin"
+literal|"MapredLocal task succeeded"
 argument_list|)
 expr_stmt|;
 block|}

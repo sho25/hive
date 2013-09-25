@@ -216,7 +216,7 @@ operator|=
 name|zookeeper
 expr_stmt|;
 block|}
-comment|/**      * Closes this strategy and releases any ZooKeeper resources; but keeps the      *  ZooKeeper instance open      */
+comment|/**    * Closes this strategy and releases any ZooKeeper resources; but keeps the    *  ZooKeeper instance open    */
 specifier|public
 name|void
 name|close
@@ -239,7 +239,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**      * return zookeeper client instance      * @return zookeeper client instance      */
+comment|/**    * return zookeeper client instance    * @return zookeeper client instance    */
 specifier|public
 name|ZooKeeper
 name|getZookeeper
@@ -249,7 +249,7 @@ return|return
 name|zookeeper
 return|;
 block|}
-comment|/**      * return the acl its using      * @return the acl.      */
+comment|/**    * return the acl its using    * @return the acl.    */
 specifier|public
 name|List
 argument_list|<
@@ -262,7 +262,7 @@ return|return
 name|acl
 return|;
 block|}
-comment|/**      * set the acl      * @param acl the acl to set to      */
+comment|/**    * set the acl    * @param acl the acl to set to    */
 specifier|public
 name|void
 name|setAcl
@@ -281,7 +281,7 @@ operator|=
 name|acl
 expr_stmt|;
 block|}
-comment|/**      * get the retry delay in milliseconds      * @return the retry delay      */
+comment|/**    * get the retry delay in milliseconds    * @return the retry delay    */
 specifier|public
 name|long
 name|getRetryDelay
@@ -291,7 +291,7 @@ return|return
 name|retryDelay
 return|;
 block|}
-comment|/**      * Sets the time waited between retry delays      * @param retryDelay the retry delay      */
+comment|/**    * Sets the time waited between retry delays    * @param retryDelay the retry delay    */
 specifier|public
 name|void
 name|setRetryDelay
@@ -307,13 +307,13 @@ operator|=
 name|retryDelay
 expr_stmt|;
 block|}
-comment|/**      * Allow derived classes to perform      * some custom closing operations to release resources      */
+comment|/**    * Allow derived classes to perform    * some custom closing operations to release resources    */
 specifier|protected
 name|void
 name|doClose
 parameter_list|()
-block|{     }
-comment|/**      * Perform the given operation, retrying if the connection fails      * @return object. it needs to be cast to the callee's expected      * return type.      */
+block|{   }
+comment|/**    * Perform the given operation, retrying if the connection fails    * @return object. it needs to be cast to the callee's expected    * return type.    */
 specifier|protected
 name|Object
 name|retryOperation
@@ -430,7 +430,7 @@ throw|throw
 name|exception
 throw|;
 block|}
-comment|/**      * Ensures that the given path exists with no data, the current      * ACL and no flags      * @param path      */
+comment|/**    * Ensures that the given path exists with no data, the current    * ACL and no flags    * @param path    */
 specifier|protected
 name|void
 name|ensurePathExists
@@ -453,7 +453,7 @@ name|PERSISTENT
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Ensures that the given path exists with the given data, ACL and flags      * @param path      * @param acl      * @param flags      */
+comment|/**    * Ensures that the given path exists with the given data, ACL and flags    * @param path    * @param acl    * @param flags    */
 specifier|protected
 name|void
 name|ensureExists
@@ -577,7 +577,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Returns true if this protocol has been closed      * @return true if this protocol is closed      */
+comment|/**    * Returns true if this protocol has been closed    * @return true if this protocol is closed    */
 specifier|protected
 name|boolean
 name|isClosed
@@ -590,7 +590,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**      * Performs a retry delay if this is not the first attempt      * @param attemptCount the number of the attempts performed so far      */
+comment|/**    * Performs a retry delay if this is not the first attempt    * @param attemptCount the number of the attempts performed so far    */
 specifier|protected
 name|void
 name|retryDelay

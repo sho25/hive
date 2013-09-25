@@ -48,6 +48,14 @@ specifier|private
 name|ObjectInspector
 name|value
 decl_stmt|;
+specifier|protected
+name|DelegatedMapObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 specifier|public
 name|DelegatedMapObjectInspector
 parameter_list|(

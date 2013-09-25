@@ -737,9 +737,6 @@ name|vc
 operator|.
 name|getTypeInfo
 argument_list|()
-operator|.
-name|getPrimitiveCategory
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;

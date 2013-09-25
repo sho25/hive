@@ -530,6 +530,17 @@ argument_list|(
 name|ao
 argument_list|)
 expr_stmt|;
+name|JobConf
+name|job
+init|=
+operator|new
+name|JobConf
+argument_list|(
+name|TestPlan
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 comment|// serialize the configuration once ..
 name|ByteArrayOutputStream
 name|baos
@@ -540,11 +551,13 @@ argument_list|()
 decl_stmt|;
 name|Utilities
 operator|.
-name|serializeObject
+name|serializePlan
 argument_list|(
 name|mrwork
 argument_list|,
 name|baos
+argument_list|,
+name|job
 argument_list|)
 expr_stmt|;
 name|baos
@@ -561,17 +574,6 @@ name|toString
 argument_list|()
 decl_stmt|;
 comment|// store into configuration
-name|JobConf
-name|job
-init|=
-operator|new
-name|JobConf
-argument_list|(
-name|TestPlan
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
 name|job
 operator|.
 name|set
@@ -642,11 +644,13 @@ argument_list|()
 expr_stmt|;
 name|Utilities
 operator|.
-name|serializeObject
+name|serializePlan
 argument_list|(
 name|mrwork2
 argument_list|,
 name|baos
+argument_list|,
+name|job
 argument_list|)
 expr_stmt|;
 name|baos

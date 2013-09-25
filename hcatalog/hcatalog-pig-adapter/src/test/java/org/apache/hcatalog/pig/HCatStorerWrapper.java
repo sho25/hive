@@ -80,7 +80,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is used to test the HCAT_PIG_STORER_EXTERNAL_LOCATION property used in HCatStorer.  * When this property is set, HCatStorer writes the output to the location it specifies. Since  * the property can only be set in the UDFContext, we need this simpler wrapper to do three things:  *<ol>  *<li> save the external dir specified in the Pig script</li>  *<li> set the same UDFContext signature as HCatStorer</li>  *<li> before {@link HCatStorer#setStoreLocation(String, Job)}, set the external dir in the UDFContext.</li>  *</ol>  */
+comment|/**  * This class is used to test the HCAT_PIG_STORER_EXTERNAL_LOCATION property used in HCatStorer.  * When this property is set, HCatStorer writes the output to the location it specifies. Since  * the property can only be set in the UDFContext, we need this simpler wrapper to do three things:  *<ol>  *<li> save the external dir specified in the Pig script</li>  *<li> set the same UDFContext signature as HCatStorer</li>  *<li> before {@link HCatStorer#setStoreLocation(String, Job)}, set the external dir in the UDFContext.</li>  *</ol>  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.HCatStorerWrapper} instead  */
 end_comment
 
 begin_class

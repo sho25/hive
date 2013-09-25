@@ -215,24 +215,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|StandardStructObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|StructField
 import|;
 end_import
@@ -589,11 +571,11 @@ block|}
 block|}
 comment|// Add the value to the vector
 comment|// if join-key is null, process each row in different group.
-name|StandardStructObjectInspector
+name|StructObjectInspector
 name|inspector
 init|=
 operator|(
-name|StandardStructObjectInspector
+name|StructObjectInspector
 operator|)
 name|sf
 operator|.

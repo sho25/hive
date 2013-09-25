@@ -129,22 +129,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|shims
-operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|thrift
 operator|.
 name|DelegationTokenSelector
@@ -303,6 +287,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|thrift
 operator|.
 name|TException
@@ -328,6 +328,10 @@ operator|.
 name|LoggerFactory
 import|;
 end_import
+
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.Security} instead  */
+end_comment
 
 begin_class
 specifier|final

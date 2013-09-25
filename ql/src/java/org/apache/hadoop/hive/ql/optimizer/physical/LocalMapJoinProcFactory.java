@@ -1094,7 +1094,21 @@ block|{
 throw|throw
 operator|new
 name|SemanticException
+argument_list|(
+literal|"Expected parent operator of type TableScanOperator."
+operator|+
+literal|"Found "
+operator|+
+name|parent
+operator|.
+name|getClass
 argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" instead."
+argument_list|)
 throw|;
 block|}
 block|}

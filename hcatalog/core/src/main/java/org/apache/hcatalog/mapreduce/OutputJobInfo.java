@@ -108,7 +108,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** The class used to serialize and store the output related information  */
+comment|/**   * The class used to serialize and store the output related information    * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.OutputJobInfo} instead  */
 end_comment
 
 begin_class
@@ -143,7 +143,7 @@ specifier|private
 name|HCatTableInfo
 name|tableInfo
 decl_stmt|;
-comment|/** The output schema. This is given to us by user.  This wont contain any      * partition columns ,even if user has specified them.      * */
+comment|/** The output schema. This is given to us by user.  This wont contain any    * partition columns ,even if user has specified them.    * */
 specifier|private
 name|HCatSchema
 name|outputSchema
@@ -197,7 +197,7 @@ specifier|private
 name|boolean
 name|harRequested
 decl_stmt|;
-comment|/**      * Initializes a new OutputJobInfo instance      * for writing data from a table.      * @param databaseName the db name      * @param tableName the table name      * @param partitionValues The partition values to publish to, can be null or empty Map to      * work with hadoop security, the kerberos principal name of the server - else null      * The principal name should be of the form:      *<servicename>/_HOST@<realm> like "hcat/_HOST@myrealm.com"      * The special string _HOST will be replaced automatically with the correct host name      * indicate write to a unpartitioned table. For partitioned tables, this map should      * contain keys for all partition columns with corresponding values.      */
+comment|/**    * Initializes a new OutputJobInfo instance    * for writing data from a table.    * @param databaseName the db name    * @param tableName the table name    * @param partitionValues The partition values to publish to, can be null or empty Map to    * work with hadoop security, the kerberos principal name of the server - else null    * The principal name should be of the form:    *<servicename>/_HOST@<realm> like "hcat/_HOST@myrealm.com"    * The special string _HOST will be replaced automatically with the correct host name    * indicate write to a unpartitioned table. For partitioned tables, this map should    * contain keys for all partition columns with corresponding values.    */
 specifier|public
 specifier|static
 name|OutputJobInfo
@@ -285,7 +285,7 @@ name|Properties
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * @return the posOfPartCols      */
+comment|/**    * @return the posOfPartCols    */
 specifier|protected
 name|List
 argument_list|<
@@ -298,7 +298,7 @@ return|return
 name|posOfPartCols
 return|;
 block|}
-comment|/**      * @return the posOfDynPartCols      */
+comment|/**    * @return the posOfDynPartCols    */
 specifier|protected
 name|List
 argument_list|<
@@ -311,7 +311,7 @@ return|return
 name|posOfDynPartCols
 return|;
 block|}
-comment|/**      * @param posOfPartCols the posOfPartCols to set      */
+comment|/**    * @param posOfPartCols the posOfPartCols to set    */
 specifier|protected
 name|void
 name|setPosOfPartCols
@@ -383,7 +383,7 @@ operator|=
 name|posOfPartCols
 expr_stmt|;
 block|}
-comment|/**      * @param posOfDynPartCols the posOfDynPartCols to set      */
+comment|/**    * @param posOfDynPartCols the posOfDynPartCols to set    */
 specifier|protected
 name|void
 name|setPosOfDynPartCols
@@ -403,7 +403,7 @@ operator|=
 name|posOfDynPartCols
 expr_stmt|;
 block|}
-comment|/**      * @return the tableInfo      */
+comment|/**    * @return the tableInfo    */
 specifier|public
 name|HCatTableInfo
 name|getTableInfo
@@ -413,7 +413,7 @@ return|return
 name|tableInfo
 return|;
 block|}
-comment|/**      * @return the outputSchema      */
+comment|/**    * @return the outputSchema    */
 specifier|public
 name|HCatSchema
 name|getOutputSchema
@@ -423,7 +423,7 @@ return|return
 name|outputSchema
 return|;
 block|}
-comment|/**      * @param schema the outputSchema to set      */
+comment|/**    * @param schema the outputSchema to set    */
 specifier|public
 name|void
 name|setOutputSchema
@@ -439,7 +439,7 @@ operator|=
 name|schema
 expr_stmt|;
 block|}
-comment|/**      * @return the location      */
+comment|/**    * @return the location    */
 specifier|public
 name|String
 name|getLocation
@@ -449,7 +449,7 @@ return|return
 name|location
 return|;
 block|}
-comment|/**      * @param location location to write to      */
+comment|/**    * @param location location to write to    */
 specifier|public
 name|void
 name|setLocation
@@ -465,7 +465,7 @@ operator|=
 name|location
 expr_stmt|;
 block|}
-comment|/**      * Sets the value of partitionValues      * @param partitionValues the partition values to set      */
+comment|/**    * Sets the value of partitionValues    * @param partitionValues the partition values to set    */
 name|void
 name|setPartitionValues
 parameter_list|(
@@ -485,7 +485,7 @@ operator|=
 name|partitionValues
 expr_stmt|;
 block|}
-comment|/**      * Gets the value of partitionValues      * @return the partitionValues      */
+comment|/**    * Gets the value of partitionValues    * @return the partitionValues    */
 specifier|public
 name|Map
 argument_list|<
@@ -500,7 +500,7 @@ return|return
 name|partitionValues
 return|;
 block|}
-comment|/**      * set the tablInfo instance      * this should be the same instance      * determined by this object's DatabaseName and TableName      * @param tableInfo      */
+comment|/**    * set the tablInfo instance    * this should be the same instance    * determined by this object's DatabaseName and TableName    * @param tableInfo    */
 name|void
 name|setTableInfo
 parameter_list|(
@@ -515,7 +515,7 @@ operator|=
 name|tableInfo
 expr_stmt|;
 block|}
-comment|/**      * @return database name of table to write to      */
+comment|/**    * @return database name of table to write to    */
 specifier|public
 name|String
 name|getDatabaseName
@@ -525,7 +525,7 @@ return|return
 name|databaseName
 return|;
 block|}
-comment|/**      * @return name of table to write to      */
+comment|/**    * @return name of table to write to    */
 specifier|public
 name|String
 name|getTableName
@@ -535,7 +535,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**      * Set/Get Property information to be passed down to *StorageHandler implementation      * put implementation specific storage handler configurations here      * @return the implementation specific job properties      */
+comment|/**    * Set/Get Property information to be passed down to *StorageHandler implementation    * put implementation specific storage handler configurations here    * @return the implementation specific job properties    */
 specifier|public
 name|Properties
 name|getProperties
@@ -545,7 +545,7 @@ return|return
 name|properties
 return|;
 block|}
-comment|/**      * Set maximum number of allowable dynamic partitions      * @param maxDynamicPartitions      */
+comment|/**    * Set maximum number of allowable dynamic partitions    * @param maxDynamicPartitions    */
 specifier|public
 name|void
 name|setMaximumDynamicPartitions
@@ -561,7 +561,7 @@ operator|=
 name|maxDynamicPartitions
 expr_stmt|;
 block|}
-comment|/**      * Returns maximum number of allowable dynamic partitions      * @return maximum number of allowable dynamic partitions      */
+comment|/**    * Returns maximum number of allowable dynamic partitions    * @return maximum number of allowable dynamic partitions    */
 specifier|public
 name|int
 name|getMaxDynamicPartitions
@@ -573,7 +573,7 @@ operator|.
 name|maxDynamicPartitions
 return|;
 block|}
-comment|/**      * Sets whether or not hadoop archiving has been requested for this job      * @param harRequested      */
+comment|/**    * Sets whether or not hadoop archiving has been requested for this job    * @param harRequested    */
 specifier|public
 name|void
 name|setHarRequested
@@ -589,7 +589,7 @@ operator|=
 name|harRequested
 expr_stmt|;
 block|}
-comment|/**      * Returns whether or not hadoop archiving has been requested for this job      * @return whether or not hadoop archiving has been requested for this job      */
+comment|/**    * Returns whether or not hadoop archiving has been requested for this job    * @return whether or not hadoop archiving has been requested for this job    */
 specifier|public
 name|boolean
 name|getHarRequested
@@ -601,7 +601,7 @@ operator|.
 name|harRequested
 return|;
 block|}
-comment|/**      * Returns whether or not Dynamic Partitioning is used      * @return whether or not dynamic partitioning is currently enabled and used      */
+comment|/**    * Returns whether or not Dynamic Partitioning is used    * @return whether or not dynamic partitioning is currently enabled and used    */
 specifier|public
 name|boolean
 name|isDynamicPartitioningUsed
@@ -625,7 +625,7 @@ operator|)
 operator|)
 return|;
 block|}
-comment|/**      * Sets the list of dynamic partitioning keys used for outputting without specifying all the keys      * @param dynamicPartitioningKeys      */
+comment|/**    * Sets the list of dynamic partitioning keys used for outputting without specifying all the keys    * @param dynamicPartitioningKeys    */
 specifier|public
 name|void
 name|setDynamicPartitioningKeys

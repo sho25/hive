@@ -2384,6 +2384,13 @@ name|descTblDesc
 expr_stmt|;
 block|}
 comment|/**    * @return information about the partitions we want to add.    */
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Add Partition Operator"
+argument_list|)
 specifier|public
 name|AddPartitionDesc
 name|getAddPartitionDesc

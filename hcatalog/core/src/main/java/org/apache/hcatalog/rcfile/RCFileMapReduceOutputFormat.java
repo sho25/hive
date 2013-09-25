@@ -228,7 +228,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The RC file input format using new Hadoop mapreduce APIs.  */
+comment|/**  * The RC file input format using new Hadoop mapreduce APIs.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.rcfile.RCFileMapReduceOutputFormat} instead  */
 end_comment
 
 begin_class
@@ -246,7 +246,7 @@ argument_list|,
 name|BytesRefArrayWritable
 argument_list|>
 block|{
-comment|/**      * Set number of columns into the given configuration.      * @param conf      *          configuration instance which need to set the column number      * @param columnNum      *          column number for RCFile's Writer      *      */
+comment|/**    * Set number of columns into the given configuration.    * @param conf    *          configuration instance which need to set the column number    * @param columnNum    *          column number for RCFile's Writer    *    */
 specifier|public
 specifier|static
 name|void
@@ -276,7 +276,7 @@ name|columnNum
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)     * @see org.apache.hadoop.mapreduce.lib.output.FileOutputFormat#getRecordWriter(org.apache.hadoop.mapreduce.TaskAttemptContext)     */
+comment|/* (non-Javadoc)   * @see org.apache.hadoop.mapreduce.lib.output.FileOutputFormat#getRecordWriter(org.apache.hadoop.mapreduce.TaskAttemptContext)   */
 annotation|@
 name|Override
 specifier|public
@@ -454,7 +454,7 @@ name|BytesRefArrayWritable
 argument_list|>
 argument_list|()
 block|{
-comment|/* (non-Javadoc)             * @see org.apache.hadoop.mapreduce.RecordWriter#write(java.lang.Object, java.lang.Object)             */
+comment|/* (non-Javadoc)       * @see org.apache.hadoop.mapreduce.RecordWriter#write(java.lang.Object, java.lang.Object)       */
 annotation|@
 name|Override
 specifier|public
@@ -481,7 +481,7 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)             * @see org.apache.hadoop.mapreduce.RecordWriter#close(org.apache.hadoop.mapreduce.TaskAttemptContext)             */
+comment|/* (non-Javadoc)       * @see org.apache.hadoop.mapreduce.RecordWriter#close(org.apache.hadoop.mapreduce.TaskAttemptContext)       */
 annotation|@
 name|Override
 specifier|public

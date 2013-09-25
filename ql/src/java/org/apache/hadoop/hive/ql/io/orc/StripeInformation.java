@@ -35,6 +35,11 @@ name|long
 name|getOffset
 parameter_list|()
 function_decl|;
+comment|/**    * Get the total length of the stripe in bytes.    * @return the number of bytes in the stripe    */
+name|long
+name|getLength
+parameter_list|()
+function_decl|;
 comment|/**    * Get the length of the stripe's indexes.    * @return the number of bytes in the index    */
 name|long
 name|getIndexLength

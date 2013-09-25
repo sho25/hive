@@ -70,6 +70,14 @@ specifier|private
 name|BooleanWritable
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantBooleanObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantBooleanObjectInspector
 parameter_list|(
 name|BooleanWritable

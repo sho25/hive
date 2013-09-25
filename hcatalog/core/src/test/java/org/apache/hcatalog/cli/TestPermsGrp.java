@@ -473,6 +473,10 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.cli.TestPermsGrp} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -487,12 +491,8 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
-specifier|static
-specifier|final
 name|int
 name|msPort
-init|=
-literal|20101
 decl_stmt|;
 specifier|private
 name|HiveConf
@@ -554,6 +554,13 @@ condition|)
 block|{
 return|return;
 block|}
+name|msPort
+operator|=
+name|MetaStoreUtils
+operator|.
+name|findFreePort
+argument_list|()
+expr_stmt|;
 name|MetaStoreUtils
 operator|.
 name|startMetaStore
@@ -645,6 +652,19 @@ operator|.
 name|METASTORETHRIFTFAILURERETRIES
 argument_list|,
 literal|3
+argument_list|)
+expr_stmt|;
+name|hcatConf
+operator|.
+name|setIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_SOCKET_TIMEOUT
+argument_list|,
+literal|120
 argument_list|)
 expr_stmt|;
 name|hcatConf
@@ -1284,7 +1304,7 @@ parameter_list|(
 name|NoSuchObjectException
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 block|}
 specifier|private
 name|void

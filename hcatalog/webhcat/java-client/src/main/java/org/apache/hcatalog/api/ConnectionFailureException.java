@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Class representing exceptions resulting from connection problems  * between HCat client and server.  */
+comment|/**  * Class representing exceptions resulting from connection problems  * between HCat client and server.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.ConnectionFailureException} instead  */
 end_comment
 
 begin_class
@@ -48,7 +48,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * @param message Exception message.      * @param cause The wrapped Throwable that caused this exception.      */
+comment|/**    * @param message Exception message.    * @param cause The wrapped Throwable that caused this exception.    */
 specifier|public
 name|ConnectionFailureException
 parameter_list|(

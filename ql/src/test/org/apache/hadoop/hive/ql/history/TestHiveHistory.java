@@ -439,6 +439,13 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|fs
 operator|=
 name|FileSystem

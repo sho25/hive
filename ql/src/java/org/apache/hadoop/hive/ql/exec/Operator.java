@@ -488,6 +488,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
+specifier|transient
 name|Configuration
 name|configuration
 decl_stmt|;
@@ -972,7 +973,6 @@ expr_stmt|;
 block|}
 comment|// non-bean fields needed during compilation
 specifier|private
-specifier|transient
 name|RowSchema
 name|rowSchema
 decl_stmt|;
@@ -1096,7 +1096,6 @@ name|outputObjInspector
 decl_stmt|;
 comment|/**    * A map of output column name to input expression map. This is used by    * optimizer and built during semantic analysis contains only key elements for    * reduce sink and group by op    */
 specifier|protected
-specifier|transient
 name|Map
 argument_list|<
 name|String
@@ -2554,6 +2553,10 @@ name|abort
 argument_list|)
 expr_stmt|;
 block|}
+name|out
+operator|=
+literal|null
+expr_stmt|;
 name|LOG
 operator|.
 name|info

@@ -495,6 +495,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -516,6 +534,10 @@ operator|.
 name|HCatException
 import|;
 end_import
+
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.cli.SemanticAnalysis.HCatSemanticAnalyzer} instead  */
+end_comment
 
 begin_class
 specifier|public
@@ -1308,7 +1330,7 @@ name|String
 name|compoundName
 parameter_list|)
 block|{
-comment|/*         * the table name can potentially be a dot-format one with column names         * specified as part of the table name. e.g. a.b.c where b is a column in         * a and c is a field of the object/column b etc. For authorization         * purposes, we should use only the first part of the dotted name format.         *         */
+comment|/*     * the table name can potentially be a dot-format one with column names     * specified as part of the table name. e.g. a.b.c where b is a column in     * a and c is a field of the object/column b etc. For authorization     * purposes, we should use only the first part of the dotted name format.     *     */
 name|String
 index|[]
 name|words
@@ -1527,9 +1549,9 @@ argument_list|()
 operator|==
 literal|null
 condition|?
-name|cntxt
+name|SessionState
 operator|.
-name|getHive
+name|get
 argument_list|()
 operator|.
 name|getCurrentDatabase
@@ -1583,9 +1605,9 @@ argument_list|()
 operator|==
 literal|null
 condition|?
-name|cntxt
+name|SessionState
 operator|.
-name|getHive
+name|get
 argument_list|()
 operator|.
 name|getCurrentDatabase
@@ -1666,7 +1688,10 @@ name|hive
 operator|.
 name|getTable
 argument_list|(
-name|hive
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()
@@ -1759,7 +1784,10 @@ name|hive
 operator|.
 name|getTable
 argument_list|(
-name|hive
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()
@@ -1812,7 +1840,7 @@ operator|.
 name|getNewLocation
 argument_list|()
 decl_stmt|;
-comment|/* Hcat requires ALTER_DATA privileges for ALTER TABLE LOCATION statements             * for the old table/partition location and the new location.             */
+comment|/* Hcat requires ALTER_DATA privileges for ALTER TABLE LOCATION statements       * for the old table/partition location and the new location.       */
 if|if
 condition|(
 name|alterTable

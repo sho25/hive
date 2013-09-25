@@ -432,7 +432,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The Class HCatCreateTableDesc for defining attributes for a new table.  */
+comment|/**  * The Class HCatCreateTableDesc for defining attributes for a new table.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatCreateTableDesc} instead  */
 end_comment
 
 begin_class
@@ -580,7 +580,7 @@ operator|=
 name|columns
 expr_stmt|;
 block|}
-comment|/**      * Creates a builder for defining attributes.      *      * @param dbName the db name      * @param tableName the table name      * @param columns the columns      * @return the builder      */
+comment|/**    * Creates a builder for defining attributes.    *    * @param dbName the db name    * @param tableName the table name    * @param columns the columns    * @return the builder    */
 specifier|public
 specifier|static
 name|Builder
@@ -1131,7 +1131,7 @@ return|return
 name|newTable
 return|;
 block|}
-comment|/**      * Gets the if not exists.      *      * @return the if not exists      */
+comment|/**    * Gets the if not exists.    *    * @return the if not exists    */
 specifier|public
 name|boolean
 name|getIfNotExists
@@ -1143,7 +1143,7 @@ operator|.
 name|ifNotExists
 return|;
 block|}
-comment|/**      * Gets the table name.      *      * @return the table name      */
+comment|/**    * Gets the table name.    *    * @return the table name    */
 specifier|public
 name|String
 name|getTableName
@@ -1155,7 +1155,7 @@ operator|.
 name|tableName
 return|;
 block|}
-comment|/**      * Gets the cols.      *      * @return the cols      */
+comment|/**    * Gets the cols.    *    * @return the cols    */
 specifier|public
 name|List
 argument_list|<
@@ -1170,7 +1170,7 @@ operator|.
 name|cols
 return|;
 block|}
-comment|/**      * Gets the partition cols.      *      * @return the partition cols      */
+comment|/**    * Gets the partition cols.    *    * @return the partition cols    */
 specifier|public
 name|List
 argument_list|<
@@ -1185,7 +1185,7 @@ operator|.
 name|partCols
 return|;
 block|}
-comment|/**      * Gets the bucket cols.      *      * @return the bucket cols      */
+comment|/**    * Gets the bucket cols.    *    * @return the bucket cols    */
 specifier|public
 name|List
 argument_list|<
@@ -1211,7 +1211,7 @@ operator|.
 name|numBuckets
 return|;
 block|}
-comment|/**      * Gets the comments.      *      * @return the comments      */
+comment|/**    * Gets the comments.    *    * @return the comments    */
 specifier|public
 name|String
 name|getComments
@@ -1223,7 +1223,7 @@ operator|.
 name|comment
 return|;
 block|}
-comment|/**      * Gets the storage handler.      *      * @return the storage handler      */
+comment|/**    * Gets the storage handler.    *    * @return the storage handler    */
 specifier|public
 name|String
 name|getStorageHandler
@@ -1235,7 +1235,7 @@ operator|.
 name|storageHandler
 return|;
 block|}
-comment|/**      * Gets the location.      *      * @return the location      */
+comment|/**    * Gets the location.    *    * @return the location    */
 specifier|public
 name|String
 name|getLocation
@@ -1247,7 +1247,7 @@ operator|.
 name|location
 return|;
 block|}
-comment|/**      * Gets the external.      *      * @return the external      */
+comment|/**    * Gets the external.    *    * @return the external    */
 specifier|public
 name|boolean
 name|getExternal
@@ -1259,7 +1259,7 @@ operator|.
 name|isExternal
 return|;
 block|}
-comment|/**      * Gets the sort cols.      *      * @return the sort cols      */
+comment|/**    * Gets the sort cols.    *    * @return the sort cols    */
 specifier|public
 name|List
 argument_list|<
@@ -1274,7 +1274,7 @@ operator|.
 name|sortCols
 return|;
 block|}
-comment|/**      * Gets the tbl props.      *      * @return the tbl props      */
+comment|/**    * Gets the tbl props.    *    * @return the tbl props    */
 specifier|public
 name|Map
 argument_list|<
@@ -1291,7 +1291,7 @@ operator|.
 name|tblProps
 return|;
 block|}
-comment|/**      * Gets the file format.      *      * @return the file format      */
+comment|/**    * Gets the file format.    *    * @return the file format    */
 specifier|public
 name|String
 name|getFileFormat
@@ -1303,7 +1303,7 @@ operator|.
 name|fileFormat
 return|;
 block|}
-comment|/**      * Gets the database name.      *      * @return the database name      */
+comment|/**    * Gets the database name.    *    * @return the database name    */
 specifier|public
 name|String
 name|getDatabaseName
@@ -1653,7 +1653,7 @@ operator|=
 name|columns
 expr_stmt|;
 block|}
-comment|/**          * If not exists.          *          * @param ifNotExists If set to true, hive will not throw exception, if a          * table with the same name already exists.          * @return the builder          */
+comment|/**      * If not exists.      *      * @param ifNotExists If set to true, hive will not throw exception, if a      * table with the same name already exists.      * @return the builder      */
 specifier|public
 name|Builder
 name|ifNotExists
@@ -1672,7 +1672,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Partition cols.          *          * @param partCols the partition cols          * @return the builder          */
+comment|/**      * Partition cols.      *      * @param partCols the partition cols      * @return the builder      */
 specifier|public
 name|Builder
 name|partCols
@@ -1694,7 +1694,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Bucket cols.          *          * @param bucketCols the bucket cols          * @return the builder          */
+comment|/**      * Bucket cols.      *      * @param bucketCols the bucket cols      * @return the builder      */
 specifier|public
 name|Builder
 name|bucketCols
@@ -1725,7 +1725,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Storage handler.          *          * @param storageHandler the storage handler          * @return the builder          */
+comment|/**      * Storage handler.      *      * @param storageHandler the storage handler      * @return the builder      */
 specifier|public
 name|Builder
 name|storageHandler
@@ -1744,7 +1744,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Location.          *          * @param location the location          * @return the builder          */
+comment|/**      * Location.      *      * @param location the location      * @return the builder      */
 specifier|public
 name|Builder
 name|location
@@ -1763,7 +1763,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Comments.          *          * @param comment the comment          * @return the builder          */
+comment|/**      * Comments.      *      * @param comment the comment      * @return the builder      */
 specifier|public
 name|Builder
 name|comments
@@ -1782,7 +1782,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Checks if is table external.          *          * @param isExternal the is external          * @return the builder          */
+comment|/**      * Checks if is table external.      *      * @param isExternal the is external      * @return the builder      */
 specifier|public
 name|Builder
 name|isTableExternal
@@ -1801,7 +1801,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Sort cols.          *          * @param sortCols the sort cols          * @return the builder          */
+comment|/**      * Sort cols.      *      * @param sortCols the sort cols      * @return the builder      */
 specifier|public
 name|Builder
 name|sortCols
@@ -1823,7 +1823,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Tbl props.          *          * @param tblProps the tbl props          * @return the builder          */
+comment|/**      * Tbl props.      *      * @param tblProps the tbl props      * @return the builder      */
 specifier|public
 name|Builder
 name|tblProps
@@ -1847,7 +1847,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * File format.          *          * @param format the format          * @return the builder          */
+comment|/**      * File format.      *      * @param format the format      * @return the builder      */
 specifier|public
 name|Builder
 name|fileFormat
@@ -1866,7 +1866,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**          * Builds the HCatCreateTableDesc.          *          * @return HCatCreateTableDesc          * @throws HCatException          */
+comment|/**      * Builds the HCatCreateTableDesc.      *      * @return HCatCreateTableDesc      * @throws HCatException      */
 specifier|public
 name|HCatCreateTableDesc
 name|build

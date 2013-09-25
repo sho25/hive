@@ -314,7 +314,11 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveWritableConstantObjectInspector
 argument_list|(
-name|pc
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|getTypeInfo
+argument_list|()
 argument_list|,
 name|writableValue
 argument_list|)

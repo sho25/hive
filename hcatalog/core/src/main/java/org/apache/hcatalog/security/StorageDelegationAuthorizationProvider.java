@@ -308,7 +308,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A HiveAuthorizationProvider which delegates the authorization requests to   * the underlying AuthorizationProviders obtained from the StorageHandler.  */
+comment|/**  * A HiveAuthorizationProvider which delegates the authorization requests to   * the underlying AuthorizationProviders obtained from the StorageHandler.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.security.StorageDelegationAuthorizationProvider} instead  */
 end_comment
 
 begin_class

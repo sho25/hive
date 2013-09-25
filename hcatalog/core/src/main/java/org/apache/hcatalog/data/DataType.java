@@ -67,6 +67,10 @@ name|Entry
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.DataType} instead  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract
@@ -186,7 +190,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-comment|/**      * Determine the datatype of an object.      * @param o Object to test.      * @return byte code of the type, or ERROR if we don't know.      */
+comment|/**    * Determine the datatype of an object.    * @param o Object to test.    * @return byte code of the type, or ERROR if we don't know.    */
 specifier|public
 specifier|static
 name|byte

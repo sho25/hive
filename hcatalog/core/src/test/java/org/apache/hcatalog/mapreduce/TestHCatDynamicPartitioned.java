@@ -299,6 +299,10 @@ name|assertTrue
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.TestHCatDynamicPartitioned} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -668,7 +672,7 @@ return|return
 name|fields
 return|;
 block|}
-comment|/**      * Run the dynamic partitioning test but with single map task      * @throws Exception      */
+comment|/**    * Run the dynamic partitioning test but with single map task    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -684,7 +688,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Run the dynamic partitioning test but with multiple map task. See HCATALOG-490      * @throws Exception      */
+comment|/**    * Run the dynamic partitioning test but with multiple map task. See HCATALOG-490    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public

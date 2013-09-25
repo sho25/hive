@@ -39,7 +39,7 @@ specifier|private
 name|long
 name|timestamp
 decl_stmt|;
-comment|/**      * Create a FamilyRevision object      * @param rev revision number      * @param ts expiration timestamp      */
+comment|/**    * Create a FamilyRevision object    * @param rev revision number    * @param ts expiration timestamp    */
 name|FamilyRevision
 parameter_list|(
 name|long

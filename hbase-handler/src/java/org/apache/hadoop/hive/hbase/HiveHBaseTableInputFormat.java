@@ -997,16 +997,14 @@ argument_list|)
 throw|;
 block|}
 name|boolean
-name|addAll
+name|readAllColumns
 init|=
-operator|(
-name|readColIDs
+name|ColumnProjectionUtils
 operator|.
-name|size
-argument_list|()
-operator|==
-literal|0
-operator|)
+name|isReadAllColumns
+argument_list|(
+name|jobConf
+argument_list|)
 decl_stmt|;
 name|Scan
 name|scan
@@ -1037,7 +1035,7 @@ decl_stmt|;
 if|if
 condition|(
 operator|!
-name|addAll
+name|readAllColumns
 condition|)
 block|{
 for|for
@@ -1217,7 +1215,7 @@ block|}
 if|if
 condition|(
 operator|!
-name|addAll
+name|readAllColumns
 condition|)
 block|{
 break|break;
@@ -1320,76 +1318,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// If Hive's optimizer gave us a filter to process, convert it to the
-comment|// HBase scan form now.
-name|int
-name|iKey
-init|=
-operator|-
-literal|1
-decl_stmt|;
-try|try
-block|{
-name|iKey
-operator|=
-name|HBaseSerDe
-operator|.
-name|getRowKeyColumnOffset
-argument_list|(
-name|columnsMapping
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SerDeException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|IOException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
-name|tableSplit
-operator|=
-name|convertFilter
-argument_list|(
-name|jobConf
-argument_list|,
-name|scan
-argument_list|,
-name|tableSplit
-argument_list|,
-name|iKey
-argument_list|,
-name|getStorageFormatOfKey
-argument_list|(
-name|columnsMapping
-operator|.
-name|get
-argument_list|(
-name|iKey
-argument_list|)
-operator|.
-name|mappingSpec
-argument_list|,
-name|jobConf
-operator|.
-name|get
-argument_list|(
-name|HBaseSerDe
-operator|.
-name|HBASE_TABLE_DEFAULT_STORAGE_TYPE
-argument_list|,
-literal|"string"
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|setScan
 argument_list|(
 name|scan
@@ -1634,19 +1562,13 @@ block|}
 block|}
 return|;
 block|}
-comment|/**    * Converts a filter (which has been pushed down from Hive's optimizer)    * into corresponding restrictions on the HBase scan.  The    * filter should already be in a form which can be fully converted.    *    * @param jobConf configuration for the scan    *    * @param scan the HBase scan object to restrict    *    * @param tableSplit the HBase table split to restrict, or null    * if calculating splits    *    * @param iKey 0-based offset of key column within Hive table    *    * @return converted table split if any    */
+comment|/**    * Converts a filter (which has been pushed down from Hive's optimizer)    * into corresponding restrictions on the HBase scan.  The    * filter should already be in a form which can be fully converted.    *    * @param jobConf configuration for the scan    *    * @param iKey 0-based offset of key column within Hive table    *    * @return converted table split if any    */
 specifier|private
-name|TableSplit
-name|convertFilter
+name|Scan
+name|createFilterScan
 parameter_list|(
 name|JobConf
 name|jobConf
-parameter_list|,
-name|Scan
-name|scan
-parameter_list|,
-name|TableSplit
-name|tableSplit
 parameter_list|,
 name|int
 name|iKey
@@ -1657,6 +1579,13 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|Scan
+name|scan
+init|=
+operator|new
+name|Scan
+argument_list|()
+decl_stmt|;
 name|String
 name|filterExprSerialized
 init|=
@@ -1677,7 +1606,7 @@ literal|null
 condition|)
 block|{
 return|return
-name|tableSplit
+name|scan
 return|;
 block|}
 name|ExprNodeDesc
@@ -2045,34 +1974,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-if|if
-condition|(
-name|tableSplit
-operator|!=
-literal|null
-condition|)
-block|{
-name|tableSplit
-operator|=
-operator|new
-name|TableSplit
-argument_list|(
-name|tableSplit
-operator|.
-name|getTableName
-argument_list|()
-argument_list|,
-name|startRow
-argument_list|,
-name|stopRow
-argument_list|,
-name|tableSplit
-operator|.
-name|getRegionLocation
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 name|scan
 operator|.
 name|setStartRow
@@ -2088,7 +1989,7 @@ name|stopRow
 argument_list|)
 expr_stmt|;
 return|return
-name|tableSplit
+name|scan
 return|;
 block|}
 specifier|private
@@ -2378,7 +2279,7 @@ name|current
 parameter_list|)
 block|{
 comment|// startRow is inclusive while stopRow is exclusive,
-comment|//this util method returns very next bytearray which will occur after the current one
+comment|// this util method returns very next bytearray which will occur after the current one
 comment|// by padding current one with a trailing 0 byte.
 name|byte
 index|[]
@@ -2673,12 +2574,44 @@ name|e
 argument_list|)
 throw|;
 block|}
+comment|// Take filter pushdown into account while calculating splits; this
+comment|// allows us to prune off regions immediately.  Note that although
+comment|// the Javadoc for the superclass getSplits says that it returns one
+comment|// split per region, the implementation actually takes the scan
+comment|// definition into account and excludes regions which don't satisfy
+comment|// the start/stop row conditions (HBASE-1829).
 name|Scan
 name|scan
 init|=
-operator|new
-name|Scan
-argument_list|()
+name|createFilterScan
+argument_list|(
+name|jobConf
+argument_list|,
+name|iKey
+argument_list|,
+name|getStorageFormatOfKey
+argument_list|(
+name|columnsMapping
+operator|.
+name|get
+argument_list|(
+name|iKey
+argument_list|)
+operator|.
+name|mappingSpec
+argument_list|,
+name|jobConf
+operator|.
+name|get
+argument_list|(
+name|HBaseSerDe
+operator|.
+name|HBASE_TABLE_DEFAULT_STORAGE_TYPE
+argument_list|,
+literal|"string"
+argument_list|)
+argument_list|)
+argument_list|)
 decl_stmt|;
 comment|// The list of families that have been added to the scan
 name|List
@@ -2793,46 +2726,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|// Take filter pushdown into account while calculating splits; this
-comment|// allows us to prune off regions immediately.  Note that although
-comment|// the Javadoc for the superclass getSplits says that it returns one
-comment|// split per region, the implementation actually takes the scan
-comment|// definition into account and excludes regions which don't satisfy
-comment|// the start/stop row conditions (HBASE-1829).
-name|convertFilter
-argument_list|(
-name|jobConf
-argument_list|,
-name|scan
-argument_list|,
-literal|null
-argument_list|,
-name|iKey
-argument_list|,
-name|getStorageFormatOfKey
-argument_list|(
-name|columnsMapping
-operator|.
-name|get
-argument_list|(
-name|iKey
-argument_list|)
-operator|.
-name|mappingSpec
-argument_list|,
-name|jobConf
-operator|.
-name|get
-argument_list|(
-name|HBaseSerDe
-operator|.
-name|HBASE_TABLE_DEFAULT_STORAGE_TYPE
-argument_list|,
-literal|"string"
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|setScan
 argument_list|(
 name|scan

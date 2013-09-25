@@ -435,6 +435,10 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.security.TestHdfsAuthorizationProvider} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -1019,7 +1023,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Tests whether the warehouse directory is writable by the current user (as defined by Hadoop)      */
+comment|/**    * Tests whether the warehouse directory is writable by the current user (as defined by Hadoop)    */
 annotation|@
 name|Test
 specifier|public

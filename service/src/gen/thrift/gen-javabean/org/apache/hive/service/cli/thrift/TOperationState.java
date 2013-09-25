@@ -98,6 +98,11 @@ name|UKNOWN_STATE
 argument_list|(
 literal|6
 argument_list|)
+block|,
+name|PENDING_STATE
+argument_list|(
+literal|7
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -184,6 +189,12 @@ literal|6
 case|:
 return|return
 name|UKNOWN_STATE
+return|;
+case|case
+literal|7
+case|:
+return|return
+name|PENDING_STATE
 return|;
 default|default:
 return|return

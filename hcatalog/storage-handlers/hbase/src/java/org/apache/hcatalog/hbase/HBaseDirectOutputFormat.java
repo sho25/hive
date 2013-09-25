@@ -558,7 +558,7 @@ name|HBaseDirectOutputCommitter
 parameter_list|()
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -570,7 +570,7 @@ name|taskContext
 parameter_list|)
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -582,7 +582,7 @@ name|taskContext
 parameter_list|)
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -610,7 +610,7 @@ name|jobContext
 parameter_list|)
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public
@@ -622,7 +622,7 @@ name|taskContext
 parameter_list|)
 throws|throws
 name|IOException
-block|{         }
+block|{     }
 annotation|@
 name|Override
 specifier|public

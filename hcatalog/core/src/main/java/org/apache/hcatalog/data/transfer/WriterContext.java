@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This contains information obtained at master node to help prepare slave nodes  * for writer. This class implements {@link Externalizable} so it can be  * serialized using standard java mechanisms. Master should serialize it and  * make it available to slaves to prepare for writes.  */
+comment|/**  * This contains information obtained at master node to help prepare slave nodes  * for writer. This class implements {@link Externalizable} so it can be  * serialized using standard java mechanisms. Master should serialize it and  * make it available to slaves to prepare for writes.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.WriterContext} instead  */
 end_comment
 
 begin_class

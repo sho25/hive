@@ -206,7 +206,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of HCatRecord that wraps an Object returned by a SerDe  * and an ObjectInspector.  This delays deserialization of unused columns.  */
+comment|/**  * An implementation of HCatRecord that wraps an Object returned by a SerDe  * and an ObjectInspector.  This delays deserialization of unused columns.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.LazyHCatRecord} instead  */
 end_comment
 
 begin_class
@@ -663,7 +663,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**      * Convert this LazyHCatRecord to a DefaultHCatRecord.  This is required      * before you can write out a record via write.      * @return an HCatRecord that can be serialized      * @throws HCatException      */
+comment|/**    * Convert this LazyHCatRecord to a DefaultHCatRecord.  This is required    * before you can write out a record via write.    * @return an HCatRecord that can be serialized    * @throws HCatException    */
 specifier|public
 name|HCatRecord
 name|getWritable

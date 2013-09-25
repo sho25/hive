@@ -131,7 +131,7 @@ operator|=
 name|revision
 expr_stmt|;
 block|}
-comment|/**      * @return The revision number associated with a transaction.      */
+comment|/**    * @return The revision number associated with a transaction.    */
 specifier|public
 name|long
 name|getRevisionNumber
@@ -143,7 +143,7 @@ operator|.
 name|revision
 return|;
 block|}
-comment|/**      * @return The table name associated with a transaction.      */
+comment|/**    * @return The table name associated with a transaction.    */
 specifier|public
 name|String
 name|getTableName
@@ -153,7 +153,7 @@ return|return
 name|tableName
 return|;
 block|}
-comment|/**      * @return The column families associated with a transaction.      */
+comment|/**    * @return The column families associated with a transaction.    */
 specifier|public
 name|List
 argument_list|<
@@ -166,7 +166,7 @@ return|return
 name|columnFamilies
 return|;
 block|}
-comment|/**      * @return The expire timestamp associated with a transaction.      */
+comment|/**    * @return The expire timestamp associated with a transaction.    */
 name|long
 name|getTransactionExpireTimeStamp
 parameter_list|()
@@ -195,7 +195,7 @@ operator|=
 name|seconds
 expr_stmt|;
 block|}
-comment|/**      * Gets the keep alive value.      *      * @return long  The keep alive value for the transaction.      */
+comment|/**    * Gets the keep alive value.    *    * @return long  The keep alive value for the transaction.    */
 specifier|public
 name|long
 name|getKeepAliveValue
@@ -207,7 +207,7 @@ operator|.
 name|keepAlive
 return|;
 block|}
-comment|/**      * Gets the family revision info.      *      * @return FamilyRevision An instance of FamilyRevision associated with the transaction.      */
+comment|/**    * Gets the family revision info.    *    * @return FamilyRevision An instance of FamilyRevision associated with the transaction.    */
 name|FamilyRevision
 name|getFamilyRevisionInfo
 parameter_list|()
@@ -223,7 +223,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Keep alive transaction. This methods extends the expire timestamp of a      * transaction by the "keep alive" amount.      */
+comment|/**    * Keep alive transaction. This methods extends the expire timestamp of a    * transaction by the "keep alive" amount.    */
 name|void
 name|keepAliveTransaction
 parameter_list|()

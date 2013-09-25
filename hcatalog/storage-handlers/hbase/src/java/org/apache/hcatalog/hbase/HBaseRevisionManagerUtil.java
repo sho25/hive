@@ -341,8 +341,8 @@ decl_stmt|;
 specifier|private
 name|HBaseRevisionManagerUtil
 parameter_list|()
-block|{     }
-comment|/**      * Creates the latest snapshot of the table.      *      * @param jobConf The job configuration.      * @param hbaseTableName The fully qualified name of the HBase table.      * @param tableInfo HCat table information      * @return An instance of HCatTableSnapshot      * @throws IOException Signals that an I/O exception has occurred.      */
+block|{   }
+comment|/**    * Creates the latest snapshot of the table.    *    * @param jobConf The job configuration.    * @param hbaseTableName The fully qualified name of the HBase table.    * @param tableInfo HCat table information    * @return An instance of HCatTableSnapshot    * @throws IOException Signals that an I/O exception has occurred.    */
 specifier|static
 name|HCatTableSnapshot
 name|createSnapshot
@@ -410,7 +410,7 @@ return|return
 name|hcatSnapshot
 return|;
 block|}
-comment|/**      * Creates the snapshot using the revision specified by the user.      *      * @param jobConf The job configuration.      * @param tableName The fully qualified name of the table whose snapshot is being taken.      * @param revision The revision number to use for the snapshot.      * @return An instance of HCatTableSnapshot.      * @throws IOException Signals that an I/O exception has occurred.      */
+comment|/**    * Creates the snapshot using the revision specified by the user.    *    * @param jobConf The job configuration.    * @param tableName The fully qualified name of the table whose snapshot is being taken.    * @param revision The revision number to use for the snapshot.    * @return An instance of HCatTableSnapshot.    * @throws IOException Signals that an I/O exception has occurred.    */
 specifier|static
 name|HCatTableSnapshot
 name|createSnapshot
@@ -525,7 +525,7 @@ return|return
 name|hcatSnapshot
 return|;
 block|}
-comment|/**      * Gets an instance of revision manager which is opened.      *      * @param jobConf The job configuration.      * @return RevisionManager An instance of revision manager.      * @throws IOException      */
+comment|/**    * Gets an instance of revision manager which is opened.    *    * @param jobConf The job configuration.    * @return RevisionManager An instance of revision manager.    * @throws IOException    */
 specifier|static
 name|RevisionManager
 name|getOpenedRevisionManager
@@ -868,7 +868,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Begins a transaction in the revision manager for the given table.      * @param qualifiedTableName Name of the table      * @param tableInfo HCat Table information      * @param jobConf Job Configuration      * @return The new transaction in revision manager      * @throws IOException      */
+comment|/**    * Begins a transaction in the revision manager for the given table.    * @param qualifiedTableName Name of the table    * @param tableInfo HCat Table information    * @param jobConf Job Configuration    * @return The new transaction in revision manager    * @throws IOException    */
 specifier|static
 name|Transaction
 name|beginWriteTransaction
@@ -1140,7 +1140,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Get the Revision number that will be assigned to this job's output data      * @param conf configuration of the job      * @return the revision number used      * @throws IOException      */
+comment|/**    * Get the Revision number that will be assigned to this job's output data    * @param conf configuration of the job    * @return the revision number used    * @throws IOException    */
 specifier|static
 name|long
 name|getOutputRevision

@@ -40,7 +40,7 @@ specifier|public
 interface|interface
 name|ZooKeeperOperation
 block|{
-comment|/**      * Performs the operation - which may be involved multiple times if the connection      * to ZooKeeper closes during this operation      *      * @return the result of the operation or null      * @throws KeeperException      * @throws InterruptedException      */
+comment|/**    * Performs the operation - which may be involved multiple times if the connection    * to ZooKeeper closes during this operation    *    * @return the result of the operation or null    * @throws KeeperException    * @throws InterruptedException    */
 specifier|public
 name|boolean
 name|execute

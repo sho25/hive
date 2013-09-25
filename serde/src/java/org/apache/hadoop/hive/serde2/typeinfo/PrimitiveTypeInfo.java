@@ -89,19 +89,42 @@ name|PrimitiveObjectInspectorUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|PrimitiveObjectInspectorUtils
+operator|.
+name|PrimitiveTypeEntry
+import|;
+end_import
+
 begin_comment
-comment|/**  * There are limited number of Primitive Types. All Primitive Types are defined  * by TypeInfoFactory.isPrimitiveClass().  *   * Always use the TypeInfoFactory to create new TypeInfo objects, instead of  * directly creating an instance of this class.  */
+comment|/**  * There are limited number of Primitive Types. All Primitive Types are defined  * by TypeInfoFactory.isPrimitiveClass().  *  * Always use the TypeInfoFactory to create new TypeInfo objects, instead of  * directly creating an instance of this class.  */
 end_comment
 
 begin_class
 specifier|public
-specifier|final
 class|class
 name|PrimitiveTypeInfo
 extends|extends
 name|TypeInfo
 implements|implements
 name|Serializable
+implements|,
+name|PrimitiveTypeSpec
 block|{
 specifier|private
 specifier|static
@@ -111,9 +134,13 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|private
+specifier|protected
 name|String
 name|typeName
+decl_stmt|;
+specifier|protected
+name|BaseTypeParams
+name|typeParams
 decl_stmt|;
 comment|/**    * For java serialization use only.    */
 specifier|public
@@ -154,12 +181,8 @@ name|getPrimitiveCategory
 parameter_list|()
 block|{
 return|return
-name|PrimitiveObjectInspectorUtils
-operator|.
-name|getTypeEntryFromTypeName
-argument_list|(
-name|typeName
-argument_list|)
+name|getPrimitiveTypeEntry
+argument_list|()
 operator|.
 name|primitiveCategory
 return|;
@@ -229,6 +252,59 @@ return|return
 name|typeName
 return|;
 block|}
+comment|/**    * If the type has type parameters (such as varchar length, or decimal precision/scale),    * then return the parameters for the type.    * @return A BaseTypeParams object representing the parameters for the type, or null    */
+specifier|public
+name|BaseTypeParams
+name|getTypeParams
+parameter_list|()
+block|{
+return|return
+name|typeParams
+return|;
+block|}
+comment|/**    * Set the type parameters for the type.    * @param typeParams type parameters for the type    */
+specifier|public
+name|void
+name|setTypeParams
+parameter_list|(
+name|BaseTypeParams
+name|typeParams
+parameter_list|)
+block|{
+comment|// Ideally could check here to make sure the type really supports parameters,
+comment|// however during deserialization some of the required fields are not set at the
+comment|// time that the type params are set. We would have to customize the way this class
+comment|// is serialized/deserialized for the check to work.
+comment|//if (typeParams != null&& !getPrimitiveTypeEntry().isParameterized()) {
+comment|//  throw new UnsupportedOperationException(
+comment|//      "Attempting to add type parameters " + typeParams + " to type " + getTypeName());
+comment|//}
+name|this
+operator|.
+name|typeParams
+operator|=
+name|typeParams
+expr_stmt|;
+block|}
+specifier|public
+name|PrimitiveTypeEntry
+name|getPrimitiveTypeEntry
+parameter_list|()
+block|{
+return|return
+name|PrimitiveObjectInspectorUtils
+operator|.
+name|getTypeEntryFromTypeName
+argument_list|(
+name|TypeInfoUtils
+operator|.
+name|getBaseName
+argument_list|(
+name|typeName
+argument_list|)
+argument_list|)
+return|;
+block|}
 comment|/**    * Compare if 2 TypeInfos are the same. We use TypeInfoFactory to cache    * TypeInfos, so we only need to compare the Object pointer.    */
 annotation|@
 name|Override
@@ -259,6 +335,17 @@ name|typeName
 operator|.
 name|hashCode
 argument_list|()
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|typeName
 return|;
 block|}
 block|}

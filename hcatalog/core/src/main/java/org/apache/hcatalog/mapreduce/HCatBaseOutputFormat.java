@@ -229,6 +229,10 @@ name|HCatSchema
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.HCatBaseOutputFormat} instead  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract
@@ -246,7 +250,7 @@ name|HCatRecord
 argument_list|>
 block|{
 comment|//  static final private Log LOG = LogFactory.getLog(HCatBaseOutputFormat.class);
-comment|/**      * @see org.apache.hcatalog.mapreduce.HCatBaseOutputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)      * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}      */
+comment|/**    * @see org.apache.hcatalog.mapreduce.HCatBaseOutputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)    * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}    */
 specifier|public
 specifier|static
 name|HCatSchema
@@ -268,7 +272,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Gets the table schema for the table specified in the HCatOutputFormat.setOutput call      * on the specified job context.      * @param conf the Configuration object      * @return the table schema      * @throws IOException if HCatOutputFormat.setOutput has not been called for the passed context      */
+comment|/**    * Gets the table schema for the table specified in the HCatOutputFormat.setOutput call    * on the specified job context.    * @param conf the Configuration object    * @return the table schema    * @throws IOException if HCatOutputFormat.setOutput has not been called for the passed context    */
 specifier|public
 specifier|static
 name|HCatSchema
@@ -298,7 +302,7 @@ name|getDataColumns
 argument_list|()
 return|;
 block|}
-comment|/**      * Check for validity of the output-specification for the job.      * @param context information about the job      * @throws IOException when output should not be attempted      */
+comment|/**    * Check for validity of the output-specification for the job.    * @param context information about the job    * @throws IOException when output should not be attempted    */
 annotation|@
 name|Override
 specifier|public
@@ -324,7 +328,7 @@ name|context
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Gets the output format instance.      * @param context the job context      * @return the output format instance      * @throws IOException      */
+comment|/**    * Gets the output format instance.    * @param context the job context    * @return the output format instance    * @throws IOException    */
 specifier|protected
 name|OutputFormat
 argument_list|<
@@ -400,7 +404,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**      * @see org.apache.hcatalog.mapreduce.HCatBaseOutputFormat#getJobInfo(org.apache.hadoop.conf.Configuration)      * @deprecated use {@link #getJobInfo(org.apache.hadoop.conf.Configuration)}      */
+comment|/**    * @see org.apache.hcatalog.mapreduce.HCatBaseOutputFormat#getJobInfo(org.apache.hadoop.conf.Configuration)    * @deprecated use {@link #getJobInfo(org.apache.hadoop.conf.Configuration)}    */
 specifier|public
 specifier|static
 name|OutputJobInfo
@@ -422,7 +426,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Gets the HCatOuputJobInfo object by reading the Configuration and deserializing      * the string. If InputJobInfo is not present in the configuration, throws an      * exception since that means HCatOutputFormat.setOutput has not been called.      * @param conf the job Configuration object      * @return the OutputJobInfo object      * @throws IOException the IO exception      */
+comment|/**    * Gets the HCatOuputJobInfo object by reading the Configuration and deserializing    * the string. If InputJobInfo is not present in the configuration, throws an    * exception since that means HCatOutputFormat.setOutput has not been called.    * @param conf the job Configuration object    * @return the OutputJobInfo object    * @throws IOException the IO exception    */
 specifier|public
 specifier|static
 name|OutputJobInfo
@@ -475,7 +479,7 @@ name|jobString
 argument_list|)
 return|;
 block|}
-comment|/**      * Configure the output storage handler      * @param jobContext the job context      * @throws IOException      */
+comment|/**    * Configure the output storage handler    * @param jobContext the job context    * @throws IOException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -505,7 +509,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Configure the output storage handler with allowing specification of missing dynamic partvals      * @param jobContext the job context      * @param dynamicPartVals      * @throws IOException      */
+comment|/**    * Configure the output storage handler with allowing specification of missing dynamic partvals    * @param jobContext the job context    * @param dynamicPartVals    * @throws IOException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -757,7 +761,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**      * Configure the output storage handler, with allowing specification      * of partvals from which it picks the dynamic partvals      * @param context the job context      * @param jobInfo the output job info      * @param fullPartSpec      * @throws IOException      */
+comment|/**    * Configure the output storage handler, with allowing specification    * of partvals from which it picks the dynamic partvals    * @param context the job context    * @param jobInfo the output job info    * @param fullPartSpec    * @throws IOException    */
 specifier|protected
 specifier|static
 name|void

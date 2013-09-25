@@ -393,6 +393,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|serde
+operator|.
+name|serdeConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|typeinfo
@@ -744,6 +760,10 @@ operator|.
 name|LoginException
 import|;
 end_import
+
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.common.HCatUtil} instead  */
+end_comment
 
 begin_class
 specifier|public
@@ -1554,7 +1574,7 @@ return|return
 name|tableSchema
 return|;
 block|}
-comment|/**      * return the partition columns from a table instance      *      * @param table the instance to extract partition columns from      * @return HCatSchema instance which contains the partition columns      * @throws IOException      */
+comment|/**    * return the partition columns from a table instance    *    * @param table the instance to extract partition columns from    * @return HCatSchema instance which contains the partition columns    * @throws IOException    */
 specifier|public
 specifier|static
 name|HCatSchema
@@ -1622,7 +1642,7 @@ return|return
 name|cols
 return|;
 block|}
-comment|/**      * Validate partition schema, checks if the column types match between the      * partition and the existing table schema. Returns the list of columns      * present in the partition but not in the table.      *      * @param table the table      * @param partitionSchema the partition schema      * @return the list of newly added fields      * @throws IOException Signals that an I/O exception has occurred.      */
+comment|/**    * Validate partition schema, checks if the column types match between the    * partition and the existing table schema. Returns the list of columns    * present in the partition but not in the table.    *    * @param table the table    * @param partitionSchema the partition schema    * @return the list of newly added fields    * @throws IOException Signals that an I/O exception has occurred.    */
 specifier|public
 specifier|static
 name|List
@@ -1960,7 +1980,7 @@ return|return
 name|newFields
 return|;
 block|}
-comment|/**      * Test if the first FsAction is more permissive than the second. This is      * useful in cases where we want to ensure that a file owner has more      * permissions than the group they belong to, for eg. More completely(but      * potentially more cryptically) owner-r>= group-r>= world-r : bitwise      * and-masked with 0444 => 444>= 440>= 400>= 000 owner-w>= group-w>=      * world-w : bitwise and-masked with&0222 => 222>= 220>= 200>= 000      * owner-x>= group-x>= world-x : bitwise and-masked with&0111 => 111>=      * 110>= 100>= 000      *      * @return true if first FsAction is more permissive than the second, false      *         if not.      */
+comment|/**    * Test if the first FsAction is more permissive than the second. This is    * useful in cases where we want to ensure that a file owner has more    * permissions than the group they belong to, for eg. More completely(but    * potentially more cryptically) owner-r>= group-r>= world-r : bitwise    * and-masked with 0444 => 444>= 440>= 400>= 000 owner-w>= group-w>=    * world-w : bitwise and-masked with&0222 => 222>= 220>= 200>= 000    * owner-x>= group-x>= world-x : bitwise and-masked with&0111 => 111>=    * 110>= 100>= 000    *    * @return true if first FsAction is more permissive than the second, false    *         if not.    */
 specifier|public
 specifier|static
 name|boolean
@@ -2078,7 +2098,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**      * Ensure that read or write permissions are not granted without also      * granting execute permissions. Essentially, r-- , rw- and -w- are invalid,      * r-x, -wx, rwx, ---, --x are valid      *      * @param perms The FsAction to verify      * @return true if the presence of read or write permission is accompanied      *         by execute permissions      */
+comment|/**    * Ensure that read or write permissions are not granted without also    * granting execute permissions. Essentially, r-- , rw- and -w- are invalid,    * r-x, -wx, rwx, ---, --x are valid    *    * @param perms The FsAction to verify    * @return true if the presence of read or write permission is accompanied    *         by execute permissions    */
 specifier|public
 specifier|static
 name|boolean
@@ -2271,7 +2291,7 @@ return|return
 name|t
 return|;
 block|}
-comment|/**      * Create an instance of a storage handler defined in storerInfo. If one cannot be found      * then FosterStorageHandler is used to encapsulate the InputFormat, OutputFormat and SerDe.      * This StorageHandler assumes the other supplied storage artifacts are for a file-based storage system.      * @param conf job's configuration will be used to configure the Configurable StorageHandler      * @param storerInfo StorerInfo to definining the StorageHandler and InputFormat, OutputFormat and SerDe      * @return storageHandler instance      * @throws IOException      */
+comment|/**    * Create an instance of a storage handler defined in storerInfo. If one cannot be found    * then FosterStorageHandler is used to encapsulate the InputFormat, OutputFormat and SerDe.    * This StorageHandler assumes the other supplied storage artifacts are for a file-based storage system.    * @param conf job's configuration will be used to configure the Configurable StorageHandler    * @param storerInfo StorerInfo to definining the StorageHandler and InputFormat, OutputFormat and SerDe    * @return storageHandler instance    * @throws IOException    */
 specifier|public
 specifier|static
 name|HCatStorageHandler
@@ -2356,7 +2376,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**      * Create an instance of a storage handler. If storageHandler == null,      * then surrrogate StorageHandler is used to encapsulate the InputFormat, OutputFormat and SerDe.      * This StorageHandler assumes the other supplied storage artifacts are for a file-based storage system.      * @param conf job's configuration will be used to configure the Configurable StorageHandler      * @param storageHandler fully qualified class name of the desired StorageHandle instance      * @param serDe fully qualified class name of the desired SerDe instance      * @param inputFormat fully qualified class name of the desired InputFormat instance      * @param outputFormat fully qualified class name of the desired outputFormat instance      * @return storageHandler instance      * @throws IOException      */
+comment|/**    * Create an instance of a storage handler. If storageHandler == null,    * then surrrogate StorageHandler is used to encapsulate the InputFormat, OutputFormat and SerDe.    * This StorageHandler assumes the other supplied storage artifacts are for a file-based storage system.    * @param conf job's configuration will be used to configure the Configurable StorageHandler    * @param storageHandler fully qualified class name of the desired StorageHandle instance    * @param serDe fully qualified class name of the desired SerDe instance    * @param inputFormat fully qualified class name of the desired InputFormat instance    * @param outputFormat fully qualified class name of the desired outputFormat instance    * @return storageHandler instance    * @throws IOException    */
 specifier|public
 specifier|static
 name|HCatStorageHandler
@@ -2632,27 +2652,9 @@ name|InputJobInfo
 name|inputJobInfo
 parameter_list|)
 block|{
-name|TableDesc
-name|tableDesc
+name|Properties
+name|props
 init|=
-operator|new
-name|TableDesc
-argument_list|(
-name|storageHandler
-operator|.
-name|getSerDeClass
-argument_list|()
-argument_list|,
-name|storageHandler
-operator|.
-name|getInputFormatClass
-argument_list|()
-argument_list|,
-name|storageHandler
-operator|.
-name|getOutputFormatClass
-argument_list|()
-argument_list|,
 name|inputJobInfo
 operator|.
 name|getTableInfo
@@ -2663,6 +2665,41 @@ argument_list|()
 operator|.
 name|getProperties
 argument_list|()
+decl_stmt|;
+name|props
+operator|.
+name|put
+argument_list|(
+name|serdeConstants
+operator|.
+name|SERIALIZATION_LIB
+argument_list|,
+name|storageHandler
+operator|.
+name|getSerDeClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|TableDesc
+name|tableDesc
+init|=
+operator|new
+name|TableDesc
+argument_list|(
+name|storageHandler
+operator|.
+name|getInputFormatClass
+argument_list|()
+argument_list|,
+name|storageHandler
+operator|.
+name|getOutputFormatClass
+argument_list|()
+argument_list|,
+name|props
 argument_list|)
 decl_stmt|;
 if|if
@@ -2783,26 +2820,9 @@ parameter_list|)
 block|{
 comment|//TODO replace IgnoreKeyTextOutputFormat with a
 comment|//HiveOutputFormatWrapper in StorageHandler
-name|TableDesc
-name|tableDesc
+name|Properties
+name|props
 init|=
-operator|new
-name|TableDesc
-argument_list|(
-name|storageHandler
-operator|.
-name|getSerDeClass
-argument_list|()
-argument_list|,
-name|storageHandler
-operator|.
-name|getInputFormatClass
-argument_list|()
-argument_list|,
-name|IgnoreKeyTextOutputFormat
-operator|.
-name|class
-argument_list|,
 name|outputJobInfo
 operator|.
 name|getTableInfo
@@ -2813,6 +2833,40 @@ argument_list|()
 operator|.
 name|getProperties
 argument_list|()
+decl_stmt|;
+name|props
+operator|.
+name|put
+argument_list|(
+name|serdeConstants
+operator|.
+name|SERIALIZATION_LIB
+argument_list|,
+name|storageHandler
+operator|.
+name|getSerDeClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|TableDesc
+name|tableDesc
+init|=
+operator|new
+name|TableDesc
+argument_list|(
+name|storageHandler
+operator|.
+name|getInputFormatClass
+argument_list|()
+argument_list|,
+name|IgnoreKeyTextOutputFormat
+operator|.
+name|class
+argument_list|,
+name|props
 argument_list|)
 decl_stmt|;
 if|if
@@ -2971,7 +3025,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Replace the contents of dest with the contents of src      * @param src      * @param dest      */
+comment|/**    * Replace the contents of dest with the contents of src    * @param src    * @param dest    */
 specifier|public
 specifier|static
 name|void
@@ -3021,7 +3075,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Get or create a hive client depending on whether it exits in cache or not      * @param hiveConf The hive configuration      * @return the client      * @throws MetaException When HiveMetaStoreClient couldn't be created      * @throws IOException      */
+comment|/**    * Get or create a hive client depending on whether it exits in cache or not    * @param hiveConf The hive configuration    * @return the client    * @throws MetaException When HiveMetaStoreClient couldn't be created    * @throws IOException    */
 specifier|public
 specifier|static
 name|HiveMetaStoreClient

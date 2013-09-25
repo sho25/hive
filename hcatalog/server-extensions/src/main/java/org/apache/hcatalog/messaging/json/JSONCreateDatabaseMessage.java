@@ -46,7 +46,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * JSON Implementation of CreateDatabaseMessage.  */
+comment|/**  * JSON Implementation of CreateDatabaseMessage.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.json.JSONCreateDatabaseMessage} instead  */
 end_comment
 
 begin_class
@@ -70,7 +70,7 @@ name|JsonProperty
 name|Long
 name|timestamp
 decl_stmt|;
-comment|/**      * Default constructor, required for Jackson.      */
+comment|/**    * Default constructor, required for Jackson.    */
 specifier|public
 name|JSONCreateDatabaseMessage
 parameter_list|()

@@ -282,7 +282,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**          * Find the _Fields constant that matches fieldId, or null if its not found.          */
+comment|/**      * Find the _Fields constant that matches fieldId, or null if its not found.      */
 specifier|public
 specifier|static
 name|_Fields
@@ -310,7 +310,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**          * Find the _Fields constant that matches fieldId, throwing an exception          * if it is not found.          */
+comment|/**      * Find the _Fields constant that matches fieldId, throwing an exception      * if it is not found.      */
 specifier|public
 specifier|static
 name|_Fields
@@ -349,7 +349,7 @@ return|return
 name|fields
 return|;
 block|}
-comment|/**          * Find the _Fields constant that matches name, or null if its not found.          */
+comment|/**      * Find the _Fields constant that matches name, or null if its not found.      */
 specifier|public
 specifier|static
 name|_Fields
@@ -591,7 +591,7 @@ block|}
 specifier|public
 name|StoreFamilyRevisionList
 parameter_list|()
-block|{     }
+block|{   }
 specifier|public
 name|StoreFamilyRevisionList
 parameter_list|(
@@ -612,7 +612,7 @@ operator|=
 name|revisionList
 expr_stmt|;
 block|}
-comment|/**      * Performs a deep copy on<i>other</i>.      */
+comment|/**    * Performs a deep copy on<i>other</i>.    */
 specifier|public
 name|StoreFamilyRevisionList
 parameter_list|(

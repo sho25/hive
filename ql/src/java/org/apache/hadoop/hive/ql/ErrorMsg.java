@@ -1856,6 +1856,15 @@ literal|30011
 argument_list|,
 literal|"Partition protected from being dropped"
 argument_list|)
+block|,
+name|COLUMNSTATSCOLLECTOR_INVALID_COLUMN
+argument_list|(
+literal|30012
+argument_list|,
+literal|"Column statistics are not supported "
+operator|+
+literal|"for partition columns"
+argument_list|)
 block|,     ;
 specifier|private
 name|int

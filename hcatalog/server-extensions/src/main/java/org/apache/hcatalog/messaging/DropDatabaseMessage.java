@@ -16,7 +16,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * HCat message sent when a Database is dropped from HCatalog.  */
+comment|/**  * HCat message sent when a Database is dropped from HCatalog.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.DropDatabaseMessage} instead  */
 end_comment
 
 begin_class

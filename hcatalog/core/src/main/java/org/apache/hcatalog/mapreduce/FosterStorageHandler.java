@@ -209,6 +209,20 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
+name|JobConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|OutputFormat
 import|;
 end_import
@@ -282,7 +296,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This class is used to encapsulate the InputFormat, OutputFormat and SerDe  *  artifacts of tables which don't define a SerDe. This StorageHandler assumes  *  the supplied storage artifacts are for a file-based storage system.  */
+comment|/**  *  This class is used to encapsulate the InputFormat, OutputFormat and SerDe  *  artifacts of tables which don't define a SerDe. This StorageHandler assumes  *  the supplied storage artifacts are for a file-based storage system.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.FosterStorageHandler} instead  */
 end_comment
 
 begin_class
@@ -531,7 +545,7 @@ name|String
 argument_list|>
 name|jobProperties
 parameter_list|)
-block|{      }
+block|{    }
 annotation|@
 name|Override
 specifier|public
@@ -631,12 +645,6 @@ name|outputLocation
 decl_stmt|;
 if|if
 condition|(
-operator|(
-name|dynHash
-operator|==
-literal|null
-operator|)
-operator|&&
 name|Boolean
 operator|.
 name|valueOf
@@ -673,8 +681,7 @@ operator|>
 literal|0
 condition|)
 block|{
-comment|// honor custom location for external table apart from what metadata specifies
-comment|// only if we're not using dynamic partitioning - see HIVE-5011
+comment|// honor external table that specifies the location
 name|outputLocation
 operator|=
 name|jobInfo
@@ -972,6 +979,25 @@ operator|new
 name|DefaultHiveAuthorizationProvider
 argument_list|()
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|configureJobConf
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|JobConf
+name|jobConf
+parameter_list|)
+block|{
+comment|//do nothing by default
+comment|//EK: added the same (no-op) implementation as in
+comment|// org.apache.hive.hcatalog.DefaultStorageHandler (hive 0.12)
+comment|// this is needed to get 0.11 API compat layer to work
+comment|// see HIVE-4896
 block|}
 block|}
 end_class

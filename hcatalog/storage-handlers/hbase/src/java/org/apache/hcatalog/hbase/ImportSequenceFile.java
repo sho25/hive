@@ -387,6 +387,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|hcatalog
+operator|.
+name|mapreduce
+operator|.
+name|HCatMapRedUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -1094,7 +1110,7 @@ return|return
 name|job
 return|;
 block|}
-comment|/**      * Method to run the Importer MapReduce Job. Normally will be called by another MR job      * during OutputCommitter.commitJob().      * @param parentContext JobContext of the parent job      * @param tableName name of table to bulk load data into      * @param InputDir path of SequenceFile formatted data to read      * @param scratchDir temporary path for the Importer MR job to build the HFiles which will be imported      * @return      */
+comment|/**    * Method to run the Importer MapReduce Job. Normally will be called by another MR job    * during OutputCommitter.commitJob().    * @param parentContext JobContext of the parent job    * @param tableName name of table to bulk load data into    * @param InputDir path of SequenceFile formatted data to read    * @param scratchDir temporary path for the Importer MR job to build the HFiles which will be imported    * @return    */
 specifier|static
 name|boolean
 name|runJob
@@ -1419,14 +1435,6 @@ argument_list|()
 operator|.
 name|getOutputCommitter
 argument_list|(
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
 name|HCatMapRedUtil
 operator|.
 name|createTaskAttemptContext

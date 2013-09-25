@@ -551,6 +551,10 @@ name|Properties
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.InternalUtil} instead  */
+end_comment
+
 begin_class
 class|class
 name|InternalUtil
@@ -1275,7 +1279,7 @@ name|context
 argument_list|)
 return|;
 block|}
-comment|/**      * Casts an InputSplit into a HCatSplit, providing a useful error message if the cast fails.      * @param split the InputSplit      * @return the HCatSplit      * @throws IOException      */
+comment|/**    * Casts an InputSplit into a HCatSplit, providing a useful error message if the cast fails.    * @param split the InputSplit    * @return the HCatSplit    * @throws IOException    */
 specifier|public
 specifier|static
 name|HCatSplit

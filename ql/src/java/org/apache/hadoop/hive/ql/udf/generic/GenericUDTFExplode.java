@@ -441,6 +441,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
+specifier|transient
 specifier|final
 name|Object
 index|[]
@@ -453,6 +454,7 @@ literal|1
 index|]
 decl_stmt|;
 specifier|private
+specifier|transient
 specifier|final
 name|Object
 index|[]

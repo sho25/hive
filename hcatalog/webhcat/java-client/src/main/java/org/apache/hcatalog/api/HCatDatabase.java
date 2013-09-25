@@ -44,7 +44,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HCatDatabase is wrapper class around org.apache.hadoop.hive.metastore.api.Database.  */
+comment|/**  * HCatDatabase is wrapper class around org.apache.hadoop.hive.metastore.api.Database.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatDatabase} instead  */
 end_comment
 
 begin_class
@@ -116,7 +116,7 @@ name|getDescription
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Gets the database name.      *      * @return the database name      */
+comment|/**    * Gets the database name.    *    * @return the database name    */
 specifier|public
 name|String
 name|getName
@@ -126,7 +126,7 @@ return|return
 name|dbName
 return|;
 block|}
-comment|/**      * Gets the dB location.      *      * @return the dB location      */
+comment|/**    * Gets the dB location.    *    * @return the dB location    */
 specifier|public
 name|String
 name|getLocation
@@ -136,7 +136,7 @@ return|return
 name|dbLocation
 return|;
 block|}
-comment|/**      * Gets the comment.      *      * @return the comment      */
+comment|/**    * Gets the comment.    *    * @return the comment    */
 specifier|public
 name|String
 name|getComment
@@ -146,7 +146,7 @@ return|return
 name|comment
 return|;
 block|}
-comment|/**      * Gets the dB properties.      *      * @return the dB properties      */
+comment|/**    * Gets the dB properties.    *    * @return the dB properties    */
 specifier|public
 name|Map
 argument_list|<

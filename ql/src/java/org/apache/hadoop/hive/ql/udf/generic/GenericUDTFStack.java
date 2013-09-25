@@ -251,6 +251,8 @@ name|ObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
+specifier|private
+specifier|transient
 name|Object
 index|[]
 name|forwardObj

@@ -227,6 +227,8 @@ operator|.
 name|error
 argument_list|(
 literal|"Generating output obj inspector from dummy object error"
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 name|e

@@ -71,22 +71,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|WritableComparable
@@ -285,8 +269,24 @@ name|HCatInputFormat
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
 begin_comment
-comment|/**  * This reader reads via {@link HCatInputFormat}  *  */
+comment|/**  * This reader reads via {@link HCatInputFormat}  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.impl.HCatInputFormatReader} instead  */
 end_comment
 
 begin_class

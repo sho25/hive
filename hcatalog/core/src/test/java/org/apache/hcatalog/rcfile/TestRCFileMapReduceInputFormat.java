@@ -221,22 +221,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|LongWritable
@@ -347,6 +331,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -364,7 +364,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TestRCFile.  *  */
+comment|/**  * TestRCFile.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.rcfile.TestRCFileMapReduceInputFormat} instead  */
 end_comment
 
 begin_class
@@ -496,7 +496,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 block|}
 specifier|private
 specifier|static
@@ -895,7 +895,7 @@ parameter_list|(
 name|UnsupportedEncodingException
 name|e
 parameter_list|)
-block|{         }
+block|{     }
 block|}
 comment|/** For debugging and testing. */
 specifier|public

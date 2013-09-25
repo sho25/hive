@@ -71,22 +71,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|WritableComparable
@@ -315,8 +299,24 @@ name|OutputJobInfo
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
 begin_comment
-comment|/**  * This writer writes via {@link HCatOutputFormat}  *  */
+comment|/**  * This writer writes via {@link HCatOutputFormat}  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.impl.HCatOutputFormatWriter} instead  */
 end_comment
 
 begin_class

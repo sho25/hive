@@ -20,6 +20,30 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
@@ -82,30 +106,6 @@ operator|.
 name|junit
 operator|.
 name|Test
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertTrue
 import|;
 end_import
 
@@ -247,7 +247,14 @@ operator|new
 name|AvroDeserializer
 operator|.
 name|SchemaReEncoder
+argument_list|(
+name|record
+operator|.
+name|getSchema
 argument_list|()
+argument_list|,
+name|evolvedSchema
+argument_list|)
 decl_stmt|;
 name|GenericRecord
 name|r2
@@ -257,8 +264,6 @@ operator|.
 name|reencode
 argument_list|(
 name|record
-argument_list|,
-name|evolvedSchema
 argument_list|)
 decl_stmt|;
 name|assertTrue
@@ -407,6 +412,21 @@ name|record
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|schemaReEncoder
+operator|=
+operator|new
+name|AvroDeserializer
+operator|.
+name|SchemaReEncoder
+argument_list|(
+name|record
+operator|.
+name|getSchema
+argument_list|()
+argument_list|,
+name|evolvedSchema2
+argument_list|)
+expr_stmt|;
 name|r2
 operator|=
 name|schemaReEncoder
@@ -414,8 +434,6 @@ operator|.
 name|reencode
 argument_list|(
 name|record
-argument_list|,
-name|evolvedSchema2
 argument_list|)
 expr_stmt|;
 name|assertTrue

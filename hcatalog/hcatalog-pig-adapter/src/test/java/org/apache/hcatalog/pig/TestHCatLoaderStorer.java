@@ -192,7 +192,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Test that require both HCatLoader and HCatStorer. For read or write only functionality,  * please consider @{link TestHCatLoader} or @{link TestHCatStorer}.  */
+comment|/**  * Test that require both HCatLoader and HCatStorer. For read or write only functionality,  * please consider @{link TestHCatLoader} or @{link TestHCatStorer}.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.TestHCatLoaderStorer} instead  */
 end_comment
 
 begin_class
@@ -202,7 +202,7 @@ name|TestHCatLoaderStorer
 extends|extends
 name|HCatBaseTest
 block|{
-comment|/**      * Ensure Pig can read/write tinyint/smallint columns.      */
+comment|/**    * Ensure Pig can read/write tinyint/smallint columns.    */
 annotation|@
 name|Test
 specifier|public

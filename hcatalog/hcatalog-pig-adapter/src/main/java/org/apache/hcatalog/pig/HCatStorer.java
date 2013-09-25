@@ -99,22 +99,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|mapreduce
 operator|.
 name|Job
@@ -241,6 +225,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|pig
 operator|.
 name|PigException
@@ -326,7 +326,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HCatStorer.  *  */
+comment|/**  * HCatStorer.  *  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.HCatStorer} instead  */
 end_comment
 
 begin_class

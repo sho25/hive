@@ -535,6 +535,10 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.PigHCatUtil} instead  */
+end_comment
+
 begin_class
 class|class
 name|PigHCatUtil
@@ -619,7 +623,7 @@ name|pigHasBooleanSupport
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * Determine if the current Pig version supports boolean columns. This works around a      * dependency conflict preventing HCatalog from requiring a version of Pig with boolean      * field support and should be removed once HCATALOG-466 has been resolved.      */
+comment|/**    * Determine if the current Pig version supports boolean columns. This works around a    * dependency conflict preventing HCatalog from requiring a version of Pig with boolean    * field support and should be removed once HCATALOG-466 has been resolved.    */
 static|static
 block|{
 comment|// DETAILS:
@@ -692,16 +696,6 @@ literal|"=true configuration parameter."
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-specifier|static
-specifier|public
-name|boolean
-name|pigHasBooleanSupport
-parameter_list|()
-block|{
-return|return
-name|pigHasBooleanSupport
-return|;
 block|}
 specifier|static
 specifier|public
@@ -1891,7 +1885,7 @@ return|return
 name|s
 return|;
 block|}
-comment|/**      * @param hfs the field schema of the column      * @return corresponding pig type      * @throws IOException      */
+comment|/**    * @param hfs the field schema of the column    * @return corresponding pig type    * @throws IOException    */
 specifier|static
 specifier|public
 name|byte

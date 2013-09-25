@@ -26,7 +26,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Copy of C++ STL pair container.  */
+comment|/**  * Copy of C++ STL pair container.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.Pair} instead  */
 end_comment
 
 begin_class
@@ -57,7 +57,7 @@ specifier|public
 name|U
 name|second
 decl_stmt|;
-comment|/**      * @param f First element in pair.      * @param s Second element in pair.      */
+comment|/**    * @param f First element in pair.    * @param s Second element in pair.    */
 specifier|public
 name|Pair
 parameter_list|(
@@ -77,7 +77,7 @@ operator|=
 name|s
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)      * @see java.lang.Object#toString()      */
+comment|/* (non-Javadoc)    * @see java.lang.Object#toString()    */
 annotation|@
 name|Override
 specifier|public

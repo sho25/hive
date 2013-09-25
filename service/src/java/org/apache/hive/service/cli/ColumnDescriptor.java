@@ -224,6 +224,8 @@ name|int
 name|position
 parameter_list|)
 block|{
+comment|// Current usage looks like it's only for metadata columns, but if that changes then
+comment|// this method may need to require a type qualifiers aruments.
 return|return
 operator|new
 name|ColumnDescriptor

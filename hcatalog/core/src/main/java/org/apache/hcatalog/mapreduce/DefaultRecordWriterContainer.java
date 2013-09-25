@@ -160,7 +160,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Part of the DefaultOutput*Container classes  * See {@link DefaultOutputFormatContainer} for more information  */
+comment|/**  * Part of the DefaultOutput*Container classes  * See {@link DefaultOutputFormatContainer} for more information  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.DefaultRecordWriterContainer} instead  */
 end_comment
 
 begin_class
@@ -189,7 +189,7 @@ specifier|final
 name|ObjectInspector
 name|hcatRecordOI
 decl_stmt|;
-comment|/**      * @param context current JobContext      * @param baseRecordWriter RecordWriter to contain      * @throws IOException      * @throws InterruptedException      */
+comment|/**    * @param context current JobContext    * @param baseRecordWriter RecordWriter to contain    * @throws IOException    * @throws InterruptedException    */
 specifier|public
 name|DefaultRecordWriterContainer
 parameter_list|(

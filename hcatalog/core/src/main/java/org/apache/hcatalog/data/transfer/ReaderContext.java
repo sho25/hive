@@ -134,7 +134,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class will contain information of different {@link InputSplit} obtained  * at master node and configuration. This class implements  * {@link Externalizable} so it can be serialized using standard java  * mechanisms.  */
+comment|/**  * This class will contain information of different {@link InputSplit} obtained  * at master node and configuration. This class implements  * {@link Externalizable} so it can be serialized using standard java  * mechanisms.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.transfer.ReaderContext} instead  */
 end_comment
 
 begin_class

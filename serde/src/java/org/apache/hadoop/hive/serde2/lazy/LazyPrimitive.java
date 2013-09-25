@@ -277,6 +277,14 @@ parameter_list|)
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|String
 name|byteData
 init|=
@@ -305,8 +313,15 @@ operator|+
 literal|" data type range so converted to null. Given data is :"
 operator|+
 name|byteData
+argument_list|,
+operator|new
+name|Exception
+argument_list|(
+literal|"For debugging purposes"
+argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

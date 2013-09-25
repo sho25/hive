@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|List
 import|;
 end_import
 
@@ -193,24 +193,6 @@ decl_stmt|;
 name|int
 name|lengthNullSequence
 decl_stmt|;
-comment|/**    * Construct a ColumnarStruct object with the TypeInfo. It creates the first    * level object at the first place    *    * @param oi    *          the ObjectInspector representing the type of this LazyStruct.    */
-specifier|public
-name|ColumnarStruct
-parameter_list|(
-name|ObjectInspector
-name|oi
-parameter_list|)
-block|{
-name|this
-argument_list|(
-name|oi
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|)
-expr_stmt|;
-block|}
 comment|/**    * Construct a ColumnarStruct object with the TypeInfo. It creates the first    * level object at the first place    *    * @param oi    *          the ObjectInspector representing the type of this LazyStruct.    * @param notSkippedColumnIDs    *          the column ids that should not be skipped    */
 specifier|public
 name|ColumnarStruct
@@ -218,7 +200,7 @@ parameter_list|(
 name|ObjectInspector
 name|oi
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|Integer
 argument_list|>

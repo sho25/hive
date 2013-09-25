@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * DefaultListObjectInspector works on list data that is stored as a Java List  * or Java Array object.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
+comment|/**  * DefaultListObjectInspector works on list data that is stored as a Java List  * or Java Array object.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -50,9 +50,18 @@ name|StandardListObjectInspector
 implements|implements
 name|SettableListObjectInspector
 block|{
+specifier|private
 name|ObjectInspector
 name|listElementObjectInspector
 decl_stmt|;
+specifier|protected
+name|StandardListObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 comment|/**    * Call ObjectInspectorFactory.getStandardListObjectInspector instead.    */
 specifier|protected
 name|StandardListObjectInspector

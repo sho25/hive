@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * StandardMapObjectInspector works on map data that is stored as a Java Map  * object. Note: the key object of the map must support equals and hashCode by  * itself.  *   * We also plan to have a GeneralMapObjectInspector which can work on map with  * key objects that does not support equals and hashCode. That will require us  * to store InspectableObject as the key, which will have overridden equals and  * hashCode methods.  *   * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
+comment|/**  * StandardMapObjectInspector works on map data that is stored as a Java Map  * object. Note: the key object of the map must support equals and hashCode by  * itself.  *  * We also plan to have a GeneralMapObjectInspector which can work on map with  * key objects that does not support equals and hashCode. That will require us  * to store InspectableObject as the key, which will have overridden equals and  * hashCode methods.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
 
 begin_class
@@ -50,12 +50,22 @@ name|StandardMapObjectInspector
 implements|implements
 name|SettableMapObjectInspector
 block|{
+specifier|private
 name|ObjectInspector
 name|mapKeyObjectInspector
 decl_stmt|;
+specifier|private
 name|ObjectInspector
 name|mapValueObjectInspector
 decl_stmt|;
+specifier|protected
+name|StandardMapObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 comment|/**    * Call ObjectInspectorFactory.getStandardMapObjectInspector instead.    */
 specifier|protected
 name|StandardMapObjectInspector

@@ -44,7 +44,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  This class will contain an implementation of an OutputCommitter.  *  See {@link OutputFormatContainer} for more information about containers.  */
+comment|/**  *  This class will contain an implementation of an OutputCommitter.  *  See {@link OutputFormatContainer} for more information about containers.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.mapreduce.OutputCommitterContainer} instead  */
 end_comment
 
 begin_class
@@ -67,7 +67,7 @@ operator|.
 name|OutputCommitter
 name|committer
 decl_stmt|;
-comment|/**      * @param context current JobContext      * @param committer OutputCommitter that this instance will contain      */
+comment|/**    * @param context current JobContext    * @param committer OutputCommitter that this instance will contain    */
 specifier|public
 name|OutputCommitterContainer
 parameter_list|(
@@ -93,7 +93,7 @@ operator|=
 name|committer
 expr_stmt|;
 block|}
-comment|/**      * @return underlying OutputCommitter      */
+comment|/**    * @return underlying OutputCommitter    */
 specifier|public
 name|OutputCommitter
 name|getBaseOutputCommitter

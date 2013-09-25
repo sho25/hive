@@ -164,7 +164,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The HCatPartition is a wrapper around org.apache.hadoop.hive.metastore.api.Partition.  */
+comment|/**  * The HCatPartition is a wrapper around org.apache.hadoop.hive.metastore.api.Partition.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.api.HCatPartition} instead  */
 end_comment
 
 begin_class
@@ -326,7 +326,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Gets the table name.      *      * @return the table name      */
+comment|/**    * Gets the table name.    *    * @return the table name    */
 specifier|public
 name|String
 name|getTableName
@@ -338,7 +338,7 @@ operator|.
 name|tableName
 return|;
 block|}
-comment|/**      * Gets the database name.      *      * @return the database name      */
+comment|/**    * Gets the database name.    *    * @return the database name    */
 specifier|public
 name|String
 name|getDatabaseName
@@ -350,7 +350,7 @@ operator|.
 name|dbName
 return|;
 block|}
-comment|/**      * Gets the columns of the table.      *      * @return the columns      */
+comment|/**    * Gets the columns of the table.    *    * @return the columns    */
 specifier|public
 name|List
 argument_list|<
@@ -365,7 +365,7 @@ operator|.
 name|tableCols
 return|;
 block|}
-comment|/**      * Gets the input format.      *      * @return the input format      */
+comment|/**    * Gets the input format.    *    * @return the input format    */
 specifier|public
 name|String
 name|getInputFormat
@@ -380,7 +380,7 @@ name|getInputFormat
 argument_list|()
 return|;
 block|}
-comment|/**      * Gets the output format.      *      * @return the output format      */
+comment|/**    * Gets the output format.    *    * @return the output format    */
 specifier|public
 name|String
 name|getOutputFormat
@@ -395,7 +395,7 @@ name|getOutputFormat
 argument_list|()
 return|;
 block|}
-comment|/**      * Gets the storage handler.      *      * @return the storage handler      */
+comment|/**    * Gets the storage handler.    *    * @return the storage handler    */
 specifier|public
 name|String
 name|getStorageHandler
@@ -429,7 +429,7 @@ name|META_TABLE_STORAGE
 argument_list|)
 return|;
 block|}
-comment|/**      * Gets the location.      *      * @return the location      */
+comment|/**    * Gets the location.    *    * @return the location    */
 specifier|public
 name|String
 name|getLocation
@@ -444,7 +444,7 @@ name|getLocation
 argument_list|()
 return|;
 block|}
-comment|/**      * Gets the serde.      *      * @return the serde      */
+comment|/**    * Gets the serde.    *    * @return the serde    */
 specifier|public
 name|String
 name|getSerDe
@@ -478,7 +478,7 @@ operator|.
 name|parameters
 return|;
 block|}
-comment|/**      * Gets the last access time.      *      * @return the last access time      */
+comment|/**    * Gets the last access time.    *    * @return the last access time    */
 specifier|public
 name|int
 name|getLastAccessTime
@@ -490,7 +490,7 @@ operator|.
 name|lastAccessTime
 return|;
 block|}
-comment|/**      * Gets the creates the time.      *      * @return the creates the time      */
+comment|/**    * Gets the creates the time.    *    * @return the creates the time    */
 specifier|public
 name|int
 name|getCreateTime
@@ -502,7 +502,7 @@ operator|.
 name|createTime
 return|;
 block|}
-comment|/**      * Gets the values.      *      * @return the values      */
+comment|/**    * Gets the values.    *    * @return the values    */
 specifier|public
 name|List
 argument_list|<
@@ -517,7 +517,7 @@ operator|.
 name|values
 return|;
 block|}
-comment|/**      * Gets the bucket columns.      *      * @return the bucket columns      */
+comment|/**    * Gets the bucket columns.    *    * @return the bucket columns    */
 specifier|public
 name|List
 argument_list|<
@@ -535,7 +535,7 @@ name|getBucketCols
 argument_list|()
 return|;
 block|}
-comment|/**      * Gets the number of buckets.      *      * @return the number of buckets      */
+comment|/**    * Gets the number of buckets.    *    * @return the number of buckets    */
 specifier|public
 name|int
 name|getNumBuckets
@@ -550,7 +550,7 @@ name|getNumBuckets
 argument_list|()
 return|;
 block|}
-comment|/**      * Gets the sort columns.      *      * @return the sort columns      */
+comment|/**    * Gets the sort columns.    *    * @return the sort columns    */
 specifier|public
 name|List
 argument_list|<

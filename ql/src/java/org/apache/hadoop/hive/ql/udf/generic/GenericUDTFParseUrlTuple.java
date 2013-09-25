@@ -27,7 +27,7 @@ name|java
 operator|.
 name|net
 operator|.
-name|URL
+name|MalformedURLException
 import|;
 end_import
 
@@ -37,7 +37,7 @@ name|java
 operator|.
 name|net
 operator|.
-name|MalformedURLException
+name|URL
 import|;
 end_import
 
@@ -59,7 +59,7 @@ name|util
 operator|.
 name|regex
 operator|.
-name|Pattern
+name|Matcher
 import|;
 end_import
 
@@ -71,7 +71,7 @@ name|util
 operator|.
 name|regex
 operator|.
-name|Matcher
+name|Pattern
 import|;
 end_import
 
@@ -388,11 +388,15 @@ index|[]
 name|cols
 decl_stmt|;
 comment|// object pool of non-null Text, avoid creating objects all the time
+specifier|private
+specifier|transient
 name|Object
 index|[]
 name|nullCols
 decl_stmt|;
 comment|// array of null column values
+specifier|private
+specifier|transient
 name|ObjectInspector
 index|[]
 name|inputOIs
@@ -408,16 +412,22 @@ name|seenErrors
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+specifier|transient
 name|URL
 name|url
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+specifier|transient
 name|Pattern
 name|p
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+specifier|transient
 name|String
 name|lastKey
 init|=
@@ -1269,9 +1279,11 @@ name|partnames
 operator|.
 name|length
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 switch|switch
 condition|(
 name|partnames

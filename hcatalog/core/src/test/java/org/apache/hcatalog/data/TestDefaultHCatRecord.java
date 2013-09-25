@@ -221,6 +221,10 @@ name|TestCase
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.data.TestDefaultHCatRecord} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -517,7 +521,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Test get and set calls with type      * @throws HCatException      */
+comment|/**    * Test get and set calls with type    * @throws HCatException    */
 specifier|public
 name|void
 name|testGetSetByType1
@@ -751,7 +755,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Test get and set calls with type      * @throws HCatException      */
+comment|/**    * Test get and set calls with type    * @throws HCatException    */
 specifier|public
 name|void
 name|testGetSetByType2

@@ -74,6 +74,14 @@ specifier|private
 name|ShortWritable
 name|value
 decl_stmt|;
+specifier|protected
+name|WritableConstantShortObjectInspector
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 name|WritableConstantShortObjectInspector
 parameter_list|(
 name|ShortWritable

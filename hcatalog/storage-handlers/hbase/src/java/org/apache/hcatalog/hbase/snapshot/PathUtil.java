@@ -40,7 +40,7 @@ name|CLOCK_NODE
 init|=
 literal|"/clock"
 decl_stmt|;
-comment|/**      * This method returns the data path associated with the currently      * running transactions of a given table and column/column family.      * @param baseDir      * @param tableName      * @param columnFamily      * @return The path of the running transactions data.      */
+comment|/**    * This method returns the data path associated with the currently    * running transactions of a given table and column/column family.    * @param baseDir    * @param tableName    * @param columnFamily    * @return The path of the running transactions data.    */
 specifier|static
 name|String
 name|getRunningTxnInfoPath
@@ -82,7 +82,7 @@ return|return
 name|path
 return|;
 block|}
-comment|/**      * This method returns the data path associated with the aborted      * transactions of a given table and column/column family.      * @param baseDir The base directory for revision management.      * @param tableName The name of the table.      * @param columnFamily      * @return The path of the aborted transactions data.      */
+comment|/**    * This method returns the data path associated with the aborted    * transactions of a given table and column/column family.    * @param baseDir The base directory for revision management.    * @param tableName The name of the table.    * @param columnFamily    * @return The path of the aborted transactions data.    */
 specifier|static
 name|String
 name|getAbortInformationPath
@@ -124,7 +124,7 @@ return|return
 name|path
 return|;
 block|}
-comment|/**      * Gets the revision id node for a given table.      *      * @param baseDir the base dir for revision management.      * @param tableName the table name      * @return the revision id node path.      */
+comment|/**    * Gets the revision id node for a given table.    *    * @param baseDir the base dir for revision management.    * @param tableName the table name    * @return the revision id node path.    */
 specifier|static
 name|String
 name|getRevisionIDNode
@@ -159,7 +159,7 @@ return|return
 name|revisionIDNode
 return|;
 block|}
-comment|/**      * Gets the lock management node for any znode that needs to be locked.      *      * @param path the path of the znode.      * @return the lock management node path.      */
+comment|/**    * Gets the lock management node for any znode that needs to be locked.    *    * @param path the path of the znode.    * @return the lock management node path.    */
 specifier|static
 name|String
 name|getLockManagementNode
@@ -179,7 +179,7 @@ return|return
 name|lockNode
 return|;
 block|}
-comment|/**      * This method returns the base path for the transaction data.      *      * @param baseDir The base dir for revision management.      * @return The base path for the transaction data.      */
+comment|/**    * This method returns the base path for the transaction data.    *    * @param baseDir The base dir for revision management.    * @return The base path for the transaction data.    */
 specifier|static
 name|String
 name|getTransactionBasePath
@@ -199,7 +199,7 @@ return|return
 name|txnBaseNode
 return|;
 block|}
-comment|/**      * Gets the txn data path for a given table.      *      * @param baseDir the base dir for revision management.      * @param tableName the table name      * @return the txn data path for the table.      */
+comment|/**    * Gets the txn data path for a given table.    *    * @param baseDir the base dir for revision management.    * @param tableName the table name    * @return the txn data path for the table.    */
 specifier|static
 name|String
 name|getTxnDataPath
@@ -232,7 +232,7 @@ return|return
 name|path
 return|;
 block|}
-comment|/**      * This method returns the data path for clock node.      *      * @param baseDir      * @return The data path for clock.      */
+comment|/**    * This method returns the data path for clock node.    *    * @param baseDir    * @return The data path for clock.    */
 specifier|static
 name|String
 name|getClockPath

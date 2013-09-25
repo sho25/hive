@@ -358,7 +358,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Pig {@link org.apache.pig.LoadFunc} to read data from HCat  */
+comment|/**  * Pig {@link org.apache.pig.LoadFunc} to read data from HCat  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.HCatLoader} instead  */
 end_comment
 
 begin_class
@@ -1297,7 +1297,7 @@ name|partitionFilterString
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Get statistics about the data to be loaded. Only input data size is implemented at this time.      */
+comment|/**    * Get statistics about the data to be loaded. Only input data size is implemented at this time.    */
 annotation|@
 name|Override
 specifier|public

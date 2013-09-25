@@ -151,6 +151,10 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.pig.TestPigHCatUtil} instead  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -547,25 +551,6 @@ name|actual
 operator|.
 name|toString
 argument_list|()
-argument_list|)
-expr_stmt|;
-comment|// Clean up System properties that were set by this test
-name|System
-operator|.
-name|clearProperty
-argument_list|(
-name|HCatConstants
-operator|.
-name|HCAT_PIG_INNER_TUPLE_NAME
-argument_list|)
-expr_stmt|;
-name|System
-operator|.
-name|clearProperty
-argument_list|(
-name|HCatConstants
-operator|.
-name|HCAT_PIG_INNER_FIELD_NAME
 argument_list|)
 expr_stmt|;
 block|}

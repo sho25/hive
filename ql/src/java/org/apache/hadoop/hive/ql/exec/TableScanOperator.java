@@ -213,6 +213,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|OperatorDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|TableDesc
 import|;
 end_import
@@ -1343,15 +1361,15 @@ return|return
 literal|"TS"
 return|;
 block|}
-comment|// this 'neededColumnIDs' field is included in this operator class instead of
+comment|// This 'neededColumnIDs' field is included in this operator class instead of
 comment|// its desc class.The reason is that 1)tableScanDesc can not be instantiated,
 comment|// and 2) it will fail some join and union queries if this is added forcibly
-comment|// into tableScanDesc
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
+comment|// into tableScanDesc.
+comment|// Both neededColumnIDs and neededColumns should never be null.
+comment|// When neededColumnIDs is an empty list,
+comment|// it means no needed column (e.g. we do not need any column to evaluate
+comment|// SELECT count(*) FROM t).
+name|List
 argument_list|<
 name|Integer
 argument_list|>
@@ -1367,11 +1385,7 @@ specifier|public
 name|void
 name|setNeededColumnIDs
 parameter_list|(
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
+name|List
 argument_list|<
 name|Integer
 argument_list|>
@@ -1384,11 +1398,7 @@ name|orign_columns
 expr_stmt|;
 block|}
 specifier|public
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
+name|List
 argument_list|<
 name|Integer
 argument_list|>
@@ -1844,6 +1854,65 @@ parameter_list|()
 block|{
 return|return
 literal|true
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|OperatorDesc
+argument_list|>
+name|clone
+parameter_list|()
+throws|throws
+name|CloneNotSupportedException
+block|{
+name|TableScanOperator
+name|ts
+init|=
+operator|(
+name|TableScanOperator
+operator|)
+name|super
+operator|.
+name|clone
+argument_list|()
+decl_stmt|;
+name|ts
+operator|.
+name|setNeededColumnIDs
+argument_list|(
+operator|new
+name|ArrayList
+argument_list|<
+name|Integer
+argument_list|>
+argument_list|(
+name|getNeededColumnIDs
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|ts
+operator|.
+name|setNeededColumns
+argument_list|(
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|(
+name|getNeededColumns
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+return|return
+name|ts
 return|;
 block|}
 block|}

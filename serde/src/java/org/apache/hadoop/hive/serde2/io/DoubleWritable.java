@@ -4,7 +4,7 @@ comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or 
 end_comment
 
 begin_comment
-comment|/**  * This file is back-ported from hadoop-0.19, to make sure hive can run   * with hadoop-0.17.  */
+comment|/**  * This file is back-ported from hadoop-0.19, to make sure hive can run  * with hadoop-0.17.  */
 end_comment
 
 begin_package
