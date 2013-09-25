@@ -349,7 +349,9 @@ name|metastore
 operator|.
 name|parser
 operator|.
-name|FilterParser
+name|ExpressionTree
+operator|.
+name|FilterBuilder
 import|;
 end_import
 
@@ -521,6 +523,23 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+if|if
+condition|(
+name|partNames
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return
+operator|new
+name|ArrayList
+argument_list|<
+name|Partition
+argument_list|>
+argument_list|()
+return|;
+block|}
 name|String
 name|list
 init|=
@@ -567,7 +586,7 @@ name|max
 argument_list|)
 return|;
 block|}
-comment|/**    * Gets partitions by using direct SQL queries.    * @param table The table.    * @param parser The parsed filter from which the SQL filter will be generated.    * @param max The maximum number of partitions to return.    * @return List of partitions.    */
+comment|/**    * Gets partitions by using direct SQL queries.    * @param table The table.    * @param tree The expression tree from which the SQL filter will be derived.    * @param max The maximum number of partitions to return.    * @return List of partitions. Null if SQL filter cannot be derived.    */
 specifier|public
 name|List
 argument_list|<
@@ -578,8 +597,8 @@ parameter_list|(
 name|Table
 name|table
 parameter_list|,
-name|FilterParser
-name|parser
+name|ExpressionTree
+name|tree
 parameter_list|,
 name|Integer
 name|max
@@ -587,6 +606,11 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+assert|assert
+name|tree
+operator|!=
+literal|null
+assert|;
 name|List
 argument_list|<
 name|String
@@ -612,22 +636,12 @@ decl_stmt|;
 name|String
 name|sqlFilter
 init|=
-operator|(
-name|parser
-operator|==
-literal|null
-operator|)
-condition|?
-literal|null
-else|:
 name|PartitionFilterGenerator
 operator|.
 name|generateSqlFilter
 argument_list|(
 name|table
 argument_list|,
-name|parser
-operator|.
 name|tree
 argument_list|,
 name|params
@@ -635,6 +649,18 @@ argument_list|,
 name|joins
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|sqlFilter
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+comment|// Cannot make SQL filter to push down.
+block|}
 return|return
 name|getPartitionsViaSqlFilterInternal
 argument_list|(
@@ -832,7 +858,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Get partition objects for the query using direct SQL queries, to avoid bazillion    * queries created by DN retrieving stuff for each object individually.    * @param dbName Metastore db name.    * @param tblName Metastore table name.    * @param isView Whether table is a view. Can be passed as null if not immediately    *               known, then this method will get it only if necessary.    * @param sqlFilter SQL filter to use. Better be SQL92-compliant. Can be null.    * @param paramsForFilter params for ?-s in SQL filter text. Params must be in order.    * @param joinsForFilter if the filter needs additional join statement, they must be in    *                       this list. Better be SQL92-compliant.    * @param max The maximum number of partitions to return.    * @return List of partition objects. FieldSchema is currently not populated.    */
+comment|/**    * Get partition objects for the query using direct SQL queries, to avoid bazillion    * queries created by DN retrieving stuff for each object individually.    * @param dbName Metastore db name.    * @param tblName Metastore table name.    * @param isView Whether table is a view. Can be passed as null if not immediately    *               known, then this method will get it only if necessary.    * @param sqlFilter SQL filter to use. Better be SQL92-compliant.    * @param paramsForFilter params for ?-s in SQL filter text. Params must be in order.    * @param joinsForFilter if the filter needs additional join statement, they must be in    *                       this list. Better be SQL92-compliant.    * @param max The maximum number of partitions to return.    * @return List of partition objects.    */
 specifier|private
 name|List
 argument_list|<
@@ -930,19 +956,15 @@ argument_list|,
 literal|' '
 argument_list|)
 operator|+
-literal|" where TBLS.TBL_NAME = ? and DBS.NAME = ?"
+literal|" where TBLS.TBL_NAME = ? and DBS.NAME = ? "
 operator|+
-operator|(
 operator|(
 name|sqlFilter
 operator|==
 literal|null
-operator|)
 condition|?
 literal|""
 else|:
-literal|" "
-operator|+
 name|sqlFilter
 operator|)
 operator|+
@@ -3623,7 +3645,7 @@ specifier|private
 specifier|static
 class|class
 name|PartitionFilterGenerator
-implements|implements
+extends|extends
 name|TreeVisitor
 block|{
 specifier|private
@@ -3633,7 +3655,7 @@ name|table
 decl_stmt|;
 specifier|private
 specifier|final
-name|StringBuilder
+name|FilterBuilder
 name|filterBuffer
 decl_stmt|;
 specifier|private
@@ -3694,8 +3716,10 @@ operator|.
 name|filterBuffer
 operator|=
 operator|new
-name|StringBuilder
-argument_list|()
+name|FilterBuilder
+argument_list|(
+literal|false
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**      * Generate the ANSI SQL92 filter for the given expression tree      * @param table the table being queried      * @param params the ordered parameters for the resulting expression      * @param joins the joins necessary for the resulting expression      * @return the string representation of the expression tree      */
@@ -3759,14 +3783,39 @@ argument_list|)
 decl_stmt|;
 name|tree
 operator|.
-name|getRoot
-argument_list|()
-operator|.
 name|accept
 argument_list|(
 name|visitor
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|visitor
+operator|.
+name|filterBuffer
+operator|.
+name|hasError
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Unable to push down SQL filter: "
+operator|+
+name|visitor
+operator|.
+name|filterBuffer
+operator|.
+name|getErrorMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
 comment|// Some joins might be null (see processNode for LeafNode), clean them up.
 for|for
 control|(
@@ -3814,7 +3863,7 @@ name|visitor
 operator|.
 name|filterBuffer
 operator|.
-name|toString
+name|getFilter
 argument_list|()
 operator|+
 literal|")"
@@ -3822,9 +3871,9 @@ return|;
 block|}
 annotation|@
 name|Override
-specifier|public
+specifier|protected
 name|void
-name|visit
+name|beginTreeNode
 parameter_list|(
 name|TreeNode
 name|node
@@ -3832,25 +3881,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-assert|assert
-name|node
-operator|!=
-literal|null
-operator|&&
-name|node
-operator|.
-name|getLhs
-argument_list|()
-operator|!=
-literal|null
-operator|&&
-name|node
-operator|.
-name|getRhs
-argument_list|()
-operator|!=
-literal|null
-assert|;
 name|filterBuffer
 operator|.
 name|append
@@ -3858,16 +3888,19 @@ argument_list|(
 literal|" ("
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|void
+name|midTreeNode
+parameter_list|(
+name|TreeNode
 name|node
-operator|.
-name|getLhs
-argument_list|()
-operator|.
-name|accept
-argument_list|(
-name|this
-argument_list|)
-expr_stmt|;
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
 name|filterBuffer
 operator|.
 name|append
@@ -3888,16 +3921,19 @@ else|:
 literal|" or "
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|void
+name|endTreeNode
+parameter_list|(
+name|TreeNode
 name|node
-operator|.
-name|getRhs
-argument_list|()
-operator|.
-name|accept
-argument_list|(
-name|this
-argument_list|)
-expr_stmt|;
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
 name|filterBuffer
 operator|.
 name|append
@@ -3905,6 +3941,20 @@ argument_list|(
 literal|") "
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|boolean
+name|shouldStop
+parameter_list|()
+block|{
+return|return
+name|filterBuffer
+operator|.
+name|hasError
+argument_list|()
+return|;
 block|}
 annotation|@
 name|Override
@@ -3929,15 +3979,14 @@ operator|.
 name|LIKE
 condition|)
 block|{
-comment|// ANSI92 supports || for concatenation (we need to concat '%'-s to the parameter),
-comment|// but it doesn't work on all RDBMSes, e.g. on MySQL by default. So don't use it for now.
-throw|throw
-operator|new
-name|MetaException
+name|filterBuffer
+operator|.
+name|setError
 argument_list|(
 literal|"LIKE is not supported for SQL filter pushdown"
 argument_list|)
-throw|;
+expr_stmt|;
+return|return;
 block|}
 name|int
 name|partColCount
@@ -3958,8 +4007,19 @@ operator|.
 name|getPartColIndexForFilter
 argument_list|(
 name|table
+argument_list|,
+name|filterBuffer
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|filterBuffer
+operator|.
+name|hasError
+argument_list|()
+condition|)
+return|return;
+comment|// Add parameters linearly; we are traversing leaf nodes LTR, so they would match correctly.
 name|String
 name|valueAsString
 init|=
@@ -3970,9 +4030,18 @@ argument_list|(
 name|table
 argument_list|,
 name|partColIndex
+argument_list|,
+name|filterBuffer
 argument_list|)
 decl_stmt|;
-comment|// Add parameters linearly; we are traversing leaf nodes LTR, so they would match correctly.
+if|if
+condition|(
+name|filterBuffer
+operator|.
+name|hasError
+argument_list|()
+condition|)
+return|return;
 name|params
 operator|.
 name|add
