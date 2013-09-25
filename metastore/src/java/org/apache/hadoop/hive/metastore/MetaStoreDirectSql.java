@@ -53,6 +53,36 @@ begin_import
 import|import
 name|java
 operator|.
+name|sql
+operator|.
+name|Connection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|SQLException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|Statement
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -131,6 +161,28 @@ end_import
 
 begin_import
 import|import
+name|javax
+operator|.
+name|jdo
+operator|.
+name|Transaction
+import|;
+end_import
+
+begin_import
+import|import
+name|javax
+operator|.
+name|jdo
+operator|.
+name|datastore
+operator|.
+name|JDOConnection
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -154,22 +206,6 @@ operator|.
 name|logging
 operator|.
 name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|ObjectPair
 import|;
 end_import
 
@@ -483,6 +519,23 @@ specifier|final
 name|PersistenceManager
 name|pm
 decl_stmt|;
+comment|/**    * We want to avoid db-specific code in this class and stick with ANSI SQL. However, mysql    * and postgres are differently ansi-incompatible (mysql by default doesn't support quoted    * identifiers, and postgres contravenes ANSI by coercing unquoted ones to lower case).    * MySQL's way of working around this is simpler (just set ansi quotes mode on), so we will    * use that. MySQL detection is done by actually issuing the set-ansi-quotes command.    */
+specifier|private
+specifier|final
+name|boolean
+name|isMySql
+decl_stmt|;
+comment|/**    * Whether direct SQL can be used with the current datastore backing {@link #pm}.    */
+specifier|private
+specifier|final
+name|boolean
+name|isCompatibleDatastore
+decl_stmt|;
+comment|// TODO: we might also want to work around the strange and arguably non-standard behavior
+comment|// of postgres where it rolls back a tx after a failed select (see SQL92 4.28, on page 69
+comment|// about implicit rollbacks; 4.10.1 last paragraph for the "spirit" of the standard).
+comment|// See #canUseDirectSql in ObjectStore, isActiveTransaction is undesirable but unavoidable
+comment|// for postgres; in MySQL and other databases we could avoid it.
 specifier|public
 name|MetaStoreDirectSql
 parameter_list|(
@@ -496,6 +549,276 @@ name|pm
 operator|=
 name|pm
 expr_stmt|;
+name|Transaction
+name|tx
+init|=
+name|pm
+operator|.
+name|currentTransaction
+argument_list|()
+decl_stmt|;
+name|tx
+operator|.
+name|begin
+argument_list|()
+expr_stmt|;
+name|boolean
+name|isMySql
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
+name|trySetAnsiQuotesForMysql
+argument_list|()
+expr_stmt|;
+name|isMySql
+operator|=
+literal|true
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|sqlEx
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"MySQL check failed, assuming we are not on mysql: "
+operator|+
+name|sqlEx
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|tx
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
+name|tx
+operator|=
+name|pm
+operator|.
+name|currentTransaction
+argument_list|()
+expr_stmt|;
+name|tx
+operator|.
+name|begin
+argument_list|()
+expr_stmt|;
+block|}
+comment|// This should work. If it doesn't, we will self-disable. What a PITA...
+name|boolean
+name|isCompatibleDatastore
+init|=
+literal|false
+decl_stmt|;
+name|String
+name|selfTestQuery
+init|=
+literal|"select \"DB_ID\" from \"DBS\""
+decl_stmt|;
+try|try
+block|{
+name|pm
+operator|.
+name|newQuery
+argument_list|(
+literal|"javax.jdo.query.SQL"
+argument_list|,
+name|selfTestQuery
+argument_list|)
+operator|.
+name|execute
+argument_list|()
+expr_stmt|;
+name|isCompatibleDatastore
+operator|=
+literal|true
+expr_stmt|;
+name|tx
+operator|.
+name|commit
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Self-test query ["
+operator|+
+name|selfTestQuery
+operator|+
+literal|"] failed; direct SQL is disabled"
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+name|tx
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
+block|}
+name|this
+operator|.
+name|isCompatibleDatastore
+operator|=
+name|isCompatibleDatastore
+expr_stmt|;
+name|this
+operator|.
+name|isMySql
+operator|=
+name|isMySql
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isCompatibleDatastore
+parameter_list|()
+block|{
+return|return
+name|isCompatibleDatastore
+return|;
+block|}
+comment|/**    * See {@link #trySetAnsiQuotesForMysql()}.    */
+specifier|private
+name|void
+name|setAnsiQuotesForMysql
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+try|try
+block|{
+name|trySetAnsiQuotesForMysql
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|sqlEx
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Error setting ansi quotes: "
+operator|+
+name|sqlEx
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * MySQL, by default, doesn't recognize ANSI quotes which need to have for Postgres.    * Try to set the ANSI quotes mode on for the session. Due to connection pooling, needs    * to be called in the same transaction as the actual queries.    */
+specifier|private
+name|void
+name|trySetAnsiQuotesForMysql
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+specifier|final
+name|String
+name|queryText
+init|=
+literal|"SET @@session.sql_mode=ANSI_QUOTES"
+decl_stmt|;
+name|JDOConnection
+name|jdoConn
+init|=
+name|pm
+operator|.
+name|getDataStoreConnection
+argument_list|()
+decl_stmt|;
+name|boolean
+name|doTrace
+init|=
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+decl_stmt|;
+try|try
+block|{
+name|long
+name|start
+init|=
+name|doTrace
+condition|?
+name|System
+operator|.
+name|nanoTime
+argument_list|()
+else|:
+literal|0
+decl_stmt|;
+operator|(
+operator|(
+name|Connection
+operator|)
+name|jdoConn
+operator|.
+name|getNativeConnection
+argument_list|()
+operator|)
+operator|.
+name|createStatement
+argument_list|()
+operator|.
+name|execute
+argument_list|(
+name|queryText
+argument_list|)
+expr_stmt|;
+name|timingTrace
+argument_list|(
+name|doTrace
+argument_list|,
+name|queryText
+argument_list|,
+name|start
+argument_list|,
+name|doTrace
+condition|?
+name|System
+operator|.
+name|nanoTime
+argument_list|()
+else|:
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|jdoConn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+comment|// We must release the connection before we call other pm methods.
+block|}
 block|}
 comment|/**    * Gets partitions by using direct SQL queries.    * @param dbName Metastore db name.    * @param tblName Metastore table name.    * @param partNames Partition names to get.    * @param max The maximum number of partitions to return.    * @return List of partitions.    */
 specifier|public
@@ -567,7 +890,7 @@ name|tblName
 argument_list|,
 literal|null
 argument_list|,
-literal|"and PARTITIONS.PART_NAME in ("
+literal|"and \"PARTITIONS\".\"PART_NAME\" in ("
 operator|+
 name|list
 operator|+
@@ -787,11 +1110,11 @@ block|{
 name|String
 name|queryText
 init|=
-literal|"select TBL_TYPE from TBLS"
+literal|"select \"TBL_TYPE\" from \"TBLS\""
 operator|+
-literal|" inner join DBS on TBLS.DB_ID = DBS.DB_ID "
+literal|" inner join \"DBS\" on \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
 operator|+
-literal|" where TBLS.TBL_NAME = ? and DBS.NAME = ?"
+literal|" where \"TBLS\".\"TBL_NAME\" = ? and \"DBS\".\"NAME\" = ?"
 decl_stmt|;
 name|Object
 index|[]
@@ -928,26 +1251,45 @@ operator|!=
 literal|null
 operator|)
 condition|?
-literal|" order by PART_NAME asc"
+literal|" order by \"PART_NAME\" asc"
 else|:
 literal|""
 decl_stmt|;
+if|if
+condition|(
+name|isMySql
+condition|)
+block|{
+assert|assert
+name|pm
+operator|.
+name|currentTransaction
+argument_list|()
+operator|.
+name|isActive
+argument_list|()
+assert|;
+name|setAnsiQuotesForMysql
+argument_list|()
+expr_stmt|;
+comment|// must be inside tx together with queries
+block|}
 comment|// Get all simple fields for partitions and related objects, which we can map one-on-one.
 comment|// We will do this in 2 queries to use different existing indices for each one.
 comment|// We do not get table and DB name, assuming they are the same as we are using to filter.
 comment|// TODO: We might want to tune the indexes instead. With current ones MySQL performs
 comment|// poorly, esp. with 'order by' w/o index on large tables, even if the number of actual
 comment|// results is small (query that returns 8 out of 32k partitions can go 4sec. to 0sec. by
-comment|// just adding a PART_ID IN (...) filter that doesn't alter the results to it, probably
+comment|// just adding a \"PART_ID\" IN (...) filter that doesn't alter the results to it, probably
 comment|// causing it to not sort the entire table due to not knowing how selective the filter is.
 name|String
 name|queryText
 init|=
-literal|"select PARTITIONS.PART_ID from PARTITIONS"
+literal|"select \"PARTITIONS\".\"PART_ID\" from \"PARTITIONS\""
 operator|+
-literal|"  inner join TBLS on PARTITIONS.TBL_ID = TBLS.TBL_ID "
+literal|"  inner join \"TBLS\" on \"PARTITIONS\".\"TBL_ID\" = \"TBLS\".\"TBL_ID\" "
 operator|+
-literal|"  inner join DBS on TBLS.DB_ID = DBS.DB_ID "
+literal|"  inner join \"DBS\" on \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
 operator|+
 name|join
 argument_list|(
@@ -956,7 +1298,7 @@ argument_list|,
 literal|' '
 argument_list|)
 operator|+
-literal|" where TBLS.TBL_NAME = ? and DBS.NAME = ? "
+literal|" where \"TBLS\".\"TBL_NAME\" = ? and \"DBS\".\"NAME\" = ? "
 operator|+
 operator|(
 name|sqlFilter
@@ -1209,25 +1551,27 @@ expr_stmt|;
 comment|// Now get most of the other fields.
 name|queryText
 operator|=
-literal|"select PARTITIONS.PART_ID, SDS.SD_ID, SDS.CD_ID, SERDES.SERDE_ID, "
+literal|"select \"PARTITIONS\".\"PART_ID\", \"SDS\".\"SD_ID\", \"SDS\".\"CD_ID\","
 operator|+
-literal|"  PARTITIONS.CREATE_TIME, PARTITIONS.LAST_ACCESS_TIME, SDS.INPUT_FORMAT, "
+literal|" \"SERDES\".\"SERDE_ID\", \"PARTITIONS\".\"CREATE_TIME\","
 operator|+
-literal|"  SDS.IS_COMPRESSED, SDS.IS_STOREDASSUBDIRECTORIES, SDS.LOCATION,  SDS.NUM_BUCKETS, "
+literal|" \"PARTITIONS\".\"LAST_ACCESS_TIME\", \"SDS\".\"INPUT_FORMAT\", \"SDS\".\"IS_COMPRESSED\","
 operator|+
-literal|"  SDS.OUTPUT_FORMAT, SERDES.NAME, SERDES.SLIB "
+literal|" \"SDS\".\"IS_STOREDASSUBDIRECTORIES\", \"SDS\".\"LOCATION\", \"SDS\".\"NUM_BUCKETS\","
 operator|+
-literal|"from PARTITIONS"
+literal|" \"SDS\".\"OUTPUT_FORMAT\", \"SERDES\".\"NAME\", \"SERDES\".\"SLIB\" "
 operator|+
-literal|"  left outer join SDS on PARTITIONS.SD_ID = SDS.SD_ID "
+literal|"from \"PARTITIONS\""
 operator|+
-literal|"  left outer join SERDES on SDS.SERDE_ID = SERDES.SERDE_ID "
+literal|"  left outer join \"SDS\" on \"PARTITIONS\".\"SD_ID\" = \"SDS\".\"SD_ID\" "
 operator|+
-literal|"where PART_ID in ("
+literal|"  left outer join \"SERDES\" on \"SDS\".\"SERDE_ID\" = \"SERDES\".\"SERDE_ID\" "
+operator|+
+literal|"where \"PART_ID\" in ("
 operator|+
 name|partIds
 operator|+
-literal|") order by PART_NAME asc"
+literal|") order by \"PART_NAME\" asc"
 expr_stmt|;
 name|start
 operator|=
@@ -1630,13 +1974,13 @@ name|part
 operator|.
 name|setCreateTime
 argument_list|(
-operator|(
-name|Integer
-operator|)
+name|extractSqlInt
+argument_list|(
 name|fields
 index|[
 literal|4
 index|]
+argument_list|)
 argument_list|)
 expr_stmt|;
 if|if
@@ -1652,13 +1996,13 @@ name|part
 operator|.
 name|setLastAccessTime
 argument_list|(
-operator|(
-name|Integer
-operator|)
+name|extractSqlInt
+argument_list|(
 name|fields
 index|[
 literal|5
 index|]
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|partitions
@@ -1885,13 +2229,13 @@ name|sd
 operator|.
 name|setNumBuckets
 argument_list|(
-operator|(
-name|Integer
-operator|)
+name|extractSqlInt
+argument_list|(
 name|fields
 index|[
 literal|10
 index|]
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|sd
@@ -2099,11 +2443,15 @@ expr_stmt|;
 comment|// Now get all the one-to-many things. Start with partitions.
 name|queryText
 operator|=
-literal|"select PART_ID, PARAM_KEY, PARAM_VALUE from PARTITION_PARAMS where PART_ID in ("
+literal|"select \"PART_ID\", \"PARAM_KEY\", \"PARAM_VALUE\" from \"PARTITION_PARAMS\""
+operator|+
+literal|" where \"PART_ID\" in ("
 operator|+
 name|partIds
 operator|+
-literal|") and PARAM_KEY is not null order by PART_ID asc"
+literal|") and \"PARAM_KEY\" is not null"
+operator|+
+literal|" order by \"PART_ID\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -2159,11 +2507,15 @@ argument_list|)
 expr_stmt|;
 name|queryText
 operator|=
-literal|"select PART_ID, PART_KEY_VAL from PARTITION_KEY_VALS where PART_ID in ("
+literal|"select \"PART_ID\", \"PART_KEY_VAL\" from \"PARTITION_KEY_VALS\""
+operator|+
+literal|" where \"PART_ID\" in ("
 operator|+
 name|partIds
 operator|+
-literal|") and INTEGER_IDX>= 0 order by PART_ID asc, INTEGER_IDX asc"
+literal|") and \"INTEGER_IDX\">= 0"
+operator|+
+literal|" order by \"PART_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -2265,11 +2617,15 @@ decl_stmt|;
 comment|// Get all the stuff for SD. Don't do empty-list check - we expect partitions do have SDs.
 name|queryText
 operator|=
-literal|"select SD_ID, PARAM_KEY, PARAM_VALUE from SD_PARAMS where SD_ID in ("
+literal|"select \"SD_ID\", \"PARAM_KEY\", \"PARAM_VALUE\" from \"SD_PARAMS\""
+operator|+
+literal|" where \"SD_ID\" in ("
 operator|+
 name|sdIds
 operator|+
-literal|") and PARAM_KEY is not null order by SD_ID asc"
+literal|") and \"PARAM_KEY\" is not null"
+operator|+
+literal|" order by \"SD_ID\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -2323,15 +2679,17 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
-comment|// Note that SORT_COLS has "ORDER" column, which is not SQL92-legal. We have two choices
-comment|// here - drop SQL92, or get '*' and be broken on certain schema changes. We do the latter.
 name|queryText
 operator|=
-literal|"select SD_ID, COLUMN_NAME, SORT_COLS.* from SORT_COLS where SD_ID in ("
+literal|"select \"SD_ID\", \"COLUMN_NAME\", \"SORT_COLS\".\"ORDER\" from \"SORT_COLS\""
+operator|+
+literal|" where \"SD_ID\" in ("
 operator|+
 name|sdIds
 operator|+
-literal|") and INTEGER_IDX>= 0 order by SD_ID asc, INTEGER_IDX asc"
+literal|") and \"INTEGER_IDX\">= 0"
+operator|+
+literal|" order by \"SD_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -2364,7 +2722,7 @@ if|if
 condition|(
 name|fields
 index|[
-literal|4
+literal|2
 index|]
 operator|==
 literal|null
@@ -2385,13 +2743,13 @@ index|[
 literal|1
 index|]
 argument_list|,
-operator|(
-name|Integer
-operator|)
+name|extractSqlInt
+argument_list|(
 name|fields
 index|[
-literal|4
+literal|2
 index|]
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2401,11 +2759,15 @@ argument_list|)
 expr_stmt|;
 name|queryText
 operator|=
-literal|"select SD_ID, BUCKET_COL_NAME from BUCKETING_COLS where SD_ID in ("
+literal|"select \"SD_ID\", \"BUCKET_COL_NAME\" from \"BUCKETING_COLS\""
+operator|+
+literal|" where \"SD_ID\" in ("
 operator|+
 name|sdIds
 operator|+
-literal|") and INTEGER_IDX>= 0 order by SD_ID asc, INTEGER_IDX asc"
+literal|") and \"INTEGER_IDX\">= 0"
+operator|+
+literal|" order by \"SD_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -2454,11 +2816,15 @@ expr_stmt|;
 comment|// Skewed columns stuff.
 name|queryText
 operator|=
-literal|"select SD_ID, SKEWED_COL_NAME from SKEWED_COL_NAMES where SD_ID in ("
+literal|"select \"SD_ID\", \"SKEWED_COL_NAME\" from \"SKEWED_COL_NAMES\""
+operator|+
+literal|" where \"SD_ID\" in ("
 operator|+
 name|sdIds
 operator|+
-literal|") and INTEGER_IDX>= 0 order by SD_ID asc, INTEGER_IDX asc"
+literal|") and \"INTEGER_IDX\">= 0"
+operator|+
+literal|" order by \"SD_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
 name|boolean
 name|hasSkewedColumns
@@ -2538,29 +2904,31 @@ block|{
 comment|// We are skipping the SKEWED_STRING_LIST table here, as it seems to be totally useless.
 name|queryText
 operator|=
-literal|"select SKEWED_VALUES.SD_ID_OID, SKEWED_STRING_LIST_VALUES.STRING_LIST_ID, "
+literal|"select \"SKEWED_VALUES\".\"SD_ID_OID\","
 operator|+
-literal|"  SKEWED_STRING_LIST_VALUES.STRING_LIST_VALUE "
+literal|"  \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_ID\","
 operator|+
-literal|"from SKEWED_VALUES "
+literal|"  \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_VALUE\" "
 operator|+
-literal|"  left outer join SKEWED_STRING_LIST_VALUES on "
+literal|"from \"SKEWED_VALUES\" "
 operator|+
-literal|"    SKEWED_VALUES.STRING_LIST_ID_EID = SKEWED_STRING_LIST_VALUES.STRING_LIST_ID "
+literal|"  left outer join \"SKEWED_STRING_LIST_VALUES\" on \"SKEWED_VALUES\"."
 operator|+
-literal|"where SKEWED_VALUES.SD_ID_OID in ("
+literal|"\"STRING_LIST_ID_EID\" = \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_ID\" "
+operator|+
+literal|"where \"SKEWED_VALUES\".\"SD_ID_OID\" in ("
 operator|+
 name|sdIds
 operator|+
 literal|") "
 operator|+
-literal|"  and SKEWED_VALUES.STRING_LIST_ID_EID is not null "
+literal|"  and \"SKEWED_VALUES\".\"STRING_LIST_ID_EID\" is not null "
 operator|+
-literal|"  and SKEWED_VALUES.INTEGER_IDX>= 0 "
+literal|"  and \"SKEWED_VALUES\".\"INTEGER_IDX\">= 0 "
 operator|+
-literal|"order by SKEWED_VALUES.SD_ID_OID asc, SKEWED_VALUES.INTEGER_IDX asc, "
+literal|"order by \"SKEWED_VALUES\".\"SD_ID_OID\" asc, \"SKEWED_VALUES\".\"INTEGER_IDX\" asc,"
 operator|+
-literal|"  SKEWED_STRING_LIST_VALUES.INTEGER_IDX asc"
+literal|"  \"SKEWED_STRING_LIST_VALUES\".\"INTEGER_IDX\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -2723,29 +3091,33 @@ expr_stmt|;
 comment|// We are skipping the SKEWED_STRING_LIST table here, as it seems to be totally useless.
 name|queryText
 operator|=
-literal|"select SKEWED_COL_VALUE_LOC_MAP.SD_ID, SKEWED_STRING_LIST_VALUES.STRING_LIST_ID,"
+literal|"select \"SKEWED_COL_VALUE_LOC_MAP\".\"SD_ID\","
 operator|+
-literal|"  SKEWED_COL_VALUE_LOC_MAP.LOCATION, SKEWED_STRING_LIST_VALUES.STRING_LIST_VALUE "
+literal|" \"SKEWED_STRING_LIST_VALUES\".STRING_LIST_ID,"
 operator|+
-literal|"from SKEWED_COL_VALUE_LOC_MAP"
+literal|" \"SKEWED_COL_VALUE_LOC_MAP\".\"LOCATION\","
 operator|+
-literal|"  left outer join SKEWED_STRING_LIST_VALUES on SKEWED_COL_VALUE_LOC_MAP."
+literal|" \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_VALUE\" "
 operator|+
-literal|"STRING_LIST_ID_KID = SKEWED_STRING_LIST_VALUES.STRING_LIST_ID "
+literal|"from \"SKEWED_COL_VALUE_LOC_MAP\""
 operator|+
-literal|"where SKEWED_COL_VALUE_LOC_MAP.SD_ID in ("
+literal|"  left outer join \"SKEWED_STRING_LIST_VALUES\" on \"SKEWED_COL_VALUE_LOC_MAP\"."
+operator|+
+literal|"\"STRING_LIST_ID_KID\" = \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_ID\" "
+operator|+
+literal|"where \"SKEWED_COL_VALUE_LOC_MAP\".\"SD_ID\" in ("
 operator|+
 name|sdIds
 operator|+
 literal|")"
 operator|+
-literal|"  and SKEWED_COL_VALUE_LOC_MAP.STRING_LIST_ID_KID is not null "
+literal|"  and \"SKEWED_COL_VALUE_LOC_MAP\".\"STRING_LIST_ID_KID\" is not null "
 operator|+
-literal|"order by SKEWED_COL_VALUE_LOC_MAP.SD_ID asc,"
+literal|"order by \"SKEWED_COL_VALUE_LOC_MAP\".\"SD_ID\" asc,"
 operator|+
-literal|"  SKEWED_STRING_LIST_VALUES.STRING_LIST_ID asc,"
+literal|"  \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_ID\" asc,"
 operator|+
-literal|"  SKEWED_STRING_LIST_VALUES.INTEGER_IDX asc"
+literal|"  \"SKEWED_STRING_LIST_VALUES\".\"INTEGER_IDX\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -2969,11 +3341,15 @@ block|{
 comment|// We are skipping the CDS table here, as it seems to be totally useless.
 name|queryText
 operator|=
-literal|"select CD_ID, COMMENT, COLUMN_NAME, TYPE_NAME from COLUMNS_V2 where CD_ID in ("
+literal|"select \"CD_ID\", \"COMMENT\", \"COLUMN_NAME\", \"TYPE_NAME\""
+operator|+
+literal|" from \"COLUMNS_V2\" where \"CD_ID\" in ("
 operator|+
 name|colIds
 operator|+
-literal|") and INTEGER_IDX>= 0 order by CD_ID asc, INTEGER_IDX asc"
+literal|") and \"INTEGER_IDX\">= 0"
+operator|+
+literal|" order by \"CD_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -3049,11 +3425,15 @@ block|}
 comment|// Finally, get all the stuff for serdes - just the params.
 name|queryText
 operator|=
-literal|"select SERDE_ID, PARAM_KEY, PARAM_VALUE from SERDE_PARAMS where SERDE_ID in ("
+literal|"select \"SERDE_ID\", \"PARAM_KEY\", \"PARAM_VALUE\" from \"SERDE_PARAMS\""
+operator|+
+literal|" where \"SERDE_ID\" in ("
 operator|+
 name|serdeIds
 operator|+
-literal|") and PARAM_KEY is not null order by SERDE_ID asc"
+literal|") and \"PARAM_KEY\" is not null"
+operator|+
+literal|" order by \"SERDE_ID\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -3161,7 +3541,7 @@ operator|)
 operator|/
 literal|1000000.0
 operator|+
-literal|"ms, the query is [ "
+literal|"ms, the query is ["
 operator|+
 name|queryText
 operator|+
@@ -3269,6 +3649,26 @@ operator|+
 name|value
 argument_list|)
 throw|;
+block|}
+specifier|private
+name|int
+name|extractSqlInt
+parameter_list|(
+name|Object
+name|field
+parameter_list|)
+block|{
+return|return
+operator|(
+operator|(
+name|Number
+operator|)
+name|field
+operator|)
+operator|.
+name|intValue
+argument_list|()
+return|;
 block|}
 specifier|private
 specifier|static
@@ -4103,19 +4503,21 @@ name|set
 argument_list|(
 name|partColIndex
 argument_list|,
-literal|"inner join PARTITION_KEY_VALS as FILTER"
+literal|"inner join \"PARTITION_KEY_VALS\" as \"FILTER"
 operator|+
 name|partColIndex
 operator|+
-literal|" on FILTER"
+literal|"\" on \"FILTER"
 operator|+
 name|partColIndex
 operator|+
-literal|".PART_ID = PARTITIONS.PART_ID and FILTER"
+literal|"\".\"PART_ID\" = \"PARTITIONS\".\"PART_ID\""
+operator|+
+literal|" and \"FILTER"
 operator|+
 name|partColIndex
 operator|+
-literal|".INTEGER_IDX = "
+literal|"\".\"INTEGER_IDX\" = "
 operator|+
 name|partColIndex
 argument_list|)
@@ -4124,11 +4526,11 @@ block|}
 name|String
 name|tableValue
 init|=
-literal|"FILTER"
+literal|"\"FILTER"
 operator|+
 name|partColIndex
 operator|+
-literal|".PART_KEY_VAL"
+literal|"\".\"PART_KEY_VAL\""
 decl_stmt|;
 comment|// TODO: need casts here if #doesOperatorSupportIntegral is amended to include lt/gt/etc.
 name|filterBuffer
