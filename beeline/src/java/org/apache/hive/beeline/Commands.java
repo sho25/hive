@@ -3422,6 +3422,14 @@ argument_list|(
 literal|";"
 argument_list|)
 operator|)
+operator|&&
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|isAllowMultiLineCommand
+argument_list|()
 condition|)
 block|{
 name|StringBuilder
