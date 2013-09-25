@@ -409,24 +409,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
-operator|.
-name|DefaultStorageHandler
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|plan
 operator|.
 name|TableDesc
@@ -531,8 +513,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|common
@@ -546,8 +526,6 @@ import|import
 name|org
 operator|.
 name|apache
-operator|.
-name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -563,8 +541,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|data
@@ -572,6 +548,20 @@ operator|.
 name|schema
 operator|.
 name|HCatSchema
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hcatalog
+operator|.
+name|mapreduce
+operator|.
+name|HCatStorageHandler
 import|;
 end_import
 
@@ -661,8 +651,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -676,8 +664,6 @@ import|import
 name|org
 operator|.
 name|apache
-operator|.
-name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -693,8 +679,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
 name|hcatalog
 operator|.
 name|mapreduce
@@ -708,8 +692,6 @@ import|import
 name|org
 operator|.
 name|apache
-operator|.
-name|hive
 operator|.
 name|hcatalog
 operator|.
@@ -772,7 +754,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class HBaseHCatStorageHandler provides functionality to create HBase  * tables through HCatalog. The implementation is very similar to the  * HiveHBaseStorageHandler, with more details to suit HCatalog.  */
+comment|/**  * This class HBaseHCatStorageHandler provides functionality to create HBase  * tables through HCatalog. The implementation is very similar to the  * HiveHBaseStorageHandler, with more details to suit HCatalog.  *  * Note : As of 0.12, this class is considered deprecated and a candidate for future removal  * All new code must use the Hive HBaseStorageHandler instead  *  * @deprecated Use/modify {@link org.apache.hadoop.hive.hbase.HBaseStorageHandler} instead  */
 end_comment
 
 begin_class
@@ -780,7 +762,7 @@ specifier|public
 class|class
 name|HBaseHCatStorageHandler
 extends|extends
-name|DefaultStorageHandler
+name|HCatStorageHandler
 implements|implements
 name|HiveMetaHook
 implements|,
@@ -2377,6 +2359,8 @@ name|class
 return|;
 block|}
 annotation|@
+name|Deprecated
+annotation|@
 name|Override
 specifier|public
 name|Class
@@ -2417,6 +2401,8 @@ operator|.
 name|class
 return|;
 block|}
+annotation|@
+name|Deprecated
 specifier|public
 name|Configuration
 name|getJobConf
@@ -2425,6 +2411,23 @@ block|{
 return|return
 name|jobConf
 return|;
+block|}
+annotation|@
+name|Deprecated
+annotation|@
+name|Override
+specifier|public
+name|void
+name|configureJobConf
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|JobConf
+name|jobConf
+parameter_list|)
+block|{
+comment|// do nothing
 block|}
 annotation|@
 name|Deprecated
