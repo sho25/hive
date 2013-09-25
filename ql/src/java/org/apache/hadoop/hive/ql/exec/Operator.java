@@ -2447,6 +2447,10 @@ name|abort
 argument_list|)
 expr_stmt|;
 block|}
+name|out
+operator|=
+literal|null
+expr_stmt|;
 name|LOG
 operator|.
 name|info
