@@ -79,6 +79,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -157,6 +167,14 @@ name|run
 parameter_list|(
 name|String
 name|user
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|Object
+argument_list|>
+name|userArgs
 parameter_list|,
 name|String
 name|execute
@@ -239,6 +257,8 @@ return|return
 name|enqueueController
 argument_list|(
 name|user
+argument_list|,
+name|userArgs
 argument_list|,
 name|callback
 argument_list|,

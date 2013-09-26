@@ -29,6 +29,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -117,6 +127,15 @@ decl_stmt|;
 specifier|public
 name|String
 name|completed
+decl_stmt|;
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|Object
+argument_list|>
+name|userargs
 decl_stmt|;
 specifier|public
 name|QueueStatusBean
@@ -213,6 +232,13 @@ operator|=
 name|state
 operator|.
 name|getCompleteStatus
+argument_list|()
+expr_stmt|;
+name|userargs
+operator|=
+name|state
+operator|.
+name|getUserArgs
 argument_list|()
 expr_stmt|;
 block|}
