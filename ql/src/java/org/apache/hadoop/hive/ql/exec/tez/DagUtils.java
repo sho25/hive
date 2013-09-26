@@ -769,9 +769,9 @@ name|apache
 operator|.
 name|tez
 operator|.
-name|engine
+name|runtime
 operator|.
-name|lib
+name|library
 operator|.
 name|input
 operator|.
@@ -787,9 +787,9 @@ name|apache
 operator|.
 name|tez
 operator|.
-name|engine
+name|runtime
 operator|.
-name|lib
+name|library
 operator|.
 name|output
 operator|.
