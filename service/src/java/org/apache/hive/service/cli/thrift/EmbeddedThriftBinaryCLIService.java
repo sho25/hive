@@ -52,18 +52,18 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * EmbeddedThriftCLIService.  *  */
+comment|/**  * EmbeddedThriftBinaryCLIService.  *  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|EmbeddedThriftCLIService
+name|EmbeddedThriftBinaryCLIService
 extends|extends
-name|ThriftCLIService
+name|ThriftBinaryCLIService
 block|{
 specifier|public
-name|EmbeddedThriftCLIService
+name|EmbeddedThriftBinaryCLIService
 parameter_list|()
 block|{
 name|super
