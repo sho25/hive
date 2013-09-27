@@ -916,6 +916,19 @@ range|:
 name|ws
 control|)
 block|{
+name|boolean
+name|isFinal
+init|=
+name|work
+operator|.
+name|getLeaves
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|w
+argument_list|)
+decl_stmt|;
 comment|// translate work to vertex
 name|JobConf
 name|wxConf
@@ -952,6 +965,9 @@ argument_list|,
 name|fs
 argument_list|,
 name|ctx
+argument_list|,
+operator|!
+name|isFinal
 argument_list|)
 decl_stmt|;
 name|dag
