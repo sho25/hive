@@ -750,7 +750,7 @@ name|mTerminationExecutor
 operator|=
 name|Executors
 operator|.
-name|newCachedThreadPool
+name|newSingleThreadExecutor
 argument_list|()
 expr_stmt|;
 name|mHostLog
