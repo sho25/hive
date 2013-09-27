@@ -391,7 +391,7 @@ init|=
 operator|new
 name|StringBuffer
 argument_list|(
-literal|"123\t456\t789\t1000\t5.3\thive and hadoop\tNULL\tNULL\t"
+literal|"123\t456\t789\t1000\t5.3\thive and hadoop\t1\tNULL\t"
 argument_list|)
 decl_stmt|;
 name|String
@@ -478,7 +478,11 @@ argument_list|(
 literal|"hive and hadoop"
 argument_list|)
 block|,
-literal|null
+operator|new
+name|IntWritable
+argument_list|(
+literal|1
+argument_list|)
 block|,
 literal|null
 block|,
@@ -833,7 +837,7 @@ decl_stmt|;
 name|String
 name|s
 init|=
-literal|"123\t456\t789\t1000\t5.3\thive and hadoop\tNULL\ta\tb\t"
+literal|"123\t456\t789\t1000\t5.3\thive and hadoop\t1\ta\tb\t"
 decl_stmt|;
 name|Object
 index|[]
@@ -882,7 +886,11 @@ argument_list|(
 literal|"hive and hadoop"
 argument_list|)
 block|,
-literal|null
+operator|new
+name|IntWritable
+argument_list|(
+literal|1
+argument_list|)
 block|,
 operator|new
 name|Text
@@ -973,7 +981,7 @@ decl_stmt|;
 name|String
 name|s
 init|=
-literal|"123\t456\t789\t1000\t5.3\thive and hadoop\tNULL\ta"
+literal|"123\t456\t789\t1000\t5.3\thive and hadoop\t1\ta"
 decl_stmt|;
 name|Object
 index|[]
@@ -1022,7 +1030,11 @@ argument_list|(
 literal|"hive and hadoop"
 argument_list|)
 block|,
-literal|null
+operator|new
+name|IntWritable
+argument_list|(
+literal|1
+argument_list|)
 block|,
 operator|new
 name|Text
