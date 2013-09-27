@@ -96,10 +96,6 @@ name|PrimitiveTypeEntry
 name|typeEntry
 decl_stmt|;
 specifier|protected
-name|BaseTypeParams
-name|typeParams
-decl_stmt|;
-specifier|protected
 name|AbstractPrimitiveObjectInspector
 parameter_list|()
 block|{
@@ -205,6 +201,8 @@ name|getTypeParams
 parameter_list|()
 block|{
 return|return
+name|typeEntry
+operator|.
 name|typeParams
 return|;
 block|}
@@ -216,6 +214,13 @@ name|BaseTypeParams
 name|newParams
 parameter_list|)
 block|{
+name|BaseTypeParams
+name|typeParams
+init|=
+name|typeEntry
+operator|.
+name|typeParams
+decl_stmt|;
 if|if
 condition|(
 name|typeParams
@@ -244,7 +249,7 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-name|this
+name|typeEntry
 operator|.
 name|typeParams
 operator|=

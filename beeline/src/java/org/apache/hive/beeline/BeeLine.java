@@ -2744,9 +2744,7 @@ literal|"-h"
 argument_list|)
 condition|)
 block|{
-name|usage
-argument_list|()
-expr_stmt|;
+comment|// Return false here, so usage will be printed.
 return|return
 literal|false
 return|;
