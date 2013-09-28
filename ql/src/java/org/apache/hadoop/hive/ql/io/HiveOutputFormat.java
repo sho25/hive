@@ -61,26 +61,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|FileSinkOperator
-operator|.
-name|RecordWriter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|Writable
@@ -151,7 +131,7 @@ name|V
 argument_list|>
 block|{
 comment|/**    * create the final out file and get some specific settings.    *    * @param jc    *          the job configuration file    * @param finalOutPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the table properties of this file's corresponding table    * @param progress    *          progress used for status report    * @return the RecordWriter for the output file    */
-name|RecordWriter
+name|FSRecordWriter
 name|getHiveRecordWriter
 parameter_list|(
 name|JobConf

@@ -19,6 +19,26 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -43,11 +63,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|io
 operator|.
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|FSRecordWriter
 import|;
 end_import
 
@@ -167,26 +185,6 @@ name|Progressable
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Properties
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -202,7 +200,7 @@ block|{
 annotation|@
 name|Override
 specifier|public
-name|RecordWriter
+name|FSRecordWriter
 name|getHiveRecordWriter
 parameter_list|(
 name|JobConf
@@ -232,7 +230,7 @@ throws|throws
 name|IOException
 block|{
 specifier|final
-name|RecordWriter
+name|FSRecordWriter
 name|result
 init|=
 name|super
@@ -281,7 +279,7 @@ argument_list|)
 expr_stmt|;
 return|return
 operator|new
-name|RecordWriter
+name|FSRecordWriter
 argument_list|()
 block|{
 annotation|@

@@ -303,9 +303,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|io
 operator|.
-name|FileSinkOperator
+name|FSRecordWriter
 import|;
 end_import
 
@@ -3576,9 +3576,7 @@ operator|new
 name|OrcOutputFormat
 argument_list|()
 decl_stmt|;
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|FSRecordWriter
 name|writer
 init|=
 name|outFormat
@@ -4990,9 +4988,7 @@ operator|new
 name|OrcOutputFormat
 argument_list|()
 decl_stmt|;
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|FSRecordWriter
 name|writer
 init|=
 name|outFormat
@@ -5257,9 +5253,7 @@ operator|new
 name|OrcOutputFormat
 argument_list|()
 decl_stmt|;
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|FSRecordWriter
 name|writer
 init|=
 name|outFormat
