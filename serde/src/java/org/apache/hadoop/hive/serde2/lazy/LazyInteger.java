@@ -404,6 +404,11 @@ name|boolean
 name|negative
 parameter_list|)
 block|{
+name|byte
+name|separator
+init|=
+literal|'.'
+decl_stmt|;
 name|int
 name|max
 init|=
@@ -455,6 +460,23 @@ operator|-
 literal|1
 condition|)
 block|{
+if|if
+condition|(
+name|bytes
+index|[
+name|offset
+operator|-
+literal|1
+index|]
+operator|==
+name|separator
+condition|)
+block|{
+comment|// We allow decimals and will return a truncated integer in that case.
+comment|// Therefore we won't throw an exception here (checking the fractional
+comment|// part happens below.)
+break|break;
+block|}
 throw|throw
 operator|new
 name|NumberFormatException
@@ -533,6 +555,58 @@ name|result
 operator|=
 name|next
 expr_stmt|;
+block|}
+comment|// This is the case when we've encountered a decimal separator. The fractional
+comment|// part will not change the number, but we will verify that the fractional part
+comment|// is well formed.
+while|while
+condition|(
+name|offset
+operator|<
+name|end
+condition|)
+block|{
+name|int
+name|digit
+init|=
+name|LazyUtils
+operator|.
+name|digit
+argument_list|(
+name|bytes
+index|[
+name|offset
+operator|++
+index|]
+argument_list|,
+name|radix
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|digit
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+throw|throw
+operator|new
+name|NumberFormatException
+argument_list|(
+name|LazyUtils
+operator|.
+name|convertToString
+argument_list|(
+name|bytes
+argument_list|,
+name|start
+argument_list|,
+name|length
+argument_list|)
+argument_list|)
+throw|;
+block|}
 block|}
 if|if
 condition|(

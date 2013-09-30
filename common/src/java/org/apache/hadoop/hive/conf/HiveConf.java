@@ -3732,6 +3732,13 @@ literal|"hive.vectorized.execution.enabled"
 argument_list|,
 literal|false
 argument_list|)
+block|,
+name|HIVE_TYPE_CHECK_ON_INSERT
+argument_list|(
+literal|"hive.typecheck.on.insert"
+argument_list|,
+literal|true
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final

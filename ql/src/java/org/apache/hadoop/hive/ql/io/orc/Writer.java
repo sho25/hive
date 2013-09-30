@@ -78,6 +78,16 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Return the deserialized data size. Raw data size will be compute when    * writing the file footer. Hence raw data size value will be available only    * after closing the writer.    *    * @return raw data size    */
+name|long
+name|getRawDataSize
+parameter_list|()
+function_decl|;
+comment|/**    * Return the number of rows in file. Row count gets updated when flushing    * the stripes. To get accurate row count this method should be called after    * closing the writer.    *    * @return row count    */
+name|long
+name|getNumberOfRows
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

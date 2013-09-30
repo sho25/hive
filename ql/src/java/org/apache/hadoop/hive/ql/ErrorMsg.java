@@ -1672,6 +1672,15 @@ argument_list|,
 literal|"Missing over clause for function : "
 argument_list|)
 block|,
+name|PARTITION_SPEC_TYPE_MISMATCH
+argument_list|(
+literal|10248
+argument_list|,
+literal|"Cannot add partition column {0} of type {1} as it cannot be converted to type {2}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

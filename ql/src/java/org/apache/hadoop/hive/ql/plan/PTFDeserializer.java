@@ -163,8 +163,6 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|PTFTranslator
-operator|.
 name|LeadLagInfo
 import|;
 end_import

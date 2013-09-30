@@ -915,6 +915,25 @@ name|desc
 init|=
 literal|null
 decl_stmt|;
+if|if
+condition|(
+operator|(
+name|ctx
+operator|==
+literal|null
+operator|)
+operator|||
+operator|(
+name|input
+operator|==
+literal|null
+operator|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// If the current subExpression is pre-calculated, as in Group-By etc.
 name|ColumnInfo
 name|colInfo

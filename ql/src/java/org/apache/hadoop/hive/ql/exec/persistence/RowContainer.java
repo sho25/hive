@@ -175,9 +175,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|Utilities
 import|;
 end_import
 
@@ -193,9 +191,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|io
 operator|.
-name|Utilities
+name|FSRecordWriter
 import|;
 end_import
 
@@ -602,7 +600,7 @@ init|=
 literal|null
 decl_stmt|;
 comment|// record reader
-name|RecordWriter
+name|FSRecordWriter
 name|rw
 init|=
 literal|null
@@ -2697,7 +2695,7 @@ throw|;
 block|}
 block|}
 specifier|protected
-name|RecordWriter
+name|FSRecordWriter
 name|getRecordWriter
 parameter_list|()
 block|{
