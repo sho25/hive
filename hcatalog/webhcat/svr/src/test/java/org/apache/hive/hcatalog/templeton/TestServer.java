@@ -77,7 +77,10 @@ block|{
 operator|new
 name|Main
 argument_list|(
-literal|null
+operator|new
+name|String
+index|[]
+block|{}
 argument_list|)
 expr_stmt|;
 comment|// Initialize the config

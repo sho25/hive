@@ -389,9 +389,13 @@ condition|)
 block|{
 name|fs
 operator|=
-name|FileSystem
+operator|new
+name|Path
+argument_list|(
+name|storage_root
+argument_list|)
 operator|.
-name|get
+name|getFileSystem
 argument_list|(
 name|appConf
 argument_list|)

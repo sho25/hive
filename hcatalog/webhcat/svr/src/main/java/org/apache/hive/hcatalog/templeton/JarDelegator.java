@@ -384,6 +384,13 @@ argument_list|(
 literal|"--"
 argument_list|)
 expr_stmt|;
+name|TempletonUtils
+operator|.
+name|addCmdForWindows
+argument_list|(
+name|args
+argument_list|)
+expr_stmt|;
 name|args
 operator|.
 name|add
