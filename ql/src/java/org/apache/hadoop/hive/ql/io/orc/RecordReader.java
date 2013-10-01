@@ -31,6 +31,26 @@ name|IOException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|VectorizedRowBatch
+import|;
+end_import
+
 begin_comment
 comment|/**  * A row-by-row iterator for ORC files.  */
 end_comment
@@ -53,6 +73,16 @@ name|next
 parameter_list|(
 name|Object
 name|previous
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Read the next row batch. The size of the batch to read cannot be controlled    * by the callers. Caller need to look at VectorizedRowBatch.size of the retunred    * object to know the batch size read.    * @param previousBatch a row batch object that can be reused by the reader    * @return the row batch that was read    * @throws java.io.IOException    */
+name|VectorizedRowBatch
+name|nextBatch
+parameter_list|(
+name|VectorizedRowBatch
+name|previousBatch
 parameter_list|)
 throws|throws
 name|IOException

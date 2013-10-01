@@ -12517,6 +12517,11 @@ operator|.
 name|METASTORE_TRY_DIRECT_SQL
 argument_list|)
 operator|&&
+name|directSql
+operator|.
+name|isCompatibleDatastore
+argument_list|()
+operator|&&
 operator|!
 name|isActiveTransaction
 argument_list|()

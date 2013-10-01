@@ -29,20 +29,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|fs
 operator|.
 name|FileSystem
@@ -75,9 +61,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|io
 operator|.
-name|FileSinkOperator
+name|FSRecordWriter
 import|;
 end_import
 
@@ -320,9 +306,7 @@ argument_list|,
 name|OrcSerdeRow
 argument_list|>
 implements|,
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|FSRecordWriter
 block|{
 specifier|private
 name|Writer
@@ -617,9 +601,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|FSRecordWriter
 name|getHiveRecordWriter
 parameter_list|(
 name|JobConf

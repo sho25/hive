@@ -405,6 +405,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|Writable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|Text
 import|;
 end_import
@@ -460,14 +474,17 @@ name|partitionEval
 decl_stmt|;
 comment|// TODO: we use MetadataTypedColumnsetSerDe for now, till DynamicSerDe is
 comment|// ready
+specifier|protected
 specifier|transient
 name|Serializer
 name|keySerializer
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|boolean
 name|keyIsText
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|Serializer
 name|valueSerializer
@@ -476,6 +493,7 @@ specifier|transient
 name|int
 name|tag
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|byte
 index|[]
@@ -974,6 +992,7 @@ operator|new
 name|InspectableObject
 argument_list|()
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|HiveKey
 name|keyWritable
@@ -981,6 +1000,11 @@ init|=
 operator|new
 name|HiveKey
 argument_list|()
+decl_stmt|;
+specifier|protected
+specifier|transient
+name|Writable
+name|value
 decl_stmt|;
 specifier|transient
 name|StructObjectInspector
@@ -995,18 +1019,13 @@ name|ObjectInspector
 index|[]
 name|partitionObjectInspectors
 decl_stmt|;
-comment|/**    * This two dimensional array holds key data and a corresponding Union object    * which contains the tag identifying the aggregate expression for distinct columns.    *    * If there is no distict expression, cachedKeys is simply like this.    * cachedKeys[0] = [col0][col1]    *    * with two distict expression, union(tag:key) is attatched for each distinct expression    * cachedKeys[0] = [col0][col1][0:dist1]    * cachedKeys[1] = [col0][col1][1:dist2]    *    * in this case, child GBY evaluates distict values with expression like KEY.col2:0.dist1    * see {@link ExprNodeColumnEvaluator}    */
-specifier|transient
-name|Object
-index|[]
-index|[]
-name|cachedKeys
-decl_stmt|;
+specifier|protected
 specifier|transient
 name|Object
 index|[]
 name|cachedValues
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|List
 argument_list|<
@@ -1017,9 +1036,18 @@ argument_list|>
 argument_list|>
 name|distinctColIndices
 decl_stmt|;
+comment|/**    * This two dimensional array holds key data and a corresponding Union object    * which contains the tag identifying the aggregate expression for distinct columns.    *    * If there is no distict expression, cachedKeys is simply like this.    * cachedKeys[0] = [col0][col1]    *    * with two distict expression, union(tag:key) is attatched for each distinct expression    * cachedKeys[0] = [col0][col1][0:dist1]    * cachedKeys[1] = [col0][col1][1:dist2]    *    * in this case, child GBY evaluates distict values with expression like KEY.col2:0.dist1    * see {@link ExprNodeColumnEvaluator}    */
+specifier|protected
+specifier|transient
+name|Object
+index|[]
+index|[]
+name|cachedKeys
+decl_stmt|;
 name|boolean
 name|firstRow
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|Random
 name|random

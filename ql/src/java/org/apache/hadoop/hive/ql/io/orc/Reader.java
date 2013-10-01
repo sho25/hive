@@ -103,6 +103,22 @@ name|long
 name|getNumberOfRows
 parameter_list|()
 function_decl|;
+comment|/**    * Get the deserialized data size of the file    * @return raw data size    */
+name|long
+name|getRawDataSize
+parameter_list|()
+function_decl|;
+comment|/**    * Get the deserialized data size of the specified columns    * @param colNames    * @return raw data size of columns    */
+name|long
+name|getRawDataSizeOfColumns
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colNames
+parameter_list|)
+function_decl|;
 comment|/**    * Get the user metadata keys.    * @return the set of metadata keys    */
 name|Iterable
 argument_list|<

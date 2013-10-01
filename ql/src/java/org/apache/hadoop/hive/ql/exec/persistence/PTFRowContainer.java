@@ -137,9 +137,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|Utilities
 import|;
 end_import
 
@@ -155,9 +153,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|io
 operator|.
-name|Utilities
+name|FSRecordWriter
 import|;
 end_import
 
@@ -1288,7 +1286,7 @@ specifier|static
 class|class
 name|PTFRecordWriter
 implements|implements
-name|RecordWriter
+name|FSRecordWriter
 block|{
 name|BytesWritable
 name|EMPTY_KEY
@@ -1375,7 +1373,7 @@ block|{
 annotation|@
 name|Override
 specifier|public
-name|RecordWriter
+name|FSRecordWriter
 name|getHiveRecordWriter
 parameter_list|(
 name|JobConf

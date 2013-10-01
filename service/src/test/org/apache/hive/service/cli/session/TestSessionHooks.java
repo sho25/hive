@@ -127,7 +127,7 @@ name|cli
 operator|.
 name|thrift
 operator|.
-name|EmbeddedThriftCLIService
+name|EmbeddedThriftBinaryCLIService
 import|;
 end_import
 
@@ -185,7 +185,7 @@ init|=
 literal|"user1"
 decl_stmt|;
 specifier|private
-name|EmbeddedThriftCLIService
+name|EmbeddedThriftBinaryCLIService
 name|service
 decl_stmt|;
 specifier|private
@@ -320,7 +320,7 @@ expr_stmt|;
 name|service
 operator|=
 operator|new
-name|EmbeddedThriftCLIService
+name|EmbeddedThriftBinaryCLIService
 argument_list|()
 expr_stmt|;
 name|client

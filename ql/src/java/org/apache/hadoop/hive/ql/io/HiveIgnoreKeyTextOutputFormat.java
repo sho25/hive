@@ -105,26 +105,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|FileSinkOperator
-operator|.
-name|RecordWriter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde
 operator|.
 name|serdeConstants
@@ -244,7 +224,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveIgnoreKeyTextOutputFormat replaces key with null before feeding the<key,  * value> to TextOutputFormat.RecordWriter.  *   */
+comment|/**  * HiveIgnoreKeyTextOutputFormat replaces key with null before feeding the<key,  * value> to TextOutputFormat.RecordWriter.  *  */
 end_comment
 
 begin_class
@@ -275,11 +255,11 @@ argument_list|,
 name|V
 argument_list|>
 block|{
-comment|/**    * create the final out file, and output row by row. After one row is    * appended, a configured row separator is appended    *     * @param jc    *          the job configuration file    * @param outPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the tableProperties of this file's corresponding table    * @param progress    *          progress used for status report    * @return the RecordWriter    */
+comment|/**    * create the final out file, and output row by row. After one row is    * appended, a configured row separator is appended    *    * @param jc    *          the job configuration file    * @param outPath    *          the final output file to be created    * @param valueClass    *          the value class used for create    * @param isCompressed    *          whether the content is compressed or not    * @param tableProperties    *          the tableProperties of this file's corresponding table    * @param progress    *          progress used for status report    * @return the RecordWriter    */
 annotation|@
 name|Override
 specifier|public
-name|RecordWriter
+name|FSRecordWriter
 name|getHiveRecordWriter
 parameter_list|(
 name|JobConf
@@ -393,7 +373,7 @@ argument_list|)
 decl_stmt|;
 return|return
 operator|new
-name|RecordWriter
+name|FSRecordWriter
 argument_list|()
 block|{
 specifier|public

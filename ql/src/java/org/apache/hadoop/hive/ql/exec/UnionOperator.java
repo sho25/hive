@@ -483,6 +483,9 @@ name|c
 operator|++
 control|)
 block|{
+if|if
+condition|(
+operator|!
 name|columnTypeResolvers
 index|[
 name|c
@@ -503,7 +506,17 @@ operator|.
 name|getFieldObjectInspector
 argument_list|()
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+comment|// checked in SemanticAnalyzer. Should not happen
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Incompatible types for union operator"
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 name|ArrayList
@@ -536,10 +549,10 @@ name|c
 operator|++
 control|)
 block|{
-name|outputFieldOIs
-operator|.
-name|add
-argument_list|(
+comment|// can be null for void type
+name|ObjectInspector
+name|oi
+init|=
 name|columnTypeResolvers
 index|[
 name|c
@@ -547,6 +560,29 @@ index|]
 operator|.
 name|get
 argument_list|()
+decl_stmt|;
+name|outputFieldOIs
+operator|.
+name|add
+argument_list|(
+name|oi
+operator|==
+literal|null
+condition|?
+name|parentFields
+index|[
+literal|0
+index|]
+operator|.
+name|get
+argument_list|(
+name|c
+argument_list|)
+operator|.
+name|getFieldObjectInspector
+argument_list|()
+else|:
+name|oi
 argument_list|)
 expr_stmt|;
 block|}

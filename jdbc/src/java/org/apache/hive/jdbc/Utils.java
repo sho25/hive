@@ -848,7 +848,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Parse JDBC connection URL    * The new format of the URL is jdbc:hive://<host>:<port>/dbName;sess_var_list?hive_conf_list#hive_var_list    * where the optional sess, conf and var lists are semicolon separated<key>=<val> pairs. As before, if the    * host/port is not specified, it the driver runs an embedded hive.    * examples -    *  jdbc:hive://ubuntu:11000/db2?hive.cli.conf.printheader=true;hive.exec.mode.local.auto.inputbytes.max=9999#stab=salesTable;icol=customerID    *  jdbc:hive://?hive.cli.conf.printheader=true;hive.exec.mode.local.auto.inputbytes.max=9999#stab=salesTable;icol=customerID    *  jdbc:hive://ubuntu:11000/db2;user=foo;password=bar    *    * Note that currently the session properties are not used.    *    * @param uri    * @return    */
+comment|/**    * Parse JDBC connection URL    * The new format of the URL is jdbc:hive2://<host>:<port>/dbName;sess_var_list?hive_conf_list#hive_var_list    * where the optional sess, conf and var lists are semicolon separated<key>=<val> pairs. As before, if the    * host/port is not specified, it the driver runs an embedded hive.    * examples -    *  jdbc:hive2://ubuntu:11000/db2?hive.cli.conf.printheader=true;hive.exec.mode.local.auto.inputbytes.max=9999#stab=salesTable;icol=customerID    *  jdbc:hive2://?hive.cli.conf.printheader=true;hive.exec.mode.local.auto.inputbytes.max=9999#stab=salesTable;icol=customerID    *  jdbc:hive2://ubuntu:11000/db2;user=foo;password=bar    *    *  Connect to http://server:10001/hs2, with specified basicAuth credentials and initial database:    *     jdbc:hive2://server:10001/db;user=foo;password=bar?hive.server2.transport.mode=http;hive.server2.thrift.http.path=hs2    *    * Note that currently the session properties are not used.    *    * @param uri    * @return    */
 specifier|public
 specifier|static
 name|JdbcConnectionParams
@@ -886,7 +886,8 @@ literal|"Bad URL format"
 argument_list|)
 throw|;
 block|}
-comment|// Don't parse URL with no other configuration.
+comment|// For URLs with no other configuration
+comment|// Don't parse them, but set embedded mode as true
 if|if
 condition|(
 name|uri
@@ -926,9 +927,9 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|//Check to prevent unintentional use of embedded mode. A missing "/" can
+comment|// Check to prevent unintentional use of embedded mode. A missing "/"
 comment|// to separate the 'path' portion of URI can result in this.
-comment|//The missing "/" common typo while using secure mode, eg of such url -
+comment|// The missing "/" common typo while using secure mode, eg of such url -
 comment|// jdbc:hive2://localhost:10000;principal=hive/HiveServer2Host@YOUR-REALM.COM
 if|if
 condition|(

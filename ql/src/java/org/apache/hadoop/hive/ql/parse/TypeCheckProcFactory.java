@@ -915,6 +915,25 @@ name|desc
 init|=
 literal|null
 decl_stmt|;
+if|if
+condition|(
+operator|(
+name|ctx
+operator|==
+literal|null
+operator|)
+operator|||
+operator|(
+name|input
+operator|==
+literal|null
+operator|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// If the current subExpression is pre-calculated, as in Group-By etc.
 name|ColumnInfo
 name|colInfo
@@ -5228,6 +5247,8 @@ operator|.
 name|newInstance
 argument_list|(
 name|genericUDF
+argument_list|,
+name|funcText
 argument_list|,
 name|children
 argument_list|)

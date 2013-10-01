@@ -93,11 +93,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|io
 operator|.
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|FSRecordWriter
 import|;
 end_import
 
@@ -248,11 +246,11 @@ specifier|static
 class|class
 name|Base64RecordWriter
 implements|implements
-name|RecordWriter
+name|FSRecordWriter
 implements|,
 name|JobConfigurable
 block|{
-name|RecordWriter
+name|FSRecordWriter
 name|writer
 decl_stmt|;
 name|BytesWritable
@@ -261,7 +259,7 @@ decl_stmt|;
 specifier|public
 name|Base64RecordWriter
 parameter_list|(
-name|RecordWriter
+name|FSRecordWriter
 name|writer
 parameter_list|)
 block|{
@@ -573,7 +571,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|RecordWriter
+name|FSRecordWriter
 name|getHiveRecordWriter
 parameter_list|(
 name|JobConf

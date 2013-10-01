@@ -23,6 +23,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -61,9 +71,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|io
 operator|.
-name|FileSinkOperator
+name|FSRecordWriter
 import|;
 end_import
 
@@ -99,16 +109,6 @@ name|Writable
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
 begin_comment
 comment|/**  * Write an Avro GenericRecord to an Avro data file.  */
 end_comment
@@ -118,9 +118,7 @@ specifier|public
 class|class
 name|AvroGenericRecordWriter
 implements|implements
-name|FileSinkOperator
-operator|.
-name|RecordWriter
+name|FSRecordWriter
 block|{
 specifier|final
 specifier|private

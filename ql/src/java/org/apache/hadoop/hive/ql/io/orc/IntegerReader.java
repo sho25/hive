@@ -31,6 +31,26 @@ name|IOException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|LongColumnVector
+import|;
+end_import
+
 begin_comment
 comment|/**  * Interface for reading integers.  */
 end_comment
@@ -70,6 +90,19 @@ comment|/**    * Return the next available value.    * @return    * @throws IOEx
 name|long
 name|next
 parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Return the next available vector for values.    * @return    * @throws IOException    */
+name|void
+name|nextVector
+parameter_list|(
+name|LongColumnVector
+name|previous
+parameter_list|,
+name|long
+name|previousLen
+parameter_list|)
 throws|throws
 name|IOException
 function_decl|;

@@ -61,6 +61,7 @@ specifier|abstract
 class|class
 name|KeyWrapper
 block|{
+specifier|public
 specifier|abstract
 name|void
 name|getNewKey
@@ -74,16 +75,19 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+specifier|public
 specifier|abstract
 name|void
 name|setHashKey
 parameter_list|()
 function_decl|;
+specifier|public
 specifier|abstract
 name|KeyWrapper
 name|copyKey
 parameter_list|()
 function_decl|;
+specifier|public
 specifier|abstract
 name|void
 name|copyKey
@@ -92,6 +96,7 @@ name|KeyWrapper
 name|oldWrapper
 parameter_list|)
 function_decl|;
+specifier|public
 specifier|abstract
 name|Object
 index|[]

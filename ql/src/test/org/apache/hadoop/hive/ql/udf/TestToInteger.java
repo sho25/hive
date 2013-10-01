@@ -188,9 +188,14 @@ argument_list|(
 name|t4
 argument_list|)
 decl_stmt|;
-name|assertNull
+name|assertEquals
 argument_list|(
+literal|1
+argument_list|,
 name|i4
+operator|.
+name|get
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
