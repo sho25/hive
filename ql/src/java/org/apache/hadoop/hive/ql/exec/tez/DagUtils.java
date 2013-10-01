@@ -1653,7 +1653,7 @@ argument_list|,
 operator|new
 name|ProcessorDescriptor
 argument_list|(
-name|MapProcessor
+name|TezProcessor
 operator|.
 name|class
 operator|.
