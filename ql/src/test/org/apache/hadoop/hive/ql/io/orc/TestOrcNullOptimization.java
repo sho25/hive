@@ -850,7 +850,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 19998 min: a max: a"
+literal|"count: 19998 min: a max: a sum: 19998"
 argument_list|,
 name|stats
 index|[
@@ -1684,7 +1684,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 20000 min: a max: b"
+literal|"count: 20000 min: a max: b sum: 20000"
 argument_list|,
 name|stats
 index|[
@@ -2551,7 +2551,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 7 min: a max: h"
+literal|"count: 7 min: a max: h sum: 7"
 argument_list|,
 name|stats
 index|[

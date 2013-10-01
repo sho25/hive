@@ -22,27 +22,16 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Statistics for string columns.  */
+comment|/**  * Statistics for binary columns.  */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|StringColumnStatistics
+name|BinaryColumnStatistics
 extends|extends
 name|ColumnStatistics
 block|{
-comment|/**    * Get the minimum string.    * @return the minimum    */
-name|String
-name|getMinimum
-parameter_list|()
-function_decl|;
-comment|/**    * Get the maximum string.    * @return the maximum    */
-name|String
-name|getMaximum
-parameter_list|()
-function_decl|;
-comment|/**    * Get the total length of all strings    * @return the sum (total length)    */
 name|long
 name|getSum
 parameter_list|()
