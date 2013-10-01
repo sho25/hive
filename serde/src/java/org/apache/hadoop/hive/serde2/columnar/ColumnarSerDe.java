@@ -469,6 +469,7 @@ parameter_list|()
 throws|throws
 name|SerDeException
 block|{   }
+specifier|protected
 name|SerDeParameters
 name|serdeParams
 init|=

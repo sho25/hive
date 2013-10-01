@@ -3725,6 +3725,14 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+comment|//Vectorization enabled
+name|HIVE_VECTORIZATION_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.enabled"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
 argument_list|(
 literal|"hive.typecheck.on.insert"

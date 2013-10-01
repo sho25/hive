@@ -217,12 +217,16 @@ name|FILTERED
 block|,
 name|PASSED
 block|}
-specifier|private
+specifier|protected
 specifier|final
 specifier|transient
 name|LongWritable
 name|filtered_count
-decl_stmt|,
+decl_stmt|;
+specifier|protected
+specifier|final
+specifier|transient
+name|LongWritable
 name|passed_count
 decl_stmt|;
 specifier|private
@@ -250,6 +254,7 @@ specifier|transient
 name|IOContext
 name|ioContext
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|int
 name|heartbeatInterval

@@ -1086,11 +1086,13 @@ specifier|static
 name|MemoryMXBean
 name|memoryMXBean
 decl_stmt|;
-specifier|private
+comment|/**    * Total amount of memory allowed for JVM heap.    */
+specifier|protected
 name|long
 name|maxMemory
 decl_stmt|;
-specifier|private
+comment|/**    * configure percent of memory threshold usable by QP.    */
+specifier|protected
 name|float
 name|memoryThreshold
 decl_stmt|;
@@ -1147,6 +1149,8 @@ specifier|transient
 name|int
 name|fixedRowSize
 decl_stmt|;
+comment|/**    * Max memory usable by the hashtable before it should flush.    */
+specifier|protected
 specifier|transient
 name|long
 name|maxHashTblMemory
@@ -1159,6 +1163,8 @@ specifier|transient
 name|int
 name|numEntriesVarSize
 decl_stmt|;
+comment|/**    * Current number of entries in the hash table.    */
+specifier|protected
 specifier|transient
 name|int
 name|numEntriesHashTable

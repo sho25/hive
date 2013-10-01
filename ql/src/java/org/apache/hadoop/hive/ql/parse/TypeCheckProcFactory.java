@@ -5248,6 +5248,8 @@ name|newInstance
 argument_list|(
 name|genericUDF
 argument_list|,
+name|funcText
+argument_list|,
 name|children
 argument_list|)
 expr_stmt|;
