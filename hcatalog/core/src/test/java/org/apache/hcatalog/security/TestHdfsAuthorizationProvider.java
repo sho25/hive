@@ -436,7 +436,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.security.TestHdfsAuthorizationProvider} instead  */
+comment|/**  * @deprecated   */
 end_comment
 
 begin_class
@@ -589,7 +589,7 @@ name|StorageDelegationAuthorizationProvider
 operator|.
 name|class
 operator|.
-name|getCanonicalName
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;

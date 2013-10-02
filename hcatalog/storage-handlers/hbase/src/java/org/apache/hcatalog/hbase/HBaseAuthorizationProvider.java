@@ -49,6 +49,42 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceAudience
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceStability
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -188,10 +224,19 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is an implementation of HiveAuthorizationProvider to provide  * authorization functionality for HBase tables.  */
+comment|/**  * This class is an implementation of HiveAuthorizationProvider to provide  * authorization functionality for HBase tables.  * @deprecated   */
 end_comment
 
 begin_class
+annotation|@
+name|InterfaceAudience
+operator|.
+name|Private
+annotation|@
+name|InterfaceStability
+operator|.
+name|Evolving
+specifier|public
 class|class
 name|HBaseAuthorizationProvider
 implements|implements
