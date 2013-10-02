@@ -1880,6 +1880,16 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|setIsolation
+argument_list|(
+literal|"TRANSACTION_READ_COMMITTED"
+argument_list|)
+expr_stmt|;
 name|int
 name|status
 init|=

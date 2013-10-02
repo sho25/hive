@@ -52,7 +52,7 @@ specifier|final
 name|String
 name|DB_POSTGRACE
 init|=
-literal|"postgrace"
+literal|"postgres"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -820,13 +820,20 @@ name|dbCommand
 argument_list|)
 throw|;
 block|}
-comment|// remove ending ';'
+comment|// remove ending ';' and starting '@'
 return|return
 name|dbCommand
 operator|.
 name|replace
 argument_list|(
 literal|";"
+argument_list|,
+literal|""
+argument_list|)
+operator|.
+name|replace
+argument_list|(
+name|ORACLE_NESTING_TOKEN
 argument_list|,
 literal|""
 argument_list|)
