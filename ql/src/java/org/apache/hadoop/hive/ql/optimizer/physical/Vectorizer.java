@@ -2262,23 +2262,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|debug
-argument_list|(
-literal|"Input format: "
-operator|+
-name|pd
-operator|.
-name|getInputFileFormatClassName
-argument_list|()
-operator|+
-literal|", doesn't provide vectorized input"
-argument_list|)
-expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|println
+name|info
 argument_list|(
 literal|"Input format: "
 operator|+
@@ -2506,13 +2490,11 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|System
+name|LOG
 operator|.
-name|err
-operator|.
-name|println
+name|info
 argument_list|(
-literal|"Going down the vectorized path"
+literal|"Vectorizing task..."
 argument_list|)
 expr_stmt|;
 name|MapWork
@@ -2810,11 +2792,9 @@ operator|!
 name|ret
 condition|)
 block|{
-name|System
+name|LOG
 operator|.
-name|err
-operator|.
-name|println
+name|info
 argument_list|(
 literal|"Operator: "
 operator|+
@@ -2823,7 +2803,7 @@ operator|.
 name|getName
 argument_list|()
 operator|+
-literal|", could not be vectorized"
+literal|" could not be vectorized."
 argument_list|)
 expr_stmt|;
 return|return
