@@ -217,10 +217,15 @@ name|this
 operator|.
 name|userName
 operator|=
-name|ugi
+name|ShimLoader
 operator|.
-name|getUserName
+name|getHadoopShims
 argument_list|()
+operator|.
+name|getShortUserName
+argument_list|(
+name|ugi
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
