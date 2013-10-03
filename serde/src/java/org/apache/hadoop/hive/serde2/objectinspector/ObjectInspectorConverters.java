@@ -63,26 +63,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
-operator|.
-name|Category
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|primitive
 operator|.
 name|JavaStringObjectInspector
@@ -943,7 +923,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/*    * Utility function to convert from one object inspector type to another.    */
+comment|/**    * Utility function to convert from one object inspector type to another.    * The output object inspector type should have all fields as settableOI type.    * The above condition can be violated only if equalsCheck is true and inputOI is    * equal to outputOI.    * @param inputOI : input object inspector    * @param outputOI : output object inspector    * @param oiSettableProperties : The object inspector to isSettable mapping used to cache    *                               intermediate results.    * @param equalsCheck : Do we need to check if the inputOI and outputOI are the same?    *                      true : If they are the same, we return the object inspector directly.    *                      false : Do not perform an equality check on inputOI and outputOI    * @return : The output object inspector containing all settable fields. The return value    *           can contain non-settable fields only if inputOI equals outputOI and equalsCheck is    *           true.    */
 specifier|private
 specifier|static
 name|ObjectInspector
@@ -967,24 +947,8 @@ name|boolean
 name|equalsCheck
 parameter_list|)
 block|{
-name|ObjectInspector
-name|retOI
-init|=
-name|outputOI
-operator|.
-name|getCategory
-argument_list|()
-operator|==
-name|Category
-operator|.
-name|PRIMITIVE
-condition|?
-name|inputOI
-else|:
-name|outputOI
-decl_stmt|;
-comment|// If the inputOI is the same as the outputOI, just return it
-comment|// If the retOI has all fields settable, return it
+comment|// 1. If equalsCheck is true and the inputOI is the same as the outputOI OR
+comment|// 2. If the outputOI has all fields settable, return it
 if|if
 condition|(
 operator|(
@@ -1002,7 +966,7 @@ name|ObjectInspectorUtils
 operator|.
 name|hasAllFieldsSettable
 argument_list|(
-name|retOI
+name|outputOI
 argument_list|,
 name|oiSettableProperties
 argument_list|)
@@ -1011,7 +975,7 @@ literal|true
 condition|)
 block|{
 return|return
-name|retOI
+name|outputOI
 return|;
 block|}
 comment|// Return the settable equivalent object inspector for primitive categories
@@ -1029,20 +993,21 @@ block|{
 case|case
 name|PRIMITIVE
 case|:
+comment|// Create a writable object inspector for primitive type and return it.
 name|PrimitiveObjectInspector
-name|primInputOI
+name|primOutputOI
 init|=
 operator|(
 name|PrimitiveObjectInspector
 operator|)
-name|inputOI
+name|outputOI
 decl_stmt|;
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
-name|primInputOI
+name|primOutputOI
 argument_list|)
 return|;
 case|case
@@ -1056,7 +1021,7 @@ name|StructObjectInspector
 operator|)
 name|outputOI
 decl_stmt|;
-comment|// create a standard settable struct object inspector
+comment|// create a standard settable struct object inspector.
 name|List
 argument_list|<
 name|?
@@ -1124,6 +1089,10 @@ name|getFieldName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// We need to make sure that the underlying fields are settable as well.
+comment|// Hence, the recursive call for each field.
+comment|// Note that equalsCheck is false while invoking getConvertedOI() because
+comment|// we need to bypass the initial inputOI.equals(outputOI) check.
 name|structFieldObjectInspectors
 operator|.
 name|add
@@ -1168,6 +1137,7 @@ name|ListObjectInspector
 operator|)
 name|outputOI
 decl_stmt|;
+comment|// We need to make sure that the list element type is settable.
 return|return
 name|ObjectInspectorFactory
 operator|.
@@ -1202,6 +1172,7 @@ name|MapObjectInspector
 operator|)
 name|outputOI
 decl_stmt|;
+comment|// We need to make sure that the key type and the value types are settable.
 return|return
 name|ObjectInspectorFactory
 operator|.
@@ -1291,6 +1262,7 @@ range|:
 name|unionListFields
 control|)
 block|{
+comment|// We need to make sure that all the field associated with the union are settable.
 name|unionFieldObjectInspectors
 operator|.
 name|add
@@ -1317,6 +1289,7 @@ name|unionFieldObjectInspectors
 argument_list|)
 return|;
 default|default:
+comment|// Unsupported in-memory structure.
 throw|throw
 operator|new
 name|RuntimeException
