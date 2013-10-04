@@ -56,6 +56,78 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -229,16 +301,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -391,6 +453,46 @@ name|TableTypeMappings
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|After
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|BeforeClass
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestJdbcDriver2  *  */
 end_comment
@@ -399,8 +501,6 @@ begin_class
 specifier|public
 class|class
 name|TestJdbcDriver2
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -510,23 +610,24 @@ name|Connection
 name|con
 decl_stmt|;
 specifier|private
+specifier|static
 name|boolean
 name|standAloneServer
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|float
+name|floatCompareDelta
+init|=
+literal|0.0001f
+decl_stmt|;
 specifier|public
 name|TestJdbcDriver2
-parameter_list|(
-name|String
-name|name
-parameter_list|)
+parameter_list|()
 block|{
-name|super
-argument_list|(
-name|name
-argument_list|)
-expr_stmt|;
 name|conf
 operator|=
 operator|new
@@ -597,19 +698,17 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Override
-specifier|protected
+name|BeforeClass
+specifier|public
+specifier|static
 name|void
-name|setUp
+name|setUpBeforeClass
 parameter_list|()
 throws|throws
-name|Exception
+name|SQLException
+throws|,
+name|ClassNotFoundException
 block|{
-name|super
-operator|.
-name|setUp
-argument_list|()
-expr_stmt|;
 name|Class
 operator|.
 name|forName
@@ -617,58 +716,128 @@ argument_list|(
 name|driverName
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|standAloneServer
-condition|)
-block|{
-comment|// get connection
-name|con
-operator|=
-name|DriverManager
-operator|.
+name|Connection
+name|con1
+init|=
 name|getConnection
-argument_list|(
-literal|"jdbc:hive2://localhost:10000/default"
-argument_list|,
-literal|""
-argument_list|,
-literal|""
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|con
-operator|=
-name|DriverManager
+argument_list|()
+decl_stmt|;
+name|Statement
+name|stmt1
+init|=
+name|con1
 operator|.
-name|getConnection
-argument_list|(
-literal|"jdbc:hive2://"
-argument_list|,
-literal|""
-argument_list|,
-literal|""
-argument_list|)
-expr_stmt|;
-block|}
+name|createStatement
+argument_list|()
+decl_stmt|;
 name|assertNotNull
 argument_list|(
-literal|"Connection is null"
+literal|"Statement is null"
 argument_list|,
-name|con
+name|stmt1
 argument_list|)
 expr_stmt|;
-name|assertFalse
-argument_list|(
-literal|"Connection should not be closed"
-argument_list|,
-name|con
+name|stmt1
 operator|.
-name|isClosed
-argument_list|()
+name|execute
+argument_list|(
+literal|"set hive.support.concurrency = false"
 argument_list|)
+expr_stmt|;
+name|DatabaseMetaData
+name|metadata
+init|=
+name|con1
+operator|.
+name|getMetaData
+argument_list|()
+decl_stmt|;
+comment|// Drop databases created by other test cases
+name|ResultSet
+name|databaseRes
+init|=
+name|metadata
+operator|.
+name|getSchemas
+argument_list|()
+decl_stmt|;
+while|while
+condition|(
+name|databaseRes
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+name|String
+name|db
+init|=
+name|databaseRes
+operator|.
+name|getString
+argument_list|(
+literal|1
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|db
+operator|.
+name|equals
+argument_list|(
+literal|"default"
+argument_list|)
+condition|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"Dropping database "
+operator|+
+name|db
+argument_list|)
+expr_stmt|;
+name|stmt1
+operator|.
+name|execute
+argument_list|(
+literal|"DROP DATABASE "
+operator|+
+name|db
+operator|+
+literal|" CASCADE"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+name|stmt1
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|con1
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+annotation|@
+name|Before
+specifier|public
+name|void
+name|setUp
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|con
+operator|=
+name|getConnection
+argument_list|()
 expr_stmt|;
 name|Statement
 name|stmt
@@ -720,9 +889,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|ResultSet
-name|res
-decl_stmt|;
 comment|// create table
 name|stmt
 operator|.
@@ -965,20 +1131,83 @@ name|tableName
 argument_list|)
 expr_stmt|;
 block|}
+specifier|private
+specifier|static
+name|Connection
+name|getConnection
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+name|Connection
+name|con1
+decl_stmt|;
+if|if
+condition|(
+name|standAloneServer
+condition|)
+block|{
+comment|// get connection
+name|con1
+operator|=
+name|DriverManager
+operator|.
+name|getConnection
+argument_list|(
+literal|"jdbc:hive2://localhost:10000/default"
+argument_list|,
+literal|""
+argument_list|,
+literal|""
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|con1
+operator|=
+name|DriverManager
+operator|.
+name|getConnection
+argument_list|(
+literal|"jdbc:hive2://"
+argument_list|,
+literal|""
+argument_list|,
+literal|""
+argument_list|)
+expr_stmt|;
+block|}
+name|assertNotNull
+argument_list|(
+literal|"Connection is null"
+argument_list|,
+name|con1
+argument_list|)
+expr_stmt|;
+name|assertFalse
+argument_list|(
+literal|"Connection should not be closed"
+argument_list|,
+name|con1
+operator|.
+name|isClosed
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|con1
+return|;
+block|}
 annotation|@
-name|Override
-specifier|protected
+name|After
+specifier|public
 name|void
 name|tearDown
 parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|super
-operator|.
-name|tearDown
-argument_list|()
-expr_stmt|;
 comment|// drop table
 name|Statement
 name|stmt
@@ -1069,6 +1298,8 @@ name|expectedException
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testBadURL
@@ -1146,6 +1377,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDataTypes2
@@ -1223,6 +1456,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testErrorDiag
@@ -1337,6 +1572,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * verify 'explain ...' resultset    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testExplainStmt
@@ -1376,6 +1613,7 @@ operator|.
 name|getMetaData
 argument_list|()
 decl_stmt|;
+comment|// only one result column
 name|assertEquals
 argument_list|(
 name|md
@@ -1386,7 +1624,7 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
-comment|// only one result column
+comment|// verify the column name
 name|assertEquals
 argument_list|(
 name|md
@@ -1399,7 +1637,6 @@ argument_list|,
 name|EXPL_COLUMN_NAME
 argument_list|)
 expr_stmt|;
-comment|// verify the column name
 comment|//verify that there is data in the resultset
 name|assertTrue
 argument_list|(
@@ -1412,6 +1649,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testPrepareStatement
@@ -1980,6 +2219,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Execute non-select statements using execute() and executeUpdated() APIs    * of PreparedStatement interface    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testExecutePreparedStatement
@@ -2170,6 +2411,8 @@ name|result
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 specifier|final
 name|void
@@ -2202,6 +2445,8 @@ argument_list|)
 expr_stmt|;
 comment|// tests setting maxRows to 0 (return all)
 block|}
+annotation|@
+name|Test
 specifier|public
 specifier|final
 name|void
@@ -2236,6 +2481,8 @@ expr_stmt|;
 comment|// tests setting maxRows to 0
 comment|// (return all)
 block|}
+annotation|@
+name|Test
 specifier|public
 specifier|final
 name|void
@@ -2255,6 +2502,8 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 specifier|final
 name|void
@@ -2273,6 +2522,8 @@ literal|20
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNullType
@@ -2332,6 +2583,8 @@ block|}
 block|}
 comment|// executeQuery should always throw a SQLException,
 comment|// when it executes a non-ResultSet query (like create)
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testExecuteQueryException
@@ -2504,6 +2757,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNullResultSet
@@ -2670,6 +2925,8 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testCloseResultSet
@@ -2804,6 +3061,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDataTypes
@@ -2915,6 +3174,8 @@ name|getDouble
 argument_list|(
 literal|3
 argument_list|)
+argument_list|,
+name|floatCompareDelta
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -3011,6 +3272,8 @@ name|getFloat
 argument_list|(
 literal|11
 argument_list|)
+argument_list|,
+name|floatCompareDelta
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -3190,6 +3453,8 @@ name|getDouble
 argument_list|(
 literal|3
 argument_list|)
+argument_list|,
+name|floatCompareDelta
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -3289,6 +3554,8 @@ name|getFloat
 argument_list|(
 literal|11
 argument_list|)
+argument_list|,
+name|floatCompareDelta
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -3479,6 +3746,8 @@ name|getDouble
 argument_list|(
 literal|3
 argument_list|)
+argument_list|,
+name|floatCompareDelta
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -3575,6 +3844,8 @@ name|getFloat
 argument_list|(
 literal|11
 argument_list|)
+argument_list|,
+name|floatCompareDelta
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -4297,6 +4568,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testErrorMessages
@@ -4512,6 +4785,8 @@ name|exceptionFound
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testShowTables
@@ -4602,6 +4877,8 @@ name|testTableExists
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetTables
@@ -4627,6 +4904,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetTablesHive
@@ -4684,6 +4963,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetTablesClassic
@@ -5214,6 +5495,8 @@ name|cnt
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetCatalogs
@@ -5274,6 +5557,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetSchemas
@@ -5357,7 +5642,6 @@ literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//    assertNull(rs.getString(2));
 name|assertFalse
 argument_list|(
 name|rs
@@ -5372,8 +5656,10 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|//test default table types returned in
+comment|// test default table types returned in
 comment|// Connection.getMetaData().getTableTypes()
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetTableTypes
@@ -5392,8 +5678,10 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|//test default table types returned in
+comment|// test default table types returned in
 comment|// Connection.getMetaData().getTableTypes() when type config is set to "HIVE"
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetHiveTableTypes
@@ -5449,8 +5737,10 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|//test default table types returned in
+comment|// test default table types returned in
 comment|// Connection.getMetaData().getTableTypes() when type config is set to "CLASSIC"
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetClassicTableTypes
@@ -5612,6 +5902,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetColumns
@@ -5971,6 +6263,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Validate the Metadata for the result set of a metadata getColumns call.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaDataGetColumnsMetaData
@@ -6088,6 +6382,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/*   public void testConversionsBaseResultSet() throws SQLException {     ResultSet rs = new HiveMetaDataResultSet(Arrays.asList("key")             , Arrays.asList("long")             , Arrays.asList(1234, "1234", "abc")) {       private int cnt=1;       public boolean next() throws SQLException {         if (cnt<data.size()) {           row = Arrays.asList(data.get(cnt));           cnt++;           return true;         } else {           return false;         }       }     };      while (rs.next()) {       String key = rs.getString("key");       if ("1234".equals(key)) {         assertEquals("Converting a string column into a long failed.", rs.getLong("key"), 1234L);         assertEquals("Converting a string column into a int failed.", rs.getInt("key"), 1234);       } else if ("abc".equals(key)) {         Object result = null;         Exception expectedException = null;         try {           result = rs.getLong("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a long should not work.", expectedException!=null);         try {           result = rs.getInt("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a int should not work.", expectedException!=null);       }     }   }    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDescribeTable
@@ -6211,6 +6507,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDatabaseMetaData
@@ -6347,6 +6645,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testResultSetMetaData
@@ -8749,6 +9049,8 @@ literal|"db"
 block|}
 block|,   }
 decl_stmt|;
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDriverProperties
@@ -8900,6 +9202,8 @@ literal|""
 block|}
 block|,   }
 decl_stmt|;
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testParseUrlHttpMode
@@ -9068,6 +9372,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * validate schema generated by "set" command    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSetCommand
@@ -9153,6 +9459,8 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Validate error on closed resultset    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testPostClose
@@ -9255,6 +9563,8 @@ parameter_list|)
 block|{ }
 block|}
 comment|/*    * The JDBC spec says when you have duplicate column names,    * the first one should be returned.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDuplicateColumnNameOrder
@@ -9304,6 +9614,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test bad args to getXXX()    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testOutOfBoundCols
@@ -9374,6 +9686,8 @@ parameter_list|)
 block|{     }
 block|}
 comment|/**    * Verify selecting using builtin UDFs    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testBuiltInUDFCol
@@ -9474,6 +9788,8 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Verify selecting named expression columns    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testExprCol
@@ -9587,6 +9903,8 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * test getProcedureColumns()    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testProcCols
@@ -9652,6 +9970,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * test testProccedures()    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testProccedures
@@ -9715,6 +10035,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * test getPrimaryKeys()    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testPrimaryKeys
@@ -9778,6 +10100,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * test getImportedKeys()    * @throws SQLException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testImportedKeys
@@ -9841,6 +10165,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * If the Driver implementation understands the URL, it will return a Connection object;    * otherwise it returns null    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testInvalidURL
