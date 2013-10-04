@@ -446,6 +446,15 @@ argument_list|,
 literal|"-Dhttp.proxyHost=somehost -Dhttp.proxyPort=3128"
 argument_list|)
 expr_stmt|;
+name|templateVariables
+operator|.
+name|put
+argument_list|(
+literal|"antTestArgs"
+argument_list|,
+literal|"-DgrammarBuild.notRequired=true -Dskip.javadoc=true"
+argument_list|)
+expr_stmt|;
 name|String
 name|template
 init|=
@@ -650,6 +659,15 @@ argument_list|(
 literal|"antEnvOpts"
 argument_list|,
 literal|"-Dhttp.proxyHost=somehost -Dhttp.proxyPort=3128"
+argument_list|)
+expr_stmt|;
+name|templateVariables
+operator|.
+name|put
+argument_list|(
+literal|"antTestArgs"
+argument_list|,
+literal|""
 argument_list|)
 expr_stmt|;
 name|String
