@@ -81,7 +81,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Collection
+name|Map
 import|;
 end_import
 
@@ -188,8 +188,10 @@ name|JobConf
 name|jconf
 decl_stmt|;
 specifier|protected
-name|Collection
+name|Map
 argument_list|<
+name|String
+argument_list|,
 name|LogicalInput
 argument_list|>
 name|inputs
@@ -251,8 +253,10 @@ parameter_list|,
 name|MRTaskReporter
 name|mrReporter
 parameter_list|,
-name|Collection
+name|Map
 argument_list|<
+name|String
+argument_list|,
 name|LogicalInput
 argument_list|>
 name|inputs
