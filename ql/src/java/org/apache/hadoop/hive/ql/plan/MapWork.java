@@ -653,7 +653,20 @@ decl_stmt|;
 specifier|public
 name|MapWork
 parameter_list|()
-block|{   }
+block|{}
+specifier|public
+name|MapWork
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|name
+argument_list|)
+expr_stmt|;
+block|}
 annotation|@
 name|Explain
 argument_list|(

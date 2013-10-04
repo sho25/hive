@@ -990,6 +990,13 @@ argument_list|,
 name|rootTasks
 argument_list|)
 decl_stmt|;
+name|GenTezWork
+name|genTezWork
+init|=
+operator|new
+name|GenTezWork
+argument_list|()
+decl_stmt|;
 comment|// Sequence of TableScan operators to be walked
 name|Deque
 argument_list|<
@@ -1085,9 +1092,7 @@ operator|+
 literal|"%"
 argument_list|)
 argument_list|,
-operator|new
-name|GenTezWork
-argument_list|()
+name|genTezWork
 argument_list|)
 expr_stmt|;
 name|opRules
@@ -1144,9 +1149,7 @@ operator|+
 literal|"%"
 argument_list|)
 argument_list|,
-operator|new
-name|GenTezWork
-argument_list|()
+name|genTezWork
 argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching

@@ -920,14 +920,6 @@ argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|int
-name|i
-init|=
-name|ws
-operator|.
-name|size
-argument_list|()
-decl_stmt|;
 for|for
 control|(
 name|BaseWork
@@ -974,9 +966,6 @@ argument_list|,
 name|w
 argument_list|,
 name|tezDir
-argument_list|,
-name|i
-operator|--
 argument_list|,
 name|appJarLr
 argument_list|,

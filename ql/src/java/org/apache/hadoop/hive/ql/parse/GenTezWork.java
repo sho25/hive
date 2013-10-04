@@ -324,6 +324,12 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
+name|int
+name|sequenceNumber
+init|=
+literal|0
+decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -496,22 +502,36 @@ operator|.
 name|isEmpty
 argument_list|()
 assert|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Adding map work for "
-operator|+
-name|root
-argument_list|)
-expr_stmt|;
 name|MapWork
 name|mapWork
 init|=
 operator|new
 name|MapWork
-argument_list|()
+argument_list|(
+literal|"Map "
+operator|+
+operator|(
+operator|++
+name|sequenceNumber
+operator|)
+argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Adding map work ("
+operator|+
+name|mapWork
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|") for "
+operator|+
+name|root
+argument_list|)
+expr_stmt|;
 comment|// map work starts with table scan operators
 assert|assert
 name|root
@@ -585,22 +605,36 @@ operator|.
 name|isEmpty
 argument_list|()
 assert|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Adding reduce work for "
-operator|+
-name|root
-argument_list|)
-expr_stmt|;
 name|ReduceWork
 name|reduceWork
 init|=
 operator|new
 name|ReduceWork
-argument_list|()
+argument_list|(
+literal|"Reducer "
+operator|+
+operator|(
+operator|++
+name|sequenceNumber
+operator|)
+argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Adding reduce work ("
+operator|+
+name|reduceWork
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|") for "
+operator|+
+name|root
+argument_list|)
+expr_stmt|;
 name|reduceWork
 operator|.
 name|setReducer
@@ -664,25 +698,30 @@ argument_list|,
 name|reduceSink
 argument_list|)
 expr_stmt|;
-comment|// needs to be fixed in HIVE-5052. This should be driven off of stats
-if|if
-condition|(
+comment|// remember which parent belongs to which tag
 name|reduceWork
 operator|.
-name|getNumReduceTasks
+name|getTagToInput
 argument_list|()
-operator|<=
-literal|0
-condition|)
-block|{
-name|reduceWork
 operator|.
-name|setNumReduceTasks
+name|put
 argument_list|(
-literal|1
+name|reduceSink
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getTag
+argument_list|()
+argument_list|,
+name|context
+operator|.
+name|preceedingWork
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|tezWork
 operator|.
 name|add
@@ -779,6 +818,28 @@ argument_list|(
 name|rWork
 argument_list|,
 name|rs
+argument_list|)
+expr_stmt|;
+comment|// remember which parent belongs to which tag
+name|rWork
+operator|.
+name|getTagToInput
+argument_list|()
+operator|.
+name|put
+argument_list|(
+name|rs
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getTag
+argument_list|()
+argument_list|,
+name|work
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// add dependency between the two work items
