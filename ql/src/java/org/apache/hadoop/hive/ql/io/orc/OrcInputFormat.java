@@ -914,6 +914,10 @@ block|{
 if|if
 condition|(
 name|includeColumn
+operator|==
+literal|null
+operator|||
+name|includeColumn
 index|[
 name|columnId
 index|]

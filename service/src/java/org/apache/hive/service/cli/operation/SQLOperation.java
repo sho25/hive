@@ -732,6 +732,12 @@ argument_list|()
 operator|.
 name|getHiveConf
 argument_list|()
+argument_list|,
+name|getParentSession
+argument_list|()
+operator|.
+name|getUserName
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// In Hive server mode, we are not able to retry in the FetchTask

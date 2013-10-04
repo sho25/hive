@@ -715,10 +715,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error opening session: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -968,10 +972,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error closing session: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1062,10 +1070,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting info: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1197,10 +1209,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error fetching results: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1281,10 +1297,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error executing statement: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1365,10 +1385,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting type info: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1459,10 +1483,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting catalogs: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1563,10 +1591,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting schemas: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1647,10 +1679,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting tables: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1751,10 +1787,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting table types: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1850,10 +1890,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting columns: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -1934,10 +1978,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting functions: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -2005,10 +2053,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting operation status: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -2076,10 +2128,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error canceling operation: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -2160,10 +2216,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error closing operation: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.
@@ -2266,10 +2326,14 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Error getting result set metadata: "
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 name|resp
 operator|.

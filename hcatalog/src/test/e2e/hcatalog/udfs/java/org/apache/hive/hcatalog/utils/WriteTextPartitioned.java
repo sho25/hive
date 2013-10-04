@@ -318,7 +318,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This is a map reduce test for testing hcat writing to partitioned tables.  * table. It performs a group by on the first column and a SUM operation on the  * other columns. This is to simulate a typical operation in a map reduce  * program to test that hcat hands the right data to the map reduce program  *  * Usage: hadoop jar org.apache.hive.hcatalog.utils.HBaseReadWrite -libjars  *&lt;hcat_jar&gt; *&lt;serveruri&gt;&lt;input_tablename&gt;&lt;output_tablename&gt; [filter]  * If filter is given it will be provided as the partition to write to.  */
+comment|/**  * This is a map reduce test for testing hcat writing to partitioned tables.  * table. It performs a group by on the first column and a SUM operation on the  * other columns. This is to simulate a typical operation in a map reduce  * program to test that hcat hands the right data to the map reduce program  *  * Usage: hadoop jar org.apache.hcatalog.utils.HBaseReadWrite -libjars  *&lt;hcat_jar&gt; *&lt;serveruri&gt;&lt;input_tablename&gt;&lt;output_tablename&gt; [filter]  * If filter is given it will be provided as the partition to write to.  */
 end_comment
 
 begin_class

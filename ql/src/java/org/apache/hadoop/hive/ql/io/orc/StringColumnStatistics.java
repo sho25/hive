@@ -42,6 +42,11 @@ name|String
 name|getMaximum
 parameter_list|()
 function_decl|;
+comment|/**    * Get the total length of all strings    * @return the sum (total length)    */
+name|long
+name|getSum
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

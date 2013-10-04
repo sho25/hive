@@ -145,7 +145,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PartitionedTableFunctionDef
 import|;
@@ -213,7 +213,7 @@ name|rawInputOI
 decl_stmt|;
 specifier|protected
 name|PartitionedTableFunctionDef
-name|tDef
+name|tableDef
 decl_stmt|;
 specifier|protected
 name|PTFDesc
@@ -229,6 +229,7 @@ name|outputPartition
 decl_stmt|;
 static|static
 block|{
+comment|//TODO is this a bug? The field is not named outputOI it is named OI
 name|PTFUtils
 operator|.
 name|makeTransient
@@ -271,7 +272,7 @@ name|getTableDef
 parameter_list|()
 block|{
 return|return
-name|tDef
+name|tableDef
 return|;
 block|}
 specifier|public
@@ -284,7 +285,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|tDef
+name|tableDef
 operator|=
 name|tDef
 expr_stmt|;
@@ -409,7 +410,7 @@ operator|.
 name|getCfg
 argument_list|()
 argument_list|,
-name|tDef
+name|tableDef
 operator|.
 name|getOutputShape
 argument_list|()
@@ -419,7 +420,7 @@ argument_list|()
 argument_list|,
 name|OI
 argument_list|,
-name|tDef
+name|tableDef
 operator|.
 name|getOutputShape
 argument_list|()
@@ -492,7 +493,7 @@ name|format
 argument_list|(
 literal|"Internal Error: mapExecute called on function (%s)that has no Map Phase"
 argument_list|,
-name|tDef
+name|tableDef
 operator|.
 name|getName
 argument_list|()

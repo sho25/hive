@@ -27,7 +27,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|List
 import|;
 end_import
 
@@ -169,7 +169,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PartitionedTableFunctionDef
 import|;
@@ -354,7 +354,7 @@ function_decl|;
 comment|/*    * A PTF Function must provide the 'external' names of the columns in its Output.    *    */
 specifier|public
 specifier|abstract
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -399,7 +399,7 @@ throw|;
 block|}
 comment|/*    * A PTF Function must provide the 'external' names of the columns in the transformed Raw Input.    *    */
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
