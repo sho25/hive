@@ -160,6 +160,19 @@ argument_list|>
 name|getOutputs
 parameter_list|()
 function_decl|;
+specifier|public
+name|String
+name|getUserName
+parameter_list|()
+function_decl|;
+specifier|public
+name|void
+name|setUserName
+parameter_list|(
+name|String
+name|userName
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
