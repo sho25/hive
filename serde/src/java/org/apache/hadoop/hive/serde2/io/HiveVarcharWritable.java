@@ -323,6 +323,11 @@ name|int
 name|maxLength
 parameter_list|)
 block|{
+name|characterLength
+operator|=
+operator|-
+literal|1
+expr_stmt|;
 name|value
 operator|.
 name|set
@@ -410,6 +415,11 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|characterLength
+operator|=
+operator|-
+literal|1
+expr_stmt|;
 name|value
 operator|.
 name|readFields
