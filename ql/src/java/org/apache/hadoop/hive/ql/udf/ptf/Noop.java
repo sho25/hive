@@ -27,7 +27,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|List
 import|;
 end_import
 
@@ -137,7 +137,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PartitionedTableFunctionDef
 import|;
@@ -281,7 +281,7 @@ comment|/*      * (non-Javadoc)      * @see org.apache.hadoop.hive.ql.udf.ptf.Ta
 annotation|@
 name|Override
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

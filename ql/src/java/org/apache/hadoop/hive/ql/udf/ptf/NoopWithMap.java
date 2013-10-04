@@ -117,7 +117,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PartitionedTableFunctionDef
 import|;

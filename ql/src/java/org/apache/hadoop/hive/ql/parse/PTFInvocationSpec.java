@@ -31,6 +31,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -310,7 +320,7 @@ decl_stmt|;
 name|String
 name|alias
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -371,7 +381,7 @@ name|alias
 expr_stmt|;
 block|}
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -386,7 +396,7 @@ specifier|public
 name|void
 name|setArgs
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>

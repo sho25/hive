@@ -25,7 +25,27 @@ name|java
 operator|.
 name|util
 operator|.
+name|ArrayDeque
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Deque
 import|;
 end_import
 
@@ -721,7 +741,25 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|PTFDeserializer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|ptf
 operator|.
 name|BoundaryDef
 import|;
@@ -741,7 +779,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|CurrentRowDef
 import|;
@@ -761,7 +799,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|OrderDef
 import|;
@@ -781,7 +819,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|OrderExpressionDef
 import|;
@@ -801,7 +839,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PTFExpressionDef
 import|;
@@ -821,7 +859,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PTFInputDef
 import|;
@@ -841,7 +879,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PTFQueryInputDef
 import|;
@@ -861,7 +899,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PartitionDef
 import|;
@@ -881,7 +919,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PartitionedTableFunctionDef
 import|;
@@ -901,7 +939,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|RangeBoundaryDef
 import|;
@@ -921,7 +959,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|ShapeDetails
 import|;
@@ -941,7 +979,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|ValueBoundaryDef
 import|;
@@ -961,7 +999,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|WindowFrameDef
 import|;
@@ -981,7 +1019,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|WindowFunctionDef
 import|;
@@ -1001,27 +1039,9 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|WindowTableFunctionDef
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|PTFDeserializer
 import|;
 end_import
 
@@ -2084,14 +2104,14 @@ parameter_list|()
 throws|throws
 name|SemanticException
 block|{
-name|Stack
+name|Deque
 argument_list|<
 name|PTFInputSpec
 argument_list|>
 name|ptfChain
 init|=
 operator|new
-name|Stack
+name|ArrayDeque
 argument_list|<
 name|PTFInvocationSpec
 operator|.
@@ -2427,7 +2447,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|/*      * translate args      */
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -2553,7 +2573,7 @@ operator|.
 name|getRawInputOI
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -2655,7 +2675,7 @@ operator|.
 name|getOutputOI
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -3953,7 +3973,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|PTFExpressionDef
 argument_list|>
@@ -3964,7 +3984,7 @@ operator|.
 name|getArgs
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ObjectInspector
 argument_list|>
@@ -4210,7 +4230,7 @@ parameter_list|,
 name|StructObjectInspector
 name|OI
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -4274,7 +4294,7 @@ parameter_list|(
 name|StructObjectInspector
 name|OI
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -4531,7 +4551,7 @@ parameter_list|,
 name|StructObjectInspector
 name|OI
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -4939,7 +4959,7 @@ operator|.
 name|getOrder
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|OrderExpressionDef
 argument_list|>
@@ -5624,7 +5644,7 @@ parameter_list|,
 name|StructObjectInspector
 name|rowObjectInspector
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

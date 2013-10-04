@@ -385,7 +385,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PTFExpressionDef
 import|;
@@ -405,7 +405,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PTFInputDef
 import|;
@@ -425,7 +425,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PartitionedTableFunctionDef
 import|;
@@ -776,7 +776,7 @@ name|getSelectListInput
 argument_list|(
 name|iRow
 argument_list|,
-name|tDef
+name|tableDef
 operator|.
 name|getInput
 argument_list|()
@@ -952,7 +952,7 @@ operator|.
 name|getTableDef
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|PTFExpressionDef
 argument_list|>
@@ -1104,7 +1104,7 @@ parameter_list|(
 name|NPath
 name|evaluator
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|PTFExpressionDef
 argument_list|>
@@ -1203,7 +1203,7 @@ parameter_list|(
 name|NPath
 name|evaluator
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|PTFExpressionDef
 argument_list|>
@@ -1448,7 +1448,7 @@ parameter_list|(
 name|NPath
 name|evaluator
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|PTFExpressionDef
 argument_list|>
@@ -1638,7 +1638,7 @@ operator|.
 name|getTableDef
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|PTFExpressionDef
 argument_list|>

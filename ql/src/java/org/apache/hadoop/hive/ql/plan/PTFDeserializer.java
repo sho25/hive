@@ -25,7 +25,27 @@ name|java
 operator|.
 name|util
 operator|.
+name|ArrayDeque
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Deque
 import|;
 end_import
 
@@ -66,16 +86,6 @@ operator|.
 name|util
 operator|.
 name|Properties
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Stack
 import|;
 end_import
 
@@ -199,7 +209,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|BoundaryDef
 import|;
@@ -219,7 +229,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PTFExpressionDef
 import|;
@@ -239,7 +249,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PTFInputDef
 import|;
@@ -259,7 +269,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PTFQueryInputDef
 import|;
@@ -279,7 +289,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|PartitionedTableFunctionDef
 import|;
@@ -299,7 +309,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|ShapeDetails
 import|;
@@ -319,7 +329,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|ValueBoundaryDef
 import|;
@@ -339,7 +349,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|WindowFrameDef
 import|;
@@ -359,7 +369,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|WindowFunctionDef
 import|;
@@ -379,7 +389,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PTFDesc
+name|ptf
 operator|.
 name|WindowTableFunctionDef
 import|;
@@ -748,14 +758,14 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|Stack
+name|Deque
 argument_list|<
 name|PTFInputDef
 argument_list|>
 name|ptfChain
 init|=
 operator|new
-name|Stack
+name|ArrayDeque
 argument_list|<
 name|PTFInputDef
 argument_list|>
@@ -1316,7 +1326,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|PTFExpressionDef
 argument_list|>
@@ -1327,7 +1337,7 @@ operator|.
 name|getArgs
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ObjectInspector
 argument_list|>
