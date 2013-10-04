@@ -1004,6 +1004,21 @@ name|jconf
 argument_list|)
 argument_list|)
 expr_stmt|;
+operator|(
+operator|(
+name|TezContext
+operator|)
+name|MapredContext
+operator|.
+name|get
+argument_list|()
+operator|)
+operator|.
+name|setInputs
+argument_list|(
+name|inputs
+argument_list|)
+expr_stmt|;
 comment|// initialize reduce operator tree
 try|try
 block|{

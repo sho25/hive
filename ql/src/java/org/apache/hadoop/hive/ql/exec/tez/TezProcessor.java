@@ -434,32 +434,6 @@ name|getUniqueIdentifier
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//this will change when TezProcessor has support for shuffle joins and broadcast joins
-if|if
-condition|(
-name|inputs
-operator|.
-name|size
-argument_list|()
-operator|!=
-literal|1
-condition|)
-block|{
-throw|throw
-operator|new
-name|IOException
-argument_list|(
-literal|"Cannot handle multiple inputs "
-operator|+
-literal|" inputCount="
-operator|+
-name|inputs
-operator|.
-name|size
-argument_list|()
-argument_list|)
-throw|;
-block|}
 if|if
 condition|(
 name|outputs
@@ -485,20 +459,6 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-name|LogicalInput
-name|in
-init|=
-name|inputs
-operator|.
-name|values
-argument_list|()
-operator|.
-name|iterator
-argument_list|()
-operator|.
-name|next
-argument_list|()
-decl_stmt|;
 name|LogicalOutput
 name|out
 init|=
