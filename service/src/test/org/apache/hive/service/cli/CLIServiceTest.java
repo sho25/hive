@@ -629,7 +629,7 @@ argument_list|)
 expr_stmt|;
 comment|// Change lock manager, otherwise unit-test doesn't go through
 name|String
-name|setLockMgr
+name|queryString
 init|=
 literal|"SET hive.lock.manager="
 operator|+
@@ -641,33 +641,48 @@ name|executeStatement
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|setLockMgr
+name|queryString
 argument_list|,
 name|confOverlay
 argument_list|)
 expr_stmt|;
-name|String
-name|createTable
-init|=
-literal|"CREATE TABLE TEST_EXEC(ID STRING)"
-decl_stmt|;
+comment|// Drop the table if it exists
+name|queryString
+operator|=
+literal|"DROP TABLE IF EXISTS TEST_EXEC"
+expr_stmt|;
 name|client
 operator|.
 name|executeStatement
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|createTable
+name|queryString
 argument_list|,
 name|confOverlay
 argument_list|)
 expr_stmt|;
-comment|// blocking execute
-name|String
-name|select
-init|=
+comment|// Create a test table
+name|queryString
+operator|=
+literal|"CREATE TABLE TEST_EXEC(ID STRING)"
+expr_stmt|;
+name|client
+operator|.
+name|executeStatement
+argument_list|(
+name|sessionHandle
+argument_list|,
+name|queryString
+argument_list|,
+name|confOverlay
+argument_list|)
+expr_stmt|;
+comment|// Blocking execute
+name|queryString
+operator|=
 literal|"SELECT ID FROM TEST_EXEC"
-decl_stmt|;
+expr_stmt|;
 name|OperationHandle
 name|ophandle
 init|=
@@ -677,12 +692,12 @@ name|executeStatement
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|select
+name|queryString
 argument_list|,
 name|confOverlay
 argument_list|)
 decl_stmt|;
-comment|// expect query to be completed now
+comment|// Expect query to be completed now
 name|assertEquals
 argument_list|(
 literal|"Query should be finished"
@@ -773,7 +788,7 @@ name|ophandle
 decl_stmt|;
 comment|// Change lock manager, otherwise unit-test doesn't go through
 name|String
-name|setLockMgr
+name|queryString
 init|=
 literal|"SET hive.lock.manager="
 operator|+
@@ -785,30 +800,46 @@ name|executeStatement
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|setLockMgr
+name|queryString
 argument_list|,
 name|confOverlay
 argument_list|)
 expr_stmt|;
-name|String
-name|createTable
-init|=
-literal|"CREATE TABLE TEST_EXEC_ASYNC(ID STRING)"
-decl_stmt|;
+comment|// Drop the table if it exists
+name|queryString
+operator|=
+literal|"DROP TABLE IF EXISTS TEST_EXEC_ASYNC"
+expr_stmt|;
 name|client
 operator|.
-name|executeStatementAsync
+name|executeStatement
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|createTable
+name|queryString
+argument_list|,
+name|confOverlay
+argument_list|)
+expr_stmt|;
+comment|// Create a test table
+name|queryString
+operator|=
+literal|"CREATE TABLE TEST_EXEC_ASYNC(ID STRING)"
+expr_stmt|;
+name|client
+operator|.
+name|executeStatement
+argument_list|(
+name|sessionHandle
+argument_list|,
+name|queryString
 argument_list|,
 name|confOverlay
 argument_list|)
 expr_stmt|;
 comment|// Test async execution response when query is malformed
 name|String
-name|wrongQuery
+name|wrongQueryString
 init|=
 literal|"SELECT NAME FROM TEST_EXEC"
 decl_stmt|;
@@ -820,7 +851,7 @@ name|executeStatementAsync
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|wrongQuery
+name|wrongQueryString
 argument_list|,
 name|confOverlay
 argument_list|)
@@ -942,11 +973,10 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// Test async execution when query is well formed
-name|String
-name|select
-init|=
+name|queryString
+operator|=
 literal|"SELECT ID FROM TEST_EXEC_ASYNC"
-decl_stmt|;
+expr_stmt|;
 name|ophandle
 operator|=
 name|client
@@ -955,7 +985,7 @@ name|executeStatementAsync
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|select
+name|queryString
 argument_list|,
 name|confOverlay
 argument_list|)
@@ -1084,7 +1114,7 @@ name|executeStatementAsync
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|select
+name|queryString
 argument_list|,
 name|confOverlay
 argument_list|)

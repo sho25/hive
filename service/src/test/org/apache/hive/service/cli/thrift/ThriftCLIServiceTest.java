@@ -932,9 +932,10 @@ argument_list|,
 name|sessHandle
 argument_list|)
 expr_stmt|;
+comment|// Drop the table if it exists
 name|queryString
 operator|=
-literal|"CREATE TABLE TEST_EXEC(ID STRING)"
+literal|"DROP TABLE IF EXISTS TEST_EXEC_THRIFT"
 expr_stmt|;
 name|executeQuerySync
 argument_list|(
@@ -943,9 +944,22 @@ argument_list|,
 name|sessHandle
 argument_list|)
 expr_stmt|;
+comment|// Create a test table
 name|queryString
 operator|=
-literal|"SELECT ID FROM TEST_EXEC"
+literal|"CREATE TABLE TEST_EXEC_THRIFT(ID STRING)"
+expr_stmt|;
+name|executeQuerySync
+argument_list|(
+name|queryString
+argument_list|,
+name|sessHandle
+argument_list|)
+expr_stmt|;
+comment|// Execute another query to test
+name|queryString
+operator|=
+literal|"SELECT ID FROM TEST_EXEC_THRIFT"
 expr_stmt|;
 name|TExecuteStatementResp
 name|execResp
@@ -999,7 +1013,7 @@ argument_list|(
 name|opStatusReq
 argument_list|)
 decl_stmt|;
-comment|// expect query to be completed now since it was an async call
+comment|// Expect query to be completed now
 name|assertEquals
 argument_list|(
 literal|"Query should be finished"
