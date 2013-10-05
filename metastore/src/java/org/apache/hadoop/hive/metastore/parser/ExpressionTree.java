@@ -1488,7 +1488,7 @@ return|return;
 name|String
 name|valueAsString
 init|=
-name|getFilterPushdownParam
+name|getJdoFilterPushdownParam
 argument_list|(
 name|table
 argument_list|,
@@ -1746,16 +1746,11 @@ expr_stmt|;
 block|}
 block|}
 comment|/**      * @param operator operator      * @return true iff filter pushdown for this operator can be done for integral types.      */
-specifier|private
-specifier|static
+specifier|public
 name|boolean
-name|doesOperatorSupportIntegral
-parameter_list|(
-name|Operator
-name|operator
-parameter_list|)
+name|canJdoUseStringsWithIntegral
+parameter_list|()
 block|{
-comment|// TODO: for SQL-based filtering, this could be amended if we added casts.
 return|return
 operator|(
 name|operator
@@ -1780,54 +1775,6 @@ name|Operator
 operator|.
 name|NOTEQUALS2
 operator|)
-return|;
-block|}
-comment|/**      * @param type type      * @return true iff type is an integral type.      */
-specifier|private
-specifier|static
-name|boolean
-name|isIntegralType
-parameter_list|(
-name|String
-name|type
-parameter_list|)
-block|{
-return|return
-name|type
-operator|.
-name|equals
-argument_list|(
-name|serdeConstants
-operator|.
-name|TINYINT_TYPE_NAME
-argument_list|)
-operator|||
-name|type
-operator|.
-name|equals
-argument_list|(
-name|serdeConstants
-operator|.
-name|SMALLINT_TYPE_NAME
-argument_list|)
-operator|||
-name|type
-operator|.
-name|equals
-argument_list|(
-name|serdeConstants
-operator|.
-name|INT_TYPE_NAME
-argument_list|)
-operator|||
-name|type
-operator|.
-name|equals
-argument_list|(
-name|serdeConstants
-operator|.
-name|BIGINT_TYPE_NAME
-argument_list|)
 return|;
 block|}
 comment|/**      * Get partition column index in the table partition column list that      * corresponds to the key that is being filtered on by this tree node.      * @param table The table.      * @param filterBuilder filter builder used to report error, if any.      * @return The index.      */
@@ -1937,10 +1884,10 @@ return|return
 name|partitionColumnIndex
 return|;
 block|}
-comment|/**      * Validates and gets the query parameter for filter pushdown based on the column      * and the constant stored in this node.      * In future this may become different for SQL and JDOQL filter pushdown.      * @param table The table.      * @param partColIndex The index of the column to check.      * @param filterBuilder filter builder used to report error, if any.      * @return The parameter string.      */
-specifier|public
+comment|/**      * Validates and gets the query parameter for JDO filter pushdown based on the column      * and the constant stored in this node.      * @param table The table.      * @param partColIndex The index of the column to check.      * @param filterBuilder filter builder used to report error, if any.      * @return The parameter string.      */
+specifier|private
 name|String
-name|getFilterPushdownParam
+name|getJdoFilterPushdownParam
 parameter_list|(
 name|Table
 name|table
@@ -1957,10 +1904,8 @@ block|{
 name|boolean
 name|isIntegralSupported
 init|=
-name|doesOperatorSupportIntegral
-argument_list|(
-name|operator
-argument_list|)
+name|canJdoUseStringsWithIntegral
+argument_list|()
 decl_stmt|;
 name|String
 name|colType
@@ -1996,7 +1941,11 @@ operator|!
 name|isIntegralSupported
 operator|||
 operator|!
-name|isIntegralType
+name|serdeConstants
+operator|.
+name|IntegralTypes
+operator|.
+name|contains
 argument_list|(
 name|colType
 argument_list|)

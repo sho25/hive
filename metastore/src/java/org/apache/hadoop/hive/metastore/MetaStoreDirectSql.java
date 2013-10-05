@@ -491,6 +491,22 @@ name|TreeVisitor
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde
+operator|.
+name|serdeConstants
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class contains the optimizations for MetaStore that rely on direct SQL access to  * the underlying database. It should use ANSI SQL and be compatible with common databases  * such as MySQL (note that MySQL doesn't use full ANSI mode by default), Postgres, etc.  *  * As of now, only the partition retrieval is done this way to improve job startup time;  * JDOQL partition retrieval is still present so as not to limit the ORM solution we have  * to SQL stores only. There's always a way to do without direct SQL.  */
 end_comment
@@ -890,7 +906,7 @@ name|tblName
 argument_list|,
 literal|null
 argument_list|,
-literal|"and \"PARTITIONS\".\"PART_NAME\" in ("
+literal|"\"PARTITIONS\".\"PART_NAME\" in ("
 operator|+
 name|list
 operator|+
@@ -936,17 +952,21 @@ literal|null
 assert|;
 name|List
 argument_list|<
-name|String
+name|Object
 argument_list|>
 name|params
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|String
+name|Object
 argument_list|>
 argument_list|()
-decl_stmt|,
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|joins
 init|=
 operator|new
@@ -1203,7 +1223,9 @@ name|sqlFilter
 parameter_list|,
 name|List
 argument_list|<
-name|String
+name|?
+extends|extends
+name|Object
 argument_list|>
 name|paramsForFilter
 parameter_list|,
@@ -1289,7 +1311,11 @@ literal|"select \"PARTITIONS\".\"PART_ID\" from \"PARTITIONS\""
 operator|+
 literal|"  inner join \"TBLS\" on \"PARTITIONS\".\"TBL_ID\" = \"TBLS\".\"TBL_ID\" "
 operator|+
+literal|"    and \"TBLS\".\"TBL_NAME\" = ? "
+operator|+
 literal|"  inner join \"DBS\" on \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
+operator|+
+literal|"     and \"DBS\".\"NAME\" = ? "
 operator|+
 name|join
 argument_list|(
@@ -1298,8 +1324,6 @@ argument_list|,
 literal|' '
 argument_list|)
 operator|+
-literal|" where \"TBLS\".\"TBL_NAME\" = ? and \"DBS\".\"NAME\" = ? "
-operator|+
 operator|(
 name|sqlFilter
 operator|==
@@ -1307,7 +1331,11 @@ literal|null
 condition|?
 literal|""
 else|:
+operator|(
+literal|" where "
+operator|+
 name|sqlFilter
+operator|)
 operator|)
 operator|+
 name|orderForFilter
@@ -4062,7 +4090,7 @@ specifier|private
 specifier|final
 name|List
 argument_list|<
-name|String
+name|Object
 argument_list|>
 name|params
 decl_stmt|;
@@ -4082,7 +4110,7 @@ name|table
 parameter_list|,
 name|List
 argument_list|<
-name|String
+name|Object
 argument_list|>
 name|params
 parameter_list|,
@@ -4136,7 +4164,7 @@ name|tree
 parameter_list|,
 name|List
 argument_list|<
-name|String
+name|Object
 argument_list|>
 name|params
 parameter_list|,
@@ -4257,7 +4285,7 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-literal|"and ("
+literal|"("
 operator|+
 name|visitor
 operator|.
@@ -4419,36 +4447,138 @@ name|hasError
 argument_list|()
 condition|)
 return|return;
-comment|// Add parameters linearly; we are traversing leaf nodes LTR, so they would match correctly.
+comment|// We skipped 'like', other ops should all work as long as the types are right.
 name|String
-name|valueAsString
+name|colType
 init|=
-name|node
-operator|.
-name|getFilterPushdownParam
-argument_list|(
 name|table
-argument_list|,
+operator|.
+name|getPartitionKeys
+argument_list|()
+operator|.
+name|get
+argument_list|(
 name|partColIndex
-argument_list|,
-name|filterBuffer
+argument_list|)
+operator|.
+name|getType
+argument_list|()
+decl_stmt|;
+name|boolean
+name|isStringCol
+init|=
+name|colType
+operator|.
+name|equals
+argument_list|(
+name|serdeConstants
+operator|.
+name|STRING_TYPE_NAME
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
+operator|!
+name|isStringCol
+operator|&&
+operator|!
+name|serdeConstants
+operator|.
+name|IntegralTypes
+operator|.
+name|contains
+argument_list|(
+name|colType
+argument_list|)
+condition|)
+block|{
 name|filterBuffer
 operator|.
-name|hasError
-argument_list|()
-condition|)
-return|return;
-name|params
-operator|.
-name|add
+name|setError
 argument_list|(
-name|valueAsString
+literal|"Filter pushdown is only supported for string or integral columns"
 argument_list|)
 expr_stmt|;
+return|return;
+block|}
+name|boolean
+name|isStringVal
+init|=
+name|node
+operator|.
+name|value
+operator|instanceof
+name|String
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|isStringVal
+operator|&&
+operator|!
+operator|(
+name|node
+operator|.
+name|value
+operator|instanceof
+name|Long
+operator|)
+condition|)
+block|{
+name|filterBuffer
+operator|.
+name|setError
+argument_list|(
+literal|"Filter pushdown is only supported for string or integral values"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+elseif|else
+if|if
+condition|(
+name|isStringCol
+operator|!=
+name|isStringVal
+condition|)
+block|{
+comment|// It's not clear how filtering for e.g. "stringCol> 5" should work (which side is
+comment|// to be coerced?). Let the expression evaluation sort this one out, not metastore.
+name|filterBuffer
+operator|.
+name|setError
+argument_list|(
+literal|"Cannot push down filter for "
+operator|+
+operator|(
+name|isStringCol
+condition|?
+literal|"string"
+else|:
+literal|"integral"
+operator|)
+operator|+
+literal|" column and value "
+operator|+
+name|node
+operator|.
+name|value
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+comment|// Force string-based handling in some cases to be compatible with JDO pushdown.
+name|boolean
+name|forceStringEq
+init|=
+operator|!
+name|isStringCol
+operator|&&
+name|node
+operator|.
+name|canJdoUseStringsWithIntegral
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|joins
@@ -4523,6 +4653,7 @@ name|partColIndex
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Build the filter and add parameters linearly; we are traversing leaf nodes LTR.
 name|String
 name|tableValue
 init|=
@@ -4532,7 +4663,78 @@ name|partColIndex
 operator|+
 literal|"\".\"PART_KEY_VAL\""
 decl_stmt|;
-comment|// TODO: need casts here if #doesOperatorSupportIntegral is amended to include lt/gt/etc.
+if|if
+condition|(
+operator|!
+name|isStringCol
+operator|&&
+operator|!
+name|forceStringEq
+condition|)
+block|{
+comment|// The underlying database field is varchar, we need to compare numbers.
+name|tableValue
+operator|=
+literal|"cast("
+operator|+
+name|tableValue
+operator|+
+literal|" as decimal(21,0))"
+expr_stmt|;
+comment|// This is a workaround for DERBY-6358; as such, it is pretty horrible.
+name|tableValue
+operator|=
+literal|"(case when \"TBLS\".\"TBL_NAME\" = ? and \"DBS\".\"NAME\" = ? then "
+operator|+
+name|tableValue
+operator|+
+literal|" else null end)"
+expr_stmt|;
+name|params
+operator|.
+name|add
+argument_list|(
+name|table
+operator|.
+name|getTableName
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|params
+operator|.
+name|add
+argument_list|(
+name|table
+operator|.
+name|getDbName
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+name|params
+operator|.
+name|add
+argument_list|(
+name|forceStringEq
+condition|?
+name|node
+operator|.
+name|value
+operator|.
+name|toString
+argument_list|()
+else|:
+name|node
+operator|.
+name|value
+argument_list|)
+expr_stmt|;
 name|filterBuffer
 operator|.
 name|append
