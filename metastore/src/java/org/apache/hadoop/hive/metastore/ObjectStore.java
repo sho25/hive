@@ -8735,6 +8735,8 @@ init|=
 name|canUseDirectSql
 argument_list|(
 name|allowSql
+argument_list|,
+name|allowJdo
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -10596,6 +10598,8 @@ init|=
 name|canUseDirectSql
 argument_list|(
 name|allowSql
+argument_list|,
+name|allowJdo
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -10931,11 +10935,11 @@ decl_stmt|;
 name|boolean
 name|doUseDirectSql
 init|=
-name|allowSql
-operator|&&
-name|isDirectSqlEnabled
+name|canUseDirectSql
 argument_list|(
-name|maxParts
+name|allowSql
+argument_list|,
+name|allowJdo
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -11260,35 +11264,6 @@ argument_list|)
 expr_stmt|;
 return|return
 name|hasUnknownPartitions
-return|;
-block|}
-specifier|private
-name|boolean
-name|isDirectSqlEnabled
-parameter_list|(
-name|short
-name|maxParts
-parameter_list|)
-block|{
-comment|// There's no portable SQL limit. It doesn't make a lot of sense w/o offset anyway.
-return|return
-operator|(
-name|maxParts
-operator|<
-literal|0
-operator|)
-operator|&&
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|getConf
-argument_list|()
-argument_list|,
-name|ConfVars
-operator|.
-name|METASTORE_TRY_DIRECT_SQL
-argument_list|)
 return|;
 block|}
 specifier|private
@@ -12231,6 +12206,8 @@ init|=
 name|canUseDirectSql
 argument_list|(
 name|allowSql
+argument_list|,
+name|allowJdo
 argument_list|)
 decl_stmt|;
 name|dbName
@@ -12490,20 +12467,30 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|/**    * @param allowSql Whether SQL usage is allowed (always true outside test).    * @param allowJdo Whether JDO usage is allowed (always true outside test).    * @return Whether we can use direct SQL.    */
 specifier|private
 name|boolean
 name|canUseDirectSql
 parameter_list|(
 name|boolean
 name|allowSql
+parameter_list|,
+name|boolean
+name|allowJdo
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 comment|// We don't allow direct SQL usage if we are inside a larger transaction (e.g. droptable).
 comment|// That is because some databases (e.g. Postgres) abort the entire transaction when
 comment|// any query fails, so the fallback from failed SQL to JDO is not possible.
 comment|// TODO: Drop table can be very slow on large tables, we might want to address this.
-return|return
-name|allowSql
+name|boolean
+name|isEnabled
+init|=
+operator|!
+name|isActiveTransaction
+argument_list|()
 operator|&&
 name|HiveConf
 operator|.
@@ -12516,14 +12503,38 @@ name|ConfVars
 operator|.
 name|METASTORE_TRY_DIRECT_SQL
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|allowJdo
 operator|&&
+name|isEnabled
+operator|&&
+operator|!
 name|directSql
 operator|.
 name|isCompatibleDatastore
 argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"SQL is not operational"
+argument_list|)
+throw|;
+comment|// test path; SQL is enabled and broken.
+block|}
+return|return
+name|allowSql
 operator|&&
-operator|!
-name|isActiveTransaction
+name|isEnabled
+operator|&&
+name|directSql
+operator|.
+name|isCompatibleDatastore
 argument_list|()
 return|;
 block|}

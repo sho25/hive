@@ -365,6 +365,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|model
+operator|.
+name|MDatabase
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|parser
 operator|.
 name|ExpressionTree
@@ -629,7 +647,22 @@ name|begin
 argument_list|()
 expr_stmt|;
 block|}
-comment|// This should work. If it doesn't, we will self-disable. What a PITA...
+comment|// Force the underlying db to initialize.
+name|pm
+operator|.
+name|newQuery
+argument_list|(
+name|MDatabase
+operator|.
+name|class
+argument_list|,
+literal|"name == ''"
+argument_list|)
+operator|.
+name|execute
+argument_list|()
+expr_stmt|;
+comment|// Self-test query. If it doesn't work, we will self-disable. What a PITA...
 name|boolean
 name|isCompatibleDatastore
 init|=
