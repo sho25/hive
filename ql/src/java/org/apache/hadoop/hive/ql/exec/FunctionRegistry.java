@@ -1909,9 +1909,9 @@ name|udf
 operator|.
 name|ptf
 operator|.
-name|NPath
+name|MatchPath
 operator|.
-name|NPathResolver
+name|MatchPathResolver
 import|;
 end_import
 
@@ -4766,9 +4766,9 @@ argument_list|)
 expr_stmt|;
 name|registerTableFunction
 argument_list|(
-literal|"npath"
+literal|"matchpath"
 argument_list|,
-name|NPathResolver
+name|MatchPathResolver
 operator|.
 name|class
 argument_list|)

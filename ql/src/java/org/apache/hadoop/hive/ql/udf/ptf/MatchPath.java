@@ -658,7 +658,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|NPath
+name|MatchPath
 extends|extends
 name|TableFunctionEvaluator
 block|{
@@ -686,7 +686,7 @@ specifier|private
 name|ResultExprInfo
 name|resultExprInfo
 decl_stmt|;
-comment|/*    * the names of the Columns of the input to NPath. Used to setup the tpath Struct column.    */
+comment|/*    * the names of the Columns of the input to MatchPath. Used to setup the tpath Struct column.    */
 specifier|private
 name|HashMap
 argument_list|<
@@ -770,7 +770,7 @@ decl_stmt|;
 name|Object
 name|selectListInput
 init|=
-name|NPath
+name|MatchPath
 operator|.
 name|getSelectListInput
 argument_list|(
@@ -856,7 +856,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"NPath signature is: SymbolPattern, one or more SymbolName, "
+literal|"MatchPath signature is: SymbolPattern, one or more SymbolName, "
 operator|+
 literal|"expression pairs, the result expression as a select list. Error %s"
 argument_list|,
@@ -902,7 +902,7 @@ block|}
 specifier|public
 specifier|static
 class|class
-name|NPathResolver
+name|MatchPathResolver
 extends|extends
 name|TableFunctionResolver
 block|{
@@ -921,7 +921,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|NPath
+name|MatchPath
 argument_list|()
 return|;
 block|}
@@ -935,11 +935,11 @@ parameter_list|()
 throws|throws
 name|SemanticException
 block|{
-name|NPath
+name|MatchPath
 name|evaluator
 init|=
 operator|(
-name|NPath
+name|MatchPath
 operator|)
 name|getEvaluator
 argument_list|()
@@ -1024,7 +1024,7 @@ comment|/*        * setup OI for input to resultExpr select list        */
 name|RowResolver
 name|selectListInputRR
 init|=
-name|NPath
+name|MatchPath
 operator|.
 name|createSelectListRR
 argument_list|(
@@ -1101,7 +1101,7 @@ specifier|private
 name|void
 name|validateAndSetupPatternStr
 parameter_list|(
-name|NPath
+name|MatchPath
 name|evaluator
 parameter_list|,
 name|List
@@ -1200,7 +1200,7 @@ specifier|private
 name|void
 name|validateAndSetupSymbolInfo
 parameter_list|(
-name|NPath
+name|MatchPath
 name|evaluator
 parameter_list|,
 name|List
@@ -1445,7 +1445,7 @@ specifier|private
 name|void
 name|validateAndSetupResultExprStr
 parameter_list|(
-name|NPath
+name|MatchPath
 name|evaluator
 parameter_list|,
 name|List
@@ -1549,7 +1549,7 @@ specifier|private
 name|void
 name|setupSymbolFunctionChain
 parameter_list|(
-name|NPath
+name|MatchPath
 name|evaluator
 parameter_list|)
 throws|throws
@@ -1621,11 +1621,11 @@ name|HiveException
 block|{
 try|try
 block|{
-name|NPath
+name|MatchPath
 name|evaluator
 init|=
 operator|(
-name|NPath
+name|MatchPath
 operator|)
 name|getEvaluator
 argument_list|()
@@ -1691,7 +1691,7 @@ comment|/*          * setup OI for input to resultExpr select list          */
 name|StructObjectInspector
 name|selectListInputOI
 init|=
-name|NPath
+name|MatchPath
 operator|.
 name|createSelectListOI
 argument_list|(
@@ -1851,11 +1851,11 @@ argument_list|>
 name|getOutputColumnNames
 parameter_list|()
 block|{
-name|NPath
+name|MatchPath
 name|evaluator
 init|=
 operator|(
-name|NPath
+name|MatchPath
 operator|)
 name|getEvaluator
 argument_list|()
@@ -3584,7 +3584,7 @@ argument_list|()
 return|;
 block|}
 return|return
-literal|"npath_col_"
+literal|"matchpath_col_"
 operator|+
 name|colIdx
 return|;
@@ -3686,7 +3686,7 @@ specifier|static
 name|RowResolver
 name|createSelectListRR
 parameter_list|(
-name|NPath
+name|MatchPath
 name|evaluator
 parameter_list|,
 name|PTFInputDef
@@ -3973,7 +3973,7 @@ specifier|static
 name|StructObjectInspector
 name|createSelectListOI
 parameter_list|(
-name|NPath
+name|MatchPath
 name|evaluator
 parameter_list|,
 name|PTFInputDef
@@ -4140,7 +4140,7 @@ name|selectListNames
 operator|.
 name|add
 argument_list|(
-name|NPath
+name|MatchPath
 operator|.
 name|PATHATTR_NAME
 argument_list|)
