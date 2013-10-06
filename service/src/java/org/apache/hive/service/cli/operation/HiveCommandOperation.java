@@ -314,12 +314,11 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveCommandOperation.  *  */
+comment|/**  * Executes a HiveCommand  */
 end_comment
 
 begin_class
 specifier|public
-specifier|abstract
 class|class
 name|HiveCommandOperation
 extends|extends
@@ -353,6 +352,9 @@ parameter_list|,
 name|String
 name|statement
 parameter_list|,
+name|CommandProcessor
+name|commandProcessor
+parameter_list|,
 name|Map
 argument_list|<
 name|String
@@ -370,6 +372,12 @@ name|statement
 argument_list|,
 name|confOverlay
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|commandProcessor
+operator|=
+name|commandProcessor
 expr_stmt|;
 name|setupSessionIO
 argument_list|(
@@ -638,8 +646,7 @@ argument_list|()
 decl_stmt|;
 name|response
 operator|=
-name|getCommandProcessor
-argument_list|()
+name|commandProcessor
 operator|.
 name|run
 argument_list|(
@@ -1072,30 +1079,6 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-block|}
-specifier|protected
-name|CommandProcessor
-name|getCommandProcessor
-parameter_list|()
-block|{
-return|return
-name|commandProcessor
-return|;
-block|}
-specifier|protected
-name|void
-name|setCommandProcessor
-parameter_list|(
-name|CommandProcessor
-name|commandProcessor
-parameter_list|)
-block|{
-name|this
-operator|.
-name|commandProcessor
-operator|=
-name|commandProcessor
-expr_stmt|;
 block|}
 block|}
 end_class

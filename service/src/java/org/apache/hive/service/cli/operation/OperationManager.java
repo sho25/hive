@@ -313,6 +313,8 @@ parameter_list|,
 name|boolean
 name|runAsync
 parameter_list|)
+throws|throws
+name|HiveSQLException
 block|{
 name|ExecuteStatementOperation
 name|executeStatementOperation
