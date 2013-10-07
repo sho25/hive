@@ -401,11 +401,9 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveWritableConstantObjectInspector
 argument_list|(
-name|PrimitiveObjectInspector
+name|TypeInfoFactory
 operator|.
-name|PrimitiveCategory
-operator|.
-name|INT
+name|intTypeInfo
 argument_list|,
 name|x
 argument_list|)
@@ -414,11 +412,9 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveWritableConstantObjectInspector
 argument_list|(
-name|PrimitiveObjectInspector
+name|TypeInfoFactory
 operator|.
-name|PrimitiveCategory
-operator|.
-name|INT
+name|intTypeInfo
 argument_list|,
 name|y
 argument_list|)

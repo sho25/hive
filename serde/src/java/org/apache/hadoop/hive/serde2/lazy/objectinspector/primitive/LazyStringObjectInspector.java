@@ -57,7 +57,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|PrimitiveObjectInspectorUtils
+name|StringObjectInspector
 import|;
 end_import
 
@@ -73,11 +73,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|objectinspector
+name|typeinfo
 operator|.
-name|primitive
-operator|.
-name|StringObjectInspector
+name|TypeInfoFactory
 import|;
 end_import
 
@@ -138,9 +136,9 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|PrimitiveObjectInspectorUtils
+name|TypeInfoFactory
 operator|.
-name|stringTypeEntry
+name|stringTypeInfo
 argument_list|)
 expr_stmt|;
 name|this

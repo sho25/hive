@@ -319,33 +319,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|objectinspector
+name|typeinfo
 operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorUtils
-operator|.
-name|PrimitiveTypeEntry
+name|PrimitiveTypeInfo
 import|;
 end_import
 
@@ -363,7 +339,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|ParameterizedPrimitiveTypeUtils
+name|TypeInfoFactory
 import|;
 end_import
 
@@ -485,6 +461,7 @@ name|TypedBytesWritableInput
 name|tbIn
 decl_stmt|;
 specifier|private
+specifier|final
 name|NonSyncDataOutputBuffer
 name|barrStr
 init|=
@@ -497,6 +474,7 @@ name|TypedBytesWritableOutput
 name|tbOut
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|Writable
@@ -513,6 +491,7 @@ literal|0
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|String
@@ -536,6 +515,7 @@ argument_list|>
 name|columnTypes
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|ObjectInspector
@@ -550,6 +530,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|ObjectInspector
@@ -564,6 +545,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|Converter
@@ -785,12 +767,12 @@ range|:
 name|columnTypes
 control|)
 block|{
-name|PrimitiveTypeEntry
-name|dstTypeEntry
+name|PrimitiveTypeInfo
+name|dstTypeInfo
 init|=
-name|PrimitiveObjectInspectorUtils
+name|TypeInfoFactory
 operator|.
-name|getTypeEntryFromTypeName
+name|getPrimitiveTypeInfo
 argument_list|(
 name|columnType
 argument_list|)
@@ -803,7 +785,7 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
-name|dstTypeEntry
+name|dstTypeInfo
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1075,12 +1057,12 @@ argument_list|(
 name|type
 argument_list|)
 decl_stmt|;
-name|PrimitiveTypeEntry
-name|srcTypeEntry
+name|PrimitiveTypeInfo
+name|srcTypeInfo
 init|=
-name|PrimitiveObjectInspectorUtils
+name|TypeInfoFactory
 operator|.
-name|getTypeEntryFromTypeName
+name|getPrimitiveTypeInfo
 argument_list|(
 name|typeName
 argument_list|)
@@ -1093,7 +1075,7 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
-name|srcTypeEntry
+name|srcTypeInfo
 argument_list|)
 argument_list|)
 expr_stmt|;

@@ -323,24 +323,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|ParameterizedPrimitiveTypeUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|BytesWritable
@@ -509,6 +491,8 @@ decl_stmt|;
 name|TIOStreamTransport
 name|tios
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -902,6 +886,8 @@ name|deserializeReuse
 init|=
 literal|null
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|deserialize
@@ -1113,6 +1099,8 @@ operator|.
 name|getPrimitiveJavaObjectInspector
 argument_list|(
 name|pte
+operator|.
+name|primitiveCategory
 argument_list|)
 return|;
 block|}
@@ -1224,6 +1212,8 @@ argument_list|)
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ObjectInspector
 name|getObjectInspector
@@ -1238,6 +1228,8 @@ name|bt
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Class
 argument_list|<
@@ -1261,6 +1253,8 @@ operator|new
 name|BytesWritable
 argument_list|()
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|Writable
 name|serialize
@@ -1341,6 +1335,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|SerDeStats
 name|getSerDeStats

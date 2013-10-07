@@ -73,13 +73,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|objectinspector
+name|typeinfo
 operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorUtils
-operator|.
-name|PrimitiveTypeEntry
+name|PrimitiveTypeInfo
 import|;
 end_import
 
@@ -125,13 +121,13 @@ block|}
 specifier|protected
 name|AbstractPrimitiveLazyObjectInspector
 parameter_list|(
-name|PrimitiveTypeEntry
-name|typeEntry
+name|PrimitiveTypeInfo
+name|typeInfo
 parameter_list|)
 block|{
 name|super
 argument_list|(
-name|typeEntry
+name|typeInfo
 argument_list|)
 expr_stmt|;
 block|}

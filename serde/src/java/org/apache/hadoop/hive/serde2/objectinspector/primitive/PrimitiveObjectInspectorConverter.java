@@ -193,24 +193,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|VarcharTypeParams
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|Text
@@ -2026,17 +2008,6 @@ name|outputOI
 operator|=
 name|outputOI
 expr_stmt|;
-name|VarcharTypeParams
-name|typeParams
-init|=
-operator|(
-name|VarcharTypeParams
-operator|)
-name|outputOI
-operator|.
-name|getTypeParams
-argument_list|()
-decl_stmt|;
 comment|// unfortunately we seem to get instances of varchar object inspectors without params
 comment|// when an old-style UDF has an evaluate() method with varchar arguments.
 comment|// If we disallow varchar in old-style UDFs and only allow GenericUDFs to be defined

@@ -89,7 +89,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|VarcharTypeParams
+name|VarcharTypeInfo
 import|;
 end_import
 
@@ -137,38 +137,20 @@ argument_list|(
 name|oi
 argument_list|)
 expr_stmt|;
-comment|// Check for params
-name|VarcharTypeParams
-name|typeParams
-init|=
+name|maxLength
+operator|=
 operator|(
-name|VarcharTypeParams
+operator|(
+name|VarcharTypeInfo
 operator|)
 name|oi
 operator|.
-name|getTypeParams
+name|getTypeInfo
 argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|typeParams
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"varchar type used without type params"
-argument_list|)
-throw|;
-block|}
-name|maxLength
-operator|=
-name|typeParams
+operator|)
 operator|.
-name|length
+name|getLength
+argument_list|()
 expr_stmt|;
 name|data
 operator|=

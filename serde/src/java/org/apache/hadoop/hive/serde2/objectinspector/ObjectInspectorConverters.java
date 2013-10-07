@@ -389,6 +389,24 @@ name|WritableStringObjectInspector
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|PrimitiveTypeInfo
+import|;
+end_import
+
 begin_comment
 comment|/**  * ObjectInspectorConverters.  *  */
 end_comment
@@ -1007,7 +1025,13 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
+operator|(
+name|PrimitiveTypeInfo
+operator|)
 name|primOutputOI
+operator|.
+name|getTypeInfo
+argument_list|()
 argument_list|)
 return|;
 case|case

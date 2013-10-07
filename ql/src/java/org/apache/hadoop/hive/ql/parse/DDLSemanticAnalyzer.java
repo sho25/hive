@@ -1869,7 +1869,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|VarcharTypeParams
+name|VarcharTypeInfo
 import|;
 end_import
 
@@ -2211,12 +2211,12 @@ argument_list|(
 name|token
 argument_list|)
 expr_stmt|;
-name|VarcharTypeParams
-name|varcharParams
+name|VarcharTypeInfo
+name|varcharTypeInfo
 init|=
 name|ParseUtils
 operator|.
-name|getVarcharParams
+name|getVarcharTypeInfo
 argument_list|(
 name|typeName
 argument_list|,
@@ -2225,16 +2225,9 @@ argument_list|)
 decl_stmt|;
 name|typeName
 operator|=
-name|PrimitiveObjectInspectorUtils
+name|varcharTypeInfo
 operator|.
-name|getTypeEntryFromTypeSpecs
-argument_list|(
-name|primitiveCategory
-argument_list|,
-name|varcharParams
-argument_list|)
-operator|.
-name|toString
+name|getQualifiedName
 argument_list|()
 expr_stmt|;
 break|break;

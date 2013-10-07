@@ -33,25 +33,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|BaseTypeParams
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|PrimitiveTypeSpec
+name|PrimitiveTypeInfo
 import|;
 end_import
 
@@ -65,8 +47,6 @@ interface|interface
 name|PrimitiveObjectInspector
 extends|extends
 name|ObjectInspector
-extends|,
-name|PrimitiveTypeSpec
 block|{
 comment|/**    * The primitive types supported by Hive.    */
 specifier|public
@@ -105,6 +85,11 @@ block|,
 name|UNKNOWN
 block|}
 empty_stmt|;
+specifier|public
+name|PrimitiveTypeInfo
+name|getTypeInfo
+parameter_list|()
+function_decl|;
 comment|/**    * Get the primitive category of the PrimitiveObjectInspector.    */
 name|PrimitiveCategory
 name|getPrimitiveCategory
@@ -154,19 +139,6 @@ comment|/**    * Whether the ObjectInspector prefers to return a Primitive Writa
 name|boolean
 name|preferWritable
 parameter_list|()
-function_decl|;
-comment|/**    * If the type has type parameters (such as varchar length, or decimal precision/scale),    * then return the parameters for the type.    * @return A BaseTypeParams object representing the parameters for the type, or null    */
-name|BaseTypeParams
-name|getTypeParams
-parameter_list|()
-function_decl|;
-comment|/**    * Set the type parameters for the type.    * @param newParams type parameters for the type    */
-name|void
-name|setTypeParams
-parameter_list|(
-name|BaseTypeParams
-name|newParams
-parameter_list|)
 function_decl|;
 block|}
 end_interface

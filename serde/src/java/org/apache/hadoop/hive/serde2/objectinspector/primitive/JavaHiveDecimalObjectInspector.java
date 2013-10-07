@@ -67,6 +67,24 @@ name|HiveDecimalWritable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfoFactory
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -82,9 +100,9 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-name|PrimitiveObjectInspectorUtils
+name|TypeInfoFactory
 operator|.
-name|decimalTypeEntry
+name|decimalTypeInfo
 argument_list|)
 expr_stmt|;
 block|}

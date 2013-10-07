@@ -109,11 +109,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|objectinspector
+name|typeinfo
 operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorUtils
+name|TypeInfoFactory
 import|;
 end_import
 
@@ -135,9 +133,9 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-name|PrimitiveObjectInspectorUtils
+name|TypeInfoFactory
 operator|.
-name|decimalTypeEntry
+name|decimalTypeInfo
 argument_list|)
 expr_stmt|;
 block|}
