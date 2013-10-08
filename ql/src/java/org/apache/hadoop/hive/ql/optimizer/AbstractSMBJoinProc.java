@@ -2766,6 +2766,11 @@ name|convertMapJoin
 argument_list|(
 name|parseContext
 operator|.
+name|getConf
+argument_list|()
+argument_list|,
+name|parseContext
+operator|.
 name|getOpParseCtx
 argument_list|()
 argument_list|,

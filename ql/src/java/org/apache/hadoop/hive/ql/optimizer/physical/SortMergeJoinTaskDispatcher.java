@@ -2583,6 +2583,11 @@ name|MapJoinProcessor
 operator|.
 name|convertSMBJoinToMapJoin
 argument_list|(
+name|physicalContext
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|opParseContextMap
 argument_list|,
 name|newSMBJoinOp

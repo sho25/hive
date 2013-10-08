@@ -977,6 +977,14 @@ name|MapJoinProcessor
 operator|.
 name|genMapJoinOpAndLocalWork
 argument_list|(
+name|physicalContext
+operator|.
+name|getParseContext
+argument_list|()
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|newWork
 argument_list|,
 name|newJoinOp

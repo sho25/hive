@@ -675,7 +675,7 @@ operator|-
 literal|1
 condition|)
 block|{
-comment|// all tables have size 0. We let the suffle join handle this case.
+comment|// all tables have size 0. We let the shuffle join handle this case.
 return|return
 literal|null
 return|;
@@ -696,6 +696,10 @@ name|MapJoinProcessor
 operator|.
 name|convertJoinOpMapJoinOp
 argument_list|(
+name|context
+operator|.
+name|conf
+argument_list|,
 name|parseContext
 operator|.
 name|getOpParseCtx

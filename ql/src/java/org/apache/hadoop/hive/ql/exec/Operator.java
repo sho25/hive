@@ -2164,10 +2164,10 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// If a operator wants to do some work at the beginning of a group
-specifier|public
+specifier|protected
+specifier|final
 name|void
-name|startGroup
+name|defaultStartGroup
 parameter_list|()
 throws|throws
 name|HiveException
@@ -2229,10 +2229,10 @@ literal|"Start group Done"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// If an operator wants to do some work at the end of a group
-specifier|public
+specifier|protected
+specifier|final
 name|void
-name|endGroup
+name|defaultEndGroup
 parameter_list|()
 throws|throws
 name|HiveException
@@ -2292,6 +2292,30 @@ name|debug
 argument_list|(
 literal|"End group Done"
 argument_list|)
+expr_stmt|;
+block|}
+comment|// If a operator wants to do some work at the beginning of a group
+specifier|public
+name|void
+name|startGroup
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+name|defaultStartGroup
+argument_list|()
+expr_stmt|;
+block|}
+comment|// If an operator wants to do some work at the end of a group
+specifier|public
+name|void
+name|endGroup
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+name|defaultEndGroup
+argument_list|()
 expr_stmt|;
 block|}
 comment|// an blocking operator (e.g. GroupByOperator and JoinOperator) can
