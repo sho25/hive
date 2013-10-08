@@ -183,6 +183,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|HiveMetaStore
@@ -275,6 +291,24 @@ name|ql
 operator|.
 name|metadata
 operator|.
+name|Hive
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
 name|HiveException
 import|;
 end_import
@@ -332,6 +366,12 @@ specifier|private
 name|Warehouse
 name|wh
 decl_stmt|;
+specifier|private
+name|boolean
+name|isRunFromMetaStore
+init|=
+literal|false
+decl_stmt|;
 comment|/**    * Make sure that the warehouse variable is set up properly.    * @throws MetaException if unable to instantiate    */
 specifier|private
 name|void
@@ -339,6 +379,8 @@ name|initWh
 parameter_list|()
 throws|throws
 name|MetaException
+throws|,
+name|HiveException
 block|{
 if|if
 condition|(
@@ -350,12 +392,36 @@ block|{
 if|if
 condition|(
 operator|!
-name|hive_db
-operator|.
 name|isRunFromMetaStore
-argument_list|()
 condition|)
 block|{
+comment|// Note, although HiveProxy has a method that allows us to check if we're being
+comment|// called from the metastore or from the client, we don't have an initialized HiveProxy
+comment|// till we explicitly initialize it as being from the client side. So, we have a
+comment|// chicken-and-egg problem. So, we now track whether or not we're running from client-side
+comment|// in the SBAP itself.
+name|hive_db
+operator|=
+operator|new
+name|HiveProxy
+argument_list|(
+name|Hive
+operator|.
+name|get
+argument_list|(
+operator|new
+name|HiveConf
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|,
+name|StorageBasedAuthorizationProvider
+operator|.
+name|class
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|wh
@@ -367,6 +433,24 @@ name|getConf
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|this
+operator|.
+name|wh
+operator|==
+literal|null
+condition|)
+block|{
+comment|// If wh is still null after just having initialized it, bail out - something's very wrong.
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Unable to initialize Warehouse from clientside."
+argument_list|)
+throw|;
+block|}
 block|}
 else|else
 block|{
@@ -376,7 +460,7 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"Unitialized Warehouse from MetastoreHandler"
+literal|"Uninitialized Warehouse from MetastoreHandler"
 argument_list|)
 throw|;
 block|}
@@ -774,6 +858,12 @@ name|handler
 operator|.
 name|getWh
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|isRunFromMetaStore
+operator|=
+literal|true
 expr_stmt|;
 block|}
 comment|/**    * Given a privilege, return what FsActions are required    */

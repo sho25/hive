@@ -39,6 +39,24 @@ name|ConstantObjectInspector
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfoFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * A WritableVoidObjectInspector inspects a NullWritable Object.  * Note that this is also a constant object inspector.  */
 end_comment
@@ -59,9 +77,9 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-name|PrimitiveObjectInspectorUtils
+name|TypeInfoFactory
 operator|.
-name|voidTypeEntry
+name|voidTypeInfo
 argument_list|)
 expr_stmt|;
 block|}

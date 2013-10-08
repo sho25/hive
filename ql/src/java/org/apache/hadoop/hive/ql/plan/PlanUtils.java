@@ -4198,19 +4198,6 @@ name|jobProperties
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-comment|// Job properties are only relevant for non-native tables, so
-comment|// for native tables, leave it null to avoid cluttering up
-comment|// plans.
-if|if
-condition|(
-operator|!
-name|jobProperties
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
 if|if
 condition|(
 name|tableDesc
@@ -4242,6 +4229,19 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|// Job properties are only relevant for non-native tables, so
+comment|// for native tables, leave it null to avoid cluttering up
+comment|// plans.
+if|if
+condition|(
+operator|!
+name|jobProperties
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 name|tableDesc
 operator|.
 name|setJobProperties

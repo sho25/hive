@@ -763,8 +763,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// While getTypeFor() returns a TypeEntry, we won't actually be able to get any
-comment|// type parameter information from this since the TypeEntry is derived from a return type.
+comment|// Note: type param is not available here.
 name|PrimitiveTypeEntry
 name|typeEntry
 init|=
@@ -782,18 +781,9 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
-name|PrimitiveObjectInspectorUtils
-operator|.
-name|getTypeEntryFromTypeSpecs
-argument_list|(
 name|typeEntry
 operator|.
 name|primitiveCategory
-argument_list|,
-name|typeEntry
-operator|.
-name|typeParams
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|returnObj

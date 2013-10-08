@@ -37,6 +37,24 @@ name|UDFArgumentException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfo
+import|;
+end_import
+
 begin_comment
 comment|/**  * THIS INTERFACE IS UNSTABLE AND SHOULD NOT BE USED BY 3RD PARTY UDFS.  * Interface to allow passing of parameters to the UDF, before it is initialized.  * For example, to be able to pass the char length parameters to a char type cast.  */
 end_comment
@@ -48,16 +66,16 @@ name|SettableUDF
 block|{
 comment|/**    * Add data to UDF prior to initialization.    * An exception may be thrown if the UDF doesn't know what to do with this data.    * @param params UDF-specific data to add to the UDF    */
 name|void
-name|setParams
+name|setTypeInfo
 parameter_list|(
-name|Object
-name|params
+name|TypeInfo
+name|typeInfo
 parameter_list|)
 throws|throws
 name|UDFArgumentException
 function_decl|;
-name|Object
-name|getParams
+name|TypeInfo
+name|getTypeInfo
 parameter_list|()
 function_decl|;
 block|}

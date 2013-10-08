@@ -731,9 +731,32 @@ name|HiveMetaException
 block|{
 name|String
 name|versionQuery
-init|=
-literal|"select t.SCHEMA_VERSION from VERSION t"
 decl_stmt|;
+if|if
+condition|(
+name|HiveSchemaHelper
+operator|.
+name|getDbCommandParser
+argument_list|(
+name|dbType
+argument_list|)
+operator|.
+name|needsQuotedIdentifier
+argument_list|()
+condition|)
+block|{
+name|versionQuery
+operator|=
+literal|"select t.\"SCHEMA_VERSION\" from \"VERSION\" t"
+expr_stmt|;
+block|}
+else|else
+block|{
+name|versionQuery
+operator|=
+literal|"select t.SCHEMA_VERSION from VERSION t"
+expr_stmt|;
+block|}
 try|try
 block|{
 name|Statement

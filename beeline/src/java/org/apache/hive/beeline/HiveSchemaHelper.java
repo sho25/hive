@@ -138,6 +138,12 @@ name|String
 name|dbCommand
 parameter_list|)
 function_decl|;
+comment|/***      * Does the DB required table/column names quoted      * @return      */
+specifier|public
+name|boolean
+name|needsQuotedIdentifier
+parameter_list|()
+function_decl|;
 block|}
 comment|/***    * Base implemenation of NestedScriptParser    * abstractCommandParser.    *    */
 specifier|private
@@ -300,6 +306,17 @@ expr_stmt|;
 block|}
 return|return
 name|dbCommand
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|needsQuotedIdentifier
+parameter_list|()
+block|{
+return|return
+literal|false
 return|;
 block|}
 block|}
@@ -771,6 +788,17 @@ name|startsWith
 argument_list|(
 name|POSTGRES_NESTING_TOKEN
 argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|needsQuotedIdentifier
+parameter_list|()
+block|{
+return|return
+literal|true
 return|;
 block|}
 block|}

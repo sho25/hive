@@ -191,7 +191,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|VarcharTypeParams
+name|VarcharTypeInfo
 import|;
 end_import
 
@@ -1387,15 +1387,15 @@ argument_list|,
 name|varchar5OI
 argument_list|)
 decl_stmt|;
-name|VarcharTypeParams
+name|VarcharTypeInfo
 name|vcParams
 init|=
 operator|(
-name|VarcharTypeParams
+name|VarcharTypeInfo
 operator|)
 name|poi
 operator|.
-name|getTypeParams
+name|getTypeInfo
 argument_list|()
 decl_stmt|;
 name|assertEquals
@@ -1406,7 +1406,8 @@ literal|5
 argument_list|,
 name|vcParams
 operator|.
-name|length
+name|getLength
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

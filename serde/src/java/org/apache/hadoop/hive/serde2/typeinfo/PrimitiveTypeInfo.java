@@ -123,8 +123,6 @@ extends|extends
 name|TypeInfo
 implements|implements
 name|Serializable
-implements|,
-name|PrimitiveTypeSpec
 block|{
 specifier|private
 specifier|static
@@ -134,13 +132,10 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+comment|// Base name (varchar vs fully qualified name such as varchar(200)).
 specifier|protected
 name|String
 name|typeName
-decl_stmt|;
-specifier|protected
-name|BaseTypeParams
-name|typeParams
 decl_stmt|;
 comment|/**    * For java serialization use only.    */
 specifier|public
@@ -196,12 +191,8 @@ name|getPrimitiveWritableClass
 parameter_list|()
 block|{
 return|return
-name|PrimitiveObjectInspectorUtils
-operator|.
-name|getTypeEntryFromTypeName
-argument_list|(
-name|typeName
-argument_list|)
+name|getPrimitiveTypeEntry
+argument_list|()
 operator|.
 name|primitiveWritableClass
 return|;
@@ -215,12 +206,8 @@ name|getPrimitiveJavaClass
 parameter_list|()
 block|{
 return|return
-name|PrimitiveObjectInspectorUtils
-operator|.
-name|getTypeEntryFromTypeName
-argument_list|(
-name|typeName
-argument_list|)
+name|getPrimitiveTypeEntry
+argument_list|()
 operator|.
 name|primitiveJavaClass
 return|;
@@ -252,40 +239,6 @@ return|return
 name|typeName
 return|;
 block|}
-comment|/**    * If the type has type parameters (such as varchar length, or decimal precision/scale),    * then return the parameters for the type.    * @return A BaseTypeParams object representing the parameters for the type, or null    */
-specifier|public
-name|BaseTypeParams
-name|getTypeParams
-parameter_list|()
-block|{
-return|return
-name|typeParams
-return|;
-block|}
-comment|/**    * Set the type parameters for the type.    * @param typeParams type parameters for the type    */
-specifier|public
-name|void
-name|setTypeParams
-parameter_list|(
-name|BaseTypeParams
-name|typeParams
-parameter_list|)
-block|{
-comment|// Ideally could check here to make sure the type really supports parameters,
-comment|// however during deserialization some of the required fields are not set at the
-comment|// time that the type params are set. We would have to customize the way this class
-comment|// is serialized/deserialized for the check to work.
-comment|//if (typeParams != null&& !getPrimitiveTypeEntry().isParameterized()) {
-comment|//  throw new UnsupportedOperationException(
-comment|//      "Attempting to add type parameters " + typeParams + " to type " + getTypeName());
-comment|//}
-name|this
-operator|.
-name|typeParams
-operator|=
-name|typeParams
-expr_stmt|;
-block|}
 specifier|public
 name|PrimitiveTypeEntry
 name|getPrimitiveTypeEntry
@@ -296,16 +249,10 @@ name|PrimitiveObjectInspectorUtils
 operator|.
 name|getTypeEntryFromTypeName
 argument_list|(
-name|TypeInfoUtils
-operator|.
-name|getBaseName
-argument_list|(
 name|typeName
-argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Compare if 2 TypeInfos are the same. We use TypeInfoFactory to cache    * TypeInfos, so we only need to compare the Object pointer.    */
 annotation|@
 name|Override
 specifier|public
@@ -316,10 +263,43 @@ name|Object
 name|other
 parameter_list|)
 block|{
+if|if
+condition|(
+name|other
+operator|==
+literal|null
+operator|||
+operator|!
+operator|(
+name|other
+operator|instanceof
+name|PrimitiveTypeInfo
+operator|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+name|PrimitiveTypeInfo
+name|pti
+init|=
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|other
+decl_stmt|;
 return|return
 name|this
-operator|==
-name|other
+operator|.
+name|typeName
+operator|.
+name|equals
+argument_list|(
+name|pti
+operator|.
+name|typeName
+argument_list|)
 return|;
 block|}
 comment|/**    * Generate the hashCode for this TypeInfo.    */

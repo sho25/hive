@@ -699,25 +699,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|ParameterizedPrimitiveTypeUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|VarcharTypeParams
+name|VarcharTypeInfo
 import|;
 end_import
 
@@ -8172,15 +8154,12 @@ name|VARCHAR
 case|:
 comment|// The varchar length needs to be written to file and should be available
 comment|// from the object inspector
-name|VarcharTypeParams
-name|varcharParams
+name|VarcharTypeInfo
+name|typeInfo
 init|=
-operator|(
-name|VarcharTypeParams
-operator|)
-name|ParameterizedPrimitiveTypeUtils
-operator|.
-name|getTypeParamsFromPrimitiveObjectInspector
+call|(
+name|VarcharTypeInfo
+call|)
 argument_list|(
 operator|(
 name|PrimitiveObjectInspector
@@ -8189,22 +8168,10 @@ name|treeWriter
 operator|.
 name|inspector
 argument_list|)
+operator|.
+name|getTypeInfo
+argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|varcharParams
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|IllegalArgumentException
-argument_list|(
-literal|"No varchar length specified in ORC type"
-argument_list|)
-throw|;
-block|}
 name|type
 operator|.
 name|setKind
@@ -8220,7 +8187,7 @@ name|type
 operator|.
 name|setMaximumLength
 argument_list|(
-name|varcharParams
+name|typeInfo
 operator|.
 name|getLength
 argument_list|()
