@@ -113,6 +113,11 @@ name|String
 name|version
 parameter_list|()
 function_decl|;
+comment|/**    * Get the Hive short version containing major/minor/change version numbers    * @return the short version string "0.6.3"    */
+name|String
+name|shortVersion
+parameter_list|()
+function_decl|;
 comment|/**    * Get the username that compiled Hive.    */
 name|String
 name|user
