@@ -91,7 +91,7 @@ begin_class
 specifier|public
 specifier|abstract
 class|class
-name|MathFuncDoubleToDouble
+name|MathFuncLongToDouble
 extends|extends
 name|VectorExpression
 block|{
@@ -117,12 +117,12 @@ specifier|abstract
 name|double
 name|func
 parameter_list|(
-name|double
-name|d
+name|long
+name|l
 parameter_list|)
 function_decl|;
 specifier|public
-name|MathFuncDoubleToDouble
+name|MathFuncLongToDouble
 parameter_list|(
 name|int
 name|colNum
@@ -145,7 +145,7 @@ name|outputColumn
 expr_stmt|;
 block|}
 specifier|public
-name|MathFuncDoubleToDouble
+name|MathFuncLongToDouble
 parameter_list|()
 block|{   }
 annotation|@
@@ -173,11 +173,11 @@ name|batch
 argument_list|)
 expr_stmt|;
 block|}
-name|DoubleColumnVector
+name|LongColumnVector
 name|inputColVector
 init|=
 operator|(
-name|DoubleColumnVector
+name|LongColumnVector
 operator|)
 name|batch
 operator|.
@@ -238,7 +238,7 @@ name|batch
 operator|.
 name|size
 decl_stmt|;
-name|double
+name|long
 index|[]
 name|vector
 init|=
