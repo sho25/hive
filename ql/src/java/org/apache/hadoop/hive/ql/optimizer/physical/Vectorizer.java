@@ -4198,6 +4198,9 @@ case|:
 case|case
 name|TABLESCAN
 case|:
+case|case
+name|LIMIT
+case|:
 name|ret
 operator|=
 literal|true
@@ -4866,6 +4869,9 @@ name|FILESINK
 case|:
 case|case
 name|REDUCESINK
+case|:
+case|case
+name|LIMIT
 case|:
 name|vectorOp
 operator|=
