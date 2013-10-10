@@ -4274,6 +4274,17 @@ name|files
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|isSecurityEnabled
+argument_list|()
+condition|)
+block|{
 name|String
 name|hadoopAuthToken
 init|=
@@ -4306,6 +4317,7 @@ argument_list|,
 name|hadoopAuthToken
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|boolean
 name|isSilent
