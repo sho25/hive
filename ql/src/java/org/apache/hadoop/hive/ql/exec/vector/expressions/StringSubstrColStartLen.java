@@ -367,6 +367,15 @@ operator|+
 name|substrStart
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|substrLength
+operator|==
+literal|0
+condition|)
+block|{
+return|return;
+block|}
 name|int
 name|endIdx
 init|=
