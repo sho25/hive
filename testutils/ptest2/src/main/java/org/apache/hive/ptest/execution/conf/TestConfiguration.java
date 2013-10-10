@@ -196,6 +196,14 @@ name|ANT_TEST_ARGS
 init|=
 literal|"antTestArgs"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|ANT_TEST_TARGET
+init|=
+literal|"antTestTarget"
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -276,6 +284,10 @@ decl_stmt|;
 specifier|private
 name|String
 name|antEnvOpts
+decl_stmt|;
+specifier|private
+name|String
+name|antTestTarget
 decl_stmt|;
 specifier|private
 name|String
@@ -512,6 +524,20 @@ argument_list|(
 name|ANT_ENV_OPTS
 argument_list|,
 literal|""
+argument_list|)
+operator|.
+name|trim
+argument_list|()
+expr_stmt|;
+name|antTestTarget
+operator|=
+name|context
+operator|.
+name|getString
+argument_list|(
+name|ANT_TEST_TARGET
+argument_list|,
+literal|"test"
 argument_list|)
 operator|.
 name|trim
@@ -783,6 +809,15 @@ return|;
 block|}
 specifier|public
 name|String
+name|getAntTestTarget
+parameter_list|()
+block|{
+return|return
+name|antTestTarget
+return|;
+block|}
+specifier|public
+name|String
 name|getJavaHome
 parameter_list|()
 block|{
@@ -978,6 +1013,26 @@ name|antEnvOpts
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|setAntTestTarget
+parameter_list|(
+name|String
+name|antTestTarget
+parameter_list|)
+block|{
+name|this
+operator|.
+name|antTestTarget
+operator|=
+name|Strings
+operator|.
+name|nullToEmpty
+argument_list|(
+name|antTestTarget
+argument_list|)
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -990,9 +1045,17 @@ literal|"TestConfiguration [antArgs="
 operator|+
 name|antArgs
 operator|+
+literal|", antTestArgs="
+operator|+
+name|antTestArgs
+operator|+
 literal|", antEnvOpts="
 operator|+
 name|antEnvOpts
+operator|+
+literal|", antTestTarget="
+operator|+
+name|antTestTarget
 operator|+
 literal|", repositoryType="
 operator|+
@@ -1033,6 +1096,10 @@ operator|+
 literal|", jiraUser="
 operator|+
 name|jiraUser
+operator|+
+literal|", jiraPassword="
+operator|+
+name|jiraPassword
 operator|+
 literal|", jiraName="
 operator|+

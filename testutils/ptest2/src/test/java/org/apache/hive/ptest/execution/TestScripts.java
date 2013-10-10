@@ -455,6 +455,15 @@ argument_list|,
 literal|"-DgrammarBuild.notRequired=true -Dskip.javadoc=true"
 argument_list|)
 expr_stmt|;
+name|templateVariables
+operator|.
+name|put
+argument_list|(
+literal|"antTestTarget"
+argument_list|,
+literal|"testonly"
+argument_list|)
+expr_stmt|;
 name|String
 name|template
 init|=
