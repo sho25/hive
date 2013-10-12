@@ -39,6 +39,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|sql
+operator|.
+name|SQLException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Collections
@@ -87,11 +97,17 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
 operator|.
-name|SQLException
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
 import|;
 end_import
 
@@ -126,22 +142,6 @@ operator|.
 name|session
 operator|.
 name|SessionState
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
 import|;
 end_import
 
@@ -394,6 +394,14 @@ case|:
 return|return
 operator|new
 name|DeleteResourceProcessor
+argument_list|()
+return|;
+case|case
+name|COMPILE
+case|:
+return|return
+operator|new
+name|CompileProcessor
 argument_list|()
 return|;
 default|default:

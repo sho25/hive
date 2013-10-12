@@ -62,6 +62,9 @@ argument_list|()
 operator|,
 name|DELETE
 argument_list|()
+operator|,
+name|COMPILE
+argument_list|()
 enum|;
 end_enum
 
