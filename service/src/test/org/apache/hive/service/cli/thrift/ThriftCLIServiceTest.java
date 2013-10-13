@@ -1033,6 +1033,17 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|queryString
+operator|=
+literal|"DROP TABLE TEST_EXEC_THRIFT"
+expr_stmt|;
+name|executeQuerySync
+argument_list|(
+name|queryString
+argument_list|,
+name|sessHandle
+argument_list|)
+expr_stmt|;
 comment|// Close the session; ignore exception if any
 name|TCloseSessionReq
 name|closeReq
