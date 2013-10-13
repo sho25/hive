@@ -747,15 +747,25 @@ throws|,
 name|AuthorizationException
 block|{
 comment|// Partition path can be null in the case of a new create partition - in this case,
-comment|// we try to default to checking the permissions of the parent table
+comment|// we try to default to checking the permissions of the parent table.
+comment|// Partition itself can also be null, in cases where this gets called as a generic
+comment|// catch-all call in cases like those with CTAS onto an unpartitioned table (see HIVE-1887)
 if|if
 condition|(
+operator|(
+name|part
+operator|==
+literal|null
+operator|)
+operator|||
+operator|(
 name|part
 operator|.
 name|getLocation
 argument_list|()
 operator|==
 literal|null
+operator|)
 condition|)
 block|{
 name|authorize
@@ -818,6 +828,24 @@ block|{
 comment|// In a simple storage-based auth, we have no information about columns
 comment|// living in different files, so we do simple partition-auth and ignore
 comment|// the columns parameter.
+if|if
+condition|(
+operator|(
+name|part
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|part
+operator|.
+name|getTable
+argument_list|()
+operator|!=
+literal|null
+operator|)
+condition|)
+block|{
 name|authorize
 argument_list|(
 name|part
@@ -832,6 +860,21 @@ argument_list|,
 name|writeRequiredPriv
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|authorize
+argument_list|(
+name|table
+argument_list|,
+name|part
+argument_list|,
+name|readRequiredPriv
+argument_list|,
+name|writeRequiredPriv
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
