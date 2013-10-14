@@ -4530,6 +4530,15 @@ argument_list|)
 expr_stmt|;
 name|registerGenericUDTF
 argument_list|(
+literal|"posexplode"
+argument_list|,
+name|GenericUDTFPosExplode
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|registerGenericUDTF
+argument_list|(
 literal|"stack"
 argument_list|,
 name|GenericUDTFStack
