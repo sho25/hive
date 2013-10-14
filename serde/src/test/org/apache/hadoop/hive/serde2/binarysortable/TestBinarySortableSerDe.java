@@ -1175,8 +1175,9 @@ block|}
 name|HiveDecimal
 name|bd
 init|=
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 name|sb
 operator|.

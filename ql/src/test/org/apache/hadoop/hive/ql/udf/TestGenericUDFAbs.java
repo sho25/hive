@@ -960,8 +960,9 @@ argument_list|(
 operator|new
 name|HiveDecimalWritable
 argument_list|(
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 literal|"107.123456789"
 argument_list|)
@@ -1012,8 +1013,9 @@ argument_list|(
 operator|new
 name|HiveDecimalWritable
 argument_list|(
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 literal|"-107.123456789"
 argument_list|)
