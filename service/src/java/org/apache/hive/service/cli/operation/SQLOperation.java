@@ -913,6 +913,14 @@ operator|.
 name|class
 condition|)
 block|{
+name|resultSchema
+operator|=
+operator|new
+name|TableSchema
+argument_list|(
+name|mResultSchema
+argument_list|)
+expr_stmt|;
 name|setHasResultSet
 argument_list|(
 literal|true
