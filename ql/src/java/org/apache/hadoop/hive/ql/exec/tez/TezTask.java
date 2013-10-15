@@ -149,6 +149,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|Context
@@ -620,6 +638,20 @@ name|session
 init|=
 literal|null
 decl_stmt|;
+comment|// Tez requires us to use RPC for the query plan
+name|HiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_RPC_QUERY_PLAN
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 comment|// Get or create Context object. If we create it we have to clean

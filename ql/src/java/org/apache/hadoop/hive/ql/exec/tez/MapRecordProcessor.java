@@ -395,7 +395,7 @@ name|mapreduce
 operator|.
 name|input
 operator|.
-name|MRInput
+name|MRInputLegacy
 import|;
 end_import
 
@@ -554,7 +554,7 @@ name|out
 argument_list|)
 expr_stmt|;
 comment|//Update JobConf using MRInput, info like filename comes via this
-name|MRInput
+name|MRInputLegacy
 name|mrInput
 init|=
 name|getMRInput
@@ -562,6 +562,30 @@ argument_list|(
 name|inputs
 argument_list|)
 decl_stmt|;
+try|try
+block|{
+name|mrInput
+operator|.
+name|init
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Failed while initializing MRInput"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 name|Configuration
 name|updatedConf
 init|=
@@ -664,6 +688,36 @@ argument_list|,
 name|mapWork
 argument_list|)
 expr_stmt|;
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Plan: "
+operator|+
+name|mapWork
+argument_list|)
+expr_stmt|;
+for|for
+control|(
+name|String
+name|s
+range|:
+name|mapWork
+operator|.
+name|getAliases
+argument_list|()
+control|)
+block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Alias: "
+operator|+
+name|s
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|mapOp
 operator|=
@@ -878,7 +932,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-name|MRInput
+name|MRInputLegacy
 name|getMRInput
 parameter_list|(
 name|Map
@@ -891,7 +945,7 @@ name|inputs
 parameter_list|)
 block|{
 comment|//there should be only one MRInput
-name|MRInput
+name|MRInputLegacy
 name|theMRInput
 init|=
 literal|null
@@ -911,7 +965,7 @@ if|if
 condition|(
 name|inp
 operator|instanceof
-name|MRInput
+name|MRInputLegacy
 condition|)
 block|{
 if|if
@@ -933,7 +987,7 @@ comment|//a better logic would be to find the alias
 name|theMRInput
 operator|=
 operator|(
-name|MRInput
+name|MRInputLegacy
 operator|)
 name|inp
 expr_stmt|;
@@ -951,7 +1005,7 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-name|MRInput
+name|MRInputLegacy
 name|in
 init|=
 name|getMRInput

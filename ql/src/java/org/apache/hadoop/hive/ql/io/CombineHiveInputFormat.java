@@ -1619,7 +1619,9 @@ init|=
 name|part
 operator|.
 name|getDeserializer
-argument_list|()
+argument_list|(
+name|job
+argument_list|)
 operator|==
 literal|null
 condition|?
@@ -1628,7 +1630,9 @@ else|:
 name|part
 operator|.
 name|getDeserializer
-argument_list|()
+argument_list|(
+name|job
+argument_list|)
 operator|.
 name|getClass
 argument_list|()

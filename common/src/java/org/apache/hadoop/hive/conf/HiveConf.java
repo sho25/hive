@@ -3753,7 +3753,7 @@ argument_list|,
 literal|"hdfs:///user/"
 argument_list|)
 block|,
-comment|//Vectorization enabled
+comment|// Vectorization enabled
 name|HIVE_VECTORIZATION_ENABLED
 argument_list|(
 literal|"hive.vectorized.execution.enabled"
@@ -3767,7 +3767,23 @@ literal|"hive.typecheck.on.insert"
 argument_list|,
 literal|true
 argument_list|)
-block|,     ;
+block|,
+comment|// Whether to send the query plan via local resource or RPC
+name|HIVE_RPC_QUERY_PLAN
+argument_list|(
+literal|"hive.rpc.query.plan"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// Whether to generate the splits locally or in the AM (tez only)
+name|HIVE_AM_SPLIT_GENERATION
+argument_list|(
+literal|"hive.compute.splits.in.am"
+argument_list|,
+literal|true
+argument_list|)
+block|;     ;
 specifier|public
 specifier|final
 name|String

@@ -2530,7 +2530,9 @@ operator|=
 name|partDesc
 operator|.
 name|getDeserializer
-argument_list|()
+argument_list|(
+name|job
+argument_list|)
 expr_stmt|;
 name|serde
 operator|.
@@ -3686,7 +3688,9 @@ init|=
 name|listPart
 operator|.
 name|getDeserializer
-argument_list|()
+argument_list|(
+name|job
+argument_list|)
 decl_stmt|;
 name|partSerde
 operator|.

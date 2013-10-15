@@ -352,7 +352,7 @@ decl_stmt|;
 name|int
 name|checkInterval
 init|=
-literal|500
+literal|200
 decl_stmt|;
 name|int
 name|printInterval
