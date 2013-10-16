@@ -454,6 +454,8 @@ operator|=
 operator|new
 name|QFileTestBatch
 argument_list|(
+literal|"testcase"
+argument_list|,
 name|DRIVER
 argument_list|,
 literal|"qfile"
@@ -490,6 +492,8 @@ operator|=
 operator|new
 name|UnitTestBatch
 argument_list|(
+literal|"testcase"
+argument_list|,
 name|DRIVER
 argument_list|,
 literal|false

@@ -67,6 +67,11 @@ block|{
 specifier|private
 specifier|final
 name|String
+name|testCasePropertyName
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
 name|driver
 decl_stmt|;
 specifier|private
@@ -96,6 +101,9 @@ specifier|public
 name|QFileTestBatch
 parameter_list|(
 name|String
+name|testCasePropertyName
+parameter_list|,
+name|String
 name|driver
 parameter_list|,
 name|String
@@ -111,6 +119,12 @@ name|boolean
 name|isParallel
 parameter_list|)
 block|{
+name|this
+operator|.
+name|testCasePropertyName
+operator|=
+name|testCasePropertyName
+expr_stmt|;
 name|this
 operator|.
 name|driver
@@ -250,6 +264,17 @@ annotation|@
 name|Override
 specifier|public
 name|String
+name|getTestClass
+parameter_list|()
+block|{
+return|return
+name|driver
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
 name|getTestArguments
 parameter_list|()
 block|{
@@ -258,7 +283,9 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"-Dtestcase=%s -D%s=%s"
+literal|"-D%s=%s -D%s=%s"
+argument_list|,
+name|testCasePropertyName
 argument_list|,
 name|driver
 argument_list|,

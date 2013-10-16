@@ -31,6 +31,11 @@ parameter_list|()
 function_decl|;
 specifier|public
 name|String
+name|getTestClass
+parameter_list|()
+function_decl|;
+specifier|public
+name|String
 name|getName
 parameter_list|()
 function_decl|;

@@ -676,6 +676,8 @@ name|TestParser
 argument_list|(
 name|context
 argument_list|,
+literal|"testcase"
+argument_list|,
 name|workingDirectory
 argument_list|,
 name|LOG
@@ -822,6 +824,8 @@ operator|new
 name|TestParser
 argument_list|(
 name|context
+argument_list|,
+literal|"testcase"
 argument_list|,
 name|workingDirectory
 argument_list|,

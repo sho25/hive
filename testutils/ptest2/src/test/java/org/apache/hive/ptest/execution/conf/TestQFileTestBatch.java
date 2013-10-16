@@ -156,6 +156,8 @@ init|=
 operator|new
 name|QFileTestBatch
 argument_list|(
+literal|"testcase"
+argument_list|,
 name|DRIVER
 argument_list|,
 name|QUERY_FILES_PROPERTY
@@ -264,6 +266,8 @@ init|=
 operator|new
 name|QFileTestBatch
 argument_list|(
+literal|"testcase"
+argument_list|,
 name|DRIVER
 argument_list|,
 name|QUERY_FILES_PROPERTY
@@ -323,6 +327,8 @@ init|=
 operator|new
 name|QFileTestBatch
 argument_list|(
+literal|"testcase"
+argument_list|,
 name|DRIVER
 argument_list|,
 name|QUERY_FILES_PROPERTY

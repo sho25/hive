@@ -208,7 +208,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"timeout 1h rsync -qaPe \"ssh -i %s\" --timeout 600 %s@%s:%s %s"
+literal|"timeout 1h rsync -vaPe \"ssh -i %s\" --timeout 600 %s@%s:%s %s"
 argument_list|,
 name|command
 operator|.
@@ -266,7 +266,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"timeout 1h rsync -qaPe \"ssh -i %s\" --timeout 600 --delete --delete-during --force %s %s@%s:%s"
+literal|"timeout 1h rsync -vaPe \"ssh -i %s\" --timeout 600 --delete --delete-during --force %s %s@%s:%s"
 argument_list|,
 name|command
 operator|.
