@@ -2089,6 +2089,11 @@ block|}
 block|}
 finally|finally
 block|{
+name|Utilities
+operator|.
+name|clearWorkMap
+argument_list|()
+expr_stmt|;
 name|MapredContext
 operator|.
 name|close
