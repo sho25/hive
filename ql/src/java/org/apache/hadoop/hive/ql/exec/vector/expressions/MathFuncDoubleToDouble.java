@@ -84,7 +84,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implement vectorized math function that takes a double (and optionally additional  * constant argument(s)) and returns long.  * May be used for functions like ROUND(d, N), Pow(a, p) etc.  *  * Do NOT use this for simple math functions lone sin/cos/exp etc. that just take  * a single argument. For those, modify the template ColumnUnaryFunc.txt  * and expand the template to generate needed classes.  */
+comment|/**  * Implement vectorized math function that takes a double (and optionally additional  * constant argument(s)) and returns long.  * May be used for functions like ROUND(d, N), Pow(a, p) etc.  *  * Do NOT use this for simple math functions like sin/cos/exp etc. that just take  * a single argument. For those, modify the template ColumnUnaryFunc.txt  * and expand the template to generate needed classes.  */
 end_comment
 
 begin_class
@@ -112,6 +112,7 @@ name|int
 name|outputColumn
 decl_stmt|;
 comment|// Subclasses must override this with a function that implements the desired logic.
+specifier|protected
 specifier|abstract
 name|double
 name|func
@@ -120,6 +121,7 @@ name|double
 name|d
 parameter_list|)
 function_decl|;
+specifier|public
 name|MathFuncDoubleToDouble
 parameter_list|(
 name|int
@@ -142,6 +144,7 @@ operator|=
 name|outputColumn
 expr_stmt|;
 block|}
+specifier|public
 name|MathFuncDoubleToDouble
 parameter_list|()
 block|{   }
@@ -503,6 +506,52 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+name|cleanup
+argument_list|(
+name|outputColVector
+argument_list|,
+name|sel
+argument_list|,
+name|batch
+operator|.
+name|selectedInUse
+argument_list|,
+name|n
+argument_list|)
+expr_stmt|;
+block|}
+comment|// override this with a no-op if subclass doesn't need to treat NaN as null
+specifier|protected
+name|void
+name|cleanup
+parameter_list|(
+name|DoubleColumnVector
+name|outputColVector
+parameter_list|,
+name|int
+index|[]
+name|sel
+parameter_list|,
+name|boolean
+name|selectedInUse
+parameter_list|,
+name|int
+name|n
+parameter_list|)
+block|{
+name|MathExpr
+operator|.
+name|NaNToNull
+argument_list|(
+name|outputColVector
+argument_list|,
+name|sel
+argument_list|,
+name|selectedInUse
+argument_list|,
+name|n
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override

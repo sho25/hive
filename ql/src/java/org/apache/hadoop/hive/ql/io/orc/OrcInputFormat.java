@@ -1350,9 +1350,12 @@ name|Configuration
 name|conf
 parameter_list|)
 block|{
-name|String
-name|includedStr
-init|=
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"included column ids = "
+operator|+
 name|conf
 operator|.
 name|get
@@ -1361,14 +1364,6 @@ name|ColumnProjectionUtils
 operator|.
 name|READ_COLUMN_IDS_CONF_STR
 argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"included column ids = "
-operator|+
-name|includedStr
 argument_list|)
 expr_stmt|;
 if|if
@@ -1379,20 +1374,6 @@ name|isReadAllColumns
 argument_list|(
 name|conf
 argument_list|)
-operator|||
-name|includedStr
-operator|==
-literal|null
-operator|||
-name|includedStr
-operator|.
-name|trim
-argument_list|()
-operator|.
-name|length
-argument_list|()
-operator|==
-literal|0
 condition|)
 block|{
 return|return

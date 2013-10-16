@@ -155,8 +155,6 @@ name|udf
 operator|.
 name|generic
 operator|.
-name|GenericUDFLeadLag
-operator|.
 name|GenericUDFLag
 import|;
 end_import
@@ -176,8 +174,6 @@ operator|.
 name|udf
 operator|.
 name|generic
-operator|.
-name|GenericUDFLeadLag
 operator|.
 name|GenericUDFLead
 import|;

@@ -1434,6 +1434,15 @@ name|getDatabaseName
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|db
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// if above returned a null, then the db does not exist - probably a
+comment|// "drop database if exists" clause - don't try to authorize then.
 name|authorize
 argument_list|(
 name|db
@@ -1443,6 +1452,7 @@ operator|.
 name|DROP
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|DescDatabaseDesc
 name|descDb

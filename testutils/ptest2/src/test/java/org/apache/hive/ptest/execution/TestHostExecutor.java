@@ -720,6 +720,8 @@ operator|=
 operator|new
 name|UnitTestBatch
 argument_list|(
+literal|"testcase"
+argument_list|,
 name|DRIVER_PARALLEL_1
 argument_list|,
 literal|true
@@ -730,6 +732,8 @@ operator|=
 operator|new
 name|UnitTestBatch
 argument_list|(
+literal|"testcase"
+argument_list|,
 name|DRIVER_PARALLEL_2
 argument_list|,
 literal|true
@@ -740,6 +744,8 @@ operator|=
 operator|new
 name|UnitTestBatch
 argument_list|(
+literal|"testcase"
+argument_list|,
 name|DRIVER_ISOLATED_1
 argument_list|,
 literal|false
@@ -750,6 +756,8 @@ operator|=
 operator|new
 name|UnitTestBatch
 argument_list|(
+literal|"testcase"
+argument_list|,
 name|DRIVER_ISOLATED_2
 argument_list|,
 literal|false

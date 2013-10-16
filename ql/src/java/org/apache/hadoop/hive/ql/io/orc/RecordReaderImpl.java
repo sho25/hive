@@ -5740,8 +5740,9 @@ name|valuePresent
 condition|)
 block|{
 return|return
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 name|SerializationUtils
 operator|.
@@ -9331,6 +9332,8 @@ literal|"NextVector is not supported operation for List type"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 name|void
 name|checkEncoding
 parameter_list|(
@@ -9884,6 +9887,8 @@ literal|"NextVector is not supported operation for Map type"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 name|void
 name|checkEncoding
 parameter_list|(

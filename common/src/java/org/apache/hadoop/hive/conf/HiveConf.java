@@ -3640,7 +3640,7 @@ name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
 argument_list|,
-literal|"set,reset,dfs,add,delete"
+literal|"set,reset,dfs,add,delete,compile"
 argument_list|)
 block|,
 name|HIVE_CONF_RESTRICTED_LIST

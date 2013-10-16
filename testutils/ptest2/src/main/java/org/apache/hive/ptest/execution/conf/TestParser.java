@@ -181,6 +181,11 @@ name|context
 decl_stmt|;
 specifier|private
 specifier|final
+name|String
+name|testCasePropertyName
+decl_stmt|;
+specifier|private
+specifier|final
 name|File
 name|sourceDirectory
 decl_stmt|;
@@ -195,6 +200,9 @@ parameter_list|(
 name|Context
 name|context
 parameter_list|,
+name|String
+name|testCasePropertyName
+parameter_list|,
 name|File
 name|sourceDirectory
 parameter_list|,
@@ -207,6 +215,12 @@ operator|.
 name|context
 operator|=
 name|context
+expr_stmt|;
+name|this
+operator|.
+name|testCasePropertyName
+operator|=
+name|testCasePropertyName
 expr_stmt|;
 name|this
 operator|.
@@ -651,6 +665,8 @@ argument_list|(
 operator|new
 name|UnitTestBatch
 argument_list|(
+name|testCasePropertyName
+argument_list|,
 name|testName
 argument_list|,
 literal|false
@@ -676,6 +692,8 @@ argument_list|(
 operator|new
 name|UnitTestBatch
 argument_list|(
+name|testCasePropertyName
+argument_list|,
 name|testName
 argument_list|,
 literal|true
@@ -1344,6 +1362,8 @@ argument_list|(
 operator|new
 name|QFileTestBatch
 argument_list|(
+name|testCasePropertyName
+argument_list|,
 name|driver
 argument_list|,
 name|queryFilesProperty
@@ -1379,6 +1399,8 @@ argument_list|(
 operator|new
 name|QFileTestBatch
 argument_list|(
+name|testCasePropertyName
+argument_list|,
 name|driver
 argument_list|,
 name|queryFilesProperty
@@ -1427,6 +1449,8 @@ argument_list|(
 operator|new
 name|QFileTestBatch
 argument_list|(
+name|testCasePropertyName
+argument_list|,
 name|driver
 argument_list|,
 name|queryFilesProperty

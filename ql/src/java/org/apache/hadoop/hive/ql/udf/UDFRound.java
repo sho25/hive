@@ -456,8 +456,6 @@ operator|.
 name|getHiveDecimal
 argument_list|()
 decl_stmt|;
-try|try
-block|{
 name|bd
 operator|=
 name|n
@@ -474,12 +472,12 @@ operator|.
 name|ROUND_HALF_UP
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NumberFormatException
-name|e
-parameter_list|)
+if|if
+condition|(
+name|bd
+operator|==
+literal|null
+condition|)
 block|{
 return|return
 literal|null

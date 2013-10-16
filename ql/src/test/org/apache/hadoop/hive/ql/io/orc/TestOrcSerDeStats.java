@@ -2766,8 +2766,9 @@ argument_list|(
 literal|"2000-03-12 15:00:00"
 argument_list|)
 argument_list|,
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 literal|"12345678.6547456"
 argument_list|)
@@ -2881,8 +2882,9 @@ argument_list|(
 literal|"2000-03-11 15:00:00"
 argument_list|)
 argument_list|,
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 literal|"12345678.6547452"
 argument_list|)
@@ -3786,8 +3788,9 @@ argument_list|(
 literal|"2000-03-12 15:00:00"
 argument_list|)
 argument_list|,
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 literal|"12345678.6547456"
 argument_list|)
@@ -3901,8 +3904,9 @@ argument_list|(
 literal|"2000-03-11 15:00:00"
 argument_list|)
 argument_list|,
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 literal|"12345678.6547452"
 argument_list|)

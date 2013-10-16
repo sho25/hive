@@ -62,6 +62,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|public
 name|FuncBin
 parameter_list|(
 name|int
@@ -79,6 +80,7 @@ name|outputCol
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
 name|FuncBin
 parameter_list|()
 block|{

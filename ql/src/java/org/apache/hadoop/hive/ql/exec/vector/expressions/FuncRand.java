@@ -100,6 +100,7 @@ specifier|private
 name|Random
 name|random
 decl_stmt|;
+specifier|public
 name|FuncRand
 parameter_list|(
 name|int
@@ -117,6 +118,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+specifier|public
 name|FuncRand
 parameter_list|(
 name|long
@@ -132,6 +134,8 @@ name|outputCol
 operator|=
 name|outputCol
 expr_stmt|;
+name|this
+operator|.
 name|random
 operator|=
 operator|new
@@ -141,6 +145,7 @@ name|seed
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
 name|FuncRand
 parameter_list|()
 block|{   }

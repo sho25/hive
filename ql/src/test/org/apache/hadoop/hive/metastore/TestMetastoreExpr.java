@@ -1179,7 +1179,6 @@ name|build
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Apply between, isnull and instr (not supported by pushdown) via name filtering.
 name|checkExpr
 argument_list|(
 literal|3
@@ -1221,6 +1220,7 @@ name|build
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Apply isnull and instr (not supported by pushdown) via name filtering.
 name|checkExpr
 argument_list|(
 literal|4
@@ -1703,27 +1703,6 @@ argument_list|,
 name|col
 argument_list|,
 literal|true
-argument_list|)
-return|;
-block|}
-specifier|public
-name|ExprBuilder
-name|npCol
-parameter_list|(
-name|String
-name|col
-parameter_list|)
-block|{
-return|return
-name|colInternal
-argument_list|(
-name|TypeInfoFactory
-operator|.
-name|stringTypeInfo
-argument_list|,
-name|col
-argument_list|,
-literal|false
 argument_list|)
 return|;
 block|}

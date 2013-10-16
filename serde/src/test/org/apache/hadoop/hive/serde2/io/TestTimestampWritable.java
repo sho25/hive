@@ -1932,8 +1932,9 @@ name|TimestampWritable
 operator|.
 name|decimalToTimestamp
 argument_list|(
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 name|BigDecimal
 operator|.
@@ -1995,8 +1996,9 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 name|d
 argument_list|)

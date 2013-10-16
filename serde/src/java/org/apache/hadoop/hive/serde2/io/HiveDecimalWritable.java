@@ -459,8 +459,9 @@ name|getHiveDecimal
 parameter_list|()
 block|{
 return|return
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 operator|new
 name|BigInteger

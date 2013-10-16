@@ -190,6 +190,26 @@ else|:
 literal|"Unknown"
 return|;
 block|}
+comment|/**    * Get the Hive short version, with major/minor/change version numbers.    * @return short version string, eg. "0.6.3"    */
+specifier|public
+specifier|static
+name|String
+name|getShortVersion
+parameter_list|()
+block|{
+return|return
+name|version
+operator|!=
+literal|null
+condition|?
+name|version
+operator|.
+name|shortVersion
+argument_list|()
+else|:
+literal|"Unknown"
+return|;
+block|}
 comment|/**    * Get the subversion revision number for the root directory    * @return the revision number, eg. "451451"    */
 specifier|public
 specifier|static

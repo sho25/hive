@@ -161,12 +161,10 @@ name|String
 name|typeString
 decl_stmt|;
 specifier|private
-specifier|transient
 name|Type
 name|type
 decl_stmt|;
 specifier|private
-specifier|transient
 name|int
 name|bytesValueLength
 init|=

@@ -1132,8 +1132,9 @@ name|textConverter
 operator|.
 name|convert
 argument_list|(
-operator|new
 name|HiveDecimal
+operator|.
+name|create
 argument_list|(
 literal|"100.001"
 argument_list|)

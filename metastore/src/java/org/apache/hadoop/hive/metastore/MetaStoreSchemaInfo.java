@@ -609,7 +609,7 @@ operator|+
 name|SQL_FILE_EXTENSION
 return|;
 block|}
-comment|// Current hive version, remove the 'SNAPSHOT' part if needed
+comment|// Current hive version, in majorVersion.minorVersion.changeVersion format
 specifier|public
 specifier|static
 name|String
@@ -619,15 +619,8 @@ block|{
 return|return
 name|HiveVersionInfo
 operator|.
-name|getVersion
+name|getShortVersion
 argument_list|()
-operator|.
-name|replace
-argument_list|(
-literal|"-SNAPSHOT"
-argument_list|,
-literal|""
-argument_list|)
 return|;
 block|}
 block|}

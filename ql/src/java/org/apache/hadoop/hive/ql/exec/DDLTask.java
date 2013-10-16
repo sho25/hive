@@ -11773,11 +11773,11 @@ block|{
 name|String
 name|createTab_stmt
 init|=
-literal|"CREATE VIEW "
+literal|"CREATE VIEW `"
 operator|+
 name|tableName
 operator|+
-literal|" AS "
+literal|"` AS "
 operator|+
 name|tbl
 operator|.
@@ -11822,11 +11822,11 @@ literal|"CREATE<"
 operator|+
 name|EXTERNAL
 operator|+
-literal|"> TABLE "
+literal|"> TABLE `"
 operator|+
 name|tableName
 operator|+
-literal|"(\n"
+literal|"`(\n"
 operator|+
 literal|"<"
 operator|+
@@ -11946,14 +11946,14 @@ block|{
 name|String
 name|columnDesc
 init|=
-literal|"  "
+literal|"  `"
 operator|+
 name|col
 operator|.
 name|getName
 argument_list|()
 operator|+
-literal|" "
+literal|"` "
 operator|+
 name|col
 operator|.
@@ -12103,14 +12103,14 @@ block|{
 name|String
 name|partColDesc
 init|=
-literal|"  "
+literal|"  `"
 operator|+
 name|partKey
 operator|.
 name|getName
 argument_list|()
 operator|+
-literal|" "
+literal|"` "
 operator|+
 name|partKey
 operator|.

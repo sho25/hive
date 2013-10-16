@@ -513,20 +513,53 @@ comment|// is not understood and explicitly allowed.
 comment|// Both approaches have merit, but given that things like grants and revokes
 comment|// that are user-level do not make sense from the context of storage-permission
 comment|// based auth, denying seems to be more canonical here.
-throw|throw
-operator|new
-name|AuthorizationException
-argument_list|(
-name|StorageBasedAuthorizationProvider
-operator|.
-name|class
-operator|.
-name|getName
+comment|// Update to previous comment: there does seem to be one place that uses this
+comment|// and that is to authorize "show databases" in hcat commandline, which is used
+comment|// by webhcat. And user-level auth seems to be a resonable default in this case.
+comment|// The now deprecated HdfsAuthorizationProvider in hcatalog approached this in
+comment|// another way, and that was to see if the user had said above appropriate requested
+comment|// privileges for the hive root warehouse directory. That seems to be the best
+comment|// mapping for user level privileges to storage. Using that strategy here.
+name|Path
+name|root
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|initWh
 argument_list|()
-operator|+
-literal|" does not allow user-level authorization"
+expr_stmt|;
+name|root
+operator|=
+name|wh
+operator|.
+name|getWhRoot
+argument_list|()
+expr_stmt|;
+name|authorize
+argument_list|(
+name|root
+argument_list|,
+name|readRequiredPriv
+argument_list|,
+name|writeRequiredPriv
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+name|ex
+parameter_list|)
+block|{
+throw|throw
+name|hiveException
+argument_list|(
+name|ex
 argument_list|)
 throw|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -747,15 +780,25 @@ throws|,
 name|AuthorizationException
 block|{
 comment|// Partition path can be null in the case of a new create partition - in this case,
-comment|// we try to default to checking the permissions of the parent table
+comment|// we try to default to checking the permissions of the parent table.
+comment|// Partition itself can also be null, in cases where this gets called as a generic
+comment|// catch-all call in cases like those with CTAS onto an unpartitioned table (see HIVE-1887)
 if|if
 condition|(
+operator|(
+name|part
+operator|==
+literal|null
+operator|)
+operator|||
+operator|(
 name|part
 operator|.
 name|getLocation
 argument_list|()
 operator|==
 literal|null
+operator|)
 condition|)
 block|{
 name|authorize
@@ -818,6 +861,24 @@ block|{
 comment|// In a simple storage-based auth, we have no information about columns
 comment|// living in different files, so we do simple partition-auth and ignore
 comment|// the columns parameter.
+if|if
+condition|(
+operator|(
+name|part
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|part
+operator|.
+name|getTable
+argument_list|()
+operator|!=
+literal|null
+operator|)
+condition|)
+block|{
 name|authorize
 argument_list|(
 name|part
@@ -832,6 +893,21 @@ argument_list|,
 name|writeRequiredPriv
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|authorize
+argument_list|(
+name|table
+argument_list|,
+name|part
+argument_list|,
+name|readRequiredPriv
+argument_list|,
+name|writeRequiredPriv
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
