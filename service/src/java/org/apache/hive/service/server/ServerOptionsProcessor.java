@@ -192,6 +192,14 @@ specifier|final
 name|String
 name|serverName
 decl_stmt|;
+specifier|private
+name|StringBuilder
+name|debugMessage
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -325,9 +333,10 @@ name|stringPropertyNames
 argument_list|()
 control|)
 block|{
-name|LOG
+comment|//save logging message for log4j output latter after log4j initialize properly
+name|debugMessage
 operator|.
-name|debug
+name|append
 argument_list|(
 literal|"Setting "
 operator|+
@@ -342,7 +351,7 @@ argument_list|(
 name|propKey
 argument_list|)
 operator|+
-literal|";"
+literal|";\n"
 argument_list|)
 expr_stmt|;
 name|System
@@ -388,6 +397,15 @@ return|;
 block|}
 return|return
 literal|true
+return|;
+block|}
+specifier|public
+name|StringBuilder
+name|getDebugMessage
+parameter_list|()
+block|{
+return|return
+name|debugMessage
 return|;
 block|}
 specifier|private
