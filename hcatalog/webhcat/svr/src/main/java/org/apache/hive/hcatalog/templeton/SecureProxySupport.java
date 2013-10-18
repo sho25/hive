@@ -207,18 +207,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|thrift
-operator|.
-name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|security
@@ -257,6 +245,18 @@ name|Token
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|TException
+import|;
+end_import
+
 begin_comment
 comment|/**  * Helper class to run jobs using Kerberos security.  Always safe to  * use these methods, it's a noop if security is not enabled.  */
 end_comment
@@ -270,7 +270,8 @@ specifier|private
 name|Path
 name|tokenPath
 decl_stmt|;
-specifier|private
+specifier|public
+specifier|static
 specifier|final
 name|String
 name|HCAT_SERVICE
@@ -278,6 +279,7 @@ init|=
 literal|"hcat"
 decl_stmt|;
 specifier|private
+specifier|final
 name|boolean
 name|isEnabled
 decl_stmt|;

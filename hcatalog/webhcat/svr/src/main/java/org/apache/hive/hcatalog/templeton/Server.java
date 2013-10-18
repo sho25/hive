@@ -1033,10 +1033,12 @@ argument_list|(
 name|tablePattern
 argument_list|)
 condition|)
+block|{
 name|tablePattern
 operator|=
 literal|"*"
 expr_stmt|;
+block|}
 return|return
 name|d
 operator|.
@@ -1363,6 +1365,7 @@ argument_list|(
 name|format
 argument_list|)
 condition|)
+block|{
 return|return
 name|d
 operator|.
@@ -1376,7 +1379,9 @@ argument_list|,
 name|table
 argument_list|)
 return|;
+block|}
 else|else
+block|{
 return|return
 name|d
 operator|.
@@ -1392,6 +1397,7 @@ argument_list|,
 literal|false
 argument_list|)
 return|;
+block|}
 block|}
 comment|/**    * Drop an hcat table.    */
 annotation|@
@@ -2467,10 +2473,12 @@ argument_list|(
 name|dbPattern
 argument_list|)
 condition|)
+block|{
 name|dbPattern
 operator|=
 literal|"*"
 expr_stmt|;
+block|}
 return|return
 name|d
 operator|.
@@ -2744,6 +2752,7 @@ argument_list|(
 name|option
 argument_list|)
 condition|)
+block|{
 name|verifyDdlParam
 argument_list|(
 name|option
@@ -2751,6 +2760,7 @@ argument_list|,
 literal|"option"
 argument_list|)
 expr_stmt|;
+block|}
 name|HcatDelegator
 name|d
 init|=
@@ -3104,7 +3114,7 @@ name|desc
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a MapReduce Streaming job.    */
+comment|/**    * Run a MapReduce Streaming job.    * @param callback URL which WebHCat will call when the hive job finishes    */
 annotation|@
 name|POST
 annotation|@
@@ -3493,7 +3503,7 @@ name|STREAMING
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a MapReduce Jar job.    */
+comment|/**    * Run a MapReduce Jar job.    * Params correspond to the REST api params    * @param  usehcatalog if {@code true}, means the Jar uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.      * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
 annotation|@
 name|POST
 annotation|@
@@ -3583,6 +3593,14 @@ literal|"callback"
 argument_list|)
 name|String
 name|callback
+parameter_list|,
+annotation|@
+name|FormParam
+argument_list|(
+literal|"usehcatalog"
+argument_list|)
+name|boolean
+name|usehcatalog
 parameter_list|,
 annotation|@
 name|FormParam
@@ -3779,6 +3797,8 @@ name|statusdir
 argument_list|,
 name|callback
 argument_list|,
+name|usehcatalog
+argument_list|,
 name|getCompletedUrl
 argument_list|()
 argument_list|,
@@ -3790,7 +3810,7 @@ name|JAR
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a Pig job.    */
+comment|/**    * Run a Pig job.    * Params correspond to the REST api params.  If '-useHCatalog' is in the {@code pigArgs, usehcatalog},     * is interpreted as true.    * @param  usehcatalog if {@code true}, means the Pig script uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.    *    This does nothing to ensure that Pig is installed on target node in the cluster.    * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
 annotation|@
 name|POST
 annotation|@
@@ -3865,6 +3885,14 @@ parameter_list|,
 annotation|@
 name|FormParam
 argument_list|(
+literal|"usehcatalog"
+argument_list|)
+name|boolean
+name|usehcatalog
+parameter_list|,
+annotation|@
+name|FormParam
+argument_list|(
 literal|"enablelog"
 argument_list|)
 name|boolean
@@ -3898,6 +3926,7 @@ name|srcFile
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|BadParam
@@ -3905,6 +3934,7 @@ argument_list|(
 literal|"Either execute or file parameter required"
 argument_list|)
 throw|;
+block|}
 comment|//add all function arguments to a map
 name|Map
 argument_list|<
@@ -4039,6 +4069,8 @@ name|statusdir
 argument_list|,
 name|callback
 argument_list|,
+name|usehcatalog
+argument_list|,
 name|getCompletedUrl
 argument_list|()
 argument_list|,
@@ -4046,7 +4078,7 @@ name|enablelog
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a Hive job.    * @param execute    SQL statement to run, equivalent to "-e" from hive command line    * @param srcFile    name of hive script file to run, equivalent to "-f" from hive    *                   command line    * @param hiveArgs   additional command line argument passed to the hive command line.     *                   Please check https://cwiki.apache.org/Hive/languagemanual-cli.html    *                   for detailed explanation of command line arguments    * @param otherFiles additional files to be shipped to the launcher, such as the jars    *                   used in "add jar" statement in hive script    * @param defines    shortcut for command line arguments "--define"    * @param statusdir  where the stderr/stdout of templeton controller job goes    * @param callback   callback url when the hive job finishes    * @param enablelog  whether to collect mapreduce log into statusdir/logs    */
+comment|/**    * Run a Hive job.    * @param execute    SQL statement to run, equivalent to "-e" from hive command line    * @param srcFile    name of hive script file to run, equivalent to "-f" from hive    *                   command line    * @param hiveArgs   additional command line argument passed to the hive command line.     *                   Please check https://cwiki.apache.org/Hive/languagemanual-cli.html    *                   for detailed explanation of command line arguments    * @param otherFiles additional files to be shipped to the launcher, such as the jars    *                   used in "add jar" statement in hive script    * @param defines    shortcut for command line arguments "--define"    * @param statusdir  where the stderr/stdout of templeton controller job goes    * @param callback   URL which WebHCat will call when the hive job finishes    * @param enablelog  whether to collect mapreduce log into statusdir/logs    */
 annotation|@
 name|POST
 annotation|@
@@ -4165,6 +4197,7 @@ name|srcFile
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|BadParam
@@ -4172,6 +4205,7 @@ argument_list|(
 literal|"Either execute or file parameter required"
 argument_list|)
 throw|;
+block|}
 comment|//add all function arguments to a map
 name|Map
 argument_list|<
@@ -4846,12 +4880,32 @@ literal|"jobid"
 argument_list|)
 name|String
 name|jobid
+parameter_list|,
+annotation|@
+name|QueryParam
+argument_list|(
+literal|"status"
+argument_list|)
+name|String
+name|jobStatus
 parameter_list|)
 throws|throws
 name|CallbackFailedException
 throws|,
 name|IOException
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Received callback "
+operator|+
+name|theUriInfo
+operator|.
+name|getRequestUri
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|CompleteDelegator
 name|d
 init|=
@@ -4867,6 +4921,8 @@ operator|.
 name|run
 argument_list|(
 name|jobid
+argument_list|,
+name|jobStatus
 argument_list|)
 return|;
 block|}
@@ -4904,6 +4960,7 @@ operator|.
 name|isSecurityEnabled
 argument_list|()
 condition|)
+block|{
 name|msg
 operator|+=
 literal|"  Missing "
@@ -4914,6 +4971,7 @@ name|USER_NAME
 operator|+
 literal|" parameter."
 expr_stmt|;
+block|}
 throw|throw
 operator|new
 name|NotAuthorizedException
@@ -4956,7 +5014,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * All 'tasks' spawned by WebHCat should be run as this user.  W/o doAs query parameter    * this is just the user making the request (or     * {@link org.apache.hadoop.security.authentication.client.PseudoAuthenticator#USER_NAME}    * query param).    * @return value of doAs query parameter or {@link #getRequestingUser()}    */
+comment|/**    * All 'tasks' spawned by WebHCat should be run as this user.  W/o doAs query parameter    * this is just the user making the request (or    * {@link org.apache.hadoop.security.authentication.client.PseudoAuthenticator#USER_NAME}    * query param).    * @return value of doAs query parameter or {@link #getRequestingUser()}    */
 specifier|private
 name|String
 name|getDoAsUser
@@ -5002,6 +5060,7 @@ name|param
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|BadParam
@@ -5013,6 +5072,7 @@ operator|+
 literal|" parameter"
 argument_list|)
 throw|;
+block|}
 block|}
 comment|/**    * Verify that the parameter exists.  Throw an exception if invalid.    */
 specifier|public
@@ -5042,6 +5102,7 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|BadParam
@@ -5053,6 +5114,7 @@ operator|+
 literal|" parameter"
 argument_list|)
 throw|;
+block|}
 block|}
 specifier|public
 specifier|static
@@ -5106,6 +5168,7 @@ operator|.
 name|matches
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|BadParam
@@ -5115,6 +5178,7 @@ operator|+
 name|name
 argument_list|)
 throw|;
+block|}
 block|}
 comment|/**    * Get the user name from the security context, i.e. the user making the HTTP request.    * With simple/pseudo security mode this should return the    * value of user.name query param, in kerberos mode it's the kinit'ed user.    */
 specifier|private
@@ -5128,9 +5192,11 @@ name|theSecurityContext
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 if|if
 condition|(
 name|theSecurityContext
@@ -5140,9 +5206,11 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 comment|//map hue/foo.bar@something.com->hue since user group checks
 comment|// and config files are in terms of short name
 return|return
@@ -5175,9 +5243,11 @@ name|theUriInfo
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 if|if
 condition|(
 name|theUriInfo
@@ -5187,9 +5257,11 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 return|return
 name|theUriInfo
 operator|.
@@ -5198,10 +5270,10 @@ argument_list|()
 operator|+
 name|VERSION
 operator|+
-literal|"/internal/complete/$jobId"
+literal|"/internal/complete/$jobId?status=$jobStatus"
 return|;
 block|}
-comment|/**    * Returns canonical host name from which the request is made; used for doAs validation      */
+comment|/**    * Returns canonical host name from which the request is made; used for doAs validation    */
 specifier|private
 specifier|static
 name|String
@@ -5361,8 +5433,6 @@ block|{
 if|if
 condition|(
 name|enablelog
-operator|==
-literal|true
 operator|&&
 operator|!
 name|TempletonUtils

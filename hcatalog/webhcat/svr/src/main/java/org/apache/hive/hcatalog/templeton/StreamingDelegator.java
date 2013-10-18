@@ -265,6 +265,8 @@ name|statusdir
 argument_list|,
 name|callback
 argument_list|,
+literal|false
+argument_list|,
 name|completedUrl
 argument_list|,
 name|enableLog
