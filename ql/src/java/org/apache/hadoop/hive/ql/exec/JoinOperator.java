@@ -394,7 +394,7 @@ name|byte
 operator|)
 name|tag
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>

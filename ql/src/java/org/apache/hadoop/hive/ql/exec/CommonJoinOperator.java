@@ -1066,6 +1066,7 @@ return|return
 name|joinOutputObjectInspector
 return|;
 block|}
+specifier|protected
 name|Configuration
 name|hconf
 decl_stmt|;
@@ -1970,7 +1971,7 @@ comment|//
 comment|// for MapJoin, filter tag is pre-calculated in MapredLocalTask and stored with value.
 comment|// when reading the hashtable, MapJoinObjectValue calculates alias filter and provide it to join
 specifier|protected
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -1993,7 +1994,7 @@ argument_list|(
 name|alias
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -2176,7 +2177,7 @@ condition|(
 name|forward
 condition|)
 block|{
-name|forward
+name|internalForward
 argument_list|(
 name|forwardCache
 argument_list|,
@@ -3332,6 +3333,27 @@ name|checkAndGenObject
 argument_list|()
 expr_stmt|;
 block|}
+specifier|protected
+name|void
+name|internalForward
+parameter_list|(
+name|Object
+name|row
+parameter_list|,
+name|ObjectInspector
+name|outputOI
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+name|forward
+argument_list|(
+name|row
+argument_list|,
+name|outputOI
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 name|void
 name|genUniqueJoinObject
@@ -3444,7 +3466,7 @@ operator|-
 literal|1
 condition|)
 block|{
-name|forward
+name|internalForward
 argument_list|(
 name|forwardCache
 argument_list|,
@@ -3558,7 +3580,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|forward
+name|internalForward
 argument_list|(
 name|forwardCache
 argument_list|,

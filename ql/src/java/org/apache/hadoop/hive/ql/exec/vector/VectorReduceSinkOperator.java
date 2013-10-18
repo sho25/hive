@@ -631,7 +631,7 @@ argument_list|,
 operator|new
 name|VectorExpressionWriterFactory
 operator|.
-name|Closure
+name|SingleOIDClosure
 argument_list|()
 block|{
 annotation|@
@@ -774,7 +774,7 @@ argument_list|,
 operator|new
 name|VectorExpressionWriterFactory
 operator|.
-name|Closure
+name|SingleOIDClosure
 argument_list|()
 block|{
 annotation|@
