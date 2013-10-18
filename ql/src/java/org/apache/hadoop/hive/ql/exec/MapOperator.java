@@ -691,7 +691,7 @@ name|MapOpCtx
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|MapOpCtx
 name|current
@@ -892,7 +892,7 @@ name|ret
 return|;
 block|}
 block|}
-specifier|private
+specifier|protected
 specifier|static
 class|class
 name|MapOpCtx
@@ -986,6 +986,15 @@ argument_list|(
 name|value
 argument_list|)
 argument_list|)
+return|;
+block|}
+specifier|public
+name|StructObjectInspector
+name|getRowObjectInspector
+parameter_list|()
+block|{
+return|return
+name|rowObjectInspector
 return|;
 block|}
 block|}
