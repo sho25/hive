@@ -1347,10 +1347,10 @@ return|return
 name|nr
 return|;
 block|}
-comment|/**    * Return the value as a standard object. StandardObject can be inspected by a    * standard ObjectInspector.    * If it would be tagged by filter, reserve one more slot for that.    */
+comment|/**    * Return the value as a standard object. StandardObject can be inspected by a    * standard ObjectInspector.    * If it would be tagged by filter, reserve one more slot for that.    * outValues can be passed in to avoid allocation    */
 specifier|public
 specifier|static
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -1395,7 +1395,7 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>

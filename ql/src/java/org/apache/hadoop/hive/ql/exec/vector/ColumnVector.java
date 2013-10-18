@@ -23,6 +23,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -36,7 +46,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ColumnVector contains the shared structure for the sub-types,  * including NULL information, and whether this vector  * repeats, i.e. has all values the same, so only the first  * one is set. This is used to accelerate query performance  * by handling a whole vector in O(1) time when applicable.  *   * The fields are public by design since this is a performance-critical  * structure that is used in the inner loop of query execution.  */
+comment|/**  * ColumnVector contains the shared structure for the sub-types,  * including NULL information, and whether this vector  * repeats, i.e. has all values the same, so only the first  * one is set. This is used to accelerate query performance  * by handling a whole vector in O(1) time when applicable.  *  * The fields are public by design since this is a performance-critical  * structure that is used in the inner loop of query execution.  */
 end_comment
 
 begin_class
@@ -45,7 +55,7 @@ specifier|abstract
 class|class
 name|ColumnVector
 block|{
-comment|/*    * If hasNulls is true, then this array contains true if the value     * is null, otherwise false. The array is always allocated, so a batch can be re-used     * later and nulls added.    */
+comment|/*    * If hasNulls is true, then this array contains true if the value    * is null, otherwise false. The array is always allocated, so a batch can be re-used    * later and nulls added.    */
 specifier|public
 name|boolean
 index|[]
@@ -56,7 +66,7 @@ specifier|public
 name|boolean
 name|noNulls
 decl_stmt|;
-comment|/*     * True if same value repeats for whole column vector.     * If so, vector[0] holds the repeating value.    */
+comment|/*    * True if same value repeats for whole column vector.    * If so, vector[0] holds the repeating value.    */
 specifier|public
 name|boolean
 name|isRepeating
@@ -70,7 +80,7 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**    * Constructor for super-class ColumnVector. This is not called directly,    * but used to initialize inherited fields.    *     * @param len Vector length    */
+comment|/**    * Constructor for super-class ColumnVector. This is not called directly,    * but used to initialize inherited fields.    *    * @param len Vector length    */
 specifier|public
 name|ColumnVector
 parameter_list|(
@@ -86,6 +96,38 @@ index|[
 name|len
 index|]
 expr_stmt|;
+name|noNulls
+operator|=
+literal|true
+expr_stmt|;
+name|isRepeating
+operator|=
+literal|false
+expr_stmt|;
+block|}
+comment|/**      * Resets the column to default state      *  - fills the isNull array with false      *  - sets noNulls to true      *  - sets isRepeating to false      */
+specifier|public
+name|void
+name|reset
+parameter_list|()
+block|{
+if|if
+condition|(
+literal|false
+operator|==
+name|noNulls
+condition|)
+block|{
+name|Arrays
+operator|.
+name|fill
+argument_list|(
+name|isNull
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 name|noNulls
 operator|=
 literal|true

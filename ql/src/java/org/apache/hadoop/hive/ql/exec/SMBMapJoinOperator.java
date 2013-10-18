@@ -1558,7 +1558,7 @@ name|alias
 index|]
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
