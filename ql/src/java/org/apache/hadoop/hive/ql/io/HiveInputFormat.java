@@ -273,7 +273,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -2027,9 +2027,12 @@ name|tableScan
 argument_list|)
 expr_stmt|;
 comment|// push down filters
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|filterExpr
 init|=
+operator|(
+name|ExprNodeGenericFuncDesc
+operator|)
 name|scanDesc
 operator|.
 name|getFilterExpr

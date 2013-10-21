@@ -69,7 +69,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -95,7 +95,7 @@ name|ExprNodeConstantDesc
 name|constantDesc
 decl_stmt|;
 specifier|private
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|comparisonExpr
 decl_stmt|;
 comment|/**    * Constructs a search condition, which takes the form    *<pre>column-ref comparison-op constant-value</pre>.    *    * @param columnDesc column being compared    *    * @param comparisonOp comparison operator, e.g. "="    * (taken from GenericUDFBridge.getUdfName())    *    * @param constantDesc constant value to search for    *    * @param comparisonExpr the original comparison expression    */
@@ -111,7 +111,7 @@ parameter_list|,
 name|ExprNodeConstantDesc
 name|constantDesc
 parameter_list|,
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|comparisonExpr
 parameter_list|)
 block|{
@@ -216,7 +216,7 @@ specifier|public
 name|void
 name|setComparisonExpr
 parameter_list|(
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|comparisonExpr
 parameter_list|)
 block|{
@@ -228,7 +228,7 @@ name|comparisonExpr
 expr_stmt|;
 block|}
 specifier|public
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|getComparisonExpr
 parameter_list|()
 block|{

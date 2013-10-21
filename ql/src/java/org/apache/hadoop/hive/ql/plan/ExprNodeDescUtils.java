@@ -381,7 +381,7 @@ argument_list|()
 decl_stmt|;
 name|clone
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children
 argument_list|)
@@ -477,7 +477,7 @@ block|}
 comment|/**    * bind two predicates by AND op    */
 specifier|public
 specifier|static
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|mergePredicates
 parameter_list|(
 name|ExprNodeDesc
@@ -994,7 +994,7 @@ argument_list|()
 decl_stmt|;
 name|function
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|backtrack
 argument_list|(

@@ -2243,9 +2243,12 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 comment|// split predicate into pushed (what we can handle), and residual (what we can't handle)
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|residualPredicate
 init|=
+operator|(
+name|ExprNodeGenericFuncDesc
+operator|)
 name|analyzer
 operator|.
 name|analyzePredicate

@@ -776,7 +776,7 @@ argument_list|)
 expr_stmt|;
 name|plusDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children
 argument_list|)

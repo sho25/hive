@@ -3499,7 +3499,7 @@ argument_list|()
 argument_list|,
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3819,7 +3819,7 @@ name|type
 init|=
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 operator|.
 name|get
@@ -8467,7 +8467,7 @@ name|childExprList
 init|=
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 decl_stmt|;
 comment|// argument descriptors
@@ -8480,7 +8480,7 @@ name|VectorUDFArgDesc
 index|[
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 operator|.
 name|size

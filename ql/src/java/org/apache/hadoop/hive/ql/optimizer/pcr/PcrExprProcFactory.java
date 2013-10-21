@@ -1328,7 +1328,7 @@ block|}
 block|}
 name|funcExpr
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children
 argument_list|)

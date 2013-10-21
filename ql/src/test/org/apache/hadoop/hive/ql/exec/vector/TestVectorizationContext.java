@@ -1199,7 +1199,7 @@ argument_list|)
 expr_stmt|;
 name|sumExpr
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children1
 argument_list|)
@@ -1220,7 +1220,7 @@ argument_list|)
 expr_stmt|;
 name|minusExpr
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children2
 argument_list|)
@@ -1241,7 +1241,7 @@ argument_list|)
 expr_stmt|;
 name|sum2Expr
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children3
 argument_list|)
@@ -1262,7 +1262,7 @@ argument_list|)
 expr_stmt|;
 name|multiplyExpr
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children4
 argument_list|)
@@ -1283,7 +1283,7 @@ argument_list|)
 expr_stmt|;
 name|modExpr
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children5
 argument_list|)
@@ -1637,7 +1637,7 @@ argument_list|)
 expr_stmt|;
 name|exprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children1
 argument_list|)
@@ -1810,7 +1810,7 @@ argument_list|)
 expr_stmt|;
 name|exprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children1
 argument_list|)
@@ -1990,7 +1990,7 @@ argument_list|)
 expr_stmt|;
 name|exprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children1
 argument_list|)
@@ -2156,7 +2156,7 @@ argument_list|)
 expr_stmt|;
 name|greaterExprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children1
 argument_list|)
@@ -2243,7 +2243,7 @@ argument_list|)
 expr_stmt|;
 name|lessExprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children2
 argument_list|)
@@ -2300,7 +2300,7 @@ argument_list|)
 expr_stmt|;
 name|andExprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children3
 argument_list|)
@@ -2470,7 +2470,7 @@ argument_list|)
 expr_stmt|;
 name|orExprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children4
 argument_list|)
@@ -2636,7 +2636,7 @@ argument_list|)
 expr_stmt|;
 name|scalarMinusConstant
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children
 argument_list|)
@@ -2793,7 +2793,7 @@ argument_list|)
 expr_stmt|;
 name|exprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children1
 argument_list|)
@@ -2953,7 +2953,7 @@ argument_list|)
 expr_stmt|;
 name|negExprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children
 argument_list|)
@@ -3104,7 +3104,7 @@ argument_list|)
 expr_stmt|;
 name|negExprDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children
 argument_list|)
@@ -3264,7 +3264,7 @@ argument_list|)
 expr_stmt|;
 name|scalarGreaterColExpr
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children
 argument_list|)
@@ -3429,7 +3429,7 @@ argument_list|)
 expr_stmt|;
 name|colEqualScalar
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children
 argument_list|)

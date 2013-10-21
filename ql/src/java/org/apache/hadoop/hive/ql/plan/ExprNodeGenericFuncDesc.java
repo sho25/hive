@@ -430,7 +430,7 @@ name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
-name|childExprs
+name|chidren
 decl_stmt|;
 specifier|private
 specifier|transient
@@ -544,7 +544,7 @@ name|genericUDF
 expr_stmt|;
 name|this
 operator|.
-name|childExprs
+name|chidren
 operator|=
 name|children
 expr_stmt|;
@@ -648,20 +648,8 @@ name|genericUDF
 expr_stmt|;
 block|}
 specifier|public
-name|List
-argument_list|<
-name|ExprNodeDesc
-argument_list|>
-name|getChildExprs
-parameter_list|()
-block|{
-return|return
-name|childExprs
-return|;
-block|}
-specifier|public
 name|void
-name|setChildExprs
+name|setChildren
 parameter_list|(
 name|List
 argument_list|<
@@ -670,7 +658,7 @@ argument_list|>
 name|children
 parameter_list|)
 block|{
-name|childExprs
+name|chidren
 operator|=
 name|children
 expr_stmt|;
@@ -686,7 +674,7 @@ name|getChildren
 parameter_list|()
 block|{
 return|return
-name|childExprs
+name|chidren
 return|;
 block|}
 annotation|@
@@ -732,7 +720,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|childExprs
+name|chidren
 operator|.
 name|size
 argument_list|()
@@ -760,7 +748,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-name|childExprs
+name|chidren
 operator|.
 name|get
 argument_list|(
@@ -815,7 +803,7 @@ init|=
 operator|new
 name|String
 index|[
-name|childExprs
+name|chidren
 operator|.
 name|size
 argument_list|()
@@ -843,7 +831,7 @@ index|[
 name|i
 index|]
 operator|=
-name|childExprs
+name|chidren
 operator|.
 name|get
 argument_list|(
@@ -888,7 +876,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|childExprs
+name|chidren
 operator|!=
 literal|null
 condition|)
@@ -902,7 +890,7 @@ while|while
 condition|(
 name|pos
 operator|<
-name|childExprs
+name|chidren
 operator|.
 name|size
 argument_list|()
@@ -914,7 +902,7 @@ name|String
 argument_list|>
 name|colCh
 init|=
-name|childExprs
+name|chidren
 operator|.
 name|get
 argument_list|(
@@ -963,7 +951,7 @@ argument_list|<
 name|ExprNodeDesc
 argument_list|>
 argument_list|(
-name|childExprs
+name|chidren
 operator|.
 name|size
 argument_list|()
@@ -974,7 +962,7 @@ control|(
 name|ExprNodeDesc
 name|ch
 range|:
-name|childExprs
+name|chidren
 control|)
 block|{
 name|cloneCh
@@ -1631,14 +1619,14 @@ block|}
 block|}
 if|if
 condition|(
-name|childExprs
+name|chidren
 operator|.
 name|size
 argument_list|()
 operator|!=
 name|dest
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 operator|.
 name|size
@@ -1658,7 +1646,7 @@ literal|0
 init|;
 name|pos
 operator|<
-name|childExprs
+name|chidren
 operator|.
 name|size
 argument_list|()
@@ -1670,7 +1658,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|childExprs
+name|chidren
 operator|.
 name|get
 argument_list|(
@@ -1681,7 +1669,7 @@ name|isSame
 argument_list|(
 name|dest
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 operator|.
 name|get
@@ -1733,7 +1721,7 @@ name|builder
 operator|.
 name|append
 argument_list|(
-name|childExprs
+name|chidren
 argument_list|)
 expr_stmt|;
 return|return

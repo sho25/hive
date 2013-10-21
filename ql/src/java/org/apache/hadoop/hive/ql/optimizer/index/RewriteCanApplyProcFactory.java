@@ -1073,7 +1073,7 @@ name|childExprs
 init|=
 name|funcExpr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 decl_stmt|;
 for|for

@@ -794,7 +794,7 @@ name|DeferredObject
 index|[
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 operator|.
 name|size
@@ -808,7 +808,7 @@ name|ObjectInspector
 index|[
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 operator|.
 name|size
@@ -823,7 +823,7 @@ name|getExpressionWriters
 argument_list|(
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 argument_list|)
 expr_stmt|;

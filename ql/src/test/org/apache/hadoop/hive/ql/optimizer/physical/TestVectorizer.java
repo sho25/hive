@@ -546,7 +546,7 @@ argument_list|)
 expr_stmt|;
 name|exprNodeDesc
 operator|.
-name|setChildExprs
+name|setChildren
 argument_list|(
 name|children
 argument_list|)
