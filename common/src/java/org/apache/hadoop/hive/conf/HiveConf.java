@@ -3077,7 +3077,7 @@ name|HIVE_STATS_KEY_PREFIX_MAX_LENGTH
 argument_list|(
 literal|"hive.stats.key.prefix.max.length"
 argument_list|,
-literal|200
+literal|150
 argument_list|)
 block|,
 name|HIVE_STATS_KEY_PREFIX

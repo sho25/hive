@@ -1584,10 +1584,6 @@ name|getStatsAggPrefix
 argument_list|()
 operator|+
 name|pspecs
-operator|+
-name|Path
-operator|.
-name|SEPARATOR
 argument_list|,
 name|conf
 operator|.
