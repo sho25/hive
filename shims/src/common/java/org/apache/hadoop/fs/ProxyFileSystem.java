@@ -138,7 +138,7 @@ specifier|protected
 name|URI
 name|realUri
 decl_stmt|;
-specifier|private
+specifier|protected
 name|Path
 name|swizzleParamPath
 parameter_list|(
@@ -226,7 +226,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|protected
 name|FileStatus
 name|swizzleFileStatus
 parameter_list|(
