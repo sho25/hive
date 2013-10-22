@@ -443,6 +443,9 @@ name|regex
 operator|.
 name|toString
 argument_list|()
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 control|)
 block|{
