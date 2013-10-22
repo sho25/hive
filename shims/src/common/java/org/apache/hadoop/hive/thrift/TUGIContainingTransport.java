@@ -285,6 +285,7 @@ condition|)
 block|{
 return|return
 name|prev
+return|;
 block|}
 block|}
 return|return
