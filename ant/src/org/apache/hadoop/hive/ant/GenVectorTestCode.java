@@ -736,6 +736,17 @@ argument_list|,
 literal|"scalarValue"
 argument_list|)
 expr_stmt|;
+name|testCase
+operator|=
+name|testCase
+operator|.
+name|replaceAll
+argument_list|(
+literal|"<ConstructorParams>"
+argument_list|,
+literal|"0, scalarValue"
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -759,6 +770,17 @@ argument_list|(
 literal|"<Operand2>"
 argument_list|,
 literal|"inputColumnVector.vector[i]"
+argument_list|)
+expr_stmt|;
+name|testCase
+operator|=
+name|testCase
+operator|.
+name|replaceAll
+argument_list|(
+literal|"<ConstructorParams>"
+argument_list|,
+literal|"scalarValue, 0"
 argument_list|)
 expr_stmt|;
 block|}

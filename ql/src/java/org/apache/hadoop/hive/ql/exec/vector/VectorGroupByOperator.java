@@ -586,15 +586,6 @@ name|conf
 operator|=
 name|desc
 expr_stmt|;
-name|vContext
-operator|.
-name|setOperatorType
-argument_list|(
-name|OperatorType
-operator|.
-name|GROUPBY
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|ExprNodeDesc

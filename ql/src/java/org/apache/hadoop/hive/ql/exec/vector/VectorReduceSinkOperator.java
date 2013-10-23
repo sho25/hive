@@ -477,15 +477,6 @@ name|conf
 operator|=
 name|desc
 expr_stmt|;
-name|vContext
-operator|.
-name|setOperatorType
-argument_list|(
-name|OperatorType
-operator|.
-name|REDUCESINK
-argument_list|)
-expr_stmt|;
 name|keyEval
 operator|=
 name|vContext

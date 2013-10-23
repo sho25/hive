@@ -450,7 +450,7 @@ operator|!=
 literal|null
 return|;
 block|}
-comment|/**    * Creates a tez session. A session is tied to either a cli/hs2 session. You can    * submit multiple DAGs against a session (as long as they are executed serially).    * @throws IOException    * @throws URISyntaxException    * @throws LoginException    * @throws TezException    * @throws HiveException    */
+comment|/**    * Creates a tez session. A session is tied to either a cli/hs2 session. You can    * submit multiple DAGs against a session (as long as they are executed serially).    * @throws IOException    * @throws URISyntaxException    * @throws LoginException    * @throws TezException    */
 specifier|public
 name|void
 name|open
@@ -469,8 +469,6 @@ throws|,
 name|URISyntaxException
 throws|,
 name|TezException
-throws|,
-name|HiveException
 block|{
 name|this
 operator|.
@@ -483,35 +481,6 @@ operator|.
 name|conf
 operator|=
 name|conf
-expr_stmt|;
-comment|// Get the following out of the way when you start the session these take a
-comment|// while and should be done when we start up.
-name|FileSystem
-operator|.
-name|get
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|getUGIForConf
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-name|Hive
-operator|.
-name|get
-argument_list|(
-name|conf
-argument_list|)
-operator|.
-name|getAllDatabases
-argument_list|()
 expr_stmt|;
 comment|// create the tez tmp dir
 name|tezScratchDir

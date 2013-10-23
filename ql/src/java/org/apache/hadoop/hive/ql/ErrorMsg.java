@@ -1681,6 +1681,20 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|UNSUPPORTED_SUBQUERY_EXPRESSION
+argument_list|(
+literal|10249
+argument_list|,
+literal|"Unsupported SubQuery Expression"
+argument_list|)
+block|,
+name|INVALID_SUBQUERY_EXPRESSION
+argument_list|(
+literal|10250
+argument_list|,
+literal|"Invalid SubQuery expression"
+argument_list|)
+block|,
 name|INVALID_HDFS_URI
 argument_list|(
 literal|10248

@@ -353,15 +353,6 @@ operator|.
 name|getColList
 argument_list|()
 decl_stmt|;
-name|vContext
-operator|.
-name|setOperatorType
-argument_list|(
-name|OperatorType
-operator|.
-name|SELECT
-argument_list|)
-expr_stmt|;
 name|vExpressions
 operator|=
 operator|new

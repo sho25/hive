@@ -509,6 +509,9 @@ name|METASTORE_FIXED_DATASTORE
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// session creation should fail since the schema didn't get created
+try|try
+block|{
 name|SessionState
 operator|.
 name|start
@@ -520,35 +523,27 @@ name|hiveConf
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|driver
-operator|=
-operator|new
-name|Driver
+block|}
+catch|catch
+parameter_list|(
+name|RuntimeException
+name|re
+parameter_list|)
+block|{
+name|assertTrue
 argument_list|(
-name|hiveConf
-argument_list|)
-expr_stmt|;
-comment|// driver execution should fail since the schema didn't get created
-name|CommandProcessorResponse
-name|proc
-init|=
-name|driver
+name|re
 operator|.
-name|run
-argument_list|(
-literal|"show tables"
-argument_list|)
-decl_stmt|;
-name|assertFalse
-argument_list|(
-name|proc
-operator|.
-name|getResponseCode
+name|getCause
 argument_list|()
-operator|==
-literal|0
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|MetaException
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/***    * Test that with no verification, hive populates the schema and version correctly    * @throws Exception    */
 specifier|public
