@@ -27021,7 +27021,7 @@ name|childExpr
 range|:
 name|funcDesc
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 control|)
 block|{

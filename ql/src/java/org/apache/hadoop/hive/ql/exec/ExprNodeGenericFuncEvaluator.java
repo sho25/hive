@@ -435,7 +435,7 @@ name|ExprNodeEvaluator
 index|[
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 operator|.
 name|size
@@ -468,7 +468,7 @@ name|child
 init|=
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 operator|.
 name|get

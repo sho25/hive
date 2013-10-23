@@ -196,6 +196,9 @@ parameter_list|,
 name|String
 name|callback
 parameter_list|,
+name|boolean
+name|usehcatalog
+parameter_list|,
 name|String
 name|completedUrl
 parameter_list|,
@@ -245,6 +248,8 @@ argument_list|,
 name|defines
 argument_list|,
 name|statusdir
+argument_list|,
+name|usehcatalog
 argument_list|,
 name|completedUrl
 argument_list|,
@@ -300,6 +305,9 @@ parameter_list|,
 name|String
 name|statusdir
 parameter_list|,
+name|boolean
+name|usehcatalog
+parameter_list|,
 name|String
 name|completedUrl
 parameter_list|,
@@ -339,6 +347,9 @@ name|allFiles
 init|=
 operator|new
 name|ArrayList
+argument_list|<
+name|String
+argument_list|>
 argument_list|()
 decl_stmt|;
 name|allFiles
@@ -391,6 +402,16 @@ argument_list|(
 name|args
 argument_list|)
 expr_stmt|;
+comment|//check if the rest command specified explicitly to use hcatalog
+if|if
+condition|(
+name|usehcatalog
+condition|)
+block|{
+name|addHiveMetaStoreTokenArg
+argument_list|()
+expr_stmt|;
+block|}
 name|args
 operator|.
 name|add
@@ -436,6 +457,7 @@ argument_list|(
 name|mainClass
 argument_list|)
 condition|)
+block|{
 name|args
 operator|.
 name|add
@@ -443,6 +465,7 @@ argument_list|(
 name|mainClass
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|TempletonUtils

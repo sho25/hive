@@ -188,7 +188,7 @@ operator|-
 literal|1
 decl_stmt|;
 specifier|private
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|filterExpr
 decl_stmt|;
 specifier|public
@@ -395,7 +395,7 @@ operator|=
 literal|"filterExpr"
 argument_list|)
 specifier|public
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|getFilterExpr
 parameter_list|()
 block|{
@@ -407,7 +407,7 @@ specifier|public
 name|void
 name|setFilterExpr
 parameter_list|(
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|filterExpr
 parameter_list|)
 block|{

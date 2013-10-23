@@ -143,7 +143,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -224,7 +224,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|expr
 init|=
 name|deserializeExpr
@@ -326,7 +326,7 @@ throw|;
 block|}
 block|}
 specifier|private
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|deserializeExpr
 parameter_list|(
 name|byte
@@ -336,7 +336,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|expr
 init|=
 literal|null

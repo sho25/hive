@@ -359,6 +359,9 @@ argument_list|(
 name|args
 argument_list|)
 expr_stmt|;
+name|addHiveMetaStoreTokenArg
+argument_list|()
+expr_stmt|;
 name|args
 operator|.
 name|add
@@ -660,6 +663,7 @@ argument_list|(
 name|srcFile
 argument_list|)
 condition|)
+block|{
 name|allFiles
 operator|.
 name|add
@@ -676,6 +680,7 @@ name|runAs
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|TempletonUtils

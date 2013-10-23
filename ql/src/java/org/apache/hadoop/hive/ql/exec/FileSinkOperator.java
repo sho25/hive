@@ -5849,10 +5849,6 @@ operator|+
 name|spSpec
 operator|+
 name|newFspKey
-operator|+
-name|Path
-operator|.
-name|SEPARATOR
 argument_list|,
 name|conf
 operator|.

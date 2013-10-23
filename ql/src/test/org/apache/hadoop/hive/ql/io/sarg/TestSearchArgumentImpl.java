@@ -22,34 +22,66 @@ package|;
 end_package
 
 begin_import
-import|import
-name|org
+import|import static
+name|junit
 operator|.
-name|apache
+name|framework
 operator|.
-name|hadoop
+name|Assert
 operator|.
-name|conf
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|junit
 operator|.
-name|Configuration
+name|framework
+operator|.
+name|Assert
+operator|.
+name|assertTrue
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|beans
 operator|.
-name|hadoop
+name|XMLDecoder
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|hive
+name|io
 operator|.
-name|ql
+name|ByteArrayInputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|exec
+name|io
 operator|.
-name|Utilities
+name|UnsupportedEncodingException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
 import|;
 end_import
 
@@ -133,7 +165,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -158,40 +190,6 @@ operator|.
 name|junit
 operator|.
 name|Test
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import static
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
-operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
-import|import static
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
-operator|.
-name|assertTrue
 import|;
 end_import
 
@@ -1742,6 +1740,89 @@ expr_stmt|;
 block|}
 block|}
 block|}
+specifier|private
+name|ExprNodeGenericFuncDesc
+name|getFuncDesc
+parameter_list|(
+name|String
+name|xmlSerialized
+parameter_list|)
+block|{
+name|byte
+index|[]
+name|bytes
+decl_stmt|;
+try|try
+block|{
+name|bytes
+operator|=
+name|xmlSerialized
+operator|.
+name|getBytes
+argument_list|(
+literal|"UTF-8"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|UnsupportedEncodingException
+name|ex
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"UTF-8 support required"
+argument_list|,
+name|ex
+argument_list|)
+throw|;
+block|}
+name|ByteArrayInputStream
+name|bais
+init|=
+operator|new
+name|ByteArrayInputStream
+argument_list|(
+name|bytes
+argument_list|)
+decl_stmt|;
+name|XMLDecoder
+name|decoder
+init|=
+operator|new
+name|XMLDecoder
+argument_list|(
+name|bais
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+try|try
+block|{
+return|return
+operator|(
+name|ExprNodeGenericFuncDesc
+operator|)
+name|decoder
+operator|.
+name|readObject
+argument_list|()
+return|;
+block|}
+finally|finally
+block|{
+name|decoder
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+block|}
 annotation|@
 name|Test
 specifier|public
@@ -1768,7 +1849,7 @@ literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -1776,7 +1857,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -1784,7 +1865,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -1792,7 +1873,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -1800,7 +1881,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -1808,7 +1889,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -1816,7 +1897,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -1824,7 +1905,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -1914,7 +1995,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -2008,7 +2089,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -2102,7 +2183,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -2204,7 +2285,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -2298,7 +2379,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -2392,7 +2473,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -2486,7 +2567,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -2494,7 +2575,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -2568,7 +2649,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -2678,25 +2759,6 @@ literal|"</object> \n"
 operator|+
 literal|"</java> \n"
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-operator|new
-name|Configuration
-argument_list|()
-decl_stmt|;
-name|ExprNodeDesc
-name|expr
-init|=
-name|Utilities
-operator|.
-name|deserializeExpression
-argument_list|(
-name|exprStr
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 name|SearchArgumentImpl
 name|sarg
 init|=
@@ -2709,7 +2771,10 @@ name|FACTORY
 operator|.
 name|create
 argument_list|(
-name|expr
+name|getFuncDesc
+argument_list|(
+name|exprStr
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|List
@@ -3301,7 +3366,7 @@ literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -3309,7 +3374,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -3317,7 +3382,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -3325,7 +3390,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -3395,7 +3460,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -3489,7 +3554,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -3591,7 +3656,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -3681,25 +3746,6 @@ literal|"</object> \n"
 operator|+
 literal|"</java> \n"
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-operator|new
-name|Configuration
-argument_list|()
-decl_stmt|;
-name|ExprNodeDesc
-name|expr
-init|=
-name|Utilities
-operator|.
-name|deserializeExpression
-argument_list|(
-name|exprStr
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 name|SearchArgumentImpl
 name|sarg
 init|=
@@ -3712,7 +3758,10 @@ name|FACTORY
 operator|.
 name|create
 argument_list|(
-name|expr
+name|getFuncDesc
+argument_list|(
+name|exprStr
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|List
@@ -4426,7 +4475,7 @@ literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4434,7 +4483,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4442,7 +4491,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4450,7 +4499,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4458,7 +4507,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4588,7 +4637,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4690,7 +4739,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4698,7 +4747,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4749,12 +4798,6 @@ operator|+
 literal|"<void property=\"genericUDF\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBridge\"> \n"
-operator|+
-literal|"<void property=\"udfClass\"> \n"
-operator|+
-literal|"<class>org.apache.hadoop.hive.ql.udf.UDFSubstr</class> \n"
-operator|+
-literal|"</void> \n"
 operator|+
 literal|"<void property=\"udfClassName\"> \n"
 operator|+
@@ -4852,7 +4895,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4946,7 +4989,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -4954,7 +4997,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -5011,12 +5054,6 @@ operator|+
 literal|"<void property=\"genericUDF\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBridge\"> \n"
-operator|+
-literal|"<void property=\"udfClass\"> \n"
-operator|+
-literal|"<class>org.apache.hadoop.hive.ql.udf.UDFSubstr</class> \n"
-operator|+
-literal|"</void> \n"
 operator|+
 literal|"<void property=\"udfClassName\"> \n"
 operator|+
@@ -5104,25 +5141,6 @@ literal|"</object> \n"
 operator|+
 literal|"</java> \n"
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-operator|new
-name|Configuration
-argument_list|()
-decl_stmt|;
-name|ExprNodeDesc
-name|expr
-init|=
-name|Utilities
-operator|.
-name|deserializeExpression
-argument_list|(
-name|exprStr
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 name|SearchArgumentImpl
 name|sarg
 init|=
@@ -5135,7 +5153,10 @@ name|FACTORY
 operator|.
 name|create
 argument_list|(
-name|expr
+name|getFuncDesc
+argument_list|(
+name|exprStr
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|List
@@ -5409,7 +5430,7 @@ literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -5417,7 +5438,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -5425,7 +5446,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -5515,7 +5536,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -5637,7 +5658,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -5749,25 +5770,6 @@ literal|"</java> \n"
 operator|+
 literal|"\n"
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-operator|new
-name|Configuration
-argument_list|()
-decl_stmt|;
-name|ExprNodeDesc
-name|expr
-init|=
-name|Utilities
-operator|.
-name|deserializeExpression
-argument_list|(
-name|exprStr
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 name|SearchArgumentImpl
 name|sarg
 init|=
@@ -5780,7 +5782,10 @@ name|FACTORY
 operator|.
 name|create
 argument_list|(
-name|expr
+name|getFuncDesc
+argument_list|(
+name|exprStr
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|List
@@ -6280,7 +6285,7 @@ literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6288,7 +6293,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6296,7 +6301,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6386,7 +6391,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6414,7 +6419,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6479,12 +6484,6 @@ operator|+
 literal|"<void property=\"genericUDF\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBridge\"> \n"
-operator|+
-literal|"<void property=\"udfClass\"> \n"
-operator|+
-literal|"<class>org.apache.hadoop.hive.ql.udf.UDFSubstr</class> \n"
-operator|+
-literal|"</void> \n"
 operator|+
 literal|"<void property=\"udfClassName\"> \n"
 operator|+
@@ -6556,7 +6555,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6686,25 +6685,6 @@ literal|"</object> \n"
 operator|+
 literal|"</java> \n"
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-operator|new
-name|Configuration
-argument_list|()
-decl_stmt|;
-name|ExprNodeDesc
-name|expr
-init|=
-name|Utilities
-operator|.
-name|deserializeExpression
-argument_list|(
-name|exprStr
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 name|SearchArgumentImpl
 name|sarg
 init|=
@@ -6717,7 +6697,10 @@ name|FACTORY
 operator|.
 name|create
 argument_list|(
-name|expr
+name|getFuncDesc
+argument_list|(
+name|exprStr
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|List
@@ -6882,7 +6865,7 @@ literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6890,7 +6873,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6898,7 +6881,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6906,7 +6889,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6914,7 +6897,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -6922,7 +6905,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7012,7 +6995,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7106,7 +7089,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7200,7 +7183,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7208,7 +7191,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7216,7 +7199,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7290,7 +7273,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7384,7 +7367,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7498,7 +7481,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7506,7 +7489,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7580,7 +7563,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7694,7 +7677,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -7784,25 +7767,6 @@ literal|"</object>\n"
 operator|+
 literal|"</java>"
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-operator|new
-name|Configuration
-argument_list|()
-decl_stmt|;
-name|ExprNodeDesc
-name|expr
-init|=
-name|Utilities
-operator|.
-name|deserializeExpression
-argument_list|(
-name|exprStr
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 name|SearchArgumentImpl
 name|sarg
 init|=
@@ -7815,7 +7779,10 @@ name|FACTORY
 operator|.
 name|create
 argument_list|(
-name|expr
+name|getFuncDesc
+argument_list|(
+name|exprStr
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|List
@@ -8422,7 +8389,7 @@ literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -8514,25 +8481,6 @@ literal|"</object> \n"
 operator|+
 literal|"</java> "
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-operator|new
-name|Configuration
-argument_list|()
-decl_stmt|;
-name|ExprNodeDesc
-name|expr
-init|=
-name|Utilities
-operator|.
-name|deserializeExpression
-argument_list|(
-name|exprStr
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 name|SearchArgumentImpl
 name|sarg
 init|=
@@ -8545,7 +8493,10 @@ name|FACTORY
 operator|.
 name|create
 argument_list|(
-name|expr
+name|getFuncDesc
+argument_list|(
+name|exprStr
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|List
@@ -8602,7 +8553,7 @@ literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -8644,7 +8595,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -8652,7 +8603,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -8707,12 +8658,6 @@ operator|+
 literal|"<void property=\"operator\"> \n"
 operator|+
 literal|"<boolean>true</boolean> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"udfClass\"> \n"
-operator|+
-literal|"<class>org.apache.hadoop.hive.ql.udf.UDFOPPlus</class> \n"
 operator|+
 literal|"</void> \n"
 operator|+
@@ -8776,12 +8721,6 @@ literal|"<boolean>true</boolean> \n"
 operator|+
 literal|"</void> \n"
 operator|+
-literal|"<void property=\"udfClass\"> \n"
-operator|+
-literal|"<class>org.apache.hadoop.hive.ql.udf.UDFOPPlus</class> \n"
-operator|+
-literal|"</void> \n"
-operator|+
 literal|"<void property=\"udfClassName\"> \n"
 operator|+
 literal|"<string>org.apache.hadoop.hive.ql.udf.UDFOPPlus</string> \n"
@@ -8836,25 +8775,6 @@ literal|"</object> \n"
 operator|+
 literal|"</java> "
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-operator|new
-name|Configuration
-argument_list|()
-decl_stmt|;
-name|ExprNodeDesc
-name|expr
-init|=
-name|Utilities
-operator|.
-name|deserializeExpression
-argument_list|(
-name|exprStr
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 name|SearchArgumentImpl
 name|sarg
 init|=
@@ -8867,7 +8787,10 @@ name|FACTORY
 operator|.
 name|create
 argument_list|(
-name|expr
+name|getFuncDesc
+argument_list|(
+name|exprStr
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|List
@@ -8939,7 +8862,7 @@ literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -8947,7 +8870,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -9037,7 +8960,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -9045,7 +8968,7 @@ literal|"<void method=\"add\"> \n"
 operator|+
 literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
 operator|+
-literal|"<void property=\"childExprs\"> \n"
+literal|"<void property=\"children\"> \n"
 operator|+
 literal|"<object class=\"java.util.ArrayList\"> \n"
 operator|+
@@ -9155,25 +9078,6 @@ literal|"</object> \n"
 operator|+
 literal|"</java>"
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-operator|new
-name|Configuration
-argument_list|()
-decl_stmt|;
-name|ExprNodeDesc
-name|expr
-init|=
-name|Utilities
-operator|.
-name|deserializeExpression
-argument_list|(
-name|exprStr
-argument_list|,
-name|conf
-argument_list|)
-decl_stmt|;
 name|SearchArgumentImpl
 name|sarg
 init|=
@@ -9186,7 +9090,10 @@ name|FACTORY
 operator|.
 name|create
 argument_list|(
-name|expr
+name|getFuncDesc
+argument_list|(
+name|exprStr
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|List

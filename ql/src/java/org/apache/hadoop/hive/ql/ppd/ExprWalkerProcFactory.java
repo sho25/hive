@@ -1044,7 +1044,7 @@ condition|)
 block|{
 name|expr
 operator|.
-name|getChildExprs
+name|getChildren
 argument_list|()
 operator|.
 name|set

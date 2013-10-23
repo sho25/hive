@@ -1196,8 +1196,6 @@ operator|.
 name|deserializeExpression
 argument_list|(
 name|serializedPushdown
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 decl_stmt|;

@@ -987,7 +987,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
@@ -9390,7 +9390,7 @@ parameter_list|(
 name|Table
 name|tbl
 parameter_list|,
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|expr
 parameter_list|,
 name|HiveConf

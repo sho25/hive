@@ -3158,6 +3158,20 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+annotation|@
+name|Override
+specifier|abstract
+specifier|public
+name|FileSystem
+name|createProxyFileSystem
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|URI
+name|uri
+parameter_list|)
+function_decl|;
 block|}
 end_class
 

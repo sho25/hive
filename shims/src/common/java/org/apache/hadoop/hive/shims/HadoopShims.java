@@ -1569,6 +1569,18 @@ name|close
 parameter_list|()
 function_decl|;
 block|}
+comment|/**    * Create a proxy file system that can serve a given scheme/authority using some    * other file system.    */
+specifier|public
+name|FileSystem
+name|createProxyFileSystem
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|URI
+name|uri
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

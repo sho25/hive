@@ -1784,6 +1784,14 @@ specifier|transient
 name|PrimitiveObjectInspector
 name|numVectorsOI
 decl_stmt|;
+specifier|private
+specifier|final
+specifier|static
+name|int
+name|MAX_BIT_VECTORS
+init|=
+literal|1024
+decl_stmt|;
 comment|/* Partial aggregation result returned by TerminatePartial. Partial result is a struct      * containing a long field named "count".      */
 specifier|private
 specifier|transient
@@ -2717,6 +2725,31 @@ name|numVectorsOI
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|numVectors
+operator|>
+name|MAX_BIT_VECTORS
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"The maximum allowed value for number of bit vectors "
+operator|+
+literal|" is "
+operator|+
+name|MAX_BIT_VECTORS
+operator|+
+literal|", but was passed "
+operator|+
+name|numVectors
+operator|+
+literal|" bit vectors"
+argument_list|)
+throw|;
+block|}
 name|initNDVEstimator
 argument_list|(
 name|myagg
@@ -3387,6 +3420,14 @@ specifier|private
 specifier|transient
 name|PrimitiveObjectInspector
 name|numVectorsOI
+decl_stmt|;
+specifier|private
+specifier|final
+specifier|static
+name|int
+name|MAX_BIT_VECTORS
+init|=
+literal|1024
 decl_stmt|;
 comment|/* Partial aggregation result returned by TerminatePartial. Partial result is a struct      * containing a long field named "count".      */
 specifier|private
@@ -4321,6 +4362,31 @@ name|numVectorsOI
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|numVectors
+operator|>
+name|MAX_BIT_VECTORS
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"The maximum allowed value for number of bit vectors "
+operator|+
+literal|" is "
+operator|+
+name|MAX_BIT_VECTORS
+operator|+
+literal|", but was passed "
+operator|+
+name|numVectors
+operator|+
+literal|" bit vectors"
+argument_list|)
+throw|;
+block|}
 name|initNDVEstimator
 argument_list|(
 name|myagg
@@ -4988,6 +5054,14 @@ specifier|private
 specifier|transient
 name|PrimitiveObjectInspector
 name|numVectorsOI
+decl_stmt|;
+specifier|private
+specifier|final
+specifier|static
+name|int
+name|MAX_BIT_VECTORS
+init|=
+literal|1024
 decl_stmt|;
 comment|/* Partial aggregation result returned by TerminatePartial. Partial result is a struct      * containing a long field named "count".      */
 specifier|private
@@ -5987,6 +6061,31 @@ argument_list|,
 name|numVectorsOI
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|numVectors
+operator|>
+name|MAX_BIT_VECTORS
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"The maximum allowed value for number of bit vectors "
+operator|+
+literal|" is "
+operator|+
+name|MAX_BIT_VECTORS
+operator|+
+literal|" , but was passed "
+operator|+
+name|numVectors
+operator|+
+literal|" bit vectors"
+argument_list|)
+throw|;
 block|}
 name|initNDVEstimator
 argument_list|(

@@ -3077,7 +3077,7 @@ name|HIVE_STATS_KEY_PREFIX_MAX_LENGTH
 argument_list|(
 literal|"hive.stats.key.prefix.max.length"
 argument_list|,
-literal|200
+literal|150
 argument_list|)
 block|,
 name|HIVE_STATS_KEY_PREFIX
@@ -4557,7 +4557,7 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Cann't modify "
+literal|"Cannot modify "
 operator|+
 name|name
 operator|+
@@ -5427,6 +5427,15 @@ name|origProp
 operator|.
 name|clone
 argument_list|()
+expr_stmt|;
+name|restrictList
+operator|.
+name|addAll
+argument_list|(
+name|other
+operator|.
+name|restrictList
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public

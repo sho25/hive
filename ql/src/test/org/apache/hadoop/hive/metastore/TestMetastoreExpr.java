@@ -329,6 +329,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|ExprNodeColumnDesc
@@ -386,24 +404,6 @@ operator|.
 name|plan
 operator|.
 name|ExprNodeGenericFuncDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Utilities
 import|;
 end_import
 
@@ -500,7 +500,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**   * Tests hive metastore expression support. This should be moved in metastore module  * as soon as we are able to use ql from metastore server (requires splitting metastore  * server and client).  * This is a "companion" test to test to TestHiveMetaStore#testPartitionFilter; thus,  * it doesn't test all the edge cases of the filter (if classes were merged, perhaps the  * filter test could be rolled into it); assumption is that they use the same path in SQL/JDO.  */
+comment|/**  * Tests hive metastore expression support. This should be moved in metastore module  * as soon as we are able to use ql from metastore server (requires splitting metastore  * server and client).  * This is a "companion" test to test to TestHiveMetaStore#testPartitionFilter; thus,  * it doesn't test all the edge cases of the filter (if classes were merged, perhaps the  * filter test could be rolled into it); assumption is that they use the same path in SQL/JDO.  */
 end_comment
 
 begin_class
@@ -1421,7 +1421,7 @@ parameter_list|,
 name|String
 name|tblName
 parameter_list|,
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|expr
 parameter_list|)
 throws|throws
@@ -1524,7 +1524,7 @@ name|tblName
 expr_stmt|;
 block|}
 specifier|public
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|build
 parameter_list|()
 throws|throws
@@ -1539,6 +1539,7 @@ argument_list|()
 operator|!=
 literal|1
 condition|)
+block|{
 throw|throw
 operator|new
 name|Exception
@@ -1551,7 +1552,11 @@ name|size
 argument_list|()
 argument_list|)
 throw|;
+block|}
 return|return
+operator|(
+name|ExprNodeGenericFuncDesc
+operator|)
 name|stack
 operator|.
 name|pop
