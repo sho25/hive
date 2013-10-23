@@ -265,22 +265,6 @@ name|HCatInputFormat
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|hcatalog
-operator|.
-name|mapreduce
-operator|.
-name|InputJobInfo
-import|;
-end_import
-
 begin_comment
 comment|/**  * This is a map reduce test for testing hcat that checks that the columns  * handed by hcat have the right type and right values. It achieves the first  * objective by checking the type of the Objects representing the columns against  * the schema provided as a cmdline arg. It achieves the second objective by  * writing the data as Text to be compared against golden results.  *  * The schema specification consists of the types as given by "describe<table>"  * with each column's type separated from the next column's type by a '+'  *  * Can be used against "numbers" and "complex" tables.  *  * Usage: hadoop jar testudf.jar typedatacheck<serveruri><tablename>   *<hive types of cols + delimited><output dir><tab|ctrla><-libjars hive-hcat jar>  The<tab|ctrla> argument controls the output delimiter.  The hcat jar location should be specified as file://<full path to jar>  */
 end_comment
@@ -927,16 +911,9 @@ name|setInput
 argument_list|(
 name|job
 argument_list|,
-name|InputJobInfo
-operator|.
-name|create
-argument_list|(
 name|dbName
 argument_list|,
 name|tableName
-argument_list|,
-literal|null
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|HCatSchema

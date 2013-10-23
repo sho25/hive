@@ -1984,10 +1984,7 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tableName
-argument_list|)
-operator|.
-name|setFilter
-argument_list|(
+argument_list|,
 name|filter
 argument_list|)
 expr_stmt|;
