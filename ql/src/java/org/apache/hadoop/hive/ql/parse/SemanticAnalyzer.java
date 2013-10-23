@@ -22757,16 +22757,6 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-operator|new
-name|ArrayList
-argument_list|<
-name|Class
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-argument_list|()
-expr_stmt|;
 comment|// 0 is the function name
 for|for
 control|(
@@ -22943,6 +22933,18 @@ argument_list|(
 name|field
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|groupByOutputRowResolver
+operator|.
+name|getExpression
+argument_list|(
+name|value
+argument_list|)
+operator|==
+literal|null
+condition|)
+block|{
 name|groupByOutputRowResolver
 operator|.
 name|putExpression
@@ -22964,6 +22966,7 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Save the evaluator so that it can be used by the next-stage
 comment|// GroupByOperators
 if|if
@@ -24027,22 +24030,6 @@ name|size
 argument_list|()
 condition|)
 block|{
-name|reduceKeys
-operator|.
-name|add
-argument_list|(
-name|expr
-argument_list|)
-expr_stmt|;
-block|}
-comment|// add the index of expr in reduceKeys to distinctIndices
-name|distinctIndices
-operator|.
-name|add
-argument_list|(
-name|ri
-argument_list|)
-expr_stmt|;
 name|String
 name|name
 init|=
@@ -24109,6 +24096,22 @@ argument_list|(
 name|field
 argument_list|,
 name|expr
+argument_list|)
+expr_stmt|;
+name|reduceKeys
+operator|.
+name|add
+argument_list|(
+name|expr
+argument_list|)
+expr_stmt|;
+block|}
+comment|// add the index of expr in reduceKeys to distinctIndices
+name|distinctIndices
+operator|.
+name|add
+argument_list|(
+name|ri
 argument_list|)
 expr_stmt|;
 name|numExprs
