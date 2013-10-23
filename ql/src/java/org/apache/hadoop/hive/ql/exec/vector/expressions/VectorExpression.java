@@ -49,6 +49,26 @@ name|exec
 operator|.
 name|vector
 operator|.
+name|VectorExpressionDescriptor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
 name|VectorizedRowBatch
 import|;
 end_import
@@ -81,7 +101,7 @@ name|childExpressions
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * This is the primary method to implement expression logic.    * @param vrg    */
+comment|/**    * This is the primary method to implement expression logic.    * @param batch    */
 specifier|public
 specifier|abstract
 name|void
@@ -130,6 +150,14 @@ return|return
 name|childExpressions
 return|;
 block|}
+specifier|public
+specifier|abstract
+name|VectorExpressionDescriptor
+operator|.
+name|Descriptor
+name|getDescriptor
+parameter_list|()
+function_decl|;
 comment|/**    * Evaluate the child expressions on the given input batch.    * @param vrg {@link VectorizedRowBatch}    */
 specifier|final
 specifier|protected

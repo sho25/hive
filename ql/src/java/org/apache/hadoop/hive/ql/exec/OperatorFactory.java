@@ -221,6 +221,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|CollectDesc
@@ -1432,6 +1450,8 @@ parameter_list|,
 name|VectorizationContext
 name|vContext
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|Class
 argument_list|<
@@ -1525,7 +1545,7 @@ argument_list|()
 expr_stmt|;
 throw|throw
 operator|new
-name|RuntimeException
+name|HiveException
 argument_list|(
 name|e
 argument_list|)
@@ -1535,7 +1555,7 @@ block|}
 block|}
 throw|throw
 operator|new
-name|RuntimeException
+name|HiveException
 argument_list|(
 literal|"No vector operator for descriptor class "
 operator|+

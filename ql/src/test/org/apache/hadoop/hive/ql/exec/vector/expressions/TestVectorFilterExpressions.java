@@ -1279,9 +1279,9 @@ init|=
 operator|new
 name|FilterLongScalarLessLongColumn
 argument_list|(
-literal|0
-argument_list|,
 literal|15
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 comment|//Basic case
@@ -1383,9 +1383,9 @@ init|=
 operator|new
 name|FilterLongScalarGreaterLongColumn
 argument_list|(
-literal|0
-argument_list|,
 literal|18
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|expr2
