@@ -11878,6 +11878,18 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|/*    * This api just sets up a metastore client. This is used for    * pre-launching the metastore client so as to reduce latency    * within a single session.    */
+specifier|public
+name|void
+name|setupMSC
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+name|getMSC
+argument_list|()
+expr_stmt|;
+block|}
 comment|/**    *    * @return the metastore client for the current thread    * @throws MetaException    */
 specifier|private
 name|IMetaStoreClient
