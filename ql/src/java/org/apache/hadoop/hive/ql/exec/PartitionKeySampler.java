@@ -882,7 +882,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|RuntimeException
+name|IllegalArgumentException
 argument_list|(
 literal|"Percentile value must be within the range of 0 to 1."
 argument_list|)
