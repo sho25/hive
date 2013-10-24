@@ -152,6 +152,10 @@ operator|.
 name|FileMetaInfo
 name|fileMetaInfo
 decl_stmt|;
+specifier|private
+name|boolean
+name|hasFooter
+decl_stmt|;
 specifier|protected
 name|OrcSplit
 parameter_list|()
@@ -212,6 +216,14 @@ name|fileMetaInfo
 operator|=
 name|fileMetaInfo
 expr_stmt|;
+name|hasFooter
+operator|=
+name|this
+operator|.
+name|fileMetaInfo
+operator|!=
+literal|null
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -233,7 +245,20 @@ argument_list|(
 name|out
 argument_list|)
 expr_stmt|;
-comment|//serialize FileMetaInfo fields
+comment|// Whether footer information follows.
+name|out
+operator|.
+name|writeBoolean
+argument_list|(
+name|hasFooter
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|hasFooter
+condition|)
+block|{
+comment|// serialize FileMetaInfo fields
 name|Text
 operator|.
 name|writeString
@@ -256,7 +281,7 @@ operator|.
 name|bufferSize
 argument_list|)
 expr_stmt|;
-comment|//serialize FileMetaInfo field footer
+comment|// serialize FileMetaInfo field footer
 name|ByteBuffer
 name|footerBuff
 init|=
@@ -269,7 +294,7 @@ operator|.
 name|reset
 argument_list|()
 expr_stmt|;
-comment|//write length of buffer
+comment|// write length of buffer
 name|WritableUtils
 operator|.
 name|writeVInt
@@ -313,6 +338,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -333,7 +359,19 @@ argument_list|(
 name|in
 argument_list|)
 expr_stmt|;
-comment|//deserialize FileMetaInfo fields
+name|hasFooter
+operator|=
+name|in
+operator|.
+name|readBoolean
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+name|hasFooter
+condition|)
+block|{
+comment|// deserialize FileMetaInfo fields
 name|String
 name|compressionType
 init|=
@@ -354,7 +392,7 @@ argument_list|(
 name|in
 argument_list|)
 decl_stmt|;
-comment|//deserialize FileMetaInfo field footer
+comment|// deserialize FileMetaInfo field footer
 name|int
 name|footerBuffSize
 init|=
@@ -402,6 +440,7 @@ name|footerBuff
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 specifier|public
 name|FileMetaInfo
 name|getFileMetaInfo
@@ -409,6 +448,15 @@ parameter_list|()
 block|{
 return|return
 name|fileMetaInfo
+return|;
+block|}
+specifier|public
+name|boolean
+name|hasFooter
+parameter_list|()
+block|{
+return|return
+name|hasFooter
 return|;
 block|}
 block|}

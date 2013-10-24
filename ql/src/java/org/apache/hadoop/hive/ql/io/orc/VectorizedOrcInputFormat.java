@@ -883,7 +883,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|//We have OrcSplit, which has footer metadata cached, so used the appropriate reader
+comment|//We have OrcSplit, which may have footer metadata cached, so use the appropriate reader
 comment|//constructor
 name|OrcSplit
 name|orcSplit
@@ -893,6 +893,14 @@ name|OrcSplit
 operator|)
 name|fSplit
 decl_stmt|;
+if|if
+condition|(
+name|orcSplit
+operator|.
+name|hasFooter
+argument_list|()
+condition|)
+block|{
 name|FileMetaInfo
 name|fMetaInfo
 init|=
@@ -914,6 +922,21 @@ argument_list|,
 name|fMetaInfo
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|reader
+operator|=
+name|OrcFile
+operator|.
+name|createReader
+argument_list|(
+name|fs
+argument_list|,
+name|path
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 return|return
 operator|new
