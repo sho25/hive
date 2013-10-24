@@ -4380,7 +4380,7 @@ return|return
 name|mapJoinOp
 return|;
 block|}
-comment|/**    * Get a list of big table candidates. Only the tables in the returned set can    * be used as big table in the join operation.    *    * The logic here is to scan the join condition array from left to right. If    * see a inner join, and the bigTableCandidates is empty or the outer join    * that we last saw is a right outer join, add both side of this inner join to    * big table candidates only if they are not in bad position. If see a left    * outer join, set lastSeenRightOuterJoin to false, and the bigTableCandidates    * is empty, add the left side to it, and if the bigTableCandidates is not    * empty, do nothing (which means the bigTableCandidates is from left side).    * If see a right outer join, set lastSeenRightOuterJoin to true, clear the    * bigTableCandidates, and add right side to the bigTableCandidates, it means    * the right side of a right outer join always win. If see a full outer join,    * return null immediately (no one can be the big table, can not do a    * mapjoin).    *    *    * @param condns    * @return set of big table candidates    */
+comment|/**    * Get a list of big table candidates. Only the tables in the returned set can    * be used as big table in the join operation.    *    * The logic here is to scan the join condition array from left to right. If    * see a inner join, and the bigTableCandidates is empty or the outer join    * that we last saw is a right outer join, add both side of this inner join to    * big table candidates only if they are not in bad position. If see a left    * outer join, set lastSeenRightOuterJoin to false, and the bigTableCandidates    * is empty, add the left side to it, and if the bigTableCandidates is not    * empty, do nothing (which means the bigTableCandidates is from left side).    * If see a right outer join, set lastSeenRightOuterJoin to true, clear the    * bigTableCandidates, and add right side to the bigTableCandidates, it means    * the right side of a right outer join always win. If see a full outer join,    * return empty set immediately (no one can be the big table, can not do a    * mapjoin).    *    *    * @param condns    * @return set of big table candidates    */
 specifier|public
 specifier|static
 name|Set
@@ -4499,8 +4499,14 @@ name|lastSeenRightOuterJoin
 operator|=
 literal|false
 expr_stmt|;
+comment|// empty set - cannot convert
 return|return
-literal|null
+operator|new
+name|HashSet
+argument_list|<
+name|Integer
+argument_list|>
+argument_list|()
 return|;
 block|}
 elseif|else

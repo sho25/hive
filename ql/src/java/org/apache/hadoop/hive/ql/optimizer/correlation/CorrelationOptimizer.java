@@ -1279,8 +1279,9 @@ decl_stmt|;
 if|if
 condition|(
 name|bigTableCandidates
-operator|==
-literal|null
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 continue|continue;

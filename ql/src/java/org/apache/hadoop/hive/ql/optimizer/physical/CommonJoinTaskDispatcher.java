@@ -2183,8 +2183,9 @@ comment|// no table could be the big table; there is no need to convert
 if|if
 condition|(
 name|bigTableCandidates
-operator|==
-literal|null
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 return|return

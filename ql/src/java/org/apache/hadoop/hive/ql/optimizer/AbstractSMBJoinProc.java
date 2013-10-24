@@ -2457,8 +2457,9 @@ decl_stmt|;
 if|if
 condition|(
 name|joinCandidates
-operator|==
-literal|null
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 comment|// This is a full outer join. This can never be a map-join
