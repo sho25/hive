@@ -306,7 +306,7 @@ name|args
 argument_list|)
 return|;
 block|}
-comment|/**    * @param execute pig query string to be executed    * @param srcFile pig query file to be executed    * @param pigArgs pig command line arguments    * @param otherFiles  files to be copied to the map reduce cluster    * @param statusdir status dir location    * @param usehcatalog whether the command uses hcatalog/needs to connect    *         to hive metastore server    * @param completedUrl call back url    * @return    * @throws BadParam    * @throws IOException    * @throws InterruptedException    */
+comment|/**    * @param execute pig query string to be executed    * @param srcFile pig query file to be executed    * @param pigArgs pig command line arguments    * @param otherFiles  files to be copied to the map reduce cluster    * @param statusdir status dir location    * @param usehcatalog whether the command uses hcatalog/needs to connect    *         to hive metastore server    * @param completedUrl call back url    * @return list of arguments    * @throws BadParam    * @throws IOException    * @throws InterruptedException    */
 specifier|private
 name|List
 argument_list|<

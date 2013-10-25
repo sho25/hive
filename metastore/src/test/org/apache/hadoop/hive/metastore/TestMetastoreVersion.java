@@ -523,6 +523,11 @@ name|hiveConf
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|fail
+argument_list|(
+literal|"Expected exception"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -533,6 +538,9 @@ block|{
 name|assertTrue
 argument_list|(
 name|re
+operator|.
+name|getCause
+argument_list|()
 operator|.
 name|getCause
 argument_list|()

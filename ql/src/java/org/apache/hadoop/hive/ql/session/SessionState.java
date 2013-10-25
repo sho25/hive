@@ -1350,6 +1350,8 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+comment|// catch-all due to some exec time dependencies on session state
+comment|// that would cause ClassNoFoundException otherwise
 throw|throw
 operator|new
 name|RuntimeException
