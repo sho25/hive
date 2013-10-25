@@ -544,6 +544,9 @@ argument_list|()
 operator|.
 name|getCause
 argument_list|()
+operator|.
+name|getCause
+argument_list|()
 operator|instanceof
 name|MetaException
 argument_list|)

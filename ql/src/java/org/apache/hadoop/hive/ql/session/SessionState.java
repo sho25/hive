@@ -323,24 +323,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|MapRedStats
@@ -1333,56 +1315,12 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|IOException
+name|Exception
 name|e
 parameter_list|)
 block|{
-comment|// required for the FileSystem.get
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
-catch|catch
-parameter_list|(
-name|LoginException
-name|e
-parameter_list|)
-block|{
-comment|// required for the getUGIForConf
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
-catch|catch
-parameter_list|(
-name|HiveException
-name|e
-parameter_list|)
-block|{
-comment|// required for Hive.get(HiveConf)
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
-catch|catch
-parameter_list|(
-name|MetaException
-name|e
-parameter_list|)
-block|{
-comment|// required for setupMSC()
+comment|// catch-all due to some exec time dependencies on session state
+comment|// that would cause ClassNoFoundException otherwise
 throw|throw
 operator|new
 name|RuntimeException
