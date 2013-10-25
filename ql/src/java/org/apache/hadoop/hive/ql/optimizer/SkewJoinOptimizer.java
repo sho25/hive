@@ -2517,6 +2517,16 @@ operator|.
 name|getParentOperators
 argument_list|()
 operator|.
+name|isEmpty
+argument_list|()
+operator|)
+operator|||
+operator|(
+name|op
+operator|.
+name|getParentOperators
+argument_list|()
+operator|.
 name|size
 argument_list|()
 operator|>

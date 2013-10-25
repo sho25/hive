@@ -2530,8 +2530,6 @@ argument_list|,
 name|mapJoinPos
 argument_list|,
 name|noCheckOuterJoin
-argument_list|,
-name|validateMapJoinTree
 argument_list|)
 decl_stmt|;
 comment|// remove old parents
@@ -2602,6 +2600,18 @@ argument_list|(
 name|newParentOps
 argument_list|)
 expr_stmt|;
+comment|// make sure only map-joins can be performed.
+if|if
+condition|(
+name|validateMapJoinTree
+condition|)
+block|{
+name|validateMapJoinTypes
+argument_list|(
+name|mapJoinOp
+argument_list|)
+expr_stmt|;
+block|}
 comment|// change the children of the original join operator to point to the map
 comment|// join operator
 return|return
@@ -2640,9 +2650,6 @@ name|mapJoinPos
 parameter_list|,
 name|boolean
 name|noCheckOuterJoin
-parameter_list|,
-name|boolean
-name|validateMapJoinTree
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -3934,18 +3941,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// make sure only map-joins can be performed.
-if|if
-condition|(
-name|validateMapJoinTree
-condition|)
-block|{
-name|validateMapJoinTypes
-argument_list|(
-name|mapJoinOp
-argument_list|)
-expr_stmt|;
-block|}
 return|return
 name|mapJoinOp
 return|;
