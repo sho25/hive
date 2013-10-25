@@ -478,6 +478,32 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
+if|if
+condition|(
+operator|!
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|p
+argument_list|)
+condition|)
+block|{
+comment|//check first, otherwise webhcat.log is full of stack traces from FileSystem when
+comment|//clients check for status ('exitValue', 'completed', etc.)
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|p
+operator|+
+literal|" does not exist."
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
 name|in
 operator|=
 operator|new
@@ -550,11 +576,9 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-comment|//don't print stack trace since clients poll for 'exitValue', 'completed',
-comment|//files which are not there until job completes
 name|LOG
 operator|.
-name|info
+name|error
 argument_list|(
 literal|"Couldn't find "
 operator|+
@@ -566,6 +590,8 @@ name|e
 operator|.
 name|getMessage
 argument_list|()
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 block|}

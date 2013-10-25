@@ -1568,6 +1568,18 @@ name|void
 name|close
 parameter_list|()
 function_decl|;
+comment|/**      * Does exactly what org.apache.hadoop.mapreduce.Job#addCacheFile(URI) in Hadoop 2.      * Assumes that both parameters are not {@code null}.      */
+specifier|public
+name|void
+name|addCacheFile
+parameter_list|(
+name|URI
+name|uri
+parameter_list|,
+name|Job
+name|job
+parameter_list|)
+function_decl|;
 block|}
 comment|/**    * Create a proxy file system that can serve a given scheme/authority using some    * other file system.    */
 specifier|public

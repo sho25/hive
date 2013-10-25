@@ -305,7 +305,7 @@ literal|"Job not yet complete. jobId="
 operator|+
 name|id
 operator|+
-literal|" Status from JT="
+literal|" Status from JobTracker="
 operator|+
 name|jobStatus
 argument_list|,
