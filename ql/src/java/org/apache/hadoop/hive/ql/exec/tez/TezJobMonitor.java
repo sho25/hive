@@ -528,7 +528,14 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Status: Running\n"
+literal|"Status: Running (application id: "
+operator|+
+name|dagClient
+operator|.
+name|getApplicationId
+argument_list|()
+operator|+
+literal|")\n"
 argument_list|)
 expr_stmt|;
 for|for
