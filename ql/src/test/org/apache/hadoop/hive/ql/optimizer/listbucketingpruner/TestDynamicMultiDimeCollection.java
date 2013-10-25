@@ -106,7 +106,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|DynamicMultiDimeCollectionTest
+name|TestDynamicMultiDimeCollection
 extends|extends
 name|TestCase
 block|{
