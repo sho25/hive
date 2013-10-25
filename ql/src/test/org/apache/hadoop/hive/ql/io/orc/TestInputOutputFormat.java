@@ -2775,6 +2775,8 @@ argument_list|(
 literal|"/a/file"
 argument_list|)
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|splitter
@@ -2784,6 +2786,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|200
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|FileSplit
@@ -2885,6 +2889,8 @@ argument_list|(
 literal|500
 argument_list|,
 literal|600
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|result
@@ -2950,6 +2956,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|2500
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|result
@@ -3159,6 +3167,8 @@ argument_list|(
 literal|"/a/file"
 argument_list|)
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|splitter
@@ -3413,6 +3423,8 @@ argument_list|(
 literal|"/a/file"
 argument_list|)
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|splitter
