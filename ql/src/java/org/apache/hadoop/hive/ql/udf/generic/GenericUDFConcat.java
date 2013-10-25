@@ -468,7 +468,6 @@ throws|throws
 name|UDFArgumentException
 block|{
 comment|// Loop through all the inputs to determine the appropriate return type/length.
-comment|// Either all arguments are binary, or all columns are non-binary.
 comment|// Return type:
 comment|//  All VARCHAR inputs: return VARCHAR
 comment|//  All BINARY inputs: return BINARY
@@ -582,13 +581,13 @@ operator|!=
 name|currentCategory
 condition|)
 block|{
-throw|throw
-operator|new
-name|UDFArgumentException
-argument_list|(
-literal|"CONCAT cannot take a mix of binary and non-binary arguments"
-argument_list|)
-throw|;
+comment|// mix of binary/non-binary args
+name|returnType
+operator|=
+name|PrimitiveCategory
+operator|.
+name|STRING
+expr_stmt|;
 block|}
 break|break;
 case|case
@@ -596,40 +595,19 @@ name|VARCHAR
 case|:
 if|if
 condition|(
-name|returnType
-operator|==
-name|PrimitiveCategory
-operator|.
-name|BINARY
+operator|!
+name|fixedLengthReturnValue
 condition|)
 block|{
-throw|throw
-operator|new
-name|UDFArgumentException
-argument_list|(
-literal|"CONCAT cannot take a mix of binary and non-binary arguments"
-argument_list|)
-throw|;
+name|returnType
+operator|=
+name|PrimitiveCategory
+operator|.
+name|STRING
+expr_stmt|;
 block|}
 break|break;
 default|default:
-if|if
-condition|(
-name|returnType
-operator|==
-name|PrimitiveCategory
-operator|.
-name|BINARY
-condition|)
-block|{
-throw|throw
-operator|new
-name|UDFArgumentException
-argument_list|(
-literal|"CONCAT cannot take a mix of binary and non-binary arguments"
-argument_list|)
-throw|;
-block|}
 name|returnType
 operator|=
 name|PrimitiveCategory
