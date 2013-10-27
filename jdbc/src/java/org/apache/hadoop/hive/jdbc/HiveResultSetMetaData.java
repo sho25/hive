@@ -549,11 +549,11 @@ block|}
 elseif|else
 if|if
 condition|(
-literal|"decimal"
-operator|.
-name|equalsIgnoreCase
-argument_list|(
 name|type
+operator|.
+name|startsWith
+argument_list|(
+literal|"decimal"
 argument_list|)
 condition|)
 block|{

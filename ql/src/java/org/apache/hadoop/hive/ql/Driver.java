@@ -9791,6 +9791,15 @@ name|getQueryPlan
 argument_list|()
 return|;
 block|}
+specifier|public
+name|String
+name|getErrorMsg
+parameter_list|()
+block|{
+return|return
+name|errorMessage
+return|;
+block|}
 block|}
 end_class
 

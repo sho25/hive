@@ -6208,6 +6208,15 @@ argument_list|(
 name|obj
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|decimal
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 name|SerializationUtils
 operator|.
 name|writeBigInteger
@@ -8248,6 +8257,7 @@ break|break;
 case|case
 name|DECIMAL
 case|:
+comment|// TODO: save precision/scale
 name|type
 operator|.
 name|setKind

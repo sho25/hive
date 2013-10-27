@@ -516,18 +516,16 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" AS VARCHAR("
+literal|" AS "
 argument_list|)
 expr_stmt|;
 name|sb
 operator|.
 name|append
 argument_list|(
-literal|""
-operator|+
 name|typeInfo
 operator|.
-name|getLength
+name|getQualifiedName
 argument_list|()
 argument_list|)
 expr_stmt|;

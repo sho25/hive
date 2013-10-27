@@ -2571,7 +2571,13 @@ case|:
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaHiveDecimalObjectInspector
+name|getPrimitiveJavaObjectInspector
+argument_list|(
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|info
+argument_list|)
 return|;
 default|default:
 throw|throw
@@ -2824,10 +2830,16 @@ return|;
 case|case
 name|DECIMAL
 case|:
+comment|// TODO: get precision/scale from TYPE
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaHiveDecimalObjectInspector
+name|getPrimitiveJavaObjectInspector
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|decimalTypeInfo
+argument_list|)
 return|;
 case|case
 name|STRUCT
