@@ -302,6 +302,9 @@ decl_stmt|;
 specifier|public
 name|HivePreparedStatement
 parameter_list|(
+name|HiveConnection
+name|connection
+parameter_list|,
 name|TCLIService
 operator|.
 name|Iface
@@ -316,6 +319,8 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|connection
+argument_list|,
 name|client
 argument_list|,
 name|sessHandle

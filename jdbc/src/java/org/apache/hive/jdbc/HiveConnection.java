@@ -2039,6 +2039,8 @@ return|return
 operator|new
 name|HiveStatement
 argument_list|(
+name|this
+argument_list|,
 name|client
 argument_list|,
 name|sessHandle
@@ -2208,6 +2210,8 @@ return|return
 operator|new
 name|HiveDatabaseMetaData
 argument_list|(
+name|this
+argument_list|,
 name|client
 argument_list|,
 name|sessHandle
@@ -2451,6 +2455,8 @@ return|return
 operator|new
 name|HivePreparedStatement
 argument_list|(
+name|this
+argument_list|,
 name|client
 argument_list|,
 name|sessHandle
@@ -2477,6 +2483,8 @@ return|return
 operator|new
 name|HivePreparedStatement
 argument_list|(
+name|this
+argument_list|,
 name|client
 argument_list|,
 name|sessHandle
@@ -2554,6 +2562,8 @@ return|return
 operator|new
 name|HivePreparedStatement
 argument_list|(
+name|this
+argument_list|,
 name|client
 argument_list|,
 name|sessHandle

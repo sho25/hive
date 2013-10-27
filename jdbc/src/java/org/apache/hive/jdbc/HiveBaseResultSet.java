@@ -452,6 +452,12 @@ implements|implements
 name|ResultSet
 block|{
 specifier|protected
+name|Statement
+name|statement
+init|=
+literal|null
+decl_stmt|;
+specifier|protected
 name|SQLWarning
 name|warningChain
 init|=
@@ -3175,13 +3181,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|statement
+return|;
 block|}
 comment|/**    * @param columnIndex - the first column is 1, the second is 2, ...    * @see java.sql.ResultSet#getString(int)    */
 specifier|public
