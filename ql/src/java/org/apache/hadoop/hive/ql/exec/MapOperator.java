@@ -2713,14 +2713,11 @@ block|{
 name|Path
 name|fpath
 init|=
-name|normalizePath
-argument_list|(
 name|getExecContext
 argument_list|()
 operator|.
-name|getCurrentInputFile
+name|getCurrentInputPath
 argument_list|()
-argument_list|)
 decl_stmt|;
 for|for
 control|(
@@ -3295,7 +3292,10 @@ name|Text
 argument_list|(
 name|ctx
 operator|.
-name|getCurrentInputFile
+name|getCurrentInputPath
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;

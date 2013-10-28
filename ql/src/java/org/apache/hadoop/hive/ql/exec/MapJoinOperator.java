@@ -810,7 +810,10 @@ init|=
 name|getExecContext
 argument_list|()
 operator|.
-name|getCurrentInputFile
+name|getCurrentInputPath
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 decl_stmt|;
 name|LOG
