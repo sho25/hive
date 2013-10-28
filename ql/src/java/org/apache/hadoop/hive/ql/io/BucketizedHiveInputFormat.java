@@ -459,6 +459,7 @@ return|return
 name|rr
 return|;
 block|}
+comment|/**    * Recursively lists status for all files starting from the directory dir    * @param job    * @param dir    * @return    * @throws IOException    */
 specifier|protected
 name|FileStatus
 index|[]
@@ -468,7 +469,7 @@ name|JobConf
 name|job
 parameter_list|,
 name|Path
-name|path
+name|dir
 parameter_list|)
 throws|throws
 name|IOException
@@ -502,7 +503,7 @@ decl_stmt|;
 name|FileSystem
 name|fs
 init|=
-name|path
+name|dir
 operator|.
 name|getFileSystem
 argument_list|(
@@ -517,7 +518,7 @@ name|fs
 operator|.
 name|globStatus
 argument_list|(
-name|path
+name|dir
 argument_list|)
 decl_stmt|;
 if|if
@@ -536,7 +537,7 @@ name|IOException
 argument_list|(
 literal|"Input path does not exist: "
 operator|+
-name|path
+name|dir
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -560,7 +561,7 @@ name|IOException
 argument_list|(
 literal|"Input Pattern "
 operator|+
-name|path
+name|dir
 operator|+
 literal|" matches 0 files"
 argument_list|)

@@ -1659,6 +1659,7 @@ comment|// The following code should be removed, once
 comment|// https://issues.apache.org/jira/browse/MAPREDUCE-1597 is fixed.
 comment|// Hadoop does not handle non-splittable files correctly for CombineFileInputFormat,
 comment|// so don't use CombineFileInputFormat for non-splittable files
+comment|//ie, dont't combine if inputformat is a TextInputFormat and has compression turned on
 name|FileSystem
 name|inpFs
 init|=
@@ -1735,6 +1736,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|//if compresssion codec is set, use HiveInputFormat.getSplits (don't combine)
 name|splits
 operator|=
 name|super
@@ -1857,6 +1859,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|//if compresssion codec is set, use HiveInputFormat.getSplits (don't combine)
 name|splits
 operator|=
 name|super
@@ -1887,6 +1890,7 @@ block|}
 block|}
 block|}
 block|}
+comment|//don't combine if inputformat is a SymlinkTextInputFormat
 if|if
 condition|(
 name|inputFormat
@@ -1953,6 +1957,9 @@ name|isMapperCannotSpanPartns
 argument_list|()
 condition|)
 block|{
+comment|//if mapper can span partitions, make sure a splits does not contain multiple
+comment|// opList + inputFormatClassName + deserializerClassName combination
+comment|// This is done using the Map of CombinePathInputFormat to PathFilter
 name|opList
 operator|=
 name|HiveFileFormatUtils
@@ -2143,6 +2150,9 @@ name|isMapperCannotSpanPartns
 argument_list|()
 condition|)
 block|{
+comment|//mapper can span partitions
+comment|//combine into as few as one split, subject to the PathFilters set
+comment|// using combine.createPool.
 name|iss
 operator|=
 name|Arrays
