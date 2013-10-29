@@ -1458,7 +1458,7 @@ operator|=
 name|fileKey
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 name|int
 name|getInputColumnIndex
 parameter_list|(
@@ -1501,7 +1501,7 @@ name|name
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|protected
 name|int
 name|getInputColumnIndex
 parameter_list|(
@@ -1536,6 +1536,7 @@ name|outputColCount
 init|=
 literal|0
 decl_stmt|;
+specifier|protected
 name|OutputColumnManager
 parameter_list|(
 name|int
@@ -1586,6 +1587,18 @@ name|String
 name|columnType
 parameter_list|)
 block|{
+if|if
+condition|(
+name|initialOutputCol
+operator|<
+literal|0
+condition|)
+block|{
+comment|// This is a test
+return|return
+literal|0
+return|;
+block|}
 name|int
 name|relativeCol
 init|=
@@ -1742,6 +1755,16 @@ name|int
 name|index
 parameter_list|)
 block|{
+if|if
+condition|(
+name|initialOutputCol
+operator|<
+literal|0
+condition|)
+block|{
+comment|// This is a test
+return|return;
+block|}
 name|int
 name|colIndex
 init|=
@@ -3116,6 +3139,19 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|numChildren
+operator|>
+name|VectorExpressionDescriptor
+operator|.
+name|MAX_NUM_ARGUMENTS
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|VectorExpressionDescriptor
 operator|.
 name|Builder
