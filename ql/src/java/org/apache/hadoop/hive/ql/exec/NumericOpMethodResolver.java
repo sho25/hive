@@ -116,7 +116,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The class implements the method resolution for operators like (+, -, *, %).  * The resolution logic is as follows:  *   * 1. If one of the parameters is a string, then it resolves to evaluate(double,  * double) 2. If one of the parameters is null, then it resolves to evaluate(T,  * T) where T is the other non-null parameter type. 3. If both of the parameters  * are null, then it resolves to evaluate(byte, byte) 4. Otherwise, it resolves  * to evaluate(T, T), where T is the type resulting from calling  * FunctionRegistry.getCommonClass() on the two arguments.  */
+comment|/**  * The class implements the method resolution for operators like (+, -, *, %).  * The resolution logic is as follows:  *  * 1. If one of the parameters is a string, then it resolves to evaluate(double,  * double) 2. If one of the parameters is null, then it resolves to evaluate(T,  * T) where T is the other non-null parameter type. 3. If both of the parameters  * are null, then it resolves to evaluate(byte, byte) 4. Otherwise, it resolves  * to evaluate(T, T), where T is the type resulting from calling  * FunctionRegistry.getCommonClass() on the two arguments.  */
 end_comment
 
 begin_class
@@ -155,7 +155,7 @@ operator|=
 name|udfClass
 expr_stmt|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see    * org.apache.hadoop.hive.ql.exec.UDFMethodResolver#getEvalMethod(java.util    * .List)    */
+comment|/*    * (non-Javadoc)    *    * @see    * org.apache.hadoop.hive.ql.exec.UDFMethodResolver#getEvalMethod(java.util    * .List)    */
 annotation|@
 name|Override
 specifier|public
@@ -569,7 +569,7 @@ condition|(
 operator|!
 name|accepted
 operator|.
-name|equals
+name|accept
 argument_list|(
 name|pTypeInfos
 operator|.

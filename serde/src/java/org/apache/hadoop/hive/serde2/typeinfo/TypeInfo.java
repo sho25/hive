@@ -129,6 +129,23 @@ name|int
 name|hashCode
 parameter_list|()
 function_decl|;
+specifier|public
+name|boolean
+name|accept
+parameter_list|(
+name|TypeInfo
+name|other
+parameter_list|)
+block|{
+return|return
+name|this
+operator|.
+name|equals
+argument_list|(
+name|other
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

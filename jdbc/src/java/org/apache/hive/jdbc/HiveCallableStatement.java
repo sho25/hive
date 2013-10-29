@@ -250,12 +250,25 @@ name|sql
 operator|.
 name|CallableStatement
 block|{
+specifier|private
+specifier|final
+name|Connection
+name|connection
+decl_stmt|;
 comment|/**    *    */
 specifier|public
 name|HiveCallableStatement
-parameter_list|()
+parameter_list|(
+name|Connection
+name|connection
+parameter_list|)
 block|{
-comment|// TODO Auto-generated constructor stub
+name|this
+operator|.
+name|connection
+operator|=
+name|connection
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.CallableStatement#getArray(int)    */
 specifier|public
@@ -2856,7 +2869,9 @@ operator|new
 name|HiveQueryResultSet
 operator|.
 name|Builder
-argument_list|()
+argument_list|(
+name|this
+argument_list|)
 operator|.
 name|build
 argument_list|()
@@ -4420,14 +4435,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|connection
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getFetchDirection()    */
 specifier|public

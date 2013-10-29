@@ -791,7 +791,7 @@ literal|" c16 array<struct<m:map<string,string>,n:int>>,"
 operator|+
 literal|" c17 timestamp, "
 operator|+
-literal|" c18 decimal,"
+literal|" c18 decimal(16,7),"
 operator|+
 literal|" c19 binary,"
 operator|+

@@ -1114,16 +1114,13 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
 literal|"Encountered throwable"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
@@ -3720,8 +3717,6 @@ argument_list|(
 literal|"Beginning testMapPlan1"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|populateMapPlan1
 argument_list|(
 name|db
@@ -3747,24 +3742,6 @@ literal|"mapplan1.out"
 argument_list|)
 expr_stmt|;
 block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|fail
-argument_list|(
-literal|"Got Throwable"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 specifier|public
 name|void
 name|testMapPlan2
@@ -3779,8 +3756,6 @@ argument_list|(
 literal|"Beginning testMapPlan2"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|populateMapPlan2
 argument_list|(
 name|db
@@ -3806,24 +3781,6 @@ literal|"mapplan2.out"
 argument_list|)
 expr_stmt|;
 block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|fail
-argument_list|(
-literal|"Got Throwable"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 specifier|public
 name|void
 name|testMapRedPlan1
@@ -3838,8 +3795,6 @@ argument_list|(
 literal|"Beginning testMapRedPlan1"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|populateMapRedPlan1
 argument_list|(
 name|db
@@ -3865,24 +3820,6 @@ literal|"mapredplan1.out"
 argument_list|)
 expr_stmt|;
 block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|fail
-argument_list|(
-literal|"Got Throwable"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 specifier|public
 name|void
 name|testMapRedPlan2
@@ -3897,8 +3834,6 @@ argument_list|(
 literal|"Beginning testMapPlan2"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|populateMapRedPlan2
 argument_list|(
 name|db
@@ -3924,24 +3859,6 @@ literal|"mapredplan2.out"
 argument_list|)
 expr_stmt|;
 block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|fail
-argument_list|(
-literal|"Got Throwable"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 specifier|public
 name|void
 name|testMapRedPlan3
@@ -3956,8 +3873,6 @@ argument_list|(
 literal|"Beginning testMapPlan3"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|populateMapRedPlan3
 argument_list|(
 name|db
@@ -3994,24 +3909,6 @@ literal|"mapredplan3.out"
 argument_list|)
 expr_stmt|;
 block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|fail
-argument_list|(
-literal|"Got Throwable"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 specifier|public
 name|void
 name|testMapRedPlan4
@@ -4026,8 +3923,6 @@ argument_list|(
 literal|"Beginning testMapPlan4"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|populateMapRedPlan4
 argument_list|(
 name|db
@@ -4053,24 +3948,6 @@ literal|"mapredplan4.out"
 argument_list|)
 expr_stmt|;
 block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|fail
-argument_list|(
-literal|"Got Throwable"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 specifier|public
 name|void
 name|testMapRedPlan5
@@ -4085,8 +3962,6 @@ argument_list|(
 literal|"Beginning testMapPlan5"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|populateMapRedPlan5
 argument_list|(
 name|db
@@ -4112,24 +3987,6 @@ literal|"mapredplan5.out"
 argument_list|)
 expr_stmt|;
 block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|fail
-argument_list|(
-literal|"Got Throwable"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 specifier|public
 name|void
 name|testMapRedPlan6
@@ -4144,8 +4001,6 @@ argument_list|(
 literal|"Beginning testMapPlan6"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|populateMapRedPlan6
 argument_list|(
 name|db
@@ -4170,24 +4025,6 @@ argument_list|,
 literal|"mapredplan6.out"
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|fail
-argument_list|(
-literal|"Got Throwable"
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 block|}
 end_class

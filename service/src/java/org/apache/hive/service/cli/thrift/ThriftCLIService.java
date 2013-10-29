@@ -1213,7 +1213,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error fetching results: "
+literal|"Error executing statement: "
 argument_list|,
 name|e
 argument_list|)
@@ -1301,7 +1301,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error executing statement: "
+literal|"Error getting type info: "
 argument_list|,
 name|e
 argument_list|)
@@ -1389,7 +1389,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error getting type info: "
+literal|"Error getting catalogs: "
 argument_list|,
 name|e
 argument_list|)
@@ -1487,7 +1487,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error getting catalogs: "
+literal|"Error getting schemas: "
 argument_list|,
 name|e
 argument_list|)
@@ -1595,7 +1595,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error getting schemas: "
+literal|"Error getting tables: "
 argument_list|,
 name|e
 argument_list|)
@@ -1683,7 +1683,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error getting tables: "
+literal|"Error getting table types: "
 argument_list|,
 name|e
 argument_list|)
@@ -1791,7 +1791,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error getting table types: "
+literal|"Error getting columns: "
 argument_list|,
 name|e
 argument_list|)
@@ -1894,7 +1894,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error getting columns: "
+literal|"Error getting functions: "
 argument_list|,
 name|e
 argument_list|)
@@ -1982,7 +1982,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error getting functions: "
+literal|"Error getting operation status: "
 argument_list|,
 name|e
 argument_list|)
@@ -2057,7 +2057,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error getting operation status: "
+literal|"Error cancelling operation: "
 argument_list|,
 name|e
 argument_list|)
@@ -2132,7 +2132,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error canceling operation: "
+literal|"Error closing operation: "
 argument_list|,
 name|e
 argument_list|)
@@ -2220,7 +2220,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error closing operation: "
+literal|"Error getting result set metadata: "
 argument_list|,
 name|e
 argument_list|)
@@ -2330,7 +2330,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error getting result set metadata: "
+literal|"Error fetching results: "
 argument_list|,
 name|e
 argument_list|)

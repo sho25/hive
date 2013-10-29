@@ -342,12 +342,12 @@ name|baseDir
 init|=
 literal|null
 decl_stmt|;
-name|String
-name|currentInputFile
+name|Path
+name|currentInputPath
 init|=
 name|context
 operator|.
-name|getCurrentInputFile
+name|getCurrentInputPath
 argument_list|()
 decl_stmt|;
 name|LOG
@@ -356,7 +356,7 @@ name|info
 argument_list|(
 literal|"******* Load from HashTable File: input : "
 operator|+
-name|currentInputFile
+name|currentInputPath
 argument_list|)
 expr_stmt|;
 name|String
@@ -369,7 +369,10 @@ argument_list|()
 operator|.
 name|getBucketFileName
 argument_list|(
-name|currentInputFile
+name|currentInputPath
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 decl_stmt|;
 try|try

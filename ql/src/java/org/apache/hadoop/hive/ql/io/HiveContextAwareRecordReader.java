@@ -723,8 +723,8 @@ parameter_list|,
 name|boolean
 name|isBlockPointer
 parameter_list|,
-name|String
-name|inputFile
+name|Path
+name|inputPath
 parameter_list|)
 block|{
 name|ioCxtRef
@@ -748,9 +748,9 @@ name|isBlockPointer
 expr_stmt|;
 name|ioCxtRef
 operator|.
-name|inputFile
+name|inputPath
 operator|=
-name|inputFile
+name|inputPath
 expr_stmt|;
 name|LOG
 operator|.
@@ -758,7 +758,7 @@ name|info
 argument_list|(
 literal|"Processing file "
 operator|+
-name|inputFile
+name|inputPath
 argument_list|)
 expr_stmt|;
 name|initDone
@@ -1009,9 +1009,6 @@ name|makeQualified
 argument_list|(
 name|fs
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|this

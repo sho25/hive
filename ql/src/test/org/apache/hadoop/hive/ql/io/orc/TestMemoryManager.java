@@ -259,7 +259,7 @@ operator|.
 name|getMax
 argument_list|()
 operator|*
-literal|0.5f
+literal|0.5d
 argument_list|)
 argument_list|,
 name|poolSize

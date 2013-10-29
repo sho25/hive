@@ -196,6 +196,13 @@ name|Object
 index|[]
 name|output
 decl_stmt|;
+specifier|private
+specifier|transient
+name|boolean
+name|isSelectStarNoCompute
+init|=
+literal|false
+decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
@@ -221,6 +228,10 @@ name|initializeChildren
 argument_list|(
 name|hconf
 argument_list|)
+expr_stmt|;
+name|isSelectStarNoCompute
+operator|=
+literal|true
 expr_stmt|;
 return|return;
 block|}
@@ -394,13 +405,9 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// Just forward the row as is
 if|if
 condition|(
-name|conf
-operator|.
-name|isSelStarNoCompute
-argument_list|()
+name|isSelectStarNoCompute
 condition|)
 block|{
 name|forward
@@ -415,12 +422,15 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-for|for
-control|(
 name|int
 name|i
 init|=
 literal|0
+decl_stmt|;
+try|try
+block|{
+for|for
+control|(
 init|;
 name|i
 operator|<
@@ -428,11 +438,9 @@ name|eval
 operator|.
 name|length
 condition|;
-name|i
 operator|++
+name|i
 control|)
-block|{
-try|try
 block|{
 name|output
 index|[
@@ -449,6 +457,7 @@ argument_list|(
 name|row
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -488,7 +497,6 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
-block|}
 block|}
 name|forward
 argument_list|(

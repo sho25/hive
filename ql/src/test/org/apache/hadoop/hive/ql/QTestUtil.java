@@ -6536,21 +6536,6 @@ argument_list|()
 operator|)
 condition|)
 block|{
-comment|// Ignore the empty lines on windows
-if|if
-condition|(
-name|line
-operator|.
-name|isEmpty
-argument_list|()
-operator|&&
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
-continue|continue;
-block|}
 name|out
 operator|.
 name|write

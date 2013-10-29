@@ -79,6 +79,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|HiveDecimal
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -175,6 +193,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|io
+operator|.
+name|HiveDecimalWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
@@ -233,6 +269,24 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
+name|HiveDecimalUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
 name|TypeInfo
 import|;
 end_import
@@ -268,17 +322,53 @@ name|GenericUDF
 implements|implements
 name|Serializable
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|4994861742809511113L
+decl_stmt|;
 comment|/**    * The name of the UDF.    */
+specifier|private
 name|String
 name|udfName
 decl_stmt|;
 comment|/**    * Whether the UDF is an operator or not. This controls how the display string    * is generated.    */
+specifier|private
 name|boolean
 name|isOperator
 decl_stmt|;
 comment|/**    * The underlying UDF class Name.    */
+specifier|private
 name|String
 name|udfClassName
+decl_stmt|;
+comment|/**    * The underlying method of the UDF class.    */
+specifier|private
+specifier|transient
+name|Method
+name|udfMethod
+decl_stmt|;
+comment|/**    * Helper to convert the parameters before passing to udfMethod.    */
+specifier|private
+specifier|transient
+name|ConversionHelper
+name|conversionHelper
+decl_stmt|;
+comment|/**    * The actual udf object.    */
+specifier|private
+specifier|transient
+name|UDF
+name|udf
+decl_stmt|;
+comment|/**    * The non-deferred real arguments for method invocation.    */
+specifier|private
+specifier|transient
+name|Object
+index|[]
+name|realArguments
 decl_stmt|;
 comment|/**    * Create a new GenericUDFBridge object.    *    * @param udfName    *          The name of the corresponding udf.    * @param isOperator    * @param udfClassName java class name of UDF    */
 specifier|public
@@ -441,27 +531,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * The underlying method of the UDF class.    */
-specifier|transient
-name|Method
-name|udfMethod
-decl_stmt|;
-comment|/**    * Helper to convert the parameters before passing to udfMethod.    */
-specifier|transient
-name|ConversionHelper
-name|conversionHelper
-decl_stmt|;
-comment|/**    * The actual udf object.    */
-specifier|transient
-name|UDF
-name|udf
-decl_stmt|;
-comment|/**    * The non-deferred real arguments for method invocation.    */
-specifier|transient
-name|Object
-index|[]
-name|realArguments
-decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -696,6 +765,40 @@ name|realArguments
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// For non-generic UDF, type info isn't available. This poses a problem for Hive Decimal.
+comment|// If the returned value is HiveDecimal, we assume maximum precision/scale.
+if|if
+condition|(
+name|result
+operator|!=
+literal|null
+operator|&&
+name|result
+operator|instanceof
+name|HiveDecimalWritable
+condition|)
+block|{
+name|result
+operator|=
+name|HiveDecimalUtils
+operator|.
+name|enforcePrecisionScale
+argument_list|(
+operator|(
+name|HiveDecimalWritable
+operator|)
+name|result
+argument_list|,
+name|HiveDecimal
+operator|.
+name|MAX_PRECISION
+argument_list|,
+name|HiveDecimal
+operator|.
+name|MAX_SCALE
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 name|result
 return|;

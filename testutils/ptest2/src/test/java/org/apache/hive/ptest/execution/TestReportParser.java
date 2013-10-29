@@ -224,6 +224,14 @@ if|if
 condition|(
 name|file
 operator|.
+name|isFile
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|file
+operator|.
 name|getName
 argument_list|()
 operator|.
@@ -274,6 +282,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|JUnitReportParser

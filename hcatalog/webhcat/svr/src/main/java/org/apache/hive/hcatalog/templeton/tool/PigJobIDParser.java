@@ -97,7 +97,7 @@ block|{
 return|return
 name|parseJobID
 argument_list|(
-name|TempletonControllerJob
+name|JobSubmissionConstants
 operator|.
 name|STDERR_FNAME
 argument_list|,

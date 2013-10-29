@@ -58,7 +58,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|ListBucketingPrunnerTest
+name|TestListBucketingPrunner
 extends|extends
 name|TestCase
 block|{

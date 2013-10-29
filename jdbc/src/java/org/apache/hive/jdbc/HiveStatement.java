@@ -289,6 +289,11 @@ operator|.
 name|Statement
 block|{
 specifier|private
+specifier|final
+name|HiveConnection
+name|connection
+decl_stmt|;
+specifier|private
 name|TCLIService
 operator|.
 name|Iface
@@ -360,6 +365,9 @@ comment|/**    *    */
 specifier|public
 name|HiveStatement
 parameter_list|(
+name|HiveConnection
+name|connection
+parameter_list|,
 name|TCLIService
 operator|.
 name|Iface
@@ -369,6 +377,12 @@ name|TSessionHandle
 name|sessHandle
 parameter_list|)
 block|{
+name|this
+operator|.
+name|connection
+operator|=
+name|connection
+expr_stmt|;
 name|this
 operator|.
 name|client
@@ -963,7 +977,9 @@ operator|new
 name|HiveQueryResultSet
 operator|.
 name|Builder
-argument_list|()
+argument_list|(
+name|this
+argument_list|)
 operator|.
 name|setClient
 argument_list|(
@@ -978,11 +994,6 @@ operator|.
 name|setStmtHandle
 argument_list|(
 name|stmtHandle
-argument_list|)
-operator|.
-name|setHiveStatement
-argument_list|(
-name|this
 argument_list|)
 operator|.
 name|setMaxRows
@@ -1215,13 +1226,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+name|this
+operator|.
+name|connection
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getFetchDirection()    */
 specifier|public

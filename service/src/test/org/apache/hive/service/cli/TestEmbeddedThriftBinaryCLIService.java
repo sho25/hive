@@ -112,7 +112,7 @@ name|TestEmbeddedThriftBinaryCLIService
 extends|extends
 name|CLIServiceTest
 block|{
-specifier|private
+specifier|protected
 specifier|static
 name|ThriftCLIService
 name|service

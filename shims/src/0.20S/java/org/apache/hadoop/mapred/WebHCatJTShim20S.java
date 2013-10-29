@@ -37,6 +37,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|filecache
+operator|.
+name|DistributedCache
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|shims
@@ -58,6 +72,20 @@ operator|.
 name|ipc
 operator|.
 name|RPC
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapreduce
+operator|.
+name|Job
 import|;
 end_import
 
@@ -109,6 +137,16 @@ name|InetSocketAddress
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|net
+operator|.
+name|URI
+import|;
+end_import
+
 begin_comment
 comment|/**  * This is in org.apache.hadoop.mapred package because it relies on   * JobSubmissionProtocol which is package private  */
 end_comment
@@ -124,7 +162,7 @@ specifier|private
 name|JobSubmissionProtocol
 name|cnx
 decl_stmt|;
-comment|/**      * Create a connection to the Job Tracker.      */
+comment|/**    * Create a connection to the Job Tracker.    */
 specifier|public
 name|WebHCatJTShim20S
 parameter_list|(
@@ -176,7 +214,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Grab a handle to a job that is already known to the JobTracker.      *      * @return Profile of the job, or null if not found.      */
+comment|/**    * Grab a handle to a job that is already known to the JobTracker.    *    * @return Profile of the job, or null if not found.    */
 specifier|public
 name|JobProfile
 name|getJobProfile
@@ -204,7 +242,7 @@ name|jobid
 argument_list|)
 return|;
 block|}
-comment|/**      * Grab a handle to a job that is already known to the JobTracker.      *      * @return Status of the job, or null if not found.      */
+comment|/**    * Grab a handle to a job that is already known to the JobTracker.    *    * @return Status of the job, or null if not found.    */
 specifier|public
 name|org
 operator|.
@@ -240,7 +278,7 @@ name|jobid
 argument_list|)
 return|;
 block|}
-comment|/**      * Kill a job.      */
+comment|/**    * Kill a job.    */
 specifier|public
 name|void
 name|killJob
@@ -267,7 +305,7 @@ name|jobid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Get all the jobs submitted.      */
+comment|/**    * Get all the jobs submitted.    */
 specifier|public
 name|org
 operator|.
@@ -291,7 +329,7 @@ name|getAllJobs
 argument_list|()
 return|;
 block|}
-comment|/**      * Close the connection to the Job Tracker.      */
+comment|/**    * Close the connection to the Job Tracker.    */
 specifier|public
 name|void
 name|close
@@ -333,6 +371,32 @@ argument_list|(
 name|jobTrackerStr
 argument_list|)
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|addCacheFile
+parameter_list|(
+name|URI
+name|uri
+parameter_list|,
+name|Job
+name|job
+parameter_list|)
+block|{
+name|DistributedCache
+operator|.
+name|addCacheFile
+argument_list|(
+name|uri
+argument_list|,
+name|job
+operator|.
+name|getConfiguration
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class
