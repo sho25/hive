@@ -53,7 +53,7 @@ parameter_list|,
 name|String
 name|logDir
 parameter_list|,
-name|boolean
+name|String
 name|miniMr
 parameter_list|,
 name|HBaseTestSetup
@@ -86,6 +86,8 @@ name|init
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|init

@@ -307,7 +307,7 @@ parameter_list|,
 name|String
 name|logDir
 parameter_list|,
-name|boolean
+name|String
 name|miniMr
 parameter_list|,
 name|String
@@ -407,7 +407,7 @@ name|resDir
 argument_list|,
 name|logDir
 argument_list|,
-literal|false
+literal|"non-minimr"
 argument_list|,
 literal|"0.20"
 argument_list|,
