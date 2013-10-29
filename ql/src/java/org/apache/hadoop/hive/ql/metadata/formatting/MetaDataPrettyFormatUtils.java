@@ -87,14 +87,6 @@ name|FieldSchema
 import|;
 end_import
 
-begin_import
-import|import
-name|jline
-operator|.
-name|Terminal
-import|;
-end_import
-
 begin_comment
 comment|/**  * This class provides methods to format the output of DESCRIBE PRETTY  * in a human-readable way.  */
 end_comment
@@ -456,20 +448,10 @@ operator|-
 literal|1
 condition|)
 block|{
-name|Terminal
-name|terminal
-init|=
-name|Terminal
-operator|.
-name|getTerminal
-argument_list|()
-decl_stmt|;
+comment|// XXX fixed to 80 to remove jline dep
 name|prettyOutputNumCols
 operator|=
-name|terminal
-operator|.
-name|getTerminalWidth
-argument_list|()
+literal|80
 operator|-
 literal|1
 expr_stmt|;

@@ -886,6 +886,8 @@ block|{
 literal|"build.dir"
 block|,
 literal|"build.dir.hive"
+block|,
+literal|"hive.query.id"
 block|}
 decl_stmt|;
 specifier|public

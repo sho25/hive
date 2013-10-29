@@ -3526,7 +3526,7 @@ name|HIVE_SERVER2_ASYNC_EXEC_SHUTDOWN_TIMEOUT
 argument_list|(
 literal|"hive.server2.async.exec.shutdown.timeout"
 argument_list|,
-literal|10
+literal|10L
 argument_list|)
 block|,
 comment|// HiveServer2 auth configuration
@@ -4522,6 +4522,10 @@ name|Integer
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 return|return
 name|conf
@@ -4563,6 +4567,10 @@ name|Integer
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 name|conf
 operator|.
@@ -4636,6 +4644,10 @@ name|Long
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 return|return
 name|conf
@@ -4705,6 +4717,10 @@ name|Long
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 name|conf
 operator|.
@@ -4778,6 +4794,10 @@ name|Float
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 return|return
 name|conf
@@ -4847,6 +4867,10 @@ name|Float
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 name|ShimLoader
 operator|.
@@ -4925,6 +4949,10 @@ name|Boolean
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 return|return
 name|conf
@@ -4994,6 +5022,10 @@ name|Boolean
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 name|conf
 operator|.
@@ -5067,6 +5099,10 @@ name|String
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 return|return
 name|conf
@@ -5136,6 +5172,10 @@ name|String
 operator|.
 name|class
 operator|)
+operator|:
+name|var
+operator|.
+name|varname
 assert|;
 name|conf
 operator|.

@@ -705,9 +705,6 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|JobTrackerState
-name|state
-decl_stmt|;
 switch|switch
 condition|(
 name|clusterStatus
@@ -1337,8 +1334,6 @@ range|:
 name|jConf
 control|)
 block|{
-comment|//System.out.println("XXX Var: "+pair.getKey() +"="+pair.getValue());
-comment|//if (conf.get(pair.getKey()) == null) {
 name|conf
 operator|.
 name|set
@@ -1354,7 +1349,6 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//}
 block|}
 block|}
 block|}

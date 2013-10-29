@@ -3367,12 +3367,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|//      for (Entry<String,Map<String,String>> spec : partitionsDiscoveredByPath.entrySet()){
-comment|//        LOG.info("Partition "+ spec.getKey());
-comment|//        for (Entry<String,String> e : spec.getValue().entrySet()){
-comment|//          LOG.info(e.getKey() + "=>" +e.getValue());
-comment|//        }
-comment|//      }
 name|this
 operator|.
 name|partitionsDiscovered

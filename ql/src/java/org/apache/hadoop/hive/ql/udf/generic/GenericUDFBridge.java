@@ -322,17 +322,53 @@ name|GenericUDF
 implements|implements
 name|Serializable
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|4994861742809511113L
+decl_stmt|;
 comment|/**    * The name of the UDF.    */
+specifier|private
 name|String
 name|udfName
 decl_stmt|;
 comment|/**    * Whether the UDF is an operator or not. This controls how the display string    * is generated.    */
+specifier|private
 name|boolean
 name|isOperator
 decl_stmt|;
 comment|/**    * The underlying UDF class Name.    */
+specifier|private
 name|String
 name|udfClassName
+decl_stmt|;
+comment|/**    * The underlying method of the UDF class.    */
+specifier|private
+specifier|transient
+name|Method
+name|udfMethod
+decl_stmt|;
+comment|/**    * Helper to convert the parameters before passing to udfMethod.    */
+specifier|private
+specifier|transient
+name|ConversionHelper
+name|conversionHelper
+decl_stmt|;
+comment|/**    * The actual udf object.    */
+specifier|private
+specifier|transient
+name|UDF
+name|udf
+decl_stmt|;
+comment|/**    * The non-deferred real arguments for method invocation.    */
+specifier|private
+specifier|transient
+name|Object
+index|[]
+name|realArguments
 decl_stmt|;
 comment|/**    * Create a new GenericUDFBridge object.    *    * @param udfName    *          The name of the corresponding udf.    * @param isOperator    * @param udfClassName java class name of UDF    */
 specifier|public
@@ -495,27 +531,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * The underlying method of the UDF class.    */
-specifier|transient
-name|Method
-name|udfMethod
-decl_stmt|;
-comment|/**    * Helper to convert the parameters before passing to udfMethod.    */
-specifier|transient
-name|ConversionHelper
-name|conversionHelper
-decl_stmt|;
-comment|/**    * The actual udf object.    */
-specifier|transient
-name|UDF
-name|udf
-decl_stmt|;
-comment|/**    * The non-deferred real arguments for method invocation.    */
-specifier|transient
-name|Object
-index|[]
-name|realArguments
-decl_stmt|;
 annotation|@
 name|Override
 specifier|public

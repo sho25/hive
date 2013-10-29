@@ -371,7 +371,7 @@ argument_list|)
 operator|+
 literal|"/build/test/data/"
 operator|+
-name|TestSequenceFileReadWrite
+name|TestPassProperties
 operator|.
 name|class
 operator|.
@@ -694,7 +694,7 @@ name|job
 operator|.
 name|setJarByClass
 argument_list|(
-name|TestSequenceFileReadWrite
+name|TestPassProperties
 operator|.
 name|class
 argument_list|)
