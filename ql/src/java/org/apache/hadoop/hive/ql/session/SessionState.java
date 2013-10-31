@@ -169,20 +169,6 @@ end_import
 
 begin_import
 import|import
-name|javax
-operator|.
-name|security
-operator|.
-name|auth
-operator|.
-name|login
-operator|.
-name|LoginException
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -1288,7 +1274,7 @@ operator|.
 name|conf
 argument_list|)
 operator|.
-name|setupMSC
+name|getMSC
 argument_list|()
 expr_stmt|;
 name|ShimLoader

@@ -3178,6 +3178,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEOPTIMIZEMETADATAQUERIES
+argument_list|(
+literal|"hive.compute.query.using.stats"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Serde for FetchTask
 name|HIVEFETCHOUTPUTSERDE
 argument_list|(
