@@ -48968,6 +48968,9 @@ literal|":"
 operator|+
 name|alias
 operator|)
+operator|.
+name|toLowerCase
+argument_list|()
 return|;
 block|}
 annotation|@
