@@ -258,7 +258,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"java.io.tmpdir"
+literal|"test.tmp.dir"
 argument_list|)
 argument_list|)
 decl_stmt|;

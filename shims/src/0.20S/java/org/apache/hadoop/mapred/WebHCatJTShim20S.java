@@ -148,7 +148,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This is in org.apache.hadoop.mapred package because it relies on   * JobSubmissionProtocol which is package private  */
+comment|/**  * This is in org.apache.hadoop.mapred package because it relies on  * JobSubmissionProtocol which is package private  */
 end_comment
 
 begin_class

@@ -4984,9 +4984,9 @@ name|set
 argument_list|(
 name|oneProp
 argument_list|,
-name|deltaP
+name|hconf
 operator|.
-name|getProperty
+name|get
 argument_list|(
 name|oneProp
 argument_list|)

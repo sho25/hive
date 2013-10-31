@@ -58,8 +58,10 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"ql.test.query.clientpositive.dir"
+literal|"hive.root"
 argument_list|)
+operator|+
+literal|"/ql/src/test/queries/clientpositive"
 decl_stmt|;
 specifier|protected
 specifier|final
@@ -70,8 +72,10 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"ql.test.results.clientpositive.dir"
+literal|"hive.root"
 argument_list|)
+operator|+
+literal|"/ql/src/test/results/clientpositive"
 decl_stmt|;
 specifier|protected
 specifier|final
@@ -82,10 +86,10 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"test.log.dir"
+literal|"build.dir"
 argument_list|)
 operator|+
-literal|"/clientpositive"
+literal|"/junit-qfile-results/clientpositive"
 decl_stmt|;
 comment|/**    * Create a file for each test name in the inpDir.    * @param testNames    * @return files corresponding to each test name    */
 specifier|protected

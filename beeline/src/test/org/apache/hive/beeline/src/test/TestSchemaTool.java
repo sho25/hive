@@ -12,10 +12,6 @@ operator|.
 name|hive
 operator|.
 name|beeline
-operator|.
-name|src
-operator|.
-name|test
 package|;
 end_package
 
@@ -293,7 +289,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.home"
+literal|"test.tmp.dir"
 argument_list|)
 argument_list|,
 name|hiveConf

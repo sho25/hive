@@ -475,7 +475,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-comment|/* We are not starting zookeeper server here because       * QTestUtil already starts it.      */
+comment|/* We are not starting zookeeper server here because      * QTestUtil already starts it.      */
 name|int
 name|zkPort
 init|=
@@ -517,10 +517,8 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"user.dir"
+literal|"test.tmp.dir"
 argument_list|)
-operator|+
-literal|"/../build/ql/tmp"
 decl_stmt|;
 name|this
 operator|.

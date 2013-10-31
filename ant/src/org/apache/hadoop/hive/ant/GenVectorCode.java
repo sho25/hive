@@ -4003,11 +4003,9 @@ name|joinPath
 argument_list|(
 name|buildDir
 argument_list|,
-literal|"ql"
+literal|"generated-sources"
 argument_list|,
-literal|"gen"
-argument_list|,
-literal|"vector"
+literal|"java"
 argument_list|)
 decl_stmt|;
 name|File
@@ -4120,11 +4118,9 @@ name|joinPath
 argument_list|(
 name|buildDir
 argument_list|,
-literal|"ql"
+literal|"generated-test-sources"
 argument_list|,
-literal|"test"
-argument_list|,
-literal|"src"
+literal|"java"
 argument_list|,
 literal|"org"
 argument_list|,

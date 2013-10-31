@@ -192,7 +192,7 @@ name|driver
 decl_stmt|;
 specifier|private
 name|String
-name|hiveHome
+name|metaStoreRoot
 decl_stmt|;
 specifier|private
 name|String
@@ -327,13 +327,13 @@ operator|+
 literal|";create=true"
 argument_list|)
 expr_stmt|;
-name|hiveHome
+name|metaStoreRoot
 operator|=
 name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.home"
+literal|"test.tmp.dir"
 argument_list|)
 expr_stmt|;
 block|}
@@ -912,7 +912,7 @@ init|=
 operator|new
 name|MetaStoreSchemaInfo
 argument_list|(
-name|hiveHome
+name|metaStoreRoot
 argument_list|,
 name|conf
 argument_list|,
@@ -944,7 +944,7 @@ init|=
 operator|new
 name|MetaStoreSchemaInfo
 argument_list|(
-name|hiveHome
+name|metaStoreRoot
 argument_list|,
 name|conf
 argument_list|,

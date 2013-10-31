@@ -494,7 +494,7 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Path before norm :"
 operator|+
@@ -528,7 +528,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"build.dir.hive"
+literal|"test.tmp.dir"
 argument_list|)
 argument_list|,
 name|path
@@ -639,7 +639,7 @@ expr_stmt|;
 block|}
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Scheme:"
 operator|+
@@ -957,7 +957,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"build.dir.hive"
+literal|"test.tmp.dir"
 argument_list|)
 argument_list|,
 name|path
@@ -1990,7 +1990,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Return the partition specification from the specified keys and values    *     * @param partCols    *          the names of the partition keys    * @param partVals    *          the values of the partition keys    *     * @return the partition specification as a map    */
+comment|/**    * Return the partition specification from the specified keys and values    *    * @param partCols    *          the names of the partition keys    * @param partVals    *          the values of the partition keys    *    * @return the partition specification as a map    */
 specifier|public
 specifier|static
 name|Map
@@ -2076,7 +2076,7 @@ return|return
 name|partSpec
 return|;
 block|}
-comment|/**    * Compares the schemas - names, types and order, but ignoring comments    *     * @param newSchema    *          the new schema    * @param oldSchema    *          the old schema    * @return a boolean indicating match    */
+comment|/**    * Compares the schemas - names, types and order, but ignoring comments    *    * @param newSchema    *          the new schema    * @param oldSchema    *          the old schema    * @return a boolean indicating match    */
 specifier|public
 specifier|static
 name|boolean

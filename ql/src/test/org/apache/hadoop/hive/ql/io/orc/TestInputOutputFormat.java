@@ -712,7 +712,7 @@ name|getProperty
 argument_list|(
 literal|"test.tmp.dir"
 argument_list|,
-literal|"target/test/tmp"
+literal|"target/tmp"
 argument_list|)
 argument_list|)
 decl_stmt|;

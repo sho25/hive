@@ -443,7 +443,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"test.data.dir"
+literal|"test.tmp.dir"
 argument_list|,
 literal|"."
 argument_list|)
@@ -1332,7 +1332,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"test.data.dir"
+literal|"test.tmp.dir"
 argument_list|,
 literal|"."
 argument_list|)
