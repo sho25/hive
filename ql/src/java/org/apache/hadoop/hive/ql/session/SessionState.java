@@ -1151,6 +1151,24 @@ name|ss
 argument_list|)
 return|;
 block|}
+comment|/**    * Sets the given session state in the thread local var for sessions.    */
+specifier|public
+specifier|static
+name|void
+name|setCurrentSessionState
+parameter_list|(
+name|SessionState
+name|session
+parameter_list|)
+block|{
+name|tss
+operator|.
+name|set
+argument_list|(
+name|session
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * set current session to existing session object if a thread is running    * multiple sessions - it must call this method with the new session object    * when switching from one session to another.    * @throws HiveException    */
 specifier|public
 specifier|static
@@ -1161,9 +1179,7 @@ name|SessionState
 name|startSs
 parameter_list|)
 block|{
-name|tss
-operator|.
-name|set
+name|setCurrentSessionState
 argument_list|(
 name|startSs
 argument_list|)

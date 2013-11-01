@@ -1034,7 +1034,7 @@ parameter_list|()
 block|{
 name|SessionState
 operator|.
-name|start
+name|setCurrentSessionState
 argument_list|(
 name|ss
 argument_list|)
