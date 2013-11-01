@@ -125,9 +125,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|common
 operator|.
-name|HiveConf
+name|HiveStatsUtils
 import|;
 end_import
 
@@ -141,11 +141,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|conf
 operator|.
-name|exec
-operator|.
-name|Utilities
+name|HiveConf
 import|;
 end_import
 
@@ -827,7 +825,7 @@ name|FileStatus
 index|[]
 name|status
 init|=
-name|Utilities
+name|HiveStatsUtils
 operator|.
 name|getFileStatusRecurse
 argument_list|(

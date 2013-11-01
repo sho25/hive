@@ -3537,6 +3537,8 @@ parameter_list|,
 name|String
 name|ptnLocationSuffix
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 name|Partition
 name|part4
@@ -3628,6 +3630,15 @@ name|getLocation
 argument_list|()
 operator|+
 name|ptnLocationSuffix
+argument_list|)
+expr_stmt|;
+name|MetaStoreUtils
+operator|.
+name|updatePartitionStatsFast
+argument_list|(
+name|part4
+argument_list|,
+name|warehouse
 argument_list|)
 expr_stmt|;
 return|return
