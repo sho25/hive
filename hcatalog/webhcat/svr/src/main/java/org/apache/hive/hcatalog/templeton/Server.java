@@ -3503,7 +3503,7 @@ name|STREAMING
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a MapReduce Jar job.    * Params correspond to the REST api params    * @param  usehcatalog if {@code true}, means the Jar uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.      * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
+comment|/**    * Run a MapReduce Jar job.    * Params correspond to the REST api params    * @param  usesHcatalog if {@code true}, means the Jar uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.      * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
 annotation|@
 name|POST
 annotation|@
@@ -3600,7 +3600,7 @@ argument_list|(
 literal|"usehcatalog"
 argument_list|)
 name|boolean
-name|usehcatalog
+name|usesHcatalog
 parameter_list|,
 annotation|@
 name|FormParam
@@ -3797,7 +3797,7 @@ name|statusdir
 argument_list|,
 name|callback
 argument_list|,
-name|usehcatalog
+name|usesHcatalog
 argument_list|,
 name|getCompletedUrl
 argument_list|()
@@ -3810,7 +3810,7 @@ name|JAR
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a Pig job.    * Params correspond to the REST api params.  If '-useHCatalog' is in the {@code pigArgs, usehcatalog},     * is interpreted as true.    * @param  usehcatalog if {@code true}, means the Pig script uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.    *    This does nothing to ensure that Pig is installed on target node in the cluster.    * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
+comment|/**    * Run a Pig job.    * Params correspond to the REST api params.  If '-useHCatalog' is in the {@code pigArgs, usesHcatalog},    * is interpreted as true.    * @param  usesHcatalog if {@code true}, means the Pig script uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.    *    This does nothing to ensure that Pig is installed on target node in the cluster.    * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
 annotation|@
 name|POST
 annotation|@
@@ -3888,7 +3888,7 @@ argument_list|(
 literal|"usehcatalog"
 argument_list|)
 name|boolean
-name|usehcatalog
+name|usesHcatalog
 parameter_list|,
 annotation|@
 name|FormParam
@@ -4069,7 +4069,7 @@ name|statusdir
 argument_list|,
 name|callback
 argument_list|,
-name|usehcatalog
+name|usesHcatalog
 argument_list|,
 name|getCompletedUrl
 argument_list|()

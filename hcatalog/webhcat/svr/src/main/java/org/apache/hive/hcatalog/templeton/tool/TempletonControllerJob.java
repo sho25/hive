@@ -61,6 +61,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -995,6 +1005,29 @@ name|ClassNotFoundException
 throws|,
 name|TException
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Preparing to submit job: "
+operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|args
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|Configuration
 name|conf
 init|=

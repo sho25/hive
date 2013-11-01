@@ -138,6 +138,37 @@ name|TOKEN_FILE_ARG_PLACEHOLDER
 init|=
 literal|"__WEBHCAT_TOKEN_FILE_LOCATION__"
 decl_stmt|;
+comment|/**    * constants needed for Pig job submission    */
+specifier|public
+specifier|static
+interface|interface
+name|PigConstants
+block|{
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_HOME
+init|=
+literal|"HIVE_HOME"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HCAT_HOME
+init|=
+literal|"HCAT_HOME"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|PIG_OPTS
+init|=
+literal|"PIG_OPTS"
+decl_stmt|;
+block|}
 block|}
 end_interface
 
