@@ -52101,6 +52101,8 @@ operator|.
 name|getCompiler
 argument_list|(
 name|conf
+argument_list|,
+name|pCtx
 argument_list|)
 decl_stmt|;
 name|compiler
