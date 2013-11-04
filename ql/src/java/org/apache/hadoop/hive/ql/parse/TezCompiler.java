@@ -365,6 +365,24 @@ name|ql
 operator|.
 name|lib
 operator|.
+name|CompositeProcessor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lib
+operator|.
 name|DefaultRuleDispatcher
 import|;
 end_import
@@ -1078,11 +1096,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"Split Work - ReduceSink"
-argument_list|)
 argument_list|,
 name|ReduceSinkOperator
 operator|.
@@ -1102,11 +1116,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
 literal|"No more walking on ReduceSink-MapJoin"
-argument_list|)
 argument_list|,
 name|ReduceSinkOperator
 operator|.
@@ -1135,11 +1145,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-operator|new
-name|String
-argument_list|(
-literal|"Split Work - FileSink"
-argument_list|)
+literal|"Split Work + Move/Merge - FileSink"
 argument_list|,
 name|FileSinkOperator
 operator|.
@@ -1149,7 +1155,15 @@ operator|+
 literal|"%"
 argument_list|)
 argument_list|,
+operator|new
+name|CompositeProcessor
+argument_list|(
+operator|new
+name|FileSinkProcessor
+argument_list|()
+argument_list|,
 name|genTezWork
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching

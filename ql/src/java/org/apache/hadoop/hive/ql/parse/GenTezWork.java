@@ -458,6 +458,22 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// if there are no more rootOperators we're dealing with multiple
+comment|// file sinks off of the same table scan. Bail.
+if|if
+condition|(
+name|context
+operator|.
+name|rootOperators
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// null means that we're starting with a new table scan
 comment|// the graph walker walks the rootOperators in the same
 comment|// order so we can just take the next
