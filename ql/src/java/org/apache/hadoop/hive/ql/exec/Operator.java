@@ -1677,6 +1677,34 @@ argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
+comment|// sanity check
+if|if
+condition|(
+name|childOperatorsArray
+operator|==
+literal|null
+operator|&&
+operator|!
+operator|(
+name|childOperators
+operator|==
+literal|null
+operator|||
+name|childOperators
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Internal Hive error during operator initialization."
+argument_list|)
+throw|;
+block|}
 name|LOG
 operator|.
 name|info
@@ -3463,25 +3491,6 @@ comment|// System.out.println("" + this.getClass() + ": " +
 comment|// SerDeUtils.getJSONString(row, rowInspector));
 comment|// System.out.println("" + this.getClass() + ">> " +
 comment|// ObjectInspectorUtils.getObjectInspectorName(rowInspector));
-if|if
-condition|(
-name|childOperatorsArray
-operator|==
-literal|null
-operator|&&
-name|childOperators
-operator|!=
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Internal Hive error during operator initialization."
-argument_list|)
-throw|;
-block|}
 if|if
 condition|(
 operator|(
