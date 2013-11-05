@@ -278,6 +278,11 @@ name|WindowingSpec
 argument_list|>
 name|destToWindowingSpec
 decl_stmt|;
+comment|/*    * If this QB represents a SubQuery predicate then this will point to the SubQuery object.    */
+specifier|private
+name|QBSubQuery
+name|subQueryPredicateDef
+decl_stmt|;
 comment|// results
 specifier|public
 name|void
@@ -1311,6 +1316,30 @@ parameter_list|()
 block|{
 return|return
 name|destToWindowingSpec
+return|;
+block|}
+specifier|protected
+name|void
+name|setSubQueryDef
+parameter_list|(
+name|QBSubQuery
+name|subQueryPredicateDef
+parameter_list|)
+block|{
+name|this
+operator|.
+name|subQueryPredicateDef
+operator|=
+name|subQueryPredicateDef
+expr_stmt|;
+block|}
+specifier|protected
+name|QBSubQuery
+name|getSubQueryPredicateDef
+parameter_list|()
+block|{
+return|return
+name|subQueryPredicateDef
 return|;
 block|}
 block|}

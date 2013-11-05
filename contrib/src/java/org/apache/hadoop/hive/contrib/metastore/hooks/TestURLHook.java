@@ -123,7 +123,7 @@ literal|""
 argument_list|)
 expr_stmt|;
 return|return
-literal|"jdbc:derby:;databaseName=../build/test/junit_metastore_db_blank;create=true"
+literal|"jdbc:derby:;databaseName=target/tmp/junit_metastore_db_blank;create=true"
 return|;
 block|}
 else|else

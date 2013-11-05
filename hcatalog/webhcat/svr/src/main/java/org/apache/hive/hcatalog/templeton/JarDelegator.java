@@ -197,7 +197,7 @@ name|String
 name|callback
 parameter_list|,
 name|boolean
-name|usehcatalog
+name|usesHcatalog
 parameter_list|,
 name|String
 name|completedUrl
@@ -249,7 +249,7 @@ name|defines
 argument_list|,
 name|statusdir
 argument_list|,
-name|usehcatalog
+name|usesHcatalog
 argument_list|,
 name|completedUrl
 argument_list|,
@@ -306,7 +306,7 @@ name|String
 name|statusdir
 parameter_list|,
 name|boolean
-name|usehcatalog
+name|usesHcatalog
 parameter_list|,
 name|String
 name|completedUrl
@@ -405,7 +405,7 @@ expr_stmt|;
 comment|//check if the rest command specified explicitly to use hcatalog
 if|if
 condition|(
-name|usehcatalog
+name|usesHcatalog
 condition|)
 block|{
 name|addHiveMetaStoreTokenArg

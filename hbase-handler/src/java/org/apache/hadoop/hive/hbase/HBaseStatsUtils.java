@@ -93,9 +93,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|stats
+name|common
 operator|.
 name|StatsSetupConst
 import|;

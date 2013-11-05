@@ -3503,7 +3503,7 @@ name|STREAMING
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a MapReduce Jar job.    * Params correspond to the REST api params    * @param  usehcatalog if {@code true}, means the Jar uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.      * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
+comment|/**    * Run a MapReduce Jar job.    * Params correspond to the REST api params    * @param  usesHcatalog if {@code true}, means the Jar uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.      * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
 annotation|@
 name|POST
 annotation|@
@@ -3600,7 +3600,7 @@ argument_list|(
 literal|"usehcatalog"
 argument_list|)
 name|boolean
-name|usehcatalog
+name|usesHcatalog
 parameter_list|,
 annotation|@
 name|FormParam
@@ -3797,7 +3797,7 @@ name|statusdir
 argument_list|,
 name|callback
 argument_list|,
-name|usehcatalog
+name|usesHcatalog
 argument_list|,
 name|getCompletedUrl
 argument_list|()
@@ -3810,7 +3810,7 @@ name|JAR
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a Pig job.    * Params correspond to the REST api params.  If '-useHCatalog' is in the {@code pigArgs, usehcatalog},     * is interpreted as true.    * @param  usehcatalog if {@code true}, means the Pig script uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.    *    This does nothing to ensure that Pig is installed on target node in the cluster.    * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
+comment|/**    * Run a Pig job.    * Params correspond to the REST api params.  If '-useHCatalog' is in the {@code pigArgs, usesHcatalog},    * is interpreted as true.    * @param  usesHcatalog if {@code true}, means the Pig script uses HCat and thus needs to access     *    metastore, which requires additional steps for WebHCat to perform in a secure cluster.    *    This does nothing to ensure that Pig is installed on target node in the cluster.    * @param callback URL which WebHCat will call when the hive job finishes    * @see org.apache.hive.hcatalog.templeton.tool.TempletonControllerJob    */
 annotation|@
 name|POST
 annotation|@
@@ -3888,7 +3888,7 @@ argument_list|(
 literal|"usehcatalog"
 argument_list|)
 name|boolean
-name|usehcatalog
+name|usesHcatalog
 parameter_list|,
 annotation|@
 name|FormParam
@@ -4069,7 +4069,7 @@ name|statusdir
 argument_list|,
 name|callback
 argument_list|,
-name|usehcatalog
+name|usesHcatalog
 argument_list|,
 name|getCompletedUrl
 argument_list|()
@@ -4648,7 +4648,7 @@ name|jobid
 argument_list|)
 return|;
 block|}
-comment|/**    * Return all the known job ids for this user.    */
+comment|/**    * Return all the known job ids for this user based on the optional filter conditions.    *<p>    * Example usages:    * 1. curl -s 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan'    * Return all the Job IDs submitted by hsubramaniyan    * 2. curl -s     * 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan&showall=true'    * Return all the Job IDs that are visible to hsubramaniyan    * 3. curl -s    * 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan&jobid=job_201312091733_0003'    * Return all the Job IDs for hsubramaniyan after job_201312091733_0003.    * 4. curl -s 'http://localhost:50111/templeton/v1/jobs?     * user.name=hsubramaniyan&jobid=job_201312091733_0003&numrecords=5'    * Return the first 5(atmost) Job IDs submitted by hsubramaniyan after job_201312091733_0003.      * 5.  curl -s     * 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan&numrecords=5'    * Return the first 5(atmost) Job IDs submitted by hsubramaniyan after sorting the Job ID list     * lexicographically.    *</p>    *<p>    * Supporting pagination using "jobid" and "numrecords" parameters:    * Step 1: Get the start "jobid" = job_xxx_000, "numrecords" = n    * Step 2: Issue a curl command by specifying the user-defined "numrecords" and "jobid"     * Step 3: If list obtained from Step 2 has size equal to "numrecords", retrieve the list's     * last record and get the Job Id of the last record as job_yyy_k, else quit.    * Step 4: set "jobid"=job_yyy_k and go to step 2.    *</p>     * @param fields If "fields" set to "*", the request will return full details of the job.    * If "fields" is missing, will only return the job ID. Currently the value can only    * be "*", other values are not allowed and will throw exception.    * @param showall If "showall" is set to "true", the request will return all jobs the user    * has permission to view, not only the jobs belonging to the user.    * @param jobid If "jobid" is present, the records whose Job Id is lexicographically greater     * than "jobid" are only returned. For example, if "jobid" = "job_201312091733_0001",     * the jobs whose Job ID is greater than "job_201312091733_0001" are returned. The number of     * records returned depends on the value of "numrecords".    * @param numrecords If the "jobid" and "numrecords" parameters are present, the top #numrecords     * records appearing after "jobid" will be returned after sorting the Job Id list     * lexicographically.     * If "jobid" parameter is missing and "numrecords" is present, the top #numrecords will     * be returned after lexicographically sorting the Job Id list. If "jobid" parameter is present     * and "numrecords" is missing, all the records whose Job Id is greater than "jobid" are returned.    * @return list of job items based on the filter conditions specified by the user.    */
 annotation|@
 name|GET
 annotation|@
@@ -4687,6 +4687,22 @@ literal|"showall"
 argument_list|)
 name|boolean
 name|showall
+parameter_list|,
+annotation|@
+name|QueryParam
+argument_list|(
+literal|"jobid"
+argument_list|)
+name|String
+name|jobid
+parameter_list|,
+annotation|@
+name|QueryParam
+argument_list|(
+literal|"numrecords"
+argument_list|)
+name|String
+name|numrecords
 parameter_list|)
 throws|throws
 name|NotAuthorizedException
@@ -4785,6 +4801,80 @@ name|JobItemBean
 argument_list|>
 argument_list|()
 decl_stmt|;
+name|int
+name|currRecord
+init|=
+literal|0
+decl_stmt|;
+name|int
+name|numRecords
+decl_stmt|;
+comment|// Parse numrecords to an integer
+try|try
+block|{
+if|if
+condition|(
+name|numrecords
+operator|!=
+literal|null
+condition|)
+block|{
+name|numRecords
+operator|=
+name|Integer
+operator|.
+name|parseInt
+argument_list|(
+name|numrecords
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|numRecords
+operator|<=
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|BadParam
+argument_list|(
+literal|"numrecords should be an integer> 0"
+argument_list|)
+throw|;
+block|}
+block|}
+else|else
+block|{
+name|numRecords
+operator|=
+operator|-
+literal|1
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|BadParam
+argument_list|(
+literal|"Invalid numrecords format: numrecords should be an integer> 0"
+argument_list|)
+throw|;
+block|}
+comment|// Sort the list lexicographically
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|list
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|String
@@ -4793,6 +4883,61 @@ range|:
 name|list
 control|)
 block|{
+comment|// If numRecords = -1, fetch all records.
+comment|// Hence skip all the below checks when numRecords = -1.
+if|if
+condition|(
+name|numRecords
+operator|!=
+operator|-
+literal|1
+condition|)
+block|{
+comment|// If currRecord>= numRecords, we have already fetched the top #numRecords
+if|if
+condition|(
+name|currRecord
+operator|>=
+name|numRecords
+condition|)
+block|{
+break|break;
+block|}
+comment|// If the current record needs to be returned based on the
+comment|// filter conditions specified by the user, increment the counter
+elseif|else
+if|if
+condition|(
+operator|(
+name|jobid
+operator|!=
+literal|null
+operator|&&
+name|job
+operator|.
+name|compareTo
+argument_list|(
+name|jobid
+argument_list|)
+operator|>
+literal|0
+operator|)
+operator|||
+name|jobid
+operator|==
+literal|null
+condition|)
+block|{
+name|currRecord
+operator|++
+expr_stmt|;
+block|}
+comment|// The current record should not be included in the output detailList.
+else|else
+block|{
+continue|continue;
+block|}
+block|}
 name|JobItemBean
 name|jobItem
 init|=

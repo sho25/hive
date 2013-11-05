@@ -347,6 +347,24 @@ name|HIVE_PATH_NAME
 init|=
 literal|"templeton.hive.path"
 decl_stmt|;
+comment|/**    * see webhcat-default.xml    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_HOME_PATH
+init|=
+literal|"templeton.hive.home"
+decl_stmt|;
+comment|/**    * see webhcat-default.xml    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HCAT_HOME_PATH
+init|=
+literal|"templeton.hcat.home"
+decl_stmt|;
 specifier|public
 specifier|static
 specifier|final

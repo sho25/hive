@@ -573,6 +573,24 @@ name|IOException
 throws|,
 name|InterruptedException
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Launching job: "
+operator|+
+name|args
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 name|ugi
 operator|.

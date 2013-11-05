@@ -663,7 +663,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.metastore.warehouse.dir"
+literal|"test.warehouse.dir"
 argument_list|)
 operator|!=
 literal|null
@@ -687,7 +687,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.metastore.warehouse.dir"
+literal|"test.warehouse.dir"
 argument_list|)
 argument_list|)
 expr_stmt|;

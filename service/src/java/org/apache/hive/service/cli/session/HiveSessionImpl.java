@@ -747,6 +747,13 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|sessionState
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|SessionManager
@@ -804,9 +811,11 @@ parameter_list|()
 throws|throws
 name|HiveSQLException
 block|{
+comment|// need to make sure that the this connections session state is
+comment|// stored in the thread local for sessions.
 name|SessionState
 operator|.
-name|start
+name|setCurrentSessionState
 argument_list|(
 name|sessionState
 argument_list|)

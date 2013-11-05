@@ -171,6 +171,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|BeforeClass
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
 import|;
 end_import
@@ -182,7 +192,15 @@ name|TestRevisionManagerEndpoint
 extends|extends
 name|SkeletonHBaseTest
 block|{
-static|static
+annotation|@
+name|BeforeClass
+specifier|public
+specifier|static
+name|void
+name|setup
+parameter_list|()
+throws|throws
+name|Throwable
 block|{
 comment|// test case specific mini cluster settings
 name|testConf
@@ -221,6 +239,9 @@ operator|.
 name|getName
 argument_list|()
 argument_list|)
+expr_stmt|;
+name|setupSkeletonHBaseTest
+argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Mock implementation to test the protocol/serialization    */

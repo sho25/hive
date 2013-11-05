@@ -1090,6 +1090,7 @@ name|isSecurityEnabled
 argument_list|()
 condition|)
 block|{
+comment|//http://hadoop.apache.org/docs/r1.1.1/api/org/apache/hadoop/security/authentication/server/AuthenticationFilter.html
 name|authFilter
 operator|.
 name|setInitParameter
@@ -1102,6 +1103,7 @@ name|kerberosSecret
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|//https://svn.apache.org/repos/asf/hadoop/common/branches/branch-1.2/src/packages/templates/conf/hdfs-site.xml
 name|authFilter
 operator|.
 name|setInitParameter
@@ -1114,6 +1116,7 @@ name|kerberosPrincipal
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|//http://https://svn.apache.org/repos/asf/hadoop/common/branches/branch-1.2/src/packages/templates/conf/hdfs-site.xml
 name|authFilter
 operator|.
 name|setInitParameter

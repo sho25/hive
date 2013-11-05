@@ -211,16 +211,6 @@ name|AfterClass
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|BeforeClass
-import|;
-end_import
-
 begin_comment
 comment|/**  * Base class for HBase Tests which need a mini cluster instance  */
 end_comment
@@ -236,7 +226,14 @@ specifier|static
 name|String
 name|TEST_DIR
 init|=
-literal|"/tmp/build/test/data/"
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"test.tmp.dir"
+argument_list|,
+literal|"target/tmp/"
+argument_list|)
 decl_stmt|;
 specifier|protected
 specifier|final
@@ -299,8 +296,8 @@ name|String
 index|[]
 name|families
 parameter_list|)
-block|{
-try|try
+throws|throws
+name|IOException
 block|{
 name|HBaseAdmin
 name|admin
@@ -353,26 +350,11 @@ argument_list|(
 name|tableDesc
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|e
+name|admin
 operator|.
-name|printStackTrace
+name|close
 argument_list|()
 expr_stmt|;
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 block|}
 specifier|protected
 name|String
@@ -437,6 +419,7 @@ argument_list|(
 name|name
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -449,6 +432,7 @@ name|size
 argument_list|()
 argument_list|)
 throw|;
+block|}
 name|tableNames
 operator|.
 name|add
@@ -461,12 +445,10 @@ name|name
 return|;
 block|}
 comment|/**    * startup an hbase cluster instance before a test suite runs    */
-annotation|@
-name|BeforeClass
 specifier|public
 specifier|static
 name|void
-name|setup
+name|setupSkeletonHBaseTest
 parameter_list|()
 block|{
 if|if
@@ -480,6 +462,7 @@ name|getContextHandle
 argument_list|()
 argument_list|)
 condition|)
+block|{
 name|contextMap
 operator|.
 name|put
@@ -495,6 +478,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|contextMap
 operator|.
 name|get

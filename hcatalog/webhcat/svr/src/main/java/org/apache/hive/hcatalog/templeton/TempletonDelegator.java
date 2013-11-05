@@ -26,6 +26,15 @@ specifier|public
 class|class
 name|TempletonDelegator
 block|{
+comment|/**    * http://hadoop.apache.org/docs/r1.0.4/commands_manual.html#Generic+Options    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|ARCHIVES
+init|=
+literal|"-archives"
+decl_stmt|;
 specifier|protected
 name|AppConfig
 name|appConf

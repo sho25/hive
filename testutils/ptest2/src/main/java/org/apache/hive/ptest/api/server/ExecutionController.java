@@ -1172,7 +1172,7 @@ argument_list|()
 operator|||
 name|Strings
 operator|.
-name|emptyToNull
+name|nullToEmpty
 argument_list|(
 name|stopRequest
 operator|.
@@ -1275,7 +1275,7 @@ argument_list|()
 operator|||
 name|Strings
 operator|.
-name|emptyToNull
+name|nullToEmpty
 argument_list|(
 name|stopRequest
 operator|.
@@ -1376,7 +1376,7 @@ argument_list|()
 operator|||
 name|Strings
 operator|.
-name|emptyToNull
+name|nullToEmpty
 argument_list|(
 name|logsRequest
 operator|.

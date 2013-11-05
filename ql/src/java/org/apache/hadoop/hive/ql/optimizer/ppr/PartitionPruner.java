@@ -1971,7 +1971,7 @@ operator|.
 name|get
 argument_list|()
 operator|.
-name|getAllPartitionsForPruner
+name|getAllPartitionsOf
 argument_list|(
 name|tab
 argument_list|)

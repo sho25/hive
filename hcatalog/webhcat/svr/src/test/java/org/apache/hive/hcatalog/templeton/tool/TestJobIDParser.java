@@ -90,7 +90,7 @@ block|{
 name|String
 name|errFileName
 init|=
-literal|"../../src/test/data/status/pig"
+literal|"src/test/data/status/pig"
 decl_stmt|;
 name|PigJobIDParser
 name|pigJobIDParser
@@ -141,7 +141,7 @@ block|{
 name|String
 name|errFileName
 init|=
-literal|"../../src/test/data/status/hive"
+literal|"src/test/data/status/hive"
 decl_stmt|;
 name|HiveJobIDParser
 name|hiveJobIDParser
@@ -192,7 +192,7 @@ block|{
 name|String
 name|errFileName
 init|=
-literal|"../../src/test/data/status/jar"
+literal|"src/test/data/status/jar"
 decl_stmt|;
 name|JarJobIDParser
 name|jarJobIDParser
@@ -243,7 +243,7 @@ block|{
 name|String
 name|errFileName
 init|=
-literal|"../../src/test/data/status/streaming"
+literal|"src/test/data/status/streaming"
 decl_stmt|;
 name|JarJobIDParser
 name|jarJobIDParser

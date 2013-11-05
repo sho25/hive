@@ -290,7 +290,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A set of tests exercising e2e WebHCat DDL APIs.  These tests are somewhat  * between WebHCat e2e (hcatalog/src/tests/e2e/templeton) tests and simple58  *   * unit tests.  This will start a WebHCat server and make REST calls to it.  * It doesn't need Hadoop or (standalone) metastore to be running.  * Running this is much simpler than e2e tests.  *  * Most of these tests check that HTTP Status code is what is expected and  * Hive Error code {@link org.apache.hadoop.hive.ql.ErrorMsg} is what is  * expected.  *  * It may be possible to extend this to more than just DDL later.  */
+comment|/**  * A set of tests exercising e2e WebHCat DDL APIs.  These tests are somewhat  * between WebHCat e2e (hcatalog/src/tests/e2e/templeton) tests and simple58  *  * unit tests.  This will start a WebHCat server and make REST calls to it.  * It doesn't need Hadoop or (standalone) metastore to be running.  * Running this is much simpler than e2e tests.  *  * Most of these tests check that HTTP Status code is what is expected and  * Hive Error code {@link org.apache.hadoop.hive.ql.ErrorMsg} is what is  * expected.  *  * It may be possible to extend this to more than just DDL later.  */
 end_comment
 
 begin_class
@@ -952,13 +952,11 @@ name|put
 argument_list|(
 literal|"location"
 argument_list|,
-literal|"file://"
-operator|+
 name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.metastore.warehouse.dir"
+literal|"test.warehouse.dir"
 argument_list|)
 argument_list|)
 expr_stmt|;
