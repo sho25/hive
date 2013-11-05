@@ -54392,6 +54392,28 @@ name|int
 name|getMaximumLength
 parameter_list|()
 function_decl|;
+comment|// optional uint32 precision = 5;
+comment|/**      *<code>optional uint32 precision = 5;</code>      */
+name|boolean
+name|hasPrecision
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional uint32 precision = 5;</code>      */
+name|int
+name|getPrecision
+parameter_list|()
+function_decl|;
+comment|// optional uint32 scale = 6;
+comment|/**      *<code>optional uint32 scale = 6;</code>      */
+name|boolean
+name|hasScale
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional uint32 scale = 6;</code>      */
+name|int
+name|getScale
+parameter_list|()
+function_decl|;
 block|}
 comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Type}    */
 specifier|public
@@ -54936,6 +54958,40 @@ operator||=
 literal|0x00000002
 expr_stmt|;
 name|maximumLength_
+operator|=
+name|input
+operator|.
+name|readUInt32
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|40
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000004
+expr_stmt|;
+name|precision_
+operator|=
+name|input
+operator|.
+name|readUInt32
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|48
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000008
+expr_stmt|;
+name|scale_
 operator|=
 name|input
 operator|.
@@ -56274,6 +56330,88 @@ return|return
 name|maximumLength_
 return|;
 block|}
+comment|// optional uint32 precision = 5;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|PRECISION_FIELD_NUMBER
+init|=
+literal|5
+decl_stmt|;
+specifier|private
+name|int
+name|precision_
+decl_stmt|;
+comment|/**      *<code>optional uint32 precision = 5;</code>      */
+specifier|public
+name|boolean
+name|hasPrecision
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000004
+operator|)
+operator|==
+literal|0x00000004
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional uint32 precision = 5;</code>      */
+specifier|public
+name|int
+name|getPrecision
+parameter_list|()
+block|{
+return|return
+name|precision_
+return|;
+block|}
+comment|// optional uint32 scale = 6;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|SCALE_FIELD_NUMBER
+init|=
+literal|6
+decl_stmt|;
+specifier|private
+name|int
+name|scale_
+decl_stmt|;
+comment|/**      *<code>optional uint32 scale = 6;</code>      */
+specifier|public
+name|boolean
+name|hasScale
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000008
+operator|)
+operator|==
+literal|0x00000008
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional uint32 scale = 6;</code>      */
+specifier|public
+name|int
+name|getScale
+parameter_list|()
+block|{
+return|return
+name|scale_
+return|;
+block|}
 specifier|private
 name|void
 name|initFields
@@ -56327,6 +56465,14 @@ operator|.
 name|EMPTY
 expr_stmt|;
 name|maximumLength_
+operator|=
+literal|0
+expr_stmt|;
+name|precision_
+operator|=
+literal|0
+expr_stmt|;
+name|scale_
 operator|=
 literal|0
 expr_stmt|;
@@ -56543,6 +56689,52 @@ argument_list|(
 literal|4
 argument_list|,
 name|maximumLength_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000004
+operator|)
+operator|==
+literal|0x00000004
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeUInt32
+argument_list|(
+literal|5
+argument_list|,
+name|precision_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000008
+operator|)
+operator|==
+literal|0x00000008
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeUInt32
+argument_list|(
+literal|6
+argument_list|,
+name|scale_
 argument_list|)
 expr_stmt|;
 block|}
@@ -56792,6 +56984,68 @@ argument_list|(
 literal|4
 argument_list|,
 name|maximumLength_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000004
+operator|)
+operator|==
+literal|0x00000004
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeUInt32Size
+argument_list|(
+literal|5
+argument_list|,
+name|precision_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000008
+operator|)
+operator|==
+literal|0x00000008
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeUInt32Size
+argument_list|(
+literal|6
+argument_list|,
+name|scale_
 argument_list|)
 expr_stmt|;
 block|}
@@ -57769,6 +58023,32 @@ operator|~
 literal|0x00000008
 operator|)
 expr_stmt|;
+name|precision_
+operator|=
+literal|0
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000010
+operator|)
+expr_stmt|;
+name|scale_
+operator|=
+literal|0
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000020
+operator|)
+expr_stmt|;
 return|return
 name|this
 return|;
@@ -58134,6 +58414,54 @@ name|maximumLength_
 operator|=
 name|maximumLength_
 expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000010
+operator|)
+operator|==
+literal|0x00000010
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000004
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|precision_
+operator|=
+name|precision_
+expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000008
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|scale_
+operator|=
+name|scale_
+expr_stmt|;
 name|result
 operator|.
 name|bitField0_
@@ -58414,6 +58742,40 @@ argument_list|(
 name|other
 operator|.
 name|getMaximumLength
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
+name|hasPrecision
+argument_list|()
+condition|)
+block|{
+name|setPrecision
+argument_list|(
+name|other
+operator|.
+name|getPrecision
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
+name|hasScale
+argument_list|()
+condition|)
+block|{
+name|setScale
+argument_list|(
+name|other
+operator|.
+name|getScale
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -59467,6 +59829,172 @@ literal|0x00000008
 operator|)
 expr_stmt|;
 name|maximumLength_
+operator|=
+literal|0
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|// optional uint32 precision = 5;
+specifier|private
+name|int
+name|precision_
+decl_stmt|;
+comment|/**        *<code>optional uint32 precision = 5;</code>        */
+specifier|public
+name|boolean
+name|hasPrecision
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000010
+operator|)
+operator|==
+literal|0x00000010
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional uint32 precision = 5;</code>        */
+specifier|public
+name|int
+name|getPrecision
+parameter_list|()
+block|{
+return|return
+name|precision_
+return|;
+block|}
+comment|/**        *<code>optional uint32 precision = 5;</code>        */
+specifier|public
+name|Builder
+name|setPrecision
+parameter_list|(
+name|int
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000010
+expr_stmt|;
+name|precision_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional uint32 precision = 5;</code>        */
+specifier|public
+name|Builder
+name|clearPrecision
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000010
+operator|)
+expr_stmt|;
+name|precision_
+operator|=
+literal|0
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|// optional uint32 scale = 6;
+specifier|private
+name|int
+name|scale_
+decl_stmt|;
+comment|/**        *<code>optional uint32 scale = 6;</code>        */
+specifier|public
+name|boolean
+name|hasScale
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional uint32 scale = 6;</code>        */
+specifier|public
+name|int
+name|getScale
+parameter_list|()
+block|{
+return|return
+name|scale_
+return|;
+block|}
+comment|/**        *<code>optional uint32 scale = 6;</code>        */
+specifier|public
+name|Builder
+name|setScale
+parameter_list|(
+name|int
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000020
+expr_stmt|;
+name|scale_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional uint32 scale = 6;</code>        */
+specifier|public
+name|Builder
+name|clearScale
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000020
+operator|)
+expr_stmt|;
+name|scale_
 operator|=
 literal|0
 expr_stmt|;
@@ -83081,61 +83609,63 @@ literal|"e.ql.io.orc.Stream\022A\n\007columns\030\002 \003(\01320.or"
 operator|+
 literal|"g.apache.hadoop.hive.ql.io.orc.ColumnEnc"
 operator|+
-literal|"oding\"\314\002\n\004Type\0229\n\004kind\030\001 \002(\0162+.org.apach"
+literal|"oding\"\356\002\n\004Type\0229\n\004kind\030\001 \002(\0162+.org.apach"
 operator|+
 literal|"e.hadoop.hive.ql.io.orc.Type.Kind\022\024\n\010sub"
 operator|+
 literal|"types\030\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\t\022\025\n\rm"
 operator|+
-literal|"aximumLength\030\004 \001(\r\"\307\001\n\004Kind\022\013\n\007BOOLEAN\020\000"
+literal|"aximumLength\030\004 \001(\r\022\021\n\tprecision\030\005 \001(\r\022\r\n"
 operator|+
-literal|"\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002\022\007\n\003INT\020\003\022\010\n\004LONG\020\004"
+literal|"\005scale\030\006 \001(\r\"\307\001\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BY"
 operator|+
-literal|"\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE\020\006\022\n\n\006STRING\020\007\022\n\n\006B"
+literal|"TE\020\001\022\t\n\005SHORT\020\002\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FL"
 block|,
-literal|"INARY\020\010\022\r\n\tTIMESTAMP\020\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020"
+literal|"OAT\020\005\022\n\n\006DOUBLE\020\006\022\n\n\006STRING\020\007\022\n\n\006BINARY\020"
 operator|+
-literal|"\013\022\n\n\006STRUCT\020\014\022\t\n\005UNION\020\r\022\013\n\007DECIMAL\020\016\022\010\n"
+literal|"\010\022\r\n\tTIMESTAMP\020\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006S"
 operator|+
-literal|"\004DATE\020\017\022\013\n\007VARCHAR\020\020\"x\n\021StripeInformatio"
+literal|"TRUCT\020\014\022\t\n\005UNION\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DATE\020"
 operator|+
-literal|"n\022\016\n\006offset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022"
+literal|"\017\022\013\n\007VARCHAR\020\020\"x\n\021StripeInformation\022\016\n\006o"
 operator|+
-literal|"\n\ndataLength\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004"
+literal|"ffset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022\n\ndata"
 operator|+
-literal|"\022\024\n\014numberOfRows\030\005 \001(\004\"/\n\020UserMetadataIt"
+literal|"Length\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004\022\024\n\014nu"
 operator|+
-literal|"em\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\014\"\356\002\n\006Foot"
+literal|"mberOfRows\030\005 \001(\004\"/\n\020UserMetadataItem\022\014\n\004"
 operator|+
-literal|"er\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rcontentLengt"
+literal|"name\030\001 \002(\t\022\r\n\005value\030\002 \002(\014\"\356\002\n\006Footer\022\024\n\014"
 operator|+
-literal|"h\030\002 \001(\004\022D\n\007stripes\030\003 \003(\01323.org.apache.ha"
+literal|"headerLength\030\001 \001(\004\022\025\n\rcontentLength\030\002 \001("
 operator|+
-literal|"doop.hive.ql.io.orc.StripeInformation\0225\n"
+literal|"\004\022D\n\007stripes\030\003 \003(\01323.org.apache.hadoop.h"
 block|,
-literal|"\005types\030\004 \003(\0132&.org.apache.hadoop.hive.ql"
+literal|"ive.ql.io.orc.StripeInformation\0225\n\005types"
 operator|+
-literal|".io.orc.Type\022D\n\010metadata\030\005 \003(\01322.org.apa"
+literal|"\030\004 \003(\0132&.org.apache.hadoop.hive.ql.io.or"
 operator|+
-literal|"che.hadoop.hive.ql.io.orc.UserMetadataIt"
+literal|"c.Type\022D\n\010metadata\030\005 \003(\01322.org.apache.ha"
 operator|+
-literal|"em\022\024\n\014numberOfRows\030\006 \001(\004\022F\n\nstatistics\030\007"
+literal|"doop.hive.ql.io.orc.UserMetadataItem\022\024\n\014"
 operator|+
-literal|" \003(\01322.org.apache.hadoop.hive.ql.io.orc."
+literal|"numberOfRows\030\006 \001(\004\022F\n\nstatistics\030\007 \003(\01322"
 operator|+
-literal|"ColumnStatistics\022\026\n\016rowIndexStride\030\010 \001(\r"
+literal|".org.apache.hadoop.hive.ql.io.orc.Column"
 operator|+
-literal|"\"\255\001\n\nPostScript\022\024\n\014footerLength\030\001 \001(\004\022F\n"
+literal|"Statistics\022\026\n\016rowIndexStride\030\010 \001(\r\"\255\001\n\nP"
 operator|+
-literal|"\013compression\030\002 \001(\01621.org.apache.hadoop.h"
+literal|"ostScript\022\024\n\014footerLength\030\001 \001(\004\022F\n\013compr"
 operator|+
-literal|"ive.ql.io.orc.CompressionKind\022\034\n\024compres"
+literal|"ession\030\002 \001(\01621.org.apache.hadoop.hive.ql"
 operator|+
-literal|"sionBlockSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001"
+literal|".io.orc.CompressionKind\022\034\n\024compressionBl"
 block|,
-literal|"\022\016\n\005magic\030\300> \001(\t*:\n\017CompressionKind\022\010\n\004N"
+literal|"ockSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\016\n\005ma"
 operator|+
-literal|"ONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
+literal|"gic\030\300> \001(\t*:\n\017CompressionKind\022\010\n\004NONE\020\000\022"
+operator|+
+literal|"\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
 block|}
 decl_stmt|;
 name|com
@@ -83796,6 +84326,10 @@ block|,
 literal|"FieldNames"
 block|,
 literal|"MaximumLength"
+block|,
+literal|"Precision"
+block|,
+literal|"Scale"
 block|, }
 argument_list|)
 expr_stmt|;
