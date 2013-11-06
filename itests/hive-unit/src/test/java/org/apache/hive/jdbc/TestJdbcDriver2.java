@@ -2127,9 +2127,6 @@ decl_stmt|;
 comment|// verify syntax error
 try|try
 block|{
-name|ResultSet
-name|res
-init|=
 name|stmt
 operator|.
 name|executeQuery
@@ -2138,7 +2135,12 @@ literal|"select from "
 operator|+
 name|dataTypeTableName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"SQLException is expected"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -2160,16 +2162,18 @@ block|}
 comment|// verify table not fuond error
 try|try
 block|{
-name|ResultSet
-name|res
-init|=
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
 literal|"select * from nonTable"
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"SQLException is expected"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -2191,9 +2195,6 @@ block|}
 comment|// verify invalid column error
 try|try
 block|{
-name|ResultSet
-name|res
-init|=
 name|stmt
 operator|.
 name|executeQuery
@@ -2202,7 +2203,12 @@ literal|"select zzzz from "
 operator|+
 name|dataTypeTableName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"SQLException is expected"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -9386,9 +9392,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|Integer
-operator|.
-name|MAX_VALUE
+literal|18
 argument_list|,
 name|meta
 operator|.
@@ -9400,9 +9404,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|Integer
-operator|.
-name|MAX_VALUE
+literal|16
 argument_list|,
 name|meta
 operator|.
@@ -9414,9 +9416,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|Integer
-operator|.
-name|MAX_VALUE
+literal|7
 argument_list|,
 name|meta
 operator|.
@@ -9862,13 +9862,10 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-name|HiveDriver
-name|driver
-init|=
 operator|new
 name|HiveDriver
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 for|for
 control|(
 name|String

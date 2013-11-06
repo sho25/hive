@@ -809,12 +809,7 @@ name|tStrValue
 operator|.
 name|setValue
 argument_list|(
-operator|(
-operator|(
-name|HiveDecimal
-operator|)
 name|value
-operator|)
 operator|.
 name|toString
 argument_list|()

@@ -930,6 +930,15 @@ operator|.
 name|HIVE_CLI_SERVICE_PROTOCOL_V3
 argument_list|)
 expr_stmt|;
+name|supportedProtocols
+operator|.
+name|add
+argument_list|(
+name|TProtocolVersion
+operator|.
+name|HIVE_CLI_SERVICE_PROTOCOL_V4
+argument_list|)
+expr_stmt|;
 comment|// open client session
 name|openSession
 argument_list|()
