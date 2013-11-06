@@ -2481,6 +2481,18 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+comment|// Define the default ORC stripe size
+name|HIVE_ORC_DEFAULT_STRIPE_SIZE
+argument_list|(
+literal|"hive.exec.orc.default.stripe.size"
+argument_list|,
+literal|256L
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|)
+block|,
 name|HIVE_ORC_DICTIONARY_KEY_SIZE_THRESHOLD
 argument_list|(
 literal|"hive.exec.orc.dictionary.key.size.threshold"
