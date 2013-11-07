@@ -239,6 +239,24 @@ name|Progress
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|dag
+operator|.
+name|api
+operator|.
+name|client
+operator|.
+name|StatusGetOpts
+import|;
+end_import
+
 begin_comment
 comment|/**  * TezJobMonitor keeps track of a tez job while it's being executed. It will  * print status to the console and retrieve final status of the job after  * completion.  */
 end_comment
@@ -396,6 +414,19 @@ name|lastReport
 init|=
 literal|null
 decl_stmt|;
+name|Set
+argument_list|<
+name|StatusGetOpts
+argument_list|>
+name|opts
+init|=
+operator|new
+name|HashSet
+argument_list|<
+name|StatusGetOpts
+argument_list|>
+argument_list|()
+decl_stmt|;
 name|console
 operator|.
 name|printInfo
@@ -437,7 +468,9 @@ operator|=
 name|dagClient
 operator|.
 name|getDAGStatus
-argument_list|()
+argument_list|(
+name|opts
+argument_list|)
 expr_stmt|;
 name|Map
 argument_list|<
