@@ -2486,6 +2486,17 @@ argument_list|()
 return|;
 block|}
 specifier|public
+specifier|static
+name|void
+name|resetDefaultDBFlag
+parameter_list|()
+block|{
+name|createDefaultDB
+operator|=
+literal|false
+expr_stmt|;
+block|}
+specifier|public
 name|HMSHandler
 parameter_list|(
 name|String
