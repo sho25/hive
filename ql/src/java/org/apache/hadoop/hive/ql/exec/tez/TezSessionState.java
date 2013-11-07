@@ -579,7 +579,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"tez.session.id"
+literal|"mapreduce.tez.session.tokill-application-id"
 argument_list|,
 name|session
 operator|.
