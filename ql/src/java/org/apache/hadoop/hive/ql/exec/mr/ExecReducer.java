@@ -1886,6 +1886,11 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+name|Utilities
+operator|.
+name|clearWorkMap
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 block|}
