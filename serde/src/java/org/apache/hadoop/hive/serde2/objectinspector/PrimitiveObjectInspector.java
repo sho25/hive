@@ -82,6 +82,8 @@ name|DECIMAL
 block|,
 name|VARCHAR
 block|,
+name|CHAR
+block|,
 name|UNKNOWN
 block|}
 empty_stmt|;

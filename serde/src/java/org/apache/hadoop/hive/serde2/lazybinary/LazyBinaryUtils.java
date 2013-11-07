@@ -851,6 +851,9 @@ name|value
 expr_stmt|;
 break|break;
 case|case
+name|CHAR
+case|:
+case|case
 name|VARCHAR
 case|:
 name|LazyBinaryUtils

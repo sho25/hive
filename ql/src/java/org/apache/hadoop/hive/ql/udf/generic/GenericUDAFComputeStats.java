@@ -664,6 +664,9 @@ case|case
 name|STRING
 case|:
 case|case
+name|CHAR
+case|:
+case|case
 name|VARCHAR
 case|:
 return|return

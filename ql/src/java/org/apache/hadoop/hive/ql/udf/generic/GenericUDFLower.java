@@ -287,7 +287,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|TypeInfoFactory
+name|BaseCharTypeInfo
 import|;
 end_import
 
@@ -305,7 +305,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|VarcharTypeInfo
+name|TypeInfoFactory
 import|;
 end_import
 
@@ -469,11 +469,48 @@ name|outputOI
 init|=
 literal|null
 decl_stmt|;
+name|BaseCharTypeInfo
+name|typeInfo
+decl_stmt|;
 switch|switch
 condition|(
 name|inputType
 condition|)
 block|{
+case|case
+name|CHAR
+case|:
+comment|// return type should have same length as the input.
+name|returnType
+operator|=
+name|inputType
+expr_stmt|;
+name|typeInfo
+operator|=
+name|TypeInfoFactory
+operator|.
+name|getCharTypeInfo
+argument_list|(
+name|GenericUDFUtils
+operator|.
+name|StringHelper
+operator|.
+name|getFixedStringSizeForType
+argument_list|(
+name|argumentOI
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|outputOI
+operator|=
+name|PrimitiveObjectInspectorFactory
+operator|.
+name|getPrimitiveWritableObjectInspector
+argument_list|(
+name|typeInfo
+argument_list|)
+expr_stmt|;
+break|break;
 case|case
 name|VARCHAR
 case|:
@@ -482,9 +519,8 @@ name|returnType
 operator|=
 name|inputType
 expr_stmt|;
-name|VarcharTypeInfo
 name|typeInfo
-init|=
+operator|=
 name|TypeInfoFactory
 operator|.
 name|getVarcharTypeInfo
@@ -498,7 +534,7 @@ argument_list|(
 name|argumentOI
 argument_list|)
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|outputOI
 operator|=
 name|PrimitiveObjectInspectorFactory
