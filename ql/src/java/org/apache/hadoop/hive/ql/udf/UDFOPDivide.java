@@ -528,17 +528,20 @@ comment|// LOG.info("Get input " + a.getClass() + ":" + a + " " + b.getClass() +
 comment|// + b);
 if|if
 condition|(
-operator|(
 name|a
 operator|==
 literal|null
-operator|)
 operator|||
-operator|(
 name|b
 operator|==
 literal|null
-operator|)
+operator|||
+name|b
+operator|.
+name|get
+argument_list|()
+operator|==
+literal|0.0
 condition|)
 block|{
 return|return
