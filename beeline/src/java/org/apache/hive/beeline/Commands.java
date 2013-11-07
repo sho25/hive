@@ -3408,8 +3408,16 @@ comment|// bug 879518.
 comment|// use multiple lines for statements not terminated by ";"
 try|try
 block|{
+comment|//When using -e, console reader is not initialized and command is a single line
 while|while
 condition|(
+name|beeLine
+operator|.
+name|getConsoleReader
+argument_list|()
+operator|!=
+literal|null
+operator|&&
 operator|!
 operator|(
 name|line
