@@ -3129,10 +3129,13 @@ name|fileKey
 operator|=
 name|onefile
 expr_stmt|;
-break|break;
-block|}
-block|}
-block|}
+if|if
+condition|(
+name|vContext
+operator|==
+literal|null
+condition|)
+block|{
 name|vContext
 operator|=
 name|getVectorizationContext
@@ -3142,6 +3145,7 @@ argument_list|,
 name|physicalContext
 argument_list|)
 expr_stmt|;
+block|}
 name|vContext
 operator|.
 name|setFileKey
@@ -3158,6 +3162,10 @@ argument_list|,
 name|vContext
 argument_list|)
 expr_stmt|;
+break|break;
+block|}
+block|}
+block|}
 name|vContextsByTSOp
 operator|.
 name|put
