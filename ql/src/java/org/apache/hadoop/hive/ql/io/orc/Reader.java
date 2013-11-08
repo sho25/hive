@@ -23,6 +23,36 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|nio
+operator|.
+name|ByteBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -56,36 +86,6 @@ operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|nio
-operator|.
-name|ByteBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
 import|;
 end_import
 
@@ -174,6 +174,13 @@ index|[]
 name|getStatistics
 parameter_list|()
 function_decl|;
+comment|/**    * Get the metadata information like stripe level column statistics etc.    * @return the information about the column    * @throws IOException    */
+name|Metadata
+name|getMetadata
+parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Get the list of types contained in the file. The root type is the first    * type in the list.    * @return the list of flattened types    */
 name|List
 argument_list|<
@@ -196,6 +203,8 @@ throws|throws
 name|IOException
 function_decl|;
 comment|/**    * Create a RecordReader that will start reading at the first stripe after    * offset up to the stripe that starts at offset + length. This is intended    * to work with MapReduce's FileInputFormat where divisions are picked    * blindly, but they must cover all of the rows.    * @param offset a byte offset in the file    * @param length a number of bytes in the file    * @param include true for each column that should be included    * @return a new RecordReader that will read the specified rows.    * @throws IOException    * @deprecated    */
+annotation|@
+name|Deprecated
 name|RecordReader
 name|rows
 parameter_list|(
