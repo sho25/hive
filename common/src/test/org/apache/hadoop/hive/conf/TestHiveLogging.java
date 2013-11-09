@@ -339,6 +339,17 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|line
+operator|=
+name|line
+operator|.
+name|replace
+argument_list|(
+literal|"//"
+argument_list|,
+literal|"/"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|line
