@@ -6615,6 +6615,7 @@ argument_list|(
 name|tab_name
 argument_list|)
 expr_stmt|;
+comment|// TODO: is this supposed to fall thru?
 case|case
 name|HiveParser
 operator|.
@@ -7637,6 +7638,11 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+name|skipRecursion
+operator|=
+literal|false
+expr_stmt|;
+break|break;
 case|case
 name|HiveParser
 operator|.
