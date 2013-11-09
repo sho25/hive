@@ -3605,7 +3605,7 @@ name|HIVE_SERVER2_ASYNC_EXEC_THREADS
 argument_list|(
 literal|"hive.server2.async.exec.threads"
 argument_list|,
-literal|50
+literal|100
 argument_list|)
 block|,
 comment|// Number of seconds HiveServer2 shutdown will wait for async threads to terminate
@@ -3614,6 +3614,24 @@ argument_list|(
 literal|"hive.server2.async.exec.shutdown.timeout"
 argument_list|,
 literal|10L
+argument_list|)
+block|,
+comment|// Size of the wait queue for async thread pool in HiveServer2.
+comment|// After hitting this limit, the async thread pool will reject new requests.
+name|HIVE_SERVER2_ASYNC_EXEC_WAIT_QUEUE_SIZE
+argument_list|(
+literal|"hive.server2.async.exec.wait.queue.size"
+argument_list|,
+literal|100
+argument_list|)
+block|,
+comment|// Number of seconds that an idle HiveServer2 async thread (from the thread pool)
+comment|// will wait for a new task to arrive before terminating
+name|HIVE_SERVER2_ASYNC_EXEC_KEEPALIVE_TIME
+argument_list|(
+literal|"hive.server2.async.exec.keepalive.time"
+argument_list|,
+literal|10
 argument_list|)
 block|,
 comment|// HiveServer2 auth configuration
