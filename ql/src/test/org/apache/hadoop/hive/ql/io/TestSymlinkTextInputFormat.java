@@ -1065,13 +1065,6 @@ argument_list|,
 name|newJob
 argument_list|)
 decl_stmt|;
-name|combineInputFormat
-operator|.
-name|validateInput
-argument_list|(
-name|newJob
-argument_list|)
-expr_stmt|;
 name|InputSplit
 index|[]
 name|retSplits

@@ -2961,15 +2961,10 @@ block|{
 comment|// in recent hadoop versions, use deleteOnExit to clean tmp files.
 name|autoDelete
 operator|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|fileSystemDeleteOnExit
-argument_list|(
 name|fs
-argument_list|,
+operator|.
+name|deleteOnExit
+argument_list|(
 name|fsp
 operator|.
 name|outPaths
@@ -3092,15 +3087,10 @@ condition|)
 block|{
 name|autoDelete
 operator|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|fileSystemDeleteOnExit
-argument_list|(
 name|fs
-argument_list|,
+operator|.
+name|deleteOnExit
+argument_list|(
 name|fsp
 operator|.
 name|outPaths

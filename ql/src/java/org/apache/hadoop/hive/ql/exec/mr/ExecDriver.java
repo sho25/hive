@@ -1213,18 +1213,6 @@ argument_list|,
 name|files
 argument_list|)
 expr_stmt|;
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|setTmpFiles
-argument_list|(
-name|prop
-argument_list|,
-name|files
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 comment|/**    * Initialization when invoked from QL.    */

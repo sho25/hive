@@ -770,30 +770,6 @@ name|numSplits
 argument_list|)
 return|;
 block|}
-comment|// Cannot put @Override here because hadoop 0.18+ removed this method.
-specifier|public
-name|void
-name|validateInput
-parameter_list|(
-name|JobConf
-name|job
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|inputFormatValidateInput
-argument_list|(
-name|format
-argument_list|,
-name|job
-argument_list|)
-expr_stmt|;
-block|}
 comment|/**    * Workaround an incompatible change from commons-codec 1.3 to 1.4.    * Since Hadoop has this jar on its classpath, we have no way of knowing    * which version we are running against.    */
 specifier|static
 name|Base64
