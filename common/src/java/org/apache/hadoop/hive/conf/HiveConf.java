@@ -3233,6 +3233,14 @@ literal|"more"
 argument_list|)
 argument_list|)
 block|,
+name|HIVEFETCHTASKCONVERSIONTHRESHOLD
+argument_list|(
+literal|"hive.fetch.task.conversion.threshold"
+argument_list|,
+operator|-
+literal|1l
+argument_list|)
+block|,
 name|HIVEFETCHTASKAGGR
 argument_list|(
 literal|"hive.fetch.task.aggr"
