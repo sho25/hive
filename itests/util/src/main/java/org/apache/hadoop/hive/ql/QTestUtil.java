@@ -8616,9 +8616,9 @@ name|err
 operator|.
 name|println
 argument_list|(
-literal|"See build/ql/tmp/hive.log, "
+literal|"See ./ql/target/tmp/log/hive.log or ./itests/qtest/target/tmp/log/hive.log, "
 operator|+
-literal|"or try \"ant test ... -Dtest.silent=false\" to get more logs."
+literal|"or check ./ql/target/surefire-reports or ./itests/qtest/target/surefire-reports/ for specific test cases logs."
 argument_list|)
 expr_stmt|;
 name|System
