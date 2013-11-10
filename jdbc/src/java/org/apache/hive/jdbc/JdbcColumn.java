@@ -219,6 +219,11 @@ return|;
 case|case
 name|Types
 operator|.
+name|CHAR
+case|:
+case|case
+name|Types
+operator|.
 name|VARCHAR
 case|:
 return|return
@@ -359,6 +364,11 @@ return|;
 case|case
 name|Types
 operator|.
+name|CHAR
+case|:
+case|case
+name|Types
+operator|.
 name|VARCHAR
 case|:
 if|if
@@ -489,6 +499,11 @@ case|case
 name|Types
 operator|.
 name|BOOLEAN
+case|:
+case|case
+name|Types
+operator|.
+name|CHAR
 case|:
 case|case
 name|Types

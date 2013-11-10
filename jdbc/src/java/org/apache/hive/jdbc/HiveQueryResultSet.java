@@ -1065,6 +1065,9 @@ argument_list|()
 condition|)
 block|{
 case|case
+name|CHAR_TYPE
+case|:
+case|case
 name|VARCHAR_TYPE
 case|:
 name|TTypeQualifierValue
