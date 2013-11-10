@@ -3866,6 +3866,21 @@ literal|"hive.typecheck.on.insert"
 argument_list|,
 literal|true
 argument_list|)
+block|,
+comment|// none, idonly, traverse, execution
+name|HIVESTAGEIDREARRANGE
+argument_list|(
+literal|"hive.stageid.rearrange"
+argument_list|,
+literal|"none"
+argument_list|)
+block|,
+name|HIVEEXPLAINDEPENDENCYAPPENDTASKTYPES
+argument_list|(
+literal|"hive.explain.dependency.append.tasktype"
+argument_list|,
+literal|false
+argument_list|)
 block|,     ;
 specifier|public
 specifier|final

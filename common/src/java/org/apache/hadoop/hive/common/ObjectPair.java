@@ -249,6 +249,19 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|first
+operator|+
+literal|":"
+operator|+
+name|second
+return|;
+block|}
 block|}
 end_class
 
