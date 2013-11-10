@@ -453,9 +453,19 @@ name|Text
 import|;
 end_import
 
-begin_comment
-comment|// import org.apache.hadoop.util.StringUtils;
-end_comment
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|OutputCollector
+import|;
+end_import
 
 begin_comment
 comment|/**  * Reduce Sink Operator sends output to the reduce stage.  **/
@@ -484,6 +494,11 @@ name|long
 name|serialVersionUID
 init|=
 literal|1L
+decl_stmt|;
+specifier|protected
+specifier|transient
+name|OutputCollector
+name|out
 decl_stmt|;
 comment|/**    * The evaluators for the key columns. Key columns decide the sort order on    * the reducer side. Key columns are passed to the reducer in the "key".    */
 specifier|protected
@@ -577,6 +592,21 @@ block|{
 return|return
 name|inputAlias
 return|;
+block|}
+specifier|public
+name|void
+name|setOutputCollector
+parameter_list|(
+name|OutputCollector
+name|_out
+parameter_list|)
+block|{
+name|this
+operator|.
+name|out
+operator|=
+name|_out
+expr_stmt|;
 block|}
 comment|// picks topN K:V pairs from input.
 specifier|protected
@@ -2273,6 +2303,10 @@ name|closeOp
 argument_list|(
 name|abort
 argument_list|)
+expr_stmt|;
+name|out
+operator|=
+literal|null
 expr_stmt|;
 block|}
 comment|/**    * @return the name of the operator    */

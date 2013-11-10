@@ -1147,13 +1147,6 @@ name|reporter
 expr_stmt|;
 name|reducer
 operator|.
-name|setOutputCollector
-argument_list|(
-name|oc
-argument_list|)
-expr_stmt|;
-name|reducer
-operator|.
 name|setReporter
 argument_list|(
 name|rp
