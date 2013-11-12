@@ -1103,6 +1103,10 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
+literal|"All the asynchronous threads are currently busy, "
+operator|+
+literal|"please retry the operation"
+argument_list|,
 name|rejected
 argument_list|)
 throw|;

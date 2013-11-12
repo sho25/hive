@@ -1742,6 +1742,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|METASTORE_TRY_DIRECT_SQL_DDL
+argument_list|(
+literal|"hive.metastore.try.direct.sql.ddl"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 argument_list|(
 literal|"hive.metastore.disallow.incompatible.col.type.changes"
@@ -2479,6 +2486,18 @@ argument_list|(
 literal|"hive.exec.orc.write.format"
 argument_list|,
 literal|null
+argument_list|)
+block|,
+comment|// Define the default ORC stripe size
+name|HIVE_ORC_DEFAULT_STRIPE_SIZE
+argument_list|(
+literal|"hive.exec.orc.default.stripe.size"
+argument_list|,
+literal|256L
+operator|*
+literal|1024
+operator|*
+literal|1024
 argument_list|)
 block|,
 name|HIVE_ORC_DICTIONARY_KEY_SIZE_THRESHOLD
@@ -3242,6 +3261,14 @@ literal|"more"
 argument_list|)
 argument_list|)
 block|,
+name|HIVEFETCHTASKCONVERSIONTHRESHOLD
+argument_list|(
+literal|"hive.fetch.task.conversion.threshold"
+argument_list|,
+operator|-
+literal|1l
+argument_list|)
+block|,
 name|HIVEFETCHTASKAGGR
 argument_list|(
 literal|"hive.fetch.task.aggr"
@@ -3614,7 +3641,7 @@ name|HIVE_SERVER2_ASYNC_EXEC_THREADS
 argument_list|(
 literal|"hive.server2.async.exec.threads"
 argument_list|,
-literal|50
+literal|100
 argument_list|)
 block|,
 comment|// Number of seconds HiveServer2 shutdown will wait for async threads to terminate
@@ -3623,6 +3650,24 @@ argument_list|(
 literal|"hive.server2.async.exec.shutdown.timeout"
 argument_list|,
 literal|10L
+argument_list|)
+block|,
+comment|// Size of the wait queue for async thread pool in HiveServer2.
+comment|// After hitting this limit, the async thread pool will reject new requests.
+name|HIVE_SERVER2_ASYNC_EXEC_WAIT_QUEUE_SIZE
+argument_list|(
+literal|"hive.server2.async.exec.wait.queue.size"
+argument_list|,
+literal|100
+argument_list|)
+block|,
+comment|// Number of seconds that an idle HiveServer2 async thread (from the thread pool)
+comment|// will wait for a new task to arrive before terminating
+name|HIVE_SERVER2_ASYNC_EXEC_KEEPALIVE_TIME
+argument_list|(
+literal|"hive.server2.async.exec.keepalive.time"
+argument_list|,
+literal|10
 argument_list|)
 block|,
 comment|// HiveServer2 auth configuration
@@ -3714,6 +3759,27 @@ block|,
 name|HIVE_SERVER2_SESSION_HOOK
 argument_list|(
 literal|"hive.server2.session.hook"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+name|HIVE_SERVER2_USE_SSL
+argument_list|(
+literal|"hive.server2.use.SSL"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVE_SERVER2_SSL_KEYSTORE_PATH
+argument_list|(
+literal|"hive.server2.keystore.path"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+name|HIVE_SERVER2_SSL_KEYSTORE_PASSWORD
+argument_list|(
+literal|"hive.server2.keystore.password"
 argument_list|,
 literal|""
 argument_list|)
@@ -3865,7 +3931,22 @@ literal|"hive.compute.splits.in.am"
 argument_list|,
 literal|true
 argument_list|)
-block|;     ;
+block|,
+comment|// none, idonly, traverse, execution
+name|HIVESTAGEIDREARRANGE
+argument_list|(
+literal|"hive.stageid.rearrange"
+argument_list|,
+literal|"none"
+argument_list|)
+block|,
+name|HIVEEXPLAINDEPENDENCYAPPENDTASKTYPES
+argument_list|(
+literal|"hive.explain.dependency.append.tasktype"
+argument_list|,
+literal|false
+argument_list|)
+block|,     ;
 specifier|public
 specifier|final
 name|String
@@ -5173,15 +5254,10 @@ name|var
 operator|.
 name|varname
 assert|;
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|setFloatConf
-argument_list|(
 name|conf
-argument_list|,
+operator|.
+name|setFloat
+argument_list|(
 name|var
 operator|.
 name|varname

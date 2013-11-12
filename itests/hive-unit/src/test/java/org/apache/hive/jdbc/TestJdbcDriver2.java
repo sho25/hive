@@ -1073,7 +1073,9 @@ literal|" c19 binary, "
 operator|+
 literal|" c20 date,"
 operator|+
-literal|" c21 varchar(20)"
+literal|" c21 varchar(20),"
+operator|+
+literal|" c22 char(15)"
 operator|+
 literal|") comment'"
 operator|+
@@ -2127,9 +2129,6 @@ decl_stmt|;
 comment|// verify syntax error
 try|try
 block|{
-name|ResultSet
-name|res
-init|=
 name|stmt
 operator|.
 name|executeQuery
@@ -2138,7 +2137,12 @@ literal|"select from "
 operator|+
 name|dataTypeTableName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"SQLException is expected"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -2160,16 +2164,18 @@ block|}
 comment|// verify table not fuond error
 try|try
 block|{
-name|ResultSet
-name|res
-init|=
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
 literal|"select * from nonTable"
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"SQLException is expected"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -2191,9 +2197,6 @@ block|}
 comment|// verify invalid column error
 try|try
 block|{
-name|ResultSet
-name|res
-init|=
 name|stmt
 operator|.
 name|executeQuery
@@ -2202,7 +2205,12 @@ literal|"select zzzz from "
 operator|+
 name|dataTypeTableName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"SQLException is expected"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -4059,6 +4067,18 @@ literal|21
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|22
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// row 2
 name|assertTrue
 argument_list|(
@@ -4351,6 +4371,18 @@ operator|.
 name|getString
 argument_list|(
 literal|21
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|22
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -4649,6 +4681,18 @@ operator|.
 name|getString
 argument_list|(
 literal|21
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"abc123         "
+argument_list|,
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|22
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7322,7 +7366,7 @@ name|executeQuery
 argument_list|(
 literal|"select c1, c2, c3, c4, c5 as a, c6, c7, c8, c9, c10, c11, c12, "
 operator|+
-literal|"c1*2, sentences(null, null, null) as b, c17, c18, c20, c21 from "
+literal|"c1*2, sentences(null, null, null) as b, c17, c18, c20, c21, c22 from "
 operator|+
 name|dataTypeTableName
 operator|+
@@ -7361,7 +7405,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|18
+literal|19
 argument_list|,
 name|meta
 operator|.
@@ -9386,9 +9430,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|Integer
-operator|.
-name|MAX_VALUE
+literal|18
 argument_list|,
 name|meta
 operator|.
@@ -9400,9 +9442,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|Integer
-operator|.
-name|MAX_VALUE
+literal|16
 argument_list|,
 name|meta
 operator|.
@@ -9414,9 +9454,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|Integer
-operator|.
-name|MAX_VALUE
+literal|7
 argument_list|,
 name|meta
 operator|.
@@ -9572,6 +9610,81 @@ operator|.
 name|getScale
 argument_list|(
 literal|18
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"c22"
+argument_list|,
+name|meta
+operator|.
+name|getColumnName
+argument_list|(
+literal|19
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|Types
+operator|.
+name|CHAR
+argument_list|,
+name|meta
+operator|.
+name|getColumnType
+argument_list|(
+literal|19
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"char"
+argument_list|,
+name|meta
+operator|.
+name|getColumnTypeName
+argument_list|(
+literal|19
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// char columns should have correct display size/precision
+name|assertEquals
+argument_list|(
+literal|15
+argument_list|,
+name|meta
+operator|.
+name|getColumnDisplaySize
+argument_list|(
+literal|19
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|15
+argument_list|,
+name|meta
+operator|.
+name|getPrecision
+argument_list|(
+literal|19
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|0
+argument_list|,
+name|meta
+operator|.
+name|getScale
+argument_list|(
+literal|19
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9862,13 +9975,10 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-name|HiveDriver
-name|driver
-init|=
 operator|new
 name|HiveDriver
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 for|for
 control|(
 name|String

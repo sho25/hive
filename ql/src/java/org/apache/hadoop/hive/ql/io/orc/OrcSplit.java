@@ -281,6 +281,17 @@ operator|.
 name|bufferSize
 argument_list|)
 expr_stmt|;
+name|WritableUtils
+operator|.
+name|writeVInt
+argument_list|(
+name|out
+argument_list|,
+name|fileMetaInfo
+operator|.
+name|metadataSize
+argument_list|)
+expr_stmt|;
 comment|// serialize FileMetaInfo field footer
 name|ByteBuffer
 name|footerBuff
@@ -392,6 +403,16 @@ argument_list|(
 name|in
 argument_list|)
 decl_stmt|;
+name|int
+name|metadataSize
+init|=
+name|WritableUtils
+operator|.
+name|readVInt
+argument_list|(
+name|in
+argument_list|)
+decl_stmt|;
 comment|// deserialize FileMetaInfo field footer
 name|int
 name|footerBuffSize
@@ -435,6 +456,8 @@ argument_list|(
 name|compressionType
 argument_list|,
 name|bufferSize
+argument_list|,
+name|metadataSize
 argument_list|,
 name|footerBuff
 argument_list|)

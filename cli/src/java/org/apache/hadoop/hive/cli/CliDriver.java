@@ -4113,15 +4113,6 @@ name|ss
 operator|.
 name|isRemoteMode
 argument_list|()
-operator|&&
-operator|!
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|usesJobShell
-argument_list|()
 condition|)
 block|{
 comment|// hadoop-20 and above - we need to augment classpath using hiveconf

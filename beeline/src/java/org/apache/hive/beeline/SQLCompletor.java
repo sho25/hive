@@ -166,7 +166,7 @@ name|class
 operator|.
 name|getResourceAsStream
 argument_list|(
-literal|"sql-keywords.properties"
+literal|"/sql-keywords.properties"
 argument_list|)
 argument_list|)
 argument_list|)

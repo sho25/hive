@@ -546,11 +546,6 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * Return true if the current version of Hadoop uses the JobShell for    * command line interpretation.    */
-name|boolean
-name|usesJobShell
-parameter_list|()
-function_decl|;
 comment|/**    * Constructs and Returns TaskAttempt Log Url    * or null if the TaskLogServlet is not available    *    *  @return TaskAttempt Log Url    */
 name|String
 name|getTaskAttemptLogUrl
@@ -566,61 +561,6 @@ name|taskAttemptId
 parameter_list|)
 throws|throws
 name|MalformedURLException
-function_decl|;
-comment|/**    * Return true if the job has not switched to RUNNING state yet    * and is still in PREP state    */
-name|boolean
-name|isJobPreparing
-parameter_list|(
-name|RunningJob
-name|job
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Calls fs.deleteOnExit(path) if such a function exists.    *    * @return true if the call was successful    */
-name|boolean
-name|fileSystemDeleteOnExit
-parameter_list|(
-name|FileSystem
-name|fs
-parameter_list|,
-name|Path
-name|path
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Calls fmt.validateInput(conf) if such a function exists.    */
-name|void
-name|inputFormatValidateInput
-parameter_list|(
-name|InputFormat
-name|fmt
-parameter_list|,
-name|JobConf
-name|conf
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * If JobClient.getCommandLineConfig exists, sets the given    * property/value pair in that Configuration object.    *    * This applies for Hadoop 0.17 through 0.19    */
-name|void
-name|setTmpFiles
-parameter_list|(
-name|String
-name|prop
-parameter_list|,
-name|String
-name|files
-parameter_list|)
-function_decl|;
-comment|/**    * return the last access time of the given file.    * @param file    * @return last access time. -1 if not supported.    */
-name|long
-name|getAccessTime
-parameter_list|(
-name|FileStatus
-name|file
-parameter_list|)
 function_decl|;
 comment|/**    * Returns a shim to wrap MiniMrCluster    */
 specifier|public
@@ -708,17 +648,6 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-comment|/**    * We define this function here to make the code compatible between    * hadoop 0.17 and hadoop 0.20.    *    * Hive binary that compiled Text.compareTo(Text) with hadoop 0.20 won't    * work with hadoop 0.17 because in hadoop 0.20, Text.compareTo(Text) is    * implemented in org.apache.hadoop.io.BinaryComparable, and Java compiler    * references that class, which is not available in hadoop 0.17.    */
-name|int
-name|compareText
-parameter_list|(
-name|Text
-name|a
-parameter_list|,
-name|Text
-name|b
-parameter_list|)
-function_decl|;
 name|CombineFileInputFormatShim
 name|getCombineFileInputFormat
 parameter_list|()
@@ -726,29 +655,6 @@ function_decl|;
 name|String
 name|getInputFormatClassName
 parameter_list|()
-function_decl|;
-comment|/**    * Wrapper for Configuration.setFloat, which was not introduced    * until 0.20.    */
-name|void
-name|setFloatConf
-parameter_list|(
-name|Configuration
-name|conf
-parameter_list|,
-name|String
-name|varName
-parameter_list|,
-name|float
-name|val
-parameter_list|)
-function_decl|;
-comment|/**    * getTaskJobIDs returns an array of String with two elements. The first    * element is a string representing the task id and the second is a string    * representing the job id. This is necessary as TaskID and TaskAttemptID    * are not supported in Haddop 0.17    */
-name|String
-index|[]
-name|getTaskJobIDs
-parameter_list|(
-name|TaskCompletionEvent
-name|t
-parameter_list|)
 function_decl|;
 name|int
 name|createHadoopArchive

@@ -117,7 +117,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|VarcharUtils
+name|BaseCharUtils
 import|;
 end_import
 
@@ -343,7 +343,7 @@ name|writable
 parameter_list|)
 block|{
 return|return
-name|VarcharUtils
+name|BaseCharUtils
 operator|.
 name|doesWritableMatchTypeParams
 argument_list|(

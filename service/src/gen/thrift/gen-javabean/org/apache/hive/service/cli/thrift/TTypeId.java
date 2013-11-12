@@ -158,6 +158,11 @@ name|VARCHAR_TYPE
 argument_list|(
 literal|18
 argument_list|)
+block|,
+name|CHAR_TYPE
+argument_list|(
+literal|19
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -316,6 +321,12 @@ literal|18
 case|:
 return|return
 name|VARCHAR_TYPE
+return|;
+case|case
+literal|19
+case|:
+return|return
+name|CHAR_TYPE
 return|;
 default|default:
 return|return

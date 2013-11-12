@@ -35,6 +35,24 @@ name|common
 operator|.
 name|type
 operator|.
+name|HiveChar
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
 name|HiveVarchar
 import|;
 end_import
@@ -331,7 +349,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|TypeInfoFactory
+name|BaseCharTypeInfo
 import|;
 end_import
 
@@ -349,7 +367,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|VarcharTypeInfo
+name|TypeInfoFactory
 import|;
 end_import
 
@@ -469,7 +487,9 @@ name|UDFArgumentException
 block|{
 comment|// Loop through all the inputs to determine the appropriate return type/length.
 comment|// Return type:
+comment|//  All CHAR inputs: return CHAR
 comment|//  All VARCHAR inputs: return VARCHAR
+comment|//  All CHAR/VARCHAR inputs: return VARCHAR
 comment|//  All BINARY inputs: return BINARY
 comment|//  Otherwise return STRING
 name|argumentOIs
@@ -591,6 +611,9 @@ expr_stmt|;
 block|}
 break|break;
 case|case
+name|CHAR
+case|:
+case|case
 name|VARCHAR
 case|:
 if|if
@@ -604,6 +627,24 @@ operator|=
 name|PrimitiveCategory
 operator|.
 name|STRING
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|fixedLengthReturnValue
+operator|&&
+name|currentCategory
+operator|==
+name|PrimitiveCategory
+operator|.
+name|VARCHAR
+condition|)
+block|{
+name|returnType
+operator|=
+name|PrimitiveCategory
+operator|.
+name|VARCHAR
 expr_stmt|;
 block|}
 break|break;
@@ -641,6 +682,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+operator|(
 name|returnType
 operator|==
 name|PrimitiveCategory
@@ -652,6 +694,21 @@ operator|>
 name|HiveVarchar
 operator|.
 name|MAX_VARCHAR_LENGTH
+operator|)
+operator|||
+operator|(
+name|returnType
+operator|==
+name|PrimitiveCategory
+operator|.
+name|CHAR
+operator|&&
+name|returnLength
+operator|>
+name|HiveChar
+operator|.
+name|MAX_CHAR_LENGTH
+operator|)
 condition|)
 block|{
 name|returnType
@@ -708,6 +765,9 @@ argument_list|(
 name|returnType
 argument_list|)
 expr_stmt|;
+name|BaseCharTypeInfo
+name|typeInfo
+decl_stmt|;
 switch|switch
 condition|(
 name|returnType
@@ -722,18 +782,37 @@ operator|.
 name|writableStringObjectInspector
 return|;
 case|case
+name|CHAR
+case|:
+name|typeInfo
+operator|=
+name|TypeInfoFactory
+operator|.
+name|getCharTypeInfo
+argument_list|(
+name|returnLength
+argument_list|)
+expr_stmt|;
+return|return
+name|PrimitiveObjectInspectorFactory
+operator|.
+name|getPrimitiveWritableObjectInspector
+argument_list|(
+name|typeInfo
+argument_list|)
+return|;
+case|case
 name|VARCHAR
 case|:
-name|VarcharTypeInfo
 name|typeInfo
-init|=
+operator|=
 name|TypeInfoFactory
 operator|.
 name|getVarcharTypeInfo
 argument_list|(
 name|returnLength
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.

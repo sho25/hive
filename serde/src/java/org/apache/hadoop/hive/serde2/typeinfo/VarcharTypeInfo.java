@@ -71,9 +71,9 @@ argument_list|,
 name|length
 argument_list|)
 expr_stmt|;
-name|VarcharUtils
+name|BaseCharUtils
 operator|.
-name|validateParameter
+name|validateVarcharParameter
 argument_list|(
 name|length
 argument_list|)

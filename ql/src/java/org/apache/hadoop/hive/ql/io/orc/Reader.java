@@ -174,6 +174,13 @@ index|[]
 name|getStatistics
 parameter_list|()
 function_decl|;
+comment|/**    * Get the metadata information like stripe level column statistics etc.    * @return the information about the column    * @throws IOException    */
+name|Metadata
+name|getMetadata
+parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Get the list of types contained in the file. The root type is the first    * type in the list.    * @return the list of flattened types    */
 name|List
 argument_list|<
@@ -197,6 +204,10 @@ name|int
 name|bufferSize
 decl_stmt|;
 specifier|final
+name|int
+name|metadataSize
+decl_stmt|;
+specifier|final
 name|ByteBuffer
 name|footerBuffer
 decl_stmt|;
@@ -207,6 +218,9 @@ name|compressionType
 parameter_list|,
 name|int
 name|bufferSize
+parameter_list|,
+name|int
+name|metadataSize
 parameter_list|,
 name|ByteBuffer
 name|footerBuffer
@@ -223,6 +237,12 @@ operator|.
 name|bufferSize
 operator|=
 name|bufferSize
+expr_stmt|;
+name|this
+operator|.
+name|metadataSize
+operator|=
+name|metadataSize
 expr_stmt|;
 name|this
 operator|.

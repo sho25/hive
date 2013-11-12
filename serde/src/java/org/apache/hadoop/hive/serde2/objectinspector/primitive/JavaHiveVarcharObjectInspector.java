@@ -89,7 +89,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|VarcharUtils
+name|BaseCharUtils
 import|;
 end_import
 
@@ -151,7 +151,7 @@ name|o
 decl_stmt|;
 if|if
 condition|(
-name|VarcharUtils
+name|BaseCharUtils
 operator|.
 name|doesPrimitiveMatchTypeParams
 argument_list|(
@@ -283,7 +283,7 @@ name|o
 decl_stmt|;
 if|if
 condition|(
-name|VarcharUtils
+name|BaseCharUtils
 operator|.
 name|doesPrimitiveMatchTypeParams
 argument_list|(

@@ -57,31 +57,31 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|ExecutorService
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|Executors
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
 name|Future
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|LinkedBlockingQueue
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|ThreadPoolExecutor
 import|;
 end_import
 
@@ -151,11 +151,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|conf
 operator|.
-name|hooks
+name|HiveConf
 operator|.
-name|HookUtils
+name|ConfVars
 import|;
 end_import
 
@@ -169,11 +169,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|ql
 operator|.
-name|HiveConf
+name|hooks
 operator|.
-name|ConfVars
+name|HookUtils
 import|;
 end_import
 
@@ -309,7 +309,7 @@ name|Object
 argument_list|()
 decl_stmt|;
 specifier|private
-name|ExecutorService
+name|ThreadPoolExecutor
 name|backgroundOperationPool
 decl_stmt|;
 specifier|public
@@ -361,18 +361,86 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"HiveServer2: Async execution pool size"
+literal|"HiveServer2: Async execution thread pool size: "
 operator|+
 name|backgroundPoolSize
 argument_list|)
 expr_stmt|;
+name|int
+name|backgroundPoolQueueSize
+init|=
+name|hiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_ASYNC_EXEC_WAIT_QUEUE_SIZE
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"HiveServer2: Async execution wait queue size: "
+operator|+
+name|backgroundPoolQueueSize
+argument_list|)
+expr_stmt|;
+name|int
+name|keepAliveTime
+init|=
+name|hiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_ASYNC_EXEC_KEEPALIVE_TIME
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"HiveServer2: Async execution thread keepalive time: "
+operator|+
+name|keepAliveTime
+argument_list|)
+expr_stmt|;
+comment|// Create a thread pool with #backgroundPoolSize threads
+comment|// Threads terminate when they are idle for more than the keepAliveTime
+comment|// An bounded blocking queue is used to queue incoming operations, if #operations> backgroundPoolSize
 name|backgroundOperationPool
 operator|=
-name|Executors
-operator|.
-name|newFixedThreadPool
+operator|new
+name|ThreadPoolExecutor
 argument_list|(
 name|backgroundPoolSize
+argument_list|,
+name|backgroundPoolSize
+argument_list|,
+name|keepAliveTime
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+operator|new
+name|LinkedBlockingQueue
+argument_list|<
+name|Runnable
+argument_list|>
+argument_list|(
+name|backgroundPoolQueueSize
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|backgroundOperationPool
+operator|.
+name|allowCoreThreadTimeOut
+argument_list|(
+literal|true
 argument_list|)
 expr_stmt|;
 name|addService
@@ -401,7 +469,6 @@ operator|.
 name|start
 argument_list|()
 expr_stmt|;
-comment|// TODO
 block|}
 annotation|@
 name|Override
@@ -411,7 +478,6 @@ name|void
 name|stop
 parameter_list|()
 block|{
-comment|// TODO
 name|super
 operator|.
 name|stop
@@ -429,12 +495,12 @@ operator|.
 name|shutdown
 argument_list|()
 expr_stmt|;
-name|long
+name|int
 name|timeout
 init|=
 name|hiveConf
 operator|.
-name|getLongVar
+name|getIntVar
 argument_list|(
 name|ConfVars
 operator|.
@@ -458,7 +524,7 @@ block|}
 catch|catch
 parameter_list|(
 name|InterruptedException
-name|exc
+name|e
 parameter_list|)
 block|{
 name|LOG
@@ -471,7 +537,7 @@ name|timeout
 operator|+
 literal|" seconds has been exceeded. RUNNING background operations will be shut down"
 argument_list|,
-name|exc
+name|e
 argument_list|)
 expr_stmt|;
 block|}
