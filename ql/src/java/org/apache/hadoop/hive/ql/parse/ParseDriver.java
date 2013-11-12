@@ -772,7 +772,9 @@ name|errors
 argument_list|)
 throw|;
 block|}
-return|return
+name|ASTNode
+name|tree
+init|=
 operator|(
 name|ASTNode
 operator|)
@@ -780,6 +782,14 @@ name|r
 operator|.
 name|getTree
 argument_list|()
+decl_stmt|;
+name|tree
+operator|.
+name|setUnknownTokenBoundaries
+argument_list|()
+expr_stmt|;
+return|return
+name|tree
 return|;
 block|}
 comment|/*    * parse a String as a Select List. This allows table functions to be passed expression Strings    * that are translated in    * the context they define at invocation time. Currently used by NPath to allow users to specify    * what output they want.    * NPath allows expressions n 'tpath' a column that represents the matched set of rows. This    * column doesn't exist in    * the input schema and hence the Result Expression cannot be analyzed by the regular Hive    * translation process.    */
