@@ -1581,6 +1581,11 @@ name|index
 operator|++
 expr_stmt|;
 block|}
+name|table
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 name|assertEquals
 argument_list|(
 name|data
@@ -2813,6 +2818,11 @@ name|count
 operator|++
 expr_stmt|;
 block|}
+name|table
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 name|assertEquals
 argument_list|(
 name|data

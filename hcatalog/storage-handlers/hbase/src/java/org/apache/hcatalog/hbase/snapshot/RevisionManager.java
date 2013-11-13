@@ -168,7 +168,7 @@ name|String
 argument_list|>
 name|families
 parameter_list|,
-name|long
+name|Long
 name|keepAlive
 parameter_list|)
 throws|throws
@@ -242,7 +242,7 @@ parameter_list|(
 name|String
 name|tableName
 parameter_list|,
-name|long
+name|Long
 name|revision
 parameter_list|)
 throws|throws

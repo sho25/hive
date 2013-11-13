@@ -571,7 +571,7 @@ name|String
 argument_list|>
 name|families
 parameter_list|,
-name|long
+name|Long
 name|keepAlive
 parameter_list|)
 throws|throws
@@ -861,7 +861,7 @@ argument_list|,
 name|families
 argument_list|,
 operator|-
-literal|1
+literal|1L
 argument_list|)
 return|;
 block|}
@@ -1717,7 +1717,7 @@ parameter_list|(
 name|String
 name|tableName
 parameter_list|,
-name|long
+name|Long
 name|revision
 parameter_list|)
 throws|throws

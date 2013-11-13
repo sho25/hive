@@ -166,6 +166,15 @@ return|return
 name|columnFamilies
 return|;
 block|}
+comment|/**    * For wire serialization only    */
+name|long
+name|getTimeStamp
+parameter_list|()
+block|{
+return|return
+name|timeStamp
+return|;
+block|}
 comment|/**    * @return The expire timestamp associated with a transaction.    */
 name|long
 name|getTransactionExpireTimeStamp
