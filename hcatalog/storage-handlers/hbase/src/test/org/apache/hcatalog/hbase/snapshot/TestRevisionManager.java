@@ -1463,7 +1463,7 @@ name|tableName
 argument_list|,
 name|columnFamilies
 argument_list|,
-literal|40
+literal|40L
 argument_list|)
 decl_stmt|;
 name|Thread

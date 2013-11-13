@@ -135,22 +135,6 @@ name|hadoop
 operator|.
 name|hbase
 operator|.
-name|client
-operator|.
-name|Result
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hbase
-operator|.
 name|util
 operator|.
 name|Bytes
@@ -2938,7 +2922,7 @@ operator|!
 operator|(
 name|result
 operator|instanceof
-name|Result
+name|ResultWritable
 operator|)
 condition|)
 block|{
@@ -2952,7 +2936,7 @@ operator|.
 name|getName
 argument_list|()
 operator|+
-literal|": expects Result!"
+literal|": expects ResultWritable!"
 argument_list|)
 throw|;
 block|}
@@ -2961,9 +2945,14 @@ operator|.
 name|init
 argument_list|(
 operator|(
-name|Result
+operator|(
+name|ResultWritable
 operator|)
 name|result
+operator|)
+operator|.
+name|getResult
+argument_list|()
 argument_list|,
 name|columnsMapping
 argument_list|)
@@ -2998,7 +2987,7 @@ name|getSerializedClass
 parameter_list|()
 block|{
 return|return
-name|Put
+name|PutWritable
 operator|.
 name|class
 return|;
@@ -3259,7 +3248,11 @@ argument_list|)
 throw|;
 block|}
 return|return
+operator|new
+name|PutWritable
+argument_list|(
 name|put
+argument_list|)
 return|;
 block|}
 specifier|private

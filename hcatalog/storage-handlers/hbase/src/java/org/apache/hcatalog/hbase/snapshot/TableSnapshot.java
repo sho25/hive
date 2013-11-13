@@ -172,6 +172,20 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|/**    * For wire serialization only    */
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|Long
+argument_list|>
+name|getColumnFamilyRevisionMap
+parameter_list|()
+block|{
+return|return
+name|cfRevisionMap
+return|;
+block|}
 comment|/**    * Gets the revision.    *    * @param familyName The name of the column family.    * @return the revision    */
 specifier|public
 name|long
