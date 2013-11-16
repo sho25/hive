@@ -2145,7 +2145,7 @@ name|internalForward
 argument_list|(
 name|forwardCache
 argument_list|,
-literal|null
+name|outputObjInspector
 argument_list|)
 expr_stmt|;
 name|countAfterReport
