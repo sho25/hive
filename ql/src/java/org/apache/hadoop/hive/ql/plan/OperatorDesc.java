@@ -45,6 +45,19 @@ parameter_list|()
 throws|throws
 name|CloneNotSupportedException
 function_decl|;
+specifier|public
+name|Statistics
+name|getStatistics
+parameter_list|()
+function_decl|;
+specifier|public
+name|void
+name|setStatistics
+parameter_list|(
+name|Statistics
+name|statistics
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

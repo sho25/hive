@@ -3113,6 +3113,38 @@ literal|""
 argument_list|)
 block|,
 comment|// internal usage only
+comment|// if length of variable length data type cannot be determined this length will be used.
+name|HIVE_STATS_MAX_VARIABLE_LENGTH
+argument_list|(
+literal|"hive.stats.max.variable.length"
+argument_list|,
+literal|100
+argument_list|)
+block|,
+comment|// if number of elements in list cannot be determined, this value will be used
+name|HIVE_STATS_LIST_NUM_ENTRIES
+argument_list|(
+literal|"hive.stats.list.num.entries"
+argument_list|,
+literal|10
+argument_list|)
+block|,
+comment|// if number of elements in map cannot be determined, this value will be used
+name|HIVE_STATS_MAP_NUM_ENTRIES
+argument_list|(
+literal|"hive.stats.map.num.entries"
+argument_list|,
+literal|10
+argument_list|)
+block|,
+comment|// to accurately compute statistics for GROUPBY map side parallelism needs to be known
+name|HIVE_STATS_MAP_SIDE_PARALLELISM
+argument_list|(
+literal|"hive.stats.map.parallelism"
+argument_list|,
+literal|1
+argument_list|)
+block|,
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
