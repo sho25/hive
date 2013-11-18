@@ -2185,6 +2185,14 @@ condition|(
 name|originalValue
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|originalValue
+operator|.
+name|equals
+argument_list|(
+literal|"-1"
+argument_list|)
 condition|)
 block|{
 name|longValue
