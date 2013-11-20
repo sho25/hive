@@ -458,22 +458,6 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// if there are no more rootOperators we're dealing with multiple
-comment|// file sinks off of the same table scan. Bail.
-if|if
-condition|(
-name|context
-operator|.
-name|rootOperators
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
 comment|// null means that we're starting with a new table scan
 comment|// the graph walker walks the rootOperators in the same
 comment|// order so we can just take the next
@@ -483,6 +467,37 @@ name|preceedingWork
 operator|=
 literal|null
 expr_stmt|;
+comment|// if there are branches remaining we can't pop the next
+comment|// root operator yet.
+if|if
+condition|(
+name|context
+operator|.
+name|currentBranchCount
+operator|.
+name|isEmpty
+argument_list|()
+operator|||
+operator|(
+operator|!
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|peek
+argument_list|()
+operator|==
+literal|null
+operator|)
+condition|)
+block|{
 name|root
 operator|=
 name|context
@@ -492,6 +507,7 @@ operator|.
 name|pop
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 name|LOG
 operator|.
@@ -526,6 +542,45 @@ name|preceedingWork
 operator|==
 literal|null
 condition|)
+block|{
+if|if
+condition|(
+name|root
+operator|==
+literal|null
+condition|)
+block|{
+comment|// this is the multi-insert case. we need to reuse the last
+comment|// table scan work.
+name|root
+operator|=
+name|context
+operator|.
+name|lastRootOfMultiChildOperator
+operator|.
+name|peek
+argument_list|()
+expr_stmt|;
+name|work
+operator|=
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|peek
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Visiting additional branch in: "
+operator|+
+name|root
+argument_list|)
+expr_stmt|;
+block|}
+else|else
 block|{
 assert|assert
 name|root
@@ -626,6 +681,128 @@ name|work
 operator|=
 name|mapWork
 expr_stmt|;
+comment|// remember this table scan and work item. this is needed for multiple
+comment|// insert statements where multiple operator pipelines hang of a single
+comment|// table scan
+if|if
+condition|(
+operator|!
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|peek
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Capturing current work for 'multiple branches' case"
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|pop
+argument_list|()
+expr_stmt|;
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|push
+argument_list|(
+name|work
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+if|if
+condition|(
+operator|!
+name|context
+operator|.
+name|currentBranchCount
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// we've handled one branch. Adjust the counts.
+name|int
+name|branches
+init|=
+name|context
+operator|.
+name|currentBranchCount
+operator|.
+name|pop
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|--
+name|branches
+operator|!=
+literal|0
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Remaining branches: "
+operator|+
+name|branches
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|currentBranchCount
+operator|.
+name|push
+argument_list|(
+name|branches
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"No more remaining branches."
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|lastRootOfMultiChildOperator
+operator|.
+name|pop
+argument_list|()
+expr_stmt|;
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|pop
+argument_list|()
+expr_stmt|;
+block|}
+block|}
 block|}
 else|else
 block|{
@@ -709,6 +886,15 @@ name|context
 operator|.
 name|parentOfRoot
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Setting up reduce sink: "
+operator|+
+name|reduceSink
+argument_list|)
+expr_stmt|;
 name|reduceWork
 operator|.
 name|setNumReduceTasks
@@ -756,6 +942,20 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// remember the output name of the reduce sink
+name|reduceSink
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setOutputName
+argument_list|(
+name|reduceWork
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|tezWork
 operator|.
 name|add
@@ -782,6 +982,53 @@ name|work
 operator|=
 name|reduceWork
 expr_stmt|;
+comment|// remember this work item. this is needed for multiple
+comment|// insert statements where multiple operator pipelines hang of a forward
+comment|// operator
+if|if
+condition|(
+operator|!
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|peek
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Capturing current work for 'multiple branches' case"
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|pop
+argument_list|()
+expr_stmt|;
+name|context
+operator|.
+name|lastWorkForMultiChildOperator
+operator|.
+name|push
+argument_list|(
+name|work
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// We're scanning the operator from table scan to final file sink.
 comment|// We're scanning a tree from roots to leaf (this is not technically
@@ -876,6 +1123,20 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// remember the output name of the reduce sink
+name|rs
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setOutputName
+argument_list|(
+name|rWork
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// add dependency between the two work items
 name|tezWork
 operator|.
@@ -883,14 +1144,7 @@ name|connect
 argument_list|(
 name|work
 argument_list|,
-name|context
-operator|.
-name|leafOperatorToFollowingWork
-operator|.
-name|get
-argument_list|(
-name|operator
-argument_list|)
+name|rWork
 argument_list|,
 name|EdgeType
 operator|.
@@ -1010,6 +1264,17 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Leaf operator - resetting context: "
+operator|+
+name|context
+operator|.
+name|currentRootOperator
+argument_list|)
+expr_stmt|;
 name|context
 operator|.
 name|parentOfRoot
@@ -1126,6 +1391,37 @@ operator|.
 name|BROADCAST_EDGE
 argument_list|)
 expr_stmt|;
+comment|// need to set up output name for reduce sink not that we know the name
+comment|// of the downstream work
+for|for
+control|(
+name|ReduceSinkOperator
+name|r
+range|:
+name|context
+operator|.
+name|linkWorkWithReduceSinkMap
+operator|.
+name|get
+argument_list|(
+name|parentWork
+argument_list|)
+control|)
+block|{
+name|r
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setOutputName
+argument_list|(
+name|work
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 return|return

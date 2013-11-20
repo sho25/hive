@@ -563,8 +563,13 @@ name|LogicalInput
 argument_list|>
 name|inputs
 parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
 name|OutputCollector
-name|out
+argument_list|>
+name|outMap
 parameter_list|)
 block|{
 name|perfLogger
@@ -588,7 +593,7 @@ name|mrReporter
 argument_list|,
 name|inputs
 argument_list|,
-name|out
+name|outMap
 argument_list|)
 expr_stmt|;
 comment|//Update JobConf using MRInput, info like filename comes via this
@@ -920,7 +925,7 @@ operator|.
 name|getChildOperators
 argument_list|()
 argument_list|,
-name|out
+name|outMap
 argument_list|)
 expr_stmt|;
 name|mapOp

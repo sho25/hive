@@ -215,8 +215,13 @@ argument_list|>
 name|inputs
 decl_stmt|;
 specifier|protected
+name|Map
+argument_list|<
+name|String
+argument_list|,
 name|OutputCollector
-name|out
+argument_list|>
+name|outMap
 decl_stmt|;
 specifier|public
 specifier|static
@@ -299,8 +304,13 @@ name|LogicalInput
 argument_list|>
 name|inputs
 parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
 name|OutputCollector
-name|out
+argument_list|>
+name|outMap
 parameter_list|)
 block|{
 name|this
@@ -323,9 +333,9 @@ name|inputs
 expr_stmt|;
 name|this
 operator|.
-name|out
+name|outMap
 operator|=
-name|out
+name|outMap
 expr_stmt|;
 comment|// Allocate the bean at the beginning -
 name|memoryMXBean
