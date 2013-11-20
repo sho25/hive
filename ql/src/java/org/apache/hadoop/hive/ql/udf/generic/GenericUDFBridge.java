@@ -791,11 +791,11 @@ name|result
 argument_list|,
 name|HiveDecimal
 operator|.
-name|MAX_PRECISION
+name|SYSTEM_DEFAULT_PRECISION
 argument_list|,
 name|HiveDecimal
 operator|.
-name|MAX_SCALE
+name|SYSTEM_DEFAULT_SCALE
 argument_list|)
 expr_stmt|;
 block|}

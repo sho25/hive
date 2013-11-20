@@ -1152,7 +1152,7 @@ literal|null
 condition|?
 name|HiveDecimal
 operator|.
-name|DEFAULT_PRECISION
+name|USER_DEFAULT_PRECISION
 else|:
 name|prec
 operator|.
@@ -1165,7 +1165,7 @@ literal|null
 condition|?
 name|HiveDecimal
 operator|.
-name|DEFAULT_SCALE
+name|USER_DEFAULT_SCALE
 else|:
 name|scale
 operator|.

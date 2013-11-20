@@ -2357,14 +2357,14 @@ name|precision
 init|=
 name|HiveDecimal
 operator|.
-name|DEFAULT_PRECISION
+name|USER_DEFAULT_PRECISION
 decl_stmt|;
 name|int
 name|scale
 init|=
 name|HiveDecimal
 operator|.
-name|DEFAULT_SCALE
+name|USER_DEFAULT_SCALE
 decl_stmt|;
 if|if
 condition|(

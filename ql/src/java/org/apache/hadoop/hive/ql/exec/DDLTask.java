@@ -17004,11 +17004,11 @@ name|getQualifiedName
 argument_list|(
 name|HiveDecimal
 operator|.
-name|DEFAULT_PRECISION
+name|USER_DEFAULT_PRECISION
 argument_list|,
 name|HiveDecimal
 operator|.
-name|DEFAULT_SCALE
+name|USER_DEFAULT_SCALE
 argument_list|)
 argument_list|)
 expr_stmt|;

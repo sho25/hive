@@ -10407,7 +10407,7 @@ argument_list|()
 else|:
 name|HiveDecimal
 operator|.
-name|MAX_PRECISION
+name|SYSTEM_DEFAULT_PRECISION
 decl_stmt|;
 name|int
 name|scale
@@ -10424,7 +10424,7 @@ argument_list|()
 else|:
 name|HiveDecimal
 operator|.
-name|MAX_SCALE
+name|SYSTEM_DEFAULT_SCALE
 decl_stmt|;
 return|return
 operator|new
