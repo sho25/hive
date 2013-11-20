@@ -2469,6 +2469,10 @@ argument_list|(
 name|abort
 argument_list|)
 expr_stmt|;
+name|reporter
+operator|=
+literal|null
+expr_stmt|;
 if|if
 condition|(
 name|counterNameToEnum
