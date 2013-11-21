@@ -713,7 +713,8 @@ operator|=
 operator|new
 name|VectorizedOrcSerde
 argument_list|(
-name|objInspector
+name|getObjectInspector
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -724,7 +725,8 @@ name|serialize
 argument_list|(
 name|vrg
 argument_list|,
-name|objInspector
+name|getObjectInspector
+argument_list|()
 argument_list|)
 return|;
 block|}
