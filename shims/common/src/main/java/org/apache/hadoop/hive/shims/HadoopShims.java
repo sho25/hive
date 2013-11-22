@@ -947,6 +947,14 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
+comment|/***    * Check if the current UGI is keytab based    * @return    * @throws IOException    */
+specifier|public
+name|boolean
+name|isLoginKeytabBased
+parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Move the directory/file to trash. In case of the symlinks or mount points, the file is    * moved to the trashbin in the actual volume of the path p being deleted    * @param fs    * @param path    * @param conf    * @return false if the item is already in the trash or trash is disabled    * @throws IOException    */
 specifier|public
 name|boolean
