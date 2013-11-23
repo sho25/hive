@@ -700,7 +700,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|.
-name|toString
+name|getSimpleName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -760,13 +760,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|sb
-operator|.
-name|append
-argument_list|(
-literal|"("
-argument_list|)
-expr_stmt|;
 name|sb
 operator|.
 name|append
