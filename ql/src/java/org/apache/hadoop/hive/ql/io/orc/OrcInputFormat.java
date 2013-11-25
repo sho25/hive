@@ -1384,7 +1384,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"No ORC pushdown predicate"
 argument_list|)
@@ -1457,15 +1457,24 @@ operator|.
 name|READ_COLUMN_NAMES_CONF_STR
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"included columns names = "
 operator|+
 name|columnNamesString
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|columnNamesString
@@ -2996,9 +3005,17 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Meta-Info for : "
 operator|+
@@ -3036,20 +3053,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 else|else
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Info not cached for path: "
-operator|+
-name|file
-operator|.
-name|getPath
-argument_list|()
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|LOG

@@ -370,9 +370,17 @@ expr_stmt|;
 comment|//log classpaths
 try|try
 block|{
+if|if
+condition|(
 name|l4j
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|l4j
+operator|.
+name|debug
 argument_list|(
 literal|"conf classpath = "
 operator|+
@@ -397,7 +405,7 @@ argument_list|)
 expr_stmt|;
 name|l4j
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"thread classpath = "
 operator|+
@@ -423,6 +431,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

@@ -2841,7 +2841,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Loading plan from: "
 operator|+
@@ -2879,9 +2879,9 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Could not find plan!"
+literal|"Could not find plan string in conf"
 argument_list|)
 expr_stmt|;
 return|return
@@ -3170,6 +3170,16 @@ argument_list|(
 name|path
 argument_list|,
 name|gWork
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Found plan in cache."
 argument_list|)
 expr_stmt|;
 block|}
