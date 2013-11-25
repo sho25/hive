@@ -175,7 +175,9 @@ literal|"Adding "
 operator|+
 name|key
 operator|+
-literal|" to cache"
+literal|" to cache with value "
+operator|+
+name|value
 argument_list|)
 expr_stmt|;
 name|registry
@@ -212,6 +214,13 @@ argument_list|(
 name|key
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|o
+operator|!=
+literal|null
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -225,6 +234,7 @@ operator|+
 name|o
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|o
 return|;
