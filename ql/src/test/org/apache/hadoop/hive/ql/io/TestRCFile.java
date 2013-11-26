@@ -1286,6 +1286,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// LazyString has no so-called NULL sequence. The value is empty string if not.
 name|patialS
 operator|.
 name|set
@@ -1295,7 +1296,7 @@ argument_list|,
 operator|new
 name|BytesRefWritable
 argument_list|(
-literal|"NULL"
+literal|""
 operator|.
 name|getBytes
 argument_list|(
@@ -1322,6 +1323,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// LazyString has no so-called NULL sequence. The value is empty string if not.
 name|patialS
 operator|.
 name|set
@@ -1331,7 +1333,7 @@ argument_list|,
 operator|new
 name|BytesRefWritable
 argument_list|(
-literal|"NULL"
+literal|""
 operator|.
 name|getBytes
 argument_list|(
