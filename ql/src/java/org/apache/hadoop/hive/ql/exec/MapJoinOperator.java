@@ -419,23 +419,6 @@ specifier|private
 name|HashTableLoader
 name|loader
 decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-specifier|transient
-name|String
-index|[]
-name|FATAL_ERR_MSG
-init|=
-block|{
-literal|null
-block|,
-comment|// counter value 0 means no error
-literal|"Mapside join exceeds available memory. "
-operator|+
-literal|"Please try removing the mapjoin hint."
-block|}
-decl_stmt|;
 specifier|protected
 specifier|transient
 name|MapJoinTableContainer
@@ -636,44 +619,6 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-block|}
-annotation|@
-name|Override
-specifier|protected
-name|void
-name|fatalErrorMessage
-parameter_list|(
-name|StringBuilder
-name|errMsg
-parameter_list|,
-name|long
-name|counterCode
-parameter_list|)
-block|{
-name|errMsg
-operator|.
-name|append
-argument_list|(
-literal|"Operator "
-operator|+
-name|getOperatorId
-argument_list|()
-operator|+
-literal|" (id="
-operator|+
-name|id
-operator|+
-literal|"): "
-operator|+
-name|FATAL_ERR_MSG
-index|[
-operator|(
-name|int
-operator|)
-name|counterCode
-index|]
-argument_list|)
-expr_stmt|;
 block|}
 specifier|public
 name|void

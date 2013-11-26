@@ -12315,7 +12315,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
 name|StringUtils
 operator|.
@@ -12364,7 +12364,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
 name|StringUtils
 operator|.
@@ -12423,7 +12423,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
 name|StringUtils
 operator|.
@@ -12487,7 +12487,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
 name|StringUtils
 operator|.
@@ -12546,7 +12546,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
 name|StringUtils
 operator|.
@@ -12610,7 +12610,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
 name|StringUtils
 operator|.

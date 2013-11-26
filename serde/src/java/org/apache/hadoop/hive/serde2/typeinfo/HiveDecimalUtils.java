@@ -374,7 +374,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Get the precision of double type can be tricky. While a double may have more digits than    * a HiveDecimal can hold, in reality those numbers are of no practical use. Thus, we assume    * that a double can have at most HiveDecimal.MAX_PRECISION, which is generous enough. This    * implies that casting a double to a decimal type is always valid.    *    */
+comment|/**    * Need to keep consistent with JdbcColumn.columnPrecision    *    */
 specifier|public
 specifier|static
 name|int
@@ -410,7 +410,13 @@ case|case
 name|FLOAT
 case|:
 return|return
-literal|23
+literal|7
+return|;
+case|case
+name|DOUBLE
+case|:
+return|return
+literal|15
 return|;
 case|case
 name|BYTE
@@ -436,6 +442,12 @@ case|:
 return|return
 literal|19
 return|;
+case|case
+name|VOID
+case|:
+return|return
+literal|1
+return|;
 default|default:
 return|return
 name|HiveDecimal
@@ -444,7 +456,7 @@ name|MAX_PRECISION
 return|;
 block|}
 block|}
-comment|/**    * Get the scale of double type can be tricky. While a double may have more decimal digits than    * HiveDecimal, in reality those numbers are of no practical use. Thus, we assume that a double    * can have at most HiveDecimal.MAX_SCALE, which is generous enough. This implies implies that    * casting a double to a decimal type is always valid.    *    */
+comment|/**    * Need to keep consistent with JdbcColumn.columnScale()    *    */
 specifier|public
 specifier|static
 name|int
@@ -483,25 +495,25 @@ return|return
 literal|7
 return|;
 case|case
-name|BYTE
+name|DOUBLE
 case|:
 return|return
-literal|0
+literal|15
 return|;
+case|case
+name|BYTE
+case|:
 case|case
 name|SHORT
 case|:
-return|return
-literal|0
-return|;
 case|case
 name|INT
 case|:
-return|return
-literal|0
-return|;
 case|case
 name|LONG
+case|:
+case|case
+name|VOID
 case|:
 return|return
 literal|0

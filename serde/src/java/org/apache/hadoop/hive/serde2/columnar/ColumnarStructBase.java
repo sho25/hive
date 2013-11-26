@@ -260,6 +260,10 @@ name|inited
 operator|=
 literal|false
 expr_stmt|;
+name|fieldSkipped
+operator|=
+literal|false
+expr_stmt|;
 block|}
 else|else
 block|{

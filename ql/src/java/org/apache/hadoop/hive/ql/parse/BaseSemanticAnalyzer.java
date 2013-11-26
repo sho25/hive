@@ -6430,8 +6430,8 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
-operator|<=
-literal|1
+operator|==
+literal|0
 operator|)
 condition|)
 block|{

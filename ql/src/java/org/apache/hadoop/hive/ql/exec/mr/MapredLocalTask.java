@@ -1686,18 +1686,13 @@ operator|.
 name|isSecurityEnabled
 argument_list|()
 operator|&&
-name|conf
+name|ShimLoader
 operator|.
-name|getBoolVar
-argument_list|(
-name|HiveConf
+name|getHadoopShims
+argument_list|()
 operator|.
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_ENABLE_DOAS
-argument_list|)
-operator|==
-literal|true
+name|isLoginKeytabBased
+argument_list|()
 condition|)
 block|{
 comment|//If kerberos security is enabled, and HS2 doAs is enabled,
@@ -2404,7 +2399,7 @@ break|break;
 block|}
 name|forwardOp
 operator|.
-name|process
+name|processOp
 argument_list|(
 name|row
 operator|.

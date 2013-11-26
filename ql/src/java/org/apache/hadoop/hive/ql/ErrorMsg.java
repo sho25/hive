@@ -1758,6 +1758,17 @@ operator|+
 literal|"running your custom script."
 argument_list|)
 block|,
+name|DYNAMIC_PARTITIONS_TOO_MANY_PER_NODE_ERROR
+argument_list|(
+literal|20004
+argument_list|,
+literal|"Fatal error occurred when node "
+operator|+
+literal|"tried to create too many dynamic partitions. The maximum number of dynamic partitions "
+operator|+
+literal|"is controlled by hive.exec.max.dynamic.partitions and hive.exec.max.dynamic.partitions.pernode. "
+argument_list|)
+block|,
 name|STATSPUBLISHER_NOT_OBTAINED
 argument_list|(
 literal|30000
@@ -1887,6 +1898,13 @@ argument_list|,
 literal|"Column statistics are not supported "
 operator|+
 literal|"for partition columns"
+argument_list|)
+block|,
+name|STATISTICS_CLONING_FAILED
+argument_list|(
+literal|30013
+argument_list|,
+literal|"Cloning of statistics failed"
 argument_list|)
 block|,     ;
 specifier|private

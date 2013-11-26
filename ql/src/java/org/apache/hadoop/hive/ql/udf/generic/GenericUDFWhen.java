@@ -112,7 +112,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDF Class for SQL construct "CASE a WHEN b THEN c [ELSE f] END".  *   * NOTES: 1. a and b should have the same TypeInfo, or an exception will be  * thrown. 2. c and f should have the same TypeInfo, or an exception will be  * thrown.  */
+comment|/**  * GenericUDF Class for SQL construct  * "CASE WHEN a THEN b WHEN c THEN d [ELSE f] END".  *   * NOTES: 1. a and c should be boolean, or an exception will be thrown. 2. b, d  * and f should be common types, or an exception will be thrown.  */
 end_comment
 
 begin_class
@@ -158,7 +158,9 @@ operator|new
 name|GenericUDFUtils
 operator|.
 name|ReturnObjectInspectorResolver
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 for|for
 control|(

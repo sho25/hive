@@ -33,6 +33,24 @@ name|Configuration
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Task
+import|;
+end_import
+
 begin_comment
 comment|/**  * An interface for any possible implementation for gathering statistics.  */
 end_comment
@@ -42,13 +60,19 @@ specifier|public
 interface|interface
 name|StatsAggregator
 block|{
-comment|/**    * This method connects to the temporary storage.    *    * @param hconf    *          HiveConf that contains the connection parameters.    * @return true if connection is successful, false otherwise.    */
+comment|/**    * This method connects to the temporary storage.    *    * @param hconf    *          HiveConf that contains the connection parameters.    * @param sourceTask    * @return true if connection is successful, false otherwise.    */
 specifier|public
 name|boolean
 name|connect
 parameter_list|(
 name|Configuration
 name|hconf
+parameter_list|,
+name|Task
+argument_list|<
+name|?
+argument_list|>
+name|sourceTask
 parameter_list|)
 function_decl|;
 comment|/**    * This method aggregates a given statistic from all tasks (partial stats).    * After aggregation, this method also automatically removes all records    * that have been aggregated.    *    * @param keyPrefix    *          a prefix of the keys used in StatsPublisher to publish stats.    *          Any rows that starts with the same prefix will be aggregated. For example, if    *          the StatsPublisher uses the following compound key to publish stats:    *    *          the output directory name (unique per FileSinkOperator) +    *          the partition specs (only for dynamic partitions) +    *          taskID (last component of task file)    *    *          The keyPrefix for aggregation could be first 2 components. This will aggregates stats    *          across all tasks for each partition.    *    * @param statType    *          a string noting the key to be published. Ex: "numRows".    * @return a string representation of a long value, null if there are any error/exception.    */

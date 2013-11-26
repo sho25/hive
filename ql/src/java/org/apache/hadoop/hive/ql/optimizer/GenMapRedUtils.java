@@ -7749,12 +7749,7 @@ block|{
 name|MoveWork
 name|mvWork
 init|=
-operator|(
-operator|(
-name|MoveTask
-operator|)
 name|mvTask
-operator|)
 operator|.
 name|getWork
 argument_list|()
@@ -7816,6 +7811,13 @@ literal|null
 operator|:
 literal|"Error when genereting StatsTask"
 assert|;
+name|statsWork
+operator|.
+name|setSourceTask
+argument_list|(
+name|currTask
+argument_list|)
+expr_stmt|;
 name|statsWork
 operator|.
 name|setStatsReliable
@@ -7922,12 +7924,7 @@ name|statsWork
 operator|.
 name|setAggKey
 argument_list|(
-operator|(
-operator|(
-name|FileSinkOperator
-operator|)
 name|nd
-operator|)
 operator|.
 name|getConf
 argument_list|()

@@ -142,6 +142,16 @@ name|boolean
 name|preferWritable
 parameter_list|()
 function_decl|;
+comment|/**    * The precision of the underlying data.    */
+name|int
+name|precision
+parameter_list|()
+function_decl|;
+comment|/**    * The scale of the underlying data.    */
+name|int
+name|scale
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

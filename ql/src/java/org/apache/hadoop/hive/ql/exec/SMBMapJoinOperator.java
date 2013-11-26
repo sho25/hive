@@ -3032,7 +3032,7 @@ return|return;
 block|}
 name|forwardOp
 operator|.
-name|process
+name|processOp
 argument_list|(
 name|row
 operator|.
@@ -4148,7 +4148,7 @@ comment|// Pass the row though the operator tree. It is guaranteed that not more
 comment|// be produced from a input row.
 name|forwardOp
 operator|.
-name|process
+name|processOp
 argument_list|(
 name|nextRow
 operator|.

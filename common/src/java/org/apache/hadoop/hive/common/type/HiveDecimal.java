@@ -69,7 +69,7 @@ specifier|final
 name|int
 name|MAX_PRECISION
 init|=
-literal|65
+literal|38
 decl_stmt|;
 specifier|public
 specifier|static
@@ -77,13 +77,14 @@ specifier|final
 name|int
 name|MAX_SCALE
 init|=
-literal|30
+literal|38
 decl_stmt|;
+comment|/**    * Default precision/scale when user doesn't specify in the column metadata, such as    * decimal and decimal(8).    */
 specifier|public
 specifier|static
 specifier|final
 name|int
-name|DEFAULT_PRECISION
+name|USER_DEFAULT_PRECISION
 init|=
 literal|10
 decl_stmt|;
@@ -91,9 +92,26 @@ specifier|public
 specifier|static
 specifier|final
 name|int
-name|DEFAULT_SCALE
+name|USER_DEFAULT_SCALE
 init|=
 literal|0
+decl_stmt|;
+comment|/**    *  Default precision/scale when system is not able to determine them, such as in case    *  of a non-generic udf.    */
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|SYSTEM_DEFAULT_PRECISION
+init|=
+literal|38
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|SYSTEM_DEFAULT_SCALE
+init|=
+literal|18
 decl_stmt|;
 specifier|public
 specifier|static

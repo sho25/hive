@@ -1200,7 +1200,7 @@ block|{
 comment|// No need to evaluate, just forward it.
 name|child
 operator|.
-name|process
+name|processOp
 argument_list|(
 name|row
 argument_list|,
@@ -1214,7 +1214,7 @@ comment|// Call the corresponding handler to evaluate this row and
 comment|// forward the result
 name|child
 operator|.
-name|process
+name|processOp
 argument_list|(
 name|handlers
 index|[

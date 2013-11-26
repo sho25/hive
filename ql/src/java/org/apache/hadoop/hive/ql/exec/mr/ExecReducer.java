@@ -1600,7 +1600,7 @@ try|try
 block|{
 name|reducer
 operator|.
-name|process
+name|processOp
 argument_list|(
 name|row
 argument_list|,

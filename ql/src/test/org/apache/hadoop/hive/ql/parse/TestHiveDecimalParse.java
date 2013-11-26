@@ -339,7 +339,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"Decimal precision out of allowed range [1,65]"
+literal|"Decimal precision out of allowed range [1,38]"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -405,7 +405,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"Decimal precision out of allowed range [1,65]"
+literal|"Decimal precision out of allowed range [1,38]"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -471,7 +471,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"Decimal scale out of allowed range [0,30]"
+literal|"Decimal scale must be less than or equal to precision"
 argument_list|)
 argument_list|)
 expr_stmt|;

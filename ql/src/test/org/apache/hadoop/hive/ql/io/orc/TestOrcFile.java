@@ -1980,7 +1980,7 @@ literal|"string1:string>>>,list:array<struct<int1:int,string1:string>>,"
 operator|+
 literal|"map:map<string,struct<int1:int,string1:string>>,ts:timestamp,"
 operator|+
-literal|"decimal1:decimal(65,30)>"
+literal|"decimal1:decimal(38,18)>"
 argument_list|,
 name|readerInspector
 operator|.
@@ -9578,7 +9578,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-literal|"100000000000000000000"
+literal|"10000000000000000000"
 argument_list|)
 decl_stmt|;
 name|Writer
@@ -9878,7 +9878,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-literal|"100000000000000000000"
+literal|"10000000000000000000"
 argument_list|)
 expr_stmt|;
 name|row
@@ -10006,7 +10006,7 @@ argument_list|(
 operator|new
 name|BigInteger
 argument_list|(
-literal|104
+literal|64
 argument_list|,
 name|rand
 argument_list|)
@@ -10015,7 +10015,7 @@ name|rand
 operator|.
 name|nextInt
 argument_list|(
-literal|28
+literal|18
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10453,7 +10453,7 @@ argument_list|()
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"struct<time:timestamp,union:uniontype<int,string>,decimal:decimal(65,30)>"
+literal|"struct<time:timestamp,union:uniontype<int,string>,decimal:decimal(38,18)>"
 argument_list|,
 name|inspector
 operator|.
@@ -10832,7 +10832,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-literal|"100000000000000000000"
+literal|"10000000000000000000"
 argument_list|)
 argument_list|,
 name|row
@@ -10982,7 +10982,7 @@ argument_list|(
 operator|new
 name|BigInteger
 argument_list|(
-literal|104
+literal|64
 argument_list|,
 name|rand
 argument_list|)
@@ -10991,7 +10991,7 @@ name|rand
 operator|.
 name|nextInt
 argument_list|(
-literal|28
+literal|18
 argument_list|)
 argument_list|)
 argument_list|,

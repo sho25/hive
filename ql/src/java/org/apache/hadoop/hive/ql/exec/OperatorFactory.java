@@ -1523,11 +1523,6 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
-name|op
-operator|.
-name|initializeCounters
-argument_list|()
-expr_stmt|;
 return|return
 name|op
 return|;
@@ -1624,11 +1619,6 @@ operator|.
 name|newInstance
 argument_list|()
 decl_stmt|;
-name|op
-operator|.
-name|initializeCounters
-argument_list|()
-expr_stmt|;
 return|return
 name|op
 return|;

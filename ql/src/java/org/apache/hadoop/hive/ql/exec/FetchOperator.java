@@ -3095,7 +3095,7 @@ control|)
 block|{
 name|operator
 operator|.
-name|process
+name|processOp
 argument_list|(
 name|row
 argument_list|,
@@ -3157,7 +3157,7 @@ name|HiveException
 block|{
 name|operator
 operator|.
-name|process
+name|processOp
 argument_list|(
 name|row
 operator|.

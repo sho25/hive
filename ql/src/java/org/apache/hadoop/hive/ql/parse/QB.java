@@ -283,6 +283,11 @@ specifier|private
 name|QBSubQuery
 name|subQueryPredicateDef
 decl_stmt|;
+comment|/* 	 * used to give a unique name to each SubQuery QB Currently there can be at 	 * most 2 SubQueries in a Query: 1 in the Where clause, and 1 in the Having 	 * clause. 	 */
+specifier|private
+name|int
+name|numSubQueryPredicates
+decl_stmt|;
 comment|// results
 specifier|public
 name|void
@@ -1340,6 +1345,25 @@ parameter_list|()
 block|{
 return|return
 name|subQueryPredicateDef
+return|;
+block|}
+specifier|protected
+name|int
+name|getNumSubQueryPredicates
+parameter_list|()
+block|{
+return|return
+name|numSubQueryPredicates
+return|;
+block|}
+specifier|protected
+name|int
+name|incrNumSubQueryPredicates
+parameter_list|()
+block|{
+return|return
+operator|++
+name|numSubQueryPredicates
 return|;
 block|}
 block|}

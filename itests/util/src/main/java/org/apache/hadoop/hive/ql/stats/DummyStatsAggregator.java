@@ -33,6 +33,24 @@ name|Configuration
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Task
+import|;
+end_import
+
 begin_comment
 comment|/**  * An test implementation for StatsAggregator.  * The method corresponding to the configuration parameter  * hive.test.dummystats.aggregator fail, whereas all  * other methods succeed.  */
 end_comment
@@ -57,6 +75,12 @@ name|connect
 parameter_list|(
 name|Configuration
 name|hconf
+parameter_list|,
+name|Task
+argument_list|<
+name|?
+argument_list|>
+name|sourceTask
 parameter_list|)
 block|{
 name|errorMethod

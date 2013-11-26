@@ -114,7 +114,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDF Class for SQL construct  * "CASE WHEN a THEN b WHEN c THEN d [ELSE f] END".  *   * NOTES: 1. a and c should be boolean, or an exception will be thrown. 2. b, d  * and f should have the same TypeInfo, or an exception will be thrown.  */
+comment|/**  * GenericUDF Class for SQL construct "CASE a WHEN b THEN c [ELSE f] END".  *   * NOTES: 1. a and b should be compatible, or an exception will be  * thrown. 2. c and f should be compatible types, or an exception will be  * thrown.  */
 end_comment
 
 begin_class
@@ -167,7 +167,9 @@ operator|new
 name|GenericUDFUtils
 operator|.
 name|ReturnObjectInspectorResolver
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 name|returnOIResolver
 operator|=
@@ -175,7 +177,9 @@ operator|new
 name|GenericUDFUtils
 operator|.
 name|ReturnObjectInspectorResolver
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 name|boolean
 name|r
@@ -443,31 +447,51 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
+comment|// May need to convert to common type to compare
+name|PrimitiveObjectInspector
+name|caseOI
+init|=
+operator|(
+name|PrimitiveObjectInspector
+operator|)
+name|caseOIResolver
+operator|.
+name|get
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|PrimitiveObjectInspectorUtils
 operator|.
 name|comparePrimitiveObjects
 argument_list|(
+name|caseOIResolver
+operator|.
+name|convertIfNecessary
+argument_list|(
 name|exprValue
 argument_list|,
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|argumentOIs
 index|[
 literal|0
 index|]
+argument_list|)
 argument_list|,
+name|caseOI
+argument_list|,
+name|caseOIResolver
+operator|.
+name|convertIfNecessary
+argument_list|(
 name|caseKey
 argument_list|,
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|argumentOIs
 index|[
 name|i
 index|]
+argument_list|)
+argument_list|,
+name|caseOI
 argument_list|)
 condition|)
 block|{
