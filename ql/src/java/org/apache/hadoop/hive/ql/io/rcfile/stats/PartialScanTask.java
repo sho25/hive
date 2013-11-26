@@ -2322,23 +2322,6 @@ name|IOException
 block|{
 comment|// no op
 block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|updateCounters
-parameter_list|(
-name|Counters
-name|ctrs
-parameter_list|,
-name|RunningJob
-name|rj
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-comment|// no op
-block|}
 block|}
 end_class
 

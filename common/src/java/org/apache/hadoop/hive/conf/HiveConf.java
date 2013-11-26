@@ -2654,13 +2654,6 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-name|HIVEJOBPROGRESS
-argument_list|(
-literal|"hive.task.progress"
-argument_list|,
-literal|false
-argument_list|)
-block|,
 name|HIVEINPUTFORMAT
 argument_list|(
 literal|"hive.input.format"
@@ -3956,7 +3949,14 @@ literal|"hive.explain.dependency.append.tasktype"
 argument_list|,
 literal|false
 argument_list|)
-block|,     ;
+block|,
+name|HIVECOUNTERGROUP
+argument_list|(
+literal|"hive.counters.group.name"
+argument_list|,
+literal|"HIVE"
+argument_list|)
+block|;
 specifier|public
 specifier|final
 name|String

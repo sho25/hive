@@ -825,14 +825,6 @@ name|NUMROWSESTIMATESIZE
 init|=
 literal|1000
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|counterNameHashOut
-init|=
-literal|"COUNT_HASH_OUT"
-decl_stmt|;
 specifier|protected
 specifier|transient
 name|ExprNodeEvaluator
@@ -2841,7 +2833,7 @@ name|javaSizeUnknownType
 init|=
 literal|256
 decl_stmt|;
-comment|/**    * The size of the element at position 'pos' is returned, if possible. If the    * datatype is of variable length, STRING, a list of such key positions is    * maintained, and the size for such positions is then actually calculated at    * runtime.    *    * @param pos    *          the position of the key    * @param c    *          the type of the key    * @return the size of this datatype    **/
+comment|/**    * The size of the element at position 'pos' is returned, if possible. If the    * datatype is of variable length, STRING, a list of such key positions is    * maintained, and the size for such positions is then actually calculated at    * runtime.    *    * @param pos    *          the position of the key    * @return the size of this datatype    **/
 specifier|private
 name|int
 name|getSize
@@ -3133,7 +3125,7 @@ return|return
 name|javaSizeUnknownType
 return|;
 block|}
-comment|/**    * @param pos    *          position of the key    * @param typeinfo    *          type of the input    * @return the size of this datatype    **/
+comment|/**    * @param pos    *          position of the key    * @param typeInfo    *          type of the input    * @return the size of this datatype    **/
 specifier|private
 name|int
 name|getSize
@@ -6065,25 +6057,6 @@ condition|)
 block|{
 try|try
 block|{
-comment|// put the hash related stats in statsMap if applicable, so that they
-comment|// are sent to jt as counters
-if|if
-condition|(
-name|hashAggr
-operator|&&
-name|counterNameToEnum
-operator|!=
-literal|null
-condition|)
-block|{
-name|incrCounter
-argument_list|(
-name|counterNameHashOut
-argument_list|,
-name|numRowsHashTbl
-argument_list|)
-expr_stmt|;
-block|}
 comment|// If there is no grouping key and no row came to this operator
 if|if
 condition|(
@@ -6240,43 +6213,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-block|}
-annotation|@
-name|Override
-specifier|protected
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|getAdditionalCounters
-parameter_list|()
-block|{
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|ctrList
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
-name|ctrList
-operator|.
-name|add
-argument_list|(
-name|getWrappedCounterName
-argument_list|(
-name|counterNameHashOut
-argument_list|)
-argument_list|)
-expr_stmt|;
-return|return
-name|ctrList
-return|;
 block|}
 comment|// Group by contains the columns needed - no need to aggregate from children
 specifier|public

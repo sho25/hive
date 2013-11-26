@@ -30991,6 +30991,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+operator|!
 name|HiveConf
 operator|.
 name|getBoolVar
@@ -31006,26 +31007,6 @@ argument_list|)
 condition|)
 block|{
 comment|// allow DP
-comment|// turn on hive.task.progress to update # of partitions created to the JT
-name|HiveConf
-operator|.
-name|setBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEJOBPROGRESS
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-comment|// QBMetaData.DEST_PARTITION capture the all-SP case
 throw|throw
 operator|new
 name|SemanticException

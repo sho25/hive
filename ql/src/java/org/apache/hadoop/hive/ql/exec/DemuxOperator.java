@@ -1452,7 +1452,7 @@ else|else
 block|{
 name|child
 operator|.
-name|process
+name|processOp
 argument_list|(
 name|row
 argument_list|,
@@ -1691,13 +1691,6 @@ condition|(
 name|childOperators
 operator|==
 literal|null
-condition|)
-block|{
-return|return;
-block|}
-if|if
-condition|(
-name|fatalError
 condition|)
 block|{
 return|return;
