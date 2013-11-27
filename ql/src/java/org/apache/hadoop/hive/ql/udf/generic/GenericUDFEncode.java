@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|udf
+operator|.
+name|generic
 package|;
 end_package
 
