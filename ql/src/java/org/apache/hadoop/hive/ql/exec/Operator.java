@@ -2345,9 +2345,6 @@ name|conf
 parameter_list|,
 name|boolean
 name|success
-parameter_list|,
-name|JobCloseFeedBack
-name|feedBack
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2362,9 +2359,6 @@ name|conf
 parameter_list|,
 name|boolean
 name|success
-parameter_list|,
-name|JobCloseFeedBack
-name|feedBack
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2382,8 +2376,6 @@ argument_list|(
 name|conf
 argument_list|,
 name|success
-argument_list|,
-name|feedBack
 argument_list|)
 expr_stmt|;
 name|jobCloseDone
@@ -2417,8 +2409,6 @@ argument_list|(
 name|conf
 argument_list|,
 name|success
-argument_list|,
-name|feedBack
 argument_list|)
 expr_stmt|;
 block|}
