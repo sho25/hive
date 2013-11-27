@@ -297,6 +297,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|ColumnProjectionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
@@ -588,6 +604,7 @@ operator|new
 name|JobConf
 argument_list|()
 expr_stmt|;
+comment|// all columns
 name|conf
 operator|.
 name|set
@@ -604,6 +621,18 @@ argument_list|(
 literal|"columns.types"
 argument_list|,
 literal|"bigint,string,double,decimal,timestamp"
+argument_list|)
+expr_stmt|;
+comment|// needed columns
+name|conf
+operator|.
+name|set
+argument_list|(
+name|ColumnProjectionUtils
+operator|.
+name|READ_COLUMN_NAMES_CONF_STR
+argument_list|,
+literal|"userid,subtype"
 argument_list|)
 expr_stmt|;
 name|fs

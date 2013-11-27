@@ -1668,6 +1668,25 @@ name|TableScanOperator
 operator|)
 name|op
 decl_stmt|;
+comment|// push down projections.
+name|ColumnProjectionUtils
+operator|.
+name|appendReadColumns
+argument_list|(
+name|newjob
+argument_list|,
+name|tableScan
+operator|.
+name|getNeededColumnIDs
+argument_list|()
+argument_list|,
+name|tableScan
+operator|.
+name|getNeededColumns
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// push down filters
 name|pushFilters
 argument_list|(
 name|newjob
