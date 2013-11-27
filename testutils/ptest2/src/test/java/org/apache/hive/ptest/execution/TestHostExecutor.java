@@ -1488,6 +1488,8 @@ name|Approvals
 operator|.
 name|verify
 argument_list|(
+literal|"EMPTY\n"
+operator|+
 name|getExecutedCommands
 argument_list|()
 argument_list|)

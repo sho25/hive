@@ -692,9 +692,6 @@ name|hconf
 parameter_list|,
 name|boolean
 name|success
-parameter_list|,
-name|JobCloseFeedBack
-name|feedBack
 parameter_list|)
 throws|throws
 name|HiveException
@@ -952,8 +949,6 @@ argument_list|(
 name|hconf
 argument_list|,
 name|success
-argument_list|,
-name|feedBack
 argument_list|)
 expr_stmt|;
 block|}

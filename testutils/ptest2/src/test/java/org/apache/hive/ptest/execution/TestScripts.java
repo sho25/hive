@@ -364,6 +364,15 @@ name|templateVariables
 operator|.
 name|put
 argument_list|(
+literal|"mavenArgs"
+argument_list|,
+literal|"-Dant=arg1"
+argument_list|)
+expr_stmt|;
+name|templateVariables
+operator|.
+name|put
+argument_list|(
 literal|"testClass"
 argument_list|,
 literal|"TestCliDriver"
