@@ -1110,6 +1110,22 @@ operator|.
 name|getTableName
 argument_list|()
 decl_stmt|;
+name|boolean
+name|fetchColStats
+init|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_FETCH_COLUMN_STATS
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -1207,6 +1223,18 @@ name|ColStatistics
 argument_list|>
 name|colStats
 init|=
+name|Lists
+operator|.
+name|newArrayList
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|fetchColStats
+condition|)
+block|{
+name|colStats
+operator|=
 name|getTableColumnStats
 argument_list|(
 name|table
@@ -1215,7 +1243,8 @@ name|schema
 argument_list|,
 name|neededColumns
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 comment|// if column stats available and if atleast one column doesn't have stats
 comment|// then mark it as partial
 if|if
@@ -1321,17 +1350,7 @@ name|COMPLETE
 argument_list|)
 expr_stmt|;
 block|}
-name|stats
-operator|.
-name|addToColumnStats
-argument_list|(
-literal|null
-argument_list|)
-expr_stmt|;
 block|}
-else|else
-block|{
-comment|// set col stats and mark it as table level col stats
 name|stats
 operator|.
 name|addToColumnStats
@@ -1339,7 +1358,6 @@ argument_list|(
 name|colStats
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 else|else
 block|{
@@ -1556,6 +1574,18 @@ name|ColStatistics
 argument_list|>
 name|colStats
 init|=
+name|Lists
+operator|.
+name|newArrayList
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|fetchColStats
+condition|)
+block|{
+name|colStats
+operator|=
 name|getPartitionColumnStats
 argument_list|(
 name|table
@@ -1566,7 +1596,8 @@ name|schema
 argument_list|,
 name|neededColumns
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|checkIfColStatsAvailable
