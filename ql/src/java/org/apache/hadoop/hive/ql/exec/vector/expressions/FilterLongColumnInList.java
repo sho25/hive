@@ -189,6 +189,8 @@ class|class
 name|FilterLongColumnInList
 extends|extends
 name|VectorExpression
+implements|implements
+name|ILongInExpr
 block|{
 specifier|private
 specifier|static
