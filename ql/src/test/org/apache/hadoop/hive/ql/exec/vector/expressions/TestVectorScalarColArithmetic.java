@@ -1223,6 +1223,13 @@ name|batch
 argument_list|)
 expr_stmt|;
 comment|// verify NULL output in entry 0 is correct
+name|assertFalse
+argument_list|(
+name|out
+operator|.
+name|noNulls
+argument_list|)
+expr_stmt|;
 name|assertTrue
 argument_list|(
 name|out
@@ -1288,13 +1295,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|assertFalse
-argument_list|(
-name|out
-operator|.
-name|noNulls
-argument_list|)
-expr_stmt|;
 name|assertFalse
 argument_list|(
 name|out
@@ -1392,9 +1392,19 @@ expr_stmt|;
 comment|// verify zero-divide result for position 0
 name|assertTrue
 argument_list|(
+name|out
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
 name|Double
 operator|.
-name|isInfinite
+name|isNaN
 argument_list|(
 name|out
 operator|.

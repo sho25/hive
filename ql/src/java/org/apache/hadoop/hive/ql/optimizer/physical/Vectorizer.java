@@ -5567,11 +5567,9 @@ name|ExprNodeDesc
 name|desc
 parameter_list|)
 block|{
-name|boolean
-name|ret
+name|String
+name|typeName
 init|=
-name|validateDataType
-argument_list|(
 name|desc
 operator|.
 name|getTypeInfo
@@ -5579,6 +5577,13 @@ argument_list|()
 operator|.
 name|getTypeName
 argument_list|()
+decl_stmt|;
+name|boolean
+name|ret
+init|=
+name|validateDataType
+argument_list|(
+name|typeName
 argument_list|)
 decl_stmt|;
 if|if
@@ -5587,6 +5592,31 @@ operator|!
 name|ret
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Cannot vectorize "
+operator|+
+name|desc
+operator|.
+name|getExprString
+argument_list|()
+operator|+
+literal|" of type "
+operator|+
+name|typeName
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
@@ -5739,6 +5769,7 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// TODO: this cannot happen - VectorizationContext throws in such cases.
 return|return
 literal|false
 return|;
