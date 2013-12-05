@@ -13435,7 +13435,7 @@ return|return
 name|ret
 return|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|String
 name|appendPathSeparator

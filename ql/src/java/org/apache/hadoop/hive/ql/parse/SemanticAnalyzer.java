@@ -51417,7 +51417,7 @@ block|}
 comment|// Theoretically the key prefix could be any unique string shared
 comment|// between TableScanOperator (when publishing) and StatsTask (when aggregating).
 comment|// Here we use
-comment|// table_name + partitionSec
+comment|// db_name.table_name + partitionSec
 comment|// as the prefix for easy of read during explain and debugging.
 comment|// Currently, partition spec can only be static partition.
 name|String
@@ -51433,6 +51433,13 @@ name|tsDesc
 operator|.
 name|setStatsAggPrefix
 argument_list|(
+name|tab
+operator|.
+name|getDbName
+argument_list|()
+operator|+
+literal|"."
+operator|+
 name|k
 argument_list|)
 expr_stmt|;
