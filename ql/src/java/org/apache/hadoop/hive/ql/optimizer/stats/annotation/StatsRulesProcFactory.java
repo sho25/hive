@@ -69,13 +69,25 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|hive
+name|logging
 operator|.
-name|conf
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
 operator|.
-name|HiveConf
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
 import|;
 end_import
 
@@ -92,8 +104,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-operator|.
-name|ConfVars
 import|;
 end_import
 
@@ -146,24 +156,6 @@ operator|.
 name|exec
 operator|.
 name|CommonJoinOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|DemuxOperator
 import|;
 end_import
 
@@ -611,26 +603,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
-operator|.
-name|Statistics
-operator|.
-name|State
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|stats
 operator|.
 name|StatsUtils
@@ -946,7 +918,25 @@ specifier|public
 class|class
 name|StatsRulesProcFactory
 block|{
-comment|/**    * Collect basic statistics like number of rows, data size and column level    * statistics from the table. Also sets the state of the available statistics.    * Basic and column statistics can have one of the following states    * COMPLETE, PARTIAL, NONE. In case of partitioned table, the basic and column    * stats are aggregated together to table level statistics.    *    */
+specifier|private
+specifier|static
+specifier|final
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|StatsRulesProcFactory
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+decl_stmt|;
+comment|/**    * Collect basic statistics like number of rows, data size and column level statistics from the    * table. Also sets the state of the available statistics. Basic and column statistics can have    * one of the following states COMPLETE, PARTIAL, NONE. In case of partitioned table, the basic    * and column stats are aggregated together to table level statistics. Column statistics will not    * be collected if hive.stats.fetch.column.stats is set to false. If basic statistics is not    * available then number of rows will be estimated from file size and average row size (computed    * from schema).    */
 specifier|public
 specifier|static
 class|class
@@ -1084,6 +1074,34 @@ name|clone
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[0] STATS-"
+operator|+
+name|tsop
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|stats
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1109,7 +1127,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * SELECT operator doesn't change the number of rows emitted from the parent    * operator. It changes the size of each tuple emitted. In a typical case,    * where only subset of columns are selected the average row size will    * reduce as some of the columns will be pruned. In order to accurately    * compute the average row size, column level statistics is required.    * Column level statistics stores average size of values in column which    * can be used to more reliably estimate the reduction in size of each    * tuple. In the absence of column level statistics, size of columns will be    * based on data type. For primitive data types size from    * {@link org.apache.hadoop.hive.ql.util.JavaDataModel} will be    * used and for variable length data types worst case will be assumed.    *    *<p>    *<i>For more information, refer 'Estimating The Cost Of Operations' chapter in    * "Database Systems: The Complete Book" by Garcia-Molina et. al.</i>    *</p>    *    */
+comment|/**    * SELECT operator doesn't change the number of rows emitted from the parent operator. It changes    * the size of each tuple emitted. In a typical case, where only subset of columns are selected    * the average row size will reduce as some of the columns will be pruned. In order to accurately    * compute the average row size, column level statistics is required. Column level statistics    * stores average size of values in column which can be used to more reliably estimate the    * reduction in size of each tuple. In the absence of column level statistics, size of columns    * will be based on data type. For primitive data types size from    * {@link org.apache.hadoop.hive.ql.util.JavaDataModel} will be used and for variable length data    * types worst case will be assumed.    *<p>    *<i>For more information, refer 'Estimating The Cost Of Operations' chapter in    * "Database Systems: The Complete Book" by Garcia-Molina et. al.</i>    *</p>    */
 specifier|public
 specifier|static
 class|class
@@ -1329,6 +1347,34 @@ argument_list|(
 name|stats
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[0] STATS-"
+operator|+
+name|sop
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|stats
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -1349,6 +1395,34 @@ name|clone
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[1] STATS-"
+operator|+
+name|sop
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|parentStats
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -1376,7 +1450,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * FILTER operator does not change the average row size but it does change    * the number of rows emitted. The reduction in the number of rows emitted    * is dependent on the filter expression.    *    *<ul>    *<i>Notations:</i>    *<li>T(S) - Number of tuples in relations S</li>    *<li>V(S,A) - Number of distinct values of attribute A in relation S</li>    *</ul>    *    *<ul>    *<i>Rules:</i><b>    *<li>Column equals a constant</li></b> T(S) = T(R) / V(R,A)    *<p>    *<b>    *<li>Inequality conditions</li></b> T(S) = T(R) / 3    *<p>    *<b>    *<li>Not equals comparison</li></b> - Simple formula T(S) = T(R)    *<p>    * - Alternate formula T(S) = T(R) (V(R,A) - 1) / V(R,A)    *<p>    *<b>    *<li>NOT condition</li></b> T(S) = 1 - T(S'), where T(S') is the satisfying condition    *<p>    *<b>    *<li>Multiple AND conditions</li></b> Cascadingly apply the rules 1 to 3 (order doesn't matter)    *<p>    *<b>    *<li>Multiple OR conditions</li></b> - Simple formula is to evaluate conditions independently    * and sum the results T(S) = m1 + m2    *<p>    *    * - Alternate formula T(S) = T(R) * ( 1 - ( 1 - m1/T(R) ) * ( 1 - m2/T(R) ))    *<p>    * where, m1 is the number of tuples that satisfy condition1 and m2 is the number of tuples that    * satisfy condition2    *</ul>    *<p>    *<i>Worst case:</i> If no column statistics are available, then T(R) = T(R)/2 will be    * used as heuristics.    *<p>    *<i>For more information, refer 'Estimating The Cost Of Operations' chapter in    * "Database Systems: The Complete Book" by Garcia-Molina et. al.</i>    *</p>    *    */
+comment|/**    * FILTER operator does not change the average row size but it does change the number of rows    * emitted. The reduction in the number of rows emitted is dependent on the filter expression.    *<ul>    *<i>Notations:</i>    *<li>T(S) - Number of tuples in relations S</li>    *<li>V(S,A) - Number of distinct values of attribute A in relation S</li>    *</ul>    *<ul>    *<i>Rules:</i><b>    *<li>Column equals a constant</li></b> T(S) = T(R) / V(R,A)    *<p>    *<b>    *<li>Inequality conditions</li></b> T(S) = T(R) / 3    *<p>    *<b>    *<li>Not equals comparison</li></b> - Simple formula T(S) = T(R)    *<p>    * - Alternate formula T(S) = T(R) (V(R,A) - 1) / V(R,A)    *<p>    *<b>    *<li>NOT condition</li></b> T(S) = 1 - T(S'), where T(S') is the satisfying condition    *<p>    *<b>    *<li>Multiple AND conditions</li></b> Cascadingly apply the rules 1 to 3 (order doesn't matter)    *<p>    *<b>    *<li>Multiple OR conditions</li></b> - Simple formula is to evaluate conditions independently    * and sum the results T(S) = m1 + m2    *<p>    * - Alternate formula T(S) = T(R) * ( 1 - ( 1 - m1/T(R) ) * ( 1 - m2/T(R) ))    *<p>    * where, m1 is the number of tuples that satisfy condition1 and m2 is the number of tuples that    * satisfy condition2    *</ul>    *<p>    *<i>Worst case:</i> If no column statistics are available, then evaluation of predicate    * expression will assume worst case (i.e; half the input rows) for each of predicate expression.    *<p>    *<i>For more information, refer 'Estimating The Cost Of Operations' chapter in    * "Database Systems: The Complete Book" by Garcia-Molina et. al.</i>    *</p>    */
 specifier|public
 specifier|static
 class|class
@@ -1453,14 +1527,44 @@ operator|.
 name|getStatistics
 argument_list|()
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|neededCols
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|parent
+operator|instanceof
+name|TableScanOperator
+condition|)
+block|{
+name|TableScanOperator
+name|tsop
+init|=
+operator|(
+name|TableScanOperator
+operator|)
+name|parent
+decl_stmt|;
+name|neededCols
+operator|=
+name|tsop
+operator|.
+name|getNeededColumns
+argument_list|()
+expr_stmt|;
+block|}
 try|try
 block|{
 if|if
 condition|(
-name|satisfyPrecondition
-argument_list|(
 name|parentStats
-argument_list|)
+operator|!=
+literal|null
 condition|)
 block|{
 name|ExprNodeDesc
@@ -1485,6 +1589,8 @@ argument_list|,
 name|pred
 argument_list|,
 name|aspCtx
+argument_list|,
+name|neededCols
 argument_list|)
 decl_stmt|;
 name|Statistics
@@ -1495,13 +1601,119 @@ operator|.
 name|clone
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|satisfyPrecondition
+argument_list|(
+name|parentStats
+argument_list|)
+condition|)
+block|{
+comment|// update statistics based on column statistics.
+comment|// OR conditions keeps adding the stats independently, this may
+comment|// result in number of rows getting more than the input rows in
+comment|// which case stats need not be updated
+if|if
+condition|(
+name|newNumRows
+operator|<=
+name|parentStats
+operator|.
+name|getNumRows
+argument_list|()
+condition|)
+block|{
 name|updateStats
 argument_list|(
 name|st
 argument_list|,
 name|newNumRows
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[0] STATS-"
+operator|+
+name|fop
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|st
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+comment|// update only the basic statistics in the absence of column statistics
+if|if
+condition|(
+name|newNumRows
+operator|<=
+name|parentStats
+operator|.
+name|getNumRows
+argument_list|()
+condition|)
+block|{
+name|updateStats
+argument_list|(
+name|st
+argument_list|,
+name|newNumRows
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[1] STATS-"
+operator|+
+name|fop
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|st
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|fop
 operator|.
 name|setStatistics
@@ -1509,37 +1721,6 @@ argument_list|(
 name|st
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-if|if
-condition|(
-name|parentStats
-operator|!=
-literal|null
-condition|)
-block|{
-comment|// worst case, in the absence of column statistics assume half the rows are emitted
-name|Statistics
-name|wcStats
-init|=
-name|getWorstCaseStats
-argument_list|(
-name|parentStats
-operator|.
-name|clone
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|fop
-operator|.
-name|setStatistics
-argument_list|(
-name|wcStats
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 name|aspCtx
 operator|.
 name|setAndExprStats
@@ -1547,6 +1728,7 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1583,6 +1765,12 @@ name|pred
 parameter_list|,
 name|AnnotateStatsProcCtx
 name|aspCtx
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|neededCols
 parameter_list|)
 throws|throws
 name|CloneNotSupportedException
@@ -1666,8 +1854,21 @@ argument_list|,
 name|child
 argument_list|,
 name|aspCtx
+argument_list|,
+name|neededCols
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|satisfyPrecondition
+argument_list|(
+name|aspCtx
+operator|.
+name|getAndExprStats
+argument_list|()
+argument_list|)
+condition|)
+block|{
 name|updateStats
 argument_list|(
 name|aspCtx
@@ -1676,13 +1877,29 @@ name|getAndExprStats
 argument_list|()
 argument_list|,
 name|newNumRows
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|updateStats
+argument_list|(
+name|aspCtx
+operator|.
+name|getAndExprStats
+argument_list|()
+argument_list|,
+name|newNumRows
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
 block|}
-else|else
-block|{
-comment|// for OR condition independently compute and update stats
+block|}
+elseif|else
 if|if
 condition|(
 name|udf
@@ -1690,6 +1907,7 @@ operator|instanceof
 name|GenericUDFOPOr
 condition|)
 block|{
+comment|// for OR condition independently compute and update stats
 for|for
 control|(
 name|ExprNodeDesc
@@ -1710,6 +1928,8 @@ argument_list|,
 name|child
 argument_list|,
 name|aspCtx
+argument_list|,
+name|neededCols
 argument_list|)
 expr_stmt|;
 block|}
@@ -1731,55 +1951,8 @@ argument_list|,
 name|pred
 argument_list|,
 name|aspCtx
-argument_list|)
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|udf
-operator|instanceof
-name|GenericUDFOPNotNull
-condition|)
-block|{
-name|newNumRows
-operator|=
-name|evaluateColEqualsNullExpr
-argument_list|(
-name|stats
 argument_list|,
-name|pred
-argument_list|,
-name|aspCtx
-argument_list|)
-expr_stmt|;
-name|newNumRows
-operator|=
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
-operator|-
-name|newNumRows
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|udf
-operator|instanceof
-name|GenericUDFOPNull
-condition|)
-block|{
-name|newNumRows
-operator|=
-name|evaluateColEqualsNullExpr
-argument_list|(
-name|stats
-argument_list|,
-name|pred
-argument_list|,
-name|aspCtx
+name|neededCols
 argument_list|)
 expr_stmt|;
 block|}
@@ -1795,9 +1968,10 @@ argument_list|,
 name|pred
 argument_list|,
 name|aspCtx
+argument_list|,
+name|neededCols
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 elseif|else
@@ -1865,6 +2039,13 @@ argument_list|,
 name|colName
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|cs
+operator|!=
+literal|null
+condition|)
+block|{
 return|return
 name|cs
 operator|.
@@ -1872,8 +2053,7 @@ name|getNumTrues
 argument_list|()
 return|;
 block|}
-else|else
-block|{
+block|}
 comment|// if not boolean column return half the number of rows
 return|return
 name|stats
@@ -1883,7 +2063,6 @@ argument_list|()
 operator|/
 literal|2
 return|;
-block|}
 block|}
 return|return
 name|newNumRows
@@ -1901,6 +2080,12 @@ name|pred
 parameter_list|,
 name|AnnotateStatsProcCtx
 name|aspCtx
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|neededCols
 parameter_list|)
 throws|throws
 name|CloneNotSupportedException
@@ -1978,6 +2163,8 @@ argument_list|,
 name|child
 argument_list|,
 name|aspCtx
+argument_list|,
+name|neededCols
 argument_list|)
 expr_stmt|;
 block|}
@@ -2092,6 +2279,13 @@ argument_list|,
 name|colName
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|cs
+operator|!=
+literal|null
+condition|)
+block|{
 return|return
 name|cs
 operator|.
@@ -2099,8 +2293,7 @@ name|getNumFalses
 argument_list|()
 return|;
 block|}
-else|else
-block|{
+block|}
 comment|// if not boolean column return half the number of rows
 return|return
 name|numRows
@@ -2110,10 +2303,11 @@ return|;
 block|}
 block|}
 block|}
-block|}
 comment|// worst case
 return|return
 name|numRows
+operator|/
+literal|2
 return|;
 block|}
 specifier|private
@@ -2223,41 +2417,23 @@ operator|.
 name|getCountDistint
 argument_list|()
 decl_stmt|;
-comment|// if NULLs exists, add 1 to distinct count
-if|if
-condition|(
-name|cs
-operator|.
-name|getNumNulls
-argument_list|()
-operator|>
-literal|0
-condition|)
-block|{
+name|numRows
+operator|=
 name|dvs
-operator|+=
-literal|1
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|dvs
-operator|!=
+operator|==
 literal|0
-condition|)
-block|{
-return|return
+condition|?
+name|numRows
+operator|/
+literal|2
+else|:
 name|numRows
 operator|/
 name|dvs
-return|;
-block|}
-else|else
-block|{
+expr_stmt|;
 return|return
 name|numRows
 return|;
-block|}
 block|}
 block|}
 block|}
@@ -2265,6 +2441,8 @@ block|}
 comment|// worst case
 return|return
 name|numRows
+operator|/
+literal|2
 return|;
 block|}
 specifier|private
@@ -2279,6 +2457,12 @@ name|child
 parameter_list|,
 name|AnnotateStatsProcCtx
 name|aspCtx
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|neededCols
 parameter_list|)
 throws|throws
 name|CloneNotSupportedException
@@ -2372,6 +2556,28 @@ literal|true
 expr_stmt|;
 continue|continue;
 block|}
+comment|// if column name is not contained in needed column list then it
+comment|// is a partition column. We do not need to evaluate partition columns
+comment|// in filter expression since it will be taken care by partitio pruner
+if|if
+condition|(
+name|neededCols
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|neededCols
+operator|.
+name|contains
+argument_list|(
+name|colName
+argument_list|)
+condition|)
+block|{
+return|return
+name|numRows
+return|;
+block|}
 name|ColStatistics
 name|cs
 init|=
@@ -2399,41 +2605,23 @@ operator|.
 name|getCountDistint
 argument_list|()
 decl_stmt|;
-comment|// if NULLs exists, add 1 to distinct count
-if|if
-condition|(
-name|cs
-operator|.
-name|getNumNulls
-argument_list|()
-operator|>
-literal|0
-condition|)
-block|{
+name|numRows
+operator|=
 name|dvs
-operator|+=
-literal|1
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|dvs
-operator|!=
+operator|==
 literal|0
-condition|)
-block|{
-return|return
+condition|?
+name|numRows
+operator|/
+literal|2
+else|:
 name|numRows
 operator|/
 name|dvs
-return|;
-block|}
-else|else
-block|{
+expr_stmt|;
 return|return
 name|numRows
 return|;
-block|}
 block|}
 block|}
 elseif|else
@@ -2472,6 +2660,30 @@ condition|(
 name|isConst
 condition|)
 block|{
+comment|// if column name is not contained in needed column list then it
+comment|// is a partition column. We do not need to evaluate partition columns
+comment|// in filter expression since it will be taken care by partitio pruner
+if|if
+condition|(
+name|neededCols
+operator|!=
+literal|null
+operator|&&
+name|neededCols
+operator|.
+name|indexOf
+argument_list|(
+name|colName
+argument_list|)
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+return|return
+name|numRows
+return|;
+block|}
 name|ColStatistics
 name|cs
 init|=
@@ -2499,41 +2711,23 @@ operator|.
 name|getCountDistint
 argument_list|()
 decl_stmt|;
-comment|// if NULLs exists, add 1 to distinct count
-if|if
-condition|(
-name|cs
-operator|.
-name|getNumNulls
-argument_list|()
-operator|>
-literal|0
-condition|)
-block|{
+name|numRows
+operator|=
 name|dvs
-operator|+=
-literal|1
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|dvs
-operator|!=
+operator|==
 literal|0
-condition|)
-block|{
-return|return
+condition|?
+name|numRows
+operator|/
+literal|2
+else|:
 name|numRows
 operator|/
 name|dvs
-return|;
-block|}
-else|else
-block|{
+expr_stmt|;
 return|return
 name|numRows
 return|;
-block|}
 block|}
 block|}
 block|}
@@ -2577,10 +2771,45 @@ operator|/
 literal|3
 return|;
 block|}
-else|else
+elseif|else
+if|if
+condition|(
+name|udf
+operator|instanceof
+name|GenericUDFOPNotNull
+condition|)
+block|{
+name|long
+name|newNumRows
+init|=
+name|evaluateColEqualsNullExpr
+argument_list|(
+name|stats
+argument_list|,
+name|genFunc
+argument_list|,
+name|aspCtx
+argument_list|)
+decl_stmt|;
+return|return
+name|stats
+operator|.
+name|getNumRows
+argument_list|()
+operator|-
+name|newNumRows
+return|;
+block|}
+elseif|else
+if|if
+condition|(
+name|udf
+operator|instanceof
+name|GenericUDFOPNull
+condition|)
 block|{
 return|return
-name|evaluateExpression
+name|evaluateColEqualsNullExpr
 argument_list|(
 name|stats
 argument_list|,
@@ -2590,14 +2819,45 @@ name|aspCtx
 argument_list|)
 return|;
 block|}
+elseif|else
+if|if
+condition|(
+name|udf
+operator|instanceof
+name|GenericUDFOPAnd
+operator|||
+name|udf
+operator|instanceof
+name|GenericUDFOPOr
+operator|||
+name|udf
+operator|instanceof
+name|GenericUDFOPNot
+condition|)
+block|{
+return|return
+name|evaluateExpression
+argument_list|(
+name|stats
+argument_list|,
+name|genFunc
+argument_list|,
+name|aspCtx
+argument_list|,
+name|neededCols
+argument_list|)
+return|;
+block|}
 block|}
 comment|// worst case
 return|return
 name|numRows
+operator|/
+literal|2
 return|;
 block|}
 block|}
-comment|/**    * GROUPBY operator changes the number of rows. The number of rows emitted    * by GBY operator will be atleast 1 or utmost T(R) (number of rows in relation T)    * based on the aggregation. A better estimate can be found if we have column statistics    * on the columns that we are grouping on.    *<p>    * Suppose if we are grouping by attributes A,B,C and if statistics for columns A,B,C are    * available then a better estimate can be found by taking the smaller of product of V(R,[A,B,C])    * (product of distinct cardinalities of A,B,C) and T(R)/2.    *<p>    * T(R) = min (T(R)/2 , V(R,[A,B,C]) ---> [1]    *    *<p>    * In the presence of grouping sets, map-side GBY will emit more rows depending on the size of    * grouping set (input rows * size of grouping set). These rows will get reduced because of    * map-side hash aggregation. Hash aggregation is an optimization in hive to reduce the number of    * rows shuffled between map and reduce stage. This optimization will be disabled if the memory    * used for hash aggregation exceeds 90% of max available memory for hash aggregation. The number    * of rows emitted from map-side will vary if hash aggregation is enabled throughout execution or    * disabled. In the presence of grouping sets, following rules will be applied    *<p>    * If<b>hash-aggregation is enabled</b>, for query SELECT * FROM table GROUP BY (A,B) WITH CUBE    *<p>    * T(R) = min(T(R)/2, T(R, GBY(A,B)) + T(R, GBY(A)) + T(R, GBY(B)) + 1))    *<p>    * where, GBY(A,B), GBY(B), GBY(B) are the GBY rules mentioned above [1]    *    *<p>    * If<b>hash-aggregation is disabled</b>, apply the GBY rule [1] and then multiply the result by    * number of elements in grouping set T(R) = T(R) * length_of_grouping_set. Since we do not know    * if hash-aggregation is enabled or disabled during compile time, we will assume worst-case i.e,    * hash-aggregation is disabled    *    *<p>    * NOTE: The number of rows from map-side GBY operator is dependent on map-side parallelism i.e,    * number of mappers. The map-side parallelism is expected from hive config    * "hive.stats.map.parallelism". If the config is not set then default parallelism of 1 will be    * assumed.    *    *<p>    *<i>Worst case:</i> If no column statistics are available, then T(R) = T(R)/2 will be    * used as heuristics.    *<p>    *<i>For more information, refer 'Estimating The Cost Of Operations' chapter in    * "Database Systems: The Complete Book" by Garcia-Molina et. al.</i>    *</p>    *    */
+comment|/**    * GROUPBY operator changes the number of rows. The number of rows emitted by GBY operator will be    * atleast 1 or utmost T(R) (number of rows in relation T) based on the aggregation. A better    * estimate can be found if we have column statistics on the columns that we are grouping on.    *<p>    * Suppose if we are grouping by attributes A,B,C and if statistics for columns A,B,C are    * available then a better estimate can be found by taking the smaller of product of V(R,[A,B,C])    * (product of distinct cardinalities of A,B,C) and T(R)/2.    *<p>    * T(R) = min (T(R)/2 , V(R,[A,B,C]) ---> [1]    *<p>    * In the presence of grouping sets, map-side GBY will emit more rows depending on the size of    * grouping set (input rows * size of grouping set). These rows will get reduced because of    * map-side hash aggregation. Hash aggregation is an optimization in hive to reduce the number of    * rows shuffled between map and reduce stage. This optimization will be disabled if the memory    * used for hash aggregation exceeds 90% of max available memory for hash aggregation. The number    * of rows emitted from map-side will vary if hash aggregation is enabled throughout execution or    * disabled. In the presence of grouping sets, following rules will be applied    *<p>    * If<b>hash-aggregation is enabled</b>, for query SELECT * FROM table GROUP BY (A,B) WITH CUBE    *<p>    * T(R) = min(T(R)/2, T(R, GBY(A,B)) + T(R, GBY(A)) + T(R, GBY(B)) + 1))    *<p>    * where, GBY(A,B), GBY(B), GBY(B) are the GBY rules mentioned above [1]    *<p>    * If<b>hash-aggregation is disabled</b>, apply the GBY rule [1] and then multiply the result by    * number of elements in grouping set T(R) = T(R) * length_of_grouping_set. Since we do not know    * if hash-aggregation is enabled or disabled during compile time, we will assume worst-case i.e,    * hash-aggregation is disabled    *<p>    * NOTE: The number of rows from map-side GBY operator is dependent on map-side parallelism i.e,    * number of mappers. The map-side parallelism is expected from hive config    * "hive.stats.map.parallelism". If the config is not set then default parallelism of 1 will be    * assumed.    *<p>    *<i>Worst case:</i> If no column statistics are available, then T(R) = T(R)/2 will be used as    * heuristics.    *<p>    *<i>For more information, refer 'Estimating The Cost Of Operations' chapter in    * "Database Systems: The Complete Book" by Garcia-Molina et. al.</i>    *</p>    */
 specifier|public
 specifier|static
 class|class
@@ -2838,7 +3098,8 @@ block|}
 else|else
 block|{
 comment|// partial column statistics on grouping attributes case.
-comment|// if column statistics on grouping attribute is missing, then assume worst case.
+comment|// if column statistics on grouping attribute is missing, then
+comment|// assume worst case.
 comment|// GBY rule will emit half the number of rows if dvProd is 0
 name|dvProd
 operator|=
@@ -2864,8 +3125,8 @@ name|ReduceSinkOperator
 condition|)
 block|{
 comment|// since we do not know if hash-aggregation will be enabled or disabled
-comment|// at runtime we will assume that map-side group by does not do any reduction.
-comment|// hence no group by rule will be applied
+comment|// at runtime we will assume that map-side group by does not do any
+comment|// reduction.hence no group by rule will be applied
 comment|// map-side grouping set present. if grouping set is present then
 comment|// multiply the number of rows by number of elements in grouping set
 if|if
@@ -2988,6 +3249,8 @@ argument_list|(
 name|stats
 argument_list|,
 name|newNumRows
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -3012,6 +3275,8 @@ argument_list|(
 name|stats
 argument_list|,
 name|newNumRows
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -3055,9 +3320,28 @@ block|{
 comment|// reduce side
 name|stats
 operator|=
-name|getWorstCaseStats
-argument_list|(
 name|parentStats
+operator|.
+name|clone
+argument_list|()
+expr_stmt|;
+name|long
+name|newNumRows
+init|=
+name|parentStats
+operator|.
+name|getNumRows
+argument_list|()
+operator|/
+literal|2
+decl_stmt|;
+name|updateStats
+argument_list|(
+name|stats
+argument_list|,
+name|newNumRows
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -3209,7 +3493,8 @@ name|aggColStats
 argument_list|)
 expr_stmt|;
 comment|// if UDAF present and if column expression map is empty then it must
-comment|// be full aggregation query like count(*) in which case number of rows will be 1
+comment|// be full aggregation query like count(*) in which case number of
+comment|// rows will be 1
 if|if
 condition|(
 name|colExprMap
@@ -3230,6 +3515,8 @@ argument_list|(
 name|stats
 argument_list|,
 literal|1
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -3241,6 +3528,38 @@ argument_list|(
 name|stats
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+operator|&&
+name|stats
+operator|!=
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[0] STATS-"
+operator|+
+name|gop
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|stats
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -3325,7 +3644,7 @@ name|newNumRows
 return|;
 block|}
 block|}
-comment|/**    * JOIN operator can yield any of the following three cases<li>The values of join keys are    * disjoint in both relations in which case T(RXS) = 0 (we need histograms for this)</li><li>Join    * key is primary key on relation R and foreign key on relation S in which case every tuple in S    * will have a tuple in R T(RXS) = T(S) (we need histograms for this)</li><li>Both R& S relation    * have same value for join-key. Ex: bool column with all true values T(RXS) = T(R) * T(S) (we    * need histograms for this. counDistinct = 1 and same value)</li>    *    *<p>    * In the absence of histograms, we can use the following general case    *<p>    *<b>Single attribute</b>    *<p>    * T(RXS) = (T(R)*T(S))/max(V(R,Y), V(S,Y)) where Y is the join attribute    *<p>    *<b>Multiple attributes</b>    *<p>    * T(RXS) = T(R)*T(S)/max(V(R,y1), V(S,y1)) * max(V(R,y2), V(S,y2)), where y1 and y2 are the join    * attributes    *    *<p>    *<i>Worst case:</i> If no column statistics are available, then T(RXS) = T(R)*T(S)/2 will be    * used as heuristics.    *<p>    *<i>For more information, refer 'Estimating The Cost Of Operations' chapter in    * "Database Systems: The Complete Book" by Garcia-Molina et. al.</i>    *</p>    */
+comment|/**    * JOIN operator can yield any of the following three cases<li>The values of join keys are    * disjoint in both relations in which case T(RXS) = 0 (we need histograms for this)</li><li>Join    * key is primary key on relation R and foreign key on relation S in which case every tuple in S    * will have a tuple in R T(RXS) = T(S) (we need histograms for this)</li><li>Both R& S relation    * have same value for join-key. Ex: bool column with all true values T(RXS) = T(R) * T(S) (we    * need histograms for this. counDistinct = 1 and same value)</li>    *<p>    * In the absence of histograms, we can use the following general case    *<p>    *<b>Single attribute</b>    *<p>    * T(RXS) = (T(R)*T(S))/max(V(R,Y), V(S,Y)) where Y is the join attribute    *<p>    *<b>Multiple attributes</b>    *<p>    * T(RXS) = T(R)*T(S)/max(V(R,y1), V(S,y1)) * max(V(R,y2), V(S,y2)), where y1 and y2 are the join    * attributes    *<p>    *<i>Worst case:</i> If no column statistics are available, then T(RXS) = joinFactor * max(T(R),    * T(S)) * (numParents - 1) will be used as heuristics. joinFactor is from hive.stats.join.factor    * hive config. In the worst case, since we do not know any information about join keys (and hence    * which of the 3 cases to use), we let it to the user to provide the join factor.    *<p>    *<i>For more information, refer 'Estimating The Cost Of Operations' chapter in    * "Database Systems: The Complete Book" by Garcia-Molina et. al.</i>    *</p>    */
 specifier|public
 specifier|static
 class|class
@@ -3485,14 +3804,13 @@ literal|false
 expr_stmt|;
 block|}
 block|}
-try|try
-block|{
 if|if
 condition|(
 name|allSatisfyPreCondition
 condition|)
 block|{
-comment|// statistics object that is combination of statistics from all relations involved in JOIN
+comment|// statistics object that is combination of statistics from all
+comment|// relations involved in JOIN
 name|Statistics
 name|stats
 init|=
@@ -3630,10 +3948,10 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|// compute fully qualified join key column names. this name will be used to
-comment|// quickly look-up for column statistics of join key.
-comment|// TODO: expressions in join condition will be ignored. assign internal name
-comment|// for expressions and estimate column statistics for expression.
+comment|// compute fully qualified join key column names. this name will be
+comment|// used to quickly look-up for column statistics of join key.
+comment|// TODO: expressions in join condition will be ignored. assign
+comment|// internal name for expressions and estimate column statistics for expression.
 name|List
 argument_list|<
 name|String
@@ -3731,8 +4049,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// since new statistics is derived from all relations involved in JOIN,
-comment|// we need to update the state information accordingly
+comment|// since new statistics is derived from all relations involved in
+comment|// JOIN, we need to update the state information accordingly
 name|stats
 operator|.
 name|updateColumnStatsState
@@ -3744,8 +4062,9 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// compute denominator i.e, max(V(R,Y), V(S,Y)) in case of single attribute join.
-comment|// else max(V(R,y1), V(S,y1)) * max(V(R,y2), V(S,y2)) in case of multi-attribute join
+comment|// compute denominator i.e, max(V(R,Y), V(S,Y)) in case of single
+comment|// attribute join, else max(V(R,y1), V(S,y1)) * max(V(R,y2), V(S,y2))
+comment|// in case of multi-attribute join
 name|long
 name|denom
 init|=
@@ -4165,20 +4484,211 @@ argument_list|(
 name|stats
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[0] STATS-"
+operator|+
+name|jop
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|stats
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
-comment|// worst case, when no column statistics are available
-if|if
-condition|(
+comment|// worst case when there are no column statistics
+name|float
+name|joinFactor
+init|=
+name|HiveConf
+operator|.
+name|getFloatVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_JOIN_FACTOR
+argument_list|)
+decl_stmt|;
+name|int
+name|numParents
+init|=
 name|parents
 operator|.
 name|size
 argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|parentRows
+init|=
+name|Lists
+operator|.
+name|newArrayList
+argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|parentSizes
+init|=
+name|Lists
+operator|.
+name|newArrayList
+argument_list|()
+decl_stmt|;
+name|int
+name|maxRowIdx
+init|=
+literal|0
+decl_stmt|;
+name|long
+name|maxRowCount
+init|=
+literal|0
+decl_stmt|;
+name|int
+name|idx
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|OperatorDesc
+argument_list|>
+name|op
+range|:
+name|parents
+control|)
+block|{
+name|Statistics
+name|ps
+init|=
+name|op
+operator|.
+name|getStatistics
+argument_list|()
+decl_stmt|;
+name|long
+name|rowCount
+init|=
+name|ps
+operator|.
+name|getNumRows
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|rowCount
 operator|>
-literal|1
+name|maxRowCount
 condition|)
 block|{
+name|maxRowCount
+operator|=
+name|rowCount
+expr_stmt|;
+name|maxRowIdx
+operator|=
+name|idx
+expr_stmt|;
+block|}
+name|parentRows
+operator|.
+name|add
+argument_list|(
+name|rowCount
+argument_list|)
+expr_stmt|;
+name|parentSizes
+operator|.
+name|add
+argument_list|(
+name|ps
+operator|.
+name|getDataSize
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|idx
+operator|++
+expr_stmt|;
+block|}
+name|long
+name|maxDataSize
+init|=
+name|parentSizes
+operator|.
+name|get
+argument_list|(
+name|maxRowIdx
+argument_list|)
+decl_stmt|;
+name|long
+name|newNumRows
+init|=
+call|(
+name|long
+call|)
+argument_list|(
+name|joinFactor
+operator|*
+name|maxRowCount
+operator|*
+operator|(
+name|numParents
+operator|-
+literal|1
+operator|)
+argument_list|)
+decl_stmt|;
+name|long
+name|newDataSize
+init|=
+call|(
+name|long
+call|)
+argument_list|(
+name|joinFactor
+operator|*
+name|maxDataSize
+operator|*
+operator|(
+name|numParents
+operator|-
+literal|1
+operator|)
+argument_list|)
+decl_stmt|;
 name|Statistics
 name|wcStats
 init|=
@@ -4186,100 +4696,18 @@ operator|new
 name|Statistics
 argument_list|()
 decl_stmt|;
-name|Statistics
-name|stp1
-init|=
-name|parents
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getStatistics
-argument_list|()
-decl_stmt|;
-name|long
-name|numRows
-init|=
-name|stp1
-operator|.
-name|getNumRows
-argument_list|()
-decl_stmt|;
-name|long
-name|avgRowSize
-init|=
-name|stp1
-operator|.
-name|getAvgRowSize
-argument_list|()
-decl_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|1
-init|;
-name|i
-operator|<
-name|parents
-operator|.
-name|size
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|stp1
-operator|=
-name|parents
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|getStatistics
-argument_list|()
-expr_stmt|;
-name|numRows
-operator|=
-operator|(
-name|numRows
-operator|*
-name|stp1
-operator|.
-name|getNumRows
-argument_list|()
-operator|)
-operator|/
-literal|2
-expr_stmt|;
-name|avgRowSize
-operator|+=
-name|stp1
-operator|.
-name|getAvgRowSize
-argument_list|()
-expr_stmt|;
-block|}
 name|wcStats
 operator|.
 name|setNumRows
 argument_list|(
-name|numRows
+name|newNumRows
 argument_list|)
 expr_stmt|;
 name|wcStats
 operator|.
 name|setDataSize
 argument_list|(
-name|numRows
-operator|*
-name|avgRowSize
+name|newDataSize
 argument_list|)
 expr_stmt|;
 name|jop
@@ -4289,48 +4717,34 @@ argument_list|(
 name|wcStats
 argument_list|)
 expr_stmt|;
-block|}
-else|else
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[1] STATS-"
+operator|+
 name|jop
 operator|.
-name|setStatistics
-argument_list|(
-name|parents
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getStatistics
+name|toString
 argument_list|()
+operator|+
+literal|": "
+operator|+
+name|wcStats
 operator|.
-name|clone
+name|extendedToString
 argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|CloneNotSupportedException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|ErrorMsg
-operator|.
-name|STATISTICS_CLONING_FAILED
-operator|.
-name|getMsg
-argument_list|()
-argument_list|)
-throw|;
 block|}
 block|}
 return|return
@@ -4356,16 +4770,16 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-comment|// TODO: in union20.q the tab alias is not properly propagated down the operator
-comment|// tree. This happens when UNION ALL is used as sub query. Hence, even if column
-comment|// statistics are available, the tab alias will be null which will fail to get
-comment|// proper column statistics. For now assume, worst case in which denominator is 2.
+comment|// TODO: in union20.q the tab alias is not properly propagated down the
+comment|// operator tree. This happens when UNION ALL is used as sub query. Hence, even
+comment|// if column statistics are available, the tab alias will be null which will fail
+comment|// to get proper column statistics. For now assume, worst case in which
+comment|// denominator is 2.
 return|return
 literal|2
 return|;
 block|}
-comment|// simple join from 2 relations
-comment|// denom = max(v1, v2)
+comment|// simple join from 2 relations: denom = max(v1, v2)
 if|if
 condition|(
 name|distinctVals
@@ -4387,7 +4801,7 @@ return|;
 block|}
 else|else
 block|{
-comment|// join from multiple relations
+comment|// join from multiple relations:
 comment|// denom = max(v1, v2) * max(v2, v3) * max(v3, v4)
 name|long
 name|denom
@@ -4462,7 +4876,7 @@ return|;
 block|}
 block|}
 block|}
-comment|/**    * LIMIT operator changes the number of rows and thereby the data size.    *    */
+comment|/**    * LIMIT operator changes the number of rows and thereby the data size.    */
 specifier|public
 specifier|static
 class|class
@@ -4531,6 +4945,22 @@ operator|.
 name|getStatistics
 argument_list|()
 decl_stmt|;
+name|AnnotateStatsProcCtx
+name|aspCtx
+init|=
+operator|(
+name|AnnotateStatsProcCtx
+operator|)
+name|procCtx
+decl_stmt|;
+name|HiveConf
+name|conf
+init|=
+name|aspCtx
+operator|.
+name|getConf
+argument_list|()
+decl_stmt|;
 try|try
 block|{
 name|long
@@ -4565,7 +4995,8 @@ operator|.
 name|clone
 argument_list|()
 decl_stmt|;
-comment|// if limit is greater than available rows then do not update statistics
+comment|// if limit is greater than available rows then do not update
+comment|// statistics
 if|if
 condition|(
 name|limit
@@ -4581,6 +5012,8 @@ argument_list|(
 name|stats
 argument_list|,
 name|limit
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -4591,6 +5024,34 @@ argument_list|(
 name|stats
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[0] STATS-"
+operator|+
+name|lop
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|stats
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -4601,8 +5062,8 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// in the absence of column statistics, compute data size based on based
-comment|// on average row size
+comment|// in the absence of column statistics, compute data size based on
+comment|// based on average row size
 name|Statistics
 name|wcStats
 init|=
@@ -4634,6 +5095,29 @@ operator|.
 name|getAvgRowSize
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|avgRowSize
+operator|<=
+literal|0
+condition|)
+block|{
+name|avgRowSize
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_AVG_ROW_SIZE
+argument_list|)
+expr_stmt|;
+block|}
 name|long
 name|dataSize
 init|=
@@ -4663,6 +5147,34 @@ argument_list|(
 name|wcStats
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[1] STATS-"
+operator|+
+name|lop
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|wcStats
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -4690,7 +5202,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Default rule is to aggregate the statistics from all its parent operators.    *    */
+comment|/**    * Default rule is to aggregate the statistics from all its parent operators.    */
 specifier|public
 specifier|static
 class|class
@@ -4781,8 +5293,8 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// if parent statistics is null then that branch of the tree is not walked yet.
-comment|// don't update the stats until all branches are walked
+comment|// if parent statistics is null then that branch of the tree is not
+comment|// walked yet. don't update the stats until all branches are walked
 if|if
 condition|(
 name|isAllParentsContainStatistics
@@ -4881,6 +5393,34 @@ argument_list|(
 name|stats
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"[0] STATS-"
+operator|+
+name|op
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|stats
+operator|.
+name|extendedToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -5025,7 +5565,7 @@ name|DefaultStatsRule
 argument_list|()
 return|;
 block|}
-comment|/**    * Update the basic statistics of the statistics object based on the row number    *    * @param stats    *          - statistics to be updated    * @param newNumRows    *          - new number of rows    */
+comment|/**    * Update the basic statistics of the statistics object based on the row number    * @param stats    *          - statistics to be updated    * @param newNumRows    *          - new number of rows    * @param useColStats    *          - use column statistics to compute data size    */
 specifier|static
 name|void
 name|updateStats
@@ -5035,6 +5575,9 @@ name|stats
 parameter_list|,
 name|long
 name|newNumRows
+parameter_list|,
+name|boolean
+name|useColStats
 parameter_list|)
 block|{
 name|long
@@ -5065,6 +5608,11 @@ argument_list|(
 name|newNumRows
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|useColStats
+condition|)
+block|{
 name|List
 argument_list|<
 name|ColStatistics
@@ -5182,6 +5730,32 @@ name|newDataSize
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+name|long
+name|newDataSize
+init|=
+call|(
+name|long
+call|)
+argument_list|(
+name|ratio
+operator|*
+name|stats
+operator|.
+name|getDataSize
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|stats
+operator|.
+name|setDataSize
+argument_list|(
+name|newDataSize
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 specifier|static
 name|boolean
 name|satisfyPrecondition
@@ -5223,84 +5797,6 @@ name|State
 operator|.
 name|NONE
 argument_list|)
-return|;
-block|}
-specifier|static
-name|Statistics
-name|getWorstCaseStats
-parameter_list|(
-name|Statistics
-name|stats
-parameter_list|)
-throws|throws
-name|CloneNotSupportedException
-block|{
-name|Statistics
-name|wcClone
-init|=
-name|stats
-operator|.
-name|clone
-argument_list|()
-decl_stmt|;
-name|long
-name|numRows
-init|=
-name|wcClone
-operator|.
-name|getNumRows
-argument_list|()
-operator|/
-literal|2
-decl_stmt|;
-name|long
-name|dataSize
-init|=
-name|wcClone
-operator|.
-name|getDataSize
-argument_list|()
-operator|/
-literal|2
-decl_stmt|;
-name|long
-name|avgRowSize
-init|=
-name|wcClone
-operator|.
-name|getAvgRowSize
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|numRows
-operator|>
-literal|0
-condition|)
-block|{
-name|dataSize
-operator|=
-name|avgRowSize
-operator|*
-name|numRows
-expr_stmt|;
-block|}
-name|wcClone
-operator|.
-name|setNumRows
-argument_list|(
-name|numRows
-argument_list|)
-expr_stmt|;
-name|wcClone
-operator|.
-name|setDataSize
-argument_list|(
-name|dataSize
-argument_list|)
-expr_stmt|;
-return|return
-name|wcClone
 return|;
 block|}
 block|}

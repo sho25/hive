@@ -41,6 +41,34 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|fs
@@ -1042,7 +1070,25 @@ specifier|public
 class|class
 name|StatsUtils
 block|{
-comment|/**    * Collect table, partition and column level statistics    *    * @param conf    *          - hive configuration    * @param partList    *          - partition list    * @param table    *          - table    * @param tableScanOperator    *          - table scan operator    * @return statistics object    * @throws HiveException    */
+specifier|private
+specifier|static
+specifier|final
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|StatsUtils
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+decl_stmt|;
+comment|/**    * Collect table, partition and column level statistics    * @param conf    *          - hive configuration    * @param partList    *          - partition list    * @param table    *          - table    * @param tableScanOperator    *          - table scan operator    * @return statistics object    * @throws HiveException    */
 specifier|public
 specifier|static
 name|Statistics
@@ -1126,6 +1172,22 @@ operator|.
 name|HIVE_STATS_FETCH_COLUMN_STATS
 argument_list|)
 decl_stmt|;
+name|float
+name|deserFactor
+init|=
+name|HiveConf
+operator|.
+name|getFloatVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_DESERIALIZATION_FACTOR
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -1146,7 +1208,7 @@ name|tabName
 argument_list|)
 decl_stmt|;
 name|long
-name|rds
+name|ds
 init|=
 name|getRawDataSize
 argument_list|(
@@ -1157,12 +1219,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|rds
+name|ds
 operator|<=
 literal|0
 condition|)
 block|{
-name|rds
+name|ds
 operator|=
 name|getTotalSize
 argument_list|(
@@ -1174,12 +1236,12 @@ expr_stmt|;
 comment|// if data size is still 0 then get file size
 if|if
 condition|(
-name|rds
+name|ds
 operator|<=
 literal|0
 condition|)
 block|{
-name|rds
+name|ds
 operator|=
 name|getFileSizeForTable
 argument_list|(
@@ -1189,8 +1251,20 @@ name|table
 argument_list|)
 expr_stmt|;
 block|}
+name|ds
+operator|=
+call|(
+name|long
+call|)
+argument_list|(
+name|ds
+operator|*
+name|deserFactor
+argument_list|)
+expr_stmt|;
 block|}
 comment|// number of rows -1 means that statistics from metastore is not reliable
+comment|// and 0 means statistics gathering is disabled
 if|if
 condition|(
 name|nr
@@ -1198,10 +1272,50 @@ operator|<=
 literal|0
 condition|)
 block|{
+name|int
+name|avgRowSize
+init|=
+name|estimateRowSizeFromSchema
+argument_list|(
+name|conf
+argument_list|,
+name|schema
+argument_list|,
+name|neededColumns
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|avgRowSize
+operator|>
+literal|0
+condition|)
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Estimated average row size: "
+operator|+
+name|avgRowSize
+argument_list|)
+expr_stmt|;
+block|}
 name|nr
 operator|=
-literal|0
+name|ds
+operator|/
+name|avgRowSize
 expr_stmt|;
+block|}
 block|}
 name|stats
 operator|.
@@ -1214,7 +1328,7 @@ name|stats
 operator|.
 name|setDataSize
 argument_list|(
-name|rds
+name|ds
 argument_list|)
 expr_stmt|;
 name|List
@@ -1314,7 +1428,7 @@ argument_list|)
 condition|)
 block|{
 comment|// if there is column projection and if we do not have stats then mark
-comment|// it as NONE. Else we will have stats for const/udf columns
+comment|// it as NONE. Else we will have estimated stats for const/udf columns
 if|if
 condition|(
 operator|!
@@ -1446,7 +1560,7 @@ name|rowCounts
 argument_list|)
 decl_stmt|;
 name|long
-name|rds
+name|ds
 init|=
 name|getSumIgnoreNegatives
 argument_list|(
@@ -1455,7 +1569,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|rds
+name|ds
 operator|<=
 literal|0
 condition|)
@@ -1473,7 +1587,7 @@ operator|.
 name|TOTAL_SIZE
 argument_list|)
 expr_stmt|;
-name|rds
+name|ds
 operator|=
 name|getSumIgnoreNegatives
 argument_list|(
@@ -1484,7 +1598,7 @@ comment|// if data size still could not be determined, then fall back to filesyt
 comment|// sizes
 if|if
 condition|(
-name|rds
+name|ds
 operator|<=
 literal|0
 condition|)
@@ -1502,14 +1616,169 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|rds
+name|ds
 operator|=
 name|getSumIgnoreNegatives
 argument_list|(
 name|dataSizes
 argument_list|)
 expr_stmt|;
+name|ds
+operator|=
+call|(
+name|long
+call|)
+argument_list|(
+name|ds
+operator|*
+name|deserFactor
+argument_list|)
+expr_stmt|;
 block|}
+name|int
+name|avgRowSize
+init|=
+name|estimateRowSizeFromSchema
+argument_list|(
+name|conf
+argument_list|,
+name|schema
+argument_list|,
+name|neededColumns
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|avgRowSize
+operator|>
+literal|0
+condition|)
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Estimated average row size: "
+operator|+
+name|avgRowSize
+argument_list|)
+expr_stmt|;
+block|}
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|rowCounts
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|long
+name|rc
+init|=
+name|rowCounts
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+name|long
+name|s
+init|=
+name|dataSizes
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|rc
+operator|<=
+literal|0
+operator|&&
+name|s
+operator|>
+literal|0
+condition|)
+block|{
+name|rc
+operator|=
+name|s
+operator|/
+name|avgRowSize
+expr_stmt|;
+name|rowCounts
+operator|.
+name|set
+argument_list|(
+name|i
+argument_list|,
+name|rc
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|s
+operator|<=
+literal|0
+operator|&&
+name|rc
+operator|>
+literal|0
+condition|)
+block|{
+name|s
+operator|=
+name|rc
+operator|*
+name|avgRowSize
+expr_stmt|;
+name|dataSizes
+operator|.
+name|set
+argument_list|(
+name|i
+argument_list|,
+name|s
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+name|nr
+operator|=
+name|getSumIgnoreNegatives
+argument_list|(
+name|rowCounts
+argument_list|)
+expr_stmt|;
+name|ds
+operator|=
+name|getSumIgnoreNegatives
+argument_list|(
+name|dataSizes
+argument_list|)
+expr_stmt|;
 comment|// number of rows -1 means that statistics from metastore is not reliable
 if|if
 condition|(
@@ -1520,8 +1789,11 @@ condition|)
 block|{
 name|nr
 operator|=
-literal|0
+name|ds
+operator|/
+name|avgRowSize
 expr_stmt|;
+block|}
 block|}
 name|stats
 operator|.
@@ -1534,7 +1806,7 @@ name|stats
 operator|.
 name|addToDataSize
 argument_list|(
-name|rds
+name|ds
 argument_list|)
 expr_stmt|;
 comment|// if atleast a partition does not contain row count then mark basic stats state as PARTIAL
@@ -1657,7 +1929,7 @@ block|}
 else|else
 block|{
 comment|// if there is column projection and if we do not have stats then mark
-comment|// it as NONE. Else we will have stats for const/udf columns
+comment|// it as NONE. Else we will have estimated stats for const/udf columns
 if|if
 condition|(
 operator|!
@@ -1708,7 +1980,214 @@ return|return
 name|stats
 return|;
 block|}
-comment|/**    * Find the bytes on disk occupied by a table    *    * @param conf    *          - hive conf    * @param table    *          - table    * @return size on disk    */
+specifier|public
+specifier|static
+name|int
+name|estimateRowSizeFromSchema
+parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|,
+name|List
+argument_list|<
+name|ColumnInfo
+argument_list|>
+name|schema
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|neededColumns
+parameter_list|)
+block|{
+name|int
+name|avgRowSize
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+name|String
+name|neededCol
+range|:
+name|neededColumns
+control|)
+block|{
+name|ColumnInfo
+name|ci
+init|=
+name|getColumnInfoForColumn
+argument_list|(
+name|neededCol
+argument_list|,
+name|schema
+argument_list|)
+decl_stmt|;
+name|ObjectInspector
+name|oi
+init|=
+name|ci
+operator|.
+name|getObjectInspector
+argument_list|()
+decl_stmt|;
+name|String
+name|colType
+init|=
+name|ci
+operator|.
+name|getTypeName
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|colType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|serdeConstants
+operator|.
+name|STRING_TYPE_NAME
+argument_list|)
+operator|||
+name|colType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|serdeConstants
+operator|.
+name|BINARY_TYPE_NAME
+argument_list|)
+operator|||
+name|colType
+operator|.
+name|startsWith
+argument_list|(
+name|serdeConstants
+operator|.
+name|VARCHAR_TYPE_NAME
+argument_list|)
+operator|||
+name|colType
+operator|.
+name|startsWith
+argument_list|(
+name|serdeConstants
+operator|.
+name|CHAR_TYPE_NAME
+argument_list|)
+operator|||
+name|colType
+operator|.
+name|startsWith
+argument_list|(
+name|serdeConstants
+operator|.
+name|LIST_TYPE_NAME
+argument_list|)
+operator|||
+name|colType
+operator|.
+name|startsWith
+argument_list|(
+name|serdeConstants
+operator|.
+name|MAP_TYPE_NAME
+argument_list|)
+operator|||
+name|colType
+operator|.
+name|startsWith
+argument_list|(
+name|serdeConstants
+operator|.
+name|STRUCT_TYPE_NAME
+argument_list|)
+operator|||
+name|colType
+operator|.
+name|startsWith
+argument_list|(
+name|serdeConstants
+operator|.
+name|UNION_TYPE_NAME
+argument_list|)
+condition|)
+block|{
+name|avgRowSize
+operator|+=
+name|getAvgColLenOfVariableLengthTypes
+argument_list|(
+name|conf
+argument_list|,
+name|oi
+argument_list|,
+name|colType
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|avgRowSize
+operator|+=
+name|getAvgColLenOfFixedLengthTypes
+argument_list|(
+name|colType
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+return|return
+name|avgRowSize
+return|;
+block|}
+specifier|private
+specifier|static
+name|ColumnInfo
+name|getColumnInfoForColumn
+parameter_list|(
+name|String
+name|neededCol
+parameter_list|,
+name|List
+argument_list|<
+name|ColumnInfo
+argument_list|>
+name|schema
+parameter_list|)
+block|{
+for|for
+control|(
+name|ColumnInfo
+name|ci
+range|:
+name|schema
+control|)
+block|{
+if|if
+condition|(
+name|ci
+operator|.
+name|getInternalName
+argument_list|()
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|neededCol
+argument_list|)
+condition|)
+block|{
+return|return
+name|ci
+return|;
+block|}
+block|}
+return|return
+literal|null
+return|;
+block|}
+comment|/**    * Find the bytes on disk occupied by a table    * @param conf    *          - hive conf    * @param table    *          - table    * @return size on disk    */
 specifier|public
 specifier|static
 name|long
@@ -1774,7 +2253,7 @@ return|return
 name|size
 return|;
 block|}
-comment|/**    * Find the bytes on disks occupied by list of partitions    *    * @param conf    *          - hive conf    * @param parts    *          - partition list    * @return sizes of patitions    */
+comment|/**    * Find the bytes on disks occupied by list of partitions    * @param conf    *          - hive conf    * @param parts    *          - partition list    * @return sizes of patitions    */
 specifier|public
 specifier|static
 name|List
@@ -1909,7 +2388,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Get sum of all values in the list that are>0    *    * @param vals    *          - list of values    * @return sum    */
+comment|/**    * Get sum of all values in the list that are>0    * @param vals    *          - list of values    * @return sum    */
 specifier|public
 specifier|static
 name|long
@@ -1952,7 +2431,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get the partition level columns statistics from metastore for all the needed columns    *    * @param table    *          - table object    * @param part    *          - partition object    * @param schema    *          - output schema    * @param neededColumns    *          - list of needed columns    * @return column statistics    */
+comment|/**    * Get the partition level columns statistics from metastore for all the needed columns    * @param table    *          - table object    * @param part    *          - partition object    * @param schema    *          - output schema    * @param neededColumns    *          - list of needed columns    * @return column statistics    */
 specifier|public
 specifier|static
 name|List
@@ -2101,7 +2580,7 @@ return|return
 name|colStatistics
 return|;
 block|}
-comment|/**    * Get the partition level columns statistics from metastore for a specific column    *    * @param dbName    *          - database name    * @param tabName    *          - table name    * @param partName    *          - partition name    * @param colName    *          - column name    * @return column statistics    */
+comment|/**    * Get the partition level columns statistics from metastore for a specific column    * @param dbName    *          - database name    * @param tabName    *          - table name    * @param partName    *          - partition name    * @param colName    *          - column name    * @return column statistics    */
 specifier|public
 specifier|static
 name|ColStatistics
@@ -2182,7 +2661,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Will return true if column statistics for atleast one column is available    *    * @param colStats    *          - column stats    * @return    */
+comment|/**    * Will return true if column statistics for atleast one column is available    * @param colStats    *          - column stats    * @return    */
 specifier|private
 specifier|static
 name|boolean
@@ -2219,7 +2698,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Get table level column stats for specified column    *    * @param dbName    *          - database name    * @param tableName    *          - table name    * @param colName    *          - column name    * @return column stats    */
+comment|/**    * Get table level column stats for specified column    * @param dbName    *          - database name    * @param tableName    *          - table name    * @param colName    *          - column name    * @return column stats    */
 specifier|public
 specifier|static
 name|ColStatistics
@@ -2296,7 +2775,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Convert ColumnStatisticsObj to ColStatistics    *    * @param cso    *          - ColumnStatisticsObj    * @param tabName    *          - table name    * @param colName    *          - column name    * @return ColStatistics    */
+comment|/**    * Convert ColumnStatisticsObj to ColStatistics    * @param cso    *          - ColumnStatisticsObj    * @param tabName    *          - table name    * @param colName    *          - column name    * @return ColStatistics    */
 specifier|public
 specifier|static
 name|ColStatistics
@@ -2883,7 +3362,7 @@ return|return
 name|cs
 return|;
 block|}
-comment|/**    * Get table level column statistics from metastore for needed columns    *    * @param table    *          - table    * @param schema    *          - output schema    * @param neededColumns    *          - list of needed columns    * @return column statistics    */
+comment|/**    * Get table level column statistics from metastore for needed columns    * @param table    *          - table    * @param schema    *          - output schema    * @param neededColumns    *          - list of needed columns    * @return column statistics    */
 specifier|public
 specifier|static
 name|List
@@ -3019,7 +3498,7 @@ return|return
 name|colStatistics
 return|;
 block|}
-comment|/**    * Get the raw data size of variable length data types    *    * @param conf    *          - hive conf    * @param oi    *          - object inspector    * @param colType    *          - column type    * @return raw data size    */
+comment|/**    * Get the raw data size of variable length data types    * @param conf    *          - hive conf    * @param oi    *          - object inspector    * @param colType    *          - column type    * @return raw data size    */
 specifier|public
 specifier|static
 name|long
@@ -3489,7 +3968,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Get the size of complex data types    *    * @param conf    *          - hive conf    * @param oi    *          - object inspector    * @return raw data size    */
+comment|/**    * Get the size of complex data types    * @param conf    *          - hive conf    * @param oi    *          - object inspector    * @return raw data size    */
 specifier|public
 specifier|static
 name|long
@@ -4011,7 +4490,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get size of fixed length primitives    *    * @param colType    *          - column type    * @return raw data size    */
+comment|/**    * Get size of fixed length primitives    * @param colType    *          - column type    * @return raw data size    */
 specifier|public
 specifier|static
 name|long
@@ -4187,7 +4666,7 @@ literal|0
 return|;
 block|}
 block|}
-comment|/**    * Get the size of arrays of primitive types    *    * @param colType    *          - column type    * @param length    *          - array length    * @return raw data size    */
+comment|/**    * Get the size of arrays of primitive types    * @param colType    *          - column type    * @param length    *          - array length    * @return raw data size    */
 specifier|public
 specifier|static
 name|long
@@ -4433,7 +4912,7 @@ literal|0
 return|;
 block|}
 block|}
-comment|/**    * Estimate the size of map object    *    * @param scmoi    *          - object inspector    * @return size of map    */
+comment|/**    * Estimate the size of map object    * @param scmoi    *          - object inspector    * @return size of map    */
 specifier|public
 specifier|static
 name|long
@@ -4543,7 +5022,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get size of primitive data types based on their respective writable object inspector    *    * @param oi    *          - object inspector    * @param value    *          - value    * @return raw data size    */
+comment|/**    * Get size of primitive data types based on their respective writable object inspector    * @param oi    *          - object inspector    * @param value    *          - value    * @return raw data size    */
 specifier|public
 specifier|static
 name|long
@@ -4811,7 +5290,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Get column statistics from parent statistics.    *    * @param conf    *          - hive conf    * @param parentStats    *          - parent statistics    * @param colExprMap    *          - column expression map    * @param rowSchema    *          - row schema    * @return column statistics    */
+comment|/**    * Get column statistics from parent statistics.    * @param conf    *          - hive conf    * @param parentStats    *          - parent statistics    * @param colExprMap    *          - column expression map    * @param rowSchema    *          - row schema    * @return column statistics    */
 specifier|public
 specifier|static
 name|List
@@ -4975,7 +5454,7 @@ return|return
 name|cs
 return|;
 block|}
-comment|/**    * Get column statistics expression nodes    *    * @param conf    *          - hive conf    * @param parentStats    *          - parent statistics    * @param end    *          - expression nodes    * @return column statistics    */
+comment|/**    * Get column statistics expression nodes    * @param conf    *          - hive conf    * @param parentStats    *          - parent statistics    * @param end    *          - expression nodes    * @return column statistics    */
 specifier|public
 specifier|static
 name|ColStatistics
@@ -5444,7 +5923,7 @@ return|return
 name|colStats
 return|;
 block|}
-comment|/**    * Get number of rows of a give table    *    * @param dbName    *          - database name    * @param tabName    *          - table name    * @return number of rows    */
+comment|/**    * Get number of rows of a give table    * @param dbName    *          - database name    * @param tabName    *          - table name    * @return number of rows    */
 specifier|public
 specifier|static
 name|long
@@ -5470,7 +5949,7 @@ name|ROW_COUNT
 argument_list|)
 return|;
 block|}
-comment|/**    * Get raw data size of a give table    *    * @param dbName    *          - database name    * @param tabName    *          - table name    * @return raw data size    */
+comment|/**    * Get raw data size of a give table    * @param dbName    *          - database name    * @param tabName    *          - table name    * @return raw data size    */
 specifier|public
 specifier|static
 name|long
@@ -5496,7 +5975,7 @@ name|RAW_DATA_SIZE
 argument_list|)
 return|;
 block|}
-comment|/**    * Get total size of a give table    *    * @param dbName    *          - database name    * @param tabName    *          - table name    * @return total size    */
+comment|/**    * Get total size of a give table    * @param dbName    *          - database name    * @param tabName    *          - table name    * @return total size    */
 specifier|public
 specifier|static
 name|long
@@ -5522,7 +6001,7 @@ name|TOTAL_SIZE
 argument_list|)
 return|;
 block|}
-comment|/**    * Get basic stats of table    *    * @param dbName    *          - database name    * @param tabName    *          - table name    * @param statType    *          - type of stats    * @return value of stats    */
+comment|/**    * Get basic stats of table    * @param dbName    *          - database name    * @param tabName    *          - table name    * @param statType    *          - type of stats    * @return value of stats    */
 specifier|public
 specifier|static
 name|long
@@ -5626,7 +6105,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get basic stats of partitions    *    * @param table    *          - table    * @param partNames    *          - partition names    * @param statType    *          - type of stats    * @return value of stats    */
+comment|/**    * Get basic stats of partitions    * @param table    *          - table    * @param partNames    *          - partition names    * @param statType    *          - type of stats    * @return value of stats    */
 specifier|public
 specifier|static
 name|List
@@ -5766,7 +6245,7 @@ return|return
 name|stats
 return|;
 block|}
-comment|/**    * Compute raw data size from column statistics    *    * @param numRows    *          - number of rows    * @param colStats    *          - column statistics    * @return raw data size    */
+comment|/**    * Compute raw data size from column statistics    * @param numRows    *          - number of rows    * @param colStats    *          - column statistics    * @return raw data size    */
 specifier|public
 specifier|static
 name|long
@@ -6109,7 +6588,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Remove KEY/VALUE prefix from column name    *    * @param colName    *          - column name    * @return column name    */
+comment|/**    * Remove KEY/VALUE prefix from column name    * @param colName    *          - column name    * @return column name    */
 specifier|public
 specifier|static
 name|String
@@ -6159,7 +6638,7 @@ return|return
 name|stripedName
 return|;
 block|}
-comment|/**    * Returns fully qualified name of column    *    * @param tabName    * @param colName    * @return    */
+comment|/**    * Returns fully qualified name of column    * @param tabName    * @param colName    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -6183,7 +6662,7 @@ name|colName
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns fully qualified name of column    *    * @param dbName    * @param tabName    * @param colName    * @return    */
+comment|/**    * Returns fully qualified name of column    * @param dbName    * @param tabName    * @param colName    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -6210,7 +6689,7 @@ name|colName
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns fully qualified name of column    *    * @param dbName    * @param tabName    * @param partName    * @param colName    * @return    */
+comment|/**    * Returns fully qualified name of column    * @param dbName    * @param tabName    * @param partName    * @param colName    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -6307,7 +6786,7 @@ name|nonNullAndEmptyNames
 argument_list|)
 return|;
 block|}
-comment|/**    * Try to get fully qualified column name from expression node    *    * @param keyExprs    *          - expression nodes    * @param map    *          - column expression map    * @return list of fully qualified names    */
+comment|/**    * Try to get fully qualified column name from expression node    * @param keyExprs    *          - expression nodes    * @param map    *          - column expression map    * @return list of fully qualified names    */
 specifier|public
 specifier|static
 name|List
