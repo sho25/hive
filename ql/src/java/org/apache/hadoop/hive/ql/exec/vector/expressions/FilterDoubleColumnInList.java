@@ -209,6 +209,8 @@ class|class
 name|FilterDoubleColumnInList
 extends|extends
 name|VectorExpression
+implements|implements
+name|IDoubleInExpr
 block|{
 specifier|private
 specifier|static

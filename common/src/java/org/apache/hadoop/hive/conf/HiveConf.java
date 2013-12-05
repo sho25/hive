@@ -3171,6 +3171,15 @@ argument_list|,
 literal|1
 argument_list|)
 block|,
+comment|// statistics annotation fetches column statistics for all required columns and for all
+comment|// required partitions which can be very expensive sometimes
+name|HIVE_STATS_FETCH_COLUMN_STATS
+argument_list|(
+literal|"hive.stats.fetch.column.stats"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(

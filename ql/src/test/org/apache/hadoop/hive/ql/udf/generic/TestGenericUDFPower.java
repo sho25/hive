@@ -1259,6 +1259,8 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|"Unexpected result"
+argument_list|,
 operator|new
 name|Double
 argument_list|(
@@ -1278,6 +1280,8 @@ operator|.
 name|get
 argument_list|()
 argument_list|)
+argument_list|,
+literal|1e-6
 argument_list|)
 expr_stmt|;
 block|}

@@ -75,12 +75,22 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Iterator
 import|;
 end_import
 
 begin_comment
-comment|/**  * Abstract base class representing a set of rows to be displayed.  */
+comment|/**  * Abstract base class representing a set of rows to be displayed.  * Holds column values as strings  */
 end_comment
 
 begin_class
@@ -108,6 +118,11 @@ specifier|final
 name|NumberFormat
 name|numberFormat
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|nullStr
+decl_stmt|;
 name|Rows
 parameter_list|(
 name|BeeLine
@@ -124,6 +139,16 @@ operator|.
 name|beeLine
 operator|=
 name|beeLine
+expr_stmt|;
+name|nullStr
+operator|=
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getNullString
+argument_list|()
 expr_stmt|;
 name|rsMeta
 operator|=
@@ -549,6 +574,25 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|values
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+return|;
+block|}
 name|Row
 parameter_list|(
 name|int
@@ -729,7 +773,7 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
-name|sizes
+name|values
 index|[
 name|i
 index|]
@@ -741,8 +785,18 @@ index|]
 operator|==
 literal|null
 condition|?
-literal|1
+name|nullStr
 else|:
+name|values
+index|[
+name|i
+index|]
+expr_stmt|;
+name|sizes
+index|[
+name|i
+index|]
+operator|=
 name|values
 index|[
 name|i

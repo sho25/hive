@@ -55482,6 +55482,14 @@ literal|16
 argument_list|,
 literal|16
 argument_list|)
+block|,
+comment|/**        *<code>CHAR = 17;</code>        */
+name|CHAR
+argument_list|(
+literal|17
+argument_list|,
+literal|17
+argument_list|)
 block|,       ;
 comment|/**        *<code>BOOLEAN = 0;</code>        */
 specifier|public
@@ -55636,6 +55644,15 @@ name|VARCHAR_VALUE
 init|=
 literal|16
 decl_stmt|;
+comment|/**        *<code>CHAR = 17;</code>        */
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|CHAR_VALUE
+init|=
+literal|17
+decl_stmt|;
 specifier|public
 specifier|final
 name|int
@@ -55761,6 +55778,12 @@ literal|16
 case|:
 return|return
 name|VARCHAR
+return|;
+case|case
+literal|17
+case|:
+return|return
+name|CHAR
 return|;
 default|default:
 return|return
@@ -92325,7 +92348,7 @@ literal|"e.ql.io.orc.Stream\022A\n\007columns\030\002 \003(\01320.or"
 operator|+
 literal|"g.apache.hadoop.hive.ql.io.orc.ColumnEnc"
 operator|+
-literal|"oding\"\356\002\n\004Type\0229\n\004kind\030\001 \002(\0162+.org.apach"
+literal|"oding\"\370\002\n\004Type\0229\n\004kind\030\001 \002(\0162+.org.apach"
 operator|+
 literal|"e.hadoop.hive.ql.io.orc.Type.Kind\022\024\n\010sub"
 operator|+
@@ -92333,7 +92356,7 @@ literal|"types\030\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\
 operator|+
 literal|"aximumLength\030\004 \001(\r\022\021\n\tprecision\030\005 \001(\r\022\r\n"
 operator|+
-literal|"\005scale\030\006 \001(\r\"\307\001\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BY"
+literal|"\005scale\030\006 \001(\r\"\321\001\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BY"
 operator|+
 literal|"TE\020\001\022\t\n\005SHORT\020\002\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FL"
 block|,
@@ -92343,55 +92366,55 @@ literal|"\010\022\r\n\tTIMESTAMP\020\t\022\010\n\004LIST\020\n\022\007\n\003MAP\
 operator|+
 literal|"TRUCT\020\014\022\t\n\005UNION\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DATE\020"
 operator|+
-literal|"\017\022\013\n\007VARCHAR\020\020\"x\n\021StripeInformation\022\016\n\006o"
+literal|"\017\022\013\n\007VARCHAR\020\020\022\010\n\004CHAR\020\021\"x\n\021StripeInform"
 operator|+
-literal|"ffset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004\022\022\n\ndata"
+literal|"ation\022\016\n\006offset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001"
 operator|+
-literal|"Length\030\003 \001(\004\022\024\n\014footerLength\030\004 \001(\004\022\024\n\014nu"
+literal|"(\004\022\022\n\ndataLength\030\003 \001(\004\022\024\n\014footerLength\030\004"
 operator|+
-literal|"mberOfRows\030\005 \001(\004\"/\n\020UserMetadataItem\022\014\n\004"
+literal|" \001(\004\022\024\n\014numberOfRows\030\005 \001(\004\"/\n\020UserMetada"
 operator|+
-literal|"name\030\001 \002(\t\022\r\n\005value\030\002 \002(\014\"X\n\020StripeStati"
+literal|"taItem\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\014\"X\n\020S"
 operator|+
-literal|"stics\022D\n\010colStats\030\001 \003(\01322.org.apache.had"
+literal|"tripeStatistics\022D\n\010colStats\030\001 \003(\01322.org."
 operator|+
-literal|"oop.hive.ql.io.orc.ColumnStatistics\"S\n\010M"
+literal|"apache.hadoop.hive.ql.io.orc.ColumnStati"
 block|,
-literal|"etadata\022G\n\013stripeStats\030\001 \003(\01322.org.apach"
+literal|"stics\"S\n\010Metadata\022G\n\013stripeStats\030\001 \003(\01322"
 operator|+
-literal|"e.hadoop.hive.ql.io.orc.StripeStatistics"
+literal|".org.apache.hadoop.hive.ql.io.orc.Stripe"
 operator|+
-literal|"\"\356\002\n\006Footer\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rcon"
+literal|"Statistics\"\356\002\n\006Footer\022\024\n\014headerLength\030\001 "
 operator|+
-literal|"tentLength\030\002 \001(\004\022D\n\007stripes\030\003 \003(\01323.org."
+literal|"\001(\004\022\025\n\rcontentLength\030\002 \001(\004\022D\n\007stripes\030\003 "
 operator|+
-literal|"apache.hadoop.hive.ql.io.orc.StripeInfor"
+literal|"\003(\01323.org.apache.hadoop.hive.ql.io.orc.S"
 operator|+
-literal|"mation\0225\n\005types\030\004 \003(\0132&.org.apache.hadoo"
+literal|"tripeInformation\0225\n\005types\030\004 \003(\0132&.org.ap"
 operator|+
-literal|"p.hive.ql.io.orc.Type\022D\n\010metadata\030\005 \003(\0132"
+literal|"ache.hadoop.hive.ql.io.orc.Type\022D\n\010metad"
 operator|+
-literal|"2.org.apache.hadoop.hive.ql.io.orc.UserM"
+literal|"ata\030\005 \003(\01322.org.apache.hadoop.hive.ql.io"
 operator|+
-literal|"etadataItem\022\024\n\014numberOfRows\030\006 \001(\004\022F\n\nsta"
+literal|".orc.UserMetadataItem\022\024\n\014numberOfRows\030\006 "
 operator|+
-literal|"tistics\030\007 \003(\01322.org.apache.hadoop.hive.q"
+literal|"\001(\004\022F\n\nstatistics\030\007 \003(\01322.org.apache.had"
 block|,
-literal|"l.io.orc.ColumnStatistics\022\026\n\016rowIndexStr"
+literal|"oop.hive.ql.io.orc.ColumnStatistics\022\026\n\016r"
 operator|+
-literal|"ide\030\010 \001(\r\"\305\001\n\nPostScript\022\024\n\014footerLength"
+literal|"owIndexStride\030\010 \001(\r\"\305\001\n\nPostScript\022\024\n\014fo"
 operator|+
-literal|"\030\001 \001(\004\022F\n\013compression\030\002 \001(\01621.org.apache"
+literal|"oterLength\030\001 \001(\004\022F\n\013compression\030\002 \001(\01621."
 operator|+
-literal|".hadoop.hive.ql.io.orc.CompressionKind\022\034"
+literal|"org.apache.hadoop.hive.ql.io.orc.Compres"
 operator|+
-literal|"\n\024compressionBlockSize\030\003 \001(\004\022\023\n\007version\030"
+literal|"sionKind\022\034\n\024compressionBlockSize\030\003 \001(\004\022\023"
 operator|+
-literal|"\004 \003(\rB\002\020\001\022\026\n\016metadataLength\030\005 \001(\004\022\016\n\005mag"
+literal|"\n\007version\030\004 \003(\rB\002\020\001\022\026\n\016metadataLength\030\005 "
 operator|+
-literal|"ic\030\300> \001(\t*:\n\017CompressionKind\022\010\n\004NONE\020\000\022\010"
+literal|"\001(\004\022\016\n\005magic\030\300> \001(\t*:\n\017CompressionKind\022\010"
 operator|+
-literal|"\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
+literal|"\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
 block|}
 decl_stmt|;
 name|com

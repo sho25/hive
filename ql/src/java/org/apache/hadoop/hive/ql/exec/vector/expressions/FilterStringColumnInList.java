@@ -209,6 +209,8 @@ class|class
 name|FilterStringColumnInList
 extends|extends
 name|VectorExpression
+implements|implements
+name|IStringInExpr
 block|{
 specifier|private
 specifier|static

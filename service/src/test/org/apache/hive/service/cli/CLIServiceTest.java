@@ -54,6 +54,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -823,6 +835,8 @@ literal|null
 decl_stmt|;
 name|OperationHandle
 name|ophandle
+init|=
+literal|null
 decl_stmt|;
 comment|// Change lock manager, otherwise unit-test doesn't go through
 name|String
@@ -877,10 +891,12 @@ argument_list|)
 expr_stmt|;
 comment|// Test async execution response when query is malformed
 name|String
-name|wrongQueryString
+name|wrongQuery
 init|=
 literal|"SELECT NAME FROM TEST_EXEC"
 decl_stmt|;
+try|try
+block|{
 name|ophandle
 operator|=
 name|client
@@ -889,7 +905,38 @@ name|executeStatementAsync
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|wrongQueryString
+name|wrongQuery
+argument_list|,
+name|confOverlay
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Async syntax excution should fail"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveSQLException
+name|e
+parameter_list|)
+block|{
+comment|// expected error
+block|}
+name|wrongQuery
+operator|=
+literal|"CREATE TABLE NON_EXISTING_TAB (ID STRING) location 'hdfs://fooNN:10000/a/b/c'"
+expr_stmt|;
+name|ophandle
+operator|=
+name|client
+operator|.
+name|executeStatementAsync
+argument_list|(
+name|sessionHandle
+argument_list|,
+name|wrongQuery
 argument_list|,
 name|confOverlay
 argument_list|)
@@ -1026,6 +1073,14 @@ argument_list|,
 name|queryString
 argument_list|,
 name|confOverlay
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|ophandle
+operator|.
+name|hasResultSet
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|count

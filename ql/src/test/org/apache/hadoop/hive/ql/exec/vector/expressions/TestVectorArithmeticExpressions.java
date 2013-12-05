@@ -1874,6 +1874,23 @@ name|batch
 argument_list|)
 expr_stmt|;
 comment|// 0/0 for entry 0 should work but generate NaN
+name|assertFalse
+argument_list|(
+name|out
+operator|.
+name|noNulls
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|out
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
+argument_list|)
+expr_stmt|;
 name|assertTrue
 argument_list|(
 name|Double
