@@ -30940,7 +30940,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|validatePartSpec
+name|validatePartSpecColumnNames
 argument_list|(
 name|dest_tab
 argument_list|,

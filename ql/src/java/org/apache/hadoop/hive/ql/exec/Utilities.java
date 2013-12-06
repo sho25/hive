@@ -13739,7 +13739,7 @@ block|}
 specifier|public
 specifier|static
 name|void
-name|validatePartSpec
+name|validatePartSpecColumnNames
 parameter_list|(
 name|Table
 name|tbl
