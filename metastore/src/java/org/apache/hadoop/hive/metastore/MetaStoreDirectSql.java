@@ -4666,7 +4666,7 @@ name|set
 argument_list|(
 name|partColIndex
 argument_list|,
-literal|"inner join \"PARTITION_KEY_VALS\" as \"FILTER"
+literal|"inner join \"PARTITION_KEY_VALS\" \"FILTER"
 operator|+
 name|partColIndex
 operator|+
