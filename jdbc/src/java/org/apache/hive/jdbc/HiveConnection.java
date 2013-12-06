@@ -2401,6 +2401,19 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+if|if
+condition|(
+name|isClosed
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Connection is closed"
+argument_list|)
+throw|;
+block|}
 return|return
 operator|new
 name|HiveDatabaseMetaData
