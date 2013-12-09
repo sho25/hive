@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Deque
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -76,16 +66,6 @@ operator|.
 name|util
 operator|.
 name|Set
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Stack
 import|;
 end_import
 
@@ -155,7 +135,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|ReduceSinkOperator
+name|Operator
 import|;
 end_import
 
@@ -173,7 +153,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Operator
+name|ReduceSinkOperator
 import|;
 end_import
 
@@ -439,21 +419,6 @@ name|WriteEntity
 argument_list|>
 name|outputs
 decl_stmt|;
-comment|// rootOperators are all the table scan operators in sequence
-comment|// of traversal
-specifier|public
-specifier|final
-name|Deque
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
-argument_list|>
-name|rootOperators
-decl_stmt|;
 comment|// holds the root of the operator tree we're currently processing
 comment|// this could be a table scan, but also a join, ptf, etc (i.e.:
 comment|// first operator of a reduce task.
@@ -552,6 +517,20 @@ name|BaseWork
 argument_list|>
 name|operatorWorkMap
 decl_stmt|;
+comment|// a map to keep track of which root generated which work
+specifier|public
+specifier|final
+name|Map
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|BaseWork
+argument_list|>
+name|rootToWorkMap
+decl_stmt|;
 comment|// we need to keep the original list of operators in the map join to know
 comment|// what position in the mapjoin the different parent work items will have.
 specifier|public
@@ -595,33 +574,6 @@ specifier|public
 specifier|final
 name|DependencyCollectionTask
 name|dependencyTask
-decl_stmt|;
-comment|// root of last multi child operator encountered
-specifier|public
-name|Stack
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-name|lastRootOfMultiChildOperator
-decl_stmt|;
-comment|// branches of current multi-child operator
-specifier|public
-name|Stack
-argument_list|<
-name|Integer
-argument_list|>
-name|currentBranchCount
-decl_stmt|;
-comment|// work generated for last multi-child operator
-specifier|public
-name|Stack
-argument_list|<
-name|BaseWork
-argument_list|>
-name|lastWorkForMultiChildOperator
 decl_stmt|;
 annotation|@
 name|SuppressWarnings
@@ -668,15 +620,6 @@ argument_list|<
 name|WriteEntity
 argument_list|>
 name|outputs
-parameter_list|,
-name|Deque
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-name|rootOperators
 parameter_list|)
 block|{
 name|this
@@ -751,12 +694,6 @@ argument_list|()
 expr_stmt|;
 name|this
 operator|.
-name|rootOperators
-operator|=
-name|rootOperators
-expr_stmt|;
-name|this
-operator|.
 name|linkOpWithWorkMap
 operator|=
 operator|new
@@ -793,6 +730,22 @@ expr_stmt|;
 name|this
 operator|.
 name|operatorWorkMap
+operator|=
+operator|new
+name|HashMap
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|BaseWork
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|rootToWorkMap
 operator|=
 operator|new
 name|HashMap
@@ -865,41 +818,12 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
-name|this
+name|rootTasks
 operator|.
-name|lastRootOfMultiChildOperator
-operator|=
-operator|new
-name|Stack
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|currentBranchCount
-operator|=
-operator|new
-name|Stack
-argument_list|<
-name|Integer
-argument_list|>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|lastWorkForMultiChildOperator
-operator|=
-operator|new
-name|Stack
-argument_list|<
-name|BaseWork
-argument_list|>
-argument_list|()
+name|add
+argument_list|(
+name|currentTask
+argument_list|)
 expr_stmt|;
 block|}
 block|}
