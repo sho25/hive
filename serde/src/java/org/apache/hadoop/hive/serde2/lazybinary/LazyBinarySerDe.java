@@ -2418,6 +2418,17 @@ argument_list|(
 name|obj
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|t
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|warnedOnceNullMapKey
+return|;
+block|}
 name|t
 operator|.
 name|writeToByteStream
