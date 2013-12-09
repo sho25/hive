@@ -9450,6 +9450,10 @@ name|row
 argument_list|)
 expr_stmt|;
 block|}
+name|row
+operator|=
+literal|null
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -9468,10 +9472,6 @@ operator|.
 name|getMessage
 argument_list|()
 argument_list|)
-expr_stmt|;
-name|res
-operator|=
-literal|null
 expr_stmt|;
 return|return
 literal|false
