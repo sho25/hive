@@ -172,7 +172,7 @@ name|Deprecated
 specifier|public
 specifier|static
 name|void
-name|appendReadColumnID
+name|appendReadColumnIDs
 parameter_list|(
 name|Configuration
 name|conf
