@@ -7658,14 +7658,9 @@ condition|)
 block|{
 if|if
 condition|(
-name|hconf
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_MULTI_INSERT_MOVE_TASKS_SHARE_DEPENDENCIES
-argument_list|)
+name|dependencyTask
+operator|!=
+literal|null
 condition|)
 block|{
 name|parentTask
