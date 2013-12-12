@@ -2140,6 +2140,26 @@ return|return
 literal|null
 return|;
 block|}
+specifier|public
+name|void
+name|resetStream
+parameter_list|()
+block|{
+if|if
+condition|(
+name|initialized
+condition|)
+block|{
+name|resDirFilesNum
+operator|=
+literal|0
+expr_stmt|;
+name|initialized
+operator|=
+literal|false
+expr_stmt|;
+block|}
+block|}
 comment|/**    * Little abbreviation for StringUtils.    */
 specifier|private
 specifier|static

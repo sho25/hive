@@ -529,6 +529,10 @@ argument_list|()
 block|}
 argument_list|)
 expr_stmt|;
+name|totalRows
+operator|=
+literal|0
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
