@@ -1166,7 +1166,7 @@ decl_stmt|;
 while|while
 condition|(
 name|value
-operator|>
+operator|!=
 literal|0
 condition|)
 block|{
