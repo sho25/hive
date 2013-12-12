@@ -1017,6 +1017,11 @@ condition|(
 name|childOperators
 operator|==
 literal|null
+operator|||
+name|childOperators
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 return|return;
