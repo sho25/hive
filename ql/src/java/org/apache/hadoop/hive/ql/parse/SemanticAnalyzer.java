@@ -32701,7 +32701,7 @@ argument_list|(
 operator|new
 name|WriteEntity
 argument_list|(
-name|destStr
+name|dest_path
 argument_list|,
 operator|!
 name|isDfsDir
@@ -51637,8 +51637,6 @@ operator|new
 name|WriteEntity
 argument_list|(
 name|tab
-argument_list|,
-literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -51708,8 +51706,6 @@ operator|new
 name|WriteEntity
 argument_list|(
 name|partn
-argument_list|,
-literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -56664,18 +56660,13 @@ block|{
 name|Table
 name|table
 init|=
-name|db
-operator|.
-name|getTable
+name|getTableWithQN
 argument_list|(
 name|tableName
 argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-comment|// use getTable(final String tableName, boolean
-comment|// throwException) which doesn't throw
-comment|// exception but null if table doesn't exist
 if|if
 condition|(
 name|table
@@ -57534,9 +57525,7 @@ block|{
 name|Table
 name|oldView
 init|=
-name|db
-operator|.
-name|getTable
+name|getTableWithQN
 argument_list|(
 name|createVwDesc
 operator|.
