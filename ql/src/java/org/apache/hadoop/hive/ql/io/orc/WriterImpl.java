@@ -9676,6 +9676,12 @@ return|;
 case|case
 name|STRING
 case|:
+case|case
+name|VARCHAR
+case|:
+case|case
+name|CHAR
+case|:
 comment|// ORC strings are converted to java Strings. so use JavaDataModel to
 comment|// compute the overall size of strings
 name|child

@@ -616,13 +616,11 @@ block|{
 case|case
 name|ALL
 case|:
-throw|throw
-operator|new
-name|AuthorizationException
-argument_list|(
-literal|"no matching Action for Privilege.All"
-argument_list|)
-throw|;
+return|return
+name|FsAction
+operator|.
+name|READ_WRITE
+return|;
 case|case
 name|ALTER_DATA
 case|:

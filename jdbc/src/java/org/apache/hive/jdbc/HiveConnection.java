@@ -111,6 +111,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|ResultSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|SQLClientInfoException
 import|;
 end_import
@@ -2256,14 +2266,71 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
+if|if
+condition|(
+name|resultSetConcurrency
+operator|!=
+name|ResultSet
+operator|.
+name|CONCUR_READ_ONLY
+condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"Statement with resultset concurrency "
+operator|+
+name|resultSetConcurrency
+operator|+
+literal|" is not supported"
+argument_list|,
+literal|"HYC00"
 argument_list|)
 throw|;
+comment|// Optional feature not implemented
+block|}
+if|if
+condition|(
+name|resultSetType
+operator|==
+name|ResultSet
+operator|.
+name|TYPE_SCROLL_SENSITIVE
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Statement with resultset type "
+operator|+
+name|resultSetType
+operator|+
+literal|" is not supported"
+argument_list|,
+literal|"HYC00"
+argument_list|)
+throw|;
+comment|// Optional feature not implemented
+block|}
+return|return
+operator|new
+name|HiveStatement
+argument_list|(
+name|this
+argument_list|,
+name|client
+argument_list|,
+name|sessHandle
+argument_list|,
+name|resultSetType
+operator|==
+name|ResultSet
+operator|.
+name|TYPE_SCROLL_INSENSITIVE
+argument_list|)
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#createStatement(int, int, int)    */
 specifier|public
@@ -2401,6 +2468,19 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+if|if
+condition|(
+name|isClosed
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Connection is closed"
+argument_list|)
+throw|;
+block|}
 return|return
 operator|new
 name|HiveDatabaseMetaData

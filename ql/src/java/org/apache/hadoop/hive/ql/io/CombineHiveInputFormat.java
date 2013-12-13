@@ -1616,17 +1616,12 @@ decl_stmt|;
 name|String
 name|deserializerClassName
 init|=
-name|part
-operator|.
-name|getDeserializer
-argument_list|(
-name|job
-argument_list|)
-operator|==
 literal|null
-condition|?
-literal|null
-else|:
+decl_stmt|;
+try|try
+block|{
+name|deserializerClassName
+operator|=
 name|part
 operator|.
 name|getDeserializer
@@ -1639,7 +1634,16 @@ argument_list|()
 operator|.
 name|getName
 argument_list|()
-decl_stmt|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+comment|// ignore
+block|}
 comment|// Since there is no easy way of knowing whether MAPREDUCE-1597 is present in the tree or not,
 comment|// we use a configuration variable for the same
 if|if

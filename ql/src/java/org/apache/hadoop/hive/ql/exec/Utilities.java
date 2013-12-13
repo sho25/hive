@@ -9906,25 +9906,6 @@ name|specPath
 argument_list|)
 decl_stmt|;
 name|Path
-name|intermediatePath
-init|=
-operator|new
-name|Path
-argument_list|(
-name|tmpPath
-operator|.
-name|getParent
-argument_list|()
-argument_list|,
-name|tmpPath
-operator|.
-name|getName
-argument_list|()
-operator|+
-literal|".intermediate"
-argument_list|)
-decl_stmt|;
-name|Path
 name|finalPath
 init|=
 operator|new
@@ -9948,34 +9929,7 @@ name|tmpPath
 argument_list|)
 condition|)
 block|{
-comment|// Step1: rename tmp output folder to intermediate path. After this
-comment|// point, updates from speculative tasks still writing to tmpPath
-comment|// will not appear in finalPath.
-name|log
-operator|.
-name|info
-argument_list|(
-literal|"Moving tmp dir: "
-operator|+
-name|tmpPath
-operator|+
-literal|" to: "
-operator|+
-name|intermediatePath
-argument_list|)
-expr_stmt|;
-name|Utilities
-operator|.
-name|rename
-argument_list|(
-name|fs
-argument_list|,
-name|tmpPath
-argument_list|,
-name|intermediatePath
-argument_list|)
-expr_stmt|;
-comment|// Step2: remove any tmp file or double-committed output files
+comment|// remove any tmp file or double-committed output files
 name|ArrayList
 argument_list|<
 name|String
@@ -9988,7 +9942,7 @@ name|removeTempOrDuplicateFiles
 argument_list|(
 name|fs
 argument_list|,
-name|intermediatePath
+name|tmpPath
 argument_list|,
 name|dpCtx
 argument_list|)
@@ -10016,14 +9970,14 @@ name|reporter
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Step3: move to the file destination
+comment|// move to the file destination
 name|log
 operator|.
 name|info
 argument_list|(
 literal|"Moving tmp dir: "
 operator|+
-name|intermediatePath
+name|tmpPath
 operator|+
 literal|" to: "
 operator|+
@@ -10036,7 +9990,7 @@ name|renameOrMoveFiles
 argument_list|(
 name|fs
 argument_list|,
-name|intermediatePath
+name|tmpPath
 argument_list|,
 name|finalPath
 argument_list|)
@@ -13930,7 +13884,7 @@ return|return
 name|ret
 return|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|String
 name|appendPathSeparator
@@ -14234,7 +14188,7 @@ block|}
 specifier|public
 specifier|static
 name|void
-name|validatePartSpec
+name|validatePartSpecColumnNames
 parameter_list|(
 name|Table
 name|tbl

@@ -1794,11 +1794,11 @@ name|preparePatchedBlob
 parameter_list|()
 block|{
 comment|// mask will be max value beyond which patch will be generated
-name|int
+name|long
 name|mask
 init|=
 operator|(
-literal|1
+literal|1L
 operator|<<
 name|brBits95p
 operator|)

@@ -518,6 +518,13 @@ name|maxColumnNameLength
 init|=
 literal|128
 decl_stmt|;
+comment|//  Cached values, to save on round trips to database.
+specifier|private
+name|String
+name|dbVersion
+init|=
+literal|null
+decl_stmt|;
 comment|/**    *    */
 specifier|public
 name|HiveDatabaseMetaData
@@ -1363,13 +1370,17 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
+return|return
+name|Utils
+operator|.
+name|getVersionPart
 argument_list|(
-literal|"Method not supported"
+name|getDatabaseProductVersion
+argument_list|()
+argument_list|,
+literal|1
 argument_list|)
-throw|;
+return|;
 block|}
 specifier|public
 name|int
@@ -1378,13 +1389,17 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
+return|return
+name|Utils
+operator|.
+name|getVersionPart
 argument_list|(
-literal|"Method not supported"
+name|getDatabaseProductVersion
+argument_list|()
+argument_list|,
+literal|2
 argument_list|)
-throw|;
+return|;
 block|}
 specifier|public
 name|String
@@ -1404,6 +1419,18 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+if|if
+condition|(
+name|dbVersion
+operator|!=
+literal|null
+condition|)
+block|{
+comment|//lazy-caching of the version.
+return|return
+name|dbVersion
+return|;
+block|}
 name|TGetInfoReq
 name|req
 init|=
@@ -1466,7 +1493,10 @@ name|getStatus
 argument_list|()
 argument_list|)
 expr_stmt|;
-return|return
+name|this
+operator|.
+name|dbVersion
+operator|=
 name|resp
 operator|.
 name|getInfoValue
@@ -1474,6 +1504,9 @@ argument_list|()
 operator|.
 name|getStringValue
 argument_list|()
+expr_stmt|;
+return|return
+name|dbVersion
 return|;
 block|}
 specifier|public

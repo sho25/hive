@@ -598,7 +598,7 @@ argument_list|)
 expr_stmt|;
 name|ColumnProjectionUtils
 operator|.
-name|appendReadColumnID
+name|appendReadColumnIDs
 argument_list|(
 name|conf
 argument_list|,

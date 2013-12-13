@@ -3148,6 +3148,7 @@ name|root
 return|;
 block|}
 comment|/**      * Remove MAYBE values from the expression. If they are in an AND operator,      * they are dropped. If they are in an OR operator, they kill their parent.      * This assumes that pushDownNot has already been called.      * @param expr The expression to clean up      * @return The cleaned up expression      */
+specifier|static
 name|ExpressionTree
 name|foldMaybe
 parameter_list|(
@@ -3267,6 +3268,26 @@ name|child
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+if|if
+condition|(
+name|expr
+operator|.
+name|children
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return
+operator|new
+name|ExpressionTree
+argument_list|(
+name|TruthValue
+operator|.
+name|YES_NO_NULL
+argument_list|)
+return|;
 block|}
 block|}
 return|return

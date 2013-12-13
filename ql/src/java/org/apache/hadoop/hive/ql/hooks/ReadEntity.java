@@ -59,6 +59,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Database
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|metadata
@@ -126,6 +144,22 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
+comment|/**    * Constructor for a database.    */
+specifier|public
+name|ReadEntity
+parameter_list|(
+name|Database
+name|database
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|database
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * Constructor.    *    * @param t    *          The Table that the query reads from.    */
 specifier|public
 name|ReadEntity
@@ -137,6 +171,8 @@ block|{
 name|super
 argument_list|(
 name|t
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -179,6 +215,8 @@ block|{
 name|super
 argument_list|(
 name|t
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|initParent
@@ -198,6 +236,8 @@ block|{
 name|super
 argument_list|(
 name|p
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -214,6 +254,8 @@ block|{
 name|super
 argument_list|(
 name|p
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|initParent
