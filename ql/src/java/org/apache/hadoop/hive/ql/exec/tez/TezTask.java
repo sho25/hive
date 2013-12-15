@@ -635,12 +635,38 @@ specifier|private
 name|TezCounters
 name|counters
 decl_stmt|;
+specifier|private
+name|DagUtils
+name|utils
+decl_stmt|;
 specifier|public
 name|TezTask
 parameter_list|()
 block|{
+name|this
+argument_list|(
+name|DagUtils
+operator|.
+name|getInstance
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|TezTask
+parameter_list|(
+name|DagUtils
+name|utils
+parameter_list|)
+block|{
 name|super
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|utils
+operator|=
+name|utils
 expr_stmt|;
 block|}
 specifier|public
@@ -795,7 +821,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// create the tez tmp dir
-name|DagUtils
+name|utils
 operator|.
 name|createTezDir
 argument_list|(
@@ -808,7 +834,7 @@ comment|// jobConf will hold all the configuration for hadoop, tez, and hive
 name|JobConf
 name|jobConf
 init|=
-name|DagUtils
+name|utils
 operator|.
 name|createConfiguration
 argument_list|(
@@ -856,9 +882,6 @@ argument_list|,
 name|appJarLr
 argument_list|,
 name|session
-operator|.
-name|getSession
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// finally monitor will print progress until the job is done
@@ -986,7 +1009,6 @@ return|return
 name|rc
 return|;
 block|}
-specifier|private
 name|DAG
 name|build
 parameter_list|(
@@ -1060,7 +1082,7 @@ name|LocalResource
 argument_list|>
 name|additionalLr
 init|=
-name|DagUtils
+name|utils
 operator|.
 name|localizeTempFiles
 argument_list|(
@@ -1090,7 +1112,7 @@ expr_stmt|;
 name|Path
 name|tezDir
 init|=
-name|DagUtils
+name|utils
 operator|.
 name|getTezDir
 argument_list|(
@@ -1187,7 +1209,7 @@ expr_stmt|;
 name|JobConf
 name|wxConf
 init|=
-name|DagUtils
+name|utils
 operator|.
 name|initializeVertexConf
 argument_list|(
@@ -1199,7 +1221,7 @@ decl_stmt|;
 name|Vertex
 name|wx
 init|=
-name|DagUtils
+name|utils
 operator|.
 name|createVertex
 argument_list|(
@@ -1303,7 +1325,7 @@ argument_list|)
 decl_stmt|;
 name|e
 operator|=
-name|DagUtils
+name|utils
 operator|.
 name|createEdge
 argument_list|(
@@ -1352,7 +1374,6 @@ return|return
 name|dag
 return|;
 block|}
-specifier|private
 name|DAGClient
 name|submit
 parameter_list|(
@@ -1368,8 +1389,8 @@ parameter_list|,
 name|LocalResource
 name|appJarLr
 parameter_list|,
-name|TezSession
-name|session
+name|TezSessionState
+name|sessionState
 parameter_list|)
 throws|throws
 name|IOException
@@ -1405,7 +1426,10 @@ block|{
 comment|// ready to start execution on the cluster
 name|dagClient
 operator|=
-name|session
+name|sessionState
+operator|.
+name|getSession
+argument_list|()
 operator|.
 name|submitDAG
 argument_list|(
@@ -1426,26 +1450,8 @@ argument_list|(
 literal|"Tez session was closed. Reopening..."
 argument_list|)
 expr_stmt|;
-comment|// Need to remove this static hack. But this is the way currently to
-comment|// get a session.
-name|SessionState
-name|ss
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-decl_stmt|;
-name|TezSessionState
-name|tezSession
-init|=
-name|ss
-operator|.
-name|getTezSession
-argument_list|()
-decl_stmt|;
 comment|// close the old one, but keep the tmp files around
-name|tezSession
+name|sessionState
 operator|.
 name|close
 argument_list|(
@@ -1453,11 +1459,11 @@ literal|true
 argument_list|)
 expr_stmt|;
 comment|// (re)open the session
-name|tezSession
+name|sessionState
 operator|.
 name|open
 argument_list|(
-name|ss
+name|sessionState
 operator|.
 name|getSessionId
 argument_list|()
@@ -1466,13 +1472,6 @@ name|this
 operator|.
 name|conf
 argument_list|)
-expr_stmt|;
-name|session
-operator|=
-name|tezSession
-operator|.
-name|getSession
-argument_list|()
 expr_stmt|;
 name|console
 operator|.
@@ -1483,7 +1482,10 @@ argument_list|)
 expr_stmt|;
 name|dagClient
 operator|=
-name|session
+name|sessionState
+operator|.
+name|getSession
+argument_list|()
 operator|.
 name|submitDAG
 argument_list|(
@@ -1507,7 +1509,6 @@ name|dagClient
 return|;
 block|}
 comment|/*    * close will move the temp files into the right place for the fetch    * task. If the job has failed it will clean up the files.    */
-specifier|private
 name|int
 name|close
 parameter_list|(

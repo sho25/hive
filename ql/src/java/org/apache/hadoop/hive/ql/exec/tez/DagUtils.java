@@ -1136,9 +1136,13 @@ name|TEZ_DIR
 init|=
 literal|"_tez_scratch_dir"
 decl_stmt|;
-comment|/*    * Creates the configuration object necessary to run a specific vertex from    * map work. This includes input formats, input processor, etc.    */
 specifier|private
 specifier|static
+name|DagUtils
+name|instance
+decl_stmt|;
+comment|/*    * Creates the configuration object necessary to run a specific vertex from    * map work. This includes input formats, input processor, etc.    */
+specifier|private
 name|JobConf
 name|initializeVertexConf
 parameter_list|(
@@ -1416,7 +1420,6 @@ return|;
 block|}
 comment|/**    * Given two vertices and their respective configuration objects createEdge    * will create an Edge object that connects the two. Currently the edge will    * always be a stable bi-partite edge.    *    * @param vConf JobConf of the first vertex    * @param v The first vertex (source)    * @param wConf JobConf of the second vertex    * @param w The second vertex (sink)    * @return    */
 specifier|public
-specifier|static
 name|Edge
 name|createEdge
 parameter_list|(
@@ -1588,7 +1591,6 @@ return|;
 block|}
 comment|/*    * Helper function to create Vertex from MapWork.    */
 specifier|private
-specifier|static
 name|Vertex
 name|createVertex
 parameter_list|(
@@ -2133,7 +2135,6 @@ return|;
 block|}
 comment|/*    * Helper function to create JobConf for specific ReduceWork.    */
 specifier|private
-specifier|static
 name|JobConf
 name|initializeVertexConf
 parameter_list|(
@@ -2204,7 +2205,6 @@ return|;
 block|}
 comment|/*    * Helper function to create Vertex for given ReduceWork.    */
 specifier|private
-specifier|static
 name|Vertex
 name|createVertex
 parameter_list|(
@@ -2434,7 +2434,6 @@ return|;
 block|}
 comment|/*    * Helper method to create a yarn local resource.    */
 specifier|private
-specifier|static
 name|LocalResource
 name|createLocalResource
 parameter_list|(
@@ -2559,7 +2558,6 @@ return|;
 block|}
 comment|/**    * @param conf    * @return path to destination directory on hdfs    * @throws LoginException if we are unable to figure user information    * @throws IOException when any dfs operation fails.    */
 specifier|public
-specifier|static
 name|Path
 name|getDefaultDestDir
 parameter_list|(
@@ -2744,7 +2742,6 @@ return|;
 block|}
 comment|/**    * Localizes files, archives and jars the user has instructed us    * to provide on the cluster as resources for execution.    *    * @param conf    * @return List<LocalResource> local resources to add to execution    * @throws IOException when hdfs operation fails    * @throws LoginException when getDefaultDestDir fails with the same exception    */
 specifier|public
-specifier|static
 name|List
 argument_list|<
 name|LocalResource
@@ -3123,7 +3120,6 @@ return|;
 block|}
 comment|// the api that finds the jar being used by this class on disk
 specifier|public
-specifier|static
 name|String
 name|getExecJarPathLocal
 parameter_list|()
@@ -3154,7 +3150,6 @@ return|;
 block|}
 comment|/*    * Helper function to retrieve the basename of a local resource    */
 specifier|public
-specifier|static
 name|String
 name|getBaseName
 parameter_list|(
@@ -3179,7 +3174,6 @@ return|;
 block|}
 comment|/**    * @param pathStr - the string from which we try to determine the resource base name    * @return the name of the resource from a given path string.    */
 specifier|public
-specifier|static
 name|String
 name|getResourceBaseName
 parameter_list|(
@@ -3211,7 +3205,6 @@ return|;
 block|}
 comment|/**    * @param src the source file.    * @param dest the destination file.    * @param conf the configuration    * @return true if the file names match else returns false.    * @throws IOException when any file system related call fails    */
 specifier|private
-specifier|static
 name|boolean
 name|checkPreExisting
 parameter_list|(
@@ -3316,7 +3309,6 @@ return|;
 block|}
 comment|/**    * @param src path to the source for the resource    * @param dest path in hdfs for the resource    * @param conf    * @return localresource from tez localization.    * @throws IOException when any file system related calls fails.    */
 specifier|public
-specifier|static
 name|LocalResource
 name|localizeResource
 parameter_list|(
@@ -3426,7 +3418,6 @@ return|;
 block|}
 comment|/**    * Creates and initializes a JobConf object that can be used to execute    * the DAG. The configuration object will contain configurations from mapred-site    * overlaid with key/value pairs from the hiveConf object. Finally it will also    * contain some hive specific configurations that do not change from DAG to DAG.    *    * @param hiveConf Current hiveConf for the execution    * @return JobConf base configuration for job execution    * @throws IOException    */
 specifier|public
-specifier|static
 name|JobConf
 name|createConfiguration
 parameter_list|(
@@ -3577,7 +3568,6 @@ return|;
 block|}
 comment|/**    * Creates and initializes the JobConf object for a given BaseWork object.    *    * @param conf Any configurations in conf will be copied to the resulting new JobConf object.    * @param work BaseWork will be used to populate the configuration object.    * @return JobConf new configuration object    */
 specifier|public
-specifier|static
 name|JobConf
 name|initializeVertexConf
 parameter_list|(
@@ -3641,7 +3631,6 @@ block|}
 block|}
 comment|/**    * Create a vertex from a given work object.    *    * @param conf JobConf to be used to this execution unit    * @param work The instance of BaseWork representing the actual work to be performed    * by this vertex.    * @param scratchDir HDFS scratch dir for this execution unit.    * @param appJarLr Local resource for hive-exec.    * @param additionalLr    * @param fileSystem FS corresponding to scratchDir and LocalResources    * @param ctx This query's context    * @return Vertex    */
 specifier|public
-specifier|static
 name|Vertex
 name|createVertex
 parameter_list|(
@@ -3745,12 +3734,19 @@ expr_stmt|;
 block|}
 else|else
 block|{
-assert|assert
-literal|false
-assert|;
-return|return
-literal|null
-return|;
+comment|// something is seriously wrong if this is happening
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|GENERIC_ERROR
+operator|.
+name|getErrorCodedMsg
+argument_list|()
+argument_list|)
+throw|;
 block|}
 comment|// initialize stats publisher if necessary
 if|if
@@ -3879,7 +3875,6 @@ return|;
 block|}
 comment|/**    * createTezDir creates a temporary directory in the scratchDir folder to    * be used with Tez. Assumes scratchDir exists.    */
 specifier|public
-specifier|static
 name|Path
 name|createTezDir
 parameter_list|(
@@ -3923,7 +3918,6 @@ return|;
 block|}
 comment|/**    * Gets the tez dir that belongs to the hive scratch dir    */
 specifier|public
-specifier|static
 name|Path
 name|getTezDir
 parameter_list|(
@@ -3939,6 +3933,31 @@ name|scratchDir
 argument_list|,
 name|TEZ_DIR
 argument_list|)
+return|;
+block|}
+comment|/**    * Singleton    * @return instance of this class    */
+specifier|public
+specifier|static
+name|DagUtils
+name|getInstance
+parameter_list|()
+block|{
+if|if
+condition|(
+name|instance
+operator|==
+literal|null
+condition|)
+block|{
+name|instance
+operator|=
+operator|new
+name|DagUtils
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+name|instance
 return|;
 block|}
 specifier|private

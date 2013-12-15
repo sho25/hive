@@ -411,6 +411,10 @@ name|String
 name|sessionId
 decl_stmt|;
 specifier|private
+name|DagUtils
+name|utils
+decl_stmt|;
+specifier|private
 specifier|static
 name|List
 argument_list|<
@@ -432,10 +436,33 @@ argument_list|)
 decl_stmt|;
 comment|/**    * Constructor. We do not automatically connect, because we only want to    * load tez classes when the user has tez installed.    */
 specifier|public
-name|void
-name|TezSessionContext
+name|TezSessionState
+parameter_list|(
+name|DagUtils
+name|utils
+parameter_list|)
+block|{
+name|this
+operator|.
+name|utils
+operator|=
+name|utils
+expr_stmt|;
+block|}
+comment|/**    * Constructor. We do not automatically connect, because we only want to    * load tez classes when the user has tez installed.    */
+specifier|public
+name|TezSessionState
 parameter_list|()
-block|{   }
+block|{
+name|this
+argument_list|(
+name|DagUtils
+operator|.
+name|getInstance
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * Returns whether a session has been established    */
 specifier|public
 name|boolean
@@ -558,7 +585,7 @@ name|commonLocalResources
 operator|.
 name|put
 argument_list|(
-name|DagUtils
+name|utils
 operator|.
 name|getBaseName
 argument_list|(
@@ -895,7 +922,7 @@ decl_stmt|;
 name|String
 name|currentVersionPathStr
 init|=
-name|DagUtils
+name|utils
 operator|.
 name|getExecJarPathLocal
 argument_list|()
@@ -903,7 +930,7 @@ decl_stmt|;
 name|String
 name|currentJarName
 init|=
-name|DagUtils
+name|utils
 operator|.
 name|getResourceBaseName
 argument_list|(
@@ -1034,7 +1061,7 @@ block|{
 name|String
 name|jarName
 init|=
-name|DagUtils
+name|utils
 operator|.
 name|getResourceBaseName
 argument_list|(
@@ -1066,7 +1093,7 @@ name|getPath
 argument_list|()
 expr_stmt|;
 return|return
-name|DagUtils
+name|utils
 operator|.
 name|localizeResource
 argument_list|(
@@ -1101,7 +1128,7 @@ name|currentJarName
 argument_list|)
 decl_stmt|;
 return|return
-name|DagUtils
+name|utils
 operator|.
 name|localizeResource
 argument_list|(
@@ -1154,7 +1181,7 @@ block|{
 name|Path
 name|dest
 init|=
-name|DagUtils
+name|utils
 operator|.
 name|getDefaultDestDir
 argument_list|(
@@ -1196,7 +1223,7 @@ argument_list|()
 condition|)
 block|{
 return|return
-name|DagUtils
+name|utils
 operator|.
 name|localizeResource
 argument_list|(
