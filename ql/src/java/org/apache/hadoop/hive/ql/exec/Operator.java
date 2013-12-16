@@ -1943,6 +1943,15 @@ operator|=
 name|inputObjInspectors
 expr_stmt|;
 block|}
+specifier|public
+name|ObjectInspector
+name|getOutputObjInspector
+parameter_list|()
+block|{
+return|return
+name|outputObjInspector
+return|;
+block|}
 comment|/**    * Process the row.    *    * @param row    *          The object representing the row.    * @param tag    *          The tag of the row usually means which parent this row comes from.    *          Rows with the same tag should have exactly the same rowInspector    *          all the time.    */
 specifier|public
 specifier|abstract

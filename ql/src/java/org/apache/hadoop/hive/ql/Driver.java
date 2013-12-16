@@ -9056,7 +9056,9 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{       }
+block|{
+comment|// ignore
+block|}
 block|}
 name|console
 operator|.
@@ -9391,7 +9393,6 @@ argument_list|,
 name|tskRun
 argument_list|)
 expr_stmt|;
-return|return;
 block|}
 comment|/**    * Cleans up remaining tasks in case of failure    */
 specifier|public
@@ -9566,7 +9567,6 @@ name|ie
 parameter_list|)
 block|{
 comment|// Do Nothing
-empty_stmt|;
 block|}
 name|resultIterator
 operator|=
@@ -9579,21 +9579,10 @@ block|}
 block|}
 specifier|public
 name|boolean
-name|getResults
-parameter_list|(
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-name|res
-parameter_list|)
-throws|throws
-name|IOException
-throws|,
-name|CommandNeedRetryException
+name|isFetchingTable
+parameter_list|()
 block|{
-if|if
-condition|(
+return|return
 name|plan
 operator|!=
 literal|null
@@ -9604,6 +9593,24 @@ name|getFetchTask
 argument_list|()
 operator|!=
 literal|null
+return|;
+block|}
+specifier|public
+name|boolean
+name|getResults
+parameter_list|(
+name|List
+name|res
+parameter_list|)
+throws|throws
+name|IOException
+throws|,
+name|CommandNeedRetryException
+block|{
+if|if
+condition|(
+name|isFetchingTable
+argument_list|()
 condition|)
 block|{
 name|FetchTask
