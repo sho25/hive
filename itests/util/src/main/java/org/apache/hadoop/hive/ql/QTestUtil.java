@@ -1053,6 +1053,16 @@ name|ZooKeeper
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Assume
+import|;
+end_import
+
 begin_comment
 comment|/**  * QTestUtil.  *  */
 end_comment
@@ -2302,6 +2312,32 @@ operator|.
 name|getHadoopShims
 argument_list|()
 decl_stmt|;
+comment|// can run tez tests only on hadoop 2
+if|if
+condition|(
+name|clusterType
+operator|==
+name|MiniClusterType
+operator|.
+name|tez
+condition|)
+block|{
+name|Assume
+operator|.
+name|assumeTrue
+argument_list|(
+name|ShimLoader
+operator|.
+name|getMajorVersion
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"0.23"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|clusterType
