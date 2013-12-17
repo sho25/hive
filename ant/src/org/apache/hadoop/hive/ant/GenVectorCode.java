@@ -3015,7 +3015,7 @@ literal|""
 block|,
 literal|""
 block|,
-literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n);"
+literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n, true);"
 block|}
 block|,
 block|{
@@ -3033,7 +3033,7 @@ literal|"(double)"
 block|,
 literal|""
 block|,
-literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n);"
+literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n, true);"
 block|}
 block|,
 block|{
@@ -3051,7 +3051,7 @@ literal|""
 block|,
 literal|""
 block|,
-literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n);"
+literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n, true);"
 block|}
 block|,
 block|{
@@ -3069,7 +3069,7 @@ literal|"(double)"
 block|,
 literal|""
 block|,
-literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n);"
+literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n, true);"
 block|}
 block|,
 comment|// The MathExpr class contains helper functions for cases when existing library
@@ -3089,7 +3089,7 @@ literal|""
 block|,
 literal|""
 block|,
-literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n);"
+literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n, true);"
 block|}
 block|,
 block|{
@@ -3107,7 +3107,7 @@ literal|"(double)"
 block|,
 literal|""
 block|,
-literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n);"
+literal|"MathExpr.NaNToNull(outputColVector, sel, batch.selectedInUse, n, true);"
 block|}
 block|,
 comment|// Log(base, Col) is a special case and will be implemented separately from this template
