@@ -47,9 +47,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|mr
-operator|.
-name|MapRedTask
+name|Task
 import|;
 end_import
 
@@ -78,7 +76,7 @@ parameter_list|(
 name|Configuration
 name|hconf
 parameter_list|,
-name|MapRedTask
+name|Task
 name|sourceTask
 parameter_list|)
 block|{

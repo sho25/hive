@@ -43,9 +43,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|mr
-operator|.
-name|MapRedTask
+name|Task
 import|;
 end_import
 
@@ -151,7 +149,7 @@ literal|false
 decl_stmt|;
 specifier|private
 specifier|transient
-name|MapRedTask
+name|Task
 name|sourceTask
 decl_stmt|;
 specifier|public
@@ -399,7 +397,7 @@ name|isPartialScanAnalyzeCommand
 expr_stmt|;
 block|}
 specifier|public
-name|MapRedTask
+name|Task
 name|getSourceTask
 parameter_list|()
 block|{
@@ -411,7 +409,7 @@ specifier|public
 name|void
 name|setSourceTask
 parameter_list|(
-name|MapRedTask
+name|Task
 name|sourceTask
 parameter_list|)
 block|{

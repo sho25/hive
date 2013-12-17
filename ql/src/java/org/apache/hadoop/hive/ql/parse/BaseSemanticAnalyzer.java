@@ -7032,9 +7032,7 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|PARTITION_SPEC_TYPE_MISMATCH
-operator|.
-name|format
-argument_list|(
+argument_list|,
 name|astKeyName
 argument_list|,
 name|inputOI
@@ -7046,7 +7044,6 @@ name|outputOI
 operator|.
 name|getTypeName
 argument_list|()
-argument_list|)
 argument_list|)
 throw|;
 block|}

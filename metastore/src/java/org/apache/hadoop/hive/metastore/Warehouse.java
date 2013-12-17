@@ -483,6 +483,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|StorageDescriptor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|Table
 import|;
 end_import
@@ -2782,14 +2800,14 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    * @param partn    * @return array of FileStatus objects corresponding to the files making up the passed partition    */
+comment|/**    * @param desc    * @return array of FileStatus objects corresponding to the files    * making up the passed storage description    */
 specifier|public
 name|FileStatus
 index|[]
-name|getFileStatusesForPartition
+name|getFileStatusesForSD
 parameter_list|(
-name|Partition
-name|partn
+name|StorageDescriptor
+name|desc
 parameter_list|)
 throws|throws
 name|MetaException
@@ -2802,10 +2820,7 @@ init|=
 operator|new
 name|Path
 argument_list|(
-name|partn
-operator|.
-name|getSd
-argument_list|()
+name|desc
 operator|.
 name|getLocation
 argument_list|()
@@ -2827,7 +2842,7 @@ name|listBucketingDepth
 init|=
 name|calculateListBucketingDMLDepth
 argument_list|(
-name|partn
+name|desc
 argument_list|)
 decl_stmt|;
 return|return
@@ -2865,14 +2880,14 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * List bucketing will introduce sub-directories.    * calculate it here in order to go to the leaf directory    * so that we can count right number of files.    * @param partn    * @return    */
+comment|/**    * List bucketing will introduce sub-directories.    * calculate it here in order to go to the leaf directory    * so that we can count right number of files.    * @param desc    * @return    */
 specifier|private
 specifier|static
 name|int
 name|calculateListBucketingDMLDepth
 parameter_list|(
-name|Partition
-name|partn
+name|StorageDescriptor
+name|desc
 parameter_list|)
 block|{
 comment|// list bucketing will introduce more files
@@ -2884,10 +2899,7 @@ decl_stmt|;
 name|SkewedInfo
 name|skewedInfo
 init|=
-name|partn
-operator|.
-name|getSd
-argument_list|()
+name|desc
 operator|.
 name|getSkewedInfo
 argument_list|()

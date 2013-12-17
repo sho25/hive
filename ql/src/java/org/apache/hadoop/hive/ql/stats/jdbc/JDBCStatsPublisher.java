@@ -669,6 +669,19 @@ parameter_list|)
 block|{
 comment|// for SQLTransientException (maxRetries already achieved at Utilities retry functions
 comment|// or SQLNonTransientException, declare a real failure
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error during JDBC connection to "
+operator|+
+name|connectionString
+operator|+
+literal|". "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 return|return
 literal|false
 return|;
