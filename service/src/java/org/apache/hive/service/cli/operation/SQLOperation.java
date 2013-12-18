@@ -497,6 +497,22 @@ name|service
 operator|.
 name|cli
 operator|.
+name|OperationStatus
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
 name|RowSet
 import|;
 end_import
@@ -580,6 +596,7 @@ name|boolean
 name|runAsync
 decl_stmt|;
 specifier|private
+specifier|volatile
 name|Future
 argument_list|<
 name|?
@@ -1039,8 +1056,7 @@ expr_stmt|;
 if|if
 condition|(
 operator|!
-name|shouldRunAsync
-argument_list|()
+name|runAsync
 condition|)
 block|{
 name|runInternal
@@ -1096,6 +1112,11 @@ name|HiveSQLException
 name|e
 parameter_list|)
 block|{
+name|setOperationException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|error
@@ -1105,8 +1126,6 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-comment|// TODO: Return a more detailed error to the client,
-comment|// currently the async thread only writes to the log and sets the OperationState
 block|}
 block|}
 block|}
@@ -1172,8 +1191,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|shouldRunAsync
-argument_list|()
+name|runAsync
 condition|)
 block|{
 if|if
@@ -1983,15 +2001,6 @@ return|return
 name|serde
 return|;
 block|}
-specifier|private
-name|boolean
-name|shouldRunAsync
-parameter_list|()
-block|{
-return|return
-name|runAsync
-return|;
-block|}
 comment|/**    * If there are query specific settings to overlay, then create a copy of config    * There are two cases we need to clone the session config that's being passed to hive driver    * 1. Async query -    *    If the client changes a config setting, that shouldn't reflect in the execution already underway    * 2. confOverlay -    *    The query specific settings should only be applied to the query config and not session    * @return new configuration    * @throws HiveSQLException    */
 specifier|private
 name|HiveConf
@@ -2018,8 +2027,7 @@ operator|.
 name|isEmpty
 argument_list|()
 operator|||
-name|shouldRunAsync
-argument_list|()
+name|runAsync
 condition|)
 block|{
 comment|// clone the partent session config for this query

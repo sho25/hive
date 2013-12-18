@@ -49,6 +49,18 @@ name|junit
 operator|.
 name|Assert
 operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
 name|fail
 import|;
 end_import
@@ -108,6 +120,22 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ErrorMsg
 import|;
 end_import
 
@@ -262,15 +290,6 @@ argument_list|(
 literal|"tom"
 argument_list|,
 literal|"password"
-argument_list|,
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|assertNotNull
@@ -491,6 +510,7 @@ name|getType
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Cleanup
 name|client
 operator|.
 name|closeOperation
@@ -526,13 +546,14 @@ literal|"tom"
 argument_list|,
 literal|"password"
 argument_list|,
-operator|new
-name|HashMap
-argument_list|<
+name|Collections
+operator|.
+expr|<
 name|String
 argument_list|,
 name|String
-argument_list|>
+operator|>
+name|emptyMap
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -677,14 +698,26 @@ argument_list|(
 name|sessionHandle
 argument_list|)
 expr_stmt|;
-comment|// Change lock manager, otherwise unit-test doesn't go through
+name|OperationHandle
+name|opHandle
+decl_stmt|;
 name|String
 name|queryString
 init|=
-literal|"SET hive.lock.manager="
+literal|"SET "
 operator|+
-literal|"org.apache.hadoop.hive.ql.lockmgr.EmbeddedLockManager"
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SUPPORT_CONCURRENCY
+operator|.
+name|varname
+operator|+
+literal|" = false"
 decl_stmt|;
+name|opHandle
+operator|=
 name|client
 operator|.
 name|executeStatement
@@ -696,11 +729,19 @@ argument_list|,
 name|confOverlay
 argument_list|)
 expr_stmt|;
-comment|// Drop the table if it exists
+name|client
+operator|.
+name|closeOperation
+argument_list|(
+name|opHandle
+argument_list|)
+expr_stmt|;
 name|queryString
 operator|=
 literal|"DROP TABLE IF EXISTS TEST_EXEC"
 expr_stmt|;
+name|opHandle
+operator|=
 name|client
 operator|.
 name|executeStatement
@@ -710,6 +751,13 @@ argument_list|,
 name|queryString
 argument_list|,
 name|confOverlay
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|closeOperation
+argument_list|(
+name|opHandle
 argument_list|)
 expr_stmt|;
 comment|// Create a test table
@@ -717,6 +765,8 @@ name|queryString
 operator|=
 literal|"CREATE TABLE TEST_EXEC(ID STRING)"
 expr_stmt|;
+name|opHandle
+operator|=
 name|client
 operator|.
 name|executeStatement
@@ -726,6 +776,13 @@ argument_list|,
 name|queryString
 argument_list|,
 name|confOverlay
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|closeOperation
+argument_list|(
+name|opHandle
 argument_list|)
 expr_stmt|;
 comment|// Blocking execute
@@ -733,9 +790,8 @@ name|queryString
 operator|=
 literal|"SELECT ID FROM TEST_EXEC"
 expr_stmt|;
-name|OperationHandle
-name|ophandle
-init|=
+name|opHandle
+operator|=
 name|client
 operator|.
 name|executeStatement
@@ -746,7 +802,7 @@ name|queryString
 argument_list|,
 name|confOverlay
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// Expect query to be completed now
 name|assertEquals
 argument_list|(
@@ -760,8 +816,50 @@ name|client
 operator|.
 name|getOperationStatus
 argument_list|(
-name|ophandle
+name|opHandle
 argument_list|)
+operator|.
+name|getState
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|closeOperation
+argument_list|(
+name|opHandle
+argument_list|)
+expr_stmt|;
+comment|// Cleanup
+name|queryString
+operator|=
+literal|"DROP TABLE IF EXISTS TEST_EXEC"
+expr_stmt|;
+name|opHandle
+operator|=
+name|client
+operator|.
+name|executeStatement
+argument_list|(
+name|sessionHandle
+argument_list|,
+name|queryString
+argument_list|,
+name|confOverlay
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|closeOperation
+argument_list|(
+name|opHandle
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|closeSession
+argument_list|(
+name|sessionHandle
 argument_list|)
 expr_stmt|;
 block|}
@@ -834,7 +932,10 @@ init|=
 literal|null
 decl_stmt|;
 name|OperationHandle
-name|ophandle
+name|opHandle
+decl_stmt|;
+name|OperationStatus
+name|opStatus
 init|=
 literal|null
 decl_stmt|;
@@ -842,10 +943,20 @@ comment|// Change lock manager, otherwise unit-test doesn't go through
 name|String
 name|queryString
 init|=
-literal|"SET hive.lock.manager="
+literal|"SET "
 operator|+
-literal|"org.apache.hadoop.hive.ql.lockmgr.EmbeddedLockManager"
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SUPPORT_CONCURRENCY
+operator|.
+name|varname
+operator|+
+literal|" = false"
 decl_stmt|;
+name|opHandle
+operator|=
 name|client
 operator|.
 name|executeStatement
@@ -855,6 +966,13 @@ argument_list|,
 name|queryString
 argument_list|,
 name|confOverlay
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|closeOperation
+argument_list|(
+name|opHandle
 argument_list|)
 expr_stmt|;
 comment|// Drop the table if it exists
@@ -862,6 +980,8 @@ name|queryString
 operator|=
 literal|"DROP TABLE IF EXISTS TEST_EXEC_ASYNC"
 expr_stmt|;
+name|opHandle
+operator|=
 name|client
 operator|.
 name|executeStatement
@@ -871,6 +991,13 @@ argument_list|,
 name|queryString
 argument_list|,
 name|confOverlay
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|closeOperation
+argument_list|(
+name|opHandle
 argument_list|)
 expr_stmt|;
 comment|// Create a test table
@@ -878,6 +1005,8 @@ name|queryString
 operator|=
 literal|"CREATE TABLE TEST_EXEC_ASYNC(ID STRING)"
 expr_stmt|;
+name|opHandle
+operator|=
 name|client
 operator|.
 name|executeStatement
@@ -889,15 +1018,24 @@ argument_list|,
 name|confOverlay
 argument_list|)
 expr_stmt|;
+name|client
+operator|.
+name|closeOperation
+argument_list|(
+name|opHandle
+argument_list|)
+expr_stmt|;
 comment|// Test async execution response when query is malformed
+comment|// Compile time error
+comment|// This query will error out during compilation (which is done synchronous as of now)
 name|String
-name|wrongQuery
+name|wrongQueryString
 init|=
-literal|"SELECT NAME FROM TEST_EXEC"
+literal|"SELECT NON_EXISTANT_COLUMN FROM TEST_EXEC_ASYNC"
 decl_stmt|;
 try|try
 block|{
-name|ophandle
+name|opHandle
 operator|=
 name|client
 operator|.
@@ -905,7 +1043,7 @@ name|executeStatementAsync
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|wrongQuery
+name|wrongQueryString
 argument_list|,
 name|confOverlay
 argument_list|)
@@ -924,11 +1062,12 @@ parameter_list|)
 block|{
 comment|// expected error
 block|}
-name|wrongQuery
+comment|// Runtime error
+name|wrongQueryString
 operator|=
 literal|"CREATE TABLE NON_EXISTING_TAB (ID STRING) location 'hdfs://fooNN:10000/a/b/c'"
 expr_stmt|;
-name|ophandle
+name|opHandle
 operator|=
 name|client
 operator|.
@@ -936,7 +1075,7 @@ name|executeStatementAsync
 argument_list|(
 name|sessionHandle
 argument_list|,
-name|wrongQuery
+name|wrongQueryString
 argument_list|,
 name|confOverlay
 argument_list|)
@@ -973,14 +1112,21 @@ argument_list|)
 expr_stmt|;
 break|break;
 block|}
-name|state
+name|opStatus
 operator|=
 name|client
 operator|.
 name|getOperationStatus
 argument_list|(
-name|ophandle
+name|opHandle
 argument_list|)
+expr_stmt|;
+name|state
+operator|=
+name|opStatus
+operator|.
+name|getState
+argument_list|()
 expr_stmt|;
 name|System
 operator|.
@@ -990,7 +1136,7 @@ name|println
 argument_list|(
 literal|"Polling: "
 operator|+
-name|ophandle
+name|opHandle
 operator|+
 literal|" count="
 operator|+
@@ -1006,11 +1152,11 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+name|state
+operator|==
 name|OperationState
 operator|.
 name|CANCELED
-operator|==
-name|state
 operator|||
 name|state
 operator|==
@@ -1043,18 +1189,47 @@ expr_stmt|;
 block|}
 name|assertEquals
 argument_list|(
-literal|"Query should return an error state"
+literal|"Operation should be in error state"
 argument_list|,
 name|OperationState
 operator|.
 name|ERROR
 argument_list|,
+name|state
+argument_list|)
+expr_stmt|;
+comment|// sqlState, errorCode should be set
+name|assertEquals
+argument_list|(
+name|opStatus
+operator|.
+name|getOperationException
+argument_list|()
+operator|.
+name|getSQLState
+argument_list|()
+argument_list|,
+literal|"08S01"
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|opStatus
+operator|.
+name|getOperationException
+argument_list|()
+operator|.
+name|getErrorCode
+argument_list|()
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
-name|getOperationStatus
+name|closeOperation
 argument_list|(
-name|ophandle
-argument_list|)
+name|opHandle
 argument_list|)
 expr_stmt|;
 comment|// Test async execution when query is well formed
@@ -1062,7 +1237,7 @@ name|queryString
 operator|=
 literal|"SELECT ID FROM TEST_EXEC_ASYNC"
 expr_stmt|;
-name|ophandle
+name|opHandle
 operator|=
 name|client
 operator|.
@@ -1077,7 +1252,7 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-name|ophandle
+name|opHandle
 operator|.
 name|hasResultSet
 argument_list|()
@@ -1114,14 +1289,21 @@ argument_list|)
 expr_stmt|;
 break|break;
 block|}
-name|state
+name|opStatus
 operator|=
 name|client
 operator|.
 name|getOperationStatus
 argument_list|(
-name|ophandle
+name|opHandle
 argument_list|)
+expr_stmt|;
+name|state
+operator|=
+name|opStatus
+operator|.
+name|getState
+argument_list|()
 expr_stmt|;
 name|System
 operator|.
@@ -1131,7 +1313,7 @@ name|println
 argument_list|(
 literal|"Polling: "
 operator|+
-name|ophandle
+name|opHandle
 operator|+
 literal|" count="
 operator|+
@@ -1147,11 +1329,11 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+name|state
+operator|==
 name|OperationState
 operator|.
 name|CANCELED
-operator|==
-name|state
 operator|||
 name|state
 operator|==
@@ -1190,16 +1372,18 @@ name|OperationState
 operator|.
 name|FINISHED
 argument_list|,
+name|state
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
-name|getOperationStatus
+name|closeOperation
 argument_list|(
-name|ophandle
-argument_list|)
+name|opHandle
 argument_list|)
 expr_stmt|;
 comment|// Cancellation test
-name|ophandle
+name|opHandle
 operator|=
 name|client
 operator|.
@@ -1220,14 +1404,14 @@ name|println
 argument_list|(
 literal|"cancelling "
 operator|+
-name|ophandle
+name|opHandle
 argument_list|)
 expr_stmt|;
 name|client
 operator|.
 name|cancelOperation
 argument_list|(
-name|ophandle
+name|opHandle
 argument_list|)
 expr_stmt|;
 name|state
@@ -1236,8 +1420,11 @@ name|client
 operator|.
 name|getOperationStatus
 argument_list|(
-name|ophandle
+name|opHandle
 argument_list|)
+operator|.
+name|getState
+argument_list|()
 expr_stmt|;
 name|System
 operator|.
@@ -1245,7 +1432,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-name|ophandle
+name|opHandle
 operator|+
 literal|" after cancelling, state= "
 operator|+
@@ -1261,6 +1448,38 @@ operator|.
 name|CANCELED
 argument_list|,
 name|state
+argument_list|)
+expr_stmt|;
+comment|// Cleanup
+name|queryString
+operator|=
+literal|"DROP TABLE IF EXISTS TEST_EXEC_ASYNC"
+expr_stmt|;
+name|opHandle
+operator|=
+name|client
+operator|.
+name|executeStatement
+argument_list|(
+name|sessionHandle
+argument_list|,
+name|queryString
+argument_list|,
+name|confOverlay
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|closeOperation
+argument_list|(
+name|opHandle
+argument_list|)
+expr_stmt|;
+name|client
+operator|.
+name|closeSession
+argument_list|(
+name|sessionHandle
 argument_list|)
 expr_stmt|;
 block|}
@@ -1443,6 +1662,9 @@ name|getOperationStatus
 argument_list|(
 name|opHandle
 argument_list|)
+operator|.
+name|getState
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|client
@@ -1493,6 +1715,9 @@ name|getOperationStatus
 argument_list|(
 name|opHandle
 argument_list|)
+operator|.
+name|getState
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|client
@@ -1502,7 +1727,7 @@ argument_list|(
 name|opHandle
 argument_list|)
 expr_stmt|;
-comment|// the settings in confoverly should not be part of session config
+comment|// the settings in conf overlay should not be part of session config
 comment|// another query referring that property with the conf overlay should fail
 name|selectTab
 operator|=

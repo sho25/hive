@@ -139,7 +139,7 @@ name|service
 operator|.
 name|cli
 operator|.
-name|OperationState
+name|OperationStatus
 import|;
 end_import
 
@@ -674,8 +674,8 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|OperationState
-name|getOperationState
+name|OperationStatus
+name|getOperationStatus
 parameter_list|(
 name|OperationHandle
 name|opHandle
@@ -689,7 +689,7 @@ argument_list|(
 name|opHandle
 argument_list|)
 operator|.
-name|getState
+name|getStatus
 argument_list|()
 return|;
 block|}

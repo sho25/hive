@@ -3307,7 +3307,7 @@ block|{
 name|TRow
 name|_elem112
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem112
 operator|=
 operator|new
@@ -3443,7 +3443,7 @@ block|{
 name|TColumn
 name|_elem115
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem115
 operator|=
 operator|new
@@ -4099,7 +4099,7 @@ block|{
 name|TRow
 name|_elem122
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem122
 operator|=
 operator|new
@@ -4227,7 +4227,7 @@ block|{
 name|TColumn
 name|_elem125
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem125
 operator|=
 operator|new

@@ -1235,7 +1235,7 @@ comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.ICLIService#getOp
 annotation|@
 name|Override
 specifier|public
-name|OperationState
+name|OperationStatus
 name|getOperationStatus
 parameter_list|(
 name|OperationHandle
@@ -1244,15 +1244,15 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 block|{
-name|OperationState
-name|opState
+name|OperationStatus
+name|opStatus
 init|=
 name|sessionManager
 operator|.
 name|getOperationManager
 argument_list|()
 operator|.
-name|getOperationState
+name|getOperationStatus
 argument_list|(
 name|opHandle
 argument_list|)
@@ -1267,7 +1267,7 @@ literal|": getOperationStatus()"
 argument_list|)
 expr_stmt|;
 return|return
-name|opState
+name|opStatus
 return|;
 block|}
 comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.ICLIService#cancelOperation(org.apache.hive.service.cli.OperationHandle)    */
