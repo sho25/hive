@@ -486,7 +486,7 @@ comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.CLIServiceClient#
 annotation|@
 name|Override
 specifier|public
-name|OperationState
+name|OperationStatus
 name|getOperationStatus
 parameter_list|(
 name|OperationHandle

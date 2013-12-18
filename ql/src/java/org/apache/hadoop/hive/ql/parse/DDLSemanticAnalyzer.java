@@ -7798,6 +7798,13 @@ argument_list|)
 expr_stmt|;
 name|statDesc
 operator|.
+name|setClearAggregatorStats
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|statDesc
+operator|.
 name|setStatsReliable
 argument_list|(
 name|conf
@@ -11675,6 +11682,13 @@ block|}
 name|statDesc
 operator|.
 name|setNoStatsAggregator
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|statDesc
+operator|.
+name|setClearAggregatorStats
 argument_list|(
 literal|true
 argument_list|)

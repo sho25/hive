@@ -1906,7 +1906,43 @@ literal|30013
 argument_list|,
 literal|"Cloning of statistics failed"
 argument_list|)
-block|,     ;
+block|,
+name|STATSAGGREGATOR_SOURCETASK_NULL
+argument_list|(
+literal|30014
+argument_list|,
+literal|"SourceTask of StatsTask should not be null"
+argument_list|)
+block|,
+name|STATSAGGREGATOR_CONNECTION_ERROR
+argument_list|(
+literal|30015
+argument_list|,
+literal|"Stats aggregator of type {0} cannot be connected to"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|STATSAGGREGATOR_MISSED_SOMESTATS
+argument_list|(
+literal|30016
+argument_list|,
+literal|"Stats type {0} is missing from stats aggregator. If you don't want the query "
+operator|+
+literal|"to fail because of this, set hive.stats.atomic=false"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|STATS_SKIPPING_BY_ERROR
+argument_list|(
+literal|30017
+argument_list|,
+literal|"Skipping stats aggregation by error {0}"
+argument_list|,
+literal|true
+argument_list|)
+block|;   ;
 specifier|private
 name|int
 name|errorCode
@@ -3122,6 +3158,28 @@ operator|+
 literal|"]: "
 operator|+
 name|mesg
+return|;
+block|}
+specifier|public
+name|String
+name|getErrorCodedMsg
+parameter_list|(
+name|String
+modifier|...
+name|reasons
+parameter_list|)
+block|{
+return|return
+literal|"[Error "
+operator|+
+name|errorCode
+operator|+
+literal|"]: "
+operator|+
+name|format
+argument_list|(
+name|reasons
+argument_list|)
 return|;
 block|}
 specifier|public

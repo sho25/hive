@@ -1304,13 +1304,6 @@ argument_list|<
 name|File
 argument_list|>
 name|qFiles
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|File
-argument_list|>
-argument_list|()
 decl_stmt|;
 name|HashMap
 argument_list|<
@@ -1356,13 +1349,7 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-if|if
-condition|(
-name|queryDirectory
-operator|!=
-literal|null
-condition|)
-block|{
+comment|// queryDirectory should not be null
 name|queryDir
 operator|=
 operator|new
@@ -1371,7 +1358,20 @@ argument_list|(
 name|queryDirectory
 argument_list|)
 expr_stmt|;
-block|}
+comment|// dedup file list
+name|Set
+argument_list|<
+name|File
+argument_list|>
+name|testFiles
+init|=
+operator|new
+name|HashSet
+argument_list|<
+name|File
+argument_list|>
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|queryFile
@@ -1387,7 +1387,7 @@ literal|""
 argument_list|)
 condition|)
 block|{
-comment|// The user may have passed a list of files - comma seperated
+comment|// The user may have passed a list of files - comma separated
 for|for
 control|(
 name|String
@@ -1425,7 +1425,7 @@ operator|!=
 name|queryDir
 condition|)
 block|{
-name|qFiles
+name|testFiles
 operator|.
 name|add
 argument_list|(
@@ -1441,7 +1441,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|qFiles
+name|testFiles
 operator|.
 name|add
 argument_list|(
@@ -1471,7 +1471,20 @@ literal|""
 argument_list|)
 condition|)
 block|{
-name|qFiles
+for|for
+control|(
+name|String
+name|regex
+range|:
+name|queryFileRegex
+operator|.
+name|split
+argument_list|(
+literal|","
+argument_list|)
+control|)
+block|{
+name|testFiles
 operator|.
 name|addAll
 argument_list|(
@@ -1486,7 +1499,7 @@ argument_list|(
 operator|new
 name|QFileRegexFilter
 argument_list|(
-name|queryFileRegex
+name|regex
 argument_list|,
 name|includeOnly
 argument_list|)
@@ -1494,6 +1507,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -1510,7 +1524,7 @@ literal|"true"
 argument_list|)
 condition|)
 block|{
-name|qFiles
+name|testFiles
 operator|.
 name|addAll
 argument_list|(
@@ -1534,7 +1548,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|qFiles
+name|testFiles
 operator|.
 name|addAll
 argument_list|(
@@ -1592,7 +1606,7 @@ operator|!=
 name|queryDir
 condition|)
 block|{
-name|qFiles
+name|testFiles
 operator|.
 name|remove
 argument_list|(
@@ -1608,7 +1622,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|qFiles
+name|testFiles
 operator|.
 name|remove
 argument_list|(
@@ -1654,6 +1668,17 @@ literal|" does not exist"
 argument_list|)
 throw|;
 block|}
+name|qFiles
+operator|=
+operator|new
+name|ArrayList
+argument_list|<
+name|File
+argument_list|>
+argument_list|(
+name|testFiles
+argument_list|)
+expr_stmt|;
 name|Collections
 operator|.
 name|sort
@@ -1895,11 +1920,7 @@ condition|)
 block|{
 name|clusterMode
 operator|=
-operator|new
-name|String
-argument_list|(
 literal|""
-argument_list|)
 expr_stmt|;
 block|}
 if|if

@@ -150,9 +150,6 @@ decl_stmt|;
 specifier|private
 specifier|transient
 name|Task
-argument_list|<
-name|?
-argument_list|>
 name|sourceTask
 decl_stmt|;
 specifier|public
@@ -401,9 +398,6 @@ expr_stmt|;
 block|}
 specifier|public
 name|Task
-argument_list|<
-name|?
-argument_list|>
 name|getSourceTask
 parameter_list|()
 block|{
@@ -416,9 +410,6 @@ name|void
 name|setSourceTask
 parameter_list|(
 name|Task
-argument_list|<
-name|?
-argument_list|>
 name|sourceTask
 parameter_list|)
 block|{

@@ -1851,9 +1851,12 @@ name|fileStatus
 init|=
 name|wh
 operator|.
-name|getFileStatusesForPartition
+name|getFileStatusesForSD
 argument_list|(
 name|part
+operator|.
+name|getSd
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|params

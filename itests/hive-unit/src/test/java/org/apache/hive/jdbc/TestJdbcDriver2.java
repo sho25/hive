@@ -7257,7 +7257,7 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|"Hive"
+literal|"Apache Hive"
 argument_list|,
 name|meta
 operator|.

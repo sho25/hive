@@ -2251,7 +2251,7 @@ block|{
 name|TBoolValue
 name|_elem48
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem48
 operator|=
 operator|new
@@ -2378,7 +2378,7 @@ block|{
 name|TByteValue
 name|_elem51
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem51
 operator|=
 operator|new
@@ -2505,7 +2505,7 @@ block|{
 name|TI16Value
 name|_elem54
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem54
 operator|=
 operator|new
@@ -2632,7 +2632,7 @@ block|{
 name|TI32Value
 name|_elem57
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem57
 operator|=
 operator|new
@@ -2759,7 +2759,7 @@ block|{
 name|TI64Value
 name|_elem60
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem60
 operator|=
 operator|new
@@ -2886,7 +2886,7 @@ block|{
 name|TDoubleValue
 name|_elem63
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem63
 operator|=
 operator|new
@@ -3013,7 +3013,7 @@ block|{
 name|TStringValue
 name|_elem66
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem66
 operator|=
 operator|new
@@ -3765,7 +3765,7 @@ block|{
 name|TBoolValue
 name|_elem76
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem76
 operator|=
 operator|new
@@ -3855,7 +3855,7 @@ block|{
 name|TByteValue
 name|_elem79
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem79
 operator|=
 operator|new
@@ -3945,7 +3945,7 @@ block|{
 name|TI16Value
 name|_elem82
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem82
 operator|=
 operator|new
@@ -4035,7 +4035,7 @@ block|{
 name|TI32Value
 name|_elem85
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem85
 operator|=
 operator|new
@@ -4125,7 +4125,7 @@ block|{
 name|TI64Value
 name|_elem88
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem88
 operator|=
 operator|new
@@ -4215,7 +4215,7 @@ block|{
 name|TDoubleValue
 name|_elem91
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem91
 operator|=
 operator|new
@@ -4305,7 +4305,7 @@ block|{
 name|TStringValue
 name|_elem94
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem94
 operator|=
 operator|new

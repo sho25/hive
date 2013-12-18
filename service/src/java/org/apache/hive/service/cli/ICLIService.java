@@ -279,7 +279,7 @@ name|HiveSQLException
 function_decl|;
 specifier|public
 specifier|abstract
-name|OperationState
+name|OperationStatus
 name|getOperationStatus
 parameter_list|(
 name|OperationHandle

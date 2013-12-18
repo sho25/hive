@@ -163,22 +163,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CommandNeedRetryException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|DriverContext
 import|;
 end_import
@@ -604,7 +588,6 @@ name|DYNAMIC_PARTITIONS
 block|,
 comment|// list of dynamic partitions
 block|}
-empty_stmt|;
 comment|// Bean methods
 specifier|protected
 name|boolean
@@ -882,29 +865,6 @@ name|DriverContext
 name|driverContext
 parameter_list|)
 function_decl|;
-comment|// dummy method - FetchTask overwrites this
-specifier|public
-name|boolean
-name|fetch
-parameter_list|(
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-name|res
-parameter_list|)
-throws|throws
-name|IOException
-throws|,
-name|CommandNeedRetryException
-block|{
-assert|assert
-literal|false
-assert|;
-return|return
-literal|false
-return|;
-block|}
 specifier|public
 name|boolean
 name|isRootTask
@@ -1251,7 +1211,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-return|return;
 block|}
 comment|/**    * The default dependent tasks are just child tasks, but different types could implement their own    * (e.g. ConditionalTask will use the listTasks as dependents).    *    * @return a list of tasks that are dependent on this task.    */
 specifier|public

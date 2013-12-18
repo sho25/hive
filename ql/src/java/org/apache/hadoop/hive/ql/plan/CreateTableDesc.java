@@ -433,6 +433,9 @@ name|String
 name|lineDelim
 decl_stmt|;
 name|String
+name|nullFormat
+decl_stmt|;
+name|String
 name|comment
 decl_stmt|;
 name|String
@@ -2406,6 +2409,32 @@ operator|.
 name|isStoredAsSubDirectories
 operator|=
 name|isStoredAsSubDirectories
+expr_stmt|;
+block|}
+comment|/**    * @return the nullFormat    */
+specifier|public
+name|String
+name|getNullFormat
+parameter_list|()
+block|{
+return|return
+name|nullFormat
+return|;
+block|}
+comment|/**    * Set null format string    * @param nullFormat    */
+specifier|public
+name|void
+name|setNullFormat
+parameter_list|(
+name|String
+name|nullFormat
+parameter_list|)
+block|{
+name|this
+operator|.
+name|nullFormat
+operator|=
+name|nullFormat
 expr_stmt|;
 block|}
 block|}

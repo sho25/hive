@@ -554,13 +554,18 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|//the token file location comes after mainClass, as a -Dprop=val
+comment|//the token file location comes after mainClass, as a -D prop=val
 name|args
 operator|.
 name|add
 argument_list|(
 literal|"-D"
-operator|+
+argument_list|)
+expr_stmt|;
+name|args
+operator|.
+name|add
+argument_list|(
 name|TempletonControllerJob
 operator|.
 name|TOKEN_FILE_ARG_PLACEHOLDER
@@ -581,11 +586,16 @@ argument_list|(
 literal|"-D"
 argument_list|)
 expr_stmt|;
+name|args
+operator|.
+name|add
+argument_list|(
 name|TempletonUtils
 operator|.
 name|quoteForWindows
 argument_list|(
 name|d
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

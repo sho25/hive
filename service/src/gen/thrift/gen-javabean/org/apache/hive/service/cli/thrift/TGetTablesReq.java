@@ -4278,7 +4278,7 @@ block|{
 name|String
 name|_elem166
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem166
 operator|=
 name|iprot
@@ -5154,7 +5154,7 @@ block|{
 name|String
 name|_elem171
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem171
 operator|=
 name|iprot

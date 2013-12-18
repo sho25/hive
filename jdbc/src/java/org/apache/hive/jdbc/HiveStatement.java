@@ -963,6 +963,9 @@ case|case
 name|INITIALIZED_STATE
 case|:
 case|case
+name|PENDING_STATE
+case|:
+case|case
 name|RUNNING_STATE
 case|:
 break|break;

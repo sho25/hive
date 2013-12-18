@@ -183,9 +183,6 @@ name|Configuration
 name|hconf
 parameter_list|,
 name|Task
-argument_list|<
-name|?
-argument_list|>
 name|sourceTask
 parameter_list|)
 block|{

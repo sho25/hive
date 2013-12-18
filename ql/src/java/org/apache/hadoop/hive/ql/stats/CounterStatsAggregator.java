@@ -31,16 +31,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -78,6 +68,24 @@ operator|.
 name|conf
 operator|.
 name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Task
 import|;
 end_import
 
@@ -150,22 +158,6 @@ operator|.
 name|mapred
 operator|.
 name|Counters
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Counters
-operator|.
-name|Counter
 import|;
 end_import
 
@@ -254,9 +246,6 @@ name|Configuration
 name|hconf
 parameter_list|,
 name|Task
-argument_list|<
-name|?
-argument_list|>
 name|sourceTask
 parameter_list|)
 block|{
