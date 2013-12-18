@@ -510,17 +510,6 @@ argument_list|,
 name|pruner_pred
 argument_list|)
 expr_stmt|;
-comment|// Set the predicate in the table directly
-name|top
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|setPruningPredicate
-argument_list|(
-name|pruner_pred
-argument_list|)
-expr_stmt|;
 return|return;
 block|}
 comment|/**      * Add pruning predicate.      *      * @param opToPrunner      * @param top      * @param new_pruner_pred      * @param part      * @throws UDFArgumentException      */
@@ -679,17 +668,6 @@ argument_list|(
 name|top
 argument_list|,
 name|partToPruner
-argument_list|)
-expr_stmt|;
-comment|// Set the predicate in the table directly
-name|top
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|setPruningPredicate
-argument_list|(
-name|pruner_pred
 argument_list|)
 expr_stmt|;
 return|return;
