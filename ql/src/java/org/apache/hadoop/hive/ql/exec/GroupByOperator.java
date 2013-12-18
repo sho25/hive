@@ -1952,6 +1952,12 @@ index|[
 literal|0
 index|]
 argument_list|)
+operator|&&
+name|names
+operator|.
+name|length
+operator|>
+literal|2
 condition|)
 block|{
 name|String
@@ -2116,7 +2122,7 @@ block|}
 block|}
 else|else
 block|{
-comment|// will be VALUE._COLx
+comment|// will be KEY._COLx or VALUE._COLx
 if|if
 condition|(
 operator|!
@@ -4058,7 +4064,7 @@ block|}
 block|}
 block|}
 block|}
-comment|// update non-distinct value aggregations: 'VALUE._colx'
+comment|// update non-distinct groupby key or value aggregations: 'KEY._COLx or VALUE._colx'
 comment|// these aggregations should be updated only once.
 if|if
 condition|(
