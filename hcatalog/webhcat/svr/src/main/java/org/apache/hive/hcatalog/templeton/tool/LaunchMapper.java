@@ -1644,6 +1644,11 @@ specifier|final
 name|Configuration
 name|conf
 decl_stmt|;
+name|boolean
+name|needCloseOutput
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|Watcher
 parameter_list|(
@@ -1749,6 +1754,10 @@ argument_list|(
 name|p
 argument_list|)
 expr_stmt|;
+name|needCloseOutput
+operator|=
+literal|true
+expr_stmt|;
 name|LOG
 operator|.
 name|info
@@ -1767,6 +1776,11 @@ name|void
 name|run
 parameter_list|()
 block|{
+name|PrintWriter
+name|writer
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
 name|InputStreamReader
@@ -1787,15 +1801,14 @@ argument_list|(
 name|isr
 argument_list|)
 decl_stmt|;
-name|PrintWriter
 name|writer
-init|=
+operator|=
 operator|new
 name|PrintWriter
 argument_list|(
 name|out
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|String
 name|line
 decl_stmt|;
@@ -2022,6 +2035,29 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+comment|// Need to close() because in some FileSystem
+comment|// implementations flush() is no-op.
+comment|// Close the file handle if it is a hdfs file.
+comment|// But if it is stderr/stdout, skip it since
+comment|// WebHCat is not supposed to close it
+if|if
+condition|(
+name|needCloseOutput
+operator|&&
+name|writer
+operator|!=
+literal|null
+condition|)
+block|{
+name|writer
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
