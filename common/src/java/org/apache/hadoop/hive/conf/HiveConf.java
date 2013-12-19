@@ -1735,6 +1735,15 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// Whether to enable integral JDO pushdown. For partition columns storing integers
+comment|// in non-canonical form, (e.g. '012'), it may not work, so it's off by default.
+name|METASTORE_INTEGER_JDO_PUSHDOWN
+argument_list|(
+literal|"hive.metastore.integral.jdo.pushdown"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|METASTORE_TRY_DIRECT_SQL
 argument_list|(
 literal|"hive.metastore.try.direct.sql"

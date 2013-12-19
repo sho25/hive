@@ -12890,6 +12890,9 @@ name|tree
 operator|.
 name|generateJDOFilterFragment
 argument_list|(
+name|getConf
+argument_list|()
+argument_list|,
 name|table
 argument_list|,
 name|params
