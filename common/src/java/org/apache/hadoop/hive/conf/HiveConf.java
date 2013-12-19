@@ -4009,6 +4009,24 @@ literal|"hive.counters.group.name"
 argument_list|,
 literal|"HIVE"
 argument_list|)
+block|,
+comment|// none, column
+comment|// none is the default(past) behavior. Implies only alphaNumeric and underscore are valid characters in identifiers.
+comment|// column: implies column names can contain any character.
+name|HIVE_QUOTEDID_SUPPORT
+argument_list|(
+literal|"hive.support.quoted.identifiers"
+argument_list|,
+literal|"column"
+argument_list|,
+operator|new
+name|PatternValidator
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"column"
+argument_list|)
+argument_list|)
 block|;
 specifier|public
 specifier|final

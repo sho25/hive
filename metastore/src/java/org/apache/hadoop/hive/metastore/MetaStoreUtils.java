@@ -2737,6 +2737,21 @@ return|return
 literal|false
 return|;
 block|}
+comment|/*    * At the Metadata level there are no restrictions on Column Names.    */
+specifier|public
+specifier|static
+specifier|final
+name|boolean
+name|validateColumnName
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+block|{
+return|return
+literal|true
+return|;
+block|}
 specifier|static
 specifier|public
 name|String
@@ -2760,7 +2775,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|validateName
+name|validateColumnName
 argument_list|(
 name|fieldSchema
 operator|.
@@ -3149,7 +3164,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|validateName
+name|validateColumnName
 argument_list|(
 name|col
 argument_list|)
