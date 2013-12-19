@@ -1020,7 +1020,12 @@ name|openSession
 argument_list|()
 expr_stmt|;
 name|configureConnection
+argument_list|(
+name|connParams
+operator|.
+name|getDbName
 argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private
@@ -1829,7 +1834,10 @@ block|}
 specifier|private
 name|void
 name|configureConnection
-parameter_list|()
+parameter_list|(
+name|String
+name|dbName
+parameter_list|)
 throws|throws
 name|SQLException
 block|{
@@ -1942,6 +1950,21 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|dbName
+operator|!=
+literal|null
+condition|)
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"use "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
 name|stmt
 operator|.
 name|close
