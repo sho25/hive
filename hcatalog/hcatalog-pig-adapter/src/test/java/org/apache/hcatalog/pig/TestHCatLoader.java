@@ -333,6 +333,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
+name|hcatalog
+operator|.
+name|common
+operator|.
+name|HCatUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|pig
 operator|.
 name|ExecType
@@ -474,6 +490,10 @@ specifier|final
 name|String
 name|TEST_DATA_DIR
 init|=
+name|HCatUtil
+operator|.
+name|makePathASafeFileName
+argument_list|(
 name|System
 operator|.
 name|getProperty
@@ -498,6 +518,7 @@ name|System
 operator|.
 name|currentTimeMillis
 argument_list|()
+argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
@@ -3572,12 +3593,19 @@ name|tbl
 operator|+
 literal|" (a string, b boolean) row format delimited fields terminated by '\t'"
 operator|+
-literal|" stored as textfile location 'file://"
+literal|" stored as textfile location 'file:///"
 operator|+
 name|inputDataDir
 operator|.
-name|getAbsolutePath
+name|getPath
 argument_list|()
+operator|.
+name|replaceAll
+argument_list|(
+literal|"\\\\"
+argument_list|,
+literal|"/"
+argument_list|)
 operator|+
 literal|"'"
 argument_list|)

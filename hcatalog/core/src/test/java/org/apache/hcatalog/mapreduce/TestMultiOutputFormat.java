@@ -558,7 +558,7 @@ name|workDir
 decl_stmt|;
 specifier|private
 specifier|static
-name|Configuration
+name|JobConf
 name|mrConf
 init|=
 literal|null
@@ -646,6 +646,14 @@ argument_list|)
 expr_stmt|;
 comment|// LocalJobRunner does not work with mapreduce OutputCommitter. So need
 comment|// to use MiniMRCluster. MAPREDUCE-2350
+name|mrConf
+operator|=
+operator|new
+name|JobConf
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|mrCluster
 operator|=
 operator|new
@@ -667,19 +675,8 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-operator|new
-name|JobConf
-argument_list|(
-name|conf
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|mrConf
-operator|=
-name|mrCluster
-operator|.
-name|createJobConf
-argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private

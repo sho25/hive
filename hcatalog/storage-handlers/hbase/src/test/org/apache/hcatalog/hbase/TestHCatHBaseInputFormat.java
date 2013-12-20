@@ -645,6 +645,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|common
@@ -1523,10 +1525,15 @@ decl_stmt|;
 name|String
 name|db_dir
 init|=
+name|HCatUtil
+operator|.
+name|makePathASafeFileName
+argument_list|(
 name|getTestDir
 argument_list|()
 operator|+
 literal|"/hbasedb"
+argument_list|)
 decl_stmt|;
 name|String
 name|dbquery
