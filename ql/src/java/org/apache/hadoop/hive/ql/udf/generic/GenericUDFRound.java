@@ -989,6 +989,9 @@ case|:
 case|case
 name|VARCHAR
 case|:
+case|case
+name|CHAR
+case|:
 name|outputOI
 operator|=
 name|PrimitiveObjectInspectorFactory
@@ -1528,6 +1531,9 @@ name|STRING
 case|:
 case|case
 name|VARCHAR
+case|:
+case|case
+name|CHAR
 case|:
 name|DoubleWritable
 name|doubleValue
