@@ -46,6 +46,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -3992,16 +4004,6 @@ argument_list|,
 literal|0.00001
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|3
-argument_list|,
-name|reader
-operator|.
-name|getPos
-argument_list|()
-argument_list|)
-expr_stmt|;
 while|while
 condition|(
 name|reader
@@ -5102,10 +5104,10 @@ argument_list|,
 literal|1
 argument_list|)
 decl_stmt|;
-name|assertEquals
+name|assertTrue
 argument_list|(
-literal|0
-argument_list|,
+literal|1
+operator|==
 name|splits
 operator|.
 name|length

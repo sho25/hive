@@ -1697,7 +1697,7 @@ argument_list|)
 block|,
 name|INVALID_HDFS_URI
 argument_list|(
-literal|10248
+literal|10251
 argument_list|,
 literal|"{0} is not a hdfs uri"
 argument_list|,
@@ -1706,7 +1706,7 @@ argument_list|)
 block|,
 name|INVALID_DIR
 argument_list|(
-literal|10249
+literal|10252
 argument_list|,
 literal|"{0} is not a directory"
 argument_list|,
@@ -1715,7 +1715,7 @@ argument_list|)
 block|,
 name|NO_VALID_LOCATIONS
 argument_list|(
-literal|10250
+literal|10253
 argument_list|,
 literal|"Could not find any valid location to place the jars. "
 operator|+
