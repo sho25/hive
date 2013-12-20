@@ -1735,6 +1735,15 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// Whether to enable integral JDO pushdown. For partition columns storing integers
+comment|// in non-canonical form, (e.g. '012'), it may not work, so it's off by default.
+name|METASTORE_INTEGER_JDO_PUSHDOWN
+argument_list|(
+literal|"hive.metastore.integral.jdo.pushdown"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|METASTORE_TRY_DIRECT_SQL
 argument_list|(
 literal|"hive.metastore.try.direct.sql"
@@ -4057,6 +4066,24 @@ argument_list|(
 literal|"hive.counters.group.name"
 argument_list|,
 literal|"HIVE"
+argument_list|)
+block|,
+comment|// none, column
+comment|// none is the default(past) behavior. Implies only alphaNumeric and underscore are valid characters in identifiers.
+comment|// column: implies column names can contain any character.
+name|HIVE_QUOTEDID_SUPPORT
+argument_list|(
+literal|"hive.support.quoted.identifiers"
+argument_list|,
+literal|"column"
+argument_list|,
+operator|new
+name|PatternValidator
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"column"
+argument_list|)
 argument_list|)
 block|;
 specifier|public

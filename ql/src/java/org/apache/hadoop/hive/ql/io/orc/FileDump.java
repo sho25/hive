@@ -616,6 +616,11 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|rows
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 block|}

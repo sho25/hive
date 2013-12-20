@@ -335,7 +335,7 @@ condition|)
 block|{
 name|FileUtils
 operator|.
-name|deleteDirectory
+name|forceDeleteOnExit
 argument_list|(
 name|metaStoreDir
 argument_list|)

@@ -1810,17 +1810,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-if|if
-condition|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
-name|convertPathsFromWindowsToHdfs
-argument_list|()
-expr_stmt|;
-block|}
 name|String
 name|vectorizationEnabled
 init|=
@@ -1945,6 +1934,19 @@ operator|.
 name|toString
 argument_list|()
 argument_list|)
+expr_stmt|;
+block|}
+comment|// Windows paths should be converted after MiniMrShim.setupConfiguration()
+comment|// since setupConfiguration may overwrite configuration values.
+if|if
+condition|(
+name|Shell
+operator|.
+name|WINDOWS
+condition|)
+block|{
+name|convertPathsFromWindowsToHdfs
+argument_list|()
 expr_stmt|;
 block|}
 block|}
