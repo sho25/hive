@@ -557,7 +557,7 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|Hadoop20Shims
+name|HadoopShimsSecure
 operator|.
 name|NullOutputCommitter
 import|;
