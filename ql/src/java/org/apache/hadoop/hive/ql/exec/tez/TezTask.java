@@ -775,6 +775,25 @@ operator|.
 name|getTezSession
 argument_list|()
 expr_stmt|;
+comment|// if we don't have one yet create it.
+if|if
+condition|(
+name|session
+operator|==
+literal|null
+condition|)
+block|{
+name|ss
+operator|.
+name|setTezSession
+argument_list|(
+operator|new
+name|TezSessionState
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|// if it's not running start it.
 if|if
 condition|(
 operator|!
