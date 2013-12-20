@@ -219,6 +219,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|FileUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -2086,22 +2102,58 @@ expr_stmt|;
 name|String
 name|partName
 init|=
-literal|"ds=2008-07-01 14%3A13%3A12/hr=14"
+literal|"ds="
+operator|+
+name|FileUtils
+operator|.
+name|escapePathName
+argument_list|(
+literal|"2008-07-01 14:13:12"
+argument_list|)
+operator|+
+literal|"/hr=14"
 decl_stmt|;
 name|String
 name|part2Name
 init|=
-literal|"ds=2008-07-01 14%3A13%3A12/hr=15"
+literal|"ds="
+operator|+
+name|FileUtils
+operator|.
+name|escapePathName
+argument_list|(
+literal|"2008-07-01 14:13:12"
+argument_list|)
+operator|+
+literal|"/hr=15"
 decl_stmt|;
 name|String
 name|part3Name
 init|=
-literal|"ds=2008-07-02 14%3A13%3A12/hr=15"
+literal|"ds="
+operator|+
+name|FileUtils
+operator|.
+name|escapePathName
+argument_list|(
+literal|"2008-07-02 14:13:12"
+argument_list|)
+operator|+
+literal|"/hr=15"
 decl_stmt|;
 name|String
 name|part4Name
 init|=
-literal|"ds=2008-07-03 14%3A13%3A12/hr=151"
+literal|"ds="
+operator|+
+name|FileUtils
+operator|.
+name|escapePathName
+argument_list|(
+literal|"2008-07-03 14:13:12"
+argument_list|)
+operator|+
+literal|"/hr=151"
 decl_stmt|;
 name|part_get
 operator|=
