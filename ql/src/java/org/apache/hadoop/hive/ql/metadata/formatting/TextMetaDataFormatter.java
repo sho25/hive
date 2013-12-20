@@ -786,7 +786,9 @@ argument_list|(
 name|output
 operator|.
 name|getBytes
-argument_list|()
+argument_list|(
+literal|"UTF-8"
+argument_list|)
 argument_list|)
 expr_stmt|;
 if|if
@@ -840,7 +842,9 @@ argument_list|(
 name|output
 operator|.
 name|getBytes
-argument_list|()
+argument_list|(
+literal|"UTF-8"
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -893,7 +897,9 @@ name|toString
 argument_list|()
 operator|.
 name|getBytes
-argument_list|()
+argument_list|(
+literal|"UTF-8"
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|outStream
@@ -942,7 +948,9 @@ name|toString
 argument_list|()
 operator|.
 name|getBytes
-argument_list|()
+argument_list|(
+literal|"UTF-8"
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|outStream
@@ -2454,7 +2462,9 @@ argument_list|(
 name|comment
 operator|.
 name|getBytes
-argument_list|()
+argument_list|(
+literal|"UTF-8"
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
