@@ -13924,6 +13924,11 @@ argument_list|,
 name|forHavingClause
 argument_list|,
 name|havingInputAlias
+argument_list|,
+name|aliasToOpInfo
+operator|.
+name|keySet
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|QB
