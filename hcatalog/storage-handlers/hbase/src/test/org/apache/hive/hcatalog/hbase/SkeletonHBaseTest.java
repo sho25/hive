@@ -698,8 +698,6 @@ name|String
 name|handle
 parameter_list|)
 block|{
-try|try
-block|{
 name|testDir
 operator|=
 operator|new
@@ -728,7 +726,7 @@ operator|+
 literal|"/"
 argument_list|)
 operator|.
-name|getCanonicalPath
+name|getPath
 argument_list|()
 expr_stmt|;
 name|System
@@ -742,23 +740,6 @@ operator|+
 name|testDir
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-literal|"Failed to generate testDir"
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
 block|}
 specifier|public
 name|void

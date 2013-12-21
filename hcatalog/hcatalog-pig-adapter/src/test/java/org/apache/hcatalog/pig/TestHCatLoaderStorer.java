@@ -377,8 +377,15 @@ literal|"load data local inpath '"
 operator|+
 name|dataDir
 operator|.
-name|getAbsolutePath
+name|getPath
 argument_list|()
+operator|.
+name|replaceAll
+argument_list|(
+literal|"\\\\"
+argument_list|,
+literal|"/"
+argument_list|)
 operator|+
 literal|"' into table "
 operator|+
@@ -716,8 +723,15 @@ name|smallTinyIntBoundsCheckHelper
 argument_list|(
 name|writeDataFile
 operator|.
-name|getAbsolutePath
+name|getPath
 argument_list|()
+operator|.
+name|replaceAll
+argument_list|(
+literal|"\\\\"
+argument_list|,
+literal|"/"
+argument_list|)
 argument_list|,
 name|ExecJob
 operator|.
