@@ -221,11 +221,11 @@ argument_list|>
 name|commonJoinTask
 decl_stmt|;
 specifier|private
-name|String
+name|Path
 name|localTmpDir
 decl_stmt|;
 specifier|private
-name|String
+name|Path
 name|hdfsTmpDir
 decl_stmt|;
 specifier|public
@@ -398,7 +398,7 @@ name|pathToAliases
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getLocalTmpDir
 parameter_list|()
 block|{
@@ -410,7 +410,7 @@ specifier|public
 name|void
 name|setLocalTmpDir
 parameter_list|(
-name|String
+name|Path
 name|localTmpDir
 parameter_list|)
 block|{
@@ -422,7 +422,7 @@ name|localTmpDir
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getHdfsTmpDir
 parameter_list|()
 block|{
@@ -434,7 +434,7 @@ specifier|public
 name|void
 name|setHdfsTmpDir
 parameter_list|(
-name|String
+name|Path
 name|hdfsTmpDir
 parameter_list|)
 block|{
@@ -764,10 +764,10 @@ name|Long
 argument_list|>
 name|aliasToKnownSize
 parameter_list|,
-name|String
+name|Path
 name|hdfsTmpDir
 parameter_list|,
-name|String
+name|Path
 name|localTmpDir
 parameter_list|,
 name|HiveConf
@@ -892,6 +892,9 @@ operator|.
 name|startsWith
 argument_list|(
 name|hdfsTmpDir
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 operator|||
 name|p
@@ -899,6 +902,9 @@ operator|.
 name|startsWith
 argument_list|(
 name|localTmpDir
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 condition|)
 block|{
