@@ -29,6 +29,20 @@ name|Serializable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
 begin_comment
 comment|/**  * LoadFileDesc.  *  */
 end_comment
@@ -83,8 +97,8 @@ name|CreateTableDesc
 name|createTableDesc
 parameter_list|,
 specifier|final
-name|String
-name|sourceDir
+name|Path
+name|sourcePath
 parameter_list|,
 specifier|final
 name|String
@@ -105,7 +119,7 @@ parameter_list|)
 block|{
 name|this
 argument_list|(
-name|sourceDir
+name|sourcePath
 argument_list|,
 name|targetDir
 argument_list|,
@@ -171,8 +185,8 @@ specifier|public
 name|LoadFileDesc
 parameter_list|(
 specifier|final
-name|String
-name|sourceDir
+name|Path
+name|sourcePath
 parameter_list|,
 specifier|final
 name|String
@@ -193,7 +207,7 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|sourceDir
+name|sourcePath
 argument_list|)
 expr_stmt|;
 name|this

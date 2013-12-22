@@ -1831,14 +1831,10 @@ name|fs
 operator|.
 name|globStatus
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|tbd
 operator|.
-name|getSourceDir
+name|getSourcePath
 argument_list|()
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|files

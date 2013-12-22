@@ -7662,7 +7662,11 @@ init|=
 operator|new
 name|LoadTableDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|queryTmpdir
+argument_list|)
 argument_list|,
 name|queryTmpdir
 argument_list|,
@@ -11553,7 +11557,11 @@ init|=
 operator|new
 name|LoadTableDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|queryTmpdir
+argument_list|)
 argument_list|,
 name|queryTmpdir
 argument_list|,
