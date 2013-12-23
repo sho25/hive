@@ -3979,6 +3979,13 @@ expr_stmt|;
 block|}
 try|try
 block|{
+if|if
+condition|(
+name|tezSessionState
+operator|!=
+literal|null
+condition|)
+block|{
 name|tezSessionState
 operator|.
 name|close
@@ -3986,6 +3993,7 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -4001,6 +4009,13 @@ literal|"Error closing tez session"
 argument_list|,
 name|e
 argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|tezSessionState
+operator|=
+literal|null
 expr_stmt|;
 block|}
 block|}
