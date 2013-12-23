@@ -544,7 +544,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Path
 argument_list|>
 name|fsScratchDirs
 init|=
@@ -553,7 +553,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -877,7 +877,7 @@ return|;
 block|}
 comment|/**    * Get a tmp directory on specified URI    *    * @param scheme Scheme of the target FS    * @param authority Authority of the target FS    * @param mkdir create the directory if true    * @param scratchDir path of tmp directory    */
 specifier|private
-name|String
+name|Path
 name|getScratchDir
 parameter_list|(
 name|String
@@ -902,7 +902,7 @@ literal|":"
 operator|+
 name|authority
 decl_stmt|;
-name|String
+name|Path
 name|dir
 init|=
 name|fsScratchDirs
@@ -1066,9 +1066,6 @@ block|}
 name|dir
 operator|=
 name|dirPath
-operator|.
-name|toString
-argument_list|()
 expr_stmt|;
 name|fsScratchDirs
 operator|.
@@ -1093,7 +1090,7 @@ return|;
 block|}
 comment|/**    * Create a local scratch directory on demand and return it.    */
 specifier|public
-name|String
+name|Path
 name|getLocalScratchDir
 parameter_list|(
 name|boolean
@@ -1156,7 +1153,7 @@ block|}
 block|}
 comment|/**    * Create a map-reduce scratch directory on demand and return it.    *    */
 specifier|public
-name|String
+name|Path
 name|getMRScratchDir
 parameter_list|()
 block|{
@@ -1198,7 +1195,7 @@ operator|.
 name|toUri
 argument_list|()
 decl_stmt|;
-name|String
+name|Path
 name|newScratchDir
 init|=
 name|getScratchDir
@@ -1276,7 +1273,7 @@ throw|;
 block|}
 block|}
 specifier|private
-name|String
+name|Path
 name|getExternalScratchDir
 parameter_list|(
 name|URI
@@ -1323,7 +1320,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Path
 argument_list|>
 name|entry
 range|:
@@ -1338,14 +1335,10 @@ block|{
 name|Path
 name|p
 init|=
-operator|new
-name|Path
-argument_list|(
 name|entry
 operator|.
 name|getValue
 argument_list|()
-argument_list|)
 decl_stmt|;
 name|p
 operator|.
@@ -1505,12 +1498,8 @@ decl_stmt|;
 name|Path
 name|mrbase
 init|=
-operator|new
-name|Path
-argument_list|(
 name|getMRScratchDir
 argument_list|()
-argument_list|)
 decl_stmt|;
 name|URI
 name|relURI

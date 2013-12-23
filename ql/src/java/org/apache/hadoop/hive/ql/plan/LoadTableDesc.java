@@ -49,6 +49,20 @@ name|Map
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
 begin_comment
 comment|/**  * LoadTableDesc.  *  */
 end_comment
@@ -152,8 +166,8 @@ specifier|public
 name|LoadTableDesc
 parameter_list|(
 specifier|final
-name|String
-name|sourceDir
+name|Path
+name|sourcePath
 parameter_list|,
 specifier|final
 name|String
@@ -191,13 +205,11 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|sourceDir
+name|sourcePath
 argument_list|)
 expr_stmt|;
 name|init
 argument_list|(
-name|sourceDir
-argument_list|,
 name|tmpDir
 argument_list|,
 name|table
@@ -212,8 +224,8 @@ specifier|public
 name|LoadTableDesc
 parameter_list|(
 specifier|final
-name|String
-name|sourceDir
+name|Path
+name|sourcePath
 parameter_list|,
 specifier|final
 name|String
@@ -247,7 +259,7 @@ parameter_list|)
 block|{
 name|this
 argument_list|(
-name|sourceDir
+name|sourcePath
 argument_list|,
 name|tmpDir
 argument_list|,
@@ -263,8 +275,8 @@ specifier|public
 name|LoadTableDesc
 parameter_list|(
 specifier|final
-name|String
-name|sourceDir
+name|Path
+name|sourcePath
 parameter_list|,
 specifier|final
 name|String
@@ -293,7 +305,7 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|sourceDir
+name|sourcePath
 argument_list|)
 expr_stmt|;
 name|this
@@ -322,8 +334,6 @@ condition|)
 block|{
 name|init
 argument_list|(
-name|sourceDir
-argument_list|,
 name|tmpDir
 argument_list|,
 name|table
@@ -341,8 +351,6 @@ else|else
 block|{
 name|init
 argument_list|(
-name|sourceDir
-argument_list|,
 name|tmpDir
 argument_list|,
 name|table
@@ -365,10 +373,6 @@ specifier|private
 name|void
 name|init
 parameter_list|(
-specifier|final
-name|String
-name|sourceDir
-parameter_list|,
 specifier|final
 name|String
 name|tmpDir

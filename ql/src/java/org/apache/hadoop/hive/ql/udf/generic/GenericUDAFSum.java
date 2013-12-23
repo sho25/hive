@@ -531,14 +531,14 @@ case|:
 case|case
 name|LONG
 case|:
-case|case
-name|TIMESTAMP
-case|:
 return|return
 operator|new
 name|GenericUDAFSumLong
 argument_list|()
 return|;
+case|case
+name|TIMESTAMP
+case|:
 case|case
 name|FLOAT
 case|:

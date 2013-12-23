@@ -7185,10 +7185,14 @@ argument_list|,
 operator|new
 name|LoadFileDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|fsInputDesc
 operator|.
 name|getFinalDirName
 argument_list|()
+argument_list|)
 argument_list|,
 name|finalName
 argument_list|,

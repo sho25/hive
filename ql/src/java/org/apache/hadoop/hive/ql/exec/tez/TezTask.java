@@ -830,14 +830,10 @@ comment|// scratch dir. let's create this first.
 name|Path
 name|scratchDir
 init|=
-operator|new
-name|Path
-argument_list|(
 name|ctx
 operator|.
 name|getMRScratchDir
 argument_list|()
-argument_list|)
 decl_stmt|;
 comment|// create the tez tmp dir
 name|utils
