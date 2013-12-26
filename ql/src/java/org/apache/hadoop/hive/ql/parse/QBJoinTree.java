@@ -553,15 +553,6 @@ operator|++
 return|;
 block|}
 specifier|public
-name|String
-name|getJoinStreamDesc
-parameter_list|()
-block|{
-return|return
-literal|"$INTNAME"
-return|;
-block|}
-specifier|public
 name|JoinCond
 index|[]
 name|getJoinCond
