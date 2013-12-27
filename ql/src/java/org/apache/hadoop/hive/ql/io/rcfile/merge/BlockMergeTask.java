@@ -1027,7 +1027,7 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-name|String
+name|Path
 name|outputPath
 init|=
 name|this
@@ -1044,11 +1044,7 @@ name|Utilities
 operator|.
 name|toTempPath
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|outputPath
-argument_list|)
 argument_list|)
 decl_stmt|;
 try|try
@@ -1115,11 +1111,7 @@ name|setMergeOutputPath
 argument_list|(
 name|job
 argument_list|,
-operator|new
-name|Path
-argument_list|(
 name|outputPath
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|job
@@ -2189,7 +2181,11 @@ name|MergeWork
 argument_list|(
 name|inputPaths
 argument_list|,
+operator|new
+name|Path
+argument_list|(
 name|outputDir
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|DriverContext

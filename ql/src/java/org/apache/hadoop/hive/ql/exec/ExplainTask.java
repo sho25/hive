@@ -2044,6 +2044,10 @@ operator|||
 name|val
 operator|instanceof
 name|Double
+operator|||
+name|val
+operator|instanceof
+name|Path
 condition|)
 block|{
 return|return

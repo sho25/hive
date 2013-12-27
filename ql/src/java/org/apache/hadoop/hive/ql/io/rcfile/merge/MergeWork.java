@@ -333,7 +333,8 @@ argument_list|>
 name|inputPaths
 decl_stmt|;
 specifier|private
-name|String
+specifier|transient
+name|Path
 name|outputDir
 decl_stmt|;
 specifier|private
@@ -365,7 +366,7 @@ name|String
 argument_list|>
 name|inputPaths
 parameter_list|,
-name|String
+name|Path
 name|outputDir
 parameter_list|)
 block|{
@@ -390,7 +391,7 @@ name|String
 argument_list|>
 name|inputPaths
 parameter_list|,
-name|String
+name|Path
 name|outputDir
 parameter_list|,
 name|boolean
@@ -523,7 +524,7 @@ name|inputPaths
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getOutputDir
 parameter_list|()
 block|{
@@ -535,7 +536,7 @@ specifier|public
 name|void
 name|setOutputDir
 parameter_list|(
-name|String
+name|Path
 name|outputDir
 parameter_list|)
 block|{

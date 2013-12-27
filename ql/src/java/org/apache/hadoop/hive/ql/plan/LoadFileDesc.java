@@ -43,6 +43,24 @@ name|Path
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|PTFUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * LoadFileDesc.  *  */
 end_comment
@@ -65,7 +83,8 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|String
+specifier|transient
+name|Path
 name|targetDir
 decl_stmt|;
 specifier|private
@@ -85,6 +104,20 @@ specifier|private
 name|String
 name|destinationCreateTable
 decl_stmt|;
+static|static
+block|{
+name|PTFUtils
+operator|.
+name|makeTransient
+argument_list|(
+name|LoadFileDesc
+operator|.
+name|class
+argument_list|,
+literal|"targetDir"
+argument_list|)
+expr_stmt|;
+block|}
 specifier|public
 name|LoadFileDesc
 parameter_list|()
@@ -101,7 +134,7 @@ name|Path
 name|sourcePath
 parameter_list|,
 specifier|final
-name|String
+name|Path
 name|targetDir
 parameter_list|,
 specifier|final
@@ -189,7 +222,7 @@ name|Path
 name|sourcePath
 parameter_list|,
 specifier|final
-name|String
+name|Path
 name|targetDir
 parameter_list|,
 specifier|final
@@ -243,7 +276,7 @@ operator|=
 literal|"destination"
 argument_list|)
 specifier|public
-name|String
+name|Path
 name|getTargetDir
 parameter_list|()
 block|{
@@ -256,7 +289,7 @@ name|void
 name|setTargetDir
 parameter_list|(
 specifier|final
-name|String
+name|Path
 name|targetDir
 parameter_list|)
 block|{

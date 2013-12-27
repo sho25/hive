@@ -1285,7 +1285,7 @@ block|}
 block|}
 block|}
 block|}
-name|String
+name|Path
 name|finalName
 init|=
 name|processFS
@@ -1805,7 +1805,7 @@ parameter_list|,
 name|GenMRProcContext
 name|ctx
 parameter_list|,
-name|String
+name|Path
 name|finalName
 parameter_list|)
 throws|throws
@@ -1879,6 +1879,12 @@ operator|new
 name|FileSinkDesc
 argument_list|(
 name|finalName
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|ts
 argument_list|,
@@ -2815,7 +2821,7 @@ parameter_list|(
 name|FileSinkDesc
 name|fsInputDesc
 parameter_list|,
-name|String
+name|Path
 name|finalName
 parameter_list|,
 name|boolean
@@ -3441,7 +3447,7 @@ return|;
 block|}
 comment|/**    * Process the FileSink operator to generate a MoveTask if necessary.    *    * @param fsOp    *          current FileSink operator    * @param stack    *          parent operators    * @param opProcCtx    * @param chDir    *          whether the operator should be first output to a tmp dir and then merged    *          to the final dir later    * @return the final file name to which the FileSinkOperator should store.    * @throws SemanticException    */
 specifier|private
-name|String
+name|Path
 name|processFS
 parameter_list|(
 name|FileSinkOperator
@@ -3538,7 +3544,7 @@ name|getCurrTask
 argument_list|()
 decl_stmt|;
 comment|// If the directory needs to be changed, send the new directory
-name|String
+name|Path
 name|dest
 init|=
 literal|null
@@ -3550,6 +3556,9 @@ condition|)
 block|{
 name|dest
 operator|=
+operator|new
+name|Path
+argument_list|(
 name|fsOp
 operator|.
 name|getConf
@@ -3557,6 +3566,7 @@ argument_list|()
 operator|.
 name|getFinalDirName
 argument_list|()
+argument_list|)
 expr_stmt|;
 comment|// generate the temporary file
 comment|// it must be on the same file system as the current destination
@@ -3583,13 +3593,7 @@ name|baseCtx
 operator|.
 name|getExternalTmpFileURI
 argument_list|(
-operator|(
-operator|new
-name|Path
-argument_list|(
 name|dest
-argument_list|)
-operator|)
 operator|.
 name|toUri
 argument_list|()

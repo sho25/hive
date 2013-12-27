@@ -1461,14 +1461,10 @@ block|{
 name|Path
 name|targetPath
 init|=
-operator|new
-name|Path
-argument_list|(
 name|lfd
 operator|.
 name|getTargetDir
 argument_list|()
-argument_list|)
 decl_stmt|;
 name|Path
 name|sourcePath
@@ -1558,9 +1554,6 @@ decl_stmt|;
 name|Path
 name|destPath
 init|=
-operator|new
-name|Path
-argument_list|(
 name|lmfd
 operator|.
 name|getTargetDirs
@@ -1569,7 +1562,6 @@ operator|.
 name|get
 argument_list|(
 name|i
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|FileSystem
