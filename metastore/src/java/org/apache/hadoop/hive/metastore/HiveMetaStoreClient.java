@@ -2125,6 +2125,9 @@ block|}
 comment|// Wait before launching the next round of connection retries.
 if|if
 condition|(
+operator|!
+name|isConnected
+operator|&&
 name|retryDelaySeconds
 operator|>
 literal|0
