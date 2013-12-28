@@ -1060,6 +1060,16 @@ argument_list|)
 operator|.
 name|put
 argument_list|(
+literal|"mavenBuildArgs"
+argument_list|,
+name|configuration
+operator|.
+name|getMavenBuildArgs
+argument_list|()
+argument_list|)
+operator|.
+name|put
+argument_list|(
 literal|"mavenTestArgs"
 argument_list|,
 name|configuration
@@ -2237,7 +2247,7 @@ name|ANT_ENV_OPTS
 argument_list|,
 literal|true
 argument_list|,
-literal|"ANT_OPTS environemnt variable setting"
+literal|"ANT_OPTS environment variable setting"
 argument_list|)
 expr_stmt|;
 name|CommandLine
