@@ -2369,9 +2369,6 @@ operator|new
 name|FetchWork
 argument_list|(
 name|tblDir
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|tableDescList
 operator|.

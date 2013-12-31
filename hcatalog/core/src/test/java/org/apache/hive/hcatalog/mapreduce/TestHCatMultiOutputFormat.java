@@ -3112,13 +3112,14 @@ operator|=
 operator|new
 name|FetchWork
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tbl
 operator|.
 name|getDataLocation
 argument_list|()
-operator|.
-name|toString
-argument_list|()
+argument_list|)
 argument_list|,
 name|Utilities
 operator|.

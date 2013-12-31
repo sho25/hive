@@ -4466,9 +4466,6 @@ operator|new
 name|FetchWork
 argument_list|(
 name|tblDir
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|tblDesc
 argument_list|)
@@ -4721,7 +4718,11 @@ argument_list|,
 operator|new
 name|FetchWork
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|alias
+argument_list|)
 argument_list|,
 name|tt_desc
 argument_list|)

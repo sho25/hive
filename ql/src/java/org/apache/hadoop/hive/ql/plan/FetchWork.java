@@ -172,7 +172,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|String
+name|Path
 name|tblDir
 decl_stmt|;
 specifier|private
@@ -299,7 +299,7 @@ block|}
 specifier|public
 name|FetchWork
 parameter_list|(
-name|String
+name|Path
 name|tblDir
 parameter_list|,
 name|TableDesc
@@ -320,7 +320,7 @@ block|}
 specifier|public
 name|FetchWork
 parameter_list|(
-name|String
+name|Path
 name|tblDir
 parameter_list|,
 name|TableDesc
@@ -523,7 +523,7 @@ return|;
 block|}
 comment|/**    * @return the tblDir    */
 specifier|public
-name|String
+name|Path
 name|getTblDir
 parameter_list|()
 block|{
@@ -531,26 +531,12 @@ return|return
 name|tblDir
 return|;
 block|}
-comment|/**    * @return the tblDir    */
-specifier|public
-name|Path
-name|getTblDirPath
-parameter_list|()
-block|{
-return|return
-operator|new
-name|Path
-argument_list|(
-name|tblDir
-argument_list|)
-return|;
-block|}
 comment|/**    * @param tblDir    *          the tblDir to set    */
 specifier|public
 name|void
 name|setTblDir
 parameter_list|(
-name|String
+name|Path
 name|tblDir
 parameter_list|)
 block|{

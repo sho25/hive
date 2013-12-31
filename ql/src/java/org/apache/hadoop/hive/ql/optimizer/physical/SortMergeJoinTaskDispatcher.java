@@ -1008,6 +1008,12 @@ name|fetchWork
 operator|.
 name|getTblDir
 argument_list|()
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|partitionInfo
 argument_list|)

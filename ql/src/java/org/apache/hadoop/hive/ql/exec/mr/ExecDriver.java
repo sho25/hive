@@ -3664,12 +3664,7 @@ operator|=
 operator|new
 name|FetchWork
 argument_list|(
-name|paths
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
+name|onePath
 argument_list|,
 name|partDesc
 operator|.

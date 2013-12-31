@@ -57,6 +57,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|metastore
@@ -177,7 +191,7 @@ specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|FileSinkOperator
 argument_list|>
@@ -204,7 +218,7 @@ operator|=
 operator|new
 name|HashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|FileSinkOperator
 argument_list|>
@@ -222,7 +236,7 @@ specifier|public
 name|void
 name|mapDirToFop
 parameter_list|(
-name|String
+name|Path
 name|dir
 parameter_list|,
 name|FileSinkOperator
@@ -244,7 +258,7 @@ specifier|public
 name|void
 name|setLineage
 parameter_list|(
-name|String
+name|Path
 name|dir
 parameter_list|,
 name|DataContainer

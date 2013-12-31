@@ -2009,7 +2009,7 @@ name|currPath
 operator|=
 name|work
 operator|.
-name|getTblDirPath
+name|getTblDir
 argument_list|()
 expr_stmt|;
 name|currTbl
