@@ -39,6 +39,20 @@ name|Map
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
 begin_comment
 comment|/**  * Truncates managed table or partition  */
 end_comment
@@ -86,11 +100,11 @@ argument_list|>
 name|columnIndexes
 decl_stmt|;
 specifier|private
-name|String
+name|Path
 name|inputDir
 decl_stmt|;
 specifier|private
-name|String
+name|Path
 name|outputDir
 decl_stmt|;
 specifier|private
@@ -239,7 +253,7 @@ name|columnIndexes
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getInputDir
 parameter_list|()
 block|{
@@ -251,7 +265,7 @@ specifier|public
 name|void
 name|setInputDir
 parameter_list|(
-name|String
+name|Path
 name|inputDir
 parameter_list|)
 block|{
@@ -263,7 +277,7 @@ name|inputDir
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getOutputDir
 parameter_list|()
 block|{
@@ -275,7 +289,7 @@ specifier|public
 name|void
 name|setOutputDir
 parameter_list|(
-name|String
+name|Path
 name|outputDir
 parameter_list|)
 block|{

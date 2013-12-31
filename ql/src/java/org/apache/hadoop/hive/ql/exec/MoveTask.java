@@ -1533,9 +1533,6 @@ block|{
 name|Path
 name|srcPath
 init|=
-operator|new
-name|Path
-argument_list|(
 name|lmfd
 operator|.
 name|getSourceDirs
@@ -1544,7 +1541,6 @@ operator|.
 name|get
 argument_list|(
 name|i
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|Path

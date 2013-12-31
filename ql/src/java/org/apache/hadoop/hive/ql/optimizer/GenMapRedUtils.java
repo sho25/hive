@@ -4437,12 +4437,7 @@ argument_list|,
 operator|new
 name|FetchWork
 argument_list|(
-name|FetchWork
-operator|.
-name|convertPathToStringArray
-argument_list|(
 name|partDir
-argument_list|)
 argument_list|,
 name|partDesc
 argument_list|,

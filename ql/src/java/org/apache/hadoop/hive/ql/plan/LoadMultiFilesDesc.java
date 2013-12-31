@@ -112,9 +112,10 @@ name|String
 name|columnTypes
 decl_stmt|;
 specifier|private
+specifier|transient
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|srcDirs
 decl_stmt|;
@@ -142,7 +143,7 @@ parameter_list|(
 specifier|final
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|sourceDirs
 parameter_list|,
@@ -226,7 +227,7 @@ argument_list|)
 specifier|public
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|getSourceDirs
 parameter_list|()
@@ -241,7 +242,7 @@ name|setSourceDirs
 parameter_list|(
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|srcs
 parameter_list|)

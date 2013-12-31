@@ -907,7 +907,7 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-name|String
+name|Path
 name|outputPath
 init|=
 name|this
@@ -924,11 +924,7 @@ name|Utilities
 operator|.
 name|toTempPath
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|outputPath
-argument_list|)
 argument_list|)
 decl_stmt|;
 try|try
@@ -1483,14 +1479,10 @@ name|addInputPath
 argument_list|(
 name|job
 argument_list|,
-operator|new
-name|Path
-argument_list|(
 name|work
 operator|.
 name|getInputDir
 argument_list|()
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

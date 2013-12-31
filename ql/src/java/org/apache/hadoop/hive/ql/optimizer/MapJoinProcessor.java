@@ -1498,17 +1498,6 @@ argument_list|)
 condition|)
 block|{
 comment|// add to path set
-if|if
-condition|(
-operator|!
-name|pathSet
-operator|.
-name|contains
-argument_list|(
-name|path
-argument_list|)
-condition|)
-block|{
 name|pathSet
 operator|.
 name|add
@@ -1516,7 +1505,6 @@ argument_list|(
 name|path
 argument_list|)
 expr_stmt|;
-block|}
 comment|//remove this alias from the alias list
 name|list
 operator|.
@@ -1570,14 +1558,14 @@ literal|null
 decl_stmt|;
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|partDir
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|String
+name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1663,7 +1651,11 @@ name|partDir
 operator|.
 name|add
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tablePath
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|partDesc

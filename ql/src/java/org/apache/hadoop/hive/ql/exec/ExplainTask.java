@@ -1198,14 +1198,10 @@ block|{
 name|Path
 name|resFile
 init|=
-operator|new
-name|Path
-argument_list|(
 name|work
 operator|.
 name|getResFile
 argument_list|()
-argument_list|)
 decl_stmt|;
 name|OutputStream
 name|outS

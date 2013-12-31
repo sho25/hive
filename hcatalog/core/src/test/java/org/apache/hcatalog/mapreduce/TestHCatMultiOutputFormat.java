@@ -3034,14 +3034,14 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|partLocs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|String
+name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -3059,7 +3059,7 @@ name|add
 argument_list|(
 name|part
 operator|.
-name|getLocation
+name|getPartitionPath
 argument_list|()
 argument_list|)
 expr_stmt|;

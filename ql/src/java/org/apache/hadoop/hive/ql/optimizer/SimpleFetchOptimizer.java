@@ -1798,14 +1798,14 @@ return|;
 block|}
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|listP
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|String
+name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1851,9 +1851,6 @@ argument_list|(
 name|partition
 operator|.
 name|getPartitionPath
-argument_list|()
-operator|.
-name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;

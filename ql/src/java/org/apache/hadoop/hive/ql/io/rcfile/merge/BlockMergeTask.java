@@ -1662,7 +1662,7 @@ parameter_list|)
 block|{
 for|for
 control|(
-name|String
+name|Path
 name|path
 range|:
 name|work
@@ -1677,11 +1677,7 @@ name|addInputPath
 argument_list|(
 name|job
 argument_list|,
-operator|new
-name|Path
-argument_list|(
 name|path
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -1864,14 +1860,14 @@ expr_stmt|;
 block|}
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|inputPaths
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|String
+name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2005,9 +2001,6 @@ name|st
 operator|.
 name|getPath
 argument_list|()
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2021,9 +2014,6 @@ argument_list|(
 name|fstatus
 operator|.
 name|getPath
-argument_list|()
-operator|.
-name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;

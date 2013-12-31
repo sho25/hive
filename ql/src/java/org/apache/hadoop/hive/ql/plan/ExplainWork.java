@@ -67,6 +67,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|ql
@@ -133,7 +147,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|String
+name|Path
 name|resFile
 decl_stmt|;
 specifier|private
@@ -194,7 +208,7 @@ block|{   }
 specifier|public
 name|ExplainWork
 parameter_list|(
-name|String
+name|Path
 name|resFile
 parameter_list|,
 name|ParseContext
@@ -315,7 +329,7 @@ name|pCtx
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getResFile
 parameter_list|()
 block|{
@@ -327,7 +341,7 @@ specifier|public
 name|void
 name|setResFile
 parameter_list|(
-name|String
+name|Path
 name|resFile
 parameter_list|)
 block|{
