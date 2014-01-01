@@ -115,6 +115,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -587,7 +601,7 @@ name|isInsertTable
 argument_list|)
 expr_stmt|;
 block|}
-name|String
+name|Path
 name|finalName
 init|=
 name|processFS
@@ -868,7 +882,7 @@ block|}
 block|}
 comment|/**    * Process the FileSink operator to generate a MoveTask if necessary.    *    * @param fsOp    *          current FileSink operator    * @param stack    *          parent operators    * @param opProcCtx    * @param chDir    *          whether the operator should be first output to a tmp dir and then merged    *          to the final dir later    * @return the final file name to which the FileSinkOperator should store.    * @throws SemanticException    */
 specifier|private
-name|String
+name|Path
 name|processFS
 parameter_list|(
 name|FileSinkOperator
@@ -911,7 +925,7 @@ name|getCurrTask
 argument_list|()
 decl_stmt|;
 comment|// If the directory needs to be changed, send the new directory
-name|String
+name|Path
 name|dest
 init|=
 literal|null

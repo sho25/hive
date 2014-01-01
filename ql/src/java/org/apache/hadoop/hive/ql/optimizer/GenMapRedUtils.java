@@ -6971,7 +6971,7 @@ parameter_list|(
 name|FileSinkOperator
 name|fsInput
 parameter_list|,
-name|String
+name|Path
 name|finalName
 parameter_list|,
 name|DependencyCollectionTask
@@ -7057,6 +7057,12 @@ operator|new
 name|FileSinkDesc
 argument_list|(
 name|finalName
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|ts
 argument_list|,
@@ -8368,7 +8374,7 @@ parameter_list|(
 name|FileSinkDesc
 name|fsInputDesc
 parameter_list|,
-name|String
+name|Path
 name|finalName
 parameter_list|,
 name|boolean
@@ -9289,7 +9295,7 @@ block|}
 comment|/**    * Create and add any dependent move tasks    *    * @param currTask    * @param chDir    * @param fsOp    * @param parseCtx    * @param mvTasks    * @param hconf    * @param dependencyTask    * @return    */
 specifier|public
 specifier|static
-name|String
+name|Path
 name|createMoveTask
 parameter_list|(
 name|Task
@@ -9325,7 +9331,7 @@ name|DependencyCollectionTask
 name|dependencyTask
 parameter_list|)
 block|{
-name|String
+name|Path
 name|dest
 init|=
 literal|null
@@ -9337,6 +9343,9 @@ condition|)
 block|{
 name|dest
 operator|=
+operator|new
+name|Path
+argument_list|(
 name|fsOp
 operator|.
 name|getConf
@@ -9344,6 +9353,7 @@ argument_list|()
 operator|.
 name|getFinalDirName
 argument_list|()
+argument_list|)
 expr_stmt|;
 comment|// generate the temporary file
 comment|// it must be on the same file system as the current destination
@@ -9362,13 +9372,7 @@ name|baseCtx
 operator|.
 name|getExternalTmpFileURI
 argument_list|(
-operator|(
-operator|new
-name|Path
-argument_list|(
 name|dest
-argument_list|)
-operator|)
 operator|.
 name|toUri
 argument_list|()

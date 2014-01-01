@@ -57,6 +57,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|ql
@@ -130,7 +144,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-name|String
+name|Path
 name|outputDir
 init|=
 literal|null
@@ -236,7 +250,7 @@ name|partSpec
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getOutputDir
 parameter_list|()
 block|{
@@ -248,7 +262,7 @@ specifier|public
 name|void
 name|setOutputDir
 parameter_list|(
-name|String
+name|Path
 name|outputDir
 parameter_list|)
 block|{

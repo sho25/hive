@@ -1256,8 +1256,11 @@ assert|;
 comment|// should not have more than 1 load file for
 comment|// CTAS
 comment|// make the movetask's destination directory the table's destination.
-name|String
+name|Path
 name|location
+decl_stmt|;
+name|String
+name|loc
 init|=
 name|qb
 operator|.
@@ -1269,7 +1272,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|location
+name|loc
 operator|==
 literal|null
 condition|)
@@ -1390,9 +1393,17 @@ block|}
 name|location
 operator|=
 name|targetPath
-operator|.
-name|toString
-argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|location
+operator|=
+operator|new
+name|Path
+argument_list|(
+name|loc
+argument_list|)
 expr_stmt|;
 block|}
 name|lfd
