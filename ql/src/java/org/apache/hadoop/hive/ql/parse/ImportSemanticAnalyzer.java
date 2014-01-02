@@ -2317,13 +2317,6 @@ name|LoadTableDesc
 argument_list|(
 name|tmpPath
 argument_list|,
-name|ctx
-operator|.
-name|getExternalTmpFileURI
-argument_list|(
-name|fromURI
-argument_list|)
-argument_list|,
 name|Utilities
 operator|.
 name|getTableDesc
@@ -2710,13 +2703,6 @@ operator|new
 name|LoadTableDesc
 argument_list|(
 name|tmpPath
-argument_list|,
-name|ctx
-operator|.
-name|getExternalTmpFileURI
-argument_list|(
-name|fromURI
-argument_list|)
 argument_list|,
 name|Utilities
 operator|.

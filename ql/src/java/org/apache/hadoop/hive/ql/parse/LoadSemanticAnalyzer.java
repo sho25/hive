@@ -1658,8 +1658,6 @@ argument_list|(
 name|fromURI
 argument_list|)
 argument_list|,
-name|loadTmpPath
-argument_list|,
 name|Utilities
 operator|.
 name|getTableDesc

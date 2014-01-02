@@ -2009,7 +2009,7 @@ name|currPath
 operator|=
 name|work
 operator|.
-name|getTblDirPath
+name|getTblDir
 argument_list|()
 expr_stmt|;
 name|currTbl
@@ -2119,15 +2119,10 @@ else|else
 block|{
 name|iterPath
 operator|=
-name|FetchWork
-operator|.
-name|convertStringToPathArray
-argument_list|(
 name|work
 operator|.
 name|getPartDir
 argument_list|()
-argument_list|)
 operator|.
 name|iterator
 argument_list|()

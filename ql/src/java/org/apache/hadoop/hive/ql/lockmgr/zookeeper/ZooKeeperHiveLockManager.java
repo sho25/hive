@@ -2294,6 +2294,34 @@ operator|>=
 name|numRetriesForUnLock
 condition|)
 block|{
+name|String
+name|name
+init|=
+operator|(
+operator|(
+name|ZooKeeperHiveLock
+operator|)
+name|hiveLock
+operator|)
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Node "
+operator|+
+name|name
+operator|+
+literal|" can not be deleted after "
+operator|+
+name|numRetriesForUnLock
+operator|+
+literal|" attempts."
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|LockException
@@ -2343,23 +2371,6 @@ name|ZooKeeperHiveLock
 operator|)
 name|hiveLock
 decl_stmt|;
-try|try
-block|{
-comment|// can throw KeeperException.NoNodeException, which might mean something is wrong
-name|zkpClient
-operator|.
-name|delete
-argument_list|(
-name|zLock
-operator|.
-name|getPath
-argument_list|()
-argument_list|,
-operator|-
-literal|1
-argument_list|)
-expr_stmt|;
-comment|// Delete the parent node if all the children have been deleted
 name|HiveLockObject
 name|obj
 init|=
@@ -2380,6 +2391,20 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
+name|zkpClient
+operator|.
+name|delete
+argument_list|(
+name|zLock
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
+comment|// Delete the parent node if all the children have been deleted
 name|List
 argument_list|<
 name|String
@@ -2424,9 +2449,38 @@ parameter_list|(
 name|KeeperException
 operator|.
 name|NoNodeException
-name|e
+name|nne
 parameter_list|)
 block|{
+comment|//can happen in retrying deleting the zLock after exceptions like InterruptedException
+comment|//or in a race condition where parent has already been deleted by other process when it
+comment|//is to be deleted. Both cases should not raise error
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Node "
+operator|+
+name|zLock
+operator|.
+name|getPath
+argument_list|()
+operator|+
+literal|" or its parent has already been deleted."
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|KeeperException
+operator|.
+name|NotEmptyException
+name|nee
+parameter_list|)
+block|{
+comment|//can happen in a race condition where another process adds a zLock under this parent
+comment|//just before it is about to be deleted. It should not be a problem since this parent
+comment|//can eventually be deleted by the process which hold its last child zLock
 name|LOG
 operator|.
 name|debug
@@ -2435,10 +2489,9 @@ literal|"Node "
 operator|+
 name|name
 operator|+
-literal|" previously deleted when attempting to delete."
+literal|" to be deleted is not empty."
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2446,6 +2499,7 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+comment|//exceptions including InterruptException and other KeeperException
 name|LOG
 operator|.
 name|error

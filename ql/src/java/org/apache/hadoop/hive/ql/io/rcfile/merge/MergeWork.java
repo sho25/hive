@@ -326,9 +326,10 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
+specifier|transient
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|inputPaths
 decl_stmt|;
@@ -362,7 +363,7 @@ name|MergeWork
 parameter_list|(
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|inputPaths
 parameter_list|,
@@ -387,7 +388,7 @@ name|MergeWork
 parameter_list|(
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|inputPaths
 parameter_list|,
@@ -471,7 +472,7 @@ expr_stmt|;
 block|}
 for|for
 control|(
-name|String
+name|Path
 name|path
 range|:
 name|this
@@ -487,6 +488,9 @@ operator|.
 name|put
 argument_list|(
 name|path
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|partDesc
 argument_list|)
@@ -496,7 +500,7 @@ block|}
 specifier|public
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|getInputPaths
 parameter_list|()
@@ -511,7 +515,7 @@ name|setInputPaths
 parameter_list|(
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|inputPaths
 parameter_list|)
@@ -729,9 +733,6 @@ operator|.
 name|add
 argument_list|(
 name|path
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -791,23 +792,14 @@ operator|)
 operator|:
 literal|"alter table ... concatenate should only have one directory inside inputpaths"
 assert|;
-name|String
-name|dirName
+name|Path
+name|dirPath
 init|=
 name|inputPaths
 operator|.
 name|get
 argument_list|(
 literal|0
-argument_list|)
-decl_stmt|;
-name|Path
-name|dirPath
-init|=
-operator|new
-name|Path
-argument_list|(
-name|dirName
 argument_list|)
 decl_stmt|;
 try|try
@@ -845,14 +837,14 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|newInputPath
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|String
+name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -900,9 +892,6 @@ name|i
 index|]
 operator|.
 name|getPath
-argument_list|()
-operator|.
-name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -969,7 +958,10 @@ name|msg
 init|=
 literal|"Fail to get filesystem for directory name : "
 operator|+
-name|dirName
+name|dirPath
+operator|.
+name|toUri
+argument_list|()
 decl_stmt|;
 throw|throw
 operator|new

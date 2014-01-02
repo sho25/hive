@@ -7591,9 +7591,6 @@ operator|.
 name|setInputDir
 argument_list|(
 name|oldTblPartLoc
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|addInputsOutputsAlterTable
@@ -7653,7 +7650,11 @@ name|truncateTblDesc
 operator|.
 name|setOutputDir
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|queryTmpdir
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|LoadTableDesc
@@ -7667,8 +7668,6 @@ name|Path
 argument_list|(
 name|queryTmpdir
 argument_list|)
-argument_list|,
-name|queryTmpdir
 argument_list|,
 name|tblDesc
 argument_list|,
@@ -11036,14 +11035,14 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|inputDir
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|String
+name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -11456,9 +11455,6 @@ operator|.
 name|add
 argument_list|(
 name|oldTblPartLoc
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|mergeDesc
@@ -11566,8 +11562,6 @@ name|Path
 argument_list|(
 name|queryTmpdir
 argument_list|)
-argument_list|,
-name|queryTmpdir
 argument_list|,
 name|tblDesc
 argument_list|,
@@ -13105,9 +13099,6 @@ argument_list|(
 name|ctx
 operator|.
 name|getResFile
-argument_list|()
-operator|.
-name|toString
 argument_list|()
 argument_list|,
 operator|new

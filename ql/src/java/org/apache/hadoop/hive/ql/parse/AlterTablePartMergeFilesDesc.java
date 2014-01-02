@@ -132,14 +132,14 @@ comment|// context for list bucketing.
 specifier|private
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|inputDir
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|String
+name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -276,7 +276,7 @@ block|}
 specifier|public
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|getInputDir
 parameter_list|()
@@ -291,7 +291,7 @@ name|setInputDir
 parameter_list|(
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|inputDir
 parameter_list|)

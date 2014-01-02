@@ -155,6 +155,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -1484,17 +1498,6 @@ argument_list|)
 condition|)
 block|{
 comment|// add to path set
-if|if
-condition|(
-operator|!
-name|pathSet
-operator|.
-name|contains
-argument_list|(
-name|path
-argument_list|)
-condition|)
-block|{
 name|pathSet
 operator|.
 name|add
@@ -1502,7 +1505,6 @@ argument_list|(
 name|path
 argument_list|)
 expr_stmt|;
-block|}
 comment|//remove this alias from the alias list
 name|list
 operator|.
@@ -1556,14 +1558,14 @@ literal|null
 decl_stmt|;
 name|List
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|partDir
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|String
+name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1630,7 +1632,11 @@ operator|=
 operator|new
 name|FetchWork
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tablePath
+argument_list|)
 argument_list|,
 name|partitionDesc
 operator|.
@@ -1645,7 +1651,11 @@ name|partDir
 operator|.
 name|add
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tablePath
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|partDesc

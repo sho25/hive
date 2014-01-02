@@ -29,16 +29,6 @@ name|Serializable
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|LinkedHashMap
-import|;
-end_import
-
 begin_comment
 comment|/**  * ArchiveWork.  *  */
 end_comment
@@ -64,23 +54,6 @@ name|long
 name|serialVersionUID
 init|=
 literal|1L
-decl_stmt|;
-specifier|private
-name|String
-name|tableName
-decl_stmt|;
-specifier|private
-name|String
-name|dbName
-decl_stmt|;
-specifier|private
-name|LinkedHashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|partSpec
 decl_stmt|;
 specifier|private
 name|ArchiveActionType
