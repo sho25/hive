@@ -95,6 +95,24 @@ specifier|private
 name|String
 name|roleOwnerName
 decl_stmt|;
+comment|/**    * thrift ddl for the result of show role.    */
+specifier|private
+specifier|static
+name|String
+name|schema
+init|=
+literal|"role#string"
+decl_stmt|;
+specifier|public
+specifier|static
+name|String
+name|getSchema
+parameter_list|()
+block|{
+return|return
+name|schema
+return|;
+block|}
 specifier|public
 specifier|static
 enum|enum

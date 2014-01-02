@@ -60,6 +60,15 @@ specifier|private
 name|String
 name|resFile
 decl_stmt|;
+comment|/**    * thrift ddl for the result of show grant.    */
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|schema
+init|=
+literal|"property,value#string:string"
+decl_stmt|;
 specifier|public
 name|ShowGrantDesc
 parameter_list|()
@@ -107,6 +116,16 @@ name|columns
 operator|=
 name|columns
 expr_stmt|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|getSchema
+parameter_list|()
+block|{
+return|return
+name|schema
+return|;
 block|}
 annotation|@
 name|Explain
