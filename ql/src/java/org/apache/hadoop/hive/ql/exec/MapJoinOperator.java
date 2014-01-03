@@ -463,7 +463,7 @@ name|mjop
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*    * We need the base (operator.java) implementation of start/endGroup.    * The parent class has functionality in those that map join can't use.    */
+comment|/*    * We need the base (operator.java) implementation of start/endGroup.    * The parent class has functionality in those that map join can't use.    * Note: The mapjoin can be run in the reducer only on Tez.    */
 annotation|@
 name|Override
 specifier|public
@@ -517,6 +517,8 @@ operator|.
 name|getTagLength
 argument_list|()
 decl_stmt|;
+comment|// On Tez only: The hash map might already be cached in the container we run
+comment|// the task in. On MR: The cache is a no-op.
 name|tableKey
 operator|=
 literal|"__HASH_MAP_"
