@@ -243,6 +243,24 @@ name|OperationManager
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
+name|thrift
+operator|.
+name|TProtocolVersion
+import|;
+end_import
+
 begin_comment
 comment|/**  * SessionManager.  *  */
 end_comment
@@ -534,6 +552,9 @@ specifier|public
 name|SessionHandle
 name|openSession
 parameter_list|(
+name|TProtocolVersion
+name|protocol
+parameter_list|,
 name|String
 name|username
 parameter_list|,
@@ -554,6 +575,8 @@ block|{
 return|return
 name|openSession
 argument_list|(
+name|protocol
+argument_list|,
 name|username
 argument_list|,
 name|password
@@ -570,6 +593,9 @@ specifier|public
 name|SessionHandle
 name|openSession
 parameter_list|(
+name|TProtocolVersion
+name|protocol
+parameter_list|,
 name|String
 name|username
 parameter_list|,
@@ -622,6 +648,8 @@ init|=
 operator|new
 name|HiveSessionImplwithUGI
 argument_list|(
+name|protocol
+argument_list|,
 name|username
 argument_list|,
 name|password
@@ -660,6 +688,8 @@ operator|=
 operator|new
 name|HiveSessionImpl
 argument_list|(
+name|protocol
+argument_list|,
 name|username
 argument_list|,
 name|password

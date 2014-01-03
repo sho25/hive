@@ -51,6 +51,22 @@ name|CLIService
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
+name|ICLIService
+import|;
+end_import
+
 begin_comment
 comment|/**  * EmbeddedThriftBinaryCLIService.  *  */
 end_comment
@@ -91,6 +107,15 @@ operator|.
 name|start
 argument_list|()
 expr_stmt|;
+block|}
+specifier|public
+name|ICLIService
+name|getService
+parameter_list|()
+block|{
+return|return
+name|cliService
+return|;
 block|}
 block|}
 end_class

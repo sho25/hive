@@ -1780,6 +1780,13 @@ operator|new
 name|TOpenSessionReq
 argument_list|()
 decl_stmt|;
+name|TOpenSessionResp
+name|res
+init|=
+operator|new
+name|TOpenSessionResp
+argument_list|()
+decl_stmt|;
 name|req
 operator|.
 name|setUsername
@@ -1795,6 +1802,8 @@ operator|.
 name|getSessionHandle
 argument_list|(
 name|req
+argument_list|,
+name|res
 argument_list|)
 decl_stmt|;
 name|SessionManager

@@ -497,7 +497,7 @@ name|service
 operator|.
 name|cli
 operator|.
-name|OperationStatus
+name|RowSet
 import|;
 end_import
 
@@ -513,7 +513,7 @@ name|service
 operator|.
 name|cli
 operator|.
-name|RowSet
+name|RowSetFactory
 import|;
 end_import
 
@@ -1372,6 +1372,19 @@ operator|.
 name|FINISHED
 argument_list|)
 expr_stmt|;
+name|RowSet
+name|rowSet
+init|=
+name|RowSetFactory
+operator|.
+name|create
+argument_list|(
+name|resultSchema
+argument_list|,
+name|getProtocolVersion
+argument_list|()
+argument_list|)
+decl_stmt|;
 try|try
 block|{
 comment|/* if client is requesting fetch-from-start and its not the first time reading from this operation        * then reset the fetch position to beginning        */
@@ -1423,13 +1436,13 @@ return|return
 name|decode
 argument_list|(
 name|convey
+argument_list|,
+name|rowSet
 argument_list|)
 return|;
 block|}
 return|return
-operator|new
-name|RowSet
-argument_list|()
+name|rowSet
 return|;
 block|}
 catch|catch
@@ -1492,6 +1505,9 @@ argument_list|<
 name|Object
 argument_list|>
 name|rows
+parameter_list|,
+name|RowSet
+name|rowSet
 parameter_list|)
 throws|throws
 name|Exception
@@ -1508,6 +1524,8 @@ return|return
 name|prepareFromRow
 argument_list|(
 name|rows
+argument_list|,
+name|rowSet
 argument_list|)
 return|;
 block|}
@@ -1515,6 +1533,8 @@ return|return
 name|decodeFromString
 argument_list|(
 name|rows
+argument_list|,
+name|rowSet
 argument_list|)
 return|;
 block|}
@@ -1528,17 +1548,13 @@ argument_list|<
 name|Object
 argument_list|>
 name|rows
+parameter_list|,
+name|RowSet
+name|rowSet
 parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|RowSet
-name|rowSet
-init|=
-operator|new
-name|RowSet
-argument_list|()
-decl_stmt|;
 for|for
 control|(
 name|Object
@@ -1551,8 +1567,6 @@ name|rowSet
 operator|.
 name|addRow
 argument_list|(
-name|resultSchema
-argument_list|,
 operator|(
 name|Object
 index|[]
@@ -1574,6 +1588,9 @@ argument_list|<
 name|Object
 argument_list|>
 name|rows
+parameter_list|,
+name|RowSet
+name|rowSet
 parameter_list|)
 throws|throws
 name|SQLException
@@ -1607,13 +1624,6 @@ operator|.
 name|getAllStructFieldRefs
 argument_list|()
 decl_stmt|;
-name|RowSet
-name|rowSet
-init|=
-operator|new
-name|RowSet
-argument_list|()
-decl_stmt|;
 name|Object
 index|[]
 name|deserializedFields
@@ -1632,6 +1642,15 @@ name|rowObj
 decl_stmt|;
 name|ObjectInspector
 name|fieldOI
+decl_stmt|;
+name|int
+name|protocol
+init|=
+name|getProtocolVersion
+argument_list|()
+operator|.
+name|getValue
+argument_list|()
 decl_stmt|;
 for|for
 control|(
@@ -1721,6 +1740,8 @@ argument_list|(
 name|fieldData
 argument_list|,
 name|fieldOI
+argument_list|,
+name|protocol
 argument_list|)
 expr_stmt|;
 block|}
@@ -1728,8 +1749,6 @@ name|rowSet
 operator|.
 name|addRow
 argument_list|(
-name|resultSchema
-argument_list|,
 name|deserializedFields
 argument_list|)
 expr_stmt|;

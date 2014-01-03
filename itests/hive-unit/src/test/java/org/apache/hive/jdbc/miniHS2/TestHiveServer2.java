@@ -348,7 +348,7 @@ name|assertFalse
 argument_list|(
 name|rowSet
 operator|.
-name|getSize
+name|numRows
 argument_list|()
 operator|==
 literal|0

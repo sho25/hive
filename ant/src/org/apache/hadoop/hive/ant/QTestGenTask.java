@@ -1228,21 +1228,6 @@ throw|;
 block|}
 if|if
 condition|(
-name|resultsDirectory
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|BuildException
-argument_list|(
-literal|"No resultsDirectory specified"
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
 name|className
 operator|==
 literal|null
@@ -1712,8 +1697,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Make sure the output directory exists, if it doesn't
-comment|// then create it.
+comment|// Make sure the output directory exists, if it doesn't then create it.
 name|outDir
 operator|=
 operator|new
@@ -1769,6 +1753,13 @@ literal|" does not exist"
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|resultsDirectory
+operator|!=
+literal|null
+condition|)
+block|{
 name|resultsDir
 operator|=
 operator|new
@@ -1802,12 +1793,18 @@ argument_list|)
 throw|;
 block|}
 block|}
+block|}
 catch|catch
 parameter_list|(
 name|Exception
 name|e
 parameter_list|)
 block|{
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
 throw|throw
 operator|new
 name|BuildException
@@ -2011,6 +2008,13 @@ argument_list|,
 name|qFilesMap
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|resultsDir
+operator|!=
+literal|null
+condition|)
+block|{
 name|ctx
 operator|.
 name|put
@@ -2025,6 +2029,7 @@ name|resultsDir
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|ctx
 operator|.
 name|put
@@ -2202,6 +2207,11 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
 throw|throw
 operator|new
 name|BuildException

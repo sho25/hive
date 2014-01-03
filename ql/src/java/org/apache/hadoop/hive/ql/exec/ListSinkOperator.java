@@ -177,6 +177,14 @@ name|OUTPUT_FORMATTER
 init|=
 literal|"output.formatter"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|OUTPUT_PROTOCOL
+init|=
+literal|"output.protocol"
+decl_stmt|;
 specifier|private
 specifier|transient
 name|List

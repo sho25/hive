@@ -235,11 +235,33 @@ name|OperationManager
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
+name|thrift
+operator|.
+name|TProtocolVersion
+import|;
+end_import
+
 begin_interface
 specifier|public
 interface|interface
 name|HiveSession
 block|{
+name|TProtocolVersion
+name|getProtocolVersion
+parameter_list|()
+function_decl|;
 comment|/**    * Set the session manager for the session    * @param sessionManager    */
 specifier|public
 name|void
