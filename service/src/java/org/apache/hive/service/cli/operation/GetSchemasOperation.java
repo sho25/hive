@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|EnumSet
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -122,6 +112,22 @@ operator|.
 name|cli
 operator|.
 name|RowSet
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
+name|RowSetFactory
 import|;
 end_import
 
@@ -242,6 +248,20 @@ name|schemaName
 operator|=
 name|schemaName
 expr_stmt|;
+name|this
+operator|.
+name|rowSet
+operator|=
+name|RowSetFactory
+operator|.
+name|create
+argument_list|(
+name|RESULT_SET_SCHEMA
+argument_list|,
+name|getProtocolVersion
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.Operation#run()    */
 annotation|@
@@ -259,12 +279,6 @@ name|OperationState
 operator|.
 name|RUNNING
 argument_list|)
-expr_stmt|;
-name|rowSet
-operator|=
-operator|new
-name|RowSet
-argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -302,8 +316,6 @@ name|rowSet
 operator|.
 name|addRow
 argument_list|(
-name|RESULT_SET_SCHEMA
-argument_list|,
 operator|new
 name|Object
 index|[]

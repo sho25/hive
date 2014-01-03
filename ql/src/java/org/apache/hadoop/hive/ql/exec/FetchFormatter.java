@@ -191,6 +191,9 @@ argument_list|<
 name|Object
 argument_list|>
 block|{
+name|int
+name|protocol
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -205,7 +208,21 @@ name|props
 parameter_list|)
 throws|throws
 name|Exception
-block|{     }
+block|{
+name|protocol
+operator|=
+name|hconf
+operator|.
+name|getInt
+argument_list|(
+name|ListSinkOperator
+operator|.
+name|OUTPUT_PROTOCOL
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -315,6 +332,8 @@ name|fieldRef
 operator|.
 name|getFieldObjectInspector
 argument_list|()
+argument_list|,
+name|protocol
 argument_list|)
 expr_stmt|;
 block|}

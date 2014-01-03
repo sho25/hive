@@ -780,6 +780,7 @@ operator|.
 name|Iface
 name|client
 decl_stmt|;
+comment|// todo should be replaced by CliServiceClient
 specifier|private
 name|boolean
 name|isClosed
@@ -818,6 +819,10 @@ name|int
 name|loginTimeout
 init|=
 literal|0
+decl_stmt|;
+specifier|private
+name|TProtocolVersion
+name|protocol
 decl_stmt|;
 specifier|public
 name|HiveConnection
@@ -1013,6 +1018,15 @@ argument_list|(
 name|TProtocolVersion
 operator|.
 name|HIVE_CLI_SERVICE_PROTOCOL_V5
+argument_list|)
+expr_stmt|;
+name|supportedProtocols
+operator|.
+name|add
+argument_list|(
+name|TProtocolVersion
+operator|.
+name|HIVE_CLI_SERVICE_PROTOCOL_V6
 argument_list|)
 expr_stmt|;
 comment|// open client session
@@ -1791,6 +1805,13 @@ literal|"Unsupported Hive2 protocol"
 argument_list|)
 throw|;
 block|}
+name|protocol
+operator|=
+name|openResp
+operator|.
+name|getServerProtocolVersion
+argument_list|()
+expr_stmt|;
 name|sessHandle
 operator|=
 name|openResp
@@ -1805,6 +1826,11 @@ name|TException
 name|e
 parameter_list|)
 block|{
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
 throw|throw
 operator|new
 name|SQLException
@@ -3320,6 +3346,15 @@ argument_list|(
 literal|"Method not supported"
 argument_list|)
 throw|;
+block|}
+specifier|public
+name|TProtocolVersion
+name|getProtocol
+parameter_list|()
+block|{
+return|return
+name|protocol
+return|;
 block|}
 block|}
 end_class

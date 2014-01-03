@@ -121,6 +121,24 @@ name|HiveSQLException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
+name|thrift
+operator|.
+name|TProtocolVersion
+import|;
+end_import
+
 begin_comment
 comment|/**  *  * HiveSessionImplwithUGI.  * HiveSession with connecting user's UGI and delegation token if required  */
 end_comment
@@ -167,6 +185,9 @@ decl_stmt|;
 specifier|public
 name|HiveSessionImplwithUGI
 parameter_list|(
+name|TProtocolVersion
+name|protocol
+parameter_list|,
 name|String
 name|username
 parameter_list|,
@@ -189,6 +210,8 @@ name|HiveSQLException
 block|{
 name|super
 argument_list|(
+name|protocol
+argument_list|,
 name|username
 argument_list|,
 name|password

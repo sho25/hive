@@ -1292,6 +1292,9 @@ name|val
 parameter_list|,
 name|ObjectInspector
 name|valOI
+parameter_list|,
+name|int
+name|version
 parameter_list|)
 block|{
 if|if
@@ -1308,6 +1311,17 @@ operator|.
 name|PRIMITIVE
 condition|)
 block|{
+if|if
+condition|(
+name|val
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|Object
 name|obj
 init|=
@@ -1326,8 +1340,13 @@ operator|.
 name|JAVA
 argument_list|)
 decl_stmt|;
+comment|// uses string type for binary before HIVE_CLI_SERVICE_PROTOCOL_V6
 if|if
 condition|(
+name|version
+operator|<
+literal|5
+operator|&&
 operator|(
 operator|(
 name|PrimitiveObjectInspector

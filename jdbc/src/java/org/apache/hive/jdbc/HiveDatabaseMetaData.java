@@ -824,7 +824,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -1218,7 +1218,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -1740,7 +1740,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -1802,7 +1802,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -2272,7 +2272,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -2353,7 +2353,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -2502,7 +2502,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -2766,7 +2766,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -2964,7 +2964,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -3126,7 +3126,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
@@ -3390,7 +3390,7 @@ name|HiveQueryResultSet
 operator|.
 name|Builder
 argument_list|(
-literal|null
+name|connection
 argument_list|)
 operator|.
 name|setClient
