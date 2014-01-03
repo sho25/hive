@@ -1204,6 +1204,14 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// Max number of lines of footer user can set for a table file.
+name|HIVE_FILE_MAX_FOOTER
+argument_list|(
+literal|"hive.file.max.footer"
+argument_list|,
+literal|100
+argument_list|)
+block|,
 comment|// Hadoop Configuration Properties
 comment|// Properties with null values are ignored and exist only for the purpose of giving us
 comment|// a symbolic name to reference in the Hive source code. Properties with non-null
