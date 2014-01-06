@@ -149,6 +149,11 @@ specifier|private
 name|int
 name|numDistributionKeys
 decl_stmt|;
+comment|/**    * Used in tez. Holds the name of the output    * that this reduce sink is writing to.    */
+specifier|private
+name|String
+name|outputName
+decl_stmt|;
 comment|/**    * The partition columns (CLUSTER BY or DISTRIBUTE BY in Hive language).    * Partition columns decide the reducer that the current row goes to.    * Partition columns are not passed to reducer.    */
 specifier|private
 name|java
@@ -1120,6 +1125,30 @@ operator|.
 name|distinctColumnIndices
 operator|=
 name|distinctColumnIndices
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getOutputName
+parameter_list|()
+block|{
+return|return
+name|outputName
+return|;
+block|}
+specifier|public
+name|void
+name|setOutputName
+parameter_list|(
+name|String
+name|outputName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|outputName
+operator|=
+name|outputName
 expr_stmt|;
 block|}
 block|}

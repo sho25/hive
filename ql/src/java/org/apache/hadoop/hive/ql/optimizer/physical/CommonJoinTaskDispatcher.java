@@ -977,6 +977,14 @@ name|MapJoinProcessor
 operator|.
 name|genMapJoinOpAndLocalWork
 argument_list|(
+name|physicalContext
+operator|.
+name|getParseContext
+argument_list|()
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|newWork
 argument_list|,
 name|newJoinOp
@@ -2243,8 +2251,9 @@ comment|// no table could be the big table; there is no need to convert
 if|if
 condition|(
 name|bigTableCandidates
-operator|==
-literal|null
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 return|return

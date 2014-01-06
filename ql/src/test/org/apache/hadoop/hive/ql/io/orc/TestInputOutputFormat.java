@@ -46,6 +46,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -2775,6 +2787,8 @@ argument_list|(
 literal|"/a/file"
 argument_list|)
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|splitter
@@ -2784,6 +2798,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|200
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|FileSplit
@@ -2885,6 +2901,8 @@ argument_list|(
 literal|500
 argument_list|,
 literal|600
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|result
@@ -2950,6 +2968,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|2500
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|result
@@ -3159,6 +3179,8 @@ argument_list|(
 literal|"/a/file"
 argument_list|)
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|splitter
@@ -3413,6 +3435,8 @@ argument_list|(
 literal|"/a/file"
 argument_list|)
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|splitter
@@ -3978,16 +4002,6 @@ name|getProgress
 argument_list|()
 argument_list|,
 literal|0.00001
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|3
-argument_list|,
-name|reader
-operator|.
-name|getPos
-argument_list|()
 argument_list|)
 expr_stmt|;
 while|while
@@ -5090,10 +5104,10 @@ argument_list|,
 literal|1
 argument_list|)
 decl_stmt|;
-name|assertEquals
+name|assertTrue
 argument_list|(
-literal|0
-argument_list|,
+literal|1
+operator|==
 name|splits
 operator|.
 name|length

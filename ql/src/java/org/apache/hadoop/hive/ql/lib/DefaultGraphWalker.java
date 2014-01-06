@@ -115,7 +115,7 @@ name|Node
 argument_list|>
 name|opStack
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|List
 argument_list|<
@@ -130,7 +130,7 @@ name|Node
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|HashMap
 argument_list|<
@@ -149,7 +149,7 @@ name|Object
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|Dispatcher
 name|dispatcher

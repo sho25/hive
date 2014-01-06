@@ -327,7 +327,7 @@ specifier|private
 name|Reporter
 name|reporter
 decl_stmt|;
-specifier|private
+specifier|protected
 name|MapredContext
 parameter_list|(
 name|boolean

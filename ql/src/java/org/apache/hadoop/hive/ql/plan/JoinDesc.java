@@ -1056,6 +1056,14 @@ name|clone
 operator|.
 name|filterMap
 expr_stmt|;
+name|this
+operator|.
+name|statistics
+operator|=
+name|clone
+operator|.
+name|statistics
+expr_stmt|;
 block|}
 specifier|public
 name|Map

@@ -862,10 +862,6 @@ expr_stmt|;
 block|}
 specifier|public
 name|HadoopJobExecHelper
-parameter_list|()
-block|{   }
-specifier|public
-name|HadoopJobExecHelper
 parameter_list|(
 name|JobConf
 name|job

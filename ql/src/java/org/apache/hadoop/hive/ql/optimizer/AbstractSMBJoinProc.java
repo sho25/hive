@@ -2457,8 +2457,9 @@ decl_stmt|;
 if|if
 condition|(
 name|joinCandidates
-operator|==
-literal|null
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 comment|// This is a full outer join. This can never be a map-join
@@ -2764,6 +2765,11 @@ name|MapJoinProcessor
 operator|.
 name|convertMapJoin
 argument_list|(
+name|parseContext
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|parseContext
 operator|.
 name|getOpParseCtx

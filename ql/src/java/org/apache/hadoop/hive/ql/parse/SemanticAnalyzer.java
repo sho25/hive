@@ -53777,12 +53777,17 @@ condition|)
 block|{
 comment|// At this point we have the complete operator tree
 comment|// from which we want to create the map-reduce plan
-name|MapReduceCompiler
+name|TaskCompiler
 name|compiler
 init|=
-operator|new
-name|MapReduceCompiler
-argument_list|()
+name|TaskCompilerFactory
+operator|.
+name|getCompiler
+argument_list|(
+name|conf
+argument_list|,
+name|pCtx
+argument_list|)
 decl_stmt|;
 name|compiler
 operator|.
