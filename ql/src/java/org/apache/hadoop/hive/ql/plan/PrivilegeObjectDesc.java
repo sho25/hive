@@ -41,9 +41,12 @@ specifier|public
 class|class
 name|PrivilegeObjectDesc
 block|{
+comment|//default type is table
 specifier|private
 name|boolean
 name|table
+init|=
+literal|true
 decl_stmt|;
 specifier|private
 name|String
