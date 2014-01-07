@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|udf
+operator|.
+name|generic
 package|;
 end_package
 
@@ -65,24 +67,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDF
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|vector
 operator|.
 name|VectorizedExpressions
@@ -107,26 +91,12 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|StringTrim
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Text
+name|StringRTrim
 import|;
 end_import
 
 begin_comment
-comment|/**  * UDFTrim.  *  */
+comment|/**  * UDFRTrim.  *  */
 end_comment
 
 begin_class
@@ -135,17 +105,17 @@ name|Description
 argument_list|(
 name|name
 operator|=
-literal|"trim"
+literal|"rtrim"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(str) - Removes the leading and trailing space characters from str "
+literal|"_FUNC_(str) - Removes the trailing space characters from str "
 argument_list|,
 name|extended
 operator|=
 literal|"Example:\n"
 operator|+
-literal|"> SELECT _FUNC_('   facebook  ') FROM src LIMIT 1;\n"
+literal|"> SELECT _FUNC_('facebook   ') FROM src LIMIT 1;\n"
 operator|+
 literal|"  'facebook'"
 argument_list|)
@@ -153,66 +123,46 @@ annotation|@
 name|VectorizedExpressions
 argument_list|(
 block|{
-name|StringTrim
+name|StringRTrim
 operator|.
 name|class
 block|}
 argument_list|)
 specifier|public
 class|class
-name|UDFTrim
+name|GenericUDFRTrim
 extends|extends
-name|UDF
+name|GenericUDFBaseTrim
 block|{
-name|Text
-name|result
-init|=
-operator|new
-name|Text
-argument_list|()
-decl_stmt|;
 specifier|public
-name|UDFTrim
+name|GenericUDFRTrim
 parameter_list|()
-block|{   }
-specifier|public
-name|Text
-name|evaluate
+block|{
+name|super
+argument_list|(
+literal|"rtrim"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|String
+name|performOp
 parameter_list|(
-name|Text
-name|s
+name|String
+name|val
 parameter_list|)
 block|{
-if|if
-condition|(
-name|s
-operator|==
-literal|null
-condition|)
-block|{
 return|return
-literal|null
-return|;
-block|}
-name|result
-operator|.
-name|set
-argument_list|(
 name|StringUtils
 operator|.
-name|strip
+name|stripEnd
 argument_list|(
-name|s
-operator|.
-name|toString
-argument_list|()
+name|val
 argument_list|,
 literal|" "
 argument_list|)
-argument_list|)
-expr_stmt|;
-return|return
-name|result
 return|;
 block|}
 block|}
