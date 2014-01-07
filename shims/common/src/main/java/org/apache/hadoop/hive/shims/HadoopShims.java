@@ -103,6 +103,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Comparator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Iterator
 import|;
 end_import
@@ -253,7 +263,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|Text
+name|LongWritable
 import|;
 end_import
 
@@ -268,20 +278,6 @@ operator|.
 name|mapred
 operator|.
 name|ClusterStatus
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputFormat
 import|;
 end_import
 
@@ -366,34 +362,6 @@ operator|.
 name|mapred
 operator|.
 name|Reporter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|RunningJob
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|TaskCompletionEvent
 import|;
 end_import
 
@@ -1016,6 +984,13 @@ parameter_list|,
 name|Path
 name|partition
 parameter_list|)
+function_decl|;
+name|Comparator
+argument_list|<
+name|LongWritable
+argument_list|>
+name|getLongComparator
+parameter_list|()
 function_decl|;
 comment|/**    * InputSplitShim.    *    */
 specifier|public
