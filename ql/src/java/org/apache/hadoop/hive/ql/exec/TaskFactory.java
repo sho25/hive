@@ -462,7 +462,7 @@ specifier|public
 specifier|static
 specifier|final
 class|class
-name|taskTuple
+name|TaskTuple
 parameter_list|<
 name|T
 extends|extends
@@ -489,7 +489,7 @@ argument_list|>
 name|taskClass
 decl_stmt|;
 specifier|public
-name|taskTuple
+name|TaskTuple
 parameter_list|(
 name|Class
 argument_list|<
@@ -527,7 +527,7 @@ specifier|public
 specifier|static
 name|ArrayList
 argument_list|<
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|?
 extends|extends
@@ -543,7 +543,7 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|?
 extends|extends
@@ -557,7 +557,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|MoveWork
 argument_list|>
@@ -577,7 +577,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|FetchWork
 argument_list|>
@@ -597,7 +597,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|CopyWork
 argument_list|>
@@ -617,7 +617,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|DDLWork
 argument_list|>
@@ -637,7 +637,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|FunctionWork
 argument_list|>
@@ -657,7 +657,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|ExplainWork
 argument_list|>
@@ -677,7 +677,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|ConditionalWork
 argument_list|>
@@ -697,7 +697,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|MapredWork
 argument_list|>
@@ -717,7 +717,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|MapredLocalWork
 argument_list|>
@@ -737,7 +737,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|StatsWork
 argument_list|>
@@ -757,7 +757,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|ColumnStatsWork
 argument_list|>
@@ -777,7 +777,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|MergeWork
 argument_list|>
@@ -797,7 +797,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|DependencyCollectionWork
 argument_list|>
@@ -817,7 +817,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|PartialScanWork
 argument_list|>
@@ -970,7 +970,7 @@ parameter_list|)
 block|{
 for|for
 control|(
-name|taskTuple
+name|TaskTuple
 argument_list|<
 name|?
 extends|extends
