@@ -4605,6 +4605,26 @@ operator|+
 literal|"])"
 return|;
 block|}
+comment|/**    * Vectorized execution uses the smallest possible positive non-zero    * value to prevent possible later zero-divide exceptions. Set the field    * to this value (1 in the internal unsigned 128 bit int).    */
+specifier|public
+name|void
+name|setNullDataValue
+parameter_list|()
+block|{
+name|unscaledValue
+operator|.
+name|update
+argument_list|(
+literal|1
+argument_list|,
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
