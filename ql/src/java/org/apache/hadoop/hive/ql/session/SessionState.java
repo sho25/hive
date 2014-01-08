@@ -1434,7 +1434,7 @@ if|if
 condition|(
 name|HiveConf
 operator|.
-name|getBoolVar
+name|getVar
 argument_list|(
 name|startSs
 operator|.
@@ -1445,7 +1445,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_OPTIMIZE_TEZ
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"tez"
 argument_list|)
 condition|)
 block|{
@@ -1507,7 +1512,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"No Tez session required at this point. hive.optimize.tez is false."
+literal|"No Tez session required at this point. hive.execution.engine=mr."
 argument_list|)
 expr_stmt|;
 block|}

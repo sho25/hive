@@ -916,7 +916,7 @@ comment|// even with tez on some jobs are run as MR. disable the flag in
 comment|// the conf, so that the backend runs fully as MR.
 name|HiveConf
 operator|.
-name|setBoolVar
+name|setVar
 argument_list|(
 name|job
 argument_list|,
@@ -924,9 +924,9 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_OPTIMIZE_TEZ
+name|HIVE_EXECUTION_ENGINE
 argument_list|,
-literal|false
+literal|"mr"
 argument_list|)
 expr_stmt|;
 block|}

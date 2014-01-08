@@ -152,7 +152,7 @@ if|if
 condition|(
 name|HiveConf
 operator|.
-name|getBoolVar
+name|getVar
 argument_list|(
 name|conf
 argument_list|,
@@ -160,7 +160,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_OPTIMIZE_TEZ
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"tez"
 argument_list|)
 condition|)
 block|{
