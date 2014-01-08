@@ -125,6 +125,10 @@ name|TezCounters
 import|;
 end_import
 
+begin_comment
+comment|/**  * This class aggregates stats via counters and does so for Tez Tasks.  * With dbclass=counters this class will compute table/partition statistics  * using hadoop counters. They will be published using special keys and  * then retrieved on the client after the insert/ctas statement ran.  */
+end_comment
+
 begin_class
 specifier|public
 class|class

@@ -318,7 +318,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ConvertJoinMapJoin is an optimization that replaces a commone join  * (aka shuffle join) with a map join (aka broadcast or fragment replicate  * join when possible. Map joins have restrictions on which joins can be  * converted (e.g.: full outer joins cannot be handled as map joins) as well  * as memory restrictions (one side of the join has to fit into memory).  */
+comment|/**  * ConvertJoinMapJoin is an optimization that replaces a common join  * (aka shuffle join) with a map join (aka broadcast or fragment replicate  * join when possible. Map joins have restrictions on which joins can be  * converted (e.g.: full outer joins cannot be handled as map joins) as well  * as memory restrictions (one side of the join has to fit into memory).  */
 end_comment
 
 begin_class

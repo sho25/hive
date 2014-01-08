@@ -470,7 +470,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/* (non-Javadoc)    * This processor addresses the RS-MJ case that occurs in tez on the small/hash    * table side of things. The connection between the work that RS will be a part of    * must be connected to the MJ work via be a broadcast edge.    * We should not walk down the tree when we encounter this pattern because:    * the type of work (map work or reduce work) needs to be determined    * on the basis of the big table side because it may be a mapwork (no need for shuffle)    * or reduce work.    */
+comment|/* (non-Javadoc)    * This processor addresses the RS-MJ case that occurs in tez on the small/hash    * table side of things. The work that RS will be a part of must be connected     * to the MJ work via be a broadcast edge.    * We should not walk down the tree when we encounter this pattern because:    * the type of work (map work or reduce work) needs to be determined    * on the basis of the big table side because it may be a mapwork (no need for shuffle)    * or reduce work.    */
 annotation|@
 name|Override
 specifier|public

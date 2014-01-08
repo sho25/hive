@@ -2444,7 +2444,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Generate the table descriptor for Map-side join key.    */
+comment|/**    * Generate the table descriptor for Map-side join value.    */
 specifier|public
 specifier|static
 name|TableDesc
