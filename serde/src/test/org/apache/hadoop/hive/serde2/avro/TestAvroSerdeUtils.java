@@ -121,6 +121,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|net
+operator|.
+name|URISyntaxException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Properties
@@ -740,13 +750,13 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|MalformedURLException
+name|AvroSerdeException
 name|e
 parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
-literal|"unknown protocol: not"
+literal|"Unable to read schema from given path: not:///a.real.url"
 argument_list|,
 name|e
 operator|.
@@ -913,13 +923,13 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|MalformedURLException
+name|AvroSerdeException
 name|e
 parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
-literal|"unknown protocol: not"
+literal|"Unable to read schema from given path: not:///a.real.url"
 argument_list|,
 name|e
 operator|.
@@ -939,6 +949,8 @@ throws|throws
 name|IOException
 throws|,
 name|AvroSerdeException
+throws|,
+name|URISyntaxException
 block|{
 name|String
 name|schemaString
@@ -1032,7 +1044,7 @@ name|schemaFromHDFS
 init|=
 name|AvroSerdeUtils
 operator|.
-name|getSchemaFromHDFS
+name|getSchemaFromFS
 argument_list|(
 name|onHDFS
 argument_list|,

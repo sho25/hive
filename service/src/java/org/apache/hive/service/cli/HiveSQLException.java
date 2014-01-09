@@ -344,6 +344,16 @@ operator|.
 name|ERROR_STATUS
 argument_list|)
 decl_stmt|;
+name|tStatus
+operator|.
+name|setErrorMessage
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|tStatus
 return|;
