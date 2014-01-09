@@ -2962,7 +2962,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Loading plan from: "
+literal|"Loading plan from string: "
 operator|+
 name|path
 operator|.

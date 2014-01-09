@@ -7655,7 +7655,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Total MapReduce jobs = "
+literal|"Total jobs = "
 operator|+
 name|jobs
 argument_list|)
