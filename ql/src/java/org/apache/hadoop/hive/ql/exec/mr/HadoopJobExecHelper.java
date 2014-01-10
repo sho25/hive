@@ -905,6 +905,31 @@ name|callBackObj
 operator|=
 name|hookCallBack
 expr_stmt|;
+if|if
+condition|(
+name|job
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// even with tez on some jobs are run as MR. disable the flag in
+comment|// the conf, so that the backend runs fully as MR.
+name|HiveConf
+operator|.
+name|setVar
+argument_list|(
+name|job
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|,
+literal|"mr"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|/**    * A list of the currently running jobs spawned in this Hive instance that is used to kill all    * running jobs in the event of an unexpected shutdown - i.e., the JVM shuts down while there are    * still jobs running.    */
 specifier|public

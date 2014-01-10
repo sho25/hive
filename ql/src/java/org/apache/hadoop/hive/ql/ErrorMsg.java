@@ -1695,6 +1695,35 @@ argument_list|,
 literal|"Invalid SubQuery expression"
 argument_list|)
 block|,
+name|INVALID_HDFS_URI
+argument_list|(
+literal|10251
+argument_list|,
+literal|"{0} is not a hdfs uri"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|INVALID_DIR
+argument_list|(
+literal|10252
+argument_list|,
+literal|"{0} is not a directory"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|NO_VALID_LOCATIONS
+argument_list|(
+literal|10253
+argument_list|,
+literal|"Could not find any valid location to place the jars. "
+operator|+
+literal|"Please update hive.jar.directory or hive.user.install.directory with a valid location"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000

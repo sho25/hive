@@ -33,6 +33,24 @@ name|QTestUtil
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QTestUtil
+operator|.
+name|MiniClusterType
+import|;
+end_import
+
 begin_comment
 comment|/**  * HBaseQTestUtil initializes HBase-specific test fixtures.  */
 end_comment
@@ -53,7 +71,7 @@ parameter_list|,
 name|String
 name|logDir
 parameter_list|,
-name|boolean
+name|MiniClusterType
 name|miniMr
 parameter_list|,
 name|HBaseTestSetup
@@ -86,6 +104,8 @@ name|init
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|init

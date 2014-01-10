@@ -7630,6 +7630,19 @@ argument_list|)
 operator|.
 name|size
 argument_list|()
+operator|+
+name|Utilities
+operator|.
+name|getTezTasks
+argument_list|(
+name|plan
+operator|.
+name|getRootTasks
+argument_list|()
+argument_list|)
+operator|.
+name|size
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -7642,7 +7655,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Total MapReduce jobs = "
+literal|"Total jobs = "
 operator|+
 name|jobs
 argument_list|)

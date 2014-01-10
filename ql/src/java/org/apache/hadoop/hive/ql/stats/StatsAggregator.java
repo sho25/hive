@@ -51,26 +51,6 @@ name|Task
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|mr
-operator|.
-name|MapRedTask
-import|;
-end_import
-
 begin_comment
 comment|/**  * An interface for any possible implementation for gathering statistics.  */
 end_comment
