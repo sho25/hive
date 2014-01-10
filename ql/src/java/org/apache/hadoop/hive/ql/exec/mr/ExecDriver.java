@@ -3503,7 +3503,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|String
+name|Path
 name|tmpPath
 init|=
 name|context
@@ -3511,7 +3511,7 @@ operator|.
 name|getCtx
 argument_list|()
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|inputPaths
 operator|.

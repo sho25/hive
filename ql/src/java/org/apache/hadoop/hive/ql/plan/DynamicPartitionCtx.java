@@ -87,6 +87,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|metastore
@@ -173,7 +187,7 @@ name|spPath
 decl_stmt|;
 comment|// path name corresponding to SP columns
 specifier|private
-name|String
+name|Path
 name|rootPath
 decl_stmt|;
 comment|// the root path DP columns paths start from
@@ -660,7 +674,7 @@ specifier|public
 name|void
 name|setRootPath
 parameter_list|(
-name|String
+name|Path
 name|root
 parameter_list|)
 block|{
@@ -672,7 +686,7 @@ name|root
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getRootPath
 parameter_list|()
 block|{

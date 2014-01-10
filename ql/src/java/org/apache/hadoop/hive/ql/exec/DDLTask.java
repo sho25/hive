@@ -9008,7 +9008,7 @@ operator|.
 name|getCtx
 argument_list|()
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|originalDir
 operator|.
@@ -10082,21 +10082,17 @@ block|}
 name|Path
 name|tmpPath
 init|=
-operator|new
-name|Path
-argument_list|(
 name|driverContext
 operator|.
 name|getCtx
 argument_list|()
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|originalDir
 operator|.
 name|toUri
 argument_list|()
-argument_list|)
 argument_list|)
 decl_stmt|;
 try|try
@@ -10122,22 +10118,6 @@ operator|new
 name|HiveException
 argument_list|(
 name|e
-argument_list|)
-throw|;
-block|}
-comment|// Some sanity checks
-if|if
-condition|(
-name|originalDir
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Missing archive data in the partition"
 argument_list|)
 throw|;
 block|}

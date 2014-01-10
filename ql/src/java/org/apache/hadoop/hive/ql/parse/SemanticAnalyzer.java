@@ -9499,7 +9499,7 @@ name|fname
 operator|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|FileUtils
 operator|.
@@ -9513,6 +9513,9 @@ operator|.
 name|toUri
 argument_list|()
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 expr_stmt|;
 block|}
 catch|catch
@@ -30976,7 +30979,7 @@ init|=
 literal|null
 decl_stmt|;
 comment|// destination partition if any
-name|String
+name|Path
 name|queryTmpdir
 init|=
 literal|null
@@ -31420,12 +31423,6 @@ block|{
 name|queryTmpdir
 operator|=
 name|dest_path
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getPath
-argument_list|()
 expr_stmt|;
 block|}
 else|else
@@ -31434,7 +31431,7 @@ name|queryTmpdir
 operator|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|dest_path
 operator|.
@@ -31551,11 +31548,7 @@ operator|=
 operator|new
 name|LoadTableDesc
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|,
 name|table_desc
 argument_list|,
@@ -31962,7 +31955,7 @@ name|queryTmpdir
 operator|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|dest_path
 operator|.
@@ -32053,11 +32046,7 @@ operator|=
 operator|new
 name|LoadTableDesc
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|,
 name|table_desc
 argument_list|,
@@ -32272,10 +32261,14 @@ comment|// for local directory - we always write to map-red intermediate
 comment|// store and then copy to local fs
 name|queryTmpdir
 operator|=
+operator|new
+name|Path
+argument_list|(
 name|ctx
 operator|.
 name|getMRTmpFileURI
 argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 else|else
@@ -32300,7 +32293,7 @@ name|queryTmpdir
 operator|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|qPath
 operator|.
@@ -32712,11 +32705,7 @@ name|LoadFileDesc
 argument_list|(
 name|tblDesc
 argument_list|,
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|,
 name|dest_path
 argument_list|,
@@ -33187,6 +33176,9 @@ argument_list|(
 name|fileSinkDesc
 operator|.
 name|getDirName
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;

@@ -6214,12 +6214,12 @@ argument_list|)
 decl_stmt|;
 comment|// Write the output to temporary directory and move it to the final location at the end
 comment|// so the operation is atomic.
-name|String
+name|Path
 name|queryTmpdir
 init|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|newTblPartLoc
 operator|.
@@ -6231,11 +6231,7 @@ name|truncateTblDesc
 operator|.
 name|setOutputDir
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|LoadTableDesc
@@ -6244,11 +6240,7 @@ init|=
 operator|new
 name|LoadTableDesc
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|,
 name|tblDesc
 argument_list|,
@@ -10108,12 +10100,12 @@ argument_list|(
 name|tblObj
 argument_list|)
 decl_stmt|;
-name|String
+name|Path
 name|queryTmpdir
 init|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|newTblPartLoc
 operator|.
@@ -10125,11 +10117,7 @@ name|mergeDesc
 operator|.
 name|setOutputDir
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|LoadTableDesc
@@ -10138,11 +10126,7 @@ init|=
 operator|new
 name|LoadTableDesc
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|,
 name|tblDesc
 argument_list|,

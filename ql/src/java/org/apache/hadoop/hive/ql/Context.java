@@ -1588,27 +1588,27 @@ return|;
 block|}
 comment|/**    * Get a path to store tmp data destined for external URI.    *    * @param extURI    *          external URI to which the tmp data has to be eventually moved    * @return next available tmp path on the file system corresponding extURI    */
 specifier|public
-name|String
-name|getExternalTmpFileURI
+name|Path
+name|getExternalTmpPath
 parameter_list|(
 name|URI
 name|extURI
 parameter_list|)
 block|{
 return|return
+operator|new
+name|Path
+argument_list|(
 name|getExternalScratchDir
 argument_list|(
 name|extURI
 argument_list|)
-operator|+
-name|Path
-operator|.
-name|SEPARATOR
-operator|+
+argument_list|,
 name|EXT_PREFIX
 operator|+
 name|nextPathId
 argument_list|()
+argument_list|)
 return|;
 block|}
 comment|/**    * @return the resFile    */

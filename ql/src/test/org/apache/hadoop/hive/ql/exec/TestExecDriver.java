@@ -1564,6 +1564,9 @@ argument_list|(
 operator|new
 name|FileSinkDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tmpdir
 operator|+
 name|File
@@ -1571,6 +1574,7 @@ operator|.
 name|separator
 operator|+
 literal|"mapplan1.out"
+argument_list|)
 argument_list|,
 name|Utilities
 operator|.
@@ -1636,6 +1640,9 @@ argument_list|(
 operator|new
 name|FileSinkDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tmpdir
 operator|+
 name|File
@@ -1643,6 +1650,7 @@ operator|.
 name|separator
 operator|+
 literal|"mapplan2.out"
+argument_list|)
 argument_list|,
 name|Utilities
 operator|.
@@ -1934,6 +1942,9 @@ argument_list|(
 operator|new
 name|FileSinkDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tmpdir
 operator|+
 name|File
@@ -1941,6 +1952,7 @@ operator|.
 name|separator
 operator|+
 literal|"mapredplan1.out"
+argument_list|)
 argument_list|,
 name|Utilities
 operator|.
@@ -2174,6 +2186,9 @@ argument_list|(
 operator|new
 name|FileSinkDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tmpdir
 operator|+
 name|File
@@ -2181,6 +2196,7 @@ operator|.
 name|separator
 operator|+
 literal|"mapredplan2.out"
+argument_list|)
 argument_list|,
 name|Utilities
 operator|.
@@ -2529,6 +2545,9 @@ argument_list|(
 operator|new
 name|FileSinkDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tmpdir
 operator|+
 name|File
@@ -2536,6 +2555,7 @@ operator|.
 name|separator
 operator|+
 literal|"mapredplan3.out"
+argument_list|)
 argument_list|,
 name|Utilities
 operator|.
@@ -2916,6 +2936,9 @@ argument_list|(
 operator|new
 name|FileSinkDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tmpdir
 operator|+
 name|File
@@ -2923,6 +2946,7 @@ operator|.
 name|separator
 operator|+
 literal|"mapredplan4.out"
+argument_list|)
 argument_list|,
 name|Utilities
 operator|.
@@ -3215,6 +3239,9 @@ argument_list|(
 operator|new
 name|FileSinkDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tmpdir
 operator|+
 name|File
@@ -3222,6 +3249,7 @@ operator|.
 name|separator
 operator|+
 literal|"mapredplan5.out"
+argument_list|)
 argument_list|,
 name|Utilities
 operator|.
@@ -3559,6 +3587,9 @@ argument_list|(
 operator|new
 name|FileSinkDesc
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|tmpdir
 operator|+
 name|File
@@ -3566,6 +3597,7 @@ operator|.
 name|separator
 operator|+
 literal|"mapredplan6.out"
+argument_list|)
 argument_list|,
 name|Utilities
 operator|.
