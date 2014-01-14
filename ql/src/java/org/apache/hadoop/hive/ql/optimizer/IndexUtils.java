@@ -1078,7 +1078,7 @@ name|partFs
 init|=
 name|part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 operator|.
 name|getFileSystem
@@ -1098,7 +1098,7 @@ name|getFileStatus
 argument_list|(
 name|part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 argument_list|)
 decl_stmt|;

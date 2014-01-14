@@ -5742,7 +5742,7 @@ name|partPath
 init|=
 name|part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 decl_stmt|;
 comment|// if the table is in a different dfs than the partition,
@@ -9837,7 +9837,7 @@ name|partPath
 init|=
 name|part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 decl_stmt|;
 comment|// if the table is in a different dfs than the partition,

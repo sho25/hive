@@ -1184,9 +1184,6 @@ operator|.
 name|getLocation
 argument_list|()
 argument_list|)
-operator|.
-name|toUri
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

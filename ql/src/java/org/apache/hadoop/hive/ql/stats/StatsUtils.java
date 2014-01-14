@@ -2296,7 +2296,7 @@ name|path
 init|=
 name|part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 decl_stmt|;
 name|long

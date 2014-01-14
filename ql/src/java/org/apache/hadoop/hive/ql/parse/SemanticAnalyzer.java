@@ -31916,7 +31916,7 @@ name|partPath
 init|=
 name|dest_part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 decl_stmt|;
 comment|// if the table is in a different dfs than the partition,

@@ -36,6 +36,8 @@ name|VerifyOutputTableLocationSchemeIsFileHook
 implements|implements
 name|ExecuteWithHookContext
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run
@@ -78,6 +80,9 @@ name|getTable
 argument_list|()
 operator|.
 name|getDataLocation
+argument_list|()
+operator|.
+name|toUri
 argument_list|()
 operator|.
 name|getScheme

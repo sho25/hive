@@ -1797,15 +1797,13 @@ try|try
 block|{
 name|fs
 operator|=
-name|FileSystem
-operator|.
-name|get
-argument_list|(
 name|table
 operator|.
 name|getDataLocation
 argument_list|()
-argument_list|,
+operator|.
+name|getFileSystem
+argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
@@ -2980,7 +2978,7 @@ name|fileSys
 init|=
 name|partn
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 operator|.
 name|getFileSystem
@@ -2998,7 +2996,7 @@ name|getFileStatusRecurse
 argument_list|(
 name|partn
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 argument_list|,
 literal|1

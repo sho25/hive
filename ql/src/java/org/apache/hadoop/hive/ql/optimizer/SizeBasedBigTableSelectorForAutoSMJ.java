@@ -433,7 +433,7 @@ name|path
 init|=
 name|partition
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 decl_stmt|;
 name|String

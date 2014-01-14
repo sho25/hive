@@ -1639,17 +1639,10 @@ decl_stmt|;
 name|Path
 name|partToRemovePath
 init|=
-operator|new
-name|Path
-argument_list|(
 name|partToRemove
 operator|.
 name|getDataLocation
 argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
 decl_stmt|;
 name|fs
 operator|=

@@ -430,6 +430,8 @@ comment|/**  * @deprecated Use/modify {@link org.apache.hive.hcatalog.cli.Semant
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|final
 class|class
 name|CreateTableHook
@@ -1178,9 +1180,6 @@ operator|.
 name|getLocation
 argument_list|()
 argument_list|)
-operator|.
-name|toUri
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

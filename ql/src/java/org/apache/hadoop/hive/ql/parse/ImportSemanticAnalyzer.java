@@ -3107,7 +3107,7 @@ operator|.
 name|equals
 argument_list|(
 operator|new
-name|URI
+name|Path
 argument_list|(
 name|tableDesc
 operator|.

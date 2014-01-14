@@ -1083,7 +1083,7 @@ name|partPath
 init|=
 name|partition
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 decl_stmt|;
 name|fs

@@ -6706,7 +6706,7 @@ name|fs
 init|=
 name|p
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 operator|.
 name|getFileSystem
@@ -6726,7 +6726,7 @@ name|getFileStatus
 argument_list|(
 name|p
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -8360,7 +8360,7 @@ name|e
 argument_list|)
 throw|;
 block|}
-name|URI
+name|Path
 name|tableDir
 init|=
 name|tbl
@@ -8391,9 +8391,6 @@ operator|new
 name|Path
 argument_list|(
 name|tableDir
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|subdir
 argument_list|)
@@ -8686,7 +8683,7 @@ name|originalDir
 operator|=
 name|p
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 expr_stmt|;
 block|}
@@ -9368,7 +9365,7 @@ name|addSlash
 argument_list|(
 name|p
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 operator|.
 name|toUri
@@ -9380,7 +9377,7 @@ name|test
 init|=
 name|p
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 operator|.
 name|toUri
@@ -19356,7 +19353,11 @@ name|tbl
 operator|.
 name|setDataLocation
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|locUri
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -21807,9 +21808,6 @@ operator|.
 name|getLocation
 argument_list|()
 argument_list|)
-operator|.
-name|toUri
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -22591,9 +22589,6 @@ operator|.
 name|getLocation
 argument_list|()
 argument_list|)
-operator|.
-name|toUri
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -23523,7 +23518,7 @@ name|add
 argument_list|(
 name|partition
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -23566,7 +23561,7 @@ name|add
 argument_list|(
 name|partition
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 argument_list|)
 expr_stmt|;

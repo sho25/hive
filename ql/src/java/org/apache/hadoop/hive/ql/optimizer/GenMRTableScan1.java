@@ -1313,7 +1313,7 @@ name|getMsg
 argument_list|(
 name|part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 operator|.
 name|toString
@@ -1333,7 +1333,7 @@ name|add
 argument_list|(
 name|part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 argument_list|)
 expr_stmt|;

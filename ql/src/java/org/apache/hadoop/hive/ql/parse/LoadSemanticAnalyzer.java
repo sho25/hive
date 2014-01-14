@@ -1320,6 +1320,7 @@ name|URI
 name|toURI
 init|=
 operator|(
+operator|(
 name|ts
 operator|.
 name|partHandle
@@ -1339,6 +1340,10 @@ operator|.
 name|tableHandle
 operator|.
 name|getDataLocation
+argument_list|()
+operator|)
+operator|.
+name|toUri
 argument_list|()
 decl_stmt|;
 name|List

@@ -718,8 +718,8 @@ range|:
 name|partitions
 control|)
 block|{
-name|URI
-name|fromURI
+name|Path
+name|fromPath
 init|=
 name|partition
 operator|.
@@ -755,11 +755,7 @@ argument_list|(
 operator|new
 name|CopyWork
 argument_list|(
-operator|new
-name|Path
-argument_list|(
-name|fromURI
-argument_list|)
+name|fromPath
 argument_list|,
 name|toPartPath
 argument_list|,
@@ -791,8 +787,8 @@ block|}
 block|}
 else|else
 block|{
-name|URI
-name|fromURI
+name|Path
+name|fromPath
 init|=
 name|ts
 operator|.
@@ -827,11 +823,7 @@ argument_list|(
 operator|new
 name|CopyWork
 argument_list|(
-operator|new
-name|Path
-argument_list|(
-name|fromURI
-argument_list|)
+name|fromPath
 argument_list|,
 name|toDataPath
 argument_list|,
