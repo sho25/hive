@@ -7704,9 +7704,6 @@ name|HiveParser
 operator|.
 name|TOK_UNION
 case|:
-comment|// currently, we dont support subq1 union subq2 - the user has to
-comment|// explicitly say:
-comment|// select * from (subq1 union subq2) subqalias
 if|if
 condition|(
 operator|!
@@ -7716,6 +7713,8 @@ name|getIsSubQ
 argument_list|()
 condition|)
 block|{
+comment|// this shouldn't happen. The parser should have converted the union to be
+comment|// contained in a subquery. Just in case, we keep the error as a fallback.
 throw|throw
 operator|new
 name|SemanticException
