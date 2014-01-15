@@ -130,6 +130,11 @@ argument_list|)
 block|,
 name|SHOW_ROLE_GRANT
 argument_list|(
+literal|"show_role_grant"
+argument_list|)
+block|,
+name|SHOW_ROLES
+argument_list|(
 literal|"show_roles"
 argument_list|)
 block|;
