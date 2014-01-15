@@ -3764,7 +3764,7 @@ name|HIVE_SERVER2_ASYNC_EXEC_SHUTDOWN_TIMEOUT
 argument_list|(
 literal|"hive.server2.async.exec.shutdown.timeout"
 argument_list|,
-literal|10L
+literal|10
 argument_list|)
 block|,
 comment|// Size of the wait queue for async thread pool in HiveServer2.
