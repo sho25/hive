@@ -8111,7 +8111,7 @@ name|assertEquals
 argument_list|(
 name|Types
 operator|.
-name|VARCHAR
+name|ARRAY
 argument_list|,
 name|meta
 operator|.
@@ -8123,7 +8123,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"string"
+literal|"array"
 argument_list|,
 name|meta
 operator|.
@@ -8189,7 +8189,7 @@ name|assertEquals
 argument_list|(
 name|Types
 operator|.
-name|VARCHAR
+name|ARRAY
 argument_list|,
 name|colRS
 operator|.
@@ -8238,7 +8238,7 @@ name|assertEquals
 argument_list|(
 name|Types
 operator|.
-name|VARCHAR
+name|JAVA_OBJECT
 argument_list|,
 name|meta
 operator|.
@@ -8250,7 +8250,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"string"
+literal|"map"
 argument_list|,
 name|meta
 operator|.
@@ -8316,7 +8316,7 @@ name|assertEquals
 argument_list|(
 name|Types
 operator|.
-name|VARCHAR
+name|JAVA_OBJECT
 argument_list|,
 name|colRS
 operator|.
@@ -8365,7 +8365,7 @@ name|assertEquals
 argument_list|(
 name|Types
 operator|.
-name|VARCHAR
+name|JAVA_OBJECT
 argument_list|,
 name|meta
 operator|.
@@ -8377,7 +8377,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"string"
+literal|"map"
 argument_list|,
 name|meta
 operator|.
@@ -8443,7 +8443,7 @@ name|assertEquals
 argument_list|(
 name|Types
 operator|.
-name|VARCHAR
+name|JAVA_OBJECT
 argument_list|,
 name|colRS
 operator|.
@@ -8492,7 +8492,7 @@ name|assertEquals
 argument_list|(
 name|Types
 operator|.
-name|VARCHAR
+name|STRUCT
 argument_list|,
 name|meta
 operator|.
@@ -8504,7 +8504,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"string"
+literal|"struct"
 argument_list|,
 name|meta
 operator|.
@@ -8570,7 +8570,7 @@ name|assertEquals
 argument_list|(
 name|Types
 operator|.
-name|VARCHAR
+name|STRUCT
 argument_list|,
 name|colRS
 operator|.
@@ -9313,7 +9313,7 @@ name|assertEquals
 argument_list|(
 name|Types
 operator|.
-name|VARCHAR
+name|ARRAY
 argument_list|,
 name|meta
 operator|.
@@ -9325,7 +9325,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"string"
+literal|"array"
 argument_list|,
 name|meta
 operator|.

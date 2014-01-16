@@ -2195,6 +2195,19 @@ operator|)
 name|value
 argument_list|)
 return|;
+case|case
+name|ARRAY_TYPE
+case|:
+case|case
+name|MAP_TYPE
+case|:
+case|case
+name|STRUCT_TYPE
+case|:
+comment|// todo: returns json string. should recreate object from it?
+return|return
+name|value
+return|;
 default|default:
 return|return
 name|value
