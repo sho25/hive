@@ -8066,6 +8066,8 @@ operator|)
 name|tab
 argument_list|,
 name|conf
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -31247,13 +31249,13 @@ operator|==
 literal|null
 condition|)
 block|{
-name|Utilities
-operator|.
-name|validatePartSpecColumnNames
-argument_list|(
 name|dest_tab
-argument_list|,
+operator|.
+name|validatePartColumnNames
+argument_list|(
 name|partSpec
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|dpCtx
