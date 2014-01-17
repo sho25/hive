@@ -2806,7 +2806,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the semantic analyzer.  */
+comment|/**  * Implementation of the semantic analyzer. It generates the query plan.  * There are other specific semantic analyzers for some hive operations such as  * DDLSemanticAnalyzer for ddl operations.  */
 end_comment
 
 begin_class

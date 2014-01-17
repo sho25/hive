@@ -154,7 +154,7 @@ comment|// 20000 to 29999: Runtime errors where Hive believes that retries are u
 comment|// 30000 to 39999: Runtime errors which Hive thinks may be transient and retrying may succeed.
 comment|// 40000 to 49999: Errors where Hive is unable to advise about retries.
 comment|// In addition to the error code, ErrorMsg also has a SQLState field.
-comment|// SQLStates are taken from Section 12.5 of ISO-9075.
+comment|// SQLStates are taken from Section 22.1 of ISO-9075.
 comment|// See http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt
 comment|// Most will just rollup to the generic syntax error state of 42000, but
 comment|// specific errors can override the that state.
@@ -167,6 +167,7 @@ argument_list|,
 literal|"Exception while processing"
 argument_list|)
 block|,
+comment|//========================== 10000 range starts here ========================//
 name|INVALID_TABLE
 argument_list|(
 literal|10001
@@ -1724,6 +1725,25 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|UNNSUPPORTED_AUTHORIZATION_PRINCIPAL_TYPE_GROUP
+argument_list|(
+literal|10254
+argument_list|,
+literal|"Principal type GROUP is not supported in this authorization setting"
+argument_list|,
+literal|"28000"
+argument_list|)
+block|,
+name|INVALID_TABLE_NAME
+argument_list|(
+literal|10255
+argument_list|,
+literal|"Invalid table name {0}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
 literal|20000
@@ -1769,6 +1789,7 @@ operator|+
 literal|"is controlled by hive.exec.max.dynamic.partitions and hive.exec.max.dynamic.partitions.pernode. "
 argument_list|)
 block|,
+comment|//========================== 30000 range starts here ========================//
 name|STATSPUBLISHER_NOT_OBTAINED
 argument_list|(
 literal|30000
