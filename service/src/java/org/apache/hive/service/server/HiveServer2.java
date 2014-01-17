@@ -609,10 +609,20 @@ expr_stmt|;
 block|}
 comment|//NOTE: It is critical to do this here so that log4j is reinitialized
 comment|// before any of the other core hive classes are loaded
+name|String
+name|initLog4jMessage
+init|=
 name|LogUtils
 operator|.
 name|initHiveLog4j
 argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|initLog4jMessage
+argument_list|)
 expr_stmt|;
 name|HiveStringUtils
 operator|.
