@@ -1976,12 +1976,20 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// if the client is setting a non-default db, then switch the database
 if|if
 condition|(
+operator|!
+name|Utils
+operator|.
+name|DEFAULT_DATABASE
+operator|.
+name|equalsIgnoreCase
+argument_list|(
 name|dbName
-operator|!=
-literal|null
+argument_list|)
 condition|)
+block|{
 name|stmt
 operator|.
 name|execute
@@ -1991,6 +1999,7 @@ operator|+
 name|dbName
 argument_list|)
 expr_stmt|;
+block|}
 name|stmt
 operator|.
 name|close
