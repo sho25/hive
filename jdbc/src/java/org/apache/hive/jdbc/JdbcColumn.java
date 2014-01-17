@@ -1119,6 +1119,17 @@ return|;
 case|case
 name|Types
 operator|.
+name|BINARY
+case|:
+return|return
+name|Integer
+operator|.
+name|MAX_VALUE
+return|;
+comment|// hive has no max limit for binary
+case|case
+name|Types
+operator|.
 name|TINYINT
 case|:
 case|case
@@ -1204,11 +1215,6 @@ operator|+
 literal|2
 return|;
 comment|// '-' sign and '.'
-case|case
-name|Types
-operator|.
-name|BINARY
-case|:
 case|case
 name|Types
 operator|.
@@ -1300,6 +1306,17 @@ comment|// hive has no max limit for strings
 case|case
 name|Types
 operator|.
+name|BINARY
+case|:
+return|return
+name|Integer
+operator|.
+name|MAX_VALUE
+return|;
+comment|// hive has no max limit for binary
+case|case
+name|Types
+operator|.
 name|TINYINT
 case|:
 return|return
@@ -1371,11 +1388,6 @@ name|columnAttributes
 operator|.
 name|precision
 return|;
-case|case
-name|Types
-operator|.
-name|BINARY
-case|:
 case|case
 name|Types
 operator|.
@@ -1467,6 +1479,11 @@ name|Types
 operator|.
 name|DATE
 case|:
+case|case
+name|Types
+operator|.
+name|BINARY
+case|:
 return|return
 literal|0
 return|;
@@ -1504,11 +1521,6 @@ name|columnAttributes
 operator|.
 name|scale
 return|;
-case|case
-name|Types
-operator|.
-name|BINARY
-case|:
 case|case
 name|Types
 operator|.
