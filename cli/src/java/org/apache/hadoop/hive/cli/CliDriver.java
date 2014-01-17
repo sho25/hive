@@ -657,22 +657,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|IOUtils
@@ -828,6 +812,13 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
+name|ss
+operator|.
+name|setLastCommand
+argument_list|(
+name|cmd
+argument_list|)
+expr_stmt|;
 comment|// Flush the print stream, so it doesn't include output from the last command
 name|ss
 operator|.
