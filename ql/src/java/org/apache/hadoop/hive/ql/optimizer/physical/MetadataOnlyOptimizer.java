@@ -1407,7 +1407,7 @@ operator|.
 name|getContext
 argument_list|()
 operator|.
-name|getMRTmpFileURI
+name|getMRTmpPath
 argument_list|()
 operator|+
 name|newPartition

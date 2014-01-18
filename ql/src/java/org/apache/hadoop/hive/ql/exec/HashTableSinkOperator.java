@@ -1725,9 +1725,9 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// get tmp file URI
-name|String
-name|tmpURI
+comment|// get tmp path
+name|Path
+name|tmpPath
 init|=
 name|this
 operator|.
@@ -1737,7 +1737,7 @@ operator|.
 name|getLocalWork
 argument_list|()
 operator|.
-name|getTmpFileURI
+name|getTmpPath
 argument_list|()
 decl_stmt|;
 name|LOG
@@ -1746,7 +1746,7 @@ name|info
 argument_list|(
 literal|"Temp URI for side table: "
 operator|+
-name|tmpURI
+name|tmpPath
 argument_list|)
 expr_stmt|;
 for|for
@@ -1817,14 +1817,14 @@ operator|.
 name|getDumpFilePrefix
 argument_list|()
 decl_stmt|;
-name|String
-name|tmpURIPath
+name|Path
+name|path
 init|=
 name|Utilities
 operator|.
 name|generatePath
 argument_list|(
-name|tmpURI
+name|tmpPath
 argument_list|,
 name|dumpFilePrefix
 argument_list|,
@@ -1844,19 +1844,10 @@ argument_list|()
 operator|+
 literal|"\tDump the side-table into file: "
 operator|+
-name|tmpURIPath
+name|path
 argument_list|)
 expr_stmt|;
 comment|// get the hashtable file and path
-name|Path
-name|path
-init|=
-operator|new
-name|Path
-argument_list|(
-name|tmpURIPath
-argument_list|)
-decl_stmt|;
 name|FileSystem
 name|fs
 init|=
@@ -1926,7 +1917,7 @@ argument_list|()
 operator|+
 literal|"\tUpload 1 File to: "
 operator|+
-name|tmpURIPath
+name|path
 argument_list|)
 expr_stmt|;
 block|}

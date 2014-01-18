@@ -1459,22 +1459,22 @@ return|;
 block|}
 comment|/**    * Get a path to store map-reduce intermediate data in.    *    * @return next available path for map-red intermediate data    */
 specifier|public
-name|String
-name|getMRTmpFileURI
+name|Path
+name|getMRTmpPath
 parameter_list|()
 block|{
 return|return
+operator|new
+name|Path
+argument_list|(
 name|getMRScratchDir
 argument_list|()
-operator|+
-name|Path
-operator|.
-name|SEPARATOR
-operator|+
+argument_list|,
 name|MR_PREFIX
 operator|+
 name|nextPathId
 argument_list|()
+argument_list|)
 return|;
 block|}
 comment|/**    * Given a URI for mapreduce intermediate output, swizzle the    * it to point to the local file system. This can be called in    * case the caller decides to run in local mode (in which case    * all intermediate data can be stored locally)    *    * @param originalURI uri to localize    * @return localized path for map-red intermediate data    */

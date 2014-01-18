@@ -9620,7 +9620,10 @@ name|fname
 operator|=
 name|ctx
 operator|.
-name|getMRTmpFileURI
+name|getMRTmpPath
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 expr_stmt|;
 name|ctx
@@ -32262,14 +32265,10 @@ comment|// for local directory - we always write to map-red intermediate
 comment|// store and then copy to local fs
 name|queryTmpdir
 operator|=
-operator|new
-name|Path
-argument_list|(
 name|ctx
 operator|.
-name|getMRTmpFileURI
+name|getMRTmpPath
 argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
 else|else
