@@ -3221,7 +3221,6 @@ argument_list|,
 name|addPartitionDesc
 argument_list|)
 return|;
-comment|// TODO#: here
 block|}
 name|RenamePartitionDesc
 name|renamePartitionDesc
@@ -8023,7 +8022,6 @@ argument_list|(
 name|addPartitionDesc
 argument_list|)
 decl_stmt|;
-comment|// TODO#: here
 for|for
 control|(
 name|Partition

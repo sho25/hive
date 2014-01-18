@@ -1728,7 +1728,7 @@ parameter_list|,
 name|short
 name|maxParts
 parameter_list|,
-name|Set
+name|List
 argument_list|<
 name|Partition
 argument_list|>
