@@ -800,14 +800,10 @@ name|Utilities
 operator|.
 name|generateTmpPath
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|ctx
 operator|.
-name|getLocalTmpFileURI
+name|getLocalTmpPath
 argument_list|()
-argument_list|)
 argument_list|,
 name|currTask
 operator|.
@@ -1224,7 +1220,7 @@ argument_list|()
 decl_stmt|;
 name|HashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -1243,7 +1239,7 @@ decl_stmt|;
 comment|// to avoid concurrent modify the hashmap
 name|HashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -1257,7 +1253,7 @@ init|=
 operator|new
 name|HashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -1275,7 +1271,7 @@ name|Map
 operator|.
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -1305,7 +1301,7 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-name|String
+name|Path
 name|key
 init|=
 name|entry

@@ -1125,7 +1125,7 @@ name|Path
 argument_list|(
 name|ctx
 operator|.
-name|getLocalTmpFileURI
+name|getLocalTmpPath
 argument_list|()
 argument_list|,
 literal|"plan.xml"
@@ -1295,16 +1295,10 @@ name|files
 expr_stmt|;
 name|workDir
 operator|=
-operator|(
-operator|new
-name|Path
-argument_list|(
 name|ctx
 operator|.
-name|getLocalTmpFileURI
+name|getLocalTmpPath
 argument_list|()
-argument_list|)
-operator|)
 operator|.
 name|toUri
 argument_list|()

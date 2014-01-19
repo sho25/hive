@@ -4807,7 +4807,7 @@ name|Path
 argument_list|(
 name|ctx
 operator|.
-name|getLocalTmpFileURI
+name|getLocalTmpPath
 argument_list|()
 argument_list|,
 name|JOBCONF_FILENAME

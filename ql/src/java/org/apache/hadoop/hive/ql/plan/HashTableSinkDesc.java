@@ -45,16 +45,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -66,16 +56,6 @@ operator|.
 name|util
 operator|.
 name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|LinkedHashMap
 import|;
 end_import
 
@@ -118,6 +98,20 @@ operator|.
 name|util
 operator|.
 name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
 import|;
 end_import
 
@@ -168,7 +162,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|String
+name|Path
 argument_list|>
 name|bigKeysDirMap
 decl_stmt|;
@@ -181,7 +175,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|String
+name|Path
 argument_list|>
 argument_list|>
 name|smallKeysDirMap
@@ -792,7 +786,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|String
+name|Path
 argument_list|>
 name|getBigKeysDirMap
 parameter_list|()
@@ -811,7 +805,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|String
+name|Path
 argument_list|>
 name|bigKeysDirMap
 parameter_list|)
@@ -834,7 +828,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|String
+name|Path
 argument_list|>
 argument_list|>
 name|getSmallKeysDirMap
@@ -858,7 +852,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|String
+name|Path
 argument_list|>
 argument_list|>
 name|smallKeysDirMap

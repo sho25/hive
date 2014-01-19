@@ -239,7 +239,7 @@ comment|// task.
 specifier|private
 name|HashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -269,7 +269,7 @@ name|ConditionalResolverSkewJoinCtx
 parameter_list|(
 name|HashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -308,7 +308,7 @@ block|}
 specifier|public
 name|HashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -330,7 +330,7 @@ name|setDirToTaskMap
 parameter_list|(
 name|HashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -442,7 +442,7 @@ argument_list|()
 decl_stmt|;
 name|Map
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -462,7 +462,7 @@ name|Iterator
 argument_list|<
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -494,7 +494,7 @@ condition|)
 block|{
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|Task
 argument_list|<
@@ -510,22 +510,13 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
-name|String
-name|path
+name|Path
+name|dirPath
 init|=
 name|entry
 operator|.
 name|getKey
 argument_list|()
-decl_stmt|;
-name|Path
-name|dirPath
-init|=
-operator|new
-name|Path
-argument_list|(
-name|path
-argument_list|)
 decl_stmt|;
 name|FileSystem
 name|inpFs

@@ -111,16 +111,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Stack
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -708,20 +698,6 @@ operator|.
 name|objectinspector
 operator|.
 name|SubStructObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|BytesWritable
 import|;
 end_import
 
@@ -4491,15 +4467,12 @@ operator|&&
 name|isNativeTable
 condition|)
 block|{
-name|String
+name|Path
 name|specPath
 init|=
 name|conf
 operator|.
 name|getDirName
-argument_list|()
-operator|.
-name|toString
 argument_list|()
 decl_stmt|;
 name|DynamicPartitionCtx
@@ -4529,9 +4502,6 @@ operator|=
 name|conf
 operator|.
 name|getParentDir
-argument_list|()
-operator|.
-name|toString
 argument_list|()
 expr_stmt|;
 block|}
