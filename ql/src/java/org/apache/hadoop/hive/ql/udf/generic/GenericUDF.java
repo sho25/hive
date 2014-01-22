@@ -569,6 +569,29 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{   }
+comment|/**    * Some functions are affected by appearing order of arguments (comparisons, for example)    */
+specifier|public
+name|GenericUDF
+name|flip
+parameter_list|()
+block|{
+return|return
+name|this
+return|;
+block|}
+specifier|public
+name|String
+name|getUdfName
+parameter_list|()
+block|{
+return|return
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 
