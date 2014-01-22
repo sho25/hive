@@ -5061,11 +5061,6 @@ argument_list|(
 name|prefix
 argument_list|,
 name|maxKeyLength
-argument_list|,
-name|postfix
-operator|.
-name|length
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|String

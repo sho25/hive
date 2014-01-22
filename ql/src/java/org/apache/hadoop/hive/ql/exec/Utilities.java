@@ -6037,7 +6037,7 @@ return|return
 name|plan
 return|;
 block|}
-comment|/**    * Deserializes the plan.    * @param in The stream to read from.    * @return The plan, such as QueryPlan, MapredWork, etc.    * @param To know what serialization format plan is in    */
+comment|/**    * Deserializes the plan.    * @param in The stream to read from.    * @param planClass class of plan    * @param conf configuration    * @return The plan, such as QueryPlan, MapredWork, etc.    */
 specifier|public
 specifier|static
 parameter_list|<
@@ -14039,7 +14039,7 @@ name|getStatsPublisher
 argument_list|()
 return|;
 block|}
-comment|/**    * If statsPrefix's length is greater than maxPrefixLength and maxPrefixLength> 0,    * then it returns an MD5 hash of statsPrefix followed by path separator, otherwise    * it returns statsPrefix    *    * @param statsPrefix    * @param maxPrefixLength    * @return    */
+comment|/**    * If statsPrefix's length is greater than maxPrefixLength and maxPrefixLength> 0,    * then it returns an MD5 hash of statsPrefix followed by path separator, otherwise    * it returns statsPrefix    *    * @param statsPrefix prefix of stats key    * @param maxPrefixLength max length of stats key    * @return if the length of prefix is longer than max, return MD5 hashed value of the prefix    */
 specifier|public
 specifier|static
 name|String
@@ -14050,9 +14050,6 @@ name|statsPrefix
 parameter_list|,
 name|int
 name|maxPrefixLength
-parameter_list|,
-name|int
-name|postfixLength
 parameter_list|)
 block|{
 comment|// todo: this might return possibly longer prefix than
@@ -14070,8 +14067,6 @@ name|length
 argument_list|()
 operator|>
 name|maxPrefixLength
-operator|-
-name|postfixLength
 condition|)
 block|{
 try|try

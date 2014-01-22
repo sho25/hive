@@ -3292,6 +3292,13 @@ argument_list|,
 literal|150
 argument_list|)
 block|,
+name|HIVE_STATS_KEY_PREFIX_RESERVE_LENGTH
+argument_list|(
+literal|"hive.stats.key.prefix.reserve.length"
+argument_list|,
+literal|24
+argument_list|)
+block|,
 name|HIVE_STATS_KEY_PREFIX
 argument_list|(
 literal|"hive.stats.key.prefix"

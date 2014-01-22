@@ -8128,6 +8128,13 @@ argument_list|,
 name|ctx
 argument_list|)
 decl_stmt|;
+name|driverCxt
+operator|.
+name|prepare
+argument_list|(
+name|plan
+argument_list|)
+expr_stmt|;
 name|ctx
 operator|.
 name|setHDFSCleanup
@@ -8673,6 +8680,13 @@ name|exitVal
 return|;
 block|}
 block|}
+name|driverCxt
+operator|.
+name|finished
+argument_list|(
+name|tskRun
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|SessionState
@@ -9706,6 +9720,13 @@ argument_list|,
 name|tskRes
 argument_list|)
 decl_stmt|;
+name|cxt
+operator|.
+name|prepare
+argument_list|(
+name|tskRun
+argument_list|)
+expr_stmt|;
 comment|// Launch Task
 if|if
 condition|(
