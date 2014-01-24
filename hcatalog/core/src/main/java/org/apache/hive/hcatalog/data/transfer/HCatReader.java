@@ -332,30 +332,6 @@ operator|=
 name|conf
 expr_stmt|;
 block|}
-specifier|public
-name|Configuration
-name|getConf
-parameter_list|()
-block|{
-if|if
-condition|(
-literal|null
-operator|==
-name|conf
-condition|)
-block|{
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-literal|"HCatReader is not constructed correctly."
-argument_list|)
-throw|;
-block|}
-return|return
-name|conf
-return|;
-block|}
 block|}
 end_class
 
