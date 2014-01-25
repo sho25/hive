@@ -1643,35 +1643,6 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-comment|// setup input paths and split info
-name|List
-argument_list|<
-name|Path
-argument_list|>
-name|inputPaths
-init|=
-name|Utilities
-operator|.
-name|getInputPaths
-argument_list|(
-name|conf
-argument_list|,
-name|mapWork
-argument_list|,
-name|mrScratchDir
-argument_list|,
-name|ctx
-argument_list|)
-decl_stmt|;
-name|Utilities
-operator|.
-name|setInputPaths
-argument_list|(
-name|conf
-argument_list|,
-name|inputPaths
-argument_list|)
-expr_stmt|;
 comment|// create the directories FileSinkOperators need
 name|Utilities
 operator|.
