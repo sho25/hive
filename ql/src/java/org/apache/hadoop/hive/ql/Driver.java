@@ -3536,10 +3536,18 @@ block|}
 if|if
 condition|(
 name|op
-operator|!=
+operator|==
 literal|null
 condition|)
 block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Operation should not be null"
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 name|op
@@ -3702,7 +3710,6 @@ operator|>
 literal|0
 condition|)
 block|{
-comment|//do authorization for each output
 for|for
 control|(
 name|WriteEntity
@@ -3844,7 +3851,6 @@ name|getOutputRequiredPrivileges
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 block|}

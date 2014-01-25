@@ -686,7 +686,7 @@ argument_list|()
 operator|==
 name|HiveParser
 operator|.
-name|TOK_ALTERTABLE_ALTERPARTS_MERGEFILES
+name|TOK_ALTERTABLE_MERGEFILES
 condition|)
 block|{
 comment|// unsupported

@@ -2575,7 +2575,7 @@ argument_list|()
 operator|==
 name|HiveParser
 operator|.
-name|TOK_ALTERTABLE_ALTERPARTS_PROTECTMODE
+name|TOK_ALTERTABLE_PROTECTMODE
 condition|)
 block|{
 name|analyzeAlterTableProtectMode
@@ -2627,7 +2627,7 @@ argument_list|()
 operator|==
 name|HiveParser
 operator|.
-name|TOK_ALTERTABLE_ALTERPARTS_MERGEFILES
+name|TOK_ALTERTABLE_MERGEFILES
 condition|)
 block|{
 name|analyzeAlterTablePartMergeFiles
@@ -3332,9 +3332,9 @@ break|break;
 case|case
 name|HiveParser
 operator|.
-name|TOK_ALTERTABLE_ALTERPARTS
+name|TOK_ALTERTABLE_PARTCOLTYPE
 case|:
-name|analyzeAlterTableAlterParts
+name|analyzeAlterTablePartColType
 argument_list|(
 name|ast
 argument_list|)
@@ -15907,7 +15907,7 @@ expr_stmt|;
 block|}
 specifier|private
 name|void
-name|analyzeAlterTableAlterParts
+name|analyzeAlterTablePartColType
 parameter_list|(
 name|ASTNode
 name|ast
