@@ -2802,11 +2802,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-name|OrcInputFormat
-operator|.
-name|Context
-operator|.
-name|FileSplitInfo
+name|FileSplit
 name|result
 init|=
 name|context
@@ -3239,11 +3235,7 @@ literal|"Errors during splitting"
 argument_list|)
 throw|;
 block|}
-name|OrcInputFormat
-operator|.
-name|Context
-operator|.
-name|FileSplitInfo
+name|FileSplit
 name|result
 init|=
 name|context

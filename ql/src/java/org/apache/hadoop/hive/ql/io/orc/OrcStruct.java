@@ -397,7 +397,6 @@ end_import
 
 begin_class
 specifier|final
-specifier|public
 class|class
 name|OrcStruct
 implements|implements
@@ -2451,7 +2450,6 @@ block|}
 block|}
 block|}
 specifier|static
-specifier|public
 name|ObjectInspector
 name|createObjectInspector
 parameter_list|(

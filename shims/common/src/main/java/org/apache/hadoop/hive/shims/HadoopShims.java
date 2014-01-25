@@ -1502,15 +1502,6 @@ argument_list|>
 name|getHadoopConfNames
 parameter_list|()
 function_decl|;
-comment|/**    * Get configuration from JobContext    */
-specifier|public
-name|Configuration
-name|getConfiguration
-parameter_list|(
-name|JobContext
-name|context
-parameter_list|)
-function_decl|;
 block|}
 end_interface
 

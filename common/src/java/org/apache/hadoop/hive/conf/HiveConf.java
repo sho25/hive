@@ -2661,38 +2661,6 @@ operator|*
 literal|1024
 argument_list|)
 block|,
-comment|// Define the default ORC index stripe
-name|HIVE_ORC_DEFAULT_ROW_INDEX_STRIDE
-argument_list|(
-literal|"hive.exec.orc.default.row.index.stride"
-argument_list|,
-literal|null
-argument_list|)
-block|,
-comment|// Define the default ORC buffer size
-name|HIVE_ORC_DEFAULT_BUFFER_SIZE
-argument_list|(
-literal|"hive.exec.orc.default.buffer.size"
-argument_list|,
-literal|null
-argument_list|)
-block|,
-comment|// Define the default block padding
-name|HIVE_ORC_DEFAULT_BLOCK_PADDING
-argument_list|(
-literal|"hive.exec.orc.default.block.padding"
-argument_list|,
-literal|null
-argument_list|)
-block|,
-comment|// Define the default orc compress
-name|HIVE_ORC_DEFAULT_COMPRESS
-argument_list|(
-literal|"hive.exec.orc.default.compress"
-argument_list|,
-literal|null
-argument_list|)
-block|,
 name|HIVE_ORC_DICTIONARY_KEY_SIZE_THRESHOLD
 argument_list|(
 literal|"hive.exec.orc.dictionary.key.size.threshold"
