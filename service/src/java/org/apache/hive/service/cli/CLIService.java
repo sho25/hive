@@ -688,7 +688,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -748,7 +748,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -805,7 +805,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -865,7 +865,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -898,7 +898,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -939,7 +939,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -993,7 +993,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -1047,7 +1047,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -1086,7 +1086,7 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -1125,7 +1125,7 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -1174,7 +1174,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -1236,7 +1236,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -1275,7 +1275,7 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -1334,7 +1334,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -1388,7 +1388,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sessionHandle
 operator|+
@@ -1427,7 +1427,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|opHandle
 operator|+
@@ -1471,7 +1471,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|opHandle
 operator|+
@@ -1512,7 +1512,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|opHandle
 operator|+
@@ -1556,7 +1556,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|opHandle
 operator|+
@@ -1613,7 +1613,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|opHandle
 operator|+
@@ -1660,7 +1660,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|opHandle
 operator|+
