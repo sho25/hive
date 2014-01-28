@@ -1700,9 +1700,6 @@ name|BaseSemanticAnalyzer
 operator|.
 name|getColumnNames
 argument_list|(
-operator|(
-name|ASTNode
-operator|)
 name|grandChild
 argument_list|)
 expr_stmt|;
@@ -1991,6 +1988,22 @@ name|getUserName
 argument_list|()
 expr_stmt|;
 block|}
+comment|//until change is made to use the admin option. Default to false with V2 authorization
+name|boolean
+name|isAdmin
+init|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|isAuthorizationModeV2
+argument_list|()
+condition|?
+literal|false
+else|:
+literal|true
+decl_stmt|;
 name|GrantRevokeRoleDDL
 name|grantRevokeRoleDDL
 init|=
@@ -2009,7 +2022,7 @@ name|PrincipalType
 operator|.
 name|USER
 argument_list|,
-literal|true
+name|isAdmin
 argument_list|)
 decl_stmt|;
 return|return

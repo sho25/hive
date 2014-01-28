@@ -20,6 +20,8 @@ operator|.
 name|authorization
 operator|.
 name|plugin
+operator|.
+name|sqlstd
 package|;
 end_package
 
@@ -43,13 +45,15 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
+name|ql
 operator|.
-name|classification
+name|security
 operator|.
-name|InterfaceAudience
+name|authorization
 operator|.
-name|Public
+name|plugin
+operator|.
+name|HiveAuthorizationPluginException
 import|;
 end_import
 
@@ -63,30 +67,72 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
+name|ql
 operator|.
-name|classification
+name|security
 operator|.
-name|InterfaceStability
+name|authorization
 operator|.
-name|Evolving
+name|plugin
+operator|.
+name|HiveAuthorizationValidator
 import|;
 end_import
 
-begin_comment
-comment|/**  * Interface used to check if user has privileges to perform certain action.  * Methods here have corresponding methods in HiveAuthorizer, check method documentation there.  */
-end_comment
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|plugin
+operator|.
+name|HiveOperationType
+import|;
+end_import
 
-begin_interface
-annotation|@
-name|Public
-annotation|@
-name|Evolving
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|plugin
+operator|.
+name|HivePrivilegeObject
+import|;
+end_import
+
+begin_class
 specifier|public
-interface|interface
+class|class
+name|SQLStdHiveAuthorizationValidator
+implements|implements
 name|HiveAuthorizationValidator
 block|{
-comment|/**    * Check if current user has privileges to perform given operation type hiveOpType on the given    * input and output objects    * @param hiveOpType    * @param inputHObjs    * @param outputHObjs    */
+annotation|@
+name|Override
+specifier|public
 name|void
 name|checkPrivileges
 parameter_list|(
@@ -107,9 +153,9 @@ name|outputHObjs
 parameter_list|)
 throws|throws
 name|HiveAuthorizationPluginException
-function_decl|;
+block|{   }
 block|}
-end_interface
+end_class
 
 end_unit
 
