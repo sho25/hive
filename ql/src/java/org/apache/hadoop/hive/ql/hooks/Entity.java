@@ -81,7 +81,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|Partition
+name|DummyPartition
 import|;
 end_import
 
@@ -99,7 +99,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|DummyPartition
+name|Partition
 import|;
 end_import
 
@@ -697,6 +697,9 @@ name|t
 operator|.
 name|getDataLocation
 argument_list|()
+operator|.
+name|toUri
+argument_list|()
 return|;
 block|}
 if|if
@@ -712,6 +715,9 @@ return|return
 name|p
 operator|.
 name|getDataLocation
+argument_list|()
+operator|.
+name|toUri
 argument_list|()
 return|;
 block|}

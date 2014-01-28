@@ -1177,7 +1177,7 @@ name|authorize
 argument_list|(
 name|part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 argument_list|,
 name|readRequiredPriv

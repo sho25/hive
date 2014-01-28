@@ -1125,7 +1125,7 @@ name|Path
 argument_list|(
 name|ctx
 operator|.
-name|getLocalTmpFileURI
+name|getLocalTmpPath
 argument_list|()
 argument_list|,
 literal|"plan.xml"
@@ -1295,16 +1295,10 @@ name|files
 expr_stmt|;
 name|workDir
 operator|=
-operator|(
-operator|new
-name|Path
-argument_list|(
 name|ctx
 operator|.
-name|getLocalTmpFileURI
+name|getLocalTmpPath
 argument_list|()
-argument_list|)
-operator|)
 operator|.
 name|toUri
 argument_list|()
@@ -2822,15 +2816,15 @@ name|parentOp
 argument_list|)
 decl_stmt|;
 comment|// generate empty hashtable for this (byte)tag
-name|String
-name|tmpURI
+name|Path
+name|tmpPath
 init|=
 name|this
 operator|.
 name|getWork
 argument_list|()
 operator|.
-name|getTmpFileURI
+name|getTmpPath
 argument_list|()
 decl_stmt|;
 name|String
@@ -2851,14 +2845,14 @@ name|HashTableSinkOperator
 operator|)
 name|childOp
 decl_stmt|;
-name|String
-name|tmpURIPath
+name|Path
+name|path
 init|=
 name|Utilities
 operator|.
 name|generatePath
 argument_list|(
-name|tmpURI
+name|tmpPath
 argument_list|,
 name|htso
 operator|.
@@ -2884,18 +2878,9 @@ argument_list|()
 operator|+
 literal|"\tDump the hashtable into file: "
 operator|+
-name|tmpURIPath
+name|path
 argument_list|)
 expr_stmt|;
-name|Path
-name|path
-init|=
-operator|new
-name|Path
-argument_list|(
-name|tmpURIPath
-argument_list|)
-decl_stmt|;
 name|FileSystem
 name|fs
 init|=
@@ -2949,7 +2934,7 @@ argument_list|()
 operator|+
 literal|"\tUpload 1 File to: "
 operator|+
-name|tmpURIPath
+name|path
 operator|+
 literal|" File size: "
 operator|+

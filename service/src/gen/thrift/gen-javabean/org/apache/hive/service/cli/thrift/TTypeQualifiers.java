@@ -2147,7 +2147,7 @@ comment|// required
 name|TTypeQualifierValue
 name|_val3
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key2
 operator|=
 name|iprot
@@ -2679,7 +2679,7 @@ comment|// required
 name|TTypeQualifierValue
 name|_val9
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key8
 operator|=
 name|iprot

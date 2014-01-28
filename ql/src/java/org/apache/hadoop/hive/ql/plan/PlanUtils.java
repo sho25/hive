@@ -800,6 +800,7 @@ block|}
 empty_stmt|;
 specifier|public
 specifier|static
+specifier|synchronized
 name|long
 name|getCountForMapJoinDumpFilePrefix
 parameter_list|()
@@ -889,7 +890,7 @@ name|colTypes
 parameter_list|)
 block|{
 name|TableDesc
-name|tableDesc
+name|ret
 init|=
 name|getDefaultTableDesc
 argument_list|(
@@ -918,11 +919,19 @@ literal|null
 condition|)
 block|{
 return|return
-name|tableDesc
+name|ret
 return|;
 block|}
 try|try
 block|{
+name|Properties
+name|properties
+init|=
+name|ret
+operator|.
+name|getProperties
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|localDirectoryDesc
@@ -933,10 +942,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableDesc
-operator|.
-name|getProperties
-argument_list|()
+name|properties
 operator|.
 name|setProperty
 argument_list|(
@@ -950,10 +956,7 @@ name|getFieldDelim
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|tableDesc
-operator|.
-name|getProperties
-argument_list|()
+name|properties
 operator|.
 name|setProperty
 argument_list|(
@@ -978,10 +981,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableDesc
-operator|.
-name|getProperties
-argument_list|()
+name|properties
 operator|.
 name|setProperty
 argument_list|(
@@ -1006,10 +1006,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableDesc
-operator|.
-name|getProperties
-argument_list|()
+name|properties
 operator|.
 name|setProperty
 argument_list|(
@@ -1034,10 +1031,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableDesc
-operator|.
-name|getProperties
-argument_list|()
+name|properties
 operator|.
 name|setProperty
 argument_list|(
@@ -1062,10 +1056,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableDesc
-operator|.
-name|getProperties
-argument_list|()
+name|properties
 operator|.
 name|setProperty
 argument_list|(
@@ -1090,10 +1081,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableDesc
-operator|.
-name|getProperties
-argument_list|()
+name|properties
 operator|.
 name|setProperty
 argument_list|(
@@ -1118,7 +1106,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableDesc
+name|ret
 operator|.
 name|setOutputFileFormatClass
 argument_list|(
@@ -1144,10 +1132,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableDesc
-operator|.
-name|getProperties
-argument_list|()
+name|properties
 operator|.
 name|setProperty
 argument_list|(
@@ -1158,6 +1143,27 @@ argument_list|,
 name|localDirectoryDesc
 operator|.
 name|getNullFormat
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|localDirectoryDesc
+operator|.
+name|getTblProps
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|properties
+operator|.
+name|putAll
+argument_list|(
+name|localDirectoryDesc
+operator|.
+name|getTblProps
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1181,7 +1187,7 @@ literal|null
 return|;
 block|}
 return|return
-name|tableDesc
+name|ret
 return|;
 block|}
 comment|/**    * Generate the table descriptor of MetadataTypedColumnsetSerDe with the    * separatorCode and column names (comma separated string).    */
@@ -1556,7 +1562,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// It is not a very clean way, and should be modified later - due to
-comment|// compatiblity reasons,
+comment|// compatibility reasons,
 comment|// user sees the results as json for custom scripts and has no way for
 comment|// specifying that.
 comment|// Right now, it is hard-coded in the code
@@ -2053,6 +2059,27 @@ operator|+
 name|crtTblDesc
 operator|.
 name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|crtTblDesc
+operator|.
+name|getTblProps
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|properties
+operator|.
+name|putAll
+argument_list|(
+name|crtTblDesc
+operator|.
+name|getTblProps
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2662,7 +2689,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Convert the ColumnList to FieldSchema list.    *    * Adds uniontype for distinctColIndices.    */
+comment|/**    * Convert the ColumnList to FieldSchema list.    *    * Adds union type for distinctColIndices.    */
 specifier|public
 specifier|static
 name|List

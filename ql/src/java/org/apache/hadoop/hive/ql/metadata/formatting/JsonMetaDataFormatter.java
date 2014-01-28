@@ -37,7 +37,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|OutputStream
+name|IOException
 import|;
 end_import
 
@@ -47,7 +47,7 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
+name|OutputStream
 import|;
 end_import
 
@@ -298,42 +298,6 @@ operator|.
 name|metadata
 operator|.
 name|Table
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|SessionState
-operator|.
-name|LogHelper
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
 import|;
 end_import
 

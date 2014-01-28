@@ -3063,7 +3063,7 @@ name|add
 argument_list|(
 name|part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3112,14 +3112,10 @@ operator|=
 operator|new
 name|FetchWork
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|tbl
 operator|.
 name|getDataLocation
 argument_list|()
-argument_list|)
 argument_list|,
 name|Utilities
 operator|.

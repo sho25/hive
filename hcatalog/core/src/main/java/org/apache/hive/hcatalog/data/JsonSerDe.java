@@ -1362,26 +1362,22 @@ operator|.
 name|getText
 argument_list|()
 decl_stmt|;
-name|int
+name|Integer
 name|fpos
-decl_stmt|;
-try|try
-block|{
-name|fpos
-operator|=
+init|=
 name|s
 operator|.
 name|getPosition
 argument_list|(
 name|fieldName
 argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|npe
-parameter_list|)
+decl_stmt|;
+if|if
+condition|(
+name|fpos
+operator|==
+literal|null
+condition|)
 block|{
 name|fpos
 operator|=
@@ -1394,13 +1390,35 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"NPE finding position for field [{}] in schema [{}]"
+literal|"NPE finding position for field [{}] in schema [{}],"
+operator|+
+literal|" attempting to check if it is an internal column name like _col0"
 argument_list|,
 name|fieldName
 argument_list|,
 name|s
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|fpos
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+name|skipValue
+argument_list|(
+name|p
+argument_list|)
+expr_stmt|;
+return|return;
+comment|// unknown field, we return. We'll continue from the next field onwards.
+block|}
+comment|// If we get past this, then the column name did match the hive pattern for an internal
+comment|// column name, such as _col0, etc, so it *MUST* match the schema for the appropriate column.
+comment|// This means people can't use arbitrary column names such as _col0, and expect us to ignore it
+comment|// if we find it.
 if|if
 condition|(
 operator|!
@@ -1429,20 +1447,23 @@ name|fpos
 argument_list|)
 expr_stmt|;
 throw|throw
-name|npe
+operator|new
+name|IOException
+argument_list|(
+literal|"Hive internal column name ("
+operator|+
+name|fieldName
+operator|+
+literal|") and position encoding ("
+operator|+
+name|fpos
+operator|+
+literal|") for the column name are at odds"
+argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-name|fpos
-operator|==
-operator|-
-literal|1
-condition|)
-block|{
-return|return;
-comment|// unknown field, we return.
-block|}
+comment|// If we reached here, then we were successful at finding an alternate internal
+comment|// column mapping, and we're about to proceed.
 block|}
 name|HCatFieldSchema
 name|hcatFieldSchema
@@ -1560,6 +1581,58 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+block|}
+comment|/**    * Utility method to extract (and forget) the next value token from the JsonParser,    * as a whole. The reason this function gets called is to yank out the next value altogether,    * because it corresponds to a field name that we do not recognize, and thus, do not have    * a schema/type for. Thus, this field is to be ignored.    * @throws IOException    * @throws JsonParseException    */
+specifier|private
+name|void
+name|skipValue
+parameter_list|(
+name|JsonParser
+name|p
+parameter_list|)
+throws|throws
+name|JsonParseException
+throws|,
+name|IOException
+block|{
+name|JsonToken
+name|valueToken
+init|=
+name|p
+operator|.
+name|nextToken
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|(
+name|valueToken
+operator|==
+name|JsonToken
+operator|.
+name|START_ARRAY
+operator|)
+operator|||
+operator|(
+name|valueToken
+operator|==
+name|JsonToken
+operator|.
+name|START_OBJECT
+operator|)
+condition|)
+block|{
+comment|// if the currently read token is a beginning of an array or object, move stream forward
+comment|// skipping any child tokens till we're at the corresponding END_ARRAY or END_OBJECT token
+name|p
+operator|.
+name|skipChildren
+argument_list|()
+expr_stmt|;
+block|}
+comment|// At the end of this function, the stream should be pointing to the last token that
+comment|// corresponds to the value being skipped. This way, the next call to nextToken
+comment|// will advance it to the next field name.
 block|}
 comment|/**    * Utility method to extract current expected field from given JsonParser    *    * To get the field, we need either a type or a hcatFieldSchema(necessary for complex types)    * It is possible that one of them can be null, and so, if so, the other is instantiated    * from the other    *    * isTokenCurrent is a boolean variable also passed in, which determines    * if the JsonParser is already at the token we expect to read next, or    * needs advancing to the next before we read.    */
 specifier|private

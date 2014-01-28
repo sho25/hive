@@ -769,6 +769,18 @@ name|entrySet
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
+name|entry
+operator|.
+name|getKey
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+comment|// negative means the key didn't exist in the original
+comment|// stream (i.e.: we changed the tree)
 name|tokenRewriteStream
 operator|.
 name|replace
@@ -793,6 +805,7 @@ operator|.
 name|replacementText
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 for|for
 control|(

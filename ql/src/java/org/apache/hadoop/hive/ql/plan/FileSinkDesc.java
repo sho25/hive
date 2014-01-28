@@ -80,7 +80,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|String
+name|Path
 name|dirName
 decl_stmt|;
 comment|// normally statsKeyPref will be the same as dirName, but the latter
@@ -175,7 +175,7 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
-name|String
+name|Path
 name|parentDir
 decl_stmt|;
 specifier|transient
@@ -213,7 +213,7 @@ specifier|public
 name|FileSinkDesc
 parameter_list|(
 specifier|final
-name|String
+name|Path
 name|dirName
 parameter_list|,
 specifier|final
@@ -321,7 +321,7 @@ specifier|public
 name|FileSinkDesc
 parameter_list|(
 specifier|final
-name|String
+name|Path
 name|dirName
 parameter_list|,
 specifier|final
@@ -518,7 +518,7 @@ operator|=
 literal|false
 argument_list|)
 specifier|public
-name|String
+name|Path
 name|getDirName
 parameter_list|()
 block|{
@@ -531,7 +531,7 @@ name|void
 name|setDirName
 parameter_list|(
 specifier|final
-name|String
+name|Path
 name|dirName
 parameter_list|)
 block|{
@@ -543,7 +543,7 @@ name|dirName
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getFinalDirName
 parameter_list|()
 block|{
@@ -1043,7 +1043,7 @@ name|linkedFileSink
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getParentDir
 parameter_list|()
 block|{
@@ -1055,7 +1055,7 @@ specifier|public
 name|void
 name|setParentDir
 parameter_list|(
-name|String
+name|Path
 name|parentDir
 parameter_list|)
 block|{

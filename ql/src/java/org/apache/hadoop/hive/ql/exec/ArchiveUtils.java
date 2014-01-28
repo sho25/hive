@@ -600,7 +600,7 @@ name|e
 argument_list|)
 throw|;
 block|}
-name|URI
+name|Path
 name|tableDir
 init|=
 name|tbl
@@ -628,9 +628,6 @@ operator|new
 name|Path
 argument_list|(
 name|tableDir
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|prefixSubdir
 argument_list|)

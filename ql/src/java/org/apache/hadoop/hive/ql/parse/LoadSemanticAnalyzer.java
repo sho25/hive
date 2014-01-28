@@ -1320,6 +1320,7 @@ name|URI
 name|toURI
 init|=
 operator|(
+operator|(
 name|ts
 operator|.
 name|partHandle
@@ -1339,6 +1340,10 @@ operator|.
 name|tableHandle
 operator|.
 name|getDataLocation
+argument_list|()
+operator|)
+operator|.
+name|toUri
 argument_list|()
 decl_stmt|;
 name|List
@@ -1437,10 +1442,13 @@ name|copyURIStr
 init|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|toURI
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 decl_stmt|;
 name|URI
 name|copyURI
@@ -1483,16 +1491,6 @@ name|copyURI
 expr_stmt|;
 block|}
 comment|// create final load/move work
-name|String
-name|loadTmpPath
-init|=
-name|ctx
-operator|.
-name|getExternalTmpFileURI
-argument_list|(
-name|toURI
-argument_list|)
-decl_stmt|;
 name|Map
 argument_list|<
 name|String

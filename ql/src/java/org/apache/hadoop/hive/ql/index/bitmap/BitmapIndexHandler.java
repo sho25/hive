@@ -813,7 +813,13 @@ operator|.
 name|getContext
 argument_list|()
 operator|.
-name|getMRTmpFileURI
+name|getMRTmpPath
+argument_list|()
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 decl_stmt|;
 name|qlCommand

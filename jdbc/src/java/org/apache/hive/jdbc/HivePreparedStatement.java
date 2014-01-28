@@ -227,6 +227,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Scanner
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -838,14 +848,36 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
-throw|throw
+name|String
+name|str
+init|=
 operator|new
-name|SQLException
+name|Scanner
 argument_list|(
-literal|"Method not supported"
+name|x
+argument_list|,
+literal|"UTF-8"
 argument_list|)
-throw|;
+operator|.
+name|useDelimiter
+argument_list|(
+literal|"\\A"
+argument_list|)
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
+name|this
+operator|.
+name|parameters
+operator|.
+name|put
+argument_list|(
+name|parameterIndex
+argument_list|,
+name|str
+argument_list|)
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.PreparedStatement#setBinaryStream(int, java.io.InputStream,    * int)    */
 specifier|public

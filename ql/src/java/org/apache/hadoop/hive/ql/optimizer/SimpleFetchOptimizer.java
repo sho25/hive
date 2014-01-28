@@ -1850,7 +1850,7 @@ name|add
 argument_list|(
 name|partition
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2228,7 +2228,7 @@ name|path
 init|=
 name|partition
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 decl_stmt|;
 name|total

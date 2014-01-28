@@ -1304,7 +1304,7 @@ name|mrWork
 argument_list|,
 name|ctx
 operator|.
-name|getMRTmpFileURI
+name|getMRTmpPath
 argument_list|()
 argument_list|)
 expr_stmt|;

@@ -370,7 +370,7 @@ name|Object
 index|[]
 name|realArguments
 decl_stmt|;
-comment|/**    * Create a new GenericUDFBridge object.    *    * @param udfName    *          The name of the corresponding udf.    * @param isOperator    * @param udfClassName java class name of UDF    */
+comment|/**    * Create a new GenericUDFBridge object.    *    * @param udfName    *          The name of the corresponding udf.    * @param isOperator true for operators    * @param udfClassName java class name of UDF    */
 specifier|public
 name|GenericUDFBridge
 parameter_list|(
@@ -423,6 +423,8 @@ operator|=
 name|udfName
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getUdfName

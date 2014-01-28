@@ -2405,6 +2405,9 @@ argument_list|()
 operator|.
 name|getDirName
 argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|newBucketCols
 argument_list|)
@@ -2466,6 +2469,9 @@ name|getConf
 argument_list|()
 operator|.
 name|getDirName
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 argument_list|,
 name|newSortCols

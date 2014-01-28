@@ -812,6 +812,9 @@ name|conf
 argument_list|,
 name|mrwork
 argument_list|,
+operator|new
+name|Path
+argument_list|(
 literal|"/tmp/"
 operator|+
 name|System
@@ -820,8 +823,9 @@ name|getProperty
 argument_list|(
 literal|"user.name"
 argument_list|)
-operator|+
-literal|"/hive"
+argument_list|,
+literal|"hive"
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|hiveSplit

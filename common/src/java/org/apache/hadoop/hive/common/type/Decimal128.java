@@ -33,6 +33,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|math
+operator|.
+name|MathContext
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|nio
 operator|.
 name|IntBuffer
@@ -3331,7 +3341,7 @@ name|throwIfExceedsTenToThirtyEight
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Performs division and puts the result into the given object. Both operands    * are first scaled up/down to the specified scale, then this method performs    * the operation. This method is static and not destructive (except the result    * object).    *<p>    * Unchecked exceptions: ArithmeticException an invalid scale is specified or    * overflow.    *</p>    *    * @param left    *          left operand    * @param right    *          right operand    * @param quotient    *          result object to receive the calculation result    * @param remainder    *          result object to receive the calculation result    * @param scale    *          scale of the result. must be 0 or positive.    */
+comment|/**    * Performs division and puts the result into the given object. Both operands    * are first scaled up/down to the specified scale, then this method performs    * the operation. This method is static and not destructive (except the result    * object).    *<p>    * Unchecked exceptions: ArithmeticException an invalid scale is specified or    * overflow.    *</p>    *    * @param left    *          left operand    * @param right    *          right operand    * @param quotient    *          result object to receive the calculation result    * @param scale    *          scale of the result. must be 0 or positive.    */
 specifier|public
 specifier|static
 name|void
@@ -3345,9 +3355,6 @@ name|right
 parameter_list|,
 name|Decimal128
 name|quotient
-parameter_list|,
-name|Decimal128
-name|remainder
 parameter_list|,
 name|short
 name|scale
@@ -3386,15 +3393,13 @@ argument_list|(
 name|right
 argument_list|,
 name|scale
-argument_list|,
-name|remainder
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Performs division, changing the scale of this object to the specified    * value.    *<p>    * Unchecked exceptions: ArithmeticException an invalid scale is specified or    * overflow.    *</p>    *    * @param right    *          right operand. this object is not modified.    * @param newScale    *          scale of the result. must be 0 or positive.    * @param remainder    *          object to receive remainder    */
+comment|/**    * As of 1/20/2014 this has a known bug in division. See    * TestDecimal128.testKnownPriorErrors(). Keeping this source    * code available since eventually it is better to fix this.    * The fix employed now is to replace this code with code that    * uses Java BigDecimal divide.    *    * Performs division, changing the scale of this object to the specified    * value.    *<p>    * Unchecked exceptions: ArithmeticException an invalid scale is specified or    * overflow.    *</p>    *    * @param right    *          right operand. this object is not modified.    * @param newScale    *          scale of the result. must be 0 or positive.    * @param remainder    *          object to receive remainder    */
 specifier|public
 name|void
-name|divideDestructive
+name|divideDestructiveNativeDecimal128
 parameter_list|(
 name|Decimal128
 name|right
@@ -3601,6 +3606,77 @@ comment|// remainder
 comment|// is
 comment|// always
 comment|// positive
+name|this
+operator|.
+name|unscaledValue
+operator|.
+name|throwIfExceedsTenToThirtyEight
+argument_list|()
+expr_stmt|;
+block|}
+comment|/**    * Divide the target object by right, and scale the result to newScale.    *    * This uses HiveDecimal to get a correct answer with the same rounding    * behavior as HiveDecimal, but it is expensive.    *    * In the future, a native implementation could be faster.    */
+specifier|public
+name|void
+name|divideDestructive
+parameter_list|(
+name|Decimal128
+name|right
+parameter_list|,
+name|short
+name|newScale
+parameter_list|)
+block|{
+name|HiveDecimal
+name|rightHD
+init|=
+name|HiveDecimal
+operator|.
+name|create
+argument_list|(
+name|right
+operator|.
+name|toBigDecimal
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|HiveDecimal
+name|thisHD
+init|=
+name|HiveDecimal
+operator|.
+name|create
+argument_list|(
+name|this
+operator|.
+name|toBigDecimal
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|HiveDecimal
+name|result
+init|=
+name|thisHD
+operator|.
+name|divide
+argument_list|(
+name|rightHD
+argument_list|)
+decl_stmt|;
+name|this
+operator|.
+name|update
+argument_list|(
+name|result
+operator|.
+name|bigDecimalValue
+argument_list|()
+operator|.
+name|toPlainString
+argument_list|()
+argument_list|,
+name|newScale
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|unscaledValue

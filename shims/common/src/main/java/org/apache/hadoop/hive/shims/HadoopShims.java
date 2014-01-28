@@ -129,6 +129,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -1481,6 +1491,16 @@ parameter_list|,
 name|URI
 name|uri
 parameter_list|)
+function_decl|;
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|getHadoopConfNames
+parameter_list|()
 function_decl|;
 block|}
 end_interface

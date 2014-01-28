@@ -340,6 +340,8 @@ operator|new
 name|AuthenticationException
 argument_list|(
 literal|"Error validating LDAP user"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

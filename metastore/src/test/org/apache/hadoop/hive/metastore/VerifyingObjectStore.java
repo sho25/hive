@@ -107,7 +107,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedHashSet
+name|LinkedList
 import|;
 end_import
 
@@ -483,7 +483,7 @@ parameter_list|,
 name|short
 name|maxParts
 parameter_list|,
-name|Set
+name|List
 argument_list|<
 name|Partition
 argument_list|>
@@ -492,14 +492,14 @@ parameter_list|)
 throws|throws
 name|TException
 block|{
-name|Set
+name|List
 argument_list|<
 name|Partition
 argument_list|>
 name|ormParts
 init|=
 operator|new
-name|LinkedHashSet
+name|LinkedList
 argument_list|<
 name|Partition
 argument_list|>

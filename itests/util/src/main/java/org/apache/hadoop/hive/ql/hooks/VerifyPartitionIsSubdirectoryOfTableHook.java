@@ -80,6 +80,8 @@ name|VerifyPartitionIsSubdirectoryOfTableHook
 implements|implements
 name|ExecuteWithHookContext
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run
@@ -202,7 +204,7 @@ argument_list|()
 argument_list|,
 name|partition
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 operator|.
 name|toString

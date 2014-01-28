@@ -1630,9 +1630,6 @@ name|mrScratchDir
 argument_list|)
 decl_stmt|;
 comment|// set up the operator plan
-name|Path
-name|planPath
-init|=
 name|Utilities
 operator|.
 name|setMapWork
@@ -1642,49 +1639,8 @@ argument_list|,
 name|mapWork
 argument_list|,
 name|mrScratchDir
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 literal|false
-argument_list|)
-decl_stmt|;
-comment|// setup input paths and split info
-name|List
-argument_list|<
-name|Path
-argument_list|>
-name|inputPaths
-init|=
-name|Utilities
-operator|.
-name|getInputPaths
-argument_list|(
-name|conf
-argument_list|,
-name|mapWork
-argument_list|,
-name|mrScratchDir
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|,
-name|ctx
-argument_list|)
-decl_stmt|;
-name|Utilities
-operator|.
-name|setInputPaths
-argument_list|(
-name|conf
-argument_list|,
-name|inputPaths
 argument_list|)
 expr_stmt|;
 comment|// create the directories FileSinkOperators need
@@ -2236,9 +2192,6 @@ throws|throws
 name|Exception
 block|{
 comment|// set up operator plan
-name|Path
-name|planPath
-init|=
 name|Utilities
 operator|.
 name|setReduceWork
@@ -2248,16 +2201,10 @@ argument_list|,
 name|reduceWork
 argument_list|,
 name|mrScratchDir
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 literal|false
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// create the directories FileSinkOperators need
 name|Utilities
 operator|.

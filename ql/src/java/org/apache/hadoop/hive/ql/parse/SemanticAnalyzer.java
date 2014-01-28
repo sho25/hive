@@ -2806,7 +2806,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the semantic analyzer.  */
+comment|/**  * Implementation of the semantic analyzer. It generates the query plan.  * There are other specific semantic analyzers for some hive operations such as  * DDLSemanticAnalyzer for ddl operations.  */
 end_comment
 
 begin_class
@@ -7704,9 +7704,6 @@ name|HiveParser
 operator|.
 name|TOK_UNION
 case|:
-comment|// currently, we dont support subq1 union subq2 - the user has to
-comment|// explicitly say:
-comment|// select * from (subq1 union subq2) subqalias
 if|if
 condition|(
 operator|!
@@ -7716,6 +7713,8 @@ name|getIsSubQ
 argument_list|()
 condition|)
 block|{
+comment|// this shouldn't happen. The parser should have converted the union to be
+comment|// contained in a subquery. Just in case, we keep the error as a fallback.
 throw|throw
 operator|new
 name|SemanticException
@@ -8067,6 +8066,8 @@ operator|)
 name|tab
 argument_list|,
 name|conf
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -9499,7 +9500,7 @@ name|fname
 operator|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|FileUtils
 operator|.
@@ -9513,6 +9514,9 @@ operator|.
 name|toUri
 argument_list|()
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 expr_stmt|;
 block|}
 catch|catch
@@ -9616,7 +9620,10 @@ name|fname
 operator|=
 name|ctx
 operator|.
-name|getMRTmpFileURI
+name|getMRTmpPath
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 expr_stmt|;
 name|ctx
@@ -30976,7 +30983,7 @@ init|=
 literal|null
 decl_stmt|;
 comment|// destination partition if any
-name|String
+name|Path
 name|queryTmpdir
 init|=
 literal|null
@@ -31245,13 +31252,13 @@ operator|==
 literal|null
 condition|)
 block|{
-name|Utilities
-operator|.
-name|validatePartSpecColumnNames
-argument_list|(
 name|dest_tab
-argument_list|,
+operator|.
+name|validatePartColumnNames
+argument_list|(
 name|partSpec
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|dpCtx
@@ -31420,12 +31427,6 @@ block|{
 name|queryTmpdir
 operator|=
 name|dest_path
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getPath
-argument_list|()
 expr_stmt|;
 block|}
 else|else
@@ -31434,7 +31435,7 @@ name|queryTmpdir
 operator|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|dest_path
 operator|.
@@ -31551,11 +31552,7 @@ operator|=
 operator|new
 name|LoadTableDesc
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|,
 name|table_desc
 argument_list|,
@@ -31923,7 +31920,7 @@ name|partPath
 init|=
 name|dest_part
 operator|.
-name|getPartitionPath
+name|getDataLocation
 argument_list|()
 decl_stmt|;
 comment|// if the table is in a different dfs than the partition,
@@ -31962,7 +31959,7 @@ name|queryTmpdir
 operator|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|dest_path
 operator|.
@@ -32053,11 +32050,7 @@ operator|=
 operator|new
 name|LoadTableDesc
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|,
 name|table_desc
 argument_list|,
@@ -32274,7 +32267,7 @@ name|queryTmpdir
 operator|=
 name|ctx
 operator|.
-name|getMRTmpFileURI
+name|getMRTmpPath
 argument_list|()
 expr_stmt|;
 block|}
@@ -32300,7 +32293,7 @@ name|queryTmpdir
 operator|=
 name|ctx
 operator|.
-name|getExternalTmpFileURI
+name|getExternalTmpPath
 argument_list|(
 name|qPath
 operator|.
@@ -32712,11 +32705,7 @@ name|LoadFileDesc
 argument_list|(
 name|tblDesc
 argument_list|,
-operator|new
-name|Path
-argument_list|(
 name|queryTmpdir
-argument_list|)
 argument_list|,
 name|dest_path
 argument_list|,
@@ -33187,6 +33176,9 @@ argument_list|(
 name|fileSinkDesc
 operator|.
 name|getDirName
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
