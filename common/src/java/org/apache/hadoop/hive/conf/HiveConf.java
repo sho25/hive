@@ -3339,8 +3339,8 @@ argument_list|,
 literal|1
 argument_list|)
 block|,
-comment|// statistics annotation fetches column statistics for all required columns and for all
-comment|// required partitions which can be very expensive sometimes
+comment|// statistics annotation fetches column statistics for all required columns which can
+comment|// be very expensive sometimes
 name|HIVE_STATS_FETCH_COLUMN_STATS
 argument_list|(
 literal|"hive.stats.fetch.column.stats"
@@ -3348,17 +3348,8 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-comment|// in the absence of table/partition stats, average row size will be used to
-comment|// estimate the number of rows/data size
-name|HIVE_STATS_AVG_ROW_SIZE
-argument_list|(
-literal|"hive.stats.avg.row.size"
-argument_list|,
-literal|10000
-argument_list|)
-block|,
 comment|// in the absence of column statistics, the estimated number of rows/data size that will
-comment|// emitted from join operator will depend on t factor
+comment|// be emitted from join operator will depend on this factor
 name|HIVE_STATS_JOIN_FACTOR
 argument_list|(
 literal|"hive.stats.join.factor"
