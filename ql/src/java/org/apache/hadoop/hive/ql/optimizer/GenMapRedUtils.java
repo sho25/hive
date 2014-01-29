@@ -9398,9 +9398,35 @@ operator|.
 name|getContext
 argument_list|()
 decl_stmt|;
+comment|// if we are on viewfs we don't want to use /tmp as tmp dir since rename from /tmp/..
+comment|// to final location /user/hive/warehouse/ will fail later, so instead pick tmp dir
+comment|// on same namespace as tbl dir.
 name|Path
 name|tmpDir
 init|=
+name|dest
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getScheme
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"viewfs"
+argument_list|)
+condition|?
+name|baseCtx
+operator|.
+name|getExtTmpPathRelTo
+argument_list|(
+name|dest
+operator|.
+name|toUri
+argument_list|()
+argument_list|)
+else|:
 name|baseCtx
 operator|.
 name|getExternalTmpPath
