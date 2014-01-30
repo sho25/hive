@@ -376,7 +376,10 @@ block|{
 name|reportProgress
 argument_list|()
 expr_stmt|;
-comment|// get alias
+name|lastAlias
+operator|=
+name|alias
+expr_stmt|;
 name|alias
 operator|=
 operator|(
@@ -384,6 +387,22 @@ name|byte
 operator|)
 name|tag
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|alias
+operator|.
+name|equals
+argument_list|(
+name|lastAlias
+argument_list|)
+condition|)
+block|{
+name|nextSz
+operator|=
+name|joinEmitInterval
+expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|Object
