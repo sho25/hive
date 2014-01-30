@@ -97,6 +97,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|ColumnStatisticsObj
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|ConfigValSecurityException
 import|;
 end_import
@@ -1892,9 +1910,12 @@ name|TException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**   * Get table level column statistics given dbName, tableName and colName   * @param dbName   * @param tableName   * @param colName   * @return ColumnStatistics struct for a given db, table and col   * @throws NoSuchObjectException   * @throws MetaException   * @throws TException   * @throws InvalidInputException   * @throws InvalidObjectException   */
+comment|/**    * Get table column statistics given dbName, tableName and multiple colName-s    * @return ColumnStatistics struct for a given db, table and columns    */
 specifier|public
-name|ColumnStatistics
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
 name|getTableColumnStatistics
 parameter_list|(
 name|String
@@ -1903,8 +1924,11 @@ parameter_list|,
 name|String
 name|tableName
 parameter_list|,
+name|List
+argument_list|<
 name|String
-name|colName
+argument_list|>
+name|colNames
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -1912,14 +1936,18 @@ throws|,
 name|MetaException
 throws|,
 name|TException
-throws|,
-name|InvalidInputException
-throws|,
-name|InvalidObjectException
 function_decl|;
-comment|/**    * Get partition level column statistics given dbName, tableName, partitionName and colName    * @param dbName    * @param tableName    * @param partitionName    * @param colName    * @return ColumnStatistics struct for a given db, table, partition and col    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @throws InvalidInputException    * @throws InvalidObjectException    */
+comment|/**    * Get partitions column statistics given dbName, tableName, multiple partitions and colName-s    * @return ColumnStatistics struct for a given db, table and columns    */
 specifier|public
-name|ColumnStatistics
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+argument_list|>
 name|getPartitionColumnStatistics
 parameter_list|(
 name|String
@@ -1928,11 +1956,17 @@ parameter_list|,
 name|String
 name|tableName
 parameter_list|,
+name|List
+argument_list|<
 name|String
-name|partitionName
+argument_list|>
+name|partNames
 parameter_list|,
+name|List
+argument_list|<
 name|String
-name|colName
+argument_list|>
+name|colNames
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -1940,10 +1974,6 @@ throws|,
 name|MetaException
 throws|,
 name|TException
-throws|,
-name|InvalidInputException
-throws|,
-name|InvalidObjectException
 function_decl|;
 comment|/**    * Delete partition level column statistics given dbName, tableName, partName and colName    * @param dbName    * @param tableName    * @param partName    * @param colName    * @return boolean indicating outcome of the operation    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws MetaException    * @throws TException    * @throws InvalidInputException    */
 specifier|public
