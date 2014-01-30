@@ -295,7 +295,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-comment|// one of the tables that is not in memory
+comment|// pos of driver alias
 specifier|protected
 specifier|transient
 name|RowContainer

@@ -506,6 +506,22 @@ index|[
 name|tagLen
 index|]
 decl_stmt|;
+name|int
+name|iterate
+init|=
+name|Math
+operator|.
+name|min
+argument_list|(
+name|exprEntries
+operator|.
+name|length
+argument_list|,
+name|inputObjInspector
+operator|.
+name|length
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|byte
@@ -515,15 +531,12 @@ literal|0
 init|;
 name|alias
 operator|<
-name|exprEntries
-operator|.
-name|length
+name|iterate
 condition|;
 name|alias
 operator|++
 control|)
 block|{
-comment|//get big table
 if|if
 condition|(
 name|alias
@@ -532,9 +545,23 @@ operator|(
 name|byte
 operator|)
 name|posBigTableAlias
+operator|||
+name|exprEntries
+index|[
+name|alias
+index|]
+operator|==
+literal|null
+operator|||
+name|inputObjInspector
+index|[
+name|alias
+index|]
+operator|==
+literal|null
 condition|)
 block|{
-comment|//skip the big tables
+comment|// skip the driver and directly loadable tables
 continue|continue;
 block|}
 name|List
@@ -674,6 +701,13 @@ operator|(
 name|byte
 operator|)
 name|posBigTableAlias
+operator|||
+name|aliasToObjectInspectors
+index|[
+name|alias
+index|]
+operator|==
+literal|null
 condition|)
 block|{
 comment|//skip the big tables
@@ -859,6 +893,18 @@ name|entrySet
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getValue
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+continue|continue;
+block|}
 name|Byte
 name|key
 init|=

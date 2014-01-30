@@ -2723,6 +2723,13 @@ argument_list|,
 literal|10000000L
 argument_list|)
 block|,
+name|HIVECONVERTJOINUSENONSTAGED
+argument_list|(
+literal|"hive.auto.convert.join.use.nonstaged"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVESKEWJOINKEY
 argument_list|(
 literal|"hive.skewjoin.key"
