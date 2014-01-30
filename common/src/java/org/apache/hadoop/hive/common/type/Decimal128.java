@@ -3662,6 +3662,22 @@ argument_list|(
 name|rightHD
 argument_list|)
 decl_stmt|;
+comment|/* If the result is null, throw an exception. This can be caught      * by calling code in the vectorized code path and made to yield      * a SQL NULL value.      */
+if|if
+condition|(
+name|result
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|ArithmeticException
+argument_list|(
+literal|"null divide result"
+argument_list|)
+throw|;
+block|}
 name|this
 operator|.
 name|update
@@ -3683,6 +3699,72 @@ name|unscaledValue
 operator|.
 name|throwIfExceedsTenToThirtyEight
 argument_list|()
+expr_stmt|;
+block|}
+comment|/**     * Performs decimal modulo     *<p>     * The definition of modulo (x % p) is:     *   x - IntegerPart(x / p, resultScale) * p     *</p>     *     * @left     *    is x     * @right     *    is p     * @result     *    receives the result     * @scratch     *    scratch space to avoid need to create a new object     * @scale     *    scale of result     */
+specifier|public
+specifier|static
+name|void
+name|modulo
+parameter_list|(
+name|Decimal128
+name|left
+parameter_list|,
+name|Decimal128
+name|right
+parameter_list|,
+name|Decimal128
+name|result
+parameter_list|,
+name|short
+name|scale
+parameter_list|)
+block|{
+comment|// set result to x / p (the quotient)
+name|Decimal128
+operator|.
+name|divide
+argument_list|(
+name|left
+argument_list|,
+name|right
+argument_list|,
+name|result
+argument_list|,
+name|scale
+argument_list|)
+expr_stmt|;
+comment|// take integer part of it
+name|result
+operator|.
+name|zeroFractionPart
+argument_list|()
+expr_stmt|;
+comment|// multiply by p
+name|result
+operator|.
+name|multiplyDestructive
+argument_list|(
+name|right
+argument_list|,
+name|scale
+argument_list|)
+expr_stmt|;
+comment|// negate it
+name|result
+operator|.
+name|negateDestructive
+argument_list|()
+expr_stmt|;
+comment|// add x to it
+name|result
+operator|.
+name|addDestructive
+argument_list|(
+name|left
+argument_list|,
+name|scale
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Makes this {@code Decimal128} a positive number. Unlike    * java.math.BigDecimal, this method is destructive.    */
@@ -4794,6 +4876,73 @@ operator|=
 literal|1
 expr_stmt|;
 block|}
+block|}
+comment|/**    * Zero the fractional part of value.    *    * Argument scratch is needed to hold unused remainder output, to avoid need to    * create a new object.    */
+specifier|public
+name|void
+name|zeroFractionPart
+parameter_list|()
+block|{
+name|short
+name|placesToRemove
+init|=
+name|this
+operator|.
+name|getScale
+argument_list|()
+decl_stmt|;
+comment|// If there's no fraction part, return immediately to avoid the cost of a divide.
+if|if
+condition|(
+name|placesToRemove
+operator|==
+literal|0
+condition|)
+block|{
+return|return;
+block|}
+comment|/* Divide by a power of 10 equal to 10**scale to logically shift the digits      * places right by "scale" positions to eliminate them.      */
+name|UnsignedInt128
+name|powerTenDivisor
+init|=
+name|SqlMathUtil
+operator|.
+name|POWER_TENS_INT128
+index|[
+name|placesToRemove
+index|]
+decl_stmt|;
+comment|/* A scratch variable is created here. This could be optimized in the future      * by perhaps using thread-local storage to allocate this scratch field.      */
+name|UnsignedInt128
+name|scratch
+init|=
+operator|new
+name|UnsignedInt128
+argument_list|()
+decl_stmt|;
+name|this
+operator|.
+name|getUnscaledValue
+argument_list|()
+operator|.
+name|divideDestructive
+argument_list|(
+name|powerTenDivisor
+argument_list|,
+name|scratch
+argument_list|)
+expr_stmt|;
+comment|/* Multiply by the same power of ten to shift the decimal point back to      * the original place. Places to the right of the decimal will be zero.      */
+name|this
+operator|.
+name|getUnscaledValue
+argument_list|()
+operator|.
+name|scaleUpTenDestructive
+argument_list|(
+name|placesToRemove
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class
