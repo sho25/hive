@@ -25,29 +25,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
 import|;
 end_import
 
@@ -123,24 +103,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
-operator|.
-name|Task
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|metadata
 operator|.
 name|Hive
@@ -197,24 +159,6 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ASTNode
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
 name|DDLSemanticAnalyzer
 import|;
 end_import
@@ -234,24 +178,6 @@ operator|.
 name|parse
 operator|.
 name|ParseDriver
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|ParseUtils
 import|;
 end_import
 
@@ -751,12 +677,9 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"CREATE ROLE "
 operator|+
 name|ROLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|RoleDDLDesc
@@ -830,12 +753,9 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"DROp ROLE "
 operator|+
 name|ROLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|RoleDDLDesc
@@ -909,8 +829,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"GRANT "
 operator|+
 name|SELECT
@@ -922,7 +840,6 @@ operator|+
 literal|" TO USER "
 operator|+
 name|USER
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|GrantDesc
@@ -947,6 +864,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -993,6 +912,8 @@ control|(
 name|PrivilegeDesc
 name|privilege
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1068,8 +989,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"GRANT "
 operator|+
 name|SELECT
@@ -1081,7 +1000,6 @@ operator|+
 literal|" TO ROLE "
 operator|+
 name|ROLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|GrantDesc
@@ -1106,6 +1024,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1152,6 +1072,8 @@ control|(
 name|PrivilegeDesc
 name|privilege
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1227,8 +1149,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"GRANT "
 operator|+
 name|SELECT
@@ -1240,7 +1160,6 @@ operator|+
 literal|" TO GROUP "
 operator|+
 name|GROUP
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|GrantDesc
@@ -1265,6 +1184,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1311,6 +1232,8 @@ control|(
 name|PrivilegeDesc
 name|privilege
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1386,8 +1309,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"REVOKE "
 operator|+
 name|SELECT
@@ -1399,7 +1320,6 @@ operator|+
 literal|" FROM USER "
 operator|+
 name|USER
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|RevokeDesc
@@ -1424,6 +1344,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1470,6 +1392,8 @@ control|(
 name|PrivilegeDesc
 name|privilege
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1545,8 +1469,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"REVOKE "
 operator|+
 name|SELECT
@@ -1558,7 +1480,6 @@ operator|+
 literal|" FROM ROLE "
 operator|+
 name|ROLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|RevokeDesc
@@ -1583,6 +1504,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1629,6 +1552,8 @@ control|(
 name|PrivilegeDesc
 name|privilege
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1704,8 +1629,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"REVOKE "
 operator|+
 name|SELECT
@@ -1717,7 +1640,6 @@ operator|+
 literal|" FROM GROUP "
 operator|+
 name|GROUP
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|RevokeDesc
@@ -1742,6 +1664,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1788,6 +1712,8 @@ control|(
 name|PrivilegeDesc
 name|privilege
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1863,8 +1789,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"GRANT ROLE "
 operator|+
 name|ROLE
@@ -1872,7 +1796,6 @@ operator|+
 literal|" TO USER "
 operator|+
 name|USER
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|GrantRevokeRoleDDL
@@ -1947,6 +1870,8 @@ control|(
 name|String
 name|role
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -1976,6 +1901,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2033,8 +1960,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"GRANT ROLE "
 operator|+
 name|ROLE
@@ -2042,7 +1967,6 @@ operator|+
 literal|" TO ROLE "
 operator|+
 name|ROLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|GrantRevokeRoleDDL
@@ -2117,6 +2041,8 @@ control|(
 name|String
 name|role
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2146,6 +2072,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2203,8 +2131,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"GRANT ROLE "
 operator|+
 name|ROLE
@@ -2212,7 +2138,6 @@ operator|+
 literal|" TO GROUP "
 operator|+
 name|GROUP
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|GrantRevokeRoleDDL
@@ -2287,6 +2212,8 @@ control|(
 name|String
 name|role
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2316,6 +2243,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2373,8 +2302,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"REVOKE ROLE "
 operator|+
 name|ROLE
@@ -2382,7 +2309,6 @@ operator|+
 literal|" FROM USER "
 operator|+
 name|USER
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|GrantRevokeRoleDDL
@@ -2457,6 +2383,8 @@ control|(
 name|String
 name|role
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2486,6 +2414,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2543,8 +2473,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"REVOKE ROLE "
 operator|+
 name|ROLE
@@ -2552,7 +2480,6 @@ operator|+
 literal|" FROM ROLE "
 operator|+
 name|ROLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|GrantRevokeRoleDDL
@@ -2627,6 +2554,8 @@ control|(
 name|String
 name|role
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2656,6 +2585,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2713,8 +2644,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"REVOKE ROLE "
 operator|+
 name|ROLE
@@ -2722,7 +2651,6 @@ operator|+
 literal|" FROM GROUP "
 operator|+
 name|GROUP
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|GrantRevokeRoleDDL
@@ -2797,6 +2725,8 @@ control|(
 name|String
 name|role
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2826,6 +2756,8 @@ control|(
 name|PrincipalDesc
 name|principal
 range|:
+name|ListSizeMatcher
+operator|.
 name|inList
 argument_list|(
 name|grantDesc
@@ -2883,12 +2815,9 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"SHOW ROLE GRANT USER "
 operator|+
 name|USER
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|RoleDDLDesc
@@ -2964,12 +2893,9 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"SHOW ROLE GRANT ROLE "
 operator|+
 name|ROLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|RoleDDLDesc
@@ -3045,12 +2971,9 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"SHOW ROLE GRANT GROUP "
 operator|+
 name|GROUP
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|RoleDDLDesc
@@ -3126,8 +3049,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"SHOW GRANT USER "
 operator|+
 name|USER
@@ -3135,7 +3056,6 @@ operator|+
 literal|" ON TABLE "
 operator|+
 name|TABLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|ShowGrantDesc
@@ -3248,8 +3168,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"SHOW GRANT ROLE "
 operator|+
 name|ROLE
@@ -3257,7 +3175,6 @@ operator|+
 literal|" ON TABLE "
 operator|+
 name|TABLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|ShowGrantDesc
@@ -3370,8 +3287,6 @@ name|work
 init|=
 name|analyze
 argument_list|(
-name|parse
-argument_list|(
 literal|"SHOW GRANT GROUP "
 operator|+
 name|GROUP
@@ -3379,7 +3294,6 @@ operator|+
 literal|" ON TABLE "
 operator|+
 name|TABLE
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|ShowGrantDesc
@@ -3478,8 +3392,8 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-name|ASTNode
-name|parse
+name|DDLWork
+name|analyze
 parameter_list|(
 name|String
 name|command
@@ -3488,169 +3402,15 @@ throws|throws
 name|Exception
 block|{
 return|return
-name|ParseUtils
+name|AuthorizationTestUtil
 operator|.
-name|findRootNonNullToken
-argument_list|(
-name|parseDriver
-operator|.
-name|parse
+name|analyze
 argument_list|(
 name|command
-argument_list|)
-argument_list|)
-return|;
-block|}
-specifier|private
-name|DDLWork
-name|analyze
-parameter_list|(
-name|ASTNode
-name|ast
-parameter_list|)
-throws|throws
-name|Exception
-block|{
-name|analyzer
-operator|.
-name|analyze
-argument_list|(
-name|ast
 argument_list|,
-name|context
-argument_list|)
-expr_stmt|;
-name|List
-argument_list|<
-name|Task
-argument_list|<
-name|?
-extends|extends
-name|Serializable
-argument_list|>
-argument_list|>
-name|rootTasks
-init|=
-name|analyzer
-operator|.
-name|getRootTasks
-argument_list|()
-decl_stmt|;
-return|return
-operator|(
-name|DDLWork
-operator|)
-name|inList
-argument_list|(
-name|rootTasks
-argument_list|)
-operator|.
-name|ofSize
-argument_list|(
-literal|1
-argument_list|)
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getWork
-argument_list|()
-return|;
-block|}
-specifier|private
-specifier|static
-class|class
-name|ListSizeMatcher
-parameter_list|<
-name|E
-parameter_list|>
-block|{
-specifier|private
-specifier|final
-name|List
-argument_list|<
-name|E
-argument_list|>
-name|list
-decl_stmt|;
-specifier|private
-name|ListSizeMatcher
-parameter_list|(
-name|List
-argument_list|<
-name|E
-argument_list|>
-name|list
-parameter_list|)
-block|{
-name|this
-operator|.
-name|list
-operator|=
-name|list
-expr_stmt|;
-block|}
-specifier|private
-name|List
-argument_list|<
-name|E
-argument_list|>
-name|ofSize
-parameter_list|(
-name|int
-name|size
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-name|list
-operator|.
-name|toString
-argument_list|()
+name|conf
 argument_list|,
-name|size
-argument_list|,
-name|list
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-return|return
-name|list
-return|;
-block|}
-block|}
-specifier|private
-specifier|static
-parameter_list|<
-name|E
-parameter_list|>
-name|ListSizeMatcher
-argument_list|<
-name|E
-argument_list|>
-name|inList
-parameter_list|(
-name|List
-argument_list|<
-name|E
-argument_list|>
-name|list
-parameter_list|)
-block|{
-return|return
-operator|new
-name|ListSizeMatcher
-argument_list|<
-name|E
-argument_list|>
-argument_list|(
-name|list
+name|db
 argument_list|)
 return|;
 block|}
