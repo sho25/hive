@@ -641,6 +641,20 @@ operator|=
 literal|"key expressions"
 argument_list|)
 specifier|public
+name|String
+name|getKeyColString
+parameter_list|()
+block|{
+return|return
+name|PlanUtils
+operator|.
+name|getExprListString
+argument_list|(
+name|keyCols
+argument_list|)
+return|;
+block|}
+specifier|public
 name|java
 operator|.
 name|util
@@ -713,6 +727,20 @@ operator|=
 literal|"value expressions"
 argument_list|)
 specifier|public
+name|String
+name|getValueColsString
+parameter_list|()
+block|{
+return|return
+name|PlanUtils
+operator|.
+name|getExprListString
+argument_list|(
+name|valueCols
+argument_list|)
+return|;
+block|}
+specifier|public
 name|java
 operator|.
 name|util
@@ -759,6 +787,20 @@ operator|=
 literal|"Map-reduce partition columns"
 argument_list|)
 specifier|public
+name|String
+name|getParitionColsString
+parameter_list|()
+block|{
+return|return
+name|PlanUtils
+operator|.
+name|getExprListString
+argument_list|(
+name|partitionCols
+argument_list|)
+return|;
+block|}
+specifier|public
 name|java
 operator|.
 name|util
@@ -803,6 +845,10 @@ argument_list|(
 name|displayName
 operator|=
 literal|"tag"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
 argument_list|)
 specifier|public
 name|int
@@ -858,6 +904,10 @@ argument_list|(
 name|displayName
 operator|=
 literal|"TopN"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
 argument_list|)
 specifier|public
 name|Integer

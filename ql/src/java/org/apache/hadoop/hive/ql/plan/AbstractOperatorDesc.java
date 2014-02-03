@@ -26,7 +26,7 @@ name|AbstractOperatorDesc
 implements|implements
 name|OperatorDesc
 block|{
-specifier|private
+specifier|protected
 name|boolean
 name|vectorMode
 init|=
@@ -42,13 +42,13 @@ name|Override
 annotation|@
 name|Explain
 argument_list|(
+name|skipHeader
+operator|=
+literal|true
+argument_list|,
 name|displayName
 operator|=
 literal|"Statistics"
-argument_list|,
-name|normalExplain
-operator|=
-literal|false
 argument_list|)
 specifier|public
 name|Statistics
@@ -92,26 +92,6 @@ argument_list|(
 literal|"clone not supported"
 argument_list|)
 throw|;
-block|}
-annotation|@
-name|Explain
-argument_list|(
-name|displayName
-operator|=
-literal|"Vectorized execution"
-argument_list|,
-name|displayOnlyOnTrue
-operator|=
-literal|true
-argument_list|)
-specifier|public
-name|boolean
-name|getVectorModeOn
-parameter_list|()
-block|{
-return|return
-name|vectorMode
-return|;
 block|}
 specifier|public
 name|void

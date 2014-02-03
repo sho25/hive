@@ -348,13 +348,6 @@ name|value
 return|;
 block|}
 annotation|@
-name|Explain
-argument_list|(
-name|displayName
-operator|=
-literal|"expr"
-argument_list|)
-annotation|@
 name|Override
 specifier|public
 name|String

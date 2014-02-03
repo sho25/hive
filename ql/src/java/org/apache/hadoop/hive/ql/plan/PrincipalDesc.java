@@ -150,6 +150,10 @@ argument_list|(
 name|displayName
 operator|=
 literal|"type"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
 argument_list|)
 specifier|public
 name|PrincipalType

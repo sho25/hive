@@ -1027,6 +1027,10 @@ argument_list|(
 name|displayName
 operator|=
 literal|"if not exists"
+argument_list|,
+name|displayOnlyOnTrue
+operator|=
+literal|true
 argument_list|)
 specifier|public
 name|boolean
@@ -1196,6 +1200,30 @@ name|displayName
 operator|=
 literal|"# buckets"
 argument_list|)
+specifier|public
+name|Integer
+name|getNumBucketsExplain
+parameter_list|()
+block|{
+if|if
+condition|(
+name|numBuckets
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+else|else
+block|{
+return|return
+name|numBuckets
+return|;
+block|}
+block|}
 specifier|public
 name|int
 name|getNumBuckets
@@ -1536,6 +1564,10 @@ argument_list|(
 name|displayName
 operator|=
 literal|"isExternal"
+argument_list|,
+name|displayOnlyOnTrue
+operator|=
+literal|true
 argument_list|)
 specifier|public
 name|boolean
