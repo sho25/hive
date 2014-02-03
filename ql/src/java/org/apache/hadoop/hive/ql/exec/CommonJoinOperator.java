@@ -594,6 +594,12 @@ init|=
 literal|0
 decl_stmt|;
 specifier|transient
+name|Byte
+name|lastAlias
+init|=
+literal|null
+decl_stmt|;
+specifier|transient
 name|boolean
 name|handleSkewJoin
 init|=
@@ -1323,10 +1329,6 @@ name|ConfVars
 operator|.
 name|HIVEJOINEMITINTERVAL
 argument_list|)
-expr_stmt|;
-name|nextSz
-operator|=
-name|joinEmitInterval
 expr_stmt|;
 name|joinCacheSize
 operator|=

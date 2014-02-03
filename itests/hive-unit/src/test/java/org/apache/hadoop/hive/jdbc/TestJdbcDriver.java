@@ -346,7 +346,7 @@ specifier|final
 name|String
 name|dataTypeTableName
 init|=
-literal|"testDataTypeTable"
+literal|"testdatatypetable"
 decl_stmt|;
 specifier|private
 specifier|static

@@ -624,6 +624,10 @@ argument_list|(
 name|displayName
 operator|=
 literal|"GlobalTableId"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
 argument_list|)
 specifier|public
 name|int

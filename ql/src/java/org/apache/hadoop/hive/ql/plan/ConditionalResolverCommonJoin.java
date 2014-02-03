@@ -707,12 +707,10 @@ if|if
 condition|(
 name|task
 operator|.
-name|getTaskTag
+name|getBackupTask
 argument_list|()
-operator|==
-name|Task
-operator|.
-name|CONVERTED_LOCAL_MAPJOIN
+operator|!=
+literal|null
 condition|)
 block|{
 name|task

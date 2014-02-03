@@ -266,6 +266,17 @@ name|HCAT_HIVE_CLIENT_EXPIRY_TIME
 init|=
 literal|"hcatalog.hive.client.cache.expiry.time"
 decl_stmt|;
+comment|// config parameter that suggests to hcat that metastore clients not be cached - default is false
+comment|// this parameter allows highly-parallel hcat usescases to not gobble up too many connections that
+comment|// sit in the cache, while not in use.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HCAT_HIVE_CLIENT_DISABLE_CACHE
+init|=
+literal|"hcatalog.hive.client.cache.disabled"
+decl_stmt|;
 specifier|private
 name|HCatConstants
 parameter_list|()

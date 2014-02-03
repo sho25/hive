@@ -1487,26 +1487,6 @@ return|return
 name|opToPartList
 return|;
 block|}
-specifier|public
-name|void
-name|setOpToPartList
-parameter_list|(
-name|HashMap
-argument_list|<
-name|TableScanOperator
-argument_list|,
-name|PrunedPartitionList
-argument_list|>
-name|opToPartList
-parameter_list|)
-block|{
-name|this
-operator|.
-name|opToPartList
-operator|=
-name|opToPartList
-expr_stmt|;
-block|}
 comment|/**    * @return the topToTable    */
 specifier|public
 name|HashMap

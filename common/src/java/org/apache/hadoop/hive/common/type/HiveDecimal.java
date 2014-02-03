@@ -892,6 +892,19 @@ literal|true
 argument_list|)
 return|;
 block|}
+comment|/**    * Get the sign of the underlying decimal.    * @return 0 if the decimal is equal to 0, -1 if less than zero, and 1 if greater than 0    */
+specifier|public
+name|int
+name|signum
+parameter_list|()
+block|{
+return|return
+name|bd
+operator|.
+name|signum
+argument_list|()
+return|;
+block|}
 specifier|private
 specifier|static
 name|BigDecimal

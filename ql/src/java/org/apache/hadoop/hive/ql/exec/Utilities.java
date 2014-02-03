@@ -9340,7 +9340,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * The first group will contain the task id. The second group is the optional extension. The file    * name looks like: "0_0" or "0_0.gz". There may be a leading prefix (tmp_). Since getTaskId() can    * return an integer only - this should match a pure integer as well. {1,3} is used to limit    * matching for attempts #'s 0-999.    */
+comment|/**    * The first group will contain the task id. The second group is the optional extension. The file    * name looks like: "0_0" or "0_0.gz". There may be a leading prefix (tmp_). Since getTaskId() can    * return an integer only - this should match a pure integer as well. {1,6} is used to limit    * matching for attempts #'s 0-999999.    */
 specifier|private
 specifier|static
 specifier|final
@@ -9351,7 +9351,7 @@ name|Pattern
 operator|.
 name|compile
 argument_list|(
-literal|"^.*?([0-9]+)(_[0-9]{1,3})?(\\..*)?$"
+literal|"^.*?([0-9]+)(_[0-9]{1,6})?(\\..*)?$"
 argument_list|)
 decl_stmt|;
 comment|/**    * This retruns prefix part + taskID for bucket join for partitioned table    */
@@ -9365,7 +9365,7 @@ name|Pattern
 operator|.
 name|compile
 argument_list|(
-literal|"^.*?((\\(.*\\))?[0-9]+)(_[0-9]{1,3})?(\\..*)?$"
+literal|"^.*?((\\(.*\\))?[0-9]+)(_[0-9]{1,6})?(\\..*)?$"
 argument_list|)
 decl_stmt|;
 comment|/**    * This breaks a prefixed bucket number into the prefix and the taskID    */

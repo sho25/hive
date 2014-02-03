@@ -1750,6 +1750,10 @@ argument_list|(
 name|displayName
 operator|=
 literal|"handleSkewJoin"
+argument_list|,
+name|displayOnlyOnTrue
+operator|=
+literal|true
 argument_list|)
 specifier|public
 name|boolean

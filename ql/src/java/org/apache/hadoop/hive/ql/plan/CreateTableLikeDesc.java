@@ -222,6 +222,10 @@ argument_list|(
 name|displayName
 operator|=
 literal|"if not exists"
+argument_list|,
+name|displayOnlyOnTrue
+operator|=
+literal|true
 argument_list|)
 specifier|public
 name|boolean
@@ -377,6 +381,10 @@ argument_list|(
 name|displayName
 operator|=
 literal|"isExternal"
+argument_list|,
+name|displayOnlyOnTrue
+operator|=
+literal|true
 argument_list|)
 specifier|public
 name|boolean

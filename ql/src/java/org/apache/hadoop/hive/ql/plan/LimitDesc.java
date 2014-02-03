@@ -75,6 +75,13 @@ operator|=
 name|limit
 expr_stmt|;
 block|}
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Number of rows"
+argument_list|)
 specifier|public
 name|int
 name|getLimit

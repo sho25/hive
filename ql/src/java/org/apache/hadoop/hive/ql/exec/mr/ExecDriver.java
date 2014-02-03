@@ -2350,6 +2350,11 @@ condition|(
 name|localwork
 operator|!=
 literal|null
+operator|&&
+name|localwork
+operator|.
+name|hasStagedAlias
+argument_list|()
 condition|)
 block|{
 if|if

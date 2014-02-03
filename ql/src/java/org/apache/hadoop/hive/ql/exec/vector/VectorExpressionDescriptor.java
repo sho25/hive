@@ -101,6 +101,11 @@ argument_list|(
 literal|3
 argument_list|)
 block|,
+name|DECIMAL
+argument_list|(
+literal|4
+argument_list|)
+block|,
 name|ANY
 argument_list|(
 literal|7

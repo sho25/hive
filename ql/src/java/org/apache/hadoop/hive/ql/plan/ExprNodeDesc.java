@@ -257,13 +257,6 @@ name|typeInfo
 argument_list|)
 return|;
 block|}
-annotation|@
-name|Explain
-argument_list|(
-name|displayName
-operator|=
-literal|"type"
-argument_list|)
 specifier|public
 name|String
 name|getTypeString

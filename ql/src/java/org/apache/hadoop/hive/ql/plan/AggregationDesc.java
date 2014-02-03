@@ -544,13 +544,6 @@ return|return
 name|mode
 return|;
 block|}
-annotation|@
-name|Explain
-argument_list|(
-name|displayName
-operator|=
-literal|"expr"
-argument_list|)
 specifier|public
 name|String
 name|getExprString

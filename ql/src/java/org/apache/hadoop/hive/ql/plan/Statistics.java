@@ -372,7 +372,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|""
+literal|"Statistics"
 argument_list|)
 specifier|public
 name|String
@@ -390,7 +390,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" numRows: "
+literal|"Num rows: "
 argument_list|)
 expr_stmt|;
 name|sb
@@ -404,7 +404,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" dataSize: "
+literal|" Data size: "
 argument_list|)
 expr_stmt|;
 name|sb
@@ -418,7 +418,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" basicStatsState: "
+literal|" Basic stats: "
 argument_list|)
 expr_stmt|;
 name|sb
@@ -432,7 +432,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" colStatsState: "
+literal|" Column stats: "
 argument_list|)
 expr_stmt|;
 name|sb

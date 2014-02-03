@@ -105,6 +105,8 @@ name|HivePrivilegeObject
 argument_list|>
 name|outputHObjs
 parameter_list|)
+throws|throws
+name|HiveAuthorizationPluginException
 function_decl|;
 block|}
 end_interface

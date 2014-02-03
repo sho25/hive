@@ -200,27 +200,32 @@ argument_list|()
 decl_stmt|;
 comment|// String query = SessionState.get().getCmd();
 name|int
-name|convertedMapJoin
-init|=
-literal|0
-decl_stmt|;
-name|int
 name|commonJoin
 init|=
 literal|0
 decl_stmt|;
 name|int
+name|hintedMapJoin
+init|=
+literal|0
+decl_stmt|;
+name|int
+name|convertedMapJoin
+init|=
+literal|0
+decl_stmt|;
+name|int
+name|hintedMapJoinLocal
+init|=
+literal|0
+decl_stmt|;
+name|int
+name|convertedMapJoinLocal
+init|=
+literal|0
+decl_stmt|;
+name|int
 name|backupCommonJoin
-init|=
-literal|0
-decl_stmt|;
-name|int
-name|convertedLocalMapJoin
-init|=
-literal|0
-decl_stmt|;
-name|int
-name|localMapJoin
 init|=
 literal|0
 decl_stmt|;
@@ -276,9 +281,18 @@ break|break;
 case|case
 name|Task
 operator|.
-name|CONVERTED_LOCAL_MAPJOIN
+name|HINTED_MAPJOIN
 case|:
-name|convertedLocalMapJoin
+name|hintedMapJoin
+operator|++
+expr_stmt|;
+break|break;
+case|case
+name|Task
+operator|.
+name|HINTED_MAPJOIN_LOCAL
+case|:
+name|hintedMapJoinLocal
 operator|++
 expr_stmt|;
 break|break;
@@ -294,18 +308,18 @@ break|break;
 case|case
 name|Task
 operator|.
-name|BACKUP_COMMON_JOIN
+name|CONVERTED_MAPJOIN_LOCAL
 case|:
-name|backupCommonJoin
+name|convertedMapJoinLocal
 operator|++
 expr_stmt|;
 break|break;
 case|case
 name|Task
 operator|.
-name|LOCAL_MAPJOIN
+name|BACKUP_COMMON_JOIN
 case|:
-name|localMapJoin
+name|backupCommonJoin
 operator|++
 expr_stmt|;
 break|break;
@@ -323,21 +337,25 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"[MapJoinCounter PostHook] CONVERTED_LOCAL_MAPJOIN: "
+literal|"[MapJoinCounter PostHook] COMMON_JOIN: "
 operator|+
-name|convertedLocalMapJoin
+name|commonJoin
+operator|+
+literal|" HINTED_MAPJOIN: "
+operator|+
+name|hintedMapJoin
+operator|+
+literal|" HINTED_MAPJOIN_LOCAL: "
+operator|+
+name|hintedMapJoinLocal
 operator|+
 literal|" CONVERTED_MAPJOIN: "
 operator|+
 name|convertedMapJoin
 operator|+
-literal|" LOCAL_MAPJOIN: "
+literal|" CONVERTED_MAPJOIN_LOCAL: "
 operator|+
-name|localMapJoin
-operator|+
-literal|" COMMON_JOIN: "
-operator|+
-name|commonJoin
+name|convertedMapJoinLocal
 operator|+
 literal|" BACKUP_COMMON_JOIN: "
 operator|+

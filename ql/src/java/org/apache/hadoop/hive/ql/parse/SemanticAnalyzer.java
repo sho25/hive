@@ -31431,8 +31431,37 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// if we are on viewfs we don't want to use /tmp as tmp dir since rename from /tmp/..
+comment|// to final /user/hive/warehouse/ will fail later, so instead pick tmp dir
+comment|// on same namespace as tbl dir.
 name|queryTmpdir
 operator|=
+name|dest_path
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getScheme
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"viewfs"
+argument_list|)
+condition|?
+name|ctx
+operator|.
+name|getExtTmpPathRelTo
+argument_list|(
+name|dest_path
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|toUri
+argument_list|()
+argument_list|)
+else|:
 name|ctx
 operator|.
 name|getExternalTmpPath
@@ -31955,8 +31984,37 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// if we are on viewfs we don't want to use /tmp as tmp dir since rename from /tmp/..
+comment|// to final /user/hive/warehouse/ will fail later, so instead pick tmp dir
+comment|// on same namespace as tbl dir.
 name|queryTmpdir
 operator|=
+name|dest_path
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getScheme
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"viewfs"
+argument_list|)
+condition|?
+name|ctx
+operator|.
+name|getExtTmpPathRelTo
+argument_list|(
+name|dest_path
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|toUri
+argument_list|()
+argument_list|)
+else|:
 name|ctx
 operator|.
 name|getExternalTmpPath
