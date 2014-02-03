@@ -3352,6 +3352,15 @@ argument_list|,
 literal|1
 argument_list|)
 block|,
+comment|// statistics annotation fetches stats for each partition, which can be expensive. turning
+comment|// this off will result in basic sizes being fetched from namenode instead
+name|HIVE_STATS_FETCH_PARTITION_STATS
+argument_list|(
+literal|"hive.stats.fetch.partition.stats"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// statistics annotation fetches column statistics for all required columns which can
 comment|// be very expensive sometimes
 name|HIVE_STATS_FETCH_COLUMN_STATS
