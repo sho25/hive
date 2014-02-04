@@ -1943,8 +1943,6 @@ name|createMRInputPayloadWithGrouping
 argument_list|(
 name|serializedConf
 argument_list|,
-literal|null
-argument_list|,
 name|HiveInputFormat
 operator|.
 name|class
