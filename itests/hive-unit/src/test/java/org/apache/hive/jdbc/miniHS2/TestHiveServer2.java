@@ -240,11 +240,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|miniHS2
-operator|.
-name|start
-argument_list|()
-expr_stmt|;
 name|confOverlay
 operator|=
 operator|new
@@ -256,6 +251,13 @@ name|String
 argument_list|>
 argument_list|()
 expr_stmt|;
+name|miniHS2
+operator|.
+name|start
+argument_list|(
+name|confOverlay
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|After
@@ -263,6 +265,8 @@ specifier|public
 name|void
 name|tearDown
 parameter_list|()
+throws|throws
+name|Exception
 block|{
 name|miniHS2
 operator|.
