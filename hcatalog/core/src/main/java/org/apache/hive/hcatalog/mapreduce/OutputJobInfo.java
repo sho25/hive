@@ -201,7 +201,7 @@ specifier|private
 name|boolean
 name|harRequested
 decl_stmt|;
-comment|/**    * Initializes a new OutputJobInfo instance    * for writing data from a table.    * @param databaseName the db name    * @param tableName the table name    * @param partitionValues The partition values to publish to, can be null or empty Map to    * work with hadoop security, the kerberos principal name of the server - else null    * The principal name should be of the form:    *<servicename>/_HOST@<realm> like "hcat/_HOST@myrealm.com"    * The special string _HOST will be replaced automatically with the correct host name    * indicate write to a unpartitioned table. For partitioned tables, this map should    * contain keys for all partition columns with corresponding values.    */
+comment|/**    * Initializes a new OutputJobInfo instance    * for writing data from a table.    * @param databaseName the db name    * @param tableName the table name    * @param partitionValues The partition values to publish to, can be null or empty Map to    * indicate write to a unpartitioned table. For partitioned tables, this map should    * contain keys for all partition columns with corresponding values.    */
 specifier|public
 specifier|static
 name|OutputJobInfo

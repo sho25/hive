@@ -998,7 +998,7 @@ name|server
 operator|.
 name|registerQuery
 argument_list|(
-literal|"store data into 'test_tbl' using org.apache.hive.hcatalog.pig.HCatStorer();"
+literal|"store data into 'test_tbl' using org.apache.hive.hcatalog.pig.HCatStorer('','','-onOutOfRangeValue Throw');"
 argument_list|)
 expr_stmt|;
 name|List
