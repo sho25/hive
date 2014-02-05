@@ -53562,43 +53562,6 @@ name|getRowResolver
 argument_list|()
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|createVwDesc
-operator|!=
-literal|null
-condition|)
-block|{
-name|saveViewDefinition
-argument_list|()
-expr_stmt|;
-comment|// validate the create view statement
-comment|// at this point, the createVwDesc gets all the information for semantic check
-name|validateCreateView
-argument_list|(
-name|createVwDesc
-argument_list|)
-expr_stmt|;
-comment|// Since we're only creating a view (not executing it), we
-comment|// don't need to optimize or translate the plan (and in fact, those
-comment|// procedures can interfere with the view creation). So
-comment|// skip the rest of this method.
-name|ctx
-operator|.
-name|setResDir
-argument_list|(
-literal|null
-argument_list|)
-expr_stmt|;
-name|ctx
-operator|.
-name|setResFile
-argument_list|(
-literal|null
-argument_list|)
-expr_stmt|;
-return|return;
-block|}
 name|ParseContext
 name|pCtx
 init|=
@@ -53668,6 +53631,67 @@ argument_list|,
 name|queryProperties
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|createVwDesc
+operator|!=
+literal|null
+condition|)
+block|{
+name|saveViewDefinition
+argument_list|()
+expr_stmt|;
+comment|// validate the create view statement
+comment|// at this point, the createVwDesc gets all the information for semantic check
+name|validateCreateView
+argument_list|(
+name|createVwDesc
+argument_list|)
+expr_stmt|;
+comment|// Since we're only creating a view (not executing it), we
+comment|// don't need to optimize or translate the plan (and in fact, those
+comment|// procedures can interfere with the view creation). So
+comment|// skip the rest of this method.
+name|ctx
+operator|.
+name|setResDir
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+name|ctx
+operator|.
+name|setResFile
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|PlanUtils
+operator|.
+name|addInputsForView
+argument_list|(
+name|pCtx
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+return|return;
+block|}
 comment|// Generate table access stats if required
 if|if
 condition|(

@@ -141,6 +141,24 @@ name|DoubleWritable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|HiveDecimalWritable
+import|;
+end_import
+
 begin_comment
 comment|/**  * UDFLn.  *  */
 end_comment
@@ -182,7 +200,7 @@ specifier|public
 class|class
 name|UDFLn
 extends|extends
-name|UDF
+name|UDFMath
 block|{
 specifier|private
 specifier|final
