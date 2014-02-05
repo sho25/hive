@@ -2170,6 +2170,14 @@ name|ADMIN
 init|=
 literal|"ADMIN"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|PUBLIC
+init|=
+literal|"PUBLIC"
+decl_stmt|;
 specifier|private
 specifier|static
 name|HadoopThriftAuthBridge
@@ -2277,7 +2285,7 @@ decl_stmt|;
 specifier|private
 specifier|static
 name|boolean
-name|adminCreated
+name|defaultRolesCreated
 init|=
 literal|false
 decl_stmt|;
@@ -2971,7 +2979,7 @@ block|{
 name|createDefaultDB
 argument_list|()
 expr_stmt|;
-name|createAdminRoleNAddUsers
+name|createDefaultRolesNAddUsers
 argument_list|()
 expr_stmt|;
 block|}
@@ -3214,6 +3222,8 @@ operator|+
 name|s
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setConf
@@ -3550,14 +3560,14 @@ block|}
 block|}
 specifier|private
 name|void
-name|createAdminRoleNAddUsers
+name|createDefaultRolesNAddUsers
 parameter_list|()
 throws|throws
 name|MetaException
 block|{
 if|if
 condition|(
-name|adminCreated
+name|defaultRolesCreated
 condition|)
 block|{
 name|LOG
@@ -3687,7 +3697,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"admin role already exists"
+name|ADMIN
+operator|+
+literal|" role already exists"
 argument_list|,
 name|e
 argument_list|)
@@ -3704,7 +3716,11 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Unexpected exception while adding ADMIN role"
+literal|"Unexpected exception while adding "
+operator|+
+name|ADMIN
+operator|+
+literal|" roles"
 argument_list|,
 name|e
 argument_list|)
@@ -3714,7 +3730,73 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Added admin role in metastore"
+literal|"Added "
+operator|+
+name|ADMIN
+operator|+
+literal|" role in metastore"
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|ms
+operator|.
+name|addRole
+argument_list|(
+name|PUBLIC
+argument_list|,
+name|PUBLIC
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InvalidObjectException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|PUBLIC
+operator|+
+literal|" role already exists"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|NoSuchObjectException
+name|e
+parameter_list|)
+block|{
+comment|// This should never be thrown.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Unexpected exception while adding "
+operator|+
+name|PUBLIC
+operator|+
+literal|" roles"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Added "
+operator|+
+name|PUBLIC
+operator|+
+literal|" role in metastore"
 argument_list|)
 expr_stmt|;
 comment|// now grant all privs to admin
@@ -4026,7 +4108,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|adminCreated
+name|defaultRolesCreated
 operator|=
 literal|true
 expr_stmt|;
@@ -4798,6 +4880,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|create_database
@@ -4966,6 +5050,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Database
 name|get_database
@@ -5081,6 +5167,8 @@ return|return
 name|db
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alter_database
@@ -5830,6 +5918,8 @@ name|SEPARATOR
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|drop_database
@@ -6016,6 +6106,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -6117,6 +6209,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -6320,6 +6414,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|create_type
@@ -6452,6 +6548,8 @@ return|return
 name|success
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Type
 name|get_type
@@ -6704,6 +6802,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|drop_type
@@ -6815,6 +6915,8 @@ return|return
 name|success
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Map
 argument_list|<
@@ -8869,6 +8971,8 @@ name|table
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Table
 name|get_table
@@ -9011,6 +9115,8 @@ name|t
 return|;
 block|}
 comment|/**      * Gets multiple tables from the hive metastore.      *      * @param dbname      *          The name of the database in which the tables reside      * @param names      *          The names of the tables to get.      *      * @return A list of tables whose names are in the the list "names" and      *         are retrievable from the database specified by "dbnames."      *         There is no guarantee of the order of the returned tables.      *         If there are duplicate names, only one instance of the table will be returned.      * @throws MetaException      * @throws InvalidOperationException      * @throws UnknownDBException      */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -11013,6 +11119,8 @@ return|return
 name|result
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|add_partitions
@@ -13360,6 +13468,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Partition
 name|get_partition
@@ -13629,6 +13739,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -13900,6 +14012,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -14867,6 +14981,8 @@ literal|"Not yet implemented"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alter_index
@@ -15054,6 +15170,8 @@ expr_stmt|;
 block|}
 return|return;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getVersion
@@ -15387,6 +15505,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -15498,6 +15618,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -15599,6 +15721,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -15873,6 +15997,8 @@ name|ret
 return|;
 block|}
 comment|/**      * Return the schema of the table. This function includes partition columns      * in addition to the regular columns.      *      * @param db      *          Name of the database      * @param tableName      *          Name of the table      * @return List of columns, each column is a FieldSchema structure      * @throws MetaException      * @throws UnknownTableException      * @throws UnknownDBException      */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -16129,6 +16255,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getCpuProfile
@@ -16144,6 +16272,8 @@ literal|""
 return|;
 block|}
 comment|/**      * Returns the value of the given configuration variable name. If the      * configuration variable with the given name doesn't exist, or if there      * were an exception thrown while retrieving the variable, or if name is      * null, defaultValue is returned.      */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|get_config_value
@@ -16626,6 +16756,8 @@ return|return
 name|p
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Partition
 name|get_partition_by_name
@@ -19185,6 +19317,8 @@ return|return
 name|convertedPartName
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ColumnStatistics
 name|get_table_column_statistics
@@ -19300,6 +19434,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|TableStatsResult
 name|get_table_statistics_req
@@ -19409,6 +19545,8 @@ return|return
 name|result
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ColumnStatistics
 name|get_partition_column_statistics
@@ -19584,6 +19722,8 @@ return|return
 name|statsObj
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|PartitionsStatsResult
 name|get_partitions_statistics_req
@@ -19736,6 +19876,8 @@ return|return
 name|result
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|update_table_column_statistics
@@ -19932,6 +20074,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|update_partition_column_statistics
@@ -20174,6 +20318,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|delete_partition_column_statistics
@@ -20321,6 +20467,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|delete_table_column_statistics
@@ -21546,6 +21694,34 @@ argument_list|(
 literal|"add_role_member"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|PUBLIC
+operator|.
+name|equals
+argument_list|(
+name|roleName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"No user can be added to "
+operator|+
+name|PUBLIC
+operator|+
+literal|". Since all users implictly"
+operator|+
+literal|" belong to "
+operator|+
+name|PUBLIC
+operator|+
+literal|" role."
+argument_list|)
+throw|;
+block|}
 name|Boolean
 name|ret
 init|=
@@ -21742,6 +21918,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -21771,16 +21949,6 @@ name|List
 argument_list|<
 name|Role
 argument_list|>
-name|ret
-init|=
-literal|null
-decl_stmt|;
-try|try
-block|{
-name|List
-argument_list|<
-name|Role
-argument_list|>
 name|result
 init|=
 operator|new
@@ -21790,6 +21958,8 @@ name|Role
 argument_list|>
 argument_list|()
 decl_stmt|;
+try|try
+block|{
 name|List
 argument_list|<
 name|MRoleMap
@@ -21855,10 +22025,25 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|ret
-operator|=
+comment|// all users by default belongs to public role
 name|result
+operator|.
+name|add
+argument_list|(
+operator|new
+name|Role
+argument_list|(
+name|PUBLIC
+argument_list|,
+literal|0
+argument_list|,
+name|PUBLIC
+argument_list|)
+argument_list|)
 expr_stmt|;
+return|return
+name|result
+return|;
 block|}
 catch|catch
 parameter_list|(
@@ -21884,9 +22069,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-return|return
-name|ret
-return|;
 block|}
 annotation|@
 name|Override
@@ -21908,6 +22090,29 @@ argument_list|(
 literal|"create_role"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|PUBLIC
+operator|.
+name|equals
+argument_list|(
+name|role
+operator|.
+name|getRoleName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+name|PUBLIC
+operator|+
+literal|" role implictly exists. It can't be created."
+argument_list|)
+throw|;
+block|}
 name|Boolean
 name|ret
 init|=
@@ -21982,6 +22187,37 @@ argument_list|(
 literal|"drop_role"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|ADMIN
+operator|.
+name|equals
+argument_list|(
+name|roleName
+argument_list|)
+operator|||
+name|PUBLIC
+operator|.
+name|equals
+argument_list|(
+name|roleName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+name|PUBLIC
+operator|+
+literal|"/"
+operator|+
+name|ADMIN
+operator|+
+literal|" role can't be dropped."
+argument_list|)
+throw|;
+block|}
 name|Boolean
 name|ret
 init|=
@@ -22065,6 +22301,9 @@ operator|.
 name|listRoleNames
 argument_list|()
 expr_stmt|;
+return|return
+name|ret
+return|;
 block|}
 catch|catch
 parameter_list|(
@@ -22090,9 +22329,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-return|return
-name|ret
-return|;
 block|}
 annotation|@
 name|Override
@@ -22188,6 +22424,26 @@ argument_list|(
 literal|"remove_role_member"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|PUBLIC
+operator|.
+name|equals
+argument_list|(
+name|roleName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+name|PUBLIC
+operator|+
+literal|" role can't be revoked."
+argument_list|)
+throw|;
+block|}
 name|Boolean
 name|ret
 init|=

@@ -3649,6 +3649,17 @@ range|:
 name|roleNames
 control|)
 block|{
+if|if
+condition|(
+operator|!
+literal|"PUBLIC"
+operator|.
+name|equals
+argument_list|(
+name|roleName
+argument_list|)
+condition|)
+block|{
 name|db
 operator|.
 name|dropRole
@@ -3656,6 +3667,7 @@ argument_list|(
 name|roleName
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// allocate and initialize a new conf since a test can
 comment|// modify conf by using 'set' commands
