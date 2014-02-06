@@ -1269,6 +1269,15 @@ argument_list|(
 name|wx
 argument_list|)
 expr_stmt|;
+name|utils
+operator|.
+name|addCredentials
+argument_list|(
+name|w
+argument_list|,
+name|dag
+argument_list|)
+expr_stmt|;
 name|perfLogger
 operator|.
 name|PerfLogEnd
