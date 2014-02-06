@@ -121,7 +121,7 @@ name|HiveAuthorizationPluginException
 function_decl|;
 name|List
 argument_list|<
-name|String
+name|HiveRole
 argument_list|>
 name|getRoles
 parameter_list|(

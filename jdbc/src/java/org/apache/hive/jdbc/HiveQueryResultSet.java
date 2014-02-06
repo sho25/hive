@@ -1371,15 +1371,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"[HiveQueryResultSet/next] 0"
-argument_list|)
-expr_stmt|;
 try|try
 block|{
 name|TGetResultSetMetadataReq

@@ -1161,6 +1161,14 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|HIVE_IN_TEST
+argument_list|(
+literal|"hive.in.test"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// internal usage only, true in test mode
 comment|// should hive determine whether to run in local mode automatically ?
 name|LOCALMODEAUTO
 argument_list|(
@@ -7397,10 +7405,20 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
+name|HIVE_IN_TEST
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|restrictList
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
 name|HIVE_CONF_RESTRICTED_LIST
 operator|.
-name|toString
-argument_list|()
+name|varname
 argument_list|)
 expr_stmt|;
 block|}

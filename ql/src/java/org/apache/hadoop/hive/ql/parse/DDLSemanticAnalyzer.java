@@ -4091,7 +4091,7 @@ name|createFetchTask
 argument_list|(
 name|RoleDDLDesc
 operator|.
-name|getSchema
+name|getRoleDescSchema
 argument_list|()
 argument_list|)
 argument_list|)
@@ -4168,7 +4168,7 @@ name|createFetchTask
 argument_list|(
 name|RoleDDLDesc
 operator|.
-name|getSchema
+name|getRoleNameSchema
 argument_list|()
 argument_list|)
 argument_list|)

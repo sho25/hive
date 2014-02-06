@@ -65,9 +65,13 @@ specifier|private
 specifier|static
 specifier|final
 name|String
-name|schema
+name|tabularSchema
 init|=
-literal|"property,value#string:string"
+literal|"database,table,partition,column,principal_name,principal_type,privilege,"
+operator|+
+literal|"grant_option,grant_time,grantor#"
+operator|+
+literal|"string:string:string:string:string:string:string:boolean:bigint:string"
 decl_stmt|;
 specifier|public
 name|ShowGrantDesc
@@ -124,7 +128,7 @@ name|getSchema
 parameter_list|()
 block|{
 return|return
-name|schema
+name|tabularSchema
 return|;
 block|}
 annotation|@

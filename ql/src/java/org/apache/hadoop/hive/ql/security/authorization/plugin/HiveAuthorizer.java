@@ -201,7 +201,7 @@ function_decl|;
 comment|/**    * Get roles that this user/role belongs to    * @param hivePrincipal - user or role    * @return list of roles    * @throws HiveAuthorizationPluginException    */
 name|List
 argument_list|<
-name|String
+name|HiveRole
 argument_list|>
 name|getRoles
 parameter_list|(
