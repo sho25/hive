@@ -2149,6 +2149,14 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVE_CURRENT_DATABASE
+argument_list|(
+literal|"hive.current.database"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+comment|// internal usage only
 comment|// for hive script operator
 name|HIVES_AUTO_PROGRESS_TIMEOUT
 argument_list|(

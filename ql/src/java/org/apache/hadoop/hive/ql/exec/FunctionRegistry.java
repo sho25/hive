@@ -3171,6 +3171,15 @@ argument_list|)
 expr_stmt|;
 name|registerGenericUDF
 argument_list|(
+literal|"current_database"
+argument_list|,
+name|UDFCurrentDB
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|registerGenericUDF
+argument_list|(
 literal|"isnull"
 argument_list|,
 name|GenericUDFOPNull
