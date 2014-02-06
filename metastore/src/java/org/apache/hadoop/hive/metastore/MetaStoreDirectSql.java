@@ -749,11 +749,6 @@ specifier|final
 name|boolean
 name|isCompatibleDatastore
 decl_stmt|;
-comment|// TODO: we might also want to work around the strange and arguably non-standard behavior
-comment|// of postgres where it rolls back a tx after a failed select (see SQL92 4.28, on page 69
-comment|// about implicit rollbacks; 4.10.1 last paragraph for the "spirit" of the standard).
-comment|// See #canUseDirectSql in ObjectStore, isActiveTransaction is undesirable but unavoidable
-comment|// for postgres; in MySQL and other databases we could avoid it.
 specifier|public
 name|MetaStoreDirectSql
 parameter_list|(
@@ -831,8 +826,14 @@ name|begin
 argument_list|()
 expr_stmt|;
 block|}
-comment|// Force the underlying db to initialize. This is for tests where tables might not
-comment|// exist otherwise. It would be nice if there was a "create db" command.s
+name|boolean
+name|isCompatibleDatastore
+init|=
+literal|true
+decl_stmt|;
+try|try
+block|{
+comment|// Force the underlying db to initialize.
 name|pm
 operator|.
 name|newQuery
@@ -875,12 +876,38 @@ operator|.
 name|execute
 argument_list|()
 expr_stmt|;
-comment|// Self-test query. If it doesn't work, we will self-disable. What a PITA...
-name|boolean
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
 name|isCompatibleDatastore
-init|=
+operator|=
 literal|false
-decl_stmt|;
+expr_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Database initialization failed; direct SQL is disabled"
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+name|tx
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|isCompatibleDatastore
+condition|)
+block|{
+comment|// Self-test query. If it doesn't work, we will self-disable. What a PITA...
 name|String
 name|selfTestQuery
 init|=
@@ -900,10 +927,6 @@ operator|.
 name|execute
 argument_list|()
 expr_stmt|;
-name|isCompatibleDatastore
-operator|=
-literal|true
-expr_stmt|;
 name|tx
 operator|.
 name|commit
@@ -916,6 +939,10 @@ name|Exception
 name|ex
 parameter_list|)
 block|{
+name|isCompatibleDatastore
+operator|=
+literal|false
+expr_stmt|;
 name|LOG
 operator|.
 name|error
@@ -934,6 +961,7 @@ operator|.
 name|rollback
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 name|this
 operator|.
