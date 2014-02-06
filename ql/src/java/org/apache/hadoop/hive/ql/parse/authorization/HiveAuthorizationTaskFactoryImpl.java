@@ -2540,7 +2540,7 @@ literal|"undefined privilege "
 operator|+
 name|privilegeType
 operator|.
-name|getType
+name|getText
 argument_list|()
 argument_list|)
 throw|;
