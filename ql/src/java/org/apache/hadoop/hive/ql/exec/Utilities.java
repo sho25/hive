@@ -2345,6 +2345,24 @@ name|FieldSerializer
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|esotericsoftware
+operator|.
+name|shaded
+operator|.
+name|org
+operator|.
+name|objenesis
+operator|.
+name|strategy
+operator|.
+name|StdInstantiatorStrategy
+import|;
+end_import
+
 begin_comment
 comment|/**  * Utilities.  *  */
 end_comment
@@ -6697,6 +6715,15 @@ name|PathSerializer
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|kryo
+operator|.
+name|setInstantiatorStrategy
+argument_list|(
+operator|new
+name|StdInstantiatorStrategy
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|removeField
 argument_list|(
 name|kryo
@@ -6896,6 +6923,15 @@ name|class
 argument_list|,
 operator|new
 name|PathSerializer
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|kryo
+operator|.
+name|setInstantiatorStrategy
+argument_list|(
+operator|new
+name|StdInstantiatorStrategy
 argument_list|()
 argument_list|)
 expr_stmt|;
