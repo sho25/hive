@@ -105,6 +105,8 @@ parameter_list|,
 name|String
 name|hiveCurrentUser
 parameter_list|)
+throws|throws
+name|HiveAuthorizationPluginException
 function_decl|;
 block|}
 end_interface

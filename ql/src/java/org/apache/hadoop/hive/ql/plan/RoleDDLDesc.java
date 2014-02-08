@@ -159,6 +159,16 @@ name|SHOW_ROLES
 argument_list|(
 literal|"show_roles"
 argument_list|)
+block|,
+name|SET_ROLE
+argument_list|(
+literal|"set_role"
+argument_list|)
+block|,
+name|SHOW_CURRENT_ROLE
+argument_list|(
+literal|"show_current_role"
+argument_list|)
 block|;
 specifier|private
 name|String
@@ -191,6 +201,8 @@ return|return
 name|operationName
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

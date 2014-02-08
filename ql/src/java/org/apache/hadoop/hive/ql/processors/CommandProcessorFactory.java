@@ -200,7 +200,12 @@ block|{
 return|return
 name|get
 argument_list|(
+operator|new
+name|String
+index|[]
+block|{
 name|cmd
+block|}
 argument_list|,
 literal|null
 argument_list|)
@@ -212,6 +217,7 @@ name|CommandProcessor
 name|getForHiveCommand
 parameter_list|(
 name|String
+index|[]
 name|cmd
 parameter_list|,
 name|HiveConf
@@ -239,6 +245,9 @@ operator|||
 name|isBlank
 argument_list|(
 name|cmd
+index|[
+literal|0
+index|]
 argument_list|)
 condition|)
 block|{
@@ -317,6 +326,9 @@ operator|.
 name|contains
 argument_list|(
 name|cmd
+index|[
+literal|0
+index|]
 operator|.
 name|trim
 argument_list|()
@@ -333,6 +345,9 @@ argument_list|(
 literal|"Insufficient privileges to execute "
 operator|+
 name|cmd
+index|[
+literal|0
+index|]
 argument_list|,
 literal|"42000"
 argument_list|)
@@ -422,6 +437,7 @@ name|CommandProcessor
 name|get
 parameter_list|(
 name|String
+index|[]
 name|cmd
 parameter_list|,
 name|HiveConf
@@ -456,6 +472,9 @@ condition|(
 name|isBlank
 argument_list|(
 name|cmd
+index|[
+literal|0
+index|]
 argument_list|)
 condition|)
 block|{

@@ -308,17 +308,6 @@ argument_list|(
 literal|"\\s+"
 argument_list|)
 decl_stmt|;
-name|String
-name|command
-init|=
-name|tokens
-index|[
-literal|0
-index|]
-operator|.
-name|toLowerCase
-argument_list|()
-decl_stmt|;
 name|CommandProcessor
 name|processor
 init|=
@@ -333,9 +322,6 @@ operator|.
 name|getForHiveCommand
 argument_list|(
 name|tokens
-index|[
-literal|0
-index|]
 argument_list|,
 name|parentSession
 operator|.

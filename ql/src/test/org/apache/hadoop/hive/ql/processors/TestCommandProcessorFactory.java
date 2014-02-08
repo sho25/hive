@@ -153,7 +153,33 @@ name|CommandProcessorFactory
 operator|.
 name|getForHiveCommand
 argument_list|(
+operator|new
+name|String
+index|[]
+block|{
 literal|" "
+block|}
+argument_list|,
+name|conf
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertNull
+argument_list|(
+literal|"set role should have returned null"
+argument_list|,
+name|CommandProcessorFactory
+operator|.
+name|getForHiveCommand
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"set role"
+block|}
 argument_list|,
 name|conf
 argument_list|)
@@ -169,7 +195,12 @@ name|CommandProcessorFactory
 operator|.
 name|getForHiveCommand
 argument_list|(
+operator|new
+name|String
+index|[]
+block|{
 literal|"SELECT * FROM TABLE"
+block|}
 argument_list|,
 name|conf
 argument_list|)
@@ -225,7 +256,12 @@ name|CommandProcessorFactory
 operator|.
 name|getForHiveCommand
 argument_list|(
+operator|new
+name|String
+index|[]
+block|{
 name|cmd
+block|}
 argument_list|,
 name|conf
 argument_list|)
@@ -268,7 +304,12 @@ name|CommandProcessorFactory
 operator|.
 name|getForHiveCommand
 argument_list|(
+operator|new
+name|String
+index|[]
+block|{
 name|cmd
+block|}
 argument_list|,
 name|conf
 argument_list|)
@@ -316,7 +357,12 @@ name|CommandProcessorFactory
 operator|.
 name|getForHiveCommand
 argument_list|(
+operator|new
+name|String
+index|[]
+block|{
 name|cmd
+block|}
 argument_list|,
 name|conf
 argument_list|)

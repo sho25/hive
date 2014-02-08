@@ -1577,9 +1577,6 @@ operator|.
 name|get
 argument_list|(
 name|tokens
-index|[
-literal|0
-index|]
 argument_list|,
 operator|(
 name|HiveConf
@@ -3285,6 +3282,8 @@ operator|new
 name|Completor
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|complete
@@ -3305,12 +3304,6 @@ name|String
 argument_list|>
 name|comp
 init|=
-operator|(
-name|List
-argument_list|<
-name|String
-argument_list|>
-operator|)
 name|completions
 decl_stmt|;
 name|int
