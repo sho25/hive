@@ -583,6 +583,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|PrivilegeType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -2536,12 +2556,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"undefined privilege "
+literal|"Undefined privilege "
 operator|+
+name|PrivilegeType
+operator|.
+name|getPrivTypeByToken
+argument_list|(
 name|privilegeType
 operator|.
-name|getText
+name|getType
 argument_list|()
+argument_list|)
 argument_list|)
 throw|;
 block|}

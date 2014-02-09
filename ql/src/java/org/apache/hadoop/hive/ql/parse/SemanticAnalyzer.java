@@ -57877,9 +57877,18 @@ argument_list|)
 expr_stmt|;
 break|break;
 default|default:
-assert|assert
-literal|false
-assert|;
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Unknown token: "
+operator|+
+name|child
+operator|.
+name|getToken
+argument_list|()
+argument_list|)
+throw|;
 block|}
 block|}
 name|storageFormat
