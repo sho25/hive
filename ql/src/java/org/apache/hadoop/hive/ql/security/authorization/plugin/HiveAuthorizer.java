@@ -49,7 +49,7 @@ name|classification
 operator|.
 name|InterfaceAudience
 operator|.
-name|Public
+name|LimitedPrivate
 import|;
 end_import
 
@@ -83,24 +83,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|Role
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|security
@@ -117,7 +99,14 @@ end_comment
 
 begin_interface
 annotation|@
-name|Public
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|""
+block|}
+argument_list|)
 annotation|@
 name|Evolving
 specifier|public
@@ -137,7 +126,7 @@ name|VERSION
 name|getVersion
 parameter_list|()
 function_decl|;
-comment|/**    * Grant privileges for principals on the object    * @param hivePrincipals    * @param hivePrivileges    * @param hivePrivObject    * @param grantorPrincipal    * @param grantOption    * @throws HiveAuthorizationPluginException    */
+comment|/**    * Grant privileges for principals on the object    * @param hivePrincipals    * @param hivePrivileges    * @param hivePrivObject    * @param grantorPrincipal    * @param grantOption    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|grantPrivileges
 parameter_list|(
@@ -163,9 +152,11 @@ name|boolean
 name|grantOption
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
-comment|/**    * Revoke privileges for principals on the object    * @param hivePrincipals    * @param hivePrivileges    * @param hivePrivObject    * @param grantorPrincipal    * @param grantOption    * @throws HiveAuthorizationPluginException    */
+comment|/**    * Revoke privileges for principals on the object    * @param hivePrincipals    * @param hivePrivileges    * @param hivePrivObject    * @param grantorPrincipal    * @param grantOption    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|revokePrivileges
 parameter_list|(
@@ -191,9 +182,11 @@ name|boolean
 name|grantOption
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
-comment|/**    * Create role    * @param roleName    * @param adminGrantor - The user in "[ WITH ADMIN<user> ]" clause of "create role"    * @throws HiveAuthorizationPluginException    */
+comment|/**    * Create role    * @param roleName    * @param adminGrantor - The user in "[ WITH ADMIN<user> ]" clause of "create role"    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|createRole
 parameter_list|(
@@ -204,9 +197,11 @@ name|HivePrincipal
 name|adminGrantor
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
-comment|/**    * Drop role    * @param roleName    * @throws HiveAuthorizationPluginException    */
+comment|/**    * Drop role    * @param roleName    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|dropRole
 parameter_list|(
@@ -214,9 +209,11 @@ name|String
 name|roleName
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
-comment|/**    * Get roles that this user/role belongs to    * @param hivePrincipal - user or role    * @return list of roles    * @throws HiveAuthorizationPluginException    */
+comment|/**    * Get roles that this user/role belongs to    * @param hivePrincipal - user or role    * @return list of roles    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|List
 argument_list|<
 name|HiveRole
@@ -227,9 +224,11 @@ name|HivePrincipal
 name|hivePrincipal
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
-comment|/**    * Grant roles in given roles list to principals in given hivePrincipals list    * @param hivePrincipals    * @param roles    * @param grantOption    * @param grantorPrinc    * @throws HiveAuthorizationPluginException    */
+comment|/**    * Grant roles in given roles list to principals in given hivePrincipals list    * @param hivePrincipals    * @param roles    * @param grantOption    * @param grantorPrinc    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|grantRole
 parameter_list|(
@@ -252,9 +251,11 @@ name|HivePrincipal
 name|grantorPrinc
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
-comment|/**    * Revoke roles in given roles list to principals in given hivePrincipals list    * @param hivePrincipals    * @param roles    * @param grantOption    * @param grantorPrinc    * @throws HiveAuthorizationPluginException    */
+comment|/**    * Revoke roles in given roles list to principals in given hivePrincipals list    * @param hivePrincipals    * @param roles    * @param grantOption    * @param grantorPrinc    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|revokeRole
 parameter_list|(
@@ -277,9 +278,11 @@ name|HivePrincipal
 name|grantorPrinc
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
-comment|/**    * Check if user has privileges to do this action on these objects    * @param hiveOpType    * @param inputsHObjs    * @param outputHObjs    * @throws HiveAuthorizationPluginException    */
+comment|/**    * Check if user has privileges to do this action on these objects    * @param hiveOpType    * @param inputsHObjs    * @param outputHObjs    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|checkPrivileges
 parameter_list|(
@@ -299,9 +302,11 @@ argument_list|>
 name|outputHObjs
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
-comment|/**    * @return all existing roles    * @throws HiveAuthorizationPluginException    */
+comment|/**    * @return all existing roles    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|List
 argument_list|<
 name|String
@@ -309,9 +314,11 @@ argument_list|>
 name|getAllRoles
 parameter_list|()
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
-comment|/**    * Show privileges for given principal on given object    * @param principal    * @param privObj    * @return    * @throws HiveAuthorizationPluginException    */
+comment|/**    * Show privileges for given principal on given object    * @param principal    * @param privObj    * @return    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|List
 argument_list|<
 name|HivePrivilegeInfo
@@ -325,7 +332,9 @@ name|HivePrivilegeObject
 name|privObj
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
 name|void
 name|setCurrentRole
@@ -334,7 +343,7 @@ name|String
 name|roleName
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 function_decl|;
 name|List
 argument_list|<
@@ -343,7 +352,7 @@ argument_list|>
 name|getCurrentRoles
 parameter_list|()
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 function_decl|;
 comment|//other functions to be added -
 comment|//showUsersInRole(rolename)

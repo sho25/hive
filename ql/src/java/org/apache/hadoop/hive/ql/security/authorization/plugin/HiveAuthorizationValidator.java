@@ -49,7 +49,7 @@ name|classification
 operator|.
 name|InterfaceAudience
 operator|.
-name|Public
+name|LimitedPrivate
 import|;
 end_import
 
@@ -79,14 +79,21 @@ end_comment
 
 begin_interface
 annotation|@
-name|Public
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|""
+block|}
+argument_list|)
 annotation|@
 name|Evolving
 specifier|public
 interface|interface
 name|HiveAuthorizationValidator
 block|{
-comment|/**    * Check if current user has privileges to perform given operation type hiveOpType on the given    * input and output objects    * @param hiveOpType    * @param inputHObjs    * @param outputHObjs    */
+comment|/**    * Check if current user has privileges to perform given operation type    * hiveOpType on the given input and output objects    *    * @param hiveOpType    * @param inputHObjs    * @param outputHObjs    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|checkPrivileges
 parameter_list|(
@@ -106,7 +113,9 @@ argument_list|>
 name|outputHObjs
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
 block|}
 end_interface

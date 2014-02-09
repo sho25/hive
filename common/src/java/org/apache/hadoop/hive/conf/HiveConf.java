@@ -4090,7 +4090,7 @@ name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
 argument_list|,
-literal|""
+literal|"hive.security.authenticator.manager,hive.security.authorization.manager"
 argument_list|)
 block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all

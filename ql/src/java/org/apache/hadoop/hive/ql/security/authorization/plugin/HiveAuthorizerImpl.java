@@ -49,7 +49,7 @@ name|classification
 operator|.
 name|InterfaceAudience
 operator|.
-name|Public
+name|LimitedPrivate
 import|;
 end_import
 
@@ -73,31 +73,20 @@ name|Evolving
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|Role
-import|;
-end_import
-
 begin_comment
 comment|/**  * Convenience implementation of HiveAuthorizer.  * You can customize the behavior by passing different implementations of  * {@link HiveAccessController} and {@link HiveAuthorizationValidator} to constructor.  *  */
 end_comment
 
 begin_class
 annotation|@
-name|Public
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|""
+block|}
+argument_list|)
 annotation|@
 name|Evolving
 specifier|public
@@ -163,7 +152,9 @@ name|boolean
 name|grantOption
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 name|accessController
 operator|.
@@ -209,7 +200,9 @@ name|boolean
 name|grantOption
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 name|accessController
 operator|.
@@ -240,7 +233,9 @@ name|HivePrincipal
 name|adminGrantor
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 name|accessController
 operator|.
@@ -262,7 +257,9 @@ name|String
 name|roleName
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 name|accessController
 operator|.
@@ -285,7 +282,9 @@ name|HivePrincipal
 name|hivePrincipal
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 return|return
 name|accessController
@@ -321,7 +320,9 @@ name|HivePrincipal
 name|grantorPrinc
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 name|accessController
 operator|.
@@ -362,7 +363,9 @@ name|HivePrincipal
 name|grantorPrinc
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 name|accessController
 operator|.
@@ -400,7 +403,9 @@ argument_list|>
 name|outputHObjs
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 name|authValidator
 operator|.
@@ -424,7 +429,9 @@ argument_list|>
 name|getAllRoles
 parameter_list|()
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 return|return
 name|accessController
@@ -449,7 +456,9 @@ name|HivePrivilegeObject
 name|privObj
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
 return|return
 name|accessController
@@ -485,7 +494,7 @@ name|String
 name|roleName
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 name|accessController
 operator|.
@@ -505,7 +514,7 @@ argument_list|>
 name|getCurrentRoles
 parameter_list|()
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 return|return
 name|accessController

@@ -39,16 +39,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -2133,7 +2123,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param hiveObject    * @param user_name    * @param group_names    * @return the privilege set    * @throws MetaException    * @throws TException    */
+comment|/**    * Return the privileges that the user, group have directly and indirectly through roles    * on the given hiveObject    * @param hiveObject    * @param user_name    * @param group_names    * @return the privilege set    * @throws MetaException    * @throws TException    */
 specifier|public
 name|PrincipalPrivilegeSet
 name|get_privilege_set
@@ -2155,7 +2145,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param principal_name    * @param principal_type    * @param hiveObject    * @return list of privileges    * @throws MetaException    * @throws TException    */
+comment|/**    * Return the privileges that this principal has directly over the object (not through roles).    * @param principal_name    * @param principal_type    * @param hiveObject    * @return list of privileges    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<

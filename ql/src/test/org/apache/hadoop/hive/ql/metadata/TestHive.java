@@ -1388,6 +1388,19 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+comment|// hm.getTable result will not have privileges set (it does not retrieve
+comment|// that part from metastore), so unset privileges to null before comparing
+comment|// (create table sets it to empty (non null) structures)
+name|tbl
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|setPrivilegesIsSet
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 name|ft
 operator|=
 name|hm

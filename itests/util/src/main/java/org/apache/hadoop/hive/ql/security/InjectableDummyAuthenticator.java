@@ -79,6 +79,24 @@ name|HiveException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+import|;
+end_import
+
 begin_comment
 comment|/**  *  * InjectableDummyAuthenticator - An implementation of HiveMetastoreAuthenticationProvider  * that wraps another Authenticator, but when asked to inject a user provided username  * and groupnames, does so. This can be toggled back and forth to use in testing  */
 end_comment
@@ -273,9 +291,6 @@ try|try
 block|{
 name|hmap
 operator|=
-operator|(
-name|HiveMetastoreAuthenticationProvider
-operator|)
 name|hmapClass
 operator|.
 name|newInstance
@@ -360,6 +375,18 @@ operator|.
 name|destroy
 argument_list|()
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|setSessionState
+parameter_list|(
+name|SessionState
+name|arg0
+parameter_list|)
+block|{
+comment|//no-op
 block|}
 block|}
 end_class

@@ -41,16 +41,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashSet
 import|;
 end_import
@@ -62,16 +52,6 @@ operator|.
 name|util
 operator|.
 name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Locale
 import|;
 end_import
 
@@ -130,6 +110,22 @@ operator|.
 name|metastore
 operator|.
 name|HiveMetaStore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -309,9 +305,49 @@ name|ql
 operator|.
 name|security
 operator|.
+name|HiveAuthenticationProvider
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
 name|authorization
 operator|.
 name|AuthorizationUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|plugin
+operator|.
+name|HiveAccessControlException
 import|;
 end_import
 
@@ -355,7 +391,7 @@ name|authorization
 operator|.
 name|plugin
 operator|.
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 import|;
 end_import
 
@@ -516,7 +552,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implements functionality of access control statements for sql standard based authorization  */
+comment|/**  * Implements functionality of access control statements for sql standard based  * authorization  */
 end_comment
 
 begin_class
@@ -534,59 +570,25 @@ name|HiveMetastoreClientFactory
 name|metastoreClientFactory
 decl_stmt|;
 specifier|private
-specifier|static
 specifier|final
-name|String
-index|[]
-name|SUPPORTED_PRIVS
-init|=
-block|{
-literal|"INSERT"
-block|,
-literal|"UPDATE"
-block|,
-literal|"DELETE"
-block|,
-literal|"SELECT"
-block|,
-literal|"ALL"
-block|}
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|Set
-argument_list|<
-name|String
-argument_list|>
-name|SUPPORTED_PRIVS_SET
-init|=
-operator|new
-name|HashSet
-argument_list|<
-name|String
-argument_list|>
-argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-name|SUPPORTED_PRIVS
-argument_list|)
-argument_list|)
+name|HiveConf
+name|conf
 decl_stmt|;
 specifier|private
 specifier|final
+name|HiveAuthenticationProvider
+name|authenticator
+decl_stmt|;
+specifier|private
+name|String
+name|currentUserName
+decl_stmt|;
+specifier|private
 name|List
 argument_list|<
 name|HiveRole
 argument_list|>
 name|currentRoles
-decl_stmt|;
-specifier|private
-specifier|final
-name|String
-name|currentUserName
 decl_stmt|;
 specifier|private
 name|HiveRole
@@ -600,25 +602,68 @@ parameter_list|,
 name|HiveConf
 name|conf
 parameter_list|,
-name|String
-name|hiveCurrentUser
+name|HiveAuthenticationProvider
+name|authenticator
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
+name|this
+operator|.
+name|metastoreClientFactory
+operator|=
+name|metastoreClientFactory
+expr_stmt|;
+name|this
+operator|.
+name|conf
+operator|=
+name|conf
+expr_stmt|;
+name|this
+operator|.
+name|authenticator
+operator|=
+name|authenticator
+expr_stmt|;
+name|initUserRoles
+argument_list|()
+expr_stmt|;
+block|}
+comment|/**    * (Re-)initialize currentRoleNames if necessary.    * @throws HiveAuthzPluginException    */
+specifier|private
+name|void
+name|initUserRoles
+parameter_list|()
+throws|throws
+name|HiveAuthzPluginException
+block|{
+comment|//to aid in testing through .q files, authenticator is passed as argument to
+comment|// the interface. this helps in being able to switch the user within a session.
+comment|// so we need to check if the user has changed
+name|String
+name|newUserName
+init|=
+name|authenticator
+operator|.
+name|getUserName
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|currentUserName
+operator|==
+name|newUserName
+condition|)
+block|{
+comment|//no need to (re-)initialize the currentUserName, currentRoles fields
+return|return;
+block|}
 name|this
 operator|.
 name|currentUserName
 operator|=
-name|hiveCurrentUser
-expr_stmt|;
-try|try
-block|{
-name|this
-operator|.
-name|metastoreClientFactory
-operator|=
-name|metastoreClientFactory
+name|newUserName
 expr_stmt|;
 name|this
 operator|.
@@ -628,17 +673,6 @@ name|getRolesFromMS
 argument_list|()
 expr_stmt|;
 block|}
-catch|catch
-parameter_list|(
-name|HiveAuthorizationPluginException
-name|e
-parameter_list|)
-block|{
-throw|throw
-name|e
-throw|;
-block|}
-block|}
 specifier|private
 name|List
 argument_list|<
@@ -647,7 +681,7 @@ argument_list|>
 name|getRolesFromMS
 parameter_list|()
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 name|List
 argument_list|<
@@ -753,7 +787,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Failed to retrieve roles for "
 operator|+
@@ -792,8 +826,55 @@ name|boolean
 name|grantOption
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
+comment|// expand ALL privileges, if any
+name|hivePrivileges
+operator|=
+name|expandAllPrivileges
+argument_list|(
+name|hivePrivileges
+argument_list|)
+expr_stmt|;
+name|SQLAuthorizationUtils
+operator|.
+name|validatePrivileges
+argument_list|(
+name|hivePrivileges
+argument_list|)
+expr_stmt|;
+name|IMetaStoreClient
+name|metastoreClient
+init|=
+name|metastoreClientFactory
+operator|.
+name|getHiveMetastoreClient
+argument_list|()
+decl_stmt|;
+comment|// authorize the grant
+name|GrantPrivAuthUtils
+operator|.
+name|authorize
+argument_list|(
+name|hivePrincipals
+argument_list|,
+name|hivePrivileges
+argument_list|,
+name|hivePrivObject
+argument_list|,
+name|grantOption
+argument_list|,
+name|metastoreClient
+argument_list|,
+name|authenticator
+operator|.
+name|getUserName
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// grant
 name|PrivilegeBag
 name|privBag
 init|=
@@ -812,10 +893,7 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
-name|metastoreClientFactory
-operator|.
-name|getHiveMetastoreClient
-argument_list|()
+name|metastoreClient
 operator|.
 name|grant_privileges
 argument_list|(
@@ -831,7 +909,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Error granting privileges"
 argument_list|,
@@ -840,7 +918,110 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Create thrift privileges bag    * @param hivePrincipals    * @param hivePrivileges    * @param hivePrivObject    * @param grantorPrincipal    * @param grantOption    * @return    * @throws HiveAuthorizationPluginException    */
+specifier|private
+name|List
+argument_list|<
+name|HivePrivilege
+argument_list|>
+name|expandAllPrivileges
+parameter_list|(
+name|List
+argument_list|<
+name|HivePrivilege
+argument_list|>
+name|hivePrivileges
+parameter_list|)
+block|{
+name|Set
+argument_list|<
+name|HivePrivilege
+argument_list|>
+name|hivePrivSet
+init|=
+operator|new
+name|HashSet
+argument_list|<
+name|HivePrivilege
+argument_list|>
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|HivePrivilege
+name|hivePrivilege
+range|:
+name|hivePrivileges
+control|)
+block|{
+if|if
+condition|(
+name|hivePrivilege
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"ALL"
+argument_list|)
+condition|)
+block|{
+comment|// expand to all supported privileges
+for|for
+control|(
+name|SQLPrivilegeType
+name|privType
+range|:
+name|SQLPrivilegeType
+operator|.
+name|values
+argument_list|()
+control|)
+block|{
+name|hivePrivSet
+operator|.
+name|add
+argument_list|(
+operator|new
+name|HivePrivilege
+argument_list|(
+name|privType
+operator|.
+name|name
+argument_list|()
+argument_list|,
+name|hivePrivilege
+operator|.
+name|getColumns
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+name|hivePrivSet
+operator|.
+name|add
+argument_list|(
+name|hivePrivilege
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+return|return
+operator|new
+name|ArrayList
+argument_list|<
+name|HivePrivilege
+argument_list|>
+argument_list|(
+name|hivePrivSet
+argument_list|)
+return|;
+block|}
+comment|/**    * Create thrift privileges bag    *    * @param hivePrincipals    * @param hivePrivileges    * @param hivePrivObject    * @param grantorPrincipal    * @param grantOption    * @return    * @throws HiveAuthzPluginException    */
 specifier|private
 name|PrivilegeBag
 name|getThriftPrivilegesBag
@@ -867,11 +1048,13 @@ name|boolean
 name|grantOption
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 name|HiveObjectRef
 name|privObj
 init|=
+name|SQLAuthorizationUtils
+operator|.
 name|getThriftHiveObjectRef
 argument_list|(
 name|hivePrivObject
@@ -914,47 +1097,11 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Privileges on columns not supported currently"
 operator|+
 literal|" in sql standard authorization mode"
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
-operator|!
-name|SUPPORTED_PRIVS_SET
-operator|.
-name|contains
-argument_list|(
-name|privilege
-operator|.
-name|getName
-argument_list|()
-operator|.
-name|toUpperCase
-argument_list|(
-name|Locale
-operator|.
-name|US
-argument_list|)
-argument_list|)
-condition|)
-block|{
-throw|throw
-operator|new
-name|HiveAuthorizationPluginException
-argument_list|(
-literal|"Privilege: "
-operator|+
-name|privilege
-operator|.
-name|getName
-argument_list|()
-operator|+
-literal|" is not supported in sql standard authorization mode"
 argument_list|)
 throw|;
 block|}
@@ -1031,7 +1178,7 @@ name|boolean
 name|grantOption
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 try|try
 block|{
@@ -1056,44 +1203,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
-block|}
-comment|/**    * Create a thrift privilege object from the plugin interface privilege object    * @param privObj    * @return    * @throws HiveAuthorizationPluginException    */
-specifier|private
-name|HiveObjectRef
-name|getThriftHiveObjectRef
-parameter_list|(
-name|HivePrivilegeObject
-name|privObj
-parameter_list|)
-throws|throws
-name|HiveAuthorizationPluginException
-block|{
-try|try
-block|{
-return|return
-name|AuthorizationUtils
-operator|.
-name|getThriftHiveObjectRef
-argument_list|(
-name|privObj
-argument_list|)
-return|;
-block|}
-catch|catch
-parameter_list|(
-name|HiveException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 name|e
 argument_list|)
@@ -1128,12 +1238,35 @@ name|boolean
 name|grantOption
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 block|{
-name|PrivilegeBag
-name|privBag
+name|SQLAuthorizationUtils
+operator|.
+name|validatePrivileges
+argument_list|(
+name|hivePrivileges
+argument_list|)
+expr_stmt|;
+name|IMetaStoreClient
+name|metastoreClient
 init|=
-name|getThriftPrivilegesBag
+name|metastoreClientFactory
+operator|.
+name|getHiveMetastoreClient
+argument_list|()
+decl_stmt|;
+comment|// authorize the revoke, and get the set of privileges to be revoked
+name|List
+argument_list|<
+name|HiveObjectPrivilege
+argument_list|>
+name|revokePrivs
+init|=
+name|RevokePrivAuthUtils
+operator|.
+name|authorizeAndGetRevokePrivileges
 argument_list|(
 name|hivePrincipals
 argument_list|,
@@ -1141,21 +1274,33 @@ name|hivePrivileges
 argument_list|,
 name|hivePrivObject
 argument_list|,
-name|grantorPrincipal
-argument_list|,
 name|grantOption
+argument_list|,
+name|metastoreClient
+argument_list|,
+name|authenticator
+operator|.
+name|getUserName
+argument_list|()
 argument_list|)
 decl_stmt|;
 try|try
 block|{
-name|metastoreClientFactory
-operator|.
-name|getHiveMetastoreClient
-argument_list|()
+comment|// unfortunately, the metastore api revokes all privileges that match on
+comment|// principal, privilege object type it does not filter on the grator
+comment|// username.
+comment|// So this will revoke privileges that are granted by other users.This is
+comment|// not SQL compliant behavior. Need to change/add a metastore api
+comment|// that has desired behavior.
+name|metastoreClient
 operator|.
 name|revoke_privileges
 argument_list|(
-name|privBag
+operator|new
+name|PrivilegeBag
+argument_list|(
+name|revokePrivs
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -1167,7 +1312,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Error revoking privileges"
 argument_list|,
@@ -1189,7 +1334,7 @@ name|HivePrincipal
 name|adminGrantor
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 try|try
 block|{
@@ -1234,7 +1379,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Error create role"
 argument_list|,
@@ -1253,7 +1398,7 @@ name|String
 name|roleName
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 try|try
 block|{
@@ -1276,7 +1421,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Error dropping role"
 argument_list|,
@@ -1298,7 +1443,7 @@ name|HivePrincipal
 name|hivePrincipal
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 try|try
 block|{
@@ -1335,7 +1480,7 @@ name|List
 argument_list|<
 name|HiveRole
 argument_list|>
-name|roleNames
+name|hiveRoles
 init|=
 operator|new
 name|ArrayList
@@ -1357,8 +1502,7 @@ range|:
 name|roles
 control|)
 block|{
-empty_stmt|;
-name|roleNames
+name|hiveRoles
 operator|.
 name|add
 argument_list|(
@@ -1371,7 +1515,7 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-name|roleNames
+name|hiveRoles
 return|;
 block|}
 catch|catch
@@ -1382,9 +1526,9 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
-literal|"Error listing roles for user"
+literal|"Error listing roles for user "
 operator|+
 name|hivePrincipal
 operator|.
@@ -1421,7 +1565,7 @@ name|HivePrincipal
 name|grantorPrinc
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 for|for
 control|(
@@ -1441,10 +1585,15 @@ control|)
 block|{
 try|try
 block|{
+name|IMetaStoreClient
+name|mClient
+init|=
 name|metastoreClientFactory
 operator|.
 name|getHiveMetastoreClient
 argument_list|()
+decl_stmt|;
+name|mClient
 operator|.
 name|grant_role
 argument_list|(
@@ -1492,7 +1641,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 name|e
 operator|.
@@ -1532,7 +1681,7 @@ argument_list|()
 decl_stmt|;
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 name|msg
 argument_list|,
@@ -1568,17 +1717,17 @@ name|HivePrincipal
 name|grantorPrinc
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 if|if
 condition|(
 name|grantOption
 condition|)
 block|{
-comment|//removing grant privileges only is not supported in metastore api
+comment|// removing grant privileges only is not supported in metastore api
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Revoking only the admin privileges on "
 operator|+
@@ -1604,10 +1753,15 @@ control|)
 block|{
 try|try
 block|{
+name|IMetaStoreClient
+name|mClient
+init|=
 name|metastoreClientFactory
 operator|.
 name|getHiveMetastoreClient
 argument_list|()
+decl_stmt|;
+name|mClient
 operator|.
 name|revoke_role
 argument_list|(
@@ -1649,15 +1803,10 @@ operator|+
 literal|" to role "
 operator|+
 name|roleName
-operator|+
-name|hivePrincipal
-operator|.
-name|getName
-argument_list|()
 decl_stmt|;
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 name|msg
 argument_list|,
@@ -1678,7 +1827,7 @@ argument_list|>
 name|getAllRoles
 parameter_list|()
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 try|try
 block|{
@@ -1700,7 +1849,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Error listing all roles"
 argument_list|,
@@ -1725,10 +1874,18 @@ name|HivePrivilegeObject
 name|privObj
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 try|try
 block|{
+name|IMetaStoreClient
+name|mClient
+init|=
+name|metastoreClientFactory
+operator|.
+name|getHiveMetastoreClient
+argument_list|()
+decl_stmt|;
 name|List
 argument_list|<
 name|HivePrivilegeInfo
@@ -1742,17 +1899,14 @@ name|HivePrivilegeInfo
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|//get metastore/thrift privilege object using metastore api
+comment|// get metastore/thrift privilege object using metastore api
 name|List
 argument_list|<
 name|HiveObjectPrivilege
 argument_list|>
 name|msObjPrivs
 init|=
-name|metastoreClientFactory
-operator|.
-name|getHiveMetastoreClient
-argument_list|()
+name|mClient
 operator|.
 name|list_privileges
 argument_list|(
@@ -1771,13 +1925,15 @@ name|getType
 argument_list|()
 argument_list|)
 argument_list|,
+name|SQLAuthorizationUtils
+operator|.
 name|getThriftHiveObjectRef
 argument_list|(
 name|privObj
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|//convert the metastore thrift objects to result objects
+comment|// convert the metastore thrift objects to result objects
 for|for
 control|(
 name|HiveObjectPrivilege
@@ -1786,7 +1942,7 @@ range|:
 name|msObjPrivs
 control|)
 block|{
-comment|//result principal
+comment|// result principal
 name|HivePrincipal
 name|resPrincipal
 init|=
@@ -1809,7 +1965,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|//result privilege
+comment|// result privilege
 name|PrivilegeGrantInfo
 name|msGrantInfo
 init|=
@@ -1832,7 +1988,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-comment|//result object
+comment|// result object
 name|HiveObjectRef
 name|msObjRef
 init|=
@@ -1866,7 +2022,7 @@ name|getObjectName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|//result grantor principal
+comment|// result grantor principal
 name|HivePrincipal
 name|grantorPrincipal
 init|=
@@ -1929,7 +2085,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Error showing privileges"
 argument_list|,
@@ -1946,7 +2102,7 @@ name|HiveObjectType
 name|objectType
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 switch|switch
 condition|(
@@ -1980,7 +2136,7 @@ name|PARTITION
 case|:
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 literal|"Unsupported object type "
 operator|+
@@ -2009,7 +2165,7 @@ name|String
 name|roleName
 parameter_list|)
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
 if|if
 condition|(
@@ -2111,7 +2267,7 @@ block|}
 comment|// If we are here it means, user is requesting a role he doesn't belong to.
 throw|throw
 operator|new
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 argument_list|(
 name|currentUserName
 operator|+
@@ -2131,8 +2287,11 @@ argument_list|>
 name|getCurrentRoles
 parameter_list|()
 throws|throws
-name|HiveAuthorizationPluginException
+name|HiveAuthzPluginException
 block|{
+name|initUserRoles
+argument_list|()
+expr_stmt|;
 return|return
 name|currentRoles
 return|;

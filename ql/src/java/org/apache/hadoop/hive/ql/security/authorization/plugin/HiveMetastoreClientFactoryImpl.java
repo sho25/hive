@@ -25,16 +25,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -143,8 +133,13 @@ name|IMetaStoreClient
 name|getHiveMetastoreClient
 parameter_list|()
 throws|throws
-name|IOException
+name|HiveAuthzPluginException
 block|{
+name|String
+name|errMsg
+init|=
+literal|"Error getting metastore client"
+decl_stmt|;
 try|try
 block|{
 return|return
@@ -165,8 +160,10 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|HiveAuthzPluginException
 argument_list|(
+name|errMsg
+argument_list|,
 name|e
 argument_list|)
 throw|;
@@ -179,8 +176,10 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|HiveAuthzPluginException
 argument_list|(
+name|errMsg
+argument_list|,
 name|e
 argument_list|)
 throw|;

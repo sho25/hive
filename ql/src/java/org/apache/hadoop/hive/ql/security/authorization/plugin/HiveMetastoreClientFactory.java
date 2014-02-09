@@ -25,11 +25,21 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|io
+name|apache
 operator|.
-name|IOException
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
 import|;
 end_import
 
@@ -47,9 +57,9 @@ name|common
 operator|.
 name|classification
 operator|.
-name|InterfaceAudience
+name|InterfaceStability
 operator|.
-name|Public
+name|Evolving
 import|;
 end_import
 
@@ -75,7 +85,16 @@ end_comment
 
 begin_interface
 annotation|@
-name|Public
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|""
+block|}
+argument_list|)
+annotation|@
+name|Evolving
 specifier|public
 interface|interface
 name|HiveMetastoreClientFactory
@@ -84,7 +103,7 @@ name|IMetaStoreClient
 name|getHiveMetastoreClient
 parameter_list|()
 throws|throws
-name|IOException
+name|HiveAuthzPluginException
 function_decl|;
 block|}
 end_interface
