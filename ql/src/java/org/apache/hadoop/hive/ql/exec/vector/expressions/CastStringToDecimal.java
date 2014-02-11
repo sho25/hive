@@ -150,6 +150,12 @@ name|outputColumn
 operator|=
 name|outputColumn
 expr_stmt|;
+name|this
+operator|.
+name|outputType
+operator|=
+literal|"decimal"
+expr_stmt|;
 block|}
 specifier|public
 name|CastStringToDecimal
@@ -157,6 +163,12 @@ parameter_list|()
 block|{
 name|super
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|outputType
+operator|=
+literal|"decimal"
 expr_stmt|;
 block|}
 comment|/**    * Convert input string to a decimal, at position i in the respective vectors.    */
@@ -701,17 +713,6 @@ name|inputColumn
 operator|=
 name|inputColumn
 expr_stmt|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|getOutputType
-parameter_list|()
-block|{
-return|return
-literal|"decimal"
-return|;
 block|}
 annotation|@
 name|Override

@@ -84,6 +84,14 @@ literal|1L
 decl_stmt|;
 specifier|public
 name|CastDecimalToBoolean
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|CastDecimalToBoolean
 parameter_list|(
 name|int
 name|inputColumn

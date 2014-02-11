@@ -80,6 +80,14 @@ literal|1L
 decl_stmt|;
 specifier|public
 name|CastDecimalToDouble
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|CastDecimalToDouble
 parameter_list|(
 name|int
 name|inputCol

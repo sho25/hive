@@ -214,6 +214,8 @@ decl_stmt|;
 specifier|transient
 name|Checker
 name|checker
+init|=
+literal|null
 decl_stmt|;
 specifier|public
 name|AbstractFilterStringColLikeStringScalar
@@ -309,8 +311,13 @@ name|VectorizedRowBatch
 name|batch
 parameter_list|)
 block|{
-name|this
-operator|.
+if|if
+condition|(
+name|checker
+operator|==
+literal|null
+condition|)
+block|{
 name|checker
 operator|=
 name|createChecker
@@ -318,6 +325,7 @@ argument_list|(
 name|pattern
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|childExpressions
@@ -1521,8 +1529,10 @@ expr_stmt|;
 return|return
 name|matcher
 operator|.
-name|matches
-argument_list|()
+name|find
+argument_list|(
+literal|0
+argument_list|)
 return|;
 block|}
 block|}
