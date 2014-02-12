@@ -3403,7 +3403,7 @@ name|getConf
 argument_list|()
 decl_stmt|;
 return|return
-name|RetryingRawStore
+name|RawStoreProxy
 operator|.
 name|getProxy
 argument_list|(

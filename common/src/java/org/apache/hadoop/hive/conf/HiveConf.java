@@ -564,18 +564,6 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTOREATTEMPTS
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTOREINTERVAL
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
 name|METASTOREFORCERELOADCONF
 block|,
 name|HiveConf
@@ -1566,22 +1554,6 @@ argument_list|(
 literal|"javax.jdo.option.ConnectionURL"
 argument_list|,
 literal|"jdbc:derby:;databaseName=metastore_db;create=true"
-argument_list|)
-block|,
-comment|// Number of attempts to retry connecting after there is a JDO datastore err
-name|METASTOREATTEMPTS
-argument_list|(
-literal|"hive.metastore.ds.retry.attempts"
-argument_list|,
-literal|1
-argument_list|)
-block|,
-comment|// Number of miliseconds to wait between attepting
-name|METASTOREINTERVAL
-argument_list|(
-literal|"hive.metastore.ds.retry.interval"
-argument_list|,
-literal|1000
 argument_list|)
 block|,
 comment|// Whether to force reloading of the metastore configuration (including
@@ -6314,6 +6286,39 @@ operator|+
 literal|"effect. Make sure to provide a valid value for hive.metastore.uris if you are "
 operator|+
 literal|"connecting to a remote metastore."
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+name|this
+operator|.
+name|get
+argument_list|(
+literal|"hive.metastore.ds.retry.attempts"
+argument_list|)
+operator|!=
+literal|null
+operator|)
+operator|||
+name|this
+operator|.
+name|get
+argument_list|(
+literal|"hive.metastore.ds.retry.interval"
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+name|l4j
+operator|.
+name|warn
+argument_list|(
+literal|"DEPRECATED: hive.metastore.ds.retry.* no longer has any effect.  "
+operator|+
+literal|"Use hive.hmshandler.retry.* instead"
 argument_list|)
 expr_stmt|;
 block|}

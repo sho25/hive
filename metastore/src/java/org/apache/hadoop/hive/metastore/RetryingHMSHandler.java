@@ -279,9 +279,11 @@ decl_stmt|;
 specifier|protected
 name|RetryingHMSHandler
 parameter_list|(
+specifier|final
 name|HiveConf
 name|hiveConf
 parameter_list|,
+specifier|final
 name|String
 name|name
 parameter_list|)
@@ -302,9 +304,6 @@ name|this
 operator|.
 name|base
 operator|=
-operator|(
-name|IHMSHandler
-operator|)
 operator|new
 name|HiveMetaStore
 operator|.
@@ -414,12 +413,15 @@ specifier|public
 name|Object
 name|invoke
 parameter_list|(
+specifier|final
 name|Object
 name|proxy
 parameter_list|,
+specifier|final
 name|Method
 name|method
 parameter_list|,
+specifier|final
 name|Object
 index|[]
 name|args
@@ -867,6 +869,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"HMSHandler Fatal error: "
+operator|+
 name|ExceptionUtils
 operator|.
 name|getStackTrace
@@ -908,15 +912,22 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"JDO datastore error. Retrying HMSHandler "
-operator|+
-literal|"after %d ms (attempt %d of %d)"
+literal|"Retrying HMSHandler after %d ms (attempt %d of %d)"
 argument_list|,
 name|retryInterval
 argument_list|,
 name|retryCount
 argument_list|,
 name|retryLimit
+argument_list|)
+operator|+
+literal|" with error: "
+operator|+
+name|ExceptionUtils
+operator|.
+name|getStackTrace
+argument_list|(
+name|caughtException
 argument_list|)
 argument_list|)
 expr_stmt|;
