@@ -494,6 +494,8 @@ name|String
 name|roleName
 parameter_list|)
 throws|throws
+name|HiveAccessControlException
+throws|,
 name|HiveAuthzPluginException
 block|{
 name|accessController

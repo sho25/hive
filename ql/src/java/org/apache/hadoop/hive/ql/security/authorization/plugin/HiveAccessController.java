@@ -278,6 +278,8 @@ name|roleName
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
 function_decl|;
 name|List
 argument_list|<

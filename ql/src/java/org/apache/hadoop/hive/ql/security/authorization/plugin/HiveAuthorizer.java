@@ -343,6 +343,8 @@ name|String
 name|roleName
 parameter_list|)
 throws|throws
+name|HiveAccessControlException
+throws|,
 name|HiveAuthzPluginException
 function_decl|;
 name|List
@@ -356,7 +358,6 @@ name|HiveAuthzPluginException
 function_decl|;
 comment|//other functions to be added -
 comment|//showUsersInRole(rolename)
-comment|//isSuperuser(username)
 block|}
 end_interface
 
