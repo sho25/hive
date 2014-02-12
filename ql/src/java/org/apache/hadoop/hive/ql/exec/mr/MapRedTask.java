@@ -1905,7 +1905,7 @@ name|environmentVariables
 operator|.
 name|get
 argument_list|(
-name|HIVE_MAIN_CLIENT_DEBUG_OPTS
+name|HIVE_CHILD_CLIENT_DEBUG_OPTS
 argument_list|)
 operator|!=
 literal|null
