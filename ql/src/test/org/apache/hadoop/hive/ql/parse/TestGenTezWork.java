@@ -574,6 +574,9 @@ name|proc
 operator|=
 operator|new
 name|GenTezWork
+argument_list|(
+operator|new
+name|GenTezUtils
 argument_list|()
 block|{
 annotation|@
@@ -587,6 +590,9 @@ name|mapWork
 parameter_list|,
 name|GenTezProcContext
 name|context
+parameter_list|,
+name|PrunedPartitionList
+name|partitions
 parameter_list|,
 name|Operator
 argument_list|<
@@ -648,6 +654,7 @@ expr_stmt|;
 return|return;
 block|}
 block|}
+argument_list|)
 expr_stmt|;
 name|fs
 operator|=
