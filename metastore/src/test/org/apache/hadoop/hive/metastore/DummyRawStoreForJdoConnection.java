@@ -2772,6 +2772,25 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|dropPartitions
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|)
+block|{   }
 block|}
 end_class
 
