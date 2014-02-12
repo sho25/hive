@@ -1954,6 +1954,11 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
+name|boolean
+name|isAdmin
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 name|wAdminOption
@@ -1974,7 +1979,10 @@ operator|=
 literal|2
 expr_stmt|;
 comment|//start reading role names from next postion
-comment|//TODO: use the admin option
+name|isAdmin
+operator|=
+literal|true
+expr_stmt|;
 block|}
 name|List
 argument_list|<
@@ -2068,21 +2076,6 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|//until change is made to use the admin option. Default to false with V2 authorization
-name|boolean
-name|isAdmin
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|isAuthorizationModeV2
-argument_list|()
-condition|?
-literal|false
-else|:
-literal|true
-decl_stmt|;
 name|GrantRevokeRoleDDL
 name|grantRevokeRoleDDL
 init|=

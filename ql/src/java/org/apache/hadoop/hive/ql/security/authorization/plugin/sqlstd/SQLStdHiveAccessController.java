@@ -595,11 +595,6 @@ name|metastoreClientFactory
 decl_stmt|;
 specifier|private
 specifier|final
-name|HiveConf
-name|conf
-decl_stmt|;
-specifier|private
-specifier|final
 name|HiveAuthenticationProvider
 name|authenticator
 decl_stmt|;
@@ -637,12 +632,6 @@ operator|.
 name|metastoreClientFactory
 operator|=
 name|metastoreClientFactory
-expr_stmt|;
-name|this
-operator|.
-name|conf
-operator|=
-name|conf
 expr_stmt|;
 name|this
 operator|.
