@@ -2668,6 +2668,40 @@ argument_list|,
 literal|0.8f
 argument_list|)
 block|,
+comment|// Define the default ORC index stride
+name|HIVE_ORC_DEFAULT_ROW_INDEX_STRIDE
+argument_list|(
+literal|"hive.exec.orc.default.row.index.stride"
+argument_list|,
+literal|10000
+argument_list|)
+block|,
+comment|// Define the default ORC buffer size
+name|HIVE_ORC_DEFAULT_BUFFER_SIZE
+argument_list|(
+literal|"hive.exec.orc.default.buffer.size"
+argument_list|,
+literal|256
+operator|*
+literal|1024
+argument_list|)
+block|,
+comment|// Define the default block padding
+name|HIVE_ORC_DEFAULT_BLOCK_PADDING
+argument_list|(
+literal|"hive.exec.orc.default.block.padding"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|// Define the default compression codec for ORC file
+name|HIVE_ORC_DEFAULT_COMPRESS
+argument_list|(
+literal|"hive.exec.orc.default.compress"
+argument_list|,
+literal|"ZLIB"
+argument_list|)
+block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS
 argument_list|(
 literal|"hive.orc.splits.include.file.footer"
