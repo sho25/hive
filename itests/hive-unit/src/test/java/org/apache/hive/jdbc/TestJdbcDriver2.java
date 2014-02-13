@@ -11898,7 +11898,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"role1"
+literal|"PUBLIC"
 argument_list|,
 name|res
 operator|.
@@ -11918,7 +11918,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"PUBLIC"
+literal|"role1"
 argument_list|,
 name|res
 operator|.

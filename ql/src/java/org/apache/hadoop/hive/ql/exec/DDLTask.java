@@ -6938,6 +6938,14 @@ operator|.
 name|getAllRoleNames
 argument_list|()
 decl_stmt|;
+comment|//sort the list to get sorted (deterministic) output (for ease of testing)
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|roleNames
+argument_list|)
+expr_stmt|;
 name|Path
 name|resFile
 init|=
@@ -18397,6 +18405,14 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
+comment|//sort the list to get sorted (deterministic) output (for ease of testing)
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|privileges
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|HiveObjectPrivilege
@@ -18575,6 +18591,14 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
+comment|//sort the list to get sorted (deterministic) output (for ease of testing)
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|roles
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Role
@@ -18714,6 +18738,14 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
+comment|//sort the list to get sorted (deterministic) output (for ease of testing)
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|roles
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|HiveRole
