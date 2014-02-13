@@ -1030,7 +1030,7 @@ return|return
 name|connParams
 return|;
 block|}
-comment|/**    * Takes a version string delmited by '.' and '-' characters    * and returns a partial version.    *    * @param fullVersion    *          version string.    * @param tokenPosition    *          position of version string to get starting at 1. eg, for a X.x.xxx    *          string, 1 will return the major version, 2 will return minor    *          version.    * @return version part, or -1 if version string was malformed.    */
+comment|/**    * Takes a version string delmited by '.' and '-' characters    * and returns a partial version.    *    * @param fullVersion    *          version string.    * @param tokenPosition    *          position of version string to get starting at 0. eg, for a X.x.xxx    *          string, 0 will return the major version, 1 will return minor    *          version.    * @return version part, or -1 if version string was malformed.    */
 specifier|static
 name|int
 name|getVersionPart
