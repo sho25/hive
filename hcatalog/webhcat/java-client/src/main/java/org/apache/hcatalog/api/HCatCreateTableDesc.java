@@ -1666,6 +1666,10 @@ name|String
 name|storageHandler
 decl_stmt|;
 specifier|private
+name|String
+name|serDe
+decl_stmt|;
+specifier|private
 name|Map
 argument_list|<
 name|String
@@ -1930,6 +1934,25 @@ return|return
 name|this
 return|;
 block|}
+comment|/**      * SerDe.      *      * @param serDe the SerDe implementation's class-name.      * @return the builder      */
+specifier|public
+name|Builder
+name|serDe
+parameter_list|(
+name|String
+name|serDe
+parameter_list|)
+block|{
+name|this
+operator|.
+name|serDe
+operator|=
+name|serDe
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
 comment|/**      * Builds the HCatCreateTableDesc.      *      * @return HCatCreateTableDesc      * @throws HCatException      */
 specifier|public
 name|HCatCreateTableDesc
@@ -2062,7 +2085,9 @@ name|desc
 operator|.
 name|serde
 operator|=
-literal|null
+name|this
+operator|.
+name|serDe
 expr_stmt|;
 if|if
 condition|(
