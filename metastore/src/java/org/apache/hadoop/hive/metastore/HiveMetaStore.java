@@ -3351,7 +3351,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
+specifier|public
 name|Configuration
 name|getConf
 parameter_list|()
