@@ -4243,6 +4243,20 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_PREWARM_ENABLED
+argument_list|(
+literal|"hive.prewarm.enabled"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVE_PREWARM_NUM_CONTAINERS
+argument_list|(
+literal|"hive.prewarm.numcontainers"
+argument_list|,
+literal|10
+argument_list|)
+block|,
 comment|// none, idonly, traverse, execution
 name|HIVESTAGEIDREARRANGE
 argument_list|(
