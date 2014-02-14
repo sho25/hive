@@ -39,7 +39,27 @@ name|classification
 operator|.
 name|InterfaceAudience
 operator|.
-name|Public
+name|LimitedPrivate
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceStability
+operator|.
+name|Evolving
 import|;
 end_import
 
@@ -62,15 +82,24 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Exception thrown by the Authorization plugin api (v2)  */
+comment|/**  * Exception thrown by the Authorization plugin api (v2). Indicates  * an error while performing authorization, and not a authorization being  * denied.  */
 end_comment
 
 begin_class
 annotation|@
-name|Public
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|""
+block|}
+argument_list|)
+annotation|@
+name|Evolving
 specifier|public
 class|class
-name|HiveAuthorizationPluginException
+name|HiveAccessControlException
 extends|extends
 name|HiveException
 block|{
@@ -83,11 +112,11 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|public
-name|HiveAuthorizationPluginException
+name|HiveAccessControlException
 parameter_list|()
 block|{   }
 specifier|public
-name|HiveAuthorizationPluginException
+name|HiveAccessControlException
 parameter_list|(
 name|String
 name|msg
@@ -100,7 +129,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|HiveAuthorizationPluginException
+name|HiveAccessControlException
 parameter_list|(
 name|String
 name|msg
@@ -118,7 +147,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|HiveAuthorizationPluginException
+name|HiveAccessControlException
 parameter_list|(
 name|Throwable
 name|cause

@@ -61,6 +61,24 @@ name|HiveException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+import|;
+end_import
+
 begin_comment
 comment|/**  * HiveAuthenticationProvider is an interface for authentication. The  * implementation should return userNames and groupNames.  */
 end_comment
@@ -91,6 +109,14 @@ name|destroy
 parameter_list|()
 throws|throws
 name|HiveException
+function_decl|;
+specifier|public
+name|void
+name|setSessionState
+parameter_list|(
+name|SessionState
+name|ss
+parameter_list|)
 function_decl|;
 block|}
 end_interface

@@ -101,6 +101,11 @@ name|childExpressions
 init|=
 literal|null
 decl_stmt|;
+comment|/**    * Output type of the expression.    */
+specifier|protected
+name|String
+name|outputType
+decl_stmt|;
 comment|/**    * This is the primary method to implement expression logic.    * @param batch    */
 specifier|public
 specifier|abstract
@@ -120,11 +125,30 @@ parameter_list|()
 function_decl|;
 comment|/**    * Returns type of the output column.    */
 specifier|public
-specifier|abstract
 name|String
 name|getOutputType
 parameter_list|()
-function_decl|;
+block|{
+return|return
+name|outputType
+return|;
+block|}
+comment|/**    * Set type of the output column.    */
+specifier|public
+name|void
+name|setOutputType
+parameter_list|(
+name|String
+name|type
+parameter_list|)
+block|{
+name|this
+operator|.
+name|outputType
+operator|=
+name|type
+expr_stmt|;
+block|}
 comment|/**    * Initialize the child expressions.    */
 specifier|public
 name|void

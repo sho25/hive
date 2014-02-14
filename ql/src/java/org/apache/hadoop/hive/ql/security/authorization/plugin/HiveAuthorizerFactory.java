@@ -39,7 +39,7 @@ name|classification
 operator|.
 name|InterfaceAudience
 operator|.
-name|Public
+name|LimitedPrivate
 import|;
 end_import
 
@@ -79,20 +79,45 @@ name|HiveConf
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
+name|HiveAuthenticationProvider
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implementation of this interface specified through hive configuration will be used to  * create  {@link HiveAuthorizer} instance used for hive authorization.  *  */
 end_comment
 
 begin_interface
 annotation|@
-name|Public
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|""
+block|}
+argument_list|)
 annotation|@
 name|Evolving
 specifier|public
 interface|interface
 name|HiveAuthorizerFactory
 block|{
-comment|/**    * Create a new instance of HiveAuthorizer, initialized with the given objects.    * @param metastoreClientFactory - Use this to get the valid meta store client (IMetaStoreClient)    *  for the current thread. Each invocation of method in HiveAuthorizer can happen in    *  different thread, so get the current instance in each method invocation.    * @param conf - current HiveConf    * @param hiveCurrentUser - user for current session    * @return new instance of HiveAuthorizer    */
+comment|/**    * Create a new instance of HiveAuthorizer, initialized with the given objects.    * @param metastoreClientFactory - Use this to get the valid meta store client (IMetaStoreClient)    *  for the current thread. Each invocation of method in HiveAuthorizer can happen in    *  different thread, so get the current instance in each method invocation.    * @param conf - current HiveConf    * @param hiveAuthenticator - authenticator, provides user name    * @return new instance of HiveAuthorizer    * @throws HiveAuthzPluginException    */
 name|HiveAuthorizer
 name|createHiveAuthorizer
 parameter_list|(
@@ -102,9 +127,11 @@ parameter_list|,
 name|HiveConf
 name|conf
 parameter_list|,
-name|String
-name|hiveCurrentUser
+name|HiveAuthenticationProvider
+name|hiveAuthenticator
 parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
 function_decl|;
 block|}
 end_interface

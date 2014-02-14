@@ -204,7 +204,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** * * TestThriftHttpCLIService. * This tests ThriftCLIService started in http mode. * */
+comment|/**  *  * TestThriftHttpCLIService.  * This tests ThriftCLIService started in http mode.  *  */
 end_comment
 
 begin_class

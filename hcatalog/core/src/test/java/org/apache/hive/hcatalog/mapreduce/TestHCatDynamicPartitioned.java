@@ -699,6 +699,8 @@ block|{
 name|runHCatDynamicPartitionedTable
 argument_list|(
 literal|true
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -715,6 +717,8 @@ block|{
 name|runHCatDynamicPartitionedTable
 argument_list|(
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -724,6 +728,9 @@ name|runHCatDynamicPartitionedTable
 parameter_list|(
 name|boolean
 name|asSingleMapTask
+parameter_list|,
+name|String
+name|customDynamicPathPattern
 parameter_list|)
 throws|throws
 name|Exception
@@ -750,6 +757,8 @@ argument_list|,
 literal|true
 argument_list|,
 name|asSingleMapTask
+argument_list|,
+name|customDynamicPathPattern
 argument_list|)
 expr_stmt|;
 name|runMRRead
@@ -882,6 +891,10 @@ argument_list|,
 name|NUM_RECORDS
 argument_list|,
 literal|false
+argument_list|,
+literal|true
+argument_list|,
+name|customDynamicPathPattern
 argument_list|)
 decl_stmt|;
 if|if

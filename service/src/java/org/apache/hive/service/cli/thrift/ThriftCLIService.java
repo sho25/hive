@@ -434,9 +434,11 @@ decl_stmt|;
 specifier|protected
 name|org
 operator|.
-name|mortbay
+name|eclipse
 operator|.
 name|jetty
+operator|.
+name|server
 operator|.
 name|Server
 name|httpServer

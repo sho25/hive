@@ -564,18 +564,6 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTOREATTEMPTS
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTOREINTERVAL
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
 name|METASTOREFORCERELOADCONF
 block|,
 name|HiveConf
@@ -811,6 +799,12 @@ operator|.
 name|ConfVars
 operator|.
 name|USERS_IN_ADMIN_ROLE
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_AUTHORIZATION_MANAGER
 block|}
 decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
@@ -1161,6 +1155,14 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|HIVE_IN_TEST
+argument_list|(
+literal|"hive.in.test"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// internal usage only, true in test mode
 comment|// should hive determine whether to run in local mode automatically ?
 name|LOCALMODEAUTO
 argument_list|(
@@ -1552,22 +1554,6 @@ argument_list|(
 literal|"javax.jdo.option.ConnectionURL"
 argument_list|,
 literal|"jdbc:derby:;databaseName=metastore_db;create=true"
-argument_list|)
-block|,
-comment|// Number of attempts to retry connecting after there is a JDO datastore err
-name|METASTOREATTEMPTS
-argument_list|(
-literal|"hive.metastore.ds.retry.attempts"
-argument_list|,
-literal|1
-argument_list|)
-block|,
-comment|// Number of miliseconds to wait between attepting
-name|METASTOREINTERVAL
-argument_list|(
-literal|"hive.metastore.ds.retry.interval"
-argument_list|,
-literal|1000
 argument_list|)
 block|,
 comment|// Whether to force reloading of the metastore configuration (including
@@ -2149,6 +2135,14 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVE_CURRENT_DATABASE
+argument_list|(
+literal|"hive.current.database"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+comment|// internal usage only
 comment|// for hive script operator
 name|HIVES_AUTO_PROGRESS_TIMEOUT
 argument_list|(
@@ -2672,6 +2666,40 @@ argument_list|(
 literal|"hive.exec.orc.dictionary.key.size.threshold"
 argument_list|,
 literal|0.8f
+argument_list|)
+block|,
+comment|// Define the default ORC index stride
+name|HIVE_ORC_DEFAULT_ROW_INDEX_STRIDE
+argument_list|(
+literal|"hive.exec.orc.default.row.index.stride"
+argument_list|,
+literal|10000
+argument_list|)
+block|,
+comment|// Define the default ORC buffer size
+name|HIVE_ORC_DEFAULT_BUFFER_SIZE
+argument_list|(
+literal|"hive.exec.orc.default.buffer.size"
+argument_list|,
+literal|256
+operator|*
+literal|1024
+argument_list|)
+block|,
+comment|// Define the default block padding
+name|HIVE_ORC_DEFAULT_BLOCK_PADDING
+argument_list|(
+literal|"hive.exec.orc.default.block.padding"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|// Define the default compression codec for ORC file
+name|HIVE_ORC_DEFAULT_COMPRESS
+argument_list|(
+literal|"hive.exec.orc.default.compress"
+argument_list|,
+literal|"ZLIB"
 argument_list|)
 block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS
@@ -4074,7 +4102,7 @@ name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
 argument_list|,
-literal|""
+literal|"hive.security.authenticator.manager,hive.security.authorization.manager"
 argument_list|)
 block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
@@ -6309,6 +6337,39 @@ literal|"connecting to a remote metastore."
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|(
+name|this
+operator|.
+name|get
+argument_list|(
+literal|"hive.metastore.ds.retry.attempts"
+argument_list|)
+operator|!=
+literal|null
+operator|)
+operator|||
+name|this
+operator|.
+name|get
+argument_list|(
+literal|"hive.metastore.ds.retry.interval"
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+name|l4j
+operator|.
+name|warn
+argument_list|(
+literal|"DEPRECATED: hive.metastore.ds.retry.* no longer has any effect.  "
+operator|+
+literal|"Use hive.hmshandler.retry.* instead"
+argument_list|)
+expr_stmt|;
+block|}
 comment|// if the running class was loaded directly (through eclipse) rather than through a
 comment|// jar then this would be needed
 if|if
@@ -7403,10 +7464,20 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
+name|HIVE_IN_TEST
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|restrictList
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
 name|HIVE_CONF_RESTRICTED_LIST
 operator|.
-name|toString
-argument_list|()
+name|varname
 argument_list|)
 expr_stmt|;
 block|}

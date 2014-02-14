@@ -19,6 +19,26 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|FileInputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|security
+operator|.
+name|KeyStore
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|sql
 operator|.
 name|Array
@@ -275,6 +295,18 @@ begin_import
 import|import
 name|javax
 operator|.
+name|net
+operator|.
+name|ssl
+operator|.
+name|SSLContext
+import|;
+end_import
+
+begin_import
+import|import
+name|javax
+operator|.
 name|security
 operator|.
 name|sasl
@@ -292,6 +324,34 @@ operator|.
 name|sasl
 operator|.
 name|SaslException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
 import|;
 end_import
 
@@ -527,11 +587,71 @@ name|apache
 operator|.
 name|http
 operator|.
+name|HttpRequestInterceptor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|http
+operator|.
+name|conn
+operator|.
+name|ssl
+operator|.
+name|SSLConnectionSocketFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|http
+operator|.
+name|conn
+operator|.
+name|ssl
+operator|.
+name|SSLContexts
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|http
+operator|.
 name|impl
 operator|.
 name|client
 operator|.
-name|DefaultHttpClient
+name|CloseableHttpClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|http
+operator|.
+name|impl
+operator|.
+name|client
+operator|.
+name|HttpClients
 import|;
 end_import
 
@@ -618,6 +738,24 @@ name|sql
 operator|.
 name|Connection
 block|{
+specifier|public
+specifier|static
+specifier|final
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|HiveConnection
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -721,6 +859,16 @@ name|String
 name|HIVE_CONF_PREFIX
 init|=
 literal|"hiveconf:"
+decl_stmt|;
+comment|// Currently supports JKS keystore format
+comment|// See HIVE-6286 (Add support for PKCS12 keystore format)
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|HIVE_SSL_TRUST_STORE_TYPE
+init|=
+literal|"JKS"
 decl_stmt|;
 specifier|private
 specifier|final
@@ -1240,6 +1388,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+name|CloseableHttpClient
+name|httpClient
+decl_stmt|;
 comment|// http path should begin with "/"
 name|String
 name|httpPath
@@ -1289,28 +1440,44 @@ operator|+
 name|httpPath
 expr_stmt|;
 block|}
-name|DefaultHttpClient
-name|httpClient
+name|boolean
+name|useSsl
 init|=
-operator|new
-name|DefaultHttpClient
-argument_list|()
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|HIVE_USE_SSL
+argument_list|)
+argument_list|)
+decl_stmt|;
+comment|// Create an http client from the configs
+name|httpClient
+operator|=
+name|getHttpClient
+argument_list|(
+name|useSsl
+argument_list|)
+expr_stmt|;
+comment|// Create the http/https url
+comment|// JDBC driver will set up an https url if ssl is enabled, otherwise http
+name|String
+name|schemeName
+init|=
+name|useSsl
+condition|?
+literal|"https"
+else|:
+literal|"http"
 decl_stmt|;
 name|String
 name|httpUrl
 init|=
-name|hiveConfMap
-operator|.
-name|get
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_TRANSPORT_MODE
-operator|.
-name|varname
-argument_list|)
+name|schemeName
 operator|+
 literal|"://"
 operator|+
@@ -1322,21 +1489,6 @@ name|port
 operator|+
 name|httpPath
 decl_stmt|;
-name|httpClient
-operator|.
-name|addRequestInterceptor
-argument_list|(
-operator|new
-name|HttpBasicAuthInterceptor
-argument_list|(
-name|getUserName
-argument_list|()
-argument_list|,
-name|getPasswd
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
 try|try
 block|{
 name|transport
@@ -1385,6 +1537,209 @@ block|}
 return|return
 name|transport
 return|;
+block|}
+specifier|private
+name|CloseableHttpClient
+name|getHttpClient
+parameter_list|(
+name|Boolean
+name|useSsl
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+comment|// Add an interceptor to pass username/password in the header
+comment|// for basic preemtive http authentication at the server
+comment|// In https mode, the entire information is encrypted
+name|HttpRequestInterceptor
+name|authInterceptor
+init|=
+operator|new
+name|HttpBasicAuthInterceptor
+argument_list|(
+name|getUserName
+argument_list|()
+argument_list|,
+name|getPasswd
+argument_list|()
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|useSsl
+condition|)
+block|{
+name|String
+name|sslTrustStorePath
+init|=
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|HIVE_SSL_TRUST_STORE
+argument_list|)
+decl_stmt|;
+name|String
+name|sslTrustStorePassword
+init|=
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|HIVE_SSL_TRUST_STORE_PASSWORD
+argument_list|)
+decl_stmt|;
+name|KeyStore
+name|sslTrustStore
+decl_stmt|;
+name|SSLContext
+name|sslContext
+decl_stmt|;
+if|if
+condition|(
+name|sslTrustStorePath
+operator|==
+literal|null
+operator|||
+name|sslTrustStorePath
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// Create a default client context based on standard JSSE trust material
+name|sslContext
+operator|=
+name|SSLContexts
+operator|.
+name|createDefault
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Pick trust store config from the given path
+try|try
+block|{
+name|sslTrustStore
+operator|=
+name|KeyStore
+operator|.
+name|getInstance
+argument_list|(
+name|HIVE_SSL_TRUST_STORE_TYPE
+argument_list|)
+expr_stmt|;
+name|sslTrustStore
+operator|.
+name|load
+argument_list|(
+operator|new
+name|FileInputStream
+argument_list|(
+name|sslTrustStorePath
+argument_list|)
+argument_list|,
+name|sslTrustStorePassword
+operator|.
+name|toCharArray
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|sslContext
+operator|=
+name|SSLContexts
+operator|.
+name|custom
+argument_list|()
+operator|.
+name|loadTrustMaterial
+argument_list|(
+name|sslTrustStore
+argument_list|)
+operator|.
+name|build
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|String
+name|msg
+init|=
+literal|"Could not create an https connection to "
+operator|+
+name|jdbcURI
+operator|+
+literal|". "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+decl_stmt|;
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+name|msg
+argument_list|,
+literal|" 08S01"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+return|return
+name|HttpClients
+operator|.
+name|custom
+argument_list|()
+operator|.
+name|setHostnameVerifier
+argument_list|(
+name|SSLConnectionSocketFactory
+operator|.
+name|ALLOW_ALL_HOSTNAME_VERIFIER
+argument_list|)
+operator|.
+name|setSslcontext
+argument_list|(
+name|sslContext
+argument_list|)
+operator|.
+name|addInterceptorFirst
+argument_list|(
+name|authInterceptor
+argument_list|)
+operator|.
+name|build
+argument_list|()
+return|;
+block|}
+else|else
+block|{
+comment|// Create a plain http client
+return|return
+name|HttpClients
+operator|.
+name|custom
+argument_list|()
+operator|.
+name|addInterceptorFirst
+argument_list|(
+name|authInterceptor
+argument_list|)
+operator|.
+name|build
+argument_list|()
+return|;
+block|}
 block|}
 specifier|private
 name|TTransport
@@ -1844,13 +2199,6 @@ name|equalsIgnoreCase
 argument_list|(
 literal|"http"
 argument_list|)
-operator|||
-name|transportMode
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-literal|"https"
-argument_list|)
 operator|)
 condition|)
 block|{
@@ -1944,10 +2292,14 @@ name|TException
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|error
+argument_list|(
+literal|"Error opening session"
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
@@ -2268,6 +2620,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#clearWarnings()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|clearWarnings
@@ -2281,6 +2635,8 @@ literal|null
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#close()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -2352,6 +2708,8 @@ block|}
 block|}
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#commit()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|commit
@@ -2369,6 +2727,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#createArrayOf(java.lang.String,    * java.lang.Object[])    */
+annotation|@
+name|Override
 specifier|public
 name|Array
 name|createArrayOf
@@ -2393,6 +2753,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#createBlob()    */
+annotation|@
+name|Override
 specifier|public
 name|Blob
 name|createBlob
@@ -2410,6 +2772,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#createClob()    */
+annotation|@
+name|Override
 specifier|public
 name|Clob
 name|createClob
@@ -2427,6 +2791,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#createNClob()    */
+annotation|@
+name|Override
 specifier|public
 name|NClob
 name|createNClob
@@ -2444,6 +2810,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#createSQLXML()    */
+annotation|@
+name|Override
 specifier|public
 name|SQLXML
 name|createSQLXML
@@ -2461,6 +2829,8 @@ argument_list|)
 throw|;
 block|}
 comment|/**    * Creates a Statement object for sending SQL statements to the database.    *    * @throws SQLException    *           if a database access error occurs.    * @see java.sql.Connection#createStatement()    */
+annotation|@
+name|Override
 specifier|public
 name|Statement
 name|createStatement
@@ -2494,6 +2864,8 @@ argument_list|)
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#createStatement(int, int)    */
+annotation|@
+name|Override
 specifier|public
 name|Statement
 name|createStatement
@@ -2574,6 +2946,8 @@ argument_list|)
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#createStatement(int, int, int)    */
+annotation|@
+name|Override
 specifier|public
 name|Statement
 name|createStatement
@@ -2600,6 +2974,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#createStruct(java.lang.String, java.lang.Object[])    */
+annotation|@
+name|Override
 specifier|public
 name|Struct
 name|createStruct
@@ -2624,6 +3000,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getAutoCommit()    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|getAutoCommit
@@ -2636,6 +3014,8 @@ literal|true
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getCatalog()    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getCatalog
@@ -2648,6 +3028,8 @@ literal|""
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getClientInfo()    */
+annotation|@
+name|Override
 specifier|public
 name|Properties
 name|getClientInfo
@@ -2665,6 +3047,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getClientInfo(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getClientInfo
@@ -2685,6 +3069,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getHoldability()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getHoldability
@@ -2702,6 +3088,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getMetaData()    */
+annotation|@
+name|Override
 specifier|public
 name|DatabaseMetaData
 name|getMetaData
@@ -2767,6 +3155,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getTransactionIsolation()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getTransactionIsolation
@@ -2781,6 +3171,8 @@ name|TRANSACTION_NONE
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getTypeMap()    */
+annotation|@
+name|Override
 specifier|public
 name|Map
 argument_list|<
@@ -2806,6 +3198,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getWarnings()    */
+annotation|@
+name|Override
 specifier|public
 name|SQLWarning
 name|getWarnings
@@ -2818,6 +3212,8 @@ name|warningChain
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#isClosed()    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isClosed
@@ -2830,6 +3226,8 @@ name|isClosed
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#isReadOnly()    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isReadOnly
@@ -2842,6 +3240,8 @@ literal|false
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#isValid(int)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isValid
@@ -2862,6 +3262,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#nativeSQL(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|nativeSQL
@@ -2882,6 +3284,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#prepareCall(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|CallableStatement
 name|prepareCall
@@ -2902,6 +3306,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#prepareCall(java.lang.String, int, int)    */
+annotation|@
+name|Override
 specifier|public
 name|CallableStatement
 name|prepareCall
@@ -2928,6 +3334,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#prepareCall(java.lang.String, int, int, int)    */
+annotation|@
+name|Override
 specifier|public
 name|CallableStatement
 name|prepareCall
@@ -2957,6 +3365,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#prepareStatement(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -2982,6 +3392,8 @@ argument_list|)
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#prepareStatement(java.lang.String, int)    */
+annotation|@
+name|Override
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -3010,6 +3422,8 @@ argument_list|)
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#prepareStatement(java.lang.String, int[])    */
+annotation|@
+name|Override
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -3034,6 +3448,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#prepareStatement(java.lang.String,    * java.lang.String[])    */
+annotation|@
+name|Override
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -3058,6 +3474,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#prepareStatement(java.lang.String, int, int)    */
+annotation|@
+name|Override
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -3089,6 +3507,8 @@ argument_list|)
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#prepareStatement(java.lang.String, int, int, int)    */
+annotation|@
+name|Override
 specifier|public
 name|PreparedStatement
 name|prepareStatement
@@ -3118,6 +3538,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#releaseSavepoint(java.sql.Savepoint)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|releaseSavepoint
@@ -3138,6 +3560,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#rollback()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|rollback
@@ -3155,6 +3579,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#rollback(java.sql.Savepoint)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|rollback
@@ -3175,6 +3601,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setAutoCommit(boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setAutoCommit
@@ -3200,6 +3628,8 @@ throw|;
 block|}
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setCatalog(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setCatalog
@@ -3220,6 +3650,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setClientInfo(java.util.Properties)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setClientInfo
@@ -3242,6 +3674,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setClientInfo(java.lang.String, java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setClientInfo
@@ -3267,6 +3701,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setHoldability(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setHoldability
@@ -3309,6 +3745,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setReadOnly(boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setReadOnly
@@ -3329,6 +3767,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setSavepoint()    */
+annotation|@
+name|Override
 specifier|public
 name|Savepoint
 name|setSavepoint
@@ -3346,6 +3786,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setSavepoint(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|Savepoint
 name|setSavepoint
@@ -3385,6 +3827,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setTransactionIsolation(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setTransactionIsolation
@@ -3398,6 +3842,8 @@ block|{
 comment|// TODO: throw an exception?
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setTypeMap(java.util.Map)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setTypeMap
@@ -3426,6 +3872,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -3449,6 +3897,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+annotation|@
+name|Override
 specifier|public
 parameter_list|<
 name|T

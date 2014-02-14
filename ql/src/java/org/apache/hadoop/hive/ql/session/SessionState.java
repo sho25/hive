@@ -529,6 +529,24 @@ name|ql
 operator|.
 name|security
 operator|.
+name|SessionStateUserAuthenticator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
 name|authorization
 operator|.
 name|HiveAuthorizationProvider
@@ -1577,7 +1595,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|//auth has been initialized
+comment|// auth has been initialized
 return|return;
 block|}
 try|try
@@ -1596,6 +1614,31 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_AUTHENTICATOR_MANAGER
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|userName
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// if username is set through the session, use an authenticator that
+comment|// just returns the sessionstate user
+name|authenticator
+operator|=
+operator|new
+name|SessionStateUserAuthenticator
+argument_list|(
+name|this
+argument_list|)
+expr_stmt|;
+block|}
+name|authenticator
+operator|.
+name|setSessionState
+argument_list|(
+name|this
 argument_list|)
 expr_stmt|;
 name|authorizer
@@ -1625,7 +1668,8 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|//if it was null, the new authorization plugin must be specified in config
+comment|// if it was null, the new authorization plugin must be specified in
+comment|// config
 name|HiveAuthorizerFactory
 name|authorizerFactory
 init|=
@@ -1643,20 +1687,6 @@ operator|.
 name|HIVE_AUTHORIZATION_MANAGER
 argument_list|)
 decl_stmt|;
-name|String
-name|authUser
-init|=
-name|userName
-operator|==
-literal|null
-condition|?
-name|authenticator
-operator|.
-name|getUserName
-argument_list|()
-else|:
-name|userName
-decl_stmt|;
 name|authorizerV2
 operator|=
 name|authorizerFactory
@@ -1670,12 +1700,23 @@ argument_list|,
 name|getConf
 argument_list|()
 argument_list|,
-name|authUser
+name|authenticator
+argument_list|)
+expr_stmt|;
+comment|// grant all privileges for table to its owner
+name|getConf
+argument_list|()
+operator|.
+name|setVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_AUTHORIZATION_TABLE_OWNER_GRANTS
+argument_list|,
+literal|"insert,select,update,delete"
 argument_list|)
 expr_stmt|;
 block|}
-else|else
-block|{
 name|createTableGrants
 operator|=
 name|CreateTableAutomaticGrant
@@ -1686,7 +1727,6 @@ name|getConf
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2739,6 +2779,8 @@ operator|new
 name|ResourceHook
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|preHook
@@ -2762,6 +2804,8 @@ name|s
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|postHook
@@ -2789,6 +2833,8 @@ operator|new
 name|ResourceHook
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|preHook
@@ -2840,6 +2886,8 @@ literal|null
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|postHook
@@ -2870,6 +2918,8 @@ operator|new
 name|ResourceHook
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|preHook
@@ -2893,6 +2943,8 @@ name|s
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|postHook
@@ -3890,6 +3942,9 @@ name|CreateTableAutomaticGrant
 name|getCreateTableGrants
 parameter_list|()
 block|{
+name|setupAuth
+argument_list|()
+expr_stmt|;
 return|return
 name|createTableGrants
 return|;
@@ -4447,6 +4502,15 @@ name|tezSessionState
 operator|=
 name|session
 expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getUserName
+parameter_list|()
+block|{
+return|return
+name|userName
+return|;
 block|}
 block|}
 end_class

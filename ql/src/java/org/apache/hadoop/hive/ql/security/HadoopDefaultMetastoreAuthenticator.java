@@ -60,7 +60,7 @@ name|setConf
 argument_list|(
 name|handler
 operator|.
-name|getHiveConf
+name|getConf
 argument_list|()
 argument_list|)
 expr_stmt|;

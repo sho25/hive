@@ -39,7 +39,7 @@ name|classification
 operator|.
 name|InterfaceAudience
 operator|.
-name|Public
+name|LimitedPrivate
 import|;
 end_import
 
@@ -69,13 +69,43 @@ end_comment
 
 begin_class
 annotation|@
-name|Public
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|""
+block|}
+argument_list|)
 annotation|@
 name|Unstable
 specifier|public
 class|class
 name|HivePrivilegeObject
 block|{
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"Hive Object [type="
+operator|+
+name|type
+operator|+
+literal|", dbname="
+operator|+
+name|dbname
+operator|+
+literal|", table/viewname="
+operator|+
+name|tableviewname
+operator|+
+literal|"]"
+return|;
+block|}
 specifier|public
 enum|enum
 name|HivePrivilegeObjectType

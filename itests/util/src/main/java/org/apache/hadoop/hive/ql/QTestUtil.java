@@ -3654,7 +3654,15 @@ condition|(
 operator|!
 literal|"PUBLIC"
 operator|.
-name|equals
+name|equalsIgnoreCase
+argument_list|(
+name|roleName
+argument_list|)
+operator|&&
+operator|!
+literal|"ADMIN"
+operator|.
+name|equalsIgnoreCase
 argument_list|(
 name|roleName
 argument_list|)
@@ -8028,10 +8036,6 @@ name|String
 index|[]
 name|cmdArray
 init|=
-operator|(
-name|String
-index|[]
-operator|)
 name|args
 operator|.
 name|toArray
@@ -8714,6 +8718,8 @@ operator|=
 name|fname
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run

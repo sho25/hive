@@ -1829,9 +1829,9 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertTrue
+name|assertFalse
 argument_list|(
-literal|"Grant option is always true "
+literal|"With admin option is not specified"
 argument_list|,
 name|grantDesc
 operator|.
@@ -2000,9 +2000,9 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertTrue
+name|assertFalse
 argument_list|(
-literal|"Grant option is always true "
+literal|"With admin option is not specified"
 argument_list|,
 name|grantDesc
 operator|.
@@ -2171,9 +2171,9 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertTrue
+name|assertFalse
 argument_list|(
-literal|"Grant option is always true "
+literal|"With admin option is not specified"
 argument_list|,
 name|grantDesc
 operator|.
@@ -2342,9 +2342,9 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertTrue
+name|assertFalse
 argument_list|(
-literal|"Grant option is always true "
+literal|"With admin option is not specified"
 argument_list|,
 name|grantDesc
 operator|.
@@ -2513,9 +2513,9 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertTrue
+name|assertFalse
 argument_list|(
-literal|"Grant option is always true "
+literal|"With admin option is not specified"
 argument_list|,
 name|grantDesc
 operator|.
@@ -2684,9 +2684,9 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertTrue
+name|assertFalse
 argument_list|(
-literal|"Grant option is always true "
+literal|"With admin option is not specified"
 argument_list|,
 name|grantDesc
 operator|.

@@ -425,24 +425,6 @@ name|StringUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|velocity
-operator|.
-name|runtime
-operator|.
-name|parser
-operator|.
-name|node
-operator|.
-name|GetExecutor
-import|;
-end_import
-
 begin_comment
 comment|/**  * Context for Semantic Analyzers. Usage: not reusable - construct a new one for  * each query should call clear() at end of use to remove temporary folders  */
 end_comment

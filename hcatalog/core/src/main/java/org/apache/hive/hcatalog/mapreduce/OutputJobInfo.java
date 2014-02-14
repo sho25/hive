@@ -157,6 +157,16 @@ specifier|private
 name|String
 name|location
 decl_stmt|;
+comment|/** The root location of custom dynamic partitions being written */
+specifier|private
+name|String
+name|customDynamicRoot
+decl_stmt|;
+comment|/** The relative path of custom dynamic partitions being written */
+specifier|private
+name|String
+name|customDynamicPath
+decl_stmt|;
 comment|/** The partition values to publish to, if used for output*/
 specifier|private
 name|Map
@@ -201,7 +211,7 @@ specifier|private
 name|boolean
 name|harRequested
 decl_stmt|;
-comment|/**    * Initializes a new OutputJobInfo instance    * for writing data from a table.    * @param databaseName the db name    * @param tableName the table name    * @param partitionValues The partition values to publish to, can be null or empty Map to    * work with hadoop security, the kerberos principal name of the server - else null    * The principal name should be of the form:    *<servicename>/_HOST@<realm> like "hcat/_HOST@myrealm.com"    * The special string _HOST will be replaced automatically with the correct host name    * indicate write to a unpartitioned table. For partitioned tables, this map should    * contain keys for all partition columns with corresponding values.    */
+comment|/**    * Initializes a new OutputJobInfo instance    * for writing data from a table.    * @param databaseName the db name    * @param tableName the table name    * @param partitionValues The partition values to publish to, can be null or empty Map to    * indicate write to a unpartitioned table. For partitioned tables, this map should    * contain keys for all partition columns with corresponding values.    */
 specifier|public
 specifier|static
 name|OutputJobInfo
@@ -468,6 +478,48 @@ name|location
 operator|=
 name|location
 expr_stmt|;
+block|}
+comment|/**    * @param customDynamicLocation the custom location for dynamic partitions    */
+name|void
+name|setCustomDynamicLocation
+parameter_list|(
+name|String
+name|customDynamicRoot
+parameter_list|,
+name|String
+name|customDynamicPath
+parameter_list|)
+block|{
+name|this
+operator|.
+name|customDynamicRoot
+operator|=
+name|customDynamicRoot
+expr_stmt|;
+name|this
+operator|.
+name|customDynamicPath
+operator|=
+name|customDynamicPath
+expr_stmt|;
+block|}
+comment|/**    * @return the root location for custom dynamic partitions    */
+name|String
+name|getCustomDynamicRoot
+parameter_list|()
+block|{
+return|return
+name|customDynamicRoot
+return|;
+block|}
+comment|/**    * @return the relative path custom location for dynamic partitions    */
+name|String
+name|getCustomDynamicPath
+parameter_list|()
+block|{
+return|return
+name|customDynamicPath
+return|;
 block|}
 comment|/**    * Sets the value of partitionValues    * @param partitionValues the partition values to set    */
 name|void

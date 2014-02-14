@@ -39,11 +39,17 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Set
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|ObjectPair
 import|;
 end_import
 
@@ -1539,6 +1545,46 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|dropPartitions
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|ObjectPair
+argument_list|<
+name|Integer
+argument_list|,
+name|byte
+index|[]
+argument_list|>
+argument_list|>
+name|partExprs
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ignoreProtection
+parameter_list|,
+name|boolean
+name|ifExists
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 specifier|public
 name|boolean
 name|dropPartition
@@ -2133,7 +2179,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param hiveObject    * @param user_name    * @param group_names    * @return the privilege set    * @throws MetaException    * @throws TException    */
+comment|/**    * Return the privileges that the user, group have directly and indirectly through roles    * on the given hiveObject    * @param hiveObject    * @param user_name    * @param group_names    * @return the privilege set    * @throws MetaException    * @throws TException    */
 specifier|public
 name|PrincipalPrivilegeSet
 name|get_privilege_set
@@ -2155,7 +2201,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param principal_name    * @param principal_type    * @param hiveObject    * @return list of privileges    * @throws MetaException    * @throws TException    */
+comment|/**    * Return the privileges that this principal has directly over the object (not through roles).    * @param principal_name    * @param principal_type    * @param hiveObject    * @return list of privileges    * @throws MetaException    * @throws TException    */
 specifier|public
 name|List
 argument_list|<

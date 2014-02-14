@@ -477,6 +477,14 @@ name|HCAT_IS_DYNAMIC_MAX_PTN_CHECK_ENABLED
 init|=
 literal|false
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HCAT_DYNAMIC_CUSTOM_PATTERN
+init|=
+literal|"hcat.dynamic.partitioning.custom.pattern"
+decl_stmt|;
 comment|// Message Bus related properties.
 specifier|public
 specifier|static

@@ -71,6 +71,24 @@ name|HiveException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -79,6 +97,7 @@ implements|implements
 name|HiveAuthenticationProvider
 block|{
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -86,6 +105,7 @@ argument_list|>
 name|groupNames
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|userName
 decl_stmt|;
@@ -180,6 +200,8 @@ operator|=
 name|conf
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Configuration
 name|getConf
@@ -190,6 +212,18 @@ name|this
 operator|.
 name|conf
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|setSessionState
+parameter_list|(
+name|SessionState
+name|ss
+parameter_list|)
+block|{
+comment|//no op
 block|}
 block|}
 end_class

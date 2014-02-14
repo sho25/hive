@@ -66,14 +66,14 @@ import|;
 end_import
 
 begin_comment
-comment|/***  * Base class for Hive service  * AbstarctHiveService.  *  */
+comment|/***  * Base class for Hive service  * AbstractHiveService.  *  */
 end_comment
 
 begin_class
 specifier|public
 specifier|abstract
 class|class
-name|AbstarctHiveService
+name|AbstractHiveService
 block|{
 specifier|private
 name|HiveConf
@@ -87,7 +87,11 @@ name|hostname
 decl_stmt|;
 specifier|private
 name|int
-name|port
+name|binaryPort
+decl_stmt|;
+specifier|private
+name|int
+name|httpPort
 decl_stmt|;
 specifier|private
 name|boolean
@@ -96,7 +100,7 @@ init|=
 literal|false
 decl_stmt|;
 specifier|public
-name|AbstarctHiveService
+name|AbstractHiveService
 parameter_list|(
 name|HiveConf
 name|hiveConf
@@ -105,7 +109,10 @@ name|String
 name|hostname
 parameter_list|,
 name|int
-name|port
+name|binaryPort
+parameter_list|,
+name|int
+name|httpPort
 parameter_list|)
 block|{
 name|this
@@ -122,9 +129,15 @@ name|hostname
 expr_stmt|;
 name|this
 operator|.
-name|port
+name|binaryPort
 operator|=
-name|port
+name|binaryPort
+expr_stmt|;
+name|this
+operator|.
+name|httpPort
+operator|=
+name|httpPort
 expr_stmt|;
 block|}
 comment|/**    * Get Hive conf    * @return    */
@@ -269,10 +282,10 @@ return|return
 name|hostname
 return|;
 block|}
-comment|/**    * Set service port #    * @param portNum    */
+comment|/**    * Set binary service port #    * @param portNum    */
 specifier|public
 name|void
-name|setPort
+name|setBinaryPort
 parameter_list|(
 name|int
 name|portNum
@@ -280,19 +293,45 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|port
+name|binaryPort
 operator|=
 name|portNum
 expr_stmt|;
 block|}
-comment|// get service port#
+comment|/**    * Set http service port #    * @param portNum    */
+specifier|public
+name|void
+name|setHttpPort
+parameter_list|(
+name|int
+name|portNum
+parameter_list|)
+block|{
+name|this
+operator|.
+name|httpPort
+operator|=
+name|portNum
+expr_stmt|;
+block|}
+comment|// Get binary service port #
 specifier|protected
 name|int
-name|getPort
+name|getBinaryPort
 parameter_list|()
 block|{
 return|return
-name|port
+name|binaryPort
+return|;
+block|}
+comment|// Get http service port #
+specifier|protected
+name|int
+name|getHttpPort
+parameter_list|()
+block|{
+return|return
+name|httpPort
 return|;
 block|}
 specifier|public
@@ -335,7 +374,7 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"HS2 is not running"
+literal|"HiveServer2 is not running"
 argument_list|)
 throw|;
 block|}
@@ -355,7 +394,7 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"HS2 alreadyrunning"
+literal|"HiveServer2 already running"
 argument_list|)
 throw|;
 block|}

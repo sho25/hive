@@ -39,7 +39,27 @@ name|classification
 operator|.
 name|InterfaceAudience
 operator|.
-name|Public
+name|LimitedPrivate
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceStability
+operator|.
+name|Evolving
 import|;
 end_import
 
@@ -49,7 +69,16 @@ end_comment
 
 begin_enum
 annotation|@
-name|Public
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|""
+block|}
+argument_list|)
+annotation|@
+name|Evolving
 specifier|public
 enum|enum
 name|HiveOperationType

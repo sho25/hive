@@ -1068,7 +1068,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ExecDriver is the central class in co-ordinating execution of any map-reduce task.  * It's main responsabilities are:  *  * - Converting the plan (MapredWork) into a MR Job (JobConf)  * - Submitting a MR job to the cluster via JobClient and ExecHelper  * - Executing MR job in local execution mode (where applicable)  *  */
+comment|/**  * ExecDriver is the central class in co-ordinating execution of any map-reduce task.  * It's main responsibilities are:  *  * - Converting the plan (MapredWork) into a MR Job (JobConf)  * - Submitting a MR job to the cluster via JobClient and ExecHelper  * - Executing MR job in local execution mode (where applicable)  *  */
 end_comment
 
 begin_class
@@ -2859,7 +2859,7 @@ argument_list|(
 name|job
 argument_list|)
 decl_stmt|;
-comment|// make this client wait if job trcker is not behaving well.
+comment|// make this client wait if job tracker is not behaving well.
 name|Throttle
 operator|.
 name|checkJobTracker
@@ -3536,7 +3536,7 @@ argument_list|(
 literal|"Use sampling data created in previous MR"
 argument_list|)
 expr_stmt|;
-comment|// merges sampling data from previous MR and make paritition keys for total sort
+comment|// merges sampling data from previous MR and make partition keys for total sort
 for|for
 control|(
 name|Path
@@ -3810,8 +3810,6 @@ name|setVar
 argument_list|(
 name|conf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|HIVEINPUTFORMAT
@@ -3871,6 +3869,81 @@ name|isInputFormatSorted
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_CURRENT_DATABASE
+argument_list|,
+literal|null
+argument_list|)
+operator|==
+literal|null
+condition|)
+block|{
+name|HiveConf
+operator|.
+name|setVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_CURRENT_DATABASE
+argument_list|,
+name|getCurrentDB
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+specifier|public
+specifier|static
+name|String
+name|getCurrentDB
+parameter_list|()
+block|{
+name|String
+name|currentDB
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|currentDB
+operator|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getCurrentDatabase
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+name|currentDB
+operator|==
+literal|null
+condition|?
+literal|"default"
+else|:
+name|currentDB
+return|;
 block|}
 specifier|public
 name|boolean

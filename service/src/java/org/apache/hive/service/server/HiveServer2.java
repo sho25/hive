@@ -305,13 +305,6 @@ name|equalsIgnoreCase
 argument_list|(
 literal|"http"
 argument_list|)
-operator|||
-name|transportMode
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-literal|"https"
-argument_list|)
 operator|)
 condition|)
 block|{

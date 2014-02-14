@@ -39,7 +39,7 @@ name|classification
 operator|.
 name|InterfaceAudience
 operator|.
-name|Public
+name|LimitedPrivate
 import|;
 end_import
 
@@ -69,7 +69,14 @@ end_comment
 
 begin_class
 annotation|@
-name|Public
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|""
+block|}
+argument_list|)
 annotation|@
 name|Evolving
 specifier|public

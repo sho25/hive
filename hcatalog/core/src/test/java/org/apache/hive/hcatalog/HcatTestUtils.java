@@ -596,34 +596,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Used by various tests to make sure the path is safe for Windows    */
-specifier|public
-specifier|static
-name|String
-name|makePathASafeFileName
-parameter_list|(
-name|String
-name|filePath
-parameter_list|)
-block|{
-return|return
-operator|new
-name|File
-argument_list|(
-name|filePath
-argument_list|)
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|replaceAll
-argument_list|(
-literal|"\\\\"
-argument_list|,
-literal|"/"
-argument_list|)
-return|;
-block|}
 block|}
 end_class
 

@@ -375,24 +375,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|PartitionSpec
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|ShowDatabasesDesc
 import|;
 end_import
@@ -1671,7 +1653,9 @@ block|{
 comment|//this is actually a ALTER TABLE DROP PARITITION statement
 for|for
 control|(
-name|PartitionSpec
+name|DropTableDesc
+operator|.
+name|PartSpec
 name|partSpec
 range|:
 name|dropTable
@@ -1722,7 +1706,10 @@ name|table
 argument_list|,
 name|partSpec
 operator|.
-name|toString
+name|getPartSpec
+argument_list|()
+operator|.
+name|getExprString
 argument_list|()
 argument_list|)
 expr_stmt|;
