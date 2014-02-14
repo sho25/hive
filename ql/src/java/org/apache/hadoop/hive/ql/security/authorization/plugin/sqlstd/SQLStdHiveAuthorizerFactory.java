@@ -216,10 +216,9 @@ parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
 block|{
-return|return
-operator|new
-name|HiveAuthorizerImpl
-argument_list|(
+name|SQLStdHiveAccessController
+name|privilegeManager
+init|=
 operator|new
 name|SQLStdHiveAccessController
 argument_list|(
@@ -229,6 +228,12 @@ name|conf
 argument_list|,
 name|authenticator
 argument_list|)
+decl_stmt|;
+return|return
+operator|new
+name|HiveAuthorizerImpl
+argument_list|(
+name|privilegeManager
 argument_list|,
 operator|new
 name|SQLStdHiveAuthorizationValidator
@@ -238,6 +243,8 @@ argument_list|,
 name|conf
 argument_list|,
 name|authenticator
+argument_list|,
+name|privilegeManager
 argument_list|)
 argument_list|)
 return|;

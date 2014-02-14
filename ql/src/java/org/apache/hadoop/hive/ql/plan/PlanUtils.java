@@ -4715,12 +4715,15 @@ comment|// so that the same input with different parents cannot be added twice. 
 comment|// is already present, make sure the parents are added.
 comment|// Consider the query:
 comment|// select * from (select * from V2 union all select * from V3) subq;
-comment|// where both V2 and V3 depend on V1
+comment|// where both V2 and V3 depend on V1 (eg V2 : select * from V1, V3: select * from V1),
 comment|// addInput would be called twice for V1 (one with parent V2 and the other with parent V3).
 comment|// When addInput is called for the first time for V1, V1 (parent V2) is added to inputs.
 comment|// When addInput is called for the second time for V1, the input V1 from inputs is picked up,
 comment|// and it's parents are enhanced to include V2 and V3
-comment|// The inputs will contain: (V2, no parent), (V3, no parent), (v1, parents(V2, v3))
+comment|// The inputs will contain: (V2, no parent), (V3, no parent), (V1, parents(V2, v3))
+comment|//
+comment|// If the ReadEntity is already present and another ReadEntity with same name is
+comment|// added, then the isDirect flag is updated to be the OR of values of both.
 specifier|public
 specifier|static
 name|ReadEntity
@@ -4798,6 +4801,21 @@ argument_list|(
 name|newInput
 operator|.
 name|getParents
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|input
+operator|.
+name|setDirect
+argument_list|(
+name|input
+operator|.
+name|isDirect
+argument_list|()
+operator|||
+name|newInput
+operator|.
+name|isDirect
 argument_list|()
 argument_list|)
 expr_stmt|;

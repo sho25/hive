@@ -5201,7 +5201,7 @@ argument_list|()
 argument_list|,
 name|privObj
 operator|.
-name|getTableviewname
+name|getTableViewURI
 argument_list|()
 argument_list|,
 literal|null
@@ -6554,8 +6554,6 @@ name|PrivilegeObjectDesc
 name|privSubjectDesc
 parameter_list|)
 block|{
-comment|//TODO: This needs to change to support view once view grant/revoke is supported as
-comment|// part of HIVE-6181
 return|return
 name|privSubjectDesc
 operator|.
@@ -6564,7 +6562,7 @@ argument_list|()
 condition|?
 name|HivePrivilegeObjectType
 operator|.
-name|TABLE
+name|TABLE_OR_VIEW
 else|:
 name|HivePrivilegeObjectType
 operator|.
@@ -22052,36 +22050,13 @@ name|user
 init|=
 literal|null
 decl_stmt|;
-try|try
-block|{
 name|user
 operator|=
-name|conf
+name|SessionState
 operator|.
-name|getUser
+name|getUserFromAuthenticator
 argument_list|()
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-name|e
-argument_list|,
-name|ErrorMsg
-operator|.
-name|GENERIC_ERROR
-argument_list|,
-literal|"Unable to get current user"
-argument_list|)
-throw|;
-block|}
 name|params
 operator|.
 name|put
@@ -24895,39 +24870,16 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-try|try
-block|{
 name|tbl
 operator|.
 name|setOwner
 argument_list|(
-name|conf
+name|SessionState
 operator|.
-name|getUser
+name|getUserFromAuthenticator
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-name|e
-argument_list|,
-name|ErrorMsg
-operator|.
-name|GENERIC_ERROR
-argument_list|,
-literal|"Unable to get current user"
-argument_list|)
-throw|;
-block|}
 comment|// set create time
 name|tbl
 operator|.

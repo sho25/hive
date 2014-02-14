@@ -126,12 +126,12 @@ argument_list|)
 block|,
 name|OWNER_PRIV
 argument_list|(
-literal|"Object ownership"
+literal|"OBJECT OWNERSHIP"
 argument_list|)
 block|,
 name|ADMIN_PRIV
 argument_list|(
-literal|"Admin privilege"
+literal|"ADMIN PRIVILEGE"
 argument_list|)
 block|;
 comment|// This one can be used to deny permission for performing the operation

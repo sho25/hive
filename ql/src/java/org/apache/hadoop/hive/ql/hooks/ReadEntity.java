@@ -119,6 +119,15 @@ block|{
 comment|// Consider a query like: select * from V, where the view V is defined as:
 comment|// select * from T
 comment|// The inputs will contain V and T (parent: V)
+comment|// T will be marked as an indirect entity using isDirect flag.
+comment|// This will help in distinguishing from the case where T is a direct dependency
+comment|// For example in the case of "select * from V join T ..." T would be direct dependency
+specifier|private
+name|boolean
+name|isDirect
+init|=
+literal|true
+decl_stmt|;
 comment|// For views, the entities can be nested - by default, entities are at the top level
 specifier|private
 specifier|final
@@ -225,6 +234,33 @@ name|parent
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|ReadEntity
+parameter_list|(
+name|Table
+name|t
+parameter_list|,
+name|ReadEntity
+name|parent
+parameter_list|,
+name|boolean
+name|isDirect
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|t
+argument_list|,
+name|parent
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|isDirect
+operator|=
+name|isDirect
+expr_stmt|;
+block|}
 comment|/**    * Constructor given a partition.    *    * @param p    *          The partition that the query reads from.    */
 specifier|public
 name|ReadEntity
@@ -262,6 +298,33 @@ name|initParent
 argument_list|(
 name|parent
 argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|ReadEntity
+parameter_list|(
+name|Partition
+name|p
+parameter_list|,
+name|ReadEntity
+name|parent
+parameter_list|,
+name|boolean
+name|isDirect
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|p
+argument_list|,
+name|parent
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|isDirect
+operator|=
+name|isDirect
 expr_stmt|;
 block|}
 specifier|public
@@ -334,6 +397,30 @@ return|return
 literal|false
 return|;
 block|}
+block|}
+specifier|public
+name|boolean
+name|isDirect
+parameter_list|()
+block|{
+return|return
+name|isDirect
+return|;
+block|}
+specifier|public
+name|void
+name|setDirect
+parameter_list|(
+name|boolean
+name|isDirect
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isDirect
+operator|=
+name|isDirect
+expr_stmt|;
 block|}
 block|}
 end_class

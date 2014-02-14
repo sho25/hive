@@ -371,7 +371,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MoveTask
+name|MapJoinOperator
 import|;
 end_import
 
@@ -389,7 +389,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MapJoinOperator
+name|MoveTask
 import|;
 end_import
 
@@ -1418,20 +1418,6 @@ operator|.
 name|typeinfo
 operator|.
 name|TypeInfoFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputFormat
 import|;
 end_import
 
@@ -3849,6 +3835,17 @@ argument_list|)
 decl_stmt|;
 comment|// The table should also be considered a part of inputs, even if the table is a
 comment|// partitioned table and whether any partition is selected or not
+comment|//This read entity is a direct read entity and not an indirect read (that is when
+comment|// this is being read because it is a dependency of a view).
+name|boolean
+name|isDirectRead
+init|=
+operator|(
+name|parentViewInfo
+operator|==
+literal|null
+operator|)
+decl_stmt|;
 name|PlanUtils
 operator|.
 name|addInput
@@ -3869,6 +3866,8 @@ name|topOp
 argument_list|)
 argument_list|,
 name|parentViewInfo
+argument_list|,
+name|isDirectRead
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3903,6 +3902,8 @@ argument_list|(
 name|part
 argument_list|,
 name|parentViewInfo
+argument_list|,
+name|isDirectRead
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3924,6 +3925,8 @@ name|getTable
 argument_list|()
 argument_list|,
 name|parentViewInfo
+argument_list|,
+name|isDirectRead
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7434,14 +7437,6 @@ block|{
 name|Class
 name|c
 init|=
-operator|(
-name|Class
-argument_list|<
-name|?
-extends|extends
-name|InputFormat
-argument_list|>
-operator|)
 name|Class
 operator|.
 name|forName

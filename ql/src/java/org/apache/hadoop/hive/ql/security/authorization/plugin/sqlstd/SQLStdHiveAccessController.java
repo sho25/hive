@@ -457,30 +457,6 @@ name|authorization
 operator|.
 name|plugin
 operator|.
-name|HivePrincipal
-operator|.
-name|HivePrincipalType
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|security
-operator|.
-name|authorization
-operator|.
-name|plugin
-operator|.
 name|HivePrivilege
 import|;
 end_import
@@ -612,6 +588,15 @@ decl_stmt|;
 specifier|private
 name|HiveRole
 name|adminRole
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|ADMIN_ONLY_MSG
+init|=
+literal|"User has to belong to ADMIN role and "
+operator|+
+literal|"have it as current role, for this action."
 decl_stmt|;
 name|SQLStdHiveAccessController
 parameter_list|(
@@ -805,6 +790,13 @@ argument_list|(
 literal|"Failed to retrieve roles for "
 operator|+
 name|currentUserName
+operator|+
+literal|": "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -843,17 +835,9 @@ name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 block|{
-comment|// expand ALL privileges, if any
 name|hivePrivileges
 operator|=
-name|expandAllPrivileges
-argument_list|(
-name|hivePrivileges
-argument_list|)
-expr_stmt|;
-name|SQLAuthorizationUtils
-operator|.
-name|validatePrivileges
+name|expandAndValidatePrivileges
 argument_list|(
 name|hivePrivileges
 argument_list|)
@@ -884,6 +868,12 @@ argument_list|,
 name|authenticator
 operator|.
 name|getUserName
+argument_list|()
+argument_list|,
+name|getCurrentRoles
+argument_list|()
+argument_list|,
+name|isUserAdmin
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -924,12 +914,52 @@ throw|throw
 operator|new
 name|HiveAuthzPluginException
 argument_list|(
-literal|"Error granting privileges"
+literal|"Error granting privileges: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
 throw|;
 block|}
+block|}
+specifier|private
+name|List
+argument_list|<
+name|HivePrivilege
+argument_list|>
+name|expandAndValidatePrivileges
+parameter_list|(
+name|List
+argument_list|<
+name|HivePrivilege
+argument_list|>
+name|hivePrivileges
+parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
+block|{
+comment|// expand ALL privileges, if any
+name|hivePrivileges
+operator|=
+name|expandAllPrivileges
+argument_list|(
+name|hivePrivileges
+argument_list|)
+expr_stmt|;
+name|SQLAuthorizationUtils
+operator|.
+name|validatePrivileges
+argument_list|(
+name|hivePrivileges
+argument_list|)
+expr_stmt|;
+return|return
+name|hivePrivileges
+return|;
 block|}
 specifier|private
 name|List
@@ -1255,9 +1285,9 @@ name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 block|{
-name|SQLAuthorizationUtils
-operator|.
-name|validatePrivileges
+name|hivePrivileges
+operator|=
+name|expandAndValidatePrivileges
 argument_list|(
 name|hivePrivileges
 argument_list|)
@@ -1355,20 +1385,8 @@ comment|// only user belonging to admin role can create new roles.
 if|if
 condition|(
 operator|!
-name|this
-operator|.
 name|isUserAdmin
-argument_list|(
-operator|new
-name|HivePrincipal
-argument_list|(
-name|currentUserName
-argument_list|,
-name|HivePrincipalType
-operator|.
-name|USER
-argument_list|)
-argument_list|)
+argument_list|()
 condition|)
 block|{
 throw|throw
@@ -1381,7 +1399,9 @@ name|currentUserName
 operator|+
 literal|" is not"
 operator|+
-literal|" allowed to add roles. Only users belonging to admin role can add new roles."
+literal|" allowed to add roles. "
+operator|+
+name|ADMIN_ONLY_MSG
 argument_list|)
 throw|;
 block|}
@@ -1455,20 +1475,8 @@ comment|// only user belonging to admin role can drop existing role
 if|if
 condition|(
 operator|!
-name|this
-operator|.
 name|isUserAdmin
-argument_list|(
-operator|new
-name|HivePrincipal
-argument_list|(
-name|currentUserName
-argument_list|,
-name|HivePrincipalType
-operator|.
-name|USER
-argument_list|)
-argument_list|)
+argument_list|()
 condition|)
 block|{
 throw|throw
@@ -1481,7 +1489,9 @@ name|currentUserName
 operator|+
 literal|" is not"
 operator|+
-literal|" allowed to drop role. Only users belonging to admin role can drop roles."
+literal|" allowed to drop role. "
+operator|+
+name|ADMIN_ONLY_MSG
 argument_list|)
 throw|;
 block|}
@@ -1619,6 +1629,13 @@ name|hivePrincipal
 operator|.
 name|getName
 argument_list|()
+operator|+
+literal|": "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -1657,20 +1674,8 @@ block|{
 if|if
 condition|(
 operator|!
-name|this
-operator|.
 name|isUserAdmin
-argument_list|(
-operator|new
-name|HivePrincipal
-argument_list|(
-name|currentUserName
-argument_list|,
-name|HivePrincipalType
-operator|.
-name|USER
-argument_list|)
-argument_list|)
+argument_list|()
 condition|)
 block|{
 throw|throw
@@ -1683,7 +1688,9 @@ name|currentUserName
 operator|+
 literal|" is not"
 operator|+
-literal|" allowed to grant role. Currently only users belonging to admin role can grant roles."
+literal|" allowed to grant role. Currently "
+operator|+
+name|ADMIN_ONLY_MSG
 argument_list|)
 throw|;
 block|}
@@ -1860,20 +1867,8 @@ block|}
 if|if
 condition|(
 operator|!
-name|this
-operator|.
 name|isUserAdmin
-argument_list|(
-operator|new
-name|HivePrincipal
-argument_list|(
-name|currentUserName
-argument_list|,
-name|HivePrincipalType
-operator|.
-name|USER
-argument_list|)
-argument_list|)
+argument_list|()
 condition|)
 block|{
 throw|throw
@@ -1886,7 +1881,9 @@ name|currentUserName
 operator|+
 literal|" is not"
 operator|+
-literal|" allowed to revoke role. Currently only users belonging to admin role can revoke roles."
+literal|" allowed to revoke role. "
+operator|+
+name|ADMIN_ONLY_MSG
 argument_list|)
 throw|;
 block|}
@@ -1958,6 +1955,13 @@ operator|+
 literal|" to role "
 operator|+
 name|roleName
+operator|+
+literal|": "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 decl_stmt|;
 throw|throw
 operator|new
@@ -1990,20 +1994,8 @@ comment|// only user belonging to admin role can list role
 if|if
 condition|(
 operator|!
-name|this
-operator|.
 name|isUserAdmin
-argument_list|(
-operator|new
-name|HivePrincipal
-argument_list|(
-name|currentUserName
-argument_list|,
-name|HivePrincipalType
-operator|.
-name|USER
-argument_list|)
-argument_list|)
+argument_list|()
 condition|)
 block|{
 throw|throw
@@ -2016,7 +2008,9 @@ name|currentUserName
 operator|+
 literal|" is not"
 operator|+
-literal|" allowed to list roles. Only users belonging to admin role can list roles."
+literal|" allowed to list roles. "
+operator|+
+name|ADMIN_ONLY_MSG
 argument_list|)
 throw|;
 block|}
@@ -2278,7 +2272,12 @@ throw|throw
 operator|new
 name|HiveAuthzPluginException
 argument_list|(
-literal|"Error showing privileges"
+literal|"Error showing privileges: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2314,7 +2313,7 @@ case|:
 return|return
 name|HivePrivilegeObjectType
 operator|.
-name|TABLE
+name|TABLE_OR_VIEW
 return|;
 case|case
 name|COLUMN
@@ -2489,14 +2488,10 @@ return|return
 name|currentRoles
 return|;
 block|}
-comment|/**    * @param principal    * @return true only if current role of user is Admin    * @throws HiveAuthzPluginException    */
-specifier|private
+comment|/**    * @return true only if current role of user is Admin    * @throws HiveAuthzPluginException    */
 name|boolean
 name|isUserAdmin
-parameter_list|(
-name|HivePrincipal
-name|principal
-parameter_list|)
+parameter_list|()
 throws|throws
 name|HiveAuthzPluginException
 block|{
