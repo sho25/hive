@@ -199,6 +199,8 @@ block|{
 name|SIMPLE_EDGE
 block|,
 name|BROADCAST_EDGE
+block|,
+name|CONTAINS
 block|}
 specifier|private
 specifier|static
