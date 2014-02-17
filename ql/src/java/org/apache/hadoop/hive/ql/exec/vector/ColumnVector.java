@@ -371,6 +371,30 @@ operator|=
 name|noNulls
 expr_stmt|;
 block|}
+comment|/**      * Set the element in this column vector from the given input vector.      */
+specifier|public
+specifier|abstract
+name|void
+name|setElement
+parameter_list|(
+name|int
+name|outElementNum
+parameter_list|,
+name|int
+name|inputElementNum
+parameter_list|,
+name|ColumnVector
+name|inputVector
+parameter_list|)
+function_decl|;
+comment|/**      * Initialize the column vector. This method can be overridden by specific column vector types.      * Use this method only if the individual type of the column vector is not known, otherwise its      * preferable to call specific initialization methods.      */
+specifier|public
+name|void
+name|init
+parameter_list|()
+block|{
+comment|// Do nothing by default
+block|}
 block|}
 end_class
 
