@@ -2067,6 +2067,8 @@ specifier|public
 name|ObjectStore
 parameter_list|()
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|Configuration
 name|getConf
@@ -2077,6 +2079,8 @@ name|hiveConf
 return|;
 block|}
 comment|/**    * Called whenever this object is instantiated using ReflectionUils, and also    * on connection retries. In cases of connection retries, conf will usually    * contain modified values.    */
+annotation|@
+name|Override
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -2365,9 +2369,6 @@ name|className
 argument_list|)
 decl_stmt|;
 return|return
-operator|(
-name|PartitionExpressionProxy
-operator|)
 name|MetaStoreUtils
 operator|.
 name|newInstance
@@ -2872,6 +2873,8 @@ name|getPersistenceManager
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|shutdown
@@ -2892,6 +2895,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Opens a new one or the one already created Every call of this function must    * have corresponding commit or rollback function call    *    * @return an active transaction    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|openTransaction
@@ -2971,6 +2976,8 @@ name|result
 return|;
 block|}
 comment|/**    * if this is the commit of the first open call then an actual commit is    * called.    *    * @return Always returns true    */
+annotation|@
+name|Override
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -3139,6 +3146,8 @@ argument_list|()
 return|;
 block|}
 comment|/**    * Rolls back the current transaction if it is active    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|rollbackTransaction
@@ -3210,6 +3219,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createDatabase
@@ -3275,6 +3286,47 @@ name|db
 operator|.
 name|getParameters
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|mdb
+operator|.
+name|setOwnerName
+argument_list|(
+name|db
+operator|.
+name|getOwnerName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|PrincipalType
+name|ownerType
+init|=
+name|db
+operator|.
+name|getOwnerType
+argument_list|()
+decl_stmt|;
+name|mdb
+operator|.
+name|setOwnerType
+argument_list|(
+operator|(
+literal|null
+operator|==
+name|ownerType
+condition|?
+name|PrincipalType
+operator|.
+name|USER
+operator|.
+name|name
+argument_list|()
+else|:
+name|ownerType
+operator|.
+name|name
+argument_list|()
+operator|)
 argument_list|)
 expr_stmt|;
 try|try
@@ -3436,6 +3488,8 @@ return|return
 name|mdb
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Database
 name|getDatabase
@@ -3534,11 +3588,59 @@ name|getParameters
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|db
+operator|.
+name|setOwnerName
+argument_list|(
+name|mdb
+operator|.
+name|getOwnerName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|String
+name|type
+init|=
+name|mdb
+operator|.
+name|getOwnerType
+argument_list|()
+decl_stmt|;
+name|db
+operator|.
+name|setOwnerType
+argument_list|(
+operator|(
+literal|null
+operator|==
+name|type
+operator|||
+name|type
+operator|.
+name|trim
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|?
+literal|null
+else|:
+name|PrincipalType
+operator|.
+name|valueOf
+argument_list|(
+name|type
+argument_list|)
+argument_list|)
+expr_stmt|;
 return|return
 name|db
 return|;
 block|}
 comment|/**    * Alter the database object in metastore. Currently only the parameters    * of the database can be changed.    * @param dbName the database name    * @param db the Hive Database object    * @throws MetaException    * @throws NoSuchObjectException    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|alterDatabase
@@ -3620,6 +3722,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|dropDatabase
@@ -3749,6 +3853,8 @@ return|return
 name|success
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -3959,6 +4065,8 @@ return|return
 name|databases
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -4183,6 +4291,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|createType
@@ -4248,6 +4358,8 @@ return|return
 name|success
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Type
 name|getType
@@ -4360,6 +4472,8 @@ return|return
 name|type
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|dropType
@@ -4490,6 +4604,8 @@ return|return
 name|success
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createTable
@@ -4859,6 +4975,8 @@ block|}
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|dropTable
@@ -5130,6 +5248,8 @@ return|return
 name|success
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Table
 name|getTable
@@ -5193,6 +5313,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5427,6 +5549,8 @@ return|return
 name|tbls
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5567,6 +5691,8 @@ return|return
 name|mtbl
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -8127,6 +8253,8 @@ return|return
 name|success
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Partition
 name|getPartition
@@ -9245,6 +9373,8 @@ return|return
 name|success
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -9325,6 +9455,8 @@ argument_list|,
 name|allowJdo
 argument_list|)
 block|{
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -9370,6 +9502,8 @@ name|max
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -9984,6 +10118,8 @@ name|parts
 return|;
 block|}
 comment|// TODO:pc implement max
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -11077,6 +11213,8 @@ argument_list|,
 name|allowJdo
 argument_list|)
 block|{
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -11111,6 +11249,8 @@ literal|null
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -11328,6 +11468,8 @@ argument_list|,
 name|allowJdo
 argument_list|)
 block|{
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -11442,6 +11584,8 @@ return|return
 name|result
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -13641,6 +13785,8 @@ argument_list|,
 name|allowJdo
 argument_list|)
 block|{
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -13710,6 +13856,8 @@ return|return
 name|parts
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -14932,6 +15080,8 @@ return|return
 name|partNames
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alterTable
@@ -15166,6 +15316,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alterIndex
@@ -15498,6 +15650,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alterPartition
@@ -15607,6 +15761,8 @@ throw|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alterPartitions
@@ -18546,6 +18702,8 @@ return|return
 name|mRoleMemebership
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Role
 name|getRole
@@ -18702,6 +18860,8 @@ return|return
 name|mrole
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -26179,6 +26339,8 @@ argument_list|)
 return|;
 block|}
 annotation|@
+name|Override
+annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
@@ -26692,6 +26854,8 @@ return|return
 name|mSecurityColList
 return|;
 block|}
+annotation|@
+name|Override
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -31969,6 +32133,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|updateTableColumnStatistics
@@ -32097,6 +32263,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|updatePartitionColumnStatistics
@@ -32670,6 +32838,8 @@ throw|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ColumnStatistics
 name|getTableColumnStatistics
@@ -32753,6 +32923,8 @@ argument_list|,
 name|allowJdo
 argument_list|)
 block|{
+annotation|@
+name|Override
 specifier|protected
 name|ColumnStatistics
 name|getSqlResult
@@ -32779,6 +32951,8 @@ name|colNames
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|ColumnStatistics
 name|getJdoResult
@@ -32916,6 +33090,8 @@ literal|true
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -33017,6 +33193,8 @@ argument_list|,
 name|allowJdo
 argument_list|)
 block|{
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -33051,6 +33229,8 @@ name|colNames
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|List
 argument_list|<
@@ -33690,6 +33870,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|deletePartitionColumnStatistics
@@ -34092,6 +34274,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|deleteTableColumnStatistics
