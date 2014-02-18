@@ -11200,6 +11200,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the cursor repositioning to start of resultset    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFetchFirstQuery
@@ -11209,7 +11211,7 @@ name|Exception
 block|{
 name|execFetchFirst
 argument_list|(
-literal|"select c4 from "
+literal|"select c4, c1 from "
 operator|+
 name|dataTypeTableName
 operator|+
@@ -11222,7 +11224,7 @@ argument_list|)
 expr_stmt|;
 name|execFetchFirst
 argument_list|(
-literal|"select c4 from "
+literal|"select c4, c1 from "
 operator|+
 name|dataTypeTableName
 operator|+
@@ -11235,6 +11237,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the cursor repositioning to start of resultset from non-mr query    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFetchFirstNonMR
@@ -11255,6 +11259,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    *  Test for cursor repositioning to start of resultset for non-sql commands    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFetchFirstSetCmds
@@ -11273,6 +11279,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    *  Test for cursor repositioning to start of resultset for non-sql commands    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFetchFirstDfsCmds
@@ -11311,6 +11319,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Negative Test for cursor repositioning to start of resultset    * Verify unsupported JDBC resultset attributes    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testUnsupportedFetchTypes
@@ -11402,6 +11412,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Negative Test for cursor repositioning to start of resultset    * Verify unsupported JDBC resultset methods    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFetchFirstError
