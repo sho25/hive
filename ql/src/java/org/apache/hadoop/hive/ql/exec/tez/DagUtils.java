@@ -3167,11 +3167,11 @@ argument_list|(
 name|conf
 argument_list|)
 argument_list|,
+name|numContainers
+argument_list|,
 operator|new
 name|VertexLocationHint
 argument_list|(
-name|numContainers
-argument_list|,
 literal|null
 argument_list|)
 argument_list|)
