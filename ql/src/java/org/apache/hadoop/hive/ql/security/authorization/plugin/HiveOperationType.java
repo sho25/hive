@@ -169,8 +169,6 @@ name|SHOWPARTITIONS
 block|,
 name|SHOWLOCKS
 block|,
-name|SHOWCONF
-block|,
 name|CREATEFUNCTION
 block|,
 name|DROPFUNCTION
