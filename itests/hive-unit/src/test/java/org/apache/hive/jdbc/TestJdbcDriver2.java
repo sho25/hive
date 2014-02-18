@@ -41,15 +41,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
-name|ql
+name|common
 operator|.
-name|processors
+name|util
 operator|.
-name|SetProcessor
+name|SystemVariables
 operator|.
 name|SET_COLUMN_NAME
 import|;
@@ -11268,8 +11266,6 @@ name|execFetchFirst
 argument_list|(
 literal|"set -v"
 argument_list|,
-name|SetProcessor
-operator|.
 name|SET_COLUMN_NAME
 argument_list|,
 literal|false
