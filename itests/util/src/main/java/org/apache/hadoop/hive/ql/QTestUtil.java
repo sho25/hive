@@ -3611,11 +3611,18 @@ name|dbName
 argument_list|)
 condition|)
 block|{
+comment|// Drop cascade, may need to drop functions
 name|db
 operator|.
 name|dropDatabase
 argument_list|(
 name|dbName
+argument_list|,
+literal|true
+argument_list|,
+literal|true
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -3975,6 +3982,61 @@ argument_list|(
 literal|"create table command: "
 operator|+
 name|createTableCmd
+operator|+
+literal|" failed with exit code= "
+operator|+
+name|ecode
+argument_list|)
+throw|;
+block|}
+return|return;
+block|}
+specifier|private
+name|void
+name|runCmd
+parameter_list|(
+name|String
+name|cmd
+parameter_list|)
+throws|throws
+name|Exception
+block|{
+name|int
+name|ecode
+init|=
+literal|0
+decl_stmt|;
+name|ecode
+operator|=
+name|drv
+operator|.
+name|run
+argument_list|(
+name|cmd
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+expr_stmt|;
+name|drv
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+name|ecode
+operator|!=
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|Exception
+argument_list|(
+literal|"command: "
+operator|+
+name|cmd
 operator|+
 literal|" failed with exit code= "
 operator|+
@@ -4672,6 +4734,18 @@ operator|+
 name|AllVectorTypesRecord
 operator|.
 name|TABLE_NAME
+argument_list|)
+expr_stmt|;
+name|runCmd
+argument_list|(
+literal|"DROP FUNCTION IF EXISTS qtest_get_java_boolean "
+argument_list|)
+expr_stmt|;
+name|runCmd
+argument_list|(
+literal|"CREATE FUNCTION qtest_get_java_boolean "
+operator|+
+literal|" AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFTestGetJavaBoolean'"
 argument_list|)
 expr_stmt|;
 name|conf

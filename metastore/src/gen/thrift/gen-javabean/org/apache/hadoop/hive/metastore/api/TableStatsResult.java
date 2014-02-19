@@ -2087,7 +2087,7 @@ block|{
 name|ColumnStatisticsObj
 name|_elem266
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem266
 operator|=
 operator|new
@@ -2532,7 +2532,7 @@ block|{
 name|ColumnStatisticsObj
 name|_elem271
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem271
 operator|=
 operator|new

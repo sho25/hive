@@ -3870,7 +3870,7 @@ block|{
 name|String
 name|_elem300
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem300
 operator|=
 name|iprot
@@ -4000,7 +4000,7 @@ block|{
 name|String
 name|_elem303
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem303
 operator|=
 name|iprot
@@ -4666,7 +4666,7 @@ block|{
 name|String
 name|_elem310
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem310
 operator|=
 name|iprot
@@ -4768,7 +4768,7 @@ block|{
 name|String
 name|_elem313
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem313
 operator|=
 name|iprot
