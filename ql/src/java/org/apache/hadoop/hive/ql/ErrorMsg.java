@@ -1743,6 +1743,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|INSERT_INTO_IMMUTABLE_TABLE
+argument_list|(
+literal|10256
+argument_list|,
+literal|"Inserting into a non-empty immutable table is not allowed"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

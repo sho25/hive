@@ -340,6 +340,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|IS_IMMUTABLE
+init|=
+literal|"immutable"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|META_TABLE_COLUMNS
 init|=
 literal|"columns"

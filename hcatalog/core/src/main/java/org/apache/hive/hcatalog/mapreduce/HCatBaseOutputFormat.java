@@ -404,7 +404,7 @@ name|getStorerInfo
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|//why do we need this?
+comment|// Always configure storage handler with jobproperties/jobconf before calling any methods on it
 name|configureOutputStorageHandler
 argument_list|(
 name|context
