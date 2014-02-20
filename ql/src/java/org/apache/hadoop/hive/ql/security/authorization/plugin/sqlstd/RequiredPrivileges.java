@@ -207,6 +207,21 @@ decl_stmt|;
 if|if
 condition|(
 name|availPrivs
+operator|==
+literal|null
+condition|)
+block|{
+name|availPrivs
+operator|=
+operator|new
+name|RequiredPrivileges
+argument_list|()
+expr_stmt|;
+comment|//create an empty priv set
+block|}
+if|if
+condition|(
+name|availPrivs
 operator|.
 name|privilegeGrantSet
 operator|.
@@ -264,6 +279,7 @@ name|getMissingPrivileges
 argument_list|()
 return|;
 block|}
+specifier|public
 name|void
 name|addPrivilege
 parameter_list|(

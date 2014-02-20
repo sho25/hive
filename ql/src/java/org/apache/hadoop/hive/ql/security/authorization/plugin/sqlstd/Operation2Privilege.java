@@ -236,6 +236,31 @@ operator|.
 name|DELETE_NOGRANT
 argument_list|)
 decl_stmt|;
+specifier|private
+specifier|static
+name|SQLPrivTypeGrant
+index|[]
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
+init|=
+name|arr
+argument_list|(
+name|SQLPrivTypeGrant
+operator|.
+name|OWNER_PRIV
+argument_list|,
+name|SQLPrivTypeGrant
+operator|.
+name|INSERT_NOGRANT
+argument_list|,
+name|SQLPrivTypeGrant
+operator|.
+name|DELETE_NOGRANT
+argument_list|,
+name|SQLPrivTypeGrant
+operator|.
+name|SELECT_NOGRANT
+argument_list|)
+decl_stmt|;
 static|static
 block|{
 name|op2Priv
@@ -280,7 +305,7 @@ name|InOutPrivs
 argument_list|(
 name|ADMIN_PRIV_AR
 argument_list|,
-literal|null
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -301,7 +326,7 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//this should be database usage privilege once it is supported
+comment|// this should be database usage privilege once it is supported
 name|op2Priv
 operator|.
 name|put
@@ -405,7 +430,7 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//meta store check command - require admin priv
+comment|// meta store check command - require admin priv
 name|op2Priv
 operator|.
 name|put
@@ -425,7 +450,7 @@ argument_list|)
 expr_stmt|;
 comment|//alter table commands require table ownership
 comment|// There should not be output object, but just in case the table is incorrectly added
-comment|// to output instead of input, adding owner requirement on output will catch that as wellÿ
+comment|// to output instead of input, adding owner requirement on output will catch that as well
 name|op2Priv
 operator|.
 name|put
@@ -796,7 +821,7 @@ name|InOutPrivs
 argument_list|(
 name|OWNER_PRIV_AR
 argument_list|,
-name|OWNER_PRIV_AR
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -813,7 +838,7 @@ name|InOutPrivs
 argument_list|(
 name|OWNER_PRIV_AR
 argument_list|,
-name|OWNER_PRIV_AR
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -881,7 +906,7 @@ name|InOutPrivs
 argument_list|(
 name|OWNER_PRIV_AR
 argument_list|,
-name|OWNER_PRIV_AR
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -916,7 +941,7 @@ name|InOutPrivs
 argument_list|(
 name|OWNER_PRIV_AR
 argument_list|,
-name|OWNER_PRIV_AR
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1118,6 +1143,7 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// in alter-table-add-partition, the table is output, and location is input
 name|op2Priv
 operator|.
 name|put
@@ -1129,9 +1155,9 @@ argument_list|,
 operator|new
 name|InOutPrivs
 argument_list|(
-name|INS_NOGRANT_AR
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|,
-literal|null
+name|INS_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1235,7 +1261,7 @@ name|InOutPrivs
 argument_list|(
 name|SEL_NOGRANT_AR
 argument_list|,
-name|OWNER_PRIV_AR
+literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1277,7 +1303,7 @@ argument_list|,
 operator|new
 name|InOutPrivs
 argument_list|(
-name|SEL_NOGRANT_AR
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|,
 name|arr
 argument_list|(
@@ -1500,7 +1526,7 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// require db ownership
+comment|// require db ownership, if there is a file require SELECT , INSERT, and DELETE
 name|op2Priv
 operator|.
 name|put
@@ -1512,7 +1538,7 @@ argument_list|,
 operator|new
 name|InOutPrivs
 argument_list|(
-name|OWNER_PRIV_AR
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|,
 literal|null
 argument_list|)

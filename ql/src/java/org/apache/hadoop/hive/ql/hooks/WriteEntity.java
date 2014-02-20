@@ -75,7 +75,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|Partition
+name|DummyPartition
 import|;
 end_import
 
@@ -93,7 +93,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|DummyPartition
+name|Partition
 import|;
 end_import
 
@@ -128,6 +128,12 @@ name|Entity
 implements|implements
 name|Serializable
 block|{
+specifier|private
+name|boolean
+name|isTempURI
+init|=
+literal|false
+decl_stmt|;
 comment|/**    * Only used by serialization.    */
 specifier|public
 name|WriteEntity
@@ -160,7 +166,7 @@ name|Table
 name|t
 parameter_list|)
 block|{
-name|super
+name|this
 argument_list|(
 name|t
 argument_list|,
@@ -231,6 +237,30 @@ name|boolean
 name|islocal
 parameter_list|)
 block|{
+name|this
+argument_list|(
+name|d
+argument_list|,
+name|islocal
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Constructor for a file.    *    * @param d    *          The name of the directory that is being written to.    * @param islocal    *          Flag to decide whether this directory is local or in dfs.    * @param isTemp    *          True if this is a temporary location such as scratch dir    */
+specifier|public
+name|WriteEntity
+parameter_list|(
+name|Path
+name|d
+parameter_list|,
+name|boolean
+name|islocal
+parameter_list|,
+name|boolean
+name|isTemp
+parameter_list|)
+block|{
 name|super
 argument_list|(
 name|d
@@ -242,6 +272,12 @@ name|islocal
 argument_list|,
 literal|true
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|isTempURI
+operator|=
+name|isTemp
 expr_stmt|;
 block|}
 comment|/**    * Equals function.    */
@@ -302,6 +338,15 @@ return|return
 literal|false
 return|;
 block|}
+block|}
+specifier|public
+name|boolean
+name|isTempURI
+parameter_list|()
+block|{
+return|return
+name|isTempURI
+return|;
 block|}
 block|}
 end_class

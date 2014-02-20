@@ -81,6 +81,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -601,6 +615,11 @@ range|:
 name|hObjs
 control|)
 block|{
+name|RequiredPrivileges
+name|availPrivs
+init|=
+literal|null
+decl_stmt|;
 if|if
 condition|(
 name|hObj
@@ -611,11 +630,7 @@ operator|==
 name|HivePrivilegeObjectType
 operator|.
 name|LOCAL_URI
-condition|)
-block|{        }
-elseif|else
-if|if
-condition|(
+operator|||
 name|hObj
 operator|.
 name|getType
@@ -625,7 +640,28 @@ name|HivePrivilegeObjectType
 operator|.
 name|DFS_URI
 condition|)
-block|{        }
+block|{
+name|availPrivs
+operator|=
+name|SQLAuthorizationUtils
+operator|.
+name|getPrivilegesFromFS
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|hObj
+operator|.
+name|getTableViewURI
+argument_list|()
+argument_list|)
+argument_list|,
+name|conf
+argument_list|,
+name|userName
+argument_list|)
+expr_stmt|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -639,15 +675,15 @@ operator|.
 name|PARTITION
 condition|)
 block|{
-comment|// sql std authorization is managing privileges at the table/view levels only
+comment|// sql std authorization is managing privileges at the table/view levels
+comment|// only
 comment|// ignore partitions
 block|}
 else|else
 block|{
 comment|// get the privileges that this user has on the object
-name|RequiredPrivileges
 name|availPrivs
-init|=
+operator|=
 name|SQLAuthorizationUtils
 operator|.
 name|getPrivilegesFromMetaStore
@@ -668,7 +704,8 @@ operator|.
 name|isUserAdmin
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|Collection
 argument_list|<
 name|SQLPrivTypeGrant
@@ -701,7 +738,6 @@ argument_list|,
 name|hObj
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 block|}

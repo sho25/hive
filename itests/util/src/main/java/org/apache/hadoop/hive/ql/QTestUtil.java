@@ -943,7 +943,7 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|HadoopShims
+name|Hadoop23Shims
 import|;
 end_import
 
@@ -959,7 +959,7 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|Hadoop23Shims
+name|HadoopShims
 import|;
 end_import
 
@@ -1119,35 +1119,7 @@ name|common
 operator|.
 name|collect
 operator|.
-name|Collections2
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
 name|ImmutableList
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Ordering
 import|;
 end_import
 
@@ -7443,7 +7415,11 @@ block|,
 literal|".*USING 'java -cp.*"
 block|,
 literal|"^Deleted.*"
-block|,   }
+block|,
+literal|".*Input:.*/data/files/.*"
+block|,
+literal|".*Output:.*/data/files/.*"
+block|}
 argument_list|)
 decl_stmt|;
 specifier|public

@@ -3994,6 +3994,10 @@ operator|)
 operator|||
 operator|(
 name|tbl
+operator|!=
+literal|null
+operator|&&
+name|tbl
 operator|.
 name|isPartitioned
 argument_list|()
@@ -4923,6 +4927,26 @@ comment|// In case of views, the underlying views or tables are not direct depen
 comment|// and are not used for authorization checks.
 comment|// This ReadEntity represents one of the underlying tables/views, so skip it.
 comment|// See description of the isDirect in ReadEntity
+continue|continue;
+block|}
+if|if
+condition|(
+name|privObject
+operator|instanceof
+name|WriteEntity
+operator|&&
+operator|(
+operator|(
+name|WriteEntity
+operator|)
+name|privObject
+operator|)
+operator|.
+name|isTempURI
+argument_list|()
+condition|)
+block|{
+comment|//do not authorize temporary uris
 continue|continue;
 block|}
 comment|//support for authorization on partitions needs to be added

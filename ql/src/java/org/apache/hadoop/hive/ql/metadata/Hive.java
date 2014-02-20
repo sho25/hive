@@ -13249,7 +13249,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|String
 index|[]

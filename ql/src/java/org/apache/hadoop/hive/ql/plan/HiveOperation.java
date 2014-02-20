@@ -331,9 +331,12 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+comment|// The location is input and table is output for alter-table add partitions
 name|ALTERTABLE_ADDPARTS
 argument_list|(
 literal|"ALTERTABLE_ADDPARTS"
+argument_list|,
+literal|null
 argument_list|,
 operator|new
 name|Privilege
@@ -343,8 +346,6 @@ name|Privilege
 operator|.
 name|CREATE
 block|}
-argument_list|,
-literal|null
 argument_list|)
 block|,
 name|ALTERTABLE_TOUCH

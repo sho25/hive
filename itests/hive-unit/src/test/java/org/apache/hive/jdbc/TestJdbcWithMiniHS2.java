@@ -35,18 +35,6 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertTrue
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
 name|assertFalse
 import|;
 end_import
@@ -71,7 +59,7 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertNull
+name|assertTrue
 import|;
 end_import
 
@@ -102,6 +90,16 @@ operator|.
 name|sql
 operator|.
 name|ResultSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|SQLException
 import|;
 end_import
 
@@ -162,6 +160,24 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
 import|;
 end_import
 
@@ -281,6 +297,17 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
+name|conf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SUPPORT_CONCURRENCY
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|miniHS2
 operator|=
 operator|new
@@ -359,8 +386,6 @@ name|Exception
 block|{
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|miniHS2
@@ -378,7 +403,38 @@ argument_list|,
 literal|"bar"
 argument_list|)
 expr_stmt|;
-name|hs2Conn
+block|}
+specifier|private
+name|Connection
+name|getConnection
+parameter_list|(
+name|String
+name|jdbcURL
+parameter_list|,
+name|String
+name|user
+parameter_list|,
+name|String
+name|pwd
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+name|Connection
+name|conn
+init|=
+name|DriverManager
+operator|.
+name|getConnection
+argument_list|(
+name|jdbcURL
+argument_list|,
+name|user
+argument_list|,
+name|pwd
+argument_list|)
+decl_stmt|;
+name|conn
 operator|.
 name|createStatement
 argument_list|()
@@ -388,6 +444,9 @@ argument_list|(
 literal|"set hive.support.concurrency = false"
 argument_list|)
 expr_stmt|;
+return|return
+name|conn
+return|;
 block|}
 annotation|@
 name|After
@@ -565,8 +624,6 @@ argument_list|)
 decl_stmt|;
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|jdbcUri
@@ -622,8 +679,6 @@ argument_list|()
 expr_stmt|;
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|jdbcUri
@@ -673,8 +728,6 @@ argument_list|()
 expr_stmt|;
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|jdbcUri
@@ -777,8 +830,6 @@ argument_list|()
 expr_stmt|;
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|jdbcUri
@@ -879,8 +930,6 @@ argument_list|()
 expr_stmt|;
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|jdbcUri
@@ -945,8 +994,6 @@ argument_list|()
 expr_stmt|;
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|jdbcUri
@@ -1027,8 +1074,6 @@ block|}
 comment|// test URI with no dbName
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|jdbcUri
@@ -1057,8 +1102,6 @@ argument_list|()
 expr_stmt|;
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|jdbcUri
@@ -1089,8 +1132,6 @@ argument_list|()
 expr_stmt|;
 name|hs2Conn
 operator|=
-name|DriverManager
-operator|.
 name|getConnection
 argument_list|(
 name|jdbcUri
@@ -1291,7 +1332,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**     * verify that the current db is the one expected. first create table as<db>.tab and then      * describe that table to check if<db> is the current database     * @param expectedDbName     * @param hs2Conn     * @throws Exception     */
+comment|/**     * verify that the current db is the one expected. first create table as<db>.tab and then     * describe that table to check if<db> is the current database     * @param expectedDbName     * @param hs2Conn     * @throws Exception     */
 specifier|private
 name|void
 name|verifyCurrentDB
