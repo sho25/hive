@@ -95,6 +95,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|metadata
@@ -1969,6 +1985,23 @@ argument_list|,
 literal|"Skipping stats aggregation by error {0}"
 argument_list|,
 literal|true
+argument_list|)
+block|,
+name|ORC_CORRUPTED_READ
+argument_list|(
+literal|30018
+argument_list|,
+literal|"Corruption in ORC data encountered. To skip reading corrupted "
+operator|+
+literal|"data, set "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_ORC_SKIP_CORRUPT_DATA
+operator|+
+literal|" to true"
 argument_list|)
 block|;   ;
 specifier|private

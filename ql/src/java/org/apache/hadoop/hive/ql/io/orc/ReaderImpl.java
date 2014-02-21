@@ -147,6 +147,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|fs
 operator|.
 name|FSDataInputStream
@@ -419,6 +433,11 @@ name|deserializedSize
 init|=
 operator|-
 literal|1
+decl_stmt|;
+specifier|private
+specifier|final
+name|Configuration
+name|conf
 decl_stmt|;
 comment|//serialized footer - Keeping this around for use by getFileMetaInfo()
 comment|// will help avoid cpu cycles spend in deserializing at cost of increased
@@ -1405,7 +1424,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Constructor that extracts metadata information from file footer    * @param fs    * @param path    * @throws IOException    */
+comment|/**    * Constructor that extracts metadata information from file footer    * @param fs    * @param path    * @param conf    * @throws IOException    */
 name|ReaderImpl
 parameter_list|(
 name|FileSystem
@@ -1413,6 +1432,9 @@ name|fs
 parameter_list|,
 name|Path
 name|path
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -1428,6 +1450,12 @@ operator|.
 name|path
 operator|=
 name|path
+expr_stmt|;
+name|this
+operator|.
+name|conf
+operator|=
+name|conf
 expr_stmt|;
 name|FileMetaInfo
 name|footerMetaData
@@ -1527,7 +1555,7 @@ operator|.
 name|inspector
 expr_stmt|;
 block|}
-comment|/**    * Constructor that takes already saved footer meta information. Used for creating RecordReader    * from saved information in InputSplit    * @param fs    * @param path    * @param fMetaInfo    * @throws IOException    */
+comment|/**    * Constructor that takes already saved footer meta information. Used for creating RecordReader    * from saved information in InputSplit    * @param fs    * @param path    * @param fMetaInfo    * @param conf    * @throws IOException    */
 name|ReaderImpl
 parameter_list|(
 name|FileSystem
@@ -1538,6 +1566,9 @@ name|path
 parameter_list|,
 name|FileMetaInfo
 name|fMetaInfo
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -1553,6 +1584,12 @@ operator|.
 name|path
 operator|=
 name|path
+expr_stmt|;
+name|this
+operator|.
+name|conf
+operator|=
+name|conf
 expr_stmt|;
 name|MetaInfoObjExtractor
 name|rInfo
@@ -2482,6 +2519,8 @@ argument_list|,
 name|sarg
 argument_list|,
 name|columnNames
+argument_list|,
+name|conf
 argument_list|)
 return|;
 block|}

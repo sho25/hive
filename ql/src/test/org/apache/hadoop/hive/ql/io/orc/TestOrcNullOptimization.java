@@ -674,6 +674,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// check the stats
@@ -1508,6 +1510,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// check the stats
@@ -2375,6 +2379,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// check the stats

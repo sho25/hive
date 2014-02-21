@@ -1429,6 +1429,8 @@ argument_list|(
 name|localFs
 argument_list|,
 name|outputFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertTrue
@@ -1845,6 +1847,8 @@ argument_list|(
 name|localFs
 argument_list|,
 name|outputFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2596,6 +2600,8 @@ argument_list|(
 name|localFs
 argument_list|,
 name|outputFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|RecordReader

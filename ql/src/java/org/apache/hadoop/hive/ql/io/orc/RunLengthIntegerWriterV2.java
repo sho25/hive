@@ -1861,6 +1861,35 @@ argument_list|(
 name|patchWidth
 argument_list|)
 expr_stmt|;
+comment|// if patch bit requirement is 64 then it will not possible to pack
+comment|// gap and patch together in a long. To make sure gap and patch can be
+comment|// packed together adjust the patch width
+if|if
+condition|(
+name|patchWidth
+operator|==
+literal|64
+condition|)
+block|{
+name|patchWidth
+operator|=
+literal|56
+expr_stmt|;
+name|brBits95p
+operator|=
+literal|8
+expr_stmt|;
+name|mask
+operator|=
+operator|(
+literal|1L
+operator|<<
+name|brBits95p
+operator|)
+operator|-
+literal|1
+expr_stmt|;
+block|}
 name|int
 name|gapIdx
 init|=
@@ -2117,12 +2146,10 @@ operator|++
 index|]
 operator|=
 operator|(
-literal|255
+literal|255L
 operator|<<
 name|patchWidth
 operator|)
-operator||
-literal|0
 expr_stmt|;
 name|g
 operator|-=

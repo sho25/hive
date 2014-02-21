@@ -1881,6 +1881,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|path
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -1923,6 +1925,8 @@ argument_list|,
 name|path
 argument_list|,
 name|fMetaInfo
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -1937,6 +1941,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|path
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -2037,6 +2043,8 @@ name|file
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4422,6 +4430,10 @@ name|file
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|context
+operator|.
+name|conf
 argument_list|)
 expr_stmt|;
 name|fileInfo
@@ -4471,6 +4483,10 @@ name|file
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|context
+operator|.
+name|conf
 argument_list|)
 expr_stmt|;
 name|stripes

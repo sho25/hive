@@ -2723,6 +2723,13 @@ argument_list|,
 literal|10
 argument_list|)
 block|,
+name|HIVE_ORC_SKIP_CORRUPT_DATA
+argument_list|(
+literal|"hive.exec.orc.skip.corrupt.data"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"
