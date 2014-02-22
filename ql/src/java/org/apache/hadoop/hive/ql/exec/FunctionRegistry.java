@@ -5047,6 +5047,46 @@ condition|)
 block|{
 comment|// Found UDF in metastore - now add it to the function registry
 comment|// At this point we should add any relevant jars that would be needed for the UDf.
+try|try
+block|{
+name|FunctionTask
+operator|.
+name|addFunctionResources
+argument_list|(
+name|func
+operator|.
+name|getResourceUris
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Unable to load resources for "
+operator|+
+name|dbName
+operator|+
+literal|"."
+operator|+
+name|fName
+operator|+
+literal|":"
+operator|+
+name|e
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
 name|Class
 argument_list|<
 name|?
