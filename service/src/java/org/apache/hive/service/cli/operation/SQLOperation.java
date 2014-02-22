@@ -591,19 +591,6 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-specifier|final
-name|boolean
-name|runAsync
-decl_stmt|;
-specifier|private
-specifier|volatile
-name|Future
-argument_list|<
-name|?
-argument_list|>
-name|backgroundHandle
-decl_stmt|;
-specifier|private
 name|boolean
 name|fetchStarted
 init|=
@@ -638,13 +625,9 @@ argument_list|,
 name|statement
 argument_list|,
 name|confOverlay
-argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|runAsync
-operator|=
+argument_list|,
 name|runInBackground
+argument_list|)
 expr_stmt|;
 block|}
 comment|/***    * Compile the query and extract metadata    * @param sqlOperationConf    * @throws HiveSQLException    */
@@ -1056,7 +1039,8 @@ expr_stmt|;
 if|if
 condition|(
 operator|!
-name|runAsync
+name|shouldRunAsync
+argument_list|()
 condition|)
 block|{
 name|runInternal
@@ -1133,8 +1117,12 @@ decl_stmt|;
 try|try
 block|{
 comment|// This submit blocks if no background threads are available to run this operation
+name|Future
+argument_list|<
+name|?
+argument_list|>
 name|backgroundHandle
-operator|=
+init|=
 name|getParentSession
 argument_list|()
 operator|.
@@ -1144,6 +1132,11 @@ operator|.
 name|submitBackgroundOperation
 argument_list|(
 name|backgroundOperation
+argument_list|)
+decl_stmt|;
+name|setBackgroundHandle
+argument_list|(
+name|backgroundHandle
 argument_list|)
 expr_stmt|;
 block|}
@@ -1191,9 +1184,19 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|runAsync
+name|shouldRunAsync
+argument_list|()
 condition|)
 block|{
+name|Future
+argument_list|<
+name|?
+argument_list|>
+name|backgroundHandle
+init|=
+name|getBackgroundHandle
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|backgroundHandle
@@ -2046,7 +2049,8 @@ operator|.
 name|isEmpty
 argument_list|()
 operator|||
-name|runAsync
+name|shouldRunAsync
+argument_list|()
 condition|)
 block|{
 comment|// clone the partent session config for this query

@@ -3984,6 +3984,15 @@ argument_list|,
 literal|10
 argument_list|)
 block|,
+comment|// Time in milliseconds that HiveServer2 will wait,
+comment|// before responding to asynchronous calls that use long polling
+name|HIVE_SERVER2_LONG_POLLING_TIMEOUT
+argument_list|(
+literal|"hive.server2.long.polling.timeout"
+argument_list|,
+literal|5000L
+argument_list|)
+block|,
 comment|// HiveServer2 auth configuration
 name|HIVE_SERVER2_AUTHENTICATION
 argument_list|(

@@ -149,6 +149,8 @@ argument_list|(
 name|parentSession
 argument_list|,
 name|opType
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|setHasResultSet
