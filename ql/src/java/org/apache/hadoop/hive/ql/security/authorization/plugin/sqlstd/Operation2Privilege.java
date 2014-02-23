@@ -1540,7 +1540,7 @@ name|InOutPrivs
 argument_list|(
 name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|,
-literal|null
+name|OWNER_PRIV_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
