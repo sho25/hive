@@ -7369,7 +7369,9 @@ block|,
 literal|".*USING 'java -cp.*"
 block|,
 literal|"^Deleted.*"
-block|,   }
+block|,
+literal|".*DagName:.*"
+block|}
 argument_list|)
 decl_stmt|;
 specifier|public
