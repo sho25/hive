@@ -4011,6 +4011,8 @@ literal|"LDAP"
 argument_list|,
 literal|"KERBEROS"
 argument_list|,
+literal|"PAM"
+argument_list|,
 literal|"CUSTOM"
 argument_list|)
 argument_list|)
@@ -4053,6 +4055,15 @@ block|,
 name|HIVE_SERVER2_CUSTOM_AUTHENTICATION_CLASS
 argument_list|(
 literal|"hive.server2.custom.authentication.class"
+argument_list|,
+literal|null
+argument_list|)
+block|,
+comment|// List of the underlying pam services that should be used when auth type is PAM
+comment|// A file with the same name must exist in /etc/pam.d
+name|HIVE_SERVER2_PAM_SERVICES
+argument_list|(
+literal|"hive.server2.authentication.pam.services"
 argument_list|,
 literal|null
 argument_list|)
