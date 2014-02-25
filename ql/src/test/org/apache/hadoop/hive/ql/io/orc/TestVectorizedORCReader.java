@@ -1053,6 +1053,8 @@ name|conf
 argument_list|)
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|Reader
@@ -1070,6 +1072,8 @@ name|conf
 argument_list|)
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|RecordReaderImpl

@@ -98,7 +98,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Captures privilege sets, and can be used to compare required and available privileges  * to find missing privileges (if any).  */
+comment|/**  * Captures privilege sets, and can be used to compare required and available privileges  * to find missing privileges (if any).  * ADMIN_PRIV is considered a special privilege, if the user has that, then no privilege is  * missing.  */
 end_comment
 
 begin_class
@@ -204,6 +204,44 @@ operator|new
 name|MissingPrivilegeCapturer
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|availPrivs
+operator|==
+literal|null
+condition|)
+block|{
+name|availPrivs
+operator|=
+operator|new
+name|RequiredPrivileges
+argument_list|()
+expr_stmt|;
+comment|//create an empty priv set
+block|}
+if|if
+condition|(
+name|availPrivs
+operator|.
+name|privilegeGrantSet
+operator|.
+name|contains
+argument_list|(
+name|SQLPrivTypeGrant
+operator|.
+name|ADMIN_PRIV
+argument_list|)
+condition|)
+block|{
+comment|//you are an admin! You have all privileges, no missing privileges
+return|return
+name|missingPrivCapturer
+operator|.
+name|getMissingPrivileges
+argument_list|()
+return|;
+block|}
+comment|// check the mere mortals!
 for|for
 control|(
 name|SQLPrivTypeGrant
@@ -241,6 +279,7 @@ name|getMissingPrivileges
 argument_list|()
 return|;
 block|}
+specifier|public
 name|void
 name|addPrivilege
 parameter_list|(

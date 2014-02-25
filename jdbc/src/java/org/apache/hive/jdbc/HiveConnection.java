@@ -3145,14 +3145,75 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// JDK 1.7
+if|if
+condition|(
+name|isClosed
+condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"Connection is closed"
 argument_list|)
 throw|;
+block|}
+name|Statement
+name|stmt
+init|=
+name|createStatement
+argument_list|()
+decl_stmt|;
+name|ResultSet
+name|res
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"SELECT current_database()"
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|res
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Failed to get schema information"
+argument_list|)
+throw|;
+block|}
+name|String
+name|schemaName
+init|=
+name|res
+operator|.
+name|getString
+argument_list|(
+literal|1
+argument_list|)
+decl_stmt|;
+name|res
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+return|return
+name|schemaName
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getTransactionIsolation()    */
 annotation|@
@@ -3640,14 +3701,22 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
+comment|// Per JDBC spec, if the driver does not support catalogs,
+comment|// it will silently ignore this request.
+if|if
+condition|(
+name|isClosed
+condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"Connection is closed"
 argument_list|)
 throw|;
+block|}
+return|return;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setClientInfo(java.util.Properties)    */
 annotation|@
@@ -3818,13 +3887,59 @@ throws|throws
 name|SQLException
 block|{
 comment|// JDK 1.7
+if|if
+condition|(
+name|isClosed
+condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"Connection is closed"
 argument_list|)
 throw|;
+block|}
+if|if
+condition|(
+name|schema
+operator|==
+literal|null
+operator|||
+name|schema
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Schema name is null or empty"
+argument_list|)
+throw|;
+block|}
+name|Statement
+name|stmt
+init|=
+name|createStatement
+argument_list|()
+decl_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"use "
+operator|+
+name|schema
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setTransactionIsolation(int)    */
 annotation|@

@@ -654,6 +654,8 @@ name|username
 argument_list|,
 name|password
 argument_list|,
+name|hiveConf
+argument_list|,
 name|sessionConf
 argument_list|,
 name|delegationToken
@@ -693,6 +695,8 @@ argument_list|,
 name|username
 argument_list|,
 name|password
+argument_list|,
+name|hiveConf
 argument_list|,
 name|sessionConf
 argument_list|)

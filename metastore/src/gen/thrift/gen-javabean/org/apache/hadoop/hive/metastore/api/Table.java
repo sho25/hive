@@ -8456,7 +8456,7 @@ block|{
 name|FieldSchema
 name|_elem176
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem176
 operator|=
 operator|new
@@ -10458,7 +10458,7 @@ block|{
 name|FieldSchema
 name|_elem187
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem187
 operator|=
 operator|new

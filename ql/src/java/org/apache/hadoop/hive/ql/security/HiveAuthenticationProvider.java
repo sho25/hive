@@ -110,6 +110,7 @@ parameter_list|()
 throws|throws
 name|HiveException
 function_decl|;
+comment|/**    * This function is meant to be used only for hive internal implementations of this interface.    * SessionState is not a public interface.    * @param ss SessionState that created this instance    */
 specifier|public
 name|void
 name|setSessionState

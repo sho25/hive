@@ -367,6 +367,9 @@ name|fs
 parameter_list|,
 name|Path
 name|path
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -378,6 +381,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|path
+argument_list|,
+name|conf
 argument_list|)
 return|;
 block|}
@@ -394,6 +399,9 @@ name|path
 parameter_list|,
 name|FileMetaInfo
 name|fileMetaInfo
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -407,6 +415,8 @@ argument_list|,
 name|path
 argument_list|,
 name|fileMetaInfo
+argument_list|,
+name|conf
 argument_list|)
 return|;
 block|}

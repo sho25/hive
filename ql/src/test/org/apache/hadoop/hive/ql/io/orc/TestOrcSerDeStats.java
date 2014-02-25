@@ -1310,6 +1310,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2117,6 +2119,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// stats from reader
@@ -2334,6 +2338,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// stats from reader
@@ -2542,6 +2548,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// stats from reader
@@ -2952,6 +2960,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -3974,6 +3984,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -4779,6 +4791,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|oldFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|int

@@ -167,6 +167,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|fs
 operator|.
 name|FSDataInputStream
@@ -700,6 +714,11 @@ name|includedRowGroups
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+specifier|final
+name|Configuration
+name|conf
+decl_stmt|;
 name|RecordReaderImpl
 parameter_list|(
 name|Iterable
@@ -747,6 +766,9 @@ parameter_list|,
 name|String
 index|[]
 name|columnNames
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -785,6 +807,12 @@ operator|.
 name|included
 operator|=
 name|included
+expr_stmt|;
+name|this
+operator|.
+name|conf
+operator|=
+name|conf
 expr_stmt|;
 name|this
 operator|.
@@ -960,6 +988,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|indexes
@@ -1119,6 +1149,11 @@ name|valuePresent
 init|=
 literal|false
 decl_stmt|;
+specifier|protected
+specifier|final
+name|Configuration
+name|conf
+decl_stmt|;
 name|TreeReader
 parameter_list|(
 name|Path
@@ -1126,6 +1161,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|this
@@ -1139,6 +1177,12 @@ operator|.
 name|columnId
 operator|=
 name|columnId
+expr_stmt|;
+name|this
+operator|.
+name|conf
+operator|=
+name|conf
 expr_stmt|;
 block|}
 name|void
@@ -1224,6 +1268,8 @@ argument_list|(
 name|in
 argument_list|,
 name|signed
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -1622,6 +1668,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -1629,6 +1678,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -1902,6 +1953,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -1909,6 +1963,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -2178,6 +2234,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -2185,6 +2244,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -2538,6 +2599,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -2545,6 +2609,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -2898,6 +2964,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -2905,6 +2974,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -3253,6 +3324,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -3260,6 +3334,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -3655,6 +3731,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -3662,6 +3741,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4049,6 +4130,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -4056,6 +4140,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4502,6 +4588,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -4509,6 +4598,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -5196,6 +5287,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -5203,6 +5297,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -5595,6 +5691,9 @@ name|precision
 parameter_list|,
 name|int
 name|scale
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -5602,6 +5701,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|this
@@ -6212,6 +6313,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -6219,6 +6323,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -6296,6 +6402,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 break|break;
@@ -6313,6 +6421,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 break|break;
@@ -6458,6 +6568,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -6465,6 +6578,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|scratchlcv
@@ -7302,6 +7417,9 @@ name|path
 parameter_list|,
 name|int
 name|columnId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -7309,6 +7427,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|scratchlcv
@@ -8219,6 +8339,9 @@ name|columnId
 parameter_list|,
 name|int
 name|maxLength
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -8226,6 +8349,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|this
@@ -8334,6 +8459,9 @@ name|columnId
 parameter_list|,
 name|int
 name|maxLength
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -8341,6 +8469,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|this
@@ -8467,6 +8597,9 @@ parameter_list|,
 name|boolean
 index|[]
 name|included
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -8476,6 +8609,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|OrcProto
@@ -8571,6 +8706,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -9043,6 +9180,9 @@ parameter_list|,
 name|boolean
 index|[]
 name|included
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -9052,6 +9192,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|OrcProto
@@ -9137,6 +9279,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -9520,6 +9664,9 @@ parameter_list|,
 name|boolean
 index|[]
 name|included
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -9529,6 +9676,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|OrcProto
@@ -9559,6 +9708,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -10052,6 +10203,9 @@ parameter_list|,
 name|boolean
 index|[]
 name|included
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -10061,6 +10215,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|OrcProto
@@ -10118,6 +10274,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -10151,6 +10309,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -10611,6 +10771,9 @@ parameter_list|,
 name|boolean
 index|[]
 name|included
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -10645,6 +10808,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10657,6 +10822,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10669,6 +10836,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10681,6 +10850,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10693,6 +10864,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10705,6 +10878,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10717,6 +10892,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10729,6 +10906,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10763,6 +10942,8 @@ name|type
 operator|.
 name|getMaximumLength
 argument_list|()
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10797,6 +10978,8 @@ name|type
 operator|.
 name|getMaximumLength
 argument_list|()
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10809,6 +10992,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10821,6 +11006,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10833,6 +11020,8 @@ argument_list|(
 name|path
 argument_list|,
 name|columnId
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10883,6 +11072,8 @@ argument_list|,
 name|precision
 argument_list|,
 name|scale
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10899,6 +11090,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10915,6 +11108,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10931,6 +11126,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 return|;
 case|case
@@ -10947,6 +11144,8 @@ argument_list|,
 name|types
 argument_list|,
 name|included
+argument_list|,
+name|conf
 argument_list|)
 return|;
 default|default:

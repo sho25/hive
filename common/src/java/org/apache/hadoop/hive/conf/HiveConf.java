@@ -2730,6 +2730,13 @@ argument_list|,
 literal|10
 argument_list|)
 block|,
+name|HIVE_ORC_SKIP_CORRUPT_DATA
+argument_list|(
+literal|"hive.exec.orc.skip.corrupt.data"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"
@@ -4004,6 +4011,15 @@ argument_list|(
 literal|"hive.server2.async.exec.keepalive.time"
 argument_list|,
 literal|10
+argument_list|)
+block|,
+comment|// Time in milliseconds that HiveServer2 will wait,
+comment|// before responding to asynchronous calls that use long polling
+name|HIVE_SERVER2_LONG_POLLING_TIMEOUT
+argument_list|(
+literal|"hive.server2.long.polling.timeout"
+argument_list|,
+literal|5000L
 argument_list|)
 block|,
 comment|// HiveServer2 auth configuration

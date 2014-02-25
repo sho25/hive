@@ -387,6 +387,8 @@ argument_list|,
 name|statement
 argument_list|,
 name|confOverlay
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|this

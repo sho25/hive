@@ -166,9 +166,6 @@ operator|.
 name|matcher
 argument_list|(
 name|type
-operator|.
-name|toLowerCase
-argument_list|()
 argument_list|)
 operator|.
 name|matches

@@ -5107,7 +5107,7 @@ block|{
 name|int
 name|_elem2
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem2
 operator|=
 name|iprot
@@ -5237,7 +5237,7 @@ block|{
 name|String
 name|_elem5
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem5
 operator|=
 name|iprot
@@ -5367,7 +5367,7 @@ block|{
 name|IntString
 name|_elem8
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem8
 operator|=
 operator|new
@@ -6672,7 +6672,7 @@ block|{
 name|int
 name|_elem23
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem23
 operator|=
 name|iprot
@@ -6785,7 +6785,7 @@ block|{
 name|String
 name|_elem26
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem26
 operator|=
 name|iprot
@@ -6898,7 +6898,7 @@ block|{
 name|IntString
 name|_elem29
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem29
 operator|=
 operator|new

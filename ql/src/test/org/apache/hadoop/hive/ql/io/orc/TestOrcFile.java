@@ -1511,6 +1511,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|oldFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|int
@@ -4096,6 +4098,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// check the stats
@@ -4824,6 +4828,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|Metadata
@@ -5913,6 +5919,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|Metadata
@@ -8387,6 +8395,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// check out the statistics
@@ -8963,6 +8973,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -9331,6 +9343,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -10392,6 +10406,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -11580,6 +11596,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|RecordReader
@@ -11872,6 +11890,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -12441,6 +12461,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -13704,6 +13726,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|int
@@ -13882,6 +13906,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|testFilePath
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|assertEquals

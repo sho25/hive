@@ -80,7 +80,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Factory for getting current valid instance of IMetaStoreClient  */
+comment|/**  * Factory for getting current valid instance of IMetaStoreClient  * Metastore client cannot be cached in authorization interface as that  * can get invalidated between the calls with the logic in Hive class.  * The standard way of getting metastore client object is through Hive.get().getMSC().  * But Hive class is not a public interface, so this factory helps in hiding Hive  * class from the authorization interface users.  */
 end_comment
 
 begin_interface
