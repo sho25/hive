@@ -2653,18 +2653,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|stringtemplate
 operator|.
 name|v4
@@ -7240,7 +7228,7 @@ operator|.
 name|getAllRoles
 argument_list|()
 decl_stmt|;
-name|writeListToFile
+name|writeListToFileAfterSort
 argument_list|(
 name|allRoles
 argument_list|,
@@ -7302,7 +7290,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|writeListToFile
+name|writeListToFileAfterSort
 argument_list|(
 name|roleNames
 argument_list|,
@@ -7348,7 +7336,7 @@ block|}
 comment|/**    * Write list of string entries into given file    * @param entries    * @param resFile    * @throws IOException    */
 specifier|private
 name|void
-name|writeListToFile
+name|writeListToFileAfterSort
 parameter_list|(
 name|List
 argument_list|<
@@ -7362,6 +7350,13 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|entries
+argument_list|)
+expr_stmt|;
 name|StringBuilder
 name|sb
 init|=
