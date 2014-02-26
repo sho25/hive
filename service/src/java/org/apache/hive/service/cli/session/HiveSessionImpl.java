@@ -720,6 +720,7 @@ argument_list|(
 name|serverhiveConf
 argument_list|)
 expr_stmt|;
+comment|//set conf properties specified by user from client side
 if|if
 condition|(
 name|sessionConfMap
@@ -823,6 +824,13 @@ argument_list|(
 name|hiveConf
 argument_list|,
 name|username
+argument_list|)
+expr_stmt|;
+name|sessionState
+operator|.
+name|setIsHiveServerQuery
+argument_list|(
+literal|true
 argument_list|)
 expr_stmt|;
 name|SessionState

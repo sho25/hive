@@ -390,7 +390,7 @@ name|Utilities
 operator|.
 name|newLineCode
 decl_stmt|;
-comment|/** The number of columns to be used in pretty formatting metadata output.      * If -1, then the current terminal width is auto-detected and used.      */
+comment|/** The number of columns to be used in pretty formatting metadata output.    * If -1, then the current terminal width is auto-detected and used.    */
 specifier|private
 specifier|final
 name|int
@@ -410,7 +410,7 @@ operator|=
 name|prettyOutputNumCols
 expr_stmt|;
 block|}
-comment|/**      * Write an error message.      */
+comment|/**    * Write an error message.    */
 annotation|@
 name|Override
 specifier|public
@@ -555,7 +555,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Show a list of tables.      */
+comment|/**    * Show a list of tables.    */
 annotation|@
 name|Override
 specifier|public
@@ -665,6 +665,9 @@ name|isExt
 parameter_list|,
 name|boolean
 name|isPretty
+parameter_list|,
+name|boolean
+name|isOutputPadded
 parameter_list|)
 throws|throws
 name|HiveException
@@ -726,6 +729,8 @@ argument_list|,
 name|partCols
 argument_list|,
 name|isFormatted
+argument_list|,
+name|isOutputPadded
 argument_list|)
 expr_stmt|;
 block|}
@@ -740,6 +745,8 @@ argument_list|(
 name|cols
 argument_list|,
 name|isFormatted
+argument_list|,
+name|isOutputPadded
 argument_list|)
 expr_stmt|;
 block|}
@@ -2190,7 +2197,7 @@ name|terminator
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Show the table partitions.      */
+comment|/**    * Show the table partitions.    */
 annotation|@
 name|Override
 specifier|public
@@ -2305,7 +2312,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Show the list of databases      */
+comment|/**    * Show the list of databases    */
 annotation|@
 name|Override
 specifier|public
@@ -2366,7 +2373,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Describe a database      */
+comment|/**    * Describe a database    */
 annotation|@
 name|Override
 specifier|public
