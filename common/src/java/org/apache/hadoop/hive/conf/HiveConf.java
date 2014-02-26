@@ -2737,6 +2737,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVE_ORC_ZEROCOPY
+argument_list|(
+literal|"hive.exec.orc.zerocopy"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"

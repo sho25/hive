@@ -1807,7 +1807,9 @@ name|test1
 init|=
 operator|new
 name|TestOrcFile
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 decl_stmt|;
 name|test1
 operator|.
