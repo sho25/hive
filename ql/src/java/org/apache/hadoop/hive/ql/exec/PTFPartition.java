@@ -384,7 +384,7 @@ name|HiveException
 block|{
 name|elems
 operator|.
-name|clear
+name|clearRows
 argument_list|()
 expr_stmt|;
 block|}
@@ -448,7 +448,7 @@ if|if
 condition|(
 name|elems
 operator|.
-name|size
+name|rowCount
 argument_list|()
 operator|==
 name|Integer
@@ -522,7 +522,7 @@ name|int
 operator|)
 name|elems
 operator|.
-name|size
+name|rowCount
 argument_list|()
 return|;
 block|}

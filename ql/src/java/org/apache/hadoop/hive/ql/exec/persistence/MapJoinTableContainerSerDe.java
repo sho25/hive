@@ -382,11 +382,11 @@ argument_list|,
 name|keyContainer
 argument_list|)
 expr_stmt|;
-name|MapJoinRowContainer
+name|MapJoinEagerRowContainer
 name|values
 init|=
 operator|new
-name|MapJoinRowContainer
+name|MapJoinEagerRowContainer
 argument_list|()
 decl_stmt|;
 name|values

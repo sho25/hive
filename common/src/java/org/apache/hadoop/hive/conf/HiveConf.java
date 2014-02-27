@@ -2244,6 +2244,13 @@ argument_list|,
 literal|100
 argument_list|)
 block|,
+name|HIVEMAPJOINLAZYHASHTABLE
+argument_list|(
+literal|"hive.mapjoin.lazy.hashtable"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVESMBJOINCACHEROWS
 argument_list|(
 literal|"hive.smbjoin.cache.rows"

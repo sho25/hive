@@ -1149,6 +1149,7 @@ operator|.
 name|copy
 argument_list|()
 expr_stmt|;
+comment|// TODO: why copy?
 name|aliasFilterTags
 index|[
 name|pos
@@ -1202,7 +1203,7 @@ index|[
 name|tag
 index|]
 operator|.
-name|clear
+name|clearRows
 argument_list|()
 expr_stmt|;
 for|for

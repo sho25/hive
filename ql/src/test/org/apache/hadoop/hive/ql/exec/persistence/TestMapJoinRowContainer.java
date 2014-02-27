@@ -101,7 +101,7 @@ name|MapJoinRowContainer
 name|container1
 init|=
 operator|new
-name|MapJoinRowContainer
+name|MapJoinEagerRowContainer
 argument_list|()
 decl_stmt|;
 name|container1
@@ -253,7 +253,7 @@ literal|4
 argument_list|,
 name|container1
 operator|.
-name|size
+name|rowCount
 argument_list|()
 argument_list|)
 expr_stmt|;

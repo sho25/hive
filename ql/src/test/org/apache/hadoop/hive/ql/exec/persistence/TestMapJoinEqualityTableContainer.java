@@ -224,7 +224,7 @@ block|{
 name|rowContainer
 operator|=
 operator|new
-name|MapJoinRowContainer
+name|MapJoinEagerRowContainer
 argument_list|()
 expr_stmt|;
 name|rowContainer

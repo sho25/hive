@@ -554,7 +554,7 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-name|clear
+name|clearRows
 argument_list|()
 expr_stmt|;
 name|LOG
@@ -821,14 +821,14 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|clear
+name|clearRows
 parameter_list|()
 throws|throws
 name|HiveException
 block|{
 name|super
 operator|.
-name|clear
+name|clearRows
 argument_list|()
 expr_stmt|;
 name|resetReadBlocks
@@ -1107,7 +1107,7 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|clear
+name|clearRows
 argument_list|()
 expr_stmt|;
 name|LOG
