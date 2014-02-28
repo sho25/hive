@@ -783,6 +783,53 @@ literal|"Store into a partition with sorted column definition from Pig/Mapreduce
 argument_list|)
 throw|;
 block|}
+comment|// Set up a common id hash for this job, so that when we create any temporary directory
+comment|// later on, it is guaranteed to be unique.
+name|String
+name|idHash
+decl_stmt|;
+if|if
+condition|(
+operator|(
+name|idHash
+operator|=
+name|conf
+operator|.
+name|get
+argument_list|(
+name|HCatConstants
+operator|.
+name|HCAT_OUTPUT_ID_HASH
+argument_list|)
+operator|)
+operator|==
+literal|null
+condition|)
+block|{
+name|idHash
+operator|=
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|Math
+operator|.
+name|random
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+name|conf
+operator|.
+name|set
+argument_list|(
+name|HCatConstants
+operator|.
+name|HCAT_OUTPUT_ID_HASH
+argument_list|,
+name|idHash
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|table
@@ -1087,9 +1134,6 @@ name|random
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//              LOG.info("New dynHash : ["+dynHash+"]");
-comment|//            }else{
-comment|//              LOG.info("Old dynHash : ["+dynHash+"]");
 block|}
 name|conf
 operator|.

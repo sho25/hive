@@ -107,6 +107,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|mapreduce
+operator|.
+name|Job
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hive
 operator|.
 name|hcatalog
@@ -271,7 +285,31 @@ name|junit
 operator|.
 name|Assert
 operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
 name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
 import|;
 end_import
 
@@ -647,7 +685,8 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|//Test for duplicate publish
+comment|//Test for duplicate publish -- this will either fail on job creation time
+comment|// and throw an exception, or will fail at runtime, and fail the job.
 name|IOException
 name|exc
 init|=
@@ -655,6 +694,9 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+name|Job
+name|j
+init|=
 name|runMRCreate
 argument_list|(
 name|partitionMap
@@ -666,6 +708,18 @@ argument_list|,
 literal|20
 argument_list|,
 literal|true
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+operator|!
+name|isTableImmutable
+argument_list|()
+argument_list|,
+name|j
+operator|.
+name|isSuccessful
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -679,12 +733,6 @@ name|exc
 operator|=
 name|e
 expr_stmt|;
-block|}
-name|assertNotNull
-argument_list|(
-name|exc
-argument_list|)
-expr_stmt|;
 name|assertTrue
 argument_list|(
 name|exc
@@ -692,12 +740,14 @@ operator|instanceof
 name|HCatException
 argument_list|)
 expr_stmt|;
-name|assertEquals
+name|assertTrue
 argument_list|(
 name|ErrorType
 operator|.
 name|ERROR_DUPLICATE_PARTITION
-argument_list|,
+operator|.
+name|equals
+argument_list|(
 operator|(
 operator|(
 name|HCatException
@@ -708,7 +758,22 @@ operator|.
 name|getErrorType
 argument_list|()
 argument_list|)
+argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|isTableImmutable
+argument_list|()
+condition|)
+block|{
+name|assertNull
+argument_list|(
+name|exc
+argument_list|)
+expr_stmt|;
+block|}
 comment|//Test for publish with invalid partition key name
 name|exc
 operator|=
@@ -739,6 +804,9 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+name|Job
+name|j
+init|=
 name|runMRCreate
 argument_list|(
 name|partitionMap
@@ -750,6 +818,14 @@ argument_list|,
 literal|20
 argument_list|,
 literal|true
+argument_list|)
+decl_stmt|;
+name|assertFalse
+argument_list|(
+name|j
+operator|.
+name|isSuccessful
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -763,7 +839,6 @@ name|exc
 operator|=
 name|e
 expr_stmt|;
-block|}
 name|assertNotNull
 argument_list|(
 name|exc
@@ -793,6 +868,7 @@ name|getErrorType
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|//Test for publish with missing partition key values
 name|exc
 operator|=
@@ -910,12 +986,27 @@ expr_stmt|;
 comment|//    assertTrue(exc instanceof HCatException);
 comment|//    assertEquals(ErrorType.ERROR_PUBLISHING_PARTITION, ((HCatException) exc).getErrorType());
 comment|// With Dynamic partitioning, this isn't an error that the keyValues specified didn't values
-comment|//Read should get 10 + 20 rows
+comment|//Read should get 10 + 20 rows if immutable, 50 (10+20+20) if mutable
+if|if
+condition|(
+name|isTableImmutable
+argument_list|()
+condition|)
+block|{
 name|runMRRead
 argument_list|(
 literal|30
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|runMRRead
+argument_list|(
+literal|50
+argument_list|)
+expr_stmt|;
+block|}
 comment|//Read with partition filter
 name|runMRRead
 argument_list|(
@@ -924,6 +1015,19 @@ argument_list|,
 literal|"part1 = \"p1value1\""
 argument_list|)
 expr_stmt|;
+name|runMRRead
+argument_list|(
+literal|10
+argument_list|,
+literal|"part0 = \"p0value1\""
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|isTableImmutable
+argument_list|()
+condition|)
+block|{
 name|runMRRead
 argument_list|(
 literal|20
@@ -940,13 +1044,6 @@ argument_list|)
 expr_stmt|;
 name|runMRRead
 argument_list|(
-literal|10
-argument_list|,
-literal|"part0 = \"p0value1\""
-argument_list|)
-expr_stmt|;
-name|runMRRead
-argument_list|(
 literal|20
 argument_list|,
 literal|"part0 = \"p0value2\""
@@ -959,6 +1056,38 @@ argument_list|,
 literal|"part0 = \"p0value1\" or part0 = \"p0value2\""
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|runMRRead
+argument_list|(
+literal|40
+argument_list|,
+literal|"part1 = \"p1value2\""
+argument_list|)
+expr_stmt|;
+name|runMRRead
+argument_list|(
+literal|50
+argument_list|,
+literal|"part1 = \"p1value1\" or part1 = \"p1value2\""
+argument_list|)
+expr_stmt|;
+name|runMRRead
+argument_list|(
+literal|40
+argument_list|,
+literal|"part0 = \"p0value2\""
+argument_list|)
+expr_stmt|;
+name|runMRRead
+argument_list|(
+literal|50
+argument_list|,
+literal|"part0 = \"p0value1\" or part0 = \"p0value2\""
+argument_list|)
+expr_stmt|;
+block|}
 name|tableSchemaTest
 argument_list|()
 expr_stmt|;
@@ -2145,12 +2274,28 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isTableImmutable
+argument_list|()
+condition|)
+block|{
 comment|//Read should get 10 + 20 + 10 + 10 + 20 rows
 name|runMRRead
 argument_list|(
 literal|70
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|runMRRead
+argument_list|(
+literal|90
+argument_list|)
+expr_stmt|;
+comment|// +20 from the duplicate publish
+block|}
 block|}
 comment|//Test that data inserted through hcatoutputformat is readable from hive
 specifier|private
@@ -2221,6 +2366,13 @@ argument_list|(
 name|res
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isTableImmutable
+argument_list|()
+condition|)
+block|{
+comment|//Read should get 10 + 20 + 10 + 10 + 20 rows
 name|assertEquals
 argument_list|(
 literal|70
@@ -2231,6 +2383,21 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|assertEquals
+argument_list|(
+literal|90
+argument_list|,
+name|res
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// +20 from the duplicate publish
+block|}
 block|}
 block|}
 end_class

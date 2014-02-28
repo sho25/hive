@@ -970,7 +970,9 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|"] Expected ERROR_PUBLISHING_PARTITION or ERROR_MOVE_FAILED"
+literal|"] Expected ERROR_PUBLISHING_PARTITION or ERROR_MOVE_FAILED "
+operator|+
+literal|"or ERROR_DUPLICATE_PARTITION"
 argument_list|,
 operator|(
 name|ErrorType
@@ -992,6 +994,22 @@ operator|(
 name|ErrorType
 operator|.
 name|ERROR_MOVE_FAILED
+operator|==
+operator|(
+operator|(
+name|HCatException
+operator|)
+name|exc
+operator|)
+operator|.
+name|getErrorType
+argument_list|()
+operator|)
+operator|||
+operator|(
+name|ErrorType
+operator|.
+name|ERROR_DUPLICATE_PARTITION
 operator|==
 operator|(
 operator|(

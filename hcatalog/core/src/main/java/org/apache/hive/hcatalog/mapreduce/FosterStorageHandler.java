@@ -645,6 +645,21 @@ operator|.
 name|HCAT_DYNAMIC_PTN_JOBID
 argument_list|)
 decl_stmt|;
+name|String
+name|idHash
+init|=
+name|tableDesc
+operator|.
+name|getJobProperties
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|HCatConstants
+operator|.
+name|HCAT_OUTPUT_ID_HASH
+argument_list|)
+decl_stmt|;
 comment|// For dynamic partitioned writes without all keyvalues specified,
 comment|// we create a temp dir for the associated write job
 if|if
@@ -722,6 +737,26 @@ operator|.
 name|DYNTEMP_DIR_NAME
 operator|+
 name|dynHash
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|parentPath
+operator|=
+operator|new
+name|Path
+argument_list|(
+name|parentPath
+argument_list|,
+name|FileOutputCommitterContainer
+operator|.
+name|SCRATCH_DIR_NAME
+operator|+
+name|idHash
 argument_list|)
 operator|.
 name|toString
@@ -863,10 +898,10 @@ operator|==
 literal|0
 condition|)
 block|{
-comment|// For non-partitioned tables, we send them to the temp dir
+comment|// Unpartitioned table, writing to the scratch dir directly is good enough.
 name|outputLocation
 operator|=
-name|TEMP_DIR_NAME
+literal|""
 expr_stmt|;
 block|}
 else|else
@@ -955,6 +990,19 @@ name|values
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|outputLocation
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|outputLocation
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 name|jobInfo
 operator|.
 name|setLocation
@@ -971,6 +1019,24 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|jobInfo
+operator|.
+name|setLocation
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|parentPath
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|//only set output dir if partition is fully materialized
 if|if
 condition|(
