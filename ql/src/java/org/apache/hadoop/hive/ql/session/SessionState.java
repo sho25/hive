@@ -710,6 +710,13 @@ specifier|protected
 name|boolean
 name|isVerbose
 decl_stmt|;
+comment|/**    * Is the query served from HiveServer2    */
+specifier|private
+name|boolean
+name|isHiveServerQuery
+init|=
+literal|false
+decl_stmt|;
 comment|/*    * HiveHistory Object    */
 specifier|protected
 name|HiveHistory
@@ -948,6 +955,17 @@ return|;
 block|}
 block|}
 specifier|public
+name|boolean
+name|isHiveServerQuery
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|isHiveServerQuery
+return|;
+block|}
+specifier|public
 name|void
 name|setIsSilent
 parameter_list|(
@@ -1005,6 +1023,21 @@ operator|.
 name|isVerbose
 operator|=
 name|isVerbose
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|setIsHiveServerQuery
+parameter_list|(
+name|boolean
+name|isHiveServerQuery
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isHiveServerQuery
+operator|=
+name|isHiveServerQuery
 expr_stmt|;
 block|}
 specifier|public

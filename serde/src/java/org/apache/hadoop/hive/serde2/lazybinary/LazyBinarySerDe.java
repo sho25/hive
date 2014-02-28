@@ -753,6 +753,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|BinaryComparable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|BytesWritable
 import|;
 end_import
@@ -1116,14 +1130,14 @@ if|if
 condition|(
 name|field
 operator|instanceof
-name|BytesWritable
+name|BinaryComparable
 condition|)
 block|{
-name|BytesWritable
+name|BinaryComparable
 name|b
 init|=
 operator|(
-name|BytesWritable
+name|BinaryComparable
 operator|)
 name|field
 decl_stmt|;
@@ -1234,7 +1248,7 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|": expects either BytesWritable or Text object!"
+literal|": expects either BinaryComparable or Text object!"
 argument_list|)
 throw|;
 block|}

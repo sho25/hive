@@ -191,7 +191,7 @@ name|exec
 operator|.
 name|persistence
 operator|.
-name|MapJoinKey
+name|LazyFlatRowContainer
 import|;
 end_import
 
@@ -211,7 +211,7 @@ name|exec
 operator|.
 name|persistence
 operator|.
-name|MapJoinRowContainer
+name|MapJoinKey
 import|;
 end_import
 
@@ -304,6 +304,20 @@ operator|.
 name|serde2
 operator|.
 name|SerDeException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|BytesWritable
 import|;
 end_import
 
@@ -519,6 +533,22 @@ operator|.
 name|HIVEHASHTABLELOADFACTOR
 argument_list|)
 decl_stmt|;
+name|boolean
+name|useLazyRows
+init|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEMAPJOINLAZYHASHTABLE
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -624,9 +654,12 @@ name|getCurrentKey
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|MapJoinRowContainer
+name|LazyFlatRowContainer
 name|values
 init|=
+operator|(
+name|LazyFlatRowContainer
+operator|)
 name|tableContainer
 operator|.
 name|get
@@ -644,7 +677,7 @@ block|{
 name|values
 operator|=
 operator|new
-name|MapJoinRowContainer
+name|LazyFlatRowContainer
 argument_list|()
 expr_stmt|;
 name|tableContainer
@@ -659,7 +692,7 @@ expr_stmt|;
 block|}
 name|values
 operator|.
-name|read
+name|add
 argument_list|(
 name|mapJoinTableSerdes
 index|[
@@ -670,12 +703,14 @@ name|getValueContext
 argument_list|()
 argument_list|,
 operator|(
-name|Writable
+name|BytesWritable
 operator|)
 name|kvReader
 operator|.
 name|getCurrentValue
 argument_list|()
+argument_list|,
+name|useLazyRows
 argument_list|)
 expr_stmt|;
 block|}

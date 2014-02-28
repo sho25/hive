@@ -1754,7 +1754,7 @@ literal|null
 operator|&&
 name|bigTblRowContainer
 operator|.
-name|size
+name|rowCount
 argument_list|()
 operator|>
 literal|0
@@ -1912,7 +1912,7 @@ index|[
 name|pos
 index|]
 operator|.
-name|size
+name|rowCount
 argument_list|()
 operator|>
 literal|0
@@ -2193,7 +2193,7 @@ index|[
 name|pos
 index|]
 operator|.
-name|clear
+name|clearRows
 argument_list|()
 expr_stmt|;
 name|this
@@ -2398,7 +2398,7 @@ index|]
 decl_stmt|;
 name|oldRowContainer
 operator|.
-name|clear
+name|clearRows
 argument_list|()
 expr_stmt|;
 name|this

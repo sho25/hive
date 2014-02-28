@@ -177,26 +177,6 @@ name|Table
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|SessionState
-operator|.
-name|LogHelper
-import|;
-end_import
-
 begin_comment
 comment|/**  * Interface to format table and index information.  We can format it  * for human readability (lines of text) or for machine readability  * (json).  */
 end_comment
@@ -206,7 +186,7 @@ specifier|public
 interface|interface
 name|MetaDataFormatter
 block|{
-comment|/**      * Write an error message.      * @param sqlState if {@code null}, will be ignored      */
+comment|/**    * Write an error message.    * @param sqlState if {@code null}, will be ignored    */
 specifier|public
 name|void
 name|error
@@ -249,7 +229,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**      * Show a list of tables.      */
+comment|/**    * Show a list of tables.    */
 specifier|public
 name|void
 name|showTables
@@ -266,7 +246,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**      * Describe table.      */
+comment|/**    * Describe table.    * @param out    * @param colPath    * @param tableName    * @param tbl    * @param part    * @param cols    * @param isFormatted - describe with formatted keyword    * @param isExt    * @param isPretty    * @param isOutputPadded - if true, add spacing and indentation    * @throws HiveException    */
 specifier|public
 name|void
 name|describeTable
@@ -300,11 +280,14 @@ name|isExt
 parameter_list|,
 name|boolean
 name|isPretty
+parameter_list|,
+name|boolean
+name|isOutputPadded
 parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**      * Show the table status.      */
+comment|/**    * Show the table status.    */
 specifier|public
 name|void
 name|showTableStatus
@@ -338,7 +321,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**      * Show the table partitions.      */
+comment|/**    * Show the table partitions.    */
 specifier|public
 name|void
 name|showTablePartitons
@@ -355,7 +338,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**      * Show the databases      */
+comment|/**    * Show the databases    */
 specifier|public
 name|void
 name|showDatabases
@@ -372,7 +355,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**      * Describe a database.      */
+comment|/**    * Describe a database.    */
 specifier|public
 name|void
 name|showDatabaseDescription

@@ -8500,7 +8500,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**   * Alter partition column type in a table   *   * @param db   *          Database to rename the partition.   * @param alterPartitionDesc   *          change partition column type.   * @return Returns 0 when execution succeeds and above 0 if it fails.   * @throws HiveException   */
+comment|/**    * Alter partition column type in a table    *    * @param db    *          Database to rename the partition.    * @param alterPartitionDesc    *          change partition column type.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    */
 specifier|private
 name|int
 name|alterTableAlterPart
@@ -14926,6 +14926,20 @@ name|getPartCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// In case the query is served by HiveServer2, don't pad it with spaces,
+comment|// as HiveServer2 output is consumed by JDBC/ODBC clients.
+name|boolean
+name|isOutputPadded
+init|=
+operator|!
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|isHiveServerQuery
+argument_list|()
+decl_stmt|;
 name|outStream
 operator|.
 name|writeBytes
@@ -14937,6 +14951,8 @@ argument_list|(
 name|cols
 argument_list|,
 literal|false
+argument_list|,
+name|isOutputPadded
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18242,6 +18258,20 @@ argument_list|(
 name|cols
 argument_list|)
 expr_stmt|;
+comment|// In case the query is served by HiveServer2, don't pad it with spaces,
+comment|// as HiveServer2 output is consumed by JDBC/ODBC clients.
+name|boolean
+name|isOutputPadded
+init|=
+operator|!
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|isHiveServerQuery
+argument_list|()
+decl_stmt|;
 name|formatter
 operator|.
 name|describeTable
@@ -18272,6 +18302,8 @@ name|descTbl
 operator|.
 name|isPretty
 argument_list|()
+argument_list|,
+name|isOutputPadded
 argument_list|)
 expr_stmt|;
 name|LOG

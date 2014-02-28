@@ -341,7 +341,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**      * Convert the map to a JSON string.      */
+comment|/**    * Convert the map to a JSON string.    */
 specifier|private
 name|void
 name|asJson
@@ -391,7 +391,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Write an error message.      */
+comment|/**    * Write an error message.    */
 annotation|@
 name|Override
 specifier|public
@@ -520,7 +520,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Show a list of tables.      */
+comment|/**    * Show a list of tables.    */
 annotation|@
 name|Override
 specifier|public
@@ -560,7 +560,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Describe table.      */
+comment|/**    * Describe table.    */
 annotation|@
 name|Override
 specifier|public
@@ -596,6 +596,9 @@ name|isExt
 parameter_list|,
 name|boolean
 name|isPretty
+parameter_list|,
+name|boolean
+name|isOutputPadded
 parameter_list|)
 throws|throws
 name|HiveException
@@ -631,6 +634,7 @@ name|part
 operator|!=
 literal|null
 condition|)
+block|{
 name|builder
 operator|.
 name|put
@@ -643,7 +647,9 @@ name|getTPartition
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|builder
 operator|.
 name|put
@@ -656,6 +662,7 @@ name|getTTable
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|asJson
 argument_list|(
@@ -717,6 +724,7 @@ name|col
 range|:
 name|cols
 control|)
+block|{
 name|res
 operator|.
 name|add
@@ -727,6 +735,7 @@ name|col
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|res
 return|;
@@ -921,6 +930,7 @@ name|tbl
 range|:
 name|tbls
 control|)
+block|{
 name|res
 operator|.
 name|add
@@ -939,6 +949,7 @@ name|par
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|res
 return|;
@@ -1201,6 +1212,7 @@ operator|.
 name|isPartitioned
 argument_list|()
 condition|)
+block|{
 name|builder
 operator|.
 name|put
@@ -1216,6 +1228,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|putFileSystemsStats
 argument_list|(
 name|builder
@@ -1781,7 +1794,7 @@ name|unknown
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Show the table partitions.      */
+comment|/**    * Show the table partitions.    */
 annotation|@
 name|Override
 specifier|public
@@ -1877,6 +1890,7 @@ name|part
 range|:
 name|parts
 control|)
+block|{
 name|res
 operator|.
 name|add
@@ -1887,6 +1901,7 @@ name|part
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|res
 return|;
@@ -2041,6 +2056,7 @@ name|val
 operator|!=
 literal|null
 condition|)
+block|{
 name|names
 operator|.
 name|add
@@ -2054,7 +2070,9 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|names
 operator|.
 name|add
@@ -2062,6 +2080,7 @@ argument_list|(
 name|name
 argument_list|)
 expr_stmt|;
+block|}
 name|res
 operator|.
 name|add
@@ -2121,7 +2140,7 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/**      * Show a list of databases      */
+comment|/**    * Show a list of databases    */
 annotation|@
 name|Override
 specifier|public
@@ -2161,7 +2180,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Show the description of a database      */
+comment|/**    * Show the description of a database    */
 annotation|@
 name|Override
 specifier|public

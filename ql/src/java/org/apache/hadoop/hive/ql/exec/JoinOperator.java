@@ -438,7 +438,7 @@ index|[
 name|alias
 index|]
 operator|.
-name|size
+name|rowCount
 argument_list|()
 decl_stmt|;
 name|StructObjectInspector
@@ -535,7 +535,7 @@ index|[
 name|alias
 index|]
 operator|.
-name|clear
+name|clearRows
 argument_list|()
 expr_stmt|;
 block|}

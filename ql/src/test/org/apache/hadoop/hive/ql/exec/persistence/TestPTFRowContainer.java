@@ -575,7 +575,7 @@ assert|assert
 operator|(
 name|rc
 operator|.
-name|size
+name|rowCount
 argument_list|()
 operator|==
 name|sz
