@@ -33543,6 +33543,15 @@ index|]
 argument_list|)
 expr_stmt|;
 block|}
+name|String
+name|colName
+init|=
+name|colInfo
+operator|.
+name|getInternalName
+argument_list|()
+decl_stmt|;
+comment|//default column name
 if|if
 condition|(
 name|field_schemas
@@ -33559,6 +33568,8 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
+operator|!
+operator|(
 literal|""
 operator|.
 name|equals
@@ -33568,33 +33579,18 @@ index|[
 literal|0
 index|]
 argument_list|)
-operator|||
+operator|)
+operator|&&
 name|nm
 index|[
 literal|1
 index|]
-operator|==
+operator|!=
 literal|null
 condition|)
 block|{
-comment|// ast expression is not a valid column name for table
-name|col
-operator|.
-name|setName
-argument_list|(
-name|colInfo
-operator|.
-name|getInternalName
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|col
-operator|.
-name|setName
-argument_list|(
+name|colName
+operator|=
 name|unescapeIdentifier
 argument_list|(
 name|colInfo
@@ -33605,10 +33601,17 @@ argument_list|)
 operator|.
 name|toLowerCase
 argument_list|()
-argument_list|)
 expr_stmt|;
 comment|// remove ``
 block|}
+name|col
+operator|.
+name|setName
+argument_list|(
+name|colName
+argument_list|)
+expr_stmt|;
+empty_stmt|;
 name|col
 operator|.
 name|setType
@@ -33665,10 +33668,7 @@ name|cols
 operator|.
 name|concat
 argument_list|(
-name|colInfo
-operator|.
-name|getInternalName
-argument_list|()
+name|colName
 argument_list|)
 expr_stmt|;
 comment|// Replace VOID type with string when the output is a temp table or

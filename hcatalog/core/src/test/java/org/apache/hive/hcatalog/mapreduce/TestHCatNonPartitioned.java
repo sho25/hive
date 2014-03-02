@@ -107,6 +107,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|mapreduce
+operator|.
+name|Job
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hive
 operator|.
 name|hcatalog
@@ -242,6 +256,30 @@ operator|.
 name|Assert
 operator|.
 name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
 import|;
 end_import
 
@@ -533,7 +571,8 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|//Test for duplicate publish
+comment|//Test for duplicate publish -- this will either fail on job creation time
+comment|// and throw an exception, or will fail at runtime, and fail the job.
 name|IOException
 name|exc
 init|=
@@ -541,6 +580,9 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+name|Job
+name|j
+init|=
 name|runMRCreate
 argument_list|(
 literal|null
@@ -553,6 +595,18 @@ literal|20
 argument_list|,
 literal|true
 argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+operator|!
+name|isTableImmutable
+argument_list|()
+argument_list|,
+name|j
+operator|.
+name|isSuccessful
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -564,14 +618,6 @@ block|{
 name|exc
 operator|=
 name|e
-expr_stmt|;
-block|}
-name|assertTrue
-argument_list|(
-name|exc
-operator|!=
-literal|null
-argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -597,6 +643,20 @@ name|getErrorType
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|isTableImmutable
+argument_list|()
+condition|)
+block|{
+name|assertNull
+argument_list|(
+name|exc
+argument_list|)
+expr_stmt|;
+block|}
 comment|//Test for publish with invalid partition key name
 name|exc
 operator|=
@@ -618,6 +678,9 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+name|Job
+name|j
+init|=
 name|runMRCreate
 argument_list|(
 name|partitionMap
@@ -629,6 +692,14 @@ argument_list|,
 literal|20
 argument_list|,
 literal|true
+argument_list|)
+decl_stmt|;
+name|assertFalse
+argument_list|(
+name|j
+operator|.
+name|isSuccessful
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -642,7 +713,6 @@ name|exc
 operator|=
 name|e
 expr_stmt|;
-block|}
 name|assertTrue
 argument_list|(
 name|exc
@@ -674,12 +744,28 @@ name|getErrorType
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//Read should get 10 rows
+block|}
+comment|//Read should get 10 rows if immutable, 30 if mutable
+if|if
+condition|(
+name|isTableImmutable
+argument_list|()
+condition|)
+block|{
 name|runMRRead
 argument_list|(
 literal|10
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|runMRRead
+argument_list|(
+literal|30
+argument_list|)
+expr_stmt|;
+block|}
 name|hiveReadTest
 argument_list|()
 expr_stmt|;
@@ -753,6 +839,12 @@ argument_list|(
 name|res
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isTableImmutable
+argument_list|()
+condition|)
+block|{
 name|assertEquals
 argument_list|(
 literal|10
@@ -763,6 +855,20 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|assertEquals
+argument_list|(
+literal|30
+argument_list|,
+name|res
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class
