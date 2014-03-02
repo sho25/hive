@@ -127,7 +127,9 @@ name|work
 operator|=
 operator|new
 name|TezWork
-argument_list|()
+argument_list|(
+literal|""
+argument_list|)
 expr_stmt|;
 name|addWork
 argument_list|(

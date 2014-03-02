@@ -135,11 +135,25 @@ name|tez
 operator|.
 name|runtime
 operator|.
-name|library
+name|api
+operator|.
+name|Input
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|runtime
 operator|.
 name|api
 operator|.
-name|KeyValuesReader
+name|LogicalInput
 import|;
 end_import
 
@@ -155,14 +169,14 @@ name|runtime
 operator|.
 name|library
 operator|.
-name|input
+name|api
 operator|.
-name|ShuffledMergedInput
+name|KeyValuesReader
 import|;
 end_import
 
 begin_comment
-comment|/**  * A KeyValuesReader implementation that returns a sorted stream of key-values  * by doing a sorted merge of the key-value in ShuffledMergedInputs.  * Tags are in the last byte of the key, so no special handling for tags is required.  * Uses a priority queue to pick the KeyValuesReader of the input that is next in  * sort order.  */
+comment|/**  * A KeyValuesReader implementation that returns a sorted stream of key-values  * by doing a sorted merge of the key-value in LogicalInputs.  * Tags are in the last byte of the key, so no special handling for tags is required.  * Uses a priority queue to pick the KeyValuesReader of the input that is next in  * sort order.  */
 end_comment
 
 begin_class
@@ -207,14 +221,16 @@ name|InputMerger
 parameter_list|(
 name|List
 argument_list|<
-name|ShuffledMergedInput
+name|?
+extends|extends
+name|Input
 argument_list|>
 name|shuffleInputs
 parameter_list|)
 throws|throws
-name|IOException
+name|Exception
 block|{
-comment|//get KeyValuesReaders from the ShuffledMergedInput and add them to priority queue
+comment|//get KeyValuesReaders from the LogicalInput and add them to priority queue
 name|int
 name|initialCapacity
 init|=
@@ -240,7 +256,7 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|ShuffledMergedInput
+name|Input
 name|input
 range|:
 name|shuffleInputs
@@ -248,6 +264,9 @@ control|)
 block|{
 name|addToQueue
 argument_list|(
+operator|(
+name|KeyValuesReader
+operator|)
 name|input
 operator|.
 name|getReader

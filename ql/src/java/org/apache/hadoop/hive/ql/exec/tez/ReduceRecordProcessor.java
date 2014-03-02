@@ -609,24 +609,6 @@ name|KeyValuesReader
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|runtime
-operator|.
-name|library
-operator|.
-name|input
-operator|.
-name|ShuffledMergedInput
-import|;
-end_import
-
 begin_comment
 comment|/**  * Process input from tez LogicalInput and write output - for a map plan  * Just pump the records through the query plan.  */
 end_comment
@@ -1363,7 +1345,7 @@ name|IOException
 block|{
 name|List
 argument_list|<
-name|ShuffledMergedInput
+name|LogicalInput
 argument_list|>
 name|shuffleInputs
 init|=
@@ -1375,6 +1357,8 @@ decl_stmt|;
 name|KeyValuesReader
 name|kvsReader
 decl_stmt|;
+try|try
+block|{
 if|if
 condition|(
 name|shuffleInputs
@@ -1388,6 +1372,9 @@ block|{
 comment|//no merging of inputs required
 name|kvsReader
 operator|=
+operator|(
+name|KeyValuesReader
+operator|)
 name|shuffleInputs
 operator|.
 name|get
@@ -1410,6 +1397,21 @@ argument_list|(
 name|shuffleInputs
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+name|e
+argument_list|)
+throw|;
 block|}
 while|while
 condition|(
@@ -1462,7 +1464,7 @@ comment|/**    * Get the inputs that should be streamed through reduce plan.    
 specifier|private
 name|List
 argument_list|<
-name|ShuffledMergedInput
+name|LogicalInput
 argument_list|>
 name|getShuffleInputs
 parameter_list|(
@@ -1491,14 +1493,14 @@ argument_list|()
 decl_stmt|;
 name|ArrayList
 argument_list|<
-name|ShuffledMergedInput
+name|LogicalInput
 argument_list|>
 name|shuffleInputs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ShuffledMergedInput
+name|LogicalInput
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1518,7 +1520,7 @@ operator|.
 name|add
 argument_list|(
 operator|(
-name|ShuffledMergedInput
+name|LogicalInput
 operator|)
 name|inputs
 operator|.

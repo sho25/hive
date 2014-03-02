@@ -1057,7 +1057,9 @@ name|work
 operator|=
 operator|new
 name|TezWork
-argument_list|()
+argument_list|(
+literal|""
+argument_list|)
 expr_stmt|;
 name|mws
 operator|=
@@ -1640,7 +1642,9 @@ name|conf
 argument_list|,
 operator|new
 name|TezWork
-argument_list|()
+argument_list|(
+literal|""
+argument_list|)
 argument_list|,
 name|path
 argument_list|,

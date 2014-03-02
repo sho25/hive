@@ -451,6 +451,19 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|writerList
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|rowsAddedSinceCheck
+operator|=
+literal|0
+expr_stmt|;
+block|}
 block|}
 comment|/**    * Get the total pool size that is available for ORC writers.    * @return the number of bytes in the pool    */
 name|long

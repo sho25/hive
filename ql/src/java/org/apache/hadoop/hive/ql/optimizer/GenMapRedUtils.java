@@ -7534,7 +7534,18 @@ name|work
 operator|=
 operator|new
 name|TezWork
-argument_list|()
+argument_list|(
+name|conf
+operator|.
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEQUERYID
+argument_list|)
+argument_list|)
 expr_stmt|;
 name|cplan
 operator|.
@@ -9177,6 +9188,29 @@ condition|)
 block|{
 if|if
 condition|(
+name|currTask
+operator|.
+name|getWork
+argument_list|()
+operator|instanceof
+name|TezWork
+condition|)
+block|{
+comment|// tez blurs the boundary between map and reduce, thus it has it's own
+comment|// config
+return|return
+name|hconf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVEMERGETEZFILES
+argument_list|)
+return|;
+block|}
+if|if
+condition|(
 name|fsOp
 operator|.
 name|getConf
@@ -9221,37 +9255,6 @@ block|{
 comment|// There are separate configuration parameters to control whether to
 comment|// merge for a map-only job
 comment|// or for a map-reduce job
-if|if
-condition|(
-name|currTask
-operator|.
-name|getWork
-argument_list|()
-operator|instanceof
-name|TezWork
-condition|)
-block|{
-return|return
-name|hconf
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVEMERGEMAPFILES
-argument_list|)
-operator|||
-name|hconf
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVEMERGEMAPREDFILES
-argument_list|)
-return|;
-block|}
-elseif|else
 if|if
 condition|(
 name|currTask
