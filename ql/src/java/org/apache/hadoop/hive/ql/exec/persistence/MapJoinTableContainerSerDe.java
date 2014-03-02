@@ -215,6 +215,7 @@ block|{
 literal|"unchecked"
 block|}
 argument_list|)
+comment|/**    * Loads the table container. Only used on MR path.    * @param in Input stream.    * @return Loaded table.    */
 specifier|public
 name|MapJoinTableContainer
 name|load
@@ -364,11 +365,11 @@ name|keyIndex
 operator|++
 control|)
 block|{
-name|MapJoinKey
+name|MapJoinKeyObject
 name|key
 init|=
 operator|new
-name|MapJoinKey
+name|MapJoinKeyObject
 argument_list|()
 decl_stmt|;
 name|key

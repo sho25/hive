@@ -211,7 +211,7 @@ name|MapJoinTableContainerSerDe
 name|containerSerde
 decl_stmt|;
 specifier|private
-name|MapJoinKey
+name|MapJoinKeyObject
 name|key
 decl_stmt|;
 specifier|private
@@ -230,7 +230,7 @@ block|{
 name|key
 operator|=
 operator|new
-name|MapJoinKey
+name|MapJoinKeyObject
 argument_list|(
 name|KEY
 argument_list|)

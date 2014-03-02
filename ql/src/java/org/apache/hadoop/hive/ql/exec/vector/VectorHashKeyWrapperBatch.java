@@ -111,6 +111,24 @@ name|JavaDataModel
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazybinary
+operator|.
+name|LazyBinarySerDe
+import|;
+end_import
+
 begin_comment
 comment|/**  * Class for handling vectorized hash map key wrappers. It evaluates the key columns in a  * row batch in a vectorized fashion.  * This class stores additional information about keys needed to evaluate and output the key values.  *  */
 end_comment
@@ -3682,7 +3700,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"Internal inconsistent KeyLookupHelper at index [%d]:%d %d %d"
+literal|"Internal inconsistent KeyLookupHelper at index [%d]:%d %d %d %d"
 argument_list|,
 name|i
 argument_list|,
@@ -3697,6 +3715,10 @@ argument_list|,
 name|klh
 operator|.
 name|stringIndex
+argument_list|,
+name|klh
+operator|.
+name|decimalIndex
 argument_list|)
 argument_list|)
 throw|;

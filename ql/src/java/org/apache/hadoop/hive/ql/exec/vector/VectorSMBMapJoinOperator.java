@@ -191,7 +191,7 @@ name|exec
 operator|.
 name|persistence
 operator|.
-name|MapJoinKey
+name|MapJoinKeyObject
 import|;
 end_import
 

@@ -2244,6 +2244,13 @@ argument_list|,
 literal|100
 argument_list|)
 block|,
+name|HIVEMAPJOINUSEOPTIMIZEDKEYS
+argument_list|(
+literal|"hive.mapjoin.optimized.keys"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVEMAPJOINLAZYHASHTABLE
 argument_list|(
 literal|"hive.mapjoin.lazy.hashtable"
