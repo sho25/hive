@@ -716,11 +716,11 @@ name|dtiSum
 init|=
 name|GenericUDAFAverage
 operator|.
-name|deriveSumTypeInfo
+name|deriveSumFieldTypeInfo
 argument_list|(
-name|inputScale
-argument_list|,
 name|inputPrecision
+argument_list|,
+name|inputScale
 argument_list|)
 decl_stmt|;
 name|this
