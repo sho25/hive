@@ -3245,7 +3245,7 @@ name|HIVESTATSDBCLASS
 argument_list|(
 literal|"hive.stats.dbclass"
 argument_list|,
-literal|"counter"
+literal|"fs"
 argument_list|,
 operator|new
 name|PatternValidator
@@ -3257,6 +3257,8 @@ argument_list|,
 literal|"counter"
 argument_list|,
 literal|"custom"
+argument_list|,
+literal|"fs"
 argument_list|)
 argument_list|)
 block|,

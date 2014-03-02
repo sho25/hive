@@ -269,7 +269,7 @@ name|ql
 operator|.
 name|stats
 operator|.
-name|CounterStatsPublisher
+name|StatsCollectionTaskIndependent
 import|;
 end_import
 
@@ -1584,11 +1584,11 @@ operator|!
 operator|(
 name|statsPublisher
 operator|instanceof
-name|CounterStatsPublisher
+name|StatsCollectionTaskIndependent
 operator|)
 condition|)
 block|{
-comment|// stats publisher except counter type needs postfix 'taskID'
+comment|// stats publisher except counter or fs type needs postfix 'taskID'
 name|key
 operator|=
 name|Utilities

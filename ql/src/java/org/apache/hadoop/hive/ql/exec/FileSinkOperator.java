@@ -539,6 +539,24 @@ name|ql
 operator|.
 name|stats
 operator|.
+name|StatsCollectionTaskIndependent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|stats
+operator|.
 name|StatsPublisher
 import|;
 end_import
@@ -4918,11 +4936,11 @@ name|getMaxStatsKeyPrefixLength
 argument_list|()
 decl_stmt|;
 name|boolean
-name|counterStats
+name|taskIndependent
 init|=
 name|statsPublisher
 operator|instanceof
-name|CounterStatsPublisher
+name|StatsCollectionTaskIndependent
 decl_stmt|;
 for|for
 control|(
@@ -4993,7 +5011,7 @@ name|postfix
 decl_stmt|;
 if|if
 condition|(
-name|counterStats
+name|taskIndependent
 condition|)
 block|{
 comment|// key = "database.table/SP/DP/"LB/

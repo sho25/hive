@@ -135,6 +135,8 @@ class|class
 name|CounterStatsAggregatorTez
 implements|implements
 name|StatsAggregator
+implements|,
+name|StatsCollectionTaskIndependent
 block|{
 specifier|private
 specifier|static
@@ -159,6 +161,7 @@ name|TezCounters
 name|counters
 decl_stmt|;
 specifier|private
+specifier|final
 name|CounterStatsAggregator
 name|mrAggregator
 decl_stmt|;

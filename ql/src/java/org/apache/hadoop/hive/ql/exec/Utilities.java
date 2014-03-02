@@ -6361,6 +6361,8 @@ operator|new
 name|ExceptionListener
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|exceptionThrown
@@ -6703,7 +6705,7 @@ return|;
 block|}
 comment|// Kryo is not thread-safe,
 comment|// Also new Kryo() is expensive, so we want to do it just once.
-specifier|private
+specifier|public
 specifier|static
 name|ThreadLocal
 argument_list|<
@@ -8370,9 +8372,6 @@ decl_stmt|;
 name|CompressionCodec
 name|codec
 init|=
-operator|(
-name|CompressionCodec
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -8513,9 +8512,6 @@ decl_stmt|;
 name|CompressionCodec
 name|codec
 init|=
-operator|(
-name|CompressionCodec
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -12869,6 +12865,8 @@ operator|new
 name|Runnable
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run
@@ -13780,9 +13778,6 @@ name|tezTasks
 operator|.
 name|contains
 argument_list|(
-operator|(
-name|TezTask
-operator|)
 name|task
 argument_list|)
 condition|)
@@ -13920,9 +13915,6 @@ name|mrTasks
 operator|.
 name|contains
 argument_list|(
-operator|(
-name|ExecDriver
-operator|)
 name|task
 argument_list|)
 condition|)
@@ -17887,7 +17879,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Returns true if a plan is both configured for vectorized execution    * and vectorization is allowed. The plan may be configured for vectorization    * but vectorization dissalowed eg. for FetchOperator execution.     */
+comment|/**    * Returns true if a plan is both configured for vectorized execution    * and vectorization is allowed. The plan may be configured for vectorization    * but vectorization dissalowed eg. for FetchOperator execution.    */
 specifier|public
 specifier|static
 name|boolean

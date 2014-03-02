@@ -109,6 +109,8 @@ class|class
 name|CounterStatsPublisher
 implements|implements
 name|StatsPublisher
+implements|,
+name|StatsCollectionTaskIndependent
 block|{
 specifier|private
 specifier|static
@@ -146,6 +148,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|connect
