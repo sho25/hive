@@ -176,7 +176,7 @@ annotation|@
 name|Override
 specifier|protected
 name|long
-name|getField
+name|getTimestampField
 parameter_list|(
 name|long
 name|time

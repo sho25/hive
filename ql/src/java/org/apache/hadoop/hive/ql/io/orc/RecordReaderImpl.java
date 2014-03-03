@@ -13907,6 +13907,9 @@ case|case
 name|DOUBLE
 case|:
 case|case
+name|DATE
+case|:
+case|case
 name|STRUCT
 case|:
 case|case
