@@ -1313,6 +1313,8 @@ name|MetaException
 block|{
 try|try
 block|{
+for|for
+control|(
 name|org
 operator|.
 name|apache
@@ -1327,12 +1329,13 @@ name|api
 operator|.
 name|Partition
 name|mapiPart
-init|=
+range|:
 name|context
 operator|.
-name|getPartition
+name|getPartitions
 argument_list|()
-decl_stmt|;
+control|)
+block|{
 name|tAuthorizer
 operator|.
 name|get
@@ -1362,6 +1365,7 @@ name|getOutputRequiredPrivileges
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

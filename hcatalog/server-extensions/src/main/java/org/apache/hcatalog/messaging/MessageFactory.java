@@ -115,6 +115,16 @@ name|JSONMessageFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
 begin_comment
 comment|/**  * Abstract Factory for the construction of HCatalog message instances.  * @deprecated Use/modify {@link org.apache.hive.hcatalog.messaging.MessageFactory} instead  */
 end_comment
@@ -419,7 +429,7 @@ name|Table
 name|table
 parameter_list|)
 function_decl|;
-comment|/**    * Factory method for AddPartitionMessage.    * @param table The Table to which the partition is added.    * @param partition The Partition being added.    * @return AddPartitionMessage instance.    */
+comment|/**    * Factory method for AddPartitionMessage.    * @param table The Table to which the partitions are added.    * @param partitions The set of Partitions being added.    * @return AddPartitionMessage instance.    */
 specifier|public
 specifier|abstract
 name|AddPartitionMessage
@@ -428,8 +438,11 @@ parameter_list|(
 name|Table
 name|table
 parameter_list|,
+name|List
+argument_list|<
 name|Partition
-name|partition
+argument_list|>
+name|partitions
 parameter_list|)
 function_decl|;
 comment|/**    * Factory method for DropPartitionMessage.    * @param table The Table from which the partition is dropped.    * @param partition The Partition being dropped.    * @return DropPartitionMessage instance.    */
