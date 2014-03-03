@@ -929,6 +929,8 @@ argument_list|,
 name|leftCondAl2
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|sA
@@ -942,6 +944,8 @@ argument_list|,
 name|rightCondAl1
 argument_list|,
 name|rightCondAl2
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|)
