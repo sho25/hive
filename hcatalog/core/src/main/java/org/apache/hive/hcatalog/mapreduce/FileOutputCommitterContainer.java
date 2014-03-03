@@ -1409,8 +1409,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-try|try
-block|{
 if|if
 condition|(
 name|dynamicPartitioningUsed
@@ -1579,15 +1577,13 @@ expr_stmt|;
 block|}
 block|}
 block|}
-block|}
-finally|finally
-block|{
+comment|// Commit has succeeded (since no exceptions have been thrown.)
+comment|// Safe to cancel delegation tokens now.
 name|cancelDelegationTokens
 argument_list|(
 name|jobContext
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Override
@@ -5523,7 +5519,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Cancelling deletgation token for the job."
+literal|"Cancelling delegation token for the job."
 argument_list|)
 expr_stmt|;
 name|HiveMetaStoreClient
