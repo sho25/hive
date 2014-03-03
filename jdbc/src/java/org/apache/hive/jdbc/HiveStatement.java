@@ -439,6 +439,8 @@ name|isScrollableResultset
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#addBatch(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|addBatch
@@ -458,6 +460,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#cancel()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|cancel
@@ -557,6 +561,8 @@ throw|;
 block|}
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#clearBatch()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|clearBatch
@@ -573,6 +579,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#clearWarnings()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|clearWarnings
@@ -673,6 +681,8 @@ literal|null
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#close()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -728,6 +738,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|execute
@@ -775,6 +787,14 @@ argument_list|,
 name|sql
 argument_list|)
 decl_stmt|;
+comment|/**        * Run asynchronously whenever possible        * Currently only a SQLOperation can be run asynchronously,        * in a background operation thread        * Compilation is synchronous and execution is asynchronous        */
+name|execReq
+operator|.
+name|setRunAsync
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|execReq
 operator|.
 name|setConfOverlay
@@ -841,19 +861,6 @@ name|ex
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-operator|!
-name|stmtHandle
-operator|.
-name|isHasResultSet
-argument_list|()
-condition|)
-block|{
-comment|// Poll until the query has completed one way or another. DML queries will not return a result
-comment|// set, but we should not return from this method until the query has completed to avoid
-comment|// racing with possible subsequent session shutdown, or queries that depend on the results
-comment|// materialised here.
 name|TGetOperationStatusReq
 name|statusReq
 init|=
@@ -864,28 +871,32 @@ name|stmtHandle
 argument_list|)
 decl_stmt|;
 name|boolean
-name|requestComplete
+name|operationComplete
 init|=
 literal|false
 decl_stmt|;
+name|TGetOperationStatusResp
+name|statusResp
+decl_stmt|;
+comment|// Poll on the operation status, till the operation is complete
 while|while
 condition|(
 operator|!
-name|requestComplete
+name|operationComplete
 condition|)
 block|{
 try|try
 block|{
-name|TGetOperationStatusResp
+comment|/**          * For an async SQLOperation, GetOperationStatus will use the long polling approach          * It will essentially return after the HIVE_SERVER2_LONG_POLLING_TIMEOUT (a server config) expires          */
 name|statusResp
-init|=
+operator|=
 name|client
 operator|.
 name|GetOperationStatus
 argument_list|(
 name|statusReq
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|Utils
 operator|.
 name|verifySuccessWithInfo
@@ -918,9 +929,11 @@ case|:
 case|case
 name|FINISHED_STATE
 case|:
-return|return
-literal|false
-return|;
+name|operationComplete
+operator|=
+literal|true
+expr_stmt|;
+break|break;
 case|case
 name|CANCELED_STATE
 case|:
@@ -937,14 +950,25 @@ throw|;
 case|case
 name|ERROR_STATE
 case|:
-comment|// HY000 -> general error
+comment|// Get the error details from the underlying exception
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Query failed"
+name|statusResp
+operator|.
+name|getErrorMessage
+argument_list|()
 argument_list|,
-literal|"HY000"
+name|statusResp
+operator|.
+name|getSqlState
+argument_list|()
+argument_list|,
+name|statusResp
+operator|.
+name|getErrorCode
+argument_list|()
 argument_list|)
 throw|;
 case|case
@@ -974,44 +998,46 @@ block|}
 block|}
 catch|catch
 parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+throw|throw
+name|e
+throw|;
+block|}
+catch|catch
+parameter_list|(
 name|Exception
-name|ex
+name|e
 parameter_list|)
 block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-name|ex
+name|e
 operator|.
 name|toString
 argument_list|()
 argument_list|,
 literal|"08S01"
 argument_list|,
-name|ex
+name|e
 argument_list|)
 throw|;
 block|}
-try|try
-block|{
-name|Thread
+block|}
+comment|// The query should be completed by now
+if|if
+condition|(
+operator|!
+name|stmtHandle
 operator|.
-name|sleep
-argument_list|(
-literal|100
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InterruptedException
-name|ex
-parameter_list|)
+name|isHasResultSet
+argument_list|()
+condition|)
 block|{
-comment|// Ignore
-block|}
-block|}
 return|return
 literal|false
 return|;
@@ -1064,6 +1090,8 @@ literal|true
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String, int)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|execute
@@ -1086,6 +1114,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String, int[])    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|execute
@@ -1109,6 +1139,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String, java.lang.String[])    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|execute
@@ -1132,6 +1164,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeBatch()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 index|[]
@@ -1149,6 +1183,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeQuery(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|ResultSet
 name|executeQuery
@@ -1181,6 +1217,8 @@ name|resultSet
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|executeUpdate
@@ -1201,6 +1239,8 @@ literal|0
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, int)    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|executeUpdate
@@ -1223,6 +1263,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, int[])    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|executeUpdate
@@ -1246,6 +1288,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, java.lang.String[])    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|executeUpdate
@@ -1269,6 +1313,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getConnection()    */
+annotation|@
+name|Override
 specifier|public
 name|Connection
 name|getConnection
@@ -1283,6 +1329,8 @@ name|connection
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getFetchDirection()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getFetchDirection
@@ -1299,6 +1347,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getFetchSize()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getFetchSize
@@ -1311,6 +1361,8 @@ name|fetchSize
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getGeneratedKeys()    */
+annotation|@
+name|Override
 specifier|public
 name|ResultSet
 name|getGeneratedKeys
@@ -1327,6 +1379,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMaxFieldSize()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getMaxFieldSize
@@ -1343,6 +1397,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMaxRows()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getMaxRows
@@ -1355,6 +1411,8 @@ name|maxRows
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMoreResults()    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|getMoreResults
@@ -1371,6 +1429,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMoreResults(int)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|getMoreResults
@@ -1390,6 +1450,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getQueryTimeout()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getQueryTimeout
@@ -1406,6 +1468,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSet()    */
+annotation|@
+name|Override
 specifier|public
 name|ResultSet
 name|getResultSet
@@ -1418,6 +1482,8 @@ name|resultSet
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSetConcurrency()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getResultSetConcurrency
@@ -1434,6 +1500,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSetHoldability()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getResultSetHoldability
@@ -1450,6 +1518,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSetType()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getResultSetType
@@ -1466,6 +1536,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getUpdateCount()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getUpdateCount
@@ -1478,6 +1550,8 @@ literal|0
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getWarnings()    */
+annotation|@
+name|Override
 specifier|public
 name|SQLWarning
 name|getWarnings
@@ -1490,6 +1564,8 @@ name|warningChain
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#isClosed()    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isClosed
@@ -1518,6 +1594,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#isPoolable()    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isPoolable
@@ -1534,6 +1612,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setCursorName(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setCursorName
@@ -1553,6 +1633,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setEscapeProcessing(boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setEscapeProcessing
@@ -1572,6 +1654,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setFetchDirection(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setFetchDirection
@@ -1591,6 +1675,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setFetchSize(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setFetchSize
@@ -1607,6 +1693,8 @@ name|rows
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setMaxFieldSize(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setMaxFieldSize
@@ -1626,6 +1714,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setMaxRows(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setMaxRows
@@ -1657,6 +1747,8 @@ name|max
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setPoolable(boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setPoolable
@@ -1676,6 +1768,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setQueryTimeout(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setQueryTimeout
@@ -1695,6 +1789,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -1717,6 +1813,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+annotation|@
+name|Override
 specifier|public
 parameter_list|<
 name|T
