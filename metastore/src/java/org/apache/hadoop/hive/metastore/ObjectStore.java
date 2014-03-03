@@ -3604,7 +3604,7 @@ return|return
 name|db
 return|;
 block|}
-comment|/**    * Alter the database object in metastore. Currently only the parameters    * of the database can be changed.    * @param dbName the database name    * @param db the Hive Database object    * @throws MetaException    * @throws NoSuchObjectException    */
+comment|/**    * Alter the database object in metastore. Currently only the parameters    * of the database or the owner can be changed.    * @param dbName the database name    * @param db the Hive Database object    * @throws MetaException    * @throws NoSuchObjectException    */
 annotation|@
 name|Override
 specifier|public
@@ -3641,7 +3641,6 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
-comment|// currently only allow changing database parameters
 name|mdb
 operator|.
 name|setParameters
@@ -3652,6 +3651,40 @@ name|getParameters
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|mdb
+operator|.
+name|setOwnerName
+argument_list|(
+name|db
+operator|.
+name|getOwnerName
+argument_list|()
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|db
+operator|.
+name|getOwnerType
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|mdb
+operator|.
+name|setOwnerType
+argument_list|(
+name|db
+operator|.
+name|getOwnerType
+argument_list|()
+operator|.
+name|name
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|openTransaction
 argument_list|()
 expr_stmt|;

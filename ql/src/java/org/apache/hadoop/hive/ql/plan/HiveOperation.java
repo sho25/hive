@@ -1059,6 +1059,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|ALTERDATABASE_OWNER
+argument_list|(
+literal|"ALTERDATABASE_OWNER"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|DESCDATABASE
 argument_list|(
 literal|"DESCDATABASE"

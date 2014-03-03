@@ -237,6 +237,8 @@ name|ALTERINDEX_PROPS
 block|,
 name|ALTERDATABASE
 block|,
+name|ALTERDATABASE_OWNER
+block|,
 name|DESCDATABASE
 block|,
 name|ALTERTABLE_MERGEFILES
@@ -248,7 +250,7 @@ block|,
 name|ALTERTBLPART_SKEWED_LOCATION
 block|,
 name|ALTERVIEW_RENAME
-block|,  }
+block|,   }
 end_enum
 
 end_unit
