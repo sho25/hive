@@ -73,6 +73,14 @@ name|FLOAT
 block|,
 comment|// float and double
 name|STRING
+block|,
+name|DATE
+block|,
+name|DECIMAL
+block|,
+name|CHAR
+block|,
+name|VARCHAR
 block|}
 comment|/**    * Get the operator for the leaf.    */
 specifier|public
