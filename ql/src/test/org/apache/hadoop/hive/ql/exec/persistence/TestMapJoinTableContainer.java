@@ -243,7 +243,7 @@ argument_list|()
 expr_stmt|;
 name|rowContainer
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|VALUE
 argument_list|)

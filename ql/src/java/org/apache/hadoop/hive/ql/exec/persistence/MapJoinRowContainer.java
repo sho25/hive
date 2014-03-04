@@ -114,7 +114,7 @@ name|HiveException
 function_decl|;
 specifier|public
 name|void
-name|add
+name|addRow
 parameter_list|(
 name|Object
 index|[]

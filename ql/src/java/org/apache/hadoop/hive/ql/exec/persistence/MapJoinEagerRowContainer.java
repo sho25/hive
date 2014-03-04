@@ -299,7 +299,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|add
+name|addRow
 parameter_list|(
 name|List
 argument_list|<
@@ -320,14 +320,14 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|add
+name|addRow
 parameter_list|(
 name|Object
 index|[]
 name|t
 parameter_list|)
 block|{
-name|add
+name|addRow
 argument_list|(
 name|toList
 argument_list|(
@@ -495,7 +495,7 @@ control|)
 block|{
 name|result
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|item
 argument_list|)
@@ -631,7 +631,7 @@ operator|==
 literal|null
 condition|)
 block|{
-name|add
+name|addRow
 argument_list|(
 name|toList
 argument_list|(
@@ -679,7 +679,7 @@ name|get
 argument_list|()
 expr_stmt|;
 block|}
-name|add
+name|addRow
 argument_list|(
 name|toList
 argument_list|(

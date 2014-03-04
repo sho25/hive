@@ -1481,7 +1481,7 @@ argument_list|)
 decl_stmt|;
 name|values
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|dummyObj
 index|[
@@ -3646,7 +3646,7 @@ condition|)
 block|{
 name|alw
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|dummyObj
 index|[
@@ -3846,7 +3846,7 @@ literal|true
 expr_stmt|;
 name|alw
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|dummyObj
 index|[

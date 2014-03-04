@@ -564,7 +564,7 @@ argument_list|)
 expr_stmt|;
 name|rc
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|row
 argument_list|)

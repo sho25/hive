@@ -888,7 +888,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|add
+name|addRow
 parameter_list|(
 name|ROW
 name|t
@@ -1421,12 +1421,7 @@ decl_stmt|;
 name|int
 name|rowSize
 init|=
-operator|(
-operator|(
-name|ArrayList
-operator|)
 name|ret
-operator|)
 operator|.
 name|size
 argument_list|()
@@ -1446,12 +1441,7 @@ name|i
 operator|++
 control|)
 block|{
-operator|(
-operator|(
-name|ArrayList
-operator|)
 name|ret
-operator|)
 operator|.
 name|remove
 argument_list|(

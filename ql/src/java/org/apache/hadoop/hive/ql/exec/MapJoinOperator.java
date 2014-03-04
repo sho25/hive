@@ -1250,7 +1250,7 @@ index|[
 name|alias
 index|]
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|value
 argument_list|)

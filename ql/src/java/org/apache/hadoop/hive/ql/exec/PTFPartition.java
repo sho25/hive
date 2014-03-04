@@ -505,7 +505,7 @@ argument_list|)
 decl_stmt|;
 name|elems
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|l
 argument_list|)
@@ -517,9 +517,6 @@ name|size
 parameter_list|()
 block|{
 return|return
-operator|(
-name|int
-operator|)
 name|elems
 operator|.
 name|rowCount

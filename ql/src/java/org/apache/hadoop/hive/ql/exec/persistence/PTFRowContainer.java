@@ -494,7 +494,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|add
+name|addRow
 parameter_list|(
 name|Row
 name|t
@@ -580,7 +580,7 @@ block|}
 block|}
 name|super
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|t
 argument_list|)
