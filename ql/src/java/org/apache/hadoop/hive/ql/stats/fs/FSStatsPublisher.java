@@ -424,13 +424,36 @@ argument_list|>
 name|stats
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Putting in map : "
+operator|+
+name|partKV
+operator|+
+literal|"\t"
+operator|+
+name|stats
+argument_list|)
+expr_stmt|;
+comment|// we need to do new hashmap, since stats object is reused across calls.
 name|statsMap
 operator|.
 name|put
 argument_list|(
 name|partKV
 argument_list|,
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|(
 name|stats
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -521,6 +544,15 @@ argument_list|(
 literal|"Created file : "
 operator|+
 name|statsFile
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Writing stats in it : "
+operator|+
+name|statsMap
 argument_list|)
 expr_stmt|;
 name|Utilities
