@@ -29,6 +29,10 @@ name|List
 import|;
 end_import
 
+begin_comment
+comment|/**  * Manager for locks in Hive.  Users should not instantiate a lock manager  * directly.  Instead they should get an instance from their instance of  * {@link HiveTxnManager}.  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface

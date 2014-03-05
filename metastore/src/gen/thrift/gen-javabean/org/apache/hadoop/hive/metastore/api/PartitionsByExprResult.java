@@ -2593,7 +2593,7 @@ block|{
 name|Partition
 name|_elem258
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem258
 operator|=
 operator|new
@@ -3131,7 +3131,7 @@ block|{
 name|Partition
 name|_elem263
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem263
 operator|=
 operator|new

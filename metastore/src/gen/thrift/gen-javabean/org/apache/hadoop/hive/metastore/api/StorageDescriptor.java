@@ -7876,7 +7876,7 @@ block|{
 name|FieldSchema
 name|_elem142
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem142
 operator|=
 operator|new
@@ -8398,7 +8398,7 @@ block|{
 name|String
 name|_elem145
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem145
 operator|=
 name|iprot
@@ -8528,7 +8528,7 @@ block|{
 name|Order
 name|_elem148
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem148
 operator|=
 operator|new
@@ -10301,7 +10301,7 @@ block|{
 name|FieldSchema
 name|_elem163
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem163
 operator|=
 operator|new
@@ -10590,7 +10590,7 @@ block|{
 name|String
 name|_elem166
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem166
 operator|=
 name|iprot
@@ -10703,7 +10703,7 @@ block|{
 name|Order
 name|_elem169
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem169
 operator|=
 operator|new

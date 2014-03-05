@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -115,6 +105,16 @@ name|Table
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class encapsulates an object that is being written to by the query. This  * object may be a table, partition, dfs directory or a local directory.  */
 end_comment
@@ -134,6 +134,32 @@ name|isTempURI
 init|=
 literal|false
 decl_stmt|;
+specifier|public
+specifier|static
+enum|enum
+name|WriteType
+block|{
+name|DDL
+block|,
+comment|// for use in DDL statements that will touch data,
+comment|// will result in an exclusive lock,
+name|DDL_METADATA_ONLY
+block|,
+comment|// for use in DDL statements that touch only
+comment|// metadata and don't need a lock
+name|INSERT
+block|,
+name|INSERT_OVERWRITE
+block|,
+name|UPDATE
+block|,
+name|DELETE
+block|}
+empty_stmt|;
+specifier|private
+name|WriteType
+name|writeType
+decl_stmt|;
 comment|/**    * Only used by serialization.    */
 specifier|public
 name|WriteEntity
@@ -148,6 +174,9 @@ name|WriteEntity
 parameter_list|(
 name|Database
 name|database
+parameter_list|,
+name|WriteType
+name|type
 parameter_list|)
 block|{
 name|super
@@ -157,6 +186,10 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+name|writeType
+operator|=
+name|type
+expr_stmt|;
 block|}
 comment|/**    * Constructor for a table.    *    * @param t    *          Table that is written to.    */
 specifier|public
@@ -164,14 +197,21 @@ name|WriteEntity
 parameter_list|(
 name|Table
 name|t
+parameter_list|,
+name|WriteType
+name|type
 parameter_list|)
 block|{
-name|this
+name|super
 argument_list|(
 name|t
 argument_list|,
 literal|true
 argument_list|)
+expr_stmt|;
+name|writeType
+operator|=
+name|type
 expr_stmt|;
 block|}
 specifier|public
@@ -179,6 +219,9 @@ name|WriteEntity
 parameter_list|(
 name|Table
 name|t
+parameter_list|,
+name|WriteType
+name|type
 parameter_list|,
 name|boolean
 name|complete
@@ -190,6 +233,10 @@ name|t
 argument_list|,
 name|complete
 argument_list|)
+expr_stmt|;
+name|writeType
+operator|=
+name|type
 expr_stmt|;
 block|}
 comment|/**    * Constructor for a partition.    *    * @param p    *          Partition that is written to.    */
@@ -198,6 +245,9 @@ name|WriteEntity
 parameter_list|(
 name|Partition
 name|p
+parameter_list|,
+name|WriteType
+name|type
 parameter_list|)
 block|{
 name|super
@@ -207,12 +257,19 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+name|writeType
+operator|=
+name|type
+expr_stmt|;
 block|}
 specifier|public
 name|WriteEntity
 parameter_list|(
 name|DummyPartition
 name|p
+parameter_list|,
+name|WriteType
+name|type
 parameter_list|,
 name|boolean
 name|complete
@@ -224,6 +281,10 @@ name|p
 argument_list|,
 name|complete
 argument_list|)
+expr_stmt|;
+name|writeType
+operator|=
+name|type
 expr_stmt|;
 block|}
 comment|/**    * Constructor for a file.    *    * @param d    *          The name of the directory that is being written to.    * @param islocal    *          Flag to decide whether this directory is local or in dfs.    */
@@ -279,6 +340,16 @@ name|isTempURI
 operator|=
 name|isTemp
 expr_stmt|;
+block|}
+comment|/**    * Determine which type of write this is.  This is needed by the lock    * manager so it can understand what kind of lock to acquire.    * @return write type    */
+specifier|public
+name|WriteType
+name|getWriteType
+parameter_list|()
+block|{
+return|return
+name|writeType
+return|;
 block|}
 comment|/**    * Equals function.    */
 annotation|@

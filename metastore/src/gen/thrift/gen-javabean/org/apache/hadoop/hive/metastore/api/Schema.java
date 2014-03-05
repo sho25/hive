@@ -2750,7 +2750,7 @@ block|{
 name|FieldSchema
 name|_elem230
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem230
 operator|=
 operator|new
@@ -3601,7 +3601,7 @@ block|{
 name|FieldSchema
 name|_elem241
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem241
 operator|=
 operator|new

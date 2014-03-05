@@ -3822,7 +3822,7 @@ block|{
 name|PrivilegeGrantInfo
 name|_elem30
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem30
 operator|=
 operator|new
@@ -4046,7 +4046,7 @@ block|{
 name|PrivilegeGrantInfo
 name|_elem37
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem37
 operator|=
 operator|new
@@ -4270,7 +4270,7 @@ block|{
 name|PrivilegeGrantInfo
 name|_elem44
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem44
 operator|=
 operator|new
@@ -5603,7 +5603,7 @@ block|{
 name|PrivilegeGrantInfo
 name|_elem63
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem63
 operator|=
 operator|new
@@ -5841,7 +5841,7 @@ block|{
 name|PrivilegeGrantInfo
 name|_elem70
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem70
 operator|=
 operator|new
@@ -6079,7 +6079,7 @@ block|{
 name|PrivilegeGrantInfo
 name|_elem77
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem77
 operator|=
 operator|new

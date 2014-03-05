@@ -2120,6 +2120,12 @@ operator|new
 name|WriteEntity
 argument_list|(
 name|part
+argument_list|,
+name|WriteEntity
+operator|.
+name|WriteType
+operator|.
+name|DDL_METADATA_ONLY
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2134,6 +2140,12 @@ operator|new
 name|WriteEntity
 argument_list|(
 name|tbl
+argument_list|,
+name|WriteEntity
+operator|.
+name|WriteType
+operator|.
+name|DDL_METADATA_ONLY
 argument_list|)
 argument_list|)
 expr_stmt|;

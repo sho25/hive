@@ -2680,7 +2680,7 @@ block|{
 name|ColumnStatisticsObj
 name|_elem222
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem222
 operator|=
 operator|new
@@ -3189,7 +3189,7 @@ block|{
 name|ColumnStatisticsObj
 name|_elem227
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem227
 operator|=
 operator|new
