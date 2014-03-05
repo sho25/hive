@@ -853,19 +853,19 @@ operator|.
 name|getTezSession
 argument_list|()
 expr_stmt|;
-comment|// if we don't have one yet create it.
-if|if
-condition|(
-name|session
-operator|==
-literal|null
-condition|)
-block|{
 name|session
 operator|=
-operator|new
-name|TezSessionState
+name|TezSessionPoolManager
+operator|.
+name|getInstance
 argument_list|()
+operator|.
+name|getSession
+argument_list|(
+name|session
+argument_list|,
+name|conf
+argument_list|)
 expr_stmt|;
 name|ss
 operator|.
@@ -874,7 +874,6 @@ argument_list|(
 name|session
 argument_list|)
 expr_stmt|;
-block|}
 comment|// if it's not running start it.
 if|if
 condition|(
@@ -898,7 +897,7 @@ name|session
 operator|.
 name|open
 argument_list|(
-name|ss
+name|session
 operator|.
 name|getSessionId
 argument_list|()
@@ -1025,6 +1024,16 @@ argument_list|)
 operator|.
 name|getDAGCounters
 argument_list|()
+expr_stmt|;
+name|TezSessionPoolManager
+operator|.
+name|getInstance
+argument_list|()
+operator|.
+name|returnSession
+argument_list|(
+name|session
+argument_list|)
 expr_stmt|;
 if|if
 condition|(

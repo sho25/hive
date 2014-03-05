@@ -4410,6 +4410,27 @@ argument_list|,
 literal|"HIVE"
 argument_list|)
 block|,
+name|HIVE_SERVER2_TEZ_DEFAULT_QUEUES
+argument_list|(
+literal|"hive.server2.tez.default.queues"
+argument_list|,
+literal|""
+argument_list|)
+block|,
+name|HIVE_SERVER2_TEZ_SESSIONS_PER_DEFAULT_QUEUE
+argument_list|(
+literal|"hive.server2.tez.sessions.per.default.queue"
+argument_list|,
+literal|1
+argument_list|)
+block|,
+name|HIVE_SERVER2_TEZ_INITIALIZE_DEFAULT_SESSIONS
+argument_list|(
+literal|"hive.server2.tez.initialize.default.sessions"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// none, column
 comment|// none is the default(past) behavior. Implies only alphaNumeric and underscore are valid characters in identifiers.
 comment|// column: implies column names can contain any character.
