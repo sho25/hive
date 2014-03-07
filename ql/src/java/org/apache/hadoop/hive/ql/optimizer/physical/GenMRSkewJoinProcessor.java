@@ -2625,6 +2625,13 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|currTask
+operator|.
+name|removeDependentTask
+argument_list|(
+name|child
+argument_list|)
+expr_stmt|;
 name|listTasks
 operator|.
 name|add
