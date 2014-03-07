@@ -2613,7 +2613,7 @@ literal|" created"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// initilize all forward operator
+comment|// initialize all forward operator
 for|for
 control|(
 name|Map
