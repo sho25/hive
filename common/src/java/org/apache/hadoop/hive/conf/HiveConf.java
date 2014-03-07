@@ -2678,6 +2678,14 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+comment|// Whether extended literal set is allowed for LazySimpleSerde.
+name|HIVE_LAZYSIMPLE_EXTENDED_BOOLEAN_LITERAL
+argument_list|(
+literal|"hive.lazysimple.extended_boolean_literal"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVESKEWJOIN
 argument_list|(
 literal|"hive.optimize.skewjoin"
