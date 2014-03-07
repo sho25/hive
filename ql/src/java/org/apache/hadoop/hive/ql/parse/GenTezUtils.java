@@ -231,6 +231,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|HashTableDummyOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|ReduceSinkOperator
 import|;
 end_import
@@ -1004,6 +1022,27 @@ operator|.
 name|getAllRootOperators
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|work
+operator|.
+name|getDummyOps
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|roots
+operator|.
+name|addAll
+argument_list|(
+name|work
+operator|.
+name|getDummyOps
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// need to clone the plan.
 name|Set
 argument_list|<
@@ -1023,6 +1062,9 @@ argument_list|,
 name|roots
 argument_list|)
 decl_stmt|;
+comment|// we're cloning the operator plan but we're retaining the original work. That means
+comment|// that root operators have to be replaced with the cloned ops. The replacement map
+comment|// tells you what that mapping is.
 name|Map
 argument_list|<
 name|Operator
@@ -1052,6 +1094,22 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// there's some special handling for dummyOps required. Mapjoins won't be properly
+comment|// initialized if their dummy parents aren't initialized. Since we cloned the plan
+comment|// we need to replace the dummy operators in the work with the cloned ones.
+name|List
+argument_list|<
+name|HashTableDummyOperator
+argument_list|>
+name|dummyOps
+init|=
+operator|new
+name|LinkedList
+argument_list|<
+name|HashTableDummyOperator
+argument_list|>
+argument_list|()
+decl_stmt|;
 name|Iterator
 argument_list|<
 name|Operator
@@ -1077,18 +1135,52 @@ range|:
 name|roots
 control|)
 block|{
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+name|newRoot
+init|=
+name|it
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|newRoot
+operator|instanceof
+name|HashTableDummyOperator
+condition|)
+block|{
+name|dummyOps
+operator|.
+name|add
+argument_list|(
+operator|(
+name|HashTableDummyOperator
+operator|)
+name|newRoot
+argument_list|)
+expr_stmt|;
+name|it
+operator|.
+name|remove
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
 name|replacementMap
 operator|.
 name|put
 argument_list|(
 name|orig
 argument_list|,
-name|it
-operator|.
-name|next
-argument_list|()
+name|newRoot
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// now we remove all the unions. we throw away any branch that's not reachable from
 comment|// the current set of roots. The reason is that those branches will be handled in
@@ -1419,6 +1511,13 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|work
+operator|.
+name|setDummyOps
+argument_list|(
+name|dummyOps
+argument_list|)
+expr_stmt|;
 name|work
 operator|.
 name|replaceRoots
