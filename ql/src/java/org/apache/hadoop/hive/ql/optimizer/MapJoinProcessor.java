@@ -1142,10 +1142,10 @@ return|return
 name|op
 return|;
 block|}
-comment|/**    * Generate the MapRed Local Work for the given map-join operator    *    * @param newWork    * @param mapJoinOp    *          map-join operator for which local work needs to be generated.    * @param bigTablePos    * @return    * @throws SemanticException    */
+comment|/**    * Generate the MapRed Local Work for the given map-join operator    *    * @param newWork    * @param mapJoinOp    *          map-join operator for which local work needs to be generated.    * @param bigTablePos    * @throws SemanticException    */
 specifier|private
 specifier|static
-name|String
+name|void
 name|genMapJoinLocalWork
 parameter_list|(
 name|MapredWork
@@ -1173,11 +1173,6 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|()
-decl_stmt|;
-name|String
-name|bigTableAlias
-init|=
-literal|null
 decl_stmt|;
 comment|// create a new  MapredLocalWork
 name|MapredLocalWork
@@ -1373,10 +1368,6 @@ operator|==
 name|bigTablePos
 condition|)
 block|{
-name|bigTableAlias
-operator|=
-name|alias
-expr_stmt|;
 continue|continue;
 block|}
 comment|// set alias to work and put into smallTableAliasList
@@ -1762,30 +1753,11 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// return the big table alias
-if|if
-condition|(
-name|bigTableAlias
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"Big Table Alias is null"
-argument_list|)
-throw|;
 block|}
-return|return
-name|bigTableAlias
-return|;
-block|}
-comment|/**    * Convert the join to a map-join and also generate any local work needed.    *    * @param newWork MapredWork in which the conversion is to happen    * @param op    *          The join operator that needs to be converted to map-join    * @param bigTablePos    * @return the alias to the big table    * @throws SemanticException    */
+comment|/**    * Convert the join to a map-join and also generate any local work needed.    *    * @param newWork MapredWork in which the conversion is to happen    * @param op    *          The join operator that needs to be converted to map-join    * @param bigTablePos    * @throws SemanticException    */
 specifier|public
 specifier|static
-name|String
+name|void
 name|genMapJoinOpAndLocalWork
 parameter_list|(
 name|HiveConf
@@ -1858,7 +1830,6 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-return|return
 name|genLocalWorkForMapJoin
 argument_list|(
 name|newWork
@@ -1867,11 +1838,11 @@ name|newMapJoinOp
 argument_list|,
 name|mapJoinPos
 argument_list|)
-return|;
+expr_stmt|;
 block|}
 specifier|public
 specifier|static
-name|String
+name|void
 name|genLocalWorkForMapJoin
 parameter_list|(
 name|MapredWork
@@ -1888,10 +1859,7 @@ name|SemanticException
 block|{
 try|try
 block|{
-comment|// generate the local work and return the big table alias
-name|String
-name|bigTableAlias
-init|=
+comment|// generate the local work for the big table alias
 name|MapJoinProcessor
 operator|.
 name|genMapJoinLocalWork
@@ -1902,7 +1870,7 @@ name|newMapJoinOp
 argument_list|,
 name|mapJoinPos
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// clean up the mapred work
 name|newWork
 operator|.
@@ -1924,9 +1892,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-return|return
-name|bigTableAlias
-return|;
 block|}
 catch|catch
 parameter_list|(
@@ -2567,7 +2532,7 @@ argument_list|(
 name|pos
 argument_list|)
 operator|.
-name|removeChild
+name|replaceChild
 argument_list|(
 name|oldReduceSinkParentOps
 operator|.
@@ -2575,20 +2540,7 @@ name|get
 argument_list|(
 name|pos
 argument_list|)
-argument_list|)
-expr_stmt|;
-name|newParentOps
-operator|.
-name|get
-argument_list|(
-name|pos
-argument_list|)
-operator|.
-name|getChildOperators
-argument_list|()
-operator|.
-name|add
-argument_list|(
+argument_list|,
 name|mapJoinOp
 argument_list|)
 expr_stmt|;
@@ -5258,6 +5210,8 @@ name|mapJoinPos
 return|;
 block|}
 comment|/**    * Transform the query tree. For each join, check if it is a map-side join (user specified). If    * yes, convert it to a map-side join.    *    * @param pactx    *          current parse context    */
+annotation|@
+name|Override
 specifier|public
 name|ParseContext
 name|transform

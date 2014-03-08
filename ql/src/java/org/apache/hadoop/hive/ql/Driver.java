@@ -1844,7 +1844,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Compile a new query. Any currently-planned query associated with this Driver is discarded.    *    * @param command    *          The SQL query to compile.    */
+comment|/**    * Compile a new query. Any currently-planned query associated with this Driver is discarded.    * Do not reset id for inner queries(index, etc). Task ids are used for task identity check.    *    * @param command    *          The SQL query to compile.    */
 specifier|public
 name|int
 name|compile
