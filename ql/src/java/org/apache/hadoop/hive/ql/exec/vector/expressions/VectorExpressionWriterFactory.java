@@ -6521,13 +6521,16 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-throw|throw
-operator|new
-name|HiveException
+return|return
+name|baseWriter
+operator|.
+name|writeValue
 argument_list|(
-literal|"Should never reach here"
+name|column
+argument_list|,
+name|row
 argument_list|)
-throw|;
+return|;
 block|}
 annotation|@
 name|Override

@@ -204,7 +204,6 @@ literal|1L
 decl_stmt|;
 comment|/**    * The unscaled value of this Decimal128, as returned by    * {@link #getUnscaledValue()}.    *    * @serial    * @see #getUnscaledValue()    */
 specifier|private
-specifier|final
 name|UnsignedInt128
 name|unscaledValue
 decl_stmt|;
@@ -2422,7 +2421,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**    * Serializes the value in a format compatible with the BigDecimal's own representation    * @param bytes    * @param offset    */
+comment|/**    * Serializes the value in a format compatible with the BigDecimal's own representation    * @param scratch    */
 specifier|public
 name|int
 name|fastSerializeForHiveDecimal
@@ -4420,6 +4419,7 @@ else|else
 block|{
 name|cmp
 operator|=
+operator|-
 name|val
 operator|.
 name|unscaledValue
@@ -5464,6 +5464,54 @@ expr_stmt|;
 return|return
 name|this
 return|;
+block|}
+comment|/**    * This setter is only for de-serialization, should not be used otherwise.    */
+specifier|public
+name|void
+name|setUnscaledValue
+parameter_list|(
+name|UnsignedInt128
+name|unscaledValue
+parameter_list|)
+block|{
+name|this
+operator|.
+name|unscaledValue
+operator|=
+name|unscaledValue
+expr_stmt|;
+block|}
+comment|/**    * This setter is only for de-serialization, should not be used otherwise.    */
+specifier|public
+name|void
+name|setScale
+parameter_list|(
+name|short
+name|scale
+parameter_list|)
+block|{
+name|this
+operator|.
+name|scale
+operator|=
+name|scale
+expr_stmt|;
+block|}
+comment|/**    * This setter is only for de-serialization, should not be used otherwise.    */
+specifier|public
+name|void
+name|setSignum
+parameter_list|(
+name|byte
+name|signum
+parameter_list|)
+block|{
+name|this
+operator|.
+name|signum
+operator|=
+name|signum
+expr_stmt|;
 block|}
 block|}
 end_class

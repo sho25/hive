@@ -5056,7 +5056,7 @@ literal|"Cannot vectorize "
 operator|+
 name|desc
 operator|.
-name|getExprString
+name|toString
 argument_list|()
 operator|+
 literal|" of type "
