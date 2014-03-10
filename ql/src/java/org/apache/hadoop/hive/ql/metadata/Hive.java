@@ -1053,6 +1053,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|ErrorMsg
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|exec
 operator|.
 name|Utilities
@@ -9219,9 +9235,14 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Partition spec should only be supplied for a "
-operator|+
-literal|"partitioned table"
+name|ErrorMsg
+operator|.
+name|TABLE_NOT_PARTITIONED
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -9431,9 +9452,14 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Partition spec should only be supplied for a "
-operator|+
-literal|"partitioned table"
+name|ErrorMsg
+operator|.
+name|TABLE_NOT_PARTITIONED
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -9514,9 +9540,14 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Partition spec should only be supplied for a "
-operator|+
-literal|"partitioned table"
+name|ErrorMsg
+operator|.
+name|TABLE_NOT_PARTITIONED
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -9833,9 +9864,14 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Partition spec should only be supplied for a "
-operator|+
-literal|"partitioned table"
+name|ErrorMsg
+operator|.
+name|TABLE_NOT_PARTITIONED
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
 argument_list|)
 throw|;
 block|}
