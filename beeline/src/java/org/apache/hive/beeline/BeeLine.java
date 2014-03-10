@@ -3846,6 +3846,18 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|inputStream
+operator|instanceof
+name|FileInputStream
+condition|)
+block|{
+comment|// from script.. no need to load history and no need of completor, either
+return|return
+name|consoleReader
+return|;
+block|}
 try|try
 block|{
 comment|// now load in the previous history
