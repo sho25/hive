@@ -2043,6 +2043,7 @@ argument_list|(
 name|scratchDir
 argument_list|)
 expr_stmt|;
+block|}
 name|FsPermission
 name|fsPermission
 init|=
@@ -2064,7 +2065,6 @@ argument_list|,
 name|fsPermission
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 end_class
