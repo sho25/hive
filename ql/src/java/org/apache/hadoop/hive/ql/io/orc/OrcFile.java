@@ -302,7 +302,11 @@ name|minor
 return|;
 block|}
 block|}
-comment|// the table properties that control ORC files
+comment|// Note : these string definitions for table properties are deprecated,
+comment|// and retained only for backward compatibility, please do not add to
+comment|// them, add to OrcTableProperties below instead
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 specifier|final
@@ -311,6 +315,8 @@ name|COMPRESSION
 init|=
 literal|"orc.compress"
 decl_stmt|;
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 specifier|final
@@ -319,6 +325,8 @@ name|COMPRESSION_BLOCK_SIZE
 init|=
 literal|"orc.compress.size"
 decl_stmt|;
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 specifier|final
@@ -327,6 +335,8 @@ name|STRIPE_SIZE
 init|=
 literal|"orc.stripe.size"
 decl_stmt|;
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 specifier|final
@@ -335,6 +345,8 @@ name|ROW_INDEX_STRIDE
 init|=
 literal|"orc.row.index.stride"
 decl_stmt|;
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 specifier|final
@@ -343,6 +355,8 @@ name|ENABLE_INDEXES
 init|=
 literal|"orc.create.index"
 decl_stmt|;
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 specifier|final
@@ -351,6 +365,72 @@ name|BLOCK_PADDING
 init|=
 literal|"orc.block.padding"
 decl_stmt|;
+comment|/**    * Enum container for all orc table properties.    * If introducing a new orc-specific table property,    * add it here.    */
+specifier|public
+specifier|static
+enum|enum
+name|OrcTableProperties
+block|{
+name|COMPRESSION
+argument_list|(
+literal|"orc.compress"
+argument_list|)
+block|,
+name|COMPRESSION_BLOCK_SIZE
+argument_list|(
+literal|"orc.compress.size"
+argument_list|)
+block|,
+name|STRIPE_SIZE
+argument_list|(
+literal|"orc.stripe.size"
+argument_list|)
+block|,
+name|ROW_INDEX_STRIDE
+argument_list|(
+literal|"orc.row.index.stride"
+argument_list|)
+block|,
+name|ENABLE_INDEXES
+argument_list|(
+literal|"orc.create.index"
+argument_list|)
+block|,
+name|BLOCK_PADDING
+argument_list|(
+literal|"orc.block.padding"
+argument_list|)
+block|;
+specifier|private
+specifier|final
+name|String
+name|propName
+decl_stmt|;
+name|OrcTableProperties
+parameter_list|(
+name|String
+name|propName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|propName
+operator|=
+name|propName
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getPropName
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|propName
+return|;
+block|}
+block|}
 comment|// unused
 specifier|private
 name|OrcFile
@@ -822,7 +902,7 @@ name|conf
 argument_list|)
 return|;
 block|}
-comment|/**    * Create an ORC file writer. This is the public interface for creating    * writers going forward and new options will only be added to this method.    * @param path filename to write to    * @param options the options    * @return a new ORC file writer    * @throws IOException    */
+comment|/**    * Create an ORC file writer. This is the public interface for creating    * writers going forward and new options will only be added to this method.    * @param path filename to write to    * @param opts the options    * @return a new ORC file writer    * @throws IOException    */
 specifier|public
 specifier|static
 name|Writer
