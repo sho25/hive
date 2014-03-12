@@ -3165,7 +3165,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list290
+name|_list298
 init|=
 name|iprot
 operator|.
@@ -3182,7 +3182,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
-name|_list290
+name|_list298
 operator|.
 name|size
 argument_list|)
@@ -3190,25 +3190,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i291
+name|_i299
 init|=
 literal|0
 init|;
-name|_i291
+name|_i299
 operator|<
-name|_list290
+name|_list298
 operator|.
 name|size
 condition|;
 operator|++
-name|_i291
+name|_i299
 control|)
 block|{
 name|String
-name|_elem292
+name|_elem300
 decl_stmt|;
-comment|// required
-name|_elem292
+comment|// optional
+name|_elem300
 operator|=
 name|iprot
 operator|.
@@ -3221,7 +3221,7 @@ name|colNames
 operator|.
 name|add
 argument_list|(
-name|_elem292
+name|_elem300
 argument_list|)
 expr_stmt|;
 block|}
@@ -3457,7 +3457,7 @@ expr_stmt|;
 for|for
 control|(
 name|String
-name|_iter293
+name|_iter301
 range|:
 name|struct
 operator|.
@@ -3468,7 +3468,7 @@ name|oprot
 operator|.
 name|writeString
 argument_list|(
-name|_iter293
+name|_iter301
 argument_list|)
 expr_stmt|;
 block|}
@@ -3596,7 +3596,7 @@ expr_stmt|;
 for|for
 control|(
 name|String
-name|_iter294
+name|_iter302
 range|:
 name|struct
 operator|.
@@ -3607,7 +3607,7 @@ name|oprot
 operator|.
 name|writeString
 argument_list|(
-name|_iter294
+name|_iter302
 argument_list|)
 expr_stmt|;
 block|}
@@ -3692,7 +3692,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list295
+name|_list303
 init|=
 operator|new
 name|org
@@ -3733,7 +3733,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
-name|_list295
+name|_list303
 operator|.
 name|size
 argument_list|)
@@ -3741,25 +3741,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i296
+name|_i304
 init|=
 literal|0
 init|;
-name|_i296
+name|_i304
 operator|<
-name|_list295
+name|_list303
 operator|.
 name|size
 condition|;
 operator|++
-name|_i296
+name|_i304
 control|)
 block|{
 name|String
-name|_elem297
+name|_elem305
 decl_stmt|;
-comment|// required
-name|_elem297
+comment|// optional
+name|_elem305
 operator|=
 name|iprot
 operator|.
@@ -3772,7 +3772,7 @@ name|colNames
 operator|.
 name|add
 argument_list|(
-name|_elem297
+name|_elem305
 argument_list|)
 expr_stmt|;
 block|}

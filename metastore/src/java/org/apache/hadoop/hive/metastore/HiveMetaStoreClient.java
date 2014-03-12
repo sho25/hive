@@ -127,6 +127,26 @@ name|java
 operator|.
 name|net
 operator|.
+name|URI
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|net
+operator|.
+name|URISyntaxException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|net
+operator|.
 name|UnknownHostException
 import|;
 end_import
@@ -589,24 +609,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|DropPartitionsResult
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|EnvironmentContext
 import|;
 end_import
@@ -680,6 +682,42 @@ operator|.
 name|api
 operator|.
 name|GetOpenTxnsResponse
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|GetPrincipalsInRoleRequest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|GetPrincipalsInRoleResponse
 import|;
 end_import
 
@@ -1573,62 +1611,6 @@ name|TTransportException
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URI
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URISyntaxException
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|MetaStoreUtils
-operator|.
-name|DEFAULT_DATABASE_NAME
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|MetaStoreUtils
-operator|.
-name|isIndexTable
-import|;
-end_import
-
 begin_comment
 comment|/**  * Hive Metastore Client.  */
 end_comment
@@ -2132,6 +2114,8 @@ operator|=
 name|tmp
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|reconnect
@@ -2169,6 +2153,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * @param dbname    * @param tbl_name    * @param new_tbl    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see    *   org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#alter_table(    *   java.lang.String, java.lang.String,    *   org.apache.hadoop.hive.metastore.api.Table)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alter_table
@@ -2239,6 +2225,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param dbname    * @param name    * @param part_vals    * @param newPart    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#rename_partition(    *      java.lang.String, java.lang.String, java.util.List, org.apache.hadoop.hive.metastore.api.Partition)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|renamePartition
@@ -2856,6 +2844,8 @@ return|return
 name|tokenStrForm
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -2921,6 +2911,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * @param new_part    * @return the added partition    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#add_partition(org.apache.hadoop.hive.metastore.api.Partition)    */
+annotation|@
+name|Override
 specifier|public
 name|Partition
 name|add_partition
@@ -2980,6 +2972,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @param new_parts    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#add_partitions(List)    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|add_partitions
@@ -3119,6 +3113,8 @@ literal|null
 return|;
 block|}
 comment|/**    * @param table_name    * @param db_name    * @param part_vals    * @return the appended partition    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
+annotation|@
+name|Override
 specifier|public
 name|Partition
 name|appendPartition
@@ -3203,6 +3199,8 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Partition
 name|appendPartition
@@ -3334,6 +3332,8 @@ name|destinationTableName
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|validatePartitionNameCharacters
@@ -3360,6 +3360,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Create a new Database    * @param db    * @throws AlreadyExistsException    * @throws InvalidObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_database(Database)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createDatabase
@@ -3385,6 +3387,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param tbl    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_table(org.apache.hadoop.hive.metastore.api.Table)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createTable
@@ -3542,6 +3546,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @param name    * @throws NoSuchObjectException    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_database(java.lang.String, boolean, boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|dropDatabase
@@ -3570,6 +3576,8 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|dropDatabase
@@ -3604,6 +3612,8 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|dropDatabase
@@ -3795,6 +3805,8 @@ name|env_context
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|dropPartition
@@ -3877,6 +3889,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData    *          delete the underlying data or just delete the table in metadata    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String,    *      java.lang.String, java.util.List, boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|dropPartition
@@ -4142,6 +4156,8 @@ argument_list|()
 return|;
 block|}
 comment|/**    * @param name    * @param dbname    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_table(java.lang.String,    *      java.lang.String, boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|dropTable
@@ -4174,6 +4190,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 annotation|@
 name|Deprecated
 specifier|public
@@ -4210,6 +4228,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param dbname    * @param name    * @param deleteData    *          delete the underlying data or just delete the table in metadata    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_table(java.lang.String,    *      java.lang.String, boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|dropTable
@@ -4552,6 +4572,8 @@ name|result
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -4595,6 +4617,8 @@ literal|null
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -4633,6 +4657,8 @@ literal|null
 return|;
 block|}
 comment|/**    * @param tbl_name    * @param db_name    * @param max_parts    * @return list of partitions    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -4838,6 +4864,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Get list of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5054,6 +5082,8 @@ return|;
 comment|// Assume the worst.
 block|}
 comment|/**    * @param name    * @return the database    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_database(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|Database
 name|getDatabase
@@ -5081,6 +5111,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @param tbl_name    * @param db_name    * @param part_vals    * @return the partition    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
+annotation|@
+name|Override
 specifier|public
 name|Partition
 name|getPartition
@@ -5120,6 +5152,8 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5219,6 +5253,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @param name    * @param dbname    * @return the table    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @throws NoSuchObjectException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_table(java.lang.String,    *      java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|Table
 name|getTable
@@ -5252,6 +5288,8 @@ return|;
 block|}
 comment|/** {@inheritDoc} */
 annotation|@
+name|Override
+annotation|@
 name|Deprecated
 specifier|public
 name|Table
@@ -5277,6 +5315,8 @@ argument_list|)
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5317,6 +5357,8 @@ argument_list|)
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5383,6 +5425,8 @@ argument_list|)
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5431,6 +5475,8 @@ literal|null
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5473,6 +5519,8 @@ return|return
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|tableExists
@@ -5518,6 +5566,8 @@ return|;
 block|}
 comment|/** {@inheritDoc} */
 annotation|@
+name|Override
+annotation|@
 name|Deprecated
 specifier|public
 name|boolean
@@ -5542,6 +5592,8 @@ name|tableName
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5622,6 +5674,8 @@ name|max_parts
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alter_partition
@@ -5654,6 +5708,8 @@ name|newPart
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alter_partitions
@@ -5689,6 +5745,8 @@ name|newParts
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alterDatabase
@@ -5717,6 +5775,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_fields(java.lang.String,    *      java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5754,6 +5814,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * create an index    * @param index the index object    * @param indexTable which stores the index data    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws AlreadyExistsException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createIndex
@@ -5786,6 +5848,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param dbname    * @param base_tbl_name    * @param idx_name    * @param new_idx    * @throws InvalidOperationException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#alter_index(java.lang.String,    *      java.lang.String, java.lang.String, org.apache.hadoop.hive.metastore.api.Index)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alter_index
@@ -5824,6 +5888,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param dbName    * @param tblName    * @param indexName    * @return the index    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
+annotation|@
+name|Override
 specifier|public
 name|Index
 name|getIndex
@@ -5863,6 +5929,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * list indexes of the give base table    * @param dbName    * @param tblName    * @param max    * @return the list of indexes    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5898,6 +5966,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * list all the index names of the give base table.    *    * @param dbName    * @param tblName    * @param max    * @return list of indexes    * @throws MetaException    * @throws TException    */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -5935,6 +6005,8 @@ argument_list|)
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|updateTableColumnStatistics
@@ -5963,6 +6035,8 @@ argument_list|)
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|updatePartitionColumnStatistics
@@ -5991,6 +6065,8 @@ argument_list|)
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -6042,6 +6118,8 @@ argument_list|()
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|Map
 argument_list|<
@@ -6102,6 +6180,8 @@ argument_list|()
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|deletePartitionColumnStatistics
@@ -6145,6 +6225,8 @@ argument_list|)
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|deleteTableColumnStatistics
@@ -6183,6 +6265,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_schema(java.lang.String,    *      java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -6219,6 +6303,8 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getConfigValue
@@ -6245,6 +6331,8 @@ name|defaultValue
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Partition
 name|getPartition
@@ -7165,6 +7253,29 @@ name|client
 operator|.
 name|get_role_names
 argument_list|()
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|GetPrincipalsInRoleResponse
+name|get_principals_in_role
+parameter_list|(
+name|GetPrincipalsInRoleRequest
+name|req
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+block|{
+return|return
+name|client
+operator|.
+name|get_principals_in_role
+argument_list|(
+name|req
+argument_list|)
 return|;
 block|}
 annotation|@
@@ -8388,6 +8499,8 @@ operator|=
 name|client
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|invoke

@@ -49,16 +49,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -2574,6 +2564,28 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|List
+argument_list|<
+name|MRoleMap
+argument_list|>
+name|listRoleMembers
+parameter_list|(
+name|String
+name|roleName
+parameter_list|)
+block|{
+return|return
+name|objectStore
+operator|.
+name|listRoleMembers
+argument_list|(
+name|roleName
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|Partition
 name|getPartitionWithAuth
 parameter_list|(
@@ -3165,6 +3177,8 @@ name|colName
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|deletePartitionColumnStatistics
@@ -3240,6 +3254,8 @@ name|statsObj
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|updatePartitionColumnStatistics
@@ -3273,6 +3289,8 @@ name|partVals
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|addToken
@@ -3288,6 +3306,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|removeToken
@@ -3300,6 +3320,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getToken
@@ -3312,6 +3334,8 @@ return|return
 literal|""
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -3329,6 +3353,8 @@ argument_list|>
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|addMasterKey
@@ -3344,6 +3370,8 @@ operator|-
 literal|1
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|updateMasterKey
@@ -3359,6 +3387,8 @@ name|NoSuchObjectException
 throws|,
 name|MetaException
 block|{}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|removeMasterKey
@@ -3371,6 +3401,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 index|[]
@@ -3589,6 +3621,8 @@ name|partNames
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createFunction

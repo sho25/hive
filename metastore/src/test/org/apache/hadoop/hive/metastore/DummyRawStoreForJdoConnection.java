@@ -39,16 +39,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|junit
 operator|.
 name|framework
@@ -2035,6 +2025,23 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|List
+argument_list|<
+name|MRoleMap
+argument_list|>
+name|listRoleMembers
+parameter_list|(
+name|String
+name|roleName
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|Partition
 name|getPartitionWithAuth
 parameter_list|(
@@ -2584,6 +2591,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|deletePartitionColumnStatistics
@@ -2639,6 +2648,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|updatePartitionColumnStatistics
@@ -2809,6 +2820,8 @@ argument_list|>
 name|partNames
 parameter_list|)
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createFunction

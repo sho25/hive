@@ -104,16 +104,27 @@ name|roleNameSchema
 init|=
 literal|"role#string"
 decl_stmt|;
-comment|/**    * thrift ddl for the result of show role.    */
+comment|/**    * thrift ddl for the result of show role grant principalName    */
 specifier|private
 specifier|static
 specifier|final
 name|String
-name|roleDescSchema
+name|roleShowGrantSchema
 init|=
 literal|"role,create_time,principal_name,principal_type,grant_option,grant_time,grantor#"
 operator|+
 literal|"string:bigint:string:string:boolean:bigint:string"
+decl_stmt|;
+comment|/**    * thrift ddl for the result of describe role roleName    */
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|roleShowRolePrincipals
+init|=
+literal|"principal_name,principal_type,grant_option,grantor,grantor_type,grant_time#"
+operator|+
+literal|"string:string:boolean:string:string:bigint"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -128,11 +139,21 @@ block|}
 specifier|public
 specifier|static
 name|String
-name|getRoleDescSchema
+name|getRoleShowGrantSchema
 parameter_list|()
 block|{
 return|return
-name|roleDescSchema
+name|roleShowGrantSchema
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|getShowRolePrincipalsSchema
+parameter_list|()
+block|{
+return|return
+name|roleShowRolePrincipals
 return|;
 block|}
 specifier|public
@@ -168,6 +189,11 @@ block|,
 name|SHOW_CURRENT_ROLE
 argument_list|(
 literal|"show_current_role"
+argument_list|)
+block|,
+name|SHOW_ROLE_PRINCIPALS
+argument_list|(
+literal|"show_role_principals"
 argument_list|)
 block|;
 specifier|private

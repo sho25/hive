@@ -290,6 +290,20 @@ parameter_list|()
 throws|throws
 name|HiveAuthzPluginException
 function_decl|;
+name|List
+argument_list|<
+name|HiveRoleGrant
+argument_list|>
+name|getPrincipalsInRoleInfo
+parameter_list|(
+name|String
+name|roleName
+parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
+function_decl|;
 block|}
 end_interface
 

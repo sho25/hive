@@ -2037,7 +2037,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list378
+name|_list386
 init|=
 name|iprot
 operator|.
@@ -2054,7 +2054,7 @@ argument_list|<
 name|Long
 argument_list|>
 argument_list|(
-name|_list378
+name|_list386
 operator|.
 name|size
 argument_list|)
@@ -2062,25 +2062,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i379
+name|_i387
 init|=
 literal|0
 init|;
-name|_i379
+name|_i387
 operator|<
-name|_list378
+name|_list386
 operator|.
 name|size
 condition|;
 operator|++
-name|_i379
+name|_i387
 control|)
 block|{
 name|long
-name|_elem380
+name|_elem388
 decl_stmt|;
-comment|// required
-name|_elem380
+comment|// optional
+name|_elem388
 operator|=
 name|iprot
 operator|.
@@ -2093,7 +2093,7 @@ name|txn_ids
 operator|.
 name|add
 argument_list|(
-name|_elem380
+name|_elem388
 argument_list|)
 expr_stmt|;
 block|}
@@ -2267,7 +2267,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter381
+name|_iter389
 range|:
 name|struct
 operator|.
@@ -2278,7 +2278,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter381
+name|_iter389
 argument_list|)
 expr_stmt|;
 block|}
@@ -2388,7 +2388,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter382
+name|_iter390
 range|:
 name|struct
 operator|.
@@ -2399,7 +2399,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter382
+name|_iter390
 argument_list|)
 expr_stmt|;
 block|}
@@ -2452,7 +2452,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list383
+name|_list391
 init|=
 operator|new
 name|org
@@ -2493,7 +2493,7 @@ argument_list|<
 name|Long
 argument_list|>
 argument_list|(
-name|_list383
+name|_list391
 operator|.
 name|size
 argument_list|)
@@ -2501,25 +2501,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i384
+name|_i392
 init|=
 literal|0
 init|;
-name|_i384
+name|_i392
 operator|<
-name|_list383
+name|_list391
 operator|.
 name|size
 condition|;
 operator|++
-name|_i384
+name|_i392
 control|)
 block|{
 name|long
-name|_elem385
+name|_elem393
 decl_stmt|;
-comment|// required
-name|_elem385
+comment|// optional
+name|_elem393
 operator|=
 name|iprot
 operator|.
@@ -2532,7 +2532,7 @@ name|txn_ids
 operator|.
 name|add
 argument_list|(
-name|_elem385
+name|_elem393
 argument_list|)
 expr_stmt|;
 block|}

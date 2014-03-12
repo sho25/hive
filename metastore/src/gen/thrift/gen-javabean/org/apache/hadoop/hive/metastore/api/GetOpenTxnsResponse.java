@@ -2606,7 +2606,7 @@ operator|.
 name|protocol
 operator|.
 name|TSet
-name|_set370
+name|_set378
 init|=
 name|iprot
 operator|.
@@ -2625,7 +2625,7 @@ argument_list|>
 argument_list|(
 literal|2
 operator|*
-name|_set370
+name|_set378
 operator|.
 name|size
 argument_list|)
@@ -2633,25 +2633,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i371
+name|_i379
 init|=
 literal|0
 init|;
-name|_i371
+name|_i379
 operator|<
-name|_set370
+name|_set378
 operator|.
 name|size
 condition|;
 operator|++
-name|_i371
+name|_i379
 control|)
 block|{
 name|long
-name|_elem372
+name|_elem380
 decl_stmt|;
-comment|// required
-name|_elem372
+comment|// optional
+name|_elem380
 operator|=
 name|iprot
 operator|.
@@ -2664,7 +2664,7 @@ name|open_txns
 operator|.
 name|add
 argument_list|(
-name|_elem372
+name|_elem380
 argument_list|)
 expr_stmt|;
 block|}
@@ -2859,7 +2859,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter373
+name|_iter381
 range|:
 name|struct
 operator|.
@@ -2870,7 +2870,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter373
+name|_iter381
 argument_list|)
 expr_stmt|;
 block|}
@@ -2989,7 +2989,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter374
+name|_iter382
 range|:
 name|struct
 operator|.
@@ -3000,7 +3000,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter374
+name|_iter382
 argument_list|)
 expr_stmt|;
 block|}
@@ -3069,7 +3069,7 @@ operator|.
 name|protocol
 operator|.
 name|TSet
-name|_set375
+name|_set383
 init|=
 operator|new
 name|org
@@ -3112,7 +3112,7 @@ argument_list|>
 argument_list|(
 literal|2
 operator|*
-name|_set375
+name|_set383
 operator|.
 name|size
 argument_list|)
@@ -3120,25 +3120,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i376
+name|_i384
 init|=
 literal|0
 init|;
-name|_i376
+name|_i384
 operator|<
-name|_set375
+name|_set383
 operator|.
 name|size
 condition|;
 operator|++
-name|_i376
+name|_i384
 control|)
 block|{
 name|long
-name|_elem377
+name|_elem385
 decl_stmt|;
-comment|// required
-name|_elem377
+comment|// optional
+name|_elem385
 operator|=
 name|iprot
 operator|.
@@ -3151,7 +3151,7 @@ name|open_txns
 operator|.
 name|add
 argument_list|(
-name|_elem377
+name|_elem385
 argument_list|)
 expr_stmt|;
 block|}

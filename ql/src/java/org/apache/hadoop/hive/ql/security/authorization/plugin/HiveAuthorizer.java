@@ -228,6 +228,21 @@ name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 function_decl|;
+comment|/**    * Get the grant information for principals granted the given role    * @param roleName    * @return    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
+name|List
+argument_list|<
+name|HiveRoleGrant
+argument_list|>
+name|getPrincipalsInRoleInfo
+parameter_list|(
+name|String
+name|roleName
+parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
+function_decl|;
 comment|/**    * Grant roles in given roles list to principals in given hivePrincipals list    * @param hivePrincipals    * @param roles    * @param grantOption    * @param grantorPrinc    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|grantRole

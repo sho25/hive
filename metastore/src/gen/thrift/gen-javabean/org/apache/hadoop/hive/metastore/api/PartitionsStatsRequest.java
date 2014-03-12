@@ -3828,7 +3828,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list298
+name|_list306
 init|=
 name|iprot
 operator|.
@@ -3845,7 +3845,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
-name|_list298
+name|_list306
 operator|.
 name|size
 argument_list|)
@@ -3853,25 +3853,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i299
+name|_i307
 init|=
 literal|0
 init|;
-name|_i299
+name|_i307
 operator|<
-name|_list298
+name|_list306
 operator|.
 name|size
 condition|;
 operator|++
-name|_i299
+name|_i307
 control|)
 block|{
 name|String
-name|_elem300
+name|_elem308
 decl_stmt|;
-comment|// required
-name|_elem300
+comment|// optional
+name|_elem308
 operator|=
 name|iprot
 operator|.
@@ -3884,7 +3884,7 @@ name|colNames
 operator|.
 name|add
 argument_list|(
-name|_elem300
+name|_elem308
 argument_list|)
 expr_stmt|;
 block|}
@@ -3958,7 +3958,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list301
+name|_list309
 init|=
 name|iprot
 operator|.
@@ -3975,7 +3975,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
-name|_list301
+name|_list309
 operator|.
 name|size
 argument_list|)
@@ -3983,25 +3983,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i302
+name|_i310
 init|=
 literal|0
 init|;
-name|_i302
+name|_i310
 operator|<
-name|_list301
+name|_list309
 operator|.
 name|size
 condition|;
 operator|++
-name|_i302
+name|_i310
 control|)
 block|{
 name|String
-name|_elem303
+name|_elem311
 decl_stmt|;
-comment|// required
-name|_elem303
+comment|// optional
+name|_elem311
 operator|=
 name|iprot
 operator|.
@@ -4014,7 +4014,7 @@ name|partNames
 operator|.
 name|add
 argument_list|(
-name|_elem303
+name|_elem311
 argument_list|)
 expr_stmt|;
 block|}
@@ -4250,7 +4250,7 @@ expr_stmt|;
 for|for
 control|(
 name|String
-name|_iter304
+name|_iter312
 range|:
 name|struct
 operator|.
@@ -4261,7 +4261,7 @@ name|oprot
 operator|.
 name|writeString
 argument_list|(
-name|_iter304
+name|_iter312
 argument_list|)
 expr_stmt|;
 block|}
@@ -4333,7 +4333,7 @@ expr_stmt|;
 for|for
 control|(
 name|String
-name|_iter305
+name|_iter313
 range|:
 name|struct
 operator|.
@@ -4344,7 +4344,7 @@ name|oprot
 operator|.
 name|writeString
 argument_list|(
-name|_iter305
+name|_iter313
 argument_list|)
 expr_stmt|;
 block|}
@@ -4472,7 +4472,7 @@ expr_stmt|;
 for|for
 control|(
 name|String
-name|_iter306
+name|_iter314
 range|:
 name|struct
 operator|.
@@ -4483,7 +4483,7 @@ name|oprot
 operator|.
 name|writeString
 argument_list|(
-name|_iter306
+name|_iter314
 argument_list|)
 expr_stmt|;
 block|}
@@ -4504,7 +4504,7 @@ expr_stmt|;
 for|for
 control|(
 name|String
-name|_iter307
+name|_iter315
 range|:
 name|struct
 operator|.
@@ -4515,7 +4515,7 @@ name|oprot
 operator|.
 name|writeString
 argument_list|(
-name|_iter307
+name|_iter315
 argument_list|)
 expr_stmt|;
 block|}
@@ -4600,7 +4600,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list308
+name|_list316
 init|=
 operator|new
 name|org
@@ -4641,7 +4641,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
-name|_list308
+name|_list316
 operator|.
 name|size
 argument_list|)
@@ -4649,25 +4649,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i309
+name|_i317
 init|=
 literal|0
 init|;
-name|_i309
+name|_i317
 operator|<
-name|_list308
+name|_list316
 operator|.
 name|size
 condition|;
 operator|++
-name|_i309
+name|_i317
 control|)
 block|{
 name|String
-name|_elem310
+name|_elem318
 decl_stmt|;
-comment|// required
-name|_elem310
+comment|// optional
+name|_elem318
 operator|=
 name|iprot
 operator|.
@@ -4680,7 +4680,7 @@ name|colNames
 operator|.
 name|add
 argument_list|(
-name|_elem310
+name|_elem318
 argument_list|)
 expr_stmt|;
 block|}
@@ -4702,7 +4702,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list311
+name|_list319
 init|=
 operator|new
 name|org
@@ -4743,7 +4743,7 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
-name|_list311
+name|_list319
 operator|.
 name|size
 argument_list|)
@@ -4751,25 +4751,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i312
+name|_i320
 init|=
 literal|0
 init|;
-name|_i312
+name|_i320
 operator|<
-name|_list311
+name|_list319
 operator|.
 name|size
 condition|;
 operator|++
-name|_i312
+name|_i320
 control|)
 block|{
 name|String
-name|_elem313
+name|_elem321
 decl_stmt|;
-comment|// required
-name|_elem313
+comment|// optional
+name|_elem321
 operator|=
 name|iprot
 operator|.
@@ -4782,7 +4782,7 @@ name|partNames
 operator|.
 name|add
 argument_list|(
-name|_elem313
+name|_elem321
 argument_list|)
 expr_stmt|;
 block|}

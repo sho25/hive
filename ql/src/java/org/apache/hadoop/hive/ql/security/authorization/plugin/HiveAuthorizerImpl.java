@@ -525,10 +525,32 @@ name|getCurrentRoles
 argument_list|()
 return|;
 block|}
-comment|// other access control functions
-comment|//   void validateAuthority(HiveAction, inputs, outputs){
-comment|//     authValidator.validateAuthority(HiveAction, inputs, outputs);
-comment|//   }
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|HiveRoleGrant
+argument_list|>
+name|getPrincipalsInRoleInfo
+parameter_list|(
+name|String
+name|roleName
+parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
+block|{
+return|return
+name|accessController
+operator|.
+name|getPrincipalsInRoleInfo
+argument_list|(
+name|roleName
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

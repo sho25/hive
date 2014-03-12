@@ -854,6 +854,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|SHOW_ROLE_PRINCIPALS
+argument_list|(
+literal|"SHOW_ROLE_PRINCIPALS"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|SHOW_ROLE_GRANT
 argument_list|(
 literal|"SHOW_ROLE_GRANT"
