@@ -3931,34 +3931,6 @@ argument_list|(
 name|bigInteger
 argument_list|)
 decl_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Out = "
-operator|+
-name|uInt128
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Out = "
-operator|+
-name|bigInteger
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|assertEquals
 argument_list|(
 name|bigInteger

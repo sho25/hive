@@ -206,6 +206,25 @@ name|i
 index|]
 argument_list|)
 expr_stmt|;
+name|int
+name|newScale
+init|=
+name|inV
+operator|.
+name|scale
+operator|>
+literal|9
+condition|?
+operator|(
+name|inV
+operator|.
+name|scale
+operator|-
+literal|9
+operator|)
+else|:
+literal|0
+decl_stmt|;
 name|tmp
 operator|.
 name|multiplyDestructive
@@ -215,7 +234,7 @@ argument_list|,
 operator|(
 name|short
 operator|)
-literal|0
+name|newScale
 argument_list|)
 expr_stmt|;
 comment|// set output
