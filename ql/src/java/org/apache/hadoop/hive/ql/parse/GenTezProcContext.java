@@ -715,6 +715,15 @@ name|FileSinkOperator
 argument_list|>
 name|fileSinkSet
 decl_stmt|;
+comment|// remember which reducesinks we've already connected
+specifier|public
+specifier|final
+name|Set
+argument_list|<
+name|ReduceSinkOperator
+argument_list|>
+name|connectedReduceSinks
+decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1031,6 +1040,17 @@ operator|new
 name|HashSet
 argument_list|<
 name|FileSinkOperator
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|connectedReduceSinks
+operator|=
+operator|new
+name|HashSet
+argument_list|<
+name|ReduceSinkOperator
 argument_list|>
 argument_list|()
 expr_stmt|;

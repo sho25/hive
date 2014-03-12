@@ -776,6 +776,15 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|context
+operator|.
+name|connectedReduceSinks
+operator|.
+name|add
+argument_list|(
+name|parentRS
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{

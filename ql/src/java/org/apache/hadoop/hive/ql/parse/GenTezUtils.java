@@ -743,6 +743,15 @@ operator|.
 name|SIMPLE_EDGE
 argument_list|)
 expr_stmt|;
+name|context
+operator|.
+name|connectedReduceSinks
+operator|.
+name|add
+argument_list|(
+name|reduceSink
+argument_list|)
+expr_stmt|;
 return|return
 name|reduceWork
 return|;

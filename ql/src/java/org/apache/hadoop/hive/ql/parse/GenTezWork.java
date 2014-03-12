@@ -810,6 +810,15 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|context
+operator|.
+name|connectedReduceSinks
+operator|.
+name|add
+argument_list|(
+name|r
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}
@@ -946,6 +955,21 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// finally hook everything up
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Connecting union work ("
+operator|+
+name|unionWork
+operator|+
+literal|") with work ("
+operator|+
+name|work
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
 name|tezWork
 operator|.
 name|connect
@@ -1024,6 +1048,19 @@ argument_list|(
 name|operator
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Second pass. Leaf operator: "
+operator|+
+name|operator
+operator|+
+literal|" has common downstream work:"
+operator|+
+name|followingWork
+argument_list|)
+expr_stmt|;
 comment|// need to add this branch to the key + value info
 assert|assert
 name|operator
@@ -1100,11 +1137,11 @@ condition|(
 operator|!
 name|context
 operator|.
-name|unionWorkMap
+name|connectedReduceSinks
 operator|.
-name|containsKey
+name|contains
 argument_list|(
-name|operator
+name|rs
 argument_list|)
 condition|)
 block|{
@@ -1122,7 +1159,28 @@ operator|.
 name|SIMPLE_EDGE
 argument_list|)
 expr_stmt|;
+name|context
+operator|.
+name|connectedReduceSinks
+operator|.
+name|add
+argument_list|(
+name|rs
+argument_list|)
+expr_stmt|;
 block|}
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"First pass. Leaf operator: "
+operator|+
+name|operator
+argument_list|)
+expr_stmt|;
 block|}
 comment|// No children means we're at the bottom. If there are more operators to scan
 comment|// the next item will be a new root.
