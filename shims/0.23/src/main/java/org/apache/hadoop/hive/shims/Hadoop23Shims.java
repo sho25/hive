@@ -3184,7 +3184,7 @@ name|put
 argument_list|(
 literal|"MAPREDMINSPLITSIZEPERNODE"
 argument_list|,
-literal|"mapreduce.input.fileinputformat.split.minsize.per.rack"
+literal|"mapreduce.input.fileinputformat.split.minsize.per.node"
 argument_list|)
 expr_stmt|;
 name|ret
@@ -3193,7 +3193,7 @@ name|put
 argument_list|(
 literal|"MAPREDMINSPLITSIZEPERRACK"
 argument_list|,
-literal|"mapreduce.input.fileinputformat.split.minsize.per.node"
+literal|"mapreduce.input.fileinputformat.split.minsize.per.rack"
 argument_list|)
 expr_stmt|;
 name|ret

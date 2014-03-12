@@ -351,7 +351,7 @@ name|METASTORE_KERBEROS_PRINCIPAL
 operator|.
 name|varname
 decl_stmt|;
-comment|/**    * The desired number of input splits produced for each partition. When the    * input files are large and few, we want to split them into many splits,    * so as to increase the parallelizm of loading the splits. Try also two    * other parameters, mapred.min.split.size and mapred.max.split.size, to    * control the number of input splits.    */
+comment|/**    * The desired number of input splits produced for each partition. When the    * input files are large and few, we want to split them into many splits,    * so as to increase the parallelizm of loading the splits. Try also two    * other parameters, mapred.min.split.size and mapred.max.split.size for    * hadoop 1.x, or mapreduce.input.fileinputformat.split.minsize and    * mapreduce.input.fileinputformat.split.maxsize in hadoop 2.x to    * control the number of input splits.    */
 specifier|public
 specifier|static
 specifier|final

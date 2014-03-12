@@ -3948,7 +3948,7 @@ name|ret
 operator|.
 name|put
 argument_list|(
-literal|"MAPREDMINSPLITSIZEPERNODE"
+literal|"MAPREDMINSPLITSIZEPERRACK"
 argument_list|,
 literal|"mapred.min.split.size.per.rack"
 argument_list|)
@@ -3957,7 +3957,7 @@ name|ret
 operator|.
 name|put
 argument_list|(
-literal|"MAPREDMINSPLITSIZEPERRACK"
+literal|"MAPREDMINSPLITSIZEPERNODE"
 argument_list|,
 literal|"mapred.min.split.size.per.node"
 argument_list|)
