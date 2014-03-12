@@ -823,6 +823,7 @@ name|isSecurityEnabled
 parameter_list|()
 function_decl|;
 comment|/**    * Get the string form of the token given a token signature.    * The signature is used as the value of the "service" field in the token for lookup.    * Ref: AbstractDelegationTokenSelector in Hadoop. If there exists such a token    * in the token cache (credential store) of the job, the lookup returns that.    * This is relevant only when running against a "secure" hadoop release    * The method gets hold of the tokens if they are set up by hadoop - this should    * happen on the map/reduce tasks if the client added the tokens into hadoop's    * credential store in the front end during job submission. The method will    * select the hive delegation token among the set of tokens and return the string    * form of it    * @param tokenSignature    * @return the string form of the token found    * @throws IOException    */
+specifier|public
 name|String
 name|getTokenStrForm
 parameter_list|(
@@ -833,12 +834,27 @@ throws|throws
 name|IOException
 function_decl|;
 comment|/**    * Add a delegation token to the given ugi    * @param ugi    * @param tokenStr    * @param tokenService    * @throws IOException    */
+specifier|public
 name|void
 name|setTokenStr
 parameter_list|(
 name|UserGroupInformation
 name|ugi
 parameter_list|,
+name|String
+name|tokenStr
+parameter_list|,
+name|String
+name|tokenService
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Add given service to the string format token    * @param tokenStr    * @param tokenService    * @return    * @throws IOException    */
+specifier|public
+name|String
+name|addServiceToToken
+parameter_list|(
 name|String
 name|tokenStr
 parameter_list|,
@@ -1015,11 +1031,32 @@ name|path
 parameter_list|)
 function_decl|;
 comment|/**    * Create the proxy ugi for the given userid    * @param userName    * @return    */
+specifier|public
 name|UserGroupInformation
 name|createProxyUser
 parameter_list|(
 name|String
 name|userName
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Verify proxy access to given UGI for given user    * @param ugi    */
+specifier|public
+name|void
+name|authorizeProxyAccess
+parameter_list|(
+name|String
+name|proxyUser
+parameter_list|,
+name|UserGroupInformation
+name|realUserUgi
+parameter_list|,
+name|String
+name|ipAddress
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException

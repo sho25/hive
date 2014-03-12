@@ -4101,6 +4101,13 @@ literal|"CUSTOM"
 argument_list|)
 argument_list|)
 block|,
+name|HIVE_SERVER2_ALLOW_USER_SUBSTITUTION
+argument_list|(
+literal|"hive.server2.allow.user.substitution"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVE_SERVER2_KERBEROS_KEYTAB
 argument_list|(
 literal|"hive.server2.authentication.kerberos.keytab"

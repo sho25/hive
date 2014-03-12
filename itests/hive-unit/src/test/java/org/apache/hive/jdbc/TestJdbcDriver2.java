@@ -1422,7 +1422,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|IllegalArgumentException
+name|SQLException
 name|i
 parameter_list|)
 block|{

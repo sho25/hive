@@ -589,7 +589,9 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Bad URL format"
+literal|"Bad URL format: Missing prefix "
+operator|+
+name|URL_PREFIX
 argument_list|)
 throw|;
 block|}
@@ -867,6 +869,8 @@ name|find
 argument_list|()
 condition|)
 block|{
+if|if
+condition|(
 name|connParams
 operator|.
 name|getSessionVars
@@ -888,7 +892,25 @@ argument_list|(
 literal|2
 argument_list|)
 argument_list|)
-expr_stmt|;
+operator|!=
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Bad URL format: Multiple values for property "
+operator|+
+name|sessMatcher
+operator|.
+name|group
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 block|}
