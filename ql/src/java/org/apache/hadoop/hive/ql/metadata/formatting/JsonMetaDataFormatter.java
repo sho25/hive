@@ -223,6 +223,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|TableType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|FieldSchema
@@ -1229,6 +1245,19 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|tbl
+operator|.
+name|getTableType
+argument_list|()
+operator|!=
+name|TableType
+operator|.
+name|VIRTUAL_VIEW
+condition|)
+block|{
+comment|//tbl.getPath() is null for views
 name|putFileSystemsStats
 argument_list|(
 name|builder
@@ -1250,6 +1279,7 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|builder
 operator|.
@@ -1404,6 +1434,7 @@ return|return
 name|locations
 return|;
 block|}
+comment|/**    * @param tblPath not NULL    * @throws IOException    */
 comment|// Duplicates logic in TextMetaDataFormatter
 specifier|private
 name|void
