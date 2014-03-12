@@ -410,15 +410,6 @@ name|hiveConf
 operator|.
 name|set
 argument_list|(
-literal|"hive.metastore.local"
-argument_list|,
-literal|"true"
-argument_list|)
-expr_stmt|;
-name|hiveConf
-operator|.
-name|set
-argument_list|(
 name|HiveConf
 operator|.
 name|ConfVars

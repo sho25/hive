@@ -632,15 +632,6 @@ argument_list|)
 expr_stmt|;
 name|hcatConf
 operator|.
-name|set
-argument_list|(
-literal|"hive.metastore.local"
-argument_list|,
-literal|"false"
-argument_list|)
-expr_stmt|;
-name|hcatConf
-operator|.
 name|setVar
 argument_list|(
 name|HiveConf
