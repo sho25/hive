@@ -1454,6 +1454,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Fatal errors are those errors that cannot be recovered by retries. These are application    * dependent. Examples of fatal errors include: - the small table in the map-side joins is too    * large to be feasible to be handled by one mapper. The job should fail and the user should be    * warned to use regular joins rather than map-side joins. Fatal errors are indicated by counters    * that are set at execution time. If the counter is non-zero, a fatal error occurred. The value    * of the counter indicates the error type.    *    * @return true if fatal errors happened during job execution, false otherwise.    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|checkFatalErrors
@@ -3164,14 +3166,11 @@ expr_stmt|;
 block|}
 name|HadoopJobExecHelper
 operator|.
-name|runningJobKillURIs
+name|runningJobs
 operator|.
 name|remove
 argument_list|(
 name|rj
-operator|.
-name|getJobID
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|jobID

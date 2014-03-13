@@ -38,12 +38,6 @@ specifier|public
 class|class
 name|ReducerTimeStatsPerJob
 block|{
-comment|// stores the JobId of the job
-specifier|private
-specifier|final
-name|String
-name|jobId
-decl_stmt|;
 comment|// Stores the temporal statistics in milliseconds for reducers
 comment|// specific to a Job
 specifier|private
@@ -75,17 +69,8 @@ argument_list|<
 name|Integer
 argument_list|>
 name|reducersRunTimes
-parameter_list|,
-name|String
-name|jobId
 parameter_list|)
 block|{
-name|this
-operator|.
-name|jobId
-operator|=
-name|jobId
-expr_stmt|;
 comment|// If no Run times present, then set -1, indicating no values
 if|if
 condition|(
@@ -371,17 +356,6 @@ return|return
 name|this
 operator|.
 name|standardDeviationTime
-return|;
-block|}
-specifier|public
-name|String
-name|getJobId
-parameter_list|()
-block|{
-return|return
-name|this
-operator|.
-name|jobId
 return|;
 block|}
 block|}
