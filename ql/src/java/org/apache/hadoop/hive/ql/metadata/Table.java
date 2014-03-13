@@ -3655,13 +3655,16 @@ name|getNumBuckets
 argument_list|()
 return|;
 block|}
-comment|/**    * Replaces the directory corresponding to the table by srcf. Works by    * deleting the table directory and renaming the source directory.    *    * @param srcf    *          Source directory    */
+comment|/**    * Replaces the directory corresponding to the table by srcf. Works by    * deleting the table directory and renaming the source directory.    *    * @param srcf    *          Source directory    * @param isSrcLocal    *          If the source directory is LOCAL    */
 specifier|protected
 name|void
 name|replaceFiles
 parameter_list|(
 name|Path
 name|srcf
+parameter_list|,
+name|boolean
+name|isSrcLocal
 parameter_list|)
 throws|throws
 name|HiveException
@@ -3689,16 +3692,21 @@ argument_list|()
 operator|.
 name|getConf
 argument_list|()
+argument_list|,
+name|isSrcLocal
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Inserts files specified into the partition. Works by moving files    *    * @param srcf    *          Files to be moved. Leaf directories or globbed file paths    */
+comment|/**    * Inserts files specified into the partition. Works by moving files    *    * @param srcf    *          Files to be moved. Leaf directories or globbed file paths    * @param isSrcLocal    *          If the source directory is LOCAL    */
 specifier|protected
 name|void
 name|copyFiles
 parameter_list|(
 name|Path
 name|srcf
+parameter_list|,
+name|boolean
+name|isSrcLocal
 parameter_list|)
 throws|throws
 name|HiveException
@@ -3742,6 +3750,8 @@ name|getPath
 argument_list|()
 argument_list|,
 name|fs
+argument_list|,
+name|isSrcLocal
 argument_list|)
 expr_stmt|;
 block|}

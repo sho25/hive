@@ -1636,15 +1636,16 @@ argument_list|>
 name|files
 decl_stmt|;
 name|FileSystem
-name|fs
+name|srcFs
 decl_stmt|;
+comment|// source filesystem
 try|try
 block|{
-name|fs
+name|srcFs
 operator|=
-name|table
+name|tbd
 operator|.
-name|getDataLocation
+name|getSourcePath
 argument_list|()
 operator|.
 name|getFileSystem
@@ -1654,7 +1655,7 @@ argument_list|)
 expr_stmt|;
 name|dirs
 operator|=
-name|fs
+name|srcFs
 operator|.
 name|globStatus
 argument_list|(
@@ -1704,7 +1705,7 @@ name|Arrays
 operator|.
 name|asList
 argument_list|(
-name|fs
+name|srcFs
 operator|.
 name|listStatus
 argument_list|(
@@ -1775,7 +1776,7 @@ name|HiveFileFormatUtils
 operator|.
 name|checkInputFormat
 argument_list|(
-name|fs
+name|srcFs
 argument_list|,
 name|conf
 argument_list|,
@@ -1861,6 +1862,11 @@ argument_list|,
 name|tbd
 operator|.
 name|getHoldDDLTime
+argument_list|()
+argument_list|,
+name|work
+operator|.
+name|isSrcLocal
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2612,6 +2618,11 @@ name|isSkewedStoredAsDirs
 argument_list|(
 name|tbd
 argument_list|)
+argument_list|,
+name|work
+operator|.
+name|isSrcLocal
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Partition

@@ -389,6 +389,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|PathFilter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|common
@@ -5618,7 +5632,7 @@ name|currentDb
 argument_list|)
 return|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param holdDDLTime if true, force [re]create the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param holdDDLTime if true, force [re]create the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    */
 specifier|public
 name|void
 name|loadPartition
@@ -5648,6 +5662,9 @@ name|inheritTableSpecs
 parameter_list|,
 name|boolean
 name|isSkewedStoreAsSubdir
+parameter_list|,
+name|boolean
+name|isSrcLocal
 parameter_list|)
 throws|throws
 name|HiveException
@@ -5659,6 +5676,14 @@ name|getTable
 argument_list|(
 name|tableName
 argument_list|)
+decl_stmt|;
+name|Path
+name|tblDataLocationPath
+init|=
+name|tbl
+operator|.
+name|getDataLocation
+argument_list|()
 decl_stmt|;
 try|try
 block|{
@@ -5729,7 +5754,7 @@ operator|=
 operator|new
 name|Path
 argument_list|(
-name|loadPath
+name|tblDataLocationPath
 operator|.
 name|toUri
 argument_list|()
@@ -5737,7 +5762,7 @@ operator|.
 name|getScheme
 argument_list|()
 argument_list|,
-name|loadPath
+name|tblDataLocationPath
 operator|.
 name|toUri
 argument_list|()
@@ -5825,6 +5850,8 @@ name|oldPartPath
 argument_list|,
 name|getConf
 argument_list|()
+argument_list|,
+name|isSrcLocal
 argument_list|)
 expr_stmt|;
 block|}
@@ -5854,6 +5881,8 @@ argument_list|,
 name|newPartPath
 argument_list|,
 name|fs
+argument_list|,
+name|isSrcLocal
 argument_list|)
 expr_stmt|;
 block|}
@@ -6869,6 +6898,8 @@ argument_list|,
 literal|true
 argument_list|,
 name|listBucketingEnabled
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -6904,7 +6935,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param replace    *          if true - replace files in the table, otherwise add files to table    * @param holdDDLTime    */
+comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param replace    *          if true - replace files in the table, otherwise add files to table    * @param holdDDLTime    * @param isSrcLocal    *          If the source directory is LOCAL    */
 specifier|public
 name|void
 name|loadTable
@@ -6920,6 +6951,9 @@ name|replace
 parameter_list|,
 name|boolean
 name|holdDDLTime
+parameter_list|,
+name|boolean
+name|isSrcLocal
 parameter_list|)
 throws|throws
 name|HiveException
@@ -6942,6 +6976,8 @@ operator|.
 name|replaceFiles
 argument_list|(
 name|loadPath
+argument_list|,
+name|isSrcLocal
 argument_list|)
 expr_stmt|;
 block|}
@@ -6952,6 +6988,8 @@ operator|.
 name|copyFiles
 argument_list|(
 name|loadPath
+argument_list|,
+name|isSrcLocal
 argument_list|)
 expr_stmt|;
 block|}
@@ -10732,6 +10770,9 @@ name|FileStatus
 index|[]
 name|srcs
 parameter_list|,
+name|FileSystem
+name|srcFs
+parameter_list|,
 name|Path
 name|destf
 parameter_list|,
@@ -10833,7 +10874,7 @@ condition|)
 block|{
 name|items
 operator|=
-name|fs
+name|srcFs
 operator|.
 name|listStatus
 argument_list|(
@@ -10841,6 +10882,48 @@ name|src
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+operator|new
+name|PathFilter
+argument_list|()
+block|{
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|accept
+parameter_list|(
+name|Path
+name|p
+parameter_list|)
+block|{
+name|String
+name|name
+init|=
+name|p
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+return|return
+operator|!
+name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"_"
+argument_list|)
+operator|&&
+operator|!
+name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"."
+argument_list|)
+return|;
+block|}
+block|}
 argument_list|)
 expr_stmt|;
 name|Arrays
@@ -10907,7 +10990,7 @@ block|{
 comment|// This check is redundant because temp files are removed by
 comment|// execution layer before
 comment|// calling loadTable/Partition. But leaving it in just in case.
-name|fs
+name|srcFs
 operator|.
 name|delete
 argument_list|(
@@ -11216,6 +11299,9 @@ name|fs
 parameter_list|,
 name|boolean
 name|replace
+parameter_list|,
+name|boolean
+name|isSrcLocal
 parameter_list|)
 throws|throws
 name|HiveException
@@ -11380,6 +11466,13 @@ expr_stmt|;
 block|}
 block|}
 block|}
+if|if
+condition|(
+operator|!
+name|isSrcLocal
+condition|)
+block|{
+comment|// For NOT local src file, rename the file
 name|success
 operator|=
 name|fs
@@ -11391,6 +11484,24 @@ argument_list|,
 name|destf
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|// For local src file, copy to hdfs
+name|fs
+operator|.
+name|copyFromLocalFile
+argument_list|(
+name|srcf
+argument_list|,
+name|destf
+argument_list|)
+expr_stmt|;
+name|success
+operator|=
+literal|true
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info
@@ -11431,7 +11542,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to move source"
+literal|"Unable to move source "
 operator|+
 name|srcf
 operator|+
@@ -11549,6 +11660,9 @@ name|destf
 parameter_list|,
 name|FileSystem
 name|fs
+parameter_list|,
+name|boolean
+name|isSrcLocal
 parameter_list|)
 throws|throws
 name|HiveException
@@ -11638,11 +11752,23 @@ name|FileStatus
 index|[]
 name|srcs
 decl_stmt|;
+name|FileSystem
+name|srcFs
+decl_stmt|;
 try|try
 block|{
+name|srcFs
+operator|=
+name|srcf
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|srcs
 operator|=
-name|fs
+name|srcFs
 operator|.
 name|globStatus
 argument_list|(
@@ -11716,6 +11842,8 @@ name|fs
 argument_list|,
 name|srcs
 argument_list|,
+name|srcFs
+argument_list|,
 name|destf
 argument_list|,
 literal|false
@@ -11765,6 +11893,8 @@ argument_list|,
 name|fs
 argument_list|,
 literal|false
+argument_list|,
+name|isSrcLocal
 argument_list|)
 condition|)
 block|{
@@ -11808,7 +11938,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Replaces files in the partition with new data set specified by srcf. Works    * by renaming directory of srcf to the destination file.    * srcf, destf, and tmppath should resident in the same DFS, but the oldPath can be in a    * different DFS.    *    * @param srcf    *          Source directory to be renamed to tmppath. It should be a    *          leaf directory where the final data files reside. However it    *          could potentially contain subdirectories as well.    * @param destf    *          The directory where the final data needs to go    * @param oldPath    *          The directory where the old data location, need to be cleaned up.    */
+comment|/**    * Replaces files in the partition with new data set specified by srcf. Works    * by renaming directory of srcf to the destination file.    * srcf, destf, and tmppath should resident in the same DFS, but the oldPath can be in a    * different DFS.    *    * @param srcf    *          Source directory to be renamed to tmppath. It should be a    *          leaf directory where the final data files reside. However it    *          could potentially contain subdirectories as well.    * @param destf    *          The directory where the final data needs to go    * @param oldPath    *          The directory where the old data location, need to be cleaned up.    * @param isSrcLocal    *          If the source directory is LOCAL    */
 specifier|static
 specifier|protected
 name|void
@@ -11825,6 +11955,9 @@ name|oldPath
 parameter_list|,
 name|HiveConf
 name|conf
+parameter_list|,
+name|boolean
+name|isSrcLocal
 parameter_list|)
 throws|throws
 name|HiveException
@@ -11832,9 +11965,9 @@ block|{
 try|try
 block|{
 name|FileSystem
-name|fs
+name|destFs
 init|=
-name|srcf
+name|destf
 operator|.
 name|getFileSystem
 argument_list|(
@@ -11862,11 +11995,23 @@ name|FileStatus
 index|[]
 name|srcs
 decl_stmt|;
+name|FileSystem
+name|srcFs
+decl_stmt|;
 try|try
 block|{
+name|srcFs
+operator|=
+name|srcf
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|srcs
 operator|=
-name|fs
+name|srcFs
 operator|.
 name|globStatus
 argument_list|(
@@ -11927,9 +12072,11 @@ name|checkPaths
 argument_list|(
 name|conf
 argument_list|,
-name|fs
+name|destFs
 argument_list|,
 name|srcs
+argument_list|,
+name|srcFs
 argument_list|,
 name|destf
 argument_list|,
@@ -12052,7 +12199,7 @@ decl_stmt|;
 if|if
 condition|(
 operator|!
-name|fs
+name|destFs
 operator|.
 name|exists
 argument_list|(
@@ -12063,7 +12210,7 @@ block|{
 name|boolean
 name|success
 init|=
-name|fs
+name|destFs
 operator|.
 name|mkdirs
 argument_list|(
@@ -12096,13 +12243,13 @@ operator|&&
 name|success
 condition|)
 block|{
-name|fs
+name|destFs
 operator|.
 name|setPermission
 argument_list|(
 name|destfp
 argument_list|,
-name|fs
+name|destFs
 operator|.
 name|getFileStatus
 argument_list|(
@@ -12135,9 +12282,11 @@ argument_list|()
 argument_list|,
 name|destf
 argument_list|,
-name|fs
+name|destFs
 argument_list|,
 literal|true
+argument_list|,
+name|isSrcLocal
 argument_list|)
 decl_stmt|;
 if|if
@@ -12173,7 +12322,7 @@ comment|// srcf is a file or pattern containing wildcards
 if|if
 condition|(
 operator|!
-name|fs
+name|destFs
 operator|.
 name|exists
 argument_list|(
@@ -12184,7 +12333,7 @@ block|{
 name|boolean
 name|success
 init|=
-name|fs
+name|destFs
 operator|.
 name|mkdirs
 argument_list|(
@@ -12217,13 +12366,13 @@ operator|&&
 name|success
 condition|)
 block|{
-name|fs
+name|destFs
 operator|.
 name|setPermission
 argument_list|(
 name|destf
 argument_list|,
-name|fs
+name|destFs
 operator|.
 name|getFileStatus
 argument_list|(
@@ -12278,9 +12427,11 @@ index|[
 literal|1
 index|]
 argument_list|,
-name|fs
+name|destFs
 argument_list|,
 literal|true
+argument_list|,
+name|isSrcLocal
 argument_list|)
 condition|)
 block|{
