@@ -5008,6 +5008,8 @@ name|prefix
 decl_stmt|;
 name|String
 name|postfix
+init|=
+literal|null
 decl_stmt|;
 if|if
 condition|(
@@ -5024,15 +5026,6 @@ argument_list|()
 operator|.
 name|getTableName
 argument_list|()
-expr_stmt|;
-name|postfix
-operator|=
-name|Utilities
-operator|.
-name|join
-argument_list|(
-name|lbSpec
-argument_list|)
 expr_stmt|;
 block|}
 else|else
