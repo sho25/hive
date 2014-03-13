@@ -100,6 +100,11 @@ name|void
 name|clear
 parameter_list|()
 function_decl|;
+specifier|public
+name|MapJoinKey
+name|getAnyKey
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

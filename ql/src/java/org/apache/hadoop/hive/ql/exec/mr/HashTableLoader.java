@@ -1119,20 +1119,6 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|MapJoinKey
-name|getKeyType
-parameter_list|()
-block|{
-return|return
-operator|new
-name|MapJoinKeyObject
-argument_list|()
-return|;
-comment|// always use Object-array keys
-block|}
 block|}
 end_class
 

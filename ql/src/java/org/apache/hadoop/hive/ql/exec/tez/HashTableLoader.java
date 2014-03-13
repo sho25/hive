@@ -880,32 +880,6 @@ expr_stmt|;
 comment|// No rows in tables, the key type doesn't matter.
 block|}
 block|}
-annotation|@
-name|Override
-specifier|public
-name|MapJoinKey
-name|getKeyType
-parameter_list|()
-block|{
-if|if
-condition|(
-name|lastKey
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|AssertionError
-argument_list|(
-literal|"Should be called after loading tables"
-argument_list|)
-throw|;
-block|}
-return|return
-name|lastKey
-return|;
-block|}
 block|}
 end_class
 

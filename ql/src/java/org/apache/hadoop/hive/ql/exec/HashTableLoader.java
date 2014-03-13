@@ -185,10 +185,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-name|MapJoinKey
-name|getKeyType
-parameter_list|()
-function_decl|;
 block|}
 end_interface
 
