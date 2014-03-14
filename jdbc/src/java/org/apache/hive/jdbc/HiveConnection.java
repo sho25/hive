@@ -1507,6 +1507,15 @@ operator|.
 name|HIVE_CLI_SERVICE_PROTOCOL_V6
 argument_list|)
 expr_stmt|;
+name|supportedProtocols
+operator|.
+name|add
+argument_list|(
+name|TProtocolVersion
+operator|.
+name|HIVE_CLI_SERVICE_PROTOCOL_V7
+argument_list|)
+expr_stmt|;
 comment|// open client session
 name|openSession
 argument_list|(
