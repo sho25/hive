@@ -1437,7 +1437,7 @@ name|InOutPrivs
 argument_list|(
 literal|null
 argument_list|,
-literal|null
+name|ADMIN_PRIV_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1454,7 +1454,7 @@ name|InOutPrivs
 argument_list|(
 literal|null
 argument_list|,
-literal|null
+name|ADMIN_PRIV_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1471,7 +1471,7 @@ name|InOutPrivs
 argument_list|(
 literal|null
 argument_list|,
-literal|null
+name|ADMIN_PRIV_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1488,7 +1488,7 @@ name|InOutPrivs
 argument_list|(
 literal|null
 argument_list|,
-literal|null
+name|ADMIN_PRIV_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
