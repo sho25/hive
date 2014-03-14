@@ -4324,7 +4324,7 @@ name|HIVE_JAR_DIRECTORY
 argument_list|(
 literal|"hive.jar.directory"
 argument_list|,
-literal|"hdfs:///user/hive/"
+literal|null
 argument_list|)
 block|,
 name|HIVE_USER_INSTALL_DIR

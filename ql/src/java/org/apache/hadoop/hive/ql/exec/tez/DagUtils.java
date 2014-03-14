@@ -3809,6 +3809,12 @@ argument_list|)
 decl_stmt|;
 comment|// need to localize the additional jars and files
 comment|// we need the directory on hdfs to which we shall put all these files
+comment|// Use HIVE_JAR_DIRECTORY only if it's set explicitly; otherwise use default directory
+name|FileStatus
+name|fstatus
+init|=
+literal|null
+decl_stmt|;
 name|String
 name|hdfsDirPathStr
 init|=
@@ -3823,8 +3829,17 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_JAR_DIRECTORY
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|hdfsDirPathStr
+operator|!=
+literal|null
+condition|)
+block|{
 name|Path
 name|hdfsDirPath
 init|=
@@ -3869,11 +3884,6 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-name|FileStatus
-name|fstatus
-init|=
-literal|null
-decl_stmt|;
 try|try
 block|{
 name|fstatus
@@ -3893,6 +3903,7 @@ name|fe
 parameter_list|)
 block|{
 comment|// do nothing
+block|}
 block|}
 if|if
 condition|(
