@@ -237,22 +237,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|IMetaStoreClient
 import|;
 end_import
@@ -360,24 +344,6 @@ operator|.
 name|api
 operator|.
 name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|NoSuchObjectException
 import|;
 end_import
 
@@ -832,6 +798,9 @@ argument_list|,
 name|grantorPrincipal
 argument_list|,
 name|grantOption
+argument_list|,
+literal|0
+comment|/*real grant time added by metastore*/
 argument_list|)
 decl_stmt|;
 for|for
@@ -893,6 +862,9 @@ name|grantorPrincipal
 parameter_list|,
 name|boolean
 name|grantOption
+parameter_list|,
+name|int
+name|grantTime
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
@@ -909,6 +881,8 @@ argument_list|,
 name|grantorPrincipal
 argument_list|,
 name|grantOption
+argument_list|,
+name|grantTime
 argument_list|)
 return|;
 block|}

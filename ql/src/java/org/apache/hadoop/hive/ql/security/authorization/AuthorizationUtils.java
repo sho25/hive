@@ -470,7 +470,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Get thrift privilege grant info    * @param privilege    * @param grantorPrincipal    * @param grantOption    * @return    * @throws HiveException    */
+comment|/**    * Get thrift privilege grant info    * @param privilege    * @param grantorPrincipal    * @param grantOption    * @param grantTime    * @return    * @throws HiveException    */
 specifier|public
 specifier|static
 name|PrivilegeGrantInfo
@@ -484,6 +484,9 @@ name|grantorPrincipal
 parameter_list|,
 name|boolean
 name|grantOption
+parameter_list|,
+name|int
+name|grantTime
 parameter_list|)
 throws|throws
 name|HiveException
@@ -497,8 +500,7 @@ operator|.
 name|getName
 argument_list|()
 argument_list|,
-literal|0
-comment|/* time gets added by server */
+name|grantTime
 argument_list|,
 name|grantorPrincipal
 operator|.
@@ -529,6 +531,17 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|type
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 switch|switch
 condition|(
 name|type
