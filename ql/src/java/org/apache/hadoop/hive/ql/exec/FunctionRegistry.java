@@ -9582,6 +9582,32 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// Copy info that may be required in the new copy.
+comment|// The SettableUDF calls below could be replaced using this mechanism as well.
+try|try
+block|{
+name|genericUDF
+operator|.
+name|copyToNewInstance
+argument_list|(
+name|clonedUDF
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|UDFArgumentException
+name|err
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+name|err
+argument_list|)
+throw|;
+block|}
 comment|// The original may have settable info that needs to be added to the new copy.
 if|if
 condition|(

@@ -313,6 +313,8 @@ begin_class
 specifier|public
 class|class
 name|TestGenericUDFPosMod
+extends|extends
+name|TestGenericUDFOPNumeric
 block|{
 annotation|@
 name|Test

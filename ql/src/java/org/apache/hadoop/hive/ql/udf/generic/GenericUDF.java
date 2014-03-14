@@ -592,6 +592,58 @@ name|getName
 argument_list|()
 return|;
 block|}
+comment|/**    * Some information may be set during initialize() which needs to be saved when the UDF is copied.    * This will be called by FunctionRegistry.cloneGenericUDF()    */
+specifier|public
+name|void
+name|copyToNewInstance
+parameter_list|(
+name|Object
+name|newInstance
+parameter_list|)
+throws|throws
+name|UDFArgumentException
+block|{
+comment|// newInstance should always be the same type of object as this
+if|if
+condition|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|!=
+name|newInstance
+operator|.
+name|getClass
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|UDFArgumentException
+argument_list|(
+literal|"Invalid copy between "
+operator|+
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" and "
+operator|+
+name|newInstance
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+throw|;
+block|}
+block|}
 block|}
 end_class
 

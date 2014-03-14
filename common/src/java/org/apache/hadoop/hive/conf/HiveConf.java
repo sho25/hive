@@ -133,6 +133,20 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|HiveCompat
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -4469,6 +4483,19 @@ argument_list|(
 literal|"hive.users.in.admin.role"
 argument_list|,
 literal|""
+argument_list|)
+block|,
+comment|// Enable (configurable) deprecated behaviors by setting desired level of backward compatbility
+comment|// Setting to 0.12:
+comment|//   Maintains division behavior: int / int => double
+comment|// Setting to 0.13:
+name|HIVE_COMPAT
+argument_list|(
+literal|"hive.compat"
+argument_list|,
+name|HiveCompat
+operator|.
+name|DEFAULT_COMPAT_LEVEL
 argument_list|)
 block|;
 specifier|public
