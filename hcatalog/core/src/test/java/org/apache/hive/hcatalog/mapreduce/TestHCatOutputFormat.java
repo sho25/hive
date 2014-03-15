@@ -1003,9 +1003,6 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|job
-operator|.
-name|getConfiguration
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|assertNotNull

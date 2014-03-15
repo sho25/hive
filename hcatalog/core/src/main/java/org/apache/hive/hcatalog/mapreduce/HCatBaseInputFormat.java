@@ -1111,6 +1111,30 @@ return|return
 name|vals
 return|;
 block|}
+comment|/**    * @see org.apache.hive.hcatalog.mapreduce.HCatBaseInputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)    * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}    */
+annotation|@
+name|Deprecated
+specifier|public
+specifier|static
+name|HCatSchema
+name|getTableSchema
+parameter_list|(
+name|JobContext
+name|context
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+return|return
+name|getTableSchema
+argument_list|(
+name|context
+operator|.
+name|getConfiguration
+argument_list|()
+argument_list|)
+return|;
+block|}
 comment|/**    * Gets the HCatTable schema for the table specified in the HCatInputFormat.setInput call    * on the specified job context. This information is available only after HCatInputFormat.setInput    * has been called for a JobContext.    * @param conf the Configuration object    * @return the table schema    * @throws IOException if HCatInputFormat.setInput has not been called    *                     for the current context    */
 specifier|public
 specifier|static

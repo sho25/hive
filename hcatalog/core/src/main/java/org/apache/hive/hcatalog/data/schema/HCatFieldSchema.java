@@ -662,7 +662,7 @@ decl_stmt|;
 end_decl_stmt
 
 begin_comment
-comment|/**    * @deprecated as of 0.13, slated for removal with 0.15    * use {@link #typeInfo} instead    */
+comment|/**    * @deprecated use {@link #typeInfo}    */
 end_comment
 
 begin_decl_stmt
@@ -712,7 +712,6 @@ end_comment
 begin_decl_stmt
 annotation|@
 name|Deprecated
-comment|// @deprecated as of 0.13, slated for removal with 0.15
 name|Type
 name|mapKeyType
 init|=
@@ -766,7 +765,7 @@ block|}
 end_constructor
 
 begin_comment
-comment|/**    * Returns type of the field    * @return type of the field    * @deprecated as of 0.13, slated for removal with 0.15    * use {@link #getTypeInfo()} instead    */
+comment|/**    * Returns type of the field    * @return type of the field    * @deprecated use {@link #getTypeInfo()}    */
 end_comment
 
 begin_function
@@ -842,7 +841,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Constructor constructing a primitive datatype HCatFieldSchema    * @param fieldName Name of the primitive field    * @param type Type of the primitive field    * @throws HCatException if call made on non-primitive types    * @deprecated as of 0.13, slated for removal with 0.15    * use {@link #HCatFieldSchema(String, org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo, String)}    */
+comment|/**    * Constructor constructing a primitive datatype HCatFieldSchema    * @param fieldName Name of the primitive field    * @param type Type of the primitive field    * @throws HCatException if call made on non-primitive types    * @deprecated as of Hive 0.13; use {@link #HCatFieldSchema(String, org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo, String)}    */
 end_comment
 
 begin_constructor
@@ -1092,7 +1091,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Constructor for constructing a MAP type HCatFieldSchema, passing type of key and value    * @param fieldName Name of the array or struct field    * @param type Type of the field - must be Type.MAP    * @param mapKeyType - key type of the Map    * @param mapValueSchema - subschema of the value of the Map    * @throws HCatException if call made on non-Map types    * @deprecated as of 0.13, slated for removal with 0.15    * use {@link #createMapTypeFieldSchema(String, org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo, HCatSchema, String)}    */
+comment|/**    * Constructor for constructing a MAP type HCatFieldSchema, passing type of key and value    * @param fieldName Name of the array or struct field    * @param type Type of the field - must be Type.MAP    * @param mapKeyType - key type of the Map    * @param mapValueSchema - subschema of the value of the Map    * @throws HCatException if call made on non-Map types    * @deprecated use {@link #createMapTypeFieldSchema(String, org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo, HCatSchema, String)}    */
 end_comment
 
 begin_constructor
@@ -1314,7 +1313,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * @deprecated as of 0.13, slated for removal with 0.15    * use {@link #getMapKeyTypeInfo()} instead    */
+comment|/**    * @deprecated use {@link #getMapKeyTypeInfo()}    */
 end_comment
 
 begin_function

@@ -729,9 +729,6 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
-operator|.
-name|getConfiguration
-argument_list|()
 argument_list|)
 operator|.
 name|isDynamicPartitioningUsed
@@ -879,9 +876,6 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
-operator|.
-name|getConfiguration
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|HiveMetaStoreClient
@@ -1050,9 +1044,6 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
-operator|.
-name|getConfiguration
-argument_list|()
 argument_list|)
 operator|.
 name|isDynamicPartitioningUsed
