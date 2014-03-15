@@ -586,6 +586,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|storageHandler
@@ -1238,6 +1241,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|currTaskContext
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|//setup serDe
@@ -1583,6 +1589,9 @@ name|get
 argument_list|(
 name|dynKey
 argument_list|)
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;

@@ -278,28 +278,6 @@ name|HCatRecord
 argument_list|>
 block|{
 comment|//  static final private Log LOG = LogFactory.getLog(HCatBaseOutputFormat.class);
-comment|/**    * @see org.apache.hive.hcatalog.mapreduce.HCatBaseOutputFormat#getTableSchema(org.apache.hadoop.conf.Configuration)    * @deprecated Use {@link #getTableSchema(org.apache.hadoop.conf.Configuration)}    */
-specifier|public
-specifier|static
-name|HCatSchema
-name|getTableSchema
-parameter_list|(
-name|JobContext
-name|context
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-return|return
-name|getTableSchema
-argument_list|(
-name|context
-operator|.
-name|getConfiguration
-argument_list|()
-argument_list|)
-return|;
-block|}
 comment|/**    * Gets the table schema for the table specified in the HCatOutputFormat.setOutput call    * on the specified job context.    * @param conf the Configuration object    * @return the table schema    * @throws IOException if HCatOutputFormat.setOutput has not been called for the passed context    */
 specifier|public
 specifier|static
@@ -381,6 +359,9 @@ init|=
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|HiveStorageHandler
@@ -461,28 +442,6 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-block|}
-comment|/**    * @see org.apache.hive.hcatalog.mapreduce.HCatBaseOutputFormat#getJobInfo(org.apache.hadoop.conf.Configuration)    * @deprecated use {@link #getJobInfo(org.apache.hadoop.conf.Configuration)}    */
-specifier|public
-specifier|static
-name|OutputJobInfo
-name|getJobInfo
-parameter_list|(
-name|JobContext
-name|jobContext
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-return|return
-name|getJobInfo
-argument_list|(
-name|jobContext
-operator|.
-name|getConfiguration
-argument_list|()
-argument_list|)
-return|;
 block|}
 comment|/**    * Gets the HCatOuputJobInfo object by reading the Configuration and deserializing    * the string. If InputJobInfo is not present in the configuration, throws an    * exception since that means HCatOutputFormat.setOutput has not been called.    * @param conf the job Configuration object    * @return the OutputJobInfo object    * @throws IOException the IO exception    */
 specifier|public

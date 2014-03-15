@@ -460,6 +460,9 @@ operator|.
 name|getTableSchema
 argument_list|(
 name|job
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
