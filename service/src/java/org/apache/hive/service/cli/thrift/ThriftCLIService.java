@@ -1235,6 +1235,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|/**    * Create a session handle    * @param req    * @param res    * @return    * @throws HiveSQLException    * @throws LoginException    * @throws IOException    */
 name|SessionHandle
 name|getSessionHandle
 parameter_list|(

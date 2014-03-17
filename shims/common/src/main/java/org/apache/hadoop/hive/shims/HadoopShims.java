@@ -309,22 +309,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
-operator|.
-name|compress
-operator|.
-name|CompressionCodec
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|mapred
 operator|.
 name|ClusterStatus
@@ -786,7 +770,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Used by metastore server to creates UGI object for a remote user.    * @param userName remote User Name    * @param groupNames group names associated with remote user name    * @return UGI created for the remote user.    */
+comment|/**    * Used to creates UGI object for a remote user.    * @param userName remote User Name    * @param groupNames group names associated with remote user name    * @return UGI created for the remote user.    */
 specifier|public
 name|UserGroupInformation
 name|createRemoteUser
@@ -1090,6 +1074,8 @@ name|JobConf
 name|getJob
 parameter_list|()
 function_decl|;
+annotation|@
+name|Override
 name|long
 name|getLength
 parameter_list|()
@@ -1142,6 +1128,8 @@ name|getPaths
 parameter_list|()
 function_decl|;
 comment|/** Returns all the Paths where this input-split resides. */
+annotation|@
+name|Override
 name|String
 index|[]
 name|getLocations
@@ -1156,10 +1144,14 @@ name|long
 name|length
 parameter_list|)
 function_decl|;
+annotation|@
+name|Override
 name|String
 name|toString
 parameter_list|()
 function_decl|;
+annotation|@
+name|Override
 name|void
 name|readFields
 parameter_list|(
@@ -1169,6 +1161,8 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+annotation|@
+name|Override
 name|void
 name|write
 parameter_list|(

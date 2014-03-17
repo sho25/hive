@@ -636,7 +636,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**   * Functions that bridge Thrift's SASL transports to Hadoop's   * SASL callback handlers and authentication classes.   */
+comment|/**  * Functions that bridge Thrift's SASL transports to Hadoop's  * SASL callback handlers and authentication classes.  */
 end_comment
 
 begin_class
@@ -737,7 +737,110 @@ name|principalConf
 argument_list|)
 return|;
 block|}
-comment|/**     * Read and return Hadoop SASL configuration which can be configured using     * "hadoop.rpc.protection"     * @param conf     * @return Hadoop SASL configuration     */
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getServerPrincipal
+parameter_list|(
+name|String
+name|principalConfig
+parameter_list|,
+name|String
+name|host
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|String
+name|serverPrincipal
+init|=
+name|SecurityUtil
+operator|.
+name|getServerPrincipal
+argument_list|(
+name|principalConfig
+argument_list|,
+name|host
+argument_list|)
+decl_stmt|;
+name|String
+name|names
+index|[]
+init|=
+name|SaslRpcServer
+operator|.
+name|splitKerberosName
+argument_list|(
+name|serverPrincipal
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|names
+operator|.
+name|length
+operator|!=
+literal|3
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Kerberos principal name does NOT have the expected hostname part: "
+operator|+
+name|serverPrincipal
+argument_list|)
+throw|;
+block|}
+return|return
+name|serverPrincipal
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|UserGroupInformation
+name|getCurrentUGIWithConf
+parameter_list|(
+name|String
+name|authType
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|Configuration
+name|conf
+init|=
+operator|new
+name|Configuration
+argument_list|()
+decl_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+name|HADOOP_SECURITY_AUTHENTICATION
+argument_list|,
+name|authType
+argument_list|)
+expr_stmt|;
+name|UserGroupInformation
+operator|.
+name|setConfiguration
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+return|return
+name|UserGroupInformation
+operator|.
+name|getCurrentUser
+argument_list|()
+return|;
+block|}
+comment|/**    * Read and return Hadoop SASL configuration which can be configured using    * "hadoop.rpc.protection"    * @param conf    * @return Hadoop SASL configuration    */
 annotation|@
 name|Override
 specifier|public
@@ -776,7 +879,7 @@ name|HadoopThriftAuthBridge
 operator|.
 name|Client
 block|{
-comment|/**       * Create a client-side SASL transport that wraps an underlying transport.       *       * @param method The authentication method to use. Currently only KERBEROS is       *               supported.       * @param serverPrincipal The Kerberos principal of the target server.       * @param underlyingTransport The underlying transport mechanism, usually a TSocket.       * @param saslProps the sasl properties to create the client with       */
+comment|/**      * Create a client-side SASL transport that wraps an underlying transport.      *      * @param method The authentication method to use. Currently only KERBEROS is      *               supported.      * @param serverPrincipal The Kerberos principal of the target server.      * @param underlyingTransport The underlying transport mechanism, usually a TSocket.      * @param saslProps the sasl properties to create the client with      */
 annotation|@
 name|Override
 specifier|public
@@ -1069,6 +1172,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|handle
@@ -1503,7 +1608,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**       * Create a server with a kerberos keytab/principal.       */
+comment|/**      * Create a server with a kerberos keytab/principal.      */
 specifier|protected
 name|Server
 parameter_list|(
@@ -1611,7 +1716,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**       * Create a TTransportFactory that, upon connection of a client socket,       * negotiates a Kerberized SASL transport. The resulting TTransportFactory       * can be passed as both the input and output transport factory when       * instantiating a TThreadPoolServer, for example.       *       * @param saslProps Map of SASL properties       */
+comment|/**      * Create a TTransportFactory that, upon connection of a client socket,      * negotiates a Kerberized SASL transport. The resulting TTransportFactory      * can be passed as both the input and output transport factory when      * instantiating a TThreadPoolServer, for example.      *      * @param saslProps Map of SASL properties      */
 annotation|@
 name|Override
 specifier|public
@@ -1747,7 +1852,7 @@ name|realUgi
 argument_list|)
 return|;
 block|}
-comment|/**       * Wrap a TProcessor in such a way that, before processing any RPC, it       * assumes the UserGroupInformation of the user authenticated by       * the SASL transport.       */
+comment|/**      * Wrap a TProcessor in such a way that, before processing any RPC, it      * assumes the UserGroupInformation of the user authenticated by      * the SASL transport.      */
 annotation|@
 name|Override
 specifier|public
@@ -1770,7 +1875,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**       * Wrap a TProcessor to capture the client information like connecting userid, ip etc       */
+comment|/**      * Wrap a TProcessor to capture the client information like connecting userid, ip etc      */
 annotation|@
 name|Override
 specifier|public
@@ -2113,6 +2218,8 @@ name|String
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|run
@@ -2747,7 +2854,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**       * Processor that pulls the SaslServer object out of the transport, and       * assumes the remote user's UGI before calling through to the original       * processor.       *       * This is used on the server side to set the UGI for each specific call.       */
+comment|/**      * Processor that pulls the SaslServer object out of the transport, and      * assumes the remote user's UGI before calling through to the original      * processor.      *      * This is used on the server side to set the UGI for each specific call.      */
 specifier|protected
 class|class
 name|TUGIAssumingProcessor
@@ -2795,6 +2902,8 @@ operator|=
 name|useProxy
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|process
@@ -3029,6 +3138,8 @@ name|Boolean
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Boolean
 name|run
@@ -3188,7 +3299,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**       * A TransportFactory that wraps another one, but assumes a specified UGI       * before calling through.       *       * This is used on the server side to assume the server's Principal when accepting       * clients.       */
+comment|/**      * A TransportFactory that wraps another one, but assumes a specified UGI      * before calling through.      *      * This is used on the server side to assume the server's Principal when accepting      * clients.      */
 specifier|static
 class|class
 name|TUGIAssumingTransportFactory
@@ -3261,6 +3372,8 @@ name|TTransport
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|TTransport
 name|run
