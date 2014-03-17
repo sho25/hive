@@ -3299,6 +3299,16 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+comment|// number of threads used by partialscan/noscan stats gathering for partitioned tables.
+comment|// This is applicable only for file formats that implement StatsProvidingRecordReader
+comment|// interface (like ORC)
+name|HIVE_STATS_GATHER_NUM_THREADS
+argument_list|(
+literal|"hive.stats.gather.num.threads"
+argument_list|,
+literal|10
+argument_list|)
+block|,
 comment|// Collect table access keys information for operators that can benefit from bucketing
 name|HIVE_STATS_COLLECT_TABLEKEYS
 argument_list|(

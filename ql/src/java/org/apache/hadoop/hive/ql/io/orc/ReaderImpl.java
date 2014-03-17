@@ -2703,6 +2703,12 @@ return|;
 case|case
 name|STRING
 case|:
+case|case
+name|CHAR
+case|:
+case|case
+name|VARCHAR
+case|:
 comment|// old orc format doesn't support sum for string statistics. checking for
 comment|// existence is not required as protocol buffers takes care of it.
 comment|// ORC strings are deserialized to java strings. so use java data model's

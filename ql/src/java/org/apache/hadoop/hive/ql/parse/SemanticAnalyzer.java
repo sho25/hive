@@ -1061,6 +1061,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcInputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|lib
 operator|.
 name|DefaultGraphWalker
@@ -9708,6 +9728,9 @@ block|{
 case|case
 name|TABLE_ONLY
 case|:
+case|case
+name|DYNAMIC_PARTITION
+case|:
 name|inputFormatClass
 operator|=
 name|ts
@@ -9736,10 +9759,11 @@ assert|assert
 literal|false
 assert|;
 block|}
-comment|// throw a HiveException for non-rcfile.
+comment|// throw a HiveException for formats other than rcfile or orcfile.
 if|if
 condition|(
 operator|!
+operator|(
 name|inputFormatClass
 operator|.
 name|equals
@@ -9748,6 +9772,16 @@ name|RCFileInputFormat
 operator|.
 name|class
 argument_list|)
+operator|||
+name|inputFormatClass
+operator|.
+name|equals
+argument_list|(
+name|OrcInputFormat
+operator|.
+name|class
+argument_list|)
+operator|)
 condition|)
 block|{
 throw|throw
