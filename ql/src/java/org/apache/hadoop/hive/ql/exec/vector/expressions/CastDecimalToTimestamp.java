@@ -206,6 +206,7 @@ name|i
 index|]
 argument_list|)
 expr_stmt|;
+comment|// Reduce scale at most by 9, therefore multiplication will not require rounding.
 name|int
 name|newScale
 init|=
