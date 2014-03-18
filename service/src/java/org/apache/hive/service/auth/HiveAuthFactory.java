@@ -1416,7 +1416,7 @@ name|getServerSocket
 argument_list|(
 name|portNum
 argument_list|,
-literal|10000
+literal|0
 argument_list|,
 name|serverAddress
 argument_list|,
