@@ -5982,12 +5982,14 @@ decl_stmt|;
 name|int
 name|result
 init|=
-operator|(
+call|(
 name|int
-operator|)
+call|)
+argument_list|(
 name|serialized
 operator|>>>
 literal|3
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
