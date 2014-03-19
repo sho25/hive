@@ -1054,6 +1054,8 @@ operator|.
 name|parseColumnsMapping
 argument_list|(
 name|hbaseColumnsMapping
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|HTableDescriptor
