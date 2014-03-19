@@ -2792,7 +2792,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"schemaTool completeted"
+literal|"schemaTool completed"
 argument_list|)
 expr_stmt|;
 block|}
