@@ -341,7 +341,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDeException
+name|lazybinary
+operator|.
+name|LazyBinarySerDe
 import|;
 end_import
 
@@ -357,9 +359,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|lazybinary
-operator|.
-name|LazyBinarySerDe
+name|SerDeException
 import|;
 end_import
 
@@ -611,6 +611,16 @@ operator|.
 name|HIVEMAPJOINLAZYHASHTABLE
 argument_list|)
 decl_stmt|;
+name|TezCacheAccess
+name|tezCacheAccess
+init|=
+name|TezCacheAccess
+operator|.
+name|createInstance
+argument_list|(
+name|hconf
+argument_list|)
+decl_stmt|;
 comment|// We only check if we can use optimized keys here; that is ok because we don't
 comment|// create optimized keys in MapJoin if hash map doesn't have optimized keys.
 if|if
@@ -674,6 +684,16 @@ condition|)
 block|{
 continue|continue;
 block|}
+name|String
+name|inputName
+init|=
+name|parentToInput
+operator|.
+name|get
+argument_list|(
+name|pos
+argument_list|)
+decl_stmt|;
 name|LogicalInput
 name|input
 init|=
@@ -681,12 +701,7 @@ name|tezContext
 operator|.
 name|getInput
 argument_list|(
-name|parentToInput
-operator|.
-name|get
-argument_list|(
-name|pos
-argument_list|)
+name|inputName
 argument_list|)
 decl_stmt|;
 try|try
@@ -863,6 +878,25 @@ name|e
 argument_list|)
 throw|;
 block|}
+comment|// Register that the Input has been cached.
+name|tezCacheAccess
+operator|.
+name|registerCachedInput
+argument_list|(
+name|inputName
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Setting Input: "
+operator|+
+name|inputName
+operator|+
+literal|" as cached"
+argument_list|)
+expr_stmt|;
 block|}
 if|if
 condition|(
