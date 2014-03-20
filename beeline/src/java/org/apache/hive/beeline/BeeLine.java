@@ -3224,16 +3224,20 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|files
-operator|.
-name|add
+return|return
+name|error
 argument_list|(
+name|loc
+argument_list|(
+literal|"unrecognized-argument"
+argument_list|,
 name|args
 index|[
 name|i
 index|]
 argument_list|)
-expr_stmt|;
+argument_list|)
+return|;
 block|}
 block|}
 comment|// TODO: temporary disable this for easier debugging
