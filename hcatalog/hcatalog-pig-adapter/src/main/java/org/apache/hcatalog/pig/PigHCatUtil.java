@@ -821,16 +821,29 @@ argument_list|<
 name|?
 argument_list|>
 name|clazz
+parameter_list|,
+name|Job
+name|job
 parameter_list|)
 throws|throws
 name|Exception
 block|{
+comment|// The job configuration is passed in so the configuration will be cloned
+comment|// from the pig job configuration. This is necessary for overriding
+comment|// metastore configuration arguments like the metastore jdbc connection string
+comment|// and password, in the case of an embedded metastore, which you get when
+comment|// hive.metastore.uris = "".
 name|HiveConf
 name|hiveConf
 init|=
 operator|new
 name|HiveConf
 argument_list|(
+name|job
+operator|.
+name|getConfiguration
+argument_list|()
+argument_list|,
 name|clazz
 argument_list|)
 decl_stmt|;
@@ -1048,6 +1061,7 @@ name|fcols
 argument_list|)
 return|;
 block|}
+comment|/*   * The job argument is passed so that configuration overrides can be used to initialize   * the metastore configuration in the special case of an embedded metastore   * (hive.metastore.uris = "").   */
 specifier|public
 name|Table
 name|getTable
@@ -1060,6 +1074,9 @@ name|hcatServerUri
 parameter_list|,
 name|String
 name|hcatServerPrincipal
+parameter_list|,
+name|Job
+name|job
 parameter_list|)
 throws|throws
 name|IOException
@@ -1158,6 +1175,8 @@ argument_list|,
 name|PigHCatUtil
 operator|.
 name|class
+argument_list|,
+name|job
 argument_list|)
 expr_stmt|;
 name|table
