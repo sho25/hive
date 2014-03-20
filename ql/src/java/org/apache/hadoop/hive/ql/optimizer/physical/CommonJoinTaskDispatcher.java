@@ -2513,17 +2513,6 @@ argument_list|,
 name|pos
 argument_list|)
 decl_stmt|;
-name|MapWork
-name|mapWork
-init|=
-name|newTask
-operator|.
-name|getWork
-argument_list|()
-operator|.
-name|getMapWork
-argument_list|()
-decl_stmt|;
 name|Operator
 argument_list|<
 name|?
@@ -2550,7 +2539,7 @@ name|GenMapRedUtils
 operator|.
 name|findAliases
 argument_list|(
-name|mapWork
+name|currWork
 argument_list|,
 name|startOp
 argument_list|)
