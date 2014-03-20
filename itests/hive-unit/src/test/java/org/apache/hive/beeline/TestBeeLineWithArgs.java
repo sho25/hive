@@ -372,6 +372,20 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
+comment|// Set to non-zk lock manager to prevent HS2 from trying to connect
+name|hiveConf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_LOCK_MANAGER
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.lockmgr.EmbeddedLockManager"
+argument_list|)
+expr_stmt|;
 comment|//  hiveConf.logVars(System.err);
 comment|// System.err.flush();
 name|hiveServer2
@@ -1987,10 +2001,13 @@ name|TEST_NAME
 init|=
 literal|"testEmbeddedBeelineConnection"
 decl_stmt|;
+comment|// Set to non-zk lock manager to avoid trying to connect to zookeeper
 specifier|final
 name|String
 name|SCRIPT_TEXT
 init|=
+literal|"set hive.lock.manager=org.apache.hadoop.hive.ql.lockmgr.EmbeddedLockManager;\n"
+operator|+
 literal|"create table ${DUMMY_TBL} (d int);\nshow tables;\n"
 decl_stmt|;
 specifier|final
