@@ -396,11 +396,19 @@ specifier|final
 name|int
 name|prettyOutputNumCols
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|showPartColsSeparately
+decl_stmt|;
 specifier|public
 name|TextMetaDataFormatter
 parameter_list|(
 name|int
 name|prettyOutputNumCols
+parameter_list|,
+name|boolean
+name|partColsSeparately
 parameter_list|)
 block|{
 name|this
@@ -408,6 +416,12 @@ operator|.
 name|prettyOutputNumCols
 operator|=
 name|prettyOutputNumCols
+expr_stmt|;
+name|this
+operator|.
+name|showPartColsSeparately
+operator|=
+name|partColsSeparately
 expr_stmt|;
 block|}
 comment|/**    * Write an error message.    */
@@ -731,6 +745,8 @@ argument_list|,
 name|isFormatted
 argument_list|,
 name|isOutputPadded
+argument_list|,
+name|showPartColsSeparately
 argument_list|)
 expr_stmt|;
 block|}

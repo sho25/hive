@@ -3964,6 +3964,13 @@ argument_list|,
 literal|"@"
 argument_list|)
 block|,
+name|HIVE_DISPLAY_PARTITION_COLUMNS_SEPARATELY
+argument_list|(
+literal|"hive.display.partition.cols.separately"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVE_SERVER2_MAX_START_ATTEMPTS
 argument_list|(
 literal|"hive.server2.max.start.attempts"
