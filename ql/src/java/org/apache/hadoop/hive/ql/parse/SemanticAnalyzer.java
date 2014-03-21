@@ -59060,7 +59060,9 @@ expr_stmt|;
 name|crtTblDesc
 operator|.
 name|validate
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 comment|// outputs is empty, which means this create table happens in the current
 comment|// database.

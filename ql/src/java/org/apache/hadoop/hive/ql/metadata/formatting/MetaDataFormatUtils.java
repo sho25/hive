@@ -2055,7 +2055,7 @@ operator|.
 name|getComment
 argument_list|()
 else|:
-literal|"None"
+literal|""
 return|;
 block|}
 specifier|private

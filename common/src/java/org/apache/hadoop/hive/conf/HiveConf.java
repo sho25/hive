@@ -2342,6 +2342,21 @@ argument_list|,
 literal|"org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe"
 argument_list|)
 block|,
+name|SERDESUSINGMETASTOREFORSCHEMA
+argument_list|(
+literal|"hive.serdes.using.metastore.for.schema"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde,"
+operator|+
+literal|"org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe,org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe,"
+operator|+
+literal|"org.apache.hadoop.hive.serde2.dynamic_type.DynamicSerDe,org.apache.hadoop.hive.serde2.MetadataTypedColumnsetSerDe,"
+operator|+
+literal|"org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe,org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe,"
+operator|+
+literal|"org.apache.hadoop.hive.serde2.lazybinary.LazyBinarySerDe"
+argument_list|)
+block|,
 comment|//Location of Hive run time structured log file
 name|HIVEHISTORYFILELOC
 argument_list|(

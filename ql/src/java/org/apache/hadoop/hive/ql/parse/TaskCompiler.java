@@ -1551,7 +1551,9 @@ decl_stmt|;
 name|crtTblDesc
 operator|.
 name|validate
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 comment|// Clear the output for CTAS since we don't need the output from the
 comment|// mapredWork, the
