@@ -347,6 +347,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
+name|session
+operator|.
+name|SessionManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|thrift
 operator|.
 name|TException
@@ -1173,6 +1191,7 @@ name|userName
 init|=
 literal|null
 decl_stmt|;
+comment|// Kerberos
 if|if
 condition|(
 name|hiveAuthFactory
@@ -1187,8 +1206,8 @@ operator|.
 name|getRemoteUser
 argument_list|()
 expr_stmt|;
-comment|// kerberos
 block|}
+comment|// Except kerberos, NOSASL
 if|if
 condition|(
 name|userName
@@ -1203,7 +1222,36 @@ operator|.
 name|getUserName
 argument_list|()
 expr_stmt|;
-comment|// except kerberos, nosasl
+block|}
+comment|// Http transport mode.
+comment|// We set the thread local username, in ThriftHttpServlet.
+if|if
+condition|(
+name|cliService
+operator|.
+name|getHiveConf
+argument_list|()
+operator|.
+name|getVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_TRANSPORT_MODE
+argument_list|)
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"http"
+argument_list|)
+condition|)
+block|{
+name|userName
+operator|=
+name|SessionManager
+operator|.
+name|getUserName
+argument_list|()
+expr_stmt|;
 block|}
 if|if
 condition|(
