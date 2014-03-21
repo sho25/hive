@@ -549,6 +549,20 @@ name|UserGroupInformation
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|VersionInfo
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implemention of shims against Hadoop 0.20 with Security.  */
 end_comment
@@ -1092,6 +1106,40 @@ argument_list|,
 name|numDir
 argument_list|)
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|MiniMrShim
+name|getMiniTezCluster
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|int
+name|numberOfTaskTrackers
+parameter_list|,
+name|String
+name|nameNode
+parameter_list|,
+name|int
+name|numDir
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Cannot run tez on current hadoop, Version: "
+operator|+
+name|VersionInfo
+operator|.
+name|getVersion
+argument_list|()
+argument_list|)
+throw|;
 block|}
 comment|/**    * Shim for MiniMrCluster    */
 specifier|public
