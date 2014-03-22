@@ -1611,6 +1611,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+comment|// TODO: assert iKey is HBaseSerDe#HBASE_KEY_COL
 name|Scan
 name|scan
 init|=
@@ -1728,8 +1729,13 @@ argument_list|,
 name|searchConditions
 argument_list|)
 decl_stmt|;
-comment|// There should be no residual since we already negotiated
-comment|// that earlier in HBaseStorageHandler.decomposePredicate.
+comment|// There should be no residual since we already negotiated that earlier in
+comment|// HBaseStorageHandler.decomposePredicate. However, with hive.optimize.index.filter
+comment|// OpProcFactory#pushFilterToStorageHandler pushes the original filter back down again.
+comment|// Since pushed-down filters are not ommitted at the higher levels (and thus the
+comment|// contract of negotiation is ignored anyway), just ignore the residuals.
+comment|// Re-assess this when negotiation is honored and the duplicate evaluation is removed.
+comment|// THIS IGNORES RESIDUAL PARSING FROM HBaseStorageHandler#decomposePredicate
 if|if
 condition|(
 name|residualPredicate
@@ -1737,45 +1743,18 @@ operator|!=
 literal|null
 condition|)
 block|{
-throw|throw
-operator|new
-name|RuntimeException
+name|LOG
+operator|.
+name|debug
 argument_list|(
-literal|"Unexpected residual predicate "
+literal|"Ignoring residual predicate "
 operator|+
 name|residualPredicate
 operator|.
 name|getExprString
 argument_list|()
 argument_list|)
-throw|;
-block|}
-comment|// There should be exactly one predicate since we already
-comment|// negotiated that also.
-if|if
-condition|(
-name|searchConditions
-operator|.
-name|size
-argument_list|()
-operator|<
-literal|1
-operator|||
-name|searchConditions
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|2
-condition|)
-block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Either one or two search conditions expected in push down"
-argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|// Convert the search condition into a restriction on the HBase scan
 name|byte
