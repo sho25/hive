@@ -967,6 +967,27 @@ name|HiveSQLException
 name|e
 parameter_list|)
 block|{
+comment|// If the operation was cancelled by another thread,
+comment|// Driver#run will return a non-zero response code.
+comment|// We will simply return if the operation state is CANCELED,
+comment|// otherwise throw an exception
+if|if
+condition|(
+name|getStatus
+argument_list|()
+operator|.
+name|getState
+argument_list|()
+operator|==
+name|OperationState
+operator|.
+name|CANCELED
+condition|)
+block|{
+return|return;
+block|}
+else|else
+block|{
 name|setState
 argument_list|(
 name|OperationState
@@ -977,6 +998,7 @@ expr_stmt|;
 throw|throw
 name|e
 throw|;
+block|}
 block|}
 catch|catch
 parameter_list|(

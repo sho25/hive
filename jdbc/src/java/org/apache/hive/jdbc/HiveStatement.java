@@ -77,6 +77,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|locks
+operator|.
+name|ReentrantLock
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -367,7 +381,17 @@ name|isClosed
 init|=
 literal|false
 decl_stmt|;
-comment|/**    *    */
+comment|// A fair reentrant lock
+specifier|private
+name|ReentrantLock
+name|transportLock
+init|=
+operator|new
+name|ReentrantLock
+argument_list|(
+literal|true
+argument_list|)
+decl_stmt|;
 specifier|public
 name|HiveStatement
 parameter_list|(
@@ -507,6 +531,11 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+name|transportLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
 name|TCancelOperationResp
 name|cancelResp
 init|=
@@ -517,6 +546,11 @@ argument_list|(
 name|cancelReq
 argument_list|)
 decl_stmt|;
+name|transportLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
 name|Utils
 operator|.
 name|verifySuccessWithInfo
@@ -622,6 +656,11 @@ argument_list|(
 name|stmtHandle
 argument_list|)
 expr_stmt|;
+name|transportLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
 name|TCloseOperationResp
 name|closeResp
 init|=
@@ -632,6 +671,11 @@ argument_list|(
 name|closeReq
 argument_list|)
 decl_stmt|;
+name|transportLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
 name|Utils
 operator|.
 name|verifySuccessWithInfo
@@ -802,6 +846,11 @@ argument_list|(
 name|sessConf
 argument_list|)
 expr_stmt|;
+name|transportLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
 name|TExecuteStatementResp
 name|execResp
 init|=
@@ -827,6 +876,11 @@ operator|=
 name|execResp
 operator|.
 name|getOperationHandle
+argument_list|()
+expr_stmt|;
+name|transportLock
+operator|.
+name|unlock
 argument_list|()
 expr_stmt|;
 block|}
@@ -888,6 +942,11 @@ block|{
 try|try
 block|{
 comment|/**          * For an async SQLOperation, GetOperationStatus will use the long polling approach          * It will essentially return after the HIVE_SERVER2_LONG_POLLING_TIMEOUT (a server config) expires          */
+name|transportLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
 name|statusResp
 operator|=
 name|client
@@ -896,6 +955,11 @@ name|GetOperationStatus
 argument_list|(
 name|statusReq
 argument_list|)
+expr_stmt|;
+name|transportLock
+operator|.
+name|unlock
+argument_list|()
 expr_stmt|;
 name|Utils
 operator|.
