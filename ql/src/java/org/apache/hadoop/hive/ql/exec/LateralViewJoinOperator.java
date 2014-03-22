@@ -208,7 +208,7 @@ comment|// changing the tags.
 specifier|public
 specifier|static
 specifier|final
-name|int
+name|byte
 name|SELECT_TAG
 init|=
 literal|0
@@ -216,7 +216,7 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
-name|int
+name|byte
 name|UDTF_TAG
 init|=
 literal|1
