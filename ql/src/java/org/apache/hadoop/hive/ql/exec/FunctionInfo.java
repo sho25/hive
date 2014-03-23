@@ -167,6 +167,8 @@ begin_class
 specifier|public
 class|class
 name|FunctionInfo
+implements|implements
+name|CommonFunctionInfo
 block|{
 specifier|private
 specifier|final
