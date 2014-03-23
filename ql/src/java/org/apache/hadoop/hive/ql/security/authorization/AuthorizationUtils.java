@@ -611,6 +611,17 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|privObj
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|HiveObjectType
 name|objType
 init|=

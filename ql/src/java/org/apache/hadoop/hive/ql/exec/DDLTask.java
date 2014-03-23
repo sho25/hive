@@ -6731,6 +6731,17 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|principal
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 return|return
 operator|new
 name|HivePrincipal
