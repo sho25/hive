@@ -1253,6 +1253,10 @@ name|destroy
 argument_list|()
 expr_stmt|;
 block|}
+name|driver
+operator|=
+literal|null
+expr_stmt|;
 name|SessionState
 name|ss
 init|=
