@@ -459,19 +459,9 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-if|if
-condition|(
-name|rproc
-operator|!=
-literal|null
-condition|)
-block|{
-name|rproc
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-block|}
+comment|// we have to close in the processor's run method, because tez closes inputs
+comment|// before calling close (TEZ-955) and we might need to read inputs
+comment|// when we flush the pipeline.
 block|}
 annotation|@
 name|Override
@@ -730,6 +720,8 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+try|try
+block|{
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -918,6 +910,23 @@ operator|.
 name|TEZ_RUN_PROCESSOR
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|rproc
+operator|!=
+literal|null
+condition|)
+block|{
+name|rproc
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+block|}
 block|}
 comment|/**    * KVOutputCollector. OutputCollector that writes using KVWriter.    * Must be initialized before it is used.    *     */
 specifier|static
