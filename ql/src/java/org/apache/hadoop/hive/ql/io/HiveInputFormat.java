@@ -1848,24 +1848,6 @@ argument_list|()
 index|]
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|dirs
-operator|.
-name|length
-operator|==
-literal|0
-condition|)
-block|{
-comment|// if we still don't have any files it's time to fail.
-throw|throw
-operator|new
-name|IOException
-argument_list|(
-literal|"No input paths specified in job"
-argument_list|)
-throw|;
-block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2217,6 +2199,15 @@ operator|=
 name|inputFormatClass
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|dirs
+operator|.
+name|length
+operator|!=
+literal|0
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -2259,6 +2250,7 @@ argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info
