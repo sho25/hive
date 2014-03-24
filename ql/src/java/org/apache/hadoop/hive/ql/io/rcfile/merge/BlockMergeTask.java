@@ -1458,6 +1458,8 @@ argument_list|(
 name|rj
 argument_list|,
 name|jc
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|success
