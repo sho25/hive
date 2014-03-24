@@ -1148,6 +1148,14 @@ argument_list|,
 literal|100
 argument_list|)
 block|,
+comment|// Make column names unique in the result set by using table alias if needed
+name|HIVE_RESULTSET_USE_UNIQUE_COLUMN_NAMES
+argument_list|(
+literal|"hive.resultset.use.unique.column.names"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|// Hadoop Configuration Properties
 comment|// Properties with null values are ignored and exist only for the purpose of giving us
 comment|// a symbolic name to reference in the Hive source code. Properties with non-null
