@@ -7436,23 +7436,6 @@ name|MapObjectInspector
 operator|)
 name|inspector
 decl_stmt|;
-name|int
-name|len
-init|=
-name|insp
-operator|.
-name|getMapSize
-argument_list|(
-name|obj
-argument_list|)
-decl_stmt|;
-name|lengths
-operator|.
-name|write
-argument_list|(
-name|len
-argument_list|)
-expr_stmt|;
 comment|// this sucks, but it will have to do until we can get a better
 comment|// accessor in the MapObjectInspector.
 name|Map
@@ -7470,6 +7453,16 @@ argument_list|(
 name|obj
 argument_list|)
 decl_stmt|;
+name|lengths
+operator|.
+name|write
+argument_list|(
+name|valueMap
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Map
