@@ -3083,6 +3083,16 @@ argument_list|,
 literal|4
 argument_list|)
 block|,
+comment|// when enabled dynamic partitioning column will be globally sorted.
+comment|// this way we can keep only one record writer open for each partition value
+comment|// in the reducer thereby reducing the memory pressure on reducers
+name|HIVEOPTSORTDYNAMICPARTITION
+argument_list|(
+literal|"hive.optimize.sort.dynamic.partition"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVESAMPLINGFORORDERBY
 argument_list|(
 literal|"hive.optimize.sampling.orderby"

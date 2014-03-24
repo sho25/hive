@@ -1044,6 +1044,13 @@ operator|.
 name|getObjectInspector
 argument_list|()
 expr_stmt|;
+name|reducer
+operator|.
+name|setGroupKeyObjectInspector
+argument_list|(
+name|keyObjectInspector
+argument_list|)
+expr_stmt|;
 name|valueTableDesc
 operator|=
 operator|new
@@ -1931,15 +1938,15 @@ argument_list|)
 expr_stmt|;
 name|reducer
 operator|.
-name|startGroup
-argument_list|()
-expr_stmt|;
-name|reducer
-operator|.
 name|setGroupKeyObject
 argument_list|(
 name|keyObject
 argument_list|)
+expr_stmt|;
+name|reducer
+operator|.
+name|startGroup
+argument_list|()
 expr_stmt|;
 block|}
 comment|//process all the values we have for this key
