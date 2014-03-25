@@ -1202,7 +1202,48 @@ block|}
 argument_list|,
 literal|null
 argument_list|)
-block|,   ;
+block|,
+name|ALTERTABLE_COMPACT
+argument_list|(
+literal|"ALTERTABLE_COMPACT"
+argument_list|,
+operator|new
+name|Privilege
+index|[]
+block|{
+name|Privilege
+operator|.
+name|SELECT
+block|}
+argument_list|,
+operator|new
+name|Privilege
+index|[]
+block|{
+name|Privilege
+operator|.
+name|ALTER_DATA
+block|}
+argument_list|)
+block|,
+name|SHOW_COMPACTIONS
+argument_list|(
+literal|"SHOW COMPACTIONS"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
+name|SHOW_TRANSACTIONS
+argument_list|(
+literal|"SHOW TRANSACTIONS"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|;   ;
 specifier|private
 name|String
 name|operationName

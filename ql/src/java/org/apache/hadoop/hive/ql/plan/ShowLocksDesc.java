@@ -53,6 +53,24 @@ name|Path
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lockmgr
+operator|.
+name|DbTxnManager
+import|;
+end_import
+
 begin_comment
 comment|/**  * ShowLocksDesc.  *  */
 end_comment
@@ -101,6 +119,9 @@ decl_stmt|;
 name|boolean
 name|isExt
 decl_stmt|;
+name|boolean
+name|isNewLockFormat
+decl_stmt|;
 comment|/**    * table name for the result of show locks.    */
 specifier|private
 specifier|static
@@ -118,6 +139,19 @@ name|String
 name|schema
 init|=
 literal|"tab_name,mode#string:string"
+decl_stmt|;
+comment|/**    * Schema for use with db txn manager.    */
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|newFormatSchema
+init|=
+literal|"lockid,database,table,partition,lock_state,"
+operator|+
+literal|"lock_type,transaction_id,last_heartbeat,acquired_at,user,"
+operator|+
+literal|"hostname#string:string:string:string:string:string:string:string:string:string:string"
 decl_stmt|;
 specifier|public
 name|String
@@ -142,6 +176,14 @@ name|String
 name|getSchema
 parameter_list|()
 block|{
+if|if
+condition|(
+name|isNewLockFormat
+condition|)
+return|return
+name|newFormatSchema
+return|;
+else|else
 return|return
 name|schema
 return|;
@@ -162,6 +204,9 @@ name|dbName
 parameter_list|,
 name|boolean
 name|isExt
+parameter_list|,
+name|boolean
+name|isNewFormat
 parameter_list|)
 block|{
 name|this
@@ -196,6 +241,10 @@ operator|.
 name|dbName
 operator|=
 name|dbName
+expr_stmt|;
+name|isNewLockFormat
+operator|=
+name|isNewFormat
 expr_stmt|;
 block|}
 comment|/**    * @param resFile    */
@@ -218,6 +267,9 @@ name|partSpec
 parameter_list|,
 name|boolean
 name|isExt
+parameter_list|,
+name|boolean
+name|isNewFormat
 parameter_list|)
 block|{
 name|this
@@ -246,6 +298,10 @@ operator|.
 name|isExt
 operator|=
 name|isExt
+expr_stmt|;
+name|isNewLockFormat
+operator|=
+name|isNewFormat
 expr_stmt|;
 block|}
 specifier|public
@@ -410,6 +466,15 @@ name|isExt
 operator|=
 name|isExt
 expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isNewFormat
+parameter_list|()
+block|{
+return|return
+name|isNewLockFormat
+return|;
 block|}
 block|}
 end_class

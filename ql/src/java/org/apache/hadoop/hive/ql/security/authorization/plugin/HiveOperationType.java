@@ -252,7 +252,13 @@ block|,
 name|ALTERTBLPART_SKEWED_LOCATION
 block|,
 name|ALTERVIEW_RENAME
-block|,   }
+block|,
+name|ALTERTABLE_COMPACT
+block|,
+name|SHOW_COMPACTIONS
+block|,
+name|SHOW_TRANSACTIONS
+block|}
 end_enum
 
 end_unit
