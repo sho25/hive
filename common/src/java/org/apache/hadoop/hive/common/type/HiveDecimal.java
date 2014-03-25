@@ -1190,32 +1190,6 @@ return|return
 name|bd
 return|;
 block|}
-comment|/**    * Sets the {@link BigDecimal} value in this object.    * @param bigDecimal    */
-specifier|public
-name|void
-name|setNormalize
-parameter_list|(
-name|BigDecimal
-name|bigDecimal
-parameter_list|)
-block|{
-name|BigDecimal
-name|value
-init|=
-name|normalize
-argument_list|(
-name|bigDecimal
-argument_list|,
-literal|true
-argument_list|)
-decl_stmt|;
-name|this
-operator|.
-name|bd
-operator|=
-name|value
-expr_stmt|;
-block|}
 block|}
 end_class
 

@@ -1690,6 +1690,11 @@ specifier|final
 name|OutputColumnManager
 name|ocm
 decl_stmt|;
+comment|// File key is used by operators to retrieve the scratch vectors
+comment|// from mapWork at runtime. The operators that modify the structure of
+comment|// a vector row batch, need to allocate scratch vectors as well. Every
+comment|// operator that creates a new Vectorization context should set a unique
+comment|// fileKey.
 specifier|private
 name|String
 name|fileKey
@@ -1909,6 +1914,54 @@ name|VectorExpressionDescriptor
 argument_list|()
 expr_stmt|;
 block|}
+comment|/**    * This constructor inherits the OutputColumnManger and from    * the 'parent' constructor, therefore this should be used only by operators    * that don't create a new vectorized row batch. This should be used only by    * operators that want to modify the columnName map without changing the row batch.    */
+specifier|public
+name|VectorizationContext
+parameter_list|(
+name|VectorizationContext
+name|parent
+parameter_list|)
+block|{
+name|this
+operator|.
+name|columnMap
+operator|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|Integer
+argument_list|>
+argument_list|(
+name|parent
+operator|.
+name|columnMap
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|ocm
+operator|=
+name|parent
+operator|.
+name|ocm
+expr_stmt|;
+name|this
+operator|.
+name|firstOutputColumnIndex
+operator|=
+name|parent
+operator|.
+name|firstOutputColumnIndex
+expr_stmt|;
+name|vMap
+operator|=
+operator|new
+name|VectorExpressionDescriptor
+argument_list|()
+expr_stmt|;
+block|}
 specifier|public
 name|String
 name|getFileKey
@@ -1997,6 +2050,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
+specifier|static
 class|class
 name|OutputColumnManager
 block|{
