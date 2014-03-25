@@ -124,7 +124,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UDFLog10.  *  */
+comment|/**  * UDFLog10.  */
 end_comment
 
 begin_class
@@ -175,14 +175,12 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
-specifier|public
-name|UDFLog10
-parameter_list|()
-block|{   }
 comment|/**    * Returns the logarithm of "a" with base 10.    */
-specifier|public
+annotation|@
+name|Override
+specifier|protected
 name|DoubleWritable
-name|evaluate
+name|doEvaluate
 parameter_list|(
 name|DoubleWritable
 name|a
@@ -190,10 +188,6 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|a
-operator|==
-literal|null
-operator|||
 name|a
 operator|.
 name|get

@@ -73,6 +73,10 @@ name|HiveDecimalWritable
 import|;
 end_import
 
+begin_comment
+comment|/**  * This class can be used for math based UDFs that only have an evaluate method for {@code doubles}. By extending from  * this class these UDFs will automatically support decimals as well.  */
+end_comment
+
 begin_class
 specifier|public
 specifier|abstract
@@ -90,20 +94,44 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
-specifier|public
-name|UDFMath
-parameter_list|()
-block|{   }
 comment|/**    * For subclass to implement.    */
-specifier|public
+specifier|protected
 specifier|abstract
+name|DoubleWritable
+name|doEvaluate
+parameter_list|(
+name|DoubleWritable
+name|a
+parameter_list|)
+function_decl|;
+comment|/**    * Returns {@code null} if the passed in value is {@code} and passes on to {@link #doEvaluate(DoubleWritable)} if not.    */
+specifier|public
+specifier|final
 name|DoubleWritable
 name|evaluate
 parameter_list|(
 name|DoubleWritable
 name|a
 parameter_list|)
-function_decl|;
+block|{
+if|if
+condition|(
+name|a
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+return|return
+name|doEvaluate
+argument_list|(
+name|a
+argument_list|)
+return|;
+block|}
 comment|/**    * Convert HiveDecimal to a double and call evaluate() on it.    */
 specifier|public
 specifier|final
@@ -147,7 +175,7 @@ name|d
 argument_list|)
 expr_stmt|;
 return|return
-name|evaluate
+name|doEvaluate
 argument_list|(
 name|doubleWritable
 argument_list|)
