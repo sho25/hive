@@ -991,7 +991,7 @@ name|debug
 argument_list|(
 literal|"Going to execute query<select ntxn_next from NEXT_TXN_ID "
 operator|+
-literal|"for update>"
+literal|" for update>"
 argument_list|)
 expr_stmt|;
 name|ResultSet
@@ -4394,7 +4394,7 @@ literal|"select txn_state from TXNS where txn_id = "
 operator|+
 name|txnid
 operator|+
-literal|"for update"
+literal|" for update"
 decl_stmt|;
 name|LOG
 operator|.
@@ -6298,7 +6298,7 @@ literal|"select txn_state from TXNS where txn_id = "
 operator|+
 name|txnid
 operator|+
-literal|"for update"
+literal|" for update"
 decl_stmt|;
 name|LOG
 operator|.
