@@ -2336,6 +2336,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+comment|/*Note that HCatRecordSerDe.serializePrimitiveField() will be called before this, thus some     * type promotion/conversion may occur: e.g. Short to Integer.  We should refactor this so     * that it's hapenning in one place per module/product that we are integrating with.     * All Pig conversion should be done here, etc.*/
 if|if
 condition|(
 name|o

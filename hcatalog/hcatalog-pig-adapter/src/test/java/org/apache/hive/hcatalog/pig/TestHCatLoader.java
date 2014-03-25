@@ -829,7 +829,7 @@ name|driver
 operator|.
 name|run
 argument_list|(
-literal|"drop table "
+literal|"drop table if exists "
 operator|+
 name|tablename
 argument_list|)
