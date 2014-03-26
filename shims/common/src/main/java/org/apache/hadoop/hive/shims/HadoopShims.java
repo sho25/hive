@@ -241,6 +241,20 @@ name|hadoop
 operator|.
 name|fs
 operator|.
+name|FSDataOutputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
 name|FileStatus
 import|;
 end_import
@@ -1266,8 +1280,8 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-comment|/**    * Get the block locations for the given directory.    * @param fs the file system    * @param path the directory name to get the status and block locations    * @param filter a filter that needs to accept the file (or null)    * @return an iterator for the located file status objects    * @throws IOException    */
-name|Iterator
+comment|/**    * Get the block locations for the given directory.    * @param fs the file system    * @param path the directory name to get the status and block locations    * @param filter a filter that needs to accept the file (or null)    * @return an list for the located file status objects    * @throws IOException    */
+name|List
 argument_list|<
 name|FileStatus
 argument_list|>
@@ -1295,6 +1309,17 @@ name|fs
 parameter_list|,
 name|FileStatus
 name|status
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Flush and make visible to other users the changes to the given stream.    * @param stream the stream to hflush.    * @throws IOException    */
+specifier|public
+name|void
+name|hflush
+parameter_list|(
+name|FSDataOutputStream
+name|stream
 parameter_list|)
 throws|throws
 name|IOException

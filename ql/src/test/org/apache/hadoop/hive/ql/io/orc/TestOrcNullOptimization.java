@@ -671,11 +671,19 @@ name|OrcFile
 operator|.
 name|createReader
 argument_list|(
-name|fs
-argument_list|,
 name|testFilePath
 argument_list|,
+name|OrcFile
+operator|.
+name|readerOptions
+argument_list|(
 name|conf
+argument_list|)
+operator|.
+name|filesystem
+argument_list|(
+name|fs
+argument_list|)
 argument_list|)
 decl_stmt|;
 comment|// check the stats
@@ -836,15 +844,10 @@ name|assertEquals
 argument_list|(
 literal|19998
 argument_list|,
-operator|(
-operator|(
-name|StringColumnStatistics
-operator|)
 name|stats
 index|[
 literal|2
 index|]
-operator|)
 operator|.
 name|getNumberOfValues
 argument_list|()
@@ -905,9 +908,7 @@ init|=
 name|reader
 operator|.
 name|rows
-argument_list|(
-literal|null
-argument_list|)
+argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
@@ -1507,11 +1508,19 @@ name|OrcFile
 operator|.
 name|createReader
 argument_list|(
-name|fs
-argument_list|,
 name|testFilePath
 argument_list|,
+name|OrcFile
+operator|.
+name|readerOptions
+argument_list|(
 name|conf
+argument_list|)
+operator|.
+name|filesystem
+argument_list|(
+name|fs
+argument_list|)
 argument_list|)
 decl_stmt|;
 comment|// check the stats
@@ -1672,15 +1681,10 @@ name|assertEquals
 argument_list|(
 literal|20000
 argument_list|,
-operator|(
-operator|(
-name|StringColumnStatistics
-operator|)
 name|stats
 index|[
 literal|2
 index|]
-operator|)
 operator|.
 name|getNumberOfValues
 argument_list|()
@@ -1741,9 +1745,7 @@ init|=
 name|reader
 operator|.
 name|rows
-argument_list|(
-literal|null
-argument_list|)
+argument_list|()
 decl_stmt|;
 comment|// none of the stripes will have PRESENT stream
 name|List
@@ -2376,11 +2378,19 @@ name|OrcFile
 operator|.
 name|createReader
 argument_list|(
-name|fs
-argument_list|,
 name|testFilePath
 argument_list|,
+name|OrcFile
+operator|.
+name|readerOptions
+argument_list|(
 name|conf
+argument_list|)
+operator|.
+name|filesystem
+argument_list|(
+name|fs
+argument_list|)
 argument_list|)
 decl_stmt|;
 comment|// check the stats
@@ -2541,15 +2551,10 @@ name|assertEquals
 argument_list|(
 literal|7
 argument_list|,
-operator|(
-operator|(
-name|StringColumnStatistics
-operator|)
 name|stats
 index|[
 literal|2
 index|]
-operator|)
 operator|.
 name|getNumberOfValues
 argument_list|()
@@ -2610,9 +2615,7 @@ init|=
 name|reader
 operator|.
 name|rows
-argument_list|(
-literal|null
-argument_list|)
+argument_list|()
 decl_stmt|;
 comment|// only the last strip will have PRESENT stream
 name|List

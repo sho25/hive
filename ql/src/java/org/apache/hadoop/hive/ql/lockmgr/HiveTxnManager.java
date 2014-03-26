@@ -29,6 +29,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ValidTxnList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|IMetaStoreClient
@@ -130,9 +146,7 @@ parameter_list|()
 throws|throws
 name|LockException
 function_decl|;
-comment|/**    * Get the transactions that are currently valid.  The resulting    * {@link IMetaStoreClient.ValidTxnList} object is a thrift object and can    * be  passed to  the processing    * tasks for use in the reading the data.  This call should be made once up    * front by the planner and should never be called on the backend,    * as this will violate the isolation level semantics.    * @return list of valid transactions.    * @throws LockException    */
-name|IMetaStoreClient
-operator|.
+comment|/**    * Get the transactions that are currently valid.  The resulting    * {@link ValidTxnList} object is a thrift object and can    * be  passed to  the processing    * tasks for use in the reading the data.  This call should be made once up    * front by the planner and should never be called on the backend,    * as this will violate the isolation level semantics.    * @return list of valid transactions.    * @throws LockException    */
 name|ValidTxnList
 name|getValidTxns
 parameter_list|()
