@@ -2811,6 +2811,14 @@ operator|-
 literal|1f
 argument_list|)
 block|,
+name|HIVELIMITTABLESCANPARTITION
+argument_list|(
+literal|"hive.limit.query.max.table.partition"
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+block|,
 name|HIVEHASHTABLETHRESHOLD
 argument_list|(
 literal|"hive.hashtable.initialCapacity"

@@ -1975,6 +1975,17 @@ operator|+
 literal|"is controlled by hive.exec.max.dynamic.partitions and hive.exec.max.dynamic.partitions.pernode. "
 argument_list|)
 block|,
+name|PARTITION_SCAN_LIMIT_EXCEEDED
+argument_list|(
+literal|20005
+argument_list|,
+literal|"Number of partitions scanned (={0}) on table {1} exceeds limit"
+operator|+
+literal|" (={2}). This is controlled by hive.limit.query.max.table.partition."
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 30000 range starts here ========================//
 name|STATSPUBLISHER_NOT_OBTAINED
 argument_list|(
