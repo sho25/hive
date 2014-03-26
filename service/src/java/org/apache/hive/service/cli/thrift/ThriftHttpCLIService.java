@@ -613,7 +613,9 @@ name|hiveAuthFactory
 operator|=
 operator|new
 name|HiveAuthFactory
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 name|TProcessorFactory
 name|processorFactory
