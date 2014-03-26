@@ -798,26 +798,44 @@ name|Table
 name|table
 parameter_list|)
 block|{
+name|initialize
+argument_list|(
+name|table
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Do initialization here, so as to keep the ctor minimal.
+specifier|protected
+name|void
+name|initialize
+parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Table
+name|table
+parameter_list|)
+block|{
 name|tTable
 operator|=
 name|table
 expr_stmt|;
-if|if
-condition|(
-operator|!
-name|isView
-argument_list|()
-condition|)
-block|{
-comment|// This will set up field: inputFormatClass
-name|getInputFormatClass
-argument_list|()
-expr_stmt|;
-comment|// This will set up field: outputFormatClass
-name|getOutputFormatClass
-argument_list|()
-expr_stmt|;
-block|}
+comment|// Note that we do not set up fields like inputFormatClass, outputFormatClass
+comment|// and deserializer because the Partition needs to be accessed from across
+comment|// the metastore side as well, which will result in attempting to load
+comment|// the class associated with them, which might not be available, and
+comment|// the main reason to instantiate them would be to pre-cache them for
+comment|// performance. Since those fields are null/cache-check by their accessors
+comment|// anyway, that's not a concern.
 block|}
 specifier|public
 name|Table

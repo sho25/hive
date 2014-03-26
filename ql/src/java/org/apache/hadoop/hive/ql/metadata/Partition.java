@@ -1013,7 +1013,7 @@ name|sd
 return|;
 block|}
 comment|/**    * Initializes this object with the given variables    *    * @param table    *          Table the partition belongs to    * @param tPartition    *          Thrift Partition object    * @throws HiveException    *           Thrown if we cannot initialize the partition    */
-specifier|private
+specifier|protected
 name|void
 name|initialize
 parameter_list|(
@@ -1211,17 +1211,13 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|// This will set up field: inputFormatClass
-name|getInputFormatClass
-argument_list|()
-expr_stmt|;
-comment|// This will set up field: outputFormatClass
-name|getOutputFormatClass
-argument_list|()
-expr_stmt|;
-name|getDeserializer
-argument_list|()
-expr_stmt|;
+comment|// Note that we do not set up fields like inputFormatClass, outputFormatClass
+comment|// and deserializer because the Partition needs to be accessed from across
+comment|// the metastore side as well, which will result in attempting to load
+comment|// the class associated with them, which might not be available, and
+comment|// the main reason to instantiate them would be to pre-cache them for
+comment|// performance. Since those fields are null/cache-check by their accessors
+comment|// anyway, that's not a concern.
 block|}
 specifier|public
 name|String
