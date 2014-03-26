@@ -398,7 +398,12 @@ literal|true
 expr_stmt|;
 name|cv
 operator|.
-name|setRef
+name|initBuffer
+argument_list|()
+expr_stmt|;
+name|cv
+operator|.
+name|setVal
 argument_list|(
 literal|0
 argument_list|,
@@ -449,8 +454,11 @@ name|vector
 index|[
 literal|0
 index|]
-operator|=
+operator|.
+name|update
+argument_list|(
 name|decimalValue
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@
