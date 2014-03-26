@@ -493,7 +493,7 @@ name|Pattern
 operator|.
 name|compile
 argument_list|(
-literal|" map = \\d+%,\\s+reduce = \\d+%$"
+literal|" map = (\\d+%),\\s+reduce = (\\d+%).*$"
 argument_list|)
 decl_stmt|;
 comment|/**    * Extract the percent complete line from Pig or Jar jobs.    */
@@ -576,81 +576,25 @@ name|find
 argument_list|()
 condition|)
 block|{
-name|StringBuilder
-name|sb
-init|=
-operator|new
-name|StringBuilder
-argument_list|(
+return|return
+literal|"map "
+operator|+
 name|hive
 operator|.
 name|group
-argument_list|()
-operator|.
-name|trim
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|String
-index|[]
-name|toRemove
-init|=
-block|{
-literal|"= "
-block|,
-literal|", "
-block|}
-decl_stmt|;
-for|for
-control|(
-name|String
-name|pattern
-range|:
-name|toRemove
-control|)
-block|{
-name|int
-name|pos
-decl_stmt|;
-while|while
-condition|(
-operator|(
-name|pos
-operator|=
-name|sb
-operator|.
-name|indexOf
 argument_list|(
-name|pattern
+literal|1
 argument_list|)
-operator|)
-operator|>=
-literal|0
-condition|)
-block|{
-name|sb
-operator|.
-name|delete
-argument_list|(
-name|pos
-argument_list|,
-name|pos
 operator|+
-name|pattern
+literal|" reduce "
+operator|+
+name|hive
 operator|.
-name|length
-argument_list|()
+name|group
+argument_list|(
+literal|2
 argument_list|)
-expr_stmt|;
-block|}
-block|}
-return|return
-name|sb
-operator|.
-name|toString
-argument_list|()
 return|;
-comment|//normalized to look like JAR_COMPLETE
 block|}
 return|return
 literal|null
