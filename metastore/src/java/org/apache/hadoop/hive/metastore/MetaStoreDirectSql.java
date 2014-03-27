@@ -5931,9 +5931,11 @@ name|STATS_COLLIST
 init|=
 literal|"\"COLUMN_NAME\", \"COLUMN_TYPE\", \"LONG_LOW_VALUE\", \"LONG_HIGH_VALUE\", "
 operator|+
-literal|"\"DOUBLE_LOW_VALUE\", \"DOUBLE_HIGH_VALUE\", \"NUM_NULLS\", \"NUM_DISTINCTS\", "
+literal|"\"DOUBLE_LOW_VALUE\", \"DOUBLE_HIGH_VALUE\", \"BIG_DECIMAL_LOW_VALUE\", "
 operator|+
-literal|"\"AVG_COL_LEN\", \"MAX_COL_LEN\", \"NUM_TRUES\", \"NUM_FALSES\", \"LAST_ANALYZED\""
+literal|"\"BIG_DECIMAL_HIGH_VALUE\", \"NUM_NULLS\", \"NUM_DISTINCTS\", \"AVG_COL_LEN\", "
+operator|+
+literal|"\"MAX_COL_LEN\", \"NUM_TRUES\", \"NUM_FALSES\", \"LAST_ANALYZED\" "
 decl_stmt|;
 specifier|private
 name|ColumnStatistics
@@ -6003,7 +6005,7 @@ name|row
 index|[
 name|offset
 operator|+
-literal|12
+literal|14
 index|]
 decl_stmt|;
 if|if
@@ -6115,6 +6117,22 @@ name|i
 operator|++
 index|]
 decl_stmt|,
+name|declow
+init|=
+name|row
+index|[
+name|i
+operator|++
+index|]
+decl_stmt|,
+name|dechigh
+init|=
+name|row
+index|[
+name|i
+operator|++
+index|]
+decl_stmt|,
 name|nulls
 init|=
 name|row
@@ -6181,6 +6199,10 @@ argument_list|,
 name|dlow
 argument_list|,
 name|dhigh
+argument_list|,
+name|declow
+argument_list|,
+name|dechigh
 argument_list|,
 name|nulls
 argument_list|,
