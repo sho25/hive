@@ -1261,13 +1261,6 @@ name|RuleRegExp
 argument_list|(
 literal|"No more walking on ReduceSink-MapJoin"
 argument_list|,
-name|ReduceSinkOperator
-operator|.
-name|getOperatorName
-argument_list|()
-operator|+
-literal|"%"
-operator|+
 name|MapJoinOperator
 operator|.
 name|getOperatorName
@@ -1343,7 +1336,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-literal|"Handle union"
+literal|"Remember union"
 argument_list|,
 name|UnionOperator
 operator|.

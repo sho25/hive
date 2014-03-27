@@ -578,6 +578,16 @@ argument_list|(
 name|bucketCols
 argument_list|)
 expr_stmt|;
+name|desc
+operator|.
+name|setStatistics
+argument_list|(
+name|this
+operator|.
+name|getStatistics
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|desc
 return|;

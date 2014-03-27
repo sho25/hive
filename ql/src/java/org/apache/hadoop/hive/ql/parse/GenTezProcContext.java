@@ -591,19 +591,19 @@ argument_list|>
 argument_list|>
 name|linkWorkWithReduceSinkMap
 decl_stmt|;
-comment|// a map that maintains operator (file-sink or reduce-sink) to work mapping
+comment|// map that says which mapjoin belongs to which work item
 specifier|public
 specifier|final
 name|Map
 argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
+name|MapJoinOperator
 argument_list|,
+name|List
+argument_list|<
 name|BaseWork
 argument_list|>
-name|operatorWorkMap
+argument_list|>
+name|mapJoinWorkMap
 decl_stmt|;
 comment|// a map to keep track of which root generated which work
 specifier|public
@@ -618,6 +618,23 @@ argument_list|,
 name|BaseWork
 argument_list|>
 name|rootToWorkMap
+decl_stmt|;
+comment|// a map to keep track of which child generated with work
+specifier|public
+specifier|final
+name|Map
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|List
+argument_list|<
+name|BaseWork
+argument_list|>
+argument_list|>
+name|childToWorkMap
 decl_stmt|;
 comment|// we need to keep the original list of operators in the map join to know
 comment|// what position in the mapjoin the different parent work items will have.
@@ -663,6 +680,15 @@ specifier|final
 name|DependencyCollectionTask
 name|dependencyTask
 decl_stmt|;
+comment|// remember map joins as we encounter them.
+specifier|public
+specifier|final
+name|Set
+argument_list|<
+name|MapJoinOperator
+argument_list|>
+name|currentMapJoinOperators
+decl_stmt|;
 comment|// used to hook up unions
 specifier|public
 specifier|final
@@ -692,6 +718,14 @@ argument_list|<
 name|BaseWork
 argument_list|>
 name|workWithUnionOperators
+decl_stmt|;
+specifier|public
+specifier|final
+name|Set
+argument_list|<
+name|ReduceSinkOperator
+argument_list|>
+name|clonedReduceSinks
 decl_stmt|;
 comment|// we link filesink that will write to the same final location
 specifier|public
@@ -889,17 +923,17 @@ argument_list|()
 expr_stmt|;
 name|this
 operator|.
-name|operatorWorkMap
+name|mapJoinWorkMap
 operator|=
 operator|new
 name|HashMap
 argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
+name|MapJoinOperator
 argument_list|,
+name|List
+argument_list|<
 name|BaseWork
+argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -921,6 +955,25 @@ argument_list|()
 expr_stmt|;
 name|this
 operator|.
+name|childToWorkMap
+operator|=
+operator|new
+name|HashMap
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|List
+argument_list|<
+name|BaseWork
+argument_list|>
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
 name|mapJoinParentMap
 operator|=
 operator|new
@@ -935,6 +988,17 @@ argument_list|<
 name|?
 argument_list|>
 argument_list|>
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|currentMapJoinOperators
+operator|=
+operator|new
+name|HashSet
+argument_list|<
+name|MapJoinOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -1013,6 +1077,17 @@ operator|new
 name|HashSet
 argument_list|<
 name|BaseWork
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|clonedReduceSinks
+operator|=
+operator|new
+name|HashSet
+argument_list|<
+name|ReduceSinkOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
