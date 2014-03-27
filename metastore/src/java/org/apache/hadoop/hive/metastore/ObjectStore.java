@@ -16665,6 +16665,9 @@ name|index
 operator|.
 name|getIndexName
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|origTable
 argument_list|,
@@ -16896,6 +16899,9 @@ argument_list|,
 name|dbName
 argument_list|,
 name|indexName
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|pm
