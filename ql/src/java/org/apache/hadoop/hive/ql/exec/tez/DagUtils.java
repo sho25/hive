@@ -4118,6 +4118,7 @@ name|String
 name|pathStr
 parameter_list|)
 block|{
+comment|// TODO: this should probably use Path::getName
 name|String
 index|[]
 name|splits
