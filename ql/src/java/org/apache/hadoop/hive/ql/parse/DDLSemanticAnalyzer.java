@@ -5047,7 +5047,7 @@ throws|throws
 name|SemanticException
 block|{
 name|Table
-name|sourceTable
+name|destTable
 init|=
 name|getTable
 argument_list|(
@@ -5066,7 +5066,7 @@ argument_list|)
 argument_list|)
 decl_stmt|;
 name|Table
-name|destTable
+name|sourceTable
 init|=
 name|getTable
 argument_list|(
@@ -5118,12 +5118,12 @@ name|MetaStoreUtils
 operator|.
 name|compareFieldColumns
 argument_list|(
-name|sourceTable
+name|destTable
 operator|.
 name|getAllCols
 argument_list|()
 argument_list|,
-name|destTable
+name|sourceTable
 operator|.
 name|getAllCols
 argument_list|()
@@ -5136,12 +5136,12 @@ name|MetaStoreUtils
 operator|.
 name|compareFieldColumns
 argument_list|(
-name|sourceTable
+name|destTable
 operator|.
 name|getPartitionKeys
 argument_list|()
 argument_list|,
-name|destTable
+name|sourceTable
 operator|.
 name|getPartitionKeys
 argument_list|()
@@ -5169,12 +5169,7 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-name|List
-argument_list|<
-name|Partition
-argument_list|>
-name|partitions
-init|=
+comment|// check if source partition exists
 name|getPartitions
 argument_list|(
 name|sourceTable
@@ -5183,13 +5178,13 @@ name|partSpecs
 argument_list|,
 literal|true
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// Verify that the partitions specified are continuous
 comment|// If a subpartition value is specified without specifying a partition's value
 comment|// then we throw an exception
-if|if
-condition|(
-operator|!
+name|int
+name|counter
+init|=
 name|isPartitionValueContinuous
 argument_list|(
 name|sourceTable
@@ -5199,6 +5194,12 @@ argument_list|()
 argument_list|,
 name|partSpecs
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|counter
+operator|<
+literal|0
 condition|)
 block|{
 throw|throw
@@ -5314,9 +5315,9 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param partitionKeys the list of partition keys of the table    * @param partSpecs the partition specs given by the user    * @return true if no subpartition value is specified without a partition's    *         value being specified else it returns false    */
+comment|/**    * @param partitionKeys the list of partition keys of the table    * @param partSpecs the partition specs given by the user    * @return>=0 if no subpartition value is specified without a partition's    *         value being specified else it returns -1    */
 specifier|private
-name|boolean
+name|int
 name|isPartitionValueContinuous
 parameter_list|(
 name|List
@@ -5334,10 +5335,10 @@ argument_list|>
 name|partSpecs
 parameter_list|)
 block|{
-name|boolean
-name|partitionMissing
+name|int
+name|counter
 init|=
-literal|false
+literal|0
 decl_stmt|;
 for|for
 control|(
@@ -5349,7 +5350,6 @@ control|)
 block|{
 if|if
 condition|(
-operator|!
 name|partSpecs
 operator|.
 name|containsKey
@@ -5361,28 +5361,27 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|partitionMissing
-operator|=
-literal|true
+name|counter
+operator|++
 expr_stmt|;
+continue|continue;
 block|}
-else|else
-block|{
-if|if
-condition|(
-name|partitionMissing
-condition|)
-block|{
-comment|// A subpartition value exists after a missing partition
-comment|// The partition value specified are not continuous, return false
 return|return
-literal|false
+name|partSpecs
+operator|.
+name|size
+argument_list|()
+operator|==
+name|counter
+condition|?
+name|counter
+else|:
+operator|-
+literal|1
 return|;
 block|}
-block|}
-block|}
 return|return
-literal|true
+name|counter
 return|;
 block|}
 specifier|private
