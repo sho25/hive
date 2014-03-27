@@ -130,13 +130,14 @@ literal|60
 operator|*
 literal|1000
 decl_stmt|;
+comment|/*    * The = sign in the string for TOKEN_FILE_ARG_PLACEHOLDER is required because    * org.apache.hadoop.util.GenericOptionsParser.preProcessForWindows() prepares    * arguments expecting an = sign. It will fail to prepare the arguments correctly    * without the = sign present.    */
 specifier|public
 specifier|static
 specifier|final
 name|String
 name|TOKEN_FILE_ARG_PLACEHOLDER
 init|=
-literal|"__WEBHCAT_TOKEN_FILE_LOCATION__"
+literal|"__MR_JOB_CREDENTIALS_OPTION=WEBHCAT_TOKEN_FILE_LOCATION__"
 decl_stmt|;
 comment|/**    * constants needed for Pig job submission    */
 specifier|public
