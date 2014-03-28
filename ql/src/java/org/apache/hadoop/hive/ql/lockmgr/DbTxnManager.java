@@ -741,7 +741,7 @@ argument_list|()
 condition|)
 block|{
 case|case
-name|DDL
+name|DDL_EXCLUSIVE
 case|:
 case|case
 name|INSERT_OVERWRITE
@@ -756,7 +756,7 @@ case|case
 name|INSERT
 case|:
 case|case
-name|DDL_METADATA_ONLY
+name|DDL_SHARED
 case|:
 name|compBuilder
 operator|.
@@ -776,6 +776,11 @@ name|setSemiShared
 argument_list|()
 expr_stmt|;
 break|break;
+case|case
+name|DDL_NO_LOCK
+case|:
+continue|continue;
+comment|// No lock required here
 default|default:
 throw|throw
 operator|new

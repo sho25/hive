@@ -8294,7 +8294,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8996,6 +8996,7 @@ name|oldPart
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// We've already obtained a lock on the table, don't lock the partition too
 name|work
 operator|.
 name|getOutputs
@@ -9012,7 +9013,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9197,6 +9198,7 @@ name|tbl
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// We've already locked the table as the input, don't relock it as the output.
 name|work
 operator|.
 name|getOutputs
@@ -9213,7 +9215,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9329,7 +9331,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL_METADATA_ONLY
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9424,7 +9426,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL_METADATA_ONLY
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -23646,6 +23648,7 @@ comment|// the write entity
 comment|// contains the new table. This is needed for rename - both the old and the
 comment|// new table names are
 comment|// passed
+comment|// Don't acquire locks for any of these, we have already asked for them in DDLSemanticAnalyzer.
 if|if
 condition|(
 name|part
@@ -23683,7 +23686,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -23734,7 +23737,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -23772,7 +23775,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -23925,6 +23928,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// We have already locked the table, don't lock the partitions.
 name|work
 operator|.
 name|getOutputs
@@ -23941,7 +23945,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -24236,6 +24240,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// We have already locked the table in DDLSemenaticAnalyzer, don't do it again here
 name|work
 operator|.
 name|getOutputs
@@ -24252,7 +24257,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -25719,7 +25724,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -26331,7 +26336,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -26522,7 +26527,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -26712,7 +26717,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;

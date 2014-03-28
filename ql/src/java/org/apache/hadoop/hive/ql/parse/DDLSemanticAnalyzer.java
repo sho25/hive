@@ -4900,7 +4900,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL_METADATA_ONLY
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5780,6 +5780,8 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+comment|// We want no lock here, as the database lock will cover the tables,
+comment|// and putting a lock will actually cause us to deadlock on ourselves.
 name|outputs
 operator|.
 name|add
@@ -5793,7 +5795,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5824,7 +5826,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_EXCLUSIVE
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6030,7 +6032,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_EXCLUSIVE
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6255,7 +6257,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_EXCLUSIVE
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6290,7 +6292,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_EXCLUSIVE
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6334,7 +6336,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_EXCLUSIVE
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6369,7 +6371,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_EXCLUSIVE
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9855,6 +9857,32 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+comment|// Determine the lock type to acquire
+name|WriteEntity
+operator|.
+name|WriteType
+name|writeType
+init|=
+name|desc
+operator|==
+literal|null
+condition|?
+name|WriteEntity
+operator|.
+name|WriteType
+operator|.
+name|DDL_EXCLUSIVE
+else|:
+name|WriteEntity
+operator|.
+name|determineAlterTableWriteType
+argument_list|(
+name|desc
+operator|.
+name|getOp
+argument_list|()
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|partSpec
@@ -9887,11 +9915,7 @@ name|WriteEntity
 argument_list|(
 name|tab
 argument_list|,
-name|WriteEntity
-operator|.
-name|WriteType
-operator|.
-name|DDL
+name|writeType
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9948,11 +9972,7 @@ name|WriteEntity
 argument_list|(
 name|part
 argument_list|,
-name|WriteEntity
-operator|.
-name|WriteType
-operator|.
-name|DDL
+name|writeType
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9983,11 +10003,7 @@ name|WriteEntity
 argument_list|(
 name|part
 argument_list|,
-name|WriteEntity
-operator|.
-name|WriteType
-operator|.
-name|DDL
+name|writeType
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -17401,7 +17417,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_SHARED
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18194,7 +18210,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL_METADATA_ONLY
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -19789,6 +19805,7 @@ range|:
 name|parts
 control|)
 block|{
+comment|// Don't request any locks here, as the table has already been locked.
 name|outputs
 operator|.
 name|add
@@ -19802,7 +19819,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -20102,7 +20119,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL
+name|DDL_EXCLUSIVE
 argument_list|)
 argument_list|)
 expr_stmt|;

@@ -2145,7 +2145,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL_METADATA_ONLY
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2165,7 +2165,7 @@ name|WriteEntity
 operator|.
 name|WriteType
 operator|.
-name|DDL_METADATA_ONLY
+name|DDL_NO_LOCK
 argument_list|)
 argument_list|)
 expr_stmt|;
