@@ -111,9 +111,9 @@ specifier|final
 name|String
 name|roleShowGrantSchema
 init|=
-literal|"role,create_time,principal_name,principal_type,grant_option,grant_time,grantor#"
+literal|"role,grant_option,grant_time,grantor#"
 operator|+
-literal|"string:bigint:string:string:boolean:bigint:string"
+literal|"string:boolean:bigint:string"
 decl_stmt|;
 comment|/**    * thrift ddl for the result of describe role roleName    */
 specifier|private

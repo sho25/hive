@@ -696,7 +696,7 @@ name|hObj
 argument_list|,
 name|privController
 operator|.
-name|getCurrentRoles
+name|getCurrentRoleNames
 argument_list|()
 argument_list|,
 name|privController

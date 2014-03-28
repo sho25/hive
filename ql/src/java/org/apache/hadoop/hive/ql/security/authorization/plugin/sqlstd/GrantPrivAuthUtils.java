@@ -195,28 +195,6 @@ name|HivePrivilegeObject
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|security
-operator|.
-name|authorization
-operator|.
-name|plugin
-operator|.
-name|HiveRole
-import|;
-end_import
-
 begin_comment
 comment|/**  * Utility class to authorize grant/revoke privileges  */
 end_comment
@@ -256,7 +234,7 @@ name|userName
 parameter_list|,
 name|List
 argument_list|<
-name|HiveRole
+name|String
 argument_list|>
 name|curRoles
 parameter_list|,
@@ -315,7 +293,7 @@ name|userName
 parameter_list|,
 name|List
 argument_list|<
-name|HiveRole
+name|String
 argument_list|>
 name|curRoles
 parameter_list|,

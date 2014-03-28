@@ -213,30 +213,30 @@ name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 function_decl|;
-comment|/**    * Get roles that this user/role belongs to    * @param hivePrincipal - user or role    * @return list of roles    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
+comment|/**    * Get the grant information for principals granted the given role    * @param roleName    * @return    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|List
 argument_list|<
-name|HiveRole
+name|HiveRoleGrant
 argument_list|>
-name|getRoles
+name|getPrincipalGrantInfoForRole
 parameter_list|(
-name|HivePrincipal
-name|hivePrincipal
+name|String
+name|roleName
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 function_decl|;
-comment|/**    * Get the grant information for principals granted the given role    * @param roleName    * @return    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
+comment|/**    * Get the grant information of roles the given principal belongs to    * @param principal    * @return    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|List
 argument_list|<
 name|HiveRoleGrant
 argument_list|>
-name|getPrincipalsInRoleInfo
+name|getRoleGrantInfoForPrincipal
 parameter_list|(
-name|String
-name|roleName
+name|HivePrincipal
+name|principal
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
@@ -364,15 +364,13 @@ name|HiveAuthzPluginException
 function_decl|;
 name|List
 argument_list|<
-name|HiveRole
+name|String
 argument_list|>
-name|getCurrentRoles
+name|getCurrentRoleNames
 parameter_list|()
 throws|throws
 name|HiveAuthzPluginException
 function_decl|;
-comment|//other functions to be added -
-comment|//showUsersInRole(rolename)
 block|}
 end_interface
 

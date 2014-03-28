@@ -224,6 +224,15 @@ name|thriftRoleGrant
 operator|.
 name|getGrantorPrincipalType
 argument_list|()
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|thriftRoleGrant
+operator|.
+name|getGrantorPrincipalType
+argument_list|()
 operator|.
 name|name
 argument_list|()
