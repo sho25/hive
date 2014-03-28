@@ -607,6 +607,13 @@ name|hashTblInitedOnce
 operator|=
 literal|true
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Try to retrieve from cache"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|mapJoinTables
@@ -618,6 +625,13 @@ operator|==
 literal|null
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Did not find tables in cache"
+argument_list|)
+expr_stmt|;
 name|mapJoinTables
 operator|=
 operator|new
@@ -903,6 +917,24 @@ argument_list|,
 name|mapJoinTableSerdes
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|conf
+operator|.
+name|isBucketMapJoin
+argument_list|()
+operator|==
+literal|false
+condition|)
+block|{
+comment|/*        * The issue with caching in case of bucket map join is that different tasks        * process different buckets and if the container is reused to join a different bucket,        * join results can be incorrect. The cache is keyed on operator id and for bucket map join        * the operator does not change but data needed is different. For a proper fix, this        * requires changes in the Tez API with regard to finding bucket id and         * also ability to schedule tasks to re-use containers that have cached the specific bucket.        */
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"This is not bucket map join, so cache"
+argument_list|)
+expr_stmt|;
 name|cache
 operator|.
 name|cache
@@ -921,6 +953,7 @@ argument_list|,
 name|mapJoinTableSerdes
 argument_list|)
 expr_stmt|;
+block|}
 name|perfLogger
 operator|.
 name|PerfLogEnd

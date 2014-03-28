@@ -458,7 +458,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|MapJoinOperator
+name|HashTableLoader
 operator|.
 name|class
 operator|.
@@ -879,6 +879,29 @@ argument_list|)
 throw|;
 block|}
 comment|// Register that the Input has been cached.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Is this a bucket map join: "
+operator|+
+name|desc
+operator|.
+name|isBucketMapJoin
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// cache is disabled for bucket map join because of the same reason
+comment|// given in loadHashTable in MapJoinOperator.
+if|if
+condition|(
+operator|!
+name|desc
+operator|.
+name|isBucketMapJoin
+argument_list|()
+condition|)
+block|{
 name|tezCacheAccess
 operator|.
 name|registerCachedInput
@@ -897,6 +920,7 @@ operator|+
 literal|" as cached"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

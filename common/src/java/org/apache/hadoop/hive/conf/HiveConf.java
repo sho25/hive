@@ -4529,6 +4529,13 @@ name|HiveCompat
 operator|.
 name|DEFAULT_COMPAT_LEVEL
 argument_list|)
+block|,
+name|HIVE_CONVERT_JOIN_BUCKET_MAPJOIN_TEZ
+argument_list|(
+literal|"hive.convert.join.bucket.mapjoin.tez"
+argument_list|,
+literal|false
+argument_list|)
 block|;
 specifier|public
 specifier|final
