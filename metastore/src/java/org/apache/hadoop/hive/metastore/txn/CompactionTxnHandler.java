@@ -83,6 +83,20 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|sql
@@ -138,6 +152,8 @@ argument_list|(
 name|CLASS_NAME
 argument_list|)
 decl_stmt|;
+comment|// Always access COMPACTION_QUEUE before COMPLETED_TXN_COMPONENTS
+comment|// See TxnHandler for notes on how to deal with deadlocks.  Follow those notes.
 specifier|public
 name|CompactionTxnHandler
 parameter_list|(
@@ -277,6 +293,7 @@ name|info
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Check for aborted txns
 name|s
 operator|=
 literal|"select tc_database, tc_table, tc_partition "
@@ -435,6 +452,8 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+try|try
+block|{
 name|Connection
 name|dbConn
 init|=
@@ -556,7 +575,14 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{        }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"setRunAs"
+argument_list|)
+expr_stmt|;
 block|}
 finally|finally
 block|{
@@ -564,6 +590,28 @@ name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|setRunAs
+argument_list|(
+name|cq_id
+argument_list|,
+name|user
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -577,6 +625,8 @@ name|workerId
 parameter_list|)
 throws|throws
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -885,10 +935,28 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
-return|return
-literal|null
-return|;
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"findNextToCompact"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to connect to transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{
@@ -896,6 +964,27 @@ name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+return|return
+name|findNextToCompact
+argument_list|(
+name|workerId
+argument_list|)
+return|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -909,6 +998,8 @@ name|info
 parameter_list|)
 throws|throws
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -1035,7 +1126,28 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"markCompacted"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to connect to transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{
@@ -1043,6 +1155,26 @@ name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|markCompacted
+argument_list|(
+name|info
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -1096,8 +1228,6 @@ operator|+
 name|READY_FOR_CLEANING
 operator|+
 literal|"'"
-operator|+
-literal|" for update"
 decl_stmt|;
 name|LOG
 operator|.
@@ -1308,9 +1438,20 @@ name|SQLException
 name|e1
 parameter_list|)
 block|{       }
-return|return
-literal|null
-return|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to connect to transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{
@@ -1331,6 +1472,8 @@ name|info
 parameter_list|)
 throws|throws
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -1791,7 +1934,28 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"markCleaned"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to connect to transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{
@@ -1802,6 +1966,26 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|markCleaned
+argument_list|(
+name|info
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
+expr_stmt|;
+block|}
+block|}
 comment|/**    * Clean up aborted transactions from txns that have no components in txn_components.    */
 specifier|public
 name|void
@@ -1809,6 +1993,8 @@ name|cleanEmptyAbortedTxns
 parameter_list|()
 throws|throws
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -2045,7 +2231,28 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"cleanEmptyAbortedTxns"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to connect to transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{
@@ -2053,6 +2260,24 @@ name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|cleanEmptyAbortedTxns
+argument_list|()
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -2066,6 +2291,8 @@ name|hostname
 parameter_list|)
 throws|throws
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -2171,7 +2398,28 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"revokeFromLocalWorkers"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to connect to transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{
@@ -2179,6 +2427,26 @@ name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|revokeFromLocalWorkers
+argument_list|(
+name|hostname
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -2192,6 +2460,8 @@ name|timeout
 parameter_list|)
 throws|throws
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -2305,7 +2575,28 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"revokeTimedoutWorkers"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to connect to transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{
@@ -2313,6 +2604,26 @@ name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|revokeTimedoutWorkers
+argument_list|(
+name|timeout
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}

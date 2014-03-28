@@ -308,15 +308,10 @@ decl_stmt|;
 specifier|static
 specifier|final
 specifier|private
-name|String
-name|CLASS_NAME
+name|int
+name|ALLOWED_REPEATED_DEADLOCKS
 init|=
-name|TxnHandler
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
+literal|5
 decl_stmt|;
 specifier|static
 specifier|final
@@ -328,7 +323,12 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|CLASS_NAME
+name|TxnHandler
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|static
@@ -336,15 +336,48 @@ specifier|private
 name|BoneCP
 name|connPool
 decl_stmt|;
-comment|// Transaction timeout, in milliseconds.
 specifier|private
-name|long
-name|timeout
+specifier|static
+name|Boolean
+name|lockLock
+init|=
+operator|new
+name|Boolean
+argument_list|(
+literal|"true"
+argument_list|)
+decl_stmt|;
+comment|// Random object to lock on for the lock
+comment|// method
+comment|/**    * Number of consecutive deadlocks we have seen    */
+specifier|protected
+name|int
+name|deadlockCnt
 decl_stmt|;
 specifier|protected
 name|HiveConf
 name|conf
 decl_stmt|;
+comment|// Transaction timeout, in milliseconds.
+specifier|private
+name|long
+name|timeout
+decl_stmt|;
+comment|// DEADLOCK DETECTION AND HANDLING
+comment|// A note to developers of this class.  ALWAYS access HIVE_LOCKS before TXNS to avoid deadlock
+comment|// between simultaneous accesses.  ALWAYS access TXN_COMPONENTS before HIVE_LOCKS .
+comment|//
+comment|// Private methods should never catch SQLException and then throw MetaException.  The public
+comment|// methods depend on SQLException coming back so they can detect and handle deadlocks.  Private
+comment|// methods should only throw MetaException when they explicitly know there's a logic error and
+comment|// they want to throw past the public methods.
+comment|//
+comment|// All public methods that write to the database have to check for deadlocks when a SQLException
+comment|// comes back and handle it if they see one.  This has to be done with the connection pooling
+comment|// in mind.  To do this they should call detectDeadlock AFTER rolling back the db transaction,
+comment|// and then in an outer loop they should catch DeadlockException.  In the catch for this they
+comment|// should increment the deadlock counter and recall themselves.  See commitTxn for an example.
+comment|// the connection has been closed and returned to the pool.
 specifier|public
 name|TxnHandler
 parameter_list|(
@@ -365,7 +398,9 @@ comment|// Set up the JDBC connection pool
 try|try
 block|{
 name|setupJdbcConnectionPool
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -415,6 +450,10 @@ name|HIVE_TXN_TIMEOUT
 argument_list|)
 operator|*
 literal|1000
+expr_stmt|;
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 name|buildJumpTable
 argument_list|()
@@ -1029,6 +1068,8 @@ operator|.
 name|getNum_txns
 argument_list|()
 decl_stmt|;
+try|try
+block|{
 name|Connection
 name|dbConn
 init|=
@@ -1306,7 +1347,14 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"openTxns"
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|MetaException
@@ -1331,6 +1379,27 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+return|return
+name|openTxns
+argument_list|(
+name|rqst
+argument_list|)
+return|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
+expr_stmt|;
+block|}
+block|}
 specifier|public
 name|void
 name|abortTxn
@@ -1351,6 +1420,8 @@ operator|.
 name|getTxnid
 argument_list|()
 decl_stmt|;
+try|try
+block|{
 name|Connection
 name|dbConn
 init|=
@@ -1367,17 +1438,34 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
-name|long
-name|now
-init|=
-name|System
-operator|.
-name|currentTimeMillis
-argument_list|()
-decl_stmt|;
+comment|// delete from HIVE_LOCKS first, we always access HIVE_LOCKS before TXNS
 name|String
 name|s
 init|=
+literal|"delete from HIVE_LOCKS where hl_txnid = "
+operator|+
+name|txnid
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute update<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|executeUpdate
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+name|s
+operator|=
 literal|"update TXNS set txn_state = '"
 operator|+
 name|TXN_ABORTED
@@ -1385,7 +1473,7 @@ operator|+
 literal|"' where txn_id = "
 operator|+
 name|txnid
-decl_stmt|;
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -1436,30 +1524,6 @@ name|txnid
 argument_list|)
 throw|;
 block|}
-name|s
-operator|=
-literal|"delete from HIVE_LOCKS where hl_txnid = "
-operator|+
-name|txnid
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to execute update<"
-operator|+
-name|s
-operator|+
-literal|">"
-argument_list|)
-expr_stmt|;
-name|stmt
-operator|.
-name|executeUpdate
-argument_list|(
-name|s
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -1499,7 +1563,14 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"abortTxn"
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|MetaException
@@ -1521,6 +1592,26 @@ name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|abortTxn
+argument_list|(
+name|rqst
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -1546,6 +1637,8 @@ operator|.
 name|getTxnid
 argument_list|()
 decl_stmt|;
+try|try
+block|{
 name|Connection
 name|dbConn
 init|=
@@ -1562,128 +1655,29 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
-comment|// Make sure the transaction has not already been aborted.  This costs
-comment|// us an extra select against the database, but it is necessary to
-comment|// avoid the situation where the transaction has timed out but the
-comment|// client isn't aware of it and tries to commit it.  The client needs
-comment|// to be informed that the commit failed and it should abort on its
-comment|// side.
-comment|//
-comment|// The select has to be done as a select for update to avoid a race
-comment|// condition where this client is committing it while some other
-comment|// client is declaring it timed out and aborting it.
+comment|// Before we do the commit heartbeat the txn.  This is slightly odd in that we're going to
+comment|// commit it, but it does two things.  One, it makes sure the transaction is still valid.
+comment|// Two, it avoids the race condition where we time out between now and when we actually
+comment|// commit the transaction below.  And it does this all in a dead-lock safe way by
+comment|// committing the heartbeat back to the database.
+name|heartbeatTxn
+argument_list|(
+name|dbConn
+argument_list|,
+name|txnid
+argument_list|)
+expr_stmt|;
+comment|// Move the record from txn_components into completed_txn_components so that the compactor
+comment|// knows where to look to compact.
 name|String
 name|s
 init|=
-literal|"select txn_state from TXNS where txn_id = "
-operator|+
-name|txnid
-operator|+
-literal|" for update"
-decl_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to execute query<"
-operator|+
-name|s
-operator|+
-literal|">"
-argument_list|)
-expr_stmt|;
-name|ResultSet
-name|rs
-init|=
-name|stmt
-operator|.
-name|executeQuery
-argument_list|(
-name|s
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|rs
-operator|.
-name|next
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
-throw|throw
-operator|new
-name|NoSuchTxnException
-argument_list|(
-literal|"No such transaction: "
-operator|+
-name|txnid
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
-name|rs
-operator|.
-name|getString
-argument_list|(
-literal|1
-argument_list|)
-operator|.
-name|charAt
-argument_list|(
-literal|0
-argument_list|)
-operator|==
-name|TXN_ABORTED
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
-throw|throw
-operator|new
-name|TxnAbortedException
-argument_list|(
-literal|"Transaction "
-operator|+
-name|txnid
-operator|+
-literal|" already aborted"
-argument_list|)
-throw|;
-block|}
-comment|// Move the record from txn_components into completed_txn_components so that the compactor
-comment|// knows where to look to compact.
-name|s
-operator|=
 literal|"insert into COMPLETED_TXN_COMPONENTS select tc_txnid, tc_database, tc_table, "
 operator|+
 literal|"tc_partition from TXN_COMPONENTS where tc_txnid = "
 operator|+
 name|txnid
-expr_stmt|;
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -1709,7 +1703,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|error
+name|warn
 argument_list|(
 literal|"Expected to move at least one record from txn_components to "
 operator|+
@@ -1717,6 +1711,7 @@ literal|"completed_txn_components when committing txn!"
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Always access TXN_COMPONENTS before HIVE_LOCKS;
 name|s
 operator|=
 literal|"delete from TXN_COMPONENTS where tc_txnid = "
@@ -1741,6 +1736,7 @@ argument_list|(
 name|s
 argument_list|)
 expr_stmt|;
+comment|// Always access HIVE_LOCKS before TXNS
 name|s
 operator|=
 literal|"delete from HIVE_LOCKS where hl_txnid = "
@@ -1828,7 +1824,14 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"commitTxn"
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|MetaException
@@ -1853,6 +1856,26 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|commitTxn
+argument_list|(
+name|rqst
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
+expr_stmt|;
+block|}
+block|}
 specifier|public
 name|LockResponse
 name|lock
@@ -1866,6 +1889,8 @@ throws|,
 name|TxnAbortedException
 throws|,
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -1886,12 +1911,82 @@ literal|true
 argument_list|)
 return|;
 block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+try|try
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to rollback"
+argument_list|)
+expr_stmt|;
+name|dbConn
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e1
+parameter_list|)
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"lock"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to update transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
+block|}
 finally|finally
 block|{
 name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+return|return
+name|lock
+argument_list|(
+name|rqst
+argument_list|)
+return|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -1908,6 +2003,8 @@ throws|,
 name|TxnAbortedException
 throws|,
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -1928,12 +2025,82 @@ literal|false
 argument_list|)
 return|;
 block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+try|try
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to rollback"
+argument_list|)
+expr_stmt|;
+name|dbConn
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e1
+parameter_list|)
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"lockNoWait"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to update transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
+block|}
 finally|finally
 block|{
 name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+return|return
+name|lockNoWait
+argument_list|(
+name|rqst
+argument_list|)
+return|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -1952,6 +2119,8 @@ throws|,
 name|TxnAbortedException
 throws|,
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -2021,12 +2190,82 @@ literal|true
 argument_list|)
 return|;
 block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+try|try
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to rollback"
+argument_list|)
+expr_stmt|;
+name|dbConn
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e1
+parameter_list|)
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"checkLock"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to update transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
+block|}
 finally|finally
 block|{
 name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+return|return
+name|checkLock
+argument_list|(
+name|rqst
+argument_list|)
+return|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -2043,6 +2282,8 @@ throws|,
 name|TxnOpenException
 throws|,
 name|MetaException
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -2090,8 +2331,6 @@ operator|>
 literal|0
 condition|)
 block|{
-try|try
-block|{
 name|LOG
 operator|.
 name|debug
@@ -2134,30 +2373,6 @@ name|msg
 argument_list|)
 throw|;
 block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e1
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to rollback "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e1
-argument_list|)
-argument_list|)
-throw|;
-block|}
-block|}
-try|try
-block|{
 name|Statement
 name|stmt
 init|=
@@ -2263,6 +2478,13 @@ name|SQLException
 name|e1
 parameter_list|)
 block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"unlock"
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|MetaException
@@ -2278,13 +2500,32 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-block|}
 finally|finally
 block|{
 name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|unlock
+argument_list|(
+name|rqst
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -2736,6 +2977,8 @@ name|TxnAbortedException
 throws|,
 name|MetaException
 block|{
+try|try
+block|{
 name|Connection
 name|dbConn
 init|=
@@ -2764,18 +3007,6 @@ name|getTxnid
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to commit"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|commit
-argument_list|()
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -2783,18 +3014,48 @@ name|SQLException
 name|e
 parameter_list|)
 block|{
+try|try
+block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
-literal|"Failed to commit: "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
+literal|"Going to rollback"
 argument_list|)
 expr_stmt|;
+name|dbConn
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e1
+parameter_list|)
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"heartbeat"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to select from transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{
@@ -2802,6 +3063,26 @@ name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|heartbeat
+argument_list|(
+name|ids
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -2816,6 +3097,8 @@ throws|throws
 name|MetaException
 block|{
 comment|// Put a compaction request in the queue.
+try|try
+block|{
 name|Connection
 name|dbConn
 init|=
@@ -2928,11 +3211,11 @@ argument_list|(
 name|s
 argument_list|)
 expr_stmt|;
-name|StringBuffer
+name|StringBuilder
 name|buf
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 literal|"insert into COMPACTION_QUEUE (cq_id, cq_database, "
 operator|+
@@ -3232,7 +3515,14 @@ parameter_list|(
 name|SQLException
 name|e1
 parameter_list|)
-block|{       }
+block|{         }
+name|detectDeadlock
+argument_list|(
+name|e
+argument_list|,
+literal|"compact"
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|MetaException
@@ -3254,6 +3544,26 @@ name|closeDbConn
 argument_list|(
 name|dbConn
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|DeadlockException
+name|e
+parameter_list|)
+block|{
+name|compact
+argument_list|(
+name|rqst
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|deadlockCnt
+operator|=
+literal|0
 expr_stmt|;
 block|}
 block|}
@@ -3708,6 +4018,12 @@ name|previous_timeout
 return|;
 block|}
 specifier|protected
+class|class
+name|DeadlockException
+extends|extends
+name|Exception
+block|{    }
+specifier|protected
 name|Connection
 name|getDbConn
 parameter_list|()
@@ -3809,6 +4125,88 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+comment|/**    * Determine if an exception was a deadlock.  Unfortunately there is no standard way to do    * this, so we have to inspect the error messages and catch the telltale signs for each    * different database.    * @param e exception that was thrown.    * @param caller name of the method calling this    * @throws org.apache.hadoop.hive.metastore.txn.TxnHandler.DeadlockException when deadlock    * detected and retry count has not been exceeded.    */
+specifier|protected
+name|void
+name|detectDeadlock
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|,
+name|String
+name|caller
+parameter_list|)
+throws|throws
+name|DeadlockException
+block|{
+specifier|final
+name|String
+name|mysqlDeadlock
+init|=
+literal|"Deadlock found when trying to get lock; try restarting transaction"
+decl_stmt|;
+if|if
+condition|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|mysqlDeadlock
+argument_list|)
+operator|||
+name|e
+operator|instanceof
+name|SQLTransactionRollbackException
+condition|)
+block|{
+if|if
+condition|(
+name|deadlockCnt
+operator|++
+operator|<
+name|ALLOWED_REPEATED_DEADLOCKS
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Deadlock detected in "
+operator|+
+name|caller
+operator|+
+literal|", trying again."
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|DeadlockException
+argument_list|()
+throw|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Too many repeated deadlocks in "
+operator|+
+name|caller
+operator|+
+literal|", giving up."
+argument_list|)
+expr_stmt|;
+name|deadlockCnt
+operator|=
+literal|0
+expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private
@@ -4326,18 +4724,6 @@ name|void
 name|checkQFileTestHack
 parameter_list|()
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"In txnHandler conf object is "
-operator|+
-name|conf
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|boolean
 name|hackOn
 init|=
@@ -4441,6 +4827,22 @@ throws|,
 name|TxnAbortedException
 throws|,
 name|MetaException
+throws|,
+name|SQLException
+block|{
+comment|// We want to minimize the number of concurrent lock requests being issued.  If we do not we
+comment|// get a large number of deadlocks in the database, since this method has to both clean
+comment|// timedout locks and insert new locks.  This synchronization barrier will not eliminiate all
+comment|// deadlocks, and the code is still resilient in the face of a database deadlock.  But it
+comment|// will reduce the number.  This could have been done via a lock table command in the
+comment|// underlying database, but was not for two reasons.  One, different databases have different
+comment|// syntax for lock table, making it harder to use.  Two, that would lock the HIVE_LOCKS table
+comment|// and prevent other operations (such as committing transactions, showing locks,
+comment|// etc.) that should not interfere with this one.
+synchronized|synchronized
+init|(
+name|lockLock
+init|)
 block|{
 comment|// Clean up timed out locks before we attempt to acquire any.
 name|timeOutLocks
@@ -4458,40 +4860,15 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
-name|long
-name|txnid
-init|=
-name|rqst
-operator|.
-name|getTxnid
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|txnid
-operator|>
-literal|0
-condition|)
-block|{
-comment|// We need to check whether this transaction is valid and open
-name|String
-name|s
-init|=
-literal|"select txn_state from TXNS where txn_id = "
-operator|+
-name|txnid
-operator|+
-literal|" for update"
-decl_stmt|;
+comment|// Get the next lock id.  We have to do this as select for update so no
+comment|// one else reads it and updates it under us.
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to execute query<"
+literal|"Going to execute query<select nl_next from NEXT_LOCK_ID "
 operator|+
-name|s
-operator|+
-literal|">"
+literal|"for update>"
 argument_list|)
 expr_stmt|;
 name|ResultSet
@@ -4501,7 +4878,9 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-name|s
+literal|"select nl_next from NEXT_LOCK_ID "
+operator|+
+literal|"for update"
 argument_list|)
 decl_stmt|;
 if|if
@@ -4527,57 +4906,92 @@ argument_list|()
 expr_stmt|;
 throw|throw
 operator|new
-name|NoSuchTxnException
+name|MetaException
 argument_list|(
-literal|"No such transaction: "
+literal|"Transaction tables not properly "
 operator|+
-name|txnid
+literal|"initialized, no record found in next_lock_id"
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
+name|long
+name|extLockId
+init|=
 name|rs
 operator|.
-name|getString
+name|getLong
 argument_list|(
 literal|1
 argument_list|)
-operator|.
-name|charAt
-argument_list|(
-literal|0
-argument_list|)
-operator|==
-name|TXN_ABORTED
-condition|)
-block|{
+decl_stmt|;
+name|String
+name|s
+init|=
+literal|"update NEXT_LOCK_ID set nl_next = "
+operator|+
+operator|(
+name|extLockId
+operator|+
+literal|1
+operator|)
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to rollback"
+literal|"Going to execute update<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|executeUpdate
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to commit."
 argument_list|)
 expr_stmt|;
 name|dbConn
 operator|.
-name|rollback
+name|commit
 argument_list|()
 expr_stmt|;
-throw|throw
-operator|new
-name|TxnAbortedException
-argument_list|(
-literal|"Transaction "
-operator|+
+name|long
 name|txnid
-operator|+
-literal|" already aborted"
+init|=
+name|rqst
+operator|.
+name|getTxnid
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|txnid
+operator|>
+literal|0
+condition|)
+block|{
+comment|// Heartbeat the transaction so we know it is valid and we avoid it timing out while we
+comment|// are locking.
+name|heartbeatTxn
+argument_list|(
+name|dbConn
+argument_list|,
+name|txnid
 argument_list|)
-throw|;
-block|}
+expr_stmt|;
 comment|// For each component in this lock request,
 comment|// add an entry to the txn_components table
+comment|// This must be done before HIVE_LOCKS is accessed
 for|for
 control|(
 name|LockComponent
@@ -4681,99 +5095,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Get the next lock id.  We have to do this as select for update so no
-comment|// one else reads it and updates it under us.
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to execute query<select nl_next from NEXT_LOCK_ID "
-operator|+
-literal|"for update>"
-argument_list|)
-expr_stmt|;
-name|ResultSet
-name|rs
-init|=
-name|stmt
-operator|.
-name|executeQuery
-argument_list|(
-literal|"select nl_next from NEXT_LOCK_ID "
-operator|+
-literal|"for update"
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|rs
-operator|.
-name|next
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Transaction tables not properly "
-operator|+
-literal|"initialized, no record found in next_lock_id"
-argument_list|)
-throw|;
-block|}
-name|long
-name|extLockId
-init|=
-name|rs
-operator|.
-name|getLong
-argument_list|(
-literal|1
-argument_list|)
-decl_stmt|;
-name|String
-name|s
-init|=
-literal|"update NEXT_LOCK_ID set nl_next = "
-operator|+
-operator|(
-name|extLockId
-operator|+
-literal|1
-operator|)
-decl_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to execute update<"
-operator|+
-name|s
-operator|+
-literal|">"
-argument_list|)
-expr_stmt|;
-name|stmt
-operator|.
-name|executeUpdate
-argument_list|(
-name|s
-argument_list|)
-expr_stmt|;
 name|long
 name|intLockId
 init|=
@@ -5045,48 +5366,6 @@ return|;
 block|}
 catch|catch
 parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-try|try
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e1
-parameter_list|)
-block|{       }
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to connect to transaction database "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-throw|;
-block|}
-catch|catch
-parameter_list|(
 name|NoSuchLockException
 name|e
 parameter_list|)
@@ -5099,6 +5378,7 @@ argument_list|(
 literal|"Couldn't find a lock we just created!"
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 specifier|private
@@ -5125,6 +5405,8 @@ throws|,
 name|TxnAbortedException
 throws|,
 name|MetaException
+throws|,
+name|SQLException
 block|{
 name|List
 argument_list|<
@@ -5161,8 +5443,6 @@ operator|.
 name|currentTimeMillis
 argument_list|()
 decl_stmt|;
-try|try
-block|{
 name|LOG
 operator|.
 name|debug
@@ -5186,11 +5466,11 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
-name|StringBuffer
+name|StringBuilder
 name|query
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 literal|"select hl_lock_ext_id, "
 operator|+
@@ -5693,9 +5973,7 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"How did we get here, "
-operator|+
-literal|"we heartbeated our lock before we started!"
+literal|"How did we get here, we heartbeated our lock before we started!"
 argument_list|)
 throw|;
 block|}
@@ -5992,49 +6270,6 @@ return|return
 name|response
 return|;
 block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-try|try
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e1
-parameter_list|)
-block|{       }
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to connect to transaction database "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-throw|;
-block|}
-block|}
 specifier|private
 name|void
 name|wait
@@ -6184,8 +6419,7 @@ comment|// We update the database, but we don't commit because there may be othe
 comment|// locks together with this, and we only want to acquire one if we can
 comment|// acquire all.
 block|}
-comment|// Heartbeats on the lock table.  This does not call commit as it assumes
-comment|// someone downstream will.  However, it does lock rows in the lock table.
+comment|// Heartbeats on the lock table.  This commits, so do not enter it with any state
 specifier|private
 name|void
 name|heartbeatLock
@@ -6199,7 +6433,7 @@ parameter_list|)
 throws|throws
 name|NoSuchLockException
 throws|,
-name|MetaException
+name|SQLException
 block|{
 comment|// If the lock id is 0, then there are no locks in this heartbeat
 if|if
@@ -6209,8 +6443,6 @@ operator|==
 literal|0
 condition|)
 return|return;
-try|try
-block|{
 name|Statement
 name|stmt
 init|=
@@ -6288,52 +6520,20 @@ name|extLockId
 argument_list|)
 throw|;
 block|}
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-try|try
-block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to rollback"
+literal|"Going to commit"
 argument_list|)
 expr_stmt|;
 name|dbConn
 operator|.
-name|rollback
+name|commit
 argument_list|()
 expr_stmt|;
 block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e1
-parameter_list|)
-block|{       }
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to connect to transaction database"
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-throw|;
-block|}
-block|}
-comment|// Heartbeats on the txn table.  This does not call commit as it assumes
-comment|// someone downstream will.  However, it does lock rows in the txn table.
+comment|// Heartbeats on the txn table.  This commits, so do not enter it with any state
 specifier|private
 name|void
 name|heartbeatTxn
@@ -6349,7 +6549,7 @@ name|NoSuchTxnException
 throws|,
 name|TxnAbortedException
 throws|,
-name|MetaException
+name|SQLException
 block|{
 comment|// If the txnid is 0, then there are no transactions in this heartbeat
 if|if
@@ -6359,8 +6559,6 @@ operator|==
 literal|0
 condition|)
 return|return;
-try|try
-block|{
 name|Statement
 name|stmt
 init|=
@@ -6508,49 +6706,18 @@ argument_list|(
 name|s
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-try|try
-block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to rollback"
+literal|"Going to commit"
 argument_list|)
 expr_stmt|;
 name|dbConn
 operator|.
-name|rollback
+name|commit
 argument_list|()
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e1
-parameter_list|)
-block|{       }
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to connect to transaction database "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-throw|;
-block|}
 block|}
 comment|// NEVER call this function without first calling heartbeat(long, long)
 specifier|private
@@ -6567,8 +6734,8 @@ throws|throws
 name|NoSuchLockException
 throws|,
 name|MetaException
-block|{
-try|try
+throws|,
+name|SQLException
 block|{
 name|Statement
 name|stmt
@@ -6668,28 +6835,6 @@ name|txnid
 operator|)
 return|;
 block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to connect to transaction database "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-throw|;
-block|}
-block|}
 comment|// NEVER call this function without first calling heartbeat(long, long)
 specifier|private
 name|List
@@ -6708,8 +6853,8 @@ throws|throws
 name|NoSuchLockException
 throws|,
 name|MetaException
-block|{
-try|try
+throws|,
+name|SQLException
 block|{
 name|Statement
 name|stmt
@@ -6813,28 +6958,6 @@ return|return
 name|ourLockInfo
 return|;
 block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to connect to transaction database "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-throw|;
-block|}
-block|}
 comment|// Clean time out locks from the database.  This does a commit,
 comment|// and thus should be done before any calls to heartbeat that will leave
 comment|// open transactions.
@@ -6846,9 +6969,7 @@ name|Connection
 name|dbConn
 parameter_list|)
 throws|throws
-name|MetaException
-block|{
-try|try
+name|SQLException
 block|{
 name|long
 name|now
@@ -6908,55 +7029,17 @@ operator|.
 name|commit
 argument_list|()
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-try|try
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e1
-parameter_list|)
-block|{       }
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to connect to transaction database "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-throw|;
-block|}
+return|return;
 block|}
 specifier|private
+specifier|static
 specifier|synchronized
 name|void
 name|setupJdbcConnectionPool
-parameter_list|()
+parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|)
 throws|throws
 name|SQLException
 block|{
@@ -7067,6 +7150,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|static
 specifier|synchronized
 name|void
 name|buildJumpTable
