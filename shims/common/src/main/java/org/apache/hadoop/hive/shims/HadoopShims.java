@@ -990,6 +990,20 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    *  Perform kerberos login using the given principal and keytab,    *  and return the UGI object    * @throws IOException    */
+specifier|public
+name|UserGroupInformation
+name|loginUserFromKeytabAndReturnUGI
+parameter_list|(
+name|String
+name|principal
+parameter_list|,
+name|String
+name|keytabFile
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Perform kerberos re-login using the given principal and keytab, to renew    * the credentials    * @throws IOException    */
 specifier|public
 name|void

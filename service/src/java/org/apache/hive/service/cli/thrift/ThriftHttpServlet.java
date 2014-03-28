@@ -422,6 +422,11 @@ specifier|final
 name|UserGroupInformation
 name|serviceUGI
 decl_stmt|;
+specifier|private
+specifier|final
+name|UserGroupInformation
+name|httpUGI
+decl_stmt|;
 specifier|public
 name|ThriftHttpServlet
 parameter_list|(
@@ -436,6 +441,9 @@ name|authType
 parameter_list|,
 name|UserGroupInformation
 name|serviceUGI
+parameter_list|,
+name|UserGroupInformation
+name|httpUGI
 parameter_list|)
 block|{
 name|super
@@ -456,6 +464,12 @@ operator|.
 name|serviceUGI
 operator|=
 name|serviceUGI
+expr_stmt|;
+name|this
+operator|.
+name|httpUGI
+operator|=
+name|httpUGI
 expr_stmt|;
 block|}
 annotation|@
@@ -494,8 +508,6 @@ operator|=
 name|doKerberosAuth
 argument_list|(
 name|request
-argument_list|,
-name|serviceUGI
 argument_list|)
 expr_stmt|;
 block|}
@@ -544,7 +556,6 @@ name|HttpAuthenticationException
 name|e
 parameter_list|)
 block|{
-comment|// Send a 403 to the client
 name|LOG
 operator|.
 name|error
@@ -554,23 +565,38 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-name|response
-operator|.
-name|setContentType
-argument_list|(
-literal|"application/x-thrift"
-argument_list|)
-expr_stmt|;
+comment|// Send a 401 to the client
 name|response
 operator|.
 name|setStatus
 argument_list|(
 name|HttpServletResponse
 operator|.
-name|SC_FORBIDDEN
+name|SC_UNAUTHORIZED
 argument_list|)
 expr_stmt|;
-comment|// Send the response back to the client
+if|if
+condition|(
+name|isKerberosAuthMode
+argument_list|(
+name|authType
+argument_list|)
+condition|)
+block|{
+name|response
+operator|.
+name|addHeader
+argument_list|(
+name|HttpAuthUtils
+operator|.
+name|WWW_AUTHENTICATE
+argument_list|,
+name|HttpAuthUtils
+operator|.
+name|NEGOTIATE
+argument_list|)
+expr_stmt|;
+block|}
 name|response
 operator|.
 name|getWriter
@@ -696,20 +722,60 @@ return|return
 name|userName
 return|;
 block|}
-comment|/**    * Do the GSS-API kerberos authentication.    * We already have a logged in subject in the form of serviceUGI,    * which GSS-API will extract information from.    * @param request    * @return    * @throws HttpAuthenticationException    */
+comment|/**    * Do the GSS-API kerberos authentication.    * We already have a logged in subject in the form of serviceUGI,    * which GSS-API will extract information from.    * In case of a SPNego request we use the httpUGI,    * for the authenticating service tickets.    * @param request    * @return    * @throws HttpAuthenticationException    */
 specifier|private
 name|String
 name|doKerberosAuth
 parameter_list|(
 name|HttpServletRequest
 name|request
-parameter_list|,
-name|UserGroupInformation
-name|serviceUGI
 parameter_list|)
 throws|throws
 name|HttpAuthenticationException
 block|{
+comment|// Try authenticating with the http/_HOST principal
+if|if
+condition|(
+name|httpUGI
+operator|!=
+literal|null
+condition|)
+block|{
+try|try
+block|{
+return|return
+name|httpUGI
+operator|.
+name|doAs
+argument_list|(
+operator|new
+name|HttpKerberosServerAction
+argument_list|(
+name|request
+argument_list|,
+name|httpUGI
+argument_list|)
+argument_list|)
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Failed to authenticate with http/_HOST kerberos principal, "
+operator|+
+literal|"trying with hive/_HOST kerberos principal"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|// Now try with hive/_HOST principal
 try|try
 block|{
 return|return
@@ -733,6 +799,13 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed to authenticate with hive/_HOST kerberos principal"
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|HttpAuthenticationException
@@ -816,12 +889,22 @@ try|try
 block|{
 comment|// This Oid for Kerberos GSS-API mechanism.
 name|Oid
-name|mechOid
+name|kerberosMechOid
 init|=
 operator|new
 name|Oid
 argument_list|(
 literal|"1.2.840.113554.1.2.2"
+argument_list|)
+decl_stmt|;
+comment|// Oid for SPNego GSS-API mechanism.
+name|Oid
+name|spnegoMechOid
+init|=
+operator|new
+name|Oid
+argument_list|(
+literal|"1.3.6.1.5.5.2"
 argument_list|)
 decl_stmt|;
 comment|// Oid for kerberos principal name
@@ -861,7 +944,14 @@ name|GSSCredential
 operator|.
 name|DEFAULT_LIFETIME
 argument_list|,
-name|mechOid
+operator|new
+name|Oid
+index|[]
+block|{
+name|kerberosMechOid
+block|,
+name|spnegoMechOid
+block|}
 argument_list|,
 name|GSSCredential
 operator|.

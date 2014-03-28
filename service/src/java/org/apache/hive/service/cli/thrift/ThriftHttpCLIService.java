@@ -492,12 +492,22 @@ name|HIVE_SERVER2_AUTHENTICATION
 argument_list|)
 decl_stmt|;
 comment|// Set during the init phase of HiveServer2 if auth mode is kerberos
+comment|// UGI for the hive/_HOST (kerberos) principal
 name|UserGroupInformation
 name|serviceUGI
 init|=
 name|cliService
 operator|.
 name|getServiceUGI
+argument_list|()
+decl_stmt|;
+comment|// UGI for the http/_HOST (SPNego) principal
+name|UserGroupInformation
+name|httpUGI
+init|=
+name|cliService
+operator|.
+name|getHttpUGI
 argument_list|()
 decl_stmt|;
 if|if
@@ -659,6 +669,8 @@ argument_list|,
 name|authType
 argument_list|,
 name|serviceUGI
+argument_list|,
+name|httpUGI
 argument_list|)
 decl_stmt|;
 specifier|final
