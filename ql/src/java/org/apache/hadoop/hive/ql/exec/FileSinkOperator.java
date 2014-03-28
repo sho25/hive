@@ -1783,6 +1783,12 @@ operator|.
 name|getLbCtx
 argument_list|()
 expr_stmt|;
+name|fsp
+operator|=
+name|prevFsp
+operator|=
+literal|null
+expr_stmt|;
 name|valToPaths
 operator|=
 operator|new
@@ -4952,6 +4958,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|fsp
+operator|=
+name|prevFsp
+operator|=
+literal|null
+expr_stmt|;
 block|}
 comment|/**    * @return the name of the operator    */
 annotation|@
