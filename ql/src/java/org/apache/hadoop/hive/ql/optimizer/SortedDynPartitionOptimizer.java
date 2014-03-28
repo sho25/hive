@@ -757,6 +757,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|ListBucketingCtx
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|OperatorDesc
 import|;
 end_import
@@ -1094,6 +1112,13 @@ name|FileSinkOperator
 operator|)
 name|nd
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sorted dynamic partitioning optimization kicked in.."
+argument_list|)
+expr_stmt|;
 comment|// if not dynamic partitioning then bail out
 if|if
 condition|(
@@ -1112,7 +1137,55 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Bailing out of sort dynamic partition optimization as dpCtx is null"
+literal|"Bailing out of sort dynamic partition optimization as dynamic partitioning context is null"
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
+comment|// if list bucketing then bail out
+name|ListBucketingCtx
+name|lbCtx
+init|=
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getLbCtx
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|lbCtx
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|lbCtx
+operator|.
+name|getSkewedColNames
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
+operator|!
+name|lbCtx
+operator|.
+name|getSkewedColValues
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Bailing out of sort dynamic partition optimization as list bucketing is enabled"
 argument_list|)
 expr_stmt|;
 return|return
