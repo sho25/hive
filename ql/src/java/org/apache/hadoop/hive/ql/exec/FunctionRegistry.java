@@ -5029,6 +5029,9 @@ argument_list|()
 operator|.
 name|getCurrentDatabase
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 expr_stmt|;
 name|fName
 operator|=
@@ -5631,6 +5634,9 @@ name|get
 argument_list|()
 operator|.
 name|getCurrentDatabase
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|)
 decl_stmt|;
