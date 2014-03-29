@@ -339,6 +339,30 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_CHECK_CROSS_PRODUCT
+argument_list|)
+condition|)
+block|{
+name|resolvers
+operator|.
+name|add
+argument_list|(
+operator|new
+name|CrossProductCheck
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Vectorization should be the last optimization, because it doesn't modify the plan
 comment|// or any operators. It makes a very low level transformation to the expressions to
 comment|// run in the vectorized mode.

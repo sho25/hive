@@ -4550,7 +4550,16 @@ literal|"hive.convert.join.bucket.mapjoin.tez"
 argument_list|,
 literal|false
 argument_list|)
-block|;
+block|,
+comment|// Check if a plan contains a Cross Product.
+comment|// If there is one, output a warning to the Session's console.
+name|HIVE_CHECK_CROSS_PRODUCT
+argument_list|(
+literal|"hive.exec.check.crossproducts"
+argument_list|,
+literal|true
+argument_list|)
+block|,     ;
 specifier|public
 specifier|final
 name|String
