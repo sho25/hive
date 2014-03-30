@@ -1227,7 +1227,7 @@ block|{
 name|String
 name|_elem356
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem356
 operator|=
 name|iprot
@@ -1348,7 +1348,7 @@ block|{
 name|DropPartitionsExpr
 name|_elem359
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem359
 operator|=
 operator|new
@@ -1725,7 +1725,7 @@ block|{
 name|String
 name|_elem364
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem364
 operator|=
 name|iprot
@@ -1809,7 +1809,7 @@ block|{
 name|DropPartitionsExpr
 name|_elem367
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem367
 operator|=
 operator|new

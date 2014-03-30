@@ -101,6 +101,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|HeartbeatTxnRangeResponse
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|LockRequest
 import|;
 end_import
@@ -3071,6 +3089,20 @@ name|NoSuchTxnException
 throws|,
 name|TxnAbortedException
 throws|,
+name|TException
+function_decl|;
+comment|/**    * Send heartbeats for a range of transactions.  This is for the streaming ingest client that    * will have many transactions open at once.  Everyone else should use    * {@link #heartbeat(long, long)}.    * @param min minimum transaction id to heartbeat, inclusive    * @param max maximum transaction id to heartbeat, inclusive    * @return a pair of lists that tell which transactions in the list did not exist (they may    * have already been closed) and which were aborted.    * @throws TException    */
+specifier|public
+name|HeartbeatTxnRangeResponse
+name|heartbeatTxnRange
+parameter_list|(
+name|long
+name|min
+parameter_list|,
+name|long
+name|max
+parameter_list|)
+throws|throws
 name|TException
 function_decl|;
 comment|/**    * Send a request to compact a table or partition.  This will not block until the compaction is    * complete.  It will instead put a request on the queue for that table or partition to be    * compacted.  No checking is done on the dbname, tableName, or partitionName to make sure they    * refer to valid objects.  It is assumed this has already been done by the caller.    * @param dbname Name of the database the table is in.  If null, this will be assumed to be    *               'default'.    * @param tableName Name of the table to be compacted.  This cannot be null.  If partitionName    *                  is null, this must be a non-partitioned table.    * @param partitionName Name of the partition to be compacted    * @param type Whether this is a major or minor compaction.    * @throws TException    */
