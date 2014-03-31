@@ -51932,8 +51932,6 @@ operator|+
 name|part_col
 argument_list|)
 expr_stmt|;
-comment|// TODO: use the right type by calling part_col.getType() instead of
-comment|// String.class. See HIVE-3059.
 name|rwsch
 operator|.
 name|put
@@ -51955,7 +51953,13 @@ argument_list|()
 argument_list|,
 name|TypeInfoFactory
 operator|.
-name|stringTypeInfo
+name|getPrimitiveTypeInfo
+argument_list|(
+name|part_col
+operator|.
+name|getType
+argument_list|()
+argument_list|)
 argument_list|,
 name|alias
 argument_list|,

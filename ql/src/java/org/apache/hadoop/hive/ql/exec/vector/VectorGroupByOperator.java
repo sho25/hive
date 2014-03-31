@@ -1083,7 +1083,7 @@ name|numRowsCompareHashAggr
 operator|=
 name|HiveConf
 operator|.
-name|getLongVar
+name|getIntVar
 argument_list|(
 name|hconf
 argument_list|,
