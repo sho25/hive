@@ -2417,13 +2417,6 @@ operator|.
 name|interrupt
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
-name|cliThread
-operator|.
-name|interrupt
-argument_list|()
-expr_stmt|;
 block|}
 block|}
 argument_list|)
