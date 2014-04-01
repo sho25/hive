@@ -4120,7 +4120,7 @@ index|]
 operator|=
 operator|(
 name|i
-operator|>
+operator|>=
 name|stripeStats
 operator|.
 name|size
