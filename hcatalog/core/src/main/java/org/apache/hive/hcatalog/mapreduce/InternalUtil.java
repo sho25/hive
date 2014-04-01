@@ -865,9 +865,6 @@ operator|.
 name|getPrimitiveJavaObjectInspector
 argument_list|(
 name|primitiveType
-operator|.
-name|getPrimitiveCategory
-argument_list|()
 argument_list|)
 return|;
 case|case
