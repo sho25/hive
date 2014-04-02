@@ -675,6 +675,11 @@ specifier|final
 name|HiveConf
 name|conf
 decl_stmt|;
+specifier|public
+specifier|static
+name|String
+name|dataFileDir
+decl_stmt|;
 specifier|private
 specifier|final
 name|Path
@@ -718,9 +723,8 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-name|String
 name|dataFileDir
-init|=
+operator|=
 name|conf
 operator|.
 name|get
@@ -741,7 +745,7 @@ literal|"c:"
 argument_list|,
 literal|""
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|dataFilePath
 operator|=
 operator|new
@@ -12313,6 +12317,153 @@ return|return
 name|value
 return|;
 block|}
+block|}
+comment|/**    * Loads data from a table containing non-ascii value column    * Runs a query and compares the return value    * @throws Exception    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testNonAsciiReturnValues
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|nonAsciiTableName
+init|=
+literal|"nonAsciiTable"
+decl_stmt|;
+name|String
+name|nonAsciiString
+init|=
+literal|"Garçu Kôkaku kidôtai"
+decl_stmt|;
+name|Path
+name|nonAsciiFilePath
+init|=
+operator|new
+name|Path
+argument_list|(
+name|dataFileDir
+argument_list|,
+literal|"non_ascii_tbl.txt"
+argument_list|)
+decl_stmt|;
+name|Statement
+name|stmt
+init|=
+name|con
+operator|.
+name|createStatement
+argument_list|()
+decl_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
+comment|// Create table
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"create table "
+operator|+
+name|nonAsciiTableName
+operator|+
+literal|" (key int, value string) "
+operator|+
+literal|"row format delimited fields terminated by '|'"
+argument_list|)
+expr_stmt|;
+comment|// Load data
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"load data local inpath '"
+operator|+
+name|nonAsciiFilePath
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|"' into table "
+operator|+
+name|nonAsciiTableName
+argument_list|)
+expr_stmt|;
+name|ResultSet
+name|rs
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"select value from "
+operator|+
+name|nonAsciiTableName
+operator|+
+literal|" limit 1"
+argument_list|)
+decl_stmt|;
+while|while
+condition|(
+name|rs
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+name|String
+name|resultValue
+init|=
+name|rs
+operator|.
+name|getString
+argument_list|(
+literal|1
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|resultValue
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|nonAsciiString
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Drop table, ignore error.
+try|try
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"drop table "
+operator|+
+name|nonAsciiTableName
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+comment|// no-op
+block|}
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 end_class
