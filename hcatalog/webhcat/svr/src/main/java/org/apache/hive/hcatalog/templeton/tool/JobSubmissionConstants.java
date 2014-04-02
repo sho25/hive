@@ -139,6 +139,14 @@ name|TOKEN_FILE_ARG_PLACEHOLDER
 init|=
 literal|"__MR_JOB_CREDENTIALS_OPTION=WEBHCAT_TOKEN_FILE_LOCATION__"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TOKEN_FILE_ARG_PLACEHOLDER_TEZ
+init|=
+literal|"__TEZ_CREDENTIALS_OPTION=WEBHCAT_TOKEN_FILE_LOCATION_TEZ__"
+decl_stmt|;
 comment|/**    * constants needed for Pig job submission    */
 specifier|public
 specifier|static
