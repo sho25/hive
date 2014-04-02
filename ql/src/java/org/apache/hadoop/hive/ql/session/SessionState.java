@@ -1829,7 +1829,7 @@ name|ConfVars
 operator|.
 name|HIVE_AUTHORIZATION_TABLE_OWNER_GRANTS
 argument_list|,
-literal|"insert,select,update,delete"
+literal|"INSERT,SELECT,UPDATE,DELETE"
 argument_list|)
 expr_stmt|;
 name|String
