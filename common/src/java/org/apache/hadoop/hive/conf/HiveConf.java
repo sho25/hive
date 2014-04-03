@@ -2743,7 +2743,7 @@ name|HIVECONVERTJOINUSENONSTAGED
 argument_list|(
 literal|"hive.auto.convert.join.use.nonstaged"
 argument_list|,
-literal|true
+literal|false
 argument_list|)
 block|,
 name|HIVESKEWJOINKEY
