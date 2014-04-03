@@ -2748,7 +2748,7 @@ specifier|final
 name|String
 name|ADMIN
 init|=
-literal|"ADMIN"
+literal|"admin"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -2756,7 +2756,7 @@ specifier|final
 name|String
 name|PUBLIC
 init|=
-literal|"PUBLIC"
+literal|"public"
 decl_stmt|;
 specifier|private
 specifier|static

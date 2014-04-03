@@ -3745,9 +3745,6 @@ block|{
 name|ResultSet
 name|rs
 init|=
-operator|(
-name|ResultSet
-operator|)
 name|con
 operator|.
 name|getMetaData
@@ -3900,9 +3897,6 @@ comment|// only ask for the views.
 name|ResultSet
 name|rs
 init|=
-operator|(
-name|ResultSet
-operator|)
 name|con
 operator|.
 name|getMetaData
@@ -3966,9 +3960,6 @@ block|{
 name|ResultSet
 name|rs
 init|=
-operator|(
-name|ResultSet
-operator|)
 name|con
 operator|.
 name|getMetaData
@@ -4067,9 +4058,6 @@ block|{
 name|ResultSet
 name|rs
 init|=
-operator|(
-name|ResultSet
-operator|)
 name|con
 operator|.
 name|getMetaData
@@ -4120,9 +4108,6 @@ block|{
 name|ResultSet
 name|rs
 init|=
-operator|(
-name|ResultSet
-operator|)
 name|con
 operator|.
 name|getMetaData
@@ -4640,9 +4625,6 @@ block|{
 name|ResultSet
 name|rs
 init|=
-operator|(
-name|ResultSet
-operator|)
 name|con
 operator|.
 name|getMetaData
@@ -4791,6 +4773,8 @@ name|cnt
 init|=
 literal|1
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|next
@@ -8153,7 +8137,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"PUBLIC"
+literal|"public"
 argument_list|,
 name|res
 operator|.

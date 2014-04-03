@@ -12028,7 +12028,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"PUBLIC"
+literal|"public"
 argument_list|,
 name|res
 operator|.

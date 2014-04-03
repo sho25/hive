@@ -1655,7 +1655,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|TException
 name|e
 parameter_list|)
 block|{
@@ -1663,7 +1663,12 @@ throw|throw
 operator|new
 name|HiveAuthzPluginException
 argument_list|(
-literal|"Error create role"
+literal|"Error create role : "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
