@@ -2902,6 +2902,13 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|HIVETEZLOGLEVEL
+argument_list|(
+literal|"hive.tez.log.level"
+argument_list|,
+literal|"INFO"
+argument_list|)
+block|,
 name|HIVEENFORCEBUCKETING
 argument_list|(
 literal|"hive.enforce.bucketing"
