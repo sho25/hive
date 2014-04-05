@@ -11405,8 +11405,8 @@ comment|//it is assumed that parent directory of the destf should already exist 
 comment|//method is called. when the replace value is true, this method works a little different
 comment|//from mv command if the destf is a directory, it replaces the destf instead of moving under
 comment|//the destf. in this case, the replaced destf still preserves the original destf's permission
+specifier|public
 specifier|static
-specifier|protected
 name|boolean
 name|renameFile
 parameter_list|(
