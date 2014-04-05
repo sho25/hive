@@ -1260,7 +1260,9 @@ operator|new
 name|HiveOperation
 index|[]
 block|{
-literal|null
+name|HiveOperation
+operator|.
+name|ALTERTABLE_COMPACT
 block|,
 name|HiveOperation
 operator|.
