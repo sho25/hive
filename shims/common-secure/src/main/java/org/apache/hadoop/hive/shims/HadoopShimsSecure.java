@@ -2847,6 +2847,13 @@ name|IOException
 block|{
 name|ProxyUsers
 operator|.
+name|refreshSuperUserGroupsConfiguration
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+name|ProxyUsers
+operator|.
 name|authorize
 argument_list|(
 name|UserGroupInformation
