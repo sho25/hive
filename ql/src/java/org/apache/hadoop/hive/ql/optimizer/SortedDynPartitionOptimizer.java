@@ -1192,6 +1192,37 @@ return|return
 literal|null
 return|;
 block|}
+name|Table
+name|destTable
+init|=
+name|parseCtx
+operator|.
+name|getFsopToTable
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|fsOp
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|destTable
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Bailing out of sort dynamic partition optimization as destination table is null"
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
 comment|// if RS is inserted by enforce bucketing or sorting, we need to remove it
 comment|// since ReduceSinkDeDuplication will not merge them to single RS.
 comment|// RS inserted by enforce bucketing/sorting will have bucketing column in
@@ -1243,37 +1274,6 @@ operator|.
 name|getDynPartCtx
 argument_list|()
 decl_stmt|;
-name|Table
-name|destTable
-init|=
-name|parseCtx
-operator|.
-name|getFsopToTable
-argument_list|()
-operator|.
-name|get
-argument_list|(
-name|fsOp
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|destTable
-operator|==
-literal|null
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Bailing out of sort dynamic partition optimization as destination table is null"
-argument_list|)
-expr_stmt|;
-return|return
-literal|null
-return|;
-block|}
 name|int
 name|numBuckets
 init|=
