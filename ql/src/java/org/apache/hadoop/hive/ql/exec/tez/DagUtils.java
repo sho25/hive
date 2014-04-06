@@ -1517,6 +1517,24 @@ name|OnFileUnorderedKVOutput
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|runtime
+operator|.
+name|library
+operator|.
+name|output
+operator|.
+name|OnFileUnorderedPartitionedKVOutput
+import|;
+end_import
+
 begin_comment
 comment|/**  * DagUtils. DagUtils is a collection of helper methods to convert  * map and reduce work to tez vertices and edges. It handles configuration  * objects, file localization and vertex/edge creation.  */
 end_comment
@@ -2432,7 +2450,7 @@ name|CUSTOM
 expr_stmt|;
 name|logicalOutputClass
 operator|=
-name|OnFileSortedOutput
+name|OnFileUnorderedPartitionedKVOutput
 operator|.
 name|class
 expr_stmt|;
@@ -2546,7 +2564,7 @@ name|SCATTER_GATHER
 expr_stmt|;
 name|logicalOutputClass
 operator|=
-name|OnFileSortedOutput
+name|OnFileUnorderedPartitionedKVOutput
 operator|.
 name|class
 expr_stmt|;
