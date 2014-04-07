@@ -512,6 +512,9 @@ block|{
 name|String
 name|clientUserName
 decl_stmt|;
+name|String
+name|clientIpAddress
+decl_stmt|;
 try|try
 block|{
 comment|// For a kerberos setup
@@ -571,7 +574,7 @@ expr_stmt|;
 block|}
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Client username: "
 operator|+
@@ -584,6 +587,30 @@ operator|.
 name|setUserName
 argument_list|(
 name|clientUserName
+argument_list|)
+expr_stmt|;
+name|clientIpAddress
+operator|=
+name|request
+operator|.
+name|getRemoteAddr
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Client IP Address: "
+operator|+
+name|clientIpAddress
+argument_list|)
+expr_stmt|;
+comment|// Set the thread local ip address
+name|SessionManager
+operator|.
+name|setIpAddress
+argument_list|(
+name|clientIpAddress
 argument_list|)
 expr_stmt|;
 name|super
@@ -661,10 +688,15 @@ expr_stmt|;
 block|}
 finally|finally
 block|{
-comment|// Clear the thread local username since we set it in each http request
+comment|// Clear the thread locals
 name|SessionManager
 operator|.
 name|clearUserName
+argument_list|()
+expr_stmt|;
+name|SessionManager
+operator|.
+name|clearIpAddress
 argument_list|()
 expr_stmt|;
 name|SessionManager

@@ -1078,7 +1078,7 @@ operator|.
 name|getRemoteAddress
 argument_list|()
 operator|.
-name|toString
+name|getHostAddress
 argument_list|()
 return|;
 block|}
