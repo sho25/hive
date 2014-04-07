@@ -941,7 +941,7 @@ operator|=
 name|pathToPartitionInfo
 expr_stmt|;
 block|}
-comment|/**    * Derive additional attributes to be rendered by EXPLAIN.    */
+comment|/**    * Derive additional attributes to be rendered by EXPLAIN.    * TODO: this method is relied upon by custom input formats to set jobconf properties.    *       This is madness? - This is Hive Storage Handlers!    */
 specifier|public
 name|void
 name|deriveExplainAttributes
@@ -2341,6 +2341,8 @@ else|:
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|configureJobConf

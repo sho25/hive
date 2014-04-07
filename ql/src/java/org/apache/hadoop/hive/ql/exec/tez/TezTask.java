@@ -77,6 +77,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedList
 import|;
 end_import
@@ -825,8 +835,7 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-comment|// Get or create Context object. If we create it we have to clean
-comment|// it later as well.
+comment|// Get or create Context object. If we create it we have to clean it later as well.
 name|ctx
 operator|=
 name|driverContext
@@ -854,8 +863,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-comment|// Need to remove this static hack. But this is the way currently to
-comment|// get a session.
+comment|// Need to remove this static hack. But this is the way currently to get a session.
 name|SessionState
 name|ss
 init|=
@@ -883,6 +891,8 @@ argument_list|(
 name|session
 argument_list|,
 name|conf
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|ss
@@ -892,7 +902,175 @@ argument_list|(
 name|session
 argument_list|)
 expr_stmt|;
-comment|// if it's not running start it.
+comment|// jobConf will hold all the configuration for hadoop, tez, and hive
+name|JobConf
+name|jobConf
+init|=
+name|utils
+operator|.
+name|createConfiguration
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+comment|// Get all user jars from work (e.g. input format stuff).
+name|String
+index|[]
+name|inputOutputJars
+init|=
+name|work
+operator|.
+name|configureJobConfAndExtractJars
+argument_list|(
+name|jobConf
+argument_list|)
+decl_stmt|;
+comment|// we will localize all the files (jars, plans, hashtables) to the
+comment|// scratch dir. let's create this and tmp first.
+name|Path
+name|scratchDir
+init|=
+name|ctx
+operator|.
+name|getMRScratchDir
+argument_list|()
+decl_stmt|;
+name|utils
+operator|.
+name|createTezDir
+argument_list|(
+name|scratchDir
+argument_list|,
+name|conf
+argument_list|)
+expr_stmt|;
+comment|// we need to get the user specified local resources for this dag
+name|String
+name|hiveJarDir
+init|=
+name|utils
+operator|.
+name|getHiveJarDirectory
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|LocalResource
+argument_list|>
+name|additionalLr
+init|=
+name|utils
+operator|.
+name|localizeTempFilesFromConf
+argument_list|(
+name|hiveJarDir
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|LocalResource
+argument_list|>
+name|handlerLr
+init|=
+name|utils
+operator|.
+name|localizeTempFiles
+argument_list|(
+name|hiveJarDir
+argument_list|,
+name|conf
+argument_list|,
+name|inputOutputJars
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|handlerLr
+operator|!=
+literal|null
+condition|)
+block|{
+name|additionalLr
+operator|.
+name|addAll
+argument_list|(
+name|handlerLr
+argument_list|)
+expr_stmt|;
+block|}
+comment|// If we have any jars from input format, we need to restart the session because
+comment|// AM will need them; so, AM has to be restarted. What a mess...
+if|if
+condition|(
+operator|!
+name|session
+operator|.
+name|hasResources
+argument_list|(
+name|handlerLr
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
+name|session
+operator|.
+name|isOpen
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Tez session being reopened to pass custom jars to AM"
+argument_list|)
+expr_stmt|;
+name|session
+operator|.
+name|close
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|session
+operator|=
+name|TezSessionPoolManager
+operator|.
+name|getInstance
+argument_list|()
+operator|.
+name|getSession
+argument_list|(
+literal|null
+argument_list|,
+name|conf
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|ss
+operator|.
+name|setTezSession
+argument_list|(
+name|session
+argument_list|)
+expr_stmt|;
+block|}
+name|session
+operator|.
+name|open
+argument_list|(
+name|conf
+argument_list|,
+name|additionalLr
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -915,46 +1093,10 @@ name|session
 operator|.
 name|open
 argument_list|(
-name|session
-operator|.
-name|getSessionId
-argument_list|()
-argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
 block|}
-comment|// we will localize all the files (jars, plans, hashtables) to the
-comment|// scratch dir. let's create this first.
-name|Path
-name|scratchDir
-init|=
-name|ctx
-operator|.
-name|getMRScratchDir
-argument_list|()
-decl_stmt|;
-comment|// create the tez tmp dir
-name|utils
-operator|.
-name|createTezDir
-argument_list|(
-name|scratchDir
-argument_list|,
-name|conf
-argument_list|)
-expr_stmt|;
-comment|// jobConf will hold all the configuration for hadoop, tez, and hive
-name|JobConf
-name|jobConf
-init|=
-name|utils
-operator|.
-name|createConfiguration
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
 comment|// unless already installed on all the cluster nodes, we'll have to
 comment|// localize hive-exec.jar as well.
 name|LocalResource
@@ -978,6 +1120,8 @@ argument_list|,
 name|scratchDir
 argument_list|,
 name|appJarLr
+argument_list|,
+name|additionalLr
 argument_list|,
 name|ctx
 argument_list|)
@@ -1213,6 +1357,12 @@ parameter_list|,
 name|LocalResource
 name|appJarLr
 parameter_list|,
+name|List
+argument_list|<
+name|LocalResource
+argument_list|>
+name|additionalLr
+parameter_list|,
 name|Context
 name|ctx
 parameter_list|)
@@ -1263,20 +1413,6 @@ argument_list|,
 name|JobConf
 argument_list|>
 argument_list|()
-decl_stmt|;
-comment|// we need to get the user specified local resources for this dag
-name|List
-argument_list|<
-name|LocalResource
-argument_list|>
-name|additionalLr
-init|=
-name|utils
-operator|.
-name|localizeTempFiles
-argument_list|(
-name|conf
-argument_list|)
 decl_stmt|;
 comment|// getAllWork returns a topologically sorted list, which we use to make
 comment|// sure that vertices are created before they are used in edges.
@@ -1884,11 +2020,6 @@ name|sessionState
 operator|.
 name|open
 argument_list|(
-name|sessionState
-operator|.
-name|getSessionId
-argument_list|()
-argument_list|,
 name|this
 operator|.
 name|conf

@@ -133,12 +133,17 @@ name|Override
 specifier|public
 name|TezSessionState
 name|createSession
-parameter_list|()
+parameter_list|(
+name|String
+name|sessionId
+parameter_list|)
 block|{
 return|return
 operator|new
 name|TestTezSessionState
-argument_list|()
+argument_list|(
+name|sessionId
+argument_list|)
 return|;
 block|}
 block|}
@@ -181,6 +186,8 @@ argument_list|(
 literal|null
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|TezSessionState
@@ -193,6 +200,8 @@ argument_list|(
 name|sessionState
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 if|if
@@ -299,6 +308,8 @@ argument_list|(
 literal|null
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 if|if
@@ -336,6 +347,8 @@ argument_list|(
 literal|null
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 if|if
@@ -373,6 +386,8 @@ argument_list|(
 literal|null
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 if|if
@@ -410,6 +425,8 @@ argument_list|(
 literal|null
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 if|if
@@ -521,6 +538,8 @@ argument_list|(
 literal|null
 argument_list|,
 name|tmpConf
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|Thread

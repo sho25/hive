@@ -273,11 +273,6 @@ name|sessionState
 operator|.
 name|open
 argument_list|(
-name|TezSessionState
-operator|.
-name|makeSessionId
-argument_list|()
-argument_list|,
 name|newConf
 argument_list|)
 expr_stmt|;
@@ -407,7 +402,12 @@ name|TezSessionState
 name|sessionState
 init|=
 name|createSession
+argument_list|(
+name|TezSessionState
+operator|.
+name|makeSessionId
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|sessionState
 operator|.
@@ -456,6 +456,9 @@ name|getSession
 parameter_list|(
 name|HiveConf
 name|conf
+parameter_list|,
+name|boolean
+name|doOpen
 parameter_list|)
 throws|throws
 name|Exception
@@ -554,6 +557,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|queueName
+argument_list|,
+name|doOpen
 argument_list|)
 return|;
 block|}
@@ -571,7 +576,7 @@ name|take
 argument_list|()
 return|;
 block|}
-comment|/**    * @param conf HiveConf that is used to initialize the session    * @param queueName could be null. Set in the tez session.    * @return    * @throws Exception    */
+comment|/**    * @param conf HiveConf that is used to initialize the session    * @param queueName could be null. Set in the tez session.    * @param doOpen    * @return    * @throws Exception    */
 specifier|private
 name|TezSessionState
 name|getNewSessionState
@@ -581,6 +586,9 @@ name|conf
 parameter_list|,
 name|String
 name|queueName
+parameter_list|,
+name|boolean
+name|doOpen
 parameter_list|)
 throws|throws
 name|Exception
@@ -589,7 +597,12 @@ name|TezSessionState
 name|retTezSessionState
 init|=
 name|createSession
+argument_list|(
+name|TezSessionState
+operator|.
+name|makeSessionId
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|retTezSessionState
 operator|.
@@ -598,23 +611,35 @@ argument_list|(
 name|queueName
 argument_list|)
 expr_stmt|;
+name|String
+name|what
+init|=
+literal|"Created"
+decl_stmt|;
+if|if
+condition|(
+name|doOpen
+condition|)
+block|{
 name|retTezSessionState
 operator|.
 name|open
 argument_list|(
-name|TezSessionState
-operator|.
-name|makeSessionId
-argument_list|()
-argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
+name|what
+operator|=
+literal|"Started"
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Started a new session for queue: "
+name|what
+operator|+
+literal|" a new session for queue: "
 operator|+
 name|queueName
 operator|+
@@ -795,12 +820,17 @@ block|}
 specifier|protected
 name|TezSessionState
 name|createSession
-parameter_list|()
+parameter_list|(
+name|String
+name|sessionId
+parameter_list|)
 block|{
 return|return
 operator|new
 name|TezSessionState
-argument_list|()
+argument_list|(
+name|sessionId
+argument_list|)
 return|;
 block|}
 specifier|public
@@ -812,6 +842,9 @@ name|session
 parameter_list|,
 name|HiveConf
 name|conf
+parameter_list|,
+name|boolean
+name|doOpen
 parameter_list|)
 throws|throws
 name|Exception
@@ -849,6 +882,8 @@ return|return
 name|getSession
 argument_list|(
 name|conf
+argument_list|,
+name|doOpen
 argument_list|)
 return|;
 block|}

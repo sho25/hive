@@ -193,6 +193,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -1544,6 +1554,8 @@ name|path
 argument_list|,
 name|appLr
 argument_list|,
+literal|null
+argument_list|,
 operator|new
 name|Context
 argument_list|(
@@ -1680,6 +1692,8 @@ name|path
 argument_list|,
 name|appLr
 argument_list|,
+literal|null
+argument_list|,
 operator|new
 name|Context
 argument_list|(
@@ -1759,13 +1773,6 @@ argument_list|)
 operator|.
 name|open
 argument_list|(
-name|any
-argument_list|(
-name|String
-operator|.
-name|class
-argument_list|)
-argument_list|,
 name|any
 argument_list|(
 name|HiveConf

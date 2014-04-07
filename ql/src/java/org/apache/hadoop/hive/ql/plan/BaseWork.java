@@ -125,6 +125,20 @@ name|Operator
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobConf
+import|;
+end_import
+
 begin_comment
 comment|/**  * BaseWork. Base class for any "work" that's being done on the cluster. Items like stats  * gathering that are commonly used regarless of the type of work live here.  */
 end_comment
@@ -448,6 +462,15 @@ return|return
 name|returnSet
 return|;
 block|}
+specifier|public
+specifier|abstract
+name|void
+name|configureJobConf
+parameter_list|(
+name|JobConf
+name|job
+parameter_list|)
+function_decl|;
 block|}
 end_class
 
