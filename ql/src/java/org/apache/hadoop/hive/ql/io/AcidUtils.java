@@ -1444,11 +1444,6 @@ name|FileStatus
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|Path
-name|ignoredBase
-init|=
-literal|null
-decl_stmt|;
 name|List
 argument_list|<
 name|FileStatus
@@ -1515,31 +1510,6 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|txnList
-operator|.
-name|isTxnRangeCommitted
-argument_list|(
-literal|0
-argument_list|,
-name|txn
-argument_list|)
-operator|!=
-name|ValidTxnList
-operator|.
-name|RangeResponse
-operator|.
-name|ALL
-condition|)
-block|{
-name|ignoredBase
-operator|=
-name|p
-expr_stmt|;
-block|}
-else|else
-block|{
-if|if
-condition|(
 name|bestBase
 operator|==
 literal|null
@@ -1587,7 +1557,6 @@ argument_list|(
 name|child
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 elseif|else
@@ -1657,35 +1626,6 @@ name|original
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-comment|// Complain if all of the bases were too recent for the minimum excluded
-comment|// transaction.
-if|if
-condition|(
-name|bestBase
-operator|==
-literal|null
-operator|&&
-name|ignoredBase
-operator|!=
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|IllegalArgumentException
-argument_list|(
-literal|"All base directories were ignored,"
-operator|+
-literal|" such as "
-operator|+
-name|ignoredBase
-operator|+
-literal|" by "
-operator|+
-name|txnList
-argument_list|)
-throw|;
 block|}
 comment|// if we have a base, the original files are obsolete.
 if|if
