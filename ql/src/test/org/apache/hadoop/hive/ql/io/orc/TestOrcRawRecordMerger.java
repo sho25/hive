@@ -1193,9 +1193,6 @@ name|Mockito
 operator|.
 name|withSettings
 argument_list|()
-operator|.
-name|verboseLogging
-argument_list|()
 decl_stmt|;
 specifier|private
 name|Reader

@@ -1524,16 +1524,21 @@ argument_list|(
 name|path
 argument_list|)
 decl_stmt|;
-comment|//read last bytes into buffer to get PostScript
+comment|// figure out the size of the file using the option or filesystem
 name|long
 name|size
-init|=
-name|Math
-operator|.
-name|min
-argument_list|(
+decl_stmt|;
+if|if
+condition|(
 name|maxFileLength
-argument_list|,
+operator|==
+name|Long
+operator|.
+name|MAX_VALUE
+condition|)
+block|{
+name|size
+operator|=
 name|fs
 operator|.
 name|getFileStatus
@@ -1543,8 +1548,16 @@ argument_list|)
 operator|.
 name|getLen
 argument_list|()
-argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+else|else
+block|{
+name|size
+operator|=
+name|maxFileLength
+expr_stmt|;
+block|}
+comment|//read last bytes into buffer to get PostScript
 name|int
 name|readSize
 init|=
