@@ -17237,6 +17237,16 @@ argument_list|(
 name|terminator
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|rsp
+operator|.
+name|getCompacts
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|ShowCompactResponseElement
@@ -17397,6 +17407,7 @@ argument_list|(
 name|terminator
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|os
 operator|.
