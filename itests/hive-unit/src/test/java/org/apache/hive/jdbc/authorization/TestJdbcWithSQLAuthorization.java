@@ -597,6 +597,99 @@ literal|"bar"
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testAllowedCommands
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// using different code blocks so that jdbc variables are not accidently re-used
+comment|// between the actions. Different connection/statement object should be used for each action.
+block|{
+comment|// create tables as user1
+name|Connection
+name|hs2Conn
+init|=
+name|getConnection
+argument_list|(
+literal|"user1"
+argument_list|)
+decl_stmt|;
+name|boolean
+name|caughtException
+init|=
+literal|false
+decl_stmt|;
+name|Statement
+name|stmt
+init|=
+name|hs2Conn
+operator|.
+name|createStatement
+argument_list|()
+decl_stmt|;
+comment|// create tables
+try|try
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"dfs -ls /tmp/"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|caughtException
+operator|=
+literal|true
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Checking error message content"
+argument_list|,
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"Insufficient privileges to execute"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+name|assertTrue
+argument_list|(
+literal|"Exception expected "
+argument_list|,
+name|caughtException
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 end_class
 

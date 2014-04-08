@@ -73,6 +73,22 @@ name|Evolving
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
 begin_comment
 comment|/**  * Convenience implementation of HiveAuthorizer.  * You can customize the behavior by passing different implementations of  * {@link HiveAccessController} and {@link HiveAuthorizationValidator} to constructor.  *  */
 end_comment
@@ -550,6 +566,24 @@ argument_list|(
 name|principal
 argument_list|)
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|applyAuthorizationConfigPolicy
+parameter_list|(
+name|HiveConf
+name|hiveConf
+parameter_list|)
+block|{
+name|accessController
+operator|.
+name|applyAuthorizationConfigPolicy
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

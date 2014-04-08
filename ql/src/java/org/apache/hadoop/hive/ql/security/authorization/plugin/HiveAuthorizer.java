@@ -83,6 +83,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|security
@@ -351,6 +367,7 @@ name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 function_decl|;
+comment|/**    * Set the current role to roleName argument    * @param roleName    * @throws HiveAccessControlException    * @throws HiveAuthzPluginException    */
 name|void
 name|setCurrentRole
 parameter_list|(
@@ -362,6 +379,7 @@ name|HiveAccessControlException
 throws|,
 name|HiveAuthzPluginException
 function_decl|;
+comment|/**    * @return List having names of current roles    * @throws HiveAuthzPluginException    */
 name|List
 argument_list|<
 name|String
@@ -370,6 +388,15 @@ name|getCurrentRoleNames
 parameter_list|()
 throws|throws
 name|HiveAuthzPluginException
+function_decl|;
+comment|/**    * Modify the given HiveConf object to configure authorization related parameters    * or other parameters related to hive security    * @param hiveConf    */
+specifier|public
+name|void
+name|applyAuthorizationConfigPolicy
+parameter_list|(
+name|HiveConf
+name|hiveConf
+parameter_list|)
 function_decl|;
 block|}
 end_interface

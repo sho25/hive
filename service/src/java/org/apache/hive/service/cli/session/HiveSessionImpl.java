@@ -777,7 +777,7 @@ control|)
 block|{
 name|hiveConf
 operator|.
-name|set
+name|verifyAndSet
 argument_list|(
 name|entry
 operator|.

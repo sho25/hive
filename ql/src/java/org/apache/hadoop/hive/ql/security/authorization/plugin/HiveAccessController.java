@@ -73,6 +73,22 @@ name|Evolving
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
 begin_comment
 comment|/**  * Interface that is invoked by access control commands, including grant/revoke role/privileges,  * create/drop roles, and commands to read the state of authorization rules.  * Methods here have corresponding methods in HiveAuthorizer, check method documentation there.  */
 end_comment
@@ -303,6 +319,13 @@ throws|throws
 name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
+function_decl|;
+name|void
+name|applyAuthorizationConfigPolicy
+parameter_list|(
+name|HiveConf
+name|hiveConf
+parameter_list|)
 function_decl|;
 block|}
 end_interface
