@@ -2933,6 +2933,15 @@ block|}
 comment|// Generate a split for any buckets that weren't covered.
 comment|// This happens in the case where a bucket just has deltas and no
 comment|// base.
+if|if
+condition|(
+operator|!
+name|deltas
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 for|for
 control|(
 name|int
@@ -2990,6 +2999,7 @@ name|deltas
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

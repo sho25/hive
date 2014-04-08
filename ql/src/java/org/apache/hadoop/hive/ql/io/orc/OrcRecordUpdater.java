@@ -1097,19 +1097,6 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Created "
-operator|+
-name|path
-operator|+
-literal|"/"
-operator|+
-name|ACID_FORMAT
-argument_list|)
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1117,7 +1104,32 @@ name|IOException
 name|ioe
 parameter_list|)
 block|{
-comment|// we just need one task to write this file
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Failed to create "
+operator|+
+name|path
+operator|+
+literal|"/"
+operator|+
+name|ACID_FORMAT
+operator|+
+literal|" with "
+operator|+
+name|ioe
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
