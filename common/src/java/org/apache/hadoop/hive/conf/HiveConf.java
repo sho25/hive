@@ -4727,7 +4727,22 @@ literal|"hive.exec.check.crossproducts"
 argument_list|,
 literal|true
 argument_list|)
-block|,      ;
+block|,
+name|HIVE_LOCALIZE_RESOURCE_WAIT_INTERVAL
+argument_list|(
+literal|"hive.localize.resource.wait.interval"
+argument_list|,
+literal|5000L
+argument_list|)
+block|,
+comment|// in ms
+name|HIVE_LOCALIZE_RESOURCE_NUM_WAIT_ATTEMPTS
+argument_list|(
+literal|"hive.localize.resource.num.wait.attempts"
+argument_list|,
+literal|5
+argument_list|)
+block|,     ;
 specifier|public
 specifier|final
 name|String

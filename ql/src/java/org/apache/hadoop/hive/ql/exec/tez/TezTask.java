@@ -935,6 +935,9 @@ operator|.
 name|getMRScratchDir
 argument_list|()
 decl_stmt|;
+comment|// create the tez tmp dir
+name|scratchDir
+operator|=
 name|utils
 operator|.
 name|createTezDir
@@ -1434,20 +1437,10 @@ argument_list|(
 name|ws
 argument_list|)
 expr_stmt|;
-name|Path
-name|tezDir
-init|=
-name|utils
-operator|.
-name|getTezDir
-argument_list|(
-name|scratchDir
-argument_list|)
-decl_stmt|;
 name|FileSystem
 name|fs
 init|=
-name|tezDir
+name|scratchDir
 operator|.
 name|getFileSystem
 argument_list|(
@@ -1774,7 +1767,7 @@ name|wxConf
 argument_list|,
 name|w
 argument_list|,
-name|tezDir
+name|scratchDir
 argument_list|,
 name|appJarLr
 argument_list|,
