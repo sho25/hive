@@ -445,6 +445,12 @@ index|[]
 name|leaves
 parameter_list|)
 function_decl|;
+comment|/**    * Serialize the SARG as a kyro object and return the base64 strig.    * @return the serialized SARG    */
+specifier|public
+name|String
+name|toKryo
+parameter_list|()
+function_decl|;
 comment|/**    * A factory for creating SearchArguments. Java doesn't allow static methods    * in interfaces. *DOH*    */
 specifier|public
 specifier|static
@@ -477,6 +483,23 @@ name|SearchArgumentImpl
 operator|.
 name|newBuilder
 argument_list|()
+return|;
+block|}
+specifier|public
+name|SearchArgument
+name|create
+parameter_list|(
+name|String
+name|kryo
+parameter_list|)
+block|{
+return|return
+name|SearchArgumentImpl
+operator|.
+name|fromKryo
+argument_list|(
+name|kryo
+argument_list|)
 return|;
 block|}
 block|}

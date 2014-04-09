@@ -451,7 +451,9 @@ decl_stmt|;
 specifier|public
 name|ExprNodeGenericFuncDesc
 parameter_list|()
-block|{   }
+block|{
+empty_stmt|;
+block|}
 comment|/* If the function has an explicit name like func(args) then call a    * constructor that explicitly provides the function name in the    * funcText argument.    */
 specifier|public
 name|ExprNodeGenericFuncDesc
