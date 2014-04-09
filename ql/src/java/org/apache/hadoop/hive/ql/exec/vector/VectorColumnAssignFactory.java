@@ -47,16 +47,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -647,7 +637,7 @@ parameter_list|)
 block|{
 name|VectorizedBatchUtil
 operator|.
-name|SetNullColIsNullValue
+name|setNullColIsNullValue
 argument_list|(
 name|outCol
 argument_list|,

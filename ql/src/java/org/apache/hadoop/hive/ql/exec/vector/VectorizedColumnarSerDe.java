@@ -379,6 +379,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|DataOutputBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|ObjectWritable
 import|;
 end_import
@@ -466,7 +480,7 @@ operator|.
 name|Output
 argument_list|()
 decl_stmt|;
-comment|/**    * Serialize a vectorized row batch    *    * @param obj    *          Vectorized row batch to serialize    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @throws SerDeException    * @see SerDe#serialize(Object, ObjectInspector)    */
+comment|/**    * Serialize a vectorized row batch    *    * @param vrg    *          Vectorized row batch to serialize    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @throws SerDeException    * @see SerDe#serialize(Object, ObjectInspector)    */
 annotation|@
 name|Override
 specifier|public
@@ -1281,7 +1295,7 @@ name|SerDeException
 block|{
 comment|// Ideally this should throw  UnsupportedOperationException as the serde is
 comment|// vectorized serde. But since RC file reader does not support vectorized reading this
-comment|// is left as it is. This function will be called from VectorizedRowBatchCtx::AddRowToBatch
+comment|// is left as it is. This function will be called from VectorizedRowBatchCtx::addRowToBatch
 comment|// to deserialize the row one by one and populate the batch. Once RC file reader supports vectorized
 comment|// reading this serde and be standalone serde with no dependency on ColumnarSerDe.
 return|return
@@ -1356,6 +1370,13 @@ index|[]
 operator|)
 name|rowBlob
 decl_stmt|;
+name|DataOutputBuffer
+name|buffer
+init|=
+operator|new
+name|DataOutputBuffer
+argument_list|()
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -1386,7 +1407,7 @@ try|try
 block|{
 name|VectorizedBatchUtil
 operator|.
-name|AddRowToBatch
+name|addRowToBatch
 argument_list|(
 name|row
 argument_list|,
@@ -1398,6 +1419,8 @@ argument_list|,
 name|i
 argument_list|,
 name|reuseBatch
+argument_list|,
+name|buffer
 argument_list|)
 expr_stmt|;
 block|}

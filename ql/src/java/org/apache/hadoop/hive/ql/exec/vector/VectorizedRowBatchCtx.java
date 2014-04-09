@@ -419,26 +419,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspectorConverters
-operator|.
-name|Converter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|ObjectInspectorFactory
 import|;
 end_import
@@ -588,6 +568,20 @@ operator|.
 name|typeinfo
 operator|.
 name|TypeInfoUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|DataOutputBuffer
 import|;
 end_import
 
@@ -1748,7 +1742,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Adds the row to the batch after deserializing the row    *    * @param rowIndex    *          Row index in the batch to which the row is added    * @param rowBlob    *          Row blob (serialized version of row)    * @param batch    *          Vectorized batch to which the row is added    * @throws HiveException    * @throws SerDeException    */
+comment|/**    * Adds the row to the batch after deserializing the row    *    * @param rowIndex    *          Row index in the batch to which the row is added    * @param rowBlob    *          Row blob (serialized version of row)    * @param batch    *          Vectorized batch to which the row is added    * @param buffer a buffer to copy strings into    * @throws HiveException    * @throws SerDeException    */
 specifier|public
 name|void
 name|addRowToBatch
@@ -1761,6 +1755,9 @@ name|rowBlob
 parameter_list|,
 name|VectorizedRowBatch
 name|batch
+parameter_list|,
+name|DataOutputBuffer
+name|buffer
 parameter_list|)
 throws|throws
 name|HiveException
@@ -1781,7 +1778,7 @@ argument_list|)
 decl_stmt|;
 name|VectorizedBatchUtil
 operator|.
-name|AddRowToBatch
+name|addRowToBatch
 argument_list|(
 name|row
 argument_list|,
@@ -1792,6 +1789,8 @@ argument_list|,
 name|rowIndex
 argument_list|,
 name|batch
+argument_list|,
+name|buffer
 argument_list|)
 expr_stmt|;
 block|}

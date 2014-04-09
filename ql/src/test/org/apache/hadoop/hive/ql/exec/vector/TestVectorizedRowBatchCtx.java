@@ -461,6 +461,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|DataOutputBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|FloatWritable
 import|;
 end_import
@@ -1595,6 +1609,13 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+name|DataOutputBuffer
+name|buffer
+init|=
+operator|new
+name|DataOutputBuffer
+argument_list|()
+decl_stmt|;
 comment|// Get object inspector
 name|StructObjectInspector
 name|oi
@@ -1662,10 +1683,8 @@ argument_list|()
 decl_stmt|;
 name|VectorizedBatchUtil
 operator|.
-name|SetNoNullFields
+name|setNoNullFields
 argument_list|(
-literal|true
-argument_list|,
 name|batch
 argument_list|)
 expr_stmt|;
@@ -1729,6 +1748,8 @@ argument_list|,
 name|cols
 argument_list|,
 name|batch
+argument_list|,
+name|buffer
 argument_list|)
 expr_stmt|;
 block|}
