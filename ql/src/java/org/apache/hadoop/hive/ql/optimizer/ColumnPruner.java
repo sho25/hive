@@ -577,7 +577,7 @@ init|=
 operator|new
 name|ColumnPrunerProcCtx
 argument_list|(
-name|opToParseCtxMap
+name|pactx
 argument_list|)
 decl_stmt|;
 comment|// create a walker which walks the tree in a DFS manner while maintaining
