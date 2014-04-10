@@ -169,7 +169,7 @@ expr_stmt|;
 block|}
 comment|/**    * This will look through the completed_txn_components table and look for partitions or tables    * that may be ready for compaction.  Also, look through txns and txn_components tables for    * aborted transactions that we should add to the list.    * @param maxAborted Maximum number of aborted queries to allow before marking this as a    *                   potential compaction.    * @return list of CompactionInfo structs.  These will not have id, type,    * or runAs set since these are only potential compactions not actual ones.    */
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|CompactionInfo
 argument_list|>
@@ -187,14 +187,14 @@ init|=
 name|getDbConn
 argument_list|()
 decl_stmt|;
-name|List
+name|Set
 argument_list|<
 name|CompactionInfo
 argument_list|>
 name|response
 init|=
 operator|new
-name|ArrayList
+name|HashSet
 argument_list|<
 name|CompactionInfo
 argument_list|>
@@ -214,7 +214,9 @@ comment|// Check for completed transactions
 name|String
 name|s
 init|=
-literal|"select ctc_database, ctc_table, ctc_partition from COMPLETED_TXN_COMPONENTS"
+literal|"select distinct ctc_database, ctc_table, "
+operator|+
+literal|"ctc_partition from COMPLETED_TXN_COMPONENTS"
 decl_stmt|;
 name|LOG
 operator|.
