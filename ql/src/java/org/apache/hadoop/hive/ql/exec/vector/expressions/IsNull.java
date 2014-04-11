@@ -424,8 +424,7 @@ name|getOutputColumn
 parameter_list|()
 block|{
 return|return
-operator|-
-literal|1
+name|outputColumn
 return|;
 block|}
 annotation|@

@@ -5689,6 +5689,16 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+literal|3
+argument_list|,
+name|ve
+operator|.
+name|getOutputColumn
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
 name|ve
 operator|.
 name|getChildExpressions
