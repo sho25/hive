@@ -1367,6 +1367,20 @@ elseif|else
 if|if
 condition|(
 name|optimizeDistincts
+operator|&&
+operator|!
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_ENABLED
+argument_list|)
 condition|)
 block|{
 comment|// In test mode, dont change the query plan. However, setup a query property
