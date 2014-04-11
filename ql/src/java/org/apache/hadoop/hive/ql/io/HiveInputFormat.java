@@ -2217,6 +2217,11 @@ name|result
 argument_list|)
 expr_stmt|;
 block|}
+name|Utilities
+operator|.
+name|clearWorkMap
+argument_list|()
+expr_stmt|;
 name|LOG
 operator|.
 name|info
