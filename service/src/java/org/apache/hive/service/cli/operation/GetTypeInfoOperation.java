@@ -470,7 +470,7 @@ block|,
 comment|// DATA_TYPE
 name|type
 operator|.
-name|getPrecision
+name|getMaxPrecision
 argument_list|()
 block|,
 comment|// PRECISION

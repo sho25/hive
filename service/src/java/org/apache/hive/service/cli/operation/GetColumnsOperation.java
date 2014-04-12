@@ -874,7 +874,7 @@ block|,
 comment|// TYPE_NAME
 name|column
 operator|.
-name|getType
+name|getTypeDescriptor
 argument_list|()
 operator|.
 name|getColumnSize
@@ -886,7 +886,7 @@ block|,
 comment|// BUFFER_LENGTH, unused
 name|column
 operator|.
-name|getType
+name|getTypeDescriptor
 argument_list|()
 operator|.
 name|getDecimalDigits
