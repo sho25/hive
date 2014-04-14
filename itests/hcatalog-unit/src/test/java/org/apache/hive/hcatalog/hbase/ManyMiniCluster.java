@@ -9,6 +9,8 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
 name|hcatalog
 operator|.
 name|hbase
@@ -82,20 +84,6 @@ operator|.
 name|hbase
 operator|.
 name|HConstants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hbase
-operator|.
-name|TableName
 import|;
 end_import
 
@@ -536,7 +524,9 @@ block|{
 name|HConnectionManager
 operator|.
 name|deleteAllConnections
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 try|try
 block|{
@@ -1004,7 +994,7 @@ argument_list|,
 literal|"hbase"
 argument_list|)
 operator|.
-name|toString
+name|getCanonicalPath
 argument_list|()
 expr_stmt|;
 name|hbaseDir
@@ -1020,7 +1010,7 @@ argument_list|)
 expr_stmt|;
 name|hbaseRoot
 operator|=
-literal|"file://"
+literal|"file:///"
 operator|+
 name|hbaseDir
 expr_stmt|;
@@ -1151,12 +1141,9 @@ name|HTable
 argument_list|(
 name|hbaseConf
 argument_list|,
-name|TableName
+name|HConstants
 operator|.
 name|META_TABLE_NAME
-operator|.
-name|getNameAsString
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

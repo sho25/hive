@@ -262,6 +262,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|storageHandler

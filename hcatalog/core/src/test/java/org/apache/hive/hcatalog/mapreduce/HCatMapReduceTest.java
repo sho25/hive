@@ -2302,6 +2302,9 @@ operator|.
 name|getTableSchema
 argument_list|(
 name|job
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 return|;
 block|}

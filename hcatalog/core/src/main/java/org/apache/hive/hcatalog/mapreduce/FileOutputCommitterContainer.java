@@ -794,6 +794,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|dynamicPartitioningUsed
@@ -1216,6 +1219,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|jobContext
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Path
@@ -1490,6 +1496,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|jobContext
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -3787,6 +3796,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|harProcessor
@@ -4180,6 +4192,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Configuration
