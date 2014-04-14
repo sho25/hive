@@ -1355,6 +1355,10 @@ block|,
 name|CACHE_FILES
 block|,
 name|CACHE_SYMLINK
+block|,
+name|CLASSPATH_ARCHIVES
+block|,
+name|CLASSPATH_FILES
 block|}
 specifier|public
 name|TaskID
