@@ -386,6 +386,8 @@ operator|=
 operator|new
 name|HiveMetaStoreClient
 argument_list|(
+name|this
+operator|.
 name|conf
 argument_list|)
 expr_stmt|;
