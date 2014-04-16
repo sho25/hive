@@ -2445,6 +2445,8 @@ operator|.
 name|mkdirs
 argument_list|(
 name|destParentPath
+argument_list|,
+literal|true
 argument_list|)
 condition|)
 block|{

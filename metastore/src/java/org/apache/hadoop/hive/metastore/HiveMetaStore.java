@@ -5438,6 +5438,8 @@ operator|.
 name|mkdirs
 argument_list|(
 name|dbPath
+argument_list|,
+literal|false
 argument_list|)
 condition|)
 block|{
@@ -8157,6 +8159,8 @@ operator|.
 name|mkdirs
 argument_list|(
 name|tblPath
+argument_list|,
+literal|true
 argument_list|)
 condition|)
 block|{
@@ -10594,6 +10598,8 @@ operator|.
 name|mkdirs
 argument_list|(
 name|partLocation
+argument_list|,
+literal|true
 argument_list|)
 condition|)
 block|{
@@ -12335,6 +12341,8 @@ operator|.
 name|mkdirs
 argument_list|(
 name|partLocation
+argument_list|,
+literal|true
 argument_list|)
 condition|)
 block|{

@@ -3200,6 +3200,8 @@ operator|.
 name|mkdirs
 argument_list|(
 name|mp5Path
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|assertTrue
