@@ -1950,7 +1950,7 @@ name|METASTORE_EXECUTE_SET_UGI
 argument_list|(
 literal|"hive.metastore.execute.setugi"
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 block|,
 name|METASTORE_PARTITION_NAME_WHITELIST_PATTERN
