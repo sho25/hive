@@ -1775,9 +1775,19 @@ block|{
 if|if
 condition|(
 name|mapJoinTables
-operator|!=
+operator|==
 literal|null
 condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"mapJoinTables is null"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
 block|{
 name|flushToFile
 argument_list|()

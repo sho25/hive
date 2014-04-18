@@ -2393,26 +2393,6 @@ name|bigTableBucket
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|fetchOp
-operator|.
-name|isEmptyTable
-argument_list|()
-condition|)
-block|{
-comment|//generate empty hashtable for empty table
-name|this
-operator|.
-name|generateDummyHashTable
-argument_list|(
-name|alias
-argument_list|,
-name|bigTableBucket
-argument_list|)
-expr_stmt|;
-continue|continue;
-block|}
 comment|// get the root operator
 name|Operator
 argument_list|<
@@ -2432,6 +2412,33 @@ argument_list|(
 name|alias
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|fetchOp
+operator|.
+name|isEmptyTable
+argument_list|()
+condition|)
+block|{
+comment|//generate empty hashtable for empty table
+name|this
+operator|.
+name|generateDummyHashTable
+argument_list|(
+name|alias
+argument_list|,
+name|bigTableBucket
+argument_list|)
+expr_stmt|;
+name|forwardOp
+operator|.
+name|close
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
 comment|// walk through the operator tree
 while|while
 condition|(
@@ -2513,6 +2520,55 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+for|for
+control|(
+name|Map
+operator|.
+name|Entry
+argument_list|<
+name|String
+argument_list|,
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|OperatorDesc
+argument_list|>
+argument_list|>
+name|entry
+range|:
+name|work
+operator|.
+name|getAliasToWork
+argument_list|()
+operator|.
+name|entrySet
+argument_list|()
+control|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"initializeOperators: "
+operator|+
+name|entry
+operator|.
+name|getKey
+argument_list|()
+operator|+
+literal|", children = "
+operator|+
+name|entry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|getChildOperators
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// this mapper operator is used to initialize all the operators
 for|for
 control|(
@@ -2793,6 +2849,15 @@ name|HiveException
 throws|,
 name|IOException
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"generating dummy for "
+operator|+
+name|alias
+argument_list|)
+expr_stmt|;
 comment|// find the (byte)tag for the map join(HashTableSinkOperator)
 name|Operator
 argument_list|<

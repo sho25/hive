@@ -2365,6 +2365,17 @@ condition|)
 block|{
 continue|continue;
 block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"allInitializedParentsAreClosed? parent.state = "
+operator|+
+name|parent
+operator|.
+name|state
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -2429,6 +2440,13 @@ name|allInitializedParentsAreClosed
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Not all parent operators are closed. Not closing."
+argument_list|)
+expr_stmt|;
 return|return;
 block|}
 comment|// set state as CLOSE as long as all parents are closed
@@ -2485,6 +2503,15 @@ range|:
 name|childOperators
 control|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Closing child = "
+operator|+
+name|op
+argument_list|)
+expr_stmt|;
 name|op
 operator|.
 name|close
