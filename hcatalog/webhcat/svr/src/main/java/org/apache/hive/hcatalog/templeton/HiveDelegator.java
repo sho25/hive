@@ -446,12 +446,8 @@ name|prop
 range|:
 name|appConf
 operator|.
-name|getStrings
-argument_list|(
-name|AppConfig
-operator|.
-name|HIVE_PROPS_NAME
-argument_list|)
+name|hiveProps
+argument_list|()
 control|)
 block|{
 name|args

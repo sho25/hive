@@ -147,7 +147,7 @@ name|TOKEN_FILE_ARG_PLACEHOLDER_TEZ
 init|=
 literal|"__TEZ_CREDENTIALS_OPTION=WEBHCAT_TOKEN_FILE_LOCATION_TEZ__"
 decl_stmt|;
-comment|/**    * constants needed for Pig job submission    */
+comment|/**    * constants needed for Pig job submission    * The string values here are what Pig expects to see in it's environment    */
 specifier|public
 specifier|static
 interface|interface
