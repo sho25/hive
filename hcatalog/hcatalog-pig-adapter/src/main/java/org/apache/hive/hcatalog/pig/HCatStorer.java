@@ -707,7 +707,6 @@ name|sign
 block|}
 argument_list|)
 decl_stmt|;
-comment|//'Throw' is the default for backwards compatibility
 comment|//downstream code expects it to be set to a valid value
 name|udfProps
 operator|.
