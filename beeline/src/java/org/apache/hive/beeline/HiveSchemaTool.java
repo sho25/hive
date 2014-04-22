@@ -2446,6 +2446,16 @@ name|equalsIgnoreCase
 argument_list|(
 name|HiveSchemaHelper
 operator|.
+name|DB_MSSQL
+argument_list|)
+operator|&&
+operator|!
+name|dbType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|HiveSchemaHelper
+operator|.
 name|DB_MYSQL
 argument_list|)
 operator|&&
