@@ -41,6 +41,22 @@ name|Arrays
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|hash
+operator|.
+name|MurmurHash
+import|;
+end_import
+
 begin_comment
 comment|/**  * Size-optimized implementation of MapJoinKeyBase. MJK only needs to support equality and  * hashCode, so for simple cases we can write the requisite writables that are part of the  * key into byte array and retain the functionality without storing the writables themselves.  */
 end_comment
@@ -57,6 +73,20 @@ name|MapJoinKeyBytes
 extends|extends
 name|MapJoinKey
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|MurmurHash
+name|hash
+init|=
+operator|(
+name|MurmurHash
+operator|)
+name|MurmurHash
+operator|.
+name|getInstance
+argument_list|()
+decl_stmt|;
 comment|/**    * First byte is field count. The rest is written using BinarySortableSerDe.    */
 specifier|private
 name|byte
@@ -165,9 +195,9 @@ name|hashCode
 parameter_list|()
 block|{
 return|return
-name|Arrays
+name|hash
 operator|.
-name|hashCode
+name|hash
 argument_list|(
 name|array
 argument_list|)
