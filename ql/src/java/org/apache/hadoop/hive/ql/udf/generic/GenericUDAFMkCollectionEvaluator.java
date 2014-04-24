@@ -656,6 +656,13 @@ argument_list|(
 name|partial
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|partialResult
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|Object
@@ -671,6 +678,7 @@ argument_list|,
 name|myagg
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 annotation|@
