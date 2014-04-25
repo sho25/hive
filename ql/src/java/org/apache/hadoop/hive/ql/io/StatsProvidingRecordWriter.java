@@ -21,11 +21,21 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|io
+name|apache
 operator|.
-name|IOException
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|FileSinkOperator
+operator|.
+name|RecordWriter
 import|;
 end_import
 
@@ -45,60 +55,22 @@ name|SerDeStats
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Writable
-import|;
-end_import
-
 begin_comment
-comment|/**  * Record writer used by file sink operator.  *  * FSRecordWriter.  *  */
+comment|/**    * If a file format internally gathers statistics (like ORC) while writing then    * it can expose the statistics through this record writer interface. Writer side    * statistics is useful for updating the metastore with table/partition level    * statistics.    * StatsProvidingRecordWriter.    *    */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|FSRecordWriter
-block|{
-name|void
-name|write
-parameter_list|(
-name|Writable
-name|w
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-name|void
-name|close
-parameter_list|(
-name|boolean
-name|abort
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * If a file format internally gathers statistics (like ORC) while writing then    * it can expose the statistics through this record writer interface. Writer side    * statistics is useful for updating the metastore with table/partition level    * statistics.    * StatsProvidingRecordWriter.    *    */
-specifier|public
-interface|interface
 name|StatsProvidingRecordWriter
 extends|extends
-name|FSRecordWriter
+name|RecordWriter
 block|{
 comment|/**      * Returns the statistics information      * @return SerDeStats      */
 name|SerDeStats
 name|getStats
 parameter_list|()
 function_decl|;
-block|}
 block|}
 end_interface
 

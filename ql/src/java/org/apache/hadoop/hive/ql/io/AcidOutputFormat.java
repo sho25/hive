@@ -71,6 +71,26 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|FileSinkOperator
+operator|.
+name|RecordWriter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|objectinspector
@@ -564,7 +584,7 @@ name|IOException
 function_decl|;
 comment|/**    * Create a raw writer for ACID events.    * This is only intended for the compactor.    * @param path the root directory    * @param options options for writing the file    * @return a record writer    * @throws IOException    */
 specifier|public
-name|FSRecordWriter
+name|RecordWriter
 name|getRawRecordWriter
 parameter_list|(
 name|Path

@@ -225,9 +225,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|io
+name|exec
 operator|.
-name|FSRecordWriter
+name|FileSinkOperator
+operator|.
+name|RecordWriter
 import|;
 end_import
 
@@ -470,7 +472,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|FSRecordWriter
+name|RecordWriter
 name|getHiveRecordWriter
 parameter_list|(
 specifier|final
@@ -740,7 +742,7 @@ expr_stmt|;
 block|}
 return|return
 operator|new
-name|FSRecordWriter
+name|RecordWriter
 argument_list|()
 block|{
 annotation|@

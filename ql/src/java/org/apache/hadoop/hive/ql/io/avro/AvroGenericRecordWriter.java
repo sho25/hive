@@ -71,9 +71,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|io
+name|exec
 operator|.
-name|FSRecordWriter
+name|FileSinkOperator
+operator|.
+name|RecordWriter
 import|;
 end_import
 
@@ -118,7 +120,7 @@ specifier|public
 class|class
 name|AvroGenericRecordWriter
 implements|implements
-name|FSRecordWriter
+name|RecordWriter
 block|{
 specifier|final
 specifier|private
