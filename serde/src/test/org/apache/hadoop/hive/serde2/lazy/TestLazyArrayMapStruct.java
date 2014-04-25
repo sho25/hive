@@ -3931,13 +3931,17 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|serDe
+name|SerDeUtils
 operator|.
-name|initialize
+name|initializeSerDe
 argument_list|(
+name|serDe
+argument_list|,
 name|conf
 argument_list|,
 name|tableProp
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 comment|//create the serialized string for type
