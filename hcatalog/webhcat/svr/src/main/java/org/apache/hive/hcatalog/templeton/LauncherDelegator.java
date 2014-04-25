@@ -301,6 +301,8 @@ block|,
 name|PIG
 block|,
 name|HIVE
+block|,
+name|SQOOP
 block|}
 specifier|private
 name|boolean
