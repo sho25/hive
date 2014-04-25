@@ -77,16 +77,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedList
 import|;
 end_import
@@ -176,24 +166,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-operator|.
-name|ConfVars
 import|;
 end_import
 
@@ -503,20 +475,6 @@ name|apache
 operator|.
 name|tez
 operator|.
-name|client
-operator|.
-name|TezSession
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
 name|common
 operator|.
 name|counters
@@ -756,6 +714,7 @@ name|TezCounters
 name|counters
 decl_stmt|;
 specifier|private
+specifier|final
 name|DagUtils
 name|utils
 decl_stmt|;
@@ -947,17 +906,46 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
-comment|// If we have any jars from input format, we need to restart the session because
-comment|// AM will need them; so, AM has to be restarted. What a mess...
-if|if
-condition|(
-operator|!
+name|boolean
+name|hasResources
+init|=
 name|session
 operator|.
 name|hasResources
 argument_list|(
 name|inputOutputJars
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|ss
+operator|.
+name|hasAddedResource
+argument_list|()
+condition|)
+block|{
+comment|// need to re-launch session because of new added jars.
+name|hasResources
+operator|=
+literal|false
+expr_stmt|;
+comment|// reset the added resource flag for this session since we would
+comment|// relocalize (either by restarting or relocalizing) due to the above
+comment|// hasResources flag.
+name|ss
+operator|.
+name|setAddedResource
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|// If we have any jars from input format, we need to restart the session because
+comment|// AM will need them; so, AM has to be restarted. What a mess...
+if|if
+condition|(
+operator|!
+name|hasResources
 operator|&&
 name|session
 operator|.
@@ -972,11 +960,14 @@ argument_list|(
 literal|"Tez session being reopened to pass custom jars to AM"
 argument_list|)
 expr_stmt|;
-name|session
+name|TezSessionPoolManager
+operator|.
+name|getInstance
+argument_list|()
 operator|.
 name|close
 argument_list|(
-literal|false
+name|session
 argument_list|)
 expr_stmt|;
 name|session
