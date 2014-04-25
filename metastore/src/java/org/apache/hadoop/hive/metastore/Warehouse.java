@@ -3055,11 +3055,59 @@ literal|0
 operator|)
 condition|)
 block|{
+name|String
+name|errorStr
+init|=
+literal|"Invalid partition key& values; keys ["
+decl_stmt|;
+for|for
+control|(
+name|FieldSchema
+name|fs
+range|:
+name|partCols
+control|)
+block|{
+name|errorStr
+operator|+=
+operator|(
+name|fs
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|", "
+operator|)
+expr_stmt|;
+block|}
+name|errorStr
+operator|+=
+literal|"], values ["
+expr_stmt|;
+for|for
+control|(
+name|String
+name|val
+range|:
+name|vals
+control|)
+block|{
+name|errorStr
+operator|+=
+operator|(
+name|val
+operator|+
+literal|", "
+operator|)
+expr_stmt|;
+block|}
 throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Invalid partition key& values"
+name|errorStr
+operator|+
+literal|"]"
 argument_list|)
 throw|;
 block|}
