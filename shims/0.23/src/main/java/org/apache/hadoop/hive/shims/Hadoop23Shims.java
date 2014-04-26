@@ -880,38 +880,16 @@ return|;
 block|}
 else|else
 block|{
-comment|// if the cluster is running in MR1 mode, using HostUtil to construct TaskLogURL
-name|URL
-name|taskTrackerHttpURL
-init|=
-operator|new
-name|URL
+comment|// Was using Hadoop-internal API to get tasklogs, disable until  MAPREDUCE-5857 is fixed.
+name|LOG
+operator|.
+name|warn
 argument_list|(
-name|taskTrackerHttpAddress
+literal|"Can't fetch tasklog: TaskLogServlet is not supported in MR1 mode."
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 return|return
-name|HostUtil
-operator|.
-name|getTaskLogUrl
-argument_list|(
-name|taskTrackerHttpURL
-operator|.
-name|getHost
-argument_list|()
-argument_list|,
-name|Integer
-operator|.
-name|toString
-argument_list|(
-name|taskTrackerHttpURL
-operator|.
-name|getPort
-argument_list|()
-argument_list|)
-argument_list|,
-name|taskAttemptId
-argument_list|)
+literal|null
 return|;
 block|}
 block|}
