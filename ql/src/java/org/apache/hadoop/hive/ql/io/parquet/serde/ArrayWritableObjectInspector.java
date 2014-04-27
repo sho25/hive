@@ -1033,6 +1033,38 @@ argument_list|()
 index|]
 return|;
 block|}
+comment|//since setStructFieldData and create return a list, getStructFieldData should be able to
+comment|//handle list data. This is required when table serde is ParquetHiveSerDe and partition serde
+comment|//is something else.
+if|if
+condition|(
+name|data
+operator|instanceof
+name|List
+condition|)
+block|{
+return|return
+operator|(
+operator|(
+name|List
+operator|)
+name|data
+operator|)
+operator|.
+name|get
+argument_list|(
+operator|(
+operator|(
+name|StructFieldImpl
+operator|)
+name|fieldRef
+operator|)
+operator|.
+name|getIndex
+argument_list|()
+argument_list|)
+return|;
+block|}
 throw|throw
 operator|new
 name|UnsupportedOperationException
