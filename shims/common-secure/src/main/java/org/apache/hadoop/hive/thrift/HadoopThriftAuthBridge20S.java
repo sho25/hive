@@ -3126,6 +3126,18 @@ name|getShortUserName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Set remoteUser :"
+operator|+
+name|remoteUser
+operator|.
+name|get
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|clientUgi
 operator|.
@@ -3179,10 +3191,40 @@ return|;
 block|}
 else|else
 block|{
+comment|// use the short user name for the request
+name|UserGroupInformation
+name|endUserUgi
+init|=
+name|UserGroupInformation
+operator|.
+name|createRemoteUser
+argument_list|(
+name|endUser
+argument_list|)
+decl_stmt|;
 name|remoteUser
 operator|.
 name|set
 argument_list|(
+name|endUserUgi
+operator|.
+name|getShortUserName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Set remoteUser :"
+operator|+
+name|remoteUser
+operator|.
+name|get
+argument_list|()
+operator|+
+literal|", from endUser :"
+operator|+
 name|endUser
 argument_list|)
 expr_stmt|;
