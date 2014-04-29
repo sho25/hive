@@ -1583,6 +1583,13 @@ expr_stmt|;
 name|translatePTFChain
 argument_list|()
 expr_stmt|;
+name|PTFDeserializer
+operator|.
+name|alterOutputOIForStreaming
+argument_list|(
+name|ptfDesc
+argument_list|)
+expr_stmt|;
 return|return
 name|ptfDesc
 return|;
@@ -2108,6 +2115,13 @@ name|tFn
 operator|.
 name|setupOutputOI
 argument_list|()
+expr_stmt|;
+name|PTFDeserializer
+operator|.
+name|alterOutputOIForStreaming
+argument_list|(
+name|ptfDesc
+argument_list|)
 expr_stmt|;
 return|return
 name|ptfDesc
