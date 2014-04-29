@@ -1918,6 +1918,11 @@ name|work
 operator|.
 name|isSrcLocal
 argument_list|()
+argument_list|,
+name|isSkewedStoredAsDirs
+argument_list|(
+name|tbd
+argument_list|)
 argument_list|)
 expr_stmt|;
 if|if
