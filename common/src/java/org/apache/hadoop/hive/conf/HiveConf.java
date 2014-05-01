@@ -4223,6 +4223,9 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// hadoop.rpc.protection being set to a higher level than HiveServer2
+comment|// does not make sense in most situations.
+comment|// HiveServer2 ignores hadoop.rpc.protection in favor of hive.server2.thrift.sasl.qop.
 name|HIVE_SERVER2_THRIFT_SASL_QOP
 argument_list|(
 literal|"hive.server2.thrift.sasl.qop"

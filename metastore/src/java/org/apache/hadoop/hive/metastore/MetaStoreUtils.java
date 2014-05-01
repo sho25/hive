@@ -8268,7 +8268,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Read and return the meta store Sasl configuration. Currently it uses the default    * Hadoop SASL configuration and can be configured using "hadoop.rpc.protection"    * @param conf    * @return The SASL configuration    */
+comment|/**    * Read and return the meta store Sasl configuration. Currently it uses the default    * Hadoop SASL configuration and can be configured using "hadoop.rpc.protection"    * HADOOP-10211, made a backward incompatible change due to which this call doesn't    * work with Hadoop 2.4.0 and later.    * @param conf    * @return The SASL configuration    */
 specifier|public
 specifier|static
 name|Map
