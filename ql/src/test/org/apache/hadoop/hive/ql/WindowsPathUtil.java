@@ -61,6 +61,11 @@ name|HiveConf
 name|conf
 parameter_list|)
 block|{
+comment|// Following local paths are used as HDFS paths in unit tests.
+comment|// It works well in Unix as the path notation in Unix and HDFS is more or less same.
+comment|// But when it comes to Windows, drive letter separator ':'& backslash '\" are invalid
+comment|// characters in HDFS so we need to converts these local paths to HDFS paths before using them
+comment|// in unit tests.
 name|String
 name|orgWarehouseDir
 init|=
@@ -114,6 +119,28 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 name|String
+name|orgTestWarehouseDir
+init|=
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"test.warehouse.dir"
+argument_list|)
+decl_stmt|;
+name|System
+operator|.
+name|setProperty
+argument_list|(
+literal|"test.warehouse.dir"
+argument_list|,
+name|getHdfsUriString
+argument_list|(
+name|orgTestWarehouseDir
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|String
 name|orgScratchDir
 init|=
 name|conf
@@ -144,7 +171,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|String
 name|getHdfsUriString
