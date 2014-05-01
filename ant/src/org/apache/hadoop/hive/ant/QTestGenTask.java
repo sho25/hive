@@ -2059,7 +2059,10 @@ name|put
 argument_list|(
 literal|"hiveConfDir"
 argument_list|,
+name|escapePath
+argument_list|(
 name|hiveConfDir
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|ctx
