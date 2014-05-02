@@ -581,11 +581,13 @@ throw|throw
 operator|new
 name|UDFArgumentException
 argument_list|(
-literal|"The UDF implementation class '"
+literal|"Unable to instantiate UDF implementation class "
 operator|+
 name|udfClassName
 operator|+
-literal|"' is not present in the class path"
+literal|": "
+operator|+
+name|e
 argument_list|)
 throw|;
 block|}
