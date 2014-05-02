@@ -544,6 +544,22 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+if|if
+condition|(
+name|context
+operator|.
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_CONVERT_JOIN_BUCKET_MAPJOIN_TEZ
+argument_list|)
+condition|)
+block|{
 for|for
 control|(
 name|Operator
@@ -598,6 +614,13 @@ else|:
 name|numBuckets
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|parentOp
+operator|instanceof
+name|ReduceSinkOperator
+condition|)
+block|{
 name|ReduceSinkOperator
 name|rs
 init|=
@@ -631,6 +654,7 @@ else|:
 name|estimatedBuckets
 expr_stmt|;
 block|}
+block|}
 if|if
 condition|(
 name|numBuckets
@@ -654,6 +678,14 @@ operator|=
 literal|1
 expr_stmt|;
 block|}
+block|}
+block|}
+else|else
+block|{
+name|numBuckets
+operator|=
+literal|1
+expr_stmt|;
 block|}
 name|LOG
 operator|.
@@ -683,6 +715,8 @@ operator|<
 literal|0
 condition|)
 block|{
+comment|// we cannot convert to bucket map join, we cannot convert to
+comment|// map join either based on the size
 return|return
 literal|null
 return|;
@@ -727,6 +761,29 @@ argument_list|(
 literal|"Convert to non-bucketed map join"
 argument_list|)
 expr_stmt|;
+comment|// check if we can convert to map join no bucket scaling.
+name|mapJoinConversionPos
+operator|=
+name|mapJoinConversionPos
+argument_list|(
+name|joinOp
+argument_list|,
+name|context
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|mapJoinConversionPos
+operator|<
+literal|0
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|MapJoinOperator
 name|mapJoinOp
 init|=
