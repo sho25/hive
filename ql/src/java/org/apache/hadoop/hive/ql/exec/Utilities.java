@@ -673,20 +673,6 @@ end_import
 
 begin_import
 import|import
-name|javax
-operator|.
-name|security
-operator|.
-name|auth
-operator|.
-name|login
-operator|.
-name|LoginException
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|antlr
@@ -2296,20 +2282,6 @@ operator|.
 name|mapred
 operator|.
 name|SequenceFileOutputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|security
-operator|.
-name|UserGroupInformation
 import|;
 end_import
 
@@ -18509,8 +18481,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|// this umask is required because by default the hdfs mask is 022 resulting in
-comment|// all parents getting the fsPermission& !(022) permission instead of fsPermission
 name|boolean
 name|recursive
 init|=
@@ -18627,6 +18597,8 @@ argument_list|(
 literal|"fs.permissions.umask-mode"
 argument_list|)
 expr_stmt|;
+comment|// this umask is required because by default the hdfs mask is 022 resulting in
+comment|// all parents getting the fsPermission& !(022) permission instead of fsPermission
 name|conf
 operator|.
 name|set
@@ -18661,6 +18633,11 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|recursive
+condition|)
+block|{
+if|if
+condition|(
 name|origUmask
 operator|!=
 literal|null
@@ -18685,6 +18662,7 @@ argument_list|(
 literal|"fs.permissions.umask-mode"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|retval
