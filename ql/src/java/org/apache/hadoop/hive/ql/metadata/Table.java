@@ -946,6 +946,7 @@ name|tTable
 expr_stmt|;
 block|}
 comment|/**    * Initialize an emtpy table.    */
+specifier|public
 specifier|static
 name|org
 operator|.
