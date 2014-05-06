@@ -209,6 +209,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|io
@@ -736,6 +752,14 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|GROUP_SPLITS
+init|=
+literal|"hive.enable.custom.grouped.splits"
+decl_stmt|;
 name|VertexManagerPluginContext
 name|context
 decl_stmt|;
@@ -1072,7 +1096,18 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|/*        * Currently in tez, the flow of events is thus: "Generate Splits -> Initialize Vertex"        * (with parallelism info obtained from the generate splits phase). The generate splits        * phase groups splits using the TezGroupedSplitsInputFormat. However, for bucket map joins        * the grouping done by this input format results in incorrect results as the grouper has no        * knowledge of buckets. So, we initially set the input format to be HiveInputFormat        * (in DagUtils) for the case of bucket map joins so as to obtain un-grouped splits.        * We then group the splits corresponding to buckets using the tez grouper which returns        * TezGroupedSplits.        */
-comment|// This assumes that Grouping will always be used.
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolean
+argument_list|(
+name|GROUP_SPLITS
+argument_list|,
+literal|true
+argument_list|)
+condition|)
+block|{
 comment|// Changing the InputFormat - so that the correct one is initialized in MRInput.
 name|this
 operator|.
@@ -1123,6 +1158,7 @@ name|toByteArray
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1985,9 +2021,6 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-name|estimateBucketSizes
-argument_list|()
-expr_stmt|;
 name|bucketToGroupedSplitMap
 operator|=
 name|ArrayListMultimap
@@ -2001,6 +2034,21 @@ name|create
 argument_list|(
 name|bucketToInitialSplitMap
 argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolean
+argument_list|(
+name|GROUP_SPLITS
+argument_list|,
+literal|true
+argument_list|)
+condition|)
+block|{
+name|estimateBucketSizes
+argument_list|()
 expr_stmt|;
 name|Map
 argument_list|<
@@ -2135,6 +2183,7 @@ argument_list|,
 name|inSplit
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
