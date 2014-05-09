@@ -25,16 +25,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedList
 import|;
 end_import
@@ -140,7 +130,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * BaseWork. Base class for any "work" that's being done on the cluster. Items like stats  * gathering that are commonly used regarless of the type of work live here.  */
+comment|/**  * BaseWork. Base class for any "work" that's being done on the cluster. Items like stats  * gathering that are commonly used regardless of the type of work live here.  */
 end_comment
 
 begin_class
@@ -162,7 +152,7 @@ name|AbstractOperatorDesc
 block|{
 comment|// dummyOps is a reference to all the HashTableDummy operators in the
 comment|// plan. These have to be separately initialized when we setup a task.
-comment|// Their funtion is mainly as root ops to give the mapjoin the correct
+comment|// Their function is mainly as root ops to give the mapjoin the correct
 comment|// schema info.
 name|List
 argument_list|<
