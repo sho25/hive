@@ -16961,9 +16961,9 @@ name|newDir
 init|=
 name|hiveScratchDir
 operator|+
-name|File
+name|Path
 operator|.
-name|separator
+name|SEPARATOR
 operator|+
 name|sequenceNumber
 decl_stmt|;
@@ -17010,9 +17010,9 @@ name|newFile
 init|=
 name|newDir
 operator|+
-name|File
+name|Path
 operator|.
-name|separator
+name|SEPARATOR
 operator|+
 literal|"emptyFile"
 decl_stmt|;
