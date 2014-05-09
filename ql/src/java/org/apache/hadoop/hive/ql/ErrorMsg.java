@@ -1929,6 +1929,13 @@ operator|+
 literal|"time."
 argument_list|)
 block|,
+name|DISTINCT_NOT_SUPPORTED
+argument_list|(
+literal|10285
+argument_list|,
+literal|"Distinct keyword is not support in current context"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

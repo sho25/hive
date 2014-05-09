@@ -21234,6 +21234,13 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+name|tcCtx
+operator|.
+name|setAllowDistinctFunctions
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 name|ExprNodeDesc
 name|exp
 init|=
