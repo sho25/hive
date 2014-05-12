@@ -12015,6 +12015,8 @@ argument_list|,
 name|destf
 argument_list|,
 name|inheritPerms
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}

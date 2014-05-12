@@ -1161,6 +1161,8 @@ argument_list|,
 name|f
 argument_list|,
 name|inheritPerms
+argument_list|,
+name|conf
 argument_list|)
 return|;
 block|}

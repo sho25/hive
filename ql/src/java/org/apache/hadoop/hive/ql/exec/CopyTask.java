@@ -423,6 +423,8 @@ argument_list|,
 name|toPath
 argument_list|,
 name|inheritPerms
+argument_list|,
+name|conf
 argument_list|)
 condition|)
 block|{
