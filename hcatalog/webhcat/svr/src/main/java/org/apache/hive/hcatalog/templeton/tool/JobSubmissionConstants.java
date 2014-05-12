@@ -76,22 +76,6 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|OVERRIDE_CONTAINER_LOG4J_PROPS
-init|=
-literal|"override.containerLog4j"
-decl_stmt|;
-comment|//name of file
-specifier|static
-specifier|final
-name|String
-name|CONTAINER_LOG4J_PROPS
-init|=
-literal|"override-container-log4j.properties"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
 name|STDOUT_FNAME
 init|=
 literal|"stdout"
