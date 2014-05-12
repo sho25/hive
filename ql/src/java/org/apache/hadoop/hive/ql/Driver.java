@@ -7578,18 +7578,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|console
-operator|.
-name|printInfo
-argument_list|(
-literal|"Query ID = "
-operator|+
-name|plan
-operator|.
-name|getQueryId
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|int
 name|jobs
 init|=
@@ -7626,6 +7614,18 @@ operator|>
 literal|0
 condition|)
 block|{
+name|console
+operator|.
+name|printInfo
+argument_list|(
+literal|"Query ID = "
+operator|+
+name|plan
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|console
 operator|.
 name|printInfo
