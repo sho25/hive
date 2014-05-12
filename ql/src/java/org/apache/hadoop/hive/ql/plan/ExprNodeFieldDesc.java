@@ -385,6 +385,9 @@ argument_list|(
 name|typeInfo
 argument_list|,
 name|desc
+operator|.
+name|clone
+argument_list|()
 argument_list|,
 name|fieldName
 argument_list|,
