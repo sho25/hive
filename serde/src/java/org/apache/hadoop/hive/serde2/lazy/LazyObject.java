@@ -51,7 +51,7 @@ name|OI
 extends|extends
 name|ObjectInspector
 parameter_list|>
-extends|extends
+implements|implements
 name|LazyObjectBase
 block|{
 specifier|protected

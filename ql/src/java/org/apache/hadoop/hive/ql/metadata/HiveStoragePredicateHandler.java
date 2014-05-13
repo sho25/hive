@@ -85,6 +85,16 @@ name|JobConf
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
 begin_comment
 comment|/**  * HiveStoragePredicateHandler is an optional companion to {@link  * HiveStorageHandler}; it should only be implemented by handlers which  * support decomposition of predicates being pushed down into table scans.  */
 end_comment
@@ -119,6 +129,11 @@ comment|/**      * Portion of predicate to be evaluated by storage handler.  Hiv
 specifier|public
 name|ExprNodeGenericFuncDesc
 name|pushedPredicate
+decl_stmt|;
+comment|/**      * Serialized format for filter      */
+specifier|public
+name|Serializable
+name|pushedPredicateObject
 decl_stmt|;
 comment|/**      * Portion of predicate to be post-evaluated by Hive for any rows      * which are returned by storage handler.      */
 specifier|public

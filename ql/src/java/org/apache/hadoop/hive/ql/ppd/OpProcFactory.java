@@ -4974,6 +4974,15 @@ operator|.
 name|pushedPredicate
 argument_list|)
 expr_stmt|;
+name|tableScanDesc
+operator|.
+name|setFilterObject
+argument_list|(
+name|decomposed
+operator|.
+name|pushedPredicateObject
+argument_list|)
+expr_stmt|;
 return|return
 operator|(
 name|ExprNodeGenericFuncDesc

@@ -1512,6 +1512,17 @@ return|return
 name|inspector
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|getFieldID
+parameter_list|()
+block|{
+return|return
+name|index
+return|;
+block|}
 block|}
 block|}
 end_class

@@ -121,6 +121,17 @@ name|getFieldObjectInspector
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|getFieldID
+parameter_list|()
+block|{
+return|return
+name|structID
+return|;
+block|}
 specifier|public
 name|String
 name|getFieldComment

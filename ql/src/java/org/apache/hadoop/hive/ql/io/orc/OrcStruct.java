@@ -909,6 +909,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|int
+name|getFieldID
+parameter_list|()
+block|{
+return|return
+name|offset
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|String
 name|getFieldComment
 parameter_list|()
