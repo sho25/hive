@@ -85,6 +85,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -18236,6 +18246,17 @@ argument_list|,
 name|out_rwsch
 argument_list|)
 decl_stmt|;
+name|output
+operator|.
+name|setColumnExprMap
+argument_list|(
+name|Collections
+operator|.
+name|emptyMap
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// disable backtracking
 return|return
 name|output
 return|;

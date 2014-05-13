@@ -937,7 +937,7 @@ name|parameters
 argument_list|,
 name|cGBY
 argument_list|,
-name|pGBY
+name|RS
 argument_list|)
 argument_list|)
 expr_stmt|;
