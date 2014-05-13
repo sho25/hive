@@ -1157,6 +1157,15 @@ name|isQueryRunning
 operator|=
 literal|true
 expr_stmt|;
+name|pollTimeout
+operator|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|+
+literal|100000
+expr_stmt|;
 while|while
 condition|(
 name|isQueryRunning
