@@ -134,16 +134,41 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|name
+name|type
 operator|=
-name|name
+name|type
 expr_stmt|;
+if|if
+condition|(
+name|type
+operator|==
+name|HivePrincipalType
+operator|.
+name|ROLE
+condition|)
+block|{
+comment|// lower case role to make operations on it case insensitive
+comment|// when the old default authorization gets deprecated, this can move
+comment|// to ObjectStore code base
 name|this
 operator|.
-name|type
+name|name
 operator|=
-name|type
+name|name
+operator|.
+name|toLowerCase
+argument_list|()
 expr_stmt|;
+block|}
+else|else
+block|{
+name|this
+operator|.
+name|name
+operator|=
+name|name
+expr_stmt|;
+block|}
 block|}
 specifier|public
 name|String
