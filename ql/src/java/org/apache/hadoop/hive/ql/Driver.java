@@ -9512,7 +9512,7 @@ if|if
 condition|(
 name|bos
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 operator|>
 literal|0
@@ -9532,7 +9532,7 @@ literal|0
 argument_list|,
 name|bos
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 argument_list|,
 literal|"UTF-8"

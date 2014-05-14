@@ -304,6 +304,23 @@ name|getFieldsAsList
 argument_list|()
 return|;
 block|}
+specifier|public
+name|StructField
+name|getStructFieldRef
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+return|return
+name|fields
+operator|.
+name|get
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

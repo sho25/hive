@@ -217,7 +217,7 @@ block|}
 argument_list|)
 comment|/**    * Loads the table container. Only used on MR path.    * @param in Input stream.    * @return Loaded table.    */
 specifier|public
-name|MapJoinTableContainer
+name|MapJoinPersistableTableContainer
 name|load
 parameter_list|(
 name|ObjectInputStream
@@ -242,7 +242,7 @@ operator|.
 name|getSerDe
 argument_list|()
 decl_stmt|;
-name|MapJoinTableContainer
+name|MapJoinPersistableTableContainer
 name|tableContainer
 decl_stmt|;
 try|try
@@ -455,7 +455,7 @@ parameter_list|(
 name|ObjectOutputStream
 name|out
 parameter_list|,
-name|MapJoinTableContainer
+name|MapJoinPersistableTableContainer
 name|tableContainer
 parameter_list|)
 throws|throws
@@ -619,7 +619,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|MapJoinTableContainer
+name|MapJoinPersistableTableContainer
 name|tableContainer
 init|=
 operator|new
@@ -661,7 +661,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-name|MapJoinTableContainer
+name|MapJoinPersistableTableContainer
 name|create
 parameter_list|(
 name|String
@@ -689,7 +689,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|MapJoinTableContainer
+name|MapJoinPersistableTableContainer
 argument_list|>
 name|clazz
 init|=
@@ -698,7 +698,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|MapJoinTableContainer
+name|MapJoinPersistableTableContainer
 argument_list|>
 operator|)
 name|Class
@@ -712,7 +712,7 @@ name|Constructor
 argument_list|<
 name|?
 extends|extends
-name|MapJoinTableContainer
+name|MapJoinPersistableTableContainer
 argument_list|>
 name|constructor
 init|=

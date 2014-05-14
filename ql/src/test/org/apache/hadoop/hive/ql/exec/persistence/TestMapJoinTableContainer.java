@@ -219,7 +219,7 @@ name|ObjectInputStream
 name|in
 decl_stmt|;
 specifier|private
-name|MapJoinTableContainer
+name|MapJoinPersistableTableContainer
 name|container
 decl_stmt|;
 specifier|private

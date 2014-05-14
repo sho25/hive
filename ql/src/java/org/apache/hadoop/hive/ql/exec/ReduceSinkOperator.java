@@ -607,6 +607,12 @@ index|[]
 name|inputAliases
 decl_stmt|;
 comment|// input aliases of this RS for join (used for PPD)
+specifier|private
+name|boolean
+name|skipTag
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|void
 name|setInputAliases
@@ -959,6 +965,13 @@ operator|(
 name|byte
 operator|)
 name|tag
+expr_stmt|;
+name|skipTag
+operator|=
+name|conf
+operator|.
+name|getSkipTag
+argument_list|()
 expr_stmt|;
 name|LOG
 operator|.
@@ -2365,6 +2378,8 @@ name|tag
 operator|==
 operator|-
 literal|1
+operator|||
+name|skipTag
 condition|)
 block|{
 name|keyWritable
@@ -2667,6 +2682,21 @@ block|{
 return|return
 literal|false
 return|;
+block|}
+specifier|public
+name|void
+name|setSkipTag
+parameter_list|(
+name|boolean
+name|value
+parameter_list|)
+block|{
+name|this
+operator|.
+name|skipTag
+operator|=
+name|value
+expr_stmt|;
 block|}
 block|}
 end_class

@@ -1211,7 +1211,7 @@ name|count
 argument_list|,
 name|serializeVectorStream
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 operator|-
 name|count
@@ -1221,7 +1221,7 @@ name|count
 operator|=
 name|serializeVectorStream
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 expr_stmt|;
 block|}

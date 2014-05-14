@@ -1327,7 +1327,7 @@ literal|0
 argument_list|,
 name|bos_
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;

@@ -554,7 +554,7 @@ block|}
 return|return
 name|output
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 operator|>
 literal|0

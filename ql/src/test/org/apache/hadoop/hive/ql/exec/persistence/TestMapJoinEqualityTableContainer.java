@@ -205,7 +205,7 @@ argument_list|)
 block|}
 decl_stmt|;
 specifier|private
-name|MapJoinTableContainer
+name|HashMapWrapper
 name|container
 decl_stmt|;
 specifier|private
