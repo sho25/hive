@@ -490,7 +490,7 @@ name|KeyWrapper
 name|newKeys
 decl_stmt|;
 specifier|transient
-name|HiveConf
+name|Configuration
 name|hiveConf
 decl_stmt|;
 comment|/* 	 * 1. Find out if the operator is invoked at Map-Side or Reduce-side 	 * 2. Get the deserialized QueryDef 	 * 3. Reconstruct the transient variables in QueryDef 	 * 4. Create input partition to store rows coming from previous operator 	 */
@@ -508,15 +508,7 @@ name|HiveException
 block|{
 name|hiveConf
 operator|=
-operator|new
-name|HiveConf
-argument_list|(
 name|jobConf
-argument_list|,
-name|PTFOperator
-operator|.
-name|class
-argument_list|)
 expr_stmt|;
 comment|// if the parent is ExtractOperator, this invocation is from reduce-side
 name|Operator
@@ -555,8 +547,6 @@ name|inputObjInspectors
 index|[
 literal|0
 index|]
-argument_list|,
-name|hiveConf
 argument_list|,
 name|isMapOperator
 argument_list|)
@@ -842,7 +832,7 @@ specifier|protected
 name|void
 name|reconstructQueryDef
 parameter_list|(
-name|HiveConf
+name|Configuration
 name|hiveConf
 parameter_list|)
 throws|throws
@@ -1373,9 +1363,6 @@ parameter_list|(
 name|ObjectInspector
 name|oi
 parameter_list|,
-name|HiveConf
-name|hiveConf
-parameter_list|,
 name|boolean
 name|isMapSide
 parameter_list|)
@@ -1388,14 +1375,6 @@ init|=
 name|conf
 operator|.
 name|getStartOfChain
-argument_list|()
-decl_stmt|;
-name|TableFunctionEvaluator
-name|tEval
-init|=
-name|tabDef
-operator|.
-name|getTFunction
 argument_list|()
 decl_stmt|;
 name|PTFPartition

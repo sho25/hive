@@ -55,6 +55,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -237,7 +251,7 @@ init|=
 literal|false
 decl_stmt|;
 specifier|transient
-name|HiveConf
+name|Configuration
 name|cfg
 decl_stmt|;
 static|static
@@ -373,7 +387,7 @@ name|isMapSide
 expr_stmt|;
 block|}
 specifier|public
-name|HiveConf
+name|Configuration
 name|getCfg
 parameter_list|()
 block|{
@@ -385,7 +399,7 @@ specifier|public
 name|void
 name|setCfg
 parameter_list|(
-name|HiveConf
+name|Configuration
 name|cfg
 parameter_list|)
 block|{

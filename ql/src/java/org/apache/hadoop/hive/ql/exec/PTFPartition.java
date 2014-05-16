@@ -85,6 +85,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -288,7 +302,7 @@ decl_stmt|;
 specifier|protected
 name|PTFPartition
 parameter_list|(
-name|HiveConf
+name|Configuration
 name|cfg
 parameter_list|,
 name|SerDe
@@ -688,6 +702,8 @@ name|size
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|hasNext
@@ -702,6 +718,8 @@ operator|<
 name|end
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|next
@@ -739,6 +757,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|remove
@@ -1016,7 +1036,7 @@ specifier|static
 name|PTFPartition
 name|create
 parameter_list|(
-name|HiveConf
+name|Configuration
 name|cfg
 parameter_list|,
 name|SerDe
