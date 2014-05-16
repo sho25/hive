@@ -70,26 +70,6 @@ import|;
 end_import
 
 begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_ORC_ZEROCOPY
-import|;
-end_import
-
-begin_import
 import|import
 name|java
 operator|.
@@ -271,9 +251,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|common
 operator|.
-name|HiveConf
+name|type
+operator|.
+name|HiveDecimal
 import|;
 end_import
 
@@ -287,11 +269,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
+name|conf
 operator|.
-name|type
-operator|.
-name|HiveDecimal
+name|HiveConf
 import|;
 end_import
 
@@ -365,7 +345,43 @@ name|serde2
 operator|.
 name|io
 operator|.
+name|HiveDecimalWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
 name|ShortWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|TimestampWritable
 import|;
 end_import
 
@@ -4442,7 +4458,7 @@ argument_list|()
 argument_list|,
 operator|(
 operator|(
-name|Timestamp
+name|TimestampWritable
 operator|)
 name|row
 operator|)
@@ -10391,11 +10407,15 @@ name|setFieldValue
 argument_list|(
 literal|0
 argument_list|,
+operator|new
+name|TimestampWritable
+argument_list|(
 name|Timestamp
 operator|.
 name|valueOf
 argument_list|(
 literal|"2000-03-12 15:00:00"
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10415,7 +10435,11 @@ name|setFieldValue
 argument_list|(
 literal|2
 argument_list|,
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|value
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|union
@@ -10447,11 +10471,15 @@ name|setFieldValue
 argument_list|(
 literal|0
 argument_list|,
+operator|new
+name|TimestampWritable
+argument_list|(
 name|Timestamp
 operator|.
 name|valueOf
 argument_list|(
 literal|"2000-03-20 12:00:00.123456789"
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10486,7 +10514,11 @@ name|setFieldValue
 argument_list|(
 literal|2
 argument_list|,
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|value
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|writer
@@ -10599,11 +10631,15 @@ name|setFieldValue
 argument_list|(
 literal|0
 argument_list|,
+operator|new
+name|TimestampWritable
+argument_list|(
 name|Timestamp
 operator|.
 name|valueOf
 argument_list|(
 literal|"1900-01-01 00:00:00"
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10622,7 +10658,11 @@ name|setFieldValue
 argument_list|(
 literal|2
 argument_list|,
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|value
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|writer
@@ -10662,6 +10702,9 @@ name|setFieldValue
 argument_list|(
 literal|0
 argument_list|,
+operator|new
+name|TimestampWritable
+argument_list|(
 name|Timestamp
 operator|.
 name|valueOf
@@ -10671,6 +10714,7 @@ operator|+
 literal|"-05-05 12:34:56."
 operator|+
 name|i
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10758,7 +10802,11 @@ name|setFieldValue
 argument_list|(
 literal|2
 argument_list|,
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|value
+argument_list|)
 argument_list|)
 expr_stmt|;
 if|if
@@ -11204,11 +11252,15 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+operator|new
+name|TimestampWritable
+argument_list|(
 name|Timestamp
 operator|.
 name|valueOf
 argument_list|(
 literal|"2000-03-12 15:00:00"
+argument_list|)
 argument_list|)
 argument_list|,
 name|row
@@ -11257,11 +11309,15 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|HiveDecimal
 operator|.
 name|create
 argument_list|(
 literal|"12345678.6547456"
+argument_list|)
 argument_list|)
 argument_list|,
 name|row
@@ -11296,11 +11352,15 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+operator|new
+name|TimestampWritable
+argument_list|(
 name|Timestamp
 operator|.
 name|valueOf
 argument_list|(
 literal|"2000-03-20 12:00:00.123456789"
+argument_list|)
 argument_list|)
 argument_list|,
 name|row
@@ -11337,11 +11397,15 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|HiveDecimal
 operator|.
 name|create
 argument_list|(
 literal|"-5643.234"
+argument_list|)
 argument_list|)
 argument_list|,
 name|row
@@ -11538,11 +11602,15 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+operator|new
+name|TimestampWritable
+argument_list|(
 name|Timestamp
 operator|.
 name|valueOf
 argument_list|(
 literal|"1900-01-01 00:00:00"
+argument_list|)
 argument_list|)
 argument_list|,
 name|row
@@ -11569,11 +11637,15 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|HiveDecimal
 operator|.
 name|create
 argument_list|(
 literal|"10000000000000000000"
+argument_list|)
 argument_list|)
 argument_list|,
 name|row
@@ -11621,6 +11693,9 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+operator|new
+name|TimestampWritable
+argument_list|(
 name|Timestamp
 operator|.
 name|valueOf
@@ -11630,6 +11705,7 @@ operator|+
 literal|"-05-05 12:34:56."
 operator|+
 name|i
+argument_list|)
 argument_list|)
 argument_list|,
 name|row
@@ -11714,6 +11790,9 @@ expr_stmt|;
 block|}
 name|assertEquals
 argument_list|(
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|HiveDecimal
 operator|.
 name|create
@@ -11731,6 +11810,7 @@ operator|.
 name|nextInt
 argument_list|(
 literal|18
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|,
@@ -11919,11 +11999,15 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+operator|new
+name|TimestampWritable
+argument_list|(
 name|Timestamp
 operator|.
 name|valueOf
 argument_list|(
 literal|"2000-03-20 12:00:00.123456789"
+argument_list|)
 argument_list|)
 argument_list|,
 name|row
@@ -11960,11 +12044,15 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|HiveDecimal
 operator|.
 name|create
 argument_list|(
 literal|"-5643.234"
+argument_list|)
 argument_list|)
 argument_list|,
 name|row

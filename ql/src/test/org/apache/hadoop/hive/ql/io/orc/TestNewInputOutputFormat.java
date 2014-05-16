@@ -975,7 +975,7 @@ literal|" {-100000, in}, {1234, hat}],"
 operator|+
 literal|" {chani={5, chani}, mauddib={1, mauddib}},"
 operator|+
-literal|" 2000-03-12 15:00:01.0, 12345678.6547457}"
+literal|" 2000-03-12 15:00:01, 12345678.6547457}"
 argument_list|)
 expr_stmt|;
 name|localFs

@@ -2676,7 +2676,7 @@ case|:
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaTimestampObjectInspector
+name|writableTimestampObjectInspector
 return|;
 case|case
 name|DATE
@@ -2684,7 +2684,7 @@ case|:
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaDateObjectInspector
+name|writableDateObjectInspector
 return|;
 case|case
 name|DECIMAL
@@ -2692,7 +2692,7 @@ case|:
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|getPrimitiveJavaObjectInspector
+name|getPrimitiveWritableObjectInspector
 argument_list|(
 operator|(
 name|PrimitiveTypeInfo
@@ -2974,7 +2974,7 @@ case|:
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaTimestampObjectInspector
+name|writableTimestampObjectInspector
 return|;
 case|case
 name|DATE
@@ -2982,7 +2982,7 @@ case|:
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaDateObjectInspector
+name|writableDateObjectInspector
 return|;
 case|case
 name|DECIMAL
@@ -3024,7 +3024,7 @@ decl_stmt|;
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|getPrimitiveJavaObjectInspector
+name|getPrimitiveWritableObjectInspector
 argument_list|(
 name|TypeInfoFactory
 operator|.
