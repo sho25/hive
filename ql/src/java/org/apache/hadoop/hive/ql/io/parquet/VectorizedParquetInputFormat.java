@@ -717,9 +717,9 @@ literal|0
 init|;
 name|i
 operator|<
-name|outputBatch
+name|writables
 operator|.
-name|numCols
+name|length
 condition|;
 operator|++
 name|i
