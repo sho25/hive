@@ -1932,8 +1932,6 @@ argument_list|(
 name|hconf
 argument_list|)
 decl_stmt|;
-comment|// for local file system in Hadoop-0.17.2.1, it will throw IOException when
-comment|// file not existing.
 try|try
 block|{
 if|if
@@ -1976,31 +1974,6 @@ throw|throw
 name|e
 throw|;
 block|}
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-if|if
-condition|(
-operator|!
-name|fs
-operator|.
-name|exists
-argument_list|(
-name|outPath
-argument_list|)
-operator|&&
-name|ignoreNonExisting
-condition|)
-block|{
-return|return;
-block|}
-throw|throw
-name|e
-throw|;
 block|}
 block|}
 specifier|private
