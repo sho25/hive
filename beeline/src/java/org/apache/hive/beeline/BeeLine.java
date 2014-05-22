@@ -4681,15 +4681,23 @@ parameter_list|)
 block|{
 comment|// SQL92 comment prefix is "--"
 comment|// beeline also supports shell-style "#" prefix
-return|return
+name|String
+name|lineTrimmed
+init|=
 name|line
+operator|.
+name|trim
+argument_list|()
+decl_stmt|;
+return|return
+name|lineTrimmed
 operator|.
 name|startsWith
 argument_list|(
 literal|"#"
 argument_list|)
 operator|||
-name|line
+name|lineTrimmed
 operator|.
 name|startsWith
 argument_list|(
