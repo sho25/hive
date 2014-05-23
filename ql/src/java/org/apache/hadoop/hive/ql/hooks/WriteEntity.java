@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -123,16 +133,6 @@ name|AlterTableDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
 begin_comment
 comment|/**  * This class encapsulates an object that is being written to by the query. This  * object may be a table, partition, dfs directory or a local directory.  */
 end_comment
@@ -174,6 +174,10 @@ block|,
 name|UPDATE
 block|,
 name|DELETE
+block|,
+name|PATH_WRITE
+block|,
+comment|// Write to a URI, no locking done for this
 block|}
 empty_stmt|;
 specifier|private
@@ -359,6 +363,14 @@ operator|.
 name|isTempURI
 operator|=
 name|isTemp
+expr_stmt|;
+name|this
+operator|.
+name|writeType
+operator|=
+name|WriteType
+operator|.
+name|PATH_WRITE
 expr_stmt|;
 block|}
 comment|/**    * Determine which type of write this is.  This is needed by the lock    * manager so it can understand what kind of lock to acquire.    * @return write type    */
