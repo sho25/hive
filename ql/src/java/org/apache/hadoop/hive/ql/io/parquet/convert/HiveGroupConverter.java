@@ -137,11 +137,6 @@ name|type
 operator|.
 name|asPrimitiveType
 argument_list|()
-operator|.
-name|getPrimitiveTypeName
-argument_list|()
-operator|.
-name|javaType
 argument_list|,
 name|index
 argument_list|,

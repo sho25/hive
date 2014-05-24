@@ -409,6 +409,29 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testDecimalType
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|testConversion
+argument_list|(
+literal|"a"
+argument_list|,
+literal|"decimal(5,2)"
+argument_list|,
+literal|"message hive_schema {\n"
+operator|+
+literal|"  optional binary a (DECIMAL(5,2));\n"
+operator|+
+literal|"}\n"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testArray
 parameter_list|()
 throws|throws
@@ -440,6 +463,37 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testArrayDecimal
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|testConversion
+argument_list|(
+literal|"arrayCol"
+argument_list|,
+literal|"array<decimal(5,2)>"
+argument_list|,
+literal|"message hive_schema {\n"
+operator|+
+literal|"  optional group arrayCol (LIST) {\n"
+operator|+
+literal|"    repeated group bag {\n"
+operator|+
+literal|"      optional binary array_element (DECIMAL(5,2));\n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  }\n"
+operator|+
+literal|"}\n"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testStruct
 parameter_list|()
 throws|throws
@@ -449,7 +503,7 @@ name|testConversion
 argument_list|(
 literal|"structCol"
 argument_list|,
-literal|"struct<a:int,b:double,c:boolean>"
+literal|"struct<a:int,b:double,c:boolean,d:decimal(5,2)>"
 argument_list|,
 literal|"message hive_schema {\n"
 operator|+
@@ -460,6 +514,8 @@ operator|+
 literal|"    optional double b;\n"
 operator|+
 literal|"    optional boolean c;\n"
+operator|+
+literal|"    optional binary d (DECIMAL(5,2));\n"
 operator|+
 literal|"  }\n"
 operator|+
@@ -491,6 +547,39 @@ operator|+
 literal|"      required binary key;\n"
 operator|+
 literal|"      optional binary value;\n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  }\n"
+operator|+
+literal|"}\n"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMapDecimal
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|testConversion
+argument_list|(
+literal|"mapCol"
+argument_list|,
+literal|"map<string,decimal(5,2)>"
+argument_list|,
+literal|"message hive_schema {\n"
+operator|+
+literal|"  optional group mapCol (MAP) {\n"
+operator|+
+literal|"    repeated group map (MAP_KEY_VALUE) {\n"
+operator|+
+literal|"      required binary key;\n"
+operator|+
+literal|"      optional binary value (DECIMAL(5,2));\n"
 operator|+
 literal|"    }\n"
 operator|+
