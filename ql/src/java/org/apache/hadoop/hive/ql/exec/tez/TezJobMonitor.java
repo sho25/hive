@@ -525,11 +525,14 @@ argument_list|(
 literal|"Shutting down tez session."
 argument_list|)
 expr_stmt|;
-name|s
+name|TezSessionPoolManager
+operator|.
+name|getInstance
+argument_list|()
 operator|.
 name|close
 argument_list|(
-literal|false
+name|s
 argument_list|)
 expr_stmt|;
 block|}
