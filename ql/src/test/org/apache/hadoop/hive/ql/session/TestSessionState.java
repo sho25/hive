@@ -470,9 +470,14 @@ argument_list|)
 expr_stmt|;
 name|SessionState
 operator|.
-name|registerJar
+name|registerJars
+argument_list|(
+name|Arrays
+operator|.
+name|asList
 argument_list|(
 name|jar
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|loader

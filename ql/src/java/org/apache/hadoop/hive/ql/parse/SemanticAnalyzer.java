@@ -16425,23 +16425,6 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|filePath
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Could not download the resource: "
-operator|+
-name|progName
-argument_list|)
-throw|;
-block|}
 name|Path
 name|p
 init|=
