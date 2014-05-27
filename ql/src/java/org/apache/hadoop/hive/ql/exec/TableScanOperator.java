@@ -1367,26 +1367,6 @@ return|return
 literal|"TS"
 return|;
 block|}
-comment|// This 'neededColumnIDs' field is included in this operator class instead of
-comment|// its desc class.The reason is that 1)tableScanDesc can not be instantiated,
-comment|// and 2) it will fail some join and union queries if this is added forcibly
-comment|// into tableScanDesc.
-comment|// Both neededColumnIDs and neededColumns should never be null.
-comment|// When neededColumnIDs is an empty list,
-comment|// it means no needed column (e.g. we do not need any column to evaluate
-comment|// SELECT count(*) FROM t).
-name|List
-argument_list|<
-name|Integer
-argument_list|>
-name|neededColumnIDs
-decl_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|neededColumns
-decl_stmt|;
 specifier|public
 name|void
 name|setNeededColumnIDs
@@ -1398,9 +1378,12 @@ argument_list|>
 name|orign_columns
 parameter_list|)
 block|{
-name|neededColumnIDs
-operator|=
+name|conf
+operator|.
+name|setNeededColumnIDs
+argument_list|(
 name|orign_columns
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -1412,7 +1395,10 @@ name|getNeededColumnIDs
 parameter_list|()
 block|{
 return|return
-name|neededColumnIDs
+name|conf
+operator|.
+name|getNeededColumnIDs
+argument_list|()
 return|;
 block|}
 specifier|public
@@ -1426,9 +1412,12 @@ argument_list|>
 name|columnNames
 parameter_list|)
 block|{
-name|neededColumns
-operator|=
+name|conf
+operator|.
+name|setNeededColumns
+argument_list|(
 name|columnNames
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -1440,7 +1429,44 @@ name|getNeededColumns
 parameter_list|()
 block|{
 return|return
-name|neededColumns
+name|conf
+operator|.
+name|getNeededColumns
+argument_list|()
+return|;
+block|}
+specifier|public
+name|void
+name|setReferencedColumns
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|referencedColumns
+parameter_list|)
+block|{
+name|conf
+operator|.
+name|setReferencedColumns
+argument_list|(
+name|referencedColumns
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getReferencedColumns
+parameter_list|()
+block|{
+return|return
+name|conf
+operator|.
+name|getReferencedColumns
+argument_list|()
 return|;
 block|}
 annotation|@
@@ -1819,6 +1845,21 @@ name|String
 argument_list|>
 argument_list|(
 name|getNeededColumns
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|ts
+operator|.
+name|setReferencedColumns
+argument_list|(
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|(
+name|getReferencedColumns
 argument_list|()
 argument_list|)
 argument_list|)

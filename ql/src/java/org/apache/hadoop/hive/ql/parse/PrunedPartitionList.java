@@ -108,6 +108,14 @@ name|Partition
 argument_list|>
 name|partitions
 decl_stmt|;
+comment|/** partition columns referred by pruner expr */
+specifier|private
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|referred
+decl_stmt|;
 comment|/** Whether there are partitions in the list that may or may not satisfy the criteria. */
 specifier|private
 name|boolean
@@ -125,6 +133,12 @@ name|Partition
 argument_list|>
 name|partitions
 parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|referred
+parameter_list|,
 name|boolean
 name|hasUnknowns
 parameter_list|)
@@ -134,6 +148,12 @@ operator|.
 name|source
 operator|=
 name|source
+expr_stmt|;
+name|this
+operator|.
+name|referred
+operator|=
+name|referred
 expr_stmt|;
 name|this
 operator|.
@@ -198,6 +218,18 @@ parameter_list|()
 block|{
 return|return
 name|hasUnknowns
+return|;
+block|}
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getReferredPartCols
+parameter_list|()
+block|{
+return|return
+name|referred
 return|;
 block|}
 block|}

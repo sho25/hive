@@ -2385,7 +2385,7 @@ name|tName
 argument_list|)
 return|;
 block|}
-comment|/**    * This method is used only for the anlayze command to get the partition specs    */
+comment|/**    * This method is used only for the analyze command to get the partition specs    */
 specifier|public
 name|tableSpec
 name|getTableSpec
