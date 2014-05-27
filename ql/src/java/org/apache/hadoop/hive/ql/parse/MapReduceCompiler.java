@@ -2160,6 +2160,16 @@ argument_list|,
 name|rootTasks
 argument_list|)
 decl_stmt|;
+name|tempParseContext
+operator|.
+name|setFetchTask
+argument_list|(
+name|pCtx
+operator|.
+name|getFetchTask
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|GenMRProcContext
 name|procCtx
 init|=

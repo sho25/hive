@@ -2548,6 +2548,16 @@ argument_list|,
 name|jc
 argument_list|)
 decl_stmt|;
+name|skewJoinMapJoinTask
+operator|.
+name|setFetchSource
+argument_list|(
+name|currTask
+operator|.
+name|isFetchSource
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|bigKeysDirToTaskMap
 operator|.
 name|put

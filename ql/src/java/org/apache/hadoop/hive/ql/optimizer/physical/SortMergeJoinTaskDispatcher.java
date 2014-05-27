@@ -2007,6 +2007,16 @@ operator|.
 name|CONVERTED_MAPJOIN
 argument_list|)
 expr_stmt|;
+name|newTask
+operator|.
+name|setFetchSource
+argument_list|(
+name|currTask
+operator|.
+name|isFetchSource
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// set up backup task
 name|newTask
 operator|.
