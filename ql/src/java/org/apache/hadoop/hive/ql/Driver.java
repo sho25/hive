@@ -9023,6 +9023,17 @@ operator|.
 name|get
 argument_list|()
 operator|.
+name|getLineageState
+argument_list|()
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
 name|getHiveHistory
 argument_list|()
 operator|.
