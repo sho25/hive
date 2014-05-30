@@ -95,6 +95,28 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|parquet
+operator|.
+name|serde
+operator|.
+name|ParquetHiveSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|typeinfo
@@ -158,6 +180,28 @@ operator|.
 name|schema
 operator|.
 name|OriginalType
+import|;
+end_import
+
+begin_import
+import|import
+name|parquet
+operator|.
+name|schema
+operator|.
+name|Types
+import|;
+end_import
+
+begin_import
+import|import
+name|parquet
+operator|.
+name|schema
+operator|.
+name|PrimitiveType
+operator|.
+name|PrimitiveTypeName
 import|;
 end_import
 
@@ -422,7 +466,7 @@ literal|"decimal(5,2)"
 argument_list|,
 literal|"message hive_schema {\n"
 operator|+
-literal|"  optional binary a (DECIMAL(5,2));\n"
+literal|"  optional fixed_len_byte_array(3) a (DECIMAL(5,2));\n"
 operator|+
 literal|"}\n"
 argument_list|)
@@ -480,7 +524,7 @@ literal|"  optional group arrayCol (LIST) {\n"
 operator|+
 literal|"    repeated group bag {\n"
 operator|+
-literal|"      optional binary array_element (DECIMAL(5,2));\n"
+literal|"      optional fixed_len_byte_array(3) array_element (DECIMAL(5,2));\n"
 operator|+
 literal|"    }\n"
 operator|+
@@ -515,7 +559,7 @@ literal|"    optional double b;\n"
 operator|+
 literal|"    optional boolean c;\n"
 operator|+
-literal|"    optional binary d (DECIMAL(5,2));\n"
+literal|"    optional fixed_len_byte_array(3) d (DECIMAL(5,2));\n"
 operator|+
 literal|"  }\n"
 operator|+
@@ -579,7 +623,7 @@ literal|"    repeated group map (MAP_KEY_VALUE) {\n"
 operator|+
 literal|"      required binary key;\n"
 operator|+
-literal|"      optional binary value (DECIMAL(5,2));\n"
+literal|"      optional fixed_len_byte_array(3) value (DECIMAL(5,2));\n"
 operator|+
 literal|"    }\n"
 operator|+
