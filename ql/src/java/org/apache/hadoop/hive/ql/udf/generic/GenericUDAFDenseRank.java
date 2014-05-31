@@ -153,7 +153,7 @@ decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
-name|GenericUDAFRankEvaluator
+name|GenericUDAFAbstractRankEvaluator
 name|createEvaluator
 parameter_list|()
 block|{
