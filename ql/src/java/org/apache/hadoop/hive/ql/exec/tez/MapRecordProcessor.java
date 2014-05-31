@@ -1290,6 +1290,19 @@ block|}
 comment|// detecting failed executions by exceptions thrown by the operator tree
 try|try
 block|{
+if|if
+condition|(
+name|mapOp
+operator|==
+literal|null
+operator|||
+name|mapWork
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 name|mapOp
 operator|.
 name|close
