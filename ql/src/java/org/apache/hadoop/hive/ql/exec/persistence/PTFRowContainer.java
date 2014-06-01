@@ -1441,6 +1441,8 @@ argument_list|,
 name|valueClass
 argument_list|,
 name|isCompressed
+argument_list|,
+name|progress
 argument_list|)
 decl_stmt|;
 return|return

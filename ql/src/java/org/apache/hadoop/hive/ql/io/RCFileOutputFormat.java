@@ -662,6 +662,8 @@ argument_list|,
 name|finalOutPath
 argument_list|,
 name|isCompressed
+argument_list|,
+name|progress
 argument_list|)
 decl_stmt|;
 return|return

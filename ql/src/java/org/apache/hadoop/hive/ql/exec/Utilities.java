@@ -2295,6 +2295,20 @@ name|hadoop
 operator|.
 name|util
 operator|.
+name|Progressable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
 name|ReflectionUtils
 import|;
 end_import
@@ -8733,6 +8747,9 @@ argument_list|<
 name|?
 argument_list|>
 name|valClass
+parameter_list|,
+name|Progressable
+name|progressable
 parameter_list|)
 throws|throws
 name|IOException
@@ -8761,6 +8778,8 @@ argument_list|,
 name|valClass
 argument_list|,
 name|isCompressed
+argument_list|,
+name|progressable
 argument_list|)
 return|;
 block|}
@@ -8795,6 +8814,9 @@ name|valClass
 parameter_list|,
 name|boolean
 name|isCompressed
+parameter_list|,
+name|Progressable
+name|progressable
 parameter_list|)
 throws|throws
 name|IOException
@@ -8877,6 +8899,8 @@ argument_list|,
 name|compressionType
 argument_list|,
 name|codec
+argument_list|,
+name|progressable
 argument_list|)
 operator|)
 return|;
@@ -8900,6 +8924,9 @@ name|file
 parameter_list|,
 name|boolean
 name|isCompressed
+parameter_list|,
+name|Progressable
+name|progressable
 parameter_list|)
 throws|throws
 name|IOException
@@ -8962,7 +8989,7 @@ name|jc
 argument_list|,
 name|file
 argument_list|,
-literal|null
+name|progressable
 argument_list|,
 name|codec
 argument_list|)

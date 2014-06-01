@@ -279,6 +279,8 @@ operator|.
 name|create
 argument_list|(
 name|outPath
+argument_list|,
+name|progress
 argument_list|)
 decl_stmt|;
 return|return

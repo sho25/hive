@@ -331,6 +331,8 @@ operator|.
 name|class
 argument_list|,
 name|isCompressed
+argument_list|,
+name|progress
 argument_list|)
 decl_stmt|;
 name|keyWritable

@@ -386,6 +386,8 @@ operator|.
 name|create
 argument_list|(
 name|outPath
+argument_list|,
+name|progress
 argument_list|)
 argument_list|,
 name|isCompressed
