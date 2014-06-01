@@ -2117,6 +2117,42 @@ index|[
 name|bytes
 index|]
 decl_stmt|;
+if|if
+condition|(
+name|hd
+operator|.
+name|signum
+argument_list|()
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+comment|// For negative number, initializing bits to 1
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|bytes
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|tgt
+index|[
+name|i
+index|]
+operator||=
+literal|0xFF
+expr_stmt|;
+block|}
+block|}
 name|System
 operator|.
 name|arraycopy
@@ -2138,7 +2174,7 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
-comment|// Padding leading zeroes.
+comment|// Padding leading zeroes/ones.
 return|return
 operator|new
 name|BinaryWritable
