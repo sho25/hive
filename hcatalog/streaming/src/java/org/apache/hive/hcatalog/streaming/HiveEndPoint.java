@@ -2410,7 +2410,7 @@ argument_list|(
 literal|0
 argument_list|)
 operator|+
-literal|"src/gen/thrift"
+literal|"..."
 operator|+
 name|txnIds
 operator|.
@@ -2424,7 +2424,7 @@ operator|-
 literal|1
 argument_list|)
 operator|+
-literal|"] on endPoint= "
+literal|"] on endPoint = "
 operator|+
 name|endPt
 return|;
