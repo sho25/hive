@@ -14623,6 +14623,12 @@ return|return
 name|base
 return|;
 case|case
+name|CHAR
+case|:
+case|case
+name|VARCHAR
+case|:
+case|case
 name|STRING
 case|:
 if|if
