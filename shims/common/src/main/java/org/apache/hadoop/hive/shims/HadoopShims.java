@@ -1806,6 +1806,16 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+specifier|public
+name|void
+name|getMergedCredentials
+parameter_list|(
+name|JobConf
+name|jobConf
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 block|}
 end_interface
 

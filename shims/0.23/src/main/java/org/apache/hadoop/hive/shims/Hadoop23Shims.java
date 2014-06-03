@@ -1441,6 +1441,8 @@ block|}
 return|;
 block|}
 comment|/**    * Returns a shim to wrap MiniMrCluster    */
+annotation|@
+name|Override
 specifier|public
 name|MiniMrShim
 name|getMiniMrCluster
@@ -1700,6 +1702,8 @@ block|}
 block|}
 block|}
 comment|/**    * Returns a shim to wrap MiniMrTez    */
+annotation|@
+name|Override
 specifier|public
 name|MiniMrShim
 name|getMiniTezCluster
@@ -2046,6 +2050,8 @@ comment|// Don't move this code to the parent class. There's a binary
 comment|// incompatibility between hadoop 1 and 2 wrt MiniDFSCluster and we
 comment|// need to have two different shim classes even though they are
 comment|// exactly the same.
+annotation|@
+name|Override
 specifier|public
 name|HadoopShims
 operator|.
@@ -2118,6 +2124,8 @@ operator|=
 name|cluster
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|FileSystem
 name|getFileSystem
@@ -2132,6 +2140,8 @@ name|getFileSystem
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|shutdown
@@ -3933,6 +3943,35 @@ argument_list|,
 name|conf
 argument_list|)
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|getMergedCredentials
+parameter_list|(
+name|JobConf
+name|jobConf
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|jobConf
+operator|.
+name|getCredentials
+argument_list|()
+operator|.
+name|mergeAll
+argument_list|(
+name|UserGroupInformation
+operator|.
+name|getCurrentUser
+argument_list|()
+operator|.
+name|getCredentials
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

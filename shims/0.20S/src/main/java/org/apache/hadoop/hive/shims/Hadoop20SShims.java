@@ -1092,6 +1092,8 @@ block|}
 return|;
 block|}
 comment|/**    * Returns a shim to wrap MiniMrCluster    */
+annotation|@
+name|Override
 specifier|public
 name|MiniMrShim
 name|getMiniMrCluster
@@ -1319,6 +1321,8 @@ comment|// Don't move this code to the parent class. There's a binary
 comment|// incompatibility between hadoop 1 and 2 wrt MiniDFSCluster and we
 comment|// need to have two different shim classes even though they are
 comment|// exactly the same.
+annotation|@
+name|Override
 specifier|public
 name|HadoopShims
 operator|.
@@ -1387,6 +1391,8 @@ operator|=
 name|cluster
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|FileSystem
 name|getFileSystem
@@ -1401,6 +1407,8 @@ name|getFileSystem
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|shutdown
@@ -2829,6 +2837,26 @@ expr_stmt|;
 return|return
 name|fs
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|getMergedCredentials
+parameter_list|(
+name|JobConf
+name|jobConf
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Merging of credentials not supported in this version of hadoop"
+argument_list|)
+throw|;
 block|}
 block|}
 end_class

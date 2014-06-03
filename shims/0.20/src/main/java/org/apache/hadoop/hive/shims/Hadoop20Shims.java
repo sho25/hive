@@ -797,6 +797,8 @@ implements|implements
 name|HadoopShims
 block|{
 comment|/**    * Returns a shim to wrap MiniMrCluster    */
+annotation|@
+name|Override
 specifier|public
 name|MiniMrShim
 name|getMiniMrCluster
@@ -966,6 +968,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|HadoopShims
 operator|.
@@ -1034,6 +1038,8 @@ operator|=
 name|cluster
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|FileSystem
 name|getFileSystem
@@ -1048,6 +1054,8 @@ name|getFileSystem
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|shutdown
@@ -1060,6 +1068,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|HadoopShims
 operator|.
@@ -1101,6 +1111,8 @@ block|}
 block|}
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setTotalOrderPartitionFile
@@ -1516,6 +1528,8 @@ specifier|protected
 name|long
 name|shrinkedLength
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|next
@@ -1575,6 +1589,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|K
 name|createKey
@@ -1601,6 +1617,8 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|V
 name|createValue
@@ -1614,6 +1632,8 @@ argument_list|()
 return|;
 block|}
 comment|/**      * Return the amount of data processed.      */
+annotation|@
+name|Override
 specifier|public
 name|long
 name|getPos
@@ -1625,6 +1645,8 @@ return|return
 name|progress
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -1651,6 +1673,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**      * Return progress based on the amount of data processed so far.      */
+annotation|@
+name|Override
 specifier|public
 name|float
 name|getProgress
@@ -2148,6 +2172,8 @@ argument_list|,
 name|V
 argument_list|>
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Path
 index|[]
@@ -2367,6 +2393,8 @@ return|return
 name|isplits
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|InputSplitShim
 name|getInputSplitShim
@@ -2380,6 +2408,8 @@ name|InputSplitShim
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|RecordReader
 name|getRecordReader
@@ -2432,6 +2462,8 @@ argument_list|)
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getInputFormatClassName
@@ -2549,6 +2581,8 @@ argument_list|)
 return|;
 block|}
 comment|/*    *(non-Javadoc)    * @see org.apache.hadoop.hive.shims.HadoopShims#getHarUri(java.net.URI, java.net.URI, java.net.URI)    * This particular instance is for Hadoop 20 which creates an archive    * with the entire directory path from which one created the archive as    * compared against the one used by Hadoop 1.0 (within HadoopShimsSecure)    * where a relative path is stored within the archive.    */
+annotation|@
+name|Override
 specifier|public
 name|URI
 name|getHarUri
@@ -2702,6 +2736,8 @@ name|taskContext
 parameter_list|)
 block|{ }
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|prepareJobOutput
@@ -3505,6 +3541,8 @@ name|IOException
 block|{
 comment|// This hadoop version doesn't have proxy verification
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isSecurityEnabled
@@ -3577,9 +3615,6 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|JobTrackerState
-name|state
-decl_stmt|;
 switch|switch
 condition|(
 name|clusterStatus
@@ -4342,6 +4377,26 @@ expr_stmt|;
 return|return
 name|fs
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|getMergedCredentials
+parameter_list|(
+name|JobConf
+name|jobConf
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Merging of credentials not supported in this version of hadoop"
+argument_list|)
+throw|;
 block|}
 specifier|protected
 name|void
