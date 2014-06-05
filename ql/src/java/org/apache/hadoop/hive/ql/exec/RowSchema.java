@@ -64,6 +64,13 @@ argument_list|<
 name|ColumnInfo
 argument_list|>
 name|signature
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|ColumnInfo
+argument_list|>
+argument_list|()
 decl_stmt|;
 specifier|public
 name|RowSchema
@@ -162,13 +169,6 @@ argument_list|(
 literal|'('
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|signature
-operator|!=
-literal|null
-condition|)
-block|{
 for|for
 control|(
 name|ColumnInfo
@@ -205,7 +205,6 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|sb
 operator|.

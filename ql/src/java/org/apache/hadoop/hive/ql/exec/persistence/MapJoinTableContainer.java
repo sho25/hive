@@ -251,6 +251,12 @@ name|MapJoinRowContainer
 name|getCurrentRows
 parameter_list|()
 function_decl|;
+comment|/**      * @return key      */
+name|Object
+index|[]
+name|getCurrentKey
+parameter_list|()
+function_decl|;
 block|}
 comment|/**    * Adds row from input to the table.    */
 name|MapJoinKey

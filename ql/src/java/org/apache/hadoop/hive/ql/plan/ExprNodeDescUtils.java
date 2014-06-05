@@ -511,7 +511,7 @@ name|child
 argument_list|)
 expr_stmt|;
 block|}
-comment|// duplicate function with possibily replaced children
+comment|// duplicate function with possibly replaced children
 name|ExprNodeGenericFuncDesc
 name|clone
 init|=
@@ -919,7 +919,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Return false if the expression has any non determinitic function    */
+comment|/**    * Return false if the expression has any non deterministic function    */
 specifier|public
 specifier|static
 name|boolean
@@ -998,6 +998,57 @@ block|}
 block|}
 return|return
 literal|true
+return|;
+block|}
+specifier|public
+specifier|static
+name|ArrayList
+argument_list|<
+name|ExprNodeDesc
+argument_list|>
+name|clone
+parameter_list|(
+name|List
+argument_list|<
+name|ExprNodeDesc
+argument_list|>
+name|sources
+parameter_list|)
+block|{
+name|ArrayList
+argument_list|<
+name|ExprNodeDesc
+argument_list|>
+name|result
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|ExprNodeDesc
+argument_list|>
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|ExprNodeDesc
+name|expr
+range|:
+name|sources
+control|)
+block|{
+name|result
+operator|.
+name|add
+argument_list|(
+name|expr
+operator|.
+name|clone
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|result
 return|;
 block|}
 comment|/**    * Convert expressions in current operator to those in terminal operator, which    * is an ancestor of current or null (back to top operator).    */

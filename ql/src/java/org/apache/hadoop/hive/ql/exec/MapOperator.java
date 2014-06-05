@@ -2429,9 +2429,6 @@ argument_list|(
 literal|"dump "
 operator|+
 name|op
-operator|.
-name|getName
-argument_list|()
 operator|+
 literal|" "
 operator|+
