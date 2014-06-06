@@ -1244,6 +1244,10 @@ decl_stmt|;
 if|if
 condition|(
 name|sessionConf
+operator|!=
+literal|null
+operator|&&
+name|sessionConf
 operator|.
 name|get
 argument_list|(

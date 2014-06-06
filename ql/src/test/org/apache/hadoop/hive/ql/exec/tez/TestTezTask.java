@@ -1743,10 +1743,11 @@ name|close
 argument_list|(
 name|eq
 argument_list|(
-literal|true
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// now uses pool after HIVE-7043
 name|verify
 argument_list|(
 name|session
