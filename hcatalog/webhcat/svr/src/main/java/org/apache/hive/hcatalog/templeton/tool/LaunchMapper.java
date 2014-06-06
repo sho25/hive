@@ -589,9 +589,9 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-name|TempletonUtils
+name|StringUtils
 operator|.
-name|unEscape
+name|unEscapeString
 argument_list|(
 name|prop
 argument_list|)

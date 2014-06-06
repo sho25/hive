@@ -1826,24 +1826,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|public
-specifier|static
-name|String
-name|unEscape
-parameter_list|(
-name|String
-name|input
-parameter_list|)
-block|{
-return|return
-name|StringEscapeUtils
-operator|.
-name|unescapeJava
-argument_list|(
-name|input
-argument_list|)
-return|;
-block|}
 block|}
 end_class
 
