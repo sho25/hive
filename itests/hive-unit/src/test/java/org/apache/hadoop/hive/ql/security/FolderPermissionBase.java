@@ -1256,6 +1256,26 @@ name|getResponseCode
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|assertExistence
+argument_list|(
+name|warehouseDir
+operator|+
+literal|"/"
+operator|+
+name|tableName
+argument_list|)
+expr_stmt|;
+name|setPermission
+argument_list|(
+name|warehouseDir
+operator|+
+literal|"/"
+operator|+
+name|tableName
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
 comment|//alter partition
 name|ret
 operator|=
@@ -1291,6 +1311,8 @@ operator|+
 name|tableName
 operator|+
 literal|"/part1=2"
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 name|verifyPermission
@@ -1302,6 +1324,8 @@ operator|+
 name|tableName
 operator|+
 literal|"/part1=2/part2=2"
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 name|verifyPermission
@@ -1313,6 +1337,8 @@ operator|+
 name|tableName
 operator|+
 literal|"/part1=2/part2=2/part3=2"
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1356,6 +1382,8 @@ block|{
 name|verifyPermission
 argument_list|(
 name|child
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
