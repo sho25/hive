@@ -671,7 +671,7 @@ specifier|public
 name|void
 name|setLongLowValue
 parameter_list|(
-name|long
+name|Long
 name|longLowValue
 parameter_list|)
 block|{
@@ -695,7 +695,7 @@ specifier|public
 name|void
 name|setLongHighValue
 parameter_list|(
-name|long
+name|Long
 name|longHighValue
 parameter_list|)
 block|{
@@ -719,7 +719,7 @@ specifier|public
 name|void
 name|setDoubleLowValue
 parameter_list|(
-name|double
+name|Double
 name|doubleLowValue
 parameter_list|)
 block|{
@@ -743,7 +743,7 @@ specifier|public
 name|void
 name|setDoubleHighValue
 parameter_list|(
-name|double
+name|Double
 name|doubleHighValue
 parameter_list|)
 block|{
