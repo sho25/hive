@@ -117,6 +117,13 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+comment|/*    * for functions that don't support a Window, this provides the rows remaining to be     * added to output. Functions that return a Window can throw a UnsupportedException,    * this method shouldn't be called. For Ranking fns return 0; lead/lag fns return the    * lead/lag amt.    */
+name|int
+name|getRowsRemainingAfterTerminate
+parameter_list|()
+throws|throws
+name|HiveException
+function_decl|;
 specifier|public
 specifier|static
 name|Object
