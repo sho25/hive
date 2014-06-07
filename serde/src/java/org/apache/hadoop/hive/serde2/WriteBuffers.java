@@ -1012,7 +1012,12 @@ name|size
 argument_list|()
 operator|)
 operator|*
+operator|(
+operator|(
+name|long
+operator|)
 name|wbSize
+operator|)
 operator|>
 name|maxSize
 condition|)
@@ -1479,6 +1484,9 @@ return|return
 operator|(
 name|currentWriteBufferIndex
 operator|*
+operator|(
+name|long
+operator|)
 name|wbSize
 operator|)
 operator|+
@@ -1494,6 +1502,9 @@ return|return
 operator|(
 name|currentReadBufferIndex
 operator|*
+operator|(
+name|long
+operator|)
 name|wbSize
 operator|)
 operator|+
