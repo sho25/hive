@@ -1604,7 +1604,7 @@ name|METASTORE_CLIENT_SOCKET_TIMEOUT
 argument_list|(
 literal|"hive.metastore.client.socket.timeout"
 argument_list|,
-literal|20
+literal|600
 argument_list|)
 block|,
 name|METASTOREPWD
