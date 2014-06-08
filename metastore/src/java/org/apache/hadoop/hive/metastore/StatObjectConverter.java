@@ -1633,7 +1633,7 @@ if|if
 condition|(
 name|colType
 operator|.
-name|equals
+name|startsWith
 argument_list|(
 literal|"decimal"
 argument_list|)
@@ -2708,7 +2708,7 @@ if|if
 condition|(
 name|colType
 operator|.
-name|equals
+name|startsWith
 argument_list|(
 literal|"decimal"
 argument_list|)
@@ -3319,7 +3319,7 @@ if|if
 condition|(
 name|colType
 operator|.
-name|equals
+name|startsWith
 argument_list|(
 literal|"decimal"
 argument_list|)
