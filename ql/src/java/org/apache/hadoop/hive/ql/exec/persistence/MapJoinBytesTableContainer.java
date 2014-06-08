@@ -2681,8 +2681,6 @@ name|nulls
 index|[
 name|i
 index|]
-operator|==
-literal|true
 operator|&&
 operator|(
 name|nullsafes

@@ -1736,7 +1736,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Convert the join to a map-join and also generate any local work needed.    *    * @param newWork MapredWork in which the conversion is to happen    * @param op    *          The join operator that needs to be converted to map-join    * @param bigTablePos    * @throws SemanticException    */
+comment|/**    * Convert the join to a map-join and also generate any local work needed.    *    * @param newWork MapredWork in which the conversion is to happen    * @param op    *          The join operator that needs to be converted to map-join    * @param mapJoinPos    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|void
@@ -2487,8 +2487,6 @@ argument_list|,
 name|mapJoinPos
 argument_list|,
 name|noCheckOuterJoin
-argument_list|,
-literal|false
 argument_list|)
 decl_stmt|;
 comment|// remove old parents
@@ -2564,7 +2562,6 @@ return|return
 name|mapJoinOp
 return|;
 block|}
-specifier|public
 specifier|static
 name|MapJoinOperator
 name|convertJoinOpMapJoinOp
@@ -2596,9 +2593,6 @@ name|mapJoinPos
 parameter_list|,
 name|boolean
 name|noCheckOuterJoin
-parameter_list|,
-name|boolean
-name|tezJoin
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -3197,17 +3191,15 @@ argument_list|(
 name|pos
 argument_list|)
 decl_stmt|;
-comment|// remove values referencing key
-comment|// todo: currently, mr-mapjoin stores whole value exprs of join operator, which may contain key
 if|if
 condition|(
-name|tezJoin
-operator|&&
 name|pos
 operator|!=
 name|mapJoinPos
 condition|)
 block|{
+comment|// remove values in key exprs for value table schema
+comment|// value expression for hashsink will be modified in LocalMapJoinProcessor
 name|int
 index|[]
 name|valueIndex
@@ -5126,7 +5118,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Is it a map-side join.    *    * @param op    *          join operator    * @param qbJoin    *          qb join tree    * @return -1 if it cannot be converted to a map-side join, position of the map join node    *         otherwise    */
+comment|/**    * Is it a map-side join.    *    * @param op    *          join operator    * @param joinTree    *          qb join tree    * @return -1 if it cannot be converted to a map-side join, position of the map join node    *         otherwise    */
 specifier|private
 name|int
 name|mapSideJoin

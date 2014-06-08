@@ -796,7 +796,14 @@ operator|=
 operator|new
 name|UnwrapRowContainer
 argument_list|(
+name|alias
+argument_list|,
 name|valueIndex
+argument_list|,
+name|hasFilter
+argument_list|(
+name|alias
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|List
@@ -1170,12 +1177,11 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+operator|!
 name|conf
 operator|.
 name|isBucketMapJoin
 argument_list|()
-operator|==
-literal|false
 condition|)
 block|{
 comment|/*        * The issue with caching in case of bucket map join is that different tasks        * process different buckets and if the container is reused to join a different bucket,        * join results can be incorrect. The cache is keyed on operator id and for bucket map join        * the operator does not change but data needed is different. For a proper fix, this        * requires changes in the Tez API with regard to finding bucket id and         * also ability to schedule tasks to re-use containers that have cached the specific bucket.        */
@@ -1583,7 +1589,7 @@ name|Object
 index|[]
 name|currentKey
 init|=
-name|adaptor
+name|firstSetKey
 operator|.
 name|getCurrentKey
 argument_list|()
@@ -1610,7 +1616,7 @@ name|rowContainer
 operator|==
 literal|null
 operator|||
-name|adaptor
+name|firstSetKey
 operator|.
 name|hasAnyNulls
 argument_list|(
