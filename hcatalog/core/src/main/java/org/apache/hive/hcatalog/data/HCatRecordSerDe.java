@@ -1674,6 +1674,17 @@ name|ObjectInspector
 name|fieldObjectInspector
 parameter_list|)
 block|{
+if|if
+condition|(
+name|field
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|Object
 name|f
 init|=
