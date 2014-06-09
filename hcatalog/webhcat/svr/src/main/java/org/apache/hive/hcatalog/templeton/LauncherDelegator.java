@@ -632,6 +632,8 @@ operator|new
 name|TempletonControllerJob
 argument_list|(
 name|secureMeatastoreAccess
+argument_list|,
+name|appConf
 argument_list|)
 decl_stmt|;
 name|ToolRunner
