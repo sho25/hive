@@ -672,7 +672,7 @@ operator|.
 name|AVRO_PROP_PRECISION
 argument_list|)
 operator|.
-name|getValueAsInt
+name|getIntValue
 argument_list|()
 expr_stmt|;
 name|scale
@@ -686,10 +686,8 @@ operator|.
 name|AVRO_PROP_SCALE
 argument_list|)
 operator|.
-name|getValueAsInt
-argument_list|(
-literal|0
-argument_list|)
+name|getIntValue
+argument_list|()
 expr_stmt|;
 block|}
 catch|catch
