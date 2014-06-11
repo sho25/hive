@@ -1084,6 +1084,30 @@ name|disableOpt
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|qb
+operator|.
+name|getParseInfo
+argument_list|()
+operator|.
+name|getOuterQueryLimit
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
+comment|// Believe it or not, some tools do generate queries with limit 0 and than expect
+comment|// query to run quickly. Lets meet their requirement.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Limit 0. No query execution needed."
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 block|}
 elseif|else
 if|if
