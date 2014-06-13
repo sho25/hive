@@ -18478,7 +18478,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|tblColumnGrants
+name|partColumnGrants
 operator|.
 name|size
 argument_list|()
