@@ -1053,7 +1053,7 @@ call|(
 name|long
 call|)
 argument_list|(
-literal|1000
+literal|256
 operator|*
 literal|1000
 operator|*
@@ -1065,9 +1065,10 @@ name|MAXREDUCERS
 argument_list|(
 literal|"hive.exec.reducers.max"
 argument_list|,
-literal|999
+literal|1009
 argument_list|)
 block|,
+comment|// pick a prime
 name|PREEXECHOOKS
 argument_list|(
 literal|"hive.exec.pre.hooks"
@@ -4770,7 +4771,28 @@ literal|"hive.localize.resource.num.wait.attempts"
 argument_list|,
 literal|5
 argument_list|)
-block|,     ;
+block|,
+name|TEZ_AUTO_REDUCER_PARALLELISM
+argument_list|(
+literal|"hive.tez.auto.reducer.parallelism"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|TEZ_MAX_PARTITION_FACTOR
+argument_list|(
+literal|"hive.tez.max.partition.factor"
+argument_list|,
+literal|2f
+argument_list|)
+block|,
+name|TEZ_MIN_PARTITION_FACTOR
+argument_list|(
+literal|"hive.tez.min.partition.factor"
+argument_list|,
+literal|0.25f
+argument_list|)
+block|;
 specifier|public
 specifier|final
 name|String
