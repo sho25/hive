@@ -1759,7 +1759,7 @@ name|assertEquals
 argument_list|(
 literal|"Pre/post split values don't match"
 argument_list|,
-name|StringUtils
+name|TempletonUtils
 operator|.
 name|unEscapeString
 argument_list|(
@@ -1769,7 +1769,7 @@ name|i
 index|]
 argument_list|)
 argument_list|,
-name|StringUtils
+name|TempletonUtils
 operator|.
 name|unEscapeString
 argument_list|(
