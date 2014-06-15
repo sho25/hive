@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -45,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
+name|LinkedHashSet
 import|;
 end_import
 
@@ -947,7 +947,7 @@ operator|.
 name|leafOperatorToFollowingWork
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -963,7 +963,7 @@ operator|.
 name|linkOpWithWorkMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -984,7 +984,7 @@ operator|.
 name|linkWorkWithReduceSinkMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|BaseWork
 argument_list|,
@@ -1000,7 +1000,7 @@ operator|.
 name|mapJoinWorkMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|MapJoinOperator
 argument_list|,
@@ -1016,7 +1016,7 @@ operator|.
 name|rootToWorkMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -1032,7 +1032,7 @@ operator|.
 name|childToWorkMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -1051,7 +1051,7 @@ operator|.
 name|mapJoinParentMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|MapJoinOperator
 argument_list|,
@@ -1070,7 +1070,7 @@ operator|.
 name|currentMapJoinOperators
 operator|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|MapJoinOperator
 argument_list|>
@@ -1081,7 +1081,7 @@ operator|.
 name|linkChildOpWithDummyOp
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -1121,7 +1121,7 @@ operator|.
 name|unionWorkMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<
@@ -1148,7 +1148,7 @@ operator|.
 name|workWithUnionOperators
 operator|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|BaseWork
 argument_list|>
@@ -1159,7 +1159,7 @@ operator|.
 name|clonedReduceSinks
 operator|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|ReduceSinkOperator
 argument_list|>
@@ -1170,7 +1170,7 @@ operator|.
 name|linkedFileSinks
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Path
 argument_list|,
@@ -1186,7 +1186,7 @@ operator|.
 name|fileSinkSet
 operator|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|FileSinkOperator
 argument_list|>
@@ -1197,7 +1197,7 @@ operator|.
 name|connectedReduceSinks
 operator|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|ReduceSinkOperator
 argument_list|>
