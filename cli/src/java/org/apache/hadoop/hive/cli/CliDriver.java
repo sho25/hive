@@ -1166,6 +1166,17 @@ operator|.
 name|waitFor
 argument_list|()
 expr_stmt|;
+comment|// wait for stream threads to finish
+name|outPrinter
+operator|.
+name|join
+argument_list|()
+expr_stmt|;
+name|errPrinter
+operator|.
+name|join
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|ret
