@@ -5163,7 +5163,7 @@ name|FILE
 argument_list|,
 name|LocalResourceVisibility
 operator|.
-name|APPLICATION
+name|PRIVATE
 argument_list|)
 return|;
 block|}
