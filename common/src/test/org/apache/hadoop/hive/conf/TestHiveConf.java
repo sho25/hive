@@ -25,9 +25,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
+name|mapred
 operator|.
-name|Configuration
+name|JobConf
 import|;
 end_import
 
@@ -144,9 +144,7 @@ decl_stmt|;
 name|String
 name|hiveSiteLocation
 init|=
-operator|new
 name|HiveConf
-argument_list|()
 operator|.
 name|getHiveSiteLocation
 argument_list|()
@@ -207,8 +205,12 @@ argument_list|(
 name|expectedHadoopVal
 argument_list|,
 operator|new
-name|Configuration
-argument_list|()
+name|JobConf
+argument_list|(
+name|HiveConf
+operator|.
+name|class
+argument_list|)
 operator|.
 name|get
 argument_list|(
