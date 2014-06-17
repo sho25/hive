@@ -280,6 +280,15 @@ name|minor
 return|;
 block|}
 block|}
+specifier|public
+specifier|static
+enum|enum
+name|EncodingStrategy
+block|{
+name|SPEED
+block|,
+name|COMPRESSION
+block|;   }
 comment|// Note : these string definitions for table properties are deprecated,
 comment|// and retained only for backward compatibility, please do not add to
 comment|// them, add to OrcTableProperties below instead
@@ -377,6 +386,11 @@ block|,
 name|BLOCK_PADDING
 argument_list|(
 literal|"orc.block.padding"
+argument_list|)
+block|,
+name|ENCODING_STRATEGY
+argument_list|(
+literal|"orc.encoding.strategy"
 argument_list|)
 block|;
 specifier|private
@@ -716,6 +730,10 @@ specifier|private
 name|WriterCallback
 name|callback
 decl_stmt|;
+specifier|private
+name|EncodingStrategy
+name|encodingStrategy
+decl_stmt|;
 name|WriterOptions
 parameter_list|(
 name|Configuration
@@ -895,6 +913,48 @@ name|versionName
 argument_list|)
 expr_stmt|;
 block|}
+name|String
+name|enString
+init|=
+name|conf
+operator|.
+name|get
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_ORC_ENCODING_STRATEGY
+operator|.
+name|varname
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|enString
+operator|==
+literal|null
+condition|)
+block|{
+name|encodingStrategy
+operator|=
+name|EncodingStrategy
+operator|.
+name|SPEED
+expr_stmt|;
+block|}
+else|else
+block|{
+name|encodingStrategy
+operator|=
+name|EncodingStrategy
+operator|.
+name|valueOf
+argument_list|(
+name|enString
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|/**      * Provide the filesystem for the path, if the client has it available.      * If it is not provided, it will be found from the path.      */
 specifier|public
@@ -976,6 +1036,23 @@ block|{
 name|blockPaddingValue
 operator|=
 name|value
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**      * Sets the encoding strategy that is used to encode the data.      */
+specifier|public
+name|WriterOptions
+name|encodingStrategy
+parameter_list|(
+name|EncodingStrategy
+name|strategy
+parameter_list|)
+block|{
+name|encodingStrategy
+operator|=
+name|strategy
 expr_stmt|;
 return|return
 name|this
@@ -1170,6 +1247,10 @@ argument_list|,
 name|opts
 operator|.
 name|callback
+argument_list|,
+name|opts
+operator|.
+name|encodingStrategy
 argument_list|)
 return|;
 block|}

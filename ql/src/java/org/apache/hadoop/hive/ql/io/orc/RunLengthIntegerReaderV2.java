@@ -198,6 +198,11 @@ specifier|final
 name|boolean
 name|skipCorrupt
 decl_stmt|;
+specifier|private
+specifier|final
+name|SerializationUtils
+name|utils
+decl_stmt|;
 name|RunLengthIntegerReaderV2
 parameter_list|(
 name|InStream
@@ -238,6 +243,14 @@ name|ConfVars
 operator|.
 name|HIVE_ORC_SKIP_CORRUPT_DATA
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|utils
+operator|=
+operator|new
+name|SerializationUtils
+argument_list|()
 expr_stmt|;
 block|}
 specifier|private
@@ -383,7 +396,7 @@ condition|)
 block|{
 name|fb
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|decodeBitWidth
 argument_list|(
@@ -423,7 +436,7 @@ condition|)
 block|{
 name|firstVal
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|readVslong
 argument_list|(
@@ -435,7 +448,7 @@ else|else
 block|{
 name|firstVal
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|readVulong
 argument_list|(
@@ -470,7 +483,7 @@ comment|// if all number are positive)
 name|long
 name|fd
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|readVslong
 argument_list|(
@@ -515,7 +528,7 @@ block|{
 name|long
 name|deltaBase
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|readVslong
 argument_list|(
@@ -549,7 +562,7 @@ expr_stmt|;
 comment|// write the unpacked values, add it to previous value and store final
 comment|// value to result buffer. if the delta base value is negative then it
 comment|// is a decreasing sequence else an increasing sequence
-name|SerializationUtils
+name|utils
 operator|.
 name|readInts
 argument_list|(
@@ -647,7 +660,7 @@ decl_stmt|;
 name|int
 name|fb
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|decodeBitWidth
 argument_list|(
@@ -714,7 +727,7 @@ decl_stmt|;
 name|int
 name|pw
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|decodeBitWidth
 argument_list|(
@@ -758,7 +771,7 @@ comment|// read the next base width number of bytes to extract base value
 name|long
 name|base
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|bytesToLongBE
 argument_list|(
@@ -820,7 +833,7 @@ index|[
 name|len
 index|]
 decl_stmt|;
-name|SerializationUtils
+name|utils
 operator|.
 name|readInts
 argument_list|(
@@ -876,7 +889,7 @@ block|}
 name|int
 name|bitSize
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|getClosestFixedBits
 argument_list|(
@@ -885,7 +898,7 @@ operator|+
 name|pgw
 argument_list|)
 decl_stmt|;
-name|SerializationUtils
+name|utils
 operator|.
 name|readInts
 argument_list|(
@@ -1176,7 +1189,7 @@ decl_stmt|;
 name|int
 name|fb
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|decodeBitWidth
 argument_list|(
@@ -1208,7 +1221,7 @@ operator|+=
 literal|1
 expr_stmt|;
 comment|// write the unpacked values and zigzag decode to result buffer
-name|SerializationUtils
+name|utils
 operator|.
 name|readInts
 argument_list|(
@@ -1248,7 +1261,7 @@ index|[
 name|numLiterals
 index|]
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|zigzagDecode
 argument_list|(
@@ -1317,7 +1330,7 @@ comment|// read the repeated value which is store using fixed bytes
 name|long
 name|val
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|bytesToLongBE
 argument_list|(
@@ -1333,7 +1346,7 @@ condition|)
 block|{
 name|val
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|zigzagDecode
 argument_list|(

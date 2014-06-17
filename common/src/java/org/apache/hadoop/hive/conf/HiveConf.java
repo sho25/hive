@@ -2838,6 +2838,22 @@ argument_list|,
 literal|"ZLIB"
 argument_list|)
 block|,
+comment|// Define the default encoding strategy to use
+name|HIVE_ORC_ENCODING_STRATEGY
+argument_list|(
+literal|"hive.exec.orc.encoding.strategy"
+argument_list|,
+literal|"SPEED"
+argument_list|,
+operator|new
+name|StringsValidator
+argument_list|(
+literal|"SPEED"
+argument_list|,
+literal|"COMPRESSION"
+argument_list|)
+argument_list|)
+block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS
 argument_list|(
 literal|"hive.orc.splits.include.file.footer"

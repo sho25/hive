@@ -126,6 +126,10 @@ name|tailRunLength
 init|=
 literal|0
 decl_stmt|;
+specifier|private
+name|SerializationUtils
+name|utils
+decl_stmt|;
 name|RunLengthIntegerWriter
 parameter_list|(
 name|PositionedOutputStream
@@ -146,6 +150,14 @@ operator|.
 name|signed
 operator|=
 name|signed
+expr_stmt|;
+name|this
+operator|.
+name|utils
+operator|=
+operator|new
+name|SerializationUtils
+argument_list|()
 expr_stmt|;
 block|}
 specifier|private
@@ -191,7 +203,7 @@ condition|(
 name|signed
 condition|)
 block|{
-name|SerializationUtils
+name|utils
 operator|.
 name|writeVslong
 argument_list|(
@@ -206,7 +218,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|SerializationUtils
+name|utils
 operator|.
 name|writeVulong
 argument_list|(
@@ -250,7 +262,7 @@ condition|(
 name|signed
 condition|)
 block|{
-name|SerializationUtils
+name|utils
 operator|.
 name|writeVslong
 argument_list|(
@@ -265,7 +277,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|SerializationUtils
+name|utils
 operator|.
 name|writeVulong
 argument_list|(
