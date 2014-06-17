@@ -391,7 +391,7 @@ index|]
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// The token file location should be right after the tool argument
+comment|// The token file location and mapreduce job tag should be right after the tool argument
 if|if
 condition|(
 name|i
@@ -419,6 +419,17 @@ operator|+
 name|TempletonControllerJob
 operator|.
 name|TOKEN_FILE_ARG_PLACEHOLDER
+argument_list|)
+expr_stmt|;
+name|args
+operator|.
+name|add
+argument_list|(
+literal|"-D"
+operator|+
+name|TempletonControllerJob
+operator|.
+name|MAPREDUCE_JOB_TAGS_ARG_PLACEHOLDER
 argument_list|)
 expr_stmt|;
 block|}

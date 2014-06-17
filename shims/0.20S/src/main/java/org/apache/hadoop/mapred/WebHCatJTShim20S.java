@@ -398,6 +398,22 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Kill jobs is only supported on hadoop 2.0+.    */
+annotation|@
+name|Override
+specifier|public
+name|void
+name|killJobs
+parameter_list|(
+name|String
+name|tag
+parameter_list|,
+name|long
+name|timestamp
+parameter_list|)
+block|{
+return|return;
+block|}
 block|}
 end_class
 

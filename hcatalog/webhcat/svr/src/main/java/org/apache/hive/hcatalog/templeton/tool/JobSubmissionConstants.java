@@ -68,6 +68,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|TEMPLETON_JOB_LAUNCH_TIME_NAME
+init|=
+literal|"templeton.job.launch.time"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|OVERRIDE_CLASSPATH
 init|=
 literal|"templeton.override-classpath"
@@ -130,6 +138,26 @@ name|String
 name|TOKEN_FILE_ARG_PLACEHOLDER_TEZ
 init|=
 literal|"__TEZ_CREDENTIALS_OPTION=WEBHCAT_TOKEN_FILE_LOCATION_TEZ__"
+decl_stmt|;
+comment|// MRv2 job tag used to identify Templeton launcher child jobs. Each child job
+comment|// will be tagged with the parent jobid so that on launcher task restart, all
+comment|// previously running child jobs can be killed before the child job is launched
+comment|// again.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|MAPREDUCE_JOB_TAGS
+init|=
+literal|"mapreduce.job.tags"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|MAPREDUCE_JOB_TAGS_ARG_PLACEHOLDER
+init|=
+literal|"__MR_JOB_TAGS_OPTION=MR_JOB_TAGS_JOBID__"
 decl_stmt|;
 comment|/**    * constants needed for Pig job submission    * The string values here are what Pig expects to see in it's environment    */
 specifier|public
