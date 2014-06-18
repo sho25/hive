@@ -4935,6 +4935,11 @@ argument_list|()
 expr_stmt|;
 name|beeLine
 operator|.
+name|runInit
+argument_list|()
+expr_stmt|;
+name|beeLine
+operator|.
 name|setCompletions
 argument_list|()
 expr_stmt|;
