@@ -1443,6 +1443,13 @@ name|DAG
 operator|.
 name|class
 argument_list|)
+argument_list|,
+name|any
+argument_list|(
+name|Map
+operator|.
+name|class
+argument_list|)
 argument_list|)
 argument_list|)
 operator|.
@@ -1777,6 +1784,13 @@ argument_list|(
 name|any
 argument_list|(
 name|DAG
+operator|.
+name|class
+argument_list|)
+argument_list|,
+name|any
+argument_list|(
+name|Map
 operator|.
 name|class
 argument_list|)
