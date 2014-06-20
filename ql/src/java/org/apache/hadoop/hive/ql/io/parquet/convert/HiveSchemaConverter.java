@@ -720,13 +720,19 @@ name|timestampTypeInfo
 argument_list|)
 condition|)
 block|{
-throw|throw
+return|return
 operator|new
-name|UnsupportedOperationException
+name|PrimitiveType
 argument_list|(
-literal|"Timestamp type not implemented"
+name|repetition
+argument_list|,
+name|PrimitiveTypeName
+operator|.
+name|INT96
+argument_list|,
+name|name
 argument_list|)
-throw|;
+return|;
 block|}
 elseif|else
 if|if
