@@ -10126,15 +10126,28 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|inputs
-operator|.
-name|add
-argument_list|(
+name|ReadEntity
+name|re
+init|=
 operator|new
 name|ReadEntity
 argument_list|(
 name|tab
 argument_list|)
+decl_stmt|;
+comment|// In the case of altering a table for its partitions we don't need to lock the table
+comment|// itself, just the partitions.  But the table will have a ReadEntity.  So mark that
+comment|// ReadEntity as no lock.
+name|re
+operator|.
+name|noLockNeeded
+argument_list|()
+expr_stmt|;
+name|inputs
+operator|.
+name|add
+argument_list|(
+name|re
 argument_list|)
 expr_stmt|;
 if|if

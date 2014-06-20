@@ -142,6 +142,15 @@ name|isDirect
 init|=
 literal|true
 decl_stmt|;
+comment|// Note that we do not need a lock for this entity.  This is used by operations like alter
+comment|// table ... partition where its actually the partition that needs locked even though the table
+comment|// is marked as being read.  Defaults to true as that is the most common case.
+specifier|private
+name|boolean
+name|needsLock
+init|=
+literal|true
+decl_stmt|;
 comment|// For views, the entities can be nested - by default, entities are at the top level
 specifier|private
 specifier|final
@@ -458,6 +467,25 @@ operator|.
 name|isDirect
 operator|=
 name|isDirect
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|needsLock
+parameter_list|()
+block|{
+return|return
+name|needsLock
+return|;
+block|}
+specifier|public
+name|void
+name|noLockNeeded
+parameter_list|()
+block|{
+name|needsLock
+operator|=
+literal|false
 expr_stmt|;
 block|}
 block|}

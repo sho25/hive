@@ -505,6 +505,15 @@ name|getInputs
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
+operator|!
+name|input
+operator|.
+name|needsLock
+argument_list|()
+condition|)
+continue|continue;
 name|LockComponentBuilder
 name|compBuilder
 init|=
