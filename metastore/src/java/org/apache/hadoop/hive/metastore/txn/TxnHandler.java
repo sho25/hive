@@ -338,6 +338,7 @@ name|connPool
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|Boolean
 name|lockLock
 init|=
@@ -347,8 +348,8 @@ argument_list|(
 literal|"true"
 argument_list|)
 decl_stmt|;
-comment|// Random object to lock on for the lock
-comment|// method
+comment|// Random object to lock on for the
+comment|// lock method
 comment|/**    * Number of consecutive deadlocks we have seen    */
 specifier|protected
 name|int
@@ -478,7 +479,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_READ_COMMITTED
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -490,13 +495,20 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
+name|String
+name|s
+init|=
+literal|"select ntxn_next - 1 from NEXT_TXN_ID"
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to execute query<select ntxn_next - 1 from "
+literal|"Going to execute query<"
 operator|+
-literal|"NEXT_TXN_ID>"
+name|s
+operator|+
+literal|">"
 argument_list|)
 expr_stmt|;
 name|ResultSet
@@ -506,7 +518,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select ntxn_next - 1 from NEXT_TXN_ID"
+name|s
 argument_list|)
 decl_stmt|;
 if|if
@@ -569,11 +581,19 @@ name|TxnInfo
 argument_list|>
 argument_list|()
 decl_stmt|;
+name|s
+operator|=
+literal|"select txn_id, txn_state, txn_user, txn_host from TXNS"
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to execute query<select txn_id, txn_state from TXNS>"
+literal|"Going to execute query<"
+operator|+
+name|s
+operator|+
+literal|">"
 argument_list|)
 expr_stmt|;
 name|rs
@@ -582,7 +602,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select txn_id, txn_state, txn_user, txn_host from TXNS"
+name|s
 argument_list|)
 expr_stmt|;
 while|while
@@ -775,7 +795,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_READ_COMMITTED
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -792,13 +816,20 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
+name|String
+name|s
+init|=
+literal|"select ntxn_next - 1 from NEXT_TXN_ID"
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to execute query<select ntxn_next - 1 from "
+literal|"Going to execute query<"
 operator|+
-literal|"NEXT_TXN_ID>"
+name|s
+operator|+
+literal|">"
 argument_list|)
 expr_stmt|;
 name|ResultSet
@@ -808,7 +839,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select ntxn_next - 1 from NEXT_TXN_ID"
+name|s
 argument_list|)
 decl_stmt|;
 if|if
@@ -871,11 +902,19 @@ name|Long
 argument_list|>
 argument_list|()
 decl_stmt|;
+name|s
+operator|=
+literal|"select txn_id from TXNS"
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to execute query<select txn_id from TXNS>"
+literal|"Going to execute query<"
+operator|+
+name|s
+operator|+
+literal|">"
 argument_list|)
 expr_stmt|;
 name|rs
@@ -884,7 +923,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select txn_id from TXNS"
+name|s
 argument_list|)
 expr_stmt|;
 while|while
@@ -1083,7 +1122,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -1122,13 +1165,20 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
+name|String
+name|s
+init|=
+literal|"select ntxn_next from NEXT_TXN_ID"
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to execute query<select ntxn_next from NEXT_TXN_ID "
+literal|"Going to execute query<"
 operator|+
-literal|" for update>"
+name|s
+operator|+
+literal|">"
 argument_list|)
 expr_stmt|;
 name|ResultSet
@@ -1138,7 +1188,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select ntxn_next from NEXT_TXN_ID for update"
+name|s
 argument_list|)
 decl_stmt|;
 if|if
@@ -1170,9 +1220,8 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-name|String
 name|s
-init|=
+operator|=
 literal|"update NEXT_TXN_ID set ntxn_next = "
 operator|+
 operator|(
@@ -1180,7 +1229,7 @@ name|first
 operator|+
 name|numTxns
 operator|)
-decl_stmt|;
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -1435,7 +1484,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -1614,7 +1667,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -1867,7 +1924,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -1981,7 +2042,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -2097,7 +2162,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -2258,7 +2327,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -2512,7 +2585,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_READ_COMMITTED
+argument_list|)
 decl_stmt|;
 name|ShowLocksResponse
 name|rsp
@@ -2952,7 +3029,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -3071,7 +3152,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 name|HeartbeatTxnRangeResponse
 name|rsp
@@ -3275,7 +3360,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -3291,7 +3380,7 @@ comment|// Get the id for the next entry in the queue
 name|String
 name|s
 init|=
-literal|"select ncq_next from NEXT_COMPACTION_QUEUE_ID for update"
+literal|"select ncq_next from NEXT_COMPACTION_QUEUE_ID"
 decl_stmt|;
 name|LOG
 operator|.
@@ -3760,7 +3849,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_READ_COMMITTED
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -4096,7 +4189,11 @@ name|Connection
 name|dbConn
 init|=
 name|getDbConn
-argument_list|()
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_READ_COMMITTED
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -4195,10 +4292,14 @@ name|DeadlockException
 extends|extends
 name|Exception
 block|{    }
+comment|/**    * Get a connection to the database    * @param isolationLevel desired isolation level.  If you are doing _any_ data modifications    *                       you should request serializable, else read committed should be fine.    * @return db connection    * @throws MetaException if the connection cannot be obtained    */
 specifier|protected
 name|Connection
 name|getDbConn
-parameter_list|()
+parameter_list|(
+name|int
+name|isolationLevel
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -4223,9 +4324,7 @@ name|dbConn
 operator|.
 name|setTransactionIsolation
 argument_list|(
-name|Connection
-operator|.
-name|TRANSACTION_REPEATABLE_READ
+name|isolationLevel
 argument_list|)
 expr_stmt|;
 return|return
@@ -5263,7 +5362,6 @@ name|WAIT
 block|,
 name|KEEP_LOOKING
 block|}
-empty_stmt|;
 comment|// A jump table to figure out whether to wait, acquire,
 comment|// or keep looking .  Since
 comment|// java doesn't have function pointers (grumble grumble) we store a
@@ -5633,15 +5731,21 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
-comment|// Get the next lock id.  We have to do this as select for update so no
-comment|// one else reads it and updates it under us.
+comment|// Get the next lock id.
+name|String
+name|s
+init|=
+literal|"select nl_next from NEXT_LOCK_ID"
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to execute query<select nl_next from NEXT_LOCK_ID "
+literal|"Going to execute query<"
 operator|+
-literal|"for update>"
+name|s
+operator|+
+literal|">"
 argument_list|)
 expr_stmt|;
 name|ResultSet
@@ -5651,9 +5755,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select nl_next from NEXT_LOCK_ID "
-operator|+
-literal|"for update"
+name|s
 argument_list|)
 decl_stmt|;
 if|if
@@ -5697,9 +5799,8 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-name|String
 name|s
-init|=
+operator|=
 literal|"update NEXT_LOCK_ID set nl_next = "
 operator|+
 operator|(
@@ -5707,7 +5808,7 @@ name|extLockId
 operator|+
 literal|1
 operator|)
-decl_stmt|;
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -6570,13 +6671,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|query
-operator|.
-name|append
-argument_list|(
-literal|" for update"
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -7064,7 +7158,7 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// Need to rollback because we did a select for update but we didn't
+comment|// Need to rollback because we did a select that acquired locks but we didn't
 comment|// actually update anything.  Also, we may have locked some locks as
 comment|// acquired that we now want to not acquire.  It's ok to rollback because
 comment|// once we see one wait, we're done, we won't look for more.
@@ -7369,8 +7463,6 @@ init|=
 literal|"select txn_state from TXNS where txn_id = "
 operator|+
 name|txnid
-operator|+
-literal|" for update"
 decl_stmt|;
 name|LOG
 operator|.
