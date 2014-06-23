@@ -744,7 +744,7 @@ comment|// By that time, a new local instance of RecordWriter, with the correct 
 name|rw
 operator|=
 operator|new
-name|FileRecordWriterContainer
+name|DynamicPartitionFileRecordWriterContainer
 argument_list|(
 operator|(
 name|org
@@ -810,7 +810,7 @@ decl_stmt|;
 name|rw
 operator|=
 operator|new
-name|FileRecordWriterContainer
+name|StaticPartitionFileRecordWriterContainer
 argument_list|(
 name|getBaseOutputFormat
 argument_list|()
