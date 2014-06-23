@@ -830,6 +830,29 @@ name|getPTFProc
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|opRules
+operator|.
+name|put
+argument_list|(
+operator|new
+name|RuleRegExp
+argument_list|(
+literal|"R11"
+argument_list|,
+name|ScriptOperator
+operator|.
+name|getOperatorName
+argument_list|()
+operator|+
+literal|"%"
+argument_list|)
+argument_list|,
+name|ColumnPrunerProcFactory
+operator|.
+name|getScriptProc
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
 name|Dispatcher
