@@ -1968,7 +1968,10 @@ decl_stmt|;
 name|HiveOperation
 name|operation
 init|=
-name|analyzer
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getHiveOperation
 argument_list|()
