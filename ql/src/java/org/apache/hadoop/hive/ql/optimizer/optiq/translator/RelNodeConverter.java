@@ -1163,18 +1163,6 @@ name|org
 operator|.
 name|eigenbase
 operator|.
-name|rex
-operator|.
-name|RexUtil
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|eigenbase
-operator|.
 name|sql
 operator|.
 name|fun
@@ -1204,18 +1192,6 @@ operator|.
 name|util
 operator|.
 name|Pair
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|esotericsoftware
-operator|.
-name|minlog
-operator|.
-name|Log
 import|;
 end_import
 
@@ -2449,6 +2425,8 @@ specifier|final
 name|boolean
 name|flatten
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 return|return
 name|convertToOptiqExpr
@@ -2481,6 +2459,8 @@ specifier|final
 name|boolean
 name|flatten
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|ImmutableMap
 argument_list|<
@@ -2753,6 +2733,8 @@ parameter_list|,
 name|HiveRel
 name|rightRel
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|HiveJoinRel
 name|joinRel
@@ -3301,6 +3283,8 @@ argument_list|,
 name|joinPredicate
 argument_list|,
 name|joinType
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -3339,6 +3323,8 @@ name|RexNode
 argument_list|>
 name|extraExprs
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 specifier|final
 name|RexNode
@@ -3431,6 +3417,8 @@ name|RexNode
 argument_list|>
 name|extraExprs
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 specifier|final
 name|Aggregation

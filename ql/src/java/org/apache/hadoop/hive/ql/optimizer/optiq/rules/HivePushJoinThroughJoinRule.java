@@ -251,6 +251,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+operator|!
+name|topJoin
+operator|.
+name|isLeftSemiJoin
+argument_list|()
+operator|&&
 name|topJoin
 operator|.
 name|getJoinAlgorithm

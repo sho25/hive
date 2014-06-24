@@ -510,6 +510,7 @@ name|colNames
 return|;
 block|}
 comment|/**    * @param column  column expression to convert    * @param tableFieldTypeInfo TypeInfo to convert to    * @return Expression converting column to the type specified by tableFieldTypeInfo    */
+specifier|public
 specifier|static
 name|ExprNodeDesc
 name|createConversionCast

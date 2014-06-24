@@ -138,11 +138,6 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
-name|planner
-operator|.
-name|registerAbstractRelationalRules
-argument_list|()
-expr_stmt|;
 block|}
 return|return
 name|planner
