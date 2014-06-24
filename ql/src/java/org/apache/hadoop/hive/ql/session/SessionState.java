@@ -91,16 +91,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|text
-operator|.
-name|SimpleDateFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -865,7 +855,7 @@ argument_list|>
 name|stackTraces
 decl_stmt|;
 comment|// This mapping collects all the configuration variables which have been set by the user
-comment|// explicitely, either via SET in the CLI, the hiveconf option, or a System property.
+comment|// explicitly, either via SET in the CLI, the hiveconf option, or a System property.
 comment|// It is a mapping from the variable name to its value.  Note that if a user repeatedly
 comment|// changes the value of a variable, the corresponding change will be made in this mapping.
 specifier|private
@@ -1211,18 +1201,6 @@ name|getClassLoader
 argument_list|()
 expr_stmt|;
 block|}
-specifier|private
-specifier|static
-specifier|final
-name|SimpleDateFormat
-name|DATE_FORMAT
-init|=
-operator|new
-name|SimpleDateFormat
-argument_list|(
-literal|"yyyyMMddHHmm"
-argument_list|)
-decl_stmt|;
 specifier|public
 name|void
 name|setCmd
@@ -1446,7 +1424,7 @@ name|remove
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * set current session to existing session object if a thread is running    * multiple sessions - it must call this method with the new session object    * when switching from one session to another.    * @throws HiveException    */
+comment|/**    * set current session to existing session object if a thread is running    * multiple sessions - it must call this method with the new session object    * when switching from one session to another.    */
 specifier|public
 specifier|static
 name|SessionState
@@ -1672,6 +1650,17 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|startSs
+operator|.
+name|tezSessionState
+operator|.
+name|isOpen
+argument_list|()
+condition|)
+block|{
 name|startSs
 operator|.
 name|tezSessionState
@@ -1683,6 +1672,8 @@ operator|.
 name|conf
 argument_list|)
 expr_stmt|;
+comment|// should use conf on session start-up
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1713,7 +1704,7 @@ return|return
 name|startSs
 return|;
 block|}
-comment|/**    * Setup authentication and authorization plugins for this session.    * @param startSs    */
+comment|/**    * Setup authentication and authorization plugins for this session.    */
 specifier|private
 name|void
 name|setupAuth
@@ -3340,28 +3331,6 @@ return|return
 name|localized
 return|;
 block|}
-specifier|public
-name|void
-name|add_builtin_resource
-parameter_list|(
-name|ResourceType
-name|t
-parameter_list|,
-name|String
-name|value
-parameter_list|)
-block|{
-name|getResourceMap
-argument_list|(
-name|t
-argument_list|)
-operator|.
-name|add
-argument_list|(
-name|value
-argument_list|)
-expr_stmt|;
-block|}
 specifier|private
 name|Set
 argument_list|<
@@ -4630,7 +4599,7 @@ return|return
 name|userName
 return|;
 block|}
-comment|/**    * If authorization mode is v2, then pass it through authorizer so that it can apply    * any security configuration changes.    * @param hiveConf    * @return    * @throws HiveException    */
+comment|/**    * If authorization mode is v2, then pass it through authorizer so that it can apply    * any security configuration changes.    */
 specifier|public
 name|void
 name|applyAuthorizationPolicy
