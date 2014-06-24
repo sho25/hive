@@ -948,6 +948,26 @@ name|ASTNode
 name|sourceNode
 decl_stmt|;
 block|}
+specifier|public
+name|void
+name|clear
+parameter_list|()
+block|{
+name|translations
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|copyTranslations
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|enabled
+operator|=
+literal|false
+expr_stmt|;
+block|}
 block|}
 end_class
 

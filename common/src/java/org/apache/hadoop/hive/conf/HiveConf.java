@@ -2317,6 +2317,30 @@ argument_list|,
 literal|25000
 argument_list|)
 block|,
+comment|// CBO related
+comment|/*      * Flag to control enabling Cost Based Optimizations using Optiq framework.      */
+name|HIVE_CBO_ENABLED
+argument_list|(
+literal|"hive.cbo.enable"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|/*      * Control queries that will be considered for join reordering, based on      * number of joins in them. Beyond a certain number of joins, the cost of      * considering possible permutations is prohibitive.      */
+name|HIVE_CBO_MAX_JOINS_SUPPORTED
+argument_list|(
+literal|"hive.cbo.max.joins.supported"
+argument_list|,
+literal|10
+argument_list|)
+block|,
+name|HIVE_CBO_PULLPROJECTABOVEJOIN_RULE
+argument_list|(
+literal|"hive.cbo.project.pullabovejoin.rule"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE

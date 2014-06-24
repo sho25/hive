@@ -481,6 +481,8 @@ block|{
 name|super
 argument_list|(
 name|conf
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -2785,6 +2787,8 @@ block|{
 name|super
 argument_list|(
 name|conf
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// check if it is no scan. grammar prevents coexit noscan/columns
