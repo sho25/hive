@@ -17925,7 +17925,11 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"hive.index.compact.file"
+name|ConfVars
+operator|.
+name|HIVE_INDEX_COMPACT_FILE
+operator|.
+name|varname
 argument_list|,
 name|mWork
 operator|.
@@ -17937,7 +17941,11 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"hive.index.blockfilter.file"
+name|ConfVars
+operator|.
+name|HIVE_INDEX_BLOCKFILTER_FILE
+operator|.
+name|varname
 argument_list|,
 name|mWork
 operator|.

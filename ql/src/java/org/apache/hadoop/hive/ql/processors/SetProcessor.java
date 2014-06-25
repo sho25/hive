@@ -783,6 +783,13 @@ literal|"Warning: Value had a \\n character in it."
 argument_list|)
 expr_stmt|;
 block|}
+name|varname
+operator|=
+name|varname
+operator|.
+name|trim
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|varname
@@ -1105,7 +1112,7 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|" expects an "
+literal|" expects "
 argument_list|)
 expr_stmt|;
 name|message
@@ -1120,7 +1127,7 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|" value."
+literal|" type value."
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -1208,6 +1215,29 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|key
+operator|.
+name|startsWith
+argument_list|(
+literal|"hive."
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"hive configuration "
+operator|+
+name|key
+operator|+
+literal|" does not exists."
+argument_list|)
+throw|;
 block|}
 block|}
 name|conf
