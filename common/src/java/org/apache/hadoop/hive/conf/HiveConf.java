@@ -989,6 +989,13 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|SUBMITLOCALTASKVIACHILD
+argument_list|(
+literal|"hive.exec.submit.local.task.via.child"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|SCRIPTERRORLIMIT
 argument_list|(
 literal|"hive.exec.script.maxerrsize"

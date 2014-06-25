@@ -777,16 +777,6 @@ block|}
 block|}
 name|runningViaChild
 operator|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|isLocalMode
-argument_list|(
-name|conf
-argument_list|)
-operator|||
 name|conf
 operator|.
 name|getBoolVar

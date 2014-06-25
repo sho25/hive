@@ -4792,7 +4792,7 @@ name|ret
 operator|=
 name|ed
 operator|.
-name|executeFromChildJVM
+name|executeInProcess
 argument_list|(
 operator|new
 name|DriverContext

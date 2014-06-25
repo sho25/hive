@@ -1077,6 +1077,48 @@ name|DriverContext
 name|driverContext
 parameter_list|)
 block|{
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|SUBMITLOCALTASKVIACHILD
+argument_list|)
+condition|)
+block|{
+comment|// send task off to another jvm
+return|return
+name|executeInChildVM
+argument_list|(
+name|driverContext
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+comment|// execute in process
+return|return
+name|executeInProcess
+argument_list|(
+name|driverContext
+argument_list|)
+return|;
+block|}
+block|}
+specifier|public
+name|int
+name|executeInChildVM
+parameter_list|(
+name|DriverContext
+name|driverContext
+parameter_list|)
+block|{
+comment|// execute in child jvm
 try|try
 block|{
 comment|// generate the cmd line to run in the child jvm
@@ -2001,7 +2043,7 @@ block|}
 block|}
 specifier|public
 name|int
-name|executeFromChildJVM
+name|executeInProcess
 parameter_list|(
 name|DriverContext
 name|driverContext

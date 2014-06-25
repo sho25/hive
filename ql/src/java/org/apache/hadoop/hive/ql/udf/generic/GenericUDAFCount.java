@@ -619,13 +619,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-assert|assert
-name|parameters
-operator|.
-name|length
-operator|>
-literal|0
-assert|;
 name|boolean
 name|countThisRow
 init|=
