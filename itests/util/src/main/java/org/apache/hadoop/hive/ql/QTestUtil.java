@@ -5162,6 +5162,11 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.security.DummyAuthenticator"
 argument_list|)
 expr_stmt|;
+name|Utilities
+operator|.
+name|clearWorkMap
+argument_list|()
+expr_stmt|;
 name|CliSessionState
 name|ss
 init|=
@@ -7569,6 +7574,8 @@ block|,
 literal|".*Input:.*/data/files/.*"
 block|,
 literal|".*Output:.*/data/files/.*"
+block|,
+literal|".*total number of created files now is.*"
 block|}
 argument_list|)
 decl_stmt|;

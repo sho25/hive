@@ -660,10 +660,11 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"mydb.db"
+literal|"mydb"
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// location is not shown in test mode
 name|hcatDriver
 operator|.
 name|run

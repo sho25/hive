@@ -301,6 +301,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|hbase
 operator|.
 name|ColumnMappings
@@ -2027,7 +2043,7 @@ block|}
 block|}
 comment|// output job properties
 block|}
-comment|/**    * Return true when HBaseStorageHandler should generate hfiles instead of operate against the    * online table. This mode is implicitly applied when "hive.hbase.completebulkload" is true.    */
+comment|/**    * Return true when HBaseStorageHandler should generate hfiles instead of operate against the    * online table. This mode is implicitly applied when "hive.hbase.generatehfiles" is true.    */
 specifier|public
 specifier|static
 name|boolean
@@ -2038,13 +2054,17 @@ name|conf
 parameter_list|)
 block|{
 return|return
-name|conf
+name|HiveConf
 operator|.
-name|getBoolean
+name|getBoolVar
 argument_list|(
-literal|"hive.hbase.generatehfiles"
+name|conf
 argument_list|,
-literal|false
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_HBASE_GENERATE_HFILES
 argument_list|)
 return|;
 block|}

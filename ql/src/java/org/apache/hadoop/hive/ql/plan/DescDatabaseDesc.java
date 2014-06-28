@@ -87,7 +87,7 @@ specifier|final
 name|String
 name|schema
 init|=
-literal|"db_name,comment,location,parameters#string:string:string:string"
+literal|"db_name,comment,location,owner_name,owner_type,parameters#string:string:string:string:string:string"
 decl_stmt|;
 specifier|public
 name|DescDatabaseDesc

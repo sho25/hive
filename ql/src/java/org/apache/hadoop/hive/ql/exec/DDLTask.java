@@ -8092,13 +8092,6 @@ operator|.
 name|getDatabaseProperties
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|database
-operator|!=
-literal|null
-condition|)
-block|{
 name|Map
 argument_list|<
 name|String
@@ -8141,8 +8134,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// if one of them is null, replace the old params with the new
-comment|// one
+comment|// if one of them is null, replace the old params with the new one
 name|database
 operator|.
 name|setParameters
@@ -8150,7 +8142,6 @@ argument_list|(
 name|newParams
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 break|break;
 case|case
@@ -16357,7 +16348,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// get the tables for the desired pattenn - populate the output stream
+comment|// get the tables for the desired patten - populate the output stream
 name|Set
 argument_list|<
 name|String
@@ -19787,8 +19778,6 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-else|else
-block|{
 name|Map
 argument_list|<
 name|String
@@ -19815,6 +19804,35 @@ name|getParameters
 argument_list|()
 expr_stmt|;
 block|}
+name|String
+name|location
+init|=
+name|database
+operator|.
+name|getLocationUri
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST
+argument_list|)
+condition|)
+block|{
+name|location
+operator|=
+literal|"location/in/test"
+expr_stmt|;
+block|}
 name|PrincipalType
 name|ownerType
 init|=
@@ -19839,10 +19857,7 @@ operator|.
 name|getDescription
 argument_list|()
 argument_list|,
-name|database
-operator|.
-name|getLocationUri
-argument_list|()
+name|location
 argument_list|,
 name|database
 operator|.
@@ -19865,7 +19880,6 @@ argument_list|,
 name|params
 argument_list|)
 expr_stmt|;
-block|}
 name|outStream
 operator|.
 name|close
@@ -24971,7 +24985,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// We have already locked the table in DDLSemenaticAnalyzer, don't do it again here
+comment|// We have already locked the table in DDLSemanticAnalyzer, don't do it again here
 name|work
 operator|.
 name|getOutputs
@@ -27999,7 +28013,7 @@ return|return
 literal|"DDL"
 return|;
 block|}
-comment|/**    * Make location in specified sd qualified.    *    * @param conf    *          Hive configuration.    * @param databaseName    *          Database name.    * @param sd    *          Storage descriptor.    * @param name    *          Object name.    */
+comment|/**    * Make location in specified sd qualified.    *    * @param databaseName    *          Database name.    * @param sd    *          Storage descriptor.    * @param name    *          Object name.    */
 specifier|private
 name|void
 name|makeLocationQualified
@@ -28108,7 +28122,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Make qualified location for an index .    *    * @param conf    *          Hive configuration.    * @param crtIndex    *          Create index descriptor.    * @param name    *          Object name.    */
+comment|/**    * Make qualified location for an index .    *    * @param crtIndex    *          Create index descriptor.    * @param name    *          Object name.    */
 specifier|private
 name|void
 name|makeLocationQualified
@@ -28222,7 +28236,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Make qualified location for a database .    *    * @param conf    *          Hive configuration.    * @param database    *          Database.    */
+comment|/**    * Make qualified location for a database .    *    * @param database    *          Database.    */
 specifier|private
 name|void
 name|makeLocationQualified
