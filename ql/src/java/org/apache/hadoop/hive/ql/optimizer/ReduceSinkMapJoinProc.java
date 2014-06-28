@@ -871,6 +871,17 @@ name|isBucketMapJoin
 argument_list|()
 condition|)
 block|{
+comment|// disable auto parallelism for bucket map joins
+name|parentRS
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setAutoParallel
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 name|numBuckets
 operator|=
 operator|(
