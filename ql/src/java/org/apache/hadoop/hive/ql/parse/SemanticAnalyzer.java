@@ -71654,33 +71654,6 @@ name|getTypeFactory
 argument_list|()
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|aggregation
-operator|.
-name|equals
-argument_list|(
-name|SqlStdOperatorTable
-operator|.
-name|AVG
-argument_list|)
-condition|)
-block|{
-name|type
-operator|=
-name|type
-operator|.
-name|getField
-argument_list|(
-literal|"sum"
-argument_list|,
-literal|false
-argument_list|)
-operator|.
-name|getType
-argument_list|()
-expr_stmt|;
-block|}
 comment|// TODO: Does HQL allows expressions as aggregate args or can it only be
 comment|// projections from child?
 name|Integer
