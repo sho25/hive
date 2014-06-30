@@ -229,6 +229,13 @@ name|boolean
 name|mapGroupBy
 decl_stmt|;
 comment|// for group-by, values with same key on top-K should be forwarded
+comment|//flag used to control how TopN handled for PTF/Windowing partitions.
+specifier|private
+name|boolean
+name|isPTFReduceSink
+init|=
+literal|false
+decl_stmt|;
 specifier|private
 name|boolean
 name|skipTag
@@ -1115,6 +1122,30 @@ operator|.
 name|mapGroupBy
 operator|=
 name|mapGroupBy
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isPTFReduceSink
+parameter_list|()
+block|{
+return|return
+name|isPTFReduceSink
+return|;
+block|}
+specifier|public
+name|void
+name|setPTFReduceSink
+parameter_list|(
+name|boolean
+name|isPTFReduceSink
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isPTFReduceSink
+operator|=
+name|isPTFReduceSink
 expr_stmt|;
 block|}
 comment|/**    * Returns the number of reducers for the map-reduce job. -1 means to decide    * the number of reducers at runtime. This enables Hive to estimate the number    * of reducers based on the map-reduce input data size, which is only    * available right before we start the map-reduce job.    */
