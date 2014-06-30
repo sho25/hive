@@ -1926,14 +1926,6 @@ operator|.
 name|getTableName
 argument_list|()
 decl_stmt|;
-name|String
-name|partName
-init|=
-name|qbParseInfo
-operator|.
-name|getPartName
-argument_list|()
-decl_stmt|;
 name|List
 argument_list|<
 name|String
@@ -2053,8 +2045,6 @@ operator|new
 name|ColumnStatsDesc
 argument_list|(
 name|tableName
-argument_list|,
-name|partName
 argument_list|,
 name|colName
 argument_list|,

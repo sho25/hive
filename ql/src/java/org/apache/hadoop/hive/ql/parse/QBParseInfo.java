@@ -340,11 +340,6 @@ name|colType
 decl_stmt|;
 comment|// used for column statistics
 specifier|private
-name|String
-name|partName
-decl_stmt|;
-comment|// used for column statistics
-specifier|private
 name|boolean
 name|isTblLvl
 decl_stmt|;
@@ -2560,30 +2555,6 @@ operator|.
 name|colName
 operator|=
 name|colName
-expr_stmt|;
-block|}
-specifier|public
-name|String
-name|getPartName
-parameter_list|()
-block|{
-return|return
-name|partName
-return|;
-block|}
-specifier|public
-name|void
-name|setPartName
-parameter_list|(
-name|String
-name|partName
-parameter_list|)
-block|{
-name|this
-operator|.
-name|partName
-operator|=
-name|partName
 expr_stmt|;
 block|}
 specifier|public

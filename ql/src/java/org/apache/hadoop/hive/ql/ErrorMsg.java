@@ -1993,15 +1993,6 @@ operator|+
 literal|"statement"
 argument_list|)
 block|,
-name|COLUMNSTATSCOLLECTOR_INCORRECT_NUM_PART_KEY
-argument_list|(
-literal|30006
-argument_list|,
-literal|"Incorrect number of partitioning key "
-operator|+
-literal|"specified in ANALYZE statement"
-argument_list|)
-block|,
 name|COLUMNSTATSCOLLECTOR_INVALID_PARTITION
 argument_list|(
 literal|30007
@@ -2009,15 +2000,6 @@ argument_list|,
 literal|"Invalid partitioning key/value specified in "
 operator|+
 literal|"ANALYZE statement"
-argument_list|)
-block|,
-name|COLUMNSTATSCOLLECTOR_INVALID_SYNTAX
-argument_list|(
-literal|30008
-argument_list|,
-literal|"Dynamic partitioning is not supported yet while "
-operator|+
-literal|"gathering column statistics through ANALYZE statement"
 argument_list|)
 block|,
 name|COLUMNSTATSCOLLECTOR_PARSE_ERROR
