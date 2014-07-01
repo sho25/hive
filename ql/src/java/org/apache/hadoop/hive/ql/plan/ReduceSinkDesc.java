@@ -229,18 +229,25 @@ name|boolean
 name|mapGroupBy
 decl_stmt|;
 comment|// for group-by, values with same key on top-K should be forwarded
+comment|//flag used to control how TopN handled for PTF/Windowing partitions.
+specifier|private
+name|boolean
+name|isPTFReduceSink
+init|=
+literal|false
+decl_stmt|;
 specifier|private
 name|boolean
 name|skipTag
 decl_stmt|;
 comment|// Skip writing tags when feeding into mapjoin hashtable
 specifier|private
-name|boolean
+name|Boolean
 name|autoParallel
 init|=
-literal|false
+literal|null
 decl_stmt|;
-comment|// Is reducer parallelism automatic or fixed
+comment|// Is reducer auto-parallelism enabled, disabled or unset
 specifier|private
 specifier|static
 specifier|transient
@@ -652,10 +659,9 @@ argument_list|)
 expr_stmt|;
 name|desc
 operator|.
-name|setAutoParallel
-argument_list|(
 name|autoParallel
-argument_list|)
+operator|=
+name|autoParallel
 expr_stmt|;
 return|return
 name|desc
@@ -1118,6 +1124,30 @@ operator|=
 name|mapGroupBy
 expr_stmt|;
 block|}
+specifier|public
+name|boolean
+name|isPTFReduceSink
+parameter_list|()
+block|{
+return|return
+name|isPTFReduceSink
+return|;
+block|}
+specifier|public
+name|void
+name|setPTFReduceSink
+parameter_list|(
+name|boolean
+name|isPTFReduceSink
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isPTFReduceSink
+operator|=
+name|isPTFReduceSink
+expr_stmt|;
+block|}
 comment|/**    * Returns the number of reducers for the map-reduce job. -1 means to decide    * the number of reducers at runtime. This enables Hive to estimate the number    * of reducers based on the map-reduce input data size, which is only    * available right before we start the map-reduce job.    */
 specifier|public
 name|int
@@ -1406,6 +1436,12 @@ name|isAutoParallel
 parameter_list|()
 block|{
 return|return
+operator|(
+name|autoParallel
+operator|!=
+literal|null
+operator|)
+operator|&&
 name|autoParallel
 return|;
 block|}
@@ -1419,12 +1455,32 @@ name|boolean
 name|autoParallel
 parameter_list|)
 block|{
+comment|// we don't allow turning on auto parallel once it has been
+comment|// explicitly turned off. That is to avoid scenarios where
+comment|// auto parallelism could break assumptions about number of
+comment|// reducers or hash function.
+if|if
+condition|(
+name|this
+operator|.
+name|autoParallel
+operator|==
+literal|null
+operator|||
+name|this
+operator|.
+name|autoParallel
+operator|==
+literal|true
+condition|)
+block|{
 name|this
 operator|.
 name|autoParallel
 operator|=
 name|autoParallel
 expr_stmt|;
+block|}
 block|}
 block|}
 end_class

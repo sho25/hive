@@ -317,20 +317,20 @@ operator|-
 literal|3
 decl_stmt|;
 comment|// Vectorized - may forward the row, not sure yet.
-specifier|private
+specifier|protected
 name|BinaryCollector
 name|collector
 decl_stmt|;
-specifier|private
+specifier|protected
 name|int
 name|topN
 decl_stmt|;
-specifier|private
+specifier|protected
 name|long
 name|threshold
 decl_stmt|;
 comment|// max heap size
-specifier|private
+specifier|protected
 name|long
 name|usage
 decl_stmt|;
@@ -386,18 +386,18 @@ index|[]
 name|indexToBatchIndex
 decl_stmt|;
 comment|// mapping of index (lined up w/keys) to index in the batch
-specifier|private
+specifier|protected
 name|int
 index|[]
 name|batchIndexToResult
 decl_stmt|;
 comment|// mapping of index in the batch (linear) to hash result
-specifier|private
+specifier|protected
 name|int
 name|batchSize
 decl_stmt|;
 comment|// Size of the current batch.
-specifier|private
+specifier|protected
 name|boolean
 name|isEnabled
 init|=
@@ -665,6 +665,9 @@ name|tryStoreKey
 parameter_list|(
 name|HiveKey
 name|key
+parameter_list|,
+name|boolean
+name|partColsIsNull
 parameter_list|)
 throws|throws
 name|HiveException
@@ -923,6 +926,9 @@ parameter_list|(
 name|HiveKey
 name|key
 parameter_list|,
+name|boolean
+name|partColsIsNull
+parameter_list|,
 name|int
 name|batchIndex
 parameter_list|)
@@ -1008,6 +1014,22 @@ operator|!=
 name|collisionIndex
 condition|)
 block|{
+comment|/*        * since there is a collision index will be used for the next value         * so have the map point back to original index.        */
+if|if
+condition|(
+name|indexes
+operator|instanceof
+name|HashForGroup
+condition|)
+block|{
+name|indexes
+operator|.
+name|store
+argument_list|(
+name|collisionIndex
+argument_list|)
+expr_stmt|;
+block|}
 comment|// forward conditional on the survival of the corresponding key currently in indexes.
 operator|++
 name|batchNumForwards
@@ -1311,13 +1333,16 @@ index|]
 index|]
 return|;
 block|}
-comment|/**    * Stores the value for the key in the heap.    * @param index The index, either from tryStoreKey or from tryStoreVectorizedKey result.    * @param value The value to store.    * @param keyHash The key hash to store.    * @param vectorized Whether the result is coming from a vectorized batch.    */
+comment|/**    * Stores the value for the key in the heap.    * @param index The index, either from tryStoreKey or from tryStoreVectorizedKey result.    * @param hasCode hashCode of key, used by ptfTopNHash.    * @param value The value to store.    * @param keyHash The key hash to store.    * @param vectorized Whether the result is coming from a vectorized batch.    */
 specifier|public
 name|void
 name|storeValue
 parameter_list|(
 name|int
 name|index
+parameter_list|,
+name|int
+name|hashCode
 parameter_list|,
 name|BytesWritable
 name|value
