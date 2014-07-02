@@ -4213,13 +4213,6 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-name|HIVE_WAREHOUSE_DATA_SKIPTRASH
-argument_list|(
-literal|"hive.warehouse.data.skipTrash"
-argument_list|,
-literal|false
-argument_list|)
-block|,
 comment|// whether insert into external tables is allowed
 name|HIVE_INSERT_INTO_EXTERNAL_TABLES
 argument_list|(
