@@ -796,25 +796,11 @@ argument_list|()
 condition|)
 block|{
 throw|throw
-operator|new
-name|HiveSQLException
+name|toSQLException
 argument_list|(
-literal|"Error while compiling statement: "
-operator|+
-name|response
-operator|.
-name|getErrorMessage
-argument_list|()
+literal|"Error while compiling statement"
 argument_list|,
 name|response
-operator|.
-name|getSQLState
-argument_list|()
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -1024,25 +1010,11 @@ argument_list|()
 condition|)
 block|{
 throw|throw
-operator|new
-name|HiveSQLException
+name|toSQLException
 argument_list|(
-literal|"Error while processing statement: "
-operator|+
-name|response
-operator|.
-name|getErrorMessage
-argument_list|()
+literal|"Error while processing statement"
 argument_list|,
 name|response
-operator|.
-name|getSQLState
-argument_list|()
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 throw|;
 block|}

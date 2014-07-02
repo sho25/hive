@@ -91,6 +91,22 @@ name|service
 operator|.
 name|cli
 operator|.
+name|HiveSQLException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
 name|thrift
 operator|.
 name|TStatus
@@ -525,22 +541,9 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|HiveSQLException
 argument_list|(
 name|status
-operator|.
-name|getErrorMessage
-argument_list|()
-argument_list|,
-name|status
-operator|.
-name|getSqlState
-argument_list|()
-argument_list|,
-name|status
-operator|.
-name|getErrorCode
-argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -1042,7 +1045,7 @@ return|return
 name|connParams
 return|;
 block|}
-comment|/**    * Takes a version string delmited by '.' and '-' characters    * and returns a partial version.    *    * @param fullVersion    *          version string.    * @param tokenPosition    *          position of version string to get starting at 0. eg, for a X.x.xxx    *          string, 0 will return the major version, 1 will return minor    *          version.    * @return version part, or -1 if version string was malformed.    */
+comment|/**    * Takes a version string delimited by '.' and '-' characters    * and returns a partial version.    *    * @param fullVersion    *          version string.    * @param position    *          position of version string to get starting at 0. eg, for a X.x.xxx    *          string, 0 will return the major version, 1 will return minor    *          version.    * @return version part, or -1 if version string was malformed.    */
 specifier|static
 name|int
 name|getVersionPart
