@@ -1861,6 +1861,19 @@ return|return
 name|ace
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|authorizeAuthorizationApiInvocation
+parameter_list|()
+throws|throws
+name|HiveException
+throws|,
+name|AuthorizationException
+block|{
+comment|// no-op - SBA does not attempt to authorize auth api call. Allow it
+block|}
 block|}
 end_class
 
