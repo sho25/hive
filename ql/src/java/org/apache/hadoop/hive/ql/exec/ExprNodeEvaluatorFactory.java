@@ -513,7 +513,7 @@ operator|.
 name|getExpr
 argument_list|()
 operator|.
-name|getExprString
+name|toString
 argument_list|()
 decl_stmt|;
 name|ExprNodeEvaluator
