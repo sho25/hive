@@ -5648,7 +5648,7 @@ comment|// its children. Although the error can be set multiple times by
 comment|// descendant nodes, DFS traversal ensures that the error only needs to
 comment|// be cleared once. Also, for a case like
 comment|// SELECT concat(value, concat(value))... the logic still works as the
-comment|// error is only set with the first 'value'; all node pocessors quit
+comment|// error is only set with the first 'value'; all node processors quit
 comment|// early if the global error is set.
 if|if
 condition|(
