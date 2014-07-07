@@ -5032,9 +5032,9 @@ name|defaultFloatVal
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Method to retrieve string values from the value object, which can be overridden      * by subclasses.      * @param obj  value      * @return String value from obj      */
-name|String
-name|getStringValue
+comment|/**      * Method to retrieve text values from the value object, which can be overridden      * by subclasses.      * @param obj  value      * @return Text text value from obj      */
+name|Text
+name|getTextValue
 parameter_list|(
 name|Object
 name|obj
@@ -5048,7 +5048,7 @@ operator|)
 name|inspector
 operator|)
 operator|.
-name|getPrimitiveJavaObject
+name|getPrimitiveWritableObject
 argument_list|(
 name|obj
 argument_list|)
@@ -5079,10 +5079,10 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|String
+name|Text
 name|val
 init|=
-name|getStringValue
+name|getTextValue
 argument_list|(
 name|obj
 argument_list|)
@@ -5817,8 +5817,8 @@ block|}
 comment|/**      * Override base class implementation to support char values.      */
 annotation|@
 name|Override
-name|String
-name|getStringValue
+name|Text
+name|getTextValue
 parameter_list|(
 name|Object
 name|obj
@@ -5833,13 +5833,13 @@ operator|)
 name|inspector
 operator|)
 operator|.
-name|getPrimitiveJavaObject
+name|getPrimitiveWritableObject
 argument_list|(
 name|obj
 argument_list|)
 operator|)
 operator|.
-name|getValue
+name|getTextValue
 argument_list|()
 return|;
 block|}
@@ -5884,8 +5884,8 @@ block|}
 comment|/**      * Override base class implementation to support varchar values.      */
 annotation|@
 name|Override
-name|String
-name|getStringValue
+name|Text
+name|getTextValue
 parameter_list|(
 name|Object
 name|obj
@@ -5900,13 +5900,13 @@ operator|)
 name|inspector
 operator|)
 operator|.
-name|getPrimitiveJavaObject
+name|getPrimitiveWritableObject
 argument_list|(
 name|obj
 argument_list|)
 operator|)
 operator|.
-name|getValue
+name|getTextValue
 argument_list|()
 return|;
 block|}
