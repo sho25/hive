@@ -2298,17 +2298,14 @@ name|boolean
 name|isLocalOnlyExecutionMode
 parameter_list|()
 block|{
+comment|// TODO: hack to allow spark to run in a cluster mode. Without this, depending on
+comment|// user's local hadoop settings, true may be returned, which causes plan to be
+comment|// stored in local path. This will be addressed in subsquent patches, where false is
+comment|// returned for spark always.
 return|return
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|isLocalMode
-argument_list|(
-name|conf
-argument_list|)
+literal|false
 return|;
+comment|//    return ShimLoader.getHadoopShims().isLocalMode(conf);
 block|}
 specifier|public
 name|List

@@ -4681,6 +4681,8 @@ argument_list|(
 literal|"mr"
 argument_list|,
 literal|"tez"
+argument_list|,
+literal|"spark"
 argument_list|)
 argument_list|)
 block|,

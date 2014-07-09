@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -48,7 +58,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveKey is a simple wrapper on Text which allows us to set the hashCode  * easily. hashCode is used for hadoop partitioner.  */
+comment|/**  * HiveKey is a simple wrapper on Text which allows us to set the hashCode  * easily. hashCode is used for hadoop partitioner.  *   * TODO: spark require key to be serializable, even if it's considered serializable by  * Hadoop. For now, we let it implement Serializable. However, we expect that this is  * not needed soon.  */
 end_comment
 
 begin_class
@@ -57,6 +67,8 @@ class|class
 name|HiveKey
 extends|extends
 name|BytesWritable
+implements|implements
+name|Serializable
 block|{
 specifier|private
 specifier|static

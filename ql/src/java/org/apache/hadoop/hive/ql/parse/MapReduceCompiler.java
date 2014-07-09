@@ -1312,7 +1312,9 @@ expr_stmt|;
 block|}
 block|}
 comment|// loop over all the operators recursively
-specifier|private
+comment|// TODO: changed from private to protected for SparkCompiler to use. It will be changed back onece SparkCompiler
+comment|//       stands alone.
+specifier|protected
 name|void
 name|breakOperatorTree
 parameter_list|(
