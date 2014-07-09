@@ -1927,6 +1927,11 @@ literal|" )"
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isPartitionStats
+condition|)
+block|{
 for|for
 control|(
 name|FieldSchema
@@ -1950,6 +1955,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|rewrittenQueryBuilder
 operator|.
