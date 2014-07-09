@@ -5053,6 +5053,18 @@ argument_list|)
 throw|;
 block|}
 block|}
+specifier|public
+name|boolean
+name|isTemporary
+parameter_list|()
+block|{
+return|return
+name|tTable
+operator|.
+name|isTemporary
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

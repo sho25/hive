@@ -13920,6 +13920,12 @@ literal|"external"
 decl_stmt|;
 specifier|final
 name|String
+name|TEMPORARY
+init|=
+literal|"temporary"
+decl_stmt|;
+specifier|final
+name|String
 name|LIST_COLUMNS
 init|=
 literal|"columns"
@@ -14120,9 +14126,13 @@ name|append
 argument_list|(
 literal|"CREATE<"
 operator|+
+name|TEMPORARY
+operator|+
+literal|"><"
+operator|+
 name|EXTERNAL
 operator|+
-literal|"> TABLE `"
+literal|">TABLE `"
 argument_list|)
 expr_stmt|;
 name|createTab_str
@@ -14244,6 +14254,32 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// For cases where the table is temporary
+name|String
+name|tbl_temp
+init|=
+literal|""
+decl_stmt|;
+if|if
+condition|(
+name|tbl
+operator|.
+name|isTemporary
+argument_list|()
+condition|)
+block|{
+name|duplicateProps
+operator|.
+name|add
+argument_list|(
+literal|"TEMPORARY"
+argument_list|)
+expr_stmt|;
+name|tbl_temp
+operator|=
+literal|"TEMPORARY "
+expr_stmt|;
+block|}
 comment|// For cases where the table is external
 name|String
 name|tbl_external
@@ -14271,7 +14307,7 @@ argument_list|)
 expr_stmt|;
 name|tbl_external
 operator|=
-literal|"EXTERNAL"
+literal|"EXTERNAL "
 expr_stmt|;
 block|}
 comment|// Columns
@@ -15329,6 +15365,15 @@ literal|", \n"
 argument_list|)
 expr_stmt|;
 block|}
+name|createTab_stmt
+operator|.
+name|add
+argument_list|(
+name|TEMPORARY
+argument_list|,
+name|tbl_temp
+argument_list|)
+expr_stmt|;
 name|createTab_stmt
 operator|.
 name|add
@@ -26182,6 +26227,19 @@ expr_stmt|;
 block|}
 name|tbl
 operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|setTemporary
+argument_list|(
+name|crtTbl
+operator|.
+name|isTemporary
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|tbl
+operator|.
 name|setStoredAsSubDirectories
 argument_list|(
 name|crtTbl
@@ -27044,6 +27102,19 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|tbl
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|setTemporary
+argument_list|(
+name|crtTbl
+operator|.
+name|isTemporary
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|crtTbl
