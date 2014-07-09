@@ -2868,6 +2868,18 @@ name|HIVE_ORC_DEFAULT_STRIPE_SIZE
 argument_list|(
 literal|"hive.exec.orc.default.stripe.size"
 argument_list|,
+literal|64L
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|)
+block|,
+comment|// Define the default file system block size for ORC
+name|HIVE_ORC_DEFAULT_BLOCK_SIZE
+argument_list|(
+literal|"hive.exec.orc.default.block.size"
+argument_list|,
 literal|256L
 operator|*
 literal|1024
@@ -2906,6 +2918,15 @@ argument_list|(
 literal|"hive.exec.orc.default.block.padding"
 argument_list|,
 literal|true
+argument_list|)
+block|,
+comment|// Define the tolerance for block padding. The total padded length will
+comment|// always be less than the specified percentage.
+name|HIVE_ORC_BLOCK_PADDING_TOLERANCE
+argument_list|(
+literal|"hive.exec.orc.block.padding.tolerance"
+argument_list|,
+literal|0.05f
 argument_list|)
 block|,
 comment|// Define the default compression codec for ORC file
@@ -4233,13 +4254,6 @@ block|,
 name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
 argument_list|(
 literal|"hive.warehouse.subdir.inherit.perms"
-argument_list|,
-literal|false
-argument_list|)
-block|,
-name|HIVE_WAREHOUSE_DATA_SKIPTRASH
-argument_list|(
-literal|"hive.warehouse.data.skipTrash"
 argument_list|,
 literal|false
 argument_list|)

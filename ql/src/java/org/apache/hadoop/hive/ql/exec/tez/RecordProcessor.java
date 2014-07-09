@@ -348,6 +348,12 @@ init|=
 literal|false
 decl_stmt|;
 specifier|protected
+name|boolean
+name|isLogTraceEnabled
+init|=
+literal|false
+decl_stmt|;
+specifier|protected
 name|MRTaskReporter
 name|reporter
 decl_stmt|;
@@ -473,6 +479,13 @@ operator|=
 name|l4j
 operator|.
 name|isInfoEnabled
+argument_list|()
+expr_stmt|;
+name|isLogTraceEnabled
+operator|=
+name|l4j
+operator|.
+name|isTraceEnabled
 argument_list|()
 expr_stmt|;
 comment|//log classpaths

@@ -133,7 +133,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Return initialized ObjectInspector. If it's not initilized, throws runtime exception    */
+comment|/**    * Return initialized ObjectInspector. If it's not initialized, throws runtime exception    */
 specifier|public
 name|ObjectInspector
 name|getOutputOI

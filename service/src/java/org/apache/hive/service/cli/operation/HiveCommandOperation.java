@@ -341,10 +341,6 @@ extends|extends
 name|ExecuteStatementOperation
 block|{
 specifier|private
-name|CommandProcessorResponse
-name|response
-decl_stmt|;
-specifier|private
 name|CommandProcessor
 name|commandProcessor
 decl_stmt|;
@@ -662,15 +658,16 @@ operator|.
 name|trim
 argument_list|()
 decl_stmt|;
+name|CommandProcessorResponse
 name|response
-operator|=
+init|=
 name|commandProcessor
 operator|.
 name|run
 argument_list|(
 name|commandArgs
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|int
 name|returnCode
 init|=
@@ -687,25 +684,11 @@ literal|0
 condition|)
 block|{
 throw|throw
-operator|new
-name|HiveSQLException
+name|toSQLException
 argument_list|(
-literal|"Error while processing statement: "
-operator|+
-name|response
-operator|.
-name|getErrorMessage
-argument_list|()
+literal|"Error while processing statement"
 argument_list|,
 name|response
-operator|.
-name|getSQLState
-argument_list|()
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -933,7 +916,7 @@ return|return
 name|rowSet
 return|;
 block|}
-comment|/**    * Reads the temporary results for non-Hive (non-Driver) commands to the    * resulting List of strings.    * @param results list of strings containing the results    * @param nLines number of lines read at once. If it is<= 0, then read all lines.    */
+comment|/**    * Reads the temporary results for non-Hive (non-Driver) commands to the    * resulting List of strings.    * @param nLines number of lines read at once. If it is<= 0, then read all lines.    */
 specifier|private
 name|List
 argument_list|<
