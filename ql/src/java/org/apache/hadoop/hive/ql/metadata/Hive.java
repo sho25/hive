@@ -3609,6 +3609,26 @@ throw|;
 block|}
 if|if
 condition|(
+name|baseTbl
+operator|.
+name|isTemporary
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"tableName="
+operator|+
+name|tableName
+operator|+
+literal|" is a TEMPORARY TABLE. Index on TEMPORARY TABLE is not supported."
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
 name|indexTblName
 operator|==
 literal|null
@@ -12936,7 +12956,7 @@ name|conf
 argument_list|,
 name|hookLoader
 argument_list|,
-name|HiveMetaStoreClient
+name|SessionHiveMetaStoreClient
 operator|.
 name|class
 operator|.

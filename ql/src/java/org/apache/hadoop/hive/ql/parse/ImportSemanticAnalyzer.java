@@ -742,6 +742,11 @@ comment|// isExternal: set to false here, can be overwritten by the
 comment|// IMPORT stmt
 name|table
 operator|.
+name|isTemporary
+argument_list|()
+argument_list|,
+name|table
+operator|.
 name|getSd
 argument_list|()
 operator|.

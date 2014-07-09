@@ -229,6 +229,13 @@ operator|new
 name|HiveConf
 argument_list|()
 expr_stmt|;
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|context
 operator|=
 operator|new
@@ -247,13 +254,6 @@ name|analyzer
 operator|=
 operator|new
 name|MacroSemanticAnalyzer
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-name|SessionState
-operator|.
-name|start
 argument_list|(
 name|conf
 argument_list|)
