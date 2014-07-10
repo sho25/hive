@@ -782,6 +782,17 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|groupBy
+operator|.
+name|getGroupSet
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
 name|hiveAST
 operator|.
 name|groupBy
