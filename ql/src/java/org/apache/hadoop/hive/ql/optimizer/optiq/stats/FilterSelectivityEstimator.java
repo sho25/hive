@@ -383,7 +383,7 @@ name|call
 argument_list|)
 return|;
 block|}
-comment|/**    * Disjunction Selectivity -> (1 Ð(1-m1/n)(1-m2/n)) where n is the total    * number of tuples from child and m1 and m2 is the expected number of tuples    * from each part of the disjunction predicate.    *<p>    * Note we compute m1. m2.. by applying selectivity of the disjunctive element    * on the cardinality from child.    *     * @param call    * @return    */
+comment|/**    * Disjunction Selectivity -> (1 D(1-m1/n)(1-m2/n)) where n is the total    * number of tuples from child and m1 and m2 is the expected number of tuples    * from each part of the disjunction predicate.    *<p>    * Note we compute m1. m2.. by applying selectivity of the disjunctive element    * on the cardinality from child.    *     * @param call    * @return    */
 specifier|private
 name|Double
 name|computeDisjunctionSelectivity
