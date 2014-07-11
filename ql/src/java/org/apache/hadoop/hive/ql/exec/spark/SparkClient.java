@@ -458,7 +458,7 @@ specifier|static
 name|int
 name|reducerCount
 init|=
-literal|5
+literal|1
 decl_stmt|;
 specifier|private
 specifier|static
