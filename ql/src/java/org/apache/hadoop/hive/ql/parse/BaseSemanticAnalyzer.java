@@ -5559,7 +5559,7 @@ return|return
 name|tableAccessInfo
 return|;
 block|}
-comment|/**    * Sets the table access information.    *    * @param taInfo The TableAccessInfo structure that is set in the optimization phase.    */
+comment|/**    * Sets the table access information.    *    * @param tableAccessInfo The TableAccessInfo structure that is set in the optimization phase.    */
 specifier|public
 name|void
 name|setTableAccessInfo
@@ -7606,7 +7606,7 @@ name|throwException
 argument_list|)
 return|;
 block|}
-comment|// qnName : possibly contains database name (dot seperated)
+comment|// qnName : possibly contains database name (dot separated)
 specifier|protected
 name|Table
 name|getTableWithQN
