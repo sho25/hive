@@ -10845,6 +10845,9 @@ name|userName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|HiveException
@@ -10862,6 +10865,8 @@ argument_list|,
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|grantOption
 argument_list|)
 return|;
 block|}

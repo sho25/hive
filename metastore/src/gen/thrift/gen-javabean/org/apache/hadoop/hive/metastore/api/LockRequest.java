@@ -3588,7 +3588,7 @@ block|{
 name|LockComponent
 name|_elem404
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem404
 operator|=
 operator|new
@@ -4382,7 +4382,7 @@ block|{
 name|LockComponent
 name|_elem409
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem409
 operator|=
 operator|new

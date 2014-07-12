@@ -4684,6 +4684,11 @@ name|principal
 operator|.
 name|getType
 argument_list|()
+argument_list|,
+name|grantOrRevokeRoleDDL
+operator|.
+name|isGrantOption
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

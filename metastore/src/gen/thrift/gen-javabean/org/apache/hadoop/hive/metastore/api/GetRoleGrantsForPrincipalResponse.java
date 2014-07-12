@@ -2087,7 +2087,7 @@ block|{
 name|RolePrincipalGrant
 name|_elem80
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem80
 operator|=
 operator|new
@@ -2532,7 +2532,7 @@ block|{
 name|RolePrincipalGrant
 name|_elem85
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem85
 operator|=
 operator|new

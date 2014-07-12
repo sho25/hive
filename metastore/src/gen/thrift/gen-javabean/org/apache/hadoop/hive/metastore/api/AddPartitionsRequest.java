@@ -4205,7 +4205,7 @@ block|{
 name|Partition
 name|_elem340
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem340
 operator|=
 operator|new
@@ -4998,7 +4998,7 @@ block|{
 name|Partition
 name|_elem345
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem345
 operator|=
 operator|new

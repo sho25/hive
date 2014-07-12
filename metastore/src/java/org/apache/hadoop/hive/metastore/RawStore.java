@@ -1472,6 +1472,9 @@ name|userName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|MetaException
