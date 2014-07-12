@@ -211,6 +211,26 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -271,6 +291,21 @@ class|class
 name|CloudComputeService
 block|{
 specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|CloudComputeService
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
+specifier|private
 specifier|final
 name|ComputeServiceContext
 name|mComputeServiceContext
@@ -310,9 +345,10 @@ specifier|final
 name|String
 name|mSecurityGroup
 decl_stmt|;
+comment|/**    * JClouds requests on-demand instances when null    */
 specifier|private
 specifier|final
-name|float
+name|Float
 name|mMaxBid
 decl_stmt|;
 specifier|public
@@ -339,7 +375,7 @@ parameter_list|,
 name|String
 name|securityGroup
 parameter_list|,
-name|float
+name|Float
 name|maxBid
 parameter_list|)
 block|{
@@ -655,6 +691,11 @@ name|NodeMetadata
 name|node
 parameter_list|)
 block|{
+name|String
+name|result
+init|=
+literal|"false non-ptest host"
+decl_stmt|;
 if|if
 condition|(
 name|groupName
@@ -668,6 +709,12 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+name|result
+operator|=
+literal|"true due to group "
+operator|+
+name|groupName
+expr_stmt|;
 return|return
 literal|true
 return|;
@@ -690,6 +737,12 @@ name|groupName
 argument_list|)
 condition|)
 block|{
+name|result
+operator|=
+literal|"true due to name "
+operator|+
+name|groupName
+expr_stmt|;
 return|return
 literal|true
 return|;
@@ -707,10 +760,29 @@ name|groupTag
 argument_list|)
 condition|)
 block|{
+name|result
+operator|=
+literal|"true due to tag "
+operator|+
+name|groupName
+expr_stmt|;
 return|return
 literal|true
 return|;
 block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Found node: "
+operator|+
+name|node
+operator|+
+literal|", Result: "
+operator|+
+name|result
+argument_list|)
+expr_stmt|;
 return|return
 literal|false
 return|;
