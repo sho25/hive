@@ -3074,6 +3074,15 @@ argument_list|,
 literal|"The default SerDe Hive will use for the RCFile format"
 argument_list|)
 block|,
+name|HIVEDEFAULTSERDE
+argument_list|(
+literal|"hive.default.serde"
+argument_list|,
+literal|"org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
+argument_list|,
+literal|"The default SerDe Hive will use for storage formats that do not specify a SerDe."
+argument_list|)
+block|,
 name|SERDESUSINGMETASTOREFORSCHEMA
 argument_list|(
 literal|"hive.serdes.using.metastore.for.schema"
