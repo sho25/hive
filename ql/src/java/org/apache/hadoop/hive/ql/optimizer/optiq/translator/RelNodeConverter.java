@@ -5275,7 +5275,9 @@ argument_list|(
 name|tableScanOp
 argument_list|)
 argument_list|,
-name|stats
+literal|null
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|TableAccessRelBase

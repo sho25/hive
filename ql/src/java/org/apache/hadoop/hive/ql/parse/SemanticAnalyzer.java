@@ -71536,7 +71536,7 @@ name|ArrayList
 argument_list|<
 name|ColumnInfo
 argument_list|>
-name|columnsThatNeedsStats
+name|nonPartitionColumns
 init|=
 operator|new
 name|ArrayList
@@ -71546,6 +71546,19 @@ argument_list|>
 argument_list|(
 name|cInfoLst
 argument_list|)
+decl_stmt|;
+name|ArrayList
+argument_list|<
+name|ColumnInfo
+argument_list|>
+name|partitionColumns
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|ColumnInfo
+argument_list|>
+argument_list|()
 decl_stmt|;
 comment|// 3.2 Add column info corresponding to partition columns
 for|for
@@ -71600,6 +71613,13 @@ name|colInfo
 argument_list|)
 expr_stmt|;
 name|cInfoLst
+operator|.
+name|add
+argument_list|(
+name|colInfo
+argument_list|)
+expr_stmt|;
+name|partitionColumns
 operator|.
 name|add
 argument_list|(
@@ -71717,7 +71737,9 @@ name|rowType
 argument_list|,
 name|tab
 argument_list|,
-name|columnsThatNeedsStats
+name|nonPartitionColumns
+argument_list|,
+name|partitionColumns
 argument_list|)
 decl_stmt|;
 comment|// 5. Build Hive Table Scan Rel
