@@ -561,6 +561,13 @@ argument_list|(
 name|mapWork
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|redWork
+operator|!=
+literal|null
+condition|)
+block|{
 name|sparkWork
 operator|.
 name|setReduceWork
@@ -568,6 +575,7 @@ argument_list|(
 name|redWork
 argument_list|)
 expr_stmt|;
+block|}
 name|SparkTask
 name|task
 init|=
