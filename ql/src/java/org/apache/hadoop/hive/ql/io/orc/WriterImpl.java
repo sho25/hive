@@ -10087,7 +10087,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"Padding ORC by %d bytes (<=  %0.2f * %d)"
+literal|"Padding ORC by %d bytes (<=  %.2f * %d)"
 argument_list|,
 name|padding
 argument_list|,

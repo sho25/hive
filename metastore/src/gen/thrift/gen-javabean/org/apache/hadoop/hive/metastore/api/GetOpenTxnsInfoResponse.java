@@ -2656,7 +2656,7 @@ block|{
 name|TxnInfo
 name|_elem380
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem380
 operator|=
 operator|new
@@ -3147,7 +3147,7 @@ block|{
 name|TxnInfo
 name|_elem385
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem385
 operator|=
 operator|new

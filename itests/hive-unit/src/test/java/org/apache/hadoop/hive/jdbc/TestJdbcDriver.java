@@ -47,11 +47,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|conf
 operator|.
-name|processors
-operator|.
-name|SetProcessor
+name|SystemVariables
 operator|.
 name|SET_COLUMN_NAME
 import|;

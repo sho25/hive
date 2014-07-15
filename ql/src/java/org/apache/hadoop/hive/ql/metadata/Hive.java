@@ -579,22 +579,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|IMetaStoreClient
 import|;
 end_import
@@ -1798,7 +1782,7 @@ name|remove
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Hive    *    * @param argFsRoot    * @param c    *    */
+comment|/**    * Hive    *    * @param c    *    */
 specifier|private
 name|Hive
 parameter_list|(
@@ -2359,6 +2343,11 @@ name|DDL_TIME
 argument_list|)
 expr_stmt|;
 block|}
+name|newTbl
+operator|.
+name|checkValidity
+argument_list|()
+expr_stmt|;
 name|getMSC
 argument_list|()
 operator|.
@@ -2574,6 +2563,11 @@ name|DDL_TIME
 argument_list|)
 expr_stmt|;
 block|}
+name|newPart
+operator|.
+name|checkValidity
+argument_list|()
+expr_stmt|;
 name|getMSC
 argument_list|()
 operator|.
@@ -5427,22 +5421,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|Table
-name|table
-init|=
+return|return
 operator|new
 name|Table
 argument_list|(
 name|tTable
 argument_list|)
-decl_stmt|;
-name|table
-operator|.
-name|checkValidity
-argument_list|()
-expr_stmt|;
-return|return
-name|table
 return|;
 block|}
 comment|/**    * Get all table names for the current database.    * @return List of table names    * @throws HiveException    */
@@ -10861,6 +10845,9 @@ name|userName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|HiveException
@@ -10878,6 +10865,8 @@ argument_list|,
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|grantOption
 argument_list|)
 return|;
 block|}

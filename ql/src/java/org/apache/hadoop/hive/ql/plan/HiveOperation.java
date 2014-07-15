@@ -630,6 +630,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|SHOWCONF
+argument_list|(
+literal|"SHOWCONF"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|CREATEFUNCTION
 argument_list|(
 literal|"CREATEFUNCTION"

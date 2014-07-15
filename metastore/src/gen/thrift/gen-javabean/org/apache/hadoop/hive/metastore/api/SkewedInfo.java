@@ -3546,7 +3546,7 @@ block|{
 name|String
 name|_elem116
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem116
 operator|=
 name|iprot
@@ -3682,7 +3682,7 @@ name|String
 argument_list|>
 name|_elem119
 decl_stmt|;
-comment|// required
+comment|// optional
 block|{
 name|org
 operator|.
@@ -3733,7 +3733,7 @@ block|{
 name|String
 name|_elem122
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem122
 operator|=
 name|iprot
@@ -3942,7 +3942,7 @@ block|{
 name|String
 name|_elem129
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem129
 operator|=
 name|iprot
@@ -4963,7 +4963,7 @@ block|{
 name|String
 name|_elem142
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem142
 operator|=
 name|iprot
@@ -5082,7 +5082,7 @@ name|String
 argument_list|>
 name|_elem145
 decl_stmt|;
-comment|// required
+comment|// optional
 block|{
 name|org
 operator|.
@@ -5157,7 +5157,7 @@ block|{
 name|String
 name|_elem148
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem148
 operator|=
 name|iprot
@@ -5380,7 +5380,7 @@ block|{
 name|String
 name|_elem155
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem155
 operator|=
 name|iprot

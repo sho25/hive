@@ -839,7 +839,7 @@ specifier|final
 name|String
 name|HAS_ADMIN_PRIV_MSG
 init|=
-literal|"grantor need to have ADMIN privileges on role being"
+literal|"grantor need to have ADMIN OPTION on role being"
 operator|+
 literal|" granted and have it as a current role for this action."
 decl_stmt|;
@@ -2060,22 +2060,6 @@ name|HiveAccessControlException
 block|{
 if|if
 condition|(
-name|grantOption
-condition|)
-block|{
-comment|// removing grant privileges only is not supported in metastore api
-throw|throw
-operator|new
-name|HiveAuthzPluginException
-argument_list|(
-literal|"Revoking only the admin privileges on "
-operator|+
-literal|"role is not currently supported"
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
 operator|!
 operator|(
 name|isUserAdmin
@@ -2154,6 +2138,8 @@ operator|.
 name|getType
 argument_list|()
 argument_list|)
+argument_list|,
+name|grantOption
 argument_list|)
 expr_stmt|;
 block|}

@@ -17994,6 +17994,9 @@ name|userName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|MetaException
@@ -18025,6 +18028,51 @@ name|getRoleName
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|grantOption
+condition|)
+block|{
+comment|// Revoke with grant option - only remove the grant option but keep the role.
+if|if
+condition|(
+name|roleMember
+operator|.
+name|getGrantOption
+argument_list|()
+condition|)
+block|{
+name|roleMember
+operator|.
+name|setGrantOption
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"User "
+operator|+
+name|userName
+operator|+
+literal|" does not have grant option with role "
+operator|+
+name|role
+operator|.
+name|getRoleName
+argument_list|()
+argument_list|)
+throw|;
+block|}
+block|}
+else|else
+block|{
+comment|// No grant option in revoke, remove the whole role.
 name|pm
 operator|.
 name|deletePersistent
@@ -18032,6 +18080,7 @@ argument_list|(
 name|roleMember
 argument_list|)
 expr_stmt|;
+block|}
 name|success
 operator|=
 name|commitTransaction
