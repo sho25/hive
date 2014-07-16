@@ -58570,6 +58570,13 @@ argument_list|(
 name|qb
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"CBO Succeeded; optimized logical plan."
+argument_list|)
+expr_stmt|;
 comment|/*          * Use non CBO Result Set Schema so as to preserve user specified names.          * Hive seems to have bugs with OB/LIMIT in sub queries. // 3. Reset          * result set schema resultSchema =          * convertRowSchemaToResultSetSchema(opParseCtx.get(sinkOp)          * .getRowResolver(), true);          */
 block|}
 catch|catch
@@ -58578,22 +58585,20 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+comment|//TODO: Distinguish between exceptions that can be retried vs user errors
 name|LOG
 operator|.
-name|warn
+name|error
 argument_list|(
 literal|"CBO failed, skipping CBO. "
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-name|e
-argument_list|)
-throw|;
+name|reAnalyzeAST
+operator|=
+literal|true
+expr_stmt|;
 block|}
 finally|finally
 block|{
@@ -69811,15 +69816,6 @@ name|HIVE_CBO_MAX_JOINS_SUPPORTED
 argument_list|)
 operator|)
 operator|&&
-operator|(
-name|queryProperties
-operator|.
-name|getOuterJoinCount
-argument_list|()
-operator|==
-literal|0
-operator|)
-operator|&&
 operator|!
 name|queryProperties
 operator|.
@@ -69872,6 +69868,16 @@ block|{
 name|runOptiqPlanner
 operator|=
 literal|true
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Can not invoke CBO; query contains operators not supported for CBO."
+argument_list|)
 expr_stmt|;
 block|}
 return|return
