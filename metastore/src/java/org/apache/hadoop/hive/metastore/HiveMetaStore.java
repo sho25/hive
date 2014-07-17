@@ -29493,6 +29493,13 @@ parameter_list|)
 throws|throws
 name|Throwable
 block|{
+name|HiveConf
+operator|.
+name|setLoadMetastoreConfig
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|HiveMetastoreCli
 name|cli
 init|=
