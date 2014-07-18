@@ -169,7 +169,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|LinkedList
 import|;
 end_import
 
@@ -179,7 +179,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
+name|List
 import|;
 end_import
 
@@ -431,24 +431,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|TezWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|HiveOperation
 import|;
 end_import
@@ -468,6 +450,24 @@ operator|.
 name|plan
 operator|.
 name|OperatorDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|TezWork
 import|;
 end_import
 
@@ -620,6 +620,7 @@ init|=
 literal|"Explain"
 decl_stmt|;
 specifier|private
+specifier|final
 name|Set
 argument_list|<
 name|Operator
@@ -2231,6 +2232,8 @@ operator|.
 name|doAuthorization
 argument_list|(
 name|analyzer
+argument_list|,
+literal|""
 argument_list|)
 expr_stmt|;
 block|}
@@ -5289,6 +5292,8 @@ argument_list|<
 name|Method
 argument_list|>
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare

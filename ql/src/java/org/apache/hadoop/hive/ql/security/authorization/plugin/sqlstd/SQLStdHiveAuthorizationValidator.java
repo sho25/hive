@@ -199,6 +199,28 @@ name|authorization
 operator|.
 name|plugin
 operator|.
+name|HiveAuthzContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|plugin
+operator|.
 name|HiveAuthzPluginException
 import|;
 end_import
@@ -444,6 +466,9 @@ argument_list|<
 name|HivePrivilegeObject
 argument_list|>
 name|outputHObjs
+parameter_list|,
+name|HiveAuthzContext
+name|context
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
@@ -481,6 +506,10 @@ operator|+
 literal|" and output objects "
 operator|+
 name|outputHObjs
+operator|+
+literal|". Context Info: "
+operator|+
+name|context
 decl_stmt|;
 name|LOG
 operator|.

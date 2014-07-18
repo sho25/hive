@@ -832,6 +832,13 @@ argument_list|)
 expr_stmt|;
 name|sessionState
 operator|.
+name|setUserIpAddress
+argument_list|(
+name|ipAddress
+argument_list|)
+expr_stmt|;
+name|sessionState
+operator|.
 name|setIsHiveServerQuery
 argument_list|(
 literal|true
