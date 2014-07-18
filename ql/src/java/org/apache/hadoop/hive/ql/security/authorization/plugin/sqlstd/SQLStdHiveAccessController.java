@@ -1629,6 +1629,8 @@ name|PrivilegeBag
 argument_list|(
 name|revokePrivs
 argument_list|)
+argument_list|,
+name|grantOption
 argument_list|)
 expr_stmt|;
 block|}

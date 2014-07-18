@@ -4288,7 +4288,10 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-literal|false
+name|revokeDesc
+operator|.
+name|isGrantOption
+argument_list|()
 argument_list|,
 literal|false
 argument_list|)
@@ -6951,6 +6954,8 @@ operator|.
 name|revokePrivileges
 argument_list|(
 name|privBag
+argument_list|,
+name|grantOption
 argument_list|)
 expr_stmt|;
 block|}
