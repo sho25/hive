@@ -333,30 +333,6 @@ name|authorization
 operator|.
 name|plugin
 operator|.
-name|HivePrivilegeObject
-operator|.
-name|HivePrivilegeObjectType
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|security
-operator|.
-name|authorization
-operator|.
-name|plugin
-operator|.
 name|sqlstd
 operator|.
 name|Operation2Privilege
@@ -589,6 +565,15 @@ name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 block|{
+if|if
+condition|(
+name|hiveObjects
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 comment|// Compare required privileges and available privileges for each hive object
 for|for
 control|(
@@ -615,28 +600,26 @@ decl_stmt|;
 comment|// find available privileges
 name|RequiredPrivileges
 name|availPrivs
+init|=
+operator|new
+name|RequiredPrivileges
+argument_list|()
 decl_stmt|;
-if|if
+comment|//start with an empty priv set;
+switch|switch
 condition|(
 name|hiveObj
 operator|.
 name|getType
 argument_list|()
-operator|==
-name|HivePrivilegeObjectType
-operator|.
-name|LOCAL_URI
-operator|||
-name|hiveObj
-operator|.
-name|getType
-argument_list|()
-operator|==
-name|HivePrivilegeObjectType
-operator|.
-name|DFS_URI
 condition|)
 block|{
+case|case
+name|LOCAL_URI
+case|:
+case|case
+name|DFS_URI
+case|:
 name|availPrivs
 operator|=
 name|SQLAuthorizationUtils
@@ -657,28 +640,40 @@ argument_list|,
 name|userName
 argument_list|)
 expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|hiveObj
-operator|.
-name|getType
-argument_list|()
-operator|==
-name|HivePrivilegeObjectType
-operator|.
+break|break;
+case|case
 name|PARTITION
-condition|)
-block|{
+case|:
 comment|// sql std authorization is managing privileges at the table/view levels
 comment|// only
 comment|// ignore partitions
 continue|continue;
-block|}
-else|else
+case|case
+name|COMMAND_PARAMS
+case|:
+comment|// operations that have objects of type COMMAND_PARAMS are authorized
+comment|// solely on the type
+comment|// Assume no available privileges, unless in admin role
+if|if
+condition|(
+name|privController
+operator|.
+name|isUserAdmin
+argument_list|()
+condition|)
 block|{
-comment|// get the privileges that this user has on the object
+name|availPrivs
+operator|.
+name|addPrivilege
+argument_list|(
+name|SQLPrivTypeGrant
+operator|.
+name|ADMIN_PRIV
+argument_list|)
+expr_stmt|;
+block|}
+break|break;
+default|default:
 name|availPrivs
 operator|=
 name|SQLAuthorizationUtils
@@ -734,6 +729,8 @@ name|USER
 argument_list|)
 argument_list|,
 name|hiveObj
+argument_list|,
+name|hiveOpType
 argument_list|)
 expr_stmt|;
 block|}

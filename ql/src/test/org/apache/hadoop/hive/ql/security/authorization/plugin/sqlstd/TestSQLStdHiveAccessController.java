@@ -33,18 +33,6 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
 name|assertTrue
 import|;
 end_import
@@ -195,7 +183,7 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|checkConfigProcessing
+name|testConfigProcessing
 parameter_list|()
 throws|throws
 name|HiveAuthzPluginException
@@ -227,23 +215,6 @@ operator|.
 name|applyAuthorizationConfigPolicy
 argument_list|(
 name|processedConf
-argument_list|)
-expr_stmt|;
-comment|// check that unsafe commands have been disabled
-name|assertEquals
-argument_list|(
-literal|"only set command should be allowed"
-argument_list|,
-name|processedConf
-operator|.
-name|getVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SECURITY_COMMAND_WHITELIST
-argument_list|)
-argument_list|,
-literal|"set"
 argument_list|)
 expr_stmt|;
 comment|// check that hook to disable transforms has been added
@@ -370,7 +341,7 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|checkConfigProcessingCustomSetWhitelist
+name|testConfigProcessingCustomSetWhitelist
 parameter_list|()
 throws|throws
 name|HiveAuthzPluginException

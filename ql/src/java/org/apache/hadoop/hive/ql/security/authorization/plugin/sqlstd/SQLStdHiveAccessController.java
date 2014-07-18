@@ -3812,18 +3812,6 @@ argument_list|,
 name|hooks
 argument_list|)
 expr_stmt|;
-comment|// set security command list to only allow set command
-name|hiveConf
-operator|.
-name|setVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SECURITY_COMMAND_WHITELIST
-argument_list|,
-literal|"set"
-argument_list|)
-expr_stmt|;
 comment|// restrict the variables that can be set using set command to a list in whitelist
 name|hiveConf
 operator|.

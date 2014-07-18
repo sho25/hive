@@ -565,6 +565,28 @@ name|authorization
 operator|.
 name|plugin
 operator|.
+name|HiveOperationType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|plugin
+operator|.
 name|HivePrincipal
 import|;
 end_import
@@ -1897,6 +1919,9 @@ name|hivePrincipal
 parameter_list|,
 name|HivePrivilegeObject
 name|hivePrivObject
+parameter_list|,
+name|HiveOperationType
+name|opType
 parameter_list|)
 throws|throws
 name|HiveAccessControlException
@@ -1945,6 +1970,10 @@ operator|+
 literal|" does not have following privileges on "
 operator|+
 name|hivePrivObject
+operator|+
+literal|" for operation "
+operator|+
+name|opType
 operator|+
 literal|" : "
 operator|+
