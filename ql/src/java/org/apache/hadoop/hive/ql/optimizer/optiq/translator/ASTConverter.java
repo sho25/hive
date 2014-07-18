@@ -1793,7 +1793,7 @@ name|ht
 init|=
 name|TypeConverter
 operator|.
-name|convert
+name|hiveToken
 argument_list|(
 name|call
 operator|.
