@@ -4213,6 +4213,15 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVENULLSCANOPTIMIZE
+argument_list|(
+literal|"hive.optimize.null.scan"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Dont scan relations which are guaranteed to not generate any rows"
+argument_list|)
+block|,
 name|HIVEOPTPPD_STORAGE
 argument_list|(
 literal|"hive.optimize.ppd.storage"
@@ -7269,6 +7278,8 @@ name|VarType
 block|{
 name|STRING
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -7278,6 +7289,8 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{ }
+annotation|@
+name|Override
 name|String
 name|defaultValueString
 parameter_list|(
@@ -7295,6 +7308,8 @@ block|}
 block|,
 name|INT
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -7316,6 +7331,8 @@ block|}
 block|,
 name|LONG
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -7337,6 +7354,8 @@ block|}
 block|,
 name|FLOAT
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -7358,6 +7377,8 @@ block|}
 block|,
 name|BOOLEAN
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
