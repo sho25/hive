@@ -35,6 +35,26 @@ name|HiveConf
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|spark
+operator|.
+name|SparkCompiler
+import|;
+end_import
+
 begin_comment
 comment|/**  * TaskCompilerFactory is a factory class to choose the appropriate  * TaskCompiler.  */
 end_comment

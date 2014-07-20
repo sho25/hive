@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|parse
+operator|.
+name|spark
 package|;
 end_package
 
@@ -100,6 +102,24 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
 import|;
 end_import
 
@@ -261,6 +281,78 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|parse
+operator|.
+name|GlobalLimitCtx
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|MapReduceCompiler
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|ParseContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|SemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|MapWork
@@ -360,32 +452,32 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * SparkCompiler translates the operator plan into SparkTask.  * TODO: currently extending MapReduceCompiler in order to make POC work. It will  *       stand alone parallel to MapReduceCompiler.  */
+comment|/**  * SparkCompiler translates the operator plan into SparkTask.  * TODO: currently extending MapReduceCompiler in order to make POC work. It will  *       stand alone parallel to MapReduceCompiler.  * TODO: remove this class.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|SparkCompiler
+name|SparkCompilerOld
 extends|extends
 name|MapReduceCompiler
 block|{
-specifier|protected
+specifier|private
 specifier|final
 name|Log
-name|LOG
+name|logger
 init|=
 name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|SparkCompiler
+name|SparkCompilerOld
 operator|.
 name|class
 argument_list|)
 decl_stmt|;
 specifier|public
-name|SparkCompiler
+name|SparkCompilerOld
 parameter_list|()
 block|{   }
 annotation|@
@@ -416,6 +508,9 @@ name|db
 argument_list|)
 expr_stmt|;
 comment|// Any Spark specific configuration
+comment|// We require the use of recursive input dirs for union processing
+comment|//    conf.setBoolean("mapred.input.dir.recursive", true);
+comment|//    HiveConf.setBoolVar(conf, ConfVars.HIVE_HADOOP_SUPPORTS_SUBDIRECTORIES, true);
 block|}
 annotation|@
 name|Override
@@ -440,7 +535,9 @@ name|outputs
 parameter_list|)
 throws|throws
 name|SemanticException
-block|{   }
+block|{
+comment|// TODO: add optimization that's related to Spark
+block|}
 specifier|private
 specifier|static
 name|int
