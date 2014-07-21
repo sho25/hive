@@ -1004,15 +1004,7 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"prune Expression = "
-operator|+
-name|prunerExpr
-argument_list|)
-expr_stmt|;
+comment|//    LOG.trace("prune Expression = " + prunerExpr);
 name|String
 name|key
 init|=
