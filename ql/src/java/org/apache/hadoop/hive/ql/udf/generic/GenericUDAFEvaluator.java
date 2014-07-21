@@ -133,6 +133,22 @@ name|ObjectInspector
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|AnnotationUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * A Generic User-defined aggregation function (GenericUDAF) for the use with  * Hive.  *   * New GenericUDAF classes need to inherit from this GenericUDAF class.  *   * The GenericUDAF are superior to normal UDAFs in the following ways: 1. It can  * accept arguments of complex types, and return complex types. 2. It can accept  * variable length of arguments. 3. It can accept an infinite number of function  * signature - for example, it's easy to write a GenericUDAF that accepts  * array<int>, array<array<int>> and so on (arbitrary levels of nesting).  */
 end_comment
@@ -196,10 +212,12 @@ decl_stmt|;
 name|AggregationType
 name|annotation
 init|=
-name|clazz
+name|AnnotationUtils
 operator|.
 name|getAnnotation
 argument_list|(
+name|clazz
+argument_list|,
 name|AggregationType
 operator|.
 name|class
@@ -247,7 +265,7 @@ specifier|public
 name|GenericUDAFEvaluator
 parameter_list|()
 block|{   }
-comment|/**    * Additionally setup GenericUDAFEvaluator with MapredContext before initializing.    * This is only called in runtime of MapRedTask.    *    * @param context context    */
+comment|/**    * Additionally setup GenericUDAFEvaluator with MapredContext before initializing.    * This is only called in runtime of MapRedTask.    *    * @param mapredContext context    */
 specifier|public
 name|void
 name|configure

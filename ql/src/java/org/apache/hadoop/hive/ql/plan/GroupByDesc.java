@@ -77,6 +77,22 @@ name|GenericUDAFEvaluator
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|AnnotationUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * GroupByDesc.  *  */
 end_comment
@@ -910,13 +926,15 @@ decl_stmt|;
 name|UDFType
 name|annot
 init|=
+name|AnnotationUtils
+operator|.
+name|getAnnotation
+argument_list|(
 name|udafEval
 operator|.
 name|getClass
 argument_list|()
-operator|.
-name|getAnnotation
-argument_list|(
+argument_list|,
 name|UDFType
 operator|.
 name|class
