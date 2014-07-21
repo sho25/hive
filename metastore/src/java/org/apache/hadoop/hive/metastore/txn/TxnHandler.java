@@ -3896,7 +3896,14 @@ name|response
 init|=
 operator|new
 name|ShowCompactResponse
+argument_list|(
+operator|new
+name|ArrayList
+argument_list|<
+name|ShowCompactResponseElement
+argument_list|>
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|Connection
 name|dbConn
