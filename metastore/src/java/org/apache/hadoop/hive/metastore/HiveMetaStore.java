@@ -5525,7 +5525,7 @@ name|mkdirs
 argument_list|(
 name|dbPath
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 condition|)
 block|{
