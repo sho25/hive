@@ -127,7 +127,15 @@ init|=
 name|SparkClient
 operator|.
 name|getInstance
+argument_list|(
+name|driverContext
+operator|.
+name|getCtx
 argument_list|()
+operator|.
+name|getConf
+argument_list|()
+argument_list|)
 decl_stmt|;
 return|return
 name|client
