@@ -595,7 +595,7 @@ begin_class
 specifier|public
 class|class
 name|CustomPartitionVertex
-implements|implements
+extends|extends
 name|VertexManagerPlugin
 block|{
 specifier|private
@@ -734,14 +734,18 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|Integer
+name|VertexManagerPluginContext
+operator|.
+name|TaskWithLocationHint
 argument_list|>
 name|scheduledTasks
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|Integer
+name|VertexManagerPluginContext
+operator|.
+name|TaskWithLocationHint
 argument_list|>
 argument_list|(
 name|numTasks
@@ -767,9 +771,17 @@ operator|.
 name|add
 argument_list|(
 operator|new
+name|VertexManagerPluginContext
+operator|.
+name|TaskWithLocationHint
+argument_list|(
+operator|new
 name|Integer
 argument_list|(
 name|i
+argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1194,7 +1206,7 @@ name|totalResource
 init|=
 name|context
 operator|.
-name|getTotalAVailableResource
+name|getTotalAvailableResource
 argument_list|()
 operator|.
 name|getMemory
@@ -1652,6 +1664,8 @@ argument_list|)
 argument_list|)
 argument_list|,
 name|emMap
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 comment|// Set the actual events for the tasks.

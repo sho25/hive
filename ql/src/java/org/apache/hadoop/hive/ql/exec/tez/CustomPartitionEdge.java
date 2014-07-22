@@ -189,7 +189,7 @@ begin_class
 specifier|public
 class|class
 name|CustomPartitionEdge
-implements|implements
+extends|extends
 name|EdgeManager
 block|{
 specifier|private
@@ -215,6 +215,11 @@ name|conf
 init|=
 literal|null
 decl_stmt|;
+name|EdgeManagerContext
+name|context
+init|=
+literal|null
+decl_stmt|;
 comment|// used by the framework at runtime. initialize is the real initializer at runtime
 specifier|public
 name|CustomPartitionEdge
@@ -228,9 +233,6 @@ name|getNumDestinationTaskPhysicalInputs
 parameter_list|(
 name|int
 name|numSourceTasks
-parameter_list|,
-name|int
-name|destinationTaskIndex
 parameter_list|)
 block|{
 return|return
@@ -245,9 +247,6 @@ name|getNumSourceTaskPhysicalOutputs
 parameter_list|(
 name|int
 name|numDestinationTasks
-parameter_list|,
-name|int
-name|sourceTaskIndex
 parameter_list|)
 block|{
 return|return
@@ -265,13 +264,10 @@ name|getNumDestinationConsumerTasks
 parameter_list|(
 name|int
 name|sourceTaskIndex
-parameter_list|,
-name|int
-name|numDestinationTasks
 parameter_list|)
 block|{
 return|return
-name|numDestinationTasks
+name|sourceTaskIndex
 return|;
 block|}
 comment|// called at runtime to initialize the custom edge.
@@ -285,6 +281,12 @@ name|EdgeManagerContext
 name|context
 parameter_list|)
 block|{
+name|this
+operator|.
+name|context
+operator|=
+name|context
+expr_stmt|;
 name|byte
 index|[]
 name|payload
@@ -473,9 +475,6 @@ parameter_list|(
 name|int
 name|sourceTaskIndex
 parameter_list|,
-name|int
-name|numDestinationTasks
-parameter_list|,
 name|Map
 argument_list|<
 name|Integer
@@ -503,7 +502,10 @@ argument_list|()
 decl_stmt|;
 name|addAllDestinationTaskIndices
 argument_list|(
-name|numDestinationTasks
+name|context
+operator|.
+name|getDestinationVertexNumTasks
+argument_list|()
 argument_list|,
 name|destTaskIndices
 argument_list|)
@@ -533,6 +535,9 @@ name|event
 parameter_list|,
 name|int
 name|destinationTaskIndex
+parameter_list|,
+name|int
+name|destinationFailedInputIndex
 parameter_list|)
 block|{
 return|return

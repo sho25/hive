@@ -537,7 +537,7 @@ name|tez
 operator|.
 name|client
 operator|.
-name|TezSession
+name|TezClient
 import|;
 end_import
 
@@ -731,7 +731,7 @@ decl_stmt|;
 name|TezTask
 name|task
 decl_stmt|;
-name|TezSession
+name|TezClient
 name|session
 decl_stmt|;
 name|TezSessionState
@@ -993,13 +993,6 @@ argument_list|)
 argument_list|,
 name|any
 argument_list|(
-name|JobConf
-operator|.
-name|class
-argument_list|)
-argument_list|,
-name|any
-argument_list|(
 name|Vertex
 operator|.
 name|class
@@ -1061,7 +1054,7 @@ name|Vertex
 operator|)
 name|args
 index|[
-literal|3
+literal|2
 index|]
 argument_list|,
 name|mock
@@ -1431,7 +1424,7 @@ name|session
 operator|=
 name|mock
 argument_list|(
-name|TezSession
+name|TezClient
 operator|.
 name|class
 argument_list|)
@@ -1467,13 +1460,6 @@ argument_list|(
 name|any
 argument_list|(
 name|DAG
-operator|.
-name|class
-argument_list|)
-argument_list|,
-name|any
-argument_list|(
-name|Map
 operator|.
 name|class
 argument_list|)
@@ -1645,7 +1631,7 @@ if|if
 condition|(
 name|u
 operator|.
-name|getVertexName
+name|getName
 argument_list|()
 operator|.
 name|equals
@@ -1819,13 +1805,6 @@ argument_list|(
 name|any
 argument_list|(
 name|DAG
-operator|.
-name|class
-argument_list|)
-argument_list|,
-name|any
-argument_list|(
-name|Map
 operator|.
 name|class
 argument_list|)
