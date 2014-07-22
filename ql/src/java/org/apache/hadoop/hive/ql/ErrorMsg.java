@@ -1734,7 +1734,7 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
-name|UNNSUPPORTED_AUTHORIZATION_PRINCIPAL_TYPE_GROUP
+name|UNSUPPORTED_AUTHORIZATION_PRINCIPAL_TYPE_GROUP
 argument_list|(
 literal|10254
 argument_list|,
@@ -1757,6 +1757,24 @@ argument_list|(
 literal|10256
 argument_list|,
 literal|"Inserting into a non-empty immutable table is not allowed"
+argument_list|)
+block|,
+name|UNSUPPORTED_AUTHORIZATION_RESOURCE_TYPE_GLOBAL
+argument_list|(
+literal|10257
+argument_list|,
+literal|"Resource type GLOBAL is not supported in this authorization setting"
+argument_list|,
+literal|"28000"
+argument_list|)
+block|,
+name|UNSUPPORTED_AUTHORIZATION_RESOURCE_TYPE_COLUMN
+argument_list|(
+literal|10258
+argument_list|,
+literal|"Resource type COLUMN is not supported in this authorization setting"
+argument_list|,
+literal|"28000"
 argument_list|)
 block|,
 name|TXNMGR_NOT_SPECIFIED

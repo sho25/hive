@@ -25,13 +25,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|conf
 operator|.
-name|exec
+name|SystemVariables
 operator|.
-name|ExplainTask
-operator|.
-name|EXPL_COLUMN_NAME
+name|SET_COLUMN_NAME
 import|;
 end_import
 
@@ -45,11 +43,13 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|ql
 operator|.
-name|SystemVariables
+name|exec
 operator|.
-name|SET_COLUMN_NAME
+name|ExplainTask
+operator|.
+name|EXPL_COLUMN_NAME
 import|;
 end_import
 
@@ -414,24 +414,6 @@ operator|.
 name|processors
 operator|.
 name|DfsProcessor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|processors
-operator|.
-name|SetProcessor
 import|;
 end_import
 
@@ -12294,7 +12276,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"Select"
+literal|"SELECT"
 argument_list|,
 name|res
 operator|.
