@@ -427,6 +427,15 @@ literal|0
 index|]
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|list
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 for|for
 control|(
 name|int

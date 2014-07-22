@@ -106,7 +106,7 @@ argument_list|()
 decl_stmt|;
 name|container1
 operator|.
-name|add
+name|addRow
 argument_list|(
 operator|new
 name|Object
@@ -133,7 +133,7 @@ argument_list|)
 expr_stmt|;
 name|container1
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|Arrays
 operator|.
@@ -165,7 +165,7 @@ argument_list|)
 expr_stmt|;
 name|container1
 operator|.
-name|add
+name|addRow
 argument_list|(
 operator|new
 name|Object
@@ -188,7 +188,7 @@ argument_list|)
 expr_stmt|;
 name|container1
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|Arrays
 operator|.

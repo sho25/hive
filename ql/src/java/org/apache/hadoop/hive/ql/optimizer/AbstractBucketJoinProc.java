@@ -637,7 +637,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 function_decl|;
-specifier|private
+specifier|public
 specifier|static
 name|List
 argument_list|<
@@ -962,8 +962,6 @@ block|{
 name|QBJoinTree
 name|joinCtx
 init|=
-name|this
-operator|.
 name|pGraphContext
 operator|.
 name|getMapJoinContext
@@ -2792,6 +2790,7 @@ name|converted
 return|;
 block|}
 specifier|public
+specifier|static
 name|List
 argument_list|<
 name|String

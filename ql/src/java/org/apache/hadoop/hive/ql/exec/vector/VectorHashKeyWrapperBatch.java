@@ -111,6 +111,24 @@ name|JavaDataModel
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazybinary
+operator|.
+name|LazyBinarySerDe
+import|;
+end_import
+
 begin_comment
 comment|/**  * Class for handling vectorized hash map key wrappers. It evaluates the key columns in a  * row batch in a vectorized fashion.  * This class stores additional information about keys needed to evaluate and output the key values.  *  */
 end_comment
@@ -3353,17 +3371,10 @@ index|[
 name|i
 index|]
 operator|=
-operator|new
-name|VectorHashKeyWrapper
-argument_list|(
-name|longIndicesIndex
-argument_list|,
-name|doubleIndicesIndex
-argument_list|,
-name|stringIndicesIndex
-argument_list|,
-name|decimalIndicesIndex
-argument_list|)
+name|compiledKeyWrapperBatch
+operator|.
+name|allocateKeyWrapper
+argument_list|()
 expr_stmt|;
 block|}
 name|JavaDataModel
@@ -3480,6 +3491,33 @@ argument_list|)
 expr_stmt|;
 return|return
 name|compiledKeyWrapperBatch
+return|;
+block|}
+specifier|public
+name|VectorHashKeyWrapper
+name|allocateKeyWrapper
+parameter_list|()
+block|{
+return|return
+operator|new
+name|VectorHashKeyWrapper
+argument_list|(
+name|longIndices
+operator|.
+name|length
+argument_list|,
+name|doubleIndices
+operator|.
+name|length
+argument_list|,
+name|stringIndices
+operator|.
+name|length
+argument_list|,
+name|decimalIndices
+operator|.
+name|length
+argument_list|)
 return|;
 block|}
 comment|/**    * Get the row-mode writable object value of a key from a key wrapper    * @param keyOutputWriter    */
@@ -3682,7 +3720,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"Internal inconsistent KeyLookupHelper at index [%d]:%d %d %d"
+literal|"Internal inconsistent KeyLookupHelper at index [%d]:%d %d %d %d"
 argument_list|,
 name|i
 argument_list|,
@@ -3697,6 +3735,10 @@ argument_list|,
 name|klh
 operator|.
 name|stringIndex
+argument_list|,
+name|klh
+operator|.
+name|decimalIndex
 argument_list|)
 argument_list|)
 throw|;

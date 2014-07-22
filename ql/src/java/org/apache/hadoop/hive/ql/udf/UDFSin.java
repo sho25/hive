@@ -51,24 +51,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDF
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|vector
 operator|.
 name|VectorizedExpressions
@@ -141,26 +123,8 @@ name|DoubleWritable
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|io
-operator|.
-name|HiveDecimalWritable
-import|;
-end_import
-
 begin_comment
-comment|/**  * UDFSin.  *  */
+comment|/**  * UDFSin.  */
 end_comment
 
 begin_class
@@ -211,31 +175,16 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
-specifier|public
-name|UDFSin
-parameter_list|()
-block|{   }
 comment|/**    * Take Sine of a.    */
-specifier|public
+annotation|@
+name|Override
+specifier|protected
 name|DoubleWritable
-name|evaluate
+name|doEvaluate
 parameter_list|(
 name|DoubleWritable
 name|a
 parameter_list|)
-block|{
-if|if
-condition|(
-name|a
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
-else|else
 block|{
 name|result
 operator|.
@@ -255,7 +204,6 @@ expr_stmt|;
 return|return
 name|result
 return|;
-block|}
 block|}
 block|}
 end_class

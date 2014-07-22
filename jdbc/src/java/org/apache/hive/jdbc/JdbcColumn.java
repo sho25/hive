@@ -1627,7 +1627,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|2
+literal|10
 return|;
 block|}
 elseif|else
@@ -1642,7 +1642,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|2
+literal|10
 return|;
 block|}
 elseif|else

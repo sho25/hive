@@ -93,7 +93,7 @@ specifier|public
 interface|interface
 name|HiveAuthorizationValidator
 block|{
-comment|/**    * Check if current user has privileges to perform given operation type    * hiveOpType on the given input and output objects    *    * @param hiveOpType    * @param inputHObjs    * @param outputHObjs    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
+comment|/**    * Check if current user has privileges to perform given operation type    * hiveOpType on the given input and output objects    *    * @param hiveOpType    * @param inputHObjs    * @param outputHObjs    * @param context    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|checkPrivileges
 parameter_list|(
@@ -111,6 +111,9 @@ argument_list|<
 name|HivePrivilegeObject
 argument_list|>
 name|outputHObjs
+parameter_list|,
+name|HiveAuthzContext
+name|context
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException

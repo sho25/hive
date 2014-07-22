@@ -89,6 +89,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|plan
+operator|.
+name|ptf
+operator|.
+name|WindowFrameDef
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|udf
 operator|.
 name|UDFType
@@ -110,6 +130,22 @@ operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|AnnotationUtils
 import|;
 end_import
 
@@ -176,10 +212,12 @@ decl_stmt|;
 name|AggregationType
 name|annotation
 init|=
-name|clazz
+name|AnnotationUtils
 operator|.
 name|getAnnotation
 argument_list|(
+name|clazz
+argument_list|,
 name|AggregationType
 operator|.
 name|class
@@ -227,7 +265,7 @@ specifier|public
 name|GenericUDAFEvaluator
 parameter_list|()
 block|{   }
-comment|/**    * Additionally setup GenericUDAFEvaluator with MapredContext before initializing.    * This is only called in runtime of MapRedTask.    *    * @param context context    */
+comment|/**    * Additionally setup GenericUDAFEvaluator with MapredContext before initializing.    * This is only called in runtime of MapRedTask.    *    * @param mapredContext context    */
 specifier|public
 name|void
 name|configure
@@ -476,6 +514,19 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+comment|/**    * When evaluating an aggregates over a fixed Window, the naive way to compute    * results is to compute the aggregate for each row. But often there is a way    * to compute results in a more efficient manner. This method enables the    * basic evaluator to provide a function object that does the job in a more    * efficient manner.    *<p>    * This method is called after this Evaluator is initialized. The returned    * Function must be initialized. It is passed the 'window' of aggregation for    * each row.    *     * @param wFrmDef    *          the Window definition in play for this evaluation.    * @return null implies that this fn cannot be processed in Streaming mode. So    *         each row is evaluated independently.    */
+specifier|public
+name|GenericUDAFEvaluator
+name|getWindowingEvaluator
+parameter_list|(
+name|WindowFrameDef
+name|wFrmDef
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_class
 

@@ -141,6 +141,34 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|fs
@@ -222,22 +250,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|HiveMetaStore
 import|;
 end_import
 
@@ -377,7 +389,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|NoSuchObjectException
+name|PrincipalPrivilegeSet
 import|;
 end_import
 
@@ -395,7 +407,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|PrincipalPrivilegeSet
+name|PrincipalType
 import|;
 end_import
 
@@ -553,6 +565,28 @@ name|authorization
 operator|.
 name|plugin
 operator|.
+name|HiveOperationType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|plugin
+operator|.
 name|HivePrincipal
 import|;
 end_import
@@ -631,28 +665,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|security
-operator|.
-name|authorization
-operator|.
-name|plugin
-operator|.
-name|HiveRole
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|thrift
 operator|.
 name|TException
@@ -702,6 +714,21 @@ name|asList
 argument_list|(
 name|SUPPORTED_PRIVS
 argument_list|)
+argument_list|)
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|SQLAuthorizationUtils
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 comment|/**    * Create thrift privileges bag    *    * @param hivePrincipals    * @param hivePrivileges    * @param hivePrivObject    * @param grantorPrincipal    * @param grantOption    * @return    * @throws HiveAuthzPluginException    */
@@ -832,6 +859,9 @@ argument_list|,
 name|grantorPrincipal
 argument_list|,
 name|grantOption
+argument_list|,
+literal|0
+comment|/*real grant time added by metastore*/
 argument_list|)
 decl_stmt|;
 for|for
@@ -893,6 +923,9 @@ name|grantorPrincipal
 parameter_list|,
 name|boolean
 name|grantOption
+parameter_list|,
+name|int
+name|grantTime
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
@@ -909,6 +942,8 @@ argument_list|,
 name|grantorPrincipal
 argument_list|,
 name|grantOption
+argument_list|,
+name|grantTime
 argument_list|)
 return|;
 block|}
@@ -1107,7 +1142,7 @@ name|hivePrivObject
 parameter_list|,
 name|List
 argument_list|<
-name|HiveRole
+name|String
 argument_list|>
 name|curRoles
 parameter_list|,
@@ -1217,6 +1252,8 @@ name|metastoreClient
 argument_list|,
 name|userName
 argument_list|,
+name|curRoles
+argument_list|,
 name|hivePrivObject
 argument_list|)
 condition|)
@@ -1261,7 +1298,7 @@ name|thriftPrivs
 parameter_list|,
 name|List
 argument_list|<
-name|HiveRole
+name|String
 argument_list|>
 name|curRoles
 parameter_list|)
@@ -1317,20 +1354,12 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|HiveRole
+name|String
 name|role
 range|:
 name|curRoles
 control|)
 block|{
-name|String
-name|roleName
-init|=
-name|role
-operator|.
-name|getRoleName
-argument_list|()
-decl_stmt|;
 name|List
 argument_list|<
 name|PrivilegeGrantInfo
@@ -1344,7 +1373,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|roleName
+name|role
 argument_list|)
 decl_stmt|;
 if|if
@@ -1358,7 +1387,7 @@ name|filteredRolePrivs
 operator|.
 name|put
 argument_list|(
-name|roleName
+name|role
 argument_list|,
 name|privs
 argument_list|)
@@ -1373,7 +1402,7 @@ name|filteredRolePrivs
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Check if user is owner of the given object    *    * @param metastoreClient    * @param userName    *          user    * @param hivePrivObject    *          given object    * @return true if user is owner    * @throws HiveAuthzPluginException    */
+comment|/**    * Check if user is owner of the given object    *    * @param metastoreClient    * @param userName    *          current user    * @param curRoles    *          current roles for userName    * @param hivePrivObject    *          given object    * @return true if user is owner    * @throws HiveAuthzPluginException    */
 specifier|private
 specifier|static
 name|boolean
@@ -1385,13 +1414,19 @@ parameter_list|,
 name|String
 name|userName
 parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|curRoles
+parameter_list|,
 name|HivePrivilegeObject
 name|hivePrivObject
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
 block|{
-comment|//for now, check only table& db
+comment|// for now, check only table& db
 switch|switch
 condition|(
 name|hivePrivObject
@@ -1512,6 +1547,19 @@ name|hivePrivObject
 argument_list|)
 expr_stmt|;
 block|}
+comment|// a db owner can be a user or a role
+if|if
+condition|(
+name|db
+operator|.
+name|getOwnerType
+argument_list|()
+operator|==
+name|PrincipalType
+operator|.
+name|USER
+condition|)
+block|{
 return|return
 name|userName
 operator|.
@@ -1523,6 +1571,59 @@ name|getOwnerName
 argument_list|()
 argument_list|)
 return|;
+block|}
+elseif|else
+if|if
+condition|(
+name|db
+operator|.
+name|getOwnerType
+argument_list|()
+operator|==
+name|PrincipalType
+operator|.
+name|ROLE
+condition|)
+block|{
+comment|// check if any of the roles of this user is an owner
+return|return
+name|curRoles
+operator|.
+name|contains
+argument_list|(
+name|db
+operator|.
+name|getOwnerName
+argument_list|()
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+comment|// looks like owner is an unsupported type
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Owner of database "
+operator|+
+name|db
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" is of unsupported type "
+operator|+
+name|db
+operator|.
+name|getOwnerType
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
 block|}
 case|case
 name|DFS_URI
@@ -1818,6 +1919,9 @@ name|hivePrincipal
 parameter_list|,
 name|HivePrivilegeObject
 name|hivePrivObject
+parameter_list|,
+name|HiveOperationType
+name|opType
 parameter_list|)
 throws|throws
 name|HiveAccessControlException
@@ -1866,6 +1970,10 @@ operator|+
 literal|" does not have following privileges on "
 operator|+
 name|hivePrivObject
+operator|+
+literal|" for operation "
+operator|+
+name|opType
 operator|+
 literal|" : "
 operator|+

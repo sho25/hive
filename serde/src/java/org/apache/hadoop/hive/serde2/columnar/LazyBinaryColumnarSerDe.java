@@ -614,10 +614,18 @@ argument_list|(
 name|obj
 argument_list|)
 decl_stmt|;
-name|boolean
+name|LazyBinarySerDe
+operator|.
+name|BooleanRef
 name|warnedOnceNullMapKey
 init|=
+operator|new
+name|LazyBinarySerDe
+operator|.
+name|BooleanRef
+argument_list|(
 literal|false
+argument_list|)
 decl_stmt|;
 name|serializeStream
 operator|.
@@ -793,7 +801,7 @@ name|streamOffset
 argument_list|,
 name|serializeStream
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 operator|-
 name|streamOffset
@@ -803,7 +811,7 @@ name|streamOffset
 operator|=
 name|serializeStream
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 expr_stmt|;
 block|}
@@ -811,7 +819,7 @@ name|serializedSize
 operator|=
 name|serializeStream
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 expr_stmt|;
 name|lastOperationSerialize

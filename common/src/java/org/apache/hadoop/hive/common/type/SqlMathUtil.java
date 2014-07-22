@@ -1194,6 +1194,7 @@ operator|)
 name|remainder
 return|;
 block|}
+comment|/**    * Returns length of the array discounting the trailing elements with zero value.    */
 specifier|private
 specifier|static
 name|int
@@ -1214,7 +1215,7 @@ decl_stmt|;
 while|while
 condition|(
 name|len
-operator|>=
+operator|>
 literal|0
 operator|&&
 name|array
@@ -1233,7 +1234,7 @@ expr_stmt|;
 block|}
 return|return
 name|len
-operator|<
+operator|<=
 literal|0
 condition|?
 literal|0

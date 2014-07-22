@@ -212,11 +212,14 @@ condition|(
 name|data
 operator|==
 literal|null
+operator|||
+name|key
+operator|==
+literal|null
 condition|)
 block|{
 return|return
-operator|-
-literal|1
+literal|null
 return|;
 block|}
 return|return

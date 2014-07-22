@@ -256,6 +256,8 @@ block|,
 name|ALTERBUCKETNUM
 block|,
 name|ALTERPARTITION
+block|,
+name|COMPACT
 block|}
 specifier|public
 specifier|static

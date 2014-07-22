@@ -77,6 +77,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|locks
+operator|.
+name|ReentrantLock
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -367,7 +381,17 @@ name|isClosed
 init|=
 literal|false
 decl_stmt|;
-comment|/**    *    */
+comment|// A fair reentrant lock
+specifier|private
+name|ReentrantLock
+name|transportLock
+init|=
+operator|new
+name|ReentrantLock
+argument_list|(
+literal|true
+argument_list|)
+decl_stmt|;
 specifier|public
 name|HiveStatement
 parameter_list|(
@@ -439,6 +463,8 @@ name|isScrollableResultset
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#addBatch(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|addBatch
@@ -458,6 +484,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#cancel()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|cancel
@@ -465,44 +493,34 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-if|if
-condition|(
-name|isClosed
-condition|)
-block|{
-throw|throw
-operator|new
-name|SQLException
+name|checkConnection
 argument_list|(
-literal|"Can't cancel after statement has been closed"
+literal|"cancel"
 argument_list|)
-throw|;
-block|}
+expr_stmt|;
+name|transportLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
+try|try
+block|{
 if|if
 condition|(
 name|stmtHandle
-operator|==
+operator|!=
 literal|null
 condition|)
 block|{
-return|return;
-block|}
 name|TCancelOperationReq
 name|cancelReq
 init|=
 operator|new
 name|TCancelOperationReq
-argument_list|()
-decl_stmt|;
-name|cancelReq
-operator|.
-name|setOperationHandle
 argument_list|(
 name|stmtHandle
 argument_list|)
-expr_stmt|;
-try|try
-block|{
+decl_stmt|;
 name|TCancelOperationResp
 name|cancelResp
 init|=
@@ -523,6 +541,7 @@ name|getStatus
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -555,8 +574,18 @@ name|e
 argument_list|)
 throw|;
 block|}
+finally|finally
+block|{
+name|transportLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#clearBatch()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|clearBatch
@@ -573,6 +602,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#clearWarnings()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|clearWarnings
@@ -591,6 +622,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+name|transportLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
 try|try
 block|{
 if|if
@@ -605,15 +641,10 @@ name|closeReq
 init|=
 operator|new
 name|TCloseOperationReq
-argument_list|()
-decl_stmt|;
-name|closeReq
-operator|.
-name|setOperationHandle
 argument_list|(
 name|stmtHandle
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|TCloseOperationResp
 name|closeResp
 init|=
@@ -667,12 +698,22 @@ name|e
 argument_list|)
 throw|;
 block|}
+finally|finally
+block|{
+name|transportLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
+block|}
 name|stmtHandle
 operator|=
 literal|null
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#close()    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -687,17 +728,9 @@ condition|)
 block|{
 return|return;
 block|}
-if|if
-condition|(
-name|stmtHandle
-operator|!=
-literal|null
-condition|)
-block|{
 name|closeClientOperation
 argument_list|()
 expr_stmt|;
-block|}
 name|client
 operator|=
 literal|null
@@ -711,6 +744,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+comment|// JDK 1.7
 specifier|public
 name|void
 name|closeOnCompletion
@@ -718,7 +752,6 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// JDK 1.7
 throw|throw
 operator|new
 name|SQLException
@@ -728,6 +761,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|execute
@@ -738,32 +773,14 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-if|if
-condition|(
-name|isClosed
-condition|)
-block|{
-throw|throw
-operator|new
-name|SQLException
+name|checkConnection
 argument_list|(
-literal|"Can't execute after statement has been closed"
+literal|"execute"
 argument_list|)
-throw|;
-block|}
-try|try
-block|{
-if|if
-condition|(
-name|stmtHandle
-operator|!=
-literal|null
-condition|)
-block|{
+expr_stmt|;
 name|closeClientOperation
 argument_list|()
 expr_stmt|;
-block|}
 name|TExecuteStatementReq
 name|execReq
 init|=
@@ -775,6 +792,14 @@ argument_list|,
 name|sql
 argument_list|)
 decl_stmt|;
+comment|/**      * Run asynchronously whenever possible      * Currently only a SQLOperation can be run asynchronously,      * in a background operation thread      * Compilation is synchronous and execution is asynchronous      */
+name|execReq
+operator|.
+name|setRunAsync
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|execReq
 operator|.
 name|setConfOverlay
@@ -782,6 +807,13 @@ argument_list|(
 name|sessConf
 argument_list|)
 expr_stmt|;
+name|transportLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
+try|try
+block|{
 name|TExecuteStatementResp
 name|execResp
 init|=
@@ -841,19 +873,14 @@ name|ex
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-operator|!
-name|stmtHandle
-operator|.
-name|isHasResultSet
-argument_list|()
-condition|)
+finally|finally
 block|{
-comment|// Poll until the query has completed one way or another. DML queries will not return a result
-comment|// set, but we should not return from this method until the query has completed to avoid
-comment|// racing with possible subsequent session shutdown, or queries that depend on the results
-comment|// materialised here.
+name|transportLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
+block|}
 name|TGetOperationStatusReq
 name|statusReq
 init|=
@@ -864,28 +891,48 @@ name|stmtHandle
 argument_list|)
 decl_stmt|;
 name|boolean
-name|requestComplete
+name|operationComplete
 init|=
 literal|false
 decl_stmt|;
+name|TGetOperationStatusResp
+name|statusResp
+decl_stmt|;
+comment|// Poll on the operation status, till the operation is complete
 while|while
 condition|(
 operator|!
-name|requestComplete
+name|operationComplete
 condition|)
 block|{
 try|try
 block|{
-name|TGetOperationStatusResp
+comment|/**          * For an async SQLOperation, GetOperationStatus will use the long polling approach          * It will essentially return after the HIVE_SERVER2_LONG_POLLING_TIMEOUT (a server config) expires          */
+name|transportLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
+try|try
+block|{
 name|statusResp
-init|=
+operator|=
 name|client
 operator|.
 name|GetOperationStatus
 argument_list|(
 name|statusReq
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|transportLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
+block|}
 name|Utils
 operator|.
 name|verifySuccessWithInfo
@@ -918,9 +965,11 @@ case|:
 case|case
 name|FINISHED_STATE
 case|:
-return|return
-literal|false
-return|;
+name|operationComplete
+operator|=
+literal|true
+expr_stmt|;
+break|break;
 case|case
 name|CANCELED_STATE
 case|:
@@ -937,14 +986,25 @@ throw|;
 case|case
 name|ERROR_STATE
 case|:
-comment|// HY000 -> general error
+comment|// Get the error details from the underlying exception
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Query failed"
+name|statusResp
+operator|.
+name|getErrorMessage
+argument_list|()
 argument_list|,
-literal|"HY000"
+name|statusResp
+operator|.
+name|getSqlState
+argument_list|()
+argument_list|,
+name|statusResp
+operator|.
+name|getErrorCode
+argument_list|()
 argument_list|)
 throw|;
 case|case
@@ -974,44 +1034,46 @@ block|}
 block|}
 catch|catch
 parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+throw|throw
+name|e
+throw|;
+block|}
+catch|catch
+parameter_list|(
 name|Exception
-name|ex
+name|e
 parameter_list|)
 block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-name|ex
+name|e
 operator|.
 name|toString
 argument_list|()
 argument_list|,
 literal|"08S01"
 argument_list|,
-name|ex
+name|e
 argument_list|)
 throw|;
 block|}
-try|try
-block|{
-name|Thread
+block|}
+comment|// The query should be completed by now
+if|if
+condition|(
+operator|!
+name|stmtHandle
 operator|.
-name|sleep
-argument_list|(
-literal|100
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InterruptedException
-name|ex
-parameter_list|)
+name|isHasResultSet
+argument_list|()
+condition|)
 block|{
-comment|// Ignore
-block|}
-block|}
 return|return
 literal|false
 return|;
@@ -1063,7 +1125,37 @@ return|return
 literal|true
 return|;
 block|}
+specifier|private
+name|void
+name|checkConnection
+parameter_list|(
+name|String
+name|action
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+if|if
+condition|(
+name|isClosed
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Can't "
+operator|+
+name|action
+operator|+
+literal|" after statement has been closed"
+argument_list|)
+throw|;
+block|}
+block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String, int)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|execute
@@ -1086,6 +1178,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String, int[])    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|execute
@@ -1109,6 +1203,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#execute(java.lang.String, java.lang.String[])    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|execute
@@ -1132,6 +1228,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeBatch()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 index|[]
@@ -1149,6 +1247,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeQuery(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|ResultSet
 name|executeQuery
@@ -1181,6 +1281,8 @@ name|resultSet
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|executeUpdate
@@ -1201,6 +1303,8 @@ literal|0
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, int)    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|executeUpdate
@@ -1223,6 +1327,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, int[])    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|executeUpdate
@@ -1246,6 +1352,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, java.lang.String[])    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|executeUpdate
@@ -1269,6 +1377,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getConnection()    */
+annotation|@
+name|Override
 specifier|public
 name|Connection
 name|getConnection
@@ -1276,6 +1386,11 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+name|checkConnection
+argument_list|(
+literal|"getConnection"
+argument_list|)
+expr_stmt|;
 return|return
 name|this
 operator|.
@@ -1283,6 +1398,8 @@ name|connection
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getFetchDirection()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getFetchDirection
@@ -1290,15 +1407,20 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
+name|checkConnection
 argument_list|(
-literal|"Method not supported"
+literal|"getFetchDirection"
 argument_list|)
-throw|;
+expr_stmt|;
+return|return
+name|ResultSet
+operator|.
+name|FETCH_FORWARD
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getFetchSize()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getFetchSize
@@ -1306,11 +1428,18 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+name|checkConnection
+argument_list|(
+literal|"getFetchSize"
+argument_list|)
+expr_stmt|;
 return|return
 name|fetchSize
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getGeneratedKeys()    */
+annotation|@
+name|Override
 specifier|public
 name|ResultSet
 name|getGeneratedKeys
@@ -1327,6 +1456,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMaxFieldSize()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getMaxFieldSize
@@ -1343,6 +1474,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMaxRows()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getMaxRows
@@ -1350,11 +1483,18 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+name|checkConnection
+argument_list|(
+literal|"getMaxRows"
+argument_list|)
+expr_stmt|;
 return|return
 name|maxRows
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMoreResults()    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|getMoreResults
@@ -1371,6 +1511,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMoreResults(int)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|getMoreResults
@@ -1390,6 +1532,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getQueryTimeout()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getQueryTimeout
@@ -1397,15 +1541,18 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
+name|checkConnection
 argument_list|(
-literal|"Method not supported"
+literal|"getQueryTimeout"
 argument_list|)
-throw|;
+expr_stmt|;
+return|return
+literal|0
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSet()    */
+annotation|@
+name|Override
 specifier|public
 name|ResultSet
 name|getResultSet
@@ -1413,11 +1560,18 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+name|checkConnection
+argument_list|(
+literal|"getResultSet"
+argument_list|)
+expr_stmt|;
 return|return
 name|resultSet
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSetConcurrency()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getResultSetConcurrency
@@ -1434,6 +1588,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSetHoldability()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getResultSetHoldability
@@ -1450,6 +1606,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getResultSetType()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getResultSetType
@@ -1457,15 +1615,20 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
+name|checkConnection
 argument_list|(
-literal|"Method not supported"
+literal|"getResultSetType"
 argument_list|)
-throw|;
+expr_stmt|;
+return|return
+name|ResultSet
+operator|.
+name|TYPE_FORWARD_ONLY
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getUpdateCount()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getUpdateCount
@@ -1473,11 +1636,18 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+name|checkConnection
+argument_list|(
+literal|"getUpdateCount"
+argument_list|)
+expr_stmt|;
 return|return
 literal|0
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getWarnings()    */
+annotation|@
+name|Override
 specifier|public
 name|SQLWarning
 name|getWarnings
@@ -1485,11 +1655,18 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+name|checkConnection
+argument_list|(
+literal|"getWarnings"
+argument_list|)
+expr_stmt|;
 return|return
 name|warningChain
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#isClosed()    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isClosed
@@ -1501,6 +1678,7 @@ return|return
 name|isClosed
 return|;
 block|}
+comment|// JDK 1.7
 specifier|public
 name|boolean
 name|isCloseOnCompletion
@@ -1508,16 +1686,13 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// JDK 1.7
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#isPoolable()    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isPoolable
@@ -1525,15 +1700,13 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setCursorName(java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setCursorName
@@ -1553,6 +1726,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setEscapeProcessing(boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setEscapeProcessing
@@ -1572,6 +1747,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setFetchDirection(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setFetchDirection
@@ -1582,15 +1759,34 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
+name|checkConnection
+argument_list|(
+literal|"setFetchDirection"
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|direction
+operator|!=
+name|ResultSet
+operator|.
+name|FETCH_FORWARD
+condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"Not supported direction "
+operator|+
+name|direction
 argument_list|)
 throw|;
 block|}
+block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setFetchSize(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setFetchSize
@@ -1601,12 +1797,19 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
+name|checkConnection
+argument_list|(
+literal|"setFetchSize"
+argument_list|)
+expr_stmt|;
 name|fetchSize
 operator|=
 name|rows
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setMaxFieldSize(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setMaxFieldSize
@@ -1626,6 +1829,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setMaxRows(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setMaxRows
@@ -1636,6 +1841,11 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
+name|checkConnection
+argument_list|(
+literal|"setMaxRows"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|max
@@ -1657,6 +1867,8 @@ name|max
 expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setPoolable(boolean)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setPoolable
@@ -1676,6 +1888,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setQueryTimeout(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setQueryTimeout
@@ -1695,6 +1909,8 @@ argument_list|)
 throw|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -1708,15 +1924,13 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+annotation|@
+name|Override
 specifier|public
 parameter_list|<
 name|T
@@ -1737,7 +1951,9 @@ throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"Cannot unwrap to "
+operator|+
+name|iface
 argument_list|)
 throw|;
 block|}

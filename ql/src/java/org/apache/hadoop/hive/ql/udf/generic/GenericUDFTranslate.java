@@ -610,6 +610,18 @@ name|primitiveCategory
 operator|!=
 name|PrimitiveCategory
 operator|.
+name|CHAR
+operator|&&
+name|primitiveCategory
+operator|!=
+name|PrimitiveCategory
+operator|.
+name|VARCHAR
+operator|&&
+name|primitiveCategory
+operator|!=
+name|PrimitiveCategory
+operator|.
 name|VOID
 condition|)
 block|{
@@ -619,7 +631,7 @@ name|UDFArgumentTypeException
 argument_list|(
 name|i
 argument_list|,
-literal|"A string argument was expected but an argument of type "
+literal|"A string, char, or varchar argument was expected but an argument of type "
 operator|+
 name|arguments
 index|[

@@ -137,7 +137,9 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Utilities
+name|FileSinkOperator
+operator|.
+name|RecordWriter
 import|;
 end_import
 
@@ -153,9 +155,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|io
+name|exec
 operator|.
-name|FSRecordWriter
+name|Utilities
 import|;
 end_import
 
@@ -494,7 +496,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|add
+name|addRow
 parameter_list|(
 name|Row
 name|t
@@ -580,7 +582,7 @@ block|}
 block|}
 name|super
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|t
 argument_list|)
@@ -1286,7 +1288,7 @@ specifier|static
 class|class
 name|PTFRecordWriter
 implements|implements
-name|FSRecordWriter
+name|RecordWriter
 block|{
 name|BytesWritable
 name|EMPTY_KEY
@@ -1316,6 +1318,8 @@ operator|=
 name|outStream
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|write
@@ -1336,6 +1340,8 @@ name|r
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -1373,7 +1379,7 @@ block|{
 annotation|@
 name|Override
 specifier|public
-name|FSRecordWriter
+name|RecordWriter
 name|getHiveRecordWriter
 parameter_list|(
 name|JobConf
@@ -1435,6 +1441,8 @@ argument_list|,
 name|valueClass
 argument_list|,
 name|isCompressed
+argument_list|,
+name|progress
 argument_list|)
 decl_stmt|;
 return|return

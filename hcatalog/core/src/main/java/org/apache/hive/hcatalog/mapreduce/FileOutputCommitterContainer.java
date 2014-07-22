@@ -794,6 +794,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|dynamicPartitioningUsed
@@ -1216,6 +1219,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|jobContext
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Path
@@ -1409,8 +1415,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-try|try
-block|{
 if|if
 condition|(
 name|dynamicPartitioningUsed
@@ -1492,6 +1496,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|jobContext
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -1579,15 +1586,13 @@ expr_stmt|;
 block|}
 block|}
 block|}
-block|}
-finally|finally
-block|{
+comment|// Commit has succeeded (since no exceptions have been thrown.)
+comment|// Safe to cancel delegation tokens now.
 name|cancelDelegationTokens
 argument_list|(
 name|jobContext
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Override
@@ -3791,6 +3796,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|harProcessor
@@ -4184,6 +4192,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Configuration
@@ -5523,7 +5534,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Cancelling deletgation token for the job."
+literal|"Cancelling delegation token for the job."
 argument_list|)
 expr_stmt|;
 name|HiveMetaStoreClient

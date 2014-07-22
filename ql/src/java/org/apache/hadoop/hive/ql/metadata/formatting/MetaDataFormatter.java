@@ -101,6 +101,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|ColumnStatisticsObj
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|FieldSchema
 import|;
 end_import
@@ -246,7 +264,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Describe table.    * @param out    * @param colPath    * @param tableName    * @param tbl    * @param part    * @param cols    * @param isFormatted - describe with formatted keyword    * @param isExt    * @param isPretty    * @param isOutputPadded - if true, add spacing and indentation    * @throws HiveException    */
+comment|/**    * Describe table.    * @param out    * @param colPath    * @param tableName    * @param tbl    * @param part    * @param cols    * @param isFormatted - describe with formatted keyword    * @param isExt    * @param isPretty    * @param isOutputPadded - if true, add spacing and indentation    * @param colStats    * @throws HiveException    */
 specifier|public
 name|void
 name|describeTable
@@ -283,6 +301,12 @@ name|isPretty
 parameter_list|,
 name|boolean
 name|isOutputPadded
+parameter_list|,
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+name|colStats
 parameter_list|)
 throws|throws
 name|HiveException

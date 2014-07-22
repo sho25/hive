@@ -1092,7 +1092,7 @@ name|count
 argument_list|,
 name|serializeStream
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 operator|-
 name|count
@@ -1102,7 +1102,7 @@ name|count
 operator|=
 name|serializeStream
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 expr_stmt|;
 block|}
@@ -1110,7 +1110,7 @@ name|serializedSize
 operator|=
 name|serializeStream
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 expr_stmt|;
 name|lastOperationSerialize

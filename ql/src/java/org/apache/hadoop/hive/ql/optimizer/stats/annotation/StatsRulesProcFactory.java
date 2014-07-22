@@ -5655,9 +5655,12 @@ condition|)
 block|{
 name|newDV
 operator|=
+operator|(
+name|long
+operator|)
 name|Math
 operator|.
-name|round
+name|ceil
 argument_list|(
 name|ratio
 operator|*

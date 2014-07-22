@@ -47,16 +47,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|ObjectOutputStream
 import|;
 end_import
@@ -138,16 +128,6 @@ operator|.
 name|util
 operator|.
 name|NoSuchElementException
-import|;
-end_import
-
-begin_import
-import|import
-name|javax
-operator|.
-name|naming
-operator|.
-name|OperationNotSupportedException
 import|;
 end_import
 
@@ -665,7 +645,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|add
+name|addRow
 parameter_list|(
 name|List
 argument_list|<
@@ -749,7 +729,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|add
+name|addRow
 parameter_list|(
 name|Object
 index|[]

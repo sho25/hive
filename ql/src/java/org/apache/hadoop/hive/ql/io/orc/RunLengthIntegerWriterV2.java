@@ -187,6 +187,14 @@ specifier|private
 name|boolean
 name|isFixedDelta
 decl_stmt|;
+specifier|private
+name|SerializationUtils
+name|utils
+decl_stmt|;
+specifier|private
+name|boolean
+name|alignedBitpacking
+decl_stmt|;
 name|RunLengthIntegerWriterV2
 parameter_list|(
 name|PositionedOutputStream
@@ -194,6 +202,28 @@ name|output
 parameter_list|,
 name|boolean
 name|signed
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|output
+argument_list|,
+name|signed
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+name|RunLengthIntegerWriterV2
+parameter_list|(
+name|PositionedOutputStream
+name|output
+parameter_list|,
+name|boolean
+name|signed
+parameter_list|,
+name|boolean
+name|alignedBitpacking
 parameter_list|)
 block|{
 name|this
@@ -207,6 +237,20 @@ operator|.
 name|signed
 operator|=
 name|signed
+expr_stmt|;
+name|this
+operator|.
+name|alignedBitpacking
+operator|=
+name|alignedBitpacking
+expr_stmt|;
+name|this
+operator|.
+name|utils
+operator|=
+operator|new
+name|SerializationUtils
+argument_list|()
 expr_stmt|;
 name|clear
 argument_list|()
@@ -312,6 +356,21 @@ literal|0
 decl_stmt|;
 if|if
 condition|(
+name|alignedBitpacking
+condition|)
+block|{
+name|fb
+operator|=
+name|utils
+operator|.
+name|getClosestAlignedFixedBits
+argument_list|(
+name|fb
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|isFixedDelta
 condition|)
 block|{
@@ -370,7 +429,7 @@ expr_stmt|;
 block|}
 name|efb
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|encodeBitWidth
 argument_list|(
@@ -395,6 +454,7 @@ literal|0
 expr_stmt|;
 block|}
 comment|// extract the 9th bit of run length
+specifier|final
 name|int
 name|tailBits
 init|=
@@ -407,6 +467,7 @@ operator|>>>
 literal|8
 decl_stmt|;
 comment|// create first byte of the header
+specifier|final
 name|int
 name|headerFirstByte
 init|=
@@ -418,6 +479,7 @@ operator||
 name|tailBits
 decl_stmt|;
 comment|// second byte of the header stores the remaining 8 bits of runlength
+specifier|final
 name|int
 name|headerSecondByte
 init|=
@@ -446,7 +508,7 @@ condition|(
 name|signed
 condition|)
 block|{
-name|SerializationUtils
+name|utils
 operator|.
 name|writeVslong
 argument_list|(
@@ -461,7 +523,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|SerializationUtils
+name|utils
 operator|.
 name|writeVulong
 argument_list|(
@@ -480,7 +542,7 @@ name|isFixedDelta
 condition|)
 block|{
 comment|// if delta is fixed then we don't need to store delta blob
-name|SerializationUtils
+name|utils
 operator|.
 name|writeVslong
 argument_list|(
@@ -493,7 +555,7 @@ block|}
 else|else
 block|{
 comment|// store the first value as delta value using zigzag encoding
-name|SerializationUtils
+name|utils
 operator|.
 name|writeVslong
 argument_list|(
@@ -506,7 +568,7 @@ index|]
 argument_list|)
 expr_stmt|;
 comment|// adjacent delta values are bit packed
-name|SerializationUtils
+name|utils
 operator|.
 name|writeInts
 argument_list|(
@@ -534,16 +596,24 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
+comment|// NOTE: Aligned bit packing cannot be applied for PATCHED_BASE encoding
+comment|// because patch is applied to MSB bits. For example: If fixed bit width of
+comment|// base value is 7 bits and if patch is 3 bits, the actual value is
+comment|// constructed by shifting the patch to left by 7 positions.
+comment|// actual_value = patch<< 7 | base_value
+comment|// So, if we align base_value then actual_value can not be reconstructed.
 comment|// write the number of fixed bits required in next 5 bits
+specifier|final
 name|int
 name|fb
 init|=
 name|brBits95p
 decl_stmt|;
+specifier|final
 name|int
 name|efb
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|encodeBitWidth
 argument_list|(
@@ -558,6 +628,7 @@ operator|-=
 literal|1
 expr_stmt|;
 comment|// extract the 9th bit of run length
+specifier|final
 name|int
 name|tailBits
 init|=
@@ -570,6 +641,7 @@ operator|>>>
 literal|8
 decl_stmt|;
 comment|// create first byte of the header
+specifier|final
 name|int
 name|headerFirstByte
 init|=
@@ -581,6 +653,7 @@ operator||
 name|tailBits
 decl_stmt|;
 comment|// second byte of the header stores the remaining 8 bits of runlength
+specifier|final
 name|int
 name|headerSecondByte
 init|=
@@ -589,6 +662,7 @@ operator|&
 literal|0xff
 decl_stmt|;
 comment|// if the min value is negative toggle the sign
+specifier|final
 name|boolean
 name|isNegative
 init|=
@@ -614,10 +688,11 @@ block|}
 comment|// find the number of bytes required for base and shift it by 5 bits
 comment|// to accommodate patch width. The additional bit is used to store the sign
 comment|// of the base value.
+specifier|final
 name|int
 name|baseWidth
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|findClosestNumBits
 argument_list|(
@@ -626,6 +701,7 @@ argument_list|)
 operator|+
 literal|1
 decl_stmt|;
+specifier|final
 name|int
 name|baseBytes
 init|=
@@ -647,6 +723,7 @@ operator|)
 operator|+
 literal|1
 decl_stmt|;
+specifier|final
 name|int
 name|bb
 init|=
@@ -683,12 +760,13 @@ expr_stmt|;
 block|}
 comment|// third byte contains 3 bits for number of bytes occupied by base
 comment|// and 5 bits for patchWidth
+specifier|final
 name|int
 name|headerThirdByte
 init|=
 name|bb
 operator||
-name|SerializationUtils
+name|utils
 operator|.
 name|encodeBitWidth
 argument_list|(
@@ -697,6 +775,7 @@ argument_list|)
 decl_stmt|;
 comment|// fourth byte contains 3 bits for page gap width and 5 bits for
 comment|// patch length
+specifier|final
 name|int
 name|headerFourthByte
 init|=
@@ -789,14 +868,14 @@ comment|// base reduced literals are bit packed
 name|int
 name|closestFixedBits
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|getClosestFixedBits
 argument_list|(
-name|brBits95p
+name|fb
 argument_list|)
 decl_stmt|;
-name|SerializationUtils
+name|utils
 operator|.
 name|writeInts
 argument_list|(
@@ -816,7 +895,7 @@ expr_stmt|;
 comment|// write patch list
 name|closestFixedBits
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|getClosestFixedBits
 argument_list|(
@@ -825,7 +904,7 @@ operator|+
 name|patchWidth
 argument_list|)
 expr_stmt|;
-name|SerializationUtils
+name|utils
 operator|.
 name|writeInts
 argument_list|(
@@ -872,13 +951,34 @@ name|IOException
 block|{
 comment|// write the number of fixed bits required in next 5 bits
 name|int
+name|fb
+init|=
+name|zzBits100p
+decl_stmt|;
+if|if
+condition|(
+name|alignedBitpacking
+condition|)
+block|{
+name|fb
+operator|=
+name|utils
+operator|.
+name|getClosestAlignedFixedBits
+argument_list|(
+name|fb
+argument_list|)
+expr_stmt|;
+block|}
+specifier|final
+name|int
 name|efb
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|encodeBitWidth
 argument_list|(
-name|zzBits100p
+name|fb
 argument_list|)
 operator|<<
 literal|1
@@ -889,6 +989,7 @@ operator|-=
 literal|1
 expr_stmt|;
 comment|// extract the 9th bit of run length
+specifier|final
 name|int
 name|tailBits
 init|=
@@ -901,6 +1002,7 @@ operator|>>>
 literal|8
 decl_stmt|;
 comment|// create first byte of the header
+specifier|final
 name|int
 name|headerFirstByte
 init|=
@@ -912,6 +1014,7 @@ operator||
 name|tailBits
 decl_stmt|;
 comment|// second byte of the header stores the remaining 8 bits of runlength
+specifier|final
 name|int
 name|headerSecondByte
 init|=
@@ -935,7 +1038,7 @@ name|headerSecondByte
 argument_list|)
 expr_stmt|;
 comment|// bit packing the zigzag encoded literals
-name|SerializationUtils
+name|utils
 operator|.
 name|writeInts
 argument_list|(
@@ -947,7 +1050,7 @@ name|zigzagLiterals
 operator|.
 name|length
 argument_list|,
-name|zzBits100p
+name|fb
 argument_list|,
 name|output
 argument_list|)
@@ -978,7 +1081,7 @@ condition|)
 block|{
 name|repeatVal
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|zigzagEncode
 argument_list|(
@@ -999,16 +1102,18 @@ literal|0
 index|]
 expr_stmt|;
 block|}
+specifier|final
 name|int
 name|numBitsRepeatVal
 init|=
-name|SerializationUtils
+name|utils
 operator|.
 name|findClosestNumBits
 argument_list|(
 name|repeatVal
 argument_list|)
 decl_stmt|;
+specifier|final
 name|int
 name|numBytesRepeatVal
 init|=
@@ -1350,7 +1455,7 @@ condition|)
 block|{
 name|zzEncVal
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|zigzagEncode
 argument_list|(
@@ -1473,7 +1578,7 @@ comment|// stores the number of bits required for packing delta blob in
 comment|// delta encoding
 name|bitsDeltaMax
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|findClosestNumBits
 argument_list|(
@@ -1586,7 +1691,7 @@ literal|0.9
 decl_stmt|;
 name|zzBits90p
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|percentileBits
 argument_list|(
@@ -1601,7 +1706,7 @@ literal|1.0
 expr_stmt|;
 name|zzBits100p
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|percentileBits
 argument_list|(
@@ -1678,7 +1783,7 @@ literal|0.95
 expr_stmt|;
 name|brBits95p
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|percentileBits
 argument_list|(
@@ -1694,7 +1799,7 @@ literal|1.0
 expr_stmt|;
 name|brBits100p
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|percentileBits
 argument_list|(
@@ -1854,7 +1959,7 @@ name|brBits95p
 expr_stmt|;
 name|patchWidth
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|getClosestFixedBits
 argument_list|(
@@ -2030,7 +2135,7 @@ else|else
 block|{
 name|patchGapWidth
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|findClosestNumBits
 argument_list|(

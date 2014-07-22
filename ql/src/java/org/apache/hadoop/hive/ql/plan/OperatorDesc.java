@@ -58,6 +58,19 @@ name|Statistics
 name|statistics
 parameter_list|)
 function_decl|;
+specifier|public
+name|OpTraits
+name|getOpTraits
+parameter_list|()
+function_decl|;
+specifier|public
+name|void
+name|setOpTraits
+parameter_list|(
+name|OpTraits
+name|opTraits
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

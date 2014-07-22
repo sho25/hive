@@ -428,9 +428,13 @@ literal|"alter table "
 operator|+
 name|tblName
 operator|+
-literal|" set fileformat INPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileInputFormat' OUTPUTFORMAT "
+literal|" set fileformat "
 operator|+
-literal|"'org.apache.hadoop.hive.ql.io.RCFileOutputFormat' inputdriver 'mydriver' outputdriver 'yourdriver'"
+literal|"INPUTFORMAT  'org.apache.hadoop.hive.ql.io.RCFileInputFormat' "
+operator|+
+literal|"OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileOutputFormat' "
+operator|+
+literal|"serde 'org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe' inputdriver 'mydriver' outputdriver 'yourdriver'"
 argument_list|)
 expr_stmt|;
 name|assertEquals

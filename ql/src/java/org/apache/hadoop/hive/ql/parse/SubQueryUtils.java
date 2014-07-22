@@ -53,6 +53,20 @@ begin_import
 import|import
 name|org
 operator|.
+name|antlr
+operator|.
+name|runtime
+operator|.
+name|tree
+operator|.
+name|CommonTreeAdaptor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|apache
 operator|.
 name|hadoop
@@ -3453,6 +3467,16 @@ parameter_list|()
 function_decl|;
 block|}
 empty_stmt|;
+comment|/*    * Using CommonTreeAdaptor because the Adaptor in ParseDriver doesn't carry    * the token indexes when duplicating a Tree.    */
+specifier|static
+specifier|final
+name|CommonTreeAdaptor
+name|adaptor
+init|=
+operator|new
+name|CommonTreeAdaptor
+argument_list|()
+decl_stmt|;
 block|}
 end_class
 

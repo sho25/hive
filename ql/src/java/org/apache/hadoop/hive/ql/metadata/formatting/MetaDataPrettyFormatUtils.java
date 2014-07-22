@@ -331,7 +331,9 @@ init|=
 name|MetaDataFormatUtils
 operator|.
 name|getColumnsHeader
-argument_list|()
+argument_list|(
+literal|null
+argument_list|)
 decl_stmt|;
 name|formatOutputPretty
 argument_list|(

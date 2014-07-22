@@ -134,7 +134,7 @@ index|[
 name|i
 index|]
 operator|.
-name|toFormalString
+name|getHiveDecimalString
 argument_list|()
 decl_stmt|;
 name|byte

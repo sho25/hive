@@ -119,6 +119,10 @@ name|repeat
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+name|SerializationUtils
+name|utils
+decl_stmt|;
 name|RunLengthIntegerReader
 parameter_list|(
 name|InStream
@@ -141,6 +145,14 @@ operator|.
 name|signed
 operator|=
 name|signed
+expr_stmt|;
+name|this
+operator|.
+name|utils
+operator|=
+operator|new
+name|SerializationUtils
+argument_list|()
 expr_stmt|;
 block|}
 specifier|private
@@ -247,7 +259,7 @@ index|[
 literal|0
 index|]
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|readVslong
 argument_list|(
@@ -262,7 +274,7 @@ index|[
 literal|0
 index|]
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|readVulong
 argument_list|(
@@ -312,7 +324,7 @@ index|[
 name|i
 index|]
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|readVslong
 argument_list|(
@@ -327,7 +339,7 @@ index|[
 name|i
 index|]
 operator|=
-name|SerializationUtils
+name|utils
 operator|.
 name|readVulong
 argument_list|(

@@ -51,24 +51,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UDF
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|vector
 operator|.
 name|VectorizedExpressions
@@ -141,26 +123,8 @@ name|DoubleWritable
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|io
-operator|.
-name|HiveDecimalWritable
-import|;
-end_import
-
 begin_comment
-comment|/**  * UDFLn.  *  */
+comment|/**  * UDFLn.  */
 end_comment
 
 begin_class
@@ -211,14 +175,12 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
-specifier|public
-name|UDFLn
-parameter_list|()
-block|{   }
 comment|/**    * Returns the natural logarithm of "a".    */
-specifier|public
+annotation|@
+name|Override
+specifier|protected
 name|DoubleWritable
-name|evaluate
+name|doEvaluate
 parameter_list|(
 name|DoubleWritable
 name|a
@@ -226,10 +188,6 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|a
-operator|==
-literal|null
-operator|||
 name|a
 operator|.
 name|get

@@ -296,6 +296,8 @@ comment|/**  * An {@link org.apache.hadoop.mapred.InputFormat} for Plain files w
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|FlatFileInputFormat
@@ -315,7 +317,7 @@ name|T
 argument_list|>
 argument_list|>
 block|{
-comment|/**    * A work-around until HADOOP-1230 is fixed.    *     * Allows boolean next(k,v) to be called by reference but still allow the    * deserializer to create a new object (i.e., row) on every call to next.    */
+comment|/**    * A work-around until HADOOP-1230 is fixed.    *    * Allows boolean next(k,v) to be called by reference but still allow the    * deserializer to create a new object (i.e., row) on every call to next.    */
 specifier|public
 specifier|static
 class|class
@@ -328,7 +330,7 @@ name|T
 name|row
 decl_stmt|;
 block|}
-comment|/**    * An implementation of SerializationContext is responsible for looking up the    * Serialization implementation for the given RecordReader. Potentially based    * on the Configuration or some other mechanism    *     * The SerializationFactory does not give this functionality since: 1.    * Requires Serialization implementations to be specified in the Configuration    * a-priori (although same as setting a SerializationContext) 2. Does not    * lookup the actual subclass being deserialized. e.g., for Serializable does    * not have a way of configuring the actual Java class being    * serialized/deserialized.    */
+comment|/**    * An implementation of SerializationContext is responsible for looking up the    * Serialization implementation for the given RecordReader. Potentially based    * on the Configuration or some other mechanism    *    * The SerializationFactory does not give this functionality since: 1.    * Requires Serialization implementations to be specified in the Configuration    * a-priori (although same as setting a SerializationContext) 2. Does not    * lookup the actual subclass being deserialized. e.g., for Serializable does    * not have a way of configuring the actual Java class being    * serialized/deserialized.    */
 specifier|public
 specifier|static
 interface|interface
@@ -339,7 +341,7 @@ parameter_list|>
 extends|extends
 name|Configurable
 block|{
-comment|/**      * An {@link Serialization} object for objects of type S.      *       * @return a serialization object for this context      */
+comment|/**      * An {@link Serialization} object for objects of type S.      *      * @return a serialization object for this context      */
 name|Serialization
 argument_list|<
 name|S
@@ -371,7 +373,7 @@ name|SerializationImplKey
 init|=
 literal|"mapred.input.serialization.implKey"
 decl_stmt|;
-comment|/**    * An implementation of {@link SerializationContext} that reads the    * Serialization class and specific subclass to be deserialized from the    * JobConf.    *     */
+comment|/**    * An implementation of {@link SerializationContext} that reads the    * Serialization class and specific subclass to be deserialized from the    * JobConf.    *    */
 specifier|public
 specifier|static
 class|class
@@ -401,6 +403,8 @@ specifier|private
 name|Configuration
 name|conf
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setConf
@@ -416,6 +420,8 @@ operator|=
 name|conf
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Configuration
 name|getConf
@@ -426,6 +432,8 @@ name|conf
 return|;
 block|}
 comment|/**      * @return the actual class being deserialized.      * @exception does      *              not currently throw IOException      */
+annotation|@
+name|Override
 specifier|public
 name|Class
 argument_list|<
@@ -457,7 +465,9 @@ name|class
 argument_list|)
 return|;
 block|}
-comment|/**      * Looks up and instantiates the Serialization Object      *       * Important to note here that we are not relying on the Hadoop      * SerializationFactory part of the Serialization framework. This is because      * in the case of Non-Writable Objects, we cannot make any assumptions about      * the uniformity of the serialization class APIs - i.e., there may not be a      * "write" method call and a subclass may need to implement its own      * Serialization classes. The SerializationFactory currently returns the      * first (de)serializer that is compatible with the class to be      * deserialized; in this context, that assumption isn't necessarily true.      *       * @return the serialization object for this context      * @exception does      *              not currently throw any IOException      */
+comment|/**      * Looks up and instantiates the Serialization Object      *      * Important to note here that we are not relying on the Hadoop      * SerializationFactory part of the Serialization framework. This is because      * in the case of Non-Writable Objects, we cannot make any assumptions about      * the uniformity of the serialization class APIs - i.e., there may not be a      * "write" method call and a subclass may need to implement its own      * Serialization classes. The SerializationFactory currently returns the      * first (de)serializer that is compatible with the class to be      * deserialized; in this context, that assumption isn't necessarily true.      *      * @return the serialization object for this context      * @exception does      *              not currently throw any IOException      */
+annotation|@
+name|Override
 specifier|public
 name|Serialization
 argument_list|<
@@ -523,7 +533,9 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * An {@link RecordReader} for plain files with {@link Deserializer} records    *     * Reads one row at a time of type R. R is intended to be a base class of    * something such as: Record, Writable, Text, ...    *     */
+comment|/**    * An {@link RecordReader} for plain files with {@link Deserializer} records    *    * Reads one row at a time of type R. R is intended to be a base class of    * something such as: Record, Writable, Text, ...    *    */
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|FlatFileRecordReader
@@ -597,7 +609,7 @@ name|R
 argument_list|>
 name|realRowClass
 decl_stmt|;
-comment|/**      * FlatFileRecordReader constructor constructs the underlying stream      * (potentially decompressed) and creates the deserializer.      *       * @param conf      *          the jobconf      * @param split      *          the split for this file      */
+comment|/**      * FlatFileRecordReader constructor constructs the underlying stream      * (potentially decompressed) and creates the deserializer.      *      * @param conf      *          the jobconf      * @param split      *          the split for this file      */
 specifier|public
 name|FlatFileRecordReader
 parameter_list|(
@@ -751,12 +763,6 @@ argument_list|)
 decl_stmt|;
 name|sinfo
 operator|=
-operator|(
-name|SerializationContext
-argument_list|<
-name|R
-argument_list|>
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -818,6 +824,8 @@ init|=
 literal|"mapred.input.serialization.context_impl"
 decl_stmt|;
 comment|/**      * @return null      */
+annotation|@
+name|Override
 specifier|public
 name|Void
 name|createKey
@@ -828,6 +836,8 @@ literal|null
 return|;
 block|}
 comment|/**      * @return a new R instance.      */
+annotation|@
+name|Override
 specifier|public
 name|RowContainer
 argument_list|<
@@ -853,9 +863,6 @@ name|r
 operator|.
 name|row
 operator|=
-operator|(
-name|R
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -869,7 +876,9 @@ return|return
 name|r
 return|;
 block|}
-comment|/**      * Returns the next row # and value.      *       * @param key      *          - void as these files have a value only      * @param value      *          - the row container which is always re-used, but the internal      *          value may be set to a new Object      * @return whether the key and value were read. True if they were and false      *         if EOF      * @exception IOException      *              from the deserializer      */
+comment|/**      * Returns the next row # and value.      *      * @param key      *          - void as these files have a value only      * @param value      *          - the row container which is always re-used, but the internal      *          value may be set to a new Object      * @return whether the key and value were read. True if they were and false      *         if EOF      * @exception IOException      *              from the deserializer      */
+annotation|@
+name|Override
 specifier|public
 specifier|synchronized
 name|boolean
@@ -960,6 +969,8 @@ literal|false
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 specifier|synchronized
 name|float
@@ -1006,6 +1017,8 @@ argument_list|)
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 specifier|synchronized
 name|long
@@ -1024,6 +1037,8 @@ name|getPos
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 specifier|synchronized
 name|void

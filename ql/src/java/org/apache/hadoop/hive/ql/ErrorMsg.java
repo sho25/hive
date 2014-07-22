@@ -19,60 +19,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|text
-operator|.
-name|MessageFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Matcher
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Pattern
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|antlr
@@ -152,6 +98,60 @@ operator|.
 name|parse
 operator|.
 name|ASTNodeOrigin
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|text
+operator|.
+name|MessageFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Matcher
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Pattern
 import|;
 end_import
 
@@ -326,13 +326,6 @@ argument_list|(
 literal|10020
 argument_list|,
 literal|"TRANSFORM with other SELECT columns not supported"
-argument_list|)
-block|,
-name|DUPLICATE_GROUPBY_KEY
-argument_list|(
-literal|10021
-argument_list|,
-literal|"Repeated key in GROUP BY"
 argument_list|)
 block|,
 name|UNSUPPORTED_MULTIPLE_DISTINCTS
@@ -1766,6 +1759,108 @@ argument_list|,
 literal|"Inserting into a non-empty immutable table is not allowed"
 argument_list|)
 block|,
+name|TXNMGR_NOT_SPECIFIED
+argument_list|(
+literal|10260
+argument_list|,
+literal|"Transaction manager not specified correctly, "
+operator|+
+literal|"set hive.txn.manager"
+argument_list|)
+block|,
+name|TXNMGR_NOT_INSTANTIATED
+argument_list|(
+literal|10261
+argument_list|,
+literal|"Transaction manager could not be "
+operator|+
+literal|"instantiated, check hive.txn.manager"
+argument_list|)
+block|,
+name|TXN_NO_SUCH_TRANSACTION
+argument_list|(
+literal|10262
+argument_list|,
+literal|"No record of transaction could be found, "
+operator|+
+literal|"may have timed out"
+argument_list|)
+block|,
+name|TXN_ABORTED
+argument_list|(
+literal|10263
+argument_list|,
+literal|"Transaction manager has aborted the transaction."
+argument_list|)
+block|,
+name|LOCK_NO_SUCH_LOCK
+argument_list|(
+literal|10270
+argument_list|,
+literal|"No record of lock could be found, "
+operator|+
+literal|"may have timed out"
+argument_list|)
+block|,
+name|LOCK_REQUEST_UNSUPPORTED
+argument_list|(
+literal|10271
+argument_list|,
+literal|"Current transaction manager does not "
+operator|+
+literal|"support explicit lock requests.  Transaction manager:  "
+argument_list|)
+block|,
+name|METASTORE_COMMUNICATION_FAILED
+argument_list|(
+literal|10280
+argument_list|,
+literal|"Error communicating with the "
+operator|+
+literal|"metastore"
+argument_list|)
+block|,
+name|METASTORE_COULD_NOT_INITIATE
+argument_list|(
+literal|10281
+argument_list|,
+literal|"Unable to initiate connection to the "
+operator|+
+literal|"metastore."
+argument_list|)
+block|,
+name|INVALID_COMPACTION_TYPE
+argument_list|(
+literal|10282
+argument_list|,
+literal|"Invalid compaction type, supported values are 'major' and "
+operator|+
+literal|"'minor'"
+argument_list|)
+block|,
+name|NO_COMPACTION_PARTITION
+argument_list|(
+literal|10283
+argument_list|,
+literal|"You must specify a partition to compact for partitioned tables"
+argument_list|)
+block|,
+name|TOO_MANY_COMPACTION_PARTITIONS
+argument_list|(
+literal|10284
+argument_list|,
+literal|"Compaction can only be requested on one partition at a "
+operator|+
+literal|"time."
+argument_list|)
+block|,
+name|DISTINCT_NOT_SUPPORTED
+argument_list|(
+literal|10285
+argument_list|,
+literal|"Distinct keyword is not support in current context"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
@@ -1810,6 +1905,17 @@ operator|+
 literal|"tried to create too many dynamic partitions. The maximum number of dynamic partitions "
 operator|+
 literal|"is controlled by hive.exec.max.dynamic.partitions and hive.exec.max.dynamic.partitions.pernode. "
+argument_list|)
+block|,
+name|PARTITION_SCAN_LIMIT_EXCEEDED
+argument_list|(
+literal|20005
+argument_list|,
+literal|"Number of partitions scanned (={0}) on table {1} exceeds limit"
+operator|+
+literal|" (={2}). This is controlled by hive.limit.query.max.table.partition."
+argument_list|,
+literal|true
 argument_list|)
 block|,
 comment|//========================== 30000 range starts here ========================//
@@ -1887,15 +1993,6 @@ operator|+
 literal|"statement"
 argument_list|)
 block|,
-name|COLUMNSTATSCOLLECTOR_INCORRECT_NUM_PART_KEY
-argument_list|(
-literal|30006
-argument_list|,
-literal|"Incorrect number of partitioning key "
-operator|+
-literal|"specified in ANALYZE statement"
-argument_list|)
-block|,
 name|COLUMNSTATSCOLLECTOR_INVALID_PARTITION
 argument_list|(
 literal|30007
@@ -1903,15 +2000,6 @@ argument_list|,
 literal|"Invalid partitioning key/value specified in "
 operator|+
 literal|"ANALYZE statement"
-argument_list|)
-block|,
-name|COLUMNSTATSCOLLECTOR_INVALID_SYNTAX
-argument_list|(
-literal|30008
-argument_list|,
-literal|"Dynamic partitioning is not supported yet while "
-operator|+
-literal|"gathering column statistics through ANALYZE statement"
 argument_list|)
 block|,
 name|COLUMNSTATSCOLLECTOR_PARSE_ERROR

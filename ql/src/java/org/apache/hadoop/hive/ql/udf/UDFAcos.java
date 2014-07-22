@@ -124,7 +124,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UDFAcos.  *  */
+comment|/**  * UDFAcos.  */
 end_comment
 
 begin_class
@@ -181,31 +181,16 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
-specifier|public
-name|UDFAcos
-parameter_list|()
-block|{   }
 comment|/**    * Take Arc Cosine of a in radians.    */
-specifier|public
+annotation|@
+name|Override
+specifier|protected
 name|DoubleWritable
-name|evaluate
+name|doEvaluate
 parameter_list|(
 name|DoubleWritable
 name|a
 parameter_list|)
-block|{
-if|if
-condition|(
-name|a
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
-else|else
 block|{
 name|result
 operator|.
@@ -225,7 +210,6 @@ expr_stmt|;
 return|return
 name|result
 return|;
-block|}
 block|}
 block|}
 end_class

@@ -293,11 +293,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|plan
 operator|.
-name|Utilities
-operator|.
-name|StreamPrinter
+name|MapredWork
 import|;
 end_import
 
@@ -315,7 +313,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
+name|MapWork
 import|;
 end_import
 
@@ -386,6 +384,22 @@ operator|.
 name|shims
 operator|.
 name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|StreamPrinter
 import|;
 end_import
 
@@ -777,16 +791,6 @@ block|}
 block|}
 name|runningViaChild
 operator|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|isLocalMode
-argument_list|(
-name|conf
-argument_list|)
-operator|||
 name|conf
 operator|.
 name|getBoolVar
@@ -1639,6 +1643,17 @@ name|getId
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// wait for stream threads to finish
+name|outPrinter
+operator|.
+name|join
+argument_list|()
+expr_stmt|;
+name|errPrinter
+operator|.
+name|join
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|exitVal
@@ -2484,7 +2499,21 @@ extends|extends
 name|OperatorDesc
 argument_list|>
 name|getReducer
-parameter_list|()
+parameter_list|(
+name|MapWork
+name|mapWork
+parameter_list|)
+block|{
+if|if
+condition|(
+name|getWork
+argument_list|()
+operator|.
+name|getMapWork
+argument_list|()
+operator|==
+name|mapWork
+condition|)
 block|{
 return|return
 name|getWork
@@ -2505,6 +2534,10 @@ argument_list|()
 operator|.
 name|getReducer
 argument_list|()
+return|;
+block|}
+return|return
+literal|null
 return|;
 block|}
 annotation|@

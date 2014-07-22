@@ -73,6 +73,10 @@ specifier|private
 name|boolean
 name|allowStatefulFunctions
 decl_stmt|;
+specifier|private
+name|boolean
+name|allowDistinctFunctions
+decl_stmt|;
 comment|/**    * Constructor.    *    * @param inputRR    *          The input row resolver of the previous operator.    */
 specifier|public
 name|TypeCheckCtx
@@ -93,6 +97,10 @@ expr_stmt|;
 name|allowStatefulFunctions
 operator|=
 literal|false
+expr_stmt|;
+name|allowDistinctFunctions
+operator|=
+literal|true
 expr_stmt|;
 block|}
 comment|/**    * @param inputRR    *          the inputRR to set    */
@@ -215,6 +223,30 @@ parameter_list|()
 block|{
 return|return
 name|errorSrcNode
+return|;
+block|}
+specifier|public
+name|void
+name|setAllowDistinctFunctions
+parameter_list|(
+name|boolean
+name|allowDistinctFunctions
+parameter_list|)
+block|{
+name|this
+operator|.
+name|allowDistinctFunctions
+operator|=
+name|allowDistinctFunctions
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isAllowDistinctFunctions
+parameter_list|()
+block|{
+return|return
+name|allowDistinctFunctions
 return|;
 block|}
 block|}

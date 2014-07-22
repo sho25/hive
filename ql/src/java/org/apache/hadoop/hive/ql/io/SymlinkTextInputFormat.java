@@ -1163,19 +1163,6 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * For backward compatibility with hadoop 0.17.    */
-specifier|public
-name|void
-name|validateInput
-parameter_list|(
-name|JobConf
-name|job
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-comment|// do nothing
-block|}
 annotation|@
 name|Override
 specifier|public

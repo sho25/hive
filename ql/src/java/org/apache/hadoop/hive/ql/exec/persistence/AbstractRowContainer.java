@@ -79,9 +79,10 @@ parameter_list|()
 throws|throws
 name|HiveException
 function_decl|;
+comment|/**    * add a row into the RowContainer    *    * @param t row    */
 specifier|public
 name|void
-name|add
+name|addRow
 parameter_list|(
 name|ROW
 name|t

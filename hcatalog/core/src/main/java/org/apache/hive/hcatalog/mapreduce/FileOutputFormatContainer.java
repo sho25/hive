@@ -729,6 +729,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 operator|.
 name|isDynamicPartitioningUsed
@@ -741,7 +744,7 @@ comment|// By that time, a new local instance of RecordWriter, with the correct 
 name|rw
 operator|=
 operator|new
-name|FileRecordWriterContainer
+name|DynamicPartitionFileRecordWriterContainer
 argument_list|(
 operator|(
 name|org
@@ -807,7 +810,7 @@ decl_stmt|;
 name|rw
 operator|=
 operator|new
-name|FileRecordWriterContainer
+name|StaticPartitionFileRecordWriterContainer
 argument_list|(
 name|getBaseOutputFormat
 argument_list|()
@@ -876,6 +879,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|HiveMetaStoreClient
@@ -1044,6 +1050,9 @@ operator|.
 name|getJobInfo
 argument_list|(
 name|context
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 operator|.
 name|isDynamicPartitioningUsed

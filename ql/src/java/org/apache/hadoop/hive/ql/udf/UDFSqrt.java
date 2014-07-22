@@ -175,34 +175,20 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
-specifier|public
-name|UDFSqrt
-parameter_list|()
-block|{   }
-comment|/**    * Return NULL for NULL or negative inputs; otherwise, return the square root.    */
-specifier|public
+comment|/**    * Return NULL for negative inputs; otherwise, return the square root.    */
+annotation|@
+name|Override
+specifier|protected
 name|DoubleWritable
-name|evaluate
+name|doEvaluate
 parameter_list|(
 name|DoubleWritable
-name|i
+name|a
 parameter_list|)
 block|{
 if|if
 condition|(
-name|i
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
-elseif|else
-if|if
-condition|(
-name|i
+name|a
 operator|.
 name|get
 argument_list|()
@@ -224,7 +210,7 @@ name|Math
 operator|.
 name|sqrt
 argument_list|(
-name|i
+name|a
 operator|.
 name|get
 argument_list|()

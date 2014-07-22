@@ -1728,7 +1728,7 @@ condition|)
 block|{
 name|valString
 operator|+=
-literal|", partitionName.indexOf(\"/\", "
+literal|", partitionName.concat(\"/\").indexOf(\"/\", "
 operator|+
 name|indexOfKeyStr
 operator|+

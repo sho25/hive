@@ -209,6 +209,8 @@ class|class
 name|CounterStatsAggregator
 implements|implements
 name|StatsAggregator
+implements|,
+name|StatsCollectionTaskIndependent
 block|{
 specifier|private
 specifier|static

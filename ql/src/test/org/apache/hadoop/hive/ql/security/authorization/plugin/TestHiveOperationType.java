@@ -31,7 +31,7 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|*
+name|fail
 import|;
 end_import
 
@@ -124,25 +124,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|assertEquals
-argument_list|(
-literal|"Check if HiveOperation, HiveOperationType have same number of instances"
-argument_list|,
-name|HiveOperation
-operator|.
-name|values
-argument_list|()
-operator|.
-name|length
-argument_list|,
-name|HiveOperationType
-operator|.
-name|values
-argument_list|()
-operator|.
-name|length
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 end_class

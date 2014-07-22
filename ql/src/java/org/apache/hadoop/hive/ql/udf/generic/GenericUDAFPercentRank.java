@@ -265,7 +265,7 @@ decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
-name|GenericUDAFRankEvaluator
+name|GenericUDAFAbstractRankEvaluator
 name|createEvaluator
 parameter_list|()
 block|{
@@ -280,7 +280,7 @@ specifier|static
 class|class
 name|GenericUDAFPercentRankEvaluator
 extends|extends
-name|GenericUDAFRankEvaluator
+name|GenericUDAFAbstractRankEvaluator
 block|{
 annotation|@
 name|Override

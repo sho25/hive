@@ -263,6 +263,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|DataOutputBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|LongWritable
 import|;
 end_import
@@ -324,7 +338,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * RCFileRecordReader.  *  * @param<K>  * @param<V>  */
+comment|/**  * RCFileRecordReader.  */
 end_comment
 
 begin_class
@@ -401,6 +415,15 @@ name|boolean
 name|addPartitionCols
 init|=
 literal|true
+decl_stmt|;
+specifier|private
+specifier|final
+name|DataOutputBuffer
+name|buffer
+init|=
+operator|new
+name|DataOutputBuffer
+argument_list|()
 decl_stmt|;
 specifier|private
 specifier|static
@@ -934,12 +957,15 @@ block|{
 comment|// Reset column fields noNull values to true
 name|VectorizedBatchUtil
 operator|.
-name|SetNoNullFields
+name|setNoNullFields
 argument_list|(
-literal|true
-argument_list|,
 name|value
 argument_list|)
+expr_stmt|;
+name|buffer
+operator|.
+name|reset
+argument_list|()
 expr_stmt|;
 name|value
 operator|.
@@ -1050,6 +1076,8 @@ operator|)
 name|colsCache
 argument_list|,
 name|value
+argument_list|,
+name|buffer
 argument_list|)
 expr_stmt|;
 block|}

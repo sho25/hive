@@ -1013,7 +1013,7 @@ block|}
 comment|/**      * Execute a malformed async query with default config,      * to give a runtime time error.      * Also check that the sqlState and errorCode should be set      */
 name|queryString
 operator|=
-literal|"CREATE TABLE NON_EXISTING_TAB (ID STRING) location 'hdfs://localhost:10000/a/b/c'"
+literal|"CREATE TABLE NON_EXISTING_TAB (ID STRING) location 'invalid://localhost:10000/a/b/c'"
 expr_stmt|;
 name|opStatus
 operator|=

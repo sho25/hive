@@ -401,22 +401,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|SerDeUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|mapred
 operator|.
 name|InputFormat
@@ -995,7 +979,7 @@ name|sd
 return|;
 block|}
 comment|/**    * Initializes this object with the given variables    *    * @param table    *          Table the partition belongs to    * @param tPartition    *          Thrift Partition object    * @throws HiveException    *           Thrown if we cannot initialize the partition    */
-specifier|private
+specifier|protected
 name|void
 name|initialize
 parameter_list|(
@@ -1193,17 +1177,13 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|// This will set up field: inputFormatClass
-name|getInputFormatClass
-argument_list|()
-expr_stmt|;
-comment|// This will set up field: outputFormatClass
-name|getOutputFormatClass
-argument_list|()
-expr_stmt|;
-name|getDeserializer
-argument_list|()
-expr_stmt|;
+comment|// Note that we do not set up fields like inputFormatClass, outputFormatClass
+comment|// and deserializer because the Partition needs to be accessed from across
+comment|// the metastore side as well, which will result in attempting to load
+comment|// the class associated with them, which might not be available, and
+comment|// the main reason to instantiate them would be to pre-cache them for
+comment|// performance. Since those fields are null/cache-check by their accessors
+comment|// anyway, that's not a concern.
 block|}
 specifier|public
 name|String
@@ -2565,22 +2545,25 @@ argument_list|>
 name|getCols
 parameter_list|()
 block|{
+try|try
+block|{
 if|if
 condition|(
-operator|!
-name|SerDeUtils
+name|Table
 operator|.
-name|shouldGetColsFromSerDe
+name|hasMetastoreBasedSchema
 argument_list|(
+name|Hive
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|tPartition
 operator|.
 name|getSd
-argument_list|()
-operator|.
-name|getSerdeInfo
-argument_list|()
-operator|.
-name|getSerializationLib
 argument_list|()
 argument_list|)
 condition|)
@@ -2595,8 +2578,6 @@ name|getCols
 argument_list|()
 return|;
 block|}
-try|try
-block|{
 return|return
 name|Hive
 operator|.
@@ -3161,6 +3142,45 @@ operator|.
 name|getSkewedColValueLocationMaps
 argument_list|()
 return|;
+block|}
+specifier|public
+name|void
+name|checkValidity
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+if|if
+condition|(
+operator|!
+name|tPartition
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|table
+operator|.
+name|getSd
+argument_list|()
+argument_list|)
+condition|)
+block|{
+name|Table
+operator|.
+name|validateColumns
+argument_list|(
+name|getCols
+argument_list|()
+argument_list|,
+name|table
+operator|.
+name|getPartCols
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class

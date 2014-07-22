@@ -617,7 +617,7 @@ index|[
 name|alias
 index|]
 operator|.
-name|add
+name|addRow
 argument_list|(
 name|nr
 argument_list|)
@@ -1055,7 +1055,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * This is a similar implementation of FileSinkOperator.moveFileToFinalPath.    * @param specPath    * @param hconf    * @param success    * @param log    * @param dpCtx    * @throws IOException    * @throws HiveException    */
+comment|/**    * This is a similar implementation of FileSinkOperator.moveFileToFinalPath.    * @param specPath    * @param hconf    * @param success    * @param log    * @throws IOException    * @throws HiveException    */
 specifier|private
 name|void
 name|mvFileToFinalPath

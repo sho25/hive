@@ -67,6 +67,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|security
+operator|.
+name|UserGroupInformation
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|thrift
 operator|.
 name|TProcessor
@@ -116,7 +130,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**   * This class is only overridden by the secure hadoop shim. It allows   * the Thrift SASL support to bridge to Hadoop's UserGroupInformation   *& DelegationToken infrastructure.   */
+comment|/**  * This class is only overridden by the secure hadoop shim. It allows  * the Thrift SASL support to bridge to Hadoop's UserGroupInformation  *& DelegationToken infrastructure.  */
 end_comment
 
 begin_class
@@ -144,6 +158,45 @@ parameter_list|(
 name|String
 name|authType
 parameter_list|)
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"The current version of Hadoop does not support Authentication"
+argument_list|)
+throw|;
+block|}
+specifier|public
+name|UserGroupInformation
+name|getCurrentUGIWithConf
+parameter_list|(
+name|String
+name|authType
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"The current version of Hadoop does not support Authentication"
+argument_list|)
+throw|;
+block|}
+specifier|public
+name|String
+name|getServerPrincipal
+parameter_list|(
+name|String
+name|principalConfig
+parameter_list|,
+name|String
+name|host
+parameter_list|)
+throws|throws
+name|IOException
 block|{
 throw|throw
 operator|new
@@ -202,7 +255,7 @@ specifier|abstract
 class|class
 name|Client
 block|{
-comment|/**     *     * @param principalConfig In the case of Kerberos authentication this will     * be the kerberos principal name, for DIGEST-MD5 (delegation token) based     * authentication this will be null     * @param host The metastore server host name     * @param methodStr "KERBEROS" or "DIGEST"     * @param tokenStrForm This is url encoded string form of     * org.apache.hadoop.security.token.     * @param underlyingTransport the underlying transport     * @return the transport     * @throws IOException     */
+comment|/**      *      * @param principalConfig In the case of Kerberos authentication this will      * be the kerberos principal name, for DIGEST-MD5 (delegation token) based      * authentication this will be null      * @param host The metastore server host name      * @param methodStr "KERBEROS" or "DIGEST"      * @param tokenStrForm This is url encoded string form of      * org.apache.hadoop.security.token.      * @param underlyingTransport the underlying transport      * @return the transport      * @throws IOException      */
 specifier|public
 specifier|abstract
 name|TTransport
@@ -298,12 +351,6 @@ function_decl|;
 specifier|public
 specifier|abstract
 name|String
-name|getRemoteUser
-parameter_list|()
-function_decl|;
-specifier|public
-specifier|abstract
-name|String
 name|getDelegationToken
 parameter_list|(
 name|String
@@ -316,6 +363,31 @@ throws|throws
 name|IOException
 throws|,
 name|InterruptedException
+function_decl|;
+specifier|public
+specifier|abstract
+name|String
+name|getDelegationTokenWithService
+parameter_list|(
+name|String
+name|owner
+parameter_list|,
+name|String
+name|renewer
+parameter_list|,
+name|String
+name|service
+parameter_list|)
+throws|throws
+name|IOException
+throws|,
+name|InterruptedException
+function_decl|;
+specifier|public
+specifier|abstract
+name|String
+name|getRemoteUser
+parameter_list|()
 function_decl|;
 specifier|public
 specifier|abstract
@@ -335,6 +407,17 @@ name|cancelDelegationToken
 parameter_list|(
 name|String
 name|tokenStrForm
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+specifier|public
+specifier|abstract
+name|String
+name|getUserFromToken
+parameter_list|(
+name|String
+name|tokenStr
 parameter_list|)
 throws|throws
 name|IOException

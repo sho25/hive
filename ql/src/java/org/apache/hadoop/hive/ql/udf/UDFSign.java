@@ -25,34 +25,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|hive
@@ -268,28 +240,8 @@ name|UDFSign
 extends|extends
 name|UDF
 block|{
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"unused"
-argument_list|)
 specifier|private
-specifier|static
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|UDFSign
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-decl_stmt|;
+specifier|final
 name|DoubleWritable
 name|result
 init|=
@@ -297,6 +249,8 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
+specifier|private
+specifier|final
 name|IntWritable
 name|intWritable
 init|=
@@ -304,10 +258,6 @@ operator|new
 name|IntWritable
 argument_list|()
 decl_stmt|;
-specifier|public
-name|UDFSign
-parameter_list|()
-block|{   }
 comment|/**    * Take sign of a    */
 specifier|public
 name|DoubleWritable
@@ -380,7 +330,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get the sign of the decimal input    * @param dec decimal input    * @return -1, 0, or 1 representing the sign of the input decimal    */
+comment|/**    * Get the sign of the decimal input    *    * @param dec decimal input    *    * @return -1, 0, or 1 representing the sign of the input decimal    */
 specifier|public
 name|IntWritable
 name|evaluate

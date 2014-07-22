@@ -623,6 +623,9 @@ argument_list|)
 expr_stmt|;
 break|break;
 case|case
+name|SQOOP
+case|:
+case|case
 name|JAR
 case|:
 case|case
@@ -659,7 +662,7 @@ argument_list|()
 else|:
 literal|"null"
 operator|+
-literal|", only pig/hive/jar/streaming are supported, skip logs"
+literal|", only pig/hive/jar/streaming/sqoop are supported, skip logs"
 argument_list|)
 expr_stmt|;
 return|return;

@@ -169,6 +169,8 @@ name|SHOWPARTITIONS
 block|,
 name|SHOWLOCKS
 block|,
+name|SHOWCONF
+block|,
 name|CREATEFUNCTION
 block|,
 name|DROPFUNCTION
@@ -213,6 +215,8 @@ name|SHOW_ROLES
 block|,
 name|SHOW_ROLE_GRANT
 block|,
+name|SHOW_ROLE_PRINCIPALS
+block|,
 name|ALTERTABLE_PROTECTMODE
 block|,
 name|ALTERPARTITION_PROTECTMODE
@@ -237,6 +241,8 @@ name|ALTERINDEX_PROPS
 block|,
 name|ALTERDATABASE
 block|,
+name|ALTERDATABASE_OWNER
+block|,
 name|DESCDATABASE
 block|,
 name|ALTERTABLE_MERGEFILES
@@ -248,7 +254,25 @@ block|,
 name|ALTERTBLPART_SKEWED_LOCATION
 block|,
 name|ALTERVIEW_RENAME
-block|,  }
+block|,
+name|ALTERTABLE_COMPACT
+block|,
+name|SHOW_COMPACTIONS
+block|,
+name|SHOW_TRANSACTIONS
+block|,
+name|SET
+block|,
+name|RESET
+block|,
+name|DFS
+block|,
+name|ADD
+block|,
+name|DELETE
+block|,
+name|COMPILE
+block|}
 end_enum
 
 end_unit

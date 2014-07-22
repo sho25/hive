@@ -78,10 +78,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ByteWritable.  *  */
+comment|/**  * ByteWritable.  * Looks like this has been phased out in favor of org.apache.hadoop.hive.serde2.io.ByteWritable.  * This class should eventually be removed.  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|ByteWritable

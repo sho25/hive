@@ -1886,6 +1886,15 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * this should be overridden in subclass to test with different file formats    */
+name|String
+name|getStorageFormat
+parameter_list|()
+block|{
+return|return
+literal|"RCFILE"
+return|;
+block|}
 comment|/**    * This is used to test how Pig values of various data types which are out of range for Hive target    * column are handled.  Currently the options are to raise an error or write NULL.    * 1. create a data file with 1 column, 1 row    * 2. load into pig    * 3. use pig to store into Hive table    * 4. read from Hive table using Pig    * 5. check that read value is what is expected    * @param tblName Hive table name to create    * @param hiveType datatype to use for the single column in table    * @param pigType corresponding Pig type when loading file into Pig    * @param goal how out-of-range values from Pig are handled by HCat, may be {@code null}    * @param inputValue written to file which is read by Pig, thus must be something Pig can read    *                   (e.g. DateTime.toString(), rather than java.sql.Date)    * @param expectedValue what Pig should see when reading Hive table    * @param format date format to use for comparison of values since default DateTime.toString()    *               includes TZ which is meaningless for Hive DATE type    */
 specifier|private
 name|void
@@ -1948,7 +1957,8 @@ literal|null
 argument_list|,
 name|driver
 argument_list|,
-literal|"RCFILE"
+name|getStorageFormat
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|HcatTestUtils
@@ -2474,7 +2484,8 @@ literal|null
 argument_list|,
 name|driver
 argument_list|,
-literal|"RCFILE"
+name|getStorageFormat
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|int
@@ -2787,15 +2798,15 @@ name|assertEquals
 argument_list|(
 literal|"Comparing Pig to Raw data"
 argument_list|,
-name|rowFromPig
-operator|.
-name|toString
-argument_list|()
-argument_list|,
 name|rows
 index|[
 name|numRowsRead
 index|]
+argument_list|,
+name|rowFromPig
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|//see comment at "Dumping rows via SQL..." for why this doesn't work (for all types)
@@ -2826,7 +2837,6 @@ name|numRowsRead
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
 specifier|static
 name|void
 name|dumpFile
@@ -2922,7 +2932,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_unparted(a int) partitioned by (b string) stored as RCFILE"
+literal|"create table junit_unparted(a int) partitioned by (b string) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -3176,7 +3189,10 @@ name|createTable
 init|=
 literal|"CREATE TABLE employee (emp_id INT, emp_name STRING, emp_start_date STRING , emp_gender STRING ) "
 operator|+
-literal|" PARTITIONED BY (emp_country STRING , emp_state STRING ) STORED AS RCFILE"
+literal|" PARTITIONED BY (emp_country STRING , emp_state STRING ) STORED AS "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -3498,7 +3514,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_unparted(a int) partitioned by (b string) stored as RCFILE"
+literal|"create table junit_unparted(a int) partitioned by (b string) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -3750,7 +3769,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_parted(a int, b string) partitioned by (ds string) stored as RCFILE"
+literal|"create table junit_parted(a int, b string) partitioned by (ds string) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -4055,7 +4077,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_unparted(a int, b string) stored as RCFILE"
+literal|"create table junit_unparted(a int, b string) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -4434,7 +4459,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_unparted(a int, b string) stored as RCFILE"
+literal|"create table junit_unparted(a int, b string) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -4704,7 +4732,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_unparted(a int, b string) stored as RCFILE"
+literal|"create table junit_unparted(a int, b string) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -4974,7 +5005,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_unparted(a int, b string) stored as RCFILE"
+literal|"create table junit_unparted(a int, b string) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -5220,7 +5254,10 @@ name|createTable
 init|=
 literal|"create table junit_unparted(b string,a struct<a1:int>,  arr_of_struct array<string>, "
 operator|+
-literal|"arr_of_struct2 array<struct<s1:string,s2:string>>,  arr_of_struct3 array<struct<s3:string>>) stored as RCFILE"
+literal|"arr_of_struct2 array<struct<s1:string,s2:string>>,  arr_of_struct3 array<struct<s3:string>>) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -5423,7 +5460,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_unparted(a int, b float, c double, d bigint, e string, h boolean, f binary, g binary) stored as RCFILE"
+literal|"create table junit_unparted(a int, b float, c double, d bigint, e string, h boolean, f binary, g binary) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -5846,7 +5886,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table junit_unparted(a int, b string) stored as RCFILE"
+literal|"create table junit_unparted(a int, b string) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -6140,7 +6183,10 @@ name|createTable
 init|=
 literal|"CREATE TABLE employee (emp_id INT, emp_name STRING, emp_start_date STRING , emp_gender STRING ) "
 operator|+
-literal|" PARTITIONED BY (emp_country STRING , emp_state STRING ) STORED AS RCFILE"
+literal|" PARTITIONED BY (emp_country STRING , emp_state STRING ) STORED AS "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -6395,7 +6441,10 @@ name|createTable
 init|=
 literal|"CREATE TABLE employee (emp_id INT, emp_name STRING, emp_start_date STRING , emp_gender STRING ) "
 operator|+
-literal|" PARTITIONED BY (emp_country STRING , emp_state STRING ) STORED AS RCFILE"
+literal|" PARTITIONED BY (emp_country STRING , emp_state STRING ) STORED AS "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -6650,7 +6699,10 @@ name|createTable
 init|=
 literal|"CREATE TABLE employee (emp_id INT, emp_name STRING, emp_start_date STRING , emp_gender STRING ) "
 operator|+
-literal|" PARTITIONED BY (emp_country STRING , emp_state STRING ) STORED AS RCFILE"
+literal|" PARTITIONED BY (emp_country STRING , emp_state STRING ) STORED AS "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode
@@ -6820,7 +6872,10 @@ expr_stmt|;
 name|String
 name|createTable
 init|=
-literal|"create table ptn_fail(a int, c string) partitioned by (b string) stored as RCFILE"
+literal|"create table ptn_fail(a int, c string) partitioned by (b string) stored as "
+operator|+
+name|getStorageFormat
+argument_list|()
 decl_stmt|;
 name|int
 name|retCode

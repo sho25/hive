@@ -1271,6 +1271,8 @@ argument_list|(
 name|rj
 argument_list|,
 name|jc
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|success
@@ -1407,14 +1409,11 @@ expr_stmt|;
 block|}
 name|HadoopJobExecHelper
 operator|.
-name|runningJobKillURIs
+name|runningJobs
 operator|.
 name|remove
 argument_list|(
 name|rj
-operator|.
-name|getJobID
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|jobID

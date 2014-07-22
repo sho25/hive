@@ -64,6 +64,7 @@ init|=
 literal|1L
 decl_stmt|;
 comment|/* year boundaries in nanoseconds */
+specifier|private
 specifier|static
 specifier|transient
 specifier|final
@@ -71,21 +72,23 @@ name|long
 index|[]
 name|YEAR_BOUNDARIES
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|transient
 specifier|final
 name|int
 name|MIN_YEAR
 init|=
-literal|1901
+literal|1678
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|transient
 specifier|final
 name|int
 name|MAX_YEAR
 init|=
-literal|2038
+literal|2300
 decl_stmt|;
 static|static
 block|{
@@ -127,7 +130,7 @@ literal|1
 init|;
 name|year
 operator|<=
-literal|2038
+name|MAX_YEAR
 condition|;
 name|year
 operator|++
@@ -176,7 +179,7 @@ annotation|@
 name|Override
 specifier|protected
 name|long
-name|getField
+name|getTimestampField
 parameter_list|(
 name|long
 name|time

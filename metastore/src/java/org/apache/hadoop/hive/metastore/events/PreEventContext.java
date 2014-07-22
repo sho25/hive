@@ -69,7 +69,9 @@ block|,
 name|DROP_DATABASE
 block|,
 name|LOAD_PARTITION_DONE
-block|}
+block|,
+name|AUTHORIZATION_API_CALL
+block|,   }
 specifier|private
 specifier|final
 name|PreEventType

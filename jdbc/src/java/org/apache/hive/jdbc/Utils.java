@@ -39,19 +39,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
-operator|.
-name|Types
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -86,6 +76,22 @@ operator|.
 name|regex
 operator|.
 name|Pattern
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
+name|HiveSQLException
 import|;
 end_import
 
@@ -196,7 +202,7 @@ argument_list|>
 name|hiveConfs
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -214,7 +220,7 @@ argument_list|>
 name|hiveVars
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -232,7 +238,7 @@ argument_list|>
 name|sessionVars
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -535,22 +541,9 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|HiveSQLException
 argument_list|(
 name|status
-operator|.
-name|getErrorMessage
-argument_list|()
-argument_list|,
-name|status
-operator|.
-name|getSqlState
-argument_list|()
-argument_list|,
-name|status
-operator|.
-name|getErrorCode
-argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -589,7 +582,9 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Bad URL format"
+literal|"Bad URL format: Missing prefix "
+operator|+
+name|URL_PREFIX
 argument_list|)
 throw|;
 block|}
@@ -867,6 +862,8 @@ name|find
 argument_list|()
 condition|)
 block|{
+if|if
+condition|(
 name|connParams
 operator|.
 name|getSessionVars
@@ -888,7 +885,25 @@ argument_list|(
 literal|2
 argument_list|)
 argument_list|)
-expr_stmt|;
+operator|!=
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Bad URL format: Multiple values for property "
+operator|+
+name|sessMatcher
+operator|.
+name|group
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 block|}
@@ -1030,7 +1045,7 @@ return|return
 name|connParams
 return|;
 block|}
-comment|/**    * Takes a version string delmited by '.' and '-' characters    * and returns a partial version.    *    * @param fullVersion    *          version string.    * @param tokenPosition    *          position of version string to get starting at 0. eg, for a X.x.xxx    *          string, 0 will return the major version, 1 will return minor    *          version.    * @return version part, or -1 if version string was malformed.    */
+comment|/**    * Takes a version string delimited by '.' and '-' characters    * and returns a partial version.    *    * @param fullVersion    *          version string.    * @param position    *          position of version string to get starting at 0. eg, for a X.x.xxx    *          string, 0 will return the major version, 1 will return minor    *          version.    * @return version part, or -1 if version string was malformed.    */
 specifier|static
 name|int
 name|getVersionPart

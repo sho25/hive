@@ -445,6 +445,19 @@ name|val
 operator|.
 name|allocation
 expr_stmt|;
+if|if
+condition|(
+name|writerList
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|rowsAddedSinceCheck
+operator|=
+literal|0
+expr_stmt|;
+block|}
 name|updateScale
 argument_list|(
 literal|false
@@ -506,7 +519,6 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Notify all of the writers that they should check their memory usage.    * @throws IOException    */
-specifier|private
 name|void
 name|notifyWriters
 parameter_list|()

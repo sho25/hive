@@ -327,6 +327,18 @@ name|i
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Returns the maximum size of the batch (number of rows it can hold)    */
+specifier|public
+name|int
+name|getMaxSize
+parameter_list|()
+block|{
+return|return
+name|selected
+operator|.
+name|length
+return|;
+block|}
 comment|/**    * Return count of qualifying rows.    *    * @return number of rows that have not been filtered out    */
 specifier|public
 name|long

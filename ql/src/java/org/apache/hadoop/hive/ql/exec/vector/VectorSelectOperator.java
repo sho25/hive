@@ -287,6 +287,8 @@ class|class
 name|VectorSelectOperator
 extends|extends
 name|SelectOperator
+implements|implements
+name|VectorizationContextRegion
 block|{
 specifier|private
 specifier|static
@@ -318,6 +320,11 @@ index|[]
 name|valueWriters
 init|=
 literal|null
+decl_stmt|;
+comment|// Create a new outgoing vectorization context because column name map will change.
+specifier|private
+name|VectorizationContext
+name|vOutContext
 decl_stmt|;
 specifier|public
 name|VectorSelectOperator
@@ -410,19 +417,37 @@ operator|=
 name|ve
 expr_stmt|;
 block|}
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|Integer
-argument_list|>
-name|cMap
-init|=
+comment|/**      * Create a new vectorization context to update the column map but same output column manager      * must be inherited to track the scratch the columns.      */
+name|vOutContext
+operator|=
+operator|new
+name|VectorizationContext
+argument_list|(
 name|vContext
+argument_list|)
+expr_stmt|;
+comment|// Set a fileKey, although this operator doesn't use it.
+name|vOutContext
+operator|.
+name|setFileKey
+argument_list|(
+name|vContext
+operator|.
+name|getFileKey
+argument_list|()
+operator|+
+literal|"/_SELECT_"
+argument_list|)
+expr_stmt|;
+comment|// Update column map
+name|vOutContext
 operator|.
 name|getColumnMap
 argument_list|()
-decl_stmt|;
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -456,17 +481,6 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|cMap
-operator|.
-name|containsKey
-argument_list|(
-name|columnName
-argument_list|)
-condition|)
-block|{
 name|VectorExpression
 name|ve
 init|=
@@ -475,8 +489,7 @@ index|[
 name|i
 index|]
 decl_stmt|;
-comment|// Update column map with output column names
-name|vContext
+name|vOutContext
 operator|.
 name|addToColumnMap
 argument_list|(
@@ -488,7 +501,6 @@ name|getOutputColumn
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 specifier|public
@@ -883,6 +895,17 @@ name|vExpressions
 operator|=
 name|vExpressions
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|VectorizationContext
+name|getOuputVectorizationContext
+parameter_list|()
+block|{
+return|return
+name|vOutContext
+return|;
 block|}
 block|}
 end_class

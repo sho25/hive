@@ -66,6 +66,7 @@ name|AbstractPrimitiveJavaObjectInspector
 implements|implements
 name|SettableStringObjectInspector
 block|{
+specifier|protected
 name|JavaStringObjectInspector
 parameter_list|()
 block|{

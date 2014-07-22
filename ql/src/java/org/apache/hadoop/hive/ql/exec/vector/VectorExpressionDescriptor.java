@@ -61,6 +61,22 @@ name|HiveException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|AnnotationUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * Describes a vector expression and encapsulates the {@link Mode}, number of arguments,  * argument types {@link ArgumentType} and expression types {@link InputExpressionType}.  */
 end_comment
@@ -890,7 +906,7 @@ block|{
 if|if
 condition|(
 name|i
-operator|==
+operator|!=
 literal|0
 condition|)
 block|{
@@ -945,7 +961,7 @@ block|{
 if|if
 condition|(
 name|i
-operator|==
+operator|!=
 literal|0
 condition|)
 block|{
@@ -1005,10 +1021,12 @@ block|{
 name|VectorizedExpressions
 name|annotation
 init|=
-name|udf
+name|AnnotationUtils
 operator|.
 name|getAnnotation
 argument_list|(
+name|udf
+argument_list|,
 name|VectorizedExpressions
 operator|.
 name|class

@@ -87,16 +87,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -1482,6 +1472,9 @@ name|userName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1764,6 +1757,9 @@ name|revokePrivileges
 parameter_list|(
 name|PrivilegeBag
 name|privileges
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -1815,6 +1811,18 @@ name|principalName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|)
+function_decl|;
+comment|/**    * Get the role to principal grant mapping for given role    * @param roleName    * @return    */
+specifier|public
+name|List
+argument_list|<
+name|MRoleMap
+argument_list|>
+name|listRoleMembers
+parameter_list|(
+name|String
+name|roleName
 parameter_list|)
 function_decl|;
 specifier|public

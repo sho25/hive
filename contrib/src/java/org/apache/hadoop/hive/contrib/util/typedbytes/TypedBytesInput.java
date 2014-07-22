@@ -95,20 +95,6 @@ name|WritableUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|record
-operator|.
-name|Buffer
-import|;
-end_import
-
 begin_comment
 comment|/**  * Provides functionality for reading typed bytes.  */
 end_comment
@@ -166,7 +152,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Get a thread-local typed bytes input for the supplied {@link DataInput}.    *     * @param in    *          data input object    * @return typed bytes input corresponding to the supplied {@link DataInput}.    */
+comment|/**    * Get a thread-local typed bytes input for the supplied {@link DataInput}.    *    * @param in    *          data input object    * @return typed bytes input corresponding to the supplied {@link DataInput}.    */
 specifier|public
 specifier|static
 name|TypedBytesInput
@@ -213,7 +199,7 @@ operator|=
 name|in
 expr_stmt|;
 block|}
-comment|/**    * Reads a typed bytes sequence and converts it to a Java object. The first    * byte is interpreted as a type code, and then the right number of subsequent    * bytes are read depending on the obtained type.    *     * @return the obtained object or null when the end of the file is reached    * @throws IOException    */
+comment|/**    * Reads a typed bytes sequence and converts it to a Java object. The first    * byte is interpreted as a type code, and then the right number of subsequent    * bytes are read depending on the obtained type.    *    * @return the obtained object or null when the end of the file is reached    * @throws IOException    */
 specifier|public
 name|Object
 name|read
@@ -246,27 +232,6 @@ return|return
 literal|null
 return|;
 block|}
-if|if
-condition|(
-name|code
-operator|==
-name|Type
-operator|.
-name|BYTES
-operator|.
-name|code
-condition|)
-block|{
-return|return
-operator|new
-name|Buffer
-argument_list|(
-name|readBytes
-argument_list|()
-argument_list|)
-return|;
-block|}
-elseif|else
 if|if
 condition|(
 name|code
@@ -469,28 +434,6 @@ return|return
 literal|null
 return|;
 block|}
-elseif|else
-if|if
-condition|(
-literal|50
-operator|<=
-name|code
-operator|&&
-name|code
-operator|<=
-literal|200
-condition|)
-block|{
-comment|// application-specific typecodes
-return|return
-operator|new
-name|Buffer
-argument_list|(
-name|readBytes
-argument_list|()
-argument_list|)
-return|;
-block|}
 else|else
 block|{
 throw|throw
@@ -502,7 +445,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Reads a typed bytes sequence. The first byte is interpreted as a type code,    * and then the right number of subsequent bytes are read depending on the    * obtained type.    *     * @return the obtained typed bytes sequence or null when the end of the file    *         is reached    * @throws IOException    */
+comment|/**    * Reads a typed bytes sequence. The first byte is interpreted as a type code,    * and then the right number of subsequent bytes are read depending on the    * obtained type.    *    * @return the obtained typed bytes sequence or null when the end of the file    *         is reached    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -679,57 +622,6 @@ name|code
 operator|==
 name|Type
 operator|.
-name|VECTOR
-operator|.
-name|code
-condition|)
-block|{
-return|return
-name|readRawVector
-argument_list|()
-return|;
-block|}
-elseif|else
-if|if
-condition|(
-name|code
-operator|==
-name|Type
-operator|.
-name|LIST
-operator|.
-name|code
-condition|)
-block|{
-return|return
-name|readRawList
-argument_list|()
-return|;
-block|}
-elseif|else
-if|if
-condition|(
-name|code
-operator|==
-name|Type
-operator|.
-name|MAP
-operator|.
-name|code
-condition|)
-block|{
-return|return
-name|readRawMap
-argument_list|()
-return|;
-block|}
-elseif|else
-if|if
-condition|(
-name|code
-operator|==
-name|Type
-operator|.
 name|MARKER
 operator|.
 name|code
@@ -768,7 +660,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Reads a type byte and returns the corresponding {@link Type}.    *     * @return the obtained Type or null when the end of the file is reached    * @throws IOException    */
+comment|/**    * Reads a type byte and returns the corresponding {@link Type}.    *    * @return the obtained Type or null when the end of the file is reached    * @throws IOException    */
 specifier|public
 name|Type
 name|readType
@@ -831,7 +723,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Skips a type byte.    *     * @return true iff the end of the file was not reached    * @throws IOException    */
+comment|/**    * Skips a type byte.    *    * @return true iff the end of the file was not reached    * @throws IOException    */
 specifier|public
 name|boolean
 name|skipType
@@ -861,7 +753,7 @@ literal|false
 return|;
 block|}
 block|}
-comment|/**    * Reads the bytes following a<code>Type.BYTES</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the bytes following a<code>Type.BYTES</code> code.    *    * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -899,7 +791,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.BYTES</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.BYTES</code> code.    *    * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1025,7 +917,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the byte following a<code>Type.BYTE</code> code.    *     * @return the obtained byte    * @throws IOException    */
+comment|/**    * Reads the byte following a<code>Type.BYTE</code> code.    *    * @return the obtained byte    * @throws IOException    */
 specifier|public
 name|byte
 name|readByte
@@ -1040,7 +932,7 @@ name|readByte
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw byte following a<code>Type.BYTE</code> code.    *     * @return the obtained byte    * @throws IOException    */
+comment|/**    * Reads the raw byte following a<code>Type.BYTE</code> code.    *    * @return the obtained byte    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1088,7 +980,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the boolean following a<code>Type.BOOL</code> code.    *     * @return the obtained boolean    * @throws IOException    */
+comment|/**    * Reads the boolean following a<code>Type.BOOL</code> code.    *    * @return the obtained boolean    * @throws IOException    */
 specifier|public
 name|boolean
 name|readBool
@@ -1103,7 +995,7 @@ name|readBoolean
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.BOOL</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.BOOL</code> code.    *    * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1151,7 +1043,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the integer following a<code>Type.INT</code> code.    *     * @return the obtained integer    * @throws IOException    */
+comment|/**    * Reads the integer following a<code>Type.INT</code> code.    *    * @return the obtained integer    * @throws IOException    */
 specifier|public
 name|int
 name|readInt
@@ -1166,7 +1058,7 @@ name|readInt
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the short following a<code>Type.SHORT</code> code.    *     * @return the obtained short    * @throws IOException    */
+comment|/**    * Reads the short following a<code>Type.SHORT</code> code.    *    * @return the obtained short    * @throws IOException    */
 specifier|public
 name|short
 name|readShort
@@ -1181,7 +1073,7 @@ name|readShort
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.INT</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.INT</code> code.    *    * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1229,7 +1121,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the long following a<code>Type.LONG</code> code.    *     * @return the obtained long    * @throws IOException    */
+comment|/**    * Reads the long following a<code>Type.LONG</code> code.    *    * @return the obtained long    * @throws IOException    */
 specifier|public
 name|long
 name|readLong
@@ -1244,7 +1136,7 @@ name|readLong
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.LONG</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.LONG</code> code.    *    * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1292,7 +1184,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the float following a<code>Type.FLOAT</code> code.    *     * @return the obtained float    * @throws IOException    */
+comment|/**    * Reads the float following a<code>Type.FLOAT</code> code.    *    * @return the obtained float    * @throws IOException    */
 specifier|public
 name|float
 name|readFloat
@@ -1307,7 +1199,7 @@ name|readFloat
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.FLOAT</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.FLOAT</code> code.    *    * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1355,7 +1247,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the double following a<code>Type.DOUBLE</code> code.    *     * @return the obtained double    * @throws IOException    */
+comment|/**    * Reads the double following a<code>Type.DOUBLE</code> code.    *    * @return the obtained double    * @throws IOException    */
 specifier|public
 name|double
 name|readDouble
@@ -1370,7 +1262,7 @@ name|readDouble
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.DOUBLE</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.DOUBLE</code> code.    *    * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1418,7 +1310,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the string following a<code>Type.STRING</code> code.    *     * @return the obtained string    * @throws IOException    */
+comment|/**    * Reads the string following a<code>Type.STRING</code> code.    *    * @return the obtained string    * @throws IOException    */
 specifier|public
 name|String
 name|readString
@@ -1435,7 +1327,7 @@ name|in
 argument_list|)
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.STRING</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
+comment|/**    * Reads the raw bytes following a<code>Type.STRING</code> code.    *    * @return the obtained bytes sequence    * @throws IOException    */
 specifier|public
 name|byte
 index|[]
@@ -1561,7 +1453,7 @@ return|return
 name|bytes
 return|;
 block|}
-comment|/**    * Reads the vector following a<code>Type.VECTOR</code> code.    *     * @return the obtained vector    * @throws IOException    */
+comment|/**    * Reads the vector following a<code>Type.VECTOR</code> code.    *    * @return the obtained vector    * @throws IOException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1617,127 +1509,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.VECTOR</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
-specifier|public
-name|byte
-index|[]
-name|readRawVector
-parameter_list|()
-throws|throws
-name|IOException
-block|{
-name|Buffer
-name|buffer
-init|=
-operator|new
-name|Buffer
-argument_list|()
-decl_stmt|;
-name|int
-name|length
-init|=
-name|readVectorHeader
-argument_list|()
-decl_stmt|;
-name|buffer
-operator|.
-name|append
-argument_list|(
-operator|new
-name|byte
-index|[]
-block|{
-operator|(
-name|byte
-operator|)
-name|Type
-operator|.
-name|VECTOR
-operator|.
-name|code
-block|,
-call|(
-name|byte
-call|)
-argument_list|(
-literal|0xff
-operator|&
-operator|(
-name|length
-operator|>>
-literal|24
-operator|)
-argument_list|)
-block|,
-call|(
-name|byte
-call|)
-argument_list|(
-literal|0xff
-operator|&
-operator|(
-name|length
-operator|>>
-literal|16
-operator|)
-argument_list|)
-block|,
-call|(
-name|byte
-call|)
-argument_list|(
-literal|0xff
-operator|&
-operator|(
-name|length
-operator|>>
-literal|8
-operator|)
-argument_list|)
-block|,
-call|(
-name|byte
-call|)
-argument_list|(
-literal|0xff
-operator|&
-name|length
-argument_list|)
-block|}
-argument_list|)
-expr_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|length
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|buffer
-operator|.
-name|append
-argument_list|(
-name|readRaw
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|buffer
-operator|.
-name|get
-argument_list|()
-return|;
-block|}
-comment|/**    * Reads the header following a<code>Type.VECTOR</code> code.    *     * @return the number of elements in the vector    * @throws IOException    */
+comment|/**    * Reads the header following a<code>Type.VECTOR</code> code.    *    * @return the number of elements in the vector    * @throws IOException    */
 specifier|public
 name|int
 name|readVectorHeader
@@ -1752,7 +1524,7 @@ name|readInt
 argument_list|()
 return|;
 block|}
-comment|/**    * Reads the list following a<code>Type.LIST</code> code.    *     * @return the obtained list    * @throws IOException    */
+comment|/**    * Reads the list following a<code>Type.LIST</code> code.    *    * @return the obtained list    * @throws IOException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1802,90 +1574,7 @@ return|return
 name|list
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.LIST</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
-specifier|public
-name|byte
-index|[]
-name|readRawList
-parameter_list|()
-throws|throws
-name|IOException
-block|{
-name|Buffer
-name|buffer
-init|=
-operator|new
-name|Buffer
-argument_list|(
-operator|new
-name|byte
-index|[]
-block|{
-operator|(
-name|byte
-operator|)
-name|Type
-operator|.
-name|LIST
-operator|.
-name|code
-block|}
-argument_list|)
-decl_stmt|;
-name|byte
-index|[]
-name|bytes
-init|=
-name|readRaw
-argument_list|()
-decl_stmt|;
-while|while
-condition|(
-name|bytes
-operator|!=
-literal|null
-condition|)
-block|{
-name|buffer
-operator|.
-name|append
-argument_list|(
-name|bytes
-argument_list|)
-expr_stmt|;
-name|bytes
-operator|=
-name|readRaw
-argument_list|()
-expr_stmt|;
-block|}
-name|buffer
-operator|.
-name|append
-argument_list|(
-operator|new
-name|byte
-index|[]
-block|{
-operator|(
-name|byte
-operator|)
-name|Type
-operator|.
-name|MARKER
-operator|.
-name|code
-block|}
-argument_list|)
-expr_stmt|;
-return|return
-name|buffer
-operator|.
-name|get
-argument_list|()
-return|;
-block|}
-comment|/**    * Reads the map following a<code>Type.MAP</code> code.    *     * @return the obtained map    * @throws IOException    */
+comment|/**    * Reads the map following a<code>Type.MAP</code> code.    *    * @return the obtained map    * @throws IOException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1952,135 +1641,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Reads the raw bytes following a<code>Type.MAP</code> code.    *     * @return the obtained bytes sequence    * @throws IOException    */
-specifier|public
-name|byte
-index|[]
-name|readRawMap
-parameter_list|()
-throws|throws
-name|IOException
-block|{
-name|Buffer
-name|buffer
-init|=
-operator|new
-name|Buffer
-argument_list|()
-decl_stmt|;
-name|int
-name|length
-init|=
-name|readMapHeader
-argument_list|()
-decl_stmt|;
-name|buffer
-operator|.
-name|append
-argument_list|(
-operator|new
-name|byte
-index|[]
-block|{
-operator|(
-name|byte
-operator|)
-name|Type
-operator|.
-name|MAP
-operator|.
-name|code
-block|,
-call|(
-name|byte
-call|)
-argument_list|(
-literal|0xff
-operator|&
-operator|(
-name|length
-operator|>>
-literal|24
-operator|)
-argument_list|)
-block|,
-call|(
-name|byte
-call|)
-argument_list|(
-literal|0xff
-operator|&
-operator|(
-name|length
-operator|>>
-literal|16
-operator|)
-argument_list|)
-block|,
-call|(
-name|byte
-call|)
-argument_list|(
-literal|0xff
-operator|&
-operator|(
-name|length
-operator|>>
-literal|8
-operator|)
-argument_list|)
-block|,
-call|(
-name|byte
-call|)
-argument_list|(
-literal|0xff
-operator|&
-name|length
-argument_list|)
-block|}
-argument_list|)
-expr_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|length
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|buffer
-operator|.
-name|append
-argument_list|(
-name|readRaw
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|buffer
-operator|.
-name|append
-argument_list|(
-name|readRaw
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|buffer
-operator|.
-name|get
-argument_list|()
-return|;
-block|}
-comment|/**    * Reads the header following a<code>Type.MAP</code> code.    *     * @return the number of key-value pairs in the map    * @throws IOException    */
+comment|/**    * Reads the header following a<code>Type.MAP</code> code.    *    * @return the number of key-value pairs in the map    * @throws IOException    */
 specifier|public
 name|int
 name|readMapHeader

@@ -583,6 +583,15 @@ argument_list|(
 name|clone
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|hashtableMemoryUsage
+operator|=
+name|clone
+operator|.
+name|getHashTableMemoryUsage
+argument_list|()
+expr_stmt|;
 block|}
 specifier|private
 name|void

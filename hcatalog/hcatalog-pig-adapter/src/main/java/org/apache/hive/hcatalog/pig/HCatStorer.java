@@ -707,7 +707,6 @@ name|sign
 block|}
 argument_list|)
 decl_stmt|;
-comment|//'Throw' is the default for backwards compatibility
 comment|//downstream code expects it to be set to a valid value
 name|udfProps
 operator|.
@@ -944,33 +943,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|HCatContext
-operator|.
-name|INSTANCE
-operator|.
-name|setConf
-argument_list|(
-name|job
-operator|.
-name|getConfiguration
-argument_list|()
-argument_list|)
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|get
-argument_list|()
-operator|.
-name|setBoolean
-argument_list|(
-name|HCatConstants
-operator|.
-name|HCAT_DATA_TINY_SMALL_INT_PROMOTION
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
 name|Configuration
 name|config
 init|=
@@ -1325,6 +1297,9 @@ operator|.
 name|getTableSchema
 argument_list|(
 name|job
+operator|.
+name|getConfiguration
+argument_list|()
 argument_list|)
 decl_stmt|;
 try|try

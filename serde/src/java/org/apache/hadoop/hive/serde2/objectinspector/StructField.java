@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * StructField is an empty interface.  *   * Classes implementing this interface are considered to represent a field of a  * struct for this serde package.  */
+comment|/**  * Classes implementing this interface are considered to represent a field of a  * struct for this serde package.  */
 end_comment
 
 begin_interface
@@ -36,6 +36,11 @@ function_decl|;
 comment|/**    * Get the ObjectInspector for the field.    */
 name|ObjectInspector
 name|getFieldObjectInspector
+parameter_list|()
+function_decl|;
+comment|/**    * Get the fieldID for the field.    */
+name|int
+name|getFieldID
 parameter_list|()
 function_decl|;
 comment|/**    * Get the comment for the field. May be null if no comment provided.    */

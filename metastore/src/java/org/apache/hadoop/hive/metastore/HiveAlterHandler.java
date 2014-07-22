@@ -2445,6 +2445,8 @@ operator|.
 name|mkdirs
 argument_list|(
 name|destParentPath
+argument_list|,
+literal|true
 argument_list|)
 condition|)
 block|{
@@ -2458,13 +2460,15 @@ name|destParentPath
 argument_list|)
 throw|;
 block|}
-name|srcFs
+name|wh
 operator|.
-name|rename
+name|renameDir
 argument_list|(
 name|srcPath
 argument_list|,
 name|destPath
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|LOG

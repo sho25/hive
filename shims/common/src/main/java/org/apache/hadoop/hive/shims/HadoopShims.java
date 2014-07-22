@@ -123,16 +123,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -241,6 +231,20 @@ name|hadoop
 operator|.
 name|fs
 operator|.
+name|FSDataOutputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
 name|FileStatus
 import|;
 end_import
@@ -298,22 +302,6 @@ operator|.
 name|io
 operator|.
 name|LongWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|compress
-operator|.
-name|CompressionCodec
 import|;
 end_import
 
@@ -600,6 +588,25 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+specifier|public
+name|MiniMrShim
+name|getMiniTezCluster
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|int
+name|numberOfTaskTrackers
+parameter_list|,
+name|String
+name|nameNode
+parameter_list|,
+name|int
+name|numDir
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Shim for MiniMrCluster    */
 specifier|public
 interface|interface
@@ -786,7 +793,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Used by metastore server to creates UGI object for a remote user.    * @param userName remote User Name    * @param groupNames group names associated with remote user name    * @return UGI created for the remote user.    */
+comment|/**    * Used to creates UGI object for a remote user.    * @param userName remote User Name    * @param groupNames group names associated with remote user name    * @return UGI created for the remote user.    */
 specifier|public
 name|UserGroupInformation
 name|createRemoteUser
@@ -823,6 +830,7 @@ name|isSecurityEnabled
 parameter_list|()
 function_decl|;
 comment|/**    * Get the string form of the token given a token signature.    * The signature is used as the value of the "service" field in the token for lookup.    * Ref: AbstractDelegationTokenSelector in Hadoop. If there exists such a token    * in the token cache (credential store) of the job, the lookup returns that.    * This is relevant only when running against a "secure" hadoop release    * The method gets hold of the tokens if they are set up by hadoop - this should    * happen on the map/reduce tasks if the client added the tokens into hadoop's    * credential store in the front end during job submission. The method will    * select the hive delegation token among the set of tokens and return the string    * form of it    * @param tokenSignature    * @return the string form of the token found    * @throws IOException    */
+specifier|public
 name|String
 name|getTokenStrForm
 parameter_list|(
@@ -833,12 +841,27 @@ throws|throws
 name|IOException
 function_decl|;
 comment|/**    * Add a delegation token to the given ugi    * @param ugi    * @param tokenStr    * @param tokenService    * @throws IOException    */
+specifier|public
 name|void
 name|setTokenStr
 parameter_list|(
 name|UserGroupInformation
 name|ugi
 parameter_list|,
+name|String
+name|tokenStr
+parameter_list|,
+name|String
+name|tokenService
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Add given service to the string format token    * @param tokenStr    * @param tokenService    * @return    * @throws IOException    */
+specifier|public
+name|String
+name|addServiceToToken
+parameter_list|(
 name|String
 name|tokenStr
 parameter_list|,
@@ -957,6 +980,20 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    *  Perform kerberos login using the given principal and keytab,    *  and return the UGI object    * @throws IOException    */
+specifier|public
+name|UserGroupInformation
+name|loginUserFromKeytabAndReturnUGI
+parameter_list|(
+name|String
+name|principal
+parameter_list|,
+name|String
+name|keytabFile
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Perform kerberos re-login using the given principal and keytab, to renew    * the credentials    * @throws IOException    */
 specifier|public
 name|void
@@ -1015,11 +1052,32 @@ name|path
 parameter_list|)
 function_decl|;
 comment|/**    * Create the proxy ugi for the given userid    * @param userName    * @return    */
+specifier|public
 name|UserGroupInformation
 name|createProxyUser
 parameter_list|(
 name|String
 name|userName
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Verify proxy access to given UGI for given user    * @param ugi    */
+specifier|public
+name|void
+name|authorizeProxyAccess
+parameter_list|(
+name|String
+name|proxyUser
+parameter_list|,
+name|UserGroupInformation
+name|realUserUgi
+parameter_list|,
+name|String
+name|ipAddress
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -1053,6 +1111,8 @@ name|JobConf
 name|getJob
 parameter_list|()
 function_decl|;
+annotation|@
+name|Override
 name|long
 name|getLength
 parameter_list|()
@@ -1105,6 +1165,8 @@ name|getPaths
 parameter_list|()
 function_decl|;
 comment|/** Returns all the Paths where this input-split resides. */
+annotation|@
+name|Override
 name|String
 index|[]
 name|getLocations
@@ -1119,10 +1181,14 @@ name|long
 name|length
 parameter_list|)
 function_decl|;
+annotation|@
+name|Override
 name|String
 name|toString
 parameter_list|()
 function_decl|;
+annotation|@
+name|Override
 name|void
 name|readFields
 parameter_list|(
@@ -1132,6 +1198,8 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+annotation|@
+name|Override
 name|void
 name|write
 parameter_list|(
@@ -1216,8 +1284,8 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-comment|/**    * Get the block locations for the given directory.    * @param fs the file system    * @param path the directory name to get the status and block locations    * @param filter a filter that needs to accept the file (or null)    * @return an iterator for the located file status objects    * @throws IOException    */
-name|Iterator
+comment|/**    * Get the block locations for the given directory.    * @param fs the file system    * @param path the directory name to get the status and block locations    * @param filter a filter that needs to accept the file (or null)    * @return an list for the located file status objects    * @throws IOException    */
+name|List
 argument_list|<
 name|FileStatus
 argument_list|>
@@ -1249,6 +1317,70 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Flush and make visible to other users the changes to the given stream.    * @param stream the stream to hflush.    * @throws IOException    */
+specifier|public
+name|void
+name|hflush
+parameter_list|(
+name|FSDataOutputStream
+name|stream
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * For a given file, return a file status    * @param conf    * @param fs    * @param file    * @return    * @throws IOException    */
+specifier|public
+name|HdfsFileStatus
+name|getFullFileStatus
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|FileSystem
+name|fs
+parameter_list|,
+name|Path
+name|file
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * For a given file, set a given file status.    * @param conf    * @param sourceStatus    * @param fs    * @param target    * @throws IOException    */
+specifier|public
+name|void
+name|setFullFileStatus
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|HdfsFileStatus
+name|sourceStatus
+parameter_list|,
+name|FileSystem
+name|fs
+parameter_list|,
+name|Path
+name|target
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Includes the vanilla FileStatus, and AclStatus if it applies to this version of hadoop.    */
+specifier|public
+interface|interface
+name|HdfsFileStatus
+block|{
+specifier|public
+name|FileStatus
+name|getFileStatus
+parameter_list|()
+function_decl|;
+specifier|public
+name|void
+name|debugLog
+parameter_list|()
+function_decl|;
+block|}
 specifier|public
 name|HCatHadoopShims
 name|getHCatShim
@@ -1266,6 +1398,10 @@ block|,
 name|CACHE_FILES
 block|,
 name|CACHE_SYMLINK
+block|,
+name|CLASSPATH_ARCHIVES
+block|,
+name|CLASSPATH_FILES
 block|}
 specifier|public
 name|TaskID
@@ -1519,6 +1655,18 @@ name|Job
 name|job
 parameter_list|)
 function_decl|;
+comment|/**      * Kills all jobs tagged with the given tag that have been started after the      * given timestamp.      */
+specifier|public
+name|void
+name|killJobs
+parameter_list|(
+name|String
+name|tag
+parameter_list|,
+name|long
+name|timestamp
+parameter_list|)
+function_decl|;
 block|}
 comment|/**    * Create a proxy file system that can serve a given scheme/authority using some    * other file system.    */
 specifier|public
@@ -1656,6 +1804,29 @@ parameter_list|(
 name|JobContext
 name|context
 parameter_list|)
+function_decl|;
+specifier|public
+name|FileSystem
+name|getNonCachedFileSystem
+parameter_list|(
+name|URI
+name|uri
+parameter_list|,
+name|Configuration
+name|conf
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+specifier|public
+name|void
+name|getMergedCredentials
+parameter_list|(
+name|JobConf
+name|jobConf
+parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 block|}
 end_interface

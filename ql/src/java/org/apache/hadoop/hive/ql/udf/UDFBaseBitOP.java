@@ -113,15 +113,6 @@ name|UDFBaseBitOP
 extends|extends
 name|UDF
 block|{
-comment|/**    * Constructor.    */
-specifier|public
-name|UDFBaseBitOP
-parameter_list|()
-block|{
-name|super
-argument_list|()
-expr_stmt|;
-block|}
 specifier|protected
 name|ByteWritable
 name|byteWritable

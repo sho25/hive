@@ -100,9 +100,9 @@ name|VerifyOverriddenConfigsHook
 implements|implements
 name|ExecuteWithHookContext
 block|{
-comment|// A config variable set via a System Propery, a config variable set in the CLI,
+comment|// A config variable set via a System Property, a config variable set in the CLI,
 comment|// a config variable not in the default List of config variables, and a config variable in the
-comment|// default list of conifg variables, but which has not been overridden
+comment|// default list of config variables, but which has not been overridden
 specifier|private
 specifier|static
 name|String
@@ -114,7 +114,7 @@ literal|"mapred.job.tracker"
 block|,
 literal|"hive.exec.post.hooks"
 block|,
-literal|"hive.config.doesnt.exit"
+literal|"some.hive.config.doesnt.exit"
 block|,
 literal|"hive.exec.mode.local.auto"
 block|}

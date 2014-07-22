@@ -213,7 +213,7 @@ operator|.
 name|getClass
 argument_list|()
 argument_list|,
-name|TUGIContainingProcessor
+name|TSetIpAddressProcessor
 operator|.
 name|class
 argument_list|)

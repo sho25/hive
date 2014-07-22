@@ -329,9 +329,6 @@ operator|+
 literal|", "
 operator|+
 name|object
-operator|.
-name|toString
-argument_list|()
 operator|+
 literal|")"
 return|;

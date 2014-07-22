@@ -562,6 +562,13 @@ argument_list|(
 name|numReducers
 argument_list|)
 expr_stmt|;
+name|desc
+operator|.
+name|setAutoParallel
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 else|else

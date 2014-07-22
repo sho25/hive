@@ -39,16 +39,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|junit
 operator|.
 name|framework
@@ -1623,6 +1613,9 @@ name|userName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1970,6 +1963,9 @@ name|revokePrivileges
 parameter_list|(
 name|PrivilegeBag
 name|privileges
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -2026,6 +2022,23 @@ name|principalName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|MRoleMap
+argument_list|>
+name|listRoleMembers
+parameter_list|(
+name|String
+name|roleName
 parameter_list|)
 block|{
 return|return
@@ -2584,6 +2597,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|deletePartitionColumnStatistics
@@ -2639,6 +2654,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|updatePartitionColumnStatistics
@@ -2809,6 +2826,8 @@ argument_list|>
 name|partNames
 parameter_list|)
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createFunction

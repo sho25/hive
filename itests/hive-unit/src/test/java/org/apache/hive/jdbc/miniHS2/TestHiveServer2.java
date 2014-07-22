@@ -236,7 +236,7 @@ name|void
 name|beforeTest
 parameter_list|()
 throws|throws
-name|IOException
+name|Exception
 block|{
 name|miniHS2
 operator|=

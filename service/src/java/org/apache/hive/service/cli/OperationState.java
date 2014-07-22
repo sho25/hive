@@ -199,6 +199,9 @@ case|case
 name|RUNNING
 case|:
 case|case
+name|CANCELED
+case|:
+case|case
 name|CLOSED
 case|:
 return|return;

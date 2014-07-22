@@ -95,7 +95,7 @@ name|hadoop
 operator|.
 name|fs
 operator|.
-name|FileUtil
+name|Path
 import|;
 end_import
 
@@ -107,9 +107,27 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|fs
+name|hive
 operator|.
-name|Path
+name|common
+operator|.
+name|FileUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
 import|;
 end_import
 
@@ -379,14 +397,34 @@ literal|0
 return|;
 block|}
 block|}
+name|boolean
+name|inheritPerms
+init|=
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 operator|!
-name|dstFs
+name|FileUtils
 operator|.
-name|mkdirs
+name|mkdir
 argument_list|(
+name|dstFs
+argument_list|,
 name|toPath
+argument_list|,
+name|inheritPerms
+argument_list|,
+name|conf
 argument_list|)
 condition|)
 block|{
@@ -447,7 +485,7 @@ expr_stmt|;
 if|if
 condition|(
 operator|!
-name|FileUtil
+name|FileUtils
 operator|.
 name|copy
 argument_list|(
@@ -464,8 +502,7 @@ name|toPath
 argument_list|,
 literal|false
 argument_list|,
-comment|// delete
-comment|// source
+comment|// delete source
 literal|true
 argument_list|,
 comment|// overwrite destination

@@ -27,7 +27,11 @@ block|{
 name|SHARED
 block|,
 name|EXCLUSIVE
-block|; }
+block|,
+name|SEMI_SHARED
+block|;
+comment|// SEMI_SHARED can share with SHARED but not with itself
+block|}
 end_enum
 
 end_unit

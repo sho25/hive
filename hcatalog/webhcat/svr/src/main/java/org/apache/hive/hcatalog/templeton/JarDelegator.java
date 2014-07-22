@@ -571,6 +571,23 @@ operator|.
 name|TOKEN_FILE_ARG_PLACEHOLDER
 argument_list|)
 expr_stmt|;
+comment|//add mapreduce job tag placeholder
+name|args
+operator|.
+name|add
+argument_list|(
+literal|"-D"
+argument_list|)
+expr_stmt|;
+name|args
+operator|.
+name|add
+argument_list|(
+name|TempletonControllerJob
+operator|.
+name|MAPREDUCE_JOB_TAGS_ARG_PLACEHOLDER
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|String

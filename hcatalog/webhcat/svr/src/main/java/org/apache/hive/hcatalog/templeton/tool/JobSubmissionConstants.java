@@ -68,25 +68,17 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|OVERRIDE_CLASSPATH
+name|TEMPLETON_JOB_LAUNCH_TIME_NAME
 init|=
-literal|"templeton.override-classpath"
+literal|"templeton.job.launch.time"
 decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
 name|String
-name|OVERRIDE_CONTAINER_LOG4J_PROPS
+name|OVERRIDE_CLASSPATH
 init|=
-literal|"override.containerLog4j"
-decl_stmt|;
-comment|//name of file
-specifier|static
-specifier|final
-name|String
-name|CONTAINER_LOG4J_PROPS
-init|=
-literal|"override-container-log4j.properties"
+literal|"templeton.override-classpath"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -130,15 +122,44 @@ literal|60
 operator|*
 literal|1000
 decl_stmt|;
+comment|/*    * The = sign in the string for TOKEN_FILE_ARG_PLACEHOLDER is required because    * org.apache.hadoop.util.GenericOptionsParser.preProcessForWindows() prepares    * arguments expecting an = sign. It will fail to prepare the arguments correctly    * without the = sign present.    */
 specifier|public
 specifier|static
 specifier|final
 name|String
 name|TOKEN_FILE_ARG_PLACEHOLDER
 init|=
-literal|"__WEBHCAT_TOKEN_FILE_LOCATION__"
+literal|"__MR_JOB_CREDENTIALS_OPTION=WEBHCAT_TOKEN_FILE_LOCATION__"
 decl_stmt|;
-comment|/**    * constants needed for Pig job submission    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TOKEN_FILE_ARG_PLACEHOLDER_TEZ
+init|=
+literal|"__TEZ_CREDENTIALS_OPTION=WEBHCAT_TOKEN_FILE_LOCATION_TEZ__"
+decl_stmt|;
+comment|// MRv2 job tag used to identify Templeton launcher child jobs. Each child job
+comment|// will be tagged with the parent jobid so that on launcher task restart, all
+comment|// previously running child jobs can be killed before the child job is launched
+comment|// again.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|MAPREDUCE_JOB_TAGS
+init|=
+literal|"mapreduce.job.tags"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|MAPREDUCE_JOB_TAGS_ARG_PLACEHOLDER
+init|=
+literal|"__MR_JOB_TAGS_OPTION=MR_JOB_TAGS_JOBID__"
+decl_stmt|;
+comment|/**    * constants needed for Pig job submission    * The string values here are what Pig expects to see in it's environment    */
 specifier|public
 specifier|static
 interface|interface

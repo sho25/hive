@@ -124,7 +124,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UDFLog2.  *  */
+comment|/**  * UDFLog2.  */
 end_comment
 
 begin_class
@@ -168,8 +168,9 @@ name|UDFMath
 block|{
 specifier|private
 specifier|static
+specifier|final
 name|double
-name|log2
+name|LOG_2
 init|=
 name|Math
 operator|.
@@ -187,14 +188,12 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
-specifier|public
-name|UDFLog2
-parameter_list|()
-block|{   }
 comment|/**    * Returns the logarithm of "a" with base 2.    */
-specifier|public
+annotation|@
+name|Override
+specifier|protected
 name|DoubleWritable
-name|evaluate
+name|doEvaluate
 parameter_list|(
 name|DoubleWritable
 name|a
@@ -202,10 +201,6 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|a
-operator|==
-literal|null
-operator|||
 name|a
 operator|.
 name|get
@@ -234,7 +229,7 @@ name|get
 argument_list|()
 argument_list|)
 operator|/
-name|log2
+name|LOG_2
 argument_list|)
 expr_stmt|;
 return|return

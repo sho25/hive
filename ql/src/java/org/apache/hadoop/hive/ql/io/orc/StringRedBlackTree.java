@@ -124,7 +124,17 @@ argument_list|(
 name|value
 argument_list|)
 expr_stmt|;
-comment|// if the key is new, add it to our byteArray and store the offset& length
+return|return
+name|addNewKey
+argument_list|()
+return|;
+block|}
+specifier|private
+name|int
+name|addNewKey
+parameter_list|()
+block|{
+comment|// if the newKey is actually new, add it to our byteArray and store the offset& length
 if|if
 condition|(
 name|add
@@ -161,6 +171,26 @@ expr_stmt|;
 block|}
 return|return
 name|lastAdd
+return|;
+block|}
+specifier|public
+name|int
+name|add
+parameter_list|(
+name|Text
+name|value
+parameter_list|)
+block|{
+name|newKey
+operator|.
+name|set
+argument_list|(
+name|value
+argument_list|)
+expr_stmt|;
+return|return
+name|addNewKey
+argument_list|()
 return|;
 block|}
 annotation|@

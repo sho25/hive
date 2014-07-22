@@ -161,6 +161,10 @@ name|int
 name|getVariableSize
 parameter_list|()
 function_decl|;
+name|void
+name|reset
+parameter_list|()
+function_decl|;
 block|}
 empty_stmt|;
 specifier|public

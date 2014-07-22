@@ -1301,9 +1301,6 @@ return|;
 block|}
 block|}
 return|return
-operator|(
-name|ExprNodeGenericFuncDesc
-operator|)
 name|expr
 return|;
 block|}
@@ -1323,7 +1320,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * See compactExpr. Some things in the expr are replaced with nulls for pruner, however    * the virtual columns are not removed (ExprNodeColumnDesc cannot tell them apart from    * partition columns), so we do it here.    * The expression is only used to prune by partition name, so we have no business with VCs.    * @param expr original partition pruning expression.    * @param partCols list of partition columns for the table.    * @return partition pruning expression that only contains partition columns from the list.    */
+comment|/**    * See compactExpr. Some things in the expr are replaced with nulls for pruner, however    * the virtual columns are not removed (ExprNodeColumnDesc cannot tell them apart from    * partition columns), so we do it here.    * The expression is only used to prune by partition name, so we have no business with VCs.    * @param expr original partition pruning expression.    * @param partCols list of partition columns for the table.    * @param referred partition columns referred by expr    * @return partition pruning expression that only contains partition columns from the list.    */
 specifier|static
 specifier|private
 name|ExprNodeDesc
@@ -1337,6 +1334,12 @@ argument_list|<
 name|String
 argument_list|>
 name|partCols
+parameter_list|,
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|referred
 parameter_list|)
 block|{
 if|if
@@ -1344,12 +1347,11 @@ condition|(
 name|expr
 operator|instanceof
 name|ExprNodeColumnDesc
-operator|&&
-operator|!
-name|partCols
-operator|.
-name|contains
-argument_list|(
+condition|)
+block|{
+name|String
+name|column
+init|=
 operator|(
 operator|(
 name|ExprNodeColumnDesc
@@ -1359,6 +1361,15 @@ operator|)
 operator|.
 name|getColumn
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|partCols
+operator|.
+name|contains
+argument_list|(
+name|column
 argument_list|)
 condition|)
 block|{
@@ -1375,6 +1386,14 @@ argument_list|,
 literal|null
 argument_list|)
 return|;
+block|}
+name|referred
+operator|.
+name|add
+argument_list|(
+name|column
+argument_list|)
+expr_stmt|;
 block|}
 if|if
 condition|(
@@ -1428,6 +1447,8 @@ name|i
 argument_list|)
 argument_list|,
 name|partCols
+argument_list|,
+name|referred
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1550,6 +1571,8 @@ argument_list|(
 name|tab
 argument_list|)
 argument_list|,
+literal|null
+argument_list|,
 literal|false
 argument_list|)
 return|;
@@ -1641,10 +1664,25 @@ argument_list|(
 name|tab
 argument_list|)
 argument_list|,
+literal|null
+argument_list|,
 literal|false
 argument_list|)
 return|;
 block|}
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|referred
+init|=
+operator|new
+name|LinkedHashSet
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
 comment|// Replace virtual columns with nulls. See javadoc for details.
 name|prunerExpr
 operator|=
@@ -1656,6 +1694,8 @@ name|extractPartColNames
 argument_list|(
 name|tab
 argument_list|)
+argument_list|,
+name|referred
 argument_list|)
 expr_stmt|;
 comment|// Remove all parts that are not partition columns. See javadoc for details.
@@ -1710,6 +1750,8 @@ name|getAllPartitions
 argument_list|(
 name|tab
 argument_list|)
+argument_list|,
+literal|null
 argument_list|,
 literal|true
 argument_list|)
@@ -1893,6 +1935,15 @@ name|Partition
 argument_list|>
 argument_list|(
 name|partitions
+argument_list|)
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|(
+name|referred
 argument_list|)
 argument_list|,
 name|hasUnknownPartitions

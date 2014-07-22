@@ -678,15 +678,6 @@ argument_list|,
 literal|"thrift://no.such.machine:10888"
 argument_list|)
 expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"hive.metastore.local"
-argument_list|,
-literal|"false"
-argument_list|)
-expr_stmt|;
 name|Job
 name|job
 init|=

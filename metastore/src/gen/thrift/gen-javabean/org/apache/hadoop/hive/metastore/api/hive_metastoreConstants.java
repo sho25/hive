@@ -428,6 +428,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|META_TABLE_PARTITION_COLUMN_TYPES
+init|=
+literal|"partition_columns.types"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|FILE_INPUT_FORMAT
 init|=
 literal|"file.inputformat"

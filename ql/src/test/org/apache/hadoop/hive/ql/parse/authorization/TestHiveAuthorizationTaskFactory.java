@@ -560,6 +560,13 @@ argument_list|(
 name|table
 argument_list|)
 expr_stmt|;
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|context
 operator|=
 operator|new
@@ -582,13 +589,6 @@ argument_list|(
 name|conf
 argument_list|,
 name|db
-argument_list|)
-expr_stmt|;
-name|SessionState
-operator|.
-name|start
-argument_list|(
-name|conf
 argument_list|)
 expr_stmt|;
 name|Mockito

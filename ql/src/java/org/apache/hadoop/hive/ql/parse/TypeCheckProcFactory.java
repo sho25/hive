@@ -5648,7 +5648,7 @@ comment|// its children. Although the error can be set multiple times by
 comment|// descendant nodes, DFS traversal ensures that the error only needs to
 comment|// be cleared once. Also, for a case like
 comment|// SELECT concat(value, concat(value))... the logic still works as the
-comment|// error is only set with the first 'value'; all node pocessors quit
+comment|// error is only set with the first 'value'; all node processors quit
 comment|// early if the global error is set.
 if|if
 condition|(
@@ -6227,6 +6227,44 @@ operator|.
 name|TOK_FUNCTIONDI
 operator|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|ctx
+operator|.
+name|isAllowDistinctFunctions
+argument_list|()
+operator|&&
+name|expr
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|TOK_FUNCTIONDI
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|SemanticAnalyzer
+operator|.
+name|generateErrorMessage
+argument_list|(
+name|expr
+argument_list|,
+name|ErrorMsg
+operator|.
+name|DISTINCT_NOT_SUPPORTED
+operator|.
+name|getMsg
+argument_list|()
+argument_list|)
+argument_list|)
+throw|;
+block|}
 comment|// Create all children
 name|int
 name|childrenBegin

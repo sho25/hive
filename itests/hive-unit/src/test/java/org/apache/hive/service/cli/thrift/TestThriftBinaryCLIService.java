@@ -32,18 +32,6 @@ import|;
 end_import
 
 begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|fail
-import|;
-end_import
-
-begin_import
 import|import
 name|org
 operator|.
@@ -76,20 +64,6 @@ operator|.
 name|HiveAuthFactory
 operator|.
 name|AuthTypes
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|transport
-operator|.
-name|TTransport
 import|;
 end_import
 
@@ -150,11 +124,6 @@ name|String
 name|transportMode
 init|=
 literal|"binary"
-decl_stmt|;
-specifier|private
-specifier|static
-name|TTransport
-name|transport
 decl_stmt|;
 comment|/**    * @throws java.lang.Exception    */
 annotation|@
@@ -231,7 +200,7 @@ name|HIVE_SERVER2_AUTHENTICATION
 argument_list|,
 name|AuthTypes
 operator|.
-name|NOSASL
+name|NONE
 operator|.
 name|toString
 argument_list|()
@@ -253,35 +222,11 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-comment|// Open a binary transport
-comment|// Fail if the transport doesn't open
-name|transport
+name|client
 operator|=
-name|createBinaryTransport
+name|getServiceClientInternal
 argument_list|()
 expr_stmt|;
-try|try
-block|{
-name|transport
-operator|.
-name|open
-argument_list|()
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|fail
-argument_list|(
-literal|"Exception: "
-operator|+
-name|e
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 comment|/**    * @throws java.lang.Exception    */
 annotation|@
@@ -311,19 +256,7 @@ name|setUp
 parameter_list|()
 throws|throws
 name|Exception
-block|{
-comment|// Create and set the client
-name|initClient
-argument_list|(
-name|transport
-argument_list|)
-expr_stmt|;
-name|assertNotNull
-argument_list|(
-name|client
-argument_list|)
-expr_stmt|;
-block|}
+block|{    }
 comment|/**    * @throws java.lang.Exception    */
 annotation|@
 name|Override

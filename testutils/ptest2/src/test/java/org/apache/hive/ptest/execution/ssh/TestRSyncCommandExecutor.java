@@ -277,6 +277,8 @@ name|RSyncCommandExecutor
 argument_list|(
 name|LOG
 argument_list|,
+literal|1
+argument_list|,
 name|localCommandFactory
 argument_list|)
 decl_stmt|;
@@ -424,6 +426,8 @@ operator|new
 name|RSyncCommandExecutor
 argument_list|(
 name|LOG
+argument_list|,
+literal|1
 argument_list|,
 name|localCommandFactory
 argument_list|)

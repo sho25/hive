@@ -372,6 +372,28 @@ operator|=
 name|index
 expr_stmt|;
 block|}
+comment|/**    * Clear all lineage states    */
+specifier|public
+name|void
+name|clear
+parameter_list|()
+block|{
+name|dirToFop
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|linfo
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|index
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 end_class
 

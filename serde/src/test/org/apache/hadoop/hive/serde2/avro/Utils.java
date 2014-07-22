@@ -132,6 +132,17 @@ name|UID
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Assuming file schema is the same as record schema for testing purpose.
+name|garw
+operator|.
+name|setFileSchema
+argument_list|(
+name|record
+operator|.
+name|getSchema
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|ByteArrayOutputStream
 name|baos
 init|=

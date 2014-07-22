@@ -1021,6 +1021,7 @@ specifier|transient
 name|long
 name|totalMemory
 decl_stmt|;
+specifier|protected
 specifier|transient
 name|boolean
 name|hashAggr

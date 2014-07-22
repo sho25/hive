@@ -139,6 +139,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|ErrorMsg
@@ -269,7 +285,7 @@ name|ql
 operator|.
 name|stats
 operator|.
-name|CounterStatsPublisher
+name|StatsCollectionTaskIndependent
 import|;
 end_import
 
@@ -485,6 +501,10 @@ name|int
 name|currCount
 init|=
 literal|0
+decl_stmt|;
+specifier|private
+name|String
+name|defaultPartitionName
 decl_stmt|;
 specifier|public
 name|TableDesc
@@ -886,27 +906,18 @@ range|:
 name|writable
 control|)
 block|{
-assert|assert
-operator|(
-name|o
-operator|!=
-literal|null
-operator|&&
-name|o
-operator|.
-name|toString
-argument_list|()
-operator|.
-name|length
-argument_list|()
-operator|>
-literal|0
-operator|)
-assert|;
+comment|// It's possible that a parition column may have NULL value, in which case the row belongs
+comment|// to the special partition, __HIVE_DEFAULT_PARTITION__.
 name|values
 operator|.
 name|add
 argument_list|(
+name|o
+operator|==
+literal|null
+condition|?
+name|defaultPartitionName
+else|:
 name|o
 operator|.
 name|toString
@@ -1239,6 +1250,21 @@ name|hconf
 argument_list|)
 expr_stmt|;
 block|}
+name|defaultPartitionName
+operator|=
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|DEFAULTPARTITIONNAME
+argument_list|)
+expr_stmt|;
 name|currentStat
 operator|=
 literal|null
@@ -1341,26 +1367,6 @@ return|return
 literal|"TS"
 return|;
 block|}
-comment|// This 'neededColumnIDs' field is included in this operator class instead of
-comment|// its desc class.The reason is that 1)tableScanDesc can not be instantiated,
-comment|// and 2) it will fail some join and union queries if this is added forcibly
-comment|// into tableScanDesc.
-comment|// Both neededColumnIDs and neededColumns should never be null.
-comment|// When neededColumnIDs is an empty list,
-comment|// it means no needed column (e.g. we do not need any column to evaluate
-comment|// SELECT count(*) FROM t).
-name|List
-argument_list|<
-name|Integer
-argument_list|>
-name|neededColumnIDs
-decl_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|neededColumns
-decl_stmt|;
 specifier|public
 name|void
 name|setNeededColumnIDs
@@ -1372,9 +1378,12 @@ argument_list|>
 name|orign_columns
 parameter_list|)
 block|{
-name|neededColumnIDs
-operator|=
+name|conf
+operator|.
+name|setNeededColumnIDs
+argument_list|(
 name|orign_columns
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -1386,7 +1395,10 @@ name|getNeededColumnIDs
 parameter_list|()
 block|{
 return|return
-name|neededColumnIDs
+name|conf
+operator|.
+name|getNeededColumnIDs
+argument_list|()
 return|;
 block|}
 specifier|public
@@ -1400,9 +1412,12 @@ argument_list|>
 name|columnNames
 parameter_list|)
 block|{
-name|neededColumns
-operator|=
+name|conf
+operator|.
+name|setNeededColumns
+argument_list|(
 name|columnNames
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -1414,7 +1429,44 @@ name|getNeededColumns
 parameter_list|()
 block|{
 return|return
-name|neededColumns
+name|conf
+operator|.
+name|getNeededColumns
+argument_list|()
+return|;
+block|}
+specifier|public
+name|void
+name|setReferencedColumns
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|referencedColumns
+parameter_list|)
+block|{
+name|conf
+operator|.
+name|setReferencedColumns
+argument_list|(
+name|referencedColumns
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getReferencedColumns
+parameter_list|()
+block|{
+return|return
+name|conf
+operator|.
+name|getReferencedColumns
+argument_list|()
 return|;
 block|}
 annotation|@
@@ -1584,11 +1636,11 @@ operator|!
 operator|(
 name|statsPublisher
 operator|instanceof
-name|CounterStatsPublisher
+name|StatsCollectionTaskIndependent
 operator|)
 condition|)
 block|{
-comment|// stats publisher except counter type needs postfix 'taskID'
+comment|// stats publisher except counter or fs type needs postfix 'taskID'
 name|key
 operator|=
 name|Utilities
@@ -1793,6 +1845,21 @@ name|String
 argument_list|>
 argument_list|(
 name|getNeededColumns
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|ts
+operator|.
+name|setReferencedColumns
+argument_list|(
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|(
+name|getReferencedColumns
 argument_list|()
 argument_list|)
 argument_list|)

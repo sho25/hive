@@ -474,7 +474,7 @@ literal|0
 argument_list|,
 name|out
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -534,7 +534,7 @@ literal|0
 argument_list|,
 name|out
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -594,7 +594,7 @@ literal|0
 argument_list|,
 name|out
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -654,7 +654,7 @@ literal|0
 argument_list|,
 name|out
 operator|.
-name|getCount
+name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;

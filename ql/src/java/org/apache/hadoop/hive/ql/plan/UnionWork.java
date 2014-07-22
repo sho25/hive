@@ -143,6 +143,20 @@ name|UnionOperator
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobConf
+import|;
+end_import
+
 begin_comment
 comment|/**  * Simple wrapper for union all cases. All contributing work for a union all  * is collected here. Downstream work will connect to the union not the individual  * work.  */
 end_comment
@@ -288,6 +302,14 @@ return|return
 name|unionOperators
 return|;
 block|}
+specifier|public
+name|void
+name|configureJobConf
+parameter_list|(
+name|JobConf
+name|job
+parameter_list|)
+block|{   }
 block|}
 end_class
 

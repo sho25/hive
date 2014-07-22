@@ -135,7 +135,7 @@ argument_list|>
 name|allReduceSinkOperators
 decl_stmt|;
 comment|// Since we merge multiple operation paths, we assign new tags to bottom layer
-comment|// ReduceSinkOperatos. This mapping is used to map new tags to original tags associated
+comment|// ReduceSinkOperators. This mapping is used to map new tags to original tags associated
 comment|// to these bottom layer ReduceSinkOperators.
 specifier|private
 specifier|final
