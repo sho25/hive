@@ -5138,7 +5138,7 @@ name|HIVEFETCHTASKCONVERSION
 argument_list|(
 literal|"hive.fetch.task.conversion"
 argument_list|,
-literal|"minimal"
+literal|"more"
 argument_list|,
 operator|new
 name|StringSet
@@ -5163,8 +5163,7 @@ name|HIVEFETCHTASKCONVERSIONTHRESHOLD
 argument_list|(
 literal|"hive.fetch.task.conversion.threshold"
 argument_list|,
-operator|-
-literal|1l
+literal|1073741824L
 argument_list|,
 literal|"Input threshold for applying hive.fetch.task.conversion. If target table is native, input length\n"
 operator|+

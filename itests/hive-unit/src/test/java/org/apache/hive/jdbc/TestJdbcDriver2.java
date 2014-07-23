@@ -1515,16 +1515,6 @@ operator|+
 name|dataTypeTableName
 argument_list|)
 decl_stmt|;
-name|rs
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-name|s
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 name|assertTrue
 argument_list|(
 name|s
@@ -1546,6 +1536,16 @@ argument_list|()
 operator|==
 name|s
 argument_list|)
+expr_stmt|;
+name|rs
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|s
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 comment|/* Test parent references from PreparedStatement */
 name|PreparedStatement
@@ -1569,16 +1569,6 @@ operator|.
 name|executeQuery
 argument_list|()
 expr_stmt|;
-name|rs
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-name|ps
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 name|assertTrue
 argument_list|(
 name|ps
@@ -1600,6 +1590,16 @@ argument_list|()
 operator|==
 name|ps
 argument_list|)
+expr_stmt|;
+name|rs
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|ps
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 comment|/* Test DatabaseMetaData queries which do not have a parent Statement */
 name|DatabaseMetaData
