@@ -3544,7 +3544,7 @@ name|HIVE_ORC_DEFAULT_STRIPE_SIZE
 argument_list|(
 literal|"hive.exec.orc.default.stripe.size"
 argument_list|,
-literal|256L
+literal|64L
 operator|*
 literal|1024
 operator|*
