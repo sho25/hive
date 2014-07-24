@@ -19164,7 +19164,7 @@ name|builder
 argument_list|,
 name|resource
 operator|.
-name|getTableViewURI
+name|getObjectName
 argument_list|()
 argument_list|)
 expr_stmt|;

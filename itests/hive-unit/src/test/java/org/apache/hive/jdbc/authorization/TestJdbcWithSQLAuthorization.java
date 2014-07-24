@@ -655,11 +655,11 @@ expr_stmt|;
 name|String
 name|msg
 init|=
-literal|"Principal [name=user1, type=USER] does not have following "
+literal|"Permission denied: Principal [name=user1, type=USER] does not have "
 operator|+
-literal|"privileges on Object [type=COMMAND_PARAMS, name=[-ls, /tmp/]] for operation "
+literal|"following privileges for operation DFS [[ADMIN PRIVILEGE] on "
 operator|+
-literal|"DFS : [ADMIN PRIVILEGE]"
+literal|"Object [type=COMMAND_PARAMS, name=[-ls, /tmp/]]]"
 decl_stmt|;
 name|assertTrue
 argument_list|(

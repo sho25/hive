@@ -685,6 +685,14 @@ name|HivePrivilegeObjectType
 operator|.
 name|PARTITION
 return|;
+case|case
+name|FUNCTION
+case|:
+return|return
+name|HivePrivilegeObjectType
+operator|.
+name|FUNCTION
+return|;
 default|default:
 return|return
 literal|null
@@ -1455,26 +1463,10 @@ name|HiveObjectType
 operator|.
 name|COLUMN
 return|;
-case|case
-name|LOCAL_URI
-case|:
-case|case
-name|DFS_URI
-case|:
+default|default:
 throw|throw
 operator|new
 name|HiveException
-argument_list|(
-literal|"Unsupported type "
-operator|+
-name|type
-argument_list|)
-throw|;
-default|default:
-comment|//should not happen as we have accounted for all types
-throw|throw
-operator|new
-name|AssertionError
 argument_list|(
 literal|"Unsupported type "
 operator|+
@@ -1665,7 +1657,7 @@ argument_list|()
 argument_list|,
 name|privObj
 operator|.
-name|getTableViewURI
+name|getObjectName
 argument_list|()
 argument_list|,
 literal|null

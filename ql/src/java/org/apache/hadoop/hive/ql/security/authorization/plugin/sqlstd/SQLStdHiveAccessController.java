@@ -2635,7 +2635,7 @@ init|=
 operator|new
 name|HivePrivilegeObject
 argument_list|(
-name|getPluginObjType
+name|getPluginPrivilegeObjType
 argument_list|(
 name|msObjRef
 operator|.
@@ -2906,15 +2906,14 @@ return|return
 literal|false
 return|;
 block|}
+comment|/**    * Convert metastore object type to HivePrivilegeObjectType.    * Also verifies that metastore object type is of a type on which metastore privileges are    * supported by sql std auth.    * @param objectType    * @return corresponding HivePrivilegeObjectType    */
 specifier|private
 name|HivePrivilegeObjectType
-name|getPluginObjType
+name|getPluginPrivilegeObjType
 parameter_list|(
 name|HiveObjectType
 name|objectType
 parameter_list|)
-throws|throws
-name|HiveAuthzPluginException
 block|{
 switch|switch
 condition|(

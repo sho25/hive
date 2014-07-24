@@ -113,22 +113,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|api
 operator|.
 name|Database
@@ -255,7 +239,9 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|WriteEntity
+name|Entity
+operator|.
+name|Type
 import|;
 end_import
 
@@ -271,9 +257,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
+name|hooks
 operator|.
-name|Hive
+name|WriteEntity
 import|;
 end_import
 
@@ -364,24 +350,6 @@ operator|.
 name|plan
 operator|.
 name|PlanUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|SessionState
 import|;
 end_import
 
@@ -1034,7 +1002,7 @@ return|return
 name|resources
 return|;
 block|}
-comment|/**    * Add write entities to the semantic analyzer to restrict function creation to priviliged users.    */
+comment|/**    * Add write entities to the semantic analyzer to restrict function creation to privileged users.    */
 specifier|private
 name|void
 name|addEntities
@@ -1048,28 +1016,24 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+comment|// If the function is being added under a database 'namespace', then add an entity representing
+comment|// the database (only applicable to permanent/metastore functions).
+comment|// We also add a second entity representing the function name.
+comment|// The authorization api implementation can decide which entities it wants to use to
+comment|// authorize the create/drop function call.
+comment|// Add the relevant database 'namespace' as a WriteEntity
 name|Database
 name|database
 init|=
 literal|null
 decl_stmt|;
+comment|// temporary functions don't have any database 'namespace' associated with it,
+comment|// it matters only for permanent functions
 if|if
 condition|(
+operator|!
 name|isTemporaryFunction
 condition|)
-block|{
-comment|// This means temp function creation is also restricted.
-name|database
-operator|=
-name|getDatabase
-argument_list|(
-name|MetaStoreUtils
-operator|.
-name|DEFAULT_DATABASE_NAME
-argument_list|)
-expr_stmt|;
-block|}
-else|else
 block|{
 try|try
 block|{
@@ -1147,6 +1111,30 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Add the function name as a WriteEntity
+name|outputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|database
+argument_list|,
+name|functionName
+argument_list|,
+name|Type
+operator|.
+name|FUNCTION
+argument_list|,
+name|WriteEntity
+operator|.
+name|WriteType
+operator|.
+name|DDL_NO_LOCK
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

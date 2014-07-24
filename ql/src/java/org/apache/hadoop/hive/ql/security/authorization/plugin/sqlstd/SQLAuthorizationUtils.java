@@ -1484,7 +1484,7 @@ argument_list|()
 argument_list|,
 name|hivePrivObject
 operator|.
-name|getTableViewURI
+name|getObjectName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1931,7 +1931,7 @@ block|}
 specifier|public
 specifier|static
 name|void
-name|assertNoMissingPrivilege
+name|addMissingPrivMsg
 parameter_list|(
 name|Collection
 argument_list|<
@@ -1939,17 +1939,15 @@ name|SQLPrivTypeGrant
 argument_list|>
 name|missingPrivs
 parameter_list|,
-name|HivePrincipal
-name|hivePrincipal
-parameter_list|,
 name|HivePrivilegeObject
 name|hivePrivObject
 parameter_list|,
-name|HiveOperationType
-name|opType
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|deniedMessages
 parameter_list|)
-throws|throws
-name|HiveAccessControlException
 block|{
 if|if
 condition|(
@@ -1988,32 +1986,19 @@ expr_stmt|;
 name|String
 name|errMsg
 init|=
-literal|"Permission denied. "
+name|sortedmissingPrivs
 operator|+
-name|hivePrincipal
-operator|+
-literal|" does not have following privileges on "
+literal|" on "
 operator|+
 name|hivePrivObject
-operator|+
-literal|" for operation "
-operator|+
-name|opType
-operator|+
-literal|" : "
-operator|+
-name|sortedmissingPrivs
 decl_stmt|;
-throw|throw
-operator|new
-name|HiveAccessControlException
+name|deniedMessages
+operator|.
+name|add
 argument_list|(
 name|errMsg
-operator|.
-name|toString
-argument_list|()
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 block|}
 comment|/**    * Map permissions for this uri to SQL Standard privileges    * @param filePath    * @param conf    * @param userName    * @return    * @throws HiveAuthzPluginException    */
@@ -2207,6 +2192,67 @@ block|}
 return|return
 name|availPrivs
 return|;
+block|}
+specifier|public
+specifier|static
+name|void
+name|assertNoDeniedPermissions
+parameter_list|(
+name|HivePrincipal
+name|hivePrincipal
+parameter_list|,
+name|HiveOperationType
+name|hiveOpType
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|deniedMessages
+parameter_list|)
+throws|throws
+name|HiveAccessControlException
+block|{
+if|if
+condition|(
+name|deniedMessages
+operator|.
+name|size
+argument_list|()
+operator|!=
+literal|0
+condition|)
+block|{
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|deniedMessages
+argument_list|)
+expr_stmt|;
+name|String
+name|errorMessage
+init|=
+literal|"Permission denied: "
+operator|+
+name|hivePrincipal
+operator|+
+literal|" does not have following privileges for operation "
+operator|+
+name|hiveOpType
+operator|+
+literal|" "
+operator|+
+name|deniedMessages
+decl_stmt|;
+throw|throw
+operator|new
+name|HiveAccessControlException
+argument_list|(
+name|errorMessage
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 end_class
