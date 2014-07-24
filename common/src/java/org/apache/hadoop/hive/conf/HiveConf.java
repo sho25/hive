@@ -5511,6 +5511,25 @@ operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
 block|,
+comment|// Hive global init file location
+name|HIVE_GLOBAL_INIT_FILE_LOCATION
+argument_list|(
+literal|"hive.global.init.file.location"
+argument_list|,
+name|System
+operator|.
+name|getenv
+argument_list|(
+literal|"HIVE_CONF_DIR"
+argument_list|)
+argument_list|,
+literal|"The location of HS2 global init file (.hiverc).\n"
+operator|+
+literal|"If the property is not set, then HS2 will search for the file in $HIVE_CONF_DIR/.\n"
+operator|+
+literal|"If the property is set, the value must be a valid path where the init file is located."
+argument_list|)
+block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
 name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
 argument_list|(
