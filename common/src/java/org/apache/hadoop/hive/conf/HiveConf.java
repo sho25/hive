@@ -2869,6 +2869,15 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVE_CBO_GREEDY_JOIN_ORDER
+argument_list|(
+literal|"hive.cbo.greedy.join.order"
+argument_list|,
+literal|false
+argument_list|,
+literal|""
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE

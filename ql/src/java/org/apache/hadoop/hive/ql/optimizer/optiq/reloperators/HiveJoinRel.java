@@ -595,6 +595,9 @@ name|right
 parameter_list|,
 name|JoinRelType
 name|joinType
+parameter_list|,
+name|boolean
+name|semiJoinDone
 parameter_list|)
 block|{
 return|return
@@ -611,6 +614,8 @@ argument_list|,
 name|m_joinAlgorithm
 argument_list|,
 name|m_mapJoinStreamingSide
+argument_list|,
+name|m_leftSemiJoin
 argument_list|)
 return|;
 block|}
@@ -635,6 +640,9 @@ name|joinalgo
 parameter_list|,
 name|MapJoinStreamingRelation
 name|streamingSide
+parameter_list|,
+name|boolean
+name|semiJoinDone
 parameter_list|)
 block|{
 try|try
@@ -662,9 +670,7 @@ name|joinalgo
 argument_list|,
 name|streamingSide
 argument_list|,
-name|this
-operator|.
-name|m_leftSemiJoin
+name|semiJoinDone
 argument_list|)
 return|;
 block|}
