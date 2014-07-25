@@ -652,9 +652,23 @@ name|caughtException
 operator|=
 literal|true
 expr_stmt|;
+name|String
+name|msg
+init|=
+literal|"Permission denied: Principal [name=user1, type=USER] does not have "
+operator|+
+literal|"following privileges for operation DFS [[ADMIN PRIVILEGE] on "
+operator|+
+literal|"Object [type=COMMAND_PARAMS, name=[-ls, /tmp/]]]"
+decl_stmt|;
 name|assertTrue
 argument_list|(
-literal|"Checking error message content"
+literal|"Checking content of error message:"
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 operator|.
@@ -663,7 +677,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"Insufficient privileges to execute"
+name|msg
 argument_list|)
 argument_list|)
 expr_stmt|;

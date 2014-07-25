@@ -3572,7 +3572,7 @@ name|HIVE_ORC_DEFAULT_STRIPE_SIZE
 argument_list|(
 literal|"hive.exec.orc.default.stripe.size"
 argument_list|,
-literal|256L
+literal|64L
 operator|*
 literal|1024
 operator|*
@@ -4239,6 +4239,15 @@ argument_list|,
 literal|true
 argument_list|,
 literal|""
+argument_list|)
+block|,
+name|HIVENULLSCANOPTIMIZE
+argument_list|(
+literal|"hive.optimize.null.scan"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Dont scan relations which are guaranteed to not generate any rows"
 argument_list|)
 block|,
 name|HIVEOPTPPD_STORAGE
@@ -5157,7 +5166,7 @@ name|HIVEFETCHTASKCONVERSION
 argument_list|(
 literal|"hive.fetch.task.conversion"
 argument_list|,
-literal|"minimal"
+literal|"more"
 argument_list|,
 operator|new
 name|StringSet
@@ -5182,8 +5191,7 @@ name|HIVEFETCHTASKCONVERSIONTHRESHOLD
 argument_list|(
 literal|"hive.fetch.task.conversion.threshold"
 argument_list|,
-operator|-
-literal|1l
+literal|1073741824L
 argument_list|,
 literal|"Input threshold for applying hive.fetch.task.conversion. If target table is native, input length\n"
 operator|+
@@ -5529,6 +5537,25 @@ operator|+
 literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.properties\"), \n"
 operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
+argument_list|)
+block|,
+comment|// Hive global init file location
+name|HIVE_GLOBAL_INIT_FILE_LOCATION
+argument_list|(
+literal|"hive.global.init.file.location"
+argument_list|,
+name|System
+operator|.
+name|getenv
+argument_list|(
+literal|"HIVE_CONF_DIR"
+argument_list|)
+argument_list|,
+literal|"The location of HS2 global init file (.hiverc).\n"
+operator|+
+literal|"If the property is not set, then HS2 will search for the file in $HIVE_CONF_DIR/.\n"
+operator|+
+literal|"If the property is set, the value must be a valid path where the init file is located."
 argument_list|)
 block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
@@ -7297,6 +7324,8 @@ name|VarType
 block|{
 name|STRING
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -7306,6 +7335,8 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{ }
+annotation|@
+name|Override
 name|String
 name|defaultValueString
 parameter_list|(
@@ -7323,6 +7354,8 @@ block|}
 block|,
 name|INT
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -7344,6 +7377,8 @@ block|}
 block|,
 name|LONG
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -7365,6 +7400,8 @@ block|}
 block|,
 name|FLOAT
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(
@@ -7386,6 +7423,8 @@ block|}
 block|,
 name|BOOLEAN
 block|{
+annotation|@
+name|Override
 name|void
 name|checkType
 parameter_list|(

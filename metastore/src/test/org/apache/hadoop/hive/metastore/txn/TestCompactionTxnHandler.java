@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -42,22 +32,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|IMetaStoreClient
 import|;
 end_import
 
@@ -120,16 +94,6 @@ operator|.
 name|junit
 operator|.
 name|Before
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|Ignore
 import|;
 end_import
 
@@ -1424,11 +1388,13 @@ name|ShowCompactRequest
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|assertNull
+name|assertEquals
 argument_list|(
+literal|0
+argument_list|,
 name|rsp
 operator|.
-name|getCompacts
+name|getCompactsSize
 argument_list|()
 argument_list|)
 expr_stmt|;

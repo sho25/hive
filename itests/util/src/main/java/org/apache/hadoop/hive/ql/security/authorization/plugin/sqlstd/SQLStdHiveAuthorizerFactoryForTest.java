@@ -236,7 +236,7 @@ argument_list|(
 name|privilegeManager
 argument_list|,
 operator|new
-name|SQLStdHiveAuthorizationValidator
+name|SQLStdHiveAuthorizationValidatorForTest
 argument_list|(
 name|metastoreClientFactory
 argument_list|,

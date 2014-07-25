@@ -339,6 +339,14 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVERCFILE
+init|=
+literal|".hiverc"
+decl_stmt|;
 specifier|private
 name|HiveConf
 name|hiveConf
@@ -758,8 +766,6 @@ name|password
 argument_list|,
 name|hiveConf
 argument_list|,
-name|sessionConf
-argument_list|,
 name|TSetIpAddressProcessor
 operator|.
 name|getUserIpAddress
@@ -805,8 +811,6 @@ name|password
 argument_list|,
 name|hiveConf
 argument_list|,
-name|sessionConf
-argument_list|,
 name|TSetIpAddressProcessor
 operator|.
 name|getUserIpAddress
@@ -826,6 +830,13 @@ operator|.
 name|setOperationManager
 argument_list|(
 name|operationManager
+argument_list|)
+expr_stmt|;
+name|session
+operator|.
+name|initialize
+argument_list|(
+name|sessionConf
 argument_list|)
 expr_stmt|;
 name|session

@@ -39,20 +39,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Preconditions
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|io
@@ -747,6 +733,20 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
 begin_comment
 comment|/**  * SessionState encapsulates common data associated with a session.  *  * Also provides support for a thread static session object that can be accessed  * from any point in the code to interact with the user and to retrieve  * configuration information  */
 end_comment
@@ -804,6 +804,7 @@ init|=
 literal|"_hive.tmp_table_space"
 decl_stmt|;
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|String
@@ -1001,6 +1002,10 @@ name|String
 name|CONFIG_AUTHZ_SETTINGS_APPLIED_MARKER
 init|=
 literal|"hive.internal.ss.authz.settings.applied.marker"
+decl_stmt|;
+specifier|private
+name|String
+name|userIpAddress
 decl_stmt|;
 comment|/**    * Lineage state.    */
 name|LineageState
@@ -5454,6 +5459,32 @@ block|{
 return|return
 name|tempTables
 return|;
+block|}
+comment|/**    * @return ip address for user running the query    */
+specifier|public
+name|String
+name|getUserIpAddress
+parameter_list|()
+block|{
+return|return
+name|userIpAddress
+return|;
+block|}
+comment|/**    * set the ip address for user running the query    * @param userIpAddress    */
+specifier|public
+name|void
+name|setUserIpAddress
+parameter_list|(
+name|String
+name|userIpAddress
+parameter_list|)
+block|{
+name|this
+operator|.
+name|userIpAddress
+operator|=
+name|userIpAddress
+expr_stmt|;
 block|}
 block|}
 end_class

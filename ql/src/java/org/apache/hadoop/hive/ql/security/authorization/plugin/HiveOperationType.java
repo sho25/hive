@@ -260,6 +260,18 @@ block|,
 name|SHOW_COMPACTIONS
 block|,
 name|SHOW_TRANSACTIONS
+block|,
+name|SET
+block|,
+name|RESET
+block|,
+name|DFS
+block|,
+name|ADD
+block|,
+name|DELETE
+block|,
+name|COMPILE
 block|}
 end_enum
 

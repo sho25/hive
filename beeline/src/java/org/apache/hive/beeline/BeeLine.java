@@ -5483,6 +5483,19 @@ return|;
 block|}
 else|else
 block|{
+name|String
+name|printClosed
+init|=
+name|getDatabaseConnection
+argument_list|()
+operator|.
+name|isClosed
+argument_list|()
+condition|?
+literal|" (closed)"
+else|:
+literal|""
+decl_stmt|;
 return|return
 name|getPrompt
 argument_list|(
@@ -5500,6 +5513,8 @@ operator|.
 name|getUrl
 argument_list|()
 argument_list|)
+operator|+
+name|printClosed
 operator|+
 literal|"> "
 return|;

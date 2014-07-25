@@ -105,16 +105,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Properties
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
 import|;
 end_import
@@ -241,6 +231,19 @@ name|sqlCompletor
 init|=
 literal|null
 decl_stmt|;
+specifier|public
+name|boolean
+name|isClosed
+parameter_list|()
+block|{
+return|return
+operator|(
+literal|null
+operator|==
+name|connection
+operator|)
+return|;
+block|}
 specifier|public
 name|DatabaseConnection
 parameter_list|(
@@ -438,7 +441,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Connection to the specified data source.    *    * @param driver    *          the driver class    * @param url    *          the connection URL    * @param username    *          the username    * @param password    *          the password    */
+comment|/**    * Connection to the specified data source.    */
 name|boolean
 name|connect
 parameter_list|()

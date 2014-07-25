@@ -2257,9 +2257,10 @@ name|bytes
 argument_list|,
 literal|0
 argument_list|,
-name|bytes
+name|bw
 operator|.
-name|length
+name|getLength
+argument_list|()
 argument_list|,
 name|destIndex
 argument_list|)
@@ -2341,9 +2342,10 @@ name|bytes
 argument_list|,
 literal|0
 argument_list|,
-name|bytes
+name|bw
 operator|.
-name|length
+name|getLength
+argument_list|()
 argument_list|,
 name|destIndex
 argument_list|)

@@ -2484,6 +2484,9 @@ name|revokePrivileges
 parameter_list|(
 name|PrivilegeBag
 name|privileges
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -2498,6 +2501,8 @@ operator|.
 name|revokePrivileges
 argument_list|(
 name|privileges
+argument_list|,
+name|grantOption
 argument_list|)
 return|;
 block|}
