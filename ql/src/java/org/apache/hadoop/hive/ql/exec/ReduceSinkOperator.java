@@ -1569,6 +1569,25 @@ expr_stmt|;
 comment|// TODO: this is fishy - we init object inspectors based on first tag. We
 comment|//       should either init for each tag, or if rowInspector doesn't really
 comment|//       matter, then we can create this in ctor and get rid of firstRow.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"keys are "
+operator|+
+name|conf
+operator|.
+name|getOutputKeyColumnNames
+argument_list|()
+operator|+
+literal|" num distributions: "
+operator|+
+name|conf
+operator|.
+name|getNumDistributionKeys
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|keyObjectInspector
 operator|=
 name|initEvaluatorsAndReturnStruct
