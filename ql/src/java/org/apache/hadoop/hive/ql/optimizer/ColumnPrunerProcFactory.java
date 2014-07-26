@@ -151,6 +151,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|AbstractMapJoinOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|ColumnInfo
 import|;
 end_import
@@ -959,6 +977,8 @@ name|ColumnPrunerFilterProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -1110,6 +1130,8 @@ name|ColumnPrunerGroupByProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -1295,6 +1317,8 @@ name|ColumnPrunerScriptProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1825,6 +1849,8 @@ name|ColumnPrunerPTFProc
 extends|extends
 name|ColumnPrunerScriptProc
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -2436,6 +2462,8 @@ name|ColumnPrunerDefaultProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -2526,6 +2554,8 @@ name|ColumnPrunerTableScanProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -2967,6 +2997,8 @@ name|ColumnPrunerReduceSinkProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -3054,6 +3086,22 @@ operator|.
 name|getKeyCols
 argument_list|()
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Reduce Sink Operator "
+operator|+
+name|op
+operator|.
+name|getIdentifier
+argument_list|()
+operator|+
+literal|" key:"
+operator|+
+name|keys
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|ExprNodeDesc
@@ -3193,19 +3241,6 @@ operator|.
 name|size
 argument_list|()
 index|]
-decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|ExprNodeDesc
-argument_list|>
-name|exprMap
-init|=
-name|op
-operator|.
-name|getColumnExprMap
-argument_list|()
 decl_stmt|;
 for|for
 control|(
@@ -3361,6 +3396,8 @@ name|ColumnPrunerLateralViewJoinProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -3909,6 +3946,8 @@ name|ColumnPrunerSelectProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -4995,6 +5034,17 @@ name|outputCol
 argument_list|)
 expr_stmt|;
 block|}
+comment|// In case there are multiple columns referenced to the same column name, we won't
+comment|// do row resolve once more because the ColumnInfo in row resolver is already removed
+if|if
+condition|(
+name|nm
+operator|==
+literal|null
+condition|)
+block|{
+continue|continue;
+block|}
 comment|// Only remove information of a column if it is not a key,
 comment|// i.e. this column is not appearing in keyExprs of the RS
 if|if
@@ -5207,6 +5257,8 @@ name|ColumnPrunerJoinProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -5285,6 +5337,8 @@ name|ColumnPrunerMapJoinProc
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -5308,11 +5362,17 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|MapJoinOperator
+name|AbstractMapJoinOperator
+argument_list|<
+name|MapJoinDesc
+argument_list|>
 name|op
 init|=
 operator|(
-name|MapJoinOperator
+name|AbstractMapJoinOperator
+argument_list|<
+name|MapJoinDesc
+argument_list|>
 operator|)
 name|nd
 decl_stmt|;
@@ -5627,6 +5687,25 @@ operator|.
 name|getChildOperators
 argument_list|()
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"JOIN "
+operator|+
+name|op
+operator|.
+name|getIdentifier
+argument_list|()
+operator|+
+literal|" oldExprs: "
+operator|+
+name|conf
+operator|.
+name|getExprs
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|List
 argument_list|<
 name|String
@@ -6523,6 +6602,25 @@ name|col
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"JOIN "
+operator|+
+name|op
+operator|.
+name|getIdentifier
+argument_list|()
+operator|+
+literal|" newExprs: "
+operator|+
+name|conf
+operator|.
+name|getExprs
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|op
 operator|.
 name|setColumnExprMap

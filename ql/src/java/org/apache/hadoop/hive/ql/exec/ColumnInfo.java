@@ -833,6 +833,21 @@ return|return
 literal|true
 return|;
 block|}
+specifier|public
+name|void
+name|setObjectinspector
+parameter_list|(
+name|ObjectInspector
+name|writableObjectInspector
+parameter_list|)
+block|{
+name|this
+operator|.
+name|objectInspector
+operator|=
+name|writableObjectInspector
+expr_stmt|;
+block|}
 block|}
 end_class
 

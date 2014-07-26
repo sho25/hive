@@ -229,14 +229,6 @@ parameter_list|,
 name|HiveConf
 name|hiveConf
 parameter_list|,
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|sessionConf
-parameter_list|,
 name|String
 name|ipAddress
 parameter_list|,
@@ -255,8 +247,6 @@ argument_list|,
 name|password
 argument_list|,
 name|hiveConf
-argument_list|,
-name|sessionConf
 argument_list|,
 name|ipAddress
 argument_list|)

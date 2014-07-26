@@ -1429,6 +1429,17 @@ return|return
 name|skipTag
 return|;
 block|}
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"auto parallelism"
+argument_list|,
+name|normalExplain
+operator|=
+literal|false
+argument_list|)
 specifier|public
 specifier|final
 name|boolean

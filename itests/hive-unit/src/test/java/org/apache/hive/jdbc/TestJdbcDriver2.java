@@ -25,13 +25,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|conf
 operator|.
-name|exec
+name|SystemVariables
 operator|.
-name|ExplainTask
-operator|.
-name|EXPL_COLUMN_NAME
+name|SET_COLUMN_NAME
 import|;
 end_import
 
@@ -47,11 +45,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|processors
+name|exec
 operator|.
-name|SetProcessor
+name|ExplainTask
 operator|.
-name|SET_COLUMN_NAME
+name|EXPL_COLUMN_NAME
 import|;
 end_import
 
@@ -416,24 +414,6 @@ operator|.
 name|processors
 operator|.
 name|DfsProcessor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|processors
-operator|.
-name|SetProcessor
 import|;
 end_import
 
@@ -1535,16 +1515,6 @@ operator|+
 name|dataTypeTableName
 argument_list|)
 decl_stmt|;
-name|rs
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-name|s
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 name|assertTrue
 argument_list|(
 name|s
@@ -1566,6 +1536,16 @@ argument_list|()
 operator|==
 name|s
 argument_list|)
+expr_stmt|;
+name|rs
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|s
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 comment|/* Test parent references from PreparedStatement */
 name|PreparedStatement
@@ -1589,16 +1569,6 @@ operator|.
 name|executeQuery
 argument_list|()
 expr_stmt|;
-name|rs
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-name|ps
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 name|assertTrue
 argument_list|(
 name|ps
@@ -1620,6 +1590,16 @@ argument_list|()
 operator|==
 name|ps
 argument_list|)
+expr_stmt|;
+name|rs
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|ps
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 comment|/* Test DatabaseMetaData queries which do not have a parent Statement */
 name|DatabaseMetaData
@@ -11779,8 +11759,6 @@ name|execFetchFirst
 argument_list|(
 literal|"set -v"
 argument_list|,
-name|SetProcessor
-operator|.
 name|SET_COLUMN_NAME
 argument_list|,
 literal|false
@@ -12298,7 +12276,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"Select"
+literal|"SELECT"
 argument_list|,
 name|res
 operator|.

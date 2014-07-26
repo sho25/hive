@@ -2744,7 +2744,7 @@ block|{
 name|long
 name|_elem420
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem420
 operator|=
 name|iprot
@@ -2876,7 +2876,7 @@ block|{
 name|long
 name|_elem423
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem423
 operator|=
 name|iprot
@@ -3432,7 +3432,7 @@ block|{
 name|long
 name|_elem430
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem430
 operator|=
 name|iprot
@@ -3536,7 +3536,7 @@ block|{
 name|long
 name|_elem433
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem433
 operator|=
 name|iprot

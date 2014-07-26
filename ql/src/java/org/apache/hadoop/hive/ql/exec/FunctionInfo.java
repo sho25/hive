@@ -159,6 +159,22 @@ name|WindowingTableFunction
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|AnnotationUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * FunctionInfo.  *  */
 end_comment
@@ -350,10 +366,12 @@ expr_stmt|;
 name|PartitionTableFunctionDescription
 name|def
 init|=
-name|tableFunctionResolver
+name|AnnotationUtils
 operator|.
 name|getAnnotation
 argument_list|(
+name|tableFunctionResolver
+argument_list|,
 name|PartitionTableFunctionDescription
 operator|.
 name|class
@@ -557,7 +575,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get the display name for this function. This should be transfered into    * exprNodeGenericUDFDesc, and will be used as the first parameter to    * GenericUDF.getDisplayName() call, instead of hard-coding the function name.    * This will solve the problem of displaying only one name when a udf is    * registered under 2 names.    */
+comment|/**    * Get the display name for this function. This should be transferred into    * exprNodeGenericUDFDesc, and will be used as the first parameter to    * GenericUDF.getDisplayName() call, instead of hard-coding the function name.    * This will solve the problem of displaying only one name when a udf is    * registered under 2 names.    */
 specifier|public
 name|String
 name|getDisplayName

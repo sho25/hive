@@ -165,6 +165,46 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
+name|HiveCharObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|HiveVarcharObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
 name|PrimitiveObjectInspectorConverter
 operator|.
 name|BinaryConverter
@@ -245,7 +285,7 @@ literal|"_FUNC_(a) - cast a to binary"
 argument_list|,
 name|extended
 operator|=
-literal|"Currently only string or binary can be cast into binary"
+literal|"Currently only string, char, varchar or binary can be cast into binary"
 argument_list|)
 specifier|public
 class|class
@@ -337,6 +377,18 @@ operator|||
 operator|(
 name|argumentOI
 operator|instanceof
+name|HiveCharObjectInspector
+operator|)
+operator|||
+operator|(
+name|argumentOI
+operator|instanceof
+name|HiveVarcharObjectInspector
+operator|)
+operator|||
+operator|(
+name|argumentOI
+operator|instanceof
 name|StringObjectInspector
 operator|)
 operator|||
@@ -352,7 +404,7 @@ throw|throw
 operator|new
 name|UDFArgumentException
 argument_list|(
-literal|"Only string or binary data can be cast into binary "
+literal|"Only string, char, varchar or binary data can be cast into binary "
 operator|+
 literal|"data types."
 argument_list|)

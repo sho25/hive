@@ -93,6 +93,13 @@ name|isEmbedded
 operator|=
 literal|true
 expr_stmt|;
+name|HiveConf
+operator|.
+name|setLoadHiveServer2Config
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|cliService
 operator|.
 name|init

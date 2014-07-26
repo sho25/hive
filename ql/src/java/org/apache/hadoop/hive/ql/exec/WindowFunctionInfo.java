@@ -39,6 +39,22 @@ name|GenericUDAFResolver
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|AnnotationUtils
+import|;
+end_import
+
 begin_class
 annotation|@
 name|SuppressWarnings
@@ -106,10 +122,12 @@ decl_stmt|;
 name|WindowFunctionDescription
 name|def
 init|=
-name|wfnCls
+name|AnnotationUtils
 operator|.
 name|getAnnotation
 argument_list|(
+name|wfnCls
+argument_list|,
 name|WindowFunctionDescription
 operator|.
 name|class

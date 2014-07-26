@@ -2087,7 +2087,7 @@ block|{
 name|ShowCompactResponseElement
 name|_elem436
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem436
 operator|=
 operator|new
@@ -2532,7 +2532,7 @@ block|{
 name|ShowCompactResponseElement
 name|_elem441
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem441
 operator|=
 operator|new

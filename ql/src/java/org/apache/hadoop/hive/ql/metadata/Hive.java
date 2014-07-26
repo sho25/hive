@@ -579,22 +579,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|IMetaStoreClient
 import|;
 end_import
@@ -1798,7 +1782,7 @@ name|remove
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Hive    *    * @param argFsRoot    * @param c    *    */
+comment|/**    * Hive    *    * @param c    *    */
 specifier|private
 name|Hive
 parameter_list|(
@@ -2359,6 +2343,11 @@ name|DDL_TIME
 argument_list|)
 expr_stmt|;
 block|}
+name|newTbl
+operator|.
+name|checkValidity
+argument_list|()
+expr_stmt|;
 name|getMSC
 argument_list|()
 operator|.
@@ -2574,6 +2563,11 @@ name|DDL_TIME
 argument_list|)
 expr_stmt|;
 block|}
+name|newPart
+operator|.
+name|checkValidity
+argument_list|()
+expr_stmt|;
 name|getMSC
 argument_list|()
 operator|.
@@ -3604,6 +3598,26 @@ operator|+
 name|tableName
 operator|+
 literal|" is a VIRTUAL VIEW. Index on VIRTUAL VIEW is not supported."
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+name|baseTbl
+operator|.
+name|isTemporary
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"tableName="
+operator|+
+name|tableName
+operator|+
+literal|" is a TEMPORARY TABLE. Index on TEMPORARY TABLE is not supported."
 argument_list|)
 throw|;
 block|}
@@ -5407,22 +5421,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|Table
-name|table
-init|=
+return|return
 operator|new
 name|Table
 argument_list|(
 name|tTable
 argument_list|)
-decl_stmt|;
-name|table
-operator|.
-name|checkValidity
-argument_list|()
-expr_stmt|;
-return|return
-name|table
 return|;
 block|}
 comment|/**    * Get all table names for the current database.    * @return List of table names    * @throws HiveException    */
@@ -5714,6 +5718,9 @@ name|revokePrivileges
 parameter_list|(
 name|PrivilegeBag
 name|privileges
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|HiveException
@@ -5727,6 +5734,8 @@ operator|.
 name|revoke_privileges
 argument_list|(
 name|privileges
+argument_list|,
+name|grantOption
 argument_list|)
 return|;
 block|}
@@ -10841,6 +10850,9 @@ name|userName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|boolean
+name|grantOption
 parameter_list|)
 throws|throws
 name|HiveException
@@ -10858,6 +10870,8 @@ argument_list|,
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|grantOption
 argument_list|)
 return|;
 block|}
@@ -12936,7 +12950,7 @@ name|conf
 argument_list|,
 name|hookLoader
 argument_list|,
-name|HiveMetaStoreClient
+name|SessionHiveMetaStoreClient
 operator|.
 name|class
 operator|.

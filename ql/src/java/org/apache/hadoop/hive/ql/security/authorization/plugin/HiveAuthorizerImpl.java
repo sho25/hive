@@ -391,6 +391,9 @@ argument_list|<
 name|HivePrivilegeObject
 argument_list|>
 name|outputHObjs
+parameter_list|,
+name|HiveAuthzContext
+name|context
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
@@ -406,6 +409,8 @@ argument_list|,
 name|inputHObjs
 argument_list|,
 name|outputHObjs
+argument_list|,
+name|context
 argument_list|)
 expr_stmt|;
 block|}

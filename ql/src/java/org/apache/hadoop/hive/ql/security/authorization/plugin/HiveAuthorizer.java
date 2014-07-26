@@ -313,7 +313,7 @@ name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 function_decl|;
-comment|/**    * Check if user has privileges to do this action on these objects    * @param hiveOpType    * @param inputsHObjs    * @param outputHObjs    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
+comment|/**    * Check if user has privileges to do this action on these objects    * @param hiveOpType    * @param inputsHObjs    * @param outputHObjs    * @param context    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|checkPrivileges
 parameter_list|(
@@ -331,6 +331,9 @@ argument_list|<
 name|HivePrivilegeObject
 argument_list|>
 name|outputHObjs
+parameter_list|,
+name|HiveAuthzContext
+name|context
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException

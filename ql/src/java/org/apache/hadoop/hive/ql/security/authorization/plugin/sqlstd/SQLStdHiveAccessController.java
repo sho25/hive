@@ -839,7 +839,7 @@ specifier|final
 name|String
 name|HAS_ADMIN_PRIV_MSG
 init|=
-literal|"grantor need to have ADMIN privileges on role being"
+literal|"grantor need to have ADMIN OPTION on role being"
 operator|+
 literal|" granted and have it as a current role for this action."
 decl_stmt|;
@@ -1629,6 +1629,8 @@ name|PrivilegeBag
 argument_list|(
 name|revokePrivs
 argument_list|)
+argument_list|,
+name|grantOption
 argument_list|)
 expr_stmt|;
 block|}
@@ -2060,22 +2062,6 @@ name|HiveAccessControlException
 block|{
 if|if
 condition|(
-name|grantOption
-condition|)
-block|{
-comment|// removing grant privileges only is not supported in metastore api
-throw|throw
-operator|new
-name|HiveAuthzPluginException
-argument_list|(
-literal|"Revoking only the admin privileges on "
-operator|+
-literal|"role is not currently supported"
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
 operator|!
 operator|(
 name|isUserAdmin
@@ -2154,6 +2140,8 @@ operator|.
 name|getType
 argument_list|()
 argument_list|)
+argument_list|,
+name|grantOption
 argument_list|)
 expr_stmt|;
 block|}
@@ -2307,21 +2295,69 @@ throw|;
 block|}
 try|try
 block|{
-name|GetPrincipalsInRoleResponse
-name|princGrantInfo
-init|=
+return|return
+name|getHiveRoleGrants
+argument_list|(
 name|metastoreClientFactory
 operator|.
 name|getHiveMetastoreClient
 argument_list|()
-operator|.
-name|get_principals_in_role
+argument_list|,
+name|roleName
+argument_list|)
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveAuthzPluginException
 argument_list|(
+literal|"Error getting principals for all roles"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+specifier|public
+specifier|static
+name|List
+argument_list|<
+name|HiveRoleGrant
+argument_list|>
+name|getHiveRoleGrants
+parameter_list|(
+name|IMetaStoreClient
+name|client
+parameter_list|,
+name|String
+name|roleName
+parameter_list|)
+throws|throws
+name|Exception
+block|{
+name|GetPrincipalsInRoleRequest
+name|request
+init|=
 operator|new
 name|GetPrincipalsInRoleRequest
 argument_list|(
 name|roleName
 argument_list|)
+decl_stmt|;
+name|GetPrincipalsInRoleResponse
+name|princGrantInfo
+init|=
+name|client
+operator|.
+name|get_principals_in_role
+argument_list|(
+name|request
 argument_list|)
 decl_stmt|;
 name|List
@@ -2363,23 +2399,6 @@ block|}
 return|return
 name|hiveRoleGrants
 return|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveAuthzPluginException
-argument_list|(
-literal|"Error getting principals for all roles"
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
 block|}
 annotation|@
 name|Override
@@ -2616,7 +2635,7 @@ init|=
 operator|new
 name|HivePrivilegeObject
 argument_list|(
-name|getPluginObjType
+name|getPluginPrivilegeObjType
 argument_list|(
 name|msObjRef
 operator|.
@@ -2632,6 +2651,16 @@ argument_list|,
 name|msObjRef
 operator|.
 name|getObjectName
+argument_list|()
+argument_list|,
+name|msObjRef
+operator|.
+name|getPartValues
+argument_list|()
+argument_list|,
+name|msObjRef
+operator|.
+name|getColumnName
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -2877,15 +2906,14 @@ return|return
 literal|false
 return|;
 block|}
+comment|/**    * Convert metastore object type to HivePrivilegeObjectType.    * Also verifies that metastore object type is of a type on which metastore privileges are    * supported by sql std auth.    * @param objectType    * @return corresponding HivePrivilegeObjectType    */
 specifier|private
 name|HivePrivilegeObjectType
-name|getPluginObjType
+name|getPluginPrivilegeObjType
 parameter_list|(
 name|HiveObjectType
 name|objectType
 parameter_list|)
-throws|throws
-name|HiveAuthzPluginException
 block|{
 switch|switch
 condition|(
@@ -3824,18 +3852,6 @@ operator|.
 name|PREEXECHOOKS
 argument_list|,
 name|hooks
-argument_list|)
-expr_stmt|;
-comment|// set security command list to only allow set command
-name|hiveConf
-operator|.
-name|setVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SECURITY_COMMAND_WHITELIST
-argument_list|,
-literal|"set"
 argument_list|)
 expr_stmt|;
 comment|// restrict the variables that can be set using set command to a list in whitelist
