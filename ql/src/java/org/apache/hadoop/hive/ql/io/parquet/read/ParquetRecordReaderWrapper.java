@@ -669,6 +669,7 @@ name|eof
 operator|=
 literal|true
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|valueObj
@@ -693,7 +694,6 @@ name|schemaSize
 index|]
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 annotation|@

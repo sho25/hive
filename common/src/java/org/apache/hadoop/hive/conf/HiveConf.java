@@ -4241,6 +4241,16 @@ argument_list|,
 literal|"Whether to push predicates down into storage handlers.  Ignored when hive.optimize.ppd is false."
 argument_list|)
 block|,
+comment|// Constant propagation optimizer
+name|HIVEOPTCONSTANTPROPAGATION
+argument_list|(
+literal|"hive.optimize.constant.propagation"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable constant propagation optimizer"
+argument_list|)
+block|,
 name|HIVEMETADATAONLYQUERIES
 argument_list|(
 literal|"hive.optimize.metadataonly"

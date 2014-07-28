@@ -2070,6 +2070,16 @@ argument_list|,
 name|schema
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|ci
+operator|==
+literal|null
+condition|)
+block|{
+comment|// No need to collect statistics of index columns
+continue|continue;
+block|}
 name|ObjectInspector
 name|oi
 init|=
