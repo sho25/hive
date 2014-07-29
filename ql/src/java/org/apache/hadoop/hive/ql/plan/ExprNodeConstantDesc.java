@@ -211,6 +211,37 @@ specifier|private
 name|Object
 name|value
 decl_stmt|;
+comment|// If this constant was created while doing constant folding, foldedFromCol holds the name of
+comment|// original column from which it was folded.
+specifier|private
+specifier|transient
+name|String
+name|foldedFromCol
+decl_stmt|;
+specifier|public
+name|String
+name|getFoldedFromCol
+parameter_list|()
+block|{
+return|return
+name|foldedFromCol
+return|;
+block|}
+specifier|public
+name|void
+name|setFoldedFromCol
+parameter_list|(
+name|String
+name|foldedFromCol
+parameter_list|)
+block|{
+name|this
+operator|.
+name|foldedFromCol
+operator|=
+name|foldedFromCol
+expr_stmt|;
+block|}
 specifier|public
 name|ExprNodeConstantDesc
 parameter_list|()
