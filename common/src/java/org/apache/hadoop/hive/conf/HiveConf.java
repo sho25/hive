@@ -3267,7 +3267,7 @@ name|HIVEHWIWARFILE
 argument_list|(
 literal|"hive.hwi.war.file"
 argument_list|,
-literal|"${system:HWI_WAR_FILE}"
+literal|"${env:HWI_WAR_FILE}"
 argument_list|,
 literal|"This sets the path to the HWI war file, relative to ${HIVE_HOME}. "
 argument_list|)
@@ -5524,20 +5524,13 @@ block|,
 comment|// Hive global init file location
 name|HIVE_GLOBAL_INIT_FILE_LOCATION
 argument_list|(
-literal|"hive.global.init.file.location"
+literal|"hive.server2.global.init.file.location"
 argument_list|,
-name|System
-operator|.
-name|getenv
-argument_list|(
-literal|"HIVE_CONF_DIR"
-argument_list|)
+literal|"${env:HIVE_CONF_DIR}"
 argument_list|,
 literal|"The location of HS2 global init file (.hiverc).\n"
 operator|+
-literal|"If the property is not set, then HS2 will search for the file in $HIVE_CONF_DIR/.\n"
-operator|+
-literal|"If the property is set, the value must be a valid path where the init file is located."
+literal|"If the property is reset, the value must be a valid path where the init file is located."
 argument_list|)
 block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
