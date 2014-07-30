@@ -8701,9 +8701,6 @@ operator|.
 name|getExternalTmpPath
 argument_list|(
 name|originalDir
-operator|.
-name|toUri
-argument_list|()
 argument_list|)
 argument_list|,
 literal|"partlevel"
@@ -9780,9 +9777,6 @@ operator|.
 name|getExternalTmpPath
 argument_list|(
 name|originalDir
-operator|.
-name|toUri
-argument_list|()
 argument_list|)
 decl_stmt|;
 try|try

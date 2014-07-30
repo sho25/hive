@@ -7217,9 +7217,6 @@ operator|.
 name|getExternalTmpPath
 argument_list|(
 name|newTblPartLoc
-operator|.
-name|toUri
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|truncateTblDesc
@@ -10944,9 +10941,6 @@ operator|.
 name|getExternalTmpPath
 argument_list|(
 name|newTblPartLoc
-operator|.
-name|toUri
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|mergeDesc
