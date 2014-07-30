@@ -3452,6 +3452,30 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVEMERGEORCFILESTRIPELEVEL
+argument_list|(
+literal|"hive.merge.orcfile.stripe.level"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When hive.merge.mapfiles or hive.merge.mapredfiles is enabled while writing a\n"
+operator|+
+literal|" table with ORC file format, enabling this config will do stripe level fast merge\n"
+operator|+
+literal|" for small ORC files. Note that enabling this config will not honor padding tolerance\n"
+operator|+
+literal|" config (hive.exec.orc.block.padding.tolerance)."
+argument_list|)
+block|,
+name|HIVEMERGEINPUTFORMATSTRIPELEVEL
+argument_list|(
+literal|"hive.merge.input.format.stripe.level"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.io.orc.OrcFileStripeMergeInputFormat"
+argument_list|,
+literal|"Input file format to use for ORC stripe level merging (for internal use only)"
+argument_list|)
+block|,
 name|HIVEMERGECURRENTJOBHASDYNAMICPARTITIONS
 argument_list|(
 literal|"hive.merge.current.job.has.dynamic.partitions"

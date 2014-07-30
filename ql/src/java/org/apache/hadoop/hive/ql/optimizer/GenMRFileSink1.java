@@ -639,7 +639,8 @@ name|chDir
 condition|)
 block|{
 comment|// Merge the files in the destination table/partitions by creating Map-only merge job
-comment|// If underlying data is RCFile a RCFileBlockMerge task would be created.
+comment|// If underlying data is RCFile or OrcFile, RCFileBlockMerge task or
+comment|// OrcFileStripeMerge task would be created.
 name|LOG
 operator|.
 name|info

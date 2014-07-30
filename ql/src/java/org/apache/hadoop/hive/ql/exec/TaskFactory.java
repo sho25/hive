@@ -175,11 +175,9 @@ name|ql
 operator|.
 name|io
 operator|.
-name|rcfile
-operator|.
 name|merge
 operator|.
-name|BlockMergeTask
+name|MergeTask
 import|;
 end_import
 
@@ -196,8 +194,6 @@ operator|.
 name|ql
 operator|.
 name|io
-operator|.
-name|rcfile
 operator|.
 name|merge
 operator|.
@@ -898,7 +894,7 @@ name|MergeWork
 operator|.
 name|class
 argument_list|,
-name|BlockMergeTask
+name|MergeTask
 operator|.
 name|class
 argument_list|)

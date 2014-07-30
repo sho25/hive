@@ -767,6 +767,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcInputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|lib
 operator|.
 name|Node
@@ -10797,10 +10817,12 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-comment|// throw a HiveException for non-rcfile.
+comment|// throw a HiveException for other than rcfile and orcfile.
 if|if
 condition|(
 operator|!
+operator|(
+operator|(
 name|inputFormatClass
 operator|.
 name|equals
@@ -10809,16 +10831,36 @@ name|RCFileInputFormat
 operator|.
 name|class
 argument_list|)
+operator|||
+operator|(
+name|inputFormatClass
+operator|.
+name|equals
+argument_list|(
+name|OrcInputFormat
+operator|.
+name|class
+argument_list|)
+operator|)
+operator|)
+operator|)
 condition|)
 block|{
 throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Only RCFileFormat is supportted right now."
+literal|"Only RCFile and ORCFile Formats are supportted right now."
 argument_list|)
 throw|;
 block|}
+name|mergeDesc
+operator|.
+name|setInputFormatClass
+argument_list|(
+name|inputFormatClass
+argument_list|)
+expr_stmt|;
 comment|// throw a HiveException if the table/partition is bucketized
 if|if
 condition|(
