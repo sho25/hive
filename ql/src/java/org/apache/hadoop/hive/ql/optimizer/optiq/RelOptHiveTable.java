@@ -1310,6 +1310,10 @@ argument_list|,
 name|m_hiveNonPartitionCols
 argument_list|,
 name|nonPartColNamesThatRqrStats
+argument_list|,
+literal|true
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|m_rowCount
