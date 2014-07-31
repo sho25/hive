@@ -40,24 +40,6 @@ import|;
 end_import
 
 begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|MetaStoreUtils
-operator|.
-name|DATABASE_WAREHOUSE_SUFFIX
-import|;
-end_import
-
-begin_import
 import|import
 name|java
 operator|.
@@ -163,16 +145,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|UUID
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
 operator|.
 name|Entry
@@ -196,6 +168,16 @@ operator|.
 name|util
 operator|.
 name|TreeSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|UUID
 import|;
 end_import
 
@@ -57573,8 +57555,34 @@ expr_stmt|;
 block|}
 comment|// Generate column access stats if required - wait until column pruning takes place
 comment|// during optimization
+name|boolean
+name|isColumnInfoNeedForAuth
+init|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|isAuthorizationModeV2
+argument_list|()
+operator|&&
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_AUTHORIZATION_ENABLED
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
+name|isColumnInfoNeedForAuth
+operator|||
 name|HiveConf
 operator|.
 name|getBoolVar
@@ -57870,9 +57878,6 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-operator|(
-name|TableScanOperator
-operator|)
 name|topOp
 argument_list|)
 decl_stmt|;
