@@ -3176,6 +3176,11 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
+name|prevHiveObj
+operator|.
+name|getDatabaseCurrent
+argument_list|()
+expr_stmt|;
 name|Hive
 name|newHiveObj
 decl_stmt|;
@@ -3230,6 +3235,11 @@ operator|=
 name|Hive
 operator|.
 name|get
+argument_list|()
+expr_stmt|;
+name|prevHiveObj
+operator|.
+name|getDatabaseCurrent
 argument_list|()
 expr_stmt|;
 comment|//change value of a metavar config param in new hive conf
