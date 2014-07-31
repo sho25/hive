@@ -282,27 +282,6 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"mapper input: "
-operator|+
-name|input
-operator|.
-name|_1
-argument_list|()
-operator|+
-literal|", "
-operator|+
-name|input
-operator|.
-name|_2
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|mapper
 operator|.
 name|map
