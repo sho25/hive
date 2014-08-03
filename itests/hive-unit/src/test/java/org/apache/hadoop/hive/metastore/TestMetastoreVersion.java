@@ -230,7 +230,7 @@ name|class
 operator|.
 name|getDeclaredField
 argument_list|(
-literal|"createDefaultDB"
+literal|"currentUrl"
 argument_list|)
 decl_stmt|;
 name|defDb
@@ -242,11 +242,11 @@ argument_list|)
 expr_stmt|;
 name|defDb
 operator|.
-name|setBoolean
+name|set
 argument_list|(
 literal|null
 argument_list|,
-literal|false
+literal|null
 argument_list|)
 expr_stmt|;
 name|hiveConf

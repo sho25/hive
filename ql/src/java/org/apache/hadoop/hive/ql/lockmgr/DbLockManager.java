@@ -955,6 +955,17 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * Clear the memory of the locks in this object.  This won't clear the locks from the database.    * It is for use with    * {@link #DbLockManager(org.apache.hadoop.hive.metastore.HiveMetaStoreClient).commitTxn} and    * {@link #DbLockManager(org.apache.hadoop.hive.metastore.HiveMetaStoreClient).rollbackTxn}.    */
+name|void
+name|clearLocalLockRecords
+parameter_list|()
+block|{
+name|locks
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
 comment|// Sleep before we send checkLock again, but do it with a back off
 comment|// off so we don't sit and hammer the metastore in a tight loop
 specifier|private

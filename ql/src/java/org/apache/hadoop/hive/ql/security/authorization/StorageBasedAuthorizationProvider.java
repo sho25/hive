@@ -225,22 +225,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|metastore
 operator|.
 name|HiveMetaStore
@@ -465,16 +449,12 @@ name|Hive
 operator|.
 name|get
 argument_list|(
-operator|new
-name|HiveConf
-argument_list|(
 name|getConf
 argument_list|()
 argument_list|,
 name|StorageBasedAuthorizationProvider
 operator|.
 name|class
-argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -571,7 +551,7 @@ comment|// that are user-level do not make sense from the context of storage-per
 comment|// based auth, denying seems to be more canonical here.
 comment|// Update to previous comment: there does seem to be one place that uses this
 comment|// and that is to authorize "show databases" in hcat commandline, which is used
-comment|// by webhcat. And user-level auth seems to be a resonable default in this case.
+comment|// by webhcat. And user-level auth seems to be a reasonable default in this case.
 comment|// The now deprecated HdfsAuthorizationProvider in hcatalog approached this in
 comment|// another way, and that was to see if the user had said above appropriate requested
 comment|// privileges for the hive root warehouse directory. That seems to be the best

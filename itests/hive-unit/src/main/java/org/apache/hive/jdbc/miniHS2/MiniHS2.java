@@ -1082,13 +1082,6 @@ name|getHttpPort
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|HiveMetaStore
-operator|.
-name|HMSHandler
-operator|.
-name|resetDefaultDBFlag
-argument_list|()
-expr_stmt|;
 name|Path
 name|scratchDir
 init|=

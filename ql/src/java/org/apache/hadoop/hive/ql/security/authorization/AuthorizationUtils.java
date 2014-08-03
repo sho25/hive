@@ -23,6 +23,36 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -155,9 +185,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|hooks
+name|exec
 operator|.
-name|Entity
+name|Utilities
 import|;
 end_import
 
@@ -173,9 +203,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|hooks
 operator|.
-name|Utilities
+name|Entity
 import|;
 end_import
 
@@ -484,26 +514,6 @@ operator|.
 name|session
 operator|.
 name|SessionState
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
 import|;
 end_import
 
@@ -1138,7 +1148,7 @@ parameter_list|(
 name|PrivilegeObjectDesc
 name|privSubjectDesc
 parameter_list|,
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>

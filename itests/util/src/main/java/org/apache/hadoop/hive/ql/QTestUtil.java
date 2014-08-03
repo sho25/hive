@@ -10025,6 +10025,7 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// for negative tests, which is succeeded.. no need to print the query string
 specifier|public
 name|void
 name|failed
@@ -10036,43 +10037,11 @@ name|String
 name|debugHint
 parameter_list|)
 block|{
-name|String
-name|command
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|!=
-literal|null
-condition|?
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getLastCommand
-argument_list|()
-else|:
-literal|null
-decl_stmt|;
 name|Assert
 operator|.
 name|fail
 argument_list|(
 literal|"Client Execution was expected to fail, but succeeded with error code 0 "
-operator|+
-operator|(
-name|command
-operator|!=
-literal|null
-condition|?
-literal|" running "
-operator|+
-name|command
-else|:
-literal|""
-operator|)
 operator|+
 operator|(
 name|debugHint
@@ -10195,7 +10164,24 @@ name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"Unexpected exception"
+literal|"Unexpected exception "
+operator|+
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+operator|+
+literal|"\n"
 operator|+
 operator|(
 name|command

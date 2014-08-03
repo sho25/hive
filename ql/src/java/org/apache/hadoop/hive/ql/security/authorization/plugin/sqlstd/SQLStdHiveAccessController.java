@@ -931,6 +931,19 @@ operator|=
 name|getRolesFromMS
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Current user : "
+operator|+
+name|currentUserName
+operator|+
+literal|", Current Roles : "
+operator|+
+name|currentRoles
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|List
@@ -3090,6 +3103,19 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Current user : "
+operator|+
+name|currentUserName
+operator|+
+literal|", Current Roles : "
+operator|+
+name|currentRoles
+argument_list|)
+expr_stmt|;
 comment|// If we are here it means, user is requesting a role he doesn't belong to.
 throw|throw
 operator|new

@@ -47,16 +47,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -584,7 +574,7 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"task"
+literal|"attempt_"
 argument_list|)
 decl_stmt|;
 name|taskAttemptIdBuilder
