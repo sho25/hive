@@ -23904,11 +23904,11 @@ name|MetaException
 argument_list|(
 name|PUBLIC
 operator|+
-literal|"/"
+literal|","
 operator|+
 name|ADMIN
 operator|+
-literal|" role can't be dropped."
+literal|" roles can't be dropped."
 argument_list|)
 throw|;
 block|}
@@ -24269,6 +24269,8 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|GrantRevokeRoleResponse
 name|grant_revoke_role
