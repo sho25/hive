@@ -5119,6 +5119,26 @@ argument_list|,
 literal|"True when HBaseStorageHandler should generate hfiles instead of operate against the online table."
 argument_list|)
 block|,
+name|HIVE_HBASE_SNAPSHOT_NAME
+argument_list|(
+literal|"hive.hbase.snapshot.name"
+argument_list|,
+literal|null
+argument_list|,
+literal|"The HBase table snapshot name to use."
+argument_list|)
+block|,
+name|HIVE_HBASE_SNAPSHOT_RESTORE_DIR
+argument_list|(
+literal|"hive.hbase.snapshot.restoredir"
+argument_list|,
+literal|"/tmp"
+argument_list|,
+literal|"The directory in which to "
+operator|+
+literal|"restore the HBase table snapshot."
+argument_list|)
+block|,
 comment|// For har files
 name|HIVEARCHIVEENABLED
 argument_list|(

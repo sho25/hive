@@ -1313,7 +1313,7 @@ specifier|private
 name|ParseDriver
 name|pd
 decl_stmt|;
-specifier|private
+specifier|protected
 name|Hive
 name|db
 decl_stmt|;
@@ -3987,7 +3987,7 @@ throw|;
 block|}
 return|return;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|runCreateTableCmd
 parameter_list|(
@@ -4037,7 +4037,7 @@ throw|;
 block|}
 return|return;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|runCmd
 parameter_list|(
