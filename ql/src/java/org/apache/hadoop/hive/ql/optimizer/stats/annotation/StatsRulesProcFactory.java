@@ -1042,6 +1042,8 @@ argument_list|(
 name|tsop
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 comment|// gather statistics for the first time and the attach it to table scan operator
 name|Statistics
 name|stats
@@ -1062,8 +1064,6 @@ argument_list|,
 name|tsop
 argument_list|)
 decl_stmt|;
-try|try
-block|{
 name|tsop
 operator|.
 name|setStatistics
@@ -1119,6 +1119,27 @@ name|STATISTICS_CLONING_FAILED
 operator|.
 name|getMsg
 argument_list|()
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|e
 argument_list|)
 throw|;
 block|}

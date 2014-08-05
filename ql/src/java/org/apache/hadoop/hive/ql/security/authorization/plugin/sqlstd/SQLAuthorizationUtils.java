@@ -2254,6 +2254,34 @@ argument_list|)
 throw|;
 block|}
 block|}
+specifier|static
+name|HiveAuthzPluginException
+name|getPluginException
+parameter_list|(
+name|String
+name|prefix
+parameter_list|,
+name|Exception
+name|e
+parameter_list|)
+block|{
+return|return
+operator|new
+name|HiveAuthzPluginException
+argument_list|(
+name|prefix
+operator|+
+literal|": "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

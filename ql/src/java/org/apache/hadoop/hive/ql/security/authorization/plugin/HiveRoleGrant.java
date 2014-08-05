@@ -491,6 +491,31 @@ name|result
 argument_list|()
 return|;
 block|}
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|roleName
+operator|+
+literal|"["
+operator|+
+name|principalName
+operator|+
+literal|":"
+operator|+
+name|principalType
+operator|+
+operator|(
+name|grantOption
+condition|?
+literal|":WITH GRANT]"
+else|:
+literal|"]"
+operator|)
+return|;
+block|}
 block|}
 end_class
 

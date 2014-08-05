@@ -663,12 +663,6 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTOREFORCERELOADCONF
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
 name|METASTORESERVERMINTHREADS
 block|,
 name|HiveConf
@@ -1872,21 +1866,6 @@ argument_list|,
 literal|"jdbc:derby:;databaseName=metastore_db;create=true"
 argument_list|,
 literal|"JDBC connect string for a JDBC metastore"
-argument_list|)
-block|,
-name|METASTOREFORCERELOADCONF
-argument_list|(
-literal|"hive.metastore.force.reload.conf"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether to force reloading of the metastore configuration (including\n"
-operator|+
-literal|"the connection URL, before the next metastore query that accesses the\n"
-operator|+
-literal|"datastore. Once reloaded, this value is reset to false. Used for\n"
-operator|+
-literal|"testing only."
 argument_list|)
 block|,
 name|HMSHANDLERATTEMPTS
@@ -3487,6 +3466,30 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.io.rcfile.merge.RCFileBlockMergeInputFormat"
 argument_list|,
 literal|""
+argument_list|)
+block|,
+name|HIVEMERGEORCFILESTRIPELEVEL
+argument_list|(
+literal|"hive.merge.orcfile.stripe.level"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When hive.merge.mapfiles or hive.merge.mapredfiles is enabled while writing a\n"
+operator|+
+literal|" table with ORC file format, enabling this config will do stripe level fast merge\n"
+operator|+
+literal|" for small ORC files. Note that enabling this config will not honor padding tolerance\n"
+operator|+
+literal|" config (hive.exec.orc.block.padding.tolerance)."
+argument_list|)
+block|,
+name|HIVEMERGEINPUTFORMATSTRIPELEVEL
+argument_list|(
+literal|"hive.merge.input.format.stripe.level"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.io.orc.OrcFileStripeMergeInputFormat"
+argument_list|,
+literal|"Input file format to use for ORC stripe level merging (for internal use only)"
 argument_list|)
 block|,
 name|HIVEMERGECURRENTJOBHASDYNAMICPARTITIONS
@@ -5153,6 +5156,26 @@ argument_list|,
 literal|"True when HBaseStorageHandler should generate hfiles instead of operate against the online table."
 argument_list|)
 block|,
+name|HIVE_HBASE_SNAPSHOT_NAME
+argument_list|(
+literal|"hive.hbase.snapshot.name"
+argument_list|,
+literal|null
+argument_list|,
+literal|"The HBase table snapshot name to use."
+argument_list|)
+block|,
+name|HIVE_HBASE_SNAPSHOT_RESTORE_DIR
+argument_list|(
+literal|"hive.hbase.snapshot.restoredir"
+argument_list|,
+literal|"/tmp"
+argument_list|,
+literal|"The directory in which to "
+operator|+
+literal|"restore the HBase table snapshot."
+argument_list|)
+block|,
 comment|// For har files
 name|HIVEARCHIVEENABLED
 argument_list|(
@@ -6141,7 +6164,7 @@ name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
 argument_list|,
-literal|"hive.security.authenticator.manager,hive.security.authorization.manager"
+literal|"hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role"
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
@@ -6516,11 +6539,14 @@ operator|+
 literal|"  column: implies column names can contain any character."
 argument_list|)
 block|,
+comment|// role names are case-insensitive
 name|USERS_IN_ADMIN_ROLE
 argument_list|(
 literal|"hive.users.in.admin.role"
 argument_list|,
 literal|""
+argument_list|,
+literal|false
 argument_list|,
 literal|"Comma separated list of users who are in admin role for bootstrapping.\n"
 operator|+
@@ -6676,6 +6702,11 @@ specifier|final
 name|boolean
 name|excluded
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|caseSensitive
+decl_stmt|;
 name|ConfVars
 parameter_list|(
 name|String
@@ -6697,6 +6728,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|description
+argument_list|,
+literal|true
 argument_list|,
 literal|false
 argument_list|)
@@ -6727,7 +6760,40 @@ literal|null
 argument_list|,
 name|description
 argument_list|,
+literal|true
+argument_list|,
 name|excluded
+argument_list|)
+expr_stmt|;
+block|}
+name|ConfVars
+parameter_list|(
+name|String
+name|varname
+parameter_list|,
+name|String
+name|defaultVal
+parameter_list|,
+name|boolean
+name|caseSensitive
+parameter_list|,
+name|String
+name|description
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|varname
+argument_list|,
+name|defaultVal
+argument_list|,
+literal|null
+argument_list|,
+name|description
+argument_list|,
+name|caseSensitive
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -6756,6 +6822,8 @@ name|validator
 argument_list|,
 name|description
 argument_list|,
+literal|true
+argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
@@ -6773,6 +6841,9 @@ name|validator
 parameter_list|,
 name|String
 name|description
+parameter_list|,
+name|boolean
+name|caseSensitive
 parameter_list|,
 name|boolean
 name|excluded
@@ -6818,6 +6889,12 @@ operator|.
 name|excluded
 operator|=
 name|excluded
+expr_stmt|;
+name|this
+operator|.
+name|caseSensitive
+operator|=
+name|caseSensitive
 expr_stmt|;
 if|if
 condition|(
@@ -7217,6 +7294,15 @@ parameter_list|()
 block|{
 return|return
 name|excluded
+return|;
+block|}
+specifier|public
+name|boolean
+name|isCaseSensitive
+parameter_list|()
+block|{
+return|return
+name|caseSensitive
 return|;
 block|}
 annotation|@

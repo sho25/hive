@@ -830,16 +830,6 @@ operator|+
 name|signature
 argument_list|)
 decl_stmt|;
-name|crd
-operator|.
-name|addAll
-argument_list|(
-name|job
-operator|.
-name|getCredentials
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|job
 operator|.
 name|getCredentials

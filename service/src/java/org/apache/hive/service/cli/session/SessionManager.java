@@ -686,6 +686,9 @@ parameter_list|,
 name|String
 name|password
 parameter_list|,
+name|String
+name|ipAddress
+parameter_list|,
 name|Map
 argument_list|<
 name|String
@@ -705,6 +708,8 @@ argument_list|,
 name|username
 argument_list|,
 name|password
+argument_list|,
+name|ipAddress
 argument_list|,
 name|sessionConf
 argument_list|,
@@ -726,6 +731,9 @@ name|username
 parameter_list|,
 name|String
 name|password
+parameter_list|,
+name|String
+name|ipAddress
 parameter_list|,
 name|Map
 argument_list|<
@@ -766,10 +774,7 @@ name|password
 argument_list|,
 name|hiveConf
 argument_list|,
-name|TSetIpAddressProcessor
-operator|.
-name|getUserIpAddress
-argument_list|()
+name|ipAddress
 argument_list|,
 name|delegationToken
 argument_list|)
@@ -811,10 +816,7 @@ name|password
 argument_list|,
 name|hiveConf
 argument_list|,
-name|TSetIpAddressProcessor
-operator|.
-name|getUserIpAddress
-argument_list|()
+name|ipAddress
 argument_list|)
 expr_stmt|;
 block|}

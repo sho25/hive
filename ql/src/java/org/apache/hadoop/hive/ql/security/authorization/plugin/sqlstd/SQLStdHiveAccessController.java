@@ -931,6 +931,19 @@ operator|=
 name|getRolesFromMS
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Current user : "
+operator|+
+name|currentUserName
+operator|+
+literal|", Current Roles : "
+operator|+
+name|currentRoles
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|List
@@ -1057,19 +1070,13 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
+name|SQLAuthorizationUtils
+operator|.
+name|getPluginException
 argument_list|(
 literal|"Failed to retrieve roles for "
 operator|+
 name|currentUserName
-operator|+
-literal|": "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -1336,15 +1343,11 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
-argument_list|(
-literal|"Error granting privileges: "
-operator|+
-name|e
+name|SQLAuthorizationUtils
 operator|.
-name|getMessage
-argument_list|()
+name|getPluginException
+argument_list|(
+literal|"Error granting privileges"
 argument_list|,
 name|e
 argument_list|)
@@ -1641,8 +1644,9 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
+name|SQLAuthorizationUtils
+operator|.
+name|getPluginException
 argument_list|(
 literal|"Error revoking privileges"
 argument_list|,
@@ -1760,15 +1764,11 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
-argument_list|(
-literal|"Error create role : "
-operator|+
-name|e
+name|SQLAuthorizationUtils
 operator|.
-name|getMessage
-argument_list|()
+name|getPluginException
+argument_list|(
+literal|"Error create role"
 argument_list|,
 name|e
 argument_list|)
@@ -1833,8 +1833,9 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
+name|SQLAuthorizationUtils
+operator|.
+name|getPluginException
 argument_list|(
 literal|"Error dropping role"
 argument_list|,
@@ -1979,13 +1980,11 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
-argument_list|(
-name|e
+name|SQLAuthorizationUtils
 operator|.
-name|getMessage
-argument_list|()
+name|getPluginException
+argument_list|(
+literal|"Error granting role"
 argument_list|,
 name|e
 argument_list|)
@@ -2010,17 +2009,11 @@ operator|+
 literal|" to role "
 operator|+
 name|roleName
-operator|+
-literal|": "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
 decl_stmt|;
 throw|throw
-operator|new
-name|HiveAuthzPluginException
+name|SQLAuthorizationUtils
+operator|.
+name|getPluginException
 argument_list|(
 name|msg
 argument_list|,
@@ -2164,17 +2157,11 @@ operator|+
 literal|" to role "
 operator|+
 name|roleName
-operator|+
-literal|": "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
 decl_stmt|;
 throw|throw
-operator|new
-name|HiveAuthzPluginException
+name|SQLAuthorizationUtils
+operator|.
+name|getPluginException
 argument_list|(
 name|msg
 argument_list|,
@@ -2242,8 +2229,9 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
+name|SQLAuthorizationUtils
+operator|.
+name|getPluginException
 argument_list|(
 literal|"Error listing all roles"
 argument_list|,
@@ -2314,8 +2302,9 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
+name|SQLAuthorizationUtils
+operator|.
+name|getPluginException
 argument_list|(
 literal|"Error getting principals for all roles"
 argument_list|,
@@ -2731,15 +2720,11 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
-argument_list|(
-literal|"Error showing privileges: "
-operator|+
-name|e
+name|SQLAuthorizationUtils
 operator|.
-name|getMessage
-argument_list|()
+name|getPluginException
+argument_list|(
+literal|"Error showing privileges"
 argument_list|,
 name|e
 argument_list|)
@@ -3090,6 +3075,19 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Current user : "
+operator|+
+name|currentUserName
+operator|+
+literal|", Current Roles : "
+operator|+
+name|currentRoles
+argument_list|)
+expr_stmt|;
 comment|// If we are here it means, user is requesting a role he doesn't belong to.
 throw|throw
 operator|new
@@ -3133,28 +3131,11 @@ name|HiveRoleGrant
 argument_list|>
 name|roles
 decl_stmt|;
-try|try
-block|{
 name|roles
 operator|=
 name|getCurrentRoles
 argument_list|()
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveAuthzPluginException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 for|for
 control|(
 name|HiveRoleGrant
@@ -3206,28 +3187,11 @@ name|HiveRoleGrant
 argument_list|>
 name|currentRoles
 decl_stmt|;
-try|try
-block|{
 name|currentRoles
 operator|=
 name|getCurrentRoles
 argument_list|()
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveAuthzPluginException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 for|for
 control|(
 name|String
@@ -3406,21 +3370,15 @@ name|e
 parameter_list|)
 block|{
 throw|throw
-operator|new
-name|HiveAuthzPluginException
+name|SQLAuthorizationUtils
+operator|.
+name|getPluginException
 argument_list|(
 literal|"Error getting role grant information for user "
 operator|+
 name|principal
 operator|.
 name|getName
-argument_list|()
-operator|+
-literal|": "
-operator|+
-name|e
-operator|.
-name|getMessage
 argument_list|()
 argument_list|,
 name|e

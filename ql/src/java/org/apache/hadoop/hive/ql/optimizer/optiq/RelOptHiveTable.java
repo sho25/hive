@@ -1294,6 +1294,8 @@ block|}
 else|else
 block|{
 comment|// 2.2 Obtain col stats for full table scan
+try|try
+block|{
 name|Statistics
 name|stats
 init|=
@@ -1375,6 +1377,33 @@ name|c
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+name|String
+name|logMsg
+init|=
+literal|"Collecting stats failed."
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|logMsg
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|logMsg
+argument_list|)
+throw|;
 block|}
 block|}
 if|if
