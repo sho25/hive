@@ -543,6 +543,20 @@ name|UnionWork
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
 begin_comment
 comment|/**  * GenSparkUtils is a collection of shared helper methods to produce SparkWork  * Cloned from GenTezUtils.  * TODO: need to make it fit to Spark  */
 end_comment
@@ -691,7 +705,10 @@ name|SparkWork
 name|sparkWork
 parameter_list|)
 block|{
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 operator|!
 name|root
 operator|.
@@ -700,7 +717,10 @@ argument_list|()
 operator|.
 name|isEmpty
 argument_list|()
-assert|;
+argument_list|,
+literal|"AssertionError: expected root.getParentOperators() to be non-empty"
+argument_list|)
+expr_stmt|;
 name|boolean
 name|isAutoReduceParallelism
 init|=
@@ -818,13 +838,29 @@ comment|// All parents should be reduce sinks. We pick the one we just walked
 comment|// to choose the number of reducers. In the join/union case they will
 comment|// all be -1. In sort/order case where it matters there will be only
 comment|// one parent.
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|context
 operator|.
 name|parentOfRoot
 operator|instanceof
 name|ReduceSinkOperator
-assert|;
+argument_list|,
+literal|"AssertionError: expected context.parentOfRoot to be an instance of ReduceSinkOperator, but was "
+operator|+
+name|context
+operator|.
+name|parentOfRoot
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|ReduceSinkOperator
 name|reduceSink
 init|=
@@ -1143,7 +1179,10 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|root
 operator|.
 name|getParentOperators
@@ -1151,7 +1190,10 @@ argument_list|()
 operator|.
 name|isEmpty
 argument_list|()
-assert|;
+argument_list|,
+literal|"AssertionError: expected root.getParentOperators() to be empty"
+argument_list|)
+expr_stmt|;
 name|MapWork
 name|mapWork
 init|=
@@ -1183,11 +1225,25 @@ name|root
 argument_list|)
 expr_stmt|;
 comment|// map work starts with table scan operators
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|root
 operator|instanceof
 name|TableScanOperator
-assert|;
+argument_list|,
+literal|"AssertionError: expected root to be an instance of TableScanOperator, but was "
+operator|+
+name|root
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|String
 name|alias
 init|=
@@ -1731,11 +1787,19 @@ expr_stmt|;
 block|}
 block|}
 comment|// we should have been able to reach the union from only one side.
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|count
 operator|<=
 literal|1
-assert|;
+argument_list|,
+literal|"AssertionError: expected count to be<= 1, but was "
+operator|+
+name|count
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|parent

@@ -515,8 +515,22 @@ name|InputFormat
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
 begin_comment
-comment|/**  * ProcessAnalyzeTable sets up work for the several variants of analyze table  * (normal, no scan, partial scan.) The plan at this point will be a single  * table scan operator.  *   * TODO: cloned from tez ProcessAnalyzeTable. Need to make sure it fits to Spark.  */
+comment|/**  * ProcessAnalyzeTable sets up work for the several variants of analyze table  * (normal, no scan, partial scan.) The plan at this point will be a single  * table scan operator.  *  * TODO: cloned from tez ProcessAnalyzeTable. Need to make sure it fits to Spark.  */
 end_comment
 
 begin_class
@@ -667,14 +681,23 @@ name|isAnalyzeCommand
 argument_list|()
 condition|)
 block|{
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|tableScan
 operator|.
 name|getChildOperators
 argument_list|()
 operator|==
 literal|null
-operator|||
+argument_list|,
+literal|"AssertionError: expected tableScan.getChildOperators() to be null"
+argument_list|)
+expr_stmt|;
+name|int
+name|childOpSize
+init|=
 name|tableScan
 operator|.
 name|getChildOperators
@@ -682,9 +705,20 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
+decl_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|childOpSize
 operator|==
 literal|0
-assert|;
+argument_list|,
+literal|"AssertionError: expected tableScan.getChildOperators().size() to be 0, but was "
+operator|+
+name|childOpSize
+argument_list|)
+expr_stmt|;
 name|String
 name|alias
 init|=
@@ -725,11 +759,17 @@ name|a
 expr_stmt|;
 block|}
 block|}
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|alias
 operator|!=
 literal|null
-assert|;
+argument_list|,
+literal|"AssertionError: expected alias to be not null"
+argument_list|)
+expr_stmt|;
 name|SparkWork
 name|sparkWork
 init|=

@@ -161,6 +161,20 @@ name|Pair
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class encapsulates all the work objects that can be executed  * in a single Spark job. Currently it's basically a tree with MapWork at the  * roots and and ReduceWork (or UnionWork) at all other nodes.  */
 end_comment
@@ -802,14 +816,24 @@ name|BaseWork
 name|work
 parameter_list|)
 block|{
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|invertedWorkGraph
 operator|.
 name|containsKey
 argument_list|(
 name|work
 argument_list|)
-operator|&&
+argument_list|,
+literal|"AssertionError: expected invertedWorkGraph.containsKey(work) to be true"
+argument_list|)
+expr_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|invertedWorkGraph
 operator|.
 name|get
@@ -818,7 +842,10 @@ name|work
 argument_list|)
 operator|!=
 literal|null
-assert|;
+argument_list|,
+literal|"AssertionError: expected invertedWorkGraph.get(work) to be not null"
+argument_list|)
+expr_stmt|;
 return|return
 operator|new
 name|LinkedList
@@ -847,14 +874,24 @@ name|BaseWork
 name|work
 parameter_list|)
 block|{
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|workGraph
 operator|.
 name|containsKey
 argument_list|(
 name|work
 argument_list|)
-operator|&&
+argument_list|,
+literal|"AssertionError: expected workGraph.containsKey(work) to be true"
+argument_list|)
+expr_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|workGraph
 operator|.
 name|get
@@ -863,7 +900,10 @@ name|work
 argument_list|)
 operator|!=
 literal|null
-assert|;
+argument_list|,
+literal|"AssertionError: expected workGraph.get(work) to be not null"
+argument_list|)
+expr_stmt|;
 return|return
 operator|new
 name|LinkedList

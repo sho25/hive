@@ -461,6 +461,20 @@ name|TableDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -709,7 +723,9 @@ expr_stmt|;
 block|}
 else|else
 block|{
-assert|assert
+name|int
+name|workMapSize
+init|=
 name|context
 operator|.
 name|childToWorkMap
@@ -721,9 +737,20 @@ argument_list|)
 operator|.
 name|size
 argument_list|()
+decl_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|workMapSize
 operator|==
 literal|1
-assert|;
+argument_list|,
+literal|"AssertionError: expected context.childToWorkMap.get(parentRS).size() to be 1, but was "
+operator|+
+name|workMapSize
+argument_list|)
+expr_stmt|;
 name|parentWork
 operator|=
 name|context

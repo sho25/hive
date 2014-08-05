@@ -415,8 +415,22 @@ name|UnionWork
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
 begin_comment
-comment|/**  * GenSparkWork separates the operator tree into spark tasks.  * It is called once per leaf operator (operator that forces a new execution unit.)  * and break the operators into work and tasks along the way.  *   * Cloned from GenTezWork.  *   * TODO: need to go thru this to make it fit completely to Spark.  */
+comment|/**  * GenSparkWork separates the operator tree into spark tasks.  * It is called once per leaf operator (operator that forces a new execution unit.)  * and break the operators into work and tasks along the way.  *  * Cloned from GenTezWork.  *   * TODO: need to go thru this to make it fit completely to Spark.  */
 end_comment
 
 begin_class
@@ -499,23 +513,43 @@ name|GenSparkProcContext
 operator|)
 name|procContext
 decl_stmt|;
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|context
 operator|!=
 literal|null
-operator|&&
+argument_list|,
+literal|"AssertionError: expected context to be not null"
+argument_list|)
+expr_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|context
 operator|.
 name|currentTask
 operator|!=
 literal|null
-operator|&&
+argument_list|,
+literal|"AssertionError: expected context.currentTask to be not null"
+argument_list|)
+expr_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|context
 operator|.
 name|currentRootOperator
 operator|!=
 literal|null
-assert|;
+argument_list|,
+literal|"AssertionError: expected context.currentRootOperator to be not null"
+argument_list|)
+expr_stmt|;
 comment|// Operator is a file sink or reduce sink. Something that forces
 comment|// a new vertex.
 name|Operator
@@ -1180,7 +1214,10 @@ block|{
 comment|// we've seen this terminal before and have created a union work object.
 comment|// just need to add this work to it. There will be no children of this one
 comment|// since we've passed this operator before.
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|operator
 operator|.
 name|getChildOperators
@@ -1188,7 +1225,10 @@ argument_list|()
 operator|.
 name|isEmpty
 argument_list|()
-assert|;
+argument_list|,
+literal|"AssertionError: expected operator.getChildOperators() to be empty"
+argument_list|)
+expr_stmt|;
 name|unionWork
 operator|=
 operator|(
@@ -1355,15 +1395,44 @@ name|followingWork
 argument_list|)
 expr_stmt|;
 comment|// need to add this branch to the key + value info
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|operator
 operator|instanceof
 name|ReduceSinkOperator
-operator|&&
+argument_list|,
+literal|"AssertionError: expected operator to be an instance of ReduceSinkOperator, but was "
+operator|+
+name|operator
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|followingWork
 operator|instanceof
 name|ReduceWork
-assert|;
+argument_list|,
+literal|"AssertionError: expected followingWork to be an instance of ReduceWork, but was "
+operator|+
+name|followingWork
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|ReduceSinkOperator
 name|rs
 init|=
@@ -1520,7 +1589,10 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-assert|assert
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|operator
 operator|.
 name|getChildOperators
@@ -1530,7 +1602,18 @@ name|size
 argument_list|()
 operator|==
 literal|1
-assert|;
+argument_list|,
+literal|"AssertionError: expected operator.getChildOperators().size() to be 1, but was "
+operator|+
+name|operator
+operator|.
+name|getChildOperators
+argument_list|()
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|context
 operator|.
 name|parentOfRoot
