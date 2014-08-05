@@ -89,7 +89,7 @@ block|}
 specifier|public
 name|SparkEdgeProperty
 parameter_list|(
-name|int
+name|long
 name|edgeType
 parameter_list|)
 block|{

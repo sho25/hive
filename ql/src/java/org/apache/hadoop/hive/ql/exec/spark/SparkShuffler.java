@@ -74,6 +74,9 @@ argument_list|,
 name|BytesWritable
 argument_list|>
 name|input
+parameter_list|,
+name|int
+name|numPartitions
 parameter_list|)
 function_decl|;
 block|}
