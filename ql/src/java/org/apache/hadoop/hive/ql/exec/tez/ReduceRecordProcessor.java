@@ -1180,10 +1180,8 @@ name|vectorized
 operator|=
 name|redWork
 operator|.
-name|getVectorModeOn
+name|getVectorMode
 argument_list|()
-operator|!=
-literal|null
 expr_stmt|;
 try|try
 block|{
