@@ -58845,6 +58845,16 @@ argument_list|(
 literal|"CBO Succeeded; optimized logical plan."
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|newAST
+operator|.
+name|dump
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|/*          * Use non CBO Result Set Schema so as to preserve user specified names.          * Hive seems to have bugs with OB/LIMIT in sub queries. // 3. Reset          * result set schema resultSchema =          * convertRowSchemaToResultSetSchema(opParseCtx.get(sinkOp)          * .getRowResolver(), true);          */
 block|}
 catch|catch
