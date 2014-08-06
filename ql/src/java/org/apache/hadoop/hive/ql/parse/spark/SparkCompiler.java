@@ -257,6 +257,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|TableScanOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|Task
 import|;
 end_import
@@ -1187,9 +1205,33 @@ name|genSparkWork
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//    opRules.put(new RuleRegExp("Handle Potential Analyze Command",
-comment|//        TableScanOperator.getOperatorName() + "%"),
-comment|//        new ProcessAnalyzeTable(GenSparkUtils.getUtils()));
+name|opRules
+operator|.
+name|put
+argument_list|(
+operator|new
+name|RuleRegExp
+argument_list|(
+literal|"Handle Analyze Command"
+argument_list|,
+name|TableScanOperator
+operator|.
+name|getOperatorName
+argument_list|()
+operator|+
+literal|"%"
+argument_list|)
+argument_list|,
+operator|new
+name|SparkProcessAnalyzeTable
+argument_list|(
+name|GenSparkUtils
+operator|.
+name|getUtils
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|//    opRules.put(new RuleRegExp("Remember union", UnionOperator.getOperatorName() + "%"),
 comment|//        new NodeProcessor() {
 comment|//      @Override

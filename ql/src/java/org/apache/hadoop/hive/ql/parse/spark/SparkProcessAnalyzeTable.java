@@ -691,13 +691,7 @@ name|getChildOperators
 argument_list|()
 operator|==
 literal|null
-argument_list|,
-literal|"AssertionError: expected tableScan.getChildOperators() to be null"
-argument_list|)
-expr_stmt|;
-name|int
-name|childOpSize
-init|=
+operator|||
 name|tableScan
 operator|.
 name|getChildOperators
@@ -705,18 +699,12 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
-decl_stmt|;
-name|Preconditions
-operator|.
-name|checkArgument
-argument_list|(
-name|childOpSize
 operator|==
 literal|0
 argument_list|,
-literal|"AssertionError: expected tableScan.getChildOperators().size() to be 0, but was "
+literal|"AssertionError: expected tableScan.getChildOperators() to be null, "
 operator|+
-name|childOpSize
+literal|"or tableScan.getChildOperators().size() to be 0"
 argument_list|)
 expr_stmt|;
 name|String
