@@ -6074,10 +6074,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|oldPartPathFS
+name|FileUtils
 operator|.
-name|equals
+name|equalsFileSystem
 argument_list|(
+name|oldPartPathFS
+argument_list|,
 name|loadPathFS
 argument_list|)
 condition|)
