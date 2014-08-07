@@ -267,7 +267,7 @@ name|mr
 operator|.
 name|ExecMapper
 operator|.
-name|reportStats
+name|ReportStats
 import|;
 end_import
 
@@ -1362,11 +1362,11 @@ name|logCloseInfo
 argument_list|()
 expr_stmt|;
 block|}
-name|reportStats
+name|ReportStats
 name|rps
 init|=
 operator|new
-name|reportStats
+name|ReportStats
 argument_list|(
 name|reporter
 argument_list|)

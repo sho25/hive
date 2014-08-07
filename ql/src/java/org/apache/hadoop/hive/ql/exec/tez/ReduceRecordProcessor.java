@@ -275,7 +275,7 @@ name|mr
 operator|.
 name|ExecMapper
 operator|.
-name|reportStats
+name|ReportStats
 import|;
 end_import
 
@@ -1180,10 +1180,8 @@ name|vectorized
 operator|=
 name|redWork
 operator|.
-name|getVectorModeOn
+name|getVectorMode
 argument_list|()
-operator|!=
-literal|null
 expr_stmt|;
 try|try
 block|{
@@ -3179,11 +3177,11 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|reportStats
+name|ReportStats
 name|rps
 init|=
 operator|new
-name|reportStats
+name|ReportStats
 argument_list|(
 name|reporter
 argument_list|)

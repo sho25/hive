@@ -4679,6 +4679,17 @@ operator|+
 literal|"could not be computed accurately."
 argument_list|)
 block|,
+name|HIVE_STATS_COLLECT_PART_LEVEL_STATS
+argument_list|(
+literal|"hive.analyze.stmt.collect.partlevel.stats"
+argument_list|,
+literal|true
+argument_list|,
+literal|"analyze table T compute statistics for columns. Queries like these should compute partition"
+operator|+
+literal|"level stats for partitioned table even when no part spec is specified."
+argument_list|)
+block|,
 name|HIVE_STATS_GATHER_NUM_THREADS
 argument_list|(
 literal|"hive.stats.gather.num.threads"

@@ -708,7 +708,7 @@ name|assertTrue
 argument_list|(
 name|v
 operator|.
-name|validateOperator
+name|validateMapWorkOperator
 argument_list|(
 name|gbyOp
 argument_list|)
@@ -1332,7 +1332,7 @@ name|assertTrue
 argument_list|(
 name|vectorizer
 operator|.
-name|validateOperator
+name|validateMapWorkOperator
 argument_list|(
 name|mop
 argument_list|)
@@ -1388,7 +1388,7 @@ name|assertTrue
 argument_list|(
 name|vectorizer
 operator|.
-name|validateOperator
+name|validateMapWorkOperator
 argument_list|(
 name|mop
 argument_list|)
