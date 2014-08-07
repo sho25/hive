@@ -183,7 +183,7 @@ begin_class
 specifier|public
 class|class
 name|InputMerger
-implements|implements
+extends|extends
 name|KeyValuesReader
 block|{
 specifier|public
