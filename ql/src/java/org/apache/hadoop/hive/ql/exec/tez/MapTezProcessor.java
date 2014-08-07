@@ -21,6 +21,22 @@ name|tez
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|runtime
+operator|.
+name|api
+operator|.
+name|TezProcessorContext
+import|;
+end_import
+
 begin_comment
 comment|/**  * Subclass that is used to indicate if this is a map or reduce process  */
 end_comment
@@ -34,12 +50,21 @@ name|TezProcessor
 block|{
 specifier|public
 name|MapTezProcessor
-parameter_list|()
+parameter_list|(
+name|TezProcessorContext
+name|context
+parameter_list|)
 block|{
 name|super
 argument_list|(
-literal|true
+name|context
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|isMap
+operator|=
+literal|true
 expr_stmt|;
 block|}
 block|}

@@ -99,7 +99,7 @@ name|common
 operator|.
 name|objectregistry
 operator|.
-name|ObjectRegistryFactory
+name|ObjectRegistryImpl
 import|;
 end_import
 
@@ -149,9 +149,8 @@ specifier|final
 name|ObjectRegistry
 name|registry
 init|=
-name|ObjectRegistryFactory
-operator|.
-name|getObjectRegistry
+operator|new
+name|ObjectRegistryImpl
 argument_list|()
 decl_stmt|;
 annotation|@

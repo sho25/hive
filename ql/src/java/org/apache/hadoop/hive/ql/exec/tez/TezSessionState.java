@@ -1114,11 +1114,22 @@ expr_stmt|;
 block|}
 block|}
 block|}
+try|try
+block|{
 name|session
 operator|.
 name|waitTillReady
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|ie
+parameter_list|)
+block|{
+comment|//ignore
+block|}
 comment|// In case we need to run some MR jobs, we'll run them under tez MR emulation. The session
 comment|// id is used for tez to reuse the current session rather than start a new one.
 name|conf

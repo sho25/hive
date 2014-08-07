@@ -171,6 +171,20 @@ name|InputReadErrorEvent
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Multimap
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -209,8 +223,17 @@ decl_stmt|;
 comment|// used by the framework at runtime. initialize is the real initializer at runtime
 specifier|public
 name|CustomPartitionEdge
-parameter_list|()
-block|{   }
+parameter_list|(
+name|EdgeManagerContext
+name|context
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|context
+argument_list|)
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -268,17 +291,8 @@ name|Override
 specifier|public
 name|void
 name|initialize
-parameter_list|(
-name|EdgeManagerContext
-name|context
-parameter_list|)
+parameter_list|()
 block|{
-name|this
-operator|.
-name|context
-operator|=
-name|context
-expr_stmt|;
 name|byte
 index|[]
 name|payload
