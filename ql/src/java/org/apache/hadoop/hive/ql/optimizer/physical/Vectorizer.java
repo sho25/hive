@@ -1863,6 +1863,13 @@ name|patternBuilder
 operator|.
 name|append
 argument_list|(
+literal|"|binary"
+argument_list|)
+expr_stmt|;
+name|patternBuilder
+operator|.
+name|append
+argument_list|(
 literal|"|string"
 argument_list|)
 expr_stmt|;
