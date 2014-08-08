@@ -73094,6 +73094,36 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|gbChildProjLst
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// This will happen for count(*), in such cases we arbitarily pick
+comment|// first element from srcRel
+name|gbChildProjLst
+operator|.
+name|add
+argument_list|(
+name|this
+operator|.
+name|m_cluster
+operator|.
+name|getRexBuilder
+argument_list|()
+operator|.
+name|makeInputRef
+argument_list|(
+name|srcRel
+argument_list|,
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|RelNode
 name|gbInputRel
 init|=
@@ -74518,9 +74548,6 @@ name|astToExprNDescMap
 operator|.
 name|get
 argument_list|(
-operator|(
-name|ASTNode
-operator|)
 name|obASTExpr
 operator|.
 name|getChild
@@ -74724,6 +74751,8 @@ name|RexNode
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|RexNode
 name|apply
@@ -74866,6 +74895,8 @@ name|RexNode
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|RexNode
 name|apply
@@ -77697,6 +77728,8 @@ name|String
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|apply
