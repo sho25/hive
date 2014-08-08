@@ -3876,9 +3876,11 @@ name|partitionValidationRegex
 operator|!=
 literal|null
 operator|&&
+operator|!
 name|partitionValidationRegex
-operator|!=
-literal|""
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 name|partitionValidationPattern
