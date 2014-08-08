@@ -67,6 +67,7 @@ implements|implements
 name|RelOptCost
 block|{
 comment|// ~ Static fields/initializers ---------------------------------------------
+specifier|public
 specifier|static
 specifier|final
 name|HiveCost
@@ -101,6 +102,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
+specifier|public
 specifier|static
 specifier|final
 name|HiveCost
@@ -135,6 +137,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
+specifier|public
 specifier|static
 specifier|final
 name|HiveCost
@@ -163,6 +166,7 @@ return|;
 block|}
 block|}
 decl_stmt|;
+specifier|public
 specifier|static
 specifier|final
 name|HiveCost
