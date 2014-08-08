@@ -423,6 +423,20 @@ comment|// At this point we are done processing the input. Close the record proc
 name|closeRecordProcessor
 argument_list|()
 expr_stmt|;
+comment|// It is possible that some operators add records after closing the processor, so make sure
+comment|// to check the lastRecordOutput
+if|if
+condition|(
+name|lastRecordOutput
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
 name|lastRecordOutput
 operator|.
 name|clear
