@@ -694,12 +694,10 @@ decl_stmt|;
 name|String
 name|realInputFormatName
 init|=
-name|conf
+name|userPayloadProto
 operator|.
-name|get
-argument_list|(
-literal|"mapred.input.format.class"
-argument_list|)
+name|getInputFormatName
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -926,7 +924,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// no need for grouping and the target #of tasks.
 name|inputSplitInfo
 operator|=
 name|MRHelpers
@@ -934,10 +931,6 @@ operator|.
 name|generateInputSplitsToMem
 argument_list|(
 name|jobConf
-argument_list|,
-literal|false
-argument_list|,
-literal|0
 argument_list|)
 expr_stmt|;
 block|}
