@@ -113,6 +113,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Stack
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -276,6 +286,24 @@ operator|.
 name|exec
 operator|.
 name|Task
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|UnionOperator
 import|;
 end_import
 
@@ -458,6 +486,24 @@ operator|.
 name|lib
 operator|.
 name|NodeProcessor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lib
+operator|.
+name|NodeProcessorCtx
 import|;
 end_import
 
@@ -1232,19 +1278,85 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//    opRules.put(new RuleRegExp("Remember union", UnionOperator.getOperatorName() + "%"),
-comment|//        new NodeProcessor() {
-comment|//      @Override
-comment|//      public Object process(Node n, Stack<Node> s,
-comment|//          NodeProcessorCtx procCtx, Object... os) throws SemanticException {
-comment|//        GenSparkProcContext context = (GenSparkProcContext) procCtx;
-comment|//        UnionOperator union = (UnionOperator) n;
-comment|//
-comment|//        // simply need to remember that we've seen a union.
-comment|//        context.currentUnionOperators.add(union);
-comment|//        return null;
-comment|//      }
-comment|//    });
+name|opRules
+operator|.
+name|put
+argument_list|(
+operator|new
+name|RuleRegExp
+argument_list|(
+literal|"Remember union"
+argument_list|,
+name|UnionOperator
+operator|.
+name|getOperatorName
+argument_list|()
+operator|+
+literal|"%"
+argument_list|)
+argument_list|,
+operator|new
+name|NodeProcessor
+argument_list|()
+block|{
+annotation|@
+name|Override
+specifier|public
+name|Object
+name|process
+parameter_list|(
+name|Node
+name|n
+parameter_list|,
+name|Stack
+argument_list|<
+name|Node
+argument_list|>
+name|s
+parameter_list|,
+name|NodeProcessorCtx
+name|procCtx
+parameter_list|,
+name|Object
+modifier|...
+name|os
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+name|GenSparkProcContext
+name|context
+init|=
+operator|(
+name|GenSparkProcContext
+operator|)
+name|procCtx
+decl_stmt|;
+name|UnionOperator
+name|union
+init|=
+operator|(
+name|UnionOperator
+operator|)
+name|n
+decl_stmt|;
+comment|// simply need to remember that we've seen a union.
+name|context
+operator|.
+name|currentUnionOperators
+operator|.
+name|add
+argument_list|(
+name|union
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
+block|}
+argument_list|)
+expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
 name|Dispatcher

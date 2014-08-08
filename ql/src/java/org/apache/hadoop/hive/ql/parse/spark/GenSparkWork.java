@@ -1235,9 +1235,9 @@ name|sparkWork
 operator|.
 name|connect
 argument_list|(
-name|unionWork
-argument_list|,
 name|work
+argument_list|,
+name|unionWork
 argument_list|,
 name|edgeProp
 argument_list|)
