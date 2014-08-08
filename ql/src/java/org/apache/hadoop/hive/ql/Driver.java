@@ -4138,6 +4138,12 @@ expr_stmt|;
 comment|// use partition level authorization
 if|if
 condition|(
+name|Boolean
+operator|.
+name|TRUE
+operator|.
+name|equals
+argument_list|(
 name|tableUsePartLevelAuth
 operator|.
 name|get
@@ -4147,10 +4153,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
-operator|==
-name|Boolean
-operator|.
-name|TRUE
+argument_list|)
 condition|)
 block|{
 name|List
@@ -4244,6 +4247,12 @@ argument_list|)
 operator|&&
 operator|!
 operator|(
+name|Boolean
+operator|.
+name|TRUE
+operator|.
+name|equals
+argument_list|(
 name|tableUsePartLevelAuth
 operator|.
 name|get
@@ -4253,10 +4262,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
-operator|==
-name|Boolean
-operator|.
-name|TRUE
+argument_list|)
 operator|)
 condition|)
 block|{
@@ -4592,6 +4598,12 @@ operator|.
 name|isPartitioned
 argument_list|()
 operator|&&
+name|Boolean
+operator|.
+name|TRUE
+operator|.
+name|equals
+argument_list|(
 name|tableUsePartLevelAuth
 operator|.
 name|get
@@ -4601,10 +4613,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
-operator|==
-name|Boolean
-operator|.
-name|TRUE
+argument_list|)
 condition|)
 block|{
 name|String
