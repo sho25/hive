@@ -586,6 +586,13 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+name|LogFactory
+operator|.
+name|release
+argument_list|(
+name|loader
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|JavaUtils
