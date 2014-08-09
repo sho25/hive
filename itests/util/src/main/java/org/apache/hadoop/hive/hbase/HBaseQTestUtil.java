@@ -156,6 +156,12 @@ name|miniMr
 parameter_list|,
 name|HBaseTestSetup
 name|setup
+parameter_list|,
+name|String
+name|initScript
+parameter_list|,
+name|String
+name|cleanupScript
 parameter_list|)
 throws|throws
 name|Exception
@@ -169,6 +175,10 @@ argument_list|,
 name|miniMr
 argument_list|,
 literal|null
+argument_list|,
+name|initScript
+argument_list|,
+name|cleanupScript
 argument_list|)
 expr_stmt|;
 name|setup

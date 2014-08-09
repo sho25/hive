@@ -346,6 +346,10 @@ argument_list|,
 name|miniMr
 argument_list|,
 name|hadoopVer
+argument_list|,
+literal|""
+argument_list|,
+literal|""
 argument_list|)
 expr_stmt|;
 name|this
