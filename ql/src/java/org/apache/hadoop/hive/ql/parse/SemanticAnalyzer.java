@@ -4870,6 +4870,9 @@ name|expressionTree
 operator|.
 name|toStringTree
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|expressionTree
 argument_list|)
