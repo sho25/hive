@@ -4642,6 +4642,17 @@ operator|+
 literal|"could not be computed accurately."
 argument_list|)
 block|,
+name|HIVE_STATS_COLLECT_PART_LEVEL_STATS
+argument_list|(
+literal|"hive.analyze.stmt.collect.partlevel.stats"
+argument_list|,
+literal|true
+argument_list|,
+literal|"analyze table T compute statistics for columns. Queries like these should compute partition"
+operator|+
+literal|"level stats for partitioned table even when no part spec is specified."
+argument_list|)
+block|,
 name|HIVE_STATS_GATHER_NUM_THREADS
 argument_list|(
 literal|"hive.stats.gather.num.threads"
@@ -5117,6 +5128,26 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"True when HBaseStorageHandler should generate hfiles instead of operate against the online table."
+argument_list|)
+block|,
+name|HIVE_HBASE_SNAPSHOT_NAME
+argument_list|(
+literal|"hive.hbase.snapshot.name"
+argument_list|,
+literal|null
+argument_list|,
+literal|"The HBase table snapshot name to use."
+argument_list|)
+block|,
+name|HIVE_HBASE_SNAPSHOT_RESTORE_DIR
+argument_list|(
+literal|"hive.hbase.snapshot.restoredir"
+argument_list|,
+literal|"/tmp"
+argument_list|,
+literal|"The directory in which to "
+operator|+
+literal|"restore the HBase table snapshot."
 argument_list|)
 block|,
 comment|// For har files

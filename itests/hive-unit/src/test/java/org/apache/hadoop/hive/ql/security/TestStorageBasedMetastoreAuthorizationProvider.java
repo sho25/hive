@@ -31,6 +31,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|security
+operator|.
+name|AccessControlException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -294,7 +304,7 @@ literal|"-rwxr--r--"
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|setPermissions
 parameter_list|(
@@ -366,7 +376,7 @@ argument_list|()
 operator|.
 name|indexOf
 argument_list|(
-literal|"not permitted"
+literal|"AccessControlException"
 argument_list|)
 operator|!=
 operator|-
