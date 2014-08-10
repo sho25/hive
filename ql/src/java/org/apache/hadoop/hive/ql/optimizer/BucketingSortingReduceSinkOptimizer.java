@@ -2782,11 +2782,13 @@ name|prunedParts
 init|=
 name|pGraphContext
 operator|.
-name|getOpToPartList
-argument_list|()
-operator|.
-name|get
+name|getPrunedPartitions
 argument_list|(
+name|srcTable
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
 name|ts
 argument_list|)
 decl_stmt|;
