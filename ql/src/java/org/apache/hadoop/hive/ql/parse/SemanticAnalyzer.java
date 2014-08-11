@@ -17334,6 +17334,7 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+break|break;
 case|case
 name|HiveParser
 operator|.
