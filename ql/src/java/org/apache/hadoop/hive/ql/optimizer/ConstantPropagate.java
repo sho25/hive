@@ -554,27 +554,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-if|if
-condition|(
-name|pactx
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_VECTORIZATION_ENABLED
-argument_list|)
-condition|)
-block|{
-comment|// Constant propagate is currently conflict with vectorizer, disabling constant propagate
-comment|//    if the later is enabled.
-return|return
-name|pactx
-return|;
-block|}
 name|pGraphContext
 operator|=
 name|pactx
