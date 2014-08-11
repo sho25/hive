@@ -61017,7 +61017,7 @@ block|{
 name|Table
 name|table
 init|=
-name|getTableWithQN
+name|getTable
 argument_list|(
 name|tableName
 argument_list|,
@@ -61395,7 +61395,7 @@ block|{
 name|Table
 name|likeTable
 init|=
-name|getTableWithQN
+name|getTable
 argument_list|(
 name|likeTableName
 argument_list|,
@@ -62085,7 +62085,7 @@ block|{
 name|Table
 name|oldView
 init|=
-name|getTableWithQN
+name|getTable
 argument_list|(
 name|createVwDesc
 operator|.
