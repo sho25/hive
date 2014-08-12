@@ -644,7 +644,7 @@ name|predicate
 argument_list|)
 return|;
 block|}
-comment|/*    * Favor Broad Plans over Deep Plans.     */
+comment|/*    * Favor Broad Plans over Deep Plans.    */
 specifier|public
 name|RelOptCost
 name|getCumulativeCost
