@@ -1279,9 +1279,6 @@ name|put
 argument_list|(
 literal|"count"
 argument_list|,
-operator|(
-name|Aggregation
-operator|)
 name|SqlStdOperatorTable
 operator|.
 name|COUNT
@@ -2562,6 +2559,8 @@ implements|implements
 name|NodeProcessor
 block|{
 annotation|@
+name|Override
+annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
@@ -3614,6 +3613,8 @@ implements|implements
 name|NodeProcessor
 block|{
 annotation|@
+name|Override
+annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
@@ -3813,6 +3814,8 @@ implements|implements
 name|NodeProcessor
 block|{
 annotation|@
+name|Override
+annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
@@ -3959,6 +3962,8 @@ name|String
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|apply
@@ -4021,6 +4026,8 @@ name|LimitProcessor
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -4212,6 +4219,8 @@ name|GroupByProcessor
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -4495,6 +4504,8 @@ name|RexNode
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|RexNode
 name|apply
@@ -4606,6 +4617,8 @@ name|ReduceSinkProcessor
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -4926,6 +4939,8 @@ name|RexNode
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|RexNode
 name|apply
@@ -5089,6 +5104,8 @@ name|TableScanProcessor
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -5289,6 +5306,8 @@ name|getTable
 argument_list|(
 name|tableScanOp
 argument_list|)
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|,
@@ -5544,6 +5563,8 @@ name|DefaultProcessor
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -5601,9 +5622,6 @@ decl_stmt|;
 name|RelNode
 name|node
 init|=
-operator|(
-name|HiveRel
-operator|)
 name|ctx
 operator|.
 name|getParentNode

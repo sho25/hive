@@ -58712,7 +58712,9 @@ name|OptiqBasedPlanner
 argument_list|()
 operator|.
 name|getOptimizedAST
-argument_list|()
+argument_list|(
+name|prunedPartitions
+argument_list|)
 decl_stmt|;
 comment|// 2. Regen OP plan from optimized AST
 name|init
@@ -70107,11 +70109,16 @@ decl_stmt|;
 name|RelOptSchema
 name|m_relOptSchema
 decl_stmt|;
-name|SchemaPlus
-name|m_rootSchema
-decl_stmt|;
 name|SemanticException
 name|m_semanticException
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|PrunedPartitionList
+argument_list|>
+name|partitionCache
 decl_stmt|;
 comment|// TODO: Do we need to keep track of RR, ColNameToPosMap for every op or
 comment|// just last one.
@@ -70162,7 +70169,15 @@ decl_stmt|;
 specifier|private
 name|ASTNode
 name|getOptimizedAST
-parameter_list|()
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|PrunedPartitionList
+argument_list|>
+name|partitionCache
+parameter_list|)
 throws|throws
 name|SemanticException
 block|{
@@ -70176,6 +70191,12 @@ name|optimizedOptiqPlan
 init|=
 literal|null
 decl_stmt|;
+name|this
+operator|.
+name|partitionCache
+operator|=
+name|partitionCache
+expr_stmt|;
 try|try
 block|{
 name|optimizedOptiqPlan
@@ -70307,10 +70328,6 @@ expr_stmt|;
 name|m_relOptSchema
 operator|=
 name|relOptSchema
-expr_stmt|;
-name|m_rootSchema
-operator|=
-name|rootSchema
 expr_stmt|;
 try|try
 block|{
@@ -72057,6 +72074,8 @@ argument_list|,
 name|partitionColumns
 argument_list|,
 name|conf
+argument_list|,
+name|partitionCache
 argument_list|)
 decl_stmt|;
 comment|// 5. Build Hive Table Scan Rel
