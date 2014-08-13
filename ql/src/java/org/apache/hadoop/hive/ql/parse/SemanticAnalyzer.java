@@ -70021,6 +70021,15 @@ literal|false
 decl_stmt|;
 if|if
 condition|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST
+argument_list|)
+operator|||
 operator|(
 name|queryProperties
 operator|.
