@@ -404,6 +404,14 @@ name|AddResourceProcessor
 argument_list|()
 return|;
 case|case
+name|LIST
+case|:
+return|return
+operator|new
+name|ListResourceProcessor
+argument_list|()
+return|;
+case|case
 name|DELETE
 case|:
 return|return

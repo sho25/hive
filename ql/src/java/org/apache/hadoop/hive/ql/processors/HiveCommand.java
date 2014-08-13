@@ -60,6 +60,9 @@ operator|,
 name|ADD
 argument_list|()
 operator|,
+name|LIST
+argument_list|()
+operator|,
 name|DELETE
 argument_list|()
 operator|,

@@ -1064,6 +1064,17 @@ name|String
 name|colName
 parameter_list|)
 block|{
+if|if
+condition|(
+name|columnStats
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 for|for
 control|(
 name|ColStatistics

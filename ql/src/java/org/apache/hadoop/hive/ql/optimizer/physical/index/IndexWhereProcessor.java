@@ -411,24 +411,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
-operator|.
-name|Table
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|optimizer
 operator|.
 name|IndexUtils
@@ -594,28 +576,28 @@ specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|Table
+name|TableScanOperator
 argument_list|,
 name|List
 argument_list|<
 name|Index
 argument_list|>
 argument_list|>
-name|indexes
+name|tsToIndices
 decl_stmt|;
 specifier|public
 name|IndexWhereProcessor
 parameter_list|(
 name|Map
 argument_list|<
-name|Table
+name|TableScanOperator
 argument_list|,
 name|List
 argument_list|<
 name|Index
 argument_list|>
 argument_list|>
-name|indexes
+name|tsToIndices
 parameter_list|)
 block|{
 name|super
@@ -623,9 +605,9 @@ argument_list|()
 expr_stmt|;
 name|this
 operator|.
-name|indexes
+name|tsToIndices
 operator|=
-name|indexes
+name|tsToIndices
 expr_stmt|;
 block|}
 annotation|@
@@ -686,12 +668,33 @@ condition|(
 name|operatorDesc
 operator|==
 literal|null
+operator|||
+operator|!
+name|tsToIndices
+operator|.
+name|containsKey
+argument_list|(
+name|operator
+argument_list|)
 condition|)
 block|{
 return|return
 literal|null
 return|;
 block|}
+name|List
+argument_list|<
+name|Index
+argument_list|>
+name|indexes
+init|=
+name|tsToIndices
+operator|.
+name|get
+argument_list|(
+name|operator
+argument_list|)
+decl_stmt|;
 name|ExprNodeDesc
 name|predicate
 init|=
@@ -751,7 +754,7 @@ name|getExprString
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// check if we have indexes on all partitions in this table scan
+comment|// check if we have tsToIndices on all partitions in this table scan
 name|Set
 argument_list|<
 name|Partition
@@ -864,52 +867,6 @@ operator|.
 name|getTableDesc
 argument_list|()
 decl_stmt|;
-name|Table
-name|srcTable
-init|=
-name|pctx
-operator|.
-name|getTopToTable
-argument_list|()
-operator|.
-name|get
-argument_list|(
-name|operator
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|indexes
-operator|==
-literal|null
-operator|||
-name|indexes
-operator|.
-name|get
-argument_list|(
-name|srcTable
-argument_list|)
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
-name|List
-argument_list|<
-name|Index
-argument_list|>
-name|tableIndexes
-init|=
-name|indexes
-operator|.
-name|get
-argument_list|(
-name|srcTable
-argument_list|)
-decl_stmt|;
 name|Map
 argument_list|<
 name|String
@@ -938,7 +895,7 @@ control|(
 name|Index
 name|indexOnTable
 range|:
-name|tableIndexes
+name|indexes
 control|)
 block|{
 if|if
@@ -1008,7 +965,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// choose index type with most indexes of the same type on the table
+comment|// choose index type with most tsToIndices of the same type on the table
 comment|// TODO HIVE-2130 This would be a good place for some sort of cost based choice?
 name|List
 argument_list|<
@@ -1252,7 +1209,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get a list of Tasks to activate use of indexes.    * Generate the tasks for the index query (where we store results of    * querying the index in a tmp file) inside the IndexHandler    * @param predicate Predicate of query to rewrite    * @param index Index to use for rewrite    * @param pctx    * @param task original task before rewrite    * @param queryContext stores return values    */
+comment|/**    * Get a list of Tasks to activate use of tsToIndices.    * Generate the tasks for the index query (where we store results of    * querying the index in a tmp file) inside the IndexHandler    * @param predicate Predicate of query to rewrite    * @param index Index to use for rewrite    * @param pctx    * @param task original task before rewrite    * @param queryContext stores return values    */
 specifier|private
 name|void
 name|rewriteForIndexes
@@ -1284,7 +1241,7 @@ block|{
 name|HiveIndexHandler
 name|indexHandler
 decl_stmt|;
-comment|// All indexes in the list are of the same type, and therefore can use the
+comment|// All tsToIndices in the list are of the same type, and therefore can use the
 comment|// same handler to generate the index query tasks
 name|Index
 name|index

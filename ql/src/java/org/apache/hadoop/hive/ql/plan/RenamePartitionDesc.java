@@ -74,9 +74,6 @@ name|String
 name|tableName
 decl_stmt|;
 name|String
-name|dbName
-decl_stmt|;
-name|String
 name|location
 decl_stmt|;
 name|LinkedHashMap
@@ -105,9 +102,6 @@ specifier|public
 name|RenamePartitionDesc
 parameter_list|(
 name|String
-name|dbName
-parameter_list|,
-name|String
 name|tableName
 parameter_list|,
 name|Map
@@ -127,15 +121,6 @@ argument_list|>
 name|newPartSpec
 parameter_list|)
 block|{
-name|super
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|dbName
-operator|=
-name|dbName
-expr_stmt|;
 name|this
 operator|.
 name|tableName
@@ -171,32 +156,6 @@ argument_list|>
 argument_list|(
 name|newPartSpec
 argument_list|)
-expr_stmt|;
-block|}
-comment|/**    * @return database name    */
-specifier|public
-name|String
-name|getDbName
-parameter_list|()
-block|{
-return|return
-name|dbName
-return|;
-block|}
-comment|/**    * @param dbName    *          database name    */
-specifier|public
-name|void
-name|setDbName
-parameter_list|(
-name|String
-name|dbName
-parameter_list|)
-block|{
-name|this
-operator|.
-name|dbName
-operator|=
-name|dbName
 expr_stmt|;
 block|}
 comment|/**    * @return the table we're going to add the partitions to.    */

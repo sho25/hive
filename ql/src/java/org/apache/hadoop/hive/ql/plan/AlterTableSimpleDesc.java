@@ -85,10 +85,6 @@ name|String
 name|tableName
 decl_stmt|;
 specifier|private
-name|String
-name|dbName
-decl_stmt|;
-specifier|private
 name|LinkedHashMap
 argument_list|<
 name|String
@@ -108,13 +104,10 @@ specifier|public
 name|AlterTableSimpleDesc
 parameter_list|()
 block|{   }
-comment|/**    * @param dbName    *          database that contains the table / partition    * @param tableName    *          table containing the partition    * @param partSpec    *          partition specification. Null if touching a table.    */
+comment|/**    * @param tableName    *          table containing the partition    * @param partSpec    */
 specifier|public
 name|AlterTableSimpleDesc
 parameter_list|(
-name|String
-name|dbName
-parameter_list|,
 name|String
 name|tableName
 parameter_list|,
@@ -126,21 +119,10 @@ name|String
 argument_list|>
 name|partSpec
 parameter_list|,
-name|AlterTableDesc
-operator|.
 name|AlterTableTypes
 name|type
 parameter_list|)
 block|{
-name|super
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|dbName
-operator|=
-name|dbName
-expr_stmt|;
 name|this
 operator|.
 name|tableName
@@ -186,13 +168,10 @@ operator|=
 name|type
 expr_stmt|;
 block|}
-comment|/**    * Constructor for ALTER TABLE ... COMPACT.    * @param dbname name of the database containing the table    * @param tableName name of the table to compact    * @param partSpec partition to compact    * @param compactionType currently supported values: 'major' and 'minor'    */
+comment|/**    * Constructor for ALTER TABLE ... COMPACT.    * @param tableName name of the table to compact    * @param partSpec partition to compact    * @param compactionType currently supported values: 'major' and 'minor'    */
 specifier|public
 name|AlterTableSimpleDesc
 parameter_list|(
-name|String
-name|dbname
-parameter_list|,
 name|String
 name|tableName
 parameter_list|,
@@ -219,12 +198,6 @@ operator|.
 name|compactionType
 operator|=
 name|compactionType
-expr_stmt|;
-name|this
-operator|.
-name|dbName
-operator|=
-name|dbname
 expr_stmt|;
 name|this
 operator|.
@@ -261,30 +234,6 @@ operator|.
 name|tableName
 operator|=
 name|tableName
-expr_stmt|;
-block|}
-specifier|public
-name|String
-name|getDbName
-parameter_list|()
-block|{
-return|return
-name|dbName
-return|;
-block|}
-specifier|public
-name|void
-name|setDbName
-parameter_list|(
-name|String
-name|dbName
-parameter_list|)
-block|{
-name|this
-operator|.
-name|dbName
-operator|=
-name|dbName
 expr_stmt|;
 block|}
 specifier|public

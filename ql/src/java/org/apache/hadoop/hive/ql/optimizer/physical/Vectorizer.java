@@ -1901,6 +1901,13 @@ argument_list|(
 literal|"|date"
 argument_list|)
 expr_stmt|;
+name|patternBuilder
+operator|.
+name|append
+argument_list|(
+literal|"|void"
+argument_list|)
+expr_stmt|;
 comment|// Decimal types can be specified with different precision and scales e.g. decimal(10,5),
 comment|// as opposed to other data types which can be represented by constant strings.
 comment|// The regex matches only the "decimal" prefix of the type.

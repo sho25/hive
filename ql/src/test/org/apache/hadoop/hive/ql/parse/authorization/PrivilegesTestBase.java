@@ -200,6 +200,18 @@ specifier|protected
 specifier|static
 specifier|final
 name|String
+name|TABLE_QNAME
+init|=
+name|DB
+operator|+
+literal|"."
+operator|+
+name|TABLE
+decl_stmt|;
+specifier|protected
+specifier|static
+specifier|final
+name|String
 name|USER
 init|=
 literal|"user1"
@@ -371,7 +383,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|TABLE
+name|TABLE_QNAME
 argument_list|,
 name|grantDesc
 operator|.
