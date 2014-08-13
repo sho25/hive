@@ -1863,6 +1863,13 @@ name|patternBuilder
 operator|.
 name|append
 argument_list|(
+literal|"|binary"
+argument_list|)
+expr_stmt|;
+name|patternBuilder
+operator|.
+name|append
+argument_list|(
 literal|"|string"
 argument_list|)
 expr_stmt|;
@@ -1892,6 +1899,13 @@ operator|.
 name|append
 argument_list|(
 literal|"|date"
+argument_list|)
+expr_stmt|;
+name|patternBuilder
+operator|.
+name|append
+argument_list|(
+literal|"|void"
 argument_list|)
 expr_stmt|;
 comment|// Decimal types can be specified with different precision and scales e.g. decimal(10,5),

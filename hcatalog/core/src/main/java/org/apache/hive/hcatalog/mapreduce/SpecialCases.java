@@ -53,6 +53,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -144,7 +158,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is a place to put all the code associated with  * Special cases. If there is a corner case required to make  * a particular format work that is above and beyond the generic  * use, it belongs here, for example. Over time, the goal is to  * try to minimize usage of this, but it is a useful overflow  * class that allows us to still be as generic as possible  * in the main codeflow path, and call attention to the special  * cases here.  * Note : For all methods introduced here, please document why  * the special case is necessary, providing a jira number if  * possible.  */
+comment|/**  * This class is a place to put all the code associated with  * Special cases. If there is a corner case required to make  * a particular format work that is above and beyond the generic  * use, it belongs here, for example. Over time, the goal is to  * try to minimize usage of this, but it is a useful overflow  * class that allows us to still be as generic as possible  * in the main codeflow path, and call attention to the special  * cases here.  *  * Note : For all methods introduced here, please document why  * the special case is necessary, providing a jira number if  * possible.  */
 end_comment
 
 begin_class
@@ -167,7 +181,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * Method to do any file-format specific special casing while    * instantiating a storage handler to write. We set any parameters    * we want to be visible to the job in jobProperties, and this will    * be available to the job via jobconf at run time.    * @param jobProperties : map to write to    * @param jobInfo : information about this output job to read from    * @param ofclass : the output format in use    */
+comment|/**    * Method to do any file-format specific special casing while    * instantiating a storage handler to write. We set any parameters    * we want to be visible to the job in jobProperties, and this will    * be available to the job via jobconf at run time.    *    * This is mostly intended to be used by StorageHandlers that wrap    * File-based OutputFormats such as FosterStorageHandler that wraps    * RCFile, ORC, etc.    *    * @param jobProperties : map to write to    * @param jobInfo : information about this output job to read from    * @param ofclass : the output format in use    */
 specifier|public
 specifier|static
 name|void
@@ -316,6 +330,81 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+block|}
+comment|/**    * Method to do any storage-handler specific special casing while instantiating a    * HCatLoader    *    * @param conf : configuration to write to    * @param tableInfo : the table definition being used    */
+specifier|public
+specifier|static
+name|void
+name|addSpecialCasesParametersForHCatLoader
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|HCatTableInfo
+name|tableInfo
+parameter_list|)
+block|{
+if|if
+condition|(
+operator|(
+name|tableInfo
+operator|==
+literal|null
+operator|)
+operator|||
+operator|(
+name|tableInfo
+operator|.
+name|getStorerInfo
+argument_list|()
+operator|==
+literal|null
+operator|)
+condition|)
+block|{
+return|return;
+block|}
+name|String
+name|shClass
+init|=
+name|tableInfo
+operator|.
+name|getStorerInfo
+argument_list|()
+operator|.
+name|getStorageHandlerClass
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|(
+name|shClass
+operator|!=
+literal|null
+operator|)
+operator|&&
+name|shClass
+operator|.
+name|equals
+argument_list|(
+literal|"org.apache.hadoop.hive.hbase.HBaseStorageHandler"
+argument_list|)
+condition|)
+block|{
+comment|// NOTE: The reason we use a string name of the hive hbase handler here is
+comment|// because we do not want to introduce a compile-dependency on the hive-hbase-handler
+comment|// module from within hive-hcatalog.
+comment|// This parameter was added due to the requirement in HIVE-7072
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"pig.noSplitCombination"
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}

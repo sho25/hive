@@ -40,12 +40,10 @@ specifier|public
 interface|interface
 name|CommandProcessor
 block|{
-specifier|public
 name|void
 name|init
 parameter_list|()
 function_decl|;
-specifier|public
 name|CommandProcessorResponse
 name|run
 parameter_list|(

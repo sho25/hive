@@ -137,16 +137,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -694,7 +684,7 @@ name|String
 argument_list|>
 name|getSortedList
 parameter_list|(
-name|Set
+name|List
 argument_list|<
 name|String
 argument_list|>

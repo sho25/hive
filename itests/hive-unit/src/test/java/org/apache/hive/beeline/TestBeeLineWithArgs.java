@@ -1688,7 +1688,7 @@ specifier|final
 name|String
 name|EXPECTED_PATTERN
 init|=
-literal|"'abc','','def'"
+literal|"abc,,def"
 decl_stmt|;
 name|List
 argument_list|<
@@ -1755,7 +1755,7 @@ specifier|final
 name|String
 name|EXPECTED_PATTERN
 init|=
-literal|"'abc','','def'"
+literal|"abc,,def"
 decl_stmt|;
 name|List
 argument_list|<

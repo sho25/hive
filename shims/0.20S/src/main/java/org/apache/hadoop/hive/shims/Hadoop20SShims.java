@@ -2858,6 +2858,29 @@ literal|"Merging of credentials not supported in this version of hadoop"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getPassword
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|String
+name|name
+parameter_list|)
+block|{
+comment|// No password API, just retrieve value from conf
+return|return
+name|conf
+operator|.
+name|get
+argument_list|(
+name|name
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

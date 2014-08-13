@@ -3899,13 +3899,28 @@ operator|+
 literal|"The default value \"-1\" means no limit."
 argument_list|)
 block|,
+name|HIVEHASHTABLEKEYCOUNTADJUSTMENT
+argument_list|(
+literal|"hive.hashtable.key.count.adjustment"
+argument_list|,
+literal|1.0f
+argument_list|,
+literal|"Adjustment to mapjoin hashtable size derived from table and column statistics; the estimate"
+operator|+
+literal|" of the number of keys is divided by this value. If the value is 0, statistics are not used"
+operator|+
+literal|"and hive.hashtable.initialCapacity is used instead."
+argument_list|)
+block|,
 name|HIVEHASHTABLETHRESHOLD
 argument_list|(
 literal|"hive.hashtable.initialCapacity"
 argument_list|,
 literal|100000
 argument_list|,
-literal|""
+literal|"Initial capacity of "
+operator|+
+literal|"mapjoin hashtable if statistics are absent, or if hive.hashtable.stats.key.estimate.adjustment is set to 0"
 argument_list|)
 block|,
 name|HIVEHASHTABLELOADFACTOR
@@ -6139,7 +6154,7 @@ name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
 argument_list|,
-literal|"set,reset,dfs,add,delete,compile"
+literal|"set,reset,dfs,add,list,delete,compile"
 argument_list|,
 literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
 argument_list|)

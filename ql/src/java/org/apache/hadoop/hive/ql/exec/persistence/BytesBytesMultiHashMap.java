@@ -254,15 +254,11 @@ name|metricPutConflict
 init|=
 literal|0
 decl_stmt|,
-name|metricSameBitsDiffKey
+name|metricExpands
 init|=
 literal|0
 decl_stmt|,
-name|metricSameBitsSameKey
-init|=
-literal|0
-decl_stmt|,
-name|metricDiffBits
+name|metricExpandsUs
 init|=
 literal|0
 decl_stmt|;
@@ -1526,9 +1522,6 @@ name|hashCode
 argument_list|)
 condition|)
 block|{
-operator|++
-name|metricDiffBits
-expr_stmt|;
 return|return
 literal|false
 return|;
@@ -1582,9 +1575,7 @@ name|keyLength
 operator|)
 decl_stmt|;
 comment|// See the comment in the other isSameKey
-name|boolean
-name|result
-init|=
+return|return
 name|writeBuffers
 operator|.
 name|isEqual
@@ -1597,24 +1588,6 @@ name|keyOffset
 argument_list|,
 name|keyLength
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|result
-condition|)
-block|{
-operator|++
-name|metricSameBitsSameKey
-expr_stmt|;
-block|}
-else|else
-block|{
-operator|++
-name|metricSameBitsDiffKey
-expr_stmt|;
-block|}
-return|return
-name|result
 return|;
 block|}
 specifier|private
@@ -1718,6 +1691,14 @@ name|void
 name|expandAndRehash
 parameter_list|()
 block|{
+name|long
+name|expandTime
+init|=
+name|System
+operator|.
+name|nanoTime
+argument_list|()
+decl_stmt|;
 specifier|final
 name|long
 index|[]
@@ -1897,6 +1878,20 @@ name|capacity
 operator|*
 name|loadFactor
 argument_list|)
+expr_stmt|;
+name|metricExpandsUs
+operator|+=
+operator|(
+name|System
+operator|.
+name|nanoTime
+argument_list|()
+operator|-
+name|expandTime
+operator|)
+expr_stmt|;
+operator|++
+name|metricExpands
 expr_stmt|;
 block|}
 comment|/**    * @param ref The ref.    * @return The offset to list record pointer; list record is created if it doesn't exist.    */
@@ -3165,22 +3160,20 @@ name|void
 name|debugDumpMetrics
 parameter_list|()
 block|{
-if|if
-condition|(
 name|LOG
 operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
+name|info
 argument_list|(
-literal|"Map metrics: keys "
+literal|"Map metrics: keys allocated "
 operator|+
 name|this
 operator|.
+name|refs
+operator|.
+name|length
+operator|+
+literal|", keys assigned "
+operator|+
 name|keysAssigned
 operator|+
 literal|", write conflict "
@@ -3191,20 +3184,17 @@ literal|", write max dist "
 operator|+
 name|largestNumberOfSteps
 operator|+
-literal|", read neq "
+literal|", expanded "
 operator|+
-name|metricDiffBits
+name|metricExpands
 operator|+
-literal|", read eq-eq "
+literal|" times in "
 operator|+
-name|metricSameBitsSameKey
+name|metricExpandsUs
 operator|+
-literal|", read eq-neq "
-operator|+
-name|metricSameBitsDiffKey
+literal|"us"
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 specifier|private
 name|void

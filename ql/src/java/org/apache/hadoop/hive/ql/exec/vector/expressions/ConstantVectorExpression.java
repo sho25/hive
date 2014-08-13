@@ -760,9 +760,9 @@ name|typeString
 expr_stmt|;
 if|if
 condition|(
-literal|"string"
+name|VectorizationContext
 operator|.
-name|equalsIgnoreCase
+name|isStringFamily
 argument_list|(
 name|typeString
 argument_list|)
@@ -780,9 +780,9 @@ block|}
 elseif|else
 if|if
 condition|(
-literal|"double"
+name|VectorizationContext
 operator|.
-name|equalsIgnoreCase
+name|isFloatFamily
 argument_list|(
 name|typeString
 argument_list|)
@@ -802,15 +802,10 @@ if|if
 condition|(
 name|VectorizationContext
 operator|.
-name|decimalTypePattern
-operator|.
-name|matcher
+name|isDecimalFamily
 argument_list|(
 name|typeString
 argument_list|)
-operator|.
-name|matches
-argument_list|()
 condition|)
 block|{
 name|this
@@ -824,6 +819,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// everything else that does not belong to string, double, decimal is treated as long.
 name|this
 operator|.
 name|type

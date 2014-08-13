@@ -905,7 +905,7 @@ name|String
 name|alias
 parameter_list|)
 throws|throws
-name|HiveException
+name|SemanticException
 block|{
 return|return
 name|prune
@@ -971,7 +971,7 @@ argument_list|>
 name|prunedPartitionsMap
 parameter_list|)
 throws|throws
-name|HiveException
+name|SemanticException
 block|{
 name|LOG
 operator|.
@@ -1639,7 +1639,7 @@ name|String
 name|alias
 parameter_list|)
 throws|throws
-name|HiveException
+name|SemanticException
 block|{
 try|try
 block|{
@@ -2048,7 +2048,7 @@ return|;
 block|}
 catch|catch
 parameter_list|(
-name|HiveException
+name|SemanticException
 name|e
 parameter_list|)
 block|{
@@ -2064,7 +2064,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|HiveException
+name|SemanticException
 argument_list|(
 name|e
 argument_list|)

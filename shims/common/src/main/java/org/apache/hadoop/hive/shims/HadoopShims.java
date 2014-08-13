@@ -1875,6 +1875,20 @@ name|AccessControlException
 throws|,
 name|Exception
 function_decl|;
+comment|/**    * Use password API (if available) to fetch credentials/password    * @param conf    * @param name    * @return    */
+specifier|public
+name|String
+name|getPassword
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 block|}
 end_interface
 

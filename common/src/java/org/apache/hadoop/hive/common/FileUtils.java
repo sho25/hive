@@ -2752,6 +2752,40 @@ literal|false
 return|;
 block|}
 block|}
+comment|/**    * @param fs1    * @param fs2    * @return return true if both file system arguments point to same file system    */
+specifier|public
+specifier|static
+name|boolean
+name|equalsFileSystem
+parameter_list|(
+name|FileSystem
+name|fs1
+parameter_list|,
+name|FileSystem
+name|fs2
+parameter_list|)
+block|{
+comment|//When file system cache is disabled, you get different FileSystem objects
+comment|// for same file system, so '==' can't be used in such cases
+comment|//FileSystem api doesn't have a .equals() function implemented, so using
+comment|//the uri for comparison. FileSystem already uses uri+Configuration for
+comment|//equality in its CACHE .
+comment|//Once equality has been added in HDFS-4321, we should make use of it
+return|return
+name|fs1
+operator|.
+name|getUri
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|fs2
+operator|.
+name|getUri
+argument_list|()
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

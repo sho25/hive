@@ -6169,6 +6169,9 @@ name|expressionTree
 operator|.
 name|toStringTree
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|expressionTree
 argument_list|)
@@ -18687,6 +18690,7 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+break|break;
 case|case
 name|HiveParser
 operator|.
@@ -62606,7 +62610,7 @@ block|{
 name|Table
 name|table
 init|=
-name|getTableWithQN
+name|getTable
 argument_list|(
 name|tableName
 argument_list|,
@@ -62984,7 +62988,7 @@ block|{
 name|Table
 name|likeTable
 init|=
-name|getTableWithQN
+name|getTable
 argument_list|(
 name|likeTableName
 argument_list|,
@@ -63674,7 +63678,7 @@ block|{
 name|Table
 name|oldView
 init|=
-name|getTableWithQN
+name|getTable
 argument_list|(
 name|createVwDesc
 operator|.
