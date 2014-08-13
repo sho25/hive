@@ -43,26 +43,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|mr
-operator|.
-name|ExecMapper
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|BytesWritable
@@ -128,10 +108,10 @@ argument_list|>
 block|{
 specifier|private
 specifier|final
-name|ExecMapper
-name|mapper
+name|SparkMapRecordHandler
+name|recordHandler
 decl_stmt|;
-comment|/**    * Instantiate result set Iterable for Map function output.    *    * @param inputIterator Input record iterator.    * @param mapper Initialized {@link org.apache.hadoop.hive.ql.exec.mr.ExecMapper} instance.    */
+comment|/**    * Instantiate result set Iterable for Map function output.    *    * @param inputIterator Input record iterator.    * @param handler Initialized {@link SparkMapRecordHandler} instance.    */
 specifier|public
 name|HiveMapFunctionResultList
 parameter_list|(
@@ -149,8 +129,8 @@ argument_list|>
 argument_list|>
 name|inputIterator
 parameter_list|,
-name|ExecMapper
-name|mapper
+name|SparkMapRecordHandler
+name|handler
 parameter_list|)
 block|{
 name|super
@@ -160,11 +140,9 @@ argument_list|,
 name|inputIterator
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
-name|mapper
+name|recordHandler
 operator|=
-name|mapper
+name|handler
 expr_stmt|;
 block|}
 annotation|@
@@ -184,7 +162,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|mapper
+name|recordHandler
 operator|.
 name|map
 argument_list|(
@@ -214,7 +192,7 @@ name|processingDone
 parameter_list|()
 block|{
 return|return
-name|ExecMapper
+name|recordHandler
 operator|.
 name|getDone
 argument_list|()
@@ -227,7 +205,7 @@ name|void
 name|closeRecordProcessor
 parameter_list|()
 block|{
-name|mapper
+name|recordHandler
 operator|.
 name|close
 argument_list|()
