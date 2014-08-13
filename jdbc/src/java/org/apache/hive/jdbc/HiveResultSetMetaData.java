@@ -567,13 +567,9 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|true
+return|;
 block|}
 specifier|public
 name|boolean
