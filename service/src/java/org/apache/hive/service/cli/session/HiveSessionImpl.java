@@ -934,6 +934,8 @@ name|String
 argument_list|>
 name|sessionConfMap
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 comment|//process global init file: .hiverc
 name|processGlobalInitFile
@@ -1201,6 +1203,8 @@ name|String
 argument_list|>
 name|sessionConfMap
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 for|for
 control|(
