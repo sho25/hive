@@ -919,12 +919,33 @@ literal|2
 return|;
 block|}
 comment|// Execute generated plan.
-comment|// TODO: we should catch any exception and return more meaningful error code.
+try|try
+block|{
 name|plan
 operator|.
 name|execute
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error executing Spark Plan"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+return|return
+literal|1
+return|;
+block|}
 return|return
 literal|0
 return|;
@@ -1193,7 +1214,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|//add added files
+comment|// add added files
 name|String
 name|addedFiles
 init|=
