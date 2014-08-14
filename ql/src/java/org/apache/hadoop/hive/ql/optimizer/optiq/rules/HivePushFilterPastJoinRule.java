@@ -273,6 +273,18 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|util
+operator|.
+name|Holder
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -320,6 +332,8 @@ argument_list|)
 argument_list|)
 argument_list|,
 literal|"HivePushFilterPastJoinRule:filter"
+argument_list|,
+literal|true
 argument_list|)
 block|{
 annotation|@
@@ -384,6 +398,8 @@ argument_list|()
 argument_list|)
 argument_list|,
 literal|"HivePushFilterPastJoinRule:no-filter"
+argument_list|,
+literal|false
 argument_list|)
 block|{
 annotation|@
@@ -418,6 +434,12 @@ expr_stmt|;
 block|}
 block|}
 decl_stmt|;
+comment|/** Whether to try to strengthen join-type. */
+specifier|private
+specifier|final
+name|boolean
+name|smart
+decl_stmt|;
 comment|// ~ Constructors -----------------------------------------------------------
 comment|/**    * Creates a PushFilterPastJoinRule with an explicit root operand.    */
 specifier|private
@@ -428,6 +450,9 @@ name|operand
 parameter_list|,
 name|String
 name|id
+parameter_list|,
+name|boolean
+name|smart
 parameter_list|)
 block|{
 name|super
@@ -438,6 +463,12 @@ literal|"PushFilterRule: "
 operator|+
 name|id
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|smart
+operator|=
+name|smart
 expr_stmt|;
 block|}
 comment|// ~ Methods ----------------------------------------------------------------
@@ -612,6 +643,23 @@ name|filterPushed
 init|=
 literal|false
 decl_stmt|;
+specifier|final
+name|Holder
+argument_list|<
+name|JoinRelType
+argument_list|>
+name|joinTypeHolder
+init|=
+name|Holder
+operator|.
+name|of
+argument_list|(
+name|join
+operator|.
+name|getJoinType
+argument_list|()
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|RelOptUtil
@@ -626,10 +674,6 @@ name|join
 operator|.
 name|getJoinType
 argument_list|()
-operator|==
-name|JoinRelType
-operator|.
-name|INNER
 argument_list|,
 operator|!
 name|join
@@ -654,6 +698,10 @@ argument_list|,
 name|leftFilters
 argument_list|,
 name|rightFilters
+argument_list|,
+name|joinTypeHolder
+argument_list|,
+name|smart
 argument_list|)
 condition|)
 block|{
@@ -779,7 +827,7 @@ name|join
 argument_list|,
 name|joinFilters
 argument_list|,
-literal|false
+literal|null
 argument_list|,
 operator|!
 name|join
@@ -804,6 +852,10 @@ argument_list|,
 name|leftFilters
 argument_list|,
 name|rightFilters
+argument_list|,
+name|joinTypeHolder
+argument_list|,
+name|smart
 argument_list|)
 condition|)
 block|{
@@ -898,23 +950,25 @@ comment|// if nothing actually got pushed and there is nothing leftover,
 comment|// then this rule is a no-op
 if|if
 condition|(
-operator|(
 name|leftFilters
 operator|.
-name|size
+name|isEmpty
 argument_list|()
-operator|==
-literal|0
-operator|)
 operator|&&
-operator|(
 name|rightFilters
 operator|.
-name|size
+name|isEmpty
+argument_list|()
+operator|&&
+name|joinTypeHolder
+operator|.
+name|get
 argument_list|()
 operator|==
-literal|0
-operator|)
+name|join
+operator|.
+name|getJoinType
+argument_list|()
 condition|)
 block|{
 return|return;

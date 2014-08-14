@@ -125,7 +125,7 @@ name|void
 name|incrementJoinCount
 parameter_list|(
 name|boolean
-name|noOuterJoin
+name|outerJoin
 parameter_list|)
 block|{
 name|noOfJoins
@@ -133,8 +133,7 @@ operator|++
 expr_stmt|;
 if|if
 condition|(
-operator|!
-name|noOuterJoin
+name|outerJoin
 condition|)
 name|noOfOuterJoins
 operator|++
