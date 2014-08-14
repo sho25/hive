@@ -141,14 +141,7 @@ name|SWITCHDATABASE
 argument_list|(
 literal|"SWITCHDATABASE"
 argument_list|,
-operator|new
-name|Privilege
-index|[]
-block|{
-name|Privilege
-operator|.
-name|SELECT
-block|}
+literal|null
 argument_list|,
 literal|null
 argument_list|)
