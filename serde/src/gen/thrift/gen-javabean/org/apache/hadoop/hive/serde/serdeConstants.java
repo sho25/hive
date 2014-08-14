@@ -354,6 +354,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|SERIALIZATION_ENCODING
+init|=
+literal|"serialization.encoding"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|FIELD_DELIM
 init|=
 literal|"field.delim"
