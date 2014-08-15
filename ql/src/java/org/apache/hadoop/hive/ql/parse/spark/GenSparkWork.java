@@ -1511,6 +1511,13 @@ name|sortOrder
 operator|.
 name|isEmpty
 argument_list|()
+operator|&&
+name|GenSparkUtils
+operator|.
+name|isSortNecessary
+argument_list|(
+name|rs
+argument_list|)
 condition|)
 block|{
 name|edgeProp
