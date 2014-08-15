@@ -151,6 +151,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|METACONF_PREFIX
+init|=
+literal|"metaconf:"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|SET_COLUMN_NAME
 init|=
 literal|"set"

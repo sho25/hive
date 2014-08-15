@@ -678,6 +678,20 @@ argument_list|,
 name|ioType
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|requiredPrivs
+operator|.
+name|getRequiredPrivilegeSet
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// no privileges required, so don't need to check this object privileges
+continue|continue;
+block|}
 comment|// find available privileges
 name|RequiredPrivileges
 name|availPrivs

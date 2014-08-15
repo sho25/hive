@@ -290,6 +290,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+comment|// Don't enforce during test driver setup or shutdown.
 if|if
 condition|(
 name|sess
@@ -303,8 +304,18 @@ literal|"hive.test.init.phase"
 argument_list|,
 literal|false
 argument_list|)
-operator|==
-literal|true
+operator|||
+name|sess
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getBoolean
+argument_list|(
+literal|"hive.test.shutdown.phase"
+argument_list|,
+literal|false
+argument_list|)
 condition|)
 block|{
 return|return;

@@ -627,7 +627,9 @@ name|specificSchema
 operator|+
 literal|","
 operator|+
-literal|"\"doc\":\"\"}"
+literal|"\"doc\":\"\","
+operator|+
+literal|"\"default\":null}"
 operator|+
 literal|"]}"
 return|;
