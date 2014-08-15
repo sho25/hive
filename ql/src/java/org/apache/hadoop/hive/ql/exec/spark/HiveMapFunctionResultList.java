@@ -164,7 +164,7 @@ name|IOException
 block|{
 name|recordHandler
 operator|.
-name|process
+name|processRow
 argument_list|(
 name|inputRecord
 operator|.
