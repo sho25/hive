@@ -70553,6 +70553,13 @@ name|rootRel
 init|=
 name|optiqPreCboPlan
 decl_stmt|;
+name|hepPlanner
+operator|.
+name|setRoot
+argument_list|(
+name|rootRel
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!
