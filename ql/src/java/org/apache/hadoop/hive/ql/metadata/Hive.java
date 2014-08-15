@@ -5224,12 +5224,16 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+literal|"Table "
+operator|+
+name|tableName
+operator|+
+literal|" not found: "
+operator|+
 name|e
-argument_list|)
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 throw|throw
