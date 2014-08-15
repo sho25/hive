@@ -5846,6 +5846,15 @@ argument_list|,
 literal|"Maximum number of worker threads when in HTTP mode."
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_HTTP_MAX_IDLE_TIME
+argument_list|(
+literal|"hive.server2.thrift.http.max.idle.time"
+argument_list|,
+literal|1800000
+argument_list|,
+literal|"Maximum idle time in milliseconds for a connection on the server when in HTTP mode."
+argument_list|)
+block|,
 comment|// binary transport settings
 name|HIVE_SERVER2_THRIFT_PORT
 argument_list|(
