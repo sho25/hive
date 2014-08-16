@@ -70713,11 +70713,11 @@ name|mdProvider
 argument_list|,
 name|HivePushFilterPastJoinRule
 operator|.
-name|FILTER_ON_JOIN
+name|JOIN
 argument_list|,
 name|HivePushFilterPastJoinRule
 operator|.
-name|JOIN
+name|FILTER_ON_JOIN
 argument_list|,
 operator|new
 name|HivePartitionPrunerRule

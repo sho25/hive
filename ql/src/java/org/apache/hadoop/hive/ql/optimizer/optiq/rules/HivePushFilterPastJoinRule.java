@@ -340,7 +340,7 @@ name|HivePushFilterPastJoinRule
 argument_list|(
 name|operand
 argument_list|(
-name|HiveFilterRel
+name|FilterRelBase
 operator|.
 name|class
 argument_list|,
