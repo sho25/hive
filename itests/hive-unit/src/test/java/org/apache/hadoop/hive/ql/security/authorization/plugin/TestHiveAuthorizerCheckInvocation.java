@@ -414,6 +414,9 @@ name|conf
 parameter_list|,
 name|HiveAuthenticationProvider
 name|authenticator
+parameter_list|,
+name|HiveAuthzSessionContext
+name|ctx
 parameter_list|)
 block|{
 name|TestHiveAuthorizerCheckInvocation

@@ -117,7 +117,7 @@ specifier|public
 interface|interface
 name|HiveAuthorizerFactory
 block|{
-comment|/**    * Create a new instance of HiveAuthorizer, initialized with the given objects.    * @param metastoreClientFactory - Use this to get the valid meta store client (IMetaStoreClient)    *  for the current thread. Each invocation of method in HiveAuthorizer can happen in    *  different thread, so get the current instance in each method invocation.    * @param conf - current HiveConf    * @param hiveAuthenticator - authenticator, provides user name    * @return new instance of HiveAuthorizer    * @throws HiveAuthzPluginException    */
+comment|/**    * Create a new instance of HiveAuthorizer, initialized with the given objects.    * @param metastoreClientFactory - Use this to get the valid meta store client (IMetaStoreClient)    *  for the current thread. Each invocation of method in HiveAuthorizer can happen in    *  different thread, so get the current instance in each method invocation.    * @param conf - current HiveConf    * @param hiveAuthenticator - authenticator, provides user name    * @param ctx - session context information    * @return new instance of HiveAuthorizer    * @throws HiveAuthzPluginException    */
 name|HiveAuthorizer
 name|createHiveAuthorizer
 parameter_list|(
@@ -129,6 +129,9 @@ name|conf
 parameter_list|,
 name|HiveAuthenticationProvider
 name|hiveAuthenticator
+parameter_list|,
+name|HiveAuthzSessionContext
+name|ctx
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
