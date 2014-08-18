@@ -314,13 +314,13 @@ specifier|private
 specifier|static
 specifier|final
 name|Splitter
-name|CSV_SPLITTER
+name|TEST_SPLITTER
 init|=
 name|Splitter
 operator|.
-name|on
+name|onPattern
 argument_list|(
-literal|','
+literal|"[, ]"
 argument_list|)
 operator|.
 name|trimResults
@@ -971,7 +971,7 @@ control|(
 name|String
 name|relativePath
 range|:
-name|CSV_SPLITTER
+name|TEST_SPLITTER
 operator|.
 name|split
 argument_list|(
@@ -1371,7 +1371,7 @@ name|String
 operator|>
 name|newHashSet
 argument_list|(
-name|CSV_SPLITTER
+name|TEST_SPLITTER
 operator|.
 name|split
 argument_list|(
@@ -1529,7 +1529,7 @@ control|(
 name|String
 name|qFile
 range|:
-name|CSV_SPLITTER
+name|TEST_SPLITTER
 operator|.
 name|split
 argument_list|(
@@ -1595,7 +1595,7 @@ control|(
 name|String
 name|regex
 range|:
-name|CSV_SPLITTER
+name|TEST_SPLITTER
 operator|.
 name|split
 argument_list|(
@@ -1708,7 +1708,7 @@ control|(
 name|String
 name|qFile
 range|:
-name|CSV_SPLITTER
+name|TEST_SPLITTER
 operator|.
 name|split
 argument_list|(
