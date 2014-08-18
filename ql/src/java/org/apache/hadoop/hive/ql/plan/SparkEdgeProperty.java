@@ -225,6 +225,12 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+name|isShuffleSort
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
 name|sb
 operator|.
 name|length
@@ -241,12 +247,6 @@ literal|" "
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|isShuffleSort
-argument_list|()
-condition|)
-block|{
 name|sb
 operator|.
 name|append

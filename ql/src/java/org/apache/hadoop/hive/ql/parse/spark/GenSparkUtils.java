@@ -598,6 +598,7 @@ argument_list|(
 name|reduceWork
 argument_list|)
 expr_stmt|;
+comment|// Use group-by as the default shuffler
 name|SparkEdgeProperty
 name|edgeProp
 init|=
@@ -606,7 +607,7 @@ name|SparkEdgeProperty
 argument_list|(
 name|SparkEdgeProperty
 operator|.
-name|SHUFFLE_NONE
+name|SHUFFLE_GROUP
 argument_list|,
 name|reduceWork
 operator|.
@@ -614,19 +615,6 @@ name|getNumReduceTasks
 argument_list|()
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|root
-operator|instanceof
-name|GroupByOperator
-condition|)
-block|{
-name|edgeProp
-operator|.
-name|setShuffleGroup
-argument_list|()
-expr_stmt|;
-block|}
 name|String
 name|sortOrder
 init|=

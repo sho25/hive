@@ -73,6 +73,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1451,6 +1465,19 @@ name|SparkEdgeProperty
 name|edge
 parameter_list|)
 block|{
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+operator|!
+name|edge
+operator|.
+name|isShuffleNone
+argument_list|()
+argument_list|,
+literal|"AssertionError: SHUFFLE_NONE should only be used for UnionWork."
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|edge

@@ -1227,8 +1227,9 @@ init|=
 operator|new
 name|SparkEdgeProperty
 argument_list|(
-literal|0
-comment|/*EdgeType.CONTAINS*/
+name|SparkEdgeProperty
+operator|.
+name|SHUFFLE_NONE
 argument_list|)
 decl_stmt|;
 name|sparkWork
@@ -1450,6 +1451,7 @@ argument_list|)
 condition|)
 block|{
 comment|// add dependency between the two work items
+comment|// Use group-by as the default shuffler
 name|SparkEdgeProperty
 name|edgeProp
 init|=
@@ -1458,7 +1460,7 @@ name|SparkEdgeProperty
 argument_list|(
 name|SparkEdgeProperty
 operator|.
-name|SHUFFLE_NONE
+name|SHUFFLE_GROUP
 argument_list|,
 name|rs
 operator|.
@@ -1469,22 +1471,6 @@ name|getNumReducers
 argument_list|()
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|rWork
-operator|.
-name|getReducer
-argument_list|()
-operator|instanceof
-name|GroupByOperator
-condition|)
-block|{
-name|edgeProp
-operator|.
-name|setShuffleGroup
-argument_list|()
-expr_stmt|;
-block|}
 name|String
 name|sortOrder
 init|=
