@@ -1015,7 +1015,7 @@ name|value
 decl_stmt|;
 specifier|private
 specifier|transient
-name|Writable
+name|Object
 index|[]
 name|vcValues
 decl_stmt|;
@@ -1224,15 +1224,10 @@ name|inspectors
 operator|.
 name|add
 argument_list|(
-name|PrimitiveObjectInspectorFactory
-operator|.
-name|getPrimitiveWritableObjectInspector
-argument_list|(
 name|vc
 operator|.
-name|getTypeInfo
+name|getObjectInspector
 argument_list|()
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|names
@@ -1260,7 +1255,7 @@ expr_stmt|;
 name|vcValues
 operator|=
 operator|new
-name|Writable
+name|Object
 index|[
 name|vcCols
 operator|.
