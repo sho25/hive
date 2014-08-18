@@ -1894,18 +1894,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|public
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-name|getReducer
-parameter_list|()
-block|{
-return|return
-name|reducer
-return|;
-block|}
 block|}
 end_class
 
