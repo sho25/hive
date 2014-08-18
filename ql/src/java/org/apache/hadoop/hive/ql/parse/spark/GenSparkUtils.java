@@ -1309,6 +1309,13 @@ argument_list|(
 name|desc
 argument_list|)
 expr_stmt|;
+name|desc
+operator|.
+name|setLinkedFileSinkDesc
+argument_list|(
+name|linked
+argument_list|)
+expr_stmt|;
 block|}
 if|if
 condition|(
