@@ -4954,13 +4954,29 @@ name|Override
 specifier|protected
 name|void
 name|reset
-parameter_list|()
+parameter_list|(
+name|boolean
+name|clearPartsCache
+parameter_list|)
 block|{
 name|super
 operator|.
 name|reset
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|clearPartsCache
+condition|)
+block|{
+name|prunedPartitions
+operator|.
+name|clear
 argument_list|()
 expr_stmt|;
+block|}
 name|loadTableWork
 operator|.
 name|clear
@@ -5018,11 +5034,6 @@ name|clear
 argument_list|()
 expr_stmt|;
 name|groupOpToInputTables
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
-name|prunedPartitions
 operator|.
 name|clear
 argument_list|()
@@ -58369,11 +58380,16 @@ name|Override
 specifier|public
 name|void
 name|init
-parameter_list|()
+parameter_list|(
+name|boolean
+name|clearPartsCache
+parameter_list|)
 block|{
 comment|// clear most members
 name|reset
-argument_list|()
+argument_list|(
+name|clearPartsCache
+argument_list|)
 expr_stmt|;
 comment|// init
 name|QB
@@ -58744,7 +58760,9 @@ argument_list|)
 decl_stmt|;
 comment|// 2. Regen OP plan from optimized AST
 name|init
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 expr_stmt|;
 name|ctx_1
 operator|=
@@ -58772,6 +58790,15 @@ literal|"Couldn't do phase1 on CBO optimized query plan"
 argument_list|)
 throw|;
 block|}
+name|prunedPartitions
+operator|=
+name|ImmutableMap
+operator|.
+name|copyOf
+argument_list|(
+name|prunedPartitions
+argument_list|)
+expr_stmt|;
 name|getMetaData
 argument_list|(
 name|qb
@@ -58856,6 +58883,13 @@ name|reAnalyzeAST
 condition|)
 block|{
 name|init
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|prunedPartitions
+operator|.
+name|clear
 argument_list|()
 expr_stmt|;
 name|analyzeInternal
@@ -71084,11 +71118,14 @@ else|else
 block|{
 name|optiqJoinCond
 operator|=
-name|RexNodeConverter
-operator|.
-name|getAlwaysTruePredicate
-argument_list|(
 name|m_cluster
+operator|.
+name|getRexBuilder
+argument_list|()
+operator|.
+name|makeLiteral
+argument_list|(
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -71215,7 +71252,7 @@ return|return
 name|joinRel
 return|;
 block|}
-comment|/**      * Generate Join Logical Plan Relnode by walking through the join AST.      *       * @param qb      * @param aliasToRel      *          Alias(Table/Relation alias) to RelNode; only read and not      *          written in to by this method      * @return      * @throws SemanticException      */
+comment|/**      * Generate Join Logical Plan Relnode by walking through the join AST.      *      * @param qb      * @param aliasToRel      *          Alias(Table/Relation alias) to RelNode; only read and not      *          written in to by this method      * @return      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genJoinLogicalPlan
@@ -73518,7 +73555,7 @@ return|return
 name|aInfo
 return|;
 block|}
-comment|/**      * Generate GB plan.      *       * @param qb      * @param srcRel      * @return TODO: 1. Grouping Sets (roll up..)      * @throws SemanticException      */
+comment|/**      * Generate GB plan.      *      * @param qb      * @param srcRel      * @return TODO: 1. Grouping Sets (roll up..)      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genGBLogicalPlan
@@ -76168,7 +76205,7 @@ return|return
 name|wi
 return|;
 block|}
-comment|/**      * NOTE: there can only be one select caluse since we don't handle multi      * destination insert.      *       * @throws SemanticException      */
+comment|/**      * NOTE: there can only be one select caluse since we don't handle multi      * destination insert.      *      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genSelectLogicalPlan

@@ -2571,7 +2571,9 @@ name|qbp
 decl_stmt|;
 comment|// initialize QB
 name|init
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 comment|// Setup the necessary metadata if originating from analyze rewrite
 if|if

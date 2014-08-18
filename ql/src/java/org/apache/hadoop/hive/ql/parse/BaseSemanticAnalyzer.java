@@ -1415,7 +1415,10 @@ function_decl|;
 specifier|public
 name|void
 name|init
-parameter_list|()
+parameter_list|(
+name|boolean
+name|clearPartsCache
+parameter_list|)
 block|{
 comment|//no-op
 block|}
@@ -1453,7 +1456,9 @@ name|ctx
 argument_list|)
 expr_stmt|;
 name|init
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 name|analyzeInternal
 argument_list|(
@@ -1516,7 +1521,10 @@ block|}
 specifier|protected
 name|void
 name|reset
-parameter_list|()
+parameter_list|(
+name|boolean
+name|clearPartsCache
+parameter_list|)
 block|{
 name|rootTasks
 operator|=

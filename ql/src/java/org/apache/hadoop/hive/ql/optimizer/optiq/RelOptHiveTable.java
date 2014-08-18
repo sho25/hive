@@ -179,43 +179,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|Hive
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
 name|HiveException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|Partition
 import|;
 end_import
 
@@ -869,12 +833,12 @@ condition|)
 block|{
 if|if
 condition|(
-name|m_hiveTblMetadata
-operator|.
-name|isPartitioned
-argument_list|()
+literal|null
+operator|==
+name|partitionList
 condition|)
 block|{
+comment|// we are here either unpartitioned table or partitioned table with no predicates
 name|computePartitionList
 argument_list|(
 name|m_hiveConf
@@ -882,6 +846,15 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|m_hiveTblMetadata
+operator|.
+name|isPartitioned
+argument_list|()
+condition|)
+block|{
 name|List
 argument_list|<
 name|Long
@@ -1019,10 +992,8 @@ name|RexNode
 name|pruneNode
 parameter_list|)
 block|{
-name|partitionList
-operator|=
-literal|null
-expr_stmt|;
+try|try
+block|{
 if|if
 condition|(
 operator|!
@@ -1030,15 +1001,7 @@ name|m_hiveTblMetadata
 operator|.
 name|isPartitioned
 argument_list|()
-condition|)
-block|{
-comment|// no partitions for unpartitioned tables.
-return|return;
-block|}
-try|try
-block|{
-if|if
-condition|(
+operator|||
 name|pruneNode
 operator|==
 literal|null
@@ -1359,8 +1322,7 @@ name|partitionList
 condition|)
 block|{
 comment|// We could be here either because its an unpartitioned table or because
-comment|// there are no pruning predicates on a partitioned table. If its latter,
-comment|// we need to fetch all partitions, so do that now.
+comment|// there are no pruning predicates on a partitioned table.
 name|computePartitionList
 argument_list|(
 name|m_hiveConf
@@ -1371,9 +1333,11 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|partitionList
-operator|==
-literal|null
+operator|!
+name|m_hiveTblMetadata
+operator|.
+name|isPartitioned
+argument_list|()
 condition|)
 block|{
 comment|// 2.1 Handle the case for unpartitioned table.
@@ -1954,7 +1918,7 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/*    * use to check if a set of columns are all partition columns.    * true only if:    * - there is a prunedPartList in place    * - all columns in BitSet are partition    * columns.    */
+comment|/*    * use to check if a set of columns are all partition columns.    * true only if:    * - all columns in BitSet are partition    * columns.    */
 specifier|public
 name|boolean
 name|containsPartitionColumnsOnly
@@ -1963,17 +1927,6 @@ name|BitSet
 name|cols
 parameter_list|)
 block|{
-if|if
-condition|(
-name|partitionList
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
 for|for
 control|(
 name|int
