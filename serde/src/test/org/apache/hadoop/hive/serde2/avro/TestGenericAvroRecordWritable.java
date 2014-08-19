@@ -196,9 +196,9 @@ block|{
 name|Schema
 name|schema
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|schemaJSON
 argument_list|)

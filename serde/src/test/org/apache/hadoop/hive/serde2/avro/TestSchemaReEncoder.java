@@ -186,9 +186,9 @@ decl_stmt|;
 name|Schema
 name|originalSchema
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|original
 argument_list|)
@@ -196,9 +196,9 @@ decl_stmt|;
 name|Schema
 name|evolvedSchema
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|evolved
 argument_list|)
@@ -361,9 +361,9 @@ decl_stmt|;
 name|Schema
 name|originalSchema2
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|original2
 argument_list|)
@@ -371,9 +371,9 @@ decl_stmt|;
 name|Schema
 name|evolvedSchema2
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|evolved2
 argument_list|)
