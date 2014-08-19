@@ -492,7 +492,10 @@ name|hashCode
 parameter_list|()
 block|{
 return|return
+name|trim
+argument_list|(
 name|bd
+argument_list|)
 operator|.
 name|hashCode
 argument_list|()
@@ -715,7 +718,7 @@ operator|.
 name|bd
 argument_list|)
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 return|;
 block|}
@@ -873,6 +876,8 @@ block|{
 return|return
 name|create
 argument_list|(
+name|trim
+argument_list|(
 name|bd
 operator|.
 name|divide
@@ -886,6 +891,7 @@ argument_list|,
 name|RoundingMode
 operator|.
 name|HALF_UP
+argument_list|)
 argument_list|)
 argument_list|,
 literal|true
@@ -994,13 +1000,6 @@ return|return
 literal|null
 return|;
 block|}
-name|bd
-operator|=
-name|trim
-argument_list|(
-name|bd
-argument_list|)
-expr_stmt|;
 name|int
 name|intDigits
 init|=
@@ -1077,14 +1076,6 @@ operator|.
 name|HALF_UP
 argument_list|)
 expr_stmt|;
-comment|// Trimming is again necessary, because rounding may introduce new trailing 0's.
-name|bd
-operator|=
-name|trim
-argument_list|(
-name|bd
-argument_list|)
-expr_stmt|;
 block|}
 else|else
 block|{
@@ -1124,13 +1115,6 @@ return|return
 literal|null
 return|;
 block|}
-name|bd
-operator|=
-name|trim
-argument_list|(
-name|bd
-argument_list|)
-expr_stmt|;
 name|int
 name|maxIntDigits
 init|=

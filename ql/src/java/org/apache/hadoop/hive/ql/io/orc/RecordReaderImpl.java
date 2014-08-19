@@ -7188,11 +7188,12 @@ name|i
 index|]
 argument_list|)
 expr_stmt|;
-comment|// Change the scale to match the schema if the scale in data is different.
+comment|// Change the scale to match the schema if the scale is less than in data.
+comment|// (HIVE-7373) If scale is bigger, then it leaves the original trailing zeros
 if|if
 condition|(
 name|scale
-operator|!=
+operator|<
 name|scratchScaleVector
 operator|.
 name|vector
