@@ -699,6 +699,8 @@ operator|.
 name|getJoinType
 argument_list|()
 argument_list|,
+literal|true
+argument_list|,
 operator|!
 name|join
 operator|.
@@ -892,6 +894,8 @@ argument_list|,
 name|joinFilters
 argument_list|,
 literal|null
+argument_list|,
+literal|false
 argument_list|,
 operator|!
 name|join

@@ -273,6 +273,28 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|optiq
+operator|.
+name|reloperators
+operator|.
+name|HiveUnionRel
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|eigenbase
 operator|.
 name|rel
@@ -3098,7 +3120,7 @@ specifier|public
 name|TrimResult
 name|trimFields
 parameter_list|(
-name|SetOpRel
+name|HiveUnionRel
 name|setOp
 parameter_list|,
 name|BitSet
@@ -3252,7 +3274,7 @@ decl_stmt|;
 comment|// Create a projection; does nothing if remaining is identity.
 name|newInput
 operator|=
-name|CalcRel
+name|HiveProjectRel
 operator|.
 name|projectMapping
 argument_list|(
@@ -3319,6 +3341,8 @@ name|getTraitSet
 argument_list|()
 argument_list|,
 name|newInputs
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 return|return
