@@ -1004,7 +1004,16 @@ block|{
 comment|// add hive-exec jar
 name|addJars
 argument_list|(
-name|conf
+operator|(
+operator|new
+name|JobConf
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+argument_list|)
+operator|)
 operator|.
 name|getJar
 argument_list|()
