@@ -251,11 +251,11 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|mapred
+name|mapreduce
 operator|.
 name|split
 operator|.
-name|TezGroupedSplitsInputFormat
+name|TezMapReduceSplitsGrouper
 import|;
 end_import
 
@@ -267,11 +267,9 @@ name|apache
 operator|.
 name|tez
 operator|.
-name|dag
+name|common
 operator|.
-name|api
-operator|.
-name|EdgeManagerDescriptor
+name|TezUtils
 import|;
 end_import
 
@@ -321,6 +319,22 @@ name|dag
 operator|.
 name|api
 operator|.
+name|EdgeManagerPluginDescriptor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|dag
+operator|.
+name|api
+operator|.
 name|InputDescriptor
 import|;
 end_import
@@ -337,7 +351,7 @@ name|dag
 operator|.
 name|api
 operator|.
-name|TezConfiguration
+name|UserPayload
 import|;
 end_import
 
@@ -397,29 +411,11 @@ name|apache
 operator|.
 name|tez
 operator|.
-name|dag
-operator|.
-name|api
-operator|.
-name|VertexManagerPluginContext
-operator|.
-name|TaskWithLocationHint
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
 name|mapreduce
 operator|.
 name|hadoop
 operator|.
-name|MRHelpers
+name|MRInputHelpers
 import|;
 end_import
 
@@ -487,7 +483,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|RootInputSpecUpdate
+name|InputSpecUpdate
 import|;
 end_import
 
@@ -505,7 +501,7 @@ name|api
 operator|.
 name|events
 operator|.
-name|RootInputConfigureVertexTasksEvent
+name|InputConfigureVertexTasksEvent
 import|;
 end_import
 
@@ -523,7 +519,7 @@ name|api
 operator|.
 name|events
 operator|.
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 import|;
 end_import
 
@@ -541,7 +537,7 @@ name|api
 operator|.
 name|events
 operator|.
-name|RootInputUpdatePayloadEvent
+name|InputUpdatePayloadEvent
 import|;
 end_import
 
@@ -647,6 +643,18 @@ name|Multimap
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+import|;
+end_import
+
 begin_comment
 comment|/*  * Only works with old mapred API  * Will only work with a single MRInput for now.  */
 end_comment
@@ -680,13 +688,13 @@ name|VertexManagerPluginContext
 name|context
 decl_stmt|;
 specifier|private
-name|RootInputConfigureVertexTasksEvent
+name|InputConfigureVertexTasksEvent
 name|configureVertexTaskEvent
 decl_stmt|;
 specifier|private
 name|List
 argument_list|<
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 argument_list|>
 name|dataInformationEvents
 decl_stmt|;
@@ -754,15 +762,13 @@ expr_stmt|;
 name|ByteBuffer
 name|byteBuf
 init|=
-name|ByteBuffer
-operator|.
-name|wrap
-argument_list|(
 name|context
 operator|.
 name|getUserPayload
 argument_list|()
-argument_list|)
+operator|.
+name|getPayload
+argument_list|()
 decl_stmt|;
 name|this
 operator|.
@@ -942,7 +948,7 @@ comment|// means serializing another instance.
 name|MRInputUserPayloadProto
 name|protoPayload
 init|=
-name|MRHelpers
+name|MRInputHelpers
 operator|.
 name|parseMRInputPayload
 argument_list|(
@@ -956,7 +962,7 @@ name|this
 operator|.
 name|conf
 operator|=
-name|MRHelpers
+name|TezUtils
 operator|.
 name|createConfFromByteString
 argument_list|(
@@ -968,24 +974,7 @@ argument_list|)
 expr_stmt|;
 comment|/*        * Currently in tez, the flow of events is thus:        * "Generate Splits -> Initialize Vertex" (with parallelism info obtained        * from the generate splits phase). The generate splits phase groups        * splits using the TezGroupedSplitsInputFormat. However, for bucket map        * joins the grouping done by this input format results in incorrect        * results as the grouper has no knowledge of buckets. So, we initially        * set the input format to be HiveInputFormat (in DagUtils) for the case        * of bucket map joins so as to obtain un-grouped splits. We then group        * the splits corresponding to buckets using the tez grouper which returns        * TezGroupedSplits.        */
 comment|// This assumes that Grouping will always be used.
-comment|// Changing the InputFormat - so that the correct one is initialized in
-comment|// MRInput.
-name|this
-operator|.
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"mapred.input.format.class"
-argument_list|,
-name|TezGroupedSplitsInputFormat
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|// Enabling grouping on the payload.
 name|MRInputUserPayloadProto
 name|updatedPayload
 init|=
@@ -996,14 +985,9 @@ argument_list|(
 name|protoPayload
 argument_list|)
 operator|.
-name|setConfigurationBytes
+name|setGroupingEnabled
 argument_list|(
-name|MRHelpers
-operator|.
-name|createByteStringFromConf
-argument_list|(
-name|conf
-argument_list|)
+literal|true
 argument_list|)
 operator|.
 name|build
@@ -1013,10 +997,18 @@ name|inputDescriptor
 operator|.
 name|setUserPayload
 argument_list|(
+name|UserPayload
+operator|.
+name|create
+argument_list|(
 name|updatedPayload
 operator|.
-name|toByteArray
+name|toByteString
 argument_list|()
+operator|.
+name|asReadOnlyByteBuffer
+argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -1079,7 +1071,7 @@ if|if
 condition|(
 name|event
 operator|instanceof
-name|RootInputConfigureVertexTasksEvent
+name|InputConfigureVertexTasksEvent
 condition|)
 block|{
 comment|// No tasks should have been started yet. Checked by initial state
@@ -1113,11 +1105,11 @@ argument_list|,
 literal|"Parallelism for the vertex should be set to -1 if the InputInitializer is setting parallelism"
 argument_list|)
 expr_stmt|;
-name|RootInputConfigureVertexTasksEvent
+name|InputConfigureVertexTasksEvent
 name|cEvent
 init|=
 operator|(
-name|RootInputConfigureVertexTasksEvent
+name|InputConfigureVertexTasksEvent
 operator|)
 name|event
 decl_stmt|;
@@ -1144,7 +1136,7 @@ if|if
 condition|(
 name|event
 operator|instanceof
-name|RootInputUpdatePayloadEvent
+name|InputUpdatePayloadEvent
 condition|)
 block|{
 comment|// this event can never occur. If it does, fail.
@@ -1161,18 +1153,18 @@ if|if
 condition|(
 name|event
 operator|instanceof
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 condition|)
 block|{
 name|dataInformationEventSeen
 operator|=
 literal|true
 expr_stmt|;
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 name|diEvent
 init|=
 operator|(
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 operator|)
 name|event
 decl_stmt|;
@@ -1316,13 +1308,13 @@ name|conf
 operator|.
 name|getFloat
 argument_list|(
-name|TezConfiguration
+name|TezMapReduceSplitsGrouper
 operator|.
-name|TEZ_AM_GROUPING_SPLIT_WAVES
+name|TEZ_GROUPING_SPLIT_WAVES
 argument_list|,
-name|TezConfiguration
+name|TezMapReduceSplitsGrouper
 operator|.
-name|TEZ_AM_GROUPING_SPLIT_WAVES_DEFAULT
+name|TEZ_GROUPING_SPLIT_WAVES_DEFAULT
 argument_list|)
 decl_stmt|;
 name|int
@@ -1619,11 +1611,12 @@ block|}
 block|}
 comment|// Construct the EdgeManager descriptor to be used by all edges which need
 comment|// the routing table.
-name|EdgeManagerDescriptor
+name|EdgeManagerPluginDescriptor
 name|hiveEdgeManagerDesc
 init|=
-operator|new
-name|EdgeManagerDescriptor
+name|EdgeManagerPluginDescriptor
+operator|.
+name|create
 argument_list|(
 name|CustomPartitionEdge
 operator|.
@@ -1633,8 +1626,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|byte
-index|[]
+name|UserPayload
 name|payload
 init|=
 name|getBytePayload
@@ -1653,7 +1645,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|EdgeManagerDescriptor
+name|EdgeManagerPluginDescriptor
 argument_list|>
 name|emMap
 init|=
@@ -1743,7 +1735,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 argument_list|>
 name|taskEvents
 init|=
@@ -1774,24 +1766,28 @@ block|{
 name|MRSplitProto
 name|serializedSplit
 init|=
-name|MRHelpers
+name|MRInputHelpers
 operator|.
 name|createSplitProto
 argument_list|(
 name|inputSplit
 argument_list|)
 decl_stmt|;
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 name|diEvent
 init|=
-operator|new
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
+operator|.
+name|create
 argument_list|(
 name|count
 argument_list|,
 name|serializedSplit
 operator|.
-name|toByteArray
+name|toByteString
+argument_list|()
+operator|.
+name|asReadOnlyByteBuffer
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -1818,7 +1814,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|RootInputSpecUpdate
+name|InputSpecUpdate
 argument_list|>
 name|rootInputSpecUpdate
 init|=
@@ -1827,7 +1823,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|RootInputSpecUpdate
+name|InputSpecUpdate
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1837,7 +1833,7 @@ name|put
 argument_list|(
 name|inputName
 argument_list|,
-name|RootInputSpecUpdate
+name|InputSpecUpdate
 operator|.
 name|getDefaultSinglePhysicalInputSpecUpdate
 argument_list|()
@@ -1849,8 +1845,9 @@ name|setVertexParallelism
 argument_list|(
 name|taskCount
 argument_list|,
-operator|new
 name|VertexLocationHint
+operator|.
+name|create
 argument_list|(
 name|grouper
 operator|.
@@ -1888,9 +1885,7 @@ name|taskEvents
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
-name|byte
-index|[]
+name|UserPayload
 name|getBytePayload
 parameter_list|(
 name|Multimap
@@ -1945,14 +1940,24 @@ name|getData
 argument_list|()
 decl_stmt|;
 return|return
+name|UserPayload
+operator|.
+name|create
+argument_list|(
+name|ByteBuffer
+operator|.
+name|wrap
+argument_list|(
 name|serialized
+argument_list|)
+argument_list|)
 return|;
 block|}
 specifier|private
 name|FileSplit
 name|getFileSplitFromEvent
 parameter_list|(
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 name|event
 parameter_list|)
 throws|throws
@@ -1993,10 +1998,15 @@ name|MRSplitProto
 operator|.
 name|parseFrom
 argument_list|(
+name|ByteString
+operator|.
+name|copyFrom
+argument_list|(
 name|event
 operator|.
 name|getUserPayload
 argument_list|()
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|SerializationFactory
@@ -2012,7 +2022,7 @@ argument_list|)
 decl_stmt|;
 name|inputSplit
 operator|=
-name|MRHelpers
+name|MRInputHelpers
 operator|.
 name|createOldFormatSplitFromUserPayload
 argument_list|(

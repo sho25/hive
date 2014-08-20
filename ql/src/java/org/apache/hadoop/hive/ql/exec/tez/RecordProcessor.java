@@ -243,7 +243,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|TezProcessorContext
+name|ProcessorContext
 import|;
 end_import
 
@@ -317,7 +317,7 @@ argument_list|>
 name|outMap
 decl_stmt|;
 specifier|protected
-name|TezProcessorContext
+name|ProcessorContext
 name|processorContext
 decl_stmt|;
 specifier|public
@@ -396,7 +396,7 @@ parameter_list|(
 name|JobConf
 name|jconf
 parameter_list|,
-name|TezProcessorContext
+name|ProcessorContext
 name|processorContext
 parameter_list|,
 name|MRTaskReporter

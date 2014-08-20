@@ -259,9 +259,39 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|mapreduce
+operator|.
+name|split
+operator|.
+name|TezMapReduceSplitsGrouper
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|util
 operator|.
 name|ReflectionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|common
+operator|.
+name|TezUtils
 import|;
 end_import
 
@@ -277,7 +307,7 @@ name|dag
 operator|.
 name|api
 operator|.
-name|TezConfiguration
+name|VertexLocationHint
 import|;
 end_import
 
@@ -327,7 +357,7 @@ name|mapreduce
 operator|.
 name|hadoop
 operator|.
-name|MRHelpers
+name|MRInputHelpers
 import|;
 end_import
 
@@ -413,7 +443,9 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|RootInputSpecUpdate
+name|events
+operator|.
+name|InputConfigureVertexTasksEvent
 import|;
 end_import
 
@@ -431,7 +463,7 @@ name|api
 operator|.
 name|events
 operator|.
-name|RootInputConfigureVertexTasksEvent
+name|InputDataInformationEvent
 import|;
 end_import
 
@@ -449,7 +481,7 @@ name|api
 operator|.
 name|events
 operator|.
-name|RootInputDataInformationEvent
+name|InputInitializerEvent
 import|;
 end_import
 
@@ -465,9 +497,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|events
-operator|.
-name|RootInputInitializerEvent
+name|InputInitializer
 import|;
 end_import
 
@@ -483,7 +513,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|RootInputSpecUpdate
+name|InputInitializerContext
 import|;
 end_import
 
@@ -499,23 +529,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|TezRootInputInitializer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|runtime
-operator|.
-name|api
-operator|.
-name|TezRootInputInitializerContext
+name|InputSpecUpdate
 import|;
 end_import
 
@@ -570,7 +584,7 @@ specifier|public
 class|class
 name|HiveSplitGenerator
 extends|extends
-name|TezRootInputInitializer
+name|InputInitializer
 block|{
 specifier|private
 specifier|static
@@ -600,7 +614,7 @@ decl_stmt|;
 specifier|public
 name|HiveSplitGenerator
 parameter_list|(
-name|TezRootInputInitializerContext
+name|InputInitializerContext
 name|initializerContext
 parameter_list|)
 block|{
@@ -622,7 +636,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|TezRootInputInitializerContext
+name|InputInitializerContext
 name|rootInputContext
 init|=
 name|getContext
@@ -631,20 +645,20 @@ decl_stmt|;
 name|MRInputUserPayloadProto
 name|userPayloadProto
 init|=
-name|MRHelpers
+name|MRInputHelpers
 operator|.
 name|parseMRInputPayload
 argument_list|(
 name|rootInputContext
 operator|.
-name|getUserPayload
+name|getInputUserPayload
 argument_list|()
 argument_list|)
 decl_stmt|;
 name|Configuration
 name|conf
 init|=
-name|MRHelpers
+name|TezUtils
 operator|.
 name|createConfFromByteString
 argument_list|(
@@ -701,17 +715,17 @@ argument_list|(
 literal|"mapred.input.format.class"
 argument_list|)
 decl_stmt|;
+name|boolean
+name|groupingEnabled
+init|=
+name|userPayloadProto
+operator|.
+name|getGroupingEnabled
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
-name|realInputFormatName
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|realInputFormatName
-operator|.
-name|isEmpty
-argument_list|()
+name|groupingEnabled
 condition|)
 block|{
 comment|// Need to instantiate the realInputFormat
@@ -782,13 +796,13 @@ name|conf
 operator|.
 name|getFloat
 argument_list|(
-name|TezConfiguration
+name|TezMapReduceSplitsGrouper
 operator|.
-name|TEZ_AM_GROUPING_SPLIT_WAVES
+name|TEZ_GROUPING_SPLIT_WAVES
 argument_list|,
-name|TezConfiguration
+name|TezMapReduceSplitsGrouper
 operator|.
-name|TEZ_AM_GROUPING_SPLIT_WAVES_DEFAULT
+name|TEZ_GROUPING_SPLIT_WAVES_DEFAULT
 argument_list|)
 decl_stmt|;
 name|InputSplit
@@ -927,19 +941,19 @@ block|}
 else|else
 block|{
 comment|// no need for grouping and the target #of tasks.
-name|inputSplitInfo
-operator|=
-name|MRHelpers
-operator|.
-name|generateInputSplitsToMem
+comment|// This code path should never be triggered at the moment. If grouping is disabled,
+comment|// DAGUtils uses MRInputAMSplitGenerator.
+comment|// If this is used in the future - make sure to disable grouping in the payload, if it isn't already disabled
+throw|throw
+operator|new
+name|RuntimeException
 argument_list|(
-name|jobConf
-argument_list|,
-literal|false
-argument_list|,
-literal|0
+literal|"HiveInputFormat does not support non-grouped splits, InputFormatName is: "
+operator|+
+name|realInputFormatName
 argument_list|)
-expr_stmt|;
+throw|;
+comment|// inputSplitInfo = MRInputHelpers.generateInputSplitsToMem(jobConf, false, 0);
 block|}
 return|return
 name|createEventList
@@ -1223,13 +1237,15 @@ return|return
 name|groupedSplits
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|handleInputInitializerEvent
 parameter_list|(
 name|List
 argument_list|<
-name|RootInputInitializerEvent
+name|InputInitializerEvent
 argument_list|>
 name|events
 parameter_list|)
@@ -1268,23 +1284,29 @@ operator|+
 literal|1
 argument_list|)
 decl_stmt|;
-name|RootInputConfigureVertexTasksEvent
+name|InputConfigureVertexTasksEvent
 name|configureVertexEvent
 init|=
-operator|new
-name|RootInputConfigureVertexTasksEvent
+name|InputConfigureVertexTasksEvent
+operator|.
+name|create
 argument_list|(
 name|inputSplitInfo
 operator|.
 name|getNumTasks
 argument_list|()
 argument_list|,
+name|VertexLocationHint
+operator|.
+name|create
+argument_list|(
 name|inputSplitInfo
 operator|.
 name|getTaskLocationHints
 argument_list|()
+argument_list|)
 argument_list|,
-name|RootInputSpecUpdate
+name|InputSpecUpdate
 operator|.
 name|getDefaultSinglePhysicalInputSpecUpdate
 argument_list|()
@@ -1326,18 +1348,22 @@ name|getSplitsList
 argument_list|()
 control|)
 block|{
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 name|diEvent
 init|=
-operator|new
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
+operator|.
+name|create
 argument_list|(
 name|count
 operator|++
 argument_list|,
 name|mrSplit
 operator|.
-name|toByteArray
+name|toByteString
+argument_list|()
+operator|.
+name|asReadOnlyByteBuffer
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -1376,11 +1402,12 @@ name|getOldFormatSplits
 argument_list|()
 control|)
 block|{
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
 name|diEvent
 init|=
-operator|new
-name|RootInputDataInformationEvent
+name|InputDataInformationEvent
+operator|.
+name|create
 argument_list|(
 name|count
 operator|++

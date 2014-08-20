@@ -33,7 +33,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|TezProcessorContext
+name|ProcessorContext
 import|;
 end_import
 
@@ -51,7 +51,7 @@ block|{
 specifier|public
 name|ReduceTezProcessor
 parameter_list|(
-name|TezProcessorContext
+name|ProcessorContext
 name|context
 parameter_list|)
 block|{

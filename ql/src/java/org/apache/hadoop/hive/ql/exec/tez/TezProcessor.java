@@ -47,16 +47,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -275,22 +265,6 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|LogicalIOProcessor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|runtime
-operator|.
-name|api
-operator|.
 name|LogicalInput
 import|;
 end_import
@@ -323,7 +297,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|TezProcessorContext
+name|ProcessorContext
 import|;
 end_import
 
@@ -409,10 +383,6 @@ operator|.
 name|getPerfLogger
 argument_list|()
 decl_stmt|;
-specifier|private
-name|TezProcessorContext
-name|processorContext
-decl_stmt|;
 specifier|protected
 specifier|static
 specifier|final
@@ -469,7 +439,7 @@ block|}
 specifier|public
 name|TezProcessor
 parameter_list|(
-name|TezProcessorContext
+name|ProcessorContext
 name|context
 parameter_list|)
 block|{
@@ -516,12 +486,6 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-name|TezProcessorContext
-name|processorContext
-init|=
-name|getContext
-argument_list|()
-decl_stmt|;
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -533,22 +497,6 @@ operator|.
 name|TEZ_INITIALIZE_PROCESSOR
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
-name|processorContext
-operator|=
-name|processorContext
-expr_stmt|;
-comment|//get the jobconf
-name|byte
-index|[]
-name|userPayload
-init|=
-name|processorContext
-operator|.
-name|getUserPayload
-argument_list|()
-decl_stmt|;
 name|Configuration
 name|conf
 init|=
@@ -556,7 +504,11 @@ name|TezUtils
 operator|.
 name|createConfFromUserPayload
 argument_list|(
-name|userPayload
+name|getContext
+argument_list|()
+operator|.
+name|getUserPayload
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|this
@@ -571,7 +523,8 @@ argument_list|)
 expr_stmt|;
 name|setupMRLegacyConfigs
 argument_list|(
-name|processorContext
+name|getContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|perfLogger
@@ -590,7 +543,7 @@ specifier|private
 name|void
 name|setupMRLegacyConfigs
 parameter_list|(
-name|TezProcessorContext
+name|ProcessorContext
 name|processorContext
 parameter_list|)
 block|{
@@ -792,7 +745,8 @@ name|info
 argument_list|(
 literal|"Running task: "
 operator|+
-name|processorContext
+name|getContext
+argument_list|()
 operator|.
 name|getUniqueIdentifier
 argument_list|()
@@ -940,7 +894,8 @@ init|=
 operator|new
 name|MRTaskReporter
 argument_list|(
-name|processorContext
+name|getContext
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|rproc
@@ -949,7 +904,8 @@ name|init
 argument_list|(
 name|jobConf
 argument_list|,
-name|processorContext
+name|getContext
+argument_list|()
 argument_list|,
 name|mrReporter
 argument_list|,

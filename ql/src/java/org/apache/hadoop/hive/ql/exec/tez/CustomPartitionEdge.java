@@ -35,6 +35,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|nio
+operator|.
+name|ByteBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Collections
@@ -99,7 +109,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|DataInputBuffer
+name|DataInputByteBuffer
 import|;
 end_import
 
@@ -115,7 +125,7 @@ name|dag
 operator|.
 name|api
 operator|.
-name|EdgeManager
+name|EdgeManagerPlugin
 import|;
 end_import
 
@@ -131,7 +141,7 @@ name|dag
 operator|.
 name|api
 operator|.
-name|EdgeManagerContext
+name|EdgeManagerPluginContext
 import|;
 end_import
 
@@ -171,26 +181,12 @@ name|InputReadErrorEvent
 import|;
 end_import
 
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Multimap
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
 name|CustomPartitionEdge
 extends|extends
-name|EdgeManager
+name|EdgeManagerPlugin
 block|{
 specifier|private
 specifier|static
@@ -215,16 +211,15 @@ name|conf
 init|=
 literal|null
 decl_stmt|;
-name|EdgeManagerContext
+specifier|final
+name|EdgeManagerPluginContext
 name|context
-init|=
-literal|null
 decl_stmt|;
 comment|// used by the framework at runtime. initialize is the real initializer at runtime
 specifier|public
 name|CustomPartitionEdge
 parameter_list|(
-name|EdgeManagerContext
+name|EdgeManagerPluginContext
 name|context
 parameter_list|)
 block|{
@@ -299,13 +294,15 @@ name|void
 name|initialize
 parameter_list|()
 block|{
-name|byte
-index|[]
+name|ByteBuffer
 name|payload
 init|=
 name|context
 operator|.
 name|getUserPayload
+argument_list|()
+operator|.
+name|getPayload
 argument_list|()
 decl_stmt|;
 name|LOG
@@ -333,22 +330,18 @@ argument_list|)
 throw|;
 block|}
 comment|// De-serialization code
-name|DataInputBuffer
-name|dib
+name|DataInputByteBuffer
+name|dibb
 init|=
 operator|new
-name|DataInputBuffer
+name|DataInputByteBuffer
 argument_list|()
 decl_stmt|;
-name|dib
+name|dibb
 operator|.
 name|reset
 argument_list|(
 name|payload
-argument_list|,
-name|payload
-operator|.
-name|length
 argument_list|)
 expr_stmt|;
 name|conf
@@ -363,7 +356,7 @@ name|conf
 operator|.
 name|readFields
 argument_list|(
-name|dib
+name|dibb
 argument_list|)
 expr_stmt|;
 block|}

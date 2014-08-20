@@ -59,9 +59,7 @@ name|tez
 operator|.
 name|runtime
 operator|.
-name|common
-operator|.
-name|objectregistry
+name|api
 operator|.
 name|ObjectRegistry
 import|;
@@ -126,6 +124,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// TODO HIVE-7809. This is broken. A new instance of ObjectRegistry should not be created.
 specifier|private
 specifier|final
 name|ObjectRegistry

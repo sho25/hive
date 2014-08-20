@@ -193,16 +193,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -934,8 +924,9 @@ name|getArguments
 argument_list|()
 decl_stmt|;
 return|return
-operator|new
 name|Vertex
+operator|.
+name|create
 argument_list|(
 operator|(
 operator|(
@@ -1038,8 +1029,9 @@ name|getArguments
 argument_list|()
 decl_stmt|;
 return|return
-operator|new
 name|Edge
+operator|.
+name|create
 argument_list|(
 operator|(
 name|Vertex

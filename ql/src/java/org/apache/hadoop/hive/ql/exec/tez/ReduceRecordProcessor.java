@@ -57,16 +57,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedList
 import|;
 end_import
@@ -703,20 +693,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|mapred
-operator|.
-name|OutputCollector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|util
 operator|.
 name|ReflectionUtils
@@ -813,7 +789,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|TezProcessorContext
+name|ProcessorContext
 import|;
 end_import
 
@@ -1017,7 +993,7 @@ parameter_list|(
 name|JobConf
 name|jconf
 parameter_list|,
-name|TezProcessorContext
+name|ProcessorContext
 name|processorContext
 parameter_list|,
 name|MRTaskReporter
