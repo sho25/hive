@@ -646,6 +646,16 @@ range|:
 name|indexColumnsWanted
 control|)
 block|{
+if|if
+condition|(
+name|idx
+operator|<
+name|listColumns
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
 name|String
 name|col
 init|=
@@ -736,6 +746,7 @@ argument_list|(
 name|msg
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 block|}
