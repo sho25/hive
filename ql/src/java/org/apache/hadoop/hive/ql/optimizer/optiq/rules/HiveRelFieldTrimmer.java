@@ -2808,6 +2808,31 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Cross Join may not reference any thing from below
+comment|// Ex: select R1.x from r1 join r2;
+if|if
+condition|(
+name|inputExtraFields
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+operator|&&
+name|inputFieldsUsed
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|inputFieldsUsed
+operator|.
+name|set
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
 name|TrimResult
 name|trimResult
 init|=
