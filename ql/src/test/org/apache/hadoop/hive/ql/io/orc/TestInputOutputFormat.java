@@ -6641,14 +6641,14 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|0.0
+literal|0.33
 argument_list|,
 name|reader
 operator|.
 name|getProgress
 argument_list|()
 argument_list|,
-literal|0.00001
+literal|0.01
 argument_list|)
 expr_stmt|;
 while|while

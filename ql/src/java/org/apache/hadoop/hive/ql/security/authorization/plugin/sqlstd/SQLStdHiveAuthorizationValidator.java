@@ -31,6 +31,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Collection
 import|;
 end_import
@@ -536,6 +546,19 @@ name|getHiveMetastoreClient
 argument_list|()
 decl_stmt|;
 comment|// check privileges on input and output objects
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|deniedMessages
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
 name|checkPrivileges
 argument_list|(
 name|hiveOpType
@@ -549,6 +572,8 @@ argument_list|,
 name|IOType
 operator|.
 name|INPUT
+argument_list|,
+name|deniedMessages
 argument_list|)
 expr_stmt|;
 name|checkPrivileges
@@ -564,6 +589,27 @@ argument_list|,
 name|IOType
 operator|.
 name|OUTPUT
+argument_list|,
+name|deniedMessages
+argument_list|)
+expr_stmt|;
+name|SQLAuthorizationUtils
+operator|.
+name|assertNoDeniedPermissions
+argument_list|(
+operator|new
+name|HivePrincipal
+argument_list|(
+name|userName
+argument_list|,
+name|HivePrincipalType
+operator|.
+name|USER
+argument_list|)
+argument_list|,
+name|hiveOpType
+argument_list|,
+name|deniedMessages
 argument_list|)
 expr_stmt|;
 block|}
@@ -588,6 +634,12 @@ name|userName
 parameter_list|,
 name|IOType
 name|ioType
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|deniedMessages
 parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
@@ -626,6 +678,20 @@ argument_list|,
 name|ioType
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|requiredPrivs
+operator|.
+name|getRequiredPrivilegeSet
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// no privileges required, so don't need to check this object privileges
+continue|continue;
+block|}
 comment|// find available privileges
 name|RequiredPrivileges
 name|availPrivs
@@ -660,7 +726,7 @@ name|Path
 argument_list|(
 name|hiveObj
 operator|.
-name|getTableViewURI
+name|getObjectName
 argument_list|()
 argument_list|)
 argument_list|,
@@ -680,9 +746,11 @@ continue|continue;
 case|case
 name|COMMAND_PARAMS
 case|:
-comment|// operations that have objects of type COMMAND_PARAMS are authorized
+case|case
+name|FUNCTION
+case|:
+comment|// operations that have objects of type COMMAND_PARAMS, FUNCTION are authorized
 comment|// solely on the type
-comment|// Assume no available privileges, unless in admin role
 if|if
 condition|(
 name|privController
@@ -743,23 +811,13 @@ argument_list|)
 decl_stmt|;
 name|SQLAuthorizationUtils
 operator|.
-name|assertNoMissingPrivilege
+name|addMissingPrivMsg
 argument_list|(
 name|missingPriv
 argument_list|,
-operator|new
-name|HivePrincipal
-argument_list|(
-name|userName
-argument_list|,
-name|HivePrincipalType
-operator|.
-name|USER
-argument_list|)
-argument_list|,
 name|hiveObj
 argument_list|,
-name|hiveOpType
+name|deniedMessages
 argument_list|)
 expr_stmt|;
 block|}

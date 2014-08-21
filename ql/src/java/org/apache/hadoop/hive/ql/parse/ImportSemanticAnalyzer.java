@@ -2213,7 +2213,11 @@ name|ctx
 operator|.
 name|getExternalTmpPath
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|fromURI
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|Task
@@ -2579,7 +2583,11 @@ name|ctx
 operator|.
 name|getExternalTmpPath
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 name|fromURI
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|Task

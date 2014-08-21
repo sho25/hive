@@ -863,6 +863,15 @@ name|i
 index|]
 operator|>=
 literal|0
+operator|&&
+operator|!
+name|joinKeysObjectInspectors
+index|[
+name|bigPos
+index|]
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 name|valueOI

@@ -105,6 +105,16 @@ name|TProtocolVersion
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
 begin_comment
 comment|/**  * Methods that don't need to be executed under a doAs  * context are here. Rest of them in HiveSession interface  */
 end_comment
@@ -141,6 +151,22 @@ parameter_list|(
 name|OperationManager
 name|operationManager
 parameter_list|)
+function_decl|;
+comment|/**    * Initialize the session    * @param sessionConfMap    */
+specifier|public
+name|void
+name|initialize
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|sessionConfMap
+parameter_list|)
+throws|throws
+name|Exception
 function_decl|;
 specifier|public
 name|SessionHandle

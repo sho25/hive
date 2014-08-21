@@ -555,7 +555,7 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"task"
+literal|"attempt_"
 argument_list|)
 decl_stmt|;
 name|taskAttemptIdBuilder

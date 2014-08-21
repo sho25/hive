@@ -329,11 +329,9 @@ name|ql
 operator|.
 name|io
 operator|.
-name|rcfile
-operator|.
 name|merge
 operator|.
-name|BlockMergeTask
+name|MergeTask
 import|;
 end_import
 
@@ -2071,7 +2069,7 @@ if|if
 condition|(
 name|task
 operator|instanceof
-name|BlockMergeTask
+name|MergeTask
 operator|||
 name|task
 operator|instanceof

@@ -201,7 +201,7 @@ annotation|@
 name|Override
 specifier|public
 name|Object
-name|deserialize
+name|doDeserialize
 parameter_list|(
 name|Writable
 name|field

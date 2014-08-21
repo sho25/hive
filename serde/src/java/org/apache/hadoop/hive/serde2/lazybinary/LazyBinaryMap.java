@@ -625,6 +625,8 @@ argument_list|,
 name|lastElementByteEnd
 argument_list|,
 name|recordInfo
+argument_list|,
+name|vInt
 argument_list|)
 expr_stmt|;
 name|keyStart
@@ -741,6 +743,8 @@ argument_list|,
 name|lastElementByteEnd
 argument_list|,
 name|recordInfo
+argument_list|,
+name|vInt
 argument_list|)
 expr_stmt|;
 name|valueStart

@@ -2061,7 +2061,7 @@ block|{
 name|HiveObjectPrivilege
 name|_elem18
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem18
 operator|=
 operator|new
@@ -2567,7 +2567,7 @@ block|{
 name|HiveObjectPrivilege
 name|_elem23
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem23
 operator|=
 operator|new

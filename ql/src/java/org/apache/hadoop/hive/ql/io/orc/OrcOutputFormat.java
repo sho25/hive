@@ -455,6 +455,8 @@ argument_list|>
 implements|implements
 name|AcidOutputFormat
 argument_list|<
+name|NullWritable
+argument_list|,
 name|OrcSerdeRow
 argument_list|>
 block|{

@@ -37,16 +37,6 @@ name|FieldSchema
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -59,10 +49,6 @@ name|String
 name|tableName
 decl_stmt|;
 specifier|private
-name|String
-name|dbName
-decl_stmt|;
-specifier|private
 name|FieldSchema
 name|partKeySpec
 decl_stmt|;
@@ -70,13 +56,10 @@ specifier|public
 name|AlterTableAlterPartDesc
 parameter_list|()
 block|{   }
-comment|/**    * @param dbName    *          database that contains the table / partition    * @param tableName    *          table containing the partition    * @param partKeySpec    *          key column specification.    */
+comment|/**    * @param tableName    *          table containing the partition    * @param partKeySpec    */
 specifier|public
 name|AlterTableAlterPartDesc
 parameter_list|(
-name|String
-name|dbName
-parameter_list|,
 name|String
 name|tableName
 parameter_list|,
@@ -86,12 +69,6 @@ parameter_list|)
 block|{
 name|super
 argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|dbName
-operator|=
-name|dbName
 expr_stmt|;
 name|this
 operator|.
@@ -128,30 +105,6 @@ operator|.
 name|tableName
 operator|=
 name|tableName
-expr_stmt|;
-block|}
-specifier|public
-name|String
-name|getDbName
-parameter_list|()
-block|{
-return|return
-name|dbName
-return|;
-block|}
-specifier|public
-name|void
-name|setDbName
-parameter_list|(
-name|String
-name|dbName
-parameter_list|)
-block|{
-name|this
-operator|.
-name|dbName
-operator|=
-name|dbName
 expr_stmt|;
 block|}
 specifier|public

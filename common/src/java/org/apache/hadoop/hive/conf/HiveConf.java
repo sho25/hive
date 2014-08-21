@@ -188,24 +188,6 @@ import|;
 end_import
 
 begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|Validator
-operator|.
-name|*
-import|;
-end_import
-
-begin_import
 import|import
 name|org
 operator|.
@@ -278,6 +260,60 @@ operator|.
 name|InterfaceAudience
 operator|.
 name|LimitedPrivate
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|Validator
+operator|.
+name|PatternSet
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|Validator
+operator|.
+name|RangeValidator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|Validator
+operator|.
+name|StringSet
 import|;
 end_import
 
@@ -451,6 +487,26 @@ argument_list|,
 name|ConfVars
 argument_list|>
 name|vars
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|ConfVars
+argument_list|>
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|ConfVars
+argument_list|>
+name|metaConfs
 init|=
 operator|new
 name|HashMap
@@ -658,12 +714,6 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORECONNECTURLKEY
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTOREFORCERELOADCONF
 block|,
 name|HiveConf
 operator|.
@@ -924,6 +974,53 @@ operator|.
 name|HIVE_TXN_MAX_OPEN_BATCH
 block|,       }
 decl_stmt|;
+comment|/**    * User configurable Metastore vars    */
+specifier|public
+specifier|static
+specifier|final
+name|HiveConf
+operator|.
+name|ConfVars
+index|[]
+name|metaConfVars
+init|=
+block|{
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_TRY_DIRECT_SQL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_TRY_DIRECT_SQL_DDL
+block|}
+decl_stmt|;
+static|static
+block|{
+for|for
+control|(
+name|ConfVars
+name|confVar
+range|:
+name|metaConfVars
+control|)
+block|{
+name|metaConfs
+operator|.
+name|put
+argument_list|(
+name|confVar
+operator|.
+name|varname
+argument_list|,
+name|confVar
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
 specifier|public
 specifier|static
@@ -1872,21 +1969,6 @@ argument_list|,
 literal|"jdbc:derby:;databaseName=metastore_db;create=true"
 argument_list|,
 literal|"JDBC connect string for a JDBC metastore"
-argument_list|)
-block|,
-name|METASTOREFORCERELOADCONF
-argument_list|(
-literal|"hive.metastore.force.reload.conf"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether to force reloading of the metastore configuration (including\n"
-operator|+
-literal|"the connection URL, before the next metastore query that accesses the\n"
-operator|+
-literal|"datastore. Once reloaded, this value is reset to false. Used for\n"
-operator|+
-literal|"testing only."
 argument_list|)
 block|,
 name|HMSHANDLERATTEMPTS
@@ -3267,7 +3349,7 @@ name|HIVEHWIWARFILE
 argument_list|(
 literal|"hive.hwi.war.file"
 argument_list|,
-literal|"${system:HWI_WAR_FILE}"
+literal|"${env:HWI_WAR_FILE}"
 argument_list|,
 literal|"This sets the path to the HWI war file, relative to ${HIVE_HOME}. "
 argument_list|)
@@ -3452,6 +3534,30 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVEMERGEORCFILESTRIPELEVEL
+argument_list|(
+literal|"hive.merge.orcfile.stripe.level"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When hive.merge.mapfiles or hive.merge.mapredfiles is enabled while writing a\n"
+operator|+
+literal|" table with ORC file format, enabling this config will do stripe level fast merge\n"
+operator|+
+literal|" for small ORC files. Note that enabling this config will not honor padding tolerance\n"
+operator|+
+literal|" config (hive.exec.orc.block.padding.tolerance)."
+argument_list|)
+block|,
+name|HIVEMERGEINPUTFORMATSTRIPELEVEL
+argument_list|(
+literal|"hive.merge.input.format.stripe.level"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.io.orc.OrcFileStripeMergeInputFormat"
+argument_list|,
+literal|"Input file format to use for ORC stripe level merging (for internal use only)"
+argument_list|)
+block|,
 name|HIVEMERGECURRENTJOBHASDYNAMICPARTITIONS
 argument_list|(
 literal|"hive.merge.current.job.has.dynamic.partitions"
@@ -3544,7 +3650,7 @@ name|HIVE_ORC_DEFAULT_STRIPE_SIZE
 argument_list|(
 literal|"hive.exec.orc.default.stripe.size"
 argument_list|,
-literal|256L
+literal|64L
 operator|*
 literal|1024
 operator|*
@@ -3886,13 +3992,28 @@ operator|+
 literal|"The default value \"-1\" means no limit."
 argument_list|)
 block|,
+name|HIVEHASHTABLEKEYCOUNTADJUSTMENT
+argument_list|(
+literal|"hive.hashtable.key.count.adjustment"
+argument_list|,
+literal|1.0f
+argument_list|,
+literal|"Adjustment to mapjoin hashtable size derived from table and column statistics; the estimate"
+operator|+
+literal|" of the number of keys is divided by this value. If the value is 0, statistics are not used"
+operator|+
+literal|"and hive.hashtable.initialCapacity is used instead."
+argument_list|)
+block|,
 name|HIVEHASHTABLETHRESHOLD
 argument_list|(
 literal|"hive.hashtable.initialCapacity"
 argument_list|,
 literal|100000
 argument_list|,
-literal|""
+literal|"Initial capacity of "
+operator|+
+literal|"mapjoin hashtable if statistics are absent, or if hive.hashtable.stats.key.estimate.adjustment is set to 0"
 argument_list|)
 block|,
 name|HIVEHASHTABLELOADFACTOR
@@ -4202,6 +4323,16 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Whether to push predicates down into storage handlers.  Ignored when hive.optimize.ppd is false."
+argument_list|)
+block|,
+comment|// Constant propagation optimizer
+name|HIVEOPTCONSTANTPROPAGATION
+argument_list|(
+literal|"hive.optimize.constant.propagation"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable constant propagation optimizer"
 argument_list|)
 block|,
 name|HIVEMETADATAONLYQUERIES
@@ -4627,6 +4758,17 @@ operator|+
 literal|"If this is set to true, reading/writing from/into a partition may fail because the stats\n"
 operator|+
 literal|"could not be computed accurately."
+argument_list|)
+block|,
+name|HIVE_STATS_COLLECT_PART_LEVEL_STATS
+argument_list|(
+literal|"hive.analyze.stmt.collect.partlevel.stats"
+argument_list|,
+literal|true
+argument_list|,
+literal|"analyze table T compute statistics for columns. Queries like these should compute partition"
+operator|+
+literal|"level stats for partitioned table even when no part spec is specified."
 argument_list|)
 block|,
 name|HIVE_STATS_GATHER_NUM_THREADS
@@ -5106,6 +5248,26 @@ argument_list|,
 literal|"True when HBaseStorageHandler should generate hfiles instead of operate against the online table."
 argument_list|)
 block|,
+name|HIVE_HBASE_SNAPSHOT_NAME
+argument_list|(
+literal|"hive.hbase.snapshot.name"
+argument_list|,
+literal|null
+argument_list|,
+literal|"The HBase table snapshot name to use."
+argument_list|)
+block|,
+name|HIVE_HBASE_SNAPSHOT_RESTORE_DIR
+argument_list|(
+literal|"hive.hbase.snapshot.restoredir"
+argument_list|,
+literal|"/tmp"
+argument_list|,
+literal|"The directory in which to "
+operator|+
+literal|"restore the HBase table snapshot."
+argument_list|)
+block|,
 comment|// For har files
 name|HIVEARCHIVEENABLED
 argument_list|(
@@ -5138,7 +5300,7 @@ name|HIVEFETCHTASKCONVERSION
 argument_list|(
 literal|"hive.fetch.task.conversion"
 argument_list|,
-literal|"minimal"
+literal|"more"
 argument_list|,
 operator|new
 name|StringSet
@@ -5163,8 +5325,7 @@ name|HIVEFETCHTASKCONVERSIONTHRESHOLD
 argument_list|(
 literal|"hive.fetch.task.conversion.threshold"
 argument_list|,
-operator|-
-literal|1l
+literal|1073741824L
 argument_list|,
 literal|"Input threshold for applying hive.fetch.task.conversion. If target table is native, input length\n"
 operator|+
@@ -5253,6 +5414,17 @@ argument_list|,
 literal|""
 argument_list|,
 literal|""
+argument_list|)
+block|,
+name|HIVE_TEST_AUTHORIZATION_SQLSTD_HS2_MODE
+argument_list|(
+literal|"hive.test.authz.sstd.hs2.mode"
+argument_list|,
+literal|false
+argument_list|,
+literal|"test hs2 mode from .q tests"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|HIVE_AUTHORIZATION_ENABLED
@@ -5512,6 +5684,18 @@ operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
 block|,
+comment|// Hive global init file location
+name|HIVE_GLOBAL_INIT_FILE_LOCATION
+argument_list|(
+literal|"hive.server2.global.init.file.location"
+argument_list|,
+literal|"${env:HIVE_CONF_DIR}"
+argument_list|,
+literal|"The location of HS2 global init file (.hiverc).\n"
+operator|+
+literal|"If the property is reset, the value must be a valid path where the init file is located."
+argument_list|)
+block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
 name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
 argument_list|(
@@ -5707,6 +5891,15 @@ argument_list|,
 literal|500
 argument_list|,
 literal|"Maximum number of worker threads when in HTTP mode."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_MAX_IDLE_TIME
+argument_list|(
+literal|"hive.server2.thrift.http.max.idle.time"
+argument_list|,
+literal|1800000
+argument_list|,
+literal|"Maximum idle time in milliseconds for a connection on the server when in HTTP mode."
 argument_list|)
 block|,
 comment|// binary transport settings
@@ -6074,7 +6267,7 @@ name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
 argument_list|,
-literal|"set,reset,dfs,add,delete,compile"
+literal|"set,reset,dfs,add,list,delete,compile"
 argument_list|,
 literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
 argument_list|)
@@ -6083,7 +6276,7 @@ name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
 argument_list|,
-literal|"hive.security.authenticator.manager,hive.security.authorization.manager"
+literal|"hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role"
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
@@ -6458,11 +6651,14 @@ operator|+
 literal|"  column: implies column names can contain any character."
 argument_list|)
 block|,
+comment|// role names are case-insensitive
 name|USERS_IN_ADMIN_ROLE
 argument_list|(
 literal|"hive.users.in.admin.role"
 argument_list|,
 literal|""
+argument_list|,
+literal|false
 argument_list|,
 literal|"Comma separated list of users who are in admin role for bootstrapping.\n"
 operator|+
@@ -6618,6 +6814,11 @@ specifier|final
 name|boolean
 name|excluded
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|caseSensitive
+decl_stmt|;
 name|ConfVars
 parameter_list|(
 name|String
@@ -6639,6 +6840,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|description
+argument_list|,
+literal|true
 argument_list|,
 literal|false
 argument_list|)
@@ -6669,7 +6872,40 @@ literal|null
 argument_list|,
 name|description
 argument_list|,
+literal|true
+argument_list|,
 name|excluded
+argument_list|)
+expr_stmt|;
+block|}
+name|ConfVars
+parameter_list|(
+name|String
+name|varname
+parameter_list|,
+name|String
+name|defaultVal
+parameter_list|,
+name|boolean
+name|caseSensitive
+parameter_list|,
+name|String
+name|description
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|varname
+argument_list|,
+name|defaultVal
+argument_list|,
+literal|null
+argument_list|,
+name|description
+argument_list|,
+name|caseSensitive
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -6698,6 +6934,8 @@ name|validator
 argument_list|,
 name|description
 argument_list|,
+literal|true
+argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
@@ -6715,6 +6953,9 @@ name|validator
 parameter_list|,
 name|String
 name|description
+parameter_list|,
+name|boolean
+name|caseSensitive
 parameter_list|,
 name|boolean
 name|excluded
@@ -6760,6 +7001,12 @@ operator|.
 name|excluded
 operator|=
 name|excluded
+expr_stmt|;
+name|this
+operator|.
+name|caseSensitive
+operator|=
+name|caseSensitive
 expr_stmt|;
 if|if
 condition|(
@@ -7159,6 +7406,15 @@ parameter_list|()
 block|{
 return|return
 name|excluded
+return|;
+block|}
+specifier|public
+name|boolean
+name|isCaseSensitive
+parameter_list|()
+block|{
+return|return
+name|caseSensitive
 return|;
 block|}
 annotation|@
@@ -8315,6 +8571,24 @@ parameter_list|)
 block|{
 return|return
 name|vars
+operator|.
+name|get
+argument_list|(
+name|name
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|ConfVars
+name|getMetaConf
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+block|{
+return|return
+name|metaConfs
 operator|.
 name|get
 argument_list|(

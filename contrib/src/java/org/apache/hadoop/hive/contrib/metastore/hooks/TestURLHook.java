@@ -80,11 +80,9 @@ name|TestURLHook
 implements|implements
 name|JDOConnectionURLHook
 block|{
-specifier|static
+specifier|private
 name|String
 name|originalUrl
-init|=
-literal|null
 decl_stmt|;
 annotation|@
 name|Override

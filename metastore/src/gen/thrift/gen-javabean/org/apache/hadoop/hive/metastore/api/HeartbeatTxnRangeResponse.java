@@ -2700,7 +2700,7 @@ operator|.
 name|protocol
 operator|.
 name|TSet
-name|_set418
+name|_set426
 init|=
 name|iprot
 operator|.
@@ -2719,7 +2719,7 @@ argument_list|>
 argument_list|(
 literal|2
 operator|*
-name|_set418
+name|_set426
 operator|.
 name|size
 argument_list|)
@@ -2727,25 +2727,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i419
+name|_i427
 init|=
 literal|0
 init|;
-name|_i419
+name|_i427
 operator|<
-name|_set418
+name|_set426
 operator|.
 name|size
 condition|;
 operator|++
-name|_i419
+name|_i427
 control|)
 block|{
 name|long
-name|_elem420
+name|_elem428
 decl_stmt|;
-comment|// optional
-name|_elem420
+comment|// required
+name|_elem428
 operator|=
 name|iprot
 operator|.
@@ -2758,7 +2758,7 @@ name|aborted
 operator|.
 name|add
 argument_list|(
-name|_elem420
+name|_elem428
 argument_list|)
 expr_stmt|;
 block|}
@@ -2832,7 +2832,7 @@ operator|.
 name|protocol
 operator|.
 name|TSet
-name|_set421
+name|_set429
 init|=
 name|iprot
 operator|.
@@ -2851,7 +2851,7 @@ argument_list|>
 argument_list|(
 literal|2
 operator|*
-name|_set421
+name|_set429
 operator|.
 name|size
 argument_list|)
@@ -2859,25 +2859,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i422
+name|_i430
 init|=
 literal|0
 init|;
-name|_i422
+name|_i430
 operator|<
-name|_set421
+name|_set429
 operator|.
 name|size
 condition|;
 operator|++
-name|_i422
+name|_i430
 control|)
 block|{
 name|long
-name|_elem423
+name|_elem431
 decl_stmt|;
-comment|// optional
-name|_elem423
+comment|// required
+name|_elem431
 operator|=
 name|iprot
 operator|.
@@ -2890,7 +2890,7 @@ name|nosuch
 operator|.
 name|add
 argument_list|(
-name|_elem423
+name|_elem431
 argument_list|)
 expr_stmt|;
 block|}
@@ -3064,7 +3064,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter424
+name|_iter432
 range|:
 name|struct
 operator|.
@@ -3075,7 +3075,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter424
+name|_iter432
 argument_list|)
 expr_stmt|;
 block|}
@@ -3147,7 +3147,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter425
+name|_iter433
 range|:
 name|struct
 operator|.
@@ -3158,7 +3158,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter425
+name|_iter433
 argument_list|)
 expr_stmt|;
 block|}
@@ -3268,7 +3268,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter426
+name|_iter434
 range|:
 name|struct
 operator|.
@@ -3279,7 +3279,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter426
+name|_iter434
 argument_list|)
 expr_stmt|;
 block|}
@@ -3300,7 +3300,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter427
+name|_iter435
 range|:
 name|struct
 operator|.
@@ -3311,7 +3311,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter427
+name|_iter435
 argument_list|)
 expr_stmt|;
 block|}
@@ -3364,7 +3364,7 @@ operator|.
 name|protocol
 operator|.
 name|TSet
-name|_set428
+name|_set436
 init|=
 operator|new
 name|org
@@ -3407,7 +3407,7 @@ argument_list|>
 argument_list|(
 literal|2
 operator|*
-name|_set428
+name|_set436
 operator|.
 name|size
 argument_list|)
@@ -3415,25 +3415,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i429
+name|_i437
 init|=
 literal|0
 init|;
-name|_i429
+name|_i437
 operator|<
-name|_set428
+name|_set436
 operator|.
 name|size
 condition|;
 operator|++
-name|_i429
+name|_i437
 control|)
 block|{
 name|long
-name|_elem430
+name|_elem438
 decl_stmt|;
-comment|// optional
-name|_elem430
+comment|// required
+name|_elem438
 operator|=
 name|iprot
 operator|.
@@ -3446,7 +3446,7 @@ name|aborted
 operator|.
 name|add
 argument_list|(
-name|_elem430
+name|_elem438
 argument_list|)
 expr_stmt|;
 block|}
@@ -3468,7 +3468,7 @@ operator|.
 name|protocol
 operator|.
 name|TSet
-name|_set431
+name|_set439
 init|=
 operator|new
 name|org
@@ -3511,7 +3511,7 @@ argument_list|>
 argument_list|(
 literal|2
 operator|*
-name|_set431
+name|_set439
 operator|.
 name|size
 argument_list|)
@@ -3519,25 +3519,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i432
+name|_i440
 init|=
 literal|0
 init|;
-name|_i432
+name|_i440
 operator|<
-name|_set431
+name|_set439
 operator|.
 name|size
 condition|;
 operator|++
-name|_i432
+name|_i440
 control|)
 block|{
 name|long
-name|_elem433
+name|_elem441
 decl_stmt|;
-comment|// optional
-name|_elem433
+comment|// required
+name|_elem441
 operator|=
 name|iprot
 operator|.
@@ -3550,7 +3550,7 @@ name|nosuch
 operator|.
 name|add
 argument_list|(
-name|_elem433
+name|_elem441
 argument_list|)
 expr_stmt|;
 block|}

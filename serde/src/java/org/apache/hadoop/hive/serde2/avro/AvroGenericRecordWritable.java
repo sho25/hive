@@ -419,9 +419,9 @@ block|{
 name|Schema
 name|schema
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|in
 operator|.
@@ -431,9 +431,9 @@ argument_list|)
 decl_stmt|;
 name|fileSchema
 operator|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|in
 operator|.

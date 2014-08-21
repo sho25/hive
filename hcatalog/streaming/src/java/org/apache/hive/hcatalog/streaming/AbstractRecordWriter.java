@@ -333,6 +333,8 @@ specifier|final
 name|AcidOutputFormat
 argument_list|<
 name|?
+argument_list|,
+name|?
 argument_list|>
 name|outf
 decl_stmt|;
@@ -466,6 +468,8 @@ operator|=
 operator|(
 name|AcidOutputFormat
 argument_list|<
+name|?
+argument_list|,
 name|?
 argument_list|>
 operator|)

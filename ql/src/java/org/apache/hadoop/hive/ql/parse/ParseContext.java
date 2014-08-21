@@ -2403,7 +2403,7 @@ name|TableScanOperator
 name|ts
 parameter_list|)
 throws|throws
-name|HiveException
+name|SemanticException
 block|{
 name|PrunedPartitionList
 name|partsList

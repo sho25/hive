@@ -37,6 +37,22 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|sql
@@ -835,9 +851,12 @@ decl_stmt|;
 name|String
 name|passwd
 init|=
-name|HiveConf
+name|ShimLoader
 operator|.
-name|getVar
+name|getHadoopShims
+argument_list|()
+operator|.
+name|getPassword
 argument_list|(
 name|conf
 argument_list|,
@@ -846,6 +865,8 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTOREPWD
+operator|.
+name|varname
 argument_list|)
 decl_stmt|;
 name|prop

@@ -1218,6 +1218,9 @@ operator|new
 name|HashMapWrapper
 argument_list|(
 name|hconf
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|TableDesc

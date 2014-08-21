@@ -2037,7 +2037,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list394
+name|_list402
 init|=
 name|iprot
 operator|.
@@ -2054,7 +2054,7 @@ argument_list|<
 name|Long
 argument_list|>
 argument_list|(
-name|_list394
+name|_list402
 operator|.
 name|size
 argument_list|)
@@ -2062,25 +2062,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i395
+name|_i403
 init|=
 literal|0
 init|;
-name|_i395
+name|_i403
 operator|<
-name|_list394
+name|_list402
 operator|.
 name|size
 condition|;
 operator|++
-name|_i395
+name|_i403
 control|)
 block|{
 name|long
-name|_elem396
+name|_elem404
 decl_stmt|;
-comment|// optional
-name|_elem396
+comment|// required
+name|_elem404
 operator|=
 name|iprot
 operator|.
@@ -2093,7 +2093,7 @@ name|txn_ids
 operator|.
 name|add
 argument_list|(
-name|_elem396
+name|_elem404
 argument_list|)
 expr_stmt|;
 block|}
@@ -2267,7 +2267,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter397
+name|_iter405
 range|:
 name|struct
 operator|.
@@ -2278,7 +2278,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter397
+name|_iter405
 argument_list|)
 expr_stmt|;
 block|}
@@ -2388,7 +2388,7 @@ expr_stmt|;
 for|for
 control|(
 name|long
-name|_iter398
+name|_iter406
 range|:
 name|struct
 operator|.
@@ -2399,7 +2399,7 @@ name|oprot
 operator|.
 name|writeI64
 argument_list|(
-name|_iter398
+name|_iter406
 argument_list|)
 expr_stmt|;
 block|}
@@ -2452,7 +2452,7 @@ operator|.
 name|protocol
 operator|.
 name|TList
-name|_list399
+name|_list407
 init|=
 operator|new
 name|org
@@ -2493,7 +2493,7 @@ argument_list|<
 name|Long
 argument_list|>
 argument_list|(
-name|_list399
+name|_list407
 operator|.
 name|size
 argument_list|)
@@ -2501,25 +2501,25 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|_i400
+name|_i408
 init|=
 literal|0
 init|;
-name|_i400
+name|_i408
 operator|<
-name|_list399
+name|_list407
 operator|.
 name|size
 condition|;
 operator|++
-name|_i400
+name|_i408
 control|)
 block|{
 name|long
-name|_elem401
+name|_elem409
 decl_stmt|;
-comment|// optional
-name|_elem401
+comment|// required
+name|_elem409
 operator|=
 name|iprot
 operator|.
@@ -2532,7 +2532,7 @@ name|txn_ids
 operator|.
 name|add
 argument_list|(
-name|_elem401
+name|_elem409
 argument_list|)
 expr_stmt|;
 block|}

@@ -2485,6 +2485,17 @@ name|tableName
 init|=
 literal|"table_for_testindex"
 decl_stmt|;
+name|String
+name|qTableName
+init|=
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+operator|+
+literal|"."
+operator|+
+name|tableName
+decl_stmt|;
 try|try
 block|{
 name|hm
@@ -2693,6 +2704,17 @@ name|indexTableName
 init|=
 literal|"index_on_table_for_testindex_table"
 decl_stmt|;
+name|String
+name|qIndexTableName
+init|=
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+operator|+
+literal|"."
+operator|+
+name|indexTableName
+decl_stmt|;
 name|boolean
 name|deferredRebuild
 init|=
@@ -2804,7 +2826,7 @@ name|hm
 operator|.
 name|createIndex
 argument_list|(
-name|tableName
+name|qTableName
 argument_list|,
 name|indexName
 argument_list|,
@@ -2812,7 +2834,7 @@ name|indexHandlerClass
 argument_list|,
 name|indexedCols
 argument_list|,
-name|indexTableName
+name|qIndexTableName
 argument_list|,
 name|deferredRebuild
 argument_list|,
@@ -3176,6 +3198,11 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
+name|prevHiveObj
+operator|.
+name|getDatabaseCurrent
+argument_list|()
+expr_stmt|;
 name|Hive
 name|newHiveObj
 decl_stmt|;
@@ -3230,6 +3257,11 @@ operator|=
 name|Hive
 operator|.
 name|get
+argument_list|()
+expr_stmt|;
+name|prevHiveObj
+operator|.
+name|getDatabaseCurrent
 argument_list|()
 expr_stmt|;
 comment|//change value of a metavar config param in new hive conf

@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
 import|;
 end_import
@@ -46,16 +56,6 @@ operator|.
 name|util
 operator|.
 name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
 import|;
 end_import
 
@@ -174,7 +174,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * This hook is used for verifying the column access information  * that is generated and maintained in the QueryPlan object by the  * ColumnAccessAnalyer. All the hook does is print out the columns  * accessed from each table as recorded in the ColumnAccessInfo  * in the QueryPlan.  */
+comment|/*  * This hook is used for verifying the column access information  * that is generated and maintained in the QueryPlan object by the  * ColumnAccessAnalyzer. All the hook does is print out the columns  * accessed from each table as recorded in the ColumnAccessInfo  * in the QueryPlan.  */
 end_comment
 
 begin_class
@@ -274,7 +274,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|Set
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -313,7 +313,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|Set
+name|List
 argument_list|<
 name|String
 argument_list|>

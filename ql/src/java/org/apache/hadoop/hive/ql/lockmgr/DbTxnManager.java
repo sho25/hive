@@ -1009,6 +1009,11 @@ throw|;
 block|}
 try|try
 block|{
+name|lockMgr
+operator|.
+name|clearLocalLockRecords
+argument_list|()
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -1145,6 +1150,11 @@ throw|;
 block|}
 try|try
 block|{
+name|lockMgr
+operator|.
+name|clearLocalLockRecords
+argument_list|()
+expr_stmt|;
 name|LOG
 operator|.
 name|debug

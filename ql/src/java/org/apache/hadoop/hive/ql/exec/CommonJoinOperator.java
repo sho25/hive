@@ -3724,45 +3724,17 @@ condition|(
 name|allOne
 condition|)
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"calling genAllOneUniqueJoinObject"
-argument_list|)
-expr_stmt|;
 name|genAllOneUniqueJoinObject
 argument_list|()
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"called genAllOneUniqueJoinObject"
-argument_list|)
 expr_stmt|;
 block|}
 else|else
 block|{
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"calling genUniqueJoinObject"
-argument_list|)
-expr_stmt|;
 name|genUniqueJoinObject
 argument_list|(
 literal|0
 argument_list|,
 literal|0
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"called genUniqueJoinObject"
 argument_list|)
 expr_stmt|;
 block|}
@@ -4009,22 +3981,8 @@ operator|!
 name|mayHasMoreThanOne
 condition|)
 block|{
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"calling genAllOneUniqueJoinObject"
-argument_list|)
-expr_stmt|;
 name|genAllOneUniqueJoinObject
 argument_list|()
-expr_stmt|;
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"called genAllOneUniqueJoinObject"
-argument_list|)
 expr_stmt|;
 block|}
 elseif|else
@@ -4037,13 +3995,6 @@ operator|!
 name|hasLeftSemiJoin
 condition|)
 block|{
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"calling genUniqueJoinObject"
-argument_list|)
-expr_stmt|;
 name|genUniqueJoinObject
 argument_list|(
 literal|0
@@ -4051,32 +4002,11 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"called genUniqueJoinObject"
-argument_list|)
-expr_stmt|;
 block|}
 else|else
 block|{
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"calling genObject"
-argument_list|)
-expr_stmt|;
 name|genJoinObject
 argument_list|()
-expr_stmt|;
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"called genObject"
-argument_list|)
 expr_stmt|;
 block|}
 block|}
