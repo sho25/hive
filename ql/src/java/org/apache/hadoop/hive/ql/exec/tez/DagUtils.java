@@ -3489,7 +3489,7 @@ expr_stmt|;
 block|}
 name|map
 operator|.
-name|setTaskLocalFiles
+name|addTaskLocalFiles
 argument_list|(
 name|localResources
 argument_list|)
@@ -3755,7 +3755,7 @@ expr_stmt|;
 block|}
 name|reducer
 operator|.
-name|setTaskLocalFiles
+name|addTaskLocalFiles
 argument_list|(
 name|localResources
 argument_list|)
@@ -4001,7 +4001,7 @@ expr_stmt|;
 block|}
 name|prewarmVertex
 operator|.
-name|setTaskLocalFiles
+name|addTaskLocalFiles
 argument_list|(
 name|localResources
 argument_list|)

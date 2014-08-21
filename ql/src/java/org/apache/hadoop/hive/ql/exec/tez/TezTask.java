@@ -653,8 +653,6 @@ name|SuppressWarnings
 argument_list|(
 block|{
 literal|"serial"
-block|,
-literal|"deprecation"
 block|}
 argument_list|)
 specifier|public
@@ -1878,7 +1876,7 @@ operator|.
 name|getSession
 argument_list|()
 operator|.
-name|addAppMasterLocalResources
+name|addAppMasterLocalFiles
 argument_list|(
 name|resourceMap
 argument_list|)

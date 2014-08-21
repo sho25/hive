@@ -1353,7 +1353,7 @@ name|diEvent
 init|=
 name|InputDataInformationEvent
 operator|.
-name|create
+name|createWithSerializedPayload
 argument_list|(
 name|count
 operator|++
@@ -1407,7 +1407,7 @@ name|diEvent
 init|=
 name|InputDataInformationEvent
 operator|.
-name|create
+name|createWithObjectPayload
 argument_list|(
 name|count
 operator|++
