@@ -78479,7 +78479,6 @@ name|posn
 operator|+
 literal|1
 expr_stmt|;
-comment|// 7. Replace NULL with CAST(NULL AS STRING)
 name|ArrayList
 argument_list|<
 name|String
@@ -78511,37 +78510,6 @@ name|i
 operator|++
 control|)
 block|{
-comment|// Replace NULL with CAST(NULL AS STRING)
-if|if
-condition|(
-name|col_list
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-operator|instanceof
-name|ExprNodeNullDesc
-condition|)
-block|{
-name|col_list
-operator|.
-name|set
-argument_list|(
-name|i
-argument_list|,
-operator|new
-name|ExprNodeConstantDesc
-argument_list|(
-name|TypeInfoFactory
-operator|.
-name|stringTypeInfo
-argument_list|,
-literal|null
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
 name|columnNames
 operator|.
 name|add

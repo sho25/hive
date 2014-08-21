@@ -1080,7 +1080,6 @@ block|{
 case|case
 name|VOID
 case|:
-comment|// @todo: followup on VOID type in hive
 name|convertedType
 operator|=
 name|dtFactory
@@ -1089,7 +1088,7 @@ name|createSqlType
 argument_list|(
 name|SqlTypeName
 operator|.
-name|OTHER
+name|NULL
 argument_list|)
 expr_stmt|;
 break|break;
@@ -1201,6 +1200,7 @@ break|break;
 case|case
 name|STRING
 case|:
+comment|//TODO: shall we pass -1 for len to distinguish between STRING& VARCHAR on way out
 name|convertedType
 operator|=
 name|dtFactory
@@ -1359,6 +1359,26 @@ argument_list|)
 expr_stmt|;
 break|break;
 block|}
+if|if
+condition|(
+literal|null
+operator|==
+name|convertedType
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Unsupported Type : "
+operator|+
+name|type
+operator|.
+name|getTypeName
+argument_list|()
+argument_list|)
+throw|;
+block|}
 return|return
 name|convertedType
 return|;
@@ -1486,6 +1506,8 @@ name|RelDataType
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|RelDataType
 name|apply
@@ -1642,6 +1664,8 @@ name|TypeInfo
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|TypeInfo
 name|apply
@@ -1687,6 +1711,8 @@ name|String
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|apply

@@ -909,6 +909,16 @@ operator|.
 name|KW_FALSE
 expr_stmt|;
 break|break;
+case|case
+name|NULL
+case|:
+name|type
+operator|=
+name|HiveParser
+operator|.
+name|TOK_NULL
+expr_stmt|;
+break|break;
 default|default:
 throw|throw
 operator|new

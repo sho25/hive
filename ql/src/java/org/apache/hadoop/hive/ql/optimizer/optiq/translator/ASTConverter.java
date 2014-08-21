@@ -925,11 +925,18 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/*      * 6. Project      */
-name|int
-name|i
-init|=
-literal|0
-decl_stmt|;
+if|if
+condition|(
+operator|!
+name|select
+operator|.
+name|getChildExps
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 name|ASTBuilder
 name|b
 init|=
@@ -943,6 +950,11 @@ name|TOK_SELECT
 argument_list|,
 literal|"TOK_SELECT"
 argument_list|)
+decl_stmt|;
+name|int
+name|i
+init|=
+literal|0
 decl_stmt|;
 for|for
 control|(
@@ -1005,6 +1017,13 @@ operator|.
 name|node
 argument_list|()
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|//TODO: We should never be here. But we will be for select null from t1.
+comment|// Once you figure out why, uncomment following line:
+comment|// throw new IllegalStateException("why am I here?");
+block|}
 comment|/*      * 7. Order Use in Order By from the block above. RelNode has no pointer to      * parent hence we need to go top down; but OB at each block really belong      * to its src/from. Hence the need to pass in sortRel for each block from      * its parent.      */
 if|if
 condition|(
@@ -2320,9 +2339,6 @@ decl_stmt|;
 name|RexWindowBound
 name|ub
 init|=
-operator|(
-name|RexWindowBound
-operator|)
 name|window
 operator|.
 name|getUpperBound
@@ -2351,9 +2367,6 @@ decl_stmt|;
 name|RexWindowBound
 name|lb
 init|=
-operator|(
-name|RexWindowBound
-operator|)
 name|window
 operator|.
 name|getLowerBound
@@ -3153,7 +3166,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Assumption:<br>      * 1. ProjectRel will always be child of SortRel.<br>      * 2. In Optiq every projection in ProjectRelBase is uniquely named      * (unambigous) without using table qualifier (table name).<br>      *       * @param order      *          Hive Sort Rel Node      * @return Schema      */
+comment|/**      * Assumption:<br>      * 1. ProjectRel will always be child of SortRel.<br>      * 2. In Optiq every projection in ProjectRelBase is uniquely named      * (unambigous) without using table qualifier (table name).<br>      *      * @param order      *          Hive Sort Rel Node      * @return Schema      */
 specifier|public
 name|Schema
 parameter_list|(
