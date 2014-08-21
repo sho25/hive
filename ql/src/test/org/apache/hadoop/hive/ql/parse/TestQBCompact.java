@@ -482,20 +482,6 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"HERE "
-operator|+
-name|head
-operator|.
-name|dump
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|BaseSemanticAnalyzer
 name|a
 init|=
