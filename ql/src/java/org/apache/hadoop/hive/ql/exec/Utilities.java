@@ -19133,7 +19133,9 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"fs.permissions.umask-mode"
+name|FsPermission
+operator|.
+name|UMASK_LABEL
 argument_list|,
 name|origUmask
 argument_list|)
@@ -19141,7 +19143,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|//conf.unset("fs.permissions.umask-mode");
+comment|// TODO HIVE-7831
+comment|// conf.unset(FsPermission.UMASK_LABEL);
 block|}
 block|}
 name|fs
@@ -19203,7 +19206,9 @@ name|conf
 operator|.
 name|get
 argument_list|(
-literal|"fs.permissions.umask-mode"
+name|FsPermission
+operator|.
+name|UMASK_LABEL
 argument_list|)
 expr_stmt|;
 comment|// this umask is required because by default the hdfs mask is 022 resulting in
@@ -19212,7 +19217,9 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"fs.permissions.umask-mode"
+name|FsPermission
+operator|.
+name|UMASK_LABEL
 argument_list|,
 literal|"000"
 argument_list|)
