@@ -33,6 +33,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -58,6 +76,31 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"lead"
+argument_list|,
+name|value
+operator|=
+literal|"LEAD (scalar_expression [,offset] [,default]) OVER ([query_partition_clause] order_by_clause); "
+operator|+
+literal|"The LEAD function is used to return data from the next row. "
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n "
+operator|+
+literal|"select p_name, p_retailprice, lead(p_retailprice) over() as l1,\n"
+operator|+
+literal|" lag(p_retailprice) over() as l2\n"
+operator|+
+literal|" from part\n"
+operator|+
+literal|" where p_retailprice = 1173.15"
+argument_list|)
 annotation|@
 name|UDFType
 argument_list|(

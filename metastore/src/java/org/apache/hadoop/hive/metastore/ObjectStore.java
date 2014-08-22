@@ -15295,6 +15295,16 @@ block|}
 comment|// For now only alter name, owner, paramters, cols, bucketcols are allowed
 name|oldt
 operator|.
+name|setDatabase
+argument_list|(
+name|newt
+operator|.
+name|getDatabase
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|oldt
+operator|.
 name|setTableName
 argument_list|(
 name|newt
@@ -15338,16 +15348,6 @@ argument_list|,
 name|oldt
 operator|.
 name|getSd
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|oldt
-operator|.
-name|setDatabase
-argument_list|(
-name|newt
-operator|.
-name|getDatabase
 argument_list|()
 argument_list|)
 expr_stmt|;

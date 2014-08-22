@@ -561,7 +561,7 @@ name|appendElement
 argument_list|(
 name|property
 argument_list|,
-literal|"key"
+literal|"name"
 argument_list|,
 name|confVars
 operator|.

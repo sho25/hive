@@ -195,6 +195,11 @@ name|genericUDFClassName
 init|=
 literal|null
 decl_stmt|;
+comment|/**    * supports {@link org.apache.hadoop.hive.ql.metadata.VirtualColumn#ROWID}    */
+specifier|public
+name|RecordIdentifier
+name|ri
+decl_stmt|;
 specifier|public
 specifier|static
 enum|enum

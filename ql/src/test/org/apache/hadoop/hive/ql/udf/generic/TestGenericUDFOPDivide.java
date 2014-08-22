@@ -1346,7 +1346,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-literal|"0.06171"
+literal|"0.0617100"
 argument_list|)
 argument_list|,
 name|res

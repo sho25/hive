@@ -813,6 +813,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|SetPartitionsStatsRequest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|Table
 import|;
 end_import
@@ -880,8 +898,7 @@ specifier|public
 interface|interface
 name|IMetaStoreClient
 block|{
-comment|/**    * Returns whether current client is convertible with conf or not    * @return    */
-specifier|public
+comment|/**    * Returns whether current client is compatible with conf argument or not    * @return    */
 name|boolean
 name|isCompatibleWith
 parameter_list|(
@@ -890,20 +907,45 @@ name|conf
 parameter_list|)
 function_decl|;
 comment|/**    *  Tries to reconnect this MetaStoreClient to the MetaStore.    */
-specifier|public
 name|void
 name|reconnect
 parameter_list|()
 throws|throws
 name|MetaException
 function_decl|;
-specifier|public
+comment|/**    * close connection to meta store    */
 name|void
 name|close
 parameter_list|()
 function_decl|;
+comment|/**    * set meta variable which is open to end users    */
+name|void
+name|setMetaConf
+parameter_list|(
+name|String
+name|key
+parameter_list|,
+name|String
+name|value
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * get current meta variable    */
+name|String
+name|getMetaConf
+parameter_list|(
+name|String
+name|key
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * Get the names of all databases in the MetaStore that match the given pattern.    * @param databasePattern    * @return List of database names.    * @throws MetaException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -919,7 +961,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Get the names of all databases in the MetaStore.    * @return List of database names.    * @throws MetaException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -932,7 +973,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Get the names of all tables in the specified database that satisfy the supplied    * table name pattern.    * @param dbName    * @param tablePattern    * @return List of table names.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    */
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -953,7 +993,6 @@ throws|,
 name|UnknownDBException
 function_decl|;
 comment|/**    * Get the names of all tables in the specified database.    * @param dbName    * @return List of table names.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    */
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -971,7 +1010,6 @@ throws|,
 name|UnknownDBException
 function_decl|;
 comment|/**    * Get a list of table names that match a filter.    * The filter operators are LIKE,<,<=,>,>=, =,<>    *    * In the filter statement, values interpreted as strings must be enclosed in quotes,    * while values interpreted as integers should not be.  Strings and integers are the only    * supported value types.    *    * The currently supported key names in the filter are:    * Constants.HIVE_FILTER_FIELD_OWNER, which filters on the tables' owner's name    *   and supports all filter operators    * Constants.HIVE_FILTER_FIELD_LAST_ACCESS, which filters on the last access times    *   and supports all filter operators except LIKE    * Constants.HIVE_FILTER_FIELD_PARAMS, which filters on the tables' parameter keys and values    *   and only supports the filter operators = and<>.    *   Append the parameter key name to HIVE_FILTER_FIELD_PARAMS in the filter statement.    *   For example, to filter on parameter keys called "retention", the key name in the filter    *   statement should be Constants.HIVE_FILTER_FIELD_PARAMS + "retention"    *   Also, = and<> only work for keys that exist in the tables.    *   E.g., filtering on tables where key1<> value will only    *   return tables that have a value for the parameter key1.    * Some example filter statements include:    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " like \".*test.*\" and " +    *   Constants.HIVE_FILTER_FIELD_LAST_ACCESS + " = 0";    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " = \"test_user\" and (" +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"30\" or " +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"90\")"    *    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filter    *          The filter string    * @param maxTables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    */
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -997,7 +1035,6 @@ throws|,
 name|UnknownDBException
 function_decl|;
 comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    */
-specifier|public
 name|void
 name|dropTable
 parameter_list|(
@@ -1023,7 +1060,6 @@ function_decl|;
 comment|/**    * Drop the table in the DEFAULT database.    *    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @throws MetaException    *           Could not drop table properly.    * @throws UnknownTableException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           The table wasn't found.    *    * @deprecated As of release 0.6.0 replaced by {@link #dropTable(String, String, boolean, boolean)}.    *             This method will be removed in release 0.7.0.    */
 annotation|@
 name|Deprecated
-specifier|public
 name|void
 name|dropTable
 parameter_list|(
@@ -1042,7 +1078,6 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-specifier|public
 name|void
 name|dropTable
 parameter_list|(
@@ -1059,7 +1094,6 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-specifier|public
 name|boolean
 name|tableExists
 parameter_list|(
@@ -1079,7 +1113,6 @@ function_decl|;
 comment|/**    * Check to see if the specified table exists in the DEFAULT database.    * @param tableName    * @return TRUE if DEFAULT.tableName exists, FALSE otherwise.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    * @deprecated As of release 0.6.0 replaced by {@link #tableExists(String, String)}.    *             This method will be removed in release 0.7.0.    */
 annotation|@
 name|Deprecated
-specifier|public
 name|boolean
 name|tableExists
 parameter_list|(
@@ -1096,7 +1129,6 @@ function_decl|;
 comment|/**    * Get a table object from the DEFAULT database.    *    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    * @deprecated As of release 0.6.0 replaced by {@link #getTable(String, String)}.    *             This method will be removed in release 0.7.0.    */
 annotation|@
 name|Deprecated
-specifier|public
 name|Table
 name|getTable
 parameter_list|(
@@ -1111,7 +1143,6 @@ throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * Get a Database Object    * @param databaseName  name of the database to fetch    * @return the database    * @throws NoSuchObjectException The database does not exist    * @throws MetaException Could not fetch the database    * @throws TException A thrift communication error occurred    */
-specifier|public
 name|Database
 name|getDatabase
 parameter_list|(
@@ -1126,7 +1157,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Get a table object.    *    * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
-specifier|public
 name|Table
 name|getTable
 parameter_list|(
@@ -1144,7 +1174,6 @@ throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    *    * @param dbName    *          The database the tables are located in.    * @param tableNames    *          The names of the tables to fetch    * @return A list of objects representing the tables.    *          Only the tables that can be retrieved from the database are returned.  For example,    *          if none of the requested tables could be retrieved, an empty list is returned.    *          There is no guarantee of ordering of the returned tables.    * @throws InvalidOperationException    *          The input to this operation is invalid (e.g., the list of tables names is null)    * @throws UnknownDBException    *          The requested database could not be fetched.    * @throws TException    *          A thrift communication error occurred    * @throws MetaException    *          Any other errors    */
-specifier|public
 name|List
 argument_list|<
 name|Table
@@ -1170,7 +1199,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param tableName    * @param dbName    * @param partVals    * @return the partition object    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
-specifier|public
 name|Partition
 name|appendPartition
 parameter_list|(
@@ -1195,7 +1223,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|Partition
 name|appendPartition
 parameter_list|(
@@ -1218,7 +1245,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Add a partition to the table.    *    * @param partition    *          The partition to add    * @return The partition added    * @throws InvalidObjectException    *           Could not find table to add to    * @throws AlreadyExistsException    *           Partition already exists    * @throws MetaException    *           Could not add partition    * @throws TException    *           Thrift exception    */
-specifier|public
 name|Partition
 name|add_partition
 parameter_list|(
@@ -1235,7 +1261,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Add partitions to the table.    *    * @param partitions    *          The partitions to add    * @throws InvalidObjectException    *           Could not find table to add to    * @throws AlreadyExistsException    *           Partition already exists    * @throws MetaException    *           Could not add partition    * @throws TException    *           Thrift exception    */
-specifier|public
 name|int
 name|add_partitions
 parameter_list|(
@@ -1255,7 +1280,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Add partitions to the table.    *    * @param partitions The partitions to add    * @param ifNotExists only add partitions if they don't exist    * @param needResults Whether the results are needed    * @return the partitions that were added, or null if !needResults    */
-specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -1284,7 +1308,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param tblName    * @param dbName    * @param partVals    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
-specifier|public
 name|Partition
 name|getPartition
 parameter_list|(
@@ -1308,7 +1331,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param partitionSpecs    * @param sourceDb    * @param sourceTable    * @param destdb    * @param destTableName    * @return partition object    */
-specifier|public
 name|Partition
 name|exchange_partition
 parameter_list|(
@@ -1342,7 +1364,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param dbName    * @param tblName    * @param name - partition name i.e. 'ds=2010-02-03/ts=2010-02-03 18%3A16%3A01'    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
-specifier|public
 name|Partition
 name|getPartition
 parameter_list|(
@@ -1365,7 +1386,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param dbName    * @param tableName    * @param pvals    * @param userName    * @param groupNames    * @return the partition    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
-specifier|public
 name|Partition
 name|getPartitionWithAuthInfo
 parameter_list|(
@@ -1400,7 +1420,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param tbl_name    * @param db_name    * @param max_parts    * @return the list of partitions    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -1423,7 +1442,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -1452,7 +1470,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -1473,7 +1490,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -1503,7 +1519,6 @@ throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * Get list of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -1530,7 +1545,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Get list of partitions matching specified serialized expression    * @param db_name the database name    * @param tbl_name the table name    * @param expr expression, serialized from ExprNodeDesc    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @param default_partition_name Default partition name from configuration. If blank, the    *    metastore server-side configuration is used.    * @param result the resulting list of partitions    * @return whether the resulting list contains partitions which may or may not match the expr    */
-specifier|public
 name|boolean
 name|listPartitionsByExpr
 parameter_list|(
@@ -1560,7 +1574,6 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * @param dbName    * @param tableName    * @param s    * @param userName    * @param groupNames    * @return the list of partitions    * @throws NoSuchObjectException    */
-specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -1593,7 +1606,6 @@ throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * Get partitions by a list of partition names.    * @param db_name database name    * @param tbl_name table name    * @param part_names list of partition names    * @return list of Partition objects    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -1620,7 +1632,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param dbName    * @param tableName    * @param partialPvals    * @param s    * @param userName    * @param groupNames    * @return the list of paritions    * @throws NoSuchObjectException    */
-specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -1659,7 +1670,6 @@ throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * @param db_name    * @param tbl_name    * @param partKVs    * @param eventType    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws UnknownTableException    * @throws UnknownDBException    * @throws UnknownPartitionException    * @throws InvalidPartitionException    */
-specifier|public
 name|void
 name|markPartitionForEvent
 parameter_list|(
@@ -1696,7 +1706,6 @@ throws|,
 name|InvalidPartitionException
 function_decl|;
 comment|/**    * @param db_name    * @param tbl_name    * @param partKVs    * @param eventType    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws UnknownTableException    * @throws UnknownDBException    * @throws UnknownPartitionException    * @throws InvalidPartitionException    */
-specifier|public
 name|boolean
 name|isPartitionMarkedForEvent
 parameter_list|(
@@ -1733,7 +1742,6 @@ throws|,
 name|InvalidPartitionException
 function_decl|;
 comment|/**    * @param partVals    * @throws TException    * @throws MetaException    */
-specifier|public
 name|void
 name|validatePartitionNameCharacters
 parameter_list|(
@@ -1749,7 +1757,6 @@ throws|,
 name|MetaException
 function_decl|;
 comment|/**    * @param tbl    * @throws AlreadyExistsException    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#create_table(org.apache.hadoop.hive.metastore.api.Table)    */
-specifier|public
 name|void
 name|createTable
 parameter_list|(
@@ -1767,7 +1774,6 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|void
 name|alter_table
 parameter_list|(
@@ -1787,7 +1793,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|void
 name|createDatabase
 parameter_list|(
@@ -1803,7 +1808,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|void
 name|dropDatabase
 parameter_list|(
@@ -1819,7 +1823,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|void
 name|dropDatabase
 parameter_list|(
@@ -1841,7 +1844,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|void
 name|dropDatabase
 parameter_list|(
@@ -1866,7 +1868,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|void
 name|alterDatabase
 parameter_list|(
@@ -1884,7 +1885,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData    *          delete the underlying data or just delete the table in metadata    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String,    *      java.lang.String, java.util.List, boolean)    */
-specifier|public
 name|boolean
 name|dropPartition
 parameter_list|(
@@ -1950,7 +1950,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|boolean
 name|dropPartition
 parameter_list|(
@@ -1974,7 +1973,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * updates a partition to new partition    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
-specifier|public
 name|void
 name|alter_partition
 parameter_list|(
@@ -1995,7 +1993,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * updates a list of partitions    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newParts    *          list of partitions    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
-specifier|public
 name|void
 name|alter_partitions
 parameter_list|(
@@ -2019,7 +2016,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * rename a partition to a new partition    *    * @param dbname    *          database of the old partition    * @param name    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
-specifier|public
 name|void
 name|renamePartition
 parameter_list|(
@@ -2050,7 +2046,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_fields(java.lang.String,    *      java.lang.String)    */
-specifier|public
 name|List
 argument_list|<
 name|FieldSchema
@@ -2073,7 +2068,6 @@ throws|,
 name|UnknownDBException
 function_decl|;
 comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_schema(java.lang.String,    *      java.lang.String)    */
-specifier|public
 name|List
 argument_list|<
 name|FieldSchema
@@ -2096,7 +2090,6 @@ throws|,
 name|UnknownDBException
 function_decl|;
 comment|/**    * @param name    *          name of the configuration property to get the value of    * @param defaultValue    *          the value to return if property with the given name doesn't exist    * @return value of the specified configuration property    * @throws TException    * @throws ConfigValSecurityException    */
-specifier|public
 name|String
 name|getConfigValue
 parameter_list|(
@@ -2112,7 +2105,6 @@ throws|,
 name|ConfigValSecurityException
 function_decl|;
 comment|/**    *    * @param name    *          the partition name e.g. ("ds=2010-03-03/hr=12")    * @return a list containing the partition col values, in the same order as the name    * @throws MetaException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -2128,7 +2120,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    *    * @param name    *          the partition name e.g. ("ds=2010-03-03/hr=12")    * @return a map from the partition col to the value, as listed in the name    * @throws MetaException    * @throws TException    */
-specifier|public
 name|Map
 argument_list|<
 name|String
@@ -2146,7 +2137,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * create an index    * @param index the index object    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws AlreadyExistsException    */
-specifier|public
 name|void
 name|createIndex
 parameter_list|(
@@ -2167,7 +2157,6 @@ name|TException
 throws|,
 name|AlreadyExistsException
 function_decl|;
-specifier|public
 name|void
 name|alter_index
 parameter_list|(
@@ -2191,7 +2180,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    *    * @param dbName    * @param tblName    * @param indexName    * @return the index    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
-specifier|public
 name|Index
 name|getIndex
 parameter_list|(
@@ -2214,7 +2202,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * list indexes of the give base table    * @param db_name    * @param tbl_name    * @param max    * @return the list of indexes    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|Index
@@ -2238,7 +2225,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * list all the index names of the give base table.    *    * @param db_name    * @param tbl_name    * @param max    * @return the list of names    * @throws MetaException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -2260,7 +2246,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param db_name    * @param tbl_name    * @param name index name    * @param deleteData    * @return true on success    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
-specifier|public
 name|boolean
 name|dropIndex
 parameter_list|(
@@ -2284,7 +2269,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Write table level column statistics to persistent store    * @param statsObj    * @return boolean indicating the status of the operation    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws MetaException    * @throws TException    * @throws InvalidInputException    */
-specifier|public
 name|boolean
 name|updateTableColumnStatistics
 parameter_list|(
@@ -2303,7 +2287,6 @@ throws|,
 name|InvalidInputException
 function_decl|;
 comment|/**    * Write partition level column statistics to persistent store    * @param statsObj    * @return boolean indicating the status of the operation    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws MetaException    * @throws TException    * @throws InvalidInputException    */
-specifier|public
 name|boolean
 name|updatePartitionColumnStatistics
 parameter_list|(
@@ -2322,7 +2305,6 @@ throws|,
 name|InvalidInputException
 function_decl|;
 comment|/**    * Get table column statistics given dbName, tableName and multiple colName-s    * @return ColumnStatistics struct for a given db, table and columns    */
-specifier|public
 name|List
 argument_list|<
 name|ColumnStatisticsObj
@@ -2349,7 +2331,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Get partitions column statistics given dbName, tableName, multiple partitions and colName-s    * @return ColumnStatistics struct for a given db, table and columns    */
-specifier|public
 name|Map
 argument_list|<
 name|String
@@ -2387,7 +2368,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Delete partition level column statistics given dbName, tableName, partName and colName    * @param dbName    * @param tableName    * @param partName    * @param colName    * @return boolean indicating outcome of the operation    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws MetaException    * @throws TException    * @throws InvalidInputException    */
-specifier|public
 name|boolean
 name|deletePartitionColumnStatistics
 parameter_list|(
@@ -2414,8 +2394,7 @@ name|TException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**     * Delete table level column statistics given dbName, tableName and colName     * @param dbName     * @param tableName     * @param colName     * @return boolean indicating the outcome of the operation     * @throws NoSuchObjectException     * @throws MetaException     * @throws InvalidObjectException     * @throws TException     * @throws InvalidInputException     */
-specifier|public
+comment|/**    * Delete table level column statistics given dbName, tableName and colName    * @param dbName    * @param tableName    * @param colName    * @return boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws TException    * @throws InvalidInputException    */
 name|boolean
 name|deleteTableColumnStatistics
 parameter_list|(
@@ -2440,7 +2419,6 @@ throws|,
 name|InvalidInputException
 function_decl|;
 comment|/**    * @param role    *          role object    * @return true on success    * @throws MetaException    * @throws TException    */
-specifier|public
 name|boolean
 name|create_role
 parameter_list|(
@@ -2453,7 +2431,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param role_name    *          role name    *    * @return true on success    * @throws MetaException    * @throws TException    */
-specifier|public
 name|boolean
 name|drop_role
 parameter_list|(
@@ -2466,7 +2443,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * list all role names    * @return list of names    * @throws TException    * @throws MetaException    */
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -2479,7 +2455,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    *    * @param role_name    * @param user_name    * @param principalType    * @param grantor    * @param grantorType    * @param grantOption    * @return true on success    * @throws MetaException    * @throws TException    */
-specifier|public
 name|boolean
 name|grant_role
 parameter_list|(
@@ -2507,7 +2482,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param role_name    *          role name    * @param user_name    *          user name    * @param principalType    *    * @return true on success    * @throws MetaException    * @throws TException    */
-specifier|public
 name|boolean
 name|revoke_role
 parameter_list|(
@@ -2529,7 +2503,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    *    * @param principalName    * @param principalType    * @return list of roles    * @throws MetaException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|Role
@@ -2548,7 +2521,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Return the privileges that the user, group have directly and indirectly through roles    * on the given hiveObject    * @param hiveObject    * @param user_name    * @param group_names    * @return the privilege set    * @throws MetaException    * @throws TException    */
-specifier|public
 name|PrincipalPrivilegeSet
 name|get_privilege_set
 parameter_list|(
@@ -2570,7 +2542,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Return the privileges that this principal has directly over the object (not through roles).    * @param principal_name    * @param principal_type    * @param hiveObject    * @return list of privileges    * @throws MetaException    * @throws TException    */
-specifier|public
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2592,7 +2563,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param privileges    * @return true on success    * @throws MetaException    * @throws TException    */
-specifier|public
 name|boolean
 name|grant_privileges
 parameter_list|(
@@ -2605,7 +2575,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param privileges    * @return true on success    * @throws MetaException    * @throws TException    */
-specifier|public
 name|boolean
 name|revoke_privileges
 parameter_list|(
@@ -2621,7 +2590,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param owner the intended owner for the token    * @param renewerKerberosPrincipalName    * @return the string of the token    * @throws MetaException    * @throws TException    */
-specifier|public
 name|String
 name|getDelegationToken
 parameter_list|(
@@ -2637,7 +2605,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param tokenStrForm    * @return the new expiration time    * @throws MetaException    * @throws TException    */
-specifier|public
 name|long
 name|renewDelegationToken
 parameter_list|(
@@ -2650,7 +2617,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * @param tokenStrForm    * @throws MetaException    * @throws TException    */
-specifier|public
 name|void
 name|cancelDelegationToken
 parameter_list|(
@@ -2662,7 +2628,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|void
 name|createFunction
 parameter_list|(
@@ -2676,7 +2641,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|void
 name|alterFunction
 parameter_list|(
@@ -2696,7 +2660,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|void
 name|dropFunction
 parameter_list|(
@@ -2717,7 +2680,6 @@ name|InvalidInputException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|Function
 name|getFunction
 parameter_list|(
@@ -2732,7 +2694,6 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -2751,7 +2712,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Get a structure that details valid transactions.    * @return list of valid transactions    * @throws TException    */
-specifier|public
 name|ValidTxnList
 name|getValidTxns
 parameter_list|()
@@ -2759,7 +2719,6 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Initiate a transaction.    * @param user User who is opening this transaction.  This is the Hive user,    *             not necessarily the OS user.  It is assumed that this user has already been    *             authenticated and authorized at this point.    * @return transaction identifier    * @throws TException    */
-specifier|public
 name|long
 name|openTxn
 parameter_list|(
@@ -2770,7 +2729,6 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Initiate a batch of transactions.  It is not guaranteed that the    * requested number of transactions will be instantiated.  The system has a    * maximum number instantiated per request, controlled by hive.txn.max    * .batch.open in hive-site.xml.  If the user requests more than this    * value, only the configured max will be returned.    *    *<p>Increasing the number of transactions requested in the batch will    * allow applications that stream data into Hive to place more commits in a    * single file, thus reducing load on the namenode and making reads of the    * data more efficient.  However, opening more transactions in a batch will    * also result in readers needing to keep a larger list of open    * transactions to ignore, potentially slowing their reads.  Users will    * need to test in their system to understand the optimal number of    * transactions to request in a batch.    *</p>    * @param user User who is opening this transaction.  This is the Hive user,    *             not necessarily the OS user.  It is assumed that this user has already been    *             authenticated and authorized at this point.    * @param numTxns number of requested transactions to open    * @return list of opened txn ids.  As noted above, this may be less than    * requested, so the user should check how many were returned rather than    * optimistically assuming that the result matches the request.    * @throws TException    */
-specifier|public
 name|OpenTxnsResponse
 name|openTxns
 parameter_list|(
@@ -2784,7 +2742,6 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Rollback a transaction.  This will also unlock any locks associated with    * this transaction.    * @param txnid id of transaction to be rolled back.    * @throws NoSuchTxnException if the requested transaction does not exist.    * Note that this can result from the transaction having timed out and been    * deleted.    * @throws TException    */
-specifier|public
 name|void
 name|rollbackTxn
 parameter_list|(
@@ -2797,7 +2754,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Commit a transaction.  This will also unlock any locks associated with    * this transaction.    * @param txnid id of transaction to be committed.    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws TException    */
-specifier|public
 name|void
 name|commitTxn
 parameter_list|(
@@ -2812,7 +2768,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Show the list of currently open transactions.  This is for use by "show transactions" in the    * grammar, not for applications that want to find a list of current transactions to work with.    * Those wishing the latter should call {@link #getValidTxns()}.    * @return List of currently opened transactions, included aborted ones.    * @throws TException    */
-specifier|public
 name|GetOpenTxnsInfoResponse
 name|showTxns
 parameter_list|()
@@ -2820,7 +2775,6 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Request a set of locks.  All locks needed for a particular query, DML,    * or DDL operation should be batched together and requested in one lock    * call.  This avoids deadlocks.  It also avoids blocking other users who    * only require some of the locks required by this user.    *    *<p>If the operation requires a transaction (INSERT, UPDATE,    * or DELETE) that transaction id must be provided as part this lock    * request.  All locks associated with a transaction will be released when    * that transaction is committed or rolled back.</p>    * *    *<p>Once a lock is acquired, {@link #heartbeat(long, long)} must be called    * on a regular basis to avoid the lock being timed out by the system.</p>    * @param request The lock request.  {@link LockRequestBuilder} can be used    *                construct this request.    * @return a lock response, which will provide two things,    * the id of the lock (to be used in all further calls regarding this lock)    * as well as a state of the lock.  If the state is ACQUIRED then the user    * can proceed.  If it is WAITING the user should wait and call    * {@link #checkLock(long)} before proceeding.  All components of the lock    * will have the same state.    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws TException    */
-specifier|public
 name|LockResponse
 name|lock
 parameter_list|(
@@ -2835,7 +2789,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Check the status of a set of locks requested via a    * {@link #lock(org.apache.hadoop.hive.metastore.api.LockRequest)} call.    * Once a lock is acquired, {@link #heartbeat(long, long)} must be called    * on a regular basis to avoid the lock being timed out by the system.    * @param lockid lock id returned by lock().    * @return a lock response, which will provide two things,    * the id of the lock (to be used in all further calls regarding this lock)    * as well as a state of the lock.  If the state is ACQUIRED then the user    * can proceed.  If it is WAITING the user should wait and call    * this method again before proceeding.  All components of the lock    * will have the same state.    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws NoSuchLockException if the requested lockid does not exist.    * This can result from the lock timing out and being unlocked by the system.    * @throws TException    */
-specifier|public
 name|LockResponse
 name|checkLock
 parameter_list|(
@@ -2852,7 +2805,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Unlock a set of locks.  This can only be called when the locks are not    * assocaited with a transaction.    * @param lockid lock id returned by    * {@link #lock(org.apache.hadoop.hive.metastore.api.LockRequest)}    * @throws NoSuchLockException if the requested lockid does not exist.    * This can result from the lock timing out and being unlocked by the system.    * @throws TxnOpenException if the locks are are associated with a    * transaction.    * @throws TException    */
-specifier|public
 name|void
 name|unlock
 parameter_list|(
@@ -2867,7 +2819,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Show all currently held and waiting locks.    * @return List of currently held and waiting locks.    * @throws TException    */
-specifier|public
 name|ShowLocksResponse
 name|showLocks
 parameter_list|()
@@ -2875,7 +2826,6 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Send a heartbeat to indicate that the client holding these locks (if    * any) and that opened this transaction (if one exists) is still alive.    * The default timeout for transactions and locks is 300 seconds,    * though it is configurable.  To determine how often to heartbeat you will    * need to ask your system administrator how the metastore thrift service    * has been configured.    * @param txnid the id of the open transaction.  If no transaction is open    *              (it is a DDL or query) then this can be set to 0.    * @param lockid the id of the locks obtained.  If no locks have been    *               obtained then this can be set to 0.    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws NoSuchLockException if the requested lockid does not exist.    * This can result from the lock timing out and being unlocked by the system.    * @throws TException    */
-specifier|public
 name|void
 name|heartbeat
 parameter_list|(
@@ -2895,7 +2845,6 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Send heartbeats for a range of transactions.  This is for the streaming ingest client that    * will have many transactions open at once.  Everyone else should use    * {@link #heartbeat(long, long)}.    * @param min minimum transaction id to heartbeat, inclusive    * @param max maximum transaction id to heartbeat, inclusive    * @return a pair of lists that tell which transactions in the list did not exist (they may    * have already been closed) and which were aborted.    * @throws TException    */
-specifier|public
 name|HeartbeatTxnRangeResponse
 name|heartbeatTxnRange
 parameter_list|(
@@ -2909,7 +2858,6 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Send a request to compact a table or partition.  This will not block until the compaction is    * complete.  It will instead put a request on the queue for that table or partition to be    * compacted.  No checking is done on the dbname, tableName, or partitionName to make sure they    * refer to valid objects.  It is assumed this has already been done by the caller.    * @param dbname Name of the database the table is in.  If null, this will be assumed to be    *               'default'.    * @param tableName Name of the table to be compacted.  This cannot be null.  If partitionName    *                  is null, this must be a non-partitioned table.    * @param partitionName Name of the partition to be compacted    * @param type Whether this is a major or minor compaction.    * @throws TException    */
-specifier|public
 name|void
 name|compact
 parameter_list|(
@@ -2929,20 +2877,17 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Get a list of all current compactions.    * @return List of all current compactions.  This includes compactions waiting to happen,    * in progress, and finished but waiting to clean the existing files.    * @throws TException    */
-specifier|public
 name|ShowCompactResponse
 name|showCompactions
 parameter_list|()
 throws|throws
 name|TException
 function_decl|;
-specifier|public
 class|class
 name|IncompatibleMetastoreException
 extends|extends
 name|MetaException
 block|{
-specifier|public
 name|IncompatibleMetastoreException
 parameter_list|(
 name|String
@@ -3008,6 +2953,23 @@ throws|,
 name|MetaException
 throws|,
 name|TException
+function_decl|;
+name|boolean
+name|setPartitionColumnStatistics
+parameter_list|(
+name|SetPartitionsStatsRequest
+name|request
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|InvalidObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|InvalidInputException
 function_decl|;
 block|}
 end_interface

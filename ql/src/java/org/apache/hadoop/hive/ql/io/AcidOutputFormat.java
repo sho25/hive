@@ -109,7 +109,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|NullWritable
+name|WritableComparable
 import|;
 end_import
 
@@ -166,12 +166,16 @@ specifier|public
 interface|interface
 name|AcidOutputFormat
 parameter_list|<
+name|K
+extends|extends
+name|WritableComparable
+parameter_list|,
 name|V
 parameter_list|>
 extends|extends
 name|HiveOutputFormat
 argument_list|<
-name|NullWritable
+name|K
 argument_list|,
 name|V
 argument_list|>

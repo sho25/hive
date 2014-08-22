@@ -131,6 +131,24 @@ name|metastore
 operator|.
 name|events
 operator|.
+name|ConfigChangeEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
 name|CreateDatabaseEvent
 import|;
 end_import
@@ -255,6 +273,17 @@ operator|=
 name|config
 expr_stmt|;
 block|}
+comment|/**    * @param tableEvent table event.    * @throws MetaException    */
+specifier|public
+name|void
+name|onConfigChange
+parameter_list|(
+name|ConfigChangeEvent
+name|tableEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
 comment|/**    * @param tableEvent table event.    * @throws MetaException    */
 specifier|public
 name|void

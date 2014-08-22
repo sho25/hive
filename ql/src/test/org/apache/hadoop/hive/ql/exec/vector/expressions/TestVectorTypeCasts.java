@@ -2419,7 +2419,7 @@ name|v
 operator|=
 name|toBytes
 argument_list|(
-literal|"9999999999999999"
+literal|"9999999999999999.00"
 argument_list|)
 expr_stmt|;
 name|Assert

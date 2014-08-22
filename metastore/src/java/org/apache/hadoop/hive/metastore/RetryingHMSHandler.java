@@ -276,16 +276,24 @@ specifier|final
 name|HiveConf
 name|hiveConf
 decl_stmt|;
-specifier|protected
+comment|// base configuration
+specifier|private
+specifier|final
+name|Configuration
+name|configuration
+decl_stmt|;
+comment|// active configuration
+specifier|private
 name|RetryingHMSHandler
 parameter_list|(
-specifier|final
 name|HiveConf
 name|hiveConf
 parameter_list|,
-specifier|final
 name|String
 name|name
+parameter_list|,
+name|boolean
+name|local
 parameter_list|)
 throws|throws
 name|MetaException
@@ -295,10 +303,6 @@ operator|.
 name|hiveConf
 operator|=
 name|hiveConf
-expr_stmt|;
-comment|// This has to be called before initializing the instance of HMSHandler
-name|init
-argument_list|()
 expr_stmt|;
 name|this
 operator|.
@@ -312,7 +316,53 @@ argument_list|(
 name|name
 argument_list|,
 name|hiveConf
+argument_list|,
+literal|false
 argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|local
+condition|)
+block|{
+name|base
+operator|.
+name|setConf
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+comment|// tests expect configuration changes applied directly to metastore
+block|}
+name|configuration
+operator|=
+name|base
+operator|.
+name|getConf
+argument_list|()
+expr_stmt|;
+comment|// This has to be called before initializing the instance of HMSHandler
+comment|// Using the hook on startup ensures that the hook always has priority
+comment|// over settings in *.xml.  The thread local conf needs to be used because at this point
+comment|// it has already been initialized using hiveConf.
+name|MetaStoreInit
+operator|.
+name|updateConnectionURL
+argument_list|(
+name|hiveConf
+argument_list|,
+name|getConf
+argument_list|()
+argument_list|,
+literal|null
+argument_list|,
+name|metaStoreInitData
+argument_list|)
+expr_stmt|;
+name|base
+operator|.
+name|init
+argument_list|()
 expr_stmt|;
 block|}
 specifier|public
@@ -325,6 +375,9 @@ name|hiveConf
 parameter_list|,
 name|String
 name|name
+parameter_list|,
+name|boolean
+name|local
 parameter_list|)
 throws|throws
 name|MetaException
@@ -338,6 +391,8 @@ argument_list|(
 name|hiveConf
 argument_list|,
 name|name
+argument_list|,
+name|local
 argument_list|)
 decl_stmt|;
 return|return
@@ -368,45 +423,6 @@ name|handler
 argument_list|)
 return|;
 block|}
-specifier|private
-name|void
-name|init
-parameter_list|()
-throws|throws
-name|MetaException
-block|{
-comment|// Using the hook on startup ensures that the hook always has priority
-comment|// over settings in *.xml.  The thread local conf needs to be used because at this point
-comment|// it has already been initialized using hiveConf.
-name|MetaStoreInit
-operator|.
-name|updateConnectionURL
-argument_list|(
-name|hiveConf
-argument_list|,
-name|getConf
-argument_list|()
-argument_list|,
-literal|null
-argument_list|,
-name|metaStoreInitData
-argument_list|)
-expr_stmt|;
-block|}
-specifier|private
-name|void
-name|initMS
-parameter_list|()
-block|{
-name|base
-operator|.
-name|setConf
-argument_list|(
-name|getConf
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 annotation|@
 name|Override
 specifier|public
@@ -429,11 +445,6 @@ parameter_list|)
 throws|throws
 name|Throwable
 block|{
-name|Object
-name|ret
-init|=
-literal|null
-decl_stmt|;
 name|boolean
 name|gotNewConnectUrl
 init|=
@@ -512,7 +523,6 @@ name|retryCount
 init|=
 literal|0
 decl_stmt|;
-comment|// Exception caughtException = null;
 name|Throwable
 name|caughtException
 init|=
@@ -532,12 +542,16 @@ operator|||
 name|gotNewConnectUrl
 condition|)
 block|{
-name|initMS
+name|base
+operator|.
+name|setConf
+argument_list|(
+name|getConf
 argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
-name|ret
-operator|=
+return|return
 name|method
 operator|.
 name|invoke
@@ -546,8 +560,7 @@ name|base
 argument_list|,
 name|args
 argument_list|)
-expr_stmt|;
-break|break;
+return|;
 block|}
 catch|catch
 parameter_list|(
@@ -986,9 +999,6 @@ name|metaStoreInitData
 argument_list|)
 expr_stmt|;
 block|}
-return|return
-name|ret
-return|;
 block|}
 specifier|public
 name|Configuration
@@ -996,7 +1006,7 @@ name|getConf
 parameter_list|()
 block|{
 return|return
-name|hiveConf
+name|configuration
 return|;
 block|}
 block|}

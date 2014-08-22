@@ -338,9 +338,9 @@ operator|+
 literal|"  ] }"
 decl_stmt|;
 return|return
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|s
 argument_list|)
@@ -1552,9 +1552,9 @@ decl_stmt|;
 name|Schema
 name|schema
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|type
 argument_list|)
@@ -1652,9 +1652,9 @@ decl_stmt|;
 name|Schema
 name|schema
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|type
 argument_list|)

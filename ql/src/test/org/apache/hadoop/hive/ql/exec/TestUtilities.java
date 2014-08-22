@@ -788,12 +788,6 @@ name|IOException
 block|{
 specifier|final
 name|String
-name|FS_MASK_PARAM
-init|=
-literal|"fs.permissions.umask-mode"
-decl_stmt|;
-specifier|final
-name|String
 name|FS_MASK_VAL
 init|=
 literal|"055"
@@ -821,7 +815,9 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|FS_MASK_PARAM
+name|FsPermission
+operator|.
+name|UMASK_LABEL
 argument_list|,
 name|FS_MASK_VAL
 argument_list|)
@@ -856,7 +852,9 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|FS_MASK_PARAM
+name|FsPermission
+operator|.
+name|UMASK_LABEL
 argument_list|)
 argument_list|,
 name|FS_MASK_VAL

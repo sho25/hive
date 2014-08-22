@@ -1259,10 +1259,19 @@ parameter_list|)
 block|{
 comment|// mimicking behaviour in CreateTableDesc tableDesc creation
 comment|// returning null table description for output.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Unable to find class in getDefaultTableDesc: "
+operator|+
 name|e
 operator|.
-name|printStackTrace
+name|getMessage
 argument_list|()
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 return|return
 literal|null
@@ -2235,14 +2244,20 @@ name|ClassNotFoundException
 name|e
 parameter_list|)
 block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Unable to find class in getTableDesc: "
+operator|+
 name|e
 operator|.
-name|printStackTrace
+name|getMessage
 argument_list|()
-expr_stmt|;
-return|return
-literal|null
-return|;
+argument_list|,
+name|e
+argument_list|)
+throw|;
 block|}
 return|return
 name|ret

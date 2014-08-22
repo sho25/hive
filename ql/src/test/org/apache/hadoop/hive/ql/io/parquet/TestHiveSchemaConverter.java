@@ -476,6 +476,52 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testCharType
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|testConversion
+argument_list|(
+literal|"a"
+argument_list|,
+literal|"char(5)"
+argument_list|,
+literal|"message hive_schema {\n"
+operator|+
+literal|"  optional binary a (UTF8);\n"
+operator|+
+literal|"}\n"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testVarcharType
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|testConversion
+argument_list|(
+literal|"a"
+argument_list|,
+literal|"varchar(10)"
+argument_list|,
+literal|"message hive_schema {\n"
+operator|+
+literal|"  optional binary a (UTF8);\n"
+operator|+
+literal|"}\n"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testArray
 parameter_list|()
 throws|throws

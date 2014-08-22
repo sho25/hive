@@ -4990,7 +4990,8 @@ name|assertEquals
 argument_list|(
 literal|"get update count not as expected"
 argument_list|,
-literal|0
+operator|-
+literal|1
 argument_list|,
 name|stmt
 operator|.
@@ -7453,7 +7454,7 @@ name|supportsCatalogsInTableDefinitions
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertFalse
+name|assertTrue
 argument_list|(
 name|meta
 operator|.
@@ -7461,7 +7462,7 @@ name|supportsSchemasInTableDefinitions
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertFalse
+name|assertTrue
 argument_list|(
 name|meta
 operator|.

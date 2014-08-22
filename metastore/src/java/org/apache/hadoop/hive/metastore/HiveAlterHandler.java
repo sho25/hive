@@ -1451,6 +1451,7 @@ condition|)
 block|{
 comment|// change the file name in hdfs
 comment|// check that src exists otherwise there is no need to copy the data
+comment|// rename the src to destination
 try|try
 block|{
 if|if
@@ -1461,9 +1462,8 @@ name|exists
 argument_list|(
 name|srcPath
 argument_list|)
-condition|)
-block|{
-comment|// rename the src to destination
+operator|&&
+operator|!
 name|srcFs
 operator|.
 name|rename
@@ -1472,7 +1472,23 @@ name|srcPath
 argument_list|,
 name|destPath
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Renaming "
+operator|+
+name|srcPath
+operator|+
+literal|" to "
+operator|+
+name|destPath
+operator|+
+literal|" is failed"
+argument_list|)
+throw|;
 block|}
 block|}
 catch|catch

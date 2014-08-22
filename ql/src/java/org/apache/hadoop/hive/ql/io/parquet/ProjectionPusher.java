@@ -945,7 +945,7 @@ operator|.
 name|toUri
 argument_list|()
 operator|.
-name|toString
+name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
