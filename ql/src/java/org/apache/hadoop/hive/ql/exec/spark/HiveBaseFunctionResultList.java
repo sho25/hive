@@ -177,6 +177,12 @@ name|T
 argument_list|>
 name|inputIterator
 decl_stmt|;
+specifier|private
+name|boolean
+name|isClosed
+init|=
+literal|false
+decl_stmt|;
 comment|// Contains results from last processed input record.
 specifier|private
 specifier|final
@@ -420,9 +426,20 @@ throw|;
 block|}
 block|}
 comment|// At this point we are done processing the input. Close the record processor
+if|if
+condition|(
+operator|!
+name|isClosed
+condition|)
+block|{
 name|closeRecordProcessor
 argument_list|()
 expr_stmt|;
+name|isClosed
+operator|=
+literal|true
+expr_stmt|;
+block|}
 comment|// It is possible that some operators add records after closing the processor, so make sure
 comment|// to check the lastRecordOutput
 if|if
