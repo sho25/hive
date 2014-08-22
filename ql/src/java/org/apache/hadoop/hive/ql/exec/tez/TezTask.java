@@ -1104,6 +1104,10 @@ name|LOG
 operator|.
 name|isInfoEnabled
 argument_list|()
+operator|&&
+name|counters
+operator|!=
+literal|null
 condition|)
 block|{
 for|for

@@ -761,7 +761,9 @@ name|rproc
 operator|=
 operator|new
 name|MapRecordProcessor
-argument_list|()
+argument_list|(
+name|jobConf
+argument_list|)
 expr_stmt|;
 name|MRInputLegacy
 name|mrInput
@@ -1088,6 +1090,8 @@ name|getWriter
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|collect

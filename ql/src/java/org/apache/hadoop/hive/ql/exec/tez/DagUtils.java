@@ -2639,7 +2639,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Utility method to create a stripped down configuration for the MR partitioner.    *     * @param partitionerClassName    *          the real MR partitioner class name    * @param baseConf    *          a base configuration to extract relevant properties    * @return    */
+comment|/**    * Utility method to create a stripped down configuration for the MR partitioner.    *    * @param partitionerClassName    *          the real MR partitioner class name    * @param baseConf    *          a base configuration to extract relevant properties    * @return    */
 specifier|private
 name|Map
 argument_list|<
@@ -3180,20 +3180,6 @@ literal|false
 expr_stmt|;
 block|}
 block|}
-comment|// set up the operator plan. Before setting up Inputs since the config is updated.
-name|Utilities
-operator|.
-name|setMapWork
-argument_list|(
-name|conf
-argument_list|,
-name|mapWork
-argument_list|,
-name|mrScratchDir
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|HiveConf
@@ -3214,6 +3200,20 @@ name|isUseOneNullRowInputFormat
 argument_list|()
 condition|)
 block|{
+comment|// set up the operator plan. (before setting up splits on the AM)
+name|Utilities
+operator|.
+name|setMapWork
+argument_list|(
+name|conf
+argument_list|,
+name|mapWork
+argument_list|,
+name|mrScratchDir
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 comment|// if we're generating the splits in the AM, we just need to set
 comment|// the correct plugin.
 if|if
@@ -3326,6 +3326,20 @@ name|dataSource
 operator|.
 name|getNumberOfShards
 argument_list|()
+expr_stmt|;
+comment|// set up the operator plan. (after generating splits - that changes configs)
+name|Utilities
+operator|.
+name|setMapWork
+argument_list|(
+name|conf
+argument_list|,
+name|mapWork
+argument_list|,
+name|mrScratchDir
+argument_list|,
+literal|false
+argument_list|)
 expr_stmt|;
 block|}
 name|UserPayload
