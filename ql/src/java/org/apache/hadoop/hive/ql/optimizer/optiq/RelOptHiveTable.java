@@ -1297,23 +1297,6 @@ throw|;
 block|}
 block|}
 block|}
-comment|// 2. Obtain Col Stats for Non Partition Cols
-if|if
-condition|(
-name|nonPartColNamesThatRqrStats
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
-condition|)
-block|{
-name|List
-argument_list|<
-name|ColStatistics
-argument_list|>
-name|hiveColStats
-decl_stmt|;
 if|if
 condition|(
 literal|null
@@ -1331,6 +1314,23 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|// 2. Obtain Col Stats for Non Partition Cols
+if|if
+condition|(
+name|nonPartColNamesThatRqrStats
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|List
+argument_list|<
+name|ColStatistics
+argument_list|>
+name|hiveColStats
+decl_stmt|;
 if|if
 condition|(
 operator|!
