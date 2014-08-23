@@ -29641,10 +29641,6 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-comment|//TODO: We are setting partitionCnt for which we were able to retrieve stats same as
-comment|// incoming number from request. This is not correct, but currently no users of this api
-comment|// rely on this. Only, current user StatsAnnotation don't care for it. StatsOptimizer
-comment|// will care for it, so before StatsOptimizer begin using it, we need to fix this.
 name|aggrStats
 operator|=
 operator|new
@@ -29675,14 +29671,6 @@ operator|.
 name|getColNames
 argument_list|()
 argument_list|)
-argument_list|,
-name|request
-operator|.
-name|getPartNames
-argument_list|()
-operator|.
-name|size
-argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
