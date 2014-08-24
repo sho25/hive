@@ -507,6 +507,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|AggrStats
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|ColumnStatistics
 import|;
 end_import
@@ -15295,6 +15313,16 @@ block|}
 comment|// For now only alter name, owner, paramters, cols, bucketcols are allowed
 name|oldt
 operator|.
+name|setDatabase
+argument_list|(
+name|newt
+operator|.
+name|getDatabase
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|oldt
+operator|.
 name|setTableName
 argument_list|(
 name|newt
@@ -15338,16 +15366,6 @@ argument_list|,
 name|oldt
 operator|.
 name|getSd
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|oldt
-operator|.
-name|setDatabase
-argument_list|(
-name|newt
-operator|.
-name|getDatabase
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -34325,10 +34343,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|List
-argument_list|<
-name|ColumnStatisticsObj
-argument_list|>
+name|AggrStats
 name|get_aggr_stats_for
 parameter_list|(
 name|String
@@ -34358,9 +34373,9 @@ name|NoSuchObjectException
 block|{
 return|return
 operator|new
-name|GetListHelper
+name|GetHelper
 argument_list|<
-name|ColumnStatisticsObj
+name|AggrStats
 argument_list|>
 argument_list|(
 name|dbName
@@ -34375,18 +34390,12 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-name|List
-argument_list|<
-name|ColumnStatisticsObj
-argument_list|>
+name|AggrStats
 name|getSqlResult
 parameter_list|(
 name|GetHelper
 argument_list|<
-name|List
-argument_list|<
-name|ColumnStatisticsObj
-argument_list|>
+name|AggrStats
 argument_list|>
 name|ctx
 parameter_list|)
@@ -34411,18 +34420,12 @@ block|}
 annotation|@
 name|Override
 specifier|protected
-name|List
-argument_list|<
-name|ColumnStatisticsObj
-argument_list|>
+name|AggrStats
 name|getJdoResult
 parameter_list|(
 name|GetHelper
 argument_list|<
-name|List
-argument_list|<
-name|ColumnStatisticsObj
-argument_list|>
+name|AggrStats
 argument_list|>
 name|ctx
 parameter_list|)
@@ -34431,7 +34434,8 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
-comment|// This is fast path for query optimizations, if we can find this info quickly using
+comment|// This is fast path for query optimizations, if we can find this info
+comment|// quickly using
 comment|// directSql, do it. No point in failing back to slow path here.
 throw|throw
 operator|new
@@ -34440,6 +34444,17 @@ argument_list|(
 literal|"Jdo path is not implemented for stats aggr."
 argument_list|)
 throw|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|String
+name|describeResult
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
 block|}
 block|}
 operator|.

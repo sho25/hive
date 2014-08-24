@@ -124,19 +124,40 @@ name|int
 name|numLiterals
 decl_stmt|;
 specifier|private
+specifier|final
 name|long
 index|[]
 name|zigzagLiterals
+init|=
+operator|new
+name|long
+index|[
+name|MAX_SCOPE
+index|]
 decl_stmt|;
 specifier|private
+specifier|final
 name|long
 index|[]
 name|baseRedLiterals
+init|=
+operator|new
+name|long
+index|[
+name|MAX_SCOPE
+index|]
 decl_stmt|;
 specifier|private
+specifier|final
 name|long
 index|[]
 name|adjDeltas
+init|=
+operator|new
+name|long
+index|[
+name|MAX_SCOPE
+index|]
 decl_stmt|;
 specifier|private
 name|long
@@ -567,7 +588,10 @@ literal|0
 index|]
 argument_list|)
 expr_stmt|;
-comment|// adjacent delta values are bit packed
+comment|// adjacent delta values are bit packed. The length of adjDeltas array is
+comment|// always one less than the number of literals (delta difference for n
+comment|// elements is n-1). We have already written one element, write the
+comment|// remaining numLiterals - 2 elements here
 name|utils
 operator|.
 name|writeInts
@@ -576,11 +600,9 @@ name|adjDeltas
 argument_list|,
 literal|1
 argument_list|,
-name|adjDeltas
-operator|.
-name|length
+name|numLiterals
 operator|-
-literal|1
+literal|2
 argument_list|,
 name|fb
 argument_list|,
@@ -883,9 +905,7 @@ name|baseRedLiterals
 argument_list|,
 literal|0
 argument_list|,
-name|baseRedLiterals
-operator|.
-name|length
+name|numLiterals
 argument_list|,
 name|closestFixedBits
 argument_list|,
@@ -1046,9 +1066,7 @@ name|zigzagLiterals
 argument_list|,
 literal|0
 argument_list|,
-name|zigzagLiterals
-operator|.
-name|length
+name|numLiterals
 argument_list|,
 name|fb
 argument_list|,
@@ -1228,35 +1246,6 @@ name|void
 name|determineEncoding
 parameter_list|()
 block|{
-comment|// used for direct encoding
-name|zigzagLiterals
-operator|=
-operator|new
-name|long
-index|[
-name|numLiterals
-index|]
-expr_stmt|;
-comment|// used for patched base encoding
-name|baseRedLiterals
-operator|=
-operator|new
-name|long
-index|[
-name|numLiterals
-index|]
-expr_stmt|;
-comment|// used for delta encoding
-name|adjDeltas
-operator|=
-operator|new
-name|long
-index|[
-name|numLiterals
-operator|-
-literal|1
-index|]
-expr_stmt|;
 name|int
 name|idx
 init|=
@@ -1697,6 +1686,10 @@ name|percentileBits
 argument_list|(
 name|zigzagLiterals
 argument_list|,
+literal|0
+argument_list|,
+name|numLiterals
+argument_list|,
 name|p
 argument_list|)
 expr_stmt|;
@@ -1711,6 +1704,10 @@ operator|.
 name|percentileBits
 argument_list|(
 name|zigzagLiterals
+argument_list|,
+literal|0
+argument_list|,
+name|numLiterals
 argument_list|,
 name|p
 argument_list|)
@@ -1754,9 +1751,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|zigzagLiterals
-operator|.
-name|length
+name|numLiterals
 condition|;
 name|i
 operator|++
@@ -1789,6 +1784,10 @@ name|percentileBits
 argument_list|(
 name|baseRedLiterals
 argument_list|,
+literal|0
+argument_list|,
+name|numLiterals
+argument_list|,
 name|p
 argument_list|)
 expr_stmt|;
@@ -1804,6 +1803,10 @@ operator|.
 name|percentileBits
 argument_list|(
 name|baseRedLiterals
+argument_list|,
+literal|0
+argument_list|,
+name|numLiterals
 argument_list|,
 name|p
 argument_list|)
@@ -1922,9 +1925,7 @@ operator|.
 name|ceil
 argument_list|(
 operator|(
-name|baseRedLiterals
-operator|.
-name|length
+name|numLiterals
 operator|*
 literal|0.05
 operator|)
@@ -2029,9 +2030,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|baseRedLiterals
-operator|.
-name|length
+name|numLiterals
 condition|;
 name|i
 operator|++
@@ -2294,18 +2293,6 @@ expr_stmt|;
 name|prevDelta
 operator|=
 literal|0
-expr_stmt|;
-name|zigzagLiterals
-operator|=
-literal|null
-expr_stmt|;
-name|baseRedLiterals
-operator|=
-literal|null
-expr_stmt|;
-name|adjDeltas
-operator|=
-literal|null
 expr_stmt|;
 name|fixedDelta
 operator|=

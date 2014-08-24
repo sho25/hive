@@ -383,6 +383,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|io
+operator|.
+name|WritableComparable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapred
 operator|.
 name|InputFormat
@@ -3111,7 +3125,7 @@ parameter_list|>
 implements|implements
 name|Mapper
 argument_list|<
-name|NullWritable
+name|WritableComparable
 argument_list|,
 name|CompactorInputSplit
 argument_list|,
@@ -3132,7 +3146,7 @@ specifier|public
 name|void
 name|map
 parameter_list|(
-name|NullWritable
+name|WritableComparable
 name|key
 parameter_list|,
 name|CompactorInputSplit
@@ -3156,7 +3170,18 @@ comment|// This will only get called once, since CompactRecordReader only return
 comment|// the input split.
 comment|// Based on the split we're passed we go instantiate the real reader and then iterate on it
 comment|// until it finishes.
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
+comment|//since there is no way to parametrize instance of Class
 name|AcidInputFormat
+argument_list|<
+name|WritableComparable
+argument_list|,
+name|V
+argument_list|>
 name|aif
 init|=
 name|instantiate
@@ -3450,8 +3475,16 @@ name|bucket
 argument_list|)
 expr_stmt|;
 comment|// Instantiate the underlying output format
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
+comment|//since there is no way to parametrize instance of Class
 name|AcidOutputFormat
 argument_list|<
+name|WritableComparable
+argument_list|,
 name|V
 argument_list|>
 name|aof

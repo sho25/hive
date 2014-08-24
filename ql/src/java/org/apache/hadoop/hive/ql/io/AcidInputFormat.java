@@ -91,7 +91,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|NullWritable
+name|WritableComparable
 import|;
 end_import
 
@@ -162,7 +162,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The interface required for input formats that what to support ACID  * transactions.  *<p>  * The goal is to provide ACID transactions to Hive. There are  * several primary use cases:  *<ul>  *<li>Streaming ingest- Allow Flume or Storm to stream data into Hive  *   tables with relatively low latency (~30 seconds).</li>  *<li>Dimension table update- Allow updates of dimension tables without  *   overwriting the entire partition (or table) using standard SQL syntax.</li>  *<li>Fact table inserts- Insert data into fact tables at granularity other  *   than entire partitions using standard SQL syntax.</li>  *<li>Fact table update- Update large fact tables to correct data that  *   was previously loaded.</li>  *</ul>  * It is important to support batch updates and maintain read consistency within  * a query. A non-goal is to support many simultaneous updates or to replace  * online transactions systems.  *<p>  * The design changes the layout of data within a partition from being in files  * at the top level to having base and delta directories. Each write operation  * will be assigned a sequential global transaction id and each read operation  * will request the list of valid transaction ids.  *<ul>  *<li>Old format -  *<pre>  *        $partition/$bucket  *</pre></li>  *<li>New format -  *<pre>  *        $partition/base_$tid/$bucket  *                   delta_$tid_$tid/$bucket  *</pre></li>  *</ul>  *<p>  * With each new write operation a new delta directory is created with events  * that correspond to inserted, updated, or deleted rows. Each of the files is  * stored sorted by the original transaction id (ascending), bucket (ascending),  * row id (ascending), and current transaction id (descending). Thus the files  * can be merged by advancing through the files in parallel.  *<p>  * The base files include all transactions from the beginning of time  * (transaction id 0) to the transaction in the directory name. Delta  * directories include transactions (inclusive) between the two transaction ids.  *<p>  * Because read operations get the list of valid transactions when they start,  * all reads are performed on that snapshot, regardless of any transactions that  * are committed afterwards.  *<p>  * The base and the delta directories have the transaction ids so that major  * (merge all deltas into the base) and minor (merge several deltas together)  * compactions can happen while readers continue their processing.  *<p>  * To support transitions between non-ACID layouts to ACID layouts, the input  * formats are expected to support both layouts and detect the correct one.  *  * @param<V> The row type  */
+comment|/**  * The interface required for input formats that what to support ACID  * transactions.  *<p>  * The goal is to provide ACID transactions to Hive. There are  * several primary use cases:  *<ul>  *<li>Streaming ingest- Allow Flume or Storm to stream data into Hive  *   tables with relatively low latency (~30 seconds).</li>  *<li>Dimension table update- Allow updates of dimension tables without  *   overwriting the entire partition (or table) using standard SQL syntax.</li>  *<li>Fact table inserts- Insert data into fact tables at granularity other  *   than entire partitions using standard SQL syntax.</li>  *<li>Fact table update- Update large fact tables to correct data that  *   was previously loaded.</li>  *</ul>  * It is important to support batch updates and maintain read consistency within  * a query. A non-goal is to support many simultaneous updates or to replace  * online transactions systems.  *<p>  * The design changes the layout of data within a partition from being in files  * at the top level to having base and delta directories. Each write operation  * will be assigned a sequential global transaction id and each read operation  * will request the list of valid transaction ids.  *<ul>  *<li>Old format -  *<pre>  *        $partition/$bucket  *</pre></li>  *<li>New format -  *<pre>  *        $partition/base_$tid/$bucket  *                   delta_$tid_$tid/$bucket  *</pre></li>  *</ul>  *<p>  * With each new write operation a new delta directory is created with events  * that correspond to inserted, updated, or deleted rows. Each of the files is  * stored sorted by the original transaction id (ascending), bucket (ascending),  * row id (ascending), and current transaction id (descending). Thus the files  * can be merged by advancing through the files in parallel.  *<p>  * The base files include all transactions from the beginning of time  * (transaction id 0) to the transaction in the directory name. Delta  * directories include transactions (inclusive) between the two transaction ids.  *<p>  * Because read operations get the list of valid transactions when they start,  * all reads are performed on that snapshot, regardless of any transactions that  * are committed afterwards.  *<p>  * The base and the delta directories have the transaction ids so that major  * (merge all deltas into the base) and minor (merge several deltas together)  * compactions can happen while readers continue their processing.  *<p>  * To support transitions between non-ACID layouts to ACID layouts, the input  * formats are expected to support both layouts and detect the correct one.  *<p>  *   A note on the KEY of this InputFormat.    *   For row-at-a-time processing, KEY can conveniently pass RowId into the operator  *   pipeline.  For vectorized execution the KEY could perhaps represent a range in the batch.  *   Since {@link org.apache.hadoop.hive.ql.io.orc.OrcInputFormat} is declared to return  *   {@code NullWritable} key, {@link org.apache.hadoop.hive.ql.io.AcidRecordReader} is defined  *   to provide access to the RowId.  Other implementations of AcidInputFormat can use either  *   mechanism.  *</p>  *   * @param<VALUE> The row type  */
 end_comment
 
 begin_interface
@@ -170,14 +170,18 @@ specifier|public
 interface|interface
 name|AcidInputFormat
 parameter_list|<
-name|V
+name|KEY
+extends|extends
+name|WritableComparable
+parameter_list|,
+name|VALUE
 parameter_list|>
 extends|extends
 name|InputFormat
 argument_list|<
-name|NullWritable
+name|KEY
 argument_list|,
-name|V
+name|VALUE
 argument_list|>
 extends|,
 name|InputFormatChecker
@@ -275,7 +279,7 @@ comment|/**    * Get a record reader that provides the user-facing view of the d
 specifier|public
 name|RowReader
 argument_list|<
-name|V
+name|VALUE
 argument_list|>
 name|getReader
 parameter_list|(
@@ -312,7 +316,7 @@ block|}
 comment|/**    * Get a reader that returns the raw ACID events (insert, update, delete).    * Should only be used by the compactor.    * @param conf the configuration    * @param collapseEvents should the ACID events be collapsed so that only    *                       the last version of the row is kept.    * @param bucket the bucket to read    * @param validTxnList the list of valid transactions to use    * @param baseDirectory the base directory to read or the root directory for    *                      old style files    * @param deltaDirectory a list of delta files to include in the merge    * @return a record reader    * @throws IOException    */
 name|RawReader
 argument_list|<
-name|V
+name|VALUE
 argument_list|>
 name|getRawReader
 parameter_list|(
@@ -338,6 +342,28 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * RecordReader returned by AcidInputFormat working in row-at-a-time mode should AcidRecordReader.    */
+specifier|public
+interface|interface
+name|AcidRecordReader
+parameter_list|<
+name|K
+parameter_list|,
+name|V
+parameter_list|>
+extends|extends
+name|RecordReader
+argument_list|<
+name|K
+argument_list|,
+name|V
+argument_list|>
+block|{
+name|RecordIdentifier
+name|getRecordIdentifier
+parameter_list|()
+function_decl|;
+block|}
 block|}
 end_interface
 

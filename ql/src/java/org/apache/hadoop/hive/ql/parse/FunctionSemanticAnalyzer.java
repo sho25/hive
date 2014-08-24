@@ -1056,6 +1056,13 @@ index|[
 literal|0
 index|]
 decl_stmt|;
+name|functionName
+operator|=
+name|qualifiedNameParts
+index|[
+literal|1
+index|]
+expr_stmt|;
 name|database
 operator|=
 name|getDatabase

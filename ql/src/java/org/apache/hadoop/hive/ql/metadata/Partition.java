@@ -1248,6 +1248,16 @@ return|;
 block|}
 specifier|public
 name|Path
+name|getPartitionPath
+parameter_list|()
+block|{
+return|return
+name|getDataLocation
+argument_list|()
+return|;
+block|}
+specifier|public
+name|Path
 name|getDataLocation
 parameter_list|()
 block|{

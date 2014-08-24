@@ -325,9 +325,9 @@ specifier|final
 name|Schema
 name|originalSchema
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|originalSchemaString
 argument_list|)
@@ -337,9 +337,9 @@ specifier|final
 name|Schema
 name|newSchema
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|newSchemaString
 argument_list|)
@@ -419,9 +419,9 @@ name|assertEquals
 argument_list|(
 name|newSchema
 argument_list|,
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|conf
 operator|.

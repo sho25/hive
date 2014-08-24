@@ -835,6 +835,10 @@ break|break;
 case|case
 name|TABLE
 case|:
+case|case
+name|DUMMYPARTITION
+case|:
+comment|// in case of dynamic partitioning lock the table
 name|t
 operator|=
 name|output
@@ -865,9 +869,6 @@ expr_stmt|;
 break|break;
 case|case
 name|PARTITION
-case|:
-case|case
-name|DUMMYPARTITION
 case|:
 name|compBuilder
 operator|.
@@ -1550,6 +1551,17 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|client
+operator|!=
+literal|null
+condition|)
+name|client
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1557,6 +1569,30 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Caught exception "
+operator|+
+name|e
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" with message<"
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|+
+literal|">, swallowing as there is nothing we can do with it."
+argument_list|)
+expr_stmt|;
 comment|// Not much we can do about it here.
 block|}
 block|}

@@ -859,6 +859,11 @@ name|ss
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|ss
+operator|.
+name|numRows
+operator|++
+expr_stmt|;
 block|}
 return|return
 name|o

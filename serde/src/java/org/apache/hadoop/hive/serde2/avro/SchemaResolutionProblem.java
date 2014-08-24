@@ -116,9 +116,9 @@ specifier|static
 name|Schema
 name|SIGNAL_BAD_SCHEMA
 init|=
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|sentinelString
 argument_list|)

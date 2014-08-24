@@ -1729,6 +1729,20 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|// Make sure location string is in proper format
+name|tbl
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|setLocation
+argument_list|(
+name|tblPath
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|// Add temp table info to current session
 name|Table

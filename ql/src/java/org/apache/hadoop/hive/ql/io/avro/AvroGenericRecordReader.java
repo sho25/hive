@@ -800,9 +800,9 @@ name|s
 argument_list|)
 expr_stmt|;
 return|return
-name|Schema
+name|AvroSerdeUtils
 operator|.
-name|parse
+name|getSchemaFor
 argument_list|(
 name|s
 argument_list|)

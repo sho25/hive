@@ -1925,7 +1925,7 @@ block|{
 comment|// The background operation thread was aborted
 name|LOG
 operator|.
-name|trace
+name|warn
 argument_list|(
 name|opHandle
 operator|+

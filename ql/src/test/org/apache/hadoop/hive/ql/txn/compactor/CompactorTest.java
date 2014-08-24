@@ -347,20 +347,6 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|NullWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
 name|Text
 import|;
 end_import
@@ -376,6 +362,20 @@ operator|.
 name|io
 operator|.
 name|Writable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|WritableComparable
 import|;
 end_import
 
@@ -2212,6 +2212,8 @@ name|MockInputFormat
 implements|implements
 name|AcidInputFormat
 argument_list|<
+name|WritableComparable
+argument_list|,
 name|Text
 argument_list|>
 block|{
@@ -2459,7 +2461,7 @@ name|Override
 specifier|public
 name|RecordReader
 argument_list|<
-name|NullWritable
+name|WritableComparable
 argument_list|,
 name|Text
 argument_list|>
@@ -2800,6 +2802,8 @@ name|MockOutputFormat
 implements|implements
 name|AcidOutputFormat
 argument_list|<
+name|WritableComparable
+argument_list|,
 name|Text
 argument_list|>
 block|{
@@ -2916,7 +2920,7 @@ name|Override
 specifier|public
 name|RecordWriter
 argument_list|<
-name|NullWritable
+name|WritableComparable
 argument_list|,
 name|Text
 argument_list|>
