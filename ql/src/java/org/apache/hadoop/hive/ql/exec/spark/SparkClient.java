@@ -1305,6 +1305,21 @@ expr_stmt|;
 block|}
 block|}
 block|}
+specifier|public
+name|void
+name|close
+parameter_list|()
+block|{
+name|sc
+operator|.
+name|stop
+argument_list|()
+expr_stmt|;
+name|client
+operator|=
+literal|null
+expr_stmt|;
+block|}
 block|}
 end_class
 

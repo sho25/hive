@@ -141,6 +141,10 @@ specifier|final
 name|String
 name|sessionId
 decl_stmt|;
+specifier|private
+name|SparkClient
+name|sparkClient
+decl_stmt|;
 specifier|public
 name|SparkSessionImpl
 parameter_list|()
@@ -194,7 +198,8 @@ argument_list|,
 literal|"Session is not open. Can't submit jobs."
 argument_list|)
 expr_stmt|;
-return|return
+name|sparkClient
+operator|=
 name|SparkClient
 operator|.
 name|getInstance
@@ -207,6 +212,9 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|)
+expr_stmt|;
+return|return
+name|sparkClient
 operator|.
 name|execute
 argument_list|(
@@ -259,6 +267,23 @@ block|{
 name|isOpen
 operator|=
 literal|false
+expr_stmt|;
+if|if
+condition|(
+name|sparkClient
+operator|!=
+literal|null
+condition|)
+block|{
+name|sparkClient
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+name|sparkClient
+operator|=
+literal|null
 expr_stmt|;
 block|}
 specifier|public
