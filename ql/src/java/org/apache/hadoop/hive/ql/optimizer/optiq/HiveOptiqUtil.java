@@ -788,9 +788,7 @@ name|leftJoinKeys
 operator|.
 name|get
 argument_list|(
-name|p
-operator|.
-name|left
+name|i
 argument_list|)
 decl_stmt|;
 name|RexNode
@@ -800,9 +798,7 @@ name|rightJoinKeys
 operator|.
 name|get
 argument_list|(
-name|p
-operator|.
-name|right
+name|i
 argument_list|)
 decl_stmt|;
 name|leftKeys
