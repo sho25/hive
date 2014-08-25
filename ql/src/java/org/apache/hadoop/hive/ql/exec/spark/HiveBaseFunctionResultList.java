@@ -394,18 +394,11 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|lastRecordOutput
-operator|.
-name|hasNext
-argument_list|()
-condition|)
-block|{
-return|return
-literal|true
-return|;
-block|}
+comment|// TODO Current HiveKVResultCache does not support read-then-write,
+comment|// should not enable lazy execution here. See HIVE-7873
+comment|// if (lastRecordOutput.hasNext()) {
+comment|//   return true;
+comment|// }
 block|}
 catch|catch
 parameter_list|(
