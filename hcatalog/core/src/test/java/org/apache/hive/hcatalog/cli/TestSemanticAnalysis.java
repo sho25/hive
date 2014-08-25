@@ -1266,7 +1266,11 @@ name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"create table junit_sem_analysis (a int) stored as RCFILE"
+literal|"create table "
+operator|+
+name|TBL_NAME
+operator|+
+literal|" (a int) stored as RCFILE"
 argument_list|)
 expr_stmt|;
 name|Table

@@ -540,6 +540,13 @@ name|alterTable
 argument_list|(
 name|tbl
 operator|.
+name|getDbName
+argument_list|()
+operator|+
+literal|"."
+operator|+
+name|tbl
+operator|.
 name|getTableName
 argument_list|()
 argument_list|,

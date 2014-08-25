@@ -1663,6 +1663,15 @@ name|HiveUtils
 operator|.
 name|unparseIdentifier
 argument_list|(
+name|dbName
+argument_list|)
+operator|+
+literal|"."
+operator|+
+name|HiveUtils
+operator|.
+name|unparseIdentifier
+argument_list|(
 name|indexTableName
 argument_list|)
 argument_list|)
@@ -1848,6 +1857,15 @@ operator|.
 name|append
 argument_list|(
 literal|" FROM "
+operator|+
+name|HiveUtils
+operator|.
+name|unparseIdentifier
+argument_list|(
+name|dbName
+argument_list|)
+operator|+
+literal|"."
 operator|+
 name|HiveUtils
 operator|.
