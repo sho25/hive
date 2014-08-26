@@ -141,24 +141,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|SessionState
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hive
 operator|.
 name|service
@@ -1339,7 +1321,9 @@ name|getUsername
 argument_list|()
 expr_stmt|;
 block|}
-return|return
+name|String
+name|effectiveClientUser
+init|=
 name|getProxyUser
 argument_list|(
 name|userName
@@ -1352,6 +1336,18 @@ argument_list|,
 name|getIpAddress
 argument_list|()
 argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Client's username: "
+operator|+
+name|effectiveClientUser
+argument_list|)
+expr_stmt|;
+return|return
+name|effectiveClientUser
 return|;
 block|}
 comment|/**    * Create a session handle    * @param req    * @param res    * @return    * @throws HiveSQLException    * @throws LoginException    * @throws IOException    */
