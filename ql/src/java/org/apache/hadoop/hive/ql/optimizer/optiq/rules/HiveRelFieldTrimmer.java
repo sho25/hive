@@ -2453,7 +2453,7 @@ name|inputMapping
 argument_list|)
 return|;
 block|}
-comment|/**    * Variant of {@link #trimFields(RelNode, BitSet, Set)} for {@link JoinRel}.    *     * Have to do this because of the way ReflectUtil works. - if there is an    * exact match, things are fine. - otherwise it doesn't allow any ambiguity(in    * this case between a superClass(JoinRelBase) and an interface(HiveRel).    */
+comment|/**    * Variant of {@link #trimFields(RelNode, BitSet, Set)} for {@link JoinRel}.    *    * Have to do this because of the way ReflectUtil works. - if there is an    * exact match, things are fine. - otherwise it doesn't allow any ambiguity(in    * this case between a superClass(JoinRelBase) and an interface(HiveRel).    */
 specifier|private
 name|TrimResult
 name|_trimFields
@@ -3291,9 +3291,6 @@ block|{
 return|return
 name|_trimFields
 argument_list|(
-operator|(
-name|JoinRelBase
-operator|)
 name|join
 argument_list|,
 name|fieldsUsed
@@ -3322,9 +3319,6 @@ block|{
 return|return
 name|_trimFields
 argument_list|(
-operator|(
-name|JoinRelBase
-operator|)
 name|join
 argument_list|,
 name|fieldsUsed
@@ -4816,6 +4810,12 @@ if|if
 condition|(
 name|fieldsUsed
 operator|.
+name|isEmpty
+argument_list|()
+operator|||
+operator|(
+name|fieldsUsed
+operator|.
 name|equals
 argument_list|(
 name|BitSets
@@ -4830,6 +4830,7 @@ name|extraFields
 operator|.
 name|isEmpty
 argument_list|()
+operator|)
 condition|)
 block|{
 return|return
