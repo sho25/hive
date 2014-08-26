@@ -75554,8 +75554,26 @@ name|paraExprNode
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 2 Determine type of UDAF
-comment|// This is the GenericUDAF name
+comment|// 2. Is this distinct UDAF
+name|boolean
+name|isDistinct
+init|=
+name|aggAst
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|TOK_FUNCTIONDI
+decl_stmt|;
+comment|// 3. Determine type of UDAF
+name|TypeInfo
+name|udafRetType
+init|=
+literal|null
+decl_stmt|;
+comment|// 3.1 Obtain UDAF name
 name|String
 name|aggName
 init|=
@@ -75572,18 +75590,45 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|boolean
-name|isDistinct
-init|=
-name|aggAst
+comment|// 3.2 Rank functions type is 'int'/'double'
+if|if
+condition|(
+name|FunctionRegistry
 operator|.
-name|getType
-argument_list|()
-operator|==
-name|HiveParser
+name|isRankingFunction
+argument_list|(
+name|aggName
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
+name|aggName
 operator|.
-name|TOK_FUNCTIONDI
-decl_stmt|;
+name|equalsIgnoreCase
+argument_list|(
+literal|"percent_rank"
+argument_list|)
+condition|)
+name|udafRetType
+operator|=
+name|TypeInfoFactory
+operator|.
+name|doubleTypeInfo
+expr_stmt|;
+else|else
+name|udafRetType
+operator|=
+name|TypeInfoFactory
+operator|.
+name|intTypeInfo
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// 3.3 Try obtaining UDAF evaluators to determine the ret type
+try|try
+block|{
 name|boolean
 name|isAllColumns
 init|=
@@ -75596,7 +75641,7 @@ name|HiveParser
 operator|.
 name|TOK_FUNCTIONSTAR
 decl_stmt|;
-comment|// 3 Get UDAF Evaluator
+comment|// 3.3.1 Get UDAF Evaluator
 name|Mode
 name|amode
 init|=
@@ -75634,7 +75679,7 @@ operator|!=
 literal|null
 operator|)
 assert|;
-comment|// 4. Get UDAF Info using UDAF Evaluator
+comment|// 3.3.2 Get UDAF Info using UDAF Evaluator
 name|GenericUDAFInfo
 name|udaf
 init|=
@@ -75647,7 +75692,93 @@ argument_list|,
 name|aggParameters
 argument_list|)
 decl_stmt|;
-comment|// 5. Construct AggInfo
+name|udafRetType
+operator|=
+name|udaf
+operator|.
+name|returnType
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CBO: Couldn't Obtain UDAF evaluators for "
+operator|+
+name|aggName
+operator|+
+literal|", trying to translate to GenericUDF"
+argument_list|)
+expr_stmt|;
+block|}
+comment|// 3.4 Try GenericUDF translation
+if|if
+condition|(
+name|udafRetType
+operator|==
+literal|null
+condition|)
+block|{
+name|TypeCheckCtx
+name|tcCtx
+init|=
+operator|new
+name|TypeCheckCtx
+argument_list|(
+name|inputRR
+argument_list|)
+decl_stmt|;
+comment|// We allow stateful functions in the SELECT list (but nowhere else)
+name|tcCtx
+operator|.
+name|setAllowStatefulFunctions
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|tcCtx
+operator|.
+name|setAllowDistinctFunctions
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|ExprNodeDesc
+name|exp
+init|=
+name|genExprNodeDesc
+argument_list|(
+operator|(
+name|ASTNode
+operator|)
+name|aggAst
+operator|.
+name|getChild
+argument_list|(
+literal|0
+argument_list|)
+argument_list|,
+name|inputRR
+argument_list|,
+name|tcCtx
+argument_list|)
+decl_stmt|;
+name|udafRetType
+operator|=
+name|exp
+operator|.
+name|getTypeInfo
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+comment|// 4. Construct AggInfo
 name|aInfo
 operator|=
 operator|new
@@ -75655,9 +75786,7 @@ name|AggInfo
 argument_list|(
 name|aggParameters
 argument_list|,
-name|udaf
-operator|.
-name|returnType
+name|udafRetType
 argument_list|,
 name|aggName
 argument_list|,
