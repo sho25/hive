@@ -3506,6 +3506,15 @@ argument_list|,
 literal|"Merge small files at the end of a Tez DAG"
 argument_list|)
 block|,
+name|HIVEMERGESPARKFILES
+argument_list|(
+literal|"hive.merge.sparkfiles"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Merge small files at the end of a Spark DAG Transformation"
+argument_list|)
+block|,
 name|HIVEMERGEMAPFILESSIZE
 argument_list|(
 literal|"hive.merge.size.per.task"
