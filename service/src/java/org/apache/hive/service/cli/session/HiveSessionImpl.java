@@ -687,6 +687,22 @@ name|TProtocolVersion
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|server
+operator|.
+name|ThreadWithGarbageCleanup
+import|;
+end_import
+
 begin_comment
 comment|/**  * HiveSession  *  */
 end_comment
@@ -835,7 +851,7 @@ name|ipAddress
 operator|=
 name|ipAddress
 expr_stmt|;
-comment|// set an explicit session name to control the download directory name
+comment|// Set an explicit session name to control the download directory name
 name|hiveConf
 operator|.
 name|set
@@ -855,7 +871,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// use thrift transportable formatter
+comment|// Use thrift transportable formatter
 name|hiveConf
 operator|.
 name|set
@@ -888,6 +904,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|/**      * Create a new SessionState object that will be associated with this HiveServer2 session.      * When the server executes multiple queries in the same session,      * this SessionState object is reused across multiple queries.      */
 name|sessionState
 operator|=
 operator|new
@@ -937,18 +954,11 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-comment|//process global init file: .hiverc
+comment|// Process global init file: .hiverc
 name|processGlobalInitFile
 argument_list|()
 expr_stmt|;
-name|SessionState
-operator|.
-name|setCurrentSessionState
-argument_list|(
-name|sessionState
-argument_list|)
-expr_stmt|;
-comment|//set conf properties specified by user from client side
+comment|// Set conf properties specified by user from client side
 if|if
 condition|(
 name|sessionConfMap
@@ -1206,6 +1216,13 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+name|SessionState
+operator|.
+name|setCurrentSessionState
+argument_list|(
+name|sessionState
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Map
@@ -1393,8 +1410,8 @@ parameter_list|()
 throws|throws
 name|HiveSQLException
 block|{
-comment|// need to make sure that the this connections session state is
-comment|// stored in the thread local for sessions.
+comment|// Need to make sure that the this HiveServer2's session's session state is
+comment|// stored in the thread local for the handler thread.
 name|SessionState
 operator|.
 name|setCurrentSessionState
@@ -1403,6 +1420,7 @@ name|sessionState
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * 1. We'll remove the ThreadLocal SessionState as this thread might now serve    * other requests.    * 2. We'll cache the ThreadLocal RawStore object for this background thread for an orderly cleanup    * when this thread is garbage collected later.    * @see org.apache.hive.service.server.ThreadWithGarbageCleanup#finalize()    */
 specifier|protected
 specifier|synchronized
 name|void
@@ -1419,6 +1437,33 @@ operator|.
 name|detachSession
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|ThreadWithGarbageCleanup
+operator|.
+name|currentThread
+argument_list|()
+operator|instanceof
+name|ThreadWithGarbageCleanup
+condition|)
+block|{
+name|ThreadWithGarbageCleanup
+name|currentThread
+init|=
+operator|(
+name|ThreadWithGarbageCleanup
+operator|)
+name|ThreadWithGarbageCleanup
+operator|.
+name|currentThread
+argument_list|()
+decl_stmt|;
+name|currentThread
+operator|.
+name|cacheThreadLocalRawStore
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -2437,7 +2482,7 @@ block|{
 name|acquire
 argument_list|()
 expr_stmt|;
-comment|/**        *  For metadata operations like getTables(), getColumns() etc,        * the session allocates a private metastore handler which should be        * closed at the end of the session        */
+comment|/**        * For metadata operations like getTables(), getColumns() etc,        * the session allocates a private metastore handler which should be        * closed at the end of the session        */
 if|if
 condition|(
 name|metastoreClient

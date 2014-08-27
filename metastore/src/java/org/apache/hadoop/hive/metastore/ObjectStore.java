@@ -2309,6 +2309,29 @@ name|pm
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"RawStore: "
+operator|+
+name|this
+operator|+
+literal|", with PersistenceManager: "
+operator|+
+name|pm
+operator|+
+literal|" created in the thread with id: "
+operator|+
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+operator|.
+name|getId
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Creates the proxy used to evaluate expressions. This is here to prevent circular    * dependency - ql -&gt; metastore client&lt;-&gt metastore server -&gt ql. If server and    * client are split, this can be removed.    * @param conf Configuration.    * @return The partition expression proxy.    */
 specifier|private
@@ -2885,6 +2908,21 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"RawStore: "
+operator|+
+name|this
+operator|+
+literal|", with PersistenceManager: "
+operator|+
+name|pm
+operator|+
+literal|" will be shutdown"
+argument_list|)
+expr_stmt|;
 name|pm
 operator|.
 name|close

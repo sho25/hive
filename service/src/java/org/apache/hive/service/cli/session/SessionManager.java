@@ -297,6 +297,22 @@ name|TProtocolVersion
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|server
+operator|.
+name|ThreadFactoryWithGarbageCleanup
+import|;
+end_import
+
 begin_comment
 comment|/**  * SessionManager.  *  */
 end_comment
@@ -418,6 +434,27 @@ name|hiveConf
 operator|=
 name|hiveConf
 expr_stmt|;
+name|createBackgroundOperationPool
+argument_list|()
+expr_stmt|;
+name|addService
+argument_list|(
+name|operationManager
+argument_list|)
+expr_stmt|;
+name|super
+operator|.
+name|init
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|createBackgroundOperationPool
+parameter_list|()
+block|{
 name|int
 name|backgroundPoolSize
 init|=
@@ -434,7 +471,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"HiveServer2: Async execution thread pool size: "
+literal|"HiveServer2: Background operation thread pool size: "
 operator|+
 name|backgroundPoolSize
 argument_list|)
@@ -455,7 +492,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"HiveServer2: Async execution wait queue size: "
+literal|"HiveServer2: Background operation thread wait queue size: "
 operator|+
 name|backgroundPoolQueueSize
 argument_list|)
@@ -476,14 +513,19 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"HiveServer2: Async execution thread keepalive time: "
+literal|"HiveServer2: Background operation thread keepalive time: "
 operator|+
 name|keepAliveTime
 argument_list|)
 expr_stmt|;
 comment|// Create a thread pool with #backgroundPoolSize threads
 comment|// Threads terminate when they are idle for more than the keepAliveTime
-comment|// An bounded blocking queue is used to queue incoming operations, if #operations> backgroundPoolSize
+comment|// A bounded blocking queue is used to queue incoming operations, if #operations> backgroundPoolSize
+name|String
+name|threadPoolName
+init|=
+literal|"HiveServer2-Background-Pool"
+decl_stmt|;
 name|backgroundOperationPool
 operator|=
 operator|new
@@ -507,6 +549,12 @@ argument_list|>
 argument_list|(
 name|backgroundPoolQueueSize
 argument_list|)
+argument_list|,
+operator|new
+name|ThreadFactoryWithGarbageCleanup
+argument_list|(
+name|threadPoolName
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|backgroundOperationPool
@@ -514,18 +562,6 @@ operator|.
 name|allowCoreThreadTimeOut
 argument_list|(
 literal|true
-argument_list|)
-expr_stmt|;
-name|addService
-argument_list|(
-name|operationManager
-argument_list|)
-expr_stmt|;
-name|super
-operator|.
-name|init
-argument_list|(
-name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}

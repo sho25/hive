@@ -502,6 +502,10 @@ name|int
 name|maxWorkerThreads
 decl_stmt|;
 specifier|protected
+name|int
+name|workerKeepAliveTime
+decl_stmt|;
+specifier|protected
 specifier|static
 name|HiveAuthFactory
 name|hiveAuthFactory

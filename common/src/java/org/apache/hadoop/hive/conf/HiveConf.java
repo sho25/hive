@@ -5902,6 +5902,17 @@ argument_list|,
 literal|"Maximum idle time in milliseconds for a connection on the server when in HTTP mode."
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_HTTP_WORKER_KEEPALIVE_TIME
+argument_list|(
+literal|"hive.server2.thrift.http.worker.keepalive.time"
+argument_list|,
+literal|60
+argument_list|,
+literal|"Keepalive time (in seconds) for an idle http worker thread. When number of workers> min workers, "
+operator|+
+literal|"excess threads are killed after this time interval."
+argument_list|)
+block|,
 comment|// binary transport settings
 name|HIVE_SERVER2_THRIFT_PORT
 argument_list|(
@@ -5973,6 +5984,17 @@ argument_list|,
 literal|500
 argument_list|,
 literal|"Maximum number of Thrift worker threads"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_WORKER_KEEPALIVE_TIME
+argument_list|(
+literal|"hive.server2.thrift.worker.keepalive.time"
+argument_list|,
+literal|60
+argument_list|,
+literal|"Keepalive time (in seconds) for an idle worker thread. When number of workers> min workers, "
+operator|+
+literal|"excess threads are killed after this time interval."
 argument_list|)
 block|,
 comment|// Configuration for async thread pool in SessionManager

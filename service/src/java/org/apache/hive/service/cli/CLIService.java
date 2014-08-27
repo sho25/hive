@@ -495,10 +495,6 @@ name|SessionManager
 name|sessionManager
 decl_stmt|;
 specifier|private
-name|IMetaStoreClient
-name|metastoreClient
-decl_stmt|;
-specifier|private
 name|UserGroupInformation
 name|serviceUGI
 decl_stmt|;
@@ -816,9 +812,14 @@ name|eIO
 argument_list|)
 throw|;
 block|}
+comment|// Initialize and test a connection to the metastore
+name|IMetaStoreClient
+name|metastoreClient
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
-comment|// Initialize and test a connection to the metastore
 name|metastoreClient
 operator|=
 operator|new
@@ -851,14 +852,7 @@ name|e
 argument_list|)
 throw|;
 block|}
-block|}
-annotation|@
-name|Override
-specifier|public
-specifier|synchronized
-name|void
-name|stop
-parameter_list|()
+finally|finally
 block|{
 if|if
 condition|(
@@ -873,6 +867,16 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
+block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+specifier|synchronized
+name|void
+name|stop
+parameter_list|()
+block|{
 name|super
 operator|.
 name|stop
