@@ -999,7 +999,7 @@ name|debug
 argument_list|(
 name|sessionHandle
 operator|+
-literal|": openSession()"
+literal|": openSessionWithImpersonation()"
 argument_list|)
 expr_stmt|;
 return|return
