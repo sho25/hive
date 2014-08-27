@@ -418,12 +418,11 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.Operation#run()    */
 annotation|@
 name|Override
 specifier|public
 name|void
-name|run
+name|runInternal
 parameter_list|()
 throws|throws
 name|HiveSQLException

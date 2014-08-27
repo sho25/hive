@@ -5653,6 +5653,37 @@ operator|+
 literal|"by record readers"
 argument_list|)
 block|,
+comment|// operation log configuration
+name|HIVE_SERVER2_LOGGING_OPERATION_ENABLED
+argument_list|(
+literal|"hive.server2.logging.operation.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When true, HS2 will save operation logs"
+argument_list|)
+block|,
+name|HIVE_SERVER2_LOGGING_OPERATION_LOG_LOCATION
+argument_list|(
+literal|"hive.server2.logging.operation.log.location"
+argument_list|,
+literal|"${system:java.io.tmpdir}"
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
+literal|"${system:user.name}"
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
+literal|"operation_logs"
+argument_list|,
+literal|"Top level directory where operation logs are stored if logging functionality is enabled"
+argument_list|)
+block|,
 comment|// logging configuration
 name|HIVE_LOG4J_FILE
 argument_list|(

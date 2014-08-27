@@ -58,8 +58,6 @@ specifier|public
 interface|interface
 name|ICLIService
 block|{
-specifier|public
-specifier|abstract
 name|SessionHandle
 name|openSession
 parameter_list|(
@@ -80,8 +78,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|SessionHandle
 name|openSessionWithImpersonation
 parameter_list|(
@@ -105,8 +101,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|void
 name|closeSession
 parameter_list|(
@@ -116,8 +110,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|GetInfoValue
 name|getInfo
 parameter_list|(
@@ -130,8 +122,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationHandle
 name|executeStatement
 parameter_list|(
@@ -152,8 +142,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationHandle
 name|executeStatementAsync
 parameter_list|(
@@ -174,8 +162,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationHandle
 name|getTypeInfo
 parameter_list|(
@@ -185,8 +171,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationHandle
 name|getCatalogs
 parameter_list|(
@@ -196,8 +180,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationHandle
 name|getSchemas
 parameter_list|(
@@ -213,8 +195,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationHandle
 name|getTables
 parameter_list|(
@@ -239,8 +219,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationHandle
 name|getTableTypes
 parameter_list|(
@@ -250,8 +228,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationHandle
 name|getColumns
 parameter_list|(
@@ -273,8 +249,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationHandle
 name|getFunctions
 parameter_list|(
@@ -293,8 +267,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|OperationStatus
 name|getOperationStatus
 parameter_list|(
@@ -304,8 +276,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|void
 name|cancelOperation
 parameter_list|(
@@ -315,8 +285,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|void
 name|closeOperation
 parameter_list|(
@@ -326,8 +294,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|TableSchema
 name|getResultSetMetadata
 parameter_list|(
@@ -337,8 +303,15 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
+name|RowSet
+name|fetchResults
+parameter_list|(
+name|OperationHandle
+name|opHandle
+parameter_list|)
+throws|throws
+name|HiveSQLException
+function_decl|;
 name|RowSet
 name|fetchResults
 parameter_list|(
@@ -350,23 +323,13 @@ name|orientation
 parameter_list|,
 name|long
 name|maxRows
+parameter_list|,
+name|FetchType
+name|fetchType
 parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
-name|RowSet
-name|fetchResults
-parameter_list|(
-name|OperationHandle
-name|opHandle
-parameter_list|)
-throws|throws
-name|HiveSQLException
-function_decl|;
-specifier|public
-specifier|abstract
 name|String
 name|getDelegationToken
 parameter_list|(
@@ -385,8 +348,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|void
 name|cancelDelegationToken
 parameter_list|(
@@ -402,8 +363,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-specifier|abstract
 name|void
 name|renewDelegationToken
 parameter_list|(
