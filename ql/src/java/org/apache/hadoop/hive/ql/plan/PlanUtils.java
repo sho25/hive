@@ -2142,13 +2142,6 @@ name|META_TABLE_NAME
 argument_list|,
 name|crtTblDesc
 operator|.
-name|getDatabaseName
-argument_list|()
-operator|+
-literal|"."
-operator|+
-name|crtTblDesc
-operator|.
 name|getTableName
 argument_list|()
 argument_list|)
