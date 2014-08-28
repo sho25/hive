@@ -3055,6 +3055,7 @@ name|wh
 decl_stmt|;
 comment|// hdfs warehouse
 specifier|private
+specifier|static
 specifier|final
 name|ThreadLocal
 argument_list|<
@@ -3112,6 +3113,31 @@ return|;
 block|}
 block|}
 decl_stmt|;
+specifier|public
+specifier|static
+name|RawStore
+name|getRawStore
+parameter_list|()
+block|{
+return|return
+name|threadLocalMS
+operator|.
+name|get
+argument_list|()
+return|;
+block|}
+specifier|public
+specifier|static
+name|void
+name|removeRawStore
+parameter_list|()
+block|{
+name|threadLocalMS
+operator|.
+name|remove
+argument_list|()
+expr_stmt|;
+block|}
 comment|// Thread local configuration is needed as many threads could make changes
 comment|// to the conf using the connection hook
 specifier|private
@@ -3636,6 +3662,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|init
@@ -29641,10 +29669,6 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-comment|//TODO: We are setting partitionCnt for which we were able to retrieve stats same as
-comment|// incoming number from request. This is not correct, but currently no users of this api
-comment|// rely on this. Only, current user StatsAnnotation don't care for it. StatsOptimizer
-comment|// will care for it, so before StatsOptimizer begin using it, we need to fix this.
 name|aggrStats
 operator|=
 operator|new
@@ -29675,14 +29699,6 @@ operator|.
 name|getColNames
 argument_list|()
 argument_list|)
-argument_list|,
-name|request
-operator|.
-name|getPartNames
-argument_list|()
-operator|.
-name|size
-argument_list|()
 argument_list|)
 expr_stmt|;
 return|return

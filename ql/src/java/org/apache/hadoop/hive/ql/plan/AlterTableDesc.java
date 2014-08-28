@@ -212,52 +212,153 @@ enum|enum
 name|AlterTableTypes
 block|{
 name|RENAME
+argument_list|(
+literal|"rename"
+argument_list|)
 block|,
 name|ADDCOLS
+argument_list|(
+literal|"add columns"
+argument_list|)
 block|,
 name|REPLACECOLS
+argument_list|(
+literal|"replace columns"
+argument_list|)
 block|,
 name|ADDPROPS
+argument_list|(
+literal|"add props"
+argument_list|)
 block|,
 name|DROPPROPS
+argument_list|(
+literal|"drop props"
+argument_list|)
 block|,
 name|ADDSERDE
+argument_list|(
+literal|"add serde"
+argument_list|)
 block|,
 name|ADDSERDEPROPS
+argument_list|(
+literal|"add serde props"
+argument_list|)
 block|,
 name|ADDFILEFORMAT
+argument_list|(
+literal|"add fileformat"
+argument_list|)
 block|,
 name|ADDCLUSTERSORTCOLUMN
+argument_list|(
+literal|"add cluster sort column"
+argument_list|)
 block|,
 name|RENAMECOLUMN
+argument_list|(
+literal|"rename column"
+argument_list|)
 block|,
 name|ADDPARTITION
+argument_list|(
+literal|"add partition"
+argument_list|)
 block|,
 name|TOUCH
+argument_list|(
+literal|"touch"
+argument_list|)
 block|,
 name|ARCHIVE
+argument_list|(
+literal|"archieve"
+argument_list|)
 block|,
 name|UNARCHIVE
+argument_list|(
+literal|"unarchieve"
+argument_list|)
 block|,
 name|ALTERPROTECTMODE
+argument_list|(
+literal|"alter protect mode"
+argument_list|)
 block|,
 name|ALTERPARTITIONPROTECTMODE
+argument_list|(
+literal|"alter partition protect mode"
+argument_list|)
 block|,
 name|ALTERLOCATION
+argument_list|(
+literal|"alter location"
+argument_list|)
 block|,
 name|DROPPARTITION
+argument_list|(
+literal|"drop partition"
+argument_list|)
 block|,
 name|RENAMEPARTITION
+argument_list|(
+literal|"rename partition"
+argument_list|)
 block|,
 name|ADDSKEWEDBY
+argument_list|(
+literal|"add skew column"
+argument_list|)
 block|,
 name|ALTERSKEWEDLOCATION
+argument_list|(
+literal|"alter skew location"
+argument_list|)
 block|,
 name|ALTERBUCKETNUM
+argument_list|(
+literal|"alter bucket number"
+argument_list|)
 block|,
 name|ALTERPARTITION
+argument_list|(
+literal|"alter partition"
+argument_list|)
 block|,
 name|COMPACT
+argument_list|(
+literal|"compact"
+argument_list|)
+block|;
+specifier|private
+specifier|final
+name|String
+name|name
+decl_stmt|;
+specifier|private
+name|AlterTableTypes
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+block|{
+name|this
+operator|.
+name|name
+operator|=
+name|name
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getName
+parameter_list|()
+block|{
+return|return
+name|name
+return|;
+block|}
 block|}
 specifier|public
 specifier|static
@@ -1031,32 +1132,11 @@ name|String
 name|getAlterTableTypeString
 parameter_list|()
 block|{
-switch|switch
-condition|(
+return|return
 name|op
-condition|)
-block|{
-case|case
-name|RENAME
-case|:
-return|return
-literal|"rename"
-return|;
-case|case
-name|ADDCOLS
-case|:
-return|return
-literal|"add columns"
-return|;
-case|case
-name|REPLACECOLS
-case|:
-return|return
-literal|"replace columns"
-return|;
-block|}
-return|return
-literal|"unknown"
+operator|.
+name|getName
+argument_list|()
 return|;
 block|}
 comment|/**    * @return the old name of the table    */

@@ -109,6 +109,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|File
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Map
@@ -129,7 +139,6 @@ name|getProtocolVersion
 parameter_list|()
 function_decl|;
 comment|/**    * Set the session manager for the session    * @param sessionManager    */
-specifier|public
 name|void
 name|setSessionManager
 parameter_list|(
@@ -138,13 +147,11 @@ name|sessionManager
 parameter_list|)
 function_decl|;
 comment|/**    * Get the session manager for the session    */
-specifier|public
 name|SessionManager
 name|getSessionManager
 parameter_list|()
 function_decl|;
 comment|/**    * Set operation manager for the session    * @param operationManager    */
-specifier|public
 name|void
 name|setOperationManager
 parameter_list|(
@@ -153,7 +160,6 @@ name|operationManager
 parameter_list|)
 function_decl|;
 comment|/**    * Initialize the session    * @param sessionConfMap    */
-specifier|public
 name|void
 name|initialize
 parameter_list|(
@@ -168,37 +174,48 @@ parameter_list|)
 throws|throws
 name|Exception
 function_decl|;
-specifier|public
+comment|/**    * Check whether operation logging is enabled and session dir is created successfully    */
+name|boolean
+name|isOperationLogEnabled
+parameter_list|()
+function_decl|;
+comment|/**    * Get the session dir, which is the parent dir of operation logs    * @return a file representing the parent directory of operation logs    */
+name|File
+name|getOperationLogSessionDir
+parameter_list|()
+function_decl|;
+comment|/**    * Set the session dir, which is the parent dir of operation logs    * @param operationLogRootDir the parent dir of the session dir    */
+name|void
+name|setOperationLogSessionDir
+parameter_list|(
+name|File
+name|operationLogRootDir
+parameter_list|)
+function_decl|;
 name|SessionHandle
 name|getSessionHandle
 parameter_list|()
 function_decl|;
-specifier|public
 name|String
 name|getUsername
 parameter_list|()
 function_decl|;
-specifier|public
 name|String
 name|getPassword
 parameter_list|()
 function_decl|;
-specifier|public
 name|HiveConf
 name|getHiveConf
 parameter_list|()
 function_decl|;
-specifier|public
 name|SessionState
 name|getSessionState
 parameter_list|()
 function_decl|;
-specifier|public
 name|String
 name|getUserName
 parameter_list|()
 function_decl|;
-specifier|public
 name|void
 name|setUserName
 parameter_list|(
@@ -206,12 +223,10 @@ name|String
 name|userName
 parameter_list|)
 function_decl|;
-specifier|public
 name|String
 name|getIpAddress
 parameter_list|()
 function_decl|;
-specifier|public
 name|void
 name|setIpAddress
 parameter_list|(

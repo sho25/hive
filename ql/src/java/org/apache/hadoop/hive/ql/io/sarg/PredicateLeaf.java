@@ -78,6 +78,8 @@ comment|// string, char, varchar
 name|DATE
 block|,
 name|DECIMAL
+block|,
+name|TIMESTAMP
 block|}
 comment|/**    * Get the operator for the leaf.    */
 specifier|public

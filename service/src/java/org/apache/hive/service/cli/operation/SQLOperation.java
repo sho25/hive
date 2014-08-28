@@ -637,6 +637,22 @@ name|HiveSession
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|server
+operator|.
+name|ThreadWithGarbageCleanup
+import|;
+end_import
+
 begin_comment
 comment|/**  * SQLOperation.  *  */
 end_comment
@@ -970,7 +986,7 @@ block|}
 block|}
 specifier|private
 name|void
-name|runInternal
+name|runQuery
 parameter_list|(
 name|HiveConf
 name|sqlOperationConf
@@ -1098,7 +1114,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|run
+name|runInternal
 parameter_list|()
 throws|throws
 name|HiveSQLException
@@ -1129,7 +1145,7 @@ name|shouldRunAsync
 argument_list|()
 condition|)
 block|{
-name|runInternal
+name|runQuery
 argument_list|(
 name|opConfig
 argument_list|)
@@ -1137,6 +1153,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// We'll pass ThreadLocals in the background thread from the foreground (handler) thread
 specifier|final
 name|SessionState
 name|parentSessionState
@@ -1146,17 +1163,17 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
-comment|// current Hive object needs to be set in aysnc thread in case of remote metastore.
-comment|// The metastore client in Hive is associated with right user
+comment|// ThreadLocal Hive object needs to be set in background thread.
+comment|// The metastore client in Hive is associated with right user.
 specifier|final
 name|Hive
-name|sessionHive
+name|parentHive
 init|=
-name|getCurrentHive
+name|getSessionHive
 argument_list|()
 decl_stmt|;
-comment|// current UGI will get used by metastore when metsatore is in embedded mode
-comment|// so this needs to get passed to the new async thread
+comment|// Current UGI will get used by metastore when metsatore is in embedded mode
+comment|// So this needs to get passed to the new background thread
 specifier|final
 name|UserGroupInformation
 name|currentUGI
@@ -1204,13 +1221,11 @@ parameter_list|()
 throws|throws
 name|HiveSQLException
 block|{
-comment|// Storing the current Hive object necessary when doAs is enabled
-comment|// User information is part of the metastore client member in Hive
 name|Hive
 operator|.
 name|set
 argument_list|(
-name|sessionHive
+name|parentHive
 argument_list|)
 expr_stmt|;
 name|SessionState
@@ -1220,9 +1235,13 @@ argument_list|(
 name|parentSessionState
 argument_list|)
 expr_stmt|;
+comment|// Set current OperationLog in this async thread for keeping on saving query log.
+name|registerCurrentOperationLog
+argument_list|()
+expr_stmt|;
 try|try
 block|{
-name|runInternal
+name|runQuery
 argument_list|(
 name|opConfig
 argument_list|)
@@ -1247,6 +1266,12 @@ literal|"Error running hive query: "
 argument_list|,
 name|e
 argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|unregisterOperationLog
+argument_list|()
 expr_stmt|;
 block|}
 return|return
@@ -1299,6 +1324,37 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+comment|/**              * We'll cache the ThreadLocal RawStore object for this background thread for an orderly cleanup              * when this thread is garbage collected later.              * @see org.apache.hive.service.server.ThreadWithGarbageCleanup#finalize()              */
+if|if
+condition|(
+name|ThreadWithGarbageCleanup
+operator|.
+name|currentThread
+argument_list|()
+operator|instanceof
+name|ThreadWithGarbageCleanup
+condition|)
+block|{
+name|ThreadWithGarbageCleanup
+name|currentThread
+init|=
+operator|(
+name|ThreadWithGarbageCleanup
+operator|)
+name|ThreadWithGarbageCleanup
+operator|.
+name|currentThread
+argument_list|()
+decl_stmt|;
+name|currentThread
+operator|.
+name|cacheThreadLocalRawStore
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -1356,6 +1412,7 @@ throw|;
 block|}
 block|}
 block|}
+comment|/**    * Returns the current UGI on the stack    * @param opConfig    * @return UserGroupInformation    * @throws HiveSQLException    */
 specifier|private
 name|UserGroupInformation
 name|getCurrentUGI
@@ -1397,9 +1454,10 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**    * Returns the ThreadLocal Hive for the current thread    * @return Hive    * @throws HiveSQLException    */
 specifier|private
 name|Hive
-name|getCurrentHive
+name|getSessionHive
 parameter_list|()
 throws|throws
 name|HiveSQLException
@@ -1423,11 +1481,56 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-literal|"Failed to get current Hive object"
+literal|"Failed to get ThreadLocal Hive object"
 argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
+block|}
+specifier|private
+name|void
+name|registerCurrentOperationLog
+parameter_list|()
+block|{
+if|if
+condition|(
+name|isOperationLogEnabled
+condition|)
+block|{
+if|if
+condition|(
+name|operationLog
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to get current OperationLog object of Operation: "
+operator|+
+name|getHandle
+argument_list|()
+operator|.
+name|getHandleIdentifier
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|isOperationLogEnabled
+operator|=
+literal|false
+expr_stmt|;
+return|return;
+block|}
+name|OperationLog
+operator|.
+name|setCurrentOperationLog
+argument_list|(
+name|operationLog
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 specifier|private
@@ -1558,6 +1661,9 @@ name|OperationState
 operator|.
 name|CLOSED
 argument_list|)
+expr_stmt|;
+name|cleanupOperationLog
+argument_list|()
 expr_stmt|;
 block|}
 annotation|@

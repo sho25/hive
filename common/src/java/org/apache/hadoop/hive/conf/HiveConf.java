@@ -5663,6 +5663,37 @@ operator|+
 literal|"by record readers"
 argument_list|)
 block|,
+comment|// operation log configuration
+name|HIVE_SERVER2_LOGGING_OPERATION_ENABLED
+argument_list|(
+literal|"hive.server2.logging.operation.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When true, HS2 will save operation logs"
+argument_list|)
+block|,
+name|HIVE_SERVER2_LOGGING_OPERATION_LOG_LOCATION
+argument_list|(
+literal|"hive.server2.logging.operation.log.location"
+argument_list|,
+literal|"${system:java.io.tmpdir}"
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
+literal|"${system:user.name}"
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
+literal|"operation_logs"
+argument_list|,
+literal|"Top level directory where operation logs are stored if logging functionality is enabled"
+argument_list|)
+block|,
 comment|// logging configuration
 name|HIVE_LOG4J_FILE
 argument_list|(
@@ -5912,6 +5943,17 @@ argument_list|,
 literal|"Maximum idle time in milliseconds for a connection on the server when in HTTP mode."
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_HTTP_WORKER_KEEPALIVE_TIME
+argument_list|(
+literal|"hive.server2.thrift.http.worker.keepalive.time"
+argument_list|,
+literal|60
+argument_list|,
+literal|"Keepalive time (in seconds) for an idle http worker thread. When number of workers> min workers, "
+operator|+
+literal|"excess threads are killed after this time interval."
+argument_list|)
+block|,
 comment|// binary transport settings
 name|HIVE_SERVER2_THRIFT_PORT
 argument_list|(
@@ -5983,6 +6025,17 @@ argument_list|,
 literal|500
 argument_list|,
 literal|"Maximum number of Thrift worker threads"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_WORKER_KEEPALIVE_TIME
+argument_list|(
+literal|"hive.server2.thrift.worker.keepalive.time"
+argument_list|,
+literal|60
+argument_list|,
+literal|"Keepalive time (in seconds) for an idle worker thread. When number of workers> min workers, "
+operator|+
+literal|"excess threads are killed after this time interval."
 argument_list|)
 block|,
 comment|// Configuration for async thread pool in SessionManager

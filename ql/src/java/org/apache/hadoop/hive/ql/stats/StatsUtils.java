@@ -2030,14 +2030,11 @@ operator|+
 literal|" partitions"
 argument_list|)
 expr_stmt|;
-name|stats
-operator|.
-name|updateColumnStatsState
-argument_list|(
+name|colState
+operator|=
 name|State
 operator|.
 name|PARTIAL
-argument_list|)
 expr_stmt|;
 block|}
 name|stats

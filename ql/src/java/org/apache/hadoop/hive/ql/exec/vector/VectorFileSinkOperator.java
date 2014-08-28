@@ -835,12 +835,25 @@ operator|.
 name|getOutWriters
 argument_list|()
 expr_stmt|;
+comment|// check if all record writers implement statistics. if atleast one RW
+comment|// doesn't implement stats interface we will fallback to conventional way
+comment|// of gathering stats
+name|isCollectRWStats
+operator|=
+name|areAllTrue
+argument_list|(
+name|statsFromRecordWriter
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|conf
 operator|.
 name|isGatherStats
 argument_list|()
+operator|&&
+operator|!
+name|isCollectRWStats
 condition|)
 block|{
 if|if

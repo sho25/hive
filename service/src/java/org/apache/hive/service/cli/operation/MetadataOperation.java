@@ -176,6 +176,9 @@ operator|.
 name|CLOSED
 argument_list|)
 expr_stmt|;
+name|cleanupOperationLog
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * Convert wildchars and escape sequence from JDBC format to datanucleous/regex    */
 specifier|protected

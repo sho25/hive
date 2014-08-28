@@ -600,12 +600,11 @@ name|err
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.operation.Operation#run()    */
 annotation|@
 name|Override
 specifier|public
 name|void
-name|run
+name|runInternal
 parameter_list|()
 throws|throws
 name|HiveSQLException
@@ -810,6 +809,9 @@ name|tearDownSessionIO
 argument_list|()
 expr_stmt|;
 name|cleanTmpFile
+argument_list|()
+expr_stmt|;
+name|cleanupOperationLog
 argument_list|()
 expr_stmt|;
 block|}
