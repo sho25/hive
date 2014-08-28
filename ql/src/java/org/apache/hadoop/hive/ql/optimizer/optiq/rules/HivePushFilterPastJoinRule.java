@@ -727,7 +727,7 @@ name|rightFilters
 argument_list|,
 name|joinTypeHolder
 argument_list|,
-literal|false
+name|smart
 argument_list|)
 condition|)
 block|{

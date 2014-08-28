@@ -3585,7 +3585,7 @@ name|eigenbase
 operator|.
 name|rel
 operator|.
-name|InvalidRelException
+name|FilterRelBase
 import|;
 end_import
 
@@ -3597,7 +3597,7 @@ name|eigenbase
 operator|.
 name|rel
 operator|.
-name|JoinInfo
+name|InvalidRelException
 import|;
 end_import
 
@@ -3753,7 +3753,77 @@ name|rel
 operator|.
 name|rules
 operator|.
+name|MergeFilterRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|rel
+operator|.
+name|rules
+operator|.
+name|PushFilterPastProjectRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|rel
+operator|.
+name|rules
+operator|.
+name|PushFilterPastSetOpRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|rel
+operator|.
+name|rules
+operator|.
+name|RemoveTrivialProjectRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|rel
+operator|.
+name|rules
+operator|.
 name|SemiJoinRel
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|rel
+operator|.
+name|rules
+operator|.
+name|TransitivePredicatesOnJoinRule
 import|;
 end_import
 
@@ -70850,7 +70920,45 @@ name|hepPlan
 argument_list|(
 name|basePlan
 argument_list|,
+literal|true
+argument_list|,
 name|mdProvider
+argument_list|,
+operator|new
+name|PushFilterPastProjectRule
+argument_list|(
+name|FilterRelBase
+operator|.
+name|class
+argument_list|,
+name|HiveFilterRel
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|,
+name|HiveProjectRel
+operator|.
+name|class
+argument_list|,
+name|HiveProjectRel
+operator|.
+name|DEFAULT_PROJECT_FACTORY
+argument_list|)
+argument_list|,
+operator|new
+name|PushFilterPastSetOpRule
+argument_list|(
+name|HiveFilterRel
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|)
+argument_list|,
+operator|new
+name|MergeFilterRule
+argument_list|(
+name|HiveFilterRel
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|)
 argument_list|,
 name|HivePushFilterPastJoinRule
 operator|.
@@ -70859,6 +70967,33 @@ argument_list|,
 name|HivePushFilterPastJoinRule
 operator|.
 name|FILTER_ON_JOIN
+argument_list|)
+expr_stmt|;
+name|basePlan
+operator|=
+name|hepPlan
+argument_list|(
+name|basePlan
+argument_list|,
+literal|false
+argument_list|,
+name|mdProvider
+argument_list|,
+operator|new
+name|TransitivePredicatesOnJoinRule
+argument_list|(
+name|JoinRelBase
+operator|.
+name|class
+argument_list|,
+name|HiveFilterRel
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|)
+argument_list|,
+name|RemoveTrivialProjectRule
+operator|.
+name|INSTANCE
 argument_list|,
 operator|new
 name|HivePartitionPrunerRule
@@ -70900,6 +71035,9 @@ parameter_list|(
 name|RelNode
 name|basePlan
 parameter_list|,
+name|boolean
+name|followPlanChanges
+parameter_list|,
 name|RelMetadataProvider
 name|mdProvider
 parameter_list|,
@@ -70908,6 +71046,11 @@ modifier|...
 name|rules
 parameter_list|)
 block|{
+name|RelNode
+name|optimizedRelNode
+init|=
+name|basePlan
+decl_stmt|;
 name|HepProgramBuilder
 name|programBuilder
 init|=
@@ -70915,19 +71058,50 @@ operator|new
 name|HepProgramBuilder
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|followPlanChanges
+condition|)
+block|{
+name|programBuilder
+operator|.
+name|addMatchOrder
+argument_list|(
+name|HepMatchOrder
+operator|.
+name|TOP_DOWN
+argument_list|)
+expr_stmt|;
+name|programBuilder
+operator|=
+name|programBuilder
+operator|.
+name|addRuleCollection
+argument_list|(
+name|ImmutableList
+operator|.
+name|copyOf
+argument_list|(
+name|rules
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// TODO: Should this be also TOP_DOWN?
 for|for
 control|(
 name|RelOptRule
-name|rule
+name|r
 range|:
 name|rules
 control|)
-block|{
 name|programBuilder
 operator|.
 name|addRuleInstance
 argument_list|(
-name|rule
+name|r
 argument_list|)
 expr_stmt|;
 block|}
@@ -71001,11 +71175,15 @@ argument_list|(
 name|basePlan
 argument_list|)
 expr_stmt|;
-return|return
+name|optimizedRelNode
+operator|=
 name|planner
 operator|.
 name|findBestExp
 argument_list|()
+expr_stmt|;
+return|return
+name|optimizedRelNode
 return|;
 block|}
 annotation|@
@@ -72454,7 +72632,7 @@ return|return
 name|joinRel
 return|;
 block|}
-comment|/**      * Generate Join Logical Plan Relnode by walking through the join AST.      *      * @param qb      * @param aliasToRel      *          Alias(Table/Relation alias) to RelNode; only read and not      *          written in to by this method      * @return      * @throws SemanticException      */
+comment|/**      * Generate Join Logical Plan Relnode by walking through the join AST.      *       * @param qb      * @param aliasToRel      *          Alias(Table/Relation alias) to RelNode; only read and not      *          written in to by this method      * @return      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genJoinLogicalPlan
@@ -73613,7 +73791,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|/*        * Handle Subquery predicates.        *        * Notes (8/22/14 hb):        * Why is this a copy of the code from {@link #genFilterPlan}        * - for now we will support the same behavior as non CBO route.        * - but plan to allow nested SubQueries(Restriction.9.m) and        *   multiple SubQuery expressions(Restriction.8.m). This        *   requires use to utilize Optiq's Decorrelation mechanics,        *   and for Optiq to fix/flush out Null semantics(OPTIQ-373)        * - besides only the driving code has been copied. Most of        *   the code which is SubQueryUtils and QBSubQuery is reused.        *        */
+comment|/*        * Handle Subquery predicates.        *         * Notes (8/22/14 hb): Why is this a copy of the code from {@link        * #genFilterPlan} - for now we will support the same behavior as non CBO        * route. - but plan to allow nested SubQueries(Restriction.9.m) and        * multiple SubQuery expressions(Restriction.8.m). This requires use to        * utilize Optiq's Decorrelation mechanics, and for Optiq to fix/flush out        * Null semantics(OPTIQ-373) - besides only the driving code has been        * copied. Most of the code which is SubQueryUtils and QBSubQuery is        * reused.        */
 name|int
 name|numSrcColumns
 init|=
@@ -75797,7 +75975,7 @@ return|return
 name|aInfo
 return|;
 block|}
-comment|/**      * Generate GB plan.      *      * @param qb      * @param srcRel      * @return TODO: 1. Grouping Sets (roll up..)      * @throws SemanticException      */
+comment|/**      * Generate GB plan.      *       * @param qb      * @param srcRel      * @return TODO: 1. Grouping Sets (roll up..)      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genGBLogicalPlan
@@ -77975,7 +78153,7 @@ operator|+
 name|wndProjPos
 argument_list|)
 decl_stmt|;
-comment|//TODO: Throw exception if  wExpSpec is not of type WindowFunctionSpec
+comment|// TODO: Throw exception if wExpSpec is not of type WindowFunctionSpec
 if|if
 condition|(
 name|wExpSpec
@@ -78371,7 +78549,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|//TODO: Convert to Semantic Exception
+comment|// TODO: Convert to Semantic Exception
 throw|throw
 operator|new
 name|RuntimeException
@@ -78447,7 +78625,7 @@ return|return
 name|wi
 return|;
 block|}
-comment|/**      * NOTE: there can only be one select caluse since we don't handle multi      * destination insert.      *      * @throws SemanticException      */
+comment|/**      * NOTE: there can only be one select caluse since we don't handle multi      * destination insert.      *       * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genSelectLogicalPlan
@@ -78842,7 +79020,8 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-comment|//TODO: is the check ((child.getChildCount() == 1) || hasAsClause) needed?
+comment|// TODO: is the check ((child.getChildCount() == 1) || hasAsClause)
+comment|// needed?
 name|boolean
 name|isWindowSpec
 init|=

@@ -113,28 +113,6 @@ name|optiq
 operator|.
 name|reloperators
 operator|.
-name|HiveJoinRel
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|optiq
-operator|.
-name|reloperators
-operator|.
 name|HiveSortRel
 import|;
 end_import
@@ -925,18 +903,6 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/*      * 6. Project      */
-if|if
-condition|(
-operator|!
-name|select
-operator|.
-name|getChildExps
-argument_list|()
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
 name|ASTBuilder
 name|b
 init|=
@@ -1017,17 +983,6 @@ operator|.
 name|node
 argument_list|()
 expr_stmt|;
-block|}
-else|else
-block|{
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-literal|"Expected non-zero children for select."
-argument_list|)
-throw|;
-block|}
 comment|/*      * 7. Order Use in Order By from the block above. RelNode has no pointer to      * parent hence we need to go top down; but OB at each block really belong      * to its src/from. Hence the need to pass in sortRel for each block from      * its parent.      */
 if|if
 condition|(
@@ -1617,6 +1572,20 @@ condition|(
 name|child
 operator|instanceof
 name|AggregateRelBase
+operator|&&
+operator|!
+operator|(
+operator|(
+name|AggregateRelBase
+operator|)
+name|child
+operator|)
+operator|.
+name|getGroupSet
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 name|ASTConverter
@@ -3170,7 +3139,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Assumption:<br>      * 1. ProjectRel will always be child of SortRel.<br>      * 2. In Optiq every projection in ProjectRelBase is uniquely named      * (unambigous) without using table qualifier (table name).<br>      *      * @param order      *          Hive Sort Rel Node      * @return Schema      */
+comment|/**      * Assumption:<br>      * 1. ProjectRel will always be child of SortRel.<br>      * 2. In Optiq every projection in ProjectRelBase is uniquely named      * (unambigous) without using table qualifier (table name).<br>      *       * @param order      *          Hive Sort Rel Node      * @return Schema      */
 specifier|public
 name|Schema
 parameter_list|(
