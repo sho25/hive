@@ -1092,7 +1092,14 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|": "
+literal|" ("
+operator|+
+name|table
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|"): "
 operator|+
 name|stats
 operator|.
@@ -5653,6 +5660,13 @@ argument_list|(
 name|key
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|cs
+operator|!=
+literal|null
+condition|)
+block|{
 name|cs
 operator|.
 name|setCountDistint
@@ -5660,6 +5674,7 @@ argument_list|(
 name|minNDV
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|joinColIdx
