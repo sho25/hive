@@ -6486,6 +6486,13 @@ argument_list|(
 name|obj
 argument_list|)
 decl_stmt|;
+name|indexStatistics
+operator|.
+name|updateTimestamp
+argument_list|(
+name|val
+argument_list|)
+expr_stmt|;
 name|seconds
 operator|.
 name|write

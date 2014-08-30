@@ -959,7 +959,7 @@ name|buf
 operator|.
 name|append
 argument_list|(
-literal|"    Column "
+literal|"    Row group index column "
 argument_list|)
 operator|.
 name|append
@@ -969,7 +969,7 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|": row index"
+literal|":"
 argument_list|)
 expr_stmt|;
 name|RowIndex
@@ -1032,7 +1032,7 @@ name|buf
 operator|.
 name|append
 argument_list|(
-literal|"      RG "
+literal|"\n      Entry "
 argument_list|)
 operator|.
 name|append
@@ -1042,7 +1042,7 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|": "
+literal|":"
 argument_list|)
 expr_stmt|;
 name|RowIndexEntry
@@ -1131,30 +1131,49 @@ name|buf
 operator|.
 name|append
 argument_list|(
-literal|"["
+literal|" count: "
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|cs
+operator|.
+name|getNumberOfValues
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|buf
+operator|.
+name|append
+argument_list|(
+literal|" min: "
 argument_list|)
 operator|.
 name|append
 argument_list|(
 name|min
 argument_list|)
+expr_stmt|;
+name|buf
 operator|.
 name|append
 argument_list|(
-literal|", "
+literal|" max: "
 argument_list|)
 operator|.
 name|append
 argument_list|(
 name|max
 argument_list|)
+expr_stmt|;
+block|}
+name|buf
 operator|.
 name|append
 argument_list|(
-literal|") at "
+literal|" positions: "
 argument_list|)
 expr_stmt|;
-block|}
 for|for
 control|(
 name|int
@@ -1201,13 +1220,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|buf
-operator|.
-name|append
-argument_list|(
-literal|"\n"
-argument_list|)
-expr_stmt|;
 block|}
 name|System
 operator|.

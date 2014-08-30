@@ -261,6 +261,43 @@ argument_list|(
 name|delegationToken
 argument_list|)
 expr_stmt|;
+comment|// create a new metastore connection for this particular user session
+name|Hive
+operator|.
+name|set
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|sessionHive
+operator|=
+name|Hive
+operator|.
+name|get
+argument_list|(
+name|getHiveConf
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveSQLException
+argument_list|(
+literal|"Failed to setup metastore connection"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 comment|// setup appropriate UGI for the session
 specifier|public
@@ -506,43 +543,6 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"Couldn't setup delegation token in the ugi"
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
-comment|// create a new metastore connection using the delegation token
-name|Hive
-operator|.
-name|set
-argument_list|(
-literal|null
-argument_list|)
-expr_stmt|;
-try|try
-block|{
-name|sessionHive
-operator|=
-name|Hive
-operator|.
-name|get
-argument_list|(
-name|getHiveConf
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|HiveException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveSQLException
-argument_list|(
-literal|"Failed to setup metastore connection"
 argument_list|,
 name|e
 argument_list|)

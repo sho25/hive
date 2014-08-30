@@ -554,7 +554,7 @@ name|ZLIB
 argument_list|,
 literal|10000
 argument_list|,
-literal|10000
+literal|1000
 argument_list|)
 decl_stmt|;
 name|Random
@@ -848,6 +848,8 @@ name|testFilePath
 operator|.
 name|toString
 argument_list|()
+block|,
+literal|"--rowindex=1,2,3"
 block|}
 argument_list|)
 expr_stmt|;
@@ -979,7 +981,7 @@ name|ZLIB
 argument_list|,
 literal|10000
 argument_list|,
-literal|10000
+literal|1000
 argument_list|)
 decl_stmt|;
 name|Random
@@ -1305,6 +1307,8 @@ name|testFilePath
 operator|.
 name|toString
 argument_list|()
+block|,
+literal|"--rowindex=1,2,3"
 block|}
 argument_list|)
 expr_stmt|;

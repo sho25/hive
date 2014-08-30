@@ -332,6 +332,13 @@ name|alterTable
 argument_list|(
 name|t
 operator|.
+name|getDbName
+argument_list|()
+operator|+
+literal|"."
+operator|+
+name|t
+operator|.
 name|getTableName
 argument_list|()
 argument_list|,
@@ -414,6 +421,13 @@ name|db
 operator|.
 name|alterTable
 argument_list|(
+name|t
+operator|.
+name|getDbName
+argument_list|()
+operator|+
+literal|"."
+operator|+
 name|t
 operator|.
 name|getTableName

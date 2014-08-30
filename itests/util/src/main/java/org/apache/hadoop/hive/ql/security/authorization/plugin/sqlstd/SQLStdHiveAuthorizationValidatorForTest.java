@@ -242,7 +242,7 @@ parameter_list|,
 name|HiveAuthenticationProvider
 name|authenticator
 parameter_list|,
-name|SQLStdHiveAccessController
+name|SQLStdHiveAccessControllerWrapper
 name|privController
 parameter_list|)
 block|{

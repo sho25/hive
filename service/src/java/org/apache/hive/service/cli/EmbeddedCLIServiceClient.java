@@ -584,7 +584,6 @@ name|opHandle
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.CLIServiceClient#fetchResults(org.apache.hive.service.cli.OperationHandle, org.apache.hive.service.cli.FetchOrientation, long)    */
 annotation|@
 name|Override
 specifier|public
@@ -599,6 +598,9 @@ name|orientation
 parameter_list|,
 name|long
 name|maxRows
+parameter_list|,
+name|FetchType
+name|fetchType
 parameter_list|)
 throws|throws
 name|HiveSQLException
@@ -613,6 +615,8 @@ argument_list|,
 name|orientation
 argument_list|,
 name|maxRows
+argument_list|,
+name|fetchType
 argument_list|)
 return|;
 block|}

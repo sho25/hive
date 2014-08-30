@@ -83,16 +83,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|BitSet
 import|;
 end_import
@@ -201,20 +191,6 @@ name|hadoop
 operator|.
 name|fs
 operator|.
-name|FsShell
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
 name|LocalFileSystem
 import|;
 end_import
@@ -260,22 +236,6 @@ operator|.
 name|permission
 operator|.
 name|FsAction
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|permission
-operator|.
-name|FsPermission
 import|;
 end_import
 
@@ -2785,6 +2745,190 @@ name|getUri
 argument_list|()
 argument_list|)
 return|;
+block|}
+comment|/**    * Checks if delete can be performed on given path by given user.    * If file does not exist it just returns without throwing an Exception    * @param path    * @param conf    * @param user    * @throws AccessControlException    * @throws InterruptedException    * @throws Exception    */
+specifier|public
+specifier|static
+name|void
+name|checkDeletePermission
+parameter_list|(
+name|Path
+name|path
+parameter_list|,
+name|Configuration
+name|conf
+parameter_list|,
+name|String
+name|user
+parameter_list|)
+throws|throws
+name|AccessControlException
+throws|,
+name|InterruptedException
+throws|,
+name|Exception
+block|{
+comment|// This requires ability to delete the given path.
+comment|// The following 2 conditions should be satisfied for this-
+comment|// 1. Write permissions on parent dir
+comment|// 2. If sticky bit is set on parent dir then one of following should be
+comment|// true
+comment|//   a. User is owner of the current dir/file
+comment|//   b. User is owner of the parent dir
+comment|//   Super users are also allowed to drop the file, but there is no good way of checking
+comment|//   if a user is a super user. Also super users running hive queries is not a common
+comment|//   use case. super users can also do a chown to be able to drop the file
+specifier|final
+name|FileSystem
+name|fs
+init|=
+name|path
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|path
+argument_list|)
+condition|)
+block|{
+comment|// no file/dir to be deleted
+return|return;
+block|}
+name|Path
+name|parPath
+init|=
+name|path
+operator|.
+name|getParent
+argument_list|()
+decl_stmt|;
+comment|// check user has write permissions on the parent dir
+name|FileStatus
+name|stat
+init|=
+name|fs
+operator|.
+name|getFileStatus
+argument_list|(
+name|path
+argument_list|)
+decl_stmt|;
+name|FileUtils
+operator|.
+name|checkFileAccessWithImpersonation
+argument_list|(
+name|fs
+argument_list|,
+name|stat
+argument_list|,
+name|FsAction
+operator|.
+name|WRITE
+argument_list|,
+name|user
+argument_list|)
+expr_stmt|;
+comment|// check if sticky bit is set on the parent dir
+name|FileStatus
+name|parStatus
+init|=
+name|fs
+operator|.
+name|getFileStatus
+argument_list|(
+name|parPath
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|parStatus
+operator|.
+name|getPermission
+argument_list|()
+operator|.
+name|getStickyBit
+argument_list|()
+condition|)
+block|{
+comment|// no sticky bit, so write permission on parent dir is sufficient
+comment|// no further checks needed
+return|return;
+block|}
+comment|// check if user is owner of parent dir
+if|if
+condition|(
+name|parStatus
+operator|.
+name|getOwner
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|user
+argument_list|)
+condition|)
+block|{
+return|return;
+block|}
+comment|// check if user is owner of current dir/file
+name|FileStatus
+name|childStatus
+init|=
+name|fs
+operator|.
+name|getFileStatus
+argument_list|(
+name|path
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|childStatus
+operator|.
+name|getOwner
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|user
+argument_list|)
+condition|)
+block|{
+return|return;
+block|}
+name|String
+name|msg
+init|=
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"Permission Denied: User %s can't delete %s because sticky bit is"
+operator|+
+literal|" set on the parent dir and user does not own this file or its parent"
+argument_list|,
+name|user
+argument_list|,
+name|path
+argument_list|)
+decl_stmt|;
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
 block|}
 block|}
 end_class

@@ -609,7 +609,7 @@ throw|;
 case|case
 name|HiveParser
 operator|.
-name|TOK_TABLEBUCKETS
+name|TOK_ALTERTABLE_BUCKETS
 case|:
 break|break;
 case|case
