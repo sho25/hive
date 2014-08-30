@@ -15831,8 +15831,32 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+operator|||
+operator|(
+name|joinKeys
+index|[
+name|i
+index|]
+operator|instanceof
+name|ExprNodeColumnDesc
+operator|&&
+operator|(
+operator|(
+name|ExprNodeColumnDesc
+operator|)
+name|joinKeys
+index|[
+name|i
+index|]
+operator|)
+operator|.
+name|getIsPartitionColOrVirtualCol
+argument_list|()
+operator|)
 condition|)
 block|{
+comment|// no need to generate is not null predicate for partitioning or
+comment|// virtual column, since those columns can never be null.
 continue|continue;
 block|}
 name|List
