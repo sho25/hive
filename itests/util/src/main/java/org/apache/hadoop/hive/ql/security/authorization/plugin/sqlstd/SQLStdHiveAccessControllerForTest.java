@@ -152,7 +152,7 @@ specifier|public
 class|class
 name|SQLStdHiveAccessControllerForTest
 extends|extends
-name|SQLStdHiveAccessController
+name|SQLStdHiveAccessControllerWrapper
 block|{
 name|SQLStdHiveAccessControllerForTest
 parameter_list|(
