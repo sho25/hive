@@ -79,6 +79,12 @@ index|[]
 name|getParameterCompletors
 parameter_list|()
 function_decl|;
+comment|/**    * Returns exception thrown for last command    * @return    */
+specifier|public
+name|Throwable
+name|getLastException
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
