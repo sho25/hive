@@ -2696,7 +2696,7 @@ name|rWork
 operator|!=
 literal|null
 operator|&&
-name|rWork
+name|job
 operator|.
 name|getNumReduceTasks
 argument_list|()
@@ -3775,6 +3775,8 @@ operator|.
 name|writePartitionKeys
 argument_list|(
 name|partitionFile
+argument_list|,
+name|conf
 argument_list|,
 name|job
 argument_list|)

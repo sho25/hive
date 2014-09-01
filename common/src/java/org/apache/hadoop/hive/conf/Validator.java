@@ -703,11 +703,11 @@ decl_stmt|;
 if|if
 condition|(
 name|fvalue
-operator|<=
+argument_list|<
 literal|0
 operator|||
 name|fvalue
-operator|>=
+argument_list|>
 literal|1
 condition|)
 block|{

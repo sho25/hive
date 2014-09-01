@@ -313,6 +313,24 @@ name|conf
 operator|.
 name|Validator
 operator|.
+name|RatioValidator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|Validator
+operator|.
 name|StringSet
 import|;
 end_import
@@ -4432,7 +4450,7 @@ literal|"hive.optimize.sampling.orderby"
 argument_list|,
 literal|false
 argument_list|,
-literal|""
+literal|"Uses sampling on order-by clause for parallel execution."
 argument_list|)
 block|,
 name|HIVESAMPLINGNUMBERFORORDERBY
@@ -4441,7 +4459,7 @@ literal|"hive.optimize.sampling.orderby.number"
 argument_list|,
 literal|1000
 argument_list|,
-literal|""
+literal|"Total number of samples to be obtained."
 argument_list|)
 block|,
 name|HIVESAMPLINGPERCENTFORORDERBY
@@ -4450,7 +4468,11 @@ literal|"hive.optimize.sampling.orderby.percent"
 argument_list|,
 literal|0.1f
 argument_list|,
-literal|""
+operator|new
+name|RatioValidator
+argument_list|()
+argument_list|,
+literal|"Probability with which a row will be chosen."
 argument_list|)
 block|,
 comment|// whether to optimize union followed by select followed by filesink
