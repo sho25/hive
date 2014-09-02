@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Possible values of  SASL quality-of-protection value.  */
+comment|/**  * Possible values of SASL quality-of-protection value.  */
 end_comment
 
 begin_enum
@@ -79,7 +79,7 @@ name|String
 argument_list|,
 name|SaslQOP
 argument_list|>
-name|strToEnum
+name|STR_TO_ENUM
 init|=
 operator|new
 name|HashMap
@@ -95,28 +95,28 @@ block|{
 for|for
 control|(
 name|SaslQOP
-name|SaslQOP
+name|saslQop
 range|:
 name|values
 argument_list|()
 control|)
-name|strToEnum
+block|{
+name|STR_TO_ENUM
 operator|.
 name|put
 argument_list|(
-name|SaslQOP
+name|saslQop
 operator|.
 name|toString
 argument_list|()
 argument_list|,
-name|SaslQOP
+name|saslQop
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+block|}
 name|SaslQOP
 parameter_list|(
-specifier|final
 name|String
 name|saslQop
 parameter_list|)
@@ -164,7 +164,7 @@ block|}
 name|SaslQOP
 name|saslQOP
 init|=
-name|strToEnum
+name|STR_TO_ENUM
 operator|.
 name|get
 argument_list|(
@@ -188,7 +188,7 @@ name|str
 operator|+
 literal|" Allowed values are: "
 operator|+
-name|strToEnum
+name|STR_TO_ENUM
 operator|.
 name|keySet
 argument_list|()

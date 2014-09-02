@@ -29,13 +29,17 @@ name|AuthenticationException
 import|;
 end_import
 
+begin_comment
+comment|/**  * This class helps select a {@link PasswdAuthenticationProvider} for a given {@code AuthMethod}.  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|AuthenticationProviderFactory
 block|{
 specifier|public
-specifier|static
 enum|enum
 name|AuthMethods
 block|{
@@ -59,6 +63,8 @@ argument_list|(
 literal|"NONE"
 argument_list|)
 block|;
+specifier|private
+specifier|final
 name|String
 name|authMethod
 decl_stmt|;
@@ -151,13 +157,10 @@ block|{
 if|if
 condition|(
 name|authMethod
-operator|.
-name|equals
-argument_list|(
+operator|==
 name|AuthMethods
 operator|.
 name|LDAP
-argument_list|)
 condition|)
 block|{
 return|return
@@ -170,13 +173,10 @@ elseif|else
 if|if
 condition|(
 name|authMethod
-operator|.
-name|equals
-argument_list|(
+operator|==
 name|AuthMethods
 operator|.
 name|PAM
-argument_list|)
 condition|)
 block|{
 return|return
@@ -189,13 +189,10 @@ elseif|else
 if|if
 condition|(
 name|authMethod
-operator|.
-name|equals
-argument_list|(
+operator|==
 name|AuthMethods
 operator|.
 name|CUSTOM
-argument_list|)
 condition|)
 block|{
 return|return
@@ -208,13 +205,10 @@ elseif|else
 if|if
 condition|(
 name|authMethod
-operator|.
-name|equals
-argument_list|(
+operator|==
 name|AuthMethods
 operator|.
 name|NONE
-argument_list|)
 condition|)
 block|{
 return|return

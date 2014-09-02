@@ -6426,9 +6426,9 @@ literal|"org.apache.hive.service.auth.PasswdAuthenticationProvider. HiveServer2\
 operator|+
 literal|"will call its Authenticate(user, passed) method to authenticate requests.\n"
 operator|+
-literal|"The implementation may optionally extend Hadoop's\n"
+literal|"The implementation may optionally implement Hadoop's\n"
 operator|+
-literal|"org.apache.hadoop.conf.Configured class to grab Hive's Configuration object."
+literal|"org.apache.hadoop.conf.Configurable class to grab Hive's Configuration object."
 argument_list|)
 block|,
 name|HIVE_SERVER2_PAM_SERVICES

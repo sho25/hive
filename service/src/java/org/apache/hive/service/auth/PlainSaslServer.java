@@ -31,6 +31,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|security
+operator|.
+name|Provider
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayDeque
@@ -194,7 +204,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * PlainSaslServer.  * Sun JDK only provides PLAIN client and not server. This class implements the Plain SASL server  * conforming to RFC #4616 (http://www.ietf.org/rfc/rfc4616.txt)  */
+comment|/**  * Sun JDK only provides a PLAIN client and no server. This class implements the Plain SASL server  * conforming to RFC #4616 (http://www.ietf.org/rfc/rfc4616.txt).  */
 end_comment
 
 begin_class
@@ -204,22 +214,17 @@ name|PlainSaslServer
 implements|implements
 name|SaslServer
 block|{
-specifier|private
+specifier|public
+specifier|static
 specifier|final
-name|AuthMethods
-name|authMethod
+name|String
+name|PLAIN_METHOD
+init|=
+literal|"PLAIN"
 decl_stmt|;
 specifier|private
 name|String
 name|user
-decl_stmt|;
-specifier|private
-name|String
-name|passwd
-decl_stmt|;
-specifier|private
-name|String
-name|authzId
 decl_stmt|;
 specifier|private
 specifier|final
@@ -243,10 +248,6 @@ name|handler
 operator|=
 name|handler
 expr_stmt|;
-name|this
-operator|.
-name|authMethod
-operator|=
 name|AuthMethods
 operator|.
 name|getValidAuthMethod
@@ -255,15 +256,19 @@ name|authMethodStr
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getMechanismName
 parameter_list|()
 block|{
 return|return
-literal|"PLAIN"
+name|PLAIN_METHOD
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 index|[]
@@ -359,23 +364,19 @@ expr_stmt|;
 comment|// validate response
 if|if
 condition|(
-operator|(
 name|tokenList
 operator|.
 name|size
 argument_list|()
 operator|<
 literal|2
-operator|)
 operator|||
-operator|(
 name|tokenList
 operator|.
 name|size
 argument_list|()
 operator|>
 literal|3
-operator|)
 condition|)
 block|{
 throw|throw
@@ -386,13 +387,14 @@ literal|"Invalid message format"
 argument_list|)
 throw|;
 block|}
+name|String
 name|passwd
-operator|=
+init|=
 name|tokenList
 operator|.
 name|removeLast
 argument_list|()
-expr_stmt|;
+decl_stmt|;
 name|user
 operator|=
 name|tokenList
@@ -401,9 +403,11 @@ name|removeLast
 argument_list|()
 expr_stmt|;
 comment|// optional authzid
+name|String
+name|authzId
+decl_stmt|;
 if|if
 condition|(
-operator|!
 name|tokenList
 operator|.
 name|isEmpty
@@ -412,17 +416,17 @@ condition|)
 block|{
 name|authzId
 operator|=
-name|tokenList
-operator|.
-name|removeLast
-argument_list|()
+name|user
 expr_stmt|;
 block|}
 else|else
 block|{
 name|authzId
 operator|=
-name|user
+name|tokenList
+operator|.
+name|removeLast
+argument_list|()
 expr_stmt|;
 block|}
 if|if
@@ -441,7 +445,7 @@ throw|throw
 operator|new
 name|SaslException
 argument_list|(
-literal|"No user name provide"
+literal|"No user name provided"
 argument_list|)
 throw|;
 block|}
@@ -461,7 +465,7 @@ throw|throw
 operator|new
 name|SaslException
 argument_list|(
-literal|"No password name provide"
+literal|"No password name provided"
 argument_list|)
 throw|;
 block|}
@@ -517,9 +521,6 @@ name|Callback
 index|[]
 name|cbList
 init|=
-operator|new
-name|Callback
-index|[]
 block|{
 name|nameCallback
 block|,
@@ -605,6 +606,8 @@ return|return
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isComplete
@@ -616,6 +619,8 @@ operator|!=
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getAuthorizationID
@@ -625,6 +630,8 @@ return|return
 name|user
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 index|[]
@@ -647,6 +654,8 @@ name|UnsupportedOperationException
 argument_list|()
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|byte
 index|[]
@@ -669,6 +678,8 @@ name|UnsupportedOperationException
 argument_list|()
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|getNegotiatedProperty
@@ -681,6 +692,8 @@ return|return
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|dispose
@@ -693,6 +706,8 @@ name|SaslPlainServerFactory
 implements|implements
 name|SaslServerFactory
 block|{
+annotation|@
+name|Override
 specifier|public
 name|SaslServer
 name|createSaslServer
@@ -720,7 +735,7 @@ parameter_list|)
 block|{
 if|if
 condition|(
-literal|"PLAIN"
+name|PLAIN_METHOD
 operator|.
 name|equals
 argument_list|(
@@ -746,6 +761,7 @@ name|SaslException
 name|e
 parameter_list|)
 block|{
+comment|/* This is to fulfill the contract of the interface which states that an exception shall              be thrown when a SaslServer cannot be created due to an error but null should be              returned when a Server can't be created due to the parameters supplied. And the only              thing PlainSaslServer can fail on is a non-supported authentication mechanism.              That's why we return null instead of throwing the Exception */
 return|return
 literal|null
 return|;
@@ -755,6 +771,8 @@ return|return
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 index|[]
@@ -774,7 +792,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"PLAIN"
+name|PLAIN_METHOD
 block|}
 return|;
 block|}
@@ -784,10 +802,6 @@ specifier|static
 class|class
 name|SaslPlainProvider
 extends|extends
-name|java
-operator|.
-name|security
-operator|.
 name|Provider
 block|{
 specifier|public
