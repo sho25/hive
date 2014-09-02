@@ -143,6 +143,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -1211,22 +1223,6 @@ name|dag
 operator|.
 name|api
 operator|.
-name|VertexLocationHint
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|dag
-operator|.
-name|api
-operator|.
 name|VertexManagerPluginDescriptor
 import|;
 end_import
@@ -1598,10 +1594,6 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|paths
-operator|!=
-literal|null
-operator|&&
 operator|!
 name|paths
 operator|.
@@ -4522,7 +4514,7 @@ literal|","
 argument_list|)
 return|;
 block|}
-comment|/**    * Localizes files, archives and jars from a provided array of names.    * @param hdfsDirPathStr Destination directoty in HDFS.    * @param conf Configuration.    * @param inputOutputJars The file names to localize.    * @return List<LocalResource> local resources to add to execution    * @throws IOException when hdfs operation fails.    * @throws LoginException when getDefaultDestDir fails with the same exception    */
+comment|/**    * Localizes files, archives and jars from a provided array of names.    * @param hdfsDirPathStr Destination directory in HDFS.    * @param conf Configuration.    * @param inputOutputJars The file names to localize.    * @return List<LocalResource> local resources to add to execution    * @throws IOException when hdfs operation fails.    * @throws LoginException when getDefaultDestDir fails with the same exception    */
 specifier|public
 name|List
 argument_list|<
@@ -4912,7 +4904,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * @param pathStr - the string from which we try to determine the resource base name    * @return the name of the resource from a given path string.    */
+comment|/**    * @param path - the path from which we try to determine the resource base name    * @return the name of the resource from a given path string.    */
 specifier|public
 name|String
 name|getResourceBaseName
@@ -5108,25 +5100,21 @@ decl_stmt|;
 name|long
 name|sleepInterval
 init|=
-name|conf
-operator|.
-name|getLong
-argument_list|(
 name|HiveConf
 operator|.
-name|ConfVars
-operator|.
-name|HIVE_LOCALIZE_RESOURCE_WAIT_INTERVAL
-operator|.
-name|varname
+name|getTimeVar
+argument_list|(
+name|conf
 argument_list|,
 name|HiveConf
 operator|.
 name|ConfVars
 operator|.
 name|HIVE_LOCALIZE_RESOURCE_WAIT_INTERVAL
+argument_list|,
+name|TimeUnit
 operator|.
-name|defaultLongVal
+name|MILLISECONDS
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -5473,7 +5461,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Create a vertex from a given work object.    *    * @param conf JobConf to be used to this execution unit    * @param work The instance of BaseWork representing the actual work to be performed    * by this vertex.    * @param scratchDir HDFS scratch dir for this execution unit.    * @param list    * @param appJarLr Local resource for hive-exec.    * @param additionalLr    * @param fileSystem FS corresponding to scratchDir and LocalResources    * @param ctx This query's context    * @return Vertex    */
+comment|/**    * Create a vertex from a given work object.    *    * @param conf JobConf to be used to this execution unit    * @param work The instance of BaseWork representing the actual work to be performed    * by this vertex.    * @param scratchDir HDFS scratch dir for this execution unit.    * @param appJarLr Local resource for hive-exec.    * @param additionalLr    * @param fileSystem FS corresponding to scratchDir and LocalResources    * @param ctx This query's context    * @return Vertex    */
 specifier|public
 name|Vertex
 name|createVertex

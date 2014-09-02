@@ -193,6 +193,18 @@ name|util
 operator|.
 name|concurrent
 operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
 name|atomic
 operator|.
 name|AtomicBoolean
@@ -1947,6 +1959,11 @@ name|map
 init|=
 operator|new
 name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|Class
+argument_list|>
 argument_list|()
 decl_stmt|;
 name|map
@@ -6945,7 +6962,7 @@ return|;
 block|}
 specifier|private
 name|SerDeInfo
-name|converToSerDeInfo
+name|convertToSerDeInfo
 parameter_list|(
 name|MSerDeInfo
 name|ms
@@ -6994,7 +7011,7 @@ return|;
 block|}
 specifier|private
 name|MSerDeInfo
-name|converToMSerDeInfo
+name|convertToMSerDeInfo
 parameter_list|(
 name|SerDeInfo
 name|ms
@@ -7158,7 +7175,7 @@ operator|.
 name|getNumBuckets
 argument_list|()
 argument_list|,
-name|converToSerDeInfo
+name|convertToSerDeInfo
 argument_list|(
 name|msd
 operator|.
@@ -7730,7 +7747,7 @@ operator|.
 name|getNumBuckets
 argument_list|()
 argument_list|,
-name|converToMSerDeInfo
+name|convertToMSerDeInfo
 argument_list|(
 name|sd
 operator|.
@@ -14368,7 +14385,7 @@ return|return
 name|parser
 return|;
 block|}
-comment|/**    * Makes a JDO query filter string.    * Makes a JDO query filter string for tables or partitions.    * @param dbName Database name.    * @param table Table. If null, the query returned is over tables in a database.    *   If not null, the query returned is over partitions in a table.    * @param filter The filter from which JDOQL filter will be made.    * @param params Parameters for the filter. Some parameters may be added here.    * @return Resulting filter.    */
+comment|/**    * Makes a JDO query filter string.    * Makes a JDO query filter string for tables or partitions.    * @param dbName Database name.    * @param mtable Table. If null, the query returned is over tables in a database.    *   If not null, the query returned is over partitions in a table.    * @param filter The filter from which JDOQL filter will be made.    * @param params Parameters for the filter. Some parameters may be added here.    * @return Resulting filter.    */
 specifier|private
 name|String
 name|makeQueryFilterString
@@ -35963,7 +35980,7 @@ name|expiryTime
 init|=
 name|HiveConf
 operator|.
-name|getLongVar
+name|getTimeVar
 argument_list|(
 name|getConf
 argument_list|()
@@ -35971,9 +35988,11 @@ argument_list|,
 name|ConfVars
 operator|.
 name|METASTORE_EVENT_EXPIRY_DURATION
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
-operator|*
-literal|1000L
 decl_stmt|;
 name|Long
 name|curTime

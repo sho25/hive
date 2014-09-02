@@ -15804,7 +15804,7 @@ parameter_list|,
 name|PreparedStatement
 name|stmt
 parameter_list|,
-name|int
+name|long
 name|baseWindow
 parameter_list|,
 name|int
@@ -15937,7 +15937,7 @@ parameter_list|(
 name|String
 name|connectionString
 parameter_list|,
-name|int
+name|long
 name|waitWindow
 parameter_list|,
 name|int
@@ -16064,7 +16064,7 @@ parameter_list|,
 name|String
 name|stmt
 parameter_list|,
-name|int
+name|long
 name|waitWindow
 parameter_list|,
 name|int
@@ -16184,7 +16184,7 @@ specifier|static
 name|long
 name|getRandomWaitTime
 parameter_list|(
-name|int
+name|long
 name|baseWindow
 parameter_list|,
 name|int
@@ -18586,7 +18586,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Returns true if a plan is both configured for vectorized execution    * and vectorization is allowed. The plan may be configured for vectorization    * but vectorization dissalowed eg. for FetchOperator execution.    */
+comment|/**    * Returns true if a plan is both configured for vectorized execution    * and vectorization is allowed. The plan may be configured for vectorization    * but vectorization disallowed eg. for FetchOperator execution.    */
 specifier|public
 specifier|static
 name|boolean

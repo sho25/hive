@@ -89,6 +89,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|junit
 operator|.
 name|framework
@@ -991,7 +1003,7 @@ argument_list|)
 expr_stmt|;
 name|hcatConf
 operator|.
-name|setIntVar
+name|setTimeVar
 argument_list|(
 name|HiveConf
 operator|.
@@ -1000,6 +1012,10 @@ operator|.
 name|METASTORE_CLIENT_SOCKET_TIMEOUT
 argument_list|,
 literal|120
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
 argument_list|)
 expr_stmt|;
 name|hcatConf

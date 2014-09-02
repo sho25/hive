@@ -431,11 +431,15 @@ name|workerKeepAliveTime
 operator|=
 name|hiveConf
 operator|.
-name|getIntVar
+name|getTimeVar
 argument_list|(
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_THRIFT_WORKER_KEEPALIVE_TIME
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
 argument_list|)
 expr_stmt|;
 name|String
