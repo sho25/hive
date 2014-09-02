@@ -35,6 +35,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentTypeException
 import|;
 end_import
@@ -116,6 +134,45 @@ comment|/**  * GenericUDF Class for SQL construct  * "CASE WHEN a THEN b WHEN c 
 end_comment
 
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"when"
+argument_list|,
+name|value
+operator|=
+literal|"CASE WHEN a THEN b [WHEN c THEN d]* [ELSE e] END - "
+operator|+
+literal|"When a = true, returns b; when c = true, return d; else return e"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n "
+operator|+
+literal|"SELECT\n"
+operator|+
+literal|" CASE\n"
+operator|+
+literal|"   WHEN deptno=1 THEN Engineering\n"
+operator|+
+literal|"   WHEN deptno=2 THEN Finance\n"
+operator|+
+literal|"   ELSE admin\n"
+operator|+
+literal|" END,\n"
+operator|+
+literal|" CASE\n"
+operator|+
+literal|"   WHEN zone=7 THEN Americas\n"
+operator|+
+literal|"   ELSE Asia-Pac\n"
+operator|+
+literal|" END\n"
+operator|+
+literal|" FROM emp_details"
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFWhen

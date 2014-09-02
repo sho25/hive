@@ -350,9 +350,11 @@ name|value
 operator|=
 literal|"_FUNC_(x) NTILE allows easy calculation of tertiles, quartiles, deciles and other "
 operator|+
-literal|"common summary statistics. This function divides an ordered partition into a specified "
+literal|"common summary statistics. This function divides an ordered partition into a "
 operator|+
-literal|"number of groups called buckets and assigns a bucket number to each row in the partition."
+literal|"specified number of groups called buckets and assigns a bucket number to each row "
+operator|+
+literal|"in the partition."
 argument_list|)
 argument_list|,
 name|supportsWindow
@@ -762,7 +764,7 @@ operator|.
 name|numRows
 argument_list|)
 decl_stmt|;
-comment|/* 			 * if there is a remainder from numRows/numBuckets; then distribute increase the size of the first 'rem' buckets by 1. 			 */
+comment|/*        * if there is a remainder from numRows/numBuckets; then distribute increase the size of the first 'rem' buckets by 1.        */
 name|int
 name|bucketsz
 init|=

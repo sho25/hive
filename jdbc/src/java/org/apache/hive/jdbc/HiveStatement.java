@@ -51,6 +51,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|SQLFeatureNotSupportedException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|SQLWarning
 import|;
 end_import
@@ -1449,7 +1459,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1502,13 +1512,9 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Method not supported"
-argument_list|)
-throw|;
+return|return
+literal|false
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getMoreResults(int)    */
 annotation|@
@@ -1525,7 +1531,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1642,7 +1648,8 @@ literal|"getUpdateCount"
 argument_list|)
 expr_stmt|;
 return|return
-literal|0
+operator|-
+literal|1
 return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#getWarnings()    */
@@ -1719,7 +1726,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1738,6 +1745,11 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
+if|if
+condition|(
+name|enable
+condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
@@ -1745,6 +1757,7 @@ argument_list|(
 literal|"Method not supported"
 argument_list|)
 throw|;
+block|}
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setFetchDirection(int)    */
 annotation|@

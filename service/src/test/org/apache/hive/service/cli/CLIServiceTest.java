@@ -97,17 +97,13 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|hadoop
+name|concurrent
 operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
+name|TimeUnit
 import|;
 end_import
 
@@ -124,8 +120,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-operator|.
-name|ConfVars
 import|;
 end_import
 
@@ -967,15 +961,23 @@ decl_stmt|;
 comment|/**      * Execute a malformed async query with default config,      * to give a compile time error.      * (compilation is done synchronous as of now)      */
 name|longPollingTimeout
 operator|=
+name|HiveConf
+operator|.
+name|getTimeVar
+argument_list|(
 operator|new
 name|HiveConf
 argument_list|()
+argument_list|,
+name|HiveConf
 operator|.
-name|getLongVar
-argument_list|(
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_LONG_POLLING_TIMEOUT
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
 expr_stmt|;
 name|queryString
@@ -1411,12 +1413,9 @@ name|HIVE_SERVER2_LONG_POLLING_TIMEOUT
 operator|.
 name|varname
 argument_list|,
-name|String
-operator|.
-name|valueOf
-argument_list|(
 name|longPollingTimeout
-argument_list|)
+operator|+
+literal|"ms"
 argument_list|)
 expr_stmt|;
 name|OperationHandle

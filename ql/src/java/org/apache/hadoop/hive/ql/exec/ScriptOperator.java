@@ -151,6 +151,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -871,7 +883,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Maps a relative pathname to an absolute pathname using the PATH enviroment.    */
+comment|/**    * Maps a relative pathname to an absolute pathname using the PATH environment.    */
 specifier|public
 class|class
 name|PathFinder
@@ -883,11 +895,11 @@ comment|// a string of pathnames
 name|String
 name|pathSep
 decl_stmt|;
-comment|// the path seperator
+comment|// the path separator
 name|String
 name|fileSep
 decl_stmt|;
-comment|// the file seperator in a directory
+comment|// the file separator in a directory
 comment|/**      * Construct a PathFinder object using the path from the specified system      * environment variable.      */
 specifier|public
 name|PathFinder
@@ -1443,7 +1455,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// initialize the user's process only when you recieve the first row
+comment|// initialize the user's process only when you receive the first row
 if|if
 condition|(
 name|firstRow
@@ -1929,7 +1941,7 @@ argument_list|)
 argument_list|,
 name|HiveConf
 operator|.
-name|getIntVar
+name|getTimeVar
 argument_list|(
 name|hconf
 argument_list|,
@@ -1938,9 +1950,11 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVES_AUTO_PROGRESS_TIMEOUT
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
-operator|*
-literal|1000
 argument_list|)
 expr_stmt|;
 name|autoProgressor

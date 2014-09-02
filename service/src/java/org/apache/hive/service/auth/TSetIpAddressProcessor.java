@@ -178,7 +178,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is responsible for setting the ipAddress for operations executed via HiveServer2.  *<p>  *<ul>  *<li>Ipaddress is only set for operations that calls listeners with hookContext @see ExecuteWithHookContext.</li>  *<li>Ipaddress is only set if the underlying transport mechanism is socket.</li>  *</ul>  *</p>  */
+comment|/**  * This class is responsible for setting the ipAddress for operations executed via HiveServer2.  *<p>  *<ul>  *<li>IP address is only set for operations that calls listeners with hookContext</li>  *<li>IP address is only set if the underlying transport mechanism is socket</li>  *</ul>  *</p>  *  * @see org.apache.hadoop.hive.ql.hooks.ExecuteWithHookContext  */
 end_comment
 
 begin_class
@@ -271,12 +271,12 @@ return|;
 block|}
 finally|finally
 block|{
-name|threadLocalUserName
+name|THREAD_LOCAL_USER_NAME
 operator|.
 name|remove
 argument_list|()
 expr_stmt|;
-name|threadLocalIpAddress
+name|THREAD_LOCAL_IP_ADDRESS
 operator|.
 name|remove
 argument_list|()
@@ -323,7 +323,7 @@ operator|.
 name|getAuthorizationID
 argument_list|()
 decl_stmt|;
-name|threadLocalUserName
+name|THREAD_LOCAL_USER_NAME
 operator|.
 name|set
 argument_list|(
@@ -360,11 +360,21 @@ decl_stmt|;
 if|if
 condition|(
 name|tSocket
-operator|!=
+operator|==
 literal|null
 condition|)
 block|{
-name|threadLocalIpAddress
+name|LOGGER
+operator|.
+name|warn
+argument_list|(
+literal|"Unknown Transport, cannot determine ipAddress"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|THREAD_LOCAL_IP_ADDRESS
 operator|.
 name|set
 argument_list|(
@@ -378,16 +388,6 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|LOGGER
-operator|.
-name|warn
-argument_list|(
-literal|"Unknown Transport, cannot determine ipAddress"
 argument_list|)
 expr_stmt|;
 block|}
@@ -468,11 +468,12 @@ return|;
 block|}
 specifier|private
 specifier|static
+specifier|final
 name|ThreadLocal
 argument_list|<
 name|String
 argument_list|>
-name|threadLocalIpAddress
+name|THREAD_LOCAL_IP_ADDRESS
 init|=
 operator|new
 name|ThreadLocal
@@ -497,11 +498,12 @@ block|}
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|ThreadLocal
 argument_list|<
 name|String
 argument_list|>
-name|threadLocalUserName
+name|THREAD_LOCAL_USER_NAME
 init|=
 operator|new
 name|ThreadLocal
@@ -531,7 +533,7 @@ name|getUserIpAddress
 parameter_list|()
 block|{
 return|return
-name|threadLocalIpAddress
+name|THREAD_LOCAL_IP_ADDRESS
 operator|.
 name|get
 argument_list|()
@@ -544,7 +546,7 @@ name|getUserName
 parameter_list|()
 block|{
 return|return
-name|threadLocalUserName
+name|THREAD_LOCAL_USER_NAME
 operator|.
 name|get
 argument_list|()

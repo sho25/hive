@@ -895,13 +895,13 @@ specifier|transient
 name|boolean
 name|statsCollectRawDataSize
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|boolean
 index|[]
 name|statsFromRecordWriter
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|boolean
 name|isCollectRWStats
@@ -3658,7 +3658,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|private
+specifier|protected
 name|boolean
 name|areAllTrue
 parameter_list|(

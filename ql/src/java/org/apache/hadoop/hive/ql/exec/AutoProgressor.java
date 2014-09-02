@@ -131,7 +131,7 @@ decl_stmt|;
 name|int
 name|notificationInterval
 decl_stmt|;
-name|int
+name|long
 name|timeout
 decl_stmt|;
 name|Reporter
@@ -307,7 +307,7 @@ parameter_list|,
 name|int
 name|notificationInterval
 parameter_list|,
-name|int
+name|long
 name|timeout
 parameter_list|)
 block|{

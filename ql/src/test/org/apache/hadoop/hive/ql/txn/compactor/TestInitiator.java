@@ -171,6 +171,18 @@ name|Map
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
 begin_comment
 comment|/**  * Tests for the compactor Initiator thread.  */
 end_comment
@@ -507,12 +519,10 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
-name|HiveConf
-operator|.
-name|setLongVar
-argument_list|(
 name|conf
-argument_list|,
+operator|.
+name|setTimeVar
+argument_list|(
 name|HiveConf
 operator|.
 name|ConfVars
@@ -520,6 +530,10 @@ operator|.
 name|HIVE_COMPACTOR_WORKER_TIMEOUT
 argument_list|,
 literal|1L
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
 expr_stmt|;
 name|startInitiator

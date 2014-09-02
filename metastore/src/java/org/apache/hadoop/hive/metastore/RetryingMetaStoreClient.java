@@ -89,6 +89,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -258,7 +270,7 @@ name|retryLimit
 decl_stmt|;
 specifier|private
 specifier|final
-name|int
+name|long
 name|retryDelaySeconds
 decl_stmt|;
 specifier|protected
@@ -302,13 +314,17 @@ name|retryDelaySeconds
 operator|=
 name|hiveConf
 operator|.
-name|getIntVar
+name|getTimeVar
 argument_list|(
 name|HiveConf
 operator|.
 name|ConfVars
 operator|.
 name|METASTORE_CLIENT_CONNECT_RETRY_DELAY
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
 argument_list|)
 expr_stmt|;
 name|reloginExpiringKeytabUser
@@ -318,9 +334,6 @@ name|this
 operator|.
 name|base
 operator|=
-operator|(
-name|IMetaStoreClient
-operator|)
 name|MetaStoreUtils
 operator|.
 name|newInstance

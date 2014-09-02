@@ -143,6 +143,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -1482,6 +1494,14 @@ specifier|public
 class|class
 name|DagUtils
 block|{
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TEZ_TMP_DIR_KEY
+init|=
+literal|"_hive_tez_tmp_dir"
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -1540,10 +1560,6 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|paths
-operator|!=
-literal|null
-operator|&&
 operator|!
 name|paths
 operator|.
@@ -1677,6 +1693,9 @@ name|initializeVertexConf
 parameter_list|(
 name|JobConf
 name|baseConf
+parameter_list|,
+name|Context
+name|context
 parameter_list|,
 name|MapWork
 name|mapWork
@@ -1939,7 +1958,44 @@ name|getName
 argument_list|()
 expr_stmt|;
 block|}
-comment|// Is this required ?
+if|if
+condition|(
+name|mapWork
+operator|.
+name|getDummyTableScan
+argument_list|()
+condition|)
+block|{
+comment|// hive input format doesn't handle the special condition of no paths + 1
+comment|// split correctly.
+name|inpFormat
+operator|=
+name|CombineHiveInputFormat
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+expr_stmt|;
+block|}
+name|conf
+operator|.
+name|set
+argument_list|(
+name|TEZ_TMP_DIR_KEY
+argument_list|,
+name|context
+operator|.
+name|getMRTmpPath
+argument_list|()
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|conf
 operator|.
 name|set
@@ -3520,6 +3576,9 @@ parameter_list|(
 name|JobConf
 name|baseConf
 parameter_list|,
+name|Context
+name|context
+parameter_list|,
 name|ReduceWork
 name|reduceWork
 parameter_list|)
@@ -4429,7 +4488,7 @@ literal|","
 argument_list|)
 return|;
 block|}
-comment|/**    * Localizes files, archives and jars from a provided array of names.    * @param hdfsDirPathStr Destination directoty in HDFS.    * @param conf Configuration.    * @param inputOutputJars The file names to localize.    * @return List<LocalResource> local resources to add to execution    * @throws IOException when hdfs operation fails.    * @throws LoginException when getDefaultDestDir fails with the same exception    */
+comment|/**    * Localizes files, archives and jars from a provided array of names.    * @param hdfsDirPathStr Destination directory in HDFS.    * @param conf Configuration.    * @param inputOutputJars The file names to localize.    * @return List<LocalResource> local resources to add to execution    * @throws IOException when hdfs operation fails.    * @throws LoginException when getDefaultDestDir fails with the same exception    */
 specifier|public
 name|List
 argument_list|<
@@ -4819,7 +4878,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * @param pathStr - the string from which we try to determine the resource base name    * @return the name of the resource from a given path string.    */
+comment|/**    * @param path - the path from which we try to determine the resource base name    * @return the name of the resource from a given path string.    */
 specifier|public
 name|String
 name|getResourceBaseName
@@ -5015,25 +5074,21 @@ decl_stmt|;
 name|long
 name|sleepInterval
 init|=
-name|conf
-operator|.
-name|getLong
-argument_list|(
 name|HiveConf
 operator|.
-name|ConfVars
-operator|.
-name|HIVE_LOCALIZE_RESOURCE_WAIT_INTERVAL
-operator|.
-name|varname
+name|getTimeVar
+argument_list|(
+name|conf
 argument_list|,
 name|HiveConf
 operator|.
 name|ConfVars
 operator|.
 name|HIVE_LOCALIZE_RESOURCE_WAIT_INTERVAL
+argument_list|,
+name|TimeUnit
 operator|.
-name|defaultLongVal
+name|MILLISECONDS
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -5314,6 +5369,9 @@ parameter_list|(
 name|JobConf
 name|conf
 parameter_list|,
+name|Context
+name|context
+parameter_list|,
 name|BaseWork
 name|work
 parameter_list|)
@@ -5331,6 +5389,8 @@ return|return
 name|initializeVertexConf
 argument_list|(
 name|conf
+argument_list|,
+name|context
 argument_list|,
 operator|(
 name|MapWork
@@ -5352,6 +5412,8 @@ name|initializeVertexConf
 argument_list|(
 name|conf
 argument_list|,
+name|context
+argument_list|,
 operator|(
 name|ReduceWork
 operator|)
@@ -5369,7 +5431,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Create a vertex from a given work object.    *    * @param conf JobConf to be used to this execution unit    * @param work The instance of BaseWork representing the actual work to be performed    * by this vertex.    * @param scratchDir HDFS scratch dir for this execution unit.    * @param list    * @param appJarLr Local resource for hive-exec.    * @param additionalLr    * @param fileSystem FS corresponding to scratchDir and LocalResources    * @param ctx This query's context    * @return Vertex    */
+comment|/**    * Create a vertex from a given work object.    *    * @param conf JobConf to be used to this execution unit    * @param work The instance of BaseWork representing the actual work to be performed    * by this vertex.    * @param scratchDir HDFS scratch dir for this execution unit.    * @param appJarLr Local resource for hive-exec.    * @param additionalLr    * @param fileSystem FS corresponding to scratchDir and LocalResources    * @param ctx This query's context    * @return Vertex    */
 specifier|public
 name|Vertex
 name|createVertex

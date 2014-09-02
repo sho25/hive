@@ -170,7 +170,7 @@ name|GenericUDAFDenseRankEvaluator
 extends|extends
 name|GenericUDAFRankEvaluator
 block|{
-comment|/* 		 * Called when the value in the partition has changed. Update the currentRank 		 */
+comment|/*      * Called when the value in the partition has changed. Update the currentRank      */
 annotation|@
 name|Override
 specifier|protected

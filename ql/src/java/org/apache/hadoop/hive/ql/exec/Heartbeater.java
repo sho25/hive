@@ -123,6 +123,18 @@ name|IOException
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
 begin_comment
 comment|/**  * Class to handle heartbeats for MR and Tez tasks.  */
 end_comment
@@ -246,7 +258,7 @@ name|heartbeatInterval
 operator|=
 name|HiveConf
 operator|.
-name|getIntVar
+name|getTimeVar
 argument_list|(
 name|conf
 argument_list|,
@@ -255,9 +267,13 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_TXN_TIMEOUT
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
-operator|*
-literal|500
+operator|/
+literal|2
 expr_stmt|;
 if|if
 condition|(

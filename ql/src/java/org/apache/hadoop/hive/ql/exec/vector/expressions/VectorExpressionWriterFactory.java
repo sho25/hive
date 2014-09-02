@@ -6430,7 +6430,7 @@ return|return
 name|writers
 return|;
 block|}
-comment|/**    * VectorExpressionWriterSetter helper for vector expression writers that use     * settable ObjectInspector fields to assign the values.    * This is used by the OrcStruct serialization (eg. CREATE TABLE ... AS ...)     */
+comment|/**    * VectorExpressionWriterSetter helper for vector expression writers that use    * settable ObjectInspector fields to assign the values.    * This is used by the OrcStruct serialization (eg. CREATE TABLE ... AS ...)    */
 specifier|private
 specifier|static
 class|class

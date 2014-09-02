@@ -110,11 +110,9 @@ argument_list|)
 annotation|@
 name|Target
 argument_list|(
-block|{
 name|ElementType
 operator|.
 name|TYPE
-block|}
 argument_list|)
 annotation|@
 name|Documented
@@ -126,7 +124,7 @@ name|Description
 name|description
 parameter_list|()
 function_decl|;
-comment|/** 	 * if true it is not usable in the language. {@link WindowingTableFunction} is the only internal function. 	 */
+comment|/**    * if true it is not usable in the language. {@link WindowingTableFunction} is the only internal function.    */
 name|boolean
 name|isInternal
 parameter_list|()

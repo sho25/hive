@@ -1617,6 +1617,8 @@ name|initializeVertexConf
 argument_list|(
 name|conf
 argument_list|,
+name|ctx
+argument_list|,
 name|w
 argument_list|)
 decl_stmt|;

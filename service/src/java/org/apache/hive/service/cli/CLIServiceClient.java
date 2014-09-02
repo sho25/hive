@@ -55,6 +55,14 @@ name|CLIServiceClient
 implements|implements
 name|ICLIService
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|DEFAULT_MAX_ROWS
+init|=
+literal|1000
+decl_stmt|;
 specifier|public
 name|SessionHandle
 name|openSession
@@ -87,7 +95,6 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/* (non-Javadoc)    * @see org.apache.hive.service.cli.ICLIService#fetchResults(org.apache.hive.service.cli.OperationHandle)    */
 annotation|@
 name|Override
 specifier|public
@@ -110,7 +117,11 @@ name|FetchOrientation
 operator|.
 name|FETCH_NEXT
 argument_list|,
-literal|1000
+name|DEFAULT_MAX_ROWS
+argument_list|,
+name|FetchType
+operator|.
+name|QUERY_OUTPUT
 argument_list|)
 return|;
 block|}

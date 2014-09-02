@@ -79,6 +79,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -466,12 +478,12 @@ operator|.
 name|HMSHANDLERFORCERELOADCONF
 argument_list|)
 decl_stmt|;
-name|int
+name|long
 name|retryInterval
 init|=
 name|HiveConf
 operator|.
-name|getIntVar
+name|getTimeVar
 argument_list|(
 name|hiveConf
 argument_list|,
@@ -480,6 +492,10 @@ operator|.
 name|ConfVars
 operator|.
 name|HMSHANDLERINTERVAL
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
 decl_stmt|;
 name|int

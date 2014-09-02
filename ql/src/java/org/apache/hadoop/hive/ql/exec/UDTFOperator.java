@@ -51,6 +51,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -200,24 +212,6 @@ operator|.
 name|generic
 operator|.
 name|UDTFCollector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ObjectInspector
 import|;
 end_import
 
@@ -491,7 +485,7 @@ argument_list|)
 argument_list|,
 name|HiveConf
 operator|.
-name|getIntVar
+name|getTimeVar
 argument_list|(
 name|hconf
 argument_list|,
@@ -500,9 +494,11 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVES_AUTO_PROGRESS_TIMEOUT
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
-operator|*
-literal|1000
 argument_list|)
 expr_stmt|;
 name|autoProgressor

@@ -55,18 +55,6 @@ name|naming
 operator|.
 name|directory
 operator|.
-name|DirContext
-import|;
-end_import
-
-begin_import
-import|import
-name|javax
-operator|.
-name|naming
-operator|.
-name|directory
-operator|.
 name|InitialDirContext
 import|;
 end_import
@@ -131,8 +119,6 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
-name|this
-operator|.
 name|ldapURL
 operator|=
 name|conf
@@ -146,8 +132,6 @@ operator|.
 name|HIVE_SERVER2_PLAIN_LDAP_URL
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|baseDN
 operator|=
 name|conf
@@ -161,8 +145,6 @@ operator|.
 name|HIVE_SERVER2_PLAIN_LDAP_BASEDN
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
 name|ldapDomain
 operator|=
 name|conf
@@ -256,9 +238,16 @@ decl_stmt|;
 if|if
 condition|(
 name|baseDN
-operator|!=
+operator|==
 literal|null
 condition|)
+block|{
+name|bindDN
+operator|=
+name|user
+expr_stmt|;
+block|}
+else|else
 block|{
 name|bindDN
 operator|=
@@ -269,13 +258,6 @@ operator|+
 literal|","
 operator|+
 name|baseDN
-expr_stmt|;
-block|}
-else|else
-block|{
-name|bindDN
-operator|=
-name|user
 expr_stmt|;
 block|}
 name|env
@@ -314,7 +296,7 @@ expr_stmt|;
 try|try
 block|{
 comment|// Create initial context
-name|DirContext
+name|Context
 name|ctx
 init|=
 operator|new
@@ -345,7 +327,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-return|return;
 block|}
 block|}
 end_class

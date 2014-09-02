@@ -24,6 +24,7 @@ name|HttpAuthenticationException
 extends|extends
 name|Exception
 block|{
+specifier|private
 specifier|static
 specifier|final
 name|long
@@ -31,7 +32,7 @@ name|serialVersionUID
 init|=
 literal|0
 decl_stmt|;
-comment|/**    * @param cause original exception.    */
+comment|/**    * @param cause original exception    */
 specifier|public
 name|HttpAuthenticationException
 parameter_list|(
@@ -45,7 +46,7 @@ name|cause
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param msg exception message.    */
+comment|/**    * @param msg exception message    */
 specifier|public
 name|HttpAuthenticationException
 parameter_list|(
@@ -59,7 +60,7 @@ name|msg
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param msg exception message.    * @param cause original exception.    */
+comment|/**    * @param msg   exception message    * @param cause original exception    */
 specifier|public
 name|HttpAuthenticationException
 parameter_list|(

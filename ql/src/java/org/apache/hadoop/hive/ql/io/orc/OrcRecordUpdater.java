@@ -638,6 +638,14 @@ name|insertedRows
 init|=
 literal|0
 decl_stmt|;
+comment|// This records how many rows have been inserted or deleted.  It is separate from insertedRows
+comment|// because that is monotonically increasing to give new unique row ids.
+specifier|private
+name|long
+name|rowCountDelta
+init|=
+literal|0
+decl_stmt|;
 specifier|private
 specifier|final
 name|KeyIndexBuilder
@@ -1661,6 +1669,9 @@ argument_list|,
 name|row
 argument_list|)
 expr_stmt|;
+name|rowCountDelta
+operator|++
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -1761,6 +1772,9 @@ name|rowId
 argument_list|,
 literal|null
 argument_list|)
+expr_stmt|;
+name|rowCountDelta
+operator|--
 expr_stmt|;
 block|}
 annotation|@
@@ -1899,8 +1913,24 @@ name|SerDeStats
 name|getStats
 parameter_list|()
 block|{
+name|SerDeStats
+name|stats
+init|=
+operator|new
+name|SerDeStats
+argument_list|()
+decl_stmt|;
+name|stats
+operator|.
+name|setRowCount
+argument_list|(
+name|rowCountDelta
+argument_list|)
+expr_stmt|;
+comment|// Don't worry about setting raw data size diff.  I have no idea how to calculate that
+comment|// without finding the row we are updating or deleting, which would be a mess.
 return|return
-literal|null
+name|stats
 return|;
 block|}
 annotation|@

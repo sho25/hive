@@ -33,6 +33,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -58,6 +76,29 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"lag"
+argument_list|,
+name|value
+operator|=
+literal|"LAG  (scalar_expression [,offset] [,default]) OVER ([query_partition_clause] order_by_clause); "
+operator|+
+literal|"The LAG function is used to access data from a previous row."
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n "
+operator|+
+literal|"select p1.p_mfgr, p1.p_name, p1.p_size,\n"
+operator|+
+literal|" p1.p_size - lag(p1.p_size,1,p1.p_size) over( distribute by p1.p_mfgr sort by p1.p_name) as deltaSz\n"
+operator|+
+literal|" from part p1 join part p2 on p1.p_partkey = p2.p_partkey"
+argument_list|)
 annotation|@
 name|UDFType
 argument_list|(

@@ -241,11 +241,11 @@ parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
 block|{
-name|SQLStdHiveAccessController
+name|SQLStdHiveAccessControllerWrapper
 name|privilegeManager
 init|=
 operator|new
-name|SQLStdHiveAccessController
+name|SQLStdHiveAccessControllerWrapper
 argument_list|(
 name|metastoreClientFactory
 argument_list|,

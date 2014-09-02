@@ -97,7 +97,7 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
-comment|/**    * Deserialize an object out of a Writable blob. In most cases, the return    * value of this function will be constant since the function will reuse the    * returned object. If the client wants to keep a copy of the object, the    * client needs to clone the returnDeserializered value by calling    * ObjectInspectorUtils.getStandardObject().    *    * @param blob    *          The Writable object containing a serialized object    * @return A Java object representing the contents in the blob.    */
+comment|/**    * Deserialize an object out of a Writable blob. In most cases, the return    * value of this function will be constant since the function will reuse the    * returned object. If the client wants to keep a copy of the object, the    * client needs to clone the returned deserialized value by calling    * ObjectInspectorUtils.getStandardObject().    *    * @param blob    *          The Writable object containing a serialized object    * @return A Java object representing the contents in the blob.    */
 name|Object
 name|deserialize
 parameter_list|(

@@ -170,9 +170,20 @@ comment|// read the file in a build friendly way.
 name|Connection
 name|conn
 init|=
+literal|null
+decl_stmt|;
+name|boolean
+name|committed
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
+name|conn
+operator|=
 name|getConnection
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|Statement
 name|s
 init|=
@@ -346,11 +357,29 @@ operator|.
 name|commit
 argument_list|()
 expr_stmt|;
+name|committed
+operator|=
+literal|true
+expr_stmt|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+operator|!
+name|committed
+condition|)
+name|conn
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
 name|conn
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 specifier|public
 specifier|static
@@ -363,9 +392,20 @@ block|{
 name|Connection
 name|conn
 init|=
+literal|null
+decl_stmt|;
+name|boolean
+name|committed
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
+name|conn
+operator|=
 name|getConnection
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|Statement
 name|s
 init|=
@@ -576,7 +616,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{     }
+block|{       }
 try|try
 block|{
 name|s
@@ -592,7 +632,7 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{     }
+block|{       }
 try|try
 block|{
 name|s
@@ -608,10 +648,27 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{     }
+block|{       }
 name|conn
 operator|.
 name|commit
+argument_list|()
+expr_stmt|;
+name|committed
+operator|=
+literal|true
+expr_stmt|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+operator|!
+name|committed
+condition|)
+name|conn
+operator|.
+name|rollback
 argument_list|()
 expr_stmt|;
 name|conn
@@ -619,6 +676,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 comment|/**    * A tool to count the number of partitions, tables,    * and databases locked by a particular lockId.    * @param lockId lock id to look for lock components    * @return number of components, or 0 if there is no lock    */
 specifier|public
@@ -638,6 +696,8 @@ init|=
 name|getConnection
 argument_list|()
 decl_stmt|;
+try|try
+block|{
 name|Statement
 name|s
 init|=
@@ -653,9 +713,7 @@ name|s
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select count(*) from hive_locks where "
-operator|+
-literal|"hl_lock_ext_id = "
+literal|"select count(*) from hive_locks where hl_lock_ext_id = "
 operator|+
 name|lockId
 argument_list|)
@@ -681,6 +739,12 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
+return|return
+name|rc
+return|;
+block|}
+finally|finally
+block|{
 name|conn
 operator|.
 name|rollback
@@ -691,9 +755,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-return|return
-name|rc
-return|;
+block|}
 block|}
 specifier|public
 specifier|static
@@ -706,9 +768,15 @@ block|{
 name|Connection
 name|conn
 init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|conn
+operator|=
 name|getConnection
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|Statement
 name|s
 init|=
@@ -748,6 +816,19 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
+return|return
+name|rc
+return|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|conn
+operator|!=
+literal|null
+condition|)
+block|{
 name|conn
 operator|.
 name|rollback
@@ -758,9 +839,8 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-return|return
-name|rc
-return|;
+block|}
+block|}
 block|}
 specifier|private
 specifier|static

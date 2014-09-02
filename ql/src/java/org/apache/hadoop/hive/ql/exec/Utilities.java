@@ -1171,6 +1171,26 @@ name|exec
 operator|.
 name|tez
 operator|.
+name|DagUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|tez
+operator|.
 name|TezTask
 import|;
 end_import
@@ -8809,7 +8829,6 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-operator|(
 name|SequenceFile
 operator|.
 name|createWriter
@@ -8830,7 +8849,6 @@ name|codec
 argument_list|,
 name|progressable
 argument_list|)
-operator|)
 return|;
 block|}
 comment|/**    * Create a RCFile output stream based on job configuration Uses user supplied compression flag    * (rather than obtaining it from the Job Configuration).    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @return output stream over the created rcfile    */
@@ -9550,6 +9568,39 @@ argument_list|(
 literal|"^.*?([0-9]+)(_[0-9]{1,6})?(\\..*)?$"
 argument_list|)
 decl_stmt|;
+comment|/**    * Some jobs like "INSERT INTO" jobs create copies of files like 0000001_0_copy_2.    * For such files,    * Group 1: 00000001 [taskId]    * Group 3: 0        [task attempId]    * Group 4: _copy_2  [copy suffix]    * Group 6: copy     [copy keyword]    * Group 8: 2        [copy file index]    */
+specifier|private
+specifier|static
+specifier|final
+name|Pattern
+name|COPY_FILE_NAME_TO_TASK_ID_REGEX
+init|=
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|"^.*?"
+operator|+
+comment|// any prefix
+literal|"([0-9]+)"
+operator|+
+comment|// taskId
+literal|"(_)"
+operator|+
+comment|// separator
+literal|"([0-9]{1,6})?"
+operator|+
+comment|// attemptId (limited to 6 digits)
+literal|"((_)(\\Bcopy\\B)(_)"
+operator|+
+comment|// copy keyword
+literal|"([0-9]{1,6})$)?"
+operator|+
+comment|// copy file index
+literal|"(\\..*)?$"
+argument_list|)
+decl_stmt|;
+comment|// any suffix/file extension
 comment|/**    * This retruns prefix part + taskID for bucket join for partitioned table    */
 specifier|private
 specifier|static
@@ -11168,6 +11219,32 @@ name|toDelete
 init|=
 literal|null
 decl_stmt|;
+comment|// "LOAD .. INTO" and "INSERT INTO" commands will generate files with
+comment|// "_copy_x" suffix. These files are usually read by map tasks and the
+comment|// task output gets written to some tmp path. The output file names will
+comment|// be of format taskId_attemptId. The usual path for all these tasks is
+comment|// srcPath -> taskTmpPath -> tmpPath -> finalPath.
+comment|// But, MergeFileTask can move files directly from src path to final path
+comment|// without copying it to tmp path. In such cases, different files with
+comment|// "_copy_x" suffix will be identified as duplicates (change in value
+comment|// of x is wrongly identified as attempt id) and will be deleted.
+comment|// To avoid that we will ignore files with "_copy_x" suffix from duplicate
+comment|// elimination.
+if|if
+condition|(
+operator|!
+name|isCopyFile
+argument_list|(
+name|one
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+condition|)
+block|{
 if|if
 condition|(
 name|otherFile
@@ -11300,10 +11377,167 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|one
+operator|.
+name|getPath
+argument_list|()
+operator|+
+literal|" file identified as duplicate. This file is"
+operator|+
+literal|" not deleted as it has copySuffix."
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 block|}
 return|return
 name|taskIdToFile
+return|;
+block|}
+specifier|public
+specifier|static
+name|boolean
+name|isCopyFile
+parameter_list|(
+name|String
+name|filename
+parameter_list|)
+block|{
+name|String
+name|taskId
+init|=
+name|filename
+decl_stmt|;
+name|String
+name|copyFileSuffix
+init|=
+literal|null
+decl_stmt|;
+name|int
+name|dirEnd
+init|=
+name|filename
+operator|.
+name|lastIndexOf
+argument_list|(
+name|Path
+operator|.
+name|SEPARATOR
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|dirEnd
+operator|!=
+operator|-
+literal|1
+condition|)
+block|{
+name|taskId
+operator|=
+name|filename
+operator|.
+name|substring
+argument_list|(
+name|dirEnd
+operator|+
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
+name|Matcher
+name|m
+init|=
+name|COPY_FILE_NAME_TO_TASK_ID_REGEX
+operator|.
+name|matcher
+argument_list|(
+name|taskId
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|m
+operator|.
+name|matches
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Unable to verify if file name "
+operator|+
+name|filename
+operator|+
+literal|" has _copy_ suffix."
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|taskId
+operator|=
+name|m
+operator|.
+name|group
+argument_list|(
+literal|1
+argument_list|)
+expr_stmt|;
+name|copyFileSuffix
+operator|=
+name|m
+operator|.
+name|group
+argument_list|(
+literal|4
+argument_list|)
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Filename: "
+operator|+
+name|filename
+operator|+
+literal|" TaskId: "
+operator|+
+name|taskId
+operator|+
+literal|" CopySuffix: "
+operator|+
+name|copyFileSuffix
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|taskId
+operator|!=
+literal|null
+operator|&&
+name|copyFileSuffix
+operator|!=
+literal|null
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+return|return
+literal|false
 return|;
 block|}
 specifier|public
@@ -15568,7 +15802,7 @@ parameter_list|,
 name|PreparedStatement
 name|stmt
 parameter_list|,
-name|int
+name|long
 name|baseWindow
 parameter_list|,
 name|int
@@ -15701,7 +15935,7 @@ parameter_list|(
 name|String
 name|connectionString
 parameter_list|,
-name|int
+name|long
 name|waitWindow
 parameter_list|,
 name|int
@@ -15828,7 +16062,7 @@ parameter_list|,
 name|String
 name|stmt
 parameter_list|,
-name|int
+name|long
 name|waitWindow
 parameter_list|,
 name|int
@@ -15948,7 +16182,7 @@ specifier|static
 name|long
 name|getRandomWaitTime
 parameter_list|(
-name|int
+name|long
 name|baseWindow
 parameter_list|,
 name|int
@@ -16833,17 +17067,13 @@ block|{
 name|String
 name|scratchDir
 init|=
-name|HiveConf
-operator|.
-name|getVar
-argument_list|(
 name|job
-argument_list|,
-name|HiveConf
 operator|.
-name|ConfVars
+name|get
+argument_list|(
+name|DagUtils
 operator|.
-name|SCRATCHDIR
+name|TEZ_TMP_DIR_KEY
 argument_list|)
 decl_stmt|;
 comment|// we usually don't want to create dummy files for tez, however the metadata only
@@ -18354,7 +18584,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Returns true if a plan is both configured for vectorized execution    * and vectorization is allowed. The plan may be configured for vectorization    * but vectorization dissalowed eg. for FetchOperator execution.    */
+comment|/**    * Returns true if a plan is both configured for vectorized execution    * and vectorization is allowed. The plan may be configured for vectorization    * but vectorization disallowed eg. for FetchOperator execution.    */
 specifier|public
 specifier|static
 name|boolean
@@ -18907,7 +19137,9 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"fs.permissions.umask-mode"
+name|FsPermission
+operator|.
+name|UMASK_LABEL
 argument_list|,
 name|origUmask
 argument_list|)
@@ -18919,7 +19151,9 @@ name|conf
 operator|.
 name|unset
 argument_list|(
-literal|"fs.permissions.umask-mode"
+name|FsPermission
+operator|.
+name|UMASK_LABEL
 argument_list|)
 expr_stmt|;
 block|}
@@ -18983,7 +19217,9 @@ name|conf
 operator|.
 name|get
 argument_list|(
-literal|"fs.permissions.umask-mode"
+name|FsPermission
+operator|.
+name|UMASK_LABEL
 argument_list|)
 expr_stmt|;
 comment|// this umask is required because by default the hdfs mask is 022 resulting in
@@ -18992,7 +19228,9 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"fs.permissions.umask-mode"
+name|FsPermission
+operator|.
+name|UMASK_LABEL
 argument_list|,
 literal|"000"
 argument_list|)
