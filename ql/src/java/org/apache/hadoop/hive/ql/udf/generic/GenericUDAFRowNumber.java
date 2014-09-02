@@ -274,7 +274,9 @@ literal|"row_number"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_() - The ROW_NUMBER function assigns a unique number (sequentially, starting from 1, as defined by ORDER BY) to each row within the partition."
+literal|"_FUNC_() - The ROW_NUMBER function assigns a unique number (sequentially, starting "
+operator|+
+literal|"from 1, as defined by ORDER BY) to each row within the partition."
 argument_list|)
 argument_list|,
 name|supportsWindow

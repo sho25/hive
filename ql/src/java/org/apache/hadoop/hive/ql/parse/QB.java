@@ -278,17 +278,17 @@ name|WindowingSpec
 argument_list|>
 name|destToWindowingSpec
 decl_stmt|;
-comment|/*    * If this QB represents a SubQuery predicate then this will point to the SubQuery object.    */
+comment|/*    * If this QB represents a  SubQuery predicate then this will point to the SubQuery object.    */
 specifier|private
 name|QBSubQuery
 name|subQueryPredicateDef
 decl_stmt|;
-comment|/* 	 * used to give a unique name to each SubQuery QB Currently there can be at 	 * most 2 SubQueries in a Query: 1 in the Where clause, and 1 in the Having 	 * clause. 	 */
+comment|/*    * used to give a unique name to each SubQuery QB Currently there can be at    * most 2 SubQueries in a Query: 1 in the Where clause, and 1 in the Having    * clause.    */
 specifier|private
 name|int
 name|numSubQueryPredicates
 decl_stmt|;
-comment|/* 	 * for now a top level QB can have 1 where clause SQ predicate. 	 */
+comment|/*    * for now a top level QB can have 1 where clause SQ predicate.    */
 specifier|private
 name|QBSubQuery
 name|whereClauseSubQueryPredicate

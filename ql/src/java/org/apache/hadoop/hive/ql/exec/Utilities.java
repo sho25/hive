@@ -8829,7 +8829,6 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-operator|(
 name|SequenceFile
 operator|.
 name|createWriter
@@ -8850,7 +8849,6 @@ name|codec
 argument_list|,
 name|progressable
 argument_list|)
-operator|)
 return|;
 block|}
 comment|/**    * Create a RCFile output stream based on job configuration Uses user supplied compression flag    * (rather than obtaining it from the Job Configuration).    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @return output stream over the created rcfile    */

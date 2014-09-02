@@ -448,7 +448,7 @@ specifier|transient
 name|KeyWrapper
 name|newKeys
 decl_stmt|;
-comment|/* 	 * for map-side invocation of PTFs, we cannot utilize the currentkeys null check 	 * to decide on invoking startPartition in streaming mode. Hence this extra flag.  	 */
+comment|/*    * for map-side invocation of PTFs, we cannot utilize the currentkeys null check    * to decide on invoking startPartition in streaming mode. Hence this extra flag.    */
 specifier|transient
 name|boolean
 name|firstMapRow
@@ -461,7 +461,7 @@ specifier|transient
 name|PTFInvocation
 name|ptfInvocation
 decl_stmt|;
-comment|/* 	 * 1. Find out if the operator is invoked at Map-Side or Reduce-side 	 * 2. Get the deserialized QueryDef 	 * 3. Reconstruct the transient variables in QueryDef 	 * 4. Create input partition to store rows coming from previous operator 	 */
+comment|/*    * 1. Find out if the operator is invoked at Map-Side or Reduce-side    * 2. Get the deserialized QueryDef    * 3. Reconstruct the transient variables in QueryDef    * 4. Create input partition to store rows coming from previous operator    */
 annotation|@
 name|Override
 specifier|protected
@@ -733,7 +733,7 @@ name|row
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** 	 * Initialize the visitor to use the QueryDefDeserializer Use the order 	 * defined in QueryDefWalker to visit the QueryDef 	 * 	 * @param hiveConf 	 * @throws HiveException 	 */
+comment|/**    * Initialize the visitor to use the QueryDefDeserializer Use the order    * defined in QueryDefWalker to visit the QueryDef    *    * @param hiveConf    * @throws HiveException    */
 specifier|protected
 name|void
 name|reconstructQueryDef
@@ -869,7 +869,7 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-comment|/* 			 * Why cannot we just use the ExprNodeEvaluator on the column? 			 * - because on the reduce-side it is initialized based on the rowOI of the HiveTable 			 *   and not the OI of the ExtractOp ( the parent of this Operator on the reduce-side) 			 */
+comment|/*        * Why cannot we just use the ExprNodeEvaluator on the column?        * - because on the reduce-side it is initialized based on the rowOI of the HiveTable        *   and not the OI of the ExtractOp ( the parent of this Operator on the reduce-side)        */
 name|keyFields
 index|[
 name|i
@@ -940,7 +940,7 @@ name|getKeyWrapper
 argument_list|()
 expr_stmt|;
 block|}
-comment|/** 	 * @return the name of the operator 	 */
+comment|/**    * @return the name of the operator    */
 annotation|@
 name|Override
 specifier|public
@@ -1156,7 +1156,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/*    * Responsible for the flow of rows through the PTF Chain.    * An Invocation wraps a TableFunction.     * The PTFOp hands the chain each row through the processRow call.     * It also notifies the chain of when a Partition starts/finishes.    *     * There are several combinations depending    * whether the TableFunction and its successor support Streaming or Batch mode.    *     * Combination 1: Streaming + Streaming    * - Start Partition: invoke startPartition on tabFn.    * - Process Row: invoke process Row on tabFn.     *   Any output rows hand to next tabFn in chain or forward to next Operator.    * - Finish Partition: invoke finishPartition on tabFn.    *   Any output rows hand to next tabFn in chain or forward to next Operator.    *       * Combination 2: Streaming + Batch    * same as Combination 1    *     * Combination 3: Batch + Batch    * - Start Partition: create or reset the Input Partition for the tabFn    *   caveat is: if prev is also batch and it is not providing an Output Iterator    *   then we can just use its Output Partition.    * - Process Row: collect row in Input Partition    * - Finish Partition : invoke evaluate on tabFn on Input Partition    *   If function gives an Output Partition: set it on next Invocation's Input Partition    *   If function gives an Output Iterator: iterate and call processRow on next Invocation.    *   For last Invocation in chain: forward rows to next Operator.    *       * Combination 3: Batch + Stream    * Similar to Combination 3, except Finish Partition behavior slightly different    * - Finish Partition : invoke evaluate on tabFn on Input Partition    *   iterate output rows: hand to next tabFn in chain or forward to next Operator.    *     */
+comment|/*    * Responsible for the flow of rows through the PTF Chain.    * An Invocation wraps a TableFunction.    * The PTFOp hands the chain each row through the processRow call.    * It also notifies the chain of when a Partition starts/finishes.    *    * There are several combinations depending    * whether the TableFunction and its successor support Streaming or Batch mode.    *    * Combination 1: Streaming + Streaming    * - Start Partition: invoke startPartition on tabFn.    * - Process Row: invoke process Row on tabFn.    *   Any output rows hand to next tabFn in chain or forward to next Operator.    * - Finish Partition: invoke finishPartition on tabFn.    *   Any output rows hand to next tabFn in chain or forward to next Operator.    *    * Combination 2: Streaming + Batch    * same as Combination 1    *    * Combination 3: Batch + Batch    * - Start Partition: create or reset the Input Partition for the tabFn    *   caveat is: if prev is also batch and it is not providing an Output Iterator    *   then we can just use its Output Partition.    * - Process Row: collect row in Input Partition    * - Finish Partition : invoke evaluate on tabFn on Input Partition    *   If function gives an Output Partition: set it on next Invocation's Input Partition    *   If function gives an Output Iterator: iterate and call processRow on next Invocation.    *   For last Invocation in chain: forward rows to next Operator.    *    * Combination 3: Batch + Stream    * Similar to Combination 3, except Finish Partition behavior slightly different    * - Finish Partition : invoke evaluate on tabFn on Input Partition    *   iterate output rows: hand to next tabFn in chain or forward to next Operator.    *    */
 class|class
 name|PTFInvocation
 block|{

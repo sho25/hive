@@ -367,9 +367,6 @@ name|String
 index|[]
 name|supportedStats
 init|=
-operator|new
-name|String
-index|[]
 block|{
 name|NUM_FILES
 block|,
