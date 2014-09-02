@@ -1991,6 +1991,26 @@ name|getName
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|mapWork
+operator|.
+name|getDummyTableScan
+argument_list|()
+condition|)
+block|{
+comment|// hive input format doesn't handle the special condition of no paths + 1
+comment|// split correctly.
+name|inpFormat
+operator|=
+name|CombineHiveInputFormat
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+expr_stmt|;
+block|}
 name|conf
 operator|.
 name|set
