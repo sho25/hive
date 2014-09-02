@@ -3794,6 +3794,19 @@ argument_list|,
 literal|"Define the default ORC index stride"
 argument_list|)
 block|,
+name|HIVE_ORC_ROW_INDEX_STRIDE_DICTIONARY_CHECK
+argument_list|(
+literal|"hive.orc.row.index.stride.dictionary.check"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If enabled dictionary check will happen after first row index stride (default 10000 rows)\n"
+operator|+
+literal|"else dictionary check will happen before writing first stripe. In both cases, the decision\n"
+operator|+
+literal|"to use dictionary or not will be retained thereafter."
+argument_list|)
+block|,
 name|HIVE_ORC_DEFAULT_BUFFER_SIZE
 argument_list|(
 literal|"hive.exec.orc.default.buffer.size"
