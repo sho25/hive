@@ -170,6 +170,11 @@ name|DEMUX
 argument_list|(
 literal|20
 argument_list|)
+block|,
+name|EVENT
+argument_list|(
+literal|21
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -340,6 +345,12 @@ literal|20
 case|:
 return|return
 name|DEMUX
+return|;
+case|case
+literal|21
+case|:
+return|return
+name|EVENT
 return|;
 default|default:
 return|return

@@ -71,7 +71,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FileSinkOperator
+name|UnionOperator
 import|;
 end_import
 
@@ -130,13 +130,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * FileSinkProcessor is a simple rule to remember seen file sinks for later  * processing.  *  */
+comment|/**  * FileSinkProcessor is a simple rule to remember seen unions for later  * processing.  *  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|FileSinkProcessor
+name|UnionProcessor
 implements|implements
 name|NodeProcessor
 block|{
@@ -150,7 +150,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|FileSinkProcessor
+name|UnionProcessor
 operator|.
 name|class
 operator|.
@@ -191,26 +191,26 @@ name|GenTezProcContext
 operator|)
 name|procCtx
 decl_stmt|;
-name|FileSinkOperator
-name|fileSink
+name|UnionOperator
+name|union
 init|=
 operator|(
-name|FileSinkOperator
+name|UnionOperator
 operator|)
 name|nd
 decl_stmt|;
-comment|// just remember it for later processing
+comment|// simply need to remember that we've seen a union.
 name|context
 operator|.
-name|fileSinkSet
+name|currentUnionOperators
 operator|.
 name|add
 argument_list|(
-name|fileSink
+name|union
 argument_list|)
 expr_stmt|;
 return|return
-literal|true
+literal|null
 return|;
 block|}
 block|}

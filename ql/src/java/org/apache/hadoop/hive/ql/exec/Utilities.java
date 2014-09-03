@@ -6117,7 +6117,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|Set
+name|List
 argument_list|<
 name|Operator
 argument_list|<
@@ -6129,7 +6129,7 @@ parameter_list|(
 name|Configuration
 name|conf
 parameter_list|,
-name|Set
+name|List
 argument_list|<
 name|Operator
 argument_list|<
@@ -6159,7 +6159,12 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|Set
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
+name|List
 argument_list|<
 name|Operator
 argument_list|<

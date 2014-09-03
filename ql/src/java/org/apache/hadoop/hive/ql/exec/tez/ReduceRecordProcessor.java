@@ -1170,9 +1170,6 @@ argument_list|()
 expr_stmt|;
 name|inputKeyDeserializer
 operator|=
-operator|(
-name|SerDe
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -1271,13 +1268,6 @@ index|]
 expr_stmt|;
 name|valueStringWriters
 operator|=
-operator|(
-name|List
-argument_list|<
-name|VectorExpressionWriter
-argument_list|>
-index|[]
-operator|)
 operator|new
 name|List
 index|[
@@ -1729,6 +1719,21 @@ operator|.
 name|setInputs
 argument_list|(
 name|inputs
+argument_list|)
+expr_stmt|;
+operator|(
+operator|(
+name|TezContext
+operator|)
+name|MapredContext
+operator|.
+name|get
+argument_list|()
+operator|)
+operator|.
+name|setTezProcessorContext
+argument_list|(
+name|processorContext
 argument_list|)
 expr_stmt|;
 comment|// initialize reduce operator tree
@@ -2201,9 +2206,6 @@ name|shuffleInputs
 operator|.
 name|add
 argument_list|(
-operator|(
-name|LogicalInput
-operator|)
 name|inputs
 operator|.
 name|get

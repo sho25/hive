@@ -7078,6 +7078,43 @@ literal|"When auto reducer parallelism is enabled this factor will be used to pu
 operator|+
 literal|"of reducers that tez specifies."
 argument_list|)
+block|,
+name|TEZ_DYNAMIC_PARTITION_PRUNING
+argument_list|(
+literal|"hive.tez.dynamic.partition.pruning"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When dynamic pruning is enabled, joins on partition keys will be processed by sending events from the processing "
+operator|+
+literal|"vertices to the tez application master. These events will be used to prune unnecessary partitions."
+argument_list|)
+block|,
+name|TEZ_DYNAMIC_PARTITION_PRUNING_MAX_EVENT_SIZE
+argument_list|(
+literal|"hive.tez.dynamic.partition.pruning.max.event.size"
+argument_list|,
+literal|1
+operator|*
+literal|1024
+operator|*
+literal|1024L
+argument_list|,
+literal|"Maximum size of events sent by processors in dynamic pruning. If this size is crossed no pruning will take place."
+argument_list|)
+block|,
+name|TEZ_DYNAMIC_PARTITION_PRUNING_MAX_DATA_SIZE
+argument_list|(
+literal|"hive.tez.dynamic.parition.pruning.max.data.size"
+argument_list|,
+literal|100
+operator|*
+literal|1024
+operator|*
+literal|1024L
+argument_list|,
+literal|"Maximum total data size of events in dynamic pruning."
+argument_list|)
 block|;
 specifier|public
 specifier|final
