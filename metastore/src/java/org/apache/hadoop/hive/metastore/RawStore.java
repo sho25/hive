@@ -2562,21 +2562,6 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-name|boolean
-name|updatePartitionColumnStatistics
-parameter_list|(
-name|SetPartitionsStatsRequest
-name|request
-parameter_list|)
-throws|throws
-name|NoSuchObjectException
-throws|,
-name|MetaException
-throws|,
-name|InvalidObjectException
-throws|,
-name|InvalidInputException
-function_decl|;
 block|}
 end_interface
 
