@@ -67,19 +67,15 @@ end_import
 
 begin_import
 import|import
-name|org
+name|com
 operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|runtime
+name|google
 operator|.
 name|common
 operator|.
-name|objectregistry
+name|base
 operator|.
-name|ObjectRegistryImpl
+name|Preconditions
 import|;
 end_import
 
@@ -124,16 +120,53 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// TODO HIVE-7809. This is broken. A new instance of ObjectRegistry should not be created.
+comment|// ObjectRegistry is available via the Input/Output/ProcessorContext.
+comment|// This is setup as part of the Tez Processor construction, so that it is available whenever an
+comment|// instance of the ObjectCache is created. The assumption is that Tez will initialize the Processor
+comment|// before anything else.
+specifier|private
+specifier|volatile
+specifier|static
+name|ObjectRegistry
+name|staticRegistry
+decl_stmt|;
 specifier|private
 specifier|final
 name|ObjectRegistry
 name|registry
-init|=
-operator|new
-name|ObjectRegistryImpl
-argument_list|()
 decl_stmt|;
+specifier|public
+name|ObjectCache
+parameter_list|()
+block|{
+name|Preconditions
+operator|.
+name|checkNotNull
+argument_list|(
+name|staticRegistry
+argument_list|,
+literal|"Object registry not setup yet. This should have been setup by the TezProcessor"
+argument_list|)
+expr_stmt|;
+name|registry
+operator|=
+name|staticRegistry
+expr_stmt|;
+block|}
+specifier|public
+specifier|static
+name|void
+name|setupObjectRegistry
+parameter_list|(
+name|ObjectRegistry
+name|objectRegistry
+parameter_list|)
+block|{
+name|staticRegistry
+operator|=
+name|objectRegistry
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public

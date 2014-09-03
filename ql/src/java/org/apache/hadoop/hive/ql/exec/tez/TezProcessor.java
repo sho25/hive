@@ -448,6 +448,16 @@ argument_list|(
 name|context
 argument_list|)
 expr_stmt|;
+name|ObjectCache
+operator|.
+name|setupObjectRegistry
+argument_list|(
+name|context
+operator|.
+name|getObjectRegistry
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
