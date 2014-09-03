@@ -1346,8 +1346,9 @@ comment|// the name of the dag is what is displayed in the AM/Job UI
 name|DAG
 name|dag
 init|=
-operator|new
 name|DAG
+operator|.
+name|create
 argument_list|(
 name|work
 operator|.

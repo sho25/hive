@@ -1717,8 +1717,9 @@ block|{
 name|DAG
 name|dag
 init|=
-operator|new
 name|DAG
+operator|.
+name|create
 argument_list|(
 literal|"test"
 argument_list|)

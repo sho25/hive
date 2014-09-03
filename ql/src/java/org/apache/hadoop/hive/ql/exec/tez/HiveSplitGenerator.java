@@ -323,8 +323,6 @@ name|dag
 operator|.
 name|api
 operator|.
-name|VertexLocationHint
-operator|.
 name|TaskLocationHint
 import|;
 end_import
