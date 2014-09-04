@@ -1139,9 +1139,13 @@ name|SCRATCHDIR
 argument_list|(
 literal|"hive.exec.scratchdir"
 argument_list|,
-literal|"/tmp/hive-${system:user.name}"
+literal|"/tmp/hive"
 argument_list|,
-literal|"Scratch space for Hive jobs"
+literal|"HDFS root scratch dir for Hive jobs which gets created with 777 permission. "
+operator|+
+literal|"For each connecting user, an HDFS scratch dir: ${hive.exec.scratchdir}/<username> is created, "
+operator|+
+literal|"with ${hive.scratch.dir.permission}."
 argument_list|)
 block|,
 name|LOCALSCRATCHDIR
@@ -1159,13 +1163,28 @@ argument_list|,
 literal|"Local scratch space for Hive jobs"
 argument_list|)
 block|,
+name|DOWNLOADED_RESOURCES_DIR
+argument_list|(
+literal|"hive.downloaded.resources.dir"
+argument_list|,
+literal|"${system:java.io.tmpdir}"
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
+literal|"${hive.session.id}_resources"
+argument_list|,
+literal|"Temporary local directory for added resources in the remote file system."
+argument_list|)
+block|,
 name|SCRATCHDIRPERMISSION
 argument_list|(
 literal|"hive.scratch.dir.permission"
 argument_list|,
 literal|"700"
 argument_list|,
-literal|""
+literal|"The permission for the user specific scratch directories that get created."
 argument_list|)
 block|,
 name|SUBMITVIACHILD
@@ -1434,21 +1453,6 @@ argument_list|,
 literal|100000L
 argument_list|,
 literal|"Maximum number of HDFS files created by all mappers/reducers in a MapReduce job."
-argument_list|)
-block|,
-name|DOWNLOADED_RESOURCES_DIR
-argument_list|(
-literal|"hive.downloaded.resources.dir"
-argument_list|,
-literal|"${system:java.io.tmpdir}"
-operator|+
-name|File
-operator|.
-name|separator
-operator|+
-literal|"${hive.session.id}_resources"
-argument_list|,
-literal|"Temporary local directory for added resources in the remote file system."
 argument_list|)
 block|,
 name|DEFAULTPARTITIONNAME

@@ -187,22 +187,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|MetaStoreUtils
 import|;
 end_import
@@ -468,6 +452,10 @@ decl_stmt|;
 specifier|private
 name|MiniDFSShim
 name|dfs
+decl_stmt|;
+specifier|private
+name|FileSystem
+name|localFS
 decl_stmt|;
 specifier|private
 name|boolean
@@ -761,6 +749,15 @@ name|dfs
 expr_stmt|;
 block|}
 specifier|public
+name|FileSystem
+name|getLocalFS
+parameter_list|()
+block|{
+return|return
+name|localFS
+return|;
+block|}
+specifier|public
 name|boolean
 name|isUseMiniMR
 parameter_list|()
@@ -870,6 +867,15 @@ name|Files
 operator|.
 name|createTempDir
 argument_list|()
+expr_stmt|;
+name|localFS
+operator|=
+name|FileSystem
+operator|.
+name|getLocal
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 name|FileSystem
 name|fs
@@ -1908,7 +1914,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**         if (isUseMiniKdc()) {           getMiniKdc().loginUser(getMiniKdc().getDefaultUserPrincipal());           sessionConf.put("principal", serverPrincipal);         }         */
+comment|/**         if (isUseMiniKdc()) {           getMiniKdc().loginUser(getMiniKdc().getDefaultUserPrincipal());           sessionConf.put("principal", serverPrincipal);         }          */
 name|sessionHandle
 operator|=
 name|hs2Client
