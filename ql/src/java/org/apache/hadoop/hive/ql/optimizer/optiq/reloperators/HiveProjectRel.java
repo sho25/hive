@@ -350,7 +350,7 @@ name|Integer
 argument_list|>
 name|m_virtualCols
 decl_stmt|;
-comment|/**    * Creates a HiveProjectRel.    *     * @param cluster    *          Cluster this relational expression belongs to    * @param child    *          input relational expression    * @param exps    *          List of expressions for the input columns    * @param rowType    *          output row type    * @param flags    *          values as in {@link ProjectRelBase.Flags}    */
+comment|/**    * Creates a HiveProjectRel.    *    * @param cluster    *          Cluster this relational expression belongs to    * @param child    *          input relational expression    * @param exps    *          List of expressions for the input columns    * @param rowType    *          output row type    * @param flags    *          values as in {@link ProjectRelBase.Flags}    */
 specifier|public
 name|HiveProjectRel
 parameter_list|(
@@ -365,6 +365,8 @@ name|child
 parameter_list|,
 name|List
 argument_list|<
+name|?
+extends|extends
 name|RexNode
 argument_list|>
 name|exps
@@ -406,7 +408,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Creates a HiveProjectRel with no sort keys.    *     * @param child    *          input relational expression    * @param exps    *          set of expressions for the input columns    * @param fieldNames    *          aliases of the expressions    */
+comment|/**    * Creates a HiveProjectRel with no sort keys.    *    * @param child    *          input relational expression    * @param exps    *          set of expressions for the input columns    * @param fieldNames    *          aliases of the expressions    */
 specifier|public
 specifier|static
 name|HiveProjectRel
@@ -417,6 +419,8 @@ name|child
 parameter_list|,
 name|List
 argument_list|<
+name|?
+extends|extends
 name|RexNode
 argument_list|>
 name|exps
@@ -488,6 +492,8 @@ name|child
 parameter_list|,
 name|List
 argument_list|<
+name|?
+extends|extends
 name|RexNode
 argument_list|>
 name|exps
@@ -511,8 +517,6 @@ operator|.
 name|getSelectTraitSet
 argument_list|(
 name|cluster
-argument_list|,
-name|exps
 argument_list|,
 name|child
 argument_list|)
@@ -745,18 +749,14 @@ name|create
 argument_list|(
 name|rel
 argument_list|,
-operator|(
-name|List
-argument_list|<
-name|RexNode
-argument_list|>
-operator|)
 name|outputProjList
 argument_list|,
 name|outputNameList
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ProjectRelBase
 name|copy
@@ -826,6 +826,8 @@ name|makeZeroCost
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|implement
@@ -861,13 +863,15 @@ name|RelNode
 name|createProject
 parameter_list|(
 name|RelNode
-name|input
+name|child
 parameter_list|,
 name|List
 argument_list|<
+name|?
+extends|extends
 name|RexNode
 argument_list|>
-name|exps
+name|childExprs
 parameter_list|,
 name|List
 argument_list|<
@@ -883,9 +887,9 @@ name|HiveProjectRel
 operator|.
 name|create
 argument_list|(
-name|input
+name|child
 argument_list|,
-name|exps
+name|childExprs
 argument_list|,
 name|fieldNames
 argument_list|)
@@ -899,7 +903,7 @@ name|convert
 argument_list|(
 name|project
 argument_list|,
-name|input
+name|child
 operator|.
 name|getTraitSet
 argument_list|()

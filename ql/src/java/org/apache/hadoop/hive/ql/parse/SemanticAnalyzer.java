@@ -1801,28 +1801,6 @@ name|optimizer
 operator|.
 name|optiq
 operator|.
-name|rules
-operator|.
-name|HiveRelFieldTrimmer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|optiq
-operator|.
 name|translator
 operator|.
 name|ASTConverter
@@ -3685,6 +3663,18 @@ name|eigenbase
 operator|.
 name|rel
 operator|.
+name|RelFactories
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|rel
+operator|.
 name|RelFieldCollation
 import|;
 end_import
@@ -4140,6 +4130,18 @@ operator|.
 name|type
 operator|.
 name|SqlTypeName
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|sql2rel
+operator|.
+name|RelFieldTrimmer
 import|;
 end_import
 
@@ -71133,13 +71135,41 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|HiveRelFieldTrimmer
+name|RelFieldTrimmer
 name|fieldTrimmer
 init|=
 operator|new
-name|HiveRelFieldTrimmer
+name|RelFieldTrimmer
 argument_list|(
 literal|null
+argument_list|,
+name|HiveProjectRel
+operator|.
+name|DEFAULT_PROJECT_FACTORY
+argument_list|,
+name|HiveFilterRel
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|,
+name|HiveJoinRel
+operator|.
+name|HIVE_JOIN_FACTORY
+argument_list|,
+name|RelFactories
+operator|.
+name|DEFAULT_SEMI_JOIN_FACTORY
+argument_list|,
+name|HiveSortRel
+operator|.
+name|HIVE_SORT_REL_FACTORY
+argument_list|,
+name|HiveAggregateRel
+operator|.
+name|HIVE_AGGR_REL_FACTORY
+argument_list|,
+name|HiveUnionRel
+operator|.
+name|UNION_REL_FACTORY
 argument_list|)
 decl_stmt|;
 name|basePlan
@@ -72759,7 +72789,7 @@ return|return
 name|joinRel
 return|;
 block|}
-comment|/**      * Generate Join Logical Plan Relnode by walking through the join AST.      *       * @param qb      * @param aliasToRel      *          Alias(Table/Relation alias) to RelNode; only read and not      *          written in to by this method      * @return      * @throws SemanticException      */
+comment|/**      * Generate Join Logical Plan Relnode by walking through the join AST.      *      * @param qb      * @param aliasToRel      *          Alias(Table/Relation alias) to RelNode; only read and not      *          written in to by this method      * @return      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genJoinLogicalPlan
@@ -73920,7 +73950,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|/*        * Handle Subquery predicates.        *         * Notes (8/22/14 hb): Why is this a copy of the code from {@link        * #genFilterPlan} - for now we will support the same behavior as non CBO        * route. - but plan to allow nested SubQueries(Restriction.9.m) and        * multiple SubQuery expressions(Restriction.8.m). This requires use to        * utilize Optiq's Decorrelation mechanics, and for Optiq to fix/flush out        * Null semantics(OPTIQ-373) - besides only the driving code has been        * copied. Most of the code which is SubQueryUtils and QBSubQuery is        * reused.        */
+comment|/*        * Handle Subquery predicates.        *        * Notes (8/22/14 hb): Why is this a copy of the code from {@link        * #genFilterPlan} - for now we will support the same behavior as non CBO        * route. - but plan to allow nested SubQueries(Restriction.9.m) and        * multiple SubQuery expressions(Restriction.8.m). This requires use to        * utilize Optiq's Decorrelation mechanics, and for Optiq to fix/flush out        * Null semantics(OPTIQ-373) - besides only the driving code has been        * copied. Most of the code which is SubQueryUtils and QBSubQuery is        * reused.        */
 name|int
 name|numSrcColumns
 init|=
@@ -76104,7 +76134,7 @@ return|return
 name|aInfo
 return|;
 block|}
-comment|/**      * Generate GB plan.      *       * @param qb      * @param srcRel      * @return TODO: 1. Grouping Sets (roll up..)      * @throws SemanticException      */
+comment|/**      * Generate GB plan.      *      * @param qb      * @param srcRel      * @return TODO: 1. Grouping Sets (roll up..)      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genGBLogicalPlan
@@ -78307,9 +78337,6 @@ name|wndSpecASTIndx
 init|=
 name|getWindowSpecIndx
 argument_list|(
-operator|(
-name|ASTNode
-operator|)
 name|windowProjAst
 argument_list|)
 decl_stmt|;
@@ -79167,7 +79194,7 @@ return|return
 name|selRel
 return|;
 block|}
-comment|/**      * NOTE: there can only be one select caluse since we don't handle multi      * destination insert.      *       * @throws SemanticException      */
+comment|/**      * NOTE: there can only be one select caluse since we don't handle multi      * destination insert.      *      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genSelectLogicalPlan

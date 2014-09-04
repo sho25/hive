@@ -25,37 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Collections
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
 import|;
 end_import
 
@@ -231,18 +201,6 @@ name|eigenbase
 operator|.
 name|relopt
 operator|.
-name|RelOptUtil
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|eigenbase
-operator|.
-name|relopt
-operator|.
 name|RelTraitSet
 import|;
 end_import
@@ -346,6 +304,7 @@ name|JoinAlgorithm
 name|m_joinAlgorithm
 decl_stmt|;
 specifier|private
+specifier|final
 name|MapJoinStreamingRelation
 name|m_mapJoinStreamingSide
 init|=
@@ -671,6 +630,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @return returns rowtype representing only the left join input    */
+annotation|@
+name|Override
 specifier|public
 name|RelDataType
 name|deriveRowType
@@ -727,7 +688,7 @@ name|HiveJoinFactoryImpl
 implements|implements
 name|JoinFactory
 block|{
-comment|/**      * Creates a join.      *       * @param left      *          Left input      * @param right      *          Right input      * @param condition      *          Join condition      * @param joinType      *          Join type      * @param variablesStopped      *          Set of names of variables which are set by the LHS and used by      *          the RHS and are not available to nodes above this JoinRel in the      *          tree      * @param semiJoinDone      *          Whether this join has been translated to a semi-join      */
+comment|/**      * Creates a join.      *      * @param left      *          Left input      * @param right      *          Right input      * @param condition      *          Join condition      * @param joinType      *          Join type      * @param variablesStopped      *          Set of names of variables which are set by the LHS and used by      *          the RHS and are not available to nodes above this JoinRel in the      *          tree      * @param semiJoinDone      *          Whether this join has been translated to a semi-join      */
 annotation|@
 name|Override
 specifier|public

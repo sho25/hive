@@ -81,18 +81,6 @@ name|eigenbase
 operator|.
 name|reltype
 operator|.
-name|RelDataType
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|eigenbase
-operator|.
-name|reltype
-operator|.
 name|RelDataTypeField
 import|;
 end_import
@@ -210,7 +198,7 @@ specifier|public
 class|class
 name|HiveOptiqUtil
 block|{
-comment|/**    * Get list of virtual columns from the given list of projections.    *<p>    *     * @param exps    *          list of rex nodes representing projections    * @return List of Virtual Columns, will not be null.    */
+comment|/**    * Get list of virtual columns from the given list of projections.    *<p>    *    * @param exps    *          list of rex nodes representing projections    * @return List of Virtual Columns, will not be null.    */
 specifier|public
 specifier|static
 name|List
@@ -221,6 +209,8 @@ name|getVirtualCols
 parameter_list|(
 name|List
 argument_list|<
+name|?
+extends|extends
 name|RexNode
 argument_list|>
 name|exps
@@ -325,6 +315,8 @@ name|RexNode
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|RexNode
 name|apply
@@ -440,7 +432,7 @@ name|String
 name|s
 parameter_list|)
 block|{   }
-comment|/**    * Push any equi join conditions that are not column references as Projections    * on top of the children.    *     * @param factory    *          Project factory to use.    * @param inputRels    *          inputs to a join    * @param leftJoinKeys    *          expressions for LHS of join key    * @param rightJoinKeys    *          expressions for RHS of join key    * @param systemColCount    *          number of system columns, usually zero. These columns are    *          projected at the leading edge of the output row.    * @param leftKeys       on return this contains the join key positions from    *                       the new project rel on the LHS.    * @param rightKeys      on return this contains the join key positions from    *                       the new project rel on the RHS.    * @return the join condition after the equi expressions pushed down.    */
+comment|/**    * Push any equi join conditions that are not column references as Projections    * on top of the children.    *    * @param factory    *          Project factory to use.    * @param inputRels    *          inputs to a join    * @param leftJoinKeys    *          expressions for LHS of join key    * @param rightJoinKeys    *          expressions for RHS of join key    * @param systemColCount    *          number of system columns, usually zero. These columns are    *          projected at the leading edge of the output row.    * @param leftKeys       on return this contains the join key positions from    *                       the new project rel on the LHS.    * @param rightKeys      on return this contains the join key positions from    *                       the new project rel on the RHS.    * @return the join condition after the equi expressions pushed down.    */
 specifier|public
 specifier|static
 name|RexNode
