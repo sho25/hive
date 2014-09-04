@@ -8829,7 +8829,6 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-operator|(
 name|SequenceFile
 operator|.
 name|createWriter
@@ -8850,7 +8849,6 @@ name|codec
 argument_list|,
 name|progressable
 argument_list|)
-operator|)
 return|;
 block|}
 comment|/**    * Create a RCFile output stream based on job configuration Uses user supplied compression flag    * (rather than obtaining it from the Job Configuration).    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @return output stream over the created rcfile    */
@@ -15804,7 +15802,7 @@ parameter_list|,
 name|PreparedStatement
 name|stmt
 parameter_list|,
-name|int
+name|long
 name|baseWindow
 parameter_list|,
 name|int
@@ -15937,7 +15935,7 @@ parameter_list|(
 name|String
 name|connectionString
 parameter_list|,
-name|int
+name|long
 name|waitWindow
 parameter_list|,
 name|int
@@ -16064,7 +16062,7 @@ parameter_list|,
 name|String
 name|stmt
 parameter_list|,
-name|int
+name|long
 name|waitWindow
 parameter_list|,
 name|int
@@ -16184,7 +16182,7 @@ specifier|static
 name|long
 name|getRandomWaitTime
 parameter_list|(
-name|int
+name|long
 name|baseWindow
 parameter_list|,
 name|int
@@ -18586,7 +18584,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Returns true if a plan is both configured for vectorized execution    * and vectorization is allowed. The plan may be configured for vectorization    * but vectorization dissalowed eg. for FetchOperator execution.    */
+comment|/**    * Returns true if a plan is both configured for vectorized execution    * and vectorization is allowed. The plan may be configured for vectorization    * but vectorization disallowed eg. for FetchOperator execution.    */
 specifier|public
 specifier|static
 name|boolean

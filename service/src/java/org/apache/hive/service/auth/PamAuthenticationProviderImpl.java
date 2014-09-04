@@ -79,8 +79,6 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
-name|this
-operator|.
 name|pamServiceNames
 operator|=
 name|conf
@@ -134,8 +132,8 @@ argument_list|)
 throw|;
 block|}
 name|String
-name|pamServices
 index|[]
+name|pamServices
 init|=
 name|pamServiceNames
 operator|.

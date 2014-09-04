@@ -1362,7 +1362,7 @@ index|[
 name|i
 index|]
 operator|>
-name|o1
+name|o2
 index|[
 name|i
 index|]

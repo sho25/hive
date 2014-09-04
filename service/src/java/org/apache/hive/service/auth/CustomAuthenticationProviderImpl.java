@@ -59,6 +59,10 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_comment
+comment|/**  * This authentication provider implements the {@code CUSTOM} authentication. It allows a {@link  * PasswdAuthenticationProvider} to be specified at configuration time which may additionally  * implement {@link org.apache.hadoop.conf.Configurable Configurable} to grab Hive's {@link  * org.apache.hadoop.conf.Configuration Configuration}.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -66,14 +70,8 @@ name|CustomAuthenticationProviderImpl
 implements|implements
 name|PasswdAuthenticationProvider
 block|{
-name|Class
-argument_list|<
-name|?
-extends|extends
-name|PasswdAuthenticationProvider
-argument_list|>
-name|customHandlerClass
-decl_stmt|;
+specifier|private
+specifier|final
 name|PasswdAuthenticationProvider
 name|customProvider
 decl_stmt|;
@@ -92,10 +90,14 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
-name|this
-operator|.
+name|Class
+argument_list|<
+name|?
+extends|extends
+name|PasswdAuthenticationProvider
+argument_list|>
 name|customHandlerClass
-operator|=
+init|=
 operator|(
 name|Class
 argument_list|<
@@ -120,17 +122,13 @@ name|PasswdAuthenticationProvider
 operator|.
 name|class
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
+decl_stmt|;
 name|customProvider
 operator|=
 name|ReflectionUtils
 operator|.
 name|newInstance
 argument_list|(
-name|this
-operator|.
 name|customHandlerClass
 argument_list|,
 name|conf
@@ -152,8 +150,6 @@ parameter_list|)
 throws|throws
 name|AuthenticationException
 block|{
-name|this
-operator|.
 name|customProvider
 operator|.
 name|Authenticate

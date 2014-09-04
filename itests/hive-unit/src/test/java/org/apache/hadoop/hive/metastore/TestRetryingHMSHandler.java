@@ -49,6 +49,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|junit
 operator|.
 name|framework
@@ -398,7 +410,7 @@ argument_list|)
 expr_stmt|;
 name|hiveConf
 operator|.
-name|setIntVar
+name|setTimeVar
 argument_list|(
 name|HiveConf
 operator|.
@@ -407,6 +419,10 @@ operator|.
 name|HMSHANDLERINTERVAL
 argument_list|,
 literal|0
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
 expr_stmt|;
 name|hiveConf

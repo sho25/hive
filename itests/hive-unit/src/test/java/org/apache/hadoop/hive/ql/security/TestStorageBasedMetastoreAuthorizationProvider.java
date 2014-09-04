@@ -31,16 +31,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|security
-operator|.
-name|AccessControlException
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -170,7 +160,7 @@ name|setPermissions
 argument_list|(
 name|location
 argument_list|,
-literal|"-rwxr--r--"
+literal|"-rwxr--r-t"
 argument_list|)
 expr_stmt|;
 block|}
@@ -300,7 +290,7 @@ name|setPermissions
 argument_list|(
 name|location
 argument_list|,
-literal|"-rwxr--r--"
+literal|"-rwxr--r-t"
 argument_list|)
 expr_stmt|;
 block|}

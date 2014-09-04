@@ -1009,7 +1009,7 @@ name|NUM_BUCKETS
 argument_list|,
 name|sd
 operator|.
-name|getBucketColsSize
+name|getNumBuckets
 argument_list|()
 argument_list|)
 expr_stmt|;

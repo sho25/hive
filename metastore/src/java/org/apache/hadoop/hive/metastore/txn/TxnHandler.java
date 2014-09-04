@@ -293,6 +293,18 @@ name|*
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
 begin_comment
 comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  */
 end_comment
@@ -564,7 +576,7 @@ name|timeout
 operator|=
 name|HiveConf
 operator|.
-name|getIntVar
+name|getTimeVar
 argument_list|(
 name|conf
 argument_list|,
@@ -573,9 +585,11 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_TXN_TIMEOUT
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
-operator|*
-literal|1000
 expr_stmt|;
 name|deadlockCnt
 operator|=

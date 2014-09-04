@@ -397,7 +397,7 @@ name|authenticator
 decl_stmt|;
 specifier|private
 specifier|final
-name|SQLStdHiveAccessController
+name|SQLStdHiveAccessControllerWrapper
 name|privController
 decl_stmt|;
 specifier|public
@@ -427,8 +427,8 @@ parameter_list|,
 name|HiveAuthenticationProvider
 name|authenticator
 parameter_list|,
-name|SQLStdHiveAccessController
-name|privController
+name|SQLStdHiveAccessControllerWrapper
+name|privilegeManager
 parameter_list|)
 block|{
 name|this
@@ -453,7 +453,7 @@ name|this
 operator|.
 name|privController
 operator|=
-name|privController
+name|privilegeManager
 expr_stmt|;
 block|}
 annotation|@

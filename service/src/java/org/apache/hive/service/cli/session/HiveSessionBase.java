@@ -234,6 +234,10 @@ name|String
 name|ipAddress
 parameter_list|)
 function_decl|;
+name|long
+name|getLastAccessTime
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

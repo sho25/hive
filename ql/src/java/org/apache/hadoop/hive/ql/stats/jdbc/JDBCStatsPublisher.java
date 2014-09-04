@@ -143,6 +143,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -302,7 +314,9 @@ decl_stmt|;
 specifier|private
 name|int
 name|maxRetries
-decl_stmt|,
+decl_stmt|;
+specifier|private
+name|long
 name|waitWindow
 decl_stmt|;
 specifier|private
@@ -356,7 +370,7 @@ name|waitWindow
 operator|=
 name|HiveConf
 operator|.
-name|getIntVar
+name|getTimeVar
 argument_list|(
 name|hiveconf
 argument_list|,
@@ -365,6 +379,10 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_STATS_RETRIES_WAIT
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
 expr_stmt|;
 name|connectionString
@@ -384,9 +402,12 @@ argument_list|)
 expr_stmt|;
 name|timeout
 operator|=
+operator|(
+name|int
+operator|)
 name|HiveConf
 operator|.
-name|getIntVar
+name|getTimeVar
 argument_list|(
 name|hiveconf
 argument_list|,
@@ -395,6 +416,10 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_STATS_JDBC_TIMEOUT
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
 argument_list|)
 expr_stmt|;
 name|String
