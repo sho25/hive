@@ -1328,12 +1328,6 @@ parameter_list|(
 name|long
 name|currentTransaction
 parameter_list|,
-name|long
-name|originalTransaction
-parameter_list|,
-name|long
-name|rowId
-parameter_list|,
 name|Object
 name|row
 parameter_list|)
@@ -1351,14 +1345,6 @@ operator|+
 literal|" currTxn: "
 operator|+
 name|currentTransaction
-operator|+
-literal|" origTxn: "
-operator|+
-name|originalTransaction
-operator|+
-literal|" row: "
-operator|+
-name|rowId
 operator|+
 literal|" obj: "
 operator|+
@@ -1380,11 +1366,8 @@ parameter_list|(
 name|long
 name|currentTransaction
 parameter_list|,
-name|long
-name|originalTransaction
-parameter_list|,
-name|long
-name|rowId
+name|Object
+name|row
 parameter_list|)
 throws|throws
 name|IOException
@@ -1401,13 +1384,9 @@ literal|" currTxn: "
 operator|+
 name|currentTransaction
 operator|+
-literal|" origTxn: "
+literal|" obj: "
 operator|+
-name|originalTransaction
-operator|+
-literal|" row: "
-operator|+
-name|rowId
+name|row
 argument_list|)
 expr_stmt|;
 block|}
