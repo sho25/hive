@@ -1865,6 +1865,15 @@ name|conf
 operator|.
 name|set
 argument_list|(
+literal|"tez.am.log.level"
+argument_list|,
+literal|"DEBUG"
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
 name|MRJobConfig
 operator|.
 name|MR_AM_STAGING_DIR

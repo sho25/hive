@@ -193,16 +193,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -537,7 +527,7 @@ name|tez
 operator|.
 name|client
 operator|.
-name|TezSession
+name|TezClient
 import|;
 end_import
 
@@ -731,7 +721,7 @@ decl_stmt|;
 name|TezTask
 name|task
 decl_stmt|;
-name|TezSession
+name|TezClient
 name|session
 decl_stmt|;
 name|TezSessionState
@@ -934,8 +924,9 @@ name|getArguments
 argument_list|()
 decl_stmt|;
 return|return
-operator|new
 name|Vertex
+operator|.
+name|create
 argument_list|(
 operator|(
 operator|(
@@ -993,13 +984,6 @@ argument_list|)
 argument_list|,
 name|any
 argument_list|(
-name|JobConf
-operator|.
-name|class
-argument_list|)
-argument_list|,
-name|any
-argument_list|(
 name|Vertex
 operator|.
 name|class
@@ -1045,8 +1029,9 @@ name|getArguments
 argument_list|()
 decl_stmt|;
 return|return
-operator|new
 name|Edge
+operator|.
+name|create
 argument_list|(
 operator|(
 name|Vertex
@@ -1061,7 +1046,7 @@ name|Vertex
 operator|)
 name|args
 index|[
-literal|3
+literal|2
 index|]
 argument_list|,
 name|mock
@@ -1431,7 +1416,7 @@ name|session
 operator|=
 name|mock
 argument_list|(
-name|TezSession
+name|TezClient
 operator|.
 name|class
 argument_list|)
@@ -1467,13 +1452,6 @@ argument_list|(
 name|any
 argument_list|(
 name|DAG
-operator|.
-name|class
-argument_list|)
-argument_list|,
-name|any
-argument_list|(
-name|Map
 operator|.
 name|class
 argument_list|)
@@ -1645,7 +1623,7 @@ if|if
 condition|(
 name|u
 operator|.
-name|getVertexName
+name|getName
 argument_list|()
 operator|.
 name|equals
@@ -1739,8 +1717,9 @@ block|{
 name|DAG
 name|dag
 init|=
-operator|new
 name|DAG
+operator|.
+name|create
 argument_list|(
 literal|"test"
 argument_list|)
@@ -1819,13 +1798,6 @@ argument_list|(
 name|any
 argument_list|(
 name|DAG
-operator|.
-name|class
-argument_list|)
-argument_list|,
-name|any
-argument_list|(
-name|Map
 operator|.
 name|class
 argument_list|)
