@@ -662,6 +662,10 @@ argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
+name|hashMapRowGetters
+operator|=
+literal|null
+expr_stmt|;
 name|mapJoinTables
 operator|=
 operator|(
