@@ -85,18 +85,12 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Update an old record with a new set of values.    * @param currentTransaction the current transaction id    * @param originalTransaction the row's original transaction id    * @param rowId the original row id    * @param row the new values for the row    * @throws IOException    */
+comment|/**    * Update an old record with a new set of values.    * @param currentTransaction the current transaction id    * @param row the new values for the row    * @throws IOException    */
 name|void
 name|update
 parameter_list|(
 name|long
 name|currentTransaction
-parameter_list|,
-name|long
-name|originalTransaction
-parameter_list|,
-name|long
-name|rowId
 parameter_list|,
 name|Object
 name|row
@@ -104,18 +98,15 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Delete a row from the table.    * @param currentTransaction the current transaction id    * @param originalTransaction the rows original transaction id    * @param rowId the original row id    * @throws IOException    */
+comment|/**    * Delete a row from the table.    * @param currentTransaction the current transaction id    * @throws IOException    */
 name|void
 name|delete
 parameter_list|(
 name|long
 name|currentTransaction
 parameter_list|,
-name|long
-name|originalTransaction
-parameter_list|,
-name|long
-name|rowId
+name|Object
+name|row
 parameter_list|)
 throws|throws
 name|IOException

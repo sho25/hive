@@ -649,7 +649,6 @@ name|String
 name|password
 decl_stmt|;
 specifier|private
-specifier|final
 name|HiveConf
 name|hiveConf
 decl_stmt|;
@@ -1436,6 +1435,7 @@ expr_stmt|;
 block|}
 annotation|@
 name|Override
+comment|/**    * Opens a new HiveServer2 session for the client connection.    * Note that if doAs is true, this call goes through a proxy object,    * which wraps the method logic in a UserGroupInformation#doAs.    * That is why it is important to call SessionState#start here rather than the constructor.    */
 specifier|public
 name|void
 name|open

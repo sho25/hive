@@ -691,6 +691,13 @@ index|[]
 name|args
 parameter_list|)
 block|{
+name|HiveConf
+operator|.
+name|setLoadHiveServer2Config
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|ServerOptionsProcessor

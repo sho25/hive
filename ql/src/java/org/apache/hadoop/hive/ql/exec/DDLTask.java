@@ -24513,6 +24513,17 @@ literal|1
 index|]
 argument_list|)
 expr_stmt|;
+comment|// using old table object, hence reset the owner to current user for new table.
+name|tbl
+operator|.
+name|setOwner
+argument_list|(
+name|SessionState
+operator|.
+name|getUserFromAuthenticator
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|crtTbl
