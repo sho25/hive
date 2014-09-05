@@ -110,7 +110,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|StringConcatColCol
+name|StringGroupConcatColCol
 extends|extends
 name|VectorExpression
 block|{
@@ -135,7 +135,7 @@ name|int
 name|outputColumn
 decl_stmt|;
 specifier|public
-name|StringConcatColCol
+name|StringGroupConcatColCol
 parameter_list|(
 name|int
 name|colNum1
@@ -170,7 +170,7 @@ name|outputColumn
 expr_stmt|;
 block|}
 specifier|public
-name|StringConcatColCol
+name|StringGroupConcatColCol
 parameter_list|()
 block|{
 name|super
@@ -3046,7 +3046,7 @@ name|getOutputType
 parameter_list|()
 block|{
 return|return
-literal|"String"
+literal|"StringGroup"
 return|;
 block|}
 specifier|public
@@ -3150,13 +3150,13 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|STRING
+name|STRING_FAMILY
 argument_list|,
 name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|STRING
+name|STRING_FAMILY
 argument_list|)
 operator|.
 name|setInputExpressionTypes

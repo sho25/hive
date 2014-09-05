@@ -1018,7 +1018,14 @@ break|break;
 case|case
 name|STRING
 case|:
+case|case
+name|CHAR
+case|:
+case|case
+name|VARCHAR
+case|:
 block|{
+comment|// Is it correct to escape CHAR and VARCHAR?
 name|BytesColumnVector
 name|bcv
 init|=

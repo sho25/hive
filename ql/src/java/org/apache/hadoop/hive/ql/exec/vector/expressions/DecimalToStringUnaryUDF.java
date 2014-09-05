@@ -633,7 +633,7 @@ name|getOutputType
 parameter_list|()
 block|{
 return|return
-literal|"Decimal"
+literal|"String"
 return|;
 block|}
 annotation|@
