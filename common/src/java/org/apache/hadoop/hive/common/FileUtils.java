@@ -2778,6 +2778,16 @@ comment|//   b. User is owner of the parent dir
 comment|//   Super users are also allowed to drop the file, but there is no good way of checking
 comment|//   if a user is a super user. Also super users running hive queries is not a common
 comment|//   use case. super users can also do a chown to be able to drop the file
+if|if
+condition|(
+name|path
+operator|==
+literal|null
+condition|)
+block|{
+comment|// no file/dir to be deleted
+return|return;
+block|}
 specifier|final
 name|FileSystem
 name|fs
