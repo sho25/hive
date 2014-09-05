@@ -1006,7 +1006,7 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|STRING
+name|STRING_FAMILY
 argument_list|)
 operator|.
 name|setInputExpressionTypes

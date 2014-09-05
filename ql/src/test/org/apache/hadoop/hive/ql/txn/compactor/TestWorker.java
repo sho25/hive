@@ -131,16 +131,6 @@ name|org
 operator|.
 name|junit
 operator|.
-name|After
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
 name|Before
 import|;
 end_import
@@ -4048,7 +4038,7 @@ name|getState
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// There should still now be 5 directories in the location
+comment|// There should now be 3 directories in the location
 name|FileSystem
 name|fs
 init|=

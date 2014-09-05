@@ -797,6 +797,11 @@ name|txns
 parameter_list|,
 name|boolean
 name|isMajor
+parameter_list|,
+name|Worker
+operator|.
+name|StatsUpdater
+name|su
 parameter_list|)
 throws|throws
 name|IOException
@@ -1424,6 +1429,11 @@ name|job
 argument_list|)
 operator|.
 name|waitForCompletion
+argument_list|()
+expr_stmt|;
+name|su
+operator|.
+name|gatherStats
 argument_list|()
 expr_stmt|;
 block|}

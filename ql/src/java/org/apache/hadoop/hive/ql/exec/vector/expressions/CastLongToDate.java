@@ -723,6 +723,22 @@ name|outV
 argument_list|)
 expr_stmt|;
 break|break;
+default|default:
+throw|throw
+operator|new
+name|Error
+argument_list|(
+literal|"Unsupported input type "
+operator|+
+name|inputTypes
+index|[
+literal|0
+index|]
+operator|.
+name|name
+argument_list|()
+argument_list|)
+throw|;
 block|}
 block|}
 annotation|@
@@ -828,7 +844,7 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|LONG
+name|DATETIME_FAMILY
 argument_list|)
 operator|.
 name|setInputExpressionTypes

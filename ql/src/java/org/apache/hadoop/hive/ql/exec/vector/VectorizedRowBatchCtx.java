@@ -1564,7 +1564,7 @@ operator|)
 name|foi
 decl_stmt|;
 comment|// Vectorization currently only supports the following data types:
-comment|// BOOLEAN, BYTE, SHORT, INT, LONG, FLOAT, DOUBLE, BINARY, STRING, TIMESTAMP,
+comment|// BOOLEAN, BYTE, SHORT, INT, LONG, FLOAT, DOUBLE, BINARY, STRING, CHAR, VARCHAR, TIMESTAMP,
 comment|// DATE and DECIMAL
 switch|switch
 condition|(
@@ -1638,6 +1638,12 @@ name|BINARY
 case|:
 case|case
 name|STRING
+case|:
+case|case
+name|CHAR
+case|:
+case|case
+name|VARCHAR
 case|:
 name|result
 operator|.
@@ -2844,6 +2850,12 @@ break|break;
 case|case
 name|STRING
 case|:
+case|case
+name|CHAR
+case|:
+case|case
+name|VARCHAR
+case|:
 block|{
 name|BytesColumnVector
 name|bcv
@@ -2944,6 +2956,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|vrb
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(
@@ -3012,6 +3026,33 @@ name|i
 operator|++
 control|)
 block|{
+name|String
+name|typeName
+init|=
+name|columnTypeMap
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|typeName
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"No type found for column type entry "
+operator|+
+name|i
+argument_list|)
+throw|;
+block|}
 name|vrb
 operator|.
 name|cols
@@ -3021,12 +3062,7 @@ index|]
 operator|=
 name|allocateColumnVector
 argument_list|(
-name|columnTypeMap
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
+name|typeName
 argument_list|,
 name|VectorizedRowBatch
 operator|.
@@ -3158,11 +3194,11 @@ block|}
 elseif|else
 if|if
 condition|(
-name|type
+name|VectorizationContext
 operator|.
-name|equalsIgnoreCase
+name|isStringFamily
 argument_list|(
-literal|"string"
+name|type
 argument_list|)
 condition|)
 block|{
@@ -3217,7 +3253,30 @@ index|]
 argument_list|)
 return|;
 block|}
-else|else
+elseif|else
+if|if
+condition|(
+name|type
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"long"
+argument_list|)
+operator|||
+name|type
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"date"
+argument_list|)
+operator|||
+name|type
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"timestamp"
+argument_list|)
+condition|)
 block|{
 return|return
 operator|new
@@ -3226,6 +3285,18 @@ argument_list|(
 name|defaultSize
 argument_list|)
 return|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|Error
+argument_list|(
+literal|"Cannot allocate vector column for "
+operator|+
+name|type
+argument_list|)
+throw|;
 block|}
 block|}
 specifier|public
