@@ -21,7 +21,38 @@ name|generic
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Description
+import|;
+end_import
+
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"to_utc_timestamp"
+argument_list|,
+name|value
+operator|=
+literal|"to_utc_timestamp(timestamp, string timezone) - "
+operator|+
+literal|"Assumes given timestamp is in given timezone and converts to UTC (as of Hive 0.8.0)"
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFToUtcTimestamp

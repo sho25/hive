@@ -70561,8 +70561,15 @@ name|runOptiqPlanner
 init|=
 literal|false
 decl_stmt|;
+comment|// Assumption: If top level QB is query then everything below it must also
+comment|// be Query
 if|if
 condition|(
+name|qb
+operator|.
+name|getIsQuery
+argument_list|()
+operator|&&
 operator|(
 operator|(
 name|queryProperties
@@ -71115,6 +71122,16 @@ name|LOG
 operator|.
 name|isDebugEnabled
 argument_list|()
+operator|&&
+operator|!
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST
+argument_list|)
 condition|)
 block|{
 name|LOG
