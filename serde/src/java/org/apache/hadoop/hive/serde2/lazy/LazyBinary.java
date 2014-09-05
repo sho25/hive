@@ -317,6 +317,19 @@ argument_list|)
 else|:
 name|recv
 decl_stmt|;
+comment|// use the original bytes in case decoding should fail
+name|decoded
+operator|=
+name|decoded
+operator|.
+name|length
+operator|>
+literal|0
+condition|?
+name|decoded
+else|:
+name|recv
+expr_stmt|;
 name|data
 operator|.
 name|set
