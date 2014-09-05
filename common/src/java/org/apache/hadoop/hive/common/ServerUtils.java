@@ -90,7 +90,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * ServerUtils.  *  */
+comment|/**  * ServerUtils (specific to HiveServer version 1)  */
 end_comment
 
 begin_class

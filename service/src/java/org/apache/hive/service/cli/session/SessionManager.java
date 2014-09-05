@@ -1315,13 +1315,15 @@ block|{
 name|HiveSession
 name|session
 decl_stmt|;
+comment|// If doAs is set to true for HiveServer2, we will create a proxy object for the session impl.
+comment|// Within the proxy object, we wrap the method call in a UserGroupInformation#doAs
 if|if
 condition|(
 name|withImpersonation
 condition|)
 block|{
 name|HiveSessionImplwithUGI
-name|hiveSessionUgi
+name|sessionWithUGI
 init|=
 operator|new
 name|HiveSessionImplwithUGI
@@ -1345,15 +1347,15 @@ name|HiveSessionProxy
 operator|.
 name|getProxy
 argument_list|(
-name|hiveSessionUgi
+name|sessionWithUGI
 argument_list|,
-name|hiveSessionUgi
+name|sessionWithUGI
 operator|.
 name|getSessionUgi
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|hiveSessionUgi
+name|sessionWithUGI
 operator|.
 name|setProxySession
 argument_list|(

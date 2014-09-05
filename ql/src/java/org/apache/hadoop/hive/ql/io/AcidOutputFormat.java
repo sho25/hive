@@ -243,6 +243,14 @@ name|oldStyle
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+name|int
+name|recIdCol
+init|=
+operator|-
+literal|1
+decl_stmt|;
+comment|// Column the record identifier is in, -1 indicates no record id
 comment|/**      * Create the options object.      * @param conf Use the given configuration      */
 specifier|public
 name|Options
@@ -445,6 +453,25 @@ return|return
 name|this
 return|;
 block|}
+comment|/**      * Which column the row id field is in.      * @param recIdCol      * @return this      */
+specifier|public
+name|Options
+name|recordIdColumn
+parameter_list|(
+name|int
+name|recIdCol
+parameter_list|)
+block|{
+name|this
+operator|.
+name|recIdCol
+operator|=
+name|recIdCol
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
 comment|/**      * Temporary switch while we are in development that replaces the      * implementation with a dummy one that just prints to stream.      * @param stream the stream to print to      * @return this      */
 specifier|public
 name|Options
@@ -552,6 +579,15 @@ parameter_list|()
 block|{
 return|return
 name|bucket
+return|;
+block|}
+specifier|public
+name|int
+name|getRecordIdColumn
+parameter_list|()
+block|{
+return|return
+name|recIdCol
 return|;
 block|}
 specifier|public
