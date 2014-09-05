@@ -71157,10 +71157,6 @@ operator|.
 name|toString
 argument_list|(
 name|optiqGenPlan
-argument_list|,
-name|SqlExplainLevel
-operator|.
-name|ALL_ATTRIBUTES
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -71180,10 +71176,6 @@ operator|.
 name|toString
 argument_list|(
 name|optiqPreCboPlan
-argument_list|,
-name|SqlExplainLevel
-operator|.
-name|ALL_ATTRIBUTES
 argument_list|)
 argument_list|)
 expr_stmt|;
