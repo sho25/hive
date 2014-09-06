@@ -63,6 +63,9 @@ operator|,
 name|LIST
 argument_list|()
 operator|,
+name|RELOAD
+argument_list|()
+operator|,
 name|DELETE
 argument_list|()
 operator|,

@@ -2812,6 +2812,18 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// reloadable jars
+name|HIVERELOADABLEJARS
+argument_list|(
+literal|"hive.reloadable.aux.jars.path"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Jars can be renewed by executing reload command. And these jars can be "
+operator|+
+literal|"used as the auxiliary classes like creating a UDF or SerDe."
+argument_list|)
+block|,
 comment|// hive added files and jars
 name|HIVEADDEDFILES
 argument_list|(
@@ -6533,7 +6545,7 @@ name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
 argument_list|,
-literal|"set,reset,dfs,add,list,delete,compile"
+literal|"set,reset,dfs,add,list,delete,reload,compile"
 argument_list|,
 literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
 argument_list|)
