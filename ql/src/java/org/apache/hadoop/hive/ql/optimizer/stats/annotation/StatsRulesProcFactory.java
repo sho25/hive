@@ -4182,6 +4182,17 @@ operator|.
 name|newHashMap
 argument_list|()
 decl_stmt|;
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|rowCounts
+init|=
+name|Lists
+operator|.
+name|newArrayList
+argument_list|()
+decl_stmt|;
 comment|// get the join keys from parent ReduceSink operators
 for|for
 control|(
@@ -4283,6 +4294,16 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|rowCounts
+operator|.
+name|add
+argument_list|(
+name|parentStats
+operator|.
+name|getNumRows
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// multi-attribute join key
 if|if
 condition|(
@@ -4825,15 +4846,7 @@ name|newRowCount
 init|=
 name|computeNewRowCount
 argument_list|(
-name|Lists
-operator|.
-name|newArrayList
-argument_list|(
-name|rowCountParents
-operator|.
-name|values
-argument_list|()
-argument_list|)
+name|rowCounts
 argument_list|,
 name|denom
 argument_list|)
