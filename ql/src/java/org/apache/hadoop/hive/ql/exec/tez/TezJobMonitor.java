@@ -801,7 +801,7 @@ literal|"Status: Running (application id: "
 operator|+
 name|dagClient
 operator|.
-name|getApplicationId
+name|getExecutionContext
 argument_list|()
 operator|+
 literal|")\n"

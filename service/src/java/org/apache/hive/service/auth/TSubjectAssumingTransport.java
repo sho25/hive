@@ -114,7 +114,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**   *   * This is used on the client side, where the API explicitly opens a transport to   * the server using the Subject.doAs()   */
+comment|/**  * This is used on the client side, where the API explicitly opens a transport to  * the server using the Subject.doAs().  */
 end_comment
 
 begin_class

@@ -65,36 +65,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|fs
-operator|.
-name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|ql
@@ -159,26 +129,8 @@ name|NodeProcessorCtx
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|GenMapRedUtils
-import|;
-end_import
-
 begin_comment
-comment|/**  * FileSinkProcessor handles addition of merge, move and stats tasks for filesinks  *  */
+comment|/**  * FileSinkProcessor is a simple rule to remember seen file sinks for later  * processing.  *  */
 end_comment
 
 begin_class
@@ -208,7 +160,6 @@ argument_list|)
 decl_stmt|;
 annotation|@
 name|Override
-comment|/*    * (non-Javadoc)    * we should ideally not modify the tree we traverse.    * However, since we need to walk the tree at any time when we modify the    * operator, we might as well do it here.    */
 specifier|public
 name|Object
 name|process

@@ -4649,7 +4649,9 @@ argument_list|(
 operator|new
 name|byte
 index|[]
-block|{}
+block|{
+literal|'\n'
+block|}
 argument_list|)
 argument_list|,
 name|ba

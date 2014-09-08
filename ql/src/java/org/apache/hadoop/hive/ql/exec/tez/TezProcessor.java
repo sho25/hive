@@ -233,7 +233,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|Event
+name|AbstractLogicalIOProcessor
 import|;
 end_import
 
@@ -249,7 +249,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|LogicalIOProcessor
+name|Event
 import|;
 end_import
 
@@ -297,7 +297,7 @@ name|runtime
 operator|.
 name|api
 operator|.
-name|TezProcessorContext
+name|ProcessorContext
 import|;
 end_import
 
@@ -327,8 +327,8 @@ begin_class
 specifier|public
 class|class
 name|TezProcessor
-implements|implements
-name|LogicalIOProcessor
+extends|extends
+name|AbstractLogicalIOProcessor
 block|{
 specifier|private
 specifier|static
@@ -345,7 +345,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|private
+specifier|protected
 name|boolean
 name|isMap
 init|=
@@ -382,10 +382,6 @@ name|PerfLogger
 operator|.
 name|getPerfLogger
 argument_list|()
-decl_stmt|;
-specifier|private
-name|TezProcessorContext
-name|processorContext
 decl_stmt|;
 specifier|protected
 specifier|static
@@ -443,15 +439,24 @@ block|}
 specifier|public
 name|TezProcessor
 parameter_list|(
-name|boolean
-name|isMap
+name|ProcessorContext
+name|context
 parameter_list|)
 block|{
-name|this
+name|super
+argument_list|(
+name|context
+argument_list|)
+expr_stmt|;
+name|ObjectCache
 operator|.
-name|isMap
-operator|=
-name|isMap
+name|setupObjectRegistry
+argument_list|(
+name|context
+operator|.
+name|getObjectRegistry
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@
@@ -487,10 +492,7 @@ name|Override
 specifier|public
 name|void
 name|initialize
-parameter_list|(
-name|TezProcessorContext
-name|processorContext
-parameter_list|)
+parameter_list|()
 throws|throws
 name|IOException
 block|{
@@ -505,22 +507,6 @@ operator|.
 name|TEZ_INITIALIZE_PROCESSOR
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
-name|processorContext
-operator|=
-name|processorContext
-expr_stmt|;
-comment|//get the jobconf
-name|byte
-index|[]
-name|userPayload
-init|=
-name|processorContext
-operator|.
-name|getUserPayload
-argument_list|()
-decl_stmt|;
 name|Configuration
 name|conf
 init|=
@@ -528,7 +514,11 @@ name|TezUtils
 operator|.
 name|createConfFromUserPayload
 argument_list|(
-name|userPayload
+name|getContext
+argument_list|()
+operator|.
+name|getUserPayload
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|this
@@ -543,7 +533,8 @@ argument_list|)
 expr_stmt|;
 name|setupMRLegacyConfigs
 argument_list|(
-name|processorContext
+name|getContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|perfLogger
@@ -562,7 +553,7 @@ specifier|private
 name|void
 name|setupMRLegacyConfigs
 parameter_list|(
-name|TezProcessorContext
+name|ProcessorContext
 name|processorContext
 parameter_list|)
 block|{
@@ -764,7 +755,8 @@ name|info
 argument_list|(
 literal|"Running task: "
 operator|+
-name|processorContext
+name|getContext
+argument_list|()
 operator|.
 name|getUniqueIdentifier
 argument_list|()
@@ -779,7 +771,9 @@ name|rproc
 operator|=
 operator|new
 name|MapRecordProcessor
-argument_list|()
+argument_list|(
+name|jobConf
+argument_list|)
 expr_stmt|;
 name|MRInputLegacy
 name|mrInput
@@ -912,7 +906,8 @@ init|=
 operator|new
 name|MRTaskReporter
 argument_list|(
-name|processorContext
+name|getContext
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|rproc
@@ -921,7 +916,8 @@ name|init
 argument_list|(
 name|jobConf
 argument_list|,
-name|processorContext
+name|getContext
+argument_list|()
 argument_list|,
 name|mrReporter
 argument_list|,
@@ -1104,6 +1100,8 @@ name|getWriter
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|collect

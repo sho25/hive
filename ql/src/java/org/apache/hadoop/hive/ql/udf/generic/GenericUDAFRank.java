@@ -907,7 +907,7 @@ name|addRank
 argument_list|()
 expr_stmt|;
 block|}
-comment|/* 		 * Called when the value in the partition has changed. Update the currentRank 		 */
+comment|/*      * Called when the value in the partition has changed. Update the currentRank      */
 specifier|protected
 name|void
 name|nextRank

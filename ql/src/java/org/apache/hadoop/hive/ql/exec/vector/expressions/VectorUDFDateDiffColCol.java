@@ -1296,6 +1296,12 @@ return|;
 case|case
 name|STRING
 case|:
+case|case
+name|CHAR
+case|:
+case|case
+name|VARCHAR
+case|:
 name|BytesColumnVector
 name|bcv
 init|=
@@ -1326,10 +1332,20 @@ expr_stmt|;
 return|return
 name|dateVector
 return|;
+default|default:
+throw|throw
+operator|new
+name|Error
+argument_list|(
+literal|"Unsupported input type "
+operator|+
+name|colType
+operator|.
+name|name
+argument_list|()
+argument_list|)
+throw|;
 block|}
-return|return
-literal|null
-return|;
 block|}
 comment|// Copy the current object contents into the output. Only copy selected entries,
 comment|// as indicated by selectedInUse and the sel array.
@@ -1951,13 +1967,13 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|ANY
+name|STRING_DATETIME_FAMILY
 argument_list|,
 name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|ANY
+name|STRING_DATETIME_FAMILY
 argument_list|)
 operator|.
 name|setInputExpressionTypes

@@ -15831,8 +15831,32 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+operator|||
+operator|(
+name|joinKeys
+index|[
+name|i
+index|]
+operator|instanceof
+name|ExprNodeColumnDesc
+operator|&&
+operator|(
+operator|(
+name|ExprNodeColumnDesc
+operator|)
+name|joinKeys
+index|[
+name|i
+index|]
+operator|)
+operator|.
+name|getIsPartitionColOrVirtualCol
+argument_list|()
+operator|)
 condition|)
 block|{
+comment|// no need to generate is not null predicate for partitioning or
+comment|// virtual column, since those columns can never be null.
 continue|continue;
 block|}
 name|List
@@ -16916,9 +16940,9 @@ name|serdeName
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -18243,9 +18267,9 @@ name|defaultSerdeName
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -18702,9 +18726,9 @@ name|name
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 return|;
@@ -18771,9 +18795,9 @@ name|name
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 return|;
@@ -18872,9 +18896,9 @@ name|name
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 return|;
@@ -68593,7 +68617,7 @@ name|tab_alias
 init|=
 literal|null
 decl_stmt|;
-comment|/* 		   * If the input to the GBy has a tab alias for the column, then add an entry 		   * based on that tab_alias. 		   * For e.g. this query: 		   * select b.x, count(*) from t1 b group by x 		   * needs (tab_alias=b, col_alias=x) in the GBy RR. 		   * tab_alias=b comes from looking at the RowResolver that is the ancestor 		   * before any GBy/ReduceSinks added for the GBY operation. 		   */
+comment|/*        * If the input to the GBy has a tab alias for the column, then add an entry        * based on that tab_alias.        * For e.g. this query:        * select b.x, count(*) from t1 b group by x        * needs (tab_alias=b, col_alias=x) in the GBy RR.        * tab_alias=b comes from looking at the RowResolver that is the ancestor        * before any GBy/ReduceSinks added for the GBY operation.        */
 name|Operator
 argument_list|<
 name|?
@@ -68674,7 +68698,7 @@ parameter_list|(
 name|SemanticException
 name|se
 parameter_list|)
-block|{ 		  }
+block|{       }
 name|gByRR
 operator|.
 name|put

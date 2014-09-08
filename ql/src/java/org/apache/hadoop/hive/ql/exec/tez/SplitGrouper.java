@@ -233,8 +233,6 @@ name|dag
 operator|.
 name|api
 operator|.
-name|VertexLocationHint
-operator|.
 name|TaskLocationHint
 import|;
 end_import
@@ -793,8 +791,9 @@ name|locationHints
 operator|.
 name|add
 argument_list|(
-operator|new
 name|TaskLocationHint
+operator|.
+name|createTaskLocationHint
 argument_list|(
 operator|new
 name|HashSet
@@ -824,8 +823,9 @@ name|locationHints
 operator|.
 name|add
 argument_list|(
-operator|new
 name|TaskLocationHint
+operator|.
+name|createTaskLocationHint
 argument_list|(
 literal|null
 argument_list|,
@@ -841,8 +841,9 @@ name|locationHints
 operator|.
 name|add
 argument_list|(
-operator|new
 name|TaskLocationHint
+operator|.
+name|createTaskLocationHint
 argument_list|(
 literal|null
 argument_list|,

@@ -89,6 +89,24 @@ name|ConfVars
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -218,9 +236,9 @@ argument_list|()
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 operator|.

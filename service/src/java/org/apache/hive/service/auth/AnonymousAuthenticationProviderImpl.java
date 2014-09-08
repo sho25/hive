@@ -29,6 +29,10 @@ name|AuthenticationException
 import|;
 end_import
 
+begin_comment
+comment|/**  * This authentication provider allows any combination of username and password.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -52,7 +56,6 @@ throws|throws
 name|AuthenticationException
 block|{
 comment|// no-op authentication
-return|return;
 block|}
 block|}
 end_class

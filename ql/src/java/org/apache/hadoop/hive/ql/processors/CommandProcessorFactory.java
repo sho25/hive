@@ -427,6 +427,14 @@ operator|new
 name|CompileProcessor
 argument_list|()
 return|;
+case|case
+name|RELOAD
+case|:
+return|return
+operator|new
+name|ReloadProcessor
+argument_list|()
+return|;
 default|default:
 throw|throw
 operator|new

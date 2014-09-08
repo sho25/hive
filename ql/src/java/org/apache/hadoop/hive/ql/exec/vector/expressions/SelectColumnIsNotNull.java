@@ -454,7 +454,7 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|ANY
+name|ALL_FAMILY
 argument_list|)
 operator|.
 name|setInputExpressionTypes

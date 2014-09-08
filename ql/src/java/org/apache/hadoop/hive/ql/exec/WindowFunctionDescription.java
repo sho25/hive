@@ -130,11 +130,9 @@ argument_list|)
 annotation|@
 name|Target
 argument_list|(
-block|{
 name|ElementType
 operator|.
 name|TYPE
-block|}
 argument_list|)
 annotation|@
 name|Documented
@@ -146,28 +144,28 @@ name|Description
 name|description
 parameter_list|()
 function_decl|;
-comment|/** 	 * controls whether this function can be applied to a Window. 	 *<p> 	 * Ranking function: Rank, Dense_Rank, Percent_Rank and Cume_Dist don't operate on Windows. 	 * Why? a window specification implies a row specific range i.e. every row gets its own set of rows to process the UDAF on. 	 * For ranking defining a set of rows for every row makes no sense. 	 *<p> 	 * All other UDAFs can be computed for a Window. 	 */
+comment|/**    * controls whether this function can be applied to a Window.    *<p>    * Ranking function: Rank, Dense_Rank, Percent_Rank and Cume_Dist don't operate on Windows.    * Why? a window specification implies a row specific range i.e. every row gets its own set of rows to process the UDAF on.    * For ranking defining a set of rows for every row makes no sense.    *<p>    * All other UDAFs can be computed for a Window.    */
 name|boolean
 name|supportsWindow
 parameter_list|()
 default|default
 literal|true
 function_decl|;
-comment|/** 	 * A WindowFunc is implemented as {@link GenericUDAFResolver2}. It returns only one value. 	 * If this is true then the function must return a List which is taken to be the column for this function in the Output table returned by the 	 * {@link WindowingTableFunction}. Otherwise the output is assumed to be a single value, the column of the Output will contain the same value 	 * for all the rows. 	 */
+comment|/**    * A WindowFunc is implemented as {@link GenericUDAFResolver2}. It returns only one value.    * If this is true then the function must return a List which is taken to be the column for this function in the Output table returned by the    * {@link WindowingTableFunction}. Otherwise the output is assumed to be a single value, the column of the Output will contain the same value    * for all the rows.    */
 name|boolean
 name|pivotResult
 parameter_list|()
 default|default
 literal|false
 function_decl|;
-comment|/** 	 * Used in translations process to validate arguments 	 * @return true if ranking function 	 */
+comment|/**    * Used in translations process to validate arguments    * @return true if ranking function    */
 name|boolean
 name|rankingFunction
 parameter_list|()
 default|default
 literal|false
 function_decl|;
-comment|/** 	  * Using in analytical functions to specify that UDF implies an ordering 	  * @return true if the function implies order 	  */
+comment|/**     * Using in analytical functions to specify that UDF implies an ordering     * @return true if the function implies order     */
 name|boolean
 name|impliesOrder
 parameter_list|()

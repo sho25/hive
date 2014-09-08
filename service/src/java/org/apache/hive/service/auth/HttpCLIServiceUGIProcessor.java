@@ -150,7 +150,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * Wraps the underlying thrift processor's process call,  * to assume the client user's UGI/Subject for the doAs calls.  * Gets the client's username from a threadlocal in SessionManager which is  * set in the ThriftHttpServlet, and constructs a client UGI object from that.  *  */
+comment|/**  * Wraps the underlying Thrift processor's process call,  * to assume the client user's UGI/Subject for the doAs calls.  * Gets the client's username from a ThreadLocal in SessionManager which is  * set in the ThriftHttpServlet, and constructs a client UGI object from that.  */
 end_comment
 
 begin_class
@@ -183,8 +183,6 @@ name|underlyingProcessor
 operator|=
 name|underlyingProcessor
 expr_stmt|;
-name|this
-operator|.
 name|shim
 operator|=
 name|ShimLoader
@@ -210,16 +208,12 @@ parameter_list|)
 throws|throws
 name|TException
 block|{
-comment|/**      * Build the client UGI from threadlocal username [SessionManager.getUserName()].      * The threadlocal username is set in the ThriftHttpServlet.      */
+comment|/*      * Build the client UGI from ThreadLocal username [SessionManager.getUserName()].      * The ThreadLocal username is set in the ThriftHttpServlet.      */
+try|try
+block|{
 name|UserGroupInformation
 name|clientUgi
 init|=
-literal|null
-decl_stmt|;
-try|try
-block|{
-name|clientUgi
-operator|=
 name|shim
 operator|.
 name|createRemoteUser
@@ -236,7 +230,7 @@ name|String
 argument_list|>
 argument_list|()
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 return|return
 name|shim
 operator|.

@@ -110,6 +110,10 @@ name|String
 name|line
 parameter_list|)
 block|{
+name|lastException
+operator|=
+literal|null
+expr_stmt|;
 try|try
 block|{
 name|Object
@@ -179,6 +183,10 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
+name|lastException
+operator|=
+name|e
+expr_stmt|;
 return|return
 name|beeLine
 operator|.

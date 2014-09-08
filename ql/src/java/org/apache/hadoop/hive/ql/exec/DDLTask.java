@@ -4466,7 +4466,7 @@ name|getDescription
 argument_list|()
 decl_stmt|;
 name|String
-name|defaltValue
+name|defaultValue
 init|=
 name|conf
 operator|.
@@ -4488,14 +4488,7 @@ try|try
 block|{
 if|if
 condition|(
-name|description
-operator|!=
-literal|null
-condition|)
-block|{
-if|if
-condition|(
-name|defaltValue
+name|defaultValue
 operator|!=
 literal|null
 condition|)
@@ -4504,7 +4497,7 @@ name|output
 operator|.
 name|write
 argument_list|(
-name|defaltValue
+name|defaultValue
 operator|.
 name|getBytes
 argument_list|()
@@ -4570,7 +4563,6 @@ argument_list|(
 name|terminator
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 finally|finally
 block|{
@@ -24519,6 +24511,17 @@ name|names
 index|[
 literal|1
 index|]
+argument_list|)
+expr_stmt|;
+comment|// using old table object, hence reset the owner to current user for new table.
+name|tbl
+operator|.
+name|setOwner
+argument_list|(
+name|SessionState
+operator|.
+name|getUserFromAuthenticator
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if

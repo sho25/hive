@@ -1287,8 +1287,11 @@ name|getHCatServerPrincipal
 argument_list|(
 name|job
 argument_list|)
+argument_list|,
+name|job
 argument_list|)
 decl_stmt|;
+comment|// Pass job to initialize metastore conf overrides
 name|List
 argument_list|<
 name|FieldSchema
@@ -1421,6 +1424,10 @@ name|getHCatServerPrincipal
 argument_list|(
 name|job
 argument_list|)
+argument_list|,
+comment|// Pass job to initialize metastore conf overrides for embedded metastore case
+comment|// (hive.metastore.uris = "").
+name|job
 argument_list|)
 decl_stmt|;
 name|HCatSchema

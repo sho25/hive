@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -233,6 +243,10 @@ parameter_list|(
 name|String
 name|ipAddress
 parameter_list|)
+function_decl|;
+name|long
+name|getLastAccessTime
+parameter_list|()
 function_decl|;
 block|}
 end_interface

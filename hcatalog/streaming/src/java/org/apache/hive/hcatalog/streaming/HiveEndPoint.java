@@ -631,9 +631,9 @@ block|{
 return|return
 name|newConnection
 argument_list|(
-literal|null
-argument_list|,
 name|createPartIfNotExists
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|)
@@ -667,23 +667,19 @@ block|{
 return|return
 name|newConnection
 argument_list|(
-literal|null
-argument_list|,
 name|createPartIfNotExists
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    * Acquire a new connection to MetaStore for streaming    * @param proxyUser User on whose behalf all hdfs and hive operations will be    *                  performed on this connection. Set it to null or empty string    *                  to connect as user of current process without impersonation.    *                  Currently this argument is not supported and must be null    * @param createPartIfNotExists If true, the partition specified in the endpoint    *                              will be auto created if it does not exist    * @return    * @throws ConnectionError if problem connecting    * @throws InvalidPartition  if specified partition is not valid (createPartIfNotExists = false)    * @throws ImpersonationFailed  if not able to impersonate 'proxyUser'    * @throws IOException  if there was an I/O error when acquiring connection    * @throws PartitionCreationFailed if failed to create partition    * @throws InterruptedException    */
-specifier|private
+comment|/**    * Acquire a new connection to MetaStore for streaming    * @param createPartIfNotExists If true, the partition specified in the endpoint    *                              will be auto created if it does not exist    * @param authenticatedUser  UserGroupInformation object obtained from successful authentication.    *                           Uses insecure mode if this argument is null.    * @return    * @throws ConnectionError if there is a connection problem    * @throws InvalidPartition  if specified partition is not valid (createPartIfNotExists = false)    * @throws ImpersonationFailed  if not able to impersonate 'username'    * @throws IOException  if there was an I/O error when acquiring connection    * @throws PartitionCreationFailed if failed to create partition    * @throws InterruptedException    */
+specifier|public
 name|StreamingConnection
 name|newConnection
 parameter_list|(
-specifier|final
-name|String
-name|proxyUser
-parameter_list|,
 specifier|final
 name|boolean
 name|createPartIfNotExists
@@ -691,6 +687,10 @@ parameter_list|,
 specifier|final
 name|HiveConf
 name|conf
+parameter_list|,
+specifier|final
+name|UserGroupInformation
+name|authenticatedUser
 parameter_list|)
 throws|throws
 name|ConnectionError
@@ -707,30 +707,15 @@ name|InterruptedException
 block|{
 if|if
 condition|(
-name|proxyUser
+name|authenticatedUser
 operator|==
 literal|null
-operator|||
-name|proxyUser
-operator|.
-name|trim
-argument_list|()
-operator|.
-name|isEmpty
-argument_list|()
 condition|)
 block|{
 return|return
 name|newConnectionImpl
 argument_list|(
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"user.name"
-argument_list|)
-argument_list|,
-literal|null
+name|authenticatedUser
 argument_list|,
 name|createPartIfNotExists
 argument_list|,
@@ -738,19 +723,10 @@ name|conf
 argument_list|)
 return|;
 block|}
-specifier|final
-name|UserGroupInformation
-name|ugi
-init|=
-name|getUserGroupInfo
-argument_list|(
-name|proxyUser
-argument_list|)
-decl_stmt|;
 try|try
 block|{
 return|return
-name|ugi
+name|authenticatedUser
 operator|.
 name|doAs
 argument_list|(
@@ -779,9 +755,7 @@ block|{
 return|return
 name|newConnectionImpl
 argument_list|(
-name|proxyUser
-argument_list|,
-name|ugi
+name|authenticatedUser
 argument_list|,
 name|createPartIfNotExists
 argument_list|,
@@ -801,13 +775,14 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|ImpersonationFailed
+name|ConnectionError
 argument_list|(
-literal|"Failed to impersonate '"
+literal|"Failed to connect as : "
 operator|+
-name|proxyUser
-operator|+
-literal|"' when acquiring connection"
+name|authenticatedUser
+operator|.
+name|getShortUserName
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -818,9 +793,6 @@ specifier|private
 name|StreamingConnection
 name|newConnectionImpl
 parameter_list|(
-name|String
-name|proxyUser
-parameter_list|,
 name|UserGroupInformation
 name|ugi
 parameter_list|,
@@ -845,8 +817,6 @@ name|ConnectionImpl
 argument_list|(
 name|this
 argument_list|,
-name|proxyUser
-argument_list|,
 name|ugi
 argument_list|,
 name|conf
@@ -861,7 +831,7 @@ name|UserGroupInformation
 name|getUserGroupInfo
 parameter_list|(
 name|String
-name|proxyUser
+name|user
 parameter_list|)
 throws|throws
 name|ImpersonationFailed
@@ -873,7 +843,7 @@ name|UserGroupInformation
 operator|.
 name|createProxyUser
 argument_list|(
-name|proxyUser
+name|user
 argument_list|,
 name|UserGroupInformation
 operator|.
@@ -892,7 +862,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Unable to login as proxy user. Exception follows."
+literal|"Unable to get UserGroupInfo for user : "
+operator|+
+name|user
 argument_list|,
 name|e
 argument_list|)
@@ -901,7 +873,7 @@ throw|throw
 operator|new
 name|ImpersonationFailed
 argument_list|(
-name|proxyUser
+name|user
 argument_list|,
 name|e
 argument_list|)
@@ -1184,23 +1156,20 @@ name|endPt
 decl_stmt|;
 specifier|private
 specifier|final
-name|String
-name|proxyUser
-decl_stmt|;
-specifier|private
-specifier|final
 name|UserGroupInformation
 name|ugi
 decl_stmt|;
-comment|/**      *      * @param endPoint end point to connect to      * @param proxyUser  can be null      * @param ugi of prody user. If ugi is null, impersonation of proxy user will be disabled      * @param conf HiveConf object      * @param createPart create the partition if it does not exist      * @throws ConnectionError if there is trouble connecting      * @throws InvalidPartition if specified partition does not exist (and createPart=false)      * @throws InvalidTable if specified table does not exist      * @throws PartitionCreationFailed if createPart=true and not able to create partition      */
+specifier|private
+specifier|final
+name|String
+name|username
+decl_stmt|;
+comment|/**      * @param endPoint end point to connect to      * @param ugi on behalf of whom streaming is done. cannot be null      * @param conf HiveConf object      * @param createPart create the partition if it does not exist      * @throws ConnectionError if there is trouble connecting      * @throws InvalidPartition if specified partition does not exist (and createPart=false)      * @throws InvalidTable if specified table does not exist      * @throws PartitionCreationFailed if createPart=true and not able to create partition      */
 specifier|private
 name|ConnectionImpl
 parameter_list|(
 name|HiveEndPoint
 name|endPoint
-parameter_list|,
-name|String
-name|proxyUser
 parameter_list|,
 name|UserGroupInformation
 name|ugi
@@ -1222,12 +1191,6 @@ name|PartitionCreationFailed
 block|{
 name|this
 operator|.
-name|proxyUser
-operator|=
-name|proxyUser
-expr_stmt|;
-name|this
-operator|.
 name|endPt
 operator|=
 name|endPoint
@@ -1237,6 +1200,26 @@ operator|.
 name|ugi
 operator|=
 name|ugi
+expr_stmt|;
+name|this
+operator|.
+name|username
+operator|=
+name|ugi
+operator|==
+literal|null
+condition|?
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"user.name"
+argument_list|)
+else|:
+name|ugi
+operator|.
+name|getShortUserName
+argument_list|()
 expr_stmt|;
 if|if
 condition|(
@@ -1451,6 +1434,8 @@ name|run
 parameter_list|()
 throws|throws
 name|StreamingException
+throws|,
+name|InterruptedException
 block|{
 return|return
 name|fetchTransactionBatchImpl
@@ -1475,9 +1460,12 @@ throw|throw
 operator|new
 name|ImpersonationFailed
 argument_list|(
-literal|"Failed impersonating proxy user '"
+literal|"Failed to fetch Txn Batch as user '"
 operator|+
-name|proxyUser
+name|ugi
+operator|.
+name|getShortUserName
+argument_list|()
 operator|+
 literal|"' when acquiring Transaction Batch on endPoint "
 operator|+
@@ -1502,12 +1490,14 @@ throws|throws
 name|StreamingException
 throws|,
 name|TransactionBatchUnAvailable
+throws|,
+name|InterruptedException
 block|{
 return|return
 operator|new
 name|TransactionBatchImpl
 argument_list|(
-name|proxyUser
+name|username
 argument_list|,
 name|ugi
 argument_list|,
@@ -1553,8 +1543,22 @@ block|{
 return|return;
 block|}
 name|SessionState
-name|state
+name|localSession
 init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+name|localSession
+operator|=
 name|SessionState
 operator|.
 name|start
@@ -1565,7 +1569,8 @@ argument_list|(
 name|conf
 argument_list|)
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|Driver
 name|driver
 init|=
@@ -1777,11 +1782,19 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
-name|state
+if|if
+condition|(
+name|localSession
+operator|!=
+literal|null
+condition|)
+block|{
+name|localSession
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2131,7 +2144,7 @@ block|{
 specifier|private
 specifier|final
 name|String
-name|proxyUser
+name|username
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2180,12 +2193,13 @@ name|lockRequest
 init|=
 literal|null
 decl_stmt|;
-comment|/**      * Represents a batch of transactions acquired from MetaStore      *      * @param proxyUser      * @param ugi      * @param endPt      * @param numTxns      * @param msClient      * @param recordWriter      * @throws StreamingException if failed to create new RecordUpdater for batch      * @throws TransactionBatchUnAvailable if failed to acquire a new Transaction batch      */
+comment|/**      * Represents a batch of transactions acquired from MetaStore      *      * @param user      * @param ugi      * @param endPt      * @param numTxns      * @param msClient      * @param recordWriter      * @throws StreamingException if failed to create new RecordUpdater for batch      * @throws TransactionBatchUnAvailable if failed to acquire a new Transaction batch      */
 specifier|private
 name|TransactionBatchImpl
 parameter_list|(
+specifier|final
 name|String
-name|proxyUser
+name|user
 parameter_list|,
 name|UserGroupInformation
 name|ugi
@@ -2193,9 +2207,11 @@ parameter_list|,
 name|HiveEndPoint
 name|endPt
 parameter_list|,
+specifier|final
 name|int
 name|numTxns
 parameter_list|,
+specifier|final
 name|IMetaStoreClient
 name|msClient
 parameter_list|,
@@ -2206,6 +2222,8 @@ throws|throws
 name|StreamingException
 throws|,
 name|TransactionBatchUnAvailable
+throws|,
+name|InterruptedException
 block|{
 try|try
 block|{
@@ -2276,9 +2294,9 @@ expr_stmt|;
 block|}
 name|this
 operator|.
-name|proxyUser
+name|username
 operator|=
-name|proxyUser
+name|user
 expr_stmt|;
 name|this
 operator|.
@@ -2304,21 +2322,18 @@ name|recordWriter
 operator|=
 name|recordWriter
 expr_stmt|;
-name|this
-operator|.
 name|txnIds
 operator|=
-name|msClient
-operator|.
-name|openTxns
+name|openTxnImpl
 argument_list|(
-name|proxyUser
+name|msClient
+argument_list|,
+name|user
 argument_list|,
 name|numTxns
+argument_list|,
+name|ugi
 argument_list|)
-operator|.
-name|getTxn_ids
-argument_list|()
 expr_stmt|;
 name|this
 operator|.
@@ -2376,6 +2391,117 @@ name|e
 argument_list|)
 throw|;
 block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|TransactionBatchUnAvailable
+argument_list|(
+name|endPt
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+specifier|private
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|openTxnImpl
+parameter_list|(
+specifier|final
+name|IMetaStoreClient
+name|msClient
+parameter_list|,
+specifier|final
+name|String
+name|user
+parameter_list|,
+specifier|final
+name|int
+name|numTxns
+parameter_list|,
+name|UserGroupInformation
+name|ugi
+parameter_list|)
+throws|throws
+name|IOException
+throws|,
+name|TException
+throws|,
+name|InterruptedException
+block|{
+if|if
+condition|(
+name|ugi
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|msClient
+operator|.
+name|openTxns
+argument_list|(
+name|user
+argument_list|,
+name|numTxns
+argument_list|)
+operator|.
+name|getTxn_ids
+argument_list|()
+return|;
+block|}
+return|return
+operator|(
+name|List
+argument_list|<
+name|Long
+argument_list|>
+operator|)
+name|ugi
+operator|.
+name|doAs
+argument_list|(
+operator|new
+name|PrivilegedExceptionAction
+argument_list|<
+name|Object
+argument_list|>
+argument_list|()
+block|{
+annotation|@
+name|Override
+specifier|public
+name|Object
+name|run
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+return|return
+name|msClient
+operator|.
+name|openTxns
+argument_list|(
+name|user
+argument_list|,
+name|numTxns
+argument_list|)
+operator|.
+name|getTxn_ids
+argument_list|()
+return|;
+block|}
+block|}
+argument_list|)
+return|;
 block|}
 annotation|@
 name|Override
@@ -2498,13 +2624,13 @@ throw|throw
 operator|new
 name|ImpersonationFailed
 argument_list|(
-literal|"Failed impersonating proxyUser '"
+literal|"Failed switching to next Txn as user '"
 operator|+
-name|proxyUser
+name|username
 operator|+
-literal|"' when switch to next Transaction for endPoint :"
+literal|"' in Txn batch :"
 operator|+
-name|endPt
+name|this
 argument_list|,
 name|e
 argument_list|)
@@ -2549,7 +2675,7 @@ name|endPt
 argument_list|,
 name|partNameForLock
 argument_list|,
-name|proxyUser
+name|username
 argument_list|,
 name|getCurrentTxnId
 argument_list|()
@@ -2615,13 +2741,20 @@ operator|.
 name|OPEN
 expr_stmt|;
 block|}
-comment|/**      * Get Id of currently open transaction      * @return      */
+comment|/**      * Get Id of currently open transaction      * @return -1 if there is no open TX      */
 annotation|@
 name|Override
 specifier|public
 name|Long
 name|getCurrentTxnId
 parameter_list|()
+block|{
+if|if
+condition|(
+name|currentTxnIndex
+operator|>=
+literal|0
+condition|)
 block|{
 return|return
 name|txnIds
@@ -2630,6 +2763,11 @@ name|get
 argument_list|(
 name|currentTxnIndex
 argument_list|)
+return|;
+block|}
+return|return
+operator|-
+literal|1L
 return|;
 block|}
 comment|/**      * get state of current tramsaction      * @return      */
@@ -2765,11 +2903,11 @@ throw|throw
 operator|new
 name|ImpersonationFailed
 argument_list|(
-literal|"Failed impersonating proxy user '"
+literal|"Failed wirting as user '"
 operator|+
-name|proxyUser
+name|username
 operator|+
-literal|"' when writing to endPoint :"
+literal|"' to endPoint :"
 operator|+
 name|endPt
 operator|+
@@ -2864,11 +3002,11 @@ throw|throw
 operator|new
 name|ImpersonationFailed
 argument_list|(
-literal|"Failed impersonating proxyUser '"
+literal|"Failed writing as user '"
 operator|+
-name|proxyUser
+name|username
 operator|+
-literal|"' when writing to endPoint :"
+literal|"' to endPoint :"
 operator|+
 name|endPt
 operator|+
@@ -2988,18 +3126,20 @@ throw|throw
 operator|new
 name|ImpersonationFailed
 argument_list|(
-literal|"Failed impersonating proxy user '"
+literal|"Failed committing Txn ID "
 operator|+
-name|proxyUser
+name|getCurrentTxnId
+argument_list|()
 operator|+
-literal|"' when committing Txn on endPoint :"
+literal|" as user '"
+operator|+
+name|username
+operator|+
+literal|"'on endPoint :"
 operator|+
 name|endPt
 operator|+
 literal|". Transaction Id: "
-operator|+
-name|getCurrentTxnId
-argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3167,18 +3307,18 @@ throw|throw
 operator|new
 name|ImpersonationFailed
 argument_list|(
-literal|"Failed impersonating proxy user '"
-operator|+
-name|proxyUser
-operator|+
-literal|"' when aborting Txn on endPoint :"
-operator|+
-name|endPt
-operator|+
-literal|". Transaction Id: "
+literal|"Failed aborting Txn "
 operator|+
 name|getCurrentTxnId
 argument_list|()
+operator|+
+literal|" as user '"
+operator|+
+name|username
+operator|+
+literal|"' on endPoint :"
+operator|+
+name|endPt
 argument_list|,
 name|e
 argument_list|)
@@ -3453,11 +3593,11 @@ throw|throw
 operator|new
 name|ImpersonationFailed
 argument_list|(
-literal|"Failed impersonating proxy user '"
+literal|"Failed closing Txn Batch as user '"
 operator|+
-name|proxyUser
+name|username
 operator|+
-literal|"' when closing Txn Batch on  endPoint :"
+literal|"' on  endPoint :"
 operator|+
 name|endPt
 argument_list|,

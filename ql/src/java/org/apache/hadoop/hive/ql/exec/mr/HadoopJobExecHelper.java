@@ -133,6 +133,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1308,7 +1320,7 @@ name|maxReportInterval
 init|=
 name|HiveConf
 operator|.
-name|getLongVar
+name|getTimeVar
 argument_list|(
 name|job
 argument_list|,
@@ -1317,6 +1329,10 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_LOG_INCREMENTAL_PLAN_PROGRESS_INTERVAL
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -3522,9 +3538,9 @@ argument_list|()
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 operator|.

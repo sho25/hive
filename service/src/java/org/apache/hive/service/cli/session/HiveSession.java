@@ -94,12 +94,10 @@ name|HiveSession
 extends|extends
 name|HiveSessionBase
 block|{
-specifier|public
 name|void
 name|open
 parameter_list|()
 function_decl|;
-specifier|public
 name|IMetaStoreClient
 name|getMetaStoreClient
 parameter_list|()
@@ -107,7 +105,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * getInfo operation handler    * @param getInfoType    * @return    * @throws HiveSQLException    */
-specifier|public
 name|GetInfoValue
 name|getInfo
 parameter_list|(
@@ -118,7 +115,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * execute operation handler    * @param statement    * @param confOverlay    * @return    * @throws HiveSQLException    */
-specifier|public
 name|OperationHandle
 name|executeStatement
 parameter_list|(
@@ -137,7 +133,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * execute operation handler    * @param statement    * @param confOverlay    * @return    * @throws HiveSQLException    */
-specifier|public
 name|OperationHandle
 name|executeStatementAsync
 parameter_list|(
@@ -156,7 +151,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * getTypeInfo operation handler    * @return    * @throws HiveSQLException    */
-specifier|public
 name|OperationHandle
 name|getTypeInfo
 parameter_list|()
@@ -164,7 +158,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * getCatalogs operation handler    * @return    * @throws HiveSQLException    */
-specifier|public
 name|OperationHandle
 name|getCatalogs
 parameter_list|()
@@ -172,7 +165,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * getSchemas operation handler    * @param catalogName    * @param schemaName    * @return    * @throws HiveSQLException    */
-specifier|public
 name|OperationHandle
 name|getSchemas
 parameter_list|(
@@ -186,7 +178,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * getTables operation handler    * @param catalogName    * @param schemaName    * @param tableName    * @param tableTypes    * @return    * @throws HiveSQLException    */
-specifier|public
 name|OperationHandle
 name|getTables
 parameter_list|(
@@ -209,7 +200,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * getTableTypes operation handler    * @return    * @throws HiveSQLException    */
-specifier|public
 name|OperationHandle
 name|getTableTypes
 parameter_list|()
@@ -217,7 +207,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * getColumns operation handler    * @param catalogName    * @param schemaName    * @param tableName    * @param columnName    * @return    * @throws HiveSQLException    */
-specifier|public
 name|OperationHandle
 name|getColumns
 parameter_list|(
@@ -237,7 +226,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * getFunctions operation handler    * @param catalogName    * @param schemaName    * @param functionName    * @return    * @throws HiveSQLException    */
-specifier|public
 name|OperationHandle
 name|getFunctions
 parameter_list|(
@@ -254,14 +242,12 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 comment|/**    * close the session    * @throws HiveSQLException    */
-specifier|public
 name|void
 name|close
 parameter_list|()
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
 name|void
 name|cancelOperation
 parameter_list|(
@@ -271,7 +257,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
 name|void
 name|closeOperation
 parameter_list|(
@@ -281,7 +266,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
 name|TableSchema
 name|getResultSetMetadata
 parameter_list|(
@@ -291,7 +275,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
 name|RowSet
 name|fetchResults
 parameter_list|(
@@ -310,7 +293,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
 name|String
 name|getDelegationToken
 parameter_list|(
@@ -326,7 +308,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
 name|void
 name|cancelDelegationToken
 parameter_list|(
@@ -339,7 +320,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
 name|void
 name|renewDelegationToken
 parameter_list|(
@@ -351,6 +331,10 @@ name|tokenStr
 parameter_list|)
 throws|throws
 name|HiveSQLException
+function_decl|;
+name|void
+name|closeExpiredOperations
+parameter_list|()
 function_decl|;
 block|}
 end_interface

@@ -325,7 +325,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|IfExprStringColumnStringColumn
+name|IfExprStringGroupColumnStringGroupColumn
 import|;
 end_import
 
@@ -347,7 +347,29 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|IfExprStringColumnStringScalar
+name|IfExprStringGroupColumnStringScalar
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|IfExprStringScalarStringGroupColumn
 import|;
 end_import
 
@@ -370,28 +392,6 @@ operator|.
 name|expressions
 operator|.
 name|IfExprStringScalarStringScalar
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
-name|IfExprStringScalarStringColumn
 import|;
 end_import
 
@@ -2919,7 +2919,7 @@ name|VectorExpression
 name|expr
 init|=
 operator|new
-name|IfExprStringColumnStringColumn
+name|IfExprStringGroupColumnStringGroupColumn
 argument_list|(
 literal|0
 argument_list|,
@@ -3771,7 +3771,7 @@ name|VectorExpression
 name|expr
 init|=
 operator|new
-name|IfExprStringColumnStringScalar
+name|IfExprStringGroupColumnStringScalar
 argument_list|(
 literal|0
 argument_list|,
@@ -3973,7 +3973,7 @@ name|VectorExpression
 name|expr
 init|=
 operator|new
-name|IfExprStringScalarStringColumn
+name|IfExprStringScalarStringGroupColumn
 argument_list|(
 literal|0
 argument_list|,

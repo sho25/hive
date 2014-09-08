@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license  * agreements. See the NOTICE file distributed with this work for additional information regarding  * copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance with the License. You may obtain a  * copy of the License at  *   * http://www.apache.org/licenses/LICENSE-2.0  *   * Unless required by applicable law or agreed to in writing, software distributed under the License  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express  * or implied. See the License for the specific language governing permissions and limitations under  * the License.  */
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license  * agreements. See the NOTICE file distributed with this work for additional information regarding  * copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance with the License. You may obtain a  * copy of the License at  *  * http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software distributed under the License  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express  * or implied. See the License for the specific language governing permissions and limitations under  * the License.  */
 end_comment
 
 begin_package
@@ -160,22 +160,6 @@ operator|.
 name|logging
 operator|.
 name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|JavaUtils
 import|;
 end_import
 
@@ -374,6 +358,24 @@ operator|.
 name|exec
 operator|.
 name|UDF
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
 import|;
 end_import
 
@@ -1183,7 +1185,7 @@ parameter_list|()
 block|{
 comment|// prevent instantiation
 block|}
-comment|/**    * Get ColumnInfo from column expression.    *     * @param rr    * @param desc    * @return    */
+comment|/**    * Get ColumnInfo from column expression.    *    * @param rr    * @param desc    * @return    */
 specifier|public
 specifier|static
 name|ColumnInfo
@@ -1394,7 +1396,7 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
-comment|/**    * Cast type from expression type to expected type ti.    *     * @param desc constant expression    * @param ti expected type info    * @return cast constant, or null if the type cast failed.    */
+comment|/**    * Cast type from expression type to expected type ti.    *    * @param desc constant expression    * @param ti expected type info    * @return cast constant, or null if the type cast failed.    */
 specifier|private
 specifier|static
 name|ExprNodeConstantDesc
@@ -1655,7 +1657,7 @@ name|convObj
 argument_list|)
 return|;
 block|}
-comment|/**    * Fold input expression desc.    *     * If desc is a UDF and all parameters are constants, evaluate it. If desc is a column expression,    * find it from propagated constants, and if there is, replace it with constant.    *     * @param desc folding expression    * @param constants current propagated constant map    * @param cppCtx    * @param op processing operator    * @param propagate if true, assignment expressions will be added to constants.    * @return fold expression    */
+comment|/**    * Fold input expression desc.    *    * If desc is a UDF and all parameters are constants, evaluate it. If desc is a column expression,    * find it from propagated constants, and if there is, replace it with constant.    *    * @param desc folding expression    * @param constants current propagated constant map    * @param cppCtx    * @param op processing operator    * @param propagate if true, assignment expressions will be added to constants.    * @return fold expression    */
 specifier|private
 specifier|static
 name|ExprNodeDesc
@@ -2129,9 +2131,9 @@ argument_list|()
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 operator|.
@@ -2211,7 +2213,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Propagate assignment expression, adding an entry into constant map constants.    *     * @param udf expression UDF, currently only 2 UDFs are supported: '=' and 'is null'.    * @param newExprs child expressions (parameters).    * @param cppCtx    * @param op    * @param constants    */
+comment|/**    * Propagate assignment expression, adding an entry into constant map constants.    *    * @param udf expression UDF, currently only 2 UDFs are supported: '=' and 'is null'.    * @param newExprs child expressions (parameters).    * @param cppCtx    * @param op    * @param constants    */
 specifier|private
 specifier|static
 name|void
@@ -2678,7 +2680,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Evaluate column, replace the deterministic columns with constants if possible    *     * @param desc    * @param ctx    * @param op    * @param colToConstants    * @return    */
+comment|/**    * Evaluate column, replace the deterministic columns with constants if possible    *    * @param desc    * @param ctx    * @param op    * @param colToConstants    * @return    */
 specifier|private
 specifier|static
 name|ExprNodeDesc
@@ -2977,7 +2979,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Evaluate UDF    *     * @param udf UDF object    * @param exprs    * @param oldExprs    * @return null if expression cannot be evaluated (not all parameters are constants). Or evaluated    *         ExprNodeConstantDesc if possible.    * @throws HiveException    */
+comment|/**    * Evaluate UDF    *    * @param udf UDF object    * @param exprs    * @param oldExprs    * @return null if expression cannot be evaluated (not all parameters are constants). Or evaluated    *         ExprNodeConstantDesc if possible.    * @throws HiveException    */
 specifier|private
 specifier|static
 name|ExprNodeDesc
@@ -3420,7 +3422,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Change operator row schema, replace column with constant if it is.    *     * @param op    * @param constants    * @throws SemanticException    */
+comment|/**    * Change operator row schema, replace column with constant if it is.    *    * @param op    * @param constants    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|void
@@ -3893,7 +3895,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ConstantPropagateFilterProc class.    *     * @return ConstantPropagateFilterProc    */
+comment|/**    * Factory method to get the ConstantPropagateFilterProc class.    *    * @return ConstantPropagateFilterProc    */
 specifier|public
 specifier|static
 name|ConstantPropagateFilterProc
@@ -4081,7 +4083,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ConstantPropagateGroupByProc class.    *     * @return ConstantPropagateGroupByProc    */
+comment|/**    * Factory method to get the ConstantPropagateGroupByProc class.    *    * @return ConstantPropagateGroupByProc    */
 specifier|public
 specifier|static
 name|ConstantPropagateGroupByProc
@@ -4209,7 +4211,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get the ConstantPropagateDefaultProc class.    *     * @return ConstantPropagateDefaultProc    */
+comment|/**    * Factory method to get the ConstantPropagateDefaultProc class.    *    * @return ConstantPropagateDefaultProc    */
 specifier|public
 specifier|static
 name|ConstantPropagateDefaultProc
@@ -4401,7 +4403,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * The Factory method to get the ConstantPropagateSelectProc class.    *     * @return ConstantPropagateSelectProc    */
+comment|/**    * The Factory method to get the ConstantPropagateSelectProc class.    *    * @return ConstantPropagateSelectProc    */
 specifier|public
 specifier|static
 name|ConstantPropagateSelectProc
@@ -5965,36 +5967,12 @@ return|return
 literal|null
 return|;
 block|}
-name|List
-argument_list|<
-name|ExprNodeDesc
-argument_list|>
-name|newChildren
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|ExprNodeDesc
-argument_list|>
-argument_list|()
-decl_stmt|;
-for|for
-control|(
-name|ExprNodeDesc
-name|expr
-range|:
-name|pred
-operator|.
-name|getChildren
-argument_list|()
-control|)
-block|{
 name|ExprNodeDesc
 name|constant
 init|=
 name|foldExpr
 argument_list|(
-name|expr
+name|pred
 argument_list|,
 name|constants
 argument_list|,
@@ -6007,21 +5985,34 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-name|newChildren
+if|if
+condition|(
+name|constant
+operator|instanceof
+name|ExprNodeGenericFuncDesc
+condition|)
+block|{
+name|conf
 operator|.
-name|add
+name|setFilterExpr
 argument_list|(
+operator|(
+name|ExprNodeGenericFuncDesc
+operator|)
 name|constant
 argument_list|)
 expr_stmt|;
 block|}
-name|pred
+else|else
+block|{
+name|conf
 operator|.
-name|setChildren
+name|setFilterExpr
 argument_list|(
-name|newChildren
+literal|null
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|null
 return|;

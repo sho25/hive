@@ -358,7 +358,7 @@ name|int
 name|maxWorkerThreads
 decl_stmt|;
 specifier|protected
-name|int
+name|long
 name|workerKeepAliveTime
 decl_stmt|;
 specifier|protected

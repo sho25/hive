@@ -31,16 +31,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -414,14 +404,17 @@ specifier|protected
 specifier|synchronized
 name|void
 name|acquire
-parameter_list|()
-throws|throws
-name|HiveSQLException
+parameter_list|(
+name|boolean
+name|userAccess
+parameter_list|)
 block|{
 name|super
 operator|.
 name|acquire
-argument_list|()
+argument_list|(
+name|userAccess
+argument_list|)
 expr_stmt|;
 comment|// if we have a metastore connection with impersonation, then set it first
 if|if
@@ -453,7 +446,9 @@ block|{
 try|try
 block|{
 name|acquire
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 name|ShimLoader
 operator|.
@@ -472,7 +467,9 @@ block|}
 finally|finally
 block|{
 name|release
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 name|super
 operator|.
