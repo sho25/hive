@@ -961,7 +961,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|Set
+name|List
 argument_list|<
 name|Operator
 argument_list|<
@@ -970,11 +970,26 @@ argument_list|>
 argument_list|>
 name|roots
 init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|roots
+operator|.
+name|addAll
+argument_list|(
 name|work
 operator|.
 name|getAllRootOperators
 argument_list|()
-decl_stmt|;
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|work
@@ -997,7 +1012,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// need to clone the plan.
-name|Set
+name|List
 argument_list|<
 name|Operator
 argument_list|<
