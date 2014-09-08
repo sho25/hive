@@ -1,4 +1,8 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
+begin_comment
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+end_comment
+
 begin_package
 package|package
 name|org
@@ -84,20 +88,6 @@ operator|.
 name|util
 operator|.
 name|Set
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|atomic
-operator|.
-name|AtomicBoolean
 import|;
 end_import
 
@@ -519,7 +509,7 @@ block|{
 specifier|private
 specifier|final
 name|Table
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 decl_stmt|;
 specifier|private
 specifier|final
@@ -527,7 +517,7 @@ name|ImmutableList
 argument_list|<
 name|ColumnInfo
 argument_list|>
-name|m_hiveNonPartitionCols
+name|hiveNonPartitionCols
 decl_stmt|;
 specifier|private
 specifier|final
@@ -537,7 +527,7 @@ name|Integer
 argument_list|,
 name|ColumnInfo
 argument_list|>
-name|m_hiveNonPartitionColsMap
+name|hiveNonPartitionColsMap
 decl_stmt|;
 specifier|private
 specifier|final
@@ -547,20 +537,20 @@ name|Integer
 argument_list|,
 name|ColumnInfo
 argument_list|>
-name|m_hivePartitionColsMap
+name|hivePartitionColsMap
 decl_stmt|;
 specifier|private
 specifier|final
 name|int
-name|m_noOfProjs
+name|noOfProjs
 decl_stmt|;
 specifier|final
 name|HiveConf
-name|m_hiveConf
+name|hiveConf
 decl_stmt|;
 specifier|private
 name|double
-name|m_rowCount
+name|rowCount
 init|=
 operator|-
 literal|1
@@ -571,7 +561,7 @@ name|Integer
 argument_list|,
 name|ColStatistics
 argument_list|>
-name|m_hiveColStatsMap
+name|hiveColStatsMap
 init|=
 operator|new
 name|HashMap
@@ -581,10 +571,6 @@ argument_list|,
 name|ColStatistics
 argument_list|>
 argument_list|()
-decl_stmt|;
-specifier|private
-name|Integer
-name|m_numPartitions
 decl_stmt|;
 name|PrunedPartitionList
 name|partitionList
@@ -669,11 +655,15 @@ argument_list|,
 name|rowType
 argument_list|)
 expr_stmt|;
-name|m_hiveTblMetadata
+name|this
+operator|.
+name|hiveTblMetadata
 operator|=
 name|hiveTblMetadata
 expr_stmt|;
-name|m_hiveNonPartitionCols
+name|this
+operator|.
+name|hiveNonPartitionCols
 operator|=
 name|ImmutableList
 operator|.
@@ -682,7 +672,9 @@ argument_list|(
 name|hiveNonPartitionCols
 argument_list|)
 expr_stmt|;
-name|m_hiveNonPartitionColsMap
+name|this
+operator|.
+name|hiveNonPartitionColsMap
 operator|=
 name|getColInfoMap
 argument_list|(
@@ -691,19 +683,23 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
-name|m_hivePartitionColsMap
+name|this
+operator|.
+name|hivePartitionColsMap
 operator|=
 name|getColInfoMap
 argument_list|(
 name|hivePartitionCols
 argument_list|,
-name|m_hiveNonPartitionColsMap
+name|hiveNonPartitionColsMap
 operator|.
 name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|m_noOfProjs
+name|this
+operator|.
+name|noOfProjs
 operator|=
 name|hiveNonPartitionCols
 operator|.
@@ -715,7 +711,9 @@ operator|.
 name|size
 argument_list|()
 expr_stmt|;
-name|m_hiveConf
+name|this
+operator|.
+name|hiveConf
 operator|=
 name|hconf
 expr_stmt|;
@@ -883,7 +881,7 @@ parameter_list|()
 block|{
 if|if
 condition|(
-name|m_rowCount
+name|rowCount
 operator|==
 operator|-
 literal|1
@@ -899,7 +897,7 @@ block|{
 comment|// we are here either unpartitioned table or partitioned table with no predicates
 name|computePartitionList
 argument_list|(
-name|m_hiveConf
+name|hiveConf
 argument_list|,
 literal|null
 argument_list|)
@@ -907,7 +905,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 operator|.
 name|isPartitioned
 argument_list|()
@@ -923,7 +921,7 @@ name|StatsUtils
 operator|.
 name|getBasicStatForPartitions
 argument_list|(
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 argument_list|,
 name|partitionList
 operator|.
@@ -935,7 +933,7 @@ operator|.
 name|ROW_COUNT
 argument_list|)
 decl_stmt|;
-name|m_rowCount
+name|rowCount
 operator|=
 name|StatsUtils
 operator|.
@@ -947,19 +945,19 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|m_rowCount
+name|rowCount
 operator|=
 name|StatsUtils
 operator|.
 name|getNumRows
 argument_list|(
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 argument_list|)
 expr_stmt|;
 block|}
 block|}
 return|return
-name|m_rowCount
+name|rowCount
 return|;
 block|}
 specifier|public
@@ -968,7 +966,7 @@ name|getHiveTableMD
 parameter_list|()
 block|{
 return|return
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 return|;
 block|}
 specifier|private
@@ -1055,7 +1053,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 operator|.
 name|isPartitioned
 argument_list|()
@@ -1084,7 +1082,7 @@ name|PartitionPruner
 operator|.
 name|prune
 argument_list|(
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 argument_list|,
 literal|null
 argument_list|,
@@ -1125,7 +1123,7 @@ name|PartitionPruner
 operator|.
 name|prune
 argument_list|(
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 argument_list|,
 name|pruneExpr
 argument_list|,
@@ -1243,7 +1241,7 @@ control|)
 block|{
 if|if
 condition|(
-name|m_hiveColStatsMap
+name|hiveColStatsMap
 operator|.
 name|get
 argument_list|(
@@ -1258,7 +1256,7 @@ condition|(
 operator|(
 name|tmp
 operator|=
-name|m_hiveNonPartitionColsMap
+name|hiveNonPartitionColsMap
 operator|.
 name|get
 argument_list|(
@@ -1293,7 +1291,7 @@ condition|(
 operator|(
 name|tmp
 operator|=
-name|m_hivePartitionColsMap
+name|hivePartitionColsMap
 operator|.
 name|get
 argument_list|(
@@ -1333,7 +1331,7 @@ name|pi
 operator|+
 literal|", in "
 operator|+
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 operator|.
 name|getCompleteName
 argument_list|()
@@ -1366,7 +1364,7 @@ comment|// We could be here either because its an unpartitioned table or because
 comment|// there are no pruning predicates on a partitioned table.
 name|computePartitionList
 argument_list|(
-name|m_hiveConf
+name|hiveConf
 argument_list|,
 literal|null
 argument_list|)
@@ -1392,7 +1390,7 @@ decl_stmt|;
 if|if
 condition|(
 operator|!
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 operator|.
 name|isPartitioned
 argument_list|()
@@ -1405,9 +1403,9 @@ name|StatsUtils
 operator|.
 name|getTableColumnStats
 argument_list|(
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 argument_list|,
-name|m_hiveNonPartitionCols
+name|hiveNonPartitionCols
 argument_list|,
 name|nonPartColNamesThatRqrStats
 argument_list|)
@@ -1522,7 +1520,7 @@ argument_list|()
 condition|)
 block|{
 comment|// no need to make a metastore call
-name|m_rowCount
+name|rowCount
 operator|=
 literal|0
 expr_stmt|;
@@ -1551,7 +1549,7 @@ argument_list|(
 operator|new
 name|ColStatistics
 argument_list|(
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 operator|.
 name|getTableName
 argument_list|()
@@ -1578,13 +1576,13 @@ name|StatsUtils
 operator|.
 name|collectStatistics
 argument_list|(
-name|m_hiveConf
+name|hiveConf
 argument_list|,
 name|partitionList
 argument_list|,
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 argument_list|,
-name|m_hiveNonPartitionCols
+name|hiveNonPartitionCols
 argument_list|,
 name|nonPartColNamesThatRqrStats
 argument_list|,
@@ -1593,7 +1591,7 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
-name|m_rowCount
+name|rowCount
 operator|=
 name|stats
 operator|.
@@ -1717,7 +1715,7 @@ name|i
 operator|++
 control|)
 block|{
-name|m_hiveColStatsMap
+name|hiveColStatsMap
 operator|.
 name|put
 argument_list|(
@@ -1754,16 +1752,6 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|m_numPartitions
-operator|=
-name|partitionList
-operator|.
-name|getPartitions
-argument_list|()
-operator|.
-name|size
-argument_list|()
-expr_stmt|;
 name|ColStatistics
 name|cStats
 init|=
@@ -1792,7 +1780,7 @@ operator|=
 operator|new
 name|ColStatistics
 argument_list|(
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 operator|.
 name|getTableName
 argument_list|()
@@ -1804,7 +1792,7 @@ argument_list|(
 name|i
 argument_list|)
 argument_list|,
-name|m_hivePartitionColsMap
+name|hivePartitionColsMap
 operator|.
 name|get
 argument_list|(
@@ -1840,7 +1828,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|m_hiveColStatsMap
+name|hiveColStatsMap
 operator|.
 name|put
 argument_list|(
@@ -1871,7 +1859,7 @@ name|logMsg
 init|=
 literal|"No Stats for "
 operator|+
-name|m_hiveTblMetadata
+name|hiveTblMetadata
 operator|.
 name|getCompleteName
 argument_list|()
@@ -2033,7 +2021,7 @@ name|colStatsBldr
 operator|.
 name|add
 argument_list|(
-name|m_hiveColStatsMap
+name|hiveColStatsMap
 operator|.
 name|get
 argument_list|(
@@ -2067,7 +2055,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|m_noOfProjs
+name|noOfProjs
 condition|;
 name|i
 operator|++
@@ -2105,7 +2093,7 @@ name|colStatsBldr
 operator|.
 name|add
 argument_list|(
-name|m_hiveColStatsMap
+name|hiveColStatsMap
 operator|.
 name|get
 argument_list|(
@@ -2165,7 +2153,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|m_hivePartitionColsMap
+name|hivePartitionColsMap
 operator|.
 name|containsKey
 argument_list|(

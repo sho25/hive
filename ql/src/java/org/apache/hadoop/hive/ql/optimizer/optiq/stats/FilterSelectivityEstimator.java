@@ -91,18 +91,6 @@ name|eigenbase
 operator|.
 name|rel
 operator|.
-name|ProjectRel
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|eigenbase
-operator|.
-name|rel
-operator|.
 name|ProjectRelBase
 import|;
 end_import
@@ -192,18 +180,6 @@ operator|.
 name|rex
 operator|.
 name|RexNode
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|eigenbase
-operator|.
-name|rex
-operator|.
-name|RexUtil
 import|;
 end_import
 
