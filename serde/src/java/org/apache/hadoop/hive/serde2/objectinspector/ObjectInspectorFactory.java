@@ -179,6 +179,8 @@ block|,
 name|THRIFT
 block|,
 name|PROTOCOL_BUFFERS
+block|,
+name|AVRO
 block|}
 empty_stmt|;
 specifier|private

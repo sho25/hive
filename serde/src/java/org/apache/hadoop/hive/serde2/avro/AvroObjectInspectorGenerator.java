@@ -254,6 +254,7 @@ comment|/**  * An AvroObjectInspectorGenerator takes an Avro schema and creates 
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|AvroObjectInspectorGenerator
 block|{

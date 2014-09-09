@@ -1520,6 +1520,20 @@ return|return
 name|indexes
 return|;
 block|}
+comment|/**    * Return the data in bytes corresponding to this given struct. This is useful specifically in    * cases where the data is stored in serialized formats like protobufs or thrift and would need    * custom deserializers to be deserialized.    * */
+specifier|public
+name|byte
+index|[]
+name|getBytes
+parameter_list|()
+block|{
+return|return
+name|bytes
+operator|.
+name|getData
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 
