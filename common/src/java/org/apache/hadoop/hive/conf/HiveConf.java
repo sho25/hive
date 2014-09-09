@@ -2812,6 +2812,18 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// reloadable jars
+name|HIVERELOADABLEJARS
+argument_list|(
+literal|"hive.reloadable.aux.jars.path"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Jars can be renewed by executing reload command. And these jars can be "
+operator|+
+literal|"used as the auxiliary classes like creating a UDF or SerDe."
+argument_list|)
+block|,
 comment|// hive added files and jars
 name|HIVEADDEDFILES
 argument_list|(
@@ -6543,7 +6555,7 @@ name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
 argument_list|,
-literal|"set,reset,dfs,add,list,delete,compile"
+literal|"set,reset,dfs,add,list,delete,reload,compile"
 argument_list|,
 literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
 argument_list|)
@@ -7104,6 +7116,43 @@ argument_list|,
 literal|"When auto reducer parallelism is enabled this factor will be used to put a lower limit to the number\n"
 operator|+
 literal|"of reducers that tez specifies."
+argument_list|)
+block|,
+name|TEZ_DYNAMIC_PARTITION_PRUNING
+argument_list|(
+literal|"hive.tez.dynamic.partition.pruning"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When dynamic pruning is enabled, joins on partition keys will be processed by sending events from the processing "
+operator|+
+literal|"vertices to the tez application master. These events will be used to prune unnecessary partitions."
+argument_list|)
+block|,
+name|TEZ_DYNAMIC_PARTITION_PRUNING_MAX_EVENT_SIZE
+argument_list|(
+literal|"hive.tez.dynamic.partition.pruning.max.event.size"
+argument_list|,
+literal|1
+operator|*
+literal|1024
+operator|*
+literal|1024L
+argument_list|,
+literal|"Maximum size of events sent by processors in dynamic pruning. If this size is crossed no pruning will take place."
+argument_list|)
+block|,
+name|TEZ_DYNAMIC_PARTITION_PRUNING_MAX_DATA_SIZE
+argument_list|(
+literal|"hive.tez.dynamic.parition.pruning.max.data.size"
+argument_list|,
+literal|100
+operator|*
+literal|1024
+operator|*
+literal|1024L
+argument_list|,
+literal|"Maximum total data size of events in dynamic pruning."
 argument_list|)
 block|;
 specifier|public

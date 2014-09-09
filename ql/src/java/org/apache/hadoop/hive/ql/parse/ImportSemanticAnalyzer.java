@@ -3324,9 +3324,9 @@ name|importedofc
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 decl_stmt|;

@@ -327,6 +327,26 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|sarg
+operator|.
+name|SearchArgumentFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|io
@@ -15890,9 +15910,7 @@ expr_stmt|;
 name|SearchArgument
 name|sarg
 init|=
-name|SearchArgument
-operator|.
-name|FACTORY
+name|SearchArgumentFactory
 operator|.
 name|newBuilder
 argument_list|()
@@ -16096,9 +16114,7 @@ expr_stmt|;
 comment|// look through the file with no rows selected
 name|sarg
 operator|=
-name|SearchArgument
-operator|.
-name|FACTORY
+name|SearchArgumentFactory
 operator|.
 name|newBuilder
 argument_list|()
@@ -16193,9 +16209,7 @@ expr_stmt|;
 comment|// select first 100 and last 100 rows
 name|sarg
 operator|=
-name|SearchArgument
-operator|.
-name|FACTORY
+name|SearchArgumentFactory
 operator|.
 name|newBuilder
 argument_list|()

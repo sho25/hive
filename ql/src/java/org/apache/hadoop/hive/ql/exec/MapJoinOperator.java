@@ -662,6 +662,10 @@ argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
+name|hashMapRowGetters
+operator|=
+literal|null
+expr_stmt|;
 name|mapJoinTables
 operator|=
 operator|(
@@ -1193,7 +1197,7 @@ name|isBucketMapJoin
 argument_list|()
 condition|)
 block|{
-comment|/*        * The issue with caching in case of bucket map join is that different tasks        * process different buckets and if the container is reused to join a different bucket,        * join results can be incorrect. The cache is keyed on operator id and for bucket map join        * the operator does not change but data needed is different. For a proper fix, this        * requires changes in the Tez API with regard to finding bucket id and         * also ability to schedule tasks to re-use containers that have cached the specific bucket.        */
+comment|/*        * The issue with caching in case of bucket map join is that different tasks        * process different buckets and if the container is reused to join a different bucket,        * join results can be incorrect. The cache is keyed on operator id and for bucket map join        * the operator does not change but data needed is different. For a proper fix, this        * requires changes in the Tez API with regard to finding bucket id and        * also ability to schedule tasks to re-use containers that have cached the specific bucket.        */
 name|LOG
 operator|.
 name|info

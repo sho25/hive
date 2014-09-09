@@ -209,13 +209,13 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|DOUBLE
+name|FLOAT_FAMILY
 argument_list|,
 name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|DOUBLE
+name|FLOAT_FAMILY
 argument_list|)
 operator|.
 name|setInputExpressionTypes

@@ -704,13 +704,13 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|LONG
+name|INT_FAMILY
 argument_list|,
 name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|LONG
+name|INT_FAMILY
 argument_list|)
 operator|.
 name|setInputExpressionTypes

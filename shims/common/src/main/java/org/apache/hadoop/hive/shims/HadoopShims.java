@@ -325,6 +325,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|permission
+operator|.
+name|FsPermission
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|LongWritable
@@ -1888,6 +1904,19 @@ name|name
 parameter_list|)
 throws|throws
 name|IOException
+function_decl|;
+comment|/**    * check whether current hadoop supports sticky bit    * @return    */
+name|boolean
+name|supportStickyBit
+parameter_list|()
+function_decl|;
+comment|/**    * Check stick bit in the permission    * @param permission    * @return sticky bit    */
+name|boolean
+name|hasStickyBit
+parameter_list|(
+name|FsPermission
+name|permission
+parameter_list|)
 function_decl|;
 block|}
 end_interface

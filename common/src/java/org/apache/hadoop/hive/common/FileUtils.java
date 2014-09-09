@@ -2778,6 +2778,16 @@ comment|//   b. User is owner of the parent dir
 comment|//   Super users are also allowed to drop the file, but there is no good way of checking
 comment|//   if a user is a super user. Also super users running hive queries is not a common
 comment|//   use case. super users can also do a chown to be able to drop the file
+if|if
+condition|(
+name|path
+operator|==
+literal|null
+condition|)
+block|{
+comment|// no file/dir to be deleted
+return|return;
+block|}
 specifier|final
 name|FileSystem
 name|fs
@@ -2789,39 +2799,42 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|fs
-operator|.
-name|exists
-argument_list|(
-name|path
-argument_list|)
-condition|)
-block|{
-comment|// no file/dir to be deleted
-return|return;
-block|}
-name|Path
-name|parPath
-init|=
-name|path
-operator|.
-name|getParent
-argument_list|()
-decl_stmt|;
 comment|// check user has write permissions on the parent dir
 name|FileStatus
 name|stat
 init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|stat
+operator|=
 name|fs
 operator|.
 name|getFileStatus
 argument_list|(
 name|path
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|FileNotFoundException
+name|e
+parameter_list|)
+block|{
+comment|// ignore
+block|}
+if|if
+condition|(
+name|stat
+operator|==
+literal|null
+condition|)
+block|{
+comment|// no file/dir to be deleted
+return|return;
+block|}
 name|FileUtils
 operator|.
 name|checkFileAccessWithImpersonation
@@ -2837,6 +2850,26 @@ argument_list|,
 name|user
 argument_list|)
 expr_stmt|;
+name|HadoopShims
+name|shims
+init|=
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|shims
+operator|.
+name|supportStickyBit
+argument_list|()
+condition|)
+block|{
+comment|// not supports sticky bit
+return|return;
+block|}
 comment|// check if sticky bit is set on the parent dir
 name|FileStatus
 name|parStatus
@@ -2845,19 +2878,24 @@ name|fs
 operator|.
 name|getFileStatus
 argument_list|(
-name|parPath
+name|path
+operator|.
+name|getParent
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
 operator|!
+name|shims
+operator|.
+name|hasStickyBit
+argument_list|(
 name|parStatus
 operator|.
 name|getPermission
 argument_list|()
-operator|.
-name|getStickyBit
-argument_list|()
+argument_list|)
 condition|)
 block|{
 comment|// no sticky bit, so write permission on parent dir is sufficient

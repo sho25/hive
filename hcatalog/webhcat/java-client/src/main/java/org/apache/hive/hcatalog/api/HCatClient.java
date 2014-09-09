@@ -61,9 +61,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
+name|metastore
 operator|.
-name|JavaUtils
+name|api
+operator|.
+name|PartitionEventType
 import|;
 end_import
 
@@ -77,11 +79,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|ql
 operator|.
-name|api
+name|exec
 operator|.
-name|PartitionEventType
+name|Utilities
 import|;
 end_import
 
@@ -197,9 +199,9 @@ name|className
 argument_list|,
 literal|true
 argument_list|,
-name|JavaUtils
+name|Utilities
 operator|.
-name|getClassLoader
+name|getSessionSpecifiedClassLoader
 argument_list|()
 argument_list|)
 operator|.
