@@ -121,6 +121,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|optiq
+operator|.
+name|OptiqSemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|ASTNode
@@ -624,6 +644,8 @@ parameter_list|,
 name|RelDataType
 name|retType
 parameter_list|)
+throws|throws
+name|OptiqSemanticException
 block|{
 comment|// handle overloaded methods first
 if|if
@@ -2258,7 +2280,37 @@ parameter_list|,
 name|RelDataType
 name|optiqRetType
 parameter_list|)
+throws|throws
+name|OptiqSemanticException
 block|{
+if|if
+condition|(
+name|hiveUdfName
+operator|!=
+literal|null
+operator|&&
+name|hiveUdfName
+operator|.
+name|trim
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"<=>"
+argument_list|)
+condition|)
+block|{
+comment|// We can create Optiq IS_DISTINCT_FROM operator for this. But since our
+comment|// join reordering algo cant handle this anyway there is no advantage of this.
+comment|// So, bail out for now.
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"<=> is not yet supported for cbo."
+argument_list|)
+throw|;
+block|}
 name|SqlOperator
 name|optiqOp
 init|=
