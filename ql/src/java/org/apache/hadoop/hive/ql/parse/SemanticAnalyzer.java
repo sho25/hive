@@ -9292,6 +9292,13 @@ operator|.
 name|TOK_LATERAL_VIEW_OUTER
 condition|)
 block|{
+name|queryProperties
+operator|.
+name|setHasLateralViews
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|processLateralView
 argument_list|(
 name|qb
@@ -58889,7 +58896,9 @@ argument_list|)
 operator|||
 operator|!
 name|canHandleQuery
-argument_list|()
+argument_list|(
+name|qb
+argument_list|)
 condition|)
 block|{
 name|runCBO
@@ -70571,11 +70580,13 @@ return|;
 block|}
 comment|/**** Temporary Place Holder For Optiq plan Gen, Optimizer ****/
 comment|/*    * Entry point to Optimizations using Optiq.    */
-comment|// TODO: Extend QP to indicate LV, Multi Insert, Cubes, Rollups...
 specifier|private
 name|boolean
 name|canHandleQuery
-parameter_list|()
+parameter_list|(
+name|QB
+name|qbToChk
+parameter_list|)
 block|{
 name|boolean
 name|runOptiqPlanner
@@ -70586,7 +70597,7 @@ comment|// Assumption: If top level QB is query then everything below it must al
 comment|// be Query
 if|if
 condition|(
-name|qb
+name|qbToChk
 operator|.
 name|getIsQuery
 argument_list|()
@@ -70645,6 +70656,12 @@ operator|!
 name|queryProperties
 operator|.
 name|hasMultiDestQuery
+argument_list|()
+operator|&&
+operator|!
+name|queryProperties
+operator|.
+name|hasLateralViews
 argument_list|()
 condition|)
 block|{
@@ -73035,11 +73052,30 @@ operator|.
 name|TOK_UNIQUEJOIN
 condition|)
 block|{
+name|String
+name|msg
+init|=
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"UNIQUE JOIN is currently not supported in CBO,"
+operator|+
+literal|" turn off cbo to use UNIQUE JOIN."
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
-name|RuntimeException
+name|OptiqSemanticException
 argument_list|(
-literal|"CBO does not support Unique Join"
+name|msg
 argument_list|)
 throw|;
 block|}
@@ -79841,9 +79877,7 @@ name|format
 argument_list|(
 literal|"Hint specified for %s."
 operator|+
-literal|" Currently we don't support hints in CBO,"
-operator|+
-literal|" turn off cbo to use hints."
+literal|" Currently we don't support hints in CBO, turn off cbo to use hints."
 argument_list|,
 name|hint
 argument_list|)
@@ -79904,11 +79938,30 @@ condition|(
 name|isInTransform
 condition|)
 block|{
+name|String
+name|msg
+init|=
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"SELECT TRANSFORM is currently not supported in CBO,"
+operator|+
+literal|" turn off cbo to use TRANSFORM."
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
-name|RuntimeException
+name|OptiqSemanticException
 argument_list|(
-literal|"SELECT TRANSFORM not supported"
+name|msg
 argument_list|)
 throw|;
 block|}
@@ -80005,11 +80058,36 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|String
+name|msg
+init|=
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"UDTF "
+operator|+
+name|funcName
+operator|+
+literal|" is currently not supported in CBO,"
+operator|+
+literal|" turn off cbo to use UDTF "
+operator|+
+name|funcName
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
-name|RuntimeException
+name|OptiqSemanticException
 argument_list|(
-literal|"SELECT UDTF not supported"
+name|msg
 argument_list|)
 throw|;
 block|}
@@ -80942,6 +81020,42 @@ name|RelNode
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// 0. Check if we can handle the query
+comment|// This check is needed here because of SubQuery
+if|if
+condition|(
+operator|!
+name|canHandleQuery
+argument_list|(
+name|qb
+argument_list|)
+condition|)
+block|{
+name|String
+name|msg
+init|=
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"CBO Can not handle Sub Query"
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
+block|}
 comment|// 1. Build Rel For Src (SubQuery, TS, Join)
 comment|// 1.1. Recurse over the subqueries to fill the subquery part of the plan
 for|for
@@ -81683,6 +81797,8 @@ parameter_list|(
 name|QB
 name|qb
 parameter_list|)
+throws|throws
+name|OptiqSemanticException
 block|{
 name|QBParseInfo
 name|qbp
@@ -81704,13 +81820,34 @@ argument_list|()
 operator|>
 literal|1
 condition|)
+block|{
+name|String
+name|msg
+init|=
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"Multi Insert is currently not supported in CBO,"
+operator|+
+literal|" turn off cbo to use Multi Insert."
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
-name|RuntimeException
+name|OptiqSemanticException
 argument_list|(
-literal|"Multi Insert is not supported"
+name|msg
 argument_list|)
 throw|;
+block|}
 return|return
 name|qbp
 return|;

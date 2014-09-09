@@ -33,6 +33,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDF
 import|;
 end_import
@@ -42,6 +60,17 @@ comment|/**  * A UDF for testing, which evaluates the length of a string. This U
 end_comment
 
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"testlength2"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(col) - UDF evaluates the length of the string and returns value as Java Integer"
+argument_list|)
 specifier|public
 class|class
 name|UDFTestLength2
