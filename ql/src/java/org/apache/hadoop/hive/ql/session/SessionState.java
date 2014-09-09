@@ -2947,6 +2947,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+block|}
 comment|// create the create table grants with new config
 name|createTableGrants
 operator|=
@@ -2957,7 +2958,6 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 catch|catch
 parameter_list|(
