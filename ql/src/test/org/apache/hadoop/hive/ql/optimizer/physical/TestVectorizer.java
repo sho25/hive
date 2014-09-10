@@ -711,6 +711,8 @@ operator|.
 name|validateMapWorkOperator
 argument_list|(
 name|gbyOp
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1035,7 +1037,7 @@ name|?
 extends|extends
 name|MapJoinDesc
 argument_list|>
-name|mop
+name|map
 parameter_list|,
 name|MapJoinDesc
 name|mjdesc
@@ -1292,7 +1294,7 @@ name|testValidateMapJoinOperator
 parameter_list|()
 block|{
 name|MapJoinOperator
-name|mop
+name|map
 init|=
 operator|new
 name|MapJoinOperator
@@ -1307,12 +1309,12 @@ argument_list|()
 decl_stmt|;
 name|prepareAbstractMapJoin
 argument_list|(
-name|mop
+name|map
 argument_list|,
 name|mjdesc
 argument_list|)
 expr_stmt|;
-name|mop
+name|map
 operator|.
 name|setConf
 argument_list|(
@@ -1334,7 +1336,9 @@ name|vectorizer
 operator|.
 name|validateMapWorkOperator
 argument_list|(
-name|mop
+name|map
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1348,7 +1352,7 @@ name|testValidateSMBJoinOperator
 parameter_list|()
 block|{
 name|SMBMapJoinOperator
-name|mop
+name|map
 init|=
 operator|new
 name|SMBMapJoinOperator
@@ -1363,12 +1367,12 @@ argument_list|()
 decl_stmt|;
 name|prepareAbstractMapJoin
 argument_list|(
-name|mop
+name|map
 argument_list|,
 name|mjdesc
 argument_list|)
 expr_stmt|;
-name|mop
+name|map
 operator|.
 name|setConf
 argument_list|(
@@ -1390,7 +1394,9 @@ name|vectorizer
 operator|.
 name|validateMapWorkOperator
 argument_list|(
-name|mop
+name|map
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;

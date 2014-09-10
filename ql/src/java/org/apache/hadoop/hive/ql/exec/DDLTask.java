@@ -9033,11 +9033,6 @@ operator|.
 name|getHost
 argument_list|()
 argument_list|)
-operator|.
-name|append
-argument_list|(
-literal|":"
-argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -9051,6 +9046,11 @@ literal|1
 condition|)
 block|{
 name|authority
+operator|.
+name|append
+argument_list|(
+literal|":"
+argument_list|)
 operator|.
 name|append
 argument_list|(

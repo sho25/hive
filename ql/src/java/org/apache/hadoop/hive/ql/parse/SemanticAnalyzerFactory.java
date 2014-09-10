@@ -2027,8 +2027,6 @@ operator|new
 name|ColumnStatsSemanticAnalyzer
 argument_list|(
 name|conf
-argument_list|,
-name|tree
 argument_list|)
 return|;
 case|case

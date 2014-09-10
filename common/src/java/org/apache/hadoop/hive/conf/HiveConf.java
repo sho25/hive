@@ -707,12 +707,6 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTOREDIRECTORY
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
 name|METASTOREWAREHOUSE
 block|,
 name|HiveConf
@@ -1922,17 +1916,7 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-comment|// Metastore stuff. Be sure to update HiveConf.metaVars when you add
-comment|// something here!
-name|METASTOREDIRECTORY
-argument_list|(
-literal|"hive.metastore.metadb.dir"
-argument_list|,
-literal|""
-argument_list|,
-literal|""
-argument_list|)
-block|,
+comment|// Metastore stuff. Be sure to update HiveConf.metaVars when you add something here!
 name|METASTOREWAREHOUSE
 argument_list|(
 literal|"hive.metastore.warehouse.dir"
@@ -6832,6 +6816,17 @@ argument_list|,
 literal|"This flag should be set to true to enable vectorized mode of query execution.\n"
 operator|+
 literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_REDUCE_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.reduce.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable vectorized mode of the reduce-side of query execution.\n"
+operator|+
+literal|"The default value is true."
 argument_list|)
 block|,
 name|HIVE_VECTORIZATION_GROUPBY_CHECKINTERVAL
