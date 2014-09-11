@@ -2884,6 +2884,13 @@ operator|new
 name|SSHCommandExecutor
 argument_list|(
 name|LOG
+argument_list|,
+name|localCommandFactory
+argument_list|,
+name|conf
+operator|.
+name|getSshOpts
+argument_list|()
 argument_list|)
 argument_list|,
 operator|new
