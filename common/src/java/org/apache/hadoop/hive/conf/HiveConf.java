@@ -7148,7 +7148,7 @@ argument_list|)
 block|,
 name|TEZ_DYNAMIC_PARTITION_PRUNING_MAX_DATA_SIZE
 argument_list|(
-literal|"hive.tez.dynamic.parition.pruning.max.data.size"
+literal|"hive.tez.dynamic.partition.pruning.max.data.size"
 argument_list|,
 literal|100
 operator|*
