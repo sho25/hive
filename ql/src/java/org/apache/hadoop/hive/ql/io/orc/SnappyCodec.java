@@ -105,6 +105,16 @@ name|ByteBuffer
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|EnumSet
+import|;
+end_import
+
 begin_class
 class|class
 name|SnappyCodec
@@ -563,6 +573,24 @@ name|flip
 argument_list|()
 expr_stmt|;
 comment|// flip for read
+block|}
+annotation|@
+name|Override
+specifier|public
+name|CompressionCodec
+name|modify
+parameter_list|(
+name|EnumSet
+argument_list|<
+name|Modifier
+argument_list|>
+name|modifiers
+parameter_list|)
+block|{
+comment|// snappy allows no modifications
+return|return
+name|this
+return|;
 block|}
 block|}
 end_class
