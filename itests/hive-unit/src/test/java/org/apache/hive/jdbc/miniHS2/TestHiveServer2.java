@@ -25,17 +25,19 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertFalse
+name|assertEquals
 import|;
 end_import
 
 begin_import
-import|import
-name|java
+import|import static
+name|org
 operator|.
-name|io
+name|junit
 operator|.
-name|IOException
+name|Assert
+operator|.
+name|assertFalse
 import|;
 end_import
 
@@ -173,7 +175,7 @@ name|org
 operator|.
 name|junit
 operator|.
-name|Assert
+name|AfterClass
 import|;
 end_import
 
@@ -220,6 +222,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+specifier|static
 name|Map
 argument_list|<
 name|String
@@ -248,16 +251,6 @@ name|HiveConf
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
-annotation|@
-name|Before
-specifier|public
-name|void
-name|setUp
-parameter_list|()
-throws|throws
-name|Exception
-block|{
 name|confOverlay
 operator|=
 operator|new
@@ -291,10 +284,11 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|After
+name|AfterClass
 specifier|public
+specifier|static
 name|void
-name|tearDown
+name|afterTest
 parameter_list|()
 throws|throws
 name|Exception
@@ -306,6 +300,25 @@ argument_list|()
 expr_stmt|;
 block|}
 annotation|@
+name|Before
+specifier|public
+name|void
+name|setUp
+parameter_list|()
+throws|throws
+name|Exception
+block|{   }
+annotation|@
+name|After
+specifier|public
+name|void
+name|tearDown
+parameter_list|()
+throws|throws
+name|Exception
+block|{   }
+comment|/**    * Open a new session and run a test query    * @throws Exception    */
+annotation|@
 name|Test
 specifier|public
 name|void
@@ -315,9 +328,9 @@ throws|throws
 name|Exception
 block|{
 name|String
-name|tabName
+name|tableName
 init|=
-literal|"testTab1"
+literal|"TestHiveServer2TestConnection"
 decl_stmt|;
 name|CLIServiceClient
 name|serviceClient
@@ -345,7 +358,9 @@ name|executeStatement
 argument_list|(
 name|sessHandle
 argument_list|,
-literal|"DROP TABLE IF EXISTS tab"
+literal|"DROP TABLE IF EXISTS "
+operator|+
+name|tableName
 argument_list|,
 name|confOverlay
 argument_list|)
@@ -358,7 +373,7 @@ name|sessHandle
 argument_list|,
 literal|"CREATE TABLE "
 operator|+
-name|tabName
+name|tableName
 operator|+
 literal|" (id INT)"
 argument_list|,
@@ -399,7 +414,28 @@ operator|==
 literal|0
 argument_list|)
 expr_stmt|;
+name|serviceClient
+operator|.
+name|executeStatement
+argument_list|(
+name|sessHandle
+argument_list|,
+literal|"DROP TABLE IF EXISTS "
+operator|+
+name|tableName
+argument_list|,
+name|confOverlay
+argument_list|)
+expr_stmt|;
+name|serviceClient
+operator|.
+name|closeSession
+argument_list|(
+name|sessHandle
+argument_list|)
+expr_stmt|;
 block|}
+comment|/**    * Open a new session and execute a set command    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -453,8 +489,6 @@ argument_list|(
 name|opHandle
 argument_list|)
 decl_stmt|;
-name|Assert
-operator|.
 name|assertEquals
 argument_list|(
 literal|1
@@ -463,6 +497,13 @@ name|rowSet
 operator|.
 name|numRows
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|serviceClient
+operator|.
+name|closeSession
+argument_list|(
+name|sessHandle
 argument_list|)
 expr_stmt|;
 block|}
