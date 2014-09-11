@@ -307,6 +307,13 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
+name|events
+operator|.
+name|add
+argument_list|(
+name|event
+argument_list|)
+expr_stmt|;
 name|context
 operator|.
 name|tsToEventMap
