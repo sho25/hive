@@ -3882,6 +3882,25 @@ operator|+
 literal|"change the compression level of higher level compression codec (like ZLIB)."
 argument_list|)
 block|,
+name|HIVE_ORC_COMPRESSION_STRATEGY
+argument_list|(
+literal|"hive.exec.orc.compression.strategy"
+argument_list|,
+literal|"SPEED"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"SPEED"
+argument_list|,
+literal|"COMPRESSION"
+argument_list|)
+argument_list|,
+literal|"Define the compression strategy to use while writing data. \n"
+operator|+
+literal|"This changes the compression level of higher level compression codec (like ZLIB)."
+argument_list|)
+block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS
 argument_list|(
 literal|"hive.orc.splits.include.file.footer"
@@ -7139,7 +7158,7 @@ argument_list|)
 block|,
 name|TEZ_DYNAMIC_PARTITION_PRUNING_MAX_DATA_SIZE
 argument_list|(
-literal|"hive.tez.dynamic.parition.pruning.max.data.size"
+literal|"hive.tez.dynamic.partition.pruning.max.data.size"
 argument_list|,
 literal|100
 operator|*
