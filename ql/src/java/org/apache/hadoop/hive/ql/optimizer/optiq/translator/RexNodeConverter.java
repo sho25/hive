@@ -1187,6 +1187,25 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+name|RexNode
+name|rexNode
+init|=
+name|convert
+argument_list|(
+name|fieldDesc
+operator|.
+name|getDesc
+argument_list|()
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|rexNode
+operator|instanceof
+name|RexCall
+condition|)
+block|{
+comment|// regular case of accessing nested field in a column
 return|return
 name|m_cluster
 operator|.
@@ -1195,13 +1214,7 @@ argument_list|()
 operator|.
 name|makeFieldAccess
 argument_list|(
-name|convert
-argument_list|(
-name|fieldDesc
-operator|.
-name|getDesc
-argument_list|()
-argument_list|)
+name|rexNode
 argument_list|,
 name|fieldDesc
 operator|.
@@ -1211,6 +1224,27 @@ argument_list|,
 literal|true
 argument_list|)
 return|;
+block|}
+else|else
+block|{
+comment|// This may happen for schema-less tables, where columns are dynamically
+comment|// supplied by serdes.
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Unexpected rexnode : "
+operator|+
+name|rexNode
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getCanonicalName
+argument_list|()
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|private
 name|RexNode
