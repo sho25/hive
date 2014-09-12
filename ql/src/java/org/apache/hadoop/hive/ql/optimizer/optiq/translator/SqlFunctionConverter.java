@@ -61,6 +61,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -676,11 +690,11 @@ name|reverseOperatorMap
 decl_stmt|;
 static|static
 block|{
-name|Builder
+name|StaticBlockBuilder
 name|builder
 init|=
 operator|new
-name|Builder
+name|StaticBlockBuilder
 argument_list|()
 decl_stmt|;
 name|hiveToOptiq
@@ -722,6 +736,9 @@ specifier|static
 name|SqlOperator
 name|getOptiqOperator
 parameter_list|(
+name|String
+name|funcTextName
+parameter_list|,
 name|GenericUDF
 name|hiveUDF
 parameter_list|,
@@ -765,14 +782,28 @@ operator|.
 name|UNARY_PLUS
 return|;
 block|}
-comment|// do genric lookup
-return|return
-name|getOptiqFn
+comment|// do generic lookup
+name|String
+name|name
+init|=
+name|StringUtils
+operator|.
+name|isEmpty
 argument_list|(
+name|funcTextName
+argument_list|)
+condition|?
 name|getName
 argument_list|(
 name|hiveUDF
 argument_list|)
+else|:
+name|funcTextName
+decl_stmt|;
+return|return
+name|getOptiqFn
+argument_list|(
+name|name
 argument_list|,
 name|optiqArgTypes
 argument_list|,
@@ -1670,6 +1701,9 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|// TODO: this is not valid. Function names for built-in UDFs are specified in FunctionRegistry,
+comment|//       and only happen to match annotations. For user UDFs, the name is what user specifies at
+comment|//       creation time (annotation can be absent, different, or duplicate some other function).
 specifier|private
 specifier|static
 name|String
@@ -1851,10 +1885,11 @@ return|return
 name|udfName
 return|;
 block|}
+comment|/** This class is used to build immutable hashmaps in the static block above. */
 specifier|private
 specifier|static
 class|class
-name|Builder
+name|StaticBlockBuilder
 block|{
 specifier|final
 name|Map
@@ -1898,7 +1933,7 @@ operator|.
 name|newHashMap
 argument_list|()
 decl_stmt|;
-name|Builder
+name|StaticBlockBuilder
 parameter_list|()
 block|{
 name|registerFunction
