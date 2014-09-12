@@ -58953,6 +58953,14 @@ name|qb
 argument_list|,
 literal|true
 argument_list|)
+operator|||
+operator|!
+name|HiveOptiqUtil
+operator|.
+name|validateASTForCBO
+argument_list|(
+name|ast
+argument_list|)
 condition|)
 block|{
 name|runCBO
