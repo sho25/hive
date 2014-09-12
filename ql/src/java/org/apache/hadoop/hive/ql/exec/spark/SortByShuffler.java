@@ -29,6 +29,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|HiveKey
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|BytesWritable
@@ -99,7 +117,7 @@ name|Override
 specifier|public
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<
@@ -110,7 +128,7 @@ name|shuffle
 parameter_list|(
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -122,7 +140,7 @@ parameter_list|)
 block|{
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -181,13 +199,13 @@ name|Iterator
 argument_list|<
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
 argument_list|>
 argument_list|,
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<
@@ -211,7 +229,7 @@ name|Iterable
 argument_list|<
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<
@@ -226,7 +244,7 @@ name|Iterator
 argument_list|<
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -242,7 +260,7 @@ name|Iterator
 argument_list|<
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<
@@ -257,7 +275,7 @@ name|Iterator
 argument_list|<
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<
@@ -267,7 +285,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
-name|BytesWritable
+name|HiveKey
 name|curKey
 init|=
 literal|null
@@ -308,7 +326,7 @@ name|Override
 specifier|public
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<
@@ -331,7 +349,7 @@ condition|)
 block|{
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -360,7 +378,7 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|BytesWritable
+name|HiveKey
 name|key
 init|=
 name|curKey
@@ -403,7 +421,7 @@ return|return
 operator|new
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<
@@ -449,7 +467,7 @@ argument_list|()
 throw|;
 block|}
 comment|// if we get here, this should be the last element we have
-name|BytesWritable
+name|HiveKey
 name|key
 init|=
 name|curKey
@@ -462,7 +480,7 @@ return|return
 operator|new
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<
@@ -499,7 +517,7 @@ name|Iterable
 argument_list|<
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<
@@ -516,7 +534,7 @@ name|Iterator
 argument_list|<
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|Iterable
 argument_list|<

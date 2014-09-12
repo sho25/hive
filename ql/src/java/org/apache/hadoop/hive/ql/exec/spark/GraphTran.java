@@ -89,6 +89,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|HiveKey
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|BytesWritable
@@ -206,7 +224,7 @@ name|List
 argument_list|<
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -223,7 +241,7 @@ name|List
 argument_list|<
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -361,7 +379,7 @@ name|SparkTran
 argument_list|,
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -375,7 +393,7 @@ name|SparkTran
 argument_list|,
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -441,7 +459,7 @@ throw|;
 block|}
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -491,7 +509,7 @@ name|List
 argument_list|<
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -520,7 +538,7 @@ name|LinkedList
 argument_list|<
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -603,7 +621,7 @@ for|for
 control|(
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -688,7 +706,7 @@ for|for
 control|(
 name|JavaPairRDD
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>

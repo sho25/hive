@@ -29,6 +29,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|HiveKey
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|BytesWritable
@@ -62,7 +80,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of a voidFunction that does nothing.  *  */
+comment|/**  * Implementation of a voidFunction that does nothing.  */
 end_comment
 
 begin_class
@@ -74,7 +92,7 @@ name|VoidFunction
 argument_list|<
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>
@@ -119,7 +137,7 @@ name|call
 parameter_list|(
 name|Tuple2
 argument_list|<
-name|BytesWritable
+name|HiveKey
 argument_list|,
 name|BytesWritable
 argument_list|>

@@ -180,7 +180,6 @@ class|class
 name|SparkRecordHandler
 block|{
 specifier|private
-specifier|static
 specifier|final
 name|Log
 name|LOG
@@ -189,9 +188,10 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|SparkRecordHandler
+name|this
 operator|.
-name|class
+name|getClass
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// used to log memory usage periodically
@@ -438,7 +438,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"ExecReducer: processing "
+literal|"processing "
 operator|+
 name|rowNumber
 operator|+
@@ -482,7 +482,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"ExecMapper: processed "
+literal|"processed "
 operator|+
 name|rowNumber
 operator|+
