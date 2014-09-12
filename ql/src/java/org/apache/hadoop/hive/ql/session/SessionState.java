@@ -2881,9 +2881,9 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|localSessionPath
+name|FileSystem
 operator|.
-name|getFileSystem
+name|getLocal
 argument_list|(
 name|conf
 argument_list|)
