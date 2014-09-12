@@ -58950,6 +58950,8 @@ operator|!
 name|canHandleQuery
 argument_list|(
 name|qb
+argument_list|,
+literal|true
 argument_list|)
 condition|)
 block|{
@@ -70638,6 +70640,9 @@ name|canHandleQuery
 parameter_list|(
 name|QB
 name|qbToChk
+parameter_list|,
+name|boolean
+name|topLevelQB
 parameter_list|)
 block|{
 name|boolean
@@ -70645,16 +70650,25 @@ name|runOptiqPlanner
 init|=
 literal|false
 decl_stmt|;
-comment|// Assumption: If top level QB is query then everything below it must also
-comment|// be Query
+comment|// Assumption:
+comment|// 1. If top level QB is query then everything below it must also be Query
+comment|// 2. Nested Subquery will return false for qbToChk.getIsQuery()
 if|if
 condition|(
+operator|(
+operator|!
+name|topLevelQB
+operator|||
 name|qbToChk
 operator|.
 name|getIsQuery
 argument_list|()
+operator|)
 operator|&&
 operator|(
+operator|!
+name|topLevelQB
+operator|||
 operator|(
 name|queryProperties
 operator|.
@@ -70748,13 +70762,13 @@ name|RelNode
 argument_list|>
 block|{
 name|RelOptCluster
-name|m_cluster
+name|cluster
 decl_stmt|;
 name|RelOptSchema
-name|m_relOptSchema
+name|relOptSchema
 decl_stmt|;
 name|SemanticException
-name|m_semanticException
+name|semanticException
 decl_stmt|;
 name|Map
 argument_list|<
@@ -70773,6 +70787,12 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|topLevelFieldSchema
+decl_stmt|;
 comment|// TODO: Do we need to keep track of RR, ColNameToPosMap for every op or
 comment|// just last one.
 name|LinkedHashMap
@@ -70781,7 +70801,7 @@ name|RelNode
 argument_list|,
 name|RowResolver
 argument_list|>
-name|m_relToHiveRR
+name|relToHiveRR
 init|=
 operator|new
 name|LinkedHashMap
@@ -70803,7 +70823,7 @@ argument_list|,
 name|Integer
 argument_list|>
 argument_list|>
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 init|=
 operator|new
 name|LinkedHashMap
@@ -70870,12 +70890,12 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|m_semanticException
+name|semanticException
 operator|!=
 literal|null
 condition|)
 throw|throw
-name|m_semanticException
+name|semanticException
 throw|;
 else|else
 throw|throw
@@ -70894,7 +70914,7 @@ name|convert
 argument_list|(
 name|optimizedOptiqPlan
 argument_list|,
-name|resultSchema
+name|topLevelFieldSchema
 argument_list|)
 expr_stmt|;
 return|return
@@ -70974,11 +70994,15 @@ argument_list|,
 name|rexBuilder
 argument_list|)
 expr_stmt|;
-name|m_cluster
+name|this
+operator|.
+name|cluster
 operator|=
 name|cluster
 expr_stmt|;
-name|m_relOptSchema
+name|this
+operator|.
+name|relOptSchema
 operator|=
 name|relOptSchema
 expr_stmt|;
@@ -70991,6 +71015,31 @@ argument_list|(
 name|qb
 argument_list|)
 expr_stmt|;
+name|topLevelFieldSchema
+operator|=
+name|convertRowSchemaToResultSetSchema
+argument_list|(
+name|relToHiveRR
+operator|.
+name|get
+argument_list|(
+name|optiqGenPlan
+argument_list|)
+argument_list|,
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_RESULTSET_USE_UNIQUE_COLUMN_NAMES
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -70998,7 +71047,7 @@ name|SemanticException
 name|e
 parameter_list|)
 block|{
-name|m_semanticException
+name|semanticException
 operator|=
 name|e
 expr_stmt|;
@@ -71650,7 +71699,7 @@ name|leftRR
 init|=
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -71662,7 +71711,7 @@ name|rightRR
 init|=
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -72231,7 +72280,7 @@ argument_list|)
 expr_stmt|;
 name|unionFieldDT
 operator|=
-name|m_cluster
+name|cluster
 operator|.
 name|getTypeFactory
 argument_list|()
@@ -72259,7 +72308,7 @@ name|leftProjs
 operator|.
 name|add
 argument_list|(
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -72268,7 +72317,7 @@ name|ensureType
 argument_list|(
 name|unionFieldDT
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -72302,7 +72351,7 @@ name|rightProjs
 operator|.
 name|add
 argument_list|(
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -72311,7 +72360,7 @@ name|ensureType
 argument_list|(
 name|unionFieldDT
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -72334,7 +72383,7 @@ name|leftProjs
 operator|.
 name|add
 argument_list|(
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -72343,7 +72392,7 @@ name|ensureType
 argument_list|(
 name|leftFieldDT
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -72363,7 +72412,7 @@ name|rightProjs
 operator|.
 name|add
 argument_list|(
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -72372,7 +72421,7 @@ name|ensureType
 argument_list|(
 name|rightFieldDT
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -72486,13 +72535,13 @@ operator|=
 operator|new
 name|HiveUnionRel
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
 name|TraitsUtil
 operator|.
 name|getDefaultTraitSet
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|)
 argument_list|,
 name|bldr
@@ -72501,7 +72550,7 @@ name|build
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
@@ -72510,7 +72559,7 @@ argument_list|,
 name|unionoutRR
 argument_list|)
 expr_stmt|;
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -72561,7 +72610,7 @@ name|leftRR
 init|=
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -72573,7 +72622,7 @@ name|rightRR
 init|=
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -72741,15 +72790,15 @@ name|RexNodeConverter
 operator|.
 name|convert
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
 name|joinCondnExprNode
 argument_list|,
 name|inputRels
 argument_list|,
-name|m_relToHiveRR
+name|relToHiveRR
 argument_list|,
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 argument_list|,
 literal|false
 argument_list|)
@@ -72759,7 +72808,7 @@ else|else
 block|{
 name|optiqJoinCond
 operator|=
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -73000,9 +73049,9 @@ operator|=
 operator|new
 name|SemiJoinRel
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|traitSetOf
 argument_list|(
@@ -73047,7 +73096,7 @@ name|HiveJoinRel
 operator|.
 name|getJoin
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
 name|leftRel
 argument_list|,
@@ -73062,7 +73111,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// 5. Add new JoinRel& its RR to the maps
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -73078,7 +73127,7 @@ name|joinRel
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
@@ -74064,7 +74113,7 @@ name|TypeConverter
 operator|.
 name|getType
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
 name|rr
 argument_list|,
@@ -74078,7 +74127,7 @@ init|=
 operator|new
 name|RelOptHiveTable
 argument_list|(
-name|m_relOptSchema
+name|relOptSchema
 argument_list|,
 name|tableAlias
 argument_list|,
@@ -74103,9 +74152,9 @@ operator|=
 operator|new
 name|HiveTableScanRel
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|traitSetOf
 argument_list|(
@@ -74135,7 +74184,7 @@ argument_list|,
 name|tableRel
 argument_list|)
 decl_stmt|;
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
@@ -74144,7 +74193,7 @@ argument_list|,
 name|rr
 argument_list|)
 expr_stmt|;
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -74211,7 +74260,7 @@ name|genExprNodeDesc
 argument_list|(
 name|filterExpr
 argument_list|,
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -74229,7 +74278,7 @@ name|hiveColNameOptiqPosMap
 init|=
 name|this
 operator|.
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|get
 argument_list|(
@@ -74242,7 +74291,7 @@ init|=
 operator|new
 name|RexNodeConverter
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
 name|srcRel
 operator|.
@@ -74267,9 +74316,9 @@ init|=
 operator|new
 name|HiveFilterRel
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|traitSetOf
 argument_list|(
@@ -74285,7 +74334,7 @@ argument_list|)
 decl_stmt|;
 name|this
 operator|.
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -74294,13 +74343,13 @@ argument_list|,
 name|hiveColNameOptiqPosMap
 argument_list|)
 expr_stmt|;
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
 name|filterRel
 argument_list|,
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -74308,7 +74357,7 @@ name|srcRel
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -74481,7 +74530,7 @@ decl_stmt|;
 name|RowResolver
 name|inputRR
 init|=
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -74707,7 +74756,7 @@ expr_stmt|;
 name|RowResolver
 name|sqRR
 init|=
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -74895,7 +74944,7 @@ argument_list|)
 expr_stmt|;
 name|inputRR
 operator|=
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -75037,7 +75086,7 @@ block|{
 name|RowResolver
 name|iRR
 init|=
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -75146,7 +75195,7 @@ name|optiqColLst
 operator|.
 name|add
 argument_list|(
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -75186,7 +75235,7 @@ argument_list|)
 decl_stmt|;
 name|this
 operator|.
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -75202,7 +75251,7 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
@@ -75415,7 +75464,7 @@ name|m_returnType
 argument_list|,
 name|this
 operator|.
-name|m_cluster
+name|cluster
 operator|.
 name|getTypeFactory
 argument_list|()
@@ -75450,7 +75499,7 @@ name|dtFactory
 init|=
 name|this
 operator|.
-name|m_cluster
+name|cluster
 operator|.
 name|getTypeFactory
 argument_list|()
@@ -75630,7 +75679,7 @@ name|gbInputRR
 init|=
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -75661,7 +75710,7 @@ name|posMap
 init|=
 name|this
 operator|.
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|get
 argument_list|(
@@ -75676,7 +75725,7 @@ name|RexNodeConverter
 argument_list|(
 name|this
 operator|.
-name|m_cluster
+name|cluster
 argument_list|,
 name|srcRel
 operator|.
@@ -75850,7 +75899,7 @@ name|add
 argument_list|(
 name|this
 operator|.
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -75890,9 +75939,9 @@ operator|=
 operator|new
 name|HiveAggregateRel
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|traitSetOf
 argument_list|(
@@ -76195,7 +76244,6 @@ argument_list|,
 name|oColInfo
 argument_list|)
 expr_stmt|;
-comment|// TODO: Alternate mappings, are they necessary?
 name|addAlternateGByKeyMappings
 argument_list|(
 name|grpbyExpr
@@ -76921,7 +76969,7 @@ name|groupByInputRowResolver
 init|=
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -77325,7 +77373,7 @@ argument_list|,
 name|srcRel
 argument_list|)
 expr_stmt|;
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -77341,7 +77389,7 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
@@ -77541,7 +77589,7 @@ decl_stmt|;
 name|RowResolver
 name|inputRR
 init|=
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -77564,14 +77612,14 @@ init|=
 operator|new
 name|RexNodeConverter
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
 name|srcRel
 operator|.
 name|getRowType
 argument_list|()
 argument_list|,
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|get
 argument_list|(
@@ -77910,7 +77958,7 @@ comment|// 4. Construct SortRel
 name|RelTraitSet
 name|traitSet
 init|=
-name|m_cluster
+name|cluster
 operator|.
 name|traitSetOf
 argument_list|(
@@ -77942,7 +77990,7 @@ init|=
 operator|new
 name|HiveSortRel
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
 name|traitSet
 argument_list|,
@@ -78076,7 +78124,7 @@ argument_list|,
 name|relToRet
 argument_list|)
 decl_stmt|;
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
@@ -78085,7 +78133,7 @@ argument_list|,
 name|outputRR
 argument_list|)
 expr_stmt|;
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -78157,7 +78205,7 @@ block|{
 name|RexNode
 name|fetch
 init|=
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -78175,7 +78223,7 @@ decl_stmt|;
 name|RelTraitSet
 name|traitSet
 init|=
-name|m_cluster
+name|cluster
 operator|.
 name|traitSetOf
 argument_list|(
@@ -78201,7 +78249,7 @@ operator|=
 operator|new
 name|HiveSortRel
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
 name|traitSet
 argument_list|,
@@ -78227,7 +78275,7 @@ name|add
 argument_list|(
 name|outputRR
 argument_list|,
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -78252,7 +78300,7 @@ argument_list|,
 name|sortRel
 argument_list|)
 decl_stmt|;
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
@@ -78261,7 +78309,7 @@ argument_list|,
 name|outputRR
 argument_list|)
 expr_stmt|;
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -78641,7 +78689,7 @@ literal|null
 condition|)
 name|amtLiteral
 operator|=
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -78657,7 +78705,7 @@ name|getAmt
 argument_list|()
 argument_list|)
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|getTypeFactory
 argument_list|()
@@ -78731,7 +78779,7 @@ name|create
 argument_list|(
 name|sc
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -78832,7 +78880,7 @@ name|create
 argument_list|(
 name|sc
 argument_list|,
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -78988,7 +79036,7 @@ literal|1
 argument_list|,
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -79016,7 +79064,7 @@ name|m_returnType
 argument_list|,
 name|this
 operator|.
-name|m_cluster
+name|cluster
 operator|.
 name|getTypeFactory
 argument_list|()
@@ -79033,7 +79081,7 @@ name|posMap
 init|=
 name|this
 operator|.
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|get
 argument_list|(
@@ -79048,7 +79096,7 @@ name|RexNodeConverter
 argument_list|(
 name|this
 operator|.
-name|m_cluster
+name|cluster
 argument_list|,
 name|srcRel
 operator|.
@@ -79156,7 +79204,7 @@ argument_list|()
 argument_list|,
 name|this
 operator|.
-name|m_cluster
+name|cluster
 operator|.
 name|getTypeFactory
 argument_list|()
@@ -79208,7 +79256,7 @@ comment|// 6. Translate Window spec
 name|RowResolver
 name|inputRR
 init|=
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -79323,7 +79371,7 @@ literal|false
 decl_stmt|;
 name|w
 operator|=
-name|m_cluster
+name|cluster
 operator|.
 name|getRexBuilder
 argument_list|()
@@ -79479,7 +79527,7 @@ name|inputRR
 init|=
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -79799,7 +79847,7 @@ decl_stmt|;
 comment|// 4. Keep track of colname-to-posmap&& RR for new select
 name|this
 operator|.
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(
@@ -79815,7 +79863,7 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
@@ -79965,7 +80013,7 @@ name|inputRR
 init|=
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -80961,7 +81009,7 @@ init|=
 operator|new
 name|RexNodeConverter
 argument_list|(
-name|m_cluster
+name|cluster
 argument_list|,
 name|srcRel
 operator|.
@@ -81203,6 +81251,8 @@ operator|!
 name|canHandleQuery
 argument_list|(
 name|qb
+argument_list|,
+literal|false
 argument_list|)
 condition|)
 block|{
@@ -81468,7 +81518,7 @@ name|rr
 init|=
 name|this
 operator|.
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|get
 argument_list|(
@@ -81586,7 +81636,7 @@ name|newCi
 argument_list|)
 expr_stmt|;
 block|}
-name|m_relToHiveRR
+name|relToHiveRR
 operator|.
 name|put
 argument_list|(
@@ -81595,7 +81645,7 @@ argument_list|,
 name|newRR
 argument_list|)
 expr_stmt|;
-name|m_relToHiveColNameOptiqPosMap
+name|relToHiveColNameOptiqPosMap
 operator|.
 name|put
 argument_list|(

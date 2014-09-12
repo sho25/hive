@@ -389,14 +389,15 @@ argument_list|>
 name|resultSchema
 parameter_list|)
 block|{
-comment|// Disable introducing top level select since Hive seems to have bugs with
-comment|// OB, Limit in sub query.
-comment|// RelNode newTopSelect = introduceTopLevelSelectInResultSchema(rel,
-comment|// resultSchema);
 name|RelNode
 name|newTopNode
 init|=
+name|introduceTopLevelSelectInResultSchema
+argument_list|(
 name|rel
+argument_list|,
+name|resultSchema
+argument_list|)
 decl_stmt|;
 comment|// NOTE: Hive requires Union to buried in Project (TOK_QUERY,
 comment|// TOK_SUBQUERY, TOK_UNION)
