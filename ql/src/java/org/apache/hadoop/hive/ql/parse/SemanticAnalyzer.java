@@ -71445,10 +71445,8 @@ operator|.
 name|DEFAULT_FILTER_FACTORY
 argument_list|)
 argument_list|,
-name|RemoveTrivialProjectRule
-operator|.
-name|INSTANCE
-argument_list|,
+comment|// TODO: Enable it after OPTIQ-407 is fixed
+comment|//RemoveTrivialProjectRule.INSTANCE,
 operator|new
 name|HivePartitionPrunerRule
 argument_list|(
