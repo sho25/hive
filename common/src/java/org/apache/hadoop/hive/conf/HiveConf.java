@@ -3627,15 +3627,6 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
-name|HIVEMERGEINPUTFORMATBLOCKLEVEL
-argument_list|(
-literal|"hive.merge.input.format.block.level"
-argument_list|,
-literal|"org.apache.hadoop.hive.ql.io.rcfile.merge.RCFileBlockMergeInputFormat"
-argument_list|,
-literal|""
-argument_list|)
-block|,
 name|HIVEMERGEORCFILESTRIPELEVEL
 argument_list|(
 literal|"hive.merge.orcfile.stripe.level"
@@ -3649,24 +3640,6 @@ operator|+
 literal|" for small ORC files. Note that enabling this config will not honor padding tolerance\n"
 operator|+
 literal|" config (hive.exec.orc.block.padding.tolerance)."
-argument_list|)
-block|,
-name|HIVEMERGEINPUTFORMATSTRIPELEVEL
-argument_list|(
-literal|"hive.merge.input.format.stripe.level"
-argument_list|,
-literal|"org.apache.hadoop.hive.ql.io.orc.OrcFileStripeMergeInputFormat"
-argument_list|,
-literal|"Input file format to use for ORC stripe level merging (for internal use only)"
-argument_list|)
-block|,
-name|HIVEMERGECURRENTJOBHASDYNAMICPARTITIONS
-argument_list|(
-literal|"hive.merge.current.job.has.dynamic.partitions"
-argument_list|,
-literal|false
-argument_list|,
-literal|""
 argument_list|)
 block|,
 name|HIVEUSEEXPLICITRCFILEHEADER
@@ -6702,31 +6675,6 @@ operator|+
 literal|"               it will now take 512 reducers, similarly if the max number of reducers is 511,\n"
 operator|+
 literal|"               and a job was going to use this many, it will now use 256 reducers."
-argument_list|)
-block|,
-comment|/* The following section contains all configurations used for list bucketing feature.*/
-comment|/* This is not for clients. but only for block merge task. */
-comment|/* This is used by BlockMergeTask to send out flag to RCFileMergeMapper */
-comment|/* about alter table...concatenate and list bucketing case. */
-name|HIVEMERGECURRENTJOBCONCATENATELISTBUCKETING
-argument_list|(
-literal|"hive.merge.current.job.concatenate.list.bucketing"
-argument_list|,
-literal|true
-argument_list|,
-literal|""
-argument_list|)
-block|,
-comment|/* This is not for clients. but only for block merge task. */
-comment|/* This is used by BlockMergeTask to send out flag to RCFileMergeMapper */
-comment|/* about depth of list bucketing. */
-name|HIVEMERGECURRENTJOBCONCATENATELISTBUCKETINGDEPTH
-argument_list|(
-literal|"hive.merge.current.job.concatenate.list.bucketing.depth"
-argument_list|,
-literal|0
-argument_list|,
-literal|""
 argument_list|)
 block|,
 name|HIVEOPTLISTBUCKETING
