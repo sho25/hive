@@ -1167,7 +1167,7 @@ literal|"FROM "
 operator|+
 name|tblNameStg
 operator|+
-literal|" INSERT OVERWRITE TABLE "
+literal|" INSERT INTO TABLE "
 operator|+
 name|tblName
 operator|+
@@ -1184,7 +1184,7 @@ literal|"FROM "
 operator|+
 name|tblNameStg
 operator|+
-literal|" INSERT OVERWRITE TABLE "
+literal|" INSERT INTO TABLE "
 operator|+
 name|tblName
 operator|+

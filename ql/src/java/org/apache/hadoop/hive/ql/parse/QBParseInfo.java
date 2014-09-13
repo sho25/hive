@@ -934,6 +934,27 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|/**    * Check if a table is in the list to be inserted into    * @param fullTableName table name in dbname.tablename format    * @return    */
+specifier|public
+name|boolean
+name|isInsertIntoTable
+parameter_list|(
+name|String
+name|fullTableName
+parameter_list|)
+block|{
+return|return
+name|insertIntoTables
+operator|.
+name|contains
+argument_list|(
+name|fullTableName
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
+return|;
+block|}
 specifier|public
 name|HashMap
 argument_list|<

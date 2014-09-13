@@ -1140,6 +1140,13 @@ specifier|private
 name|String
 name|hdfsScratchDirURIString
 decl_stmt|;
+comment|/**    * Next value to use in naming a temporary table created by an insert...values statement    */
+specifier|private
+name|int
+name|nextValueTempTableSuffix
+init|=
+literal|1
+decl_stmt|;
 comment|/**    * Transaction manager to use for this session.  This is instantiated lazily by    * {@link #initTxnMgr(org.apache.hadoop.hive.conf.HiveConf)}    */
 specifier|private
 name|HiveTxnManager
@@ -6325,6 +6332,22 @@ name|userIpAddress
 operator|=
 name|userIpAddress
 expr_stmt|;
+block|}
+comment|/**    * Get the next suffix to use in naming a temporary table created by insert...values    * @return suffix    */
+specifier|public
+name|String
+name|getNextValuesTempTableSuffix
+parameter_list|()
+block|{
+return|return
+name|Integer
+operator|.
+name|toString
+argument_list|(
+name|nextValueTempTableSuffix
+operator|++
+argument_list|)
+return|;
 block|}
 block|}
 end_class

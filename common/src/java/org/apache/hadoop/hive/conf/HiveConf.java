@@ -1534,6 +1534,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_IN_TEZ_TEST
+argument_list|(
+literal|"hive.in.tez.test"
+argument_list|,
+literal|false
+argument_list|,
+literal|"internal use only, true when in testing tez"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|LOCALMODEAUTO
 argument_list|(
 literal|"hive.exec.mode.local.auto"
