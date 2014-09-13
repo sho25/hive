@@ -1339,7 +1339,9 @@ operator|>
 name|builder
 argument_list|()
 decl_stmt|;
-comment|// TODO: 1) Expand to other functions as needed 2) What about types other than primitive.
+comment|// TODO: 1) Expand to other functions as needed 2) What about types
+comment|// other
+comment|// than primitive
 if|if
 condition|(
 name|func
@@ -1563,11 +1565,6 @@ name|SqlFunctionConverter
 operator|.
 name|getOptiqOperator
 argument_list|(
-name|func
-operator|.
-name|getFuncText
-argument_list|()
-argument_list|,
 name|func
 operator|.
 name|getGenericUDF
