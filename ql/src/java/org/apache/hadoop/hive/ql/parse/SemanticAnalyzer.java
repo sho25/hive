@@ -83103,6 +83103,33 @@ name|op
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|aliasToRel
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|//// This may happen for queries like select 1; (no source table)
+comment|// We can do following which is same, as what Hive does.
+comment|// With this, we will be able to generate Optiq plan.
+comment|//        qb.getMetaData().setSrcForAlias(DUMMY_TABLE, getDummyTable());
+comment|//        RelNode op =  genTableLogicalPlan(DUMMY_TABLE, qb);
+comment|//        qb.addAlias(DUMMY_TABLE);
+comment|//        qb.setTabAlias(DUMMY_TABLE, DUMMY_TABLE);
+comment|//        aliasToRel.put(DUMMY_TABLE, op);
+comment|// However, Hive trips later while trying to get Metadata for this dummy table
+comment|// So, for now lets just disable this. Anyway there is nothing much to
+comment|// optimize in such cases.
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Unsupported"
+argument_list|)
+throw|;
+block|}
 comment|// 1.3 process join
 if|if
 condition|(
