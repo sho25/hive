@@ -228,6 +228,7 @@ name|invRslvMap
 decl_stmt|;
 comment|/*    * now a Column can have an alternate mapping.    * This captures the alternate mapping.    * The primary(first) mapping is still only held in    * invRslvMap.    */
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|String
@@ -1783,13 +1784,26 @@ argument_list|)
 operator|!=
 literal|null
 condition|)
-throw|throw
-operator|new
-name|RuntimeException
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
-literal|"Ambigous Column Names"
+literal|"Found duplicate column alias in RR: "
+operator|+
+name|rrToAddTo
+operator|.
+name|get
+argument_list|(
+name|tabAlias
+argument_list|,
+name|colAlias
 argument_list|)
-throw|;
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|rrToAddTo
 operator|.
 name|put
@@ -1801,6 +1815,7 @@ argument_list|,
 name|newCI
 argument_list|)
 expr_stmt|;
+block|}
 name|qualifiedColName
 operator|=
 name|rrToAddFrom
@@ -1885,7 +1900,7 @@ literal|1
 argument_list|)
 return|;
 block|}
-comment|/** 	 * Return a new row resolver that is combination of left RR and right RR. 	 * The schema will be schema of left, schema of right 	 *  	 * @param leftRR 	 * @param rightRR 	 * @return 	 * @throws SemanticException 	 */
+comment|/** 	 * Return a new row resolver that is combination of left RR and right RR. 	 * The schema will be schema of left, schema of right 	 * 	 * @param leftRR 	 * @param rightRR 	 * @return 	 * @throws SemanticException 	 */
 specifier|public
 specifier|static
 name|RowResolver
