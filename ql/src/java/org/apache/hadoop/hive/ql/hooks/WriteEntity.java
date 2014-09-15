@@ -459,6 +459,20 @@ return|return
 name|writeType
 return|;
 block|}
+comment|/**    * Only use this if you are very sure of what you are doing.  This is used by the    * {@link org.apache.hadoop.hive.ql.parse.UpdateDeleteSemanticAnalyzer} to reset the types to    * update or delete after rewriting and reparsing the queries.    * @param type new operation type    */
+specifier|public
+name|void
+name|setWriteType
+parameter_list|(
+name|WriteType
+name|type
+parameter_list|)
+block|{
+name|writeType
+operator|=
+name|type
+expr_stmt|;
+block|}
 comment|/**    * Equals function.    */
 annotation|@
 name|Override

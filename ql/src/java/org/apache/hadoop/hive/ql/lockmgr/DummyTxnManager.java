@@ -346,7 +346,7 @@ decl_stmt|;
 annotation|@
 name|Override
 specifier|public
-name|void
+name|long
 name|openTxn
 parameter_list|(
 name|String
@@ -356,6 +356,9 @@ throws|throws
 name|LockException
 block|{
 comment|// No-op
+return|return
+literal|0L
+return|;
 block|}
 annotation|@
 name|Override
@@ -1156,6 +1159,17 @@ name|Override
 specifier|public
 name|boolean
 name|useNewShowLocksFormat
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|supportsAcid
 parameter_list|()
 block|{
 return|return

@@ -930,7 +930,6 @@ block|,
 name|IfExprVarCharScalarStringScalar
 operator|.
 name|class
-block|,
 block|}
 argument_list|)
 specifier|public

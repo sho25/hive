@@ -171,6 +171,15 @@ name|needsLock
 init|=
 literal|true
 decl_stmt|;
+comment|// When true indicates that this object is being read as part of an update or delete.  This is
+comment|// important because in that case we shouldn't acquire a lock for it or authorize the read.
+comment|// These will be handled by the output to the table instead.
+specifier|private
+name|boolean
+name|isUpdateOrDelete
+init|=
+literal|false
+decl_stmt|;
 comment|// For views, the entities can be nested - by default, entities are at the top level
 specifier|private
 specifier|final
@@ -534,6 +543,30 @@ parameter_list|()
 block|{
 return|return
 name|accessedColumns
+return|;
+block|}
+specifier|public
+name|void
+name|setUpdateOrDelete
+parameter_list|(
+name|boolean
+name|isUpdateOrDelete
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isUpdateOrDelete
+operator|=
+name|isUpdateOrDelete
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isUpdateOrDelete
+parameter_list|()
+block|{
+return|return
+name|isUpdateOrDelete
 return|;
 block|}
 block|}

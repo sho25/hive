@@ -217,20 +217,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|ExitUtil
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|junit
 operator|.
 name|AfterClass
@@ -442,12 +428,8 @@ argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
-name|ExitUtil
-operator|.
-name|ExitException
+name|RuntimeException
 argument_list|(
-name|status
-argument_list|,
 literal|"System.exit() was called. Raising exception. "
 argument_list|)
 throw|;
