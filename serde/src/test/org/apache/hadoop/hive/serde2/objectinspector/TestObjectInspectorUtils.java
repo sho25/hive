@@ -219,7 +219,7 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|6
+literal|10
 argument_list|,
 name|fields
 operator|.
@@ -533,7 +533,7 @@ literal|0
 init|;
 name|i
 operator|<
-literal|6
+literal|10
 condition|;
 name|i
 operator|++
