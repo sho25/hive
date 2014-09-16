@@ -3182,6 +3182,15 @@ block|{
 if|if
 condition|(
 name|op
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
+if|if
+condition|(
+name|op
 operator|.
 name|isUseBucketizedHiveInputFormat
 argument_list|()

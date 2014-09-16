@@ -123,6 +123,11 @@ name|LocalCommandFactory
 name|mLocalCommandFactory
 decl_stmt|;
 specifier|private
+specifier|final
+name|String
+name|mSshOpts
+decl_stmt|;
+specifier|private
 specifier|volatile
 name|boolean
 name|mShutdown
@@ -135,19 +140,26 @@ name|logger
 parameter_list|,
 name|LocalCommandFactory
 name|localCommandFactory
+parameter_list|,
+name|String
+name|sshOpts
 parameter_list|)
 block|{
 name|mLogger
 operator|=
 name|logger
 expr_stmt|;
-name|mShutdown
-operator|=
-literal|false
-expr_stmt|;
 name|mLocalCommandFactory
 operator|=
 name|localCommandFactory
+expr_stmt|;
+name|mSshOpts
+operator|=
+name|sshOpts
+expr_stmt|;
+name|mShutdown
+operator|=
+literal|false
 expr_stmt|;
 block|}
 specifier|public
@@ -166,6 +178,8 @@ name|LocalCommandFactory
 argument_list|(
 name|logger
 argument_list|)
+argument_list|,
+literal|""
 argument_list|)
 expr_stmt|;
 block|}
@@ -194,12 +208,14 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"ssh -v -i %s -l %s %s '%s'"
+literal|"ssh -v -i %s %s -l %s %s '%s'"
 argument_list|,
 name|command
 operator|.
 name|getPrivateKey
 argument_list|()
+argument_list|,
+name|mSshOpts
 argument_list|,
 name|command
 operator|.

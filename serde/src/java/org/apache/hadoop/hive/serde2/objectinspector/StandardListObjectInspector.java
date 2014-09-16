@@ -39,6 +39,16 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
 begin_comment
 comment|/**  * DefaultListObjectInspector works on list data that is stored as a Java List  * or Java Array object.  *  * Always use the ObjectInspectorFactory to create new ObjectInspector objects,  * instead of directly creating an instance of this class.  */
 end_comment
@@ -100,6 +110,15 @@ name|listElementObjectInspector
 return|;
 block|}
 comment|// with data
+annotation|@
+name|SuppressWarnings
+argument_list|(
+block|{
+literal|"rawtypes"
+block|,
+literal|"unchecked"
+block|}
+argument_list|)
 specifier|public
 name|Object
 name|getListElement
@@ -122,21 +141,26 @@ return|return
 literal|null
 return|;
 block|}
-comment|// We support both List<Object> and Object[]
+comment|// We support List<Object>, Set<Object> and Object[]
 comment|// so we have to do differently.
-name|boolean
-name|isArray
-init|=
+if|if
+condition|(
 operator|!
 operator|(
 name|data
 operator|instanceof
 name|List
 operator|)
-decl_stmt|;
+condition|)
+block|{
 if|if
 condition|(
-name|isArray
+operator|!
+operator|(
+name|data
+operator|instanceof
+name|Set
+operator|)
 condition|)
 block|{
 name|Object
@@ -175,6 +199,22 @@ return|;
 block|}
 else|else
 block|{
+name|data
+operator|=
+operator|new
+name|ArrayList
+argument_list|(
+operator|(
+name|Set
+argument_list|<
+name|?
+argument_list|>
+operator|)
+name|data
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|List
 argument_list|<
 name|?
@@ -216,7 +256,6 @@ name|index
 argument_list|)
 return|;
 block|}
-block|}
 specifier|public
 name|int
 name|getListLength
@@ -237,21 +276,26 @@ operator|-
 literal|1
 return|;
 block|}
-comment|// We support both List<Object> and Object[]
+comment|// We support List<Object>, Set<Object> and Object[]
 comment|// so we have to do differently.
-name|boolean
-name|isArray
-init|=
+if|if
+condition|(
 operator|!
 operator|(
 name|data
 operator|instanceof
 name|List
 operator|)
-decl_stmt|;
+condition|)
+block|{
 if|if
 condition|(
-name|isArray
+operator|!
+operator|(
+name|data
+operator|instanceof
+name|Set
+operator|)
 condition|)
 block|{
 name|Object
@@ -269,6 +313,30 @@ name|list
 operator|.
 name|length
 return|;
+block|}
+else|else
+block|{
+name|Set
+argument_list|<
+name|?
+argument_list|>
+name|set
+init|=
+operator|(
+name|Set
+argument_list|<
+name|?
+argument_list|>
+operator|)
+name|data
+decl_stmt|;
+return|return
+name|set
+operator|.
+name|size
+argument_list|()
+return|;
+block|}
 block|}
 else|else
 block|{
@@ -294,6 +362,15 @@ argument_list|()
 return|;
 block|}
 block|}
+annotation|@
+name|SuppressWarnings
+argument_list|(
+block|{
+literal|"rawtypes"
+block|,
+literal|"unchecked"
+block|}
+argument_list|)
 specifier|public
 name|List
 argument_list|<
@@ -316,7 +393,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|// We support both List<Object> and Object[]
+comment|// We support List<Object>, Set<Object> and Object[]
 comment|// so we have to do differently.
 if|if
 condition|(
@@ -325,6 +402,16 @@ operator|(
 name|data
 operator|instanceof
 name|List
+operator|)
+condition|)
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+name|data
+operator|instanceof
+name|Set
 operator|)
 condition|)
 block|{
@@ -345,6 +432,24 @@ operator|)
 name|data
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|data
+operator|=
+operator|new
+name|ArrayList
+argument_list|(
+operator|(
+name|Set
+argument_list|<
+name|?
+argument_list|>
+operator|)
+name|data
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|List
 argument_list|<

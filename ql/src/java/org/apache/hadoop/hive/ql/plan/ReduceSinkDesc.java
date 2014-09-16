@@ -67,6 +67,24 @@ name|LogFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|AcidUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * ReduceSinkDesc.  *  */
 end_comment
@@ -248,6 +266,13 @@ init|=
 literal|null
 decl_stmt|;
 comment|// Is reducer auto-parallelism enabled, disabled or unset
+comment|// Write type, since this needs to calculate buckets differently for updates and deletes
+specifier|private
+name|AcidUtils
+operator|.
+name|Operation
+name|writeType
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|transient
@@ -325,6 +350,11 @@ parameter_list|,
 specifier|final
 name|TableDesc
 name|valueSerializeInfo
+parameter_list|,
+name|AcidUtils
+operator|.
+name|Operation
+name|writeType
 parameter_list|)
 block|{
 name|this
@@ -407,6 +437,12 @@ name|setBucketCols
 argument_list|(
 literal|null
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|writeType
+operator|=
+name|writeType
 expr_stmt|;
 block|}
 annotation|@
@@ -1492,6 +1528,17 @@ operator|=
 name|autoParallel
 expr_stmt|;
 block|}
+block|}
+specifier|public
+name|AcidUtils
+operator|.
+name|Operation
+name|getWriteType
+parameter_list|()
+block|{
+return|return
+name|writeType
+return|;
 block|}
 block|}
 end_class

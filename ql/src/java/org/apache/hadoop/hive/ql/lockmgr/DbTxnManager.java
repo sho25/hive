@@ -348,7 +348,7 @@ block|{   }
 annotation|@
 name|Override
 specifier|public
-name|void
+name|long
 name|openTxn
 parameter_list|(
 name|String
@@ -380,6 +380,9 @@ operator|+
 name|txnId
 argument_list|)
 expr_stmt|;
+return|return
+name|txnId
+return|;
 block|}
 catch|catch
 parameter_list|(
@@ -512,8 +515,17 @@ name|input
 operator|.
 name|needsLock
 argument_list|()
+operator|||
+name|input
+operator|.
+name|isUpdateOrDelete
+argument_list|()
 condition|)
+block|{
+comment|// We don't want to acquire readlocks during update or delete as we'll be acquiring write
+comment|// locks instead.
 continue|continue;
+block|}
 name|LockComponentBuilder
 name|compBuilder
 init|=
@@ -1516,6 +1528,17 @@ name|Override
 specifier|public
 name|boolean
 name|useNewShowLocksFormat
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|supportsAcid
 parameter_list|()
 block|{
 return|return

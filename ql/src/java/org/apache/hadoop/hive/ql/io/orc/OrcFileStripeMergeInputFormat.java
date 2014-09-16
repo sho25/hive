@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -47,7 +37,7 @@ name|io
 operator|.
 name|merge
 operator|.
-name|MergeInputFormat
+name|MergeFileInputFormat
 import|;
 end_import
 
@@ -121,12 +111,22 @@ name|Reporter
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
 name|OrcFileStripeMergeInputFormat
 extends|extends
-name|MergeInputFormat
+name|MergeFileInputFormat
 block|{
 annotation|@
 name|Override

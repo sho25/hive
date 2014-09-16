@@ -41,10 +41,37 @@ name|ByteBuffer
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|EnumSet
+import|;
+end_import
+
 begin_interface
 interface|interface
 name|CompressionCodec
 block|{
+specifier|public
+enum|enum
+name|Modifier
+block|{
+comment|/* speed/compression tradeoffs */
+name|FASTEST
+block|,
+name|FAST
+block|,
+name|DEFAULT
+block|,
+comment|/* data sensitivity modifiers */
+name|TEXT
+block|,
+name|BINARY
+block|}
+empty_stmt|;
 comment|/**    * Compress the in buffer to the out buffer.    * @param in the bytes to compress    * @param out the uncompressed bytes    * @param overflow put any additional bytes here    * @return true if the output is smaller than input    * @throws IOException    */
 name|boolean
 name|compress
@@ -73,6 +100,17 @@ name|out
 parameter_list|)
 throws|throws
 name|IOException
+function_decl|;
+comment|/**    * Produce a modified compression codec if the underlying algorithm allows    * modification.    *    * This does not modify the current object, but returns a new object if    * modifications are possible. Returns the same object if no modifications    * are possible.    * @param modifiers compression modifiers    * @return codec for use after optional modification    */
+name|CompressionCodec
+name|modify
+parameter_list|(
+name|EnumSet
+argument_list|<
+name|Modifier
+argument_list|>
+name|modifiers
+parameter_list|)
 function_decl|;
 block|}
 end_interface

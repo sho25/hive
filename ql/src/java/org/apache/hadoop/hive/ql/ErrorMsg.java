@@ -1879,6 +1879,63 @@ argument_list|,
 literal|"Distinct keyword is not support in current context"
 argument_list|)
 block|,
+name|UPDATEDELETE_PARSE_ERROR
+argument_list|(
+literal|10290
+argument_list|,
+literal|"Encountered parse error while parsing rewritten update or "
+operator|+
+literal|"delete query"
+argument_list|)
+block|,
+name|UPDATEDELETE_IO_ERROR
+argument_list|(
+literal|10291
+argument_list|,
+literal|"Encountered I/O error while parsing rewritten update or "
+operator|+
+literal|"delete query"
+argument_list|)
+block|,
+name|UPDATE_CANNOT_UPDATE_PART_VALUE
+argument_list|(
+literal|10292
+argument_list|,
+literal|"Updating values of partition columns is not supported"
+argument_list|)
+block|,
+name|INSERT_CANNOT_CREATE_TEMP_FILE
+argument_list|(
+literal|10293
+argument_list|,
+literal|"Unable to create temp file for insert values "
+argument_list|)
+block|,
+name|ACID_OP_ON_NONACID_TXNMGR
+argument_list|(
+literal|10294
+argument_list|,
+literal|"Attempt to do update or delete using transaction manager that"
+operator|+
+literal|" does not support these operations."
+argument_list|)
+block|,
+name|NO_INSERT_OVERWRITE_WITH_ACID
+argument_list|(
+literal|10295
+argument_list|,
+literal|"INSERT OVERWRITE not allowed on table with OutputFormat "
+operator|+
+literal|"that implements AcidOutputFormat while transaction manager that supports ACID is in use"
+argument_list|)
+block|,
+name|VALUES_TABLE_CONSTRUCTOR_NOT_SUPPORTED
+argument_list|(
+literal|10296
+argument_list|,
+literal|"Values clause with table constructor not yet supported"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
@@ -2109,7 +2166,7 @@ name|HIVE_ORC_SKIP_CORRUPT_DATA
 operator|+
 literal|" to true"
 argument_list|)
-block|;   ;
+block|,      ;
 specifier|private
 name|int
 name|errorCode
