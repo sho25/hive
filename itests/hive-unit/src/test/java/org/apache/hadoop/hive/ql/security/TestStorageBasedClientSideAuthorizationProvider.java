@@ -376,7 +376,7 @@ argument_list|()
 operator|.
 name|indexOf
 argument_list|(
-literal|"not permitted"
+literal|"AccessControlException"
 argument_list|)
 operator|!=
 operator|-

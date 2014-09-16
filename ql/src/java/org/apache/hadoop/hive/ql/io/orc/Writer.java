@@ -41,6 +41,16 @@ name|ByteBuffer
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
 begin_comment
 comment|/**  * The interface for writing ORC files.  */
 end_comment
@@ -94,6 +104,46 @@ name|writeIntermediateFooter
 parameter_list|()
 throws|throws
 name|IOException
+function_decl|;
+comment|/**    * Fast stripe append to ORC file. This interface is used for fast ORC file    * merge with other ORC files. When merging, the file to be merged should pass    * stripe in binary form along with stripe information and stripe statistics.    * After appending last stripe of a file, use appendUserMetadata() to append    * any user metadata.    * @param stripe - stripe as byte array    * @param offset - offset within byte array    * @param length - length of stripe within byte array    * @param stripeInfo - stripe information    * @param stripeStatistics - stripe statistics (Protobuf objects can be    *                         merged directly)    * @throws IOException    */
+specifier|public
+name|void
+name|appendStripe
+parameter_list|(
+name|byte
+index|[]
+name|stripe
+parameter_list|,
+name|int
+name|offset
+parameter_list|,
+name|int
+name|length
+parameter_list|,
+name|StripeInformation
+name|stripeInfo
+parameter_list|,
+name|OrcProto
+operator|.
+name|StripeStatistics
+name|stripeStatistics
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * When fast stripe append is used for merging ORC stripes, after appending    * the last stripe from a file, this interface must be used to merge any    * user metadata.    * @param userMetadata - user metadata    */
+specifier|public
+name|void
+name|appendUserMetadata
+parameter_list|(
+name|List
+argument_list|<
+name|OrcProto
+operator|.
+name|UserMetadataItem
+argument_list|>
+name|userMetadata
+parameter_list|)
 function_decl|;
 block|}
 end_interface

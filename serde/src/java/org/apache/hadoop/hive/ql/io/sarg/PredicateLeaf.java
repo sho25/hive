@@ -80,6 +80,8 @@ block|,
 name|DECIMAL
 block|,
 name|TIMESTAMP
+block|,
+name|BOOLEAN
 block|}
 comment|/**    * Get the operator for the leaf.    */
 specifier|public

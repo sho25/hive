@@ -309,6 +309,15 @@ name|SPEED
 block|,
 name|COMPRESSION
 block|;   }
+specifier|public
+specifier|static
+enum|enum
+name|CompressionStrategy
+block|{
+name|SPEED
+block|,
+name|COMPRESSION
+block|;   }
 comment|// Note : these string definitions for table properties are deprecated,
 comment|// and retained only for backward compatibility, please do not add to
 comment|// them, add to OrcTableProperties below instead
@@ -764,6 +773,10 @@ name|EncodingStrategy
 name|encodingStrategy
 decl_stmt|;
 specifier|private
+name|CompressionStrategy
+name|compressionStrategy
+decl_stmt|;
+specifier|private
 name|float
 name|paddingTolerance
 decl_stmt|;
@@ -932,6 +945,48 @@ operator|.
 name|valueOf
 argument_list|(
 name|enString
+argument_list|)
+expr_stmt|;
+block|}
+name|String
+name|compString
+init|=
+name|conf
+operator|.
+name|get
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_ORC_COMPRESSION_STRATEGY
+operator|.
+name|varname
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|compString
+operator|==
+literal|null
+condition|)
+block|{
+name|compressionStrategy
+operator|=
+name|CompressionStrategy
+operator|.
+name|SPEED
+expr_stmt|;
+block|}
+else|else
+block|{
+name|compressionStrategy
+operator|=
+name|CompressionStrategy
+operator|.
+name|valueOf
+argument_list|(
+name|compString
 argument_list|)
 expr_stmt|;
 block|}
@@ -1288,6 +1343,10 @@ argument_list|,
 name|opts
 operator|.
 name|encodingStrategy
+argument_list|,
+name|opts
+operator|.
+name|compressionStrategy
 argument_list|,
 name|opts
 operator|.

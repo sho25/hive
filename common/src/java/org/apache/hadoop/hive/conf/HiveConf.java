@@ -737,12 +737,6 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTOREDIRECTORY
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
 name|METASTOREWAREHOUSE
 block|,
 name|HiveConf
@@ -1570,6 +1564,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_IN_TEZ_TEST
+argument_list|(
+literal|"hive.in.tez.test"
+argument_list|,
+literal|false
+argument_list|,
+literal|"internal use only, true when in testing tez"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|LOCALMODEAUTO
 argument_list|(
 literal|"hive.exec.mode.local.auto"
@@ -1952,17 +1957,7 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-comment|// Metastore stuff. Be sure to update HiveConf.metaVars when you add
-comment|// something here!
-name|METASTOREDIRECTORY
-argument_list|(
-literal|"hive.metastore.metadb.dir"
-argument_list|,
-literal|""
-argument_list|,
-literal|""
-argument_list|)
-block|,
+comment|// Metastore stuff. Be sure to update HiveConf.metaVars when you add something here!
 name|METASTOREWAREHOUSE
 argument_list|(
 literal|"hive.metastore.warehouse.dir"
@@ -3682,15 +3677,6 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
-name|HIVEMERGEINPUTFORMATBLOCKLEVEL
-argument_list|(
-literal|"hive.merge.input.format.block.level"
-argument_list|,
-literal|"org.apache.hadoop.hive.ql.io.rcfile.merge.RCFileBlockMergeInputFormat"
-argument_list|,
-literal|""
-argument_list|)
-block|,
 name|HIVEMERGEORCFILESTRIPELEVEL
 argument_list|(
 literal|"hive.merge.orcfile.stripe.level"
@@ -3704,24 +3690,6 @@ operator|+
 literal|" for small ORC files. Note that enabling this config will not honor padding tolerance\n"
 operator|+
 literal|" config (hive.exec.orc.block.padding.tolerance)."
-argument_list|)
-block|,
-name|HIVEMERGEINPUTFORMATSTRIPELEVEL
-argument_list|(
-literal|"hive.merge.input.format.stripe.level"
-argument_list|,
-literal|"org.apache.hadoop.hive.ql.io.orc.OrcFileStripeMergeInputFormat"
-argument_list|,
-literal|"Input file format to use for ORC stripe level merging (for internal use only)"
-argument_list|)
-block|,
-name|HIVEMERGECURRENTJOBHASDYNAMICPARTITIONS
-argument_list|(
-literal|"hive.merge.current.job.has.dynamic.partitions"
-argument_list|,
-literal|false
-argument_list|,
-literal|""
 argument_list|)
 block|,
 name|HIVEUSEEXPLICITRCFILEHEADER
@@ -3925,6 +3893,25 @@ operator|+
 literal|"only affect the light weight encoding for integers. This flag will not\n"
 operator|+
 literal|"change the compression level of higher level compression codec (like ZLIB)."
+argument_list|)
+block|,
+name|HIVE_ORC_COMPRESSION_STRATEGY
+argument_list|(
+literal|"hive.exec.orc.compression.strategy"
+argument_list|,
+literal|"SPEED"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"SPEED"
+argument_list|,
+literal|"COMPRESSION"
+argument_list|)
+argument_list|,
+literal|"Define the compression strategy to use while writing data. \n"
+operator|+
+literal|"This changes the compression level of higher level compression codec (like ZLIB)."
 argument_list|)
 block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS
@@ -6740,31 +6727,6 @@ operator|+
 literal|"               and a job was going to use this many, it will now use 256 reducers."
 argument_list|)
 block|,
-comment|/* The following section contains all configurations used for list bucketing feature.*/
-comment|/* This is not for clients. but only for block merge task. */
-comment|/* This is used by BlockMergeTask to send out flag to RCFileMergeMapper */
-comment|/* about alter table...concatenate and list bucketing case. */
-name|HIVEMERGECURRENTJOBCONCATENATELISTBUCKETING
-argument_list|(
-literal|"hive.merge.current.job.concatenate.list.bucketing"
-argument_list|,
-literal|true
-argument_list|,
-literal|""
-argument_list|)
-block|,
-comment|/* This is not for clients. but only for block merge task. */
-comment|/* This is used by BlockMergeTask to send out flag to RCFileMergeMapper */
-comment|/* about depth of list bucketing. */
-name|HIVEMERGECURRENTJOBCONCATENATELISTBUCKETINGDEPTH
-argument_list|(
-literal|"hive.merge.current.job.concatenate.list.bucketing.depth"
-argument_list|,
-literal|0
-argument_list|,
-literal|""
-argument_list|)
-block|,
 name|HIVEOPTLISTBUCKETING
 argument_list|(
 literal|"hive.optimize.listbucketing"
@@ -6863,6 +6825,17 @@ argument_list|,
 literal|"This flag should be set to true to enable vectorized mode of query execution.\n"
 operator|+
 literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_REDUCE_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.reduce.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable vectorized mode of the reduce-side of query execution.\n"
+operator|+
+literal|"The default value is true."
 argument_list|)
 block|,
 name|HIVE_VECTORIZATION_GROUPBY_CHECKINTERVAL
@@ -7175,7 +7148,7 @@ argument_list|)
 block|,
 name|TEZ_DYNAMIC_PARTITION_PRUNING_MAX_DATA_SIZE
 argument_list|(
-literal|"hive.tez.dynamic.parition.pruning.max.data.size"
+literal|"hive.tez.dynamic.partition.pruning.max.data.size"
 argument_list|,
 literal|100
 operator|*

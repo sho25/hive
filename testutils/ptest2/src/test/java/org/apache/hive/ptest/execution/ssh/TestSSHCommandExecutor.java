@@ -278,6 +278,8 @@ argument_list|(
 name|LOG
 argument_list|,
 name|localCommandFactory
+argument_list|,
+literal|"-o StrictHostKeyChecking=no"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -418,6 +420,8 @@ argument_list|(
 name|LOG
 argument_list|,
 name|localCommandFactory
+argument_list|,
+literal|"-o StrictHostKeyChecking=no"
 argument_list|)
 decl_stmt|;
 name|Assert

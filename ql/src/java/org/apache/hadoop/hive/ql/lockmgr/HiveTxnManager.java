@@ -92,8 +92,8 @@ specifier|public
 interface|interface
 name|HiveTxnManager
 block|{
-comment|/**    * Open a new transaction.    * @param user Hive user who is opening this transaction.    * @throws LockException if a transaction is already open.    */
-name|void
+comment|/**    * Open a new transaction.    * @param user Hive user who is opening this transaction.    * @return The new transaction id    * @throws LockException if a transaction is already open.    */
+name|long
 name|openTxn
 parameter_list|(
 name|String
@@ -166,6 +166,11 @@ function_decl|;
 comment|/**    * Indicate whether this transaction manager returns information about locks in the new format    * for show locks or the old one.    * @return true if the new format should be used.    */
 name|boolean
 name|useNewShowLocksFormat
+parameter_list|()
+function_decl|;
+comment|/**    * Indicate whether this transaction manager supports ACID operations    * @return true if this transaction manager does ACID    */
+name|boolean
+name|supportsAcid
 parameter_list|()
 function_decl|;
 block|}

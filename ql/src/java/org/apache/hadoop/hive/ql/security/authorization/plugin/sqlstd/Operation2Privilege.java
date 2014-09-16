@@ -1656,7 +1656,7 @@ name|newIOPrivRequirement
 argument_list|(
 name|SEL_GRANT_AR
 argument_list|,
-literal|null
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1672,9 +1672,9 @@ name|PrivRequirement
 operator|.
 name|newIOPrivRequirement
 argument_list|(
-name|INS_NOGRANT_AR
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|,
-literal|null
+name|INS_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;

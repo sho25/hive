@@ -1985,6 +1985,16 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|pos
+operator|<
+name|sortColumnsFirstPartition
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
 name|o
 operator|.
 name|getOrder
@@ -2004,6 +2014,7 @@ block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 name|sortColNames
 operator|.

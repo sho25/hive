@@ -751,6 +751,23 @@ argument_list|)
 condition|)
 block|{
 comment|// Got a match, return the value
+name|Object
+name|_value
+init|=
+name|entry
+operator|.
+name|getValue
+argument_list|()
+decl_stmt|;
+comment|// If the given value is a type of LazyObject, then only try and convert it to that form.
+comment|// Else return it as it is.
+if|if
+condition|(
+name|_value
+operator|instanceof
+name|LazyObject
+condition|)
+block|{
 name|LazyObject
 argument_list|<
 name|?
@@ -780,6 +797,13 @@ operator|.
 name|getObject
 argument_list|()
 return|;
+block|}
+else|else
+block|{
+return|return
+name|_value
+return|;
+block|}
 block|}
 block|}
 return|return

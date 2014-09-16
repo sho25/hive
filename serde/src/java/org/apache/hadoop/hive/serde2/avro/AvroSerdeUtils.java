@@ -369,6 +369,14 @@ name|AVRO_SERDE_SCHEMA
 init|=
 literal|"avro.serde.schema"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|SCHEMA_RETRIEVER
+init|=
+literal|"avro.schema.retriever"
+decl_stmt|;
 comment|/**    * Determine the schema to that's been provided for Avro serde work.    * @param properties containing a key pointing to the schema, one way or another    * @return schema to use while serdeing the avro file    * @throws IOException if error while trying to read the schema from another location    * @throws AvroSerdeException if unable to find a schema or pointer to it in the properties    */
 specifier|public
 specifier|static

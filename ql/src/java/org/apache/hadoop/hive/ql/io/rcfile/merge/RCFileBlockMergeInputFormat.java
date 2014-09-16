@@ -49,7 +49,7 @@ name|io
 operator|.
 name|merge
 operator|.
-name|MergeInputFormat
+name|MergeFileInputFormat
 import|;
 end_import
 
@@ -128,7 +128,7 @@ specifier|public
 class|class
 name|RCFileBlockMergeInputFormat
 extends|extends
-name|MergeInputFormat
+name|MergeFileInputFormat
 block|{
 annotation|@
 name|Override

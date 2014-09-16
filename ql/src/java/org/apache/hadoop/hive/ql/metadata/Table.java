@@ -3631,7 +3631,7 @@ name|isSrcLocal
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Inserts files specified into the partition. Works by moving files    *    * @param srcf    *          Files to be moved. Leaf directories or globbed file paths    * @param isSrcLocal    *          If the source directory is LOCAL    */
+comment|/**    * Inserts files specified into the partition. Works by moving files    *    * @param srcf    *          Files to be moved. Leaf directories or globbed file paths    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid    *          True if this is an ACID based insert, update, or delete    */
 specifier|protected
 name|void
 name|copyFiles
@@ -3641,6 +3641,9 @@ name|srcf
 parameter_list|,
 name|boolean
 name|isSrcLocal
+parameter_list|,
+name|boolean
+name|isAcid
 parameter_list|)
 throws|throws
 name|HiveException
@@ -3686,6 +3689,8 @@ argument_list|,
 name|fs
 argument_list|,
 name|isSrcLocal
+argument_list|,
+name|isAcid
 argument_list|)
 expr_stmt|;
 block|}

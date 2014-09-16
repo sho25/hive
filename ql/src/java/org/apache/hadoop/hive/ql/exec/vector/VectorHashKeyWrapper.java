@@ -298,6 +298,10 @@ operator|+
 name|decimalValuesCount
 index|]
 expr_stmt|;
+name|hashcode
+operator|=
+literal|0
+expr_stmt|;
 block|}
 specifier|private
 name|VectorHashKeyWrapper

@@ -341,6 +341,24 @@ name|ql
 operator|.
 name|io
 operator|.
+name|AcidUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
 name|HiveFileFormatUtils
 import|;
 end_import
@@ -3461,7 +3479,7 @@ return|return
 name|schema
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param partitionCols    *          The columns for partitioning.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param partitionCols    *          The columns for partitioning.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @param writeType Whether this is an Acid write, and if so whether it is insert, update,    *                  or delete.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|ReduceSinkDesc
@@ -3502,6 +3520,11 @@ name|order
 parameter_list|,
 name|int
 name|numReducers
+parameter_list|,
+name|AcidUtils
+operator|.
+name|Operation
+name|writeType
 parameter_list|)
 block|{
 return|return
@@ -3575,10 +3598,12 @@ argument_list|,
 name|order
 argument_list|,
 name|numReducers
+argument_list|,
+name|writeType
 argument_list|)
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param numKeys    *          number of distribution key numbers. Equals to group-by-key    *          numbers usually.    * @param valueCols    *          The columns to be stored in the value    * @param distinctColIndices    *          column indices for distinct aggregate parameters    * @param outputKeyColumnNames    *          The output key columns names    * @param outputValueColumnNames    *          The output value columns names    * @param tag    *          The tag for this reducesink    * @param partitionCols    *          The columns for partitioning.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param numKeys    *          number of distribution key numbers. Equals to group-by-key    *          numbers usually.    * @param valueCols    *          The columns to be stored in the value    * @param distinctColIndices    *          column indices for distinct aggregate parameters    * @param outputKeyColumnNames    *          The output key columns names    * @param outputValueColumnNames    *          The output value columns names    * @param tag    *          The tag for this reducesink    * @param partitionCols    *          The columns for partitioning.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @param writeType Whether this is an Acid write, and if so whether it is insert, update,    *                  or delete.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|ReduceSinkDesc
@@ -3638,6 +3663,11 @@ name|order
 parameter_list|,
 name|int
 name|numReducers
+parameter_list|,
+name|AcidUtils
+operator|.
+name|Operation
+name|writeType
 parameter_list|)
 block|{
 name|TableDesc
@@ -3830,10 +3860,12 @@ argument_list|,
 name|keyTable
 argument_list|,
 name|valueTable
+argument_list|,
+name|writeType
 argument_list|)
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param numPartitionFields    *          The first numPartitionFields of keyCols will be partition columns.    *          If numPartitionFields=-1, then partition randomly.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param valueCols    *          The columns to be stored in the value    * @param outputColumnNames    *          The output columns names    * @param tag    *          The tag for this reducesink    * @param numPartitionFields    *          The first numPartitionFields of keyCols will be partition columns.    *          If numPartitionFields=-1, then partition randomly.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @param writeType Whether this is an Acid write, and if so whether it is insert, update,    *                  or delete.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|ReduceSinkDesc
@@ -3868,6 +3900,11 @@ name|numPartitionFields
 parameter_list|,
 name|int
 name|numReducers
+parameter_list|,
+name|AcidUtils
+operator|.
+name|Operation
+name|writeType
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -3941,10 +3978,12 @@ argument_list|,
 name|numPartitionFields
 argument_list|,
 name|numReducers
+argument_list|,
+name|writeType
 argument_list|)
 return|;
 block|}
-comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param numKeys  number of distribution keys. Equals to group-by-key    *        numbers usually.    * @param valueCols    *          The columns to be stored in the value    * @param distinctColIndices    *          column indices for distinct aggregates    * @param outputKeyColumnNames    *          The output key columns names    * @param outputValueColumnNames    *          The output value columns names    * @param tag    *          The tag for this reducesink    * @param numPartitionFields    *          The first numPartitionFields of keyCols will be partition columns.    *          If numPartitionFields=-1, then partition randomly.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @return The reduceSinkDesc object.    */
+comment|/**    * Create the reduce sink descriptor.    *    * @param keyCols    *          The columns to be stored in the key    * @param numKeys  number of distribution keys. Equals to group-by-key    *        numbers usually.    * @param valueCols    *          The columns to be stored in the value    * @param distinctColIndices    *          column indices for distinct aggregates    * @param outputKeyColumnNames    *          The output key columns names    * @param outputValueColumnNames    *          The output value columns names    * @param tag    *          The tag for this reducesink    * @param numPartitionFields    *          The first numPartitionFields of keyCols will be partition columns.    *          If numPartitionFields=-1, then partition randomly.    * @param numReducers    *          The number of reducers, set to -1 for automatic inference based on    *          input data size.    * @param writeType Whether this is an Acid write, and if so whether it is insert, update,    *                  or delete.    * @return The reduceSinkDesc object.    */
 specifier|public
 specifier|static
 name|ReduceSinkDesc
@@ -3997,6 +4036,11 @@ name|numPartitionFields
 parameter_list|,
 name|int
 name|numReducers
+parameter_list|,
+name|AcidUtils
+operator|.
+name|Operation
+name|writeType
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -4133,6 +4177,8 @@ name|toString
 argument_list|()
 argument_list|,
 name|numReducers
+argument_list|,
+name|writeType
 argument_list|)
 return|;
 block|}

@@ -197,7 +197,7 @@ name|io
 operator|.
 name|merge
 operator|.
-name|MergeTask
+name|MergeFileTask
 import|;
 end_import
 
@@ -217,7 +217,7 @@ name|io
 operator|.
 name|merge
 operator|.
-name|MergeWork
+name|MergeFileWork
 import|;
 end_import
 
@@ -963,14 +963,14 @@ argument_list|(
 operator|new
 name|TaskTuple
 argument_list|<
-name|MergeWork
+name|MergeFileWork
 argument_list|>
 argument_list|(
-name|MergeWork
+name|MergeFileWork
 operator|.
 name|class
 argument_list|,
-name|MergeTask
+name|MergeFileTask
 operator|.
 name|class
 argument_list|)
