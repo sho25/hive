@@ -97,12 +97,6 @@ specifier|final
 name|boolean
 name|allowWindowing
 decl_stmt|;
-comment|// "." : FIELD Expression
-specifier|private
-specifier|final
-name|boolean
-name|allowFieldExpr
-decl_stmt|;
 comment|// "[]" : LSQUARE/INDEX Expression
 specifier|private
 specifier|final
@@ -127,8 +121,6 @@ argument_list|(
 name|inputRR
 argument_list|,
 literal|false
-argument_list|,
-literal|true
 argument_list|,
 literal|true
 argument_list|,
@@ -169,9 +161,6 @@ name|allowFunctionStar
 parameter_list|,
 name|boolean
 name|allowWindowing
-parameter_list|,
-name|boolean
-name|allowFieldExpr
 parameter_list|,
 name|boolean
 name|allowIndexExpr
@@ -224,12 +213,6 @@ operator|.
 name|allowWindowing
 operator|=
 name|allowWindowing
-expr_stmt|;
-name|this
-operator|.
-name|allowFieldExpr
-operator|=
-name|allowFieldExpr
 expr_stmt|;
 name|this
 operator|.
@@ -322,7 +305,7 @@ return|return
 name|allowStatefulFunctions
 return|;
 block|}
-comment|/**    * @param error    *          the error to set    *     */
+comment|/**    * @param error    *          the error to set    *    */
 specifier|public
 name|void
 name|setError
@@ -424,15 +407,6 @@ parameter_list|()
 block|{
 return|return
 name|allowWindowing
-return|;
-block|}
-specifier|public
-name|boolean
-name|getallowFieldExpr
-parameter_list|()
-block|{
-return|return
-name|allowFieldExpr
 return|;
 block|}
 specifier|public
