@@ -6799,7 +6799,7 @@ if|if
 condition|(
 name|FunctionRegistry
 operator|.
-name|implicitConvertable
+name|implicitConvertible
 argument_list|(
 name|a
 argument_list|,
@@ -6828,7 +6828,7 @@ if|if
 condition|(
 name|FunctionRegistry
 operator|.
-name|implicitConvertable
+name|implicitConvertible
 argument_list|(
 name|b
 argument_list|,
@@ -6865,7 +6865,7 @@ if|if
 condition|(
 name|FunctionRegistry
 operator|.
-name|implicitConvertable
+name|implicitConvertible
 argument_list|(
 name|pcA
 argument_list|,
@@ -6874,7 +6874,7 @@ argument_list|)
 operator|&&
 name|FunctionRegistry
 operator|.
-name|implicitConvertable
+name|implicitConvertible
 argument_list|(
 name|pcB
 argument_list|,
@@ -7077,7 +7077,7 @@ if|if
 condition|(
 name|FunctionRegistry
 operator|.
-name|implicitConvertable
+name|implicitConvertible
 argument_list|(
 name|pcA
 argument_list|,
@@ -7086,7 +7086,7 @@ argument_list|)
 operator|&&
 name|FunctionRegistry
 operator|.
-name|implicitConvertable
+name|implicitConvertible
 argument_list|(
 name|pcB
 argument_list|,
@@ -7335,7 +7335,7 @@ block|}
 specifier|public
 specifier|static
 name|boolean
-name|implicitConvertable
+name|implicitConvertible
 parameter_list|(
 name|PrimitiveCategory
 name|from
@@ -7551,7 +7551,7 @@ comment|/**    * Returns whether it is possible to implicitly convert an object 
 specifier|public
 specifier|static
 name|boolean
-name|implicitConvertable
+name|implicitConvertible
 parameter_list|(
 name|TypeInfo
 name|from
@@ -7599,7 +7599,7 @@ name|PRIMITIVE
 condition|)
 block|{
 return|return
-name|implicitConvertable
+name|implicitConvertible
 argument_list|(
 operator|(
 operator|(
@@ -8865,7 +8865,7 @@ condition|(
 operator|!
 name|exact
 operator|&&
-name|implicitConvertable
+name|implicitConvertible
 argument_list|(
 name|argumentPassed
 argument_list|,
