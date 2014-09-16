@@ -221,11 +221,9 @@ name|ql
 operator|.
 name|io
 operator|.
-name|orc
+name|sarg
 operator|.
-name|OrcProto
-operator|.
-name|UserMetadataItem
+name|SearchArgument
 import|;
 end_import
 
@@ -243,9 +241,11 @@ name|ql
 operator|.
 name|io
 operator|.
-name|sarg
+name|orc
 operator|.
-name|SearchArgument
+name|OrcProto
+operator|.
+name|UserMetadataItem
 import|;
 end_import
 

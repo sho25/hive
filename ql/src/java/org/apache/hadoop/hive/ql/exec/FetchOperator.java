@@ -1596,6 +1596,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+comment|// TODO: why is this copy-pasted from HiveInputFormat?
 if|if
 condition|(
 operator|!
@@ -1669,11 +1670,18 @@ throw|;
 block|}
 block|}
 return|return
+name|HiveInputFormat
+operator|.
+name|wrapForLlap
+argument_list|(
 name|inputFormats
 operator|.
 name|get
 argument_list|(
 name|inputFormatClass
+argument_list|)
+argument_list|,
+name|conf
 argument_list|)
 return|;
 block|}

@@ -771,6 +771,8 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
+comment|// TODO: This might create oldInputFormat in MRInput.
+comment|//       We are assuming we don't need to wrap it for Llap.
 name|mrInput
 operator|.
 name|init

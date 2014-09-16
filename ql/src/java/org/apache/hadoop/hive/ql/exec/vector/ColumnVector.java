@@ -25,6 +25,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Arrays
@@ -395,6 +405,17 @@ parameter_list|()
 block|{
 comment|// Do nothing by default
 block|}
+specifier|public
+specifier|abstract
+name|void
+name|visit
+parameter_list|(
+name|ColumnVectorVisitor
+name|v
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 block|}
 end_class
 
