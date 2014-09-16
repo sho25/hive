@@ -448,7 +448,12 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-literal|"CLIService"
+name|CLIService
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2296,6 +2301,15 @@ operator|+
 literal|": renewDelegationToken()"
 argument_list|)
 expr_stmt|;
+block|}
+specifier|public
+name|SessionManager
+name|getSessionManager
+parameter_list|()
+block|{
+return|return
+name|sessionManager
+return|;
 block|}
 block|}
 end_class
