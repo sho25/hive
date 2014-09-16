@@ -1240,16 +1240,6 @@ name|FileSinkOperator
 operator|)
 name|current
 decl_stmt|;
-comment|// remember it for additional processing later
-name|context
-operator|.
-name|fileSinkSet
-operator|.
-name|add
-argument_list|(
-name|fileSink
-argument_list|)
-expr_stmt|;
 name|FileSinkDesc
 name|desc
 init|=
