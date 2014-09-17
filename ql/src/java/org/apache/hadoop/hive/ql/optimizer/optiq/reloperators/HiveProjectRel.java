@@ -103,6 +103,26 @@ name|optimizer
 operator|.
 name|optiq
 operator|.
+name|OptiqSemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|optiq
+operator|.
 name|TraitsUtil
 import|;
 end_import
@@ -307,6 +327,18 @@ name|eigenbase
 operator|.
 name|util
 operator|.
+name|Util
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|util
+operator|.
 name|mapping
 operator|.
 name|Mapping
@@ -435,6 +467,8 @@ name|String
 argument_list|>
 name|fieldNames
 parameter_list|)
+throws|throws
+name|OptiqSemanticException
 block|{
 name|RelOptCluster
 name|cluster
@@ -444,6 +478,33 @@ operator|.
 name|getCluster
 argument_list|()
 decl_stmt|;
+comment|// 1 Ensure columnNames are unique - OPTIQ-411
+if|if
+condition|(
+operator|!
+name|Util
+operator|.
+name|isDistinct
+argument_list|(
+name|fieldNames
+argument_list|)
+condition|)
+block|{
+name|String
+name|msg
+init|=
+literal|"Select list contains multiple expressions with the same name."
+operator|+
+name|fieldNames
+decl_stmt|;
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
+block|}
 name|RelDataType
 name|rowType
 init|=
@@ -597,7 +658,7 @@ name|BOXED
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates a relational expression which projects the output fields of a    * relational expression according to a partial mapping.    *    *<p>    * A partial mapping is weaker than a permutation: every target has one    * source, but a source may have 0, 1 or more than one targets. Usually the    * result will have fewer fields than the source, unless some source fields    * are projected multiple times.    *    *<p>    * This method could optimize the result as {@link #permute} does, but does    * not at present.    *    * @param rel    *          Relational expression    * @param mapping    *          Mapping from source fields to target fields. The mapping type must    *          obey the constraints {@link MappingType#isMandatorySource()} and    *          {@link MappingType#isSingleSource()}, as does    *          {@link MappingType#INVERSE_FUNCTION}.    * @param fieldNames    *          Field names; if null, or if a particular entry is null, the name    *          of the permuted field is used    * @return relational expression which projects a subset of the input fields    */
+comment|/**    * Creates a relational expression which projects the output fields of a    * relational expression according to a partial mapping.    *    *<p>    * A partial mapping is weaker than a permutation: every target has one    * source, but a source may have 0, 1 or more than one targets. Usually the    * result will have fewer fields than the source, unless some source fields    * are projected multiple times.    *    *<p>    * This method could optimize the result as {@link #permute} does, but does    * not at present.    *    * @param rel    *          Relational expression    * @param mapping    *          Mapping from source fields to target fields. The mapping type must    *          obey the constraints {@link MappingType#isMandatorySource()} and    *          {@link MappingType#isSingleSource()}, as does    *          {@link MappingType#INVERSE_FUNCTION}.    * @param fieldNames    *          Field names; if null, or if a particular entry is null, the name    *          of the permuted field is used    * @return relational expression which projects a subset of the input fields    * @throws OptiqSemanticException    */
 specifier|public
 specifier|static
 name|RelNode
@@ -615,6 +676,8 @@ name|String
 argument_list|>
 name|fieldNames
 parameter_list|)
+throws|throws
+name|OptiqSemanticException
 block|{
 assert|assert
 name|mapping

@@ -81566,45 +81566,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 1.1 Ensure columnNames are unique
-if|if
-condition|(
-operator|!
-name|Util
-operator|.
-name|isDistinct
-argument_list|(
-name|columnNames
-argument_list|)
-condition|)
-block|{
-name|String
-name|msg
-init|=
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Select list contains multiple expressions with the same name %s."
-operator|+
-name|columnNames
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-name|msg
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|OptiqSemanticException
-argument_list|(
-name|msg
-argument_list|)
-throw|;
-block|}
 comment|// 2. Prepend column names with '_o_'
 comment|/*        * Hive treats names that start with '_c' as internalNames; so change the        * names so we don't run into this issue when converting back to Hive AST.        */
 name|List
