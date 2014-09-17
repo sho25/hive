@@ -1095,7 +1095,7 @@ name|getVar
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_GLOBAL_INIT_FILE_LOCATION
+name|HIVE_SERVER2_GLOBAL_INIT_FILE_LOCATION
 argument_list|)
 operator|!=
 literal|null
@@ -1110,7 +1110,7 @@ name|getVar
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_GLOBAL_INIT_FILE_LOCATION
+name|HIVE_SERVER2_GLOBAL_INIT_FILE_LOCATION
 argument_list|)
 operator|+
 name|File

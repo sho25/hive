@@ -274,7 +274,12 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-literal|"OperationManager"
+name|OperationManager
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
