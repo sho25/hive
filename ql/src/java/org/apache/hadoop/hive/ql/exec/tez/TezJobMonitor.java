@@ -797,7 +797,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Status: Running (application id: "
+literal|"Status: Running ("
 operator|+
 name|dagClient
 operator|.
