@@ -481,6 +481,10 @@ decl_stmt|;
 comment|// 1 Ensure columnNames are unique - OPTIQ-411
 if|if
 condition|(
+name|fieldNames
+operator|!=
+literal|null
+operator|&&
 operator|!
 name|Util
 operator|.
