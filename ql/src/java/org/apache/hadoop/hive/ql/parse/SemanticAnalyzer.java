@@ -74013,6 +74013,25 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+literal|null
+operator|==
+name|unionFieldDT
+condition|)
+block|{
+comment|//TODO : union32.q results in this, but it seems Optiq is too
+comment|// restrictive here. Follow-up with Optiq.
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Can't find common type for: "
+operator|+
+name|tmpDTLst
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
 operator|!
 name|unionFieldDT
 operator|.
