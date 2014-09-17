@@ -1135,7 +1135,7 @@ literal|"hive.exec.scratchdir"
 argument_list|,
 literal|"/tmp/hive"
 argument_list|,
-literal|"HDFS root scratch dir for Hive jobs which gets created with 777 permission. "
+literal|"HDFS root scratch dir for Hive jobs which gets created with write all (733) permission. "
 operator|+
 literal|"For each connecting user, an HDFS scratch dir: ${hive.exec.scratchdir}/<username> is created, "
 operator|+
