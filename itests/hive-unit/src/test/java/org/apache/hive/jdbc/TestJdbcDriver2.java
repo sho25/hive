@@ -3762,6 +3762,12 @@ control|)
 block|{
 name|assertNull
 argument_list|(
+literal|"Column "
+operator|+
+name|i
+operator|+
+literal|" should be null"
+argument_list|,
 name|res
 operator|.
 name|getObject
