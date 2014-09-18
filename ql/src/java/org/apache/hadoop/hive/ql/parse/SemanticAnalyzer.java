@@ -357,22 +357,6 @@ name|hive
 operator|.
 name|common
 operator|.
-name|JavaUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
 name|ObjectPair
 import|;
 end_import
@@ -34625,7 +34609,7 @@ operator|.
 name|NOT_ACID
 condition|)
 block|{
-name|checkIfAcidAndOverwriting
+name|checkAcidConstraints
 argument_list|(
 name|qb
 argument_list|,
@@ -35311,7 +35295,7 @@ operator|.
 name|NOT_ACID
 condition|)
 block|{
-name|checkIfAcidAndOverwriting
+name|checkAcidConstraints
 argument_list|(
 name|qb
 argument_list|,
@@ -36813,11 +36797,12 @@ return|return
 name|output
 return|;
 block|}
-comment|// Check if we are overwriting any tables.  If so, throw an exception as that is not allowed
-comment|// when using an Acid compliant txn manager and operating on an acid table.
+comment|// Check constraints on acid tables.  This includes
+comment|// * no insert overwrites
+comment|// * no use of vectorization
 specifier|private
 name|void
-name|checkIfAcidAndOverwriting
+name|checkAcidConstraints
 parameter_list|(
 name|QB
 name|qb
@@ -36873,6 +36858,37 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_ENABLED
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Turning off vectorization for acid write operation"
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_ENABLED
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|/**    * Generate the conversion SelectOperator that converts the columns into the    * types that are expected by the table_desc.    */
