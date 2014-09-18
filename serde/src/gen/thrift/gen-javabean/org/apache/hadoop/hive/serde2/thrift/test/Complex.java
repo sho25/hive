@@ -8015,7 +8015,7 @@ comment|// required
 name|String
 name|_val30
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key29
 operator|=
 name|iprot
@@ -8182,7 +8182,7 @@ argument_list|>
 argument_list|>
 name|_val34
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key33
 operator|=
 name|iprot
@@ -8258,7 +8258,7 @@ name|PropValueUnion
 argument_list|>
 name|_val38
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key37
 operator|=
 name|iprot
@@ -8324,7 +8324,7 @@ comment|// required
 name|PropValueUnion
 name|_val42
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key41
 operator|=
 name|iprot
@@ -10794,7 +10794,7 @@ comment|// required
 name|String
 name|_val69
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key68
 operator|=
 name|iprot
@@ -10956,7 +10956,7 @@ argument_list|>
 argument_list|>
 name|_val73
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key72
 operator|=
 name|iprot
@@ -11068,7 +11068,7 @@ name|PropValueUnion
 argument_list|>
 name|_val77
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key76
 operator|=
 name|iprot
@@ -11170,7 +11170,7 @@ comment|// required
 name|PropValueUnion
 name|_val81
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_key80
 operator|=
 name|iprot
