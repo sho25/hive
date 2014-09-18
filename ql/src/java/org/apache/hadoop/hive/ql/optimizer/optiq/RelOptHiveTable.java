@@ -1334,6 +1334,11 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|noColsMissingStats
+operator|.
+name|getAndIncrement
+argument_list|()
+expr_stmt|;
 name|String
 name|logMsg
 init|=
