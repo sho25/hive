@@ -51,6 +51,16 @@ name|EnumSet
 import|;
 end_import
 
+begin_import
+import|import
+name|javax
+operator|.
+name|annotation
+operator|.
+name|Nullable
+import|;
+end_import
+
 begin_interface
 interface|interface
 name|CompressionCodec
@@ -105,6 +115,8 @@ comment|/**    * Produce a modified compression codec if the underlying algorith
 name|CompressionCodec
 name|modify
 parameter_list|(
+annotation|@
+name|Nullable
 name|EnumSet
 argument_list|<
 name|Modifier
