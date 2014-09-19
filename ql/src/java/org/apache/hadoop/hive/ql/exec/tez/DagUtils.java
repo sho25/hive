@@ -5377,6 +5377,17 @@ condition|(
 name|src
 operator|!=
 literal|null
+operator|&&
+name|checkPreExisting
+argument_list|(
+name|src
+argument_list|,
+name|dest
+argument_list|,
+name|conf
+argument_list|)
+operator|==
+literal|false
 condition|)
 block|{
 comment|// copy the src to the destination and create local resource.
