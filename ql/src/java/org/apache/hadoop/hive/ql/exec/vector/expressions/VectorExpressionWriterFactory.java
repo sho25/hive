@@ -4505,9 +4505,6 @@ argument_list|,
 name|this
 operator|.
 name|text
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
@@ -4582,9 +4579,6 @@ argument_list|,
 name|this
 operator|.
 name|text
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
