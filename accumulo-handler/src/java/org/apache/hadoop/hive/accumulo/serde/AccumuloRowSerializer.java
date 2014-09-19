@@ -750,26 +750,6 @@ operator|.
 name|getFieldObjectInspector
 argument_list|()
 decl_stmt|;
-name|log
-operator|.
-name|info
-argument_list|(
-literal|"Serializing rowId with "
-operator|+
-name|value
-operator|+
-literal|" in "
-operator|+
-name|field
-operator|+
-literal|" using "
-operator|+
-name|rowIdFactory
-operator|.
-name|getClass
-argument_list|()
-argument_list|)
-expr_stmt|;
 comment|// Serialize the row component using the RowIdFactory. In the normal case, this will just
 comment|// delegate back to the "local" serializeRowId method
 name|byte
