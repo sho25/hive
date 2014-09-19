@@ -4558,7 +4558,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * basic tests that cover each scalar type     * https://issues.apache.org/jira/browse/HIVE-5814    */
+comment|/**    * basic tests that cover each scalar type    * https://issues.apache.org/jira/browse/HIVE-5814    */
 specifier|private
 specifier|static
 specifier|final
