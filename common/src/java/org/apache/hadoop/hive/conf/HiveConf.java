@@ -3035,7 +3035,7 @@ name|HIVE_CBO_ENABLED
 argument_list|(
 literal|"hive.cbo.enable"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Flag to control enabling Cost Based Optimizations using Optiq framework."
 argument_list|)
