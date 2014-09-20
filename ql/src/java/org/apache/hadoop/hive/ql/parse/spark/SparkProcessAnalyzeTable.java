@@ -626,6 +626,23 @@ name|TableScanOperator
 operator|)
 name|nd
 decl_stmt|;
+comment|// If this tableScan is a generated one for multi-insertion, ignore it
+if|if
+condition|(
+name|context
+operator|.
+name|tempTS
+operator|.
+name|contains
+argument_list|(
+name|tableScan
+argument_list|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|ParseContext
 name|parseContext
 init|=

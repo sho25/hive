@@ -372,7 +372,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenSparkWork separates the operator tree into spark tasks.  * It is called once per leaf operator (operator that forces a new execution unit.)  * and break the operators into work and tasks along the way.  *  * Cloned from GenTezWork.  *   * TODO: need to go thru this to make it fit completely to Spark.  */
+comment|/**  * GenSparkWork separates the operator tree into spark tasks.  * It is called once per leaf operator (operator that forces a new execution unit.)  * and break the operators into work and tasks along the way.  *  * Cloned from GenTezWork.  *  * TODO: need to go thru this to make it fit completely to Spark.  */
 end_comment
 
 begin_class
@@ -555,6 +555,27 @@ comment|// just skip and keep going
 return|return
 literal|null
 return|;
+block|}
+if|if
+condition|(
+name|operator
+operator|instanceof
+name|FileSinkOperator
+condition|)
+block|{
+name|context
+operator|.
+name|opToTaskMap
+operator|.
+name|put
+argument_list|(
+name|operator
+argument_list|,
+name|context
+operator|.
+name|currentTask
+argument_list|)
+expr_stmt|;
 block|}
 name|SparkWork
 name|sparkWork

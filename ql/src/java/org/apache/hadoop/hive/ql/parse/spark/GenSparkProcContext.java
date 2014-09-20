@@ -193,7 +193,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|UnionOperator
+name|ReduceSinkOperator
 import|;
 end_import
 
@@ -211,7 +211,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|ReduceSinkOperator
+name|TableScanOperator
 import|;
 end_import
 
@@ -248,6 +248,24 @@ operator|.
 name|exec
 operator|.
 name|TaskFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|UnionOperator
 import|;
 end_import
 
@@ -452,7 +470,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenSparkProcContext maintains information about the tasks and operators   * as we walk the operator tree to break them into SparkTasks.  *   * Cloned from GenTezProcContext.  *  */
+comment|/**  * GenSparkProcContext maintains information about the tasks and operators  * as we walk the operator tree to break them into SparkTasks.  *  * Cloned from GenTezProcContext.  *  */
 end_comment
 
 begin_class
@@ -538,6 +556,12 @@ name|OperatorDesc
 argument_list|>
 name|parentOfRoot
 decl_stmt|;
+comment|// Default task is the task we use for those operators that are not connected
+comment|// to the newly generated TS
+specifier|public
+name|SparkTask
+name|defaultTask
+decl_stmt|;
 comment|// Spark task we're currently processing
 specifier|public
 name|SparkTask
@@ -548,6 +572,50 @@ comment|// one.
 specifier|public
 name|BaseWork
 name|preceedingWork
+decl_stmt|;
+comment|// All operators that we should unlink with their parents, for multi-table insertion
+comment|// It's a mapping from operator to its ONLY parent.
+specifier|public
+name|Map
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+name|opToParentMap
+decl_stmt|;
+comment|// A mapping from operators to their corresponding tasks.
+comment|// The key for this map could only be:
+comment|//  1. TableScanOperators (so we know which task for the tree rooted at this TS)
+comment|//  2. FileSinkOperators (need this info in GenSparkUtils::processFileSinks)
+comment|//  3. UnionOperator/JoinOperator (need for merging tasks)
+specifier|public
+specifier|final
+name|Map
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|SparkTask
+argument_list|>
+name|opToTaskMap
+decl_stmt|;
+comment|// temporary TS generated for multi-table insertion
+specifier|public
+specifier|final
+name|Set
+argument_list|<
+name|TableScanOperator
+argument_list|>
+name|tempTS
 decl_stmt|;
 comment|// map that keeps track of the last operator of a task to the work
 comment|// that follows it. This is used for connecting them later.
@@ -837,7 +905,7 @@ name|outputs
 expr_stmt|;
 name|this
 operator|.
-name|currentTask
+name|defaultTask
 operator|=
 operator|(
 name|SparkTask
@@ -863,6 +931,21 @@ argument_list|)
 argument_list|,
 name|conf
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|rootTasks
+operator|.
+name|add
+argument_list|(
+name|defaultTask
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|currentTask
+operator|=
+literal|null
 expr_stmt|;
 name|this
 operator|.
@@ -1109,12 +1192,51 @@ name|ReduceSinkOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
-name|rootTasks
+name|this
 operator|.
-name|add
-argument_list|(
-name|currentTask
-argument_list|)
+name|opToParentMap
+operator|=
+operator|new
+name|LinkedHashMap
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|opToTaskMap
+operator|=
+operator|new
+name|LinkedHashMap
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|SparkTask
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|tempTS
+operator|=
+operator|new
+name|LinkedHashSet
+argument_list|<
+name|TableScanOperator
+argument_list|>
+argument_list|()
 expr_stmt|;
 block|}
 block|}
