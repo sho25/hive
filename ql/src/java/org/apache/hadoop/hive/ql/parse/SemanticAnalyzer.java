@@ -36810,6 +36810,9 @@ block|}
 comment|// Check constraints on acid tables.  This includes
 comment|// * no insert overwrites
 comment|// * no use of vectorization
+comment|// * turns off reduce deduplication optimization, as that sometimes breaks acid
+comment|// This method assumes you have already decided that this is an Acid write.  Don't call it if
+comment|// that isn't true.
 specifier|private
 name|void
 name|checkAcidConstraints
@@ -36900,6 +36903,35 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Modifying config values for ACID write"
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVEOPTREDUCEDEDUPLICATION
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_HADOOP_SUPPORTS_SUBDIRECTORIES
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Generate the conversion SelectOperator that converts the columns into the    * types that are expected by the table_desc.    */
 name|Operator
