@@ -911,9 +911,14 @@ name|size
 argument_list|()
 condition|)
 block|{
+comment|// this is a bug in Hive where for queries like select key,value,value
+comment|// convertRowSchemaToResultSetSchema() only returns schema containing key,value
+comment|// Underlying issue is much deeper because it seems like RowResolver itself doesnt have
+comment|// those mappings. see limit_pushdown.q& limit_pushdown_negative.q
+comment|// Till Hive issue is fixed, disable CBO for such queries.
 throw|throw
 operator|new
-name|RuntimeException
+name|OptiqSemanticException
 argument_list|(
 literal|"Result Schema didn't match Optiq Optimized Op Tree Schema"
 argument_list|)
