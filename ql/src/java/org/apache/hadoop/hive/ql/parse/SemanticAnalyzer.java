@@ -6884,8 +6884,9 @@ name|HiveParser
 operator|.
 name|KW_FALSE
 case|:
+comment|// UDFToBoolean casts any non-empty string to true, so set this to false
 return|return
-literal|"FALSE"
+literal|""
 return|;
 case|case
 name|HiveParser
@@ -6918,6 +6919,15 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|)
+return|;
+case|case
+name|HiveParser
+operator|.
+name|TOK_NULL
+case|:
+comment|// Hive's text input will translate this as a null
+return|return
+literal|"\\N"
 return|;
 default|default:
 throw|throw
