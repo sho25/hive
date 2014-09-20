@@ -1014,7 +1014,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * because we want to ignore TZ which is included in toString()    * include time to make sure it's 0     */
+comment|/**    * because we want to ignore TZ which is included in toString()    * include time to make sure it's 0    */
 specifier|private
 specifier|static
 specifier|final
@@ -1520,7 +1520,7 @@ name|FORMAT_4_DATE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Note that the value that comes back from Hive will have local TZ on it.  Using local is     * arbitrary but DateTime needs TZ (or will assume default) and Hive does not have TZ.    * So if you start with Pig value in TZ=x and write to Hive, when you read it back the TZ may    * be different.  The millis value should match, of course.    *     * @throws Exception    */
+comment|/**    * Note that the value that comes back from Hive will have local TZ on it.  Using local is    * arbitrary but DateTime needs TZ (or will assume default) and Hive does not have TZ.    * So if you start with Pig value in TZ=x and write to Hive, when you read it back the TZ may    * be different.  The millis value should match, of course.    *    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public

@@ -59,16 +59,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -499,12 +489,40 @@ name|Tuple
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|After
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
 name|TestE2EScenarios
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -572,8 +590,8 @@ literal|"orc"
 return|;
 block|}
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
@@ -723,8 +741,8 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Override
-specifier|protected
+name|After
+specifier|public
 name|void
 name|tearDown
 parameter_list|()
@@ -1515,6 +1533,8 @@ return|return
 name|rtaskContext
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testReadOrcAndRCFromPig
@@ -1587,7 +1607,7 @@ literal|"' OVERWRITE INTO TABLE inpy"
 argument_list|)
 expr_stmt|;
 comment|// write it out from hive to an rcfile table, and to an orc table
-comment|//        driverRun("insert overwrite table rc5318 select * from inpy");
+comment|//driverRun("insert overwrite table rc5318 select * from inpy");
 name|copyTable
 argument_list|(
 literal|"inpy"
@@ -1595,7 +1615,7 @@ argument_list|,
 literal|"rc5318"
 argument_list|)
 expr_stmt|;
-comment|//        driverRun("insert overwrite table orc5318 select * from inpy");
+comment|//driverRun("insert overwrite table orc5318 select * from inpy");
 name|copyTable
 argument_list|(
 literal|"inpy"

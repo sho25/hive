@@ -520,6 +520,10 @@ block|,
 name|INSERT
 block|,
 name|INSERT_OVERWRITE
+block|,
+name|UPDATE
+block|,
+name|DELETE
 block|}
 empty_stmt|;
 specifier|private

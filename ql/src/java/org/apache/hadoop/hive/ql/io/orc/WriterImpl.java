@@ -2734,6 +2734,15 @@ argument_list|)
 expr_stmt|;
 break|break;
 default|default:
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Missing ORC compression modifiers for "
+operator|+
+name|kind
+argument_list|)
+expr_stmt|;
 name|modifiers
 operator|=
 literal|null

@@ -1165,7 +1165,7 @@ literal|"hive.exec.scratchdir"
 argument_list|,
 literal|"/tmp/hive"
 argument_list|,
-literal|"HDFS root scratch dir for Hive jobs which gets created with 777 permission. "
+literal|"HDFS root scratch dir for Hive jobs which gets created with write all (733) permission. "
 operator|+
 literal|"For each connecting user, an HDFS scratch dir: ${hive.exec.scratchdir}/<username> is created, "
 operator|+
@@ -5256,13 +5256,20 @@ operator|+
 literal|"that need to execute at least one mapred job."
 argument_list|)
 block|,
+comment|// Zookeeper related configs
 name|HIVE_ZOOKEEPER_QUORUM
 argument_list|(
 literal|"hive.zookeeper.quorum"
 argument_list|,
 literal|""
 argument_list|,
-literal|"The list of ZooKeeper servers to talk to. This is only needed for read/write locks."
+literal|"List of ZooKeeper servers to talk to. This is needed for: "
+operator|+
+literal|"1. Read/write locks - when hive.lock.manager is set to "
+operator|+
+literal|"org.apache.hadoop.hive.ql.lockmgr.zookeeper.ZooKeeperHiveLockManager, "
+operator|+
+literal|"2. When HiveServer2 supports service discovery via Zookeeper."
 argument_list|)
 block|,
 name|HIVE_ZOOKEEPER_CLIENT_PORT
@@ -5271,7 +5278,11 @@ literal|"hive.zookeeper.client.port"
 argument_list|,
 literal|"2181"
 argument_list|,
-literal|"The port of ZooKeeper servers to talk to. This is only needed for read/write locks."
+literal|"The port of ZooKeeper servers to talk to. "
+operator|+
+literal|"If the list of Zookeeper servers specified in hive.zookeeper.quorum,"
+operator|+
+literal|"does not contain port numbers, this value is used."
 argument_list|)
 block|,
 name|HIVE_ZOOKEEPER_SESSION_TIMEOUT
@@ -5922,18 +5933,6 @@ operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
 block|,
-comment|// Hive global init file location
-name|HIVE_GLOBAL_INIT_FILE_LOCATION
-argument_list|(
-literal|"hive.server2.global.init.file.location"
-argument_list|,
-literal|"${env:HIVE_CONF_DIR}"
-argument_list|,
-literal|"The location of HS2 global init file (.hiverc).\n"
-operator|+
-literal|"If the property is reset, the value must be a valid path where the init file is located."
-argument_list|)
-block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
 name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
 argument_list|(
@@ -6056,6 +6055,7 @@ operator|+
 literal|"get old behavior, if desired. See, test-case in patch for HIVE-6689."
 argument_list|)
 block|,
+comment|// HiveServer2 specific configs
 name|HIVE_SERVER2_MAX_START_ATTEMPTS
 argument_list|(
 literal|"hive.server2.max.start.attempts"
@@ -6070,9 +6070,45 @@ argument_list|,
 literal|null
 argument_list|)
 argument_list|,
-literal|"This number of times HiveServer2 will attempt to start before exiting, sleeping 60 seconds between retries. \n"
+literal|"Number of times HiveServer2 will attempt to start before exiting, sleeping 60 seconds "
 operator|+
-literal|"The default of 30 will keep trying for 30 minutes."
+literal|"between retries. \n The default of 30 will keep trying for 30 minutes."
+argument_list|)
+block|,
+name|HIVE_SERVER2_SUPPORT_DYNAMIC_SERVICE_DISCOVERY
+argument_list|(
+literal|"hive.server2.support.dynamic.service.discovery"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether HiveServer2 supports dynamic service discovery for its clients. "
+operator|+
+literal|"To support this, each instance of HiveServer2 currently uses ZooKeeper to register itself, "
+operator|+
+literal|"when it is brought up. JDBC/ODBC clients should use the ZooKeeper ensemble: "
+operator|+
+literal|"hive.zookeeper.quorum in their connection string."
+argument_list|)
+block|,
+name|HIVE_SERVER2_ZOOKEEPER_NAMESPACE
+argument_list|(
+literal|"hive.server2.zookeeper.namespace"
+argument_list|,
+literal|"hiveserver2"
+argument_list|,
+literal|"The parent node in ZooKeeper used by HiveServer2 when supporting dynamic service discovery."
+argument_list|)
+block|,
+comment|// HiveServer2 global init file location
+name|HIVE_SERVER2_GLOBAL_INIT_FILE_LOCATION
+argument_list|(
+literal|"hive.server2.global.init.file.location"
+argument_list|,
+literal|"${env:HIVE_CONF_DIR}"
+argument_list|,
+literal|"The location of HS2 global init file (.hiverc).\n"
+operator|+
+literal|"If the property is reset, the value must be a valid path where the init file is located."
 argument_list|)
 block|,
 name|HIVE_SERVER2_TRANSPORT_MODE
@@ -6092,6 +6128,15 @@ argument_list|,
 literal|"Transport mode of HiveServer2."
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_BIND_HOST
+argument_list|(
+literal|"hive.server2.thrift.bind.host"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Bind host on which to run the HiveServer2 Thrift service."
+argument_list|)
+block|,
 comment|// http (over thrift) transport settings
 name|HIVE_SERVER2_THRIFT_HTTP_PORT
 argument_list|(
@@ -6099,7 +6144,7 @@ literal|"hive.server2.thrift.http.port"
 argument_list|,
 literal|10001
 argument_list|,
-literal|"Port number when in HTTP mode."
+literal|"Port number of HiveServer2 Thrift interface when hive.server2.transport.mode is 'http'."
 argument_list|)
 block|,
 name|HIVE_SERVER2_THRIFT_HTTP_PATH
@@ -6172,20 +6217,7 @@ literal|"hive.server2.thrift.port"
 argument_list|,
 literal|10000
 argument_list|,
-literal|"Port number of HiveServer2 Thrift interface.\n"
-operator|+
-literal|"Can be overridden by setting $HIVE_SERVER2_THRIFT_PORT"
-argument_list|)
-block|,
-name|HIVE_SERVER2_THRIFT_BIND_HOST
-argument_list|(
-literal|"hive.server2.thrift.bind.host"
-argument_list|,
-literal|""
-argument_list|,
-literal|"Bind host on which to run the HiveServer2 Thrift interface.\n"
-operator|+
-literal|"Can be overridden by setting $HIVE_SERVER2_THRIFT_BIND_HOST"
+literal|"Port number of HiveServer2 Thrift interface when hive.server2.transport.mode is 'binary'."
 argument_list|)
 block|,
 comment|// hadoop.rpc.protection being set to a higher level than HiveServer2

@@ -47,16 +47,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedList
 import|;
 end_import
@@ -609,7 +599,7 @@ name|convertible
 argument_list|,
 name|FunctionRegistry
 operator|.
-name|implicitConvertable
+name|implicitConvertible
 argument_list|(
 name|a
 argument_list|,

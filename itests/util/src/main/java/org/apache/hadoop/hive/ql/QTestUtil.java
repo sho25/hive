@@ -1028,6 +1028,14 @@ literal|"QTestUtil"
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|String
+name|QTEST_LEAVE_FILES
+init|=
+literal|"QTEST_LEAVE_FILES"
+decl_stmt|;
+specifier|private
 specifier|final
 name|String
 name|defaultInitScript
@@ -3337,6 +3345,20 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+if|if
+condition|(
+name|System
+operator|.
+name|getenv
+argument_list|(
+name|QTEST_LEAVE_FILES
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 comment|// Delete any tables other than the source tables
 comment|// and any databases other than the default database.
 for|for
@@ -3701,6 +3723,20 @@ block|{
 name|startSessionState
 argument_list|()
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|System
+operator|.
+name|getenv
+argument_list|(
+name|QTEST_LEAVE_FILES
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+return|return;
 block|}
 name|SessionState
 operator|.

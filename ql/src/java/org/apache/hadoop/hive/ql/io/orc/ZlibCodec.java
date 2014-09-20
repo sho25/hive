@@ -89,6 +89,16 @@ end_import
 
 begin_import
 import|import
+name|javax
+operator|.
+name|annotation
+operator|.
+name|Nullable
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -725,6 +735,8 @@ specifier|public
 name|CompressionCodec
 name|modify
 parameter_list|(
+annotation|@
+name|Nullable
 name|EnumSet
 argument_list|<
 name|Modifier
@@ -732,6 +744,17 @@ argument_list|>
 name|modifiers
 parameter_list|)
 block|{
+if|if
+condition|(
+name|modifiers
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|this
+return|;
+block|}
 name|int
 name|l
 init|=

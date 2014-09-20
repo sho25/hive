@@ -377,6 +377,22 @@ name|apache
 operator|.
 name|hive
 operator|.
+name|jdbc
+operator|.
+name|Utils
+operator|.
+name|JdbcConnectionParams
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
 name|service
 operator|.
 name|auth
@@ -832,134 +848,6 @@ specifier|private
 specifier|static
 specifier|final
 name|String
-name|HIVE_AUTH_TYPE
-init|=
-literal|"auth"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_AUTH_QOP
-init|=
-literal|"sasl.qop"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_AUTH_SIMPLE
-init|=
-literal|"noSasl"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_AUTH_TOKEN
-init|=
-literal|"delegationToken"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_AUTH_USER
-init|=
-literal|"user"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_AUTH_PRINCIPAL
-init|=
-literal|"principal"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_AUTH_PASSWD
-init|=
-literal|"password"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_AUTH_KERBEROS_AUTH_TYPE
-init|=
-literal|"kerberosAuthType"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_AUTH_KERBEROS_AUTH_TYPE_FROM_SUBJECT
-init|=
-literal|"fromSubject"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_ANONYMOUS_USER
-init|=
-literal|"anonymous"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_ANONYMOUS_PASSWD
-init|=
-literal|"anonymous"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_USE_SSL
-init|=
-literal|"ssl"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_SSL_TRUST_STORE
-init|=
-literal|"sslTrustStore"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_SSL_TRUST_STORE_PASSWORD
-init|=
-literal|"trustStorePassword"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_SERVER2_TRANSPORT_MODE
-init|=
-literal|"hive.server2.transport.mode"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HIVE_SERVER2_THRIFT_HTTP_PATH
-init|=
-literal|"hive.server2.thrift.http.path"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
 name|HIVE_VAR_PREFIX
 init|=
 literal|"hivevar:"
@@ -972,28 +860,15 @@ name|HIVE_CONF_PREFIX
 init|=
 literal|"hiveconf:"
 decl_stmt|;
-comment|// Currently supports JKS keystore format
-comment|// See HIVE-6286 (Add support for PKCS12 keystore format)
 specifier|private
-specifier|static
-specifier|final
 name|String
-name|HIVE_SSL_TRUST_STORE_TYPE
-init|=
-literal|"JKS"
+name|jdbcUriString
 decl_stmt|;
 specifier|private
-specifier|final
-name|String
-name|jdbcURI
-decl_stmt|;
-specifier|private
-specifier|final
 name|String
 name|host
 decl_stmt|;
 specifier|private
-specifier|final
 name|int
 name|port
 decl_stmt|;
@@ -1028,6 +903,10 @@ argument_list|>
 name|hiveVarMap
 decl_stmt|;
 specifier|private
+name|JdbcConnectionParams
+name|connParams
+decl_stmt|;
+specifier|private
 specifier|final
 name|boolean
 name|isEmbeddedMode
@@ -1036,13 +915,13 @@ specifier|private
 name|TTransport
 name|transport
 decl_stmt|;
+comment|// TODO should be replaced by CliServiceClient
 specifier|private
 name|TCLIService
 operator|.
 name|Iface
 name|client
 decl_stmt|;
-comment|// todo should be replaced by CliServiceClient
 specifier|private
 name|boolean
 name|isClosed
@@ -1101,16 +980,6 @@ block|{
 name|setupLoginTimeout
 argument_list|()
 expr_stmt|;
-name|jdbcURI
-operator|=
-name|uri
-expr_stmt|;
-comment|// parse the connection uri
-name|Utils
-operator|.
-name|JdbcConnectionParams
-name|connParams
-decl_stmt|;
 try|try
 block|{
 name|connParams
@@ -1125,7 +994,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|IllegalArgumentException
+name|ZooKeeperHiveClientException
 name|e
 parameter_list|)
 block|{
@@ -1137,6 +1006,13 @@ name|e
 argument_list|)
 throw|;
 block|}
+name|jdbcUriString
+operator|=
+name|connParams
+operator|.
+name|getJdbcUriString
+argument_list|()
+expr_stmt|;
 comment|// extract parsed connection parameters:
 comment|// JDBC URL: jdbc:hive2://<host>:<port>/dbName;sess_var_list?hive_conf_list#hive_var_list
 comment|// each list:<key1>=<val1>;<key2>=<val2> and so on
@@ -1317,7 +1193,9 @@ name|info
 operator|.
 name|containsKey
 argument_list|(
-name|HIVE_AUTH_USER
+name|JdbcConnectionParams
+operator|.
+name|AUTH_USER
 argument_list|)
 condition|)
 block|{
@@ -1325,13 +1203,17 @@ name|sessConfMap
 operator|.
 name|put
 argument_list|(
-name|HIVE_AUTH_USER
+name|JdbcConnectionParams
+operator|.
+name|AUTH_USER
 argument_list|,
 name|info
 operator|.
 name|getProperty
 argument_list|(
-name|HIVE_AUTH_USER
+name|JdbcConnectionParams
+operator|.
+name|AUTH_USER
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1341,7 +1223,9 @@ name|info
 operator|.
 name|containsKey
 argument_list|(
-name|HIVE_AUTH_PASSWD
+name|JdbcConnectionParams
+operator|.
+name|AUTH_PASSWD
 argument_list|)
 condition|)
 block|{
@@ -1349,13 +1233,17 @@ name|sessConfMap
 operator|.
 name|put
 argument_list|(
-name|HIVE_AUTH_PASSWD
+name|JdbcConnectionParams
+operator|.
+name|AUTH_PASSWD
 argument_list|,
 name|info
 operator|.
 name|getProperty
 argument_list|(
-name|HIVE_AUTH_PASSWD
+name|JdbcConnectionParams
+operator|.
+name|AUTH_PASSWD
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1367,7 +1255,9 @@ name|info
 operator|.
 name|containsKey
 argument_list|(
-name|HIVE_AUTH_TYPE
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
 argument_list|)
 condition|)
 block|{
@@ -1375,13 +1265,17 @@ name|sessConfMap
 operator|.
 name|put
 argument_list|(
-name|HIVE_AUTH_TYPE
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
 argument_list|,
 name|info
 operator|.
 name|getProperty
 argument_list|(
-name|HIVE_AUTH_TYPE
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1472,9 +1366,7 @@ argument_list|)
 expr_stmt|;
 comment|// open client session
 name|openSession
-argument_list|(
-name|connParams
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 specifier|private
@@ -1484,7 +1376,13 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-comment|// TODO: Refactor transport creation to a factory, it's getting uber messy here
+while|while
+condition|(
+literal|true
+condition|)
+block|{
+try|try
+block|{
 name|transport
 operator|=
 name|isHttpTransportMode
@@ -1496,8 +1394,6 @@ else|:
 name|createBinaryTransport
 argument_list|()
 expr_stmt|;
-try|try
-block|{
 if|if
 condition|(
 operator|!
@@ -1507,12 +1403,22 @@ name|isOpen
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Will try to open client transport with JDBC Uri: "
+operator|+
+name|jdbcUriString
+argument_list|)
+expr_stmt|;
 name|transport
 operator|.
 name|open
 argument_list|()
 expr_stmt|;
 block|}
+break|break;
 block|}
 catch|catch
 parameter_list|(
@@ -1520,13 +1426,125 @@ name|TTransportException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Could not open client transport with JDBC Uri: "
+operator|+
+name|jdbcUriString
+argument_list|)
+expr_stmt|;
+comment|// We'll retry till we exhaust all HiveServer2 uris from ZooKeeper
+if|if
+condition|(
+operator|(
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|SERVICE_DISCOVERY_MODE
+argument_list|)
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|JdbcConnectionParams
+operator|.
+name|SERVICE_DISCOVERY_MODE_ZOOKEEPER
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|SERVICE_DISCOVERY_MODE
+argument_list|)
+argument_list|)
+operator|)
+condition|)
+block|{
+try|try
+block|{
+comment|// Update jdbcUriString, host& port variables in connParams
+comment|// Throw an exception if all HiveServer2 uris have been exhausted,
+comment|// or if we're unable to connect to ZooKeeper.
+name|Utils
+operator|.
+name|updateConnParamsFromZooKeeper
+argument_list|(
+name|connParams
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ZooKeeperHiveClientException
+name|ze
+parameter_list|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Could not open connection to "
+literal|"Could not open client transport for any of the Server URI's in ZooKeeper: "
 operator|+
-name|jdbcURI
+name|ze
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+literal|" 08S01"
+argument_list|,
+name|ze
+argument_list|)
+throw|;
+block|}
+comment|// Update with new values
+name|jdbcUriString
+operator|=
+name|connParams
+operator|.
+name|getJdbcUriString
+argument_list|()
+expr_stmt|;
+name|host
+operator|=
+name|connParams
+operator|.
+name|getHost
+argument_list|()
+expr_stmt|;
+name|port
+operator|=
+name|connParams
+operator|.
+name|getPort
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Will retry opening client transport"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Could not open client transport with JDBC Uri: "
+operator|+
+name|jdbcUriString
 operator|+
 literal|": "
 operator|+
@@ -1540,6 +1558,8 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
+block|}
 block|}
 block|}
 specifier|private
@@ -1571,7 +1591,9 @@ name|hiveConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_SERVER2_THRIFT_HTTP_PATH
+name|JdbcConnectionParams
+operator|.
+name|HTTP_PATH
 argument_list|)
 expr_stmt|;
 if|if
@@ -1625,6 +1647,8 @@ name|createHttpTransport
 parameter_list|()
 throws|throws
 name|SQLException
+throws|,
+name|TTransportException
 block|{
 name|DefaultHttpClient
 name|httpClient
@@ -1636,8 +1660,6 @@ name|isSslConnection
 argument_list|()
 decl_stmt|;
 comment|// Create an http client from the configs
-try|try
-block|{
 name|httpClient
 operator|=
 name|getHttpClient
@@ -1645,39 +1667,6 @@ argument_list|(
 name|useSsl
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|String
-name|msg
-init|=
-literal|"Could not create http connection to "
-operator|+
-name|jdbcURI
-operator|+
-literal|". "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
-decl_stmt|;
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-name|msg
-argument_list|,
-literal|" 08S01"
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
 try|try
 block|{
 name|transport
@@ -1693,10 +1682,65 @@ argument_list|,
 name|httpClient
 argument_list|)
 expr_stmt|;
+comment|// We'll call an open/close here to send a test HTTP message to the server. Any
+comment|// TTransportException caused by trying to connect to a non-available peer are thrown here.
+comment|// Bubbling them up the call hierarchy so that a retry can happen in openTransport,
+comment|// if dynamic service discovery is configured.
+name|TCLIService
+operator|.
+name|Iface
+name|client
+init|=
+operator|new
+name|TCLIService
+operator|.
+name|Client
+argument_list|(
+operator|new
+name|TBinaryProtocol
+argument_list|(
+name|transport
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|TOpenSessionResp
+name|openResp
+init|=
+name|client
+operator|.
+name|OpenSession
+argument_list|(
+operator|new
+name|TOpenSessionReq
+argument_list|()
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|openResp
+operator|!=
+literal|null
+condition|)
+block|{
+name|client
+operator|.
+name|CloseSession
+argument_list|(
+operator|new
+name|TCloseSessionReq
+argument_list|(
+name|openResp
+operator|.
+name|getSessionHandle
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
-name|TTransportException
+name|TException
 name|e
 parameter_list|)
 block|{
@@ -1705,7 +1749,7 @@ name|msg
 init|=
 literal|"Could not create http connection to "
 operator|+
-name|jdbcURI
+name|jdbcUriString
 operator|+
 literal|". "
 operator|+
@@ -1716,11 +1760,9 @@ argument_list|()
 decl_stmt|;
 throw|throw
 operator|new
-name|SQLException
+name|TTransportException
 argument_list|(
 name|msg
-argument_list|,
-literal|" 08S01"
 argument_list|,
 name|e
 argument_list|)
@@ -1790,7 +1832,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_AUTH_PRINCIPAL
+name|JdbcConnectionParams
+operator|.
+name|AUTH_PRINCIPAL
 argument_list|)
 argument_list|,
 name|host
@@ -1830,7 +1874,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_SSL_TRUST_STORE
+name|JdbcConnectionParams
+operator|.
+name|SSL_TRUST_STORE
 argument_list|)
 decl_stmt|;
 name|String
@@ -1840,7 +1886,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_SSL_TRUST_STORE_PASSWORD
+name|JdbcConnectionParams
+operator|.
+name|SSL_TRUST_STORE_PASSWORD
 argument_list|)
 decl_stmt|;
 name|KeyStore
@@ -1849,6 +1897,7 @@ decl_stmt|;
 name|SSLSocketFactory
 name|socketFactory
 decl_stmt|;
+comment|/**          * The code within the try block throws:          * 1. SSLInitializationException          * 2. KeyStoreException          * 3. IOException          * 4. NoSuchAlgorithmException          * 5. CertificateException          * 6. KeyManagementException          * 7. UnrecoverableKeyException          * We don't want the client to retry on any of these, hence we catch all          * and throw a SQLException.          */
 try|try
 block|{
 if|if
@@ -1881,7 +1930,9 @@ name|KeyStore
 operator|.
 name|getInstance
 argument_list|(
-name|HIVE_SSL_TRUST_STORE_TYPE
+name|JdbcConnectionParams
+operator|.
+name|SSL_TRUST_STORE_TYPE
 argument_list|)
 expr_stmt|;
 name|sslTrustStore
@@ -1956,7 +2007,7 @@ name|msg
 init|=
 literal|"Could not create an https connection to "
 operator|+
-name|jdbcURI
+name|jdbcUriString
 operator|+
 literal|". "
 operator|+
@@ -1990,13 +2041,15 @@ return|return
 name|httpClient
 return|;
 block|}
-comment|/**    * Create transport per the connection options    * Supported transport options are:    *   - SASL based transports over    *      + Kerberos    *      + Delegation token    *      + SSL    *      + non-SSL    *   - Raw (non-SASL) socket    *    *   Kerberos and Delegation token supports SASL QOP configurations    */
+comment|/**    * Create transport per the connection options    * Supported transport options are:    *   - SASL based transports over    *      + Kerberos    *      + Delegation token    *      + SSL    *      + non-SSL    *   - Raw (non-SASL) socket    *    *   Kerberos and Delegation token supports SASL QOP configurations    * @throws SQLException, TTransportException    */
 specifier|private
 name|TTransport
 name|createBinaryTransport
 parameter_list|()
 throws|throws
 name|SQLException
+throws|,
+name|TTransportException
 block|{
 try|try
 block|{
@@ -2004,7 +2057,9 @@ comment|// handle secure connection if specified
 if|if
 condition|(
 operator|!
-name|HIVE_AUTH_SIMPLE
+name|JdbcConnectionParams
+operator|.
+name|AUTH_SIMPLE
 operator|.
 name|equals
 argument_list|(
@@ -2012,7 +2067,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_AUTH_TYPE
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
 argument_list|)
 argument_list|)
 condition|)
@@ -2048,7 +2105,9 @@ name|sessConfMap
 operator|.
 name|containsKey
 argument_list|(
-name|HIVE_AUTH_PRINCIPAL
+name|JdbcConnectionParams
+operator|.
+name|AUTH_PRINCIPAL
 argument_list|)
 condition|)
 block|{
@@ -2058,7 +2117,9 @@ name|sessConfMap
 operator|.
 name|containsKey
 argument_list|(
-name|HIVE_AUTH_QOP
+name|JdbcConnectionParams
+operator|.
+name|AUTH_QOP
 argument_list|)
 condition|)
 block|{
@@ -2074,7 +2135,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_AUTH_QOP
+name|JdbcConnectionParams
+operator|.
+name|AUTH_QOP
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2091,7 +2154,9 @@ name|SQLException
 argument_list|(
 literal|"Invalid "
 operator|+
-name|HIVE_AUTH_QOP
+name|JdbcConnectionParams
+operator|.
+name|AUTH_QOP
 operator|+
 literal|" parameter. "
 operator|+
@@ -2135,7 +2200,9 @@ expr_stmt|;
 name|boolean
 name|assumeSubject
 init|=
-name|HIVE_AUTH_KERBEROS_AUTH_TYPE_FROM_SUBJECT
+name|JdbcConnectionParams
+operator|.
+name|AUTH_KERBEROS_AUTH_TYPE_FROM_SUBJECT
 operator|.
 name|equals
 argument_list|(
@@ -2143,7 +2210,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_AUTH_KERBEROS_AUTH_TYPE
+name|JdbcConnectionParams
+operator|.
+name|AUTH_KERBEROS_AUTH_TYPE
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2157,7 +2226,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_AUTH_PRINCIPAL
+name|JdbcConnectionParams
+operator|.
+name|AUTH_PRINCIPAL
 argument_list|)
 argument_list|,
 name|host
@@ -2237,6 +2308,11 @@ init|=
 name|getPassword
 argument_list|()
 decl_stmt|;
+comment|// Note: Thrift returns an SSL socket that is already bound to the specified host:port
+comment|// Therefore an open called on this would be a no-op later
+comment|// Hence, any TTransportException related to connecting with the peer are thrown here.
+comment|// Bubbling them up the call hierarchy so that a retry can happen in openTransport,
+comment|// if dynamic service discovery is configured.
 if|if
 condition|(
 name|isSslConnection
@@ -2251,7 +2327,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_SSL_TRUST_STORE
+name|JdbcConnectionParams
+operator|.
+name|SSL_TRUST_STORE
 argument_list|)
 decl_stmt|;
 name|String
@@ -2261,7 +2339,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_SSL_TRUST_STORE_PASSWORD
+name|JdbcConnectionParams
+operator|.
+name|SSL_TRUST_STORE_PASSWORD
 argument_list|)
 decl_stmt|;
 if|if
@@ -2375,34 +2455,7 @@ name|SQLException
 argument_list|(
 literal|"Could not create secure connection to "
 operator|+
-name|jdbcURI
-operator|+
-literal|": "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
-argument_list|,
-literal|" 08S01"
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Could not create connection to "
-operator|+
-name|jdbcURI
+name|jdbcUriString
 operator|+
 literal|": "
 operator|+
@@ -2444,7 +2497,9 @@ literal|null
 decl_stmt|;
 if|if
 condition|(
-name|HIVE_AUTH_TOKEN
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TOKEN
 operator|.
 name|equalsIgnoreCase
 argument_list|(
@@ -2452,7 +2507,9 @@ name|jdbcConnConf
 operator|.
 name|get
 argument_list|(
-name|HIVE_AUTH_TYPE
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
 argument_list|)
 argument_list|)
 condition|)
@@ -2499,12 +2556,7 @@ block|}
 specifier|private
 name|void
 name|openSession
-parameter_list|(
-name|Utils
-operator|.
-name|JdbcConnectionParams
-name|connParams
-parameter_list|)
+parameter_list|()
 throws|throws
 name|SQLException
 block|{
@@ -2754,7 +2806,7 @@ name|SQLException
 argument_list|(
 literal|"Could not establish connection to "
 operator|+
-name|jdbcURI
+name|jdbcUriString
 operator|+
 literal|": "
 operator|+
@@ -2783,9 +2835,13 @@ block|{
 return|return
 name|getSessionValue
 argument_list|(
-name|HIVE_AUTH_USER
+name|JdbcConnectionParams
+operator|.
+name|AUTH_USER
 argument_list|,
-name|HIVE_ANONYMOUS_USER
+name|JdbcConnectionParams
+operator|.
+name|ANONYMOUS_USER
 argument_list|)
 return|;
 block|}
@@ -2798,9 +2854,13 @@ block|{
 return|return
 name|getSessionValue
 argument_list|(
-name|HIVE_AUTH_PASSWD
+name|JdbcConnectionParams
+operator|.
+name|AUTH_PASSWD
 argument_list|,
-name|HIVE_ANONYMOUS_PASSWD
+name|JdbcConnectionParams
+operator|.
+name|ANONYMOUS_PASSWD
 argument_list|)
 return|;
 block|}
@@ -2818,7 +2878,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_USE_SSL
+name|JdbcConnectionParams
+operator|.
+name|USE_SSL
 argument_list|)
 argument_list|)
 return|;
@@ -2830,7 +2892,9 @@ parameter_list|()
 block|{
 return|return
 operator|!
-name|HIVE_AUTH_SIMPLE
+name|JdbcConnectionParams
+operator|.
+name|AUTH_SIMPLE
 operator|.
 name|equals
 argument_list|(
@@ -2838,7 +2902,9 @@ name|sessConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_AUTH_TYPE
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
 argument_list|)
 argument_list|)
 operator|&&
@@ -2846,7 +2912,9 @@ name|sessConfMap
 operator|.
 name|containsKey
 argument_list|(
-name|HIVE_AUTH_PRINCIPAL
+name|JdbcConnectionParams
+operator|.
+name|AUTH_PRINCIPAL
 argument_list|)
 return|;
 block|}
@@ -2862,7 +2930,9 @@ name|hiveConfMap
 operator|.
 name|get
 argument_list|(
-name|HIVE_SERVER2_TRANSPORT_MODE
+name|JdbcConnectionParams
+operator|.
+name|TRANSPORT_MODE
 argument_list|)
 decl_stmt|;
 if|if

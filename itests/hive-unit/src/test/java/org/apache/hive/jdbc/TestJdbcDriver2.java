@@ -1456,28 +1456,26 @@ argument_list|)
 expr_stmt|;
 name|fail
 argument_list|(
-literal|"should have thrown IllegalArgumentException but did not "
+literal|"Should have thrown JdbcUriParseException but did not "
 argument_list|)
 expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|SQLException
-name|i
+name|JdbcUriParseException
+name|e
 parameter_list|)
 block|{
 name|assertTrue
 argument_list|(
-name|i
+name|e
 operator|.
 name|getMessage
 argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"Bad URL format. Hostname not found "
-operator|+
-literal|" in authority part of the url"
+literal|"Bad URL format"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3764,6 +3762,12 @@ control|)
 block|{
 name|assertNull
 argument_list|(
+literal|"Column "
+operator|+
+name|i
+operator|+
+literal|" should be null"
+argument_list|,
 name|res
 operator|.
 name|getObject
@@ -10475,6 +10479,10 @@ index|[]
 index|[]
 block|{
 comment|// binary mode
+comment|// For embedded mode, the JDBC uri is of the form:
+comment|// jdbc:hive2:///dbName;sess_var_list?hive_conf_list#hive_var_list
+comment|// and does not contain host:port string.
+comment|// As a result port is parsed to '-1' per the Java URI conventions
 block|{
 literal|"jdbc:hive2://"
 block|,
@@ -10692,6 +10700,10 @@ name|testParseUrlHttpMode
 parameter_list|()
 throws|throws
 name|SQLException
+throws|,
+name|JdbcUriParseException
+throws|,
+name|ZooKeeperHiveClientException
 block|{
 operator|new
 name|HiveDriver

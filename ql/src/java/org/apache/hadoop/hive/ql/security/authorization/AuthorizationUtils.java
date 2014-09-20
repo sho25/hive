@@ -1705,9 +1705,24 @@ name|HivePrivObjectActionType
 operator|.
 name|INSERT_OVERWRITE
 return|;
+case|case
+name|UPDATE
+case|:
+return|return
+name|HivePrivObjectActionType
+operator|.
+name|UPDATE
+return|;
+case|case
+name|DELETE
+case|:
+return|return
+name|HivePrivObjectActionType
+operator|.
+name|DELETE
+return|;
 default|default:
-comment|// Ignore other types for purposes of authorization, we are interested only
-comment|// in INSERT vs INSERT_OVERWRITE as of now
+comment|// Ignore other types for purposes of authorization
 break|break;
 block|}
 block|}

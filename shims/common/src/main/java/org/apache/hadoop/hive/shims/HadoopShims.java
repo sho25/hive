@@ -149,6 +149,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TreeMap
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -1349,6 +1359,24 @@ comment|/**    * For file status returned by listLocatedStatus, convert them int
 name|BlockLocation
 index|[]
 name|getLocations
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|FileStatus
+name|status
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * For the block locations returned by getLocations() convert them into a Treemap    *<Offset,blockLocation> by iterating over the list of blockLocation.    * Using TreeMap from offset to blockLocation, makes it O(logn) to get a particular    * block based upon offset.    * @param fs the file system    * @param status the file information    * @return TreeMap<Long, BlockLocation>    * @throws IOException    */
+name|TreeMap
+argument_list|<
+name|Long
+argument_list|,
+name|BlockLocation
+argument_list|>
+name|getLocationsWithOffset
 parameter_list|(
 name|FileSystem
 name|fs

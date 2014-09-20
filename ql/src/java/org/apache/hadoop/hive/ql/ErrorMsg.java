@@ -386,11 +386,11 @@ argument_list|,
 literal|"Invalid numerical constant"
 argument_list|)
 block|,
-name|INVALID_ARRAYINDEX_CONSTANT
+name|INVALID_ARRAYINDEX_TYPE
 argument_list|(
 literal|10030
 argument_list|,
-literal|"Non-constant expressions for array indexes not supported"
+literal|"Not proper type for index of ARRAY. Currently, only integer type is supported"
 argument_list|)
 block|,
 name|INVALID_MAPINDEX_CONSTANT
