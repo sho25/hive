@@ -108,7 +108,7 @@ argument_list|>
 block|{
 specifier|private
 specifier|final
-name|SparkMapRecordHandler
+name|SparkRecordHandler
 name|recordHandler
 decl_stmt|;
 comment|/**    * Instantiate result set Iterable for Map function output.    *    * @param inputIterator Input record iterator.    * @param handler Initialized {@link SparkMapRecordHandler} instance.    */
@@ -129,7 +129,7 @@ argument_list|>
 argument_list|>
 name|inputIterator
 parameter_list|,
-name|SparkMapRecordHandler
+name|SparkRecordHandler
 name|handler
 parameter_list|)
 block|{
@@ -166,6 +166,11 @@ name|recordHandler
 operator|.
 name|processRow
 argument_list|(
+name|inputRecord
+operator|.
+name|_1
+argument_list|()
+argument_list|,
 name|inputRecord
 operator|.
 name|_2

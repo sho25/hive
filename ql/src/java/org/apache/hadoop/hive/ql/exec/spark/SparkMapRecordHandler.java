@@ -794,6 +794,9 @@ name|void
 name|processRow
 parameter_list|(
 name|Object
+name|key
+parameter_list|,
+name|Object
 name|value
 parameter_list|)
 throws|throws
@@ -901,6 +904,8 @@ literal|"Do not support this method in SparkMapRecordHandler."
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -1069,6 +1074,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|getDone

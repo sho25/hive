@@ -380,12 +380,15 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Process row with single value.    */
+comment|/**    * Process row with key and single value.    */
 specifier|public
 specifier|abstract
 name|void
 name|processRow
 parameter_list|(
+name|Object
+name|key
+parameter_list|,
 name|Object
 name|value
 parameter_list|)
@@ -456,9 +459,16 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|public
 specifier|abstract
 name|void
 name|close
+parameter_list|()
+function_decl|;
+specifier|public
+specifier|abstract
+name|boolean
+name|getDone
 parameter_list|()
 function_decl|;
 comment|/**    * Log information to be logged at the end    */
