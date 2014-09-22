@@ -22831,6 +22831,11 @@ name|dropTbl
 operator|.
 name|getTableName
 argument_list|()
+argument_list|,
+name|dropTbl
+operator|.
+name|getIfPurge
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
