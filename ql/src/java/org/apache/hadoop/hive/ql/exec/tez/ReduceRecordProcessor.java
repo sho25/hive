@@ -2785,6 +2785,11 @@ operator|.
 name|reset
 argument_list|()
 expr_stmt|;
+name|buffer
+operator|.
+name|reset
+argument_list|()
+expr_stmt|;
 comment|/* deserialize key into columns */
 name|VectorizedBatchUtil
 operator|.
@@ -2914,6 +2919,11 @@ name|rowIdx
 operator|=
 literal|0
 expr_stmt|;
+name|buffer
+operator|.
+name|reset
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|isLogInfoEnabled
@@ -2949,6 +2959,11 @@ name|batch
 argument_list|,
 name|tag
 argument_list|)
+expr_stmt|;
+name|buffer
+operator|.
+name|reset
+argument_list|()
 expr_stmt|;
 block|}
 if|if
