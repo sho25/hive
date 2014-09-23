@@ -307,6 +307,7 @@ specifier|final
 name|JoinAlgorithm
 name|joinAlgorithm
 decl_stmt|;
+comment|//This will be used once we do Join Algorithm selection
 annotation|@
 name|SuppressWarnings
 argument_list|(

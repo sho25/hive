@@ -147,24 +147,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|HiveParser
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|eigenbase
 operator|.
 name|rel
@@ -2482,14 +2464,6 @@ name|getFieldCount
 argument_list|()
 decl_stmt|;
 comment|// 1. Split leaf join predicate to expressions from left, right
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"unused"
-argument_list|)
-name|RexNode
-name|nonEquiPredicate
-init|=
 name|RelOptUtil
 operator|.
 name|splitJoinCondition
@@ -2519,7 +2493,7 @@ name|filterNulls
 argument_list|,
 literal|null
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// 2. For left expressions, collect child projection indexes used
 name|InputReferencedVisitor
 name|irvLeft

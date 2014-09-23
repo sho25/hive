@@ -457,6 +457,7 @@ operator|.
 name|EPSILON
 operator|)
 return|;
+comment|// Turn this one once we do the Algorithm selection in CBO
 comment|/*      * return (this == other) || (Math.abs((this.dCpu + this.dIo) -      * (other.getCpu() + other.getIo()))< RelOptUtil.EPSILON);      */
 block|}
 specifier|public

@@ -755,30 +755,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-elseif|else
-if|if
-condition|(
-name|rel
-operator|instanceof
-name|TableAccessRelBase
-condition|)
-block|{      }
-elseif|else
-if|if
-condition|(
-name|rel
-operator|instanceof
-name|TableFunctionRelBase
-condition|)
-block|{      }
-elseif|else
-if|if
-condition|(
-name|rel
-operator|instanceof
-name|ValuesRelBase
-condition|)
-block|{      }
 name|List
 argument_list|<
 name|RelNode

@@ -1339,7 +1339,8 @@ operator|>
 name|builder
 argument_list|()
 decl_stmt|;
-comment|// TODO: 1) Expand to other functions as needed 2) What about types other than primitive.
+comment|// TODO: 1) Expand to other functions as needed 2) What about types other
+comment|// than primitive.
 if|if
 condition|(
 name|func
@@ -1530,17 +1531,6 @@ condition|)
 block|{
 name|retType
 operator|=
-operator|(
-name|expr
-operator|!=
-literal|null
-operator|)
-condition|?
-name|expr
-operator|.
-name|getType
-argument_list|()
-else|:
 name|TypeConverter
 operator|.
 name|convert
@@ -1913,8 +1903,6 @@ name|udf
 argument_list|)
 condition|)
 block|{
-comment|// || (udf instanceof GenericUDFToUnixTimeStamp) || (udf instanceof
-comment|// GenericUDFTimestamp) || castExprUsingUDFBridge(udf)) {
 name|castExpr
 operator|=
 name|m_cluster
@@ -2427,11 +2415,16 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// We have found an invalid decimal value while enforcing precision and scale. Ideally,
-comment|// we would replace it with null here, which is what Hive does. However, we need to plumb
-comment|// this thru up somehow, because otherwise having different expression type in AST causes
-comment|// the plan generation to fail after CBO, probably due to some residual state in SA/QB.
-comment|// For now, we will not run CBO in the presence of invalid decimal literals.
+comment|// We have found an invalid decimal value while enforcing precision and
+comment|// scale. Ideally,
+comment|// we would replace it with null here, which is what Hive does. However,
+comment|// we need to plumb
+comment|// this thru up somehow, because otherwise having different expression
+comment|// type in AST causes
+comment|// the plan generation to fail after CBO, probably due to some residual
+comment|// state in SA/QB.
+comment|// For now, we will not run CBO in the presence of invalid decimal
+comment|// literals.
 throw|throw
 operator|new
 name|OptiqSemanticException
@@ -2497,8 +2490,10 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// CBO doesn't support unlimited precision decimals. In practice, this will work...
-comment|// An alternative would be to throw CboSemanticException and fall back to no CBO.
+comment|// CBO doesn't support unlimited precision decimals. In practice, this
+comment|// will work...
+comment|// An alternative would be to throw CboSemanticException and fall back
+comment|// to no CBO.
 name|RelDataType
 name|relType
 init|=

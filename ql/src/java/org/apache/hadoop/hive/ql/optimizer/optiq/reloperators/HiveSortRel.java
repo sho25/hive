@@ -192,15 +192,6 @@ argument_list|,
 name|fetch
 argument_list|)
 expr_stmt|;
-assert|assert
-name|getConvention
-argument_list|()
-operator|==
-name|child
-operator|.
-name|getConvention
-argument_list|()
-assert|;
 block|}
 annotation|@
 name|Override

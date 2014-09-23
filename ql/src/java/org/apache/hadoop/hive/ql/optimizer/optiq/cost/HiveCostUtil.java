@@ -79,6 +79,10 @@ name|RelOptCost
 import|;
 end_import
 
+begin_comment
+comment|// Use this once we have Join Algorithm selection
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -137,6 +141,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"unused"
 argument_list|)
+comment|//Use this once we have Join Algorithm selection
 specifier|private
 specifier|static
 specifier|final

@@ -3953,20 +3953,6 @@ name|rel
 operator|.
 name|rules
 operator|.
-name|RemoveTrivialProjectRule
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|eigenbase
-operator|.
-name|rel
-operator|.
-name|rules
-operator|.
 name|SemiJoinRel
 import|;
 end_import
@@ -4378,18 +4364,6 @@ operator|.
 name|util
 operator|.
 name|Pair
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|eigenbase
-operator|.
-name|util
-operator|.
-name|Util
 import|;
 end_import
 
@@ -75519,7 +75493,7 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-comment|// 0. If the table has a Sample specified, bail from Optiq path.
+comment|// 1. If the table has a Sample specified, bail from Optiq path.
 if|if
 condition|(
 name|qb
@@ -75577,17 +75551,6 @@ name|msg
 argument_list|)
 throw|;
 block|}
-comment|// 1. Get Table Alias
-name|String
-name|alias_id
-init|=
-name|getAliasId
-argument_list|(
-name|tableAlias
-argument_list|,
-name|qb
-argument_list|)
-decl_stmt|;
 comment|// 2. Get Table Metadata
 name|Table
 name|tab
@@ -77551,20 +77514,6 @@ argument_list|(
 name|srcRel
 argument_list|)
 decl_stmt|;
-name|ArrayList
-argument_list|<
-name|ColumnInfo
-argument_list|>
-name|signature
-init|=
-name|gbInputRR
-operator|.
-name|getRowSchema
-argument_list|()
-operator|.
-name|getSignature
-argument_list|()
-decl_stmt|;
 name|ImmutableMap
 argument_list|<
 name|String
@@ -78823,11 +78772,6 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|int
-name|numDistinctUDFs
-init|=
-literal|0
-decl_stmt|;
 comment|// 2. Input, Output Row Resolvers
 name|RowResolver
 name|groupByInputRowResolver
@@ -79034,15 +78978,6 @@ name|HiveParser
 operator|.
 name|TOK_FUNCTIONSTAR
 decl_stmt|;
-if|if
-condition|(
-name|isDistinct
-condition|)
-block|{
-name|numDistinctUDFs
-operator|++
-expr_stmt|;
-block|}
 comment|// 4.2 Convert UDAF Params to ExprNodeDesc
 name|ArrayList
 argument_list|<
@@ -81515,14 +81450,6 @@ literal|null
 argument_list|,
 literal|false
 argument_list|)
-decl_stmt|;
-name|String
-name|colAlias
-init|=
-name|wExprSpec
-operator|.
-name|getAlias
-argument_list|()
 decl_stmt|;
 if|if
 condition|(

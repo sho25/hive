@@ -823,13 +823,14 @@ operator|instanceof
 name|FilterRelBase
 condition|)
 block|{
+return|return
 name|isPartitionPredicate
 argument_list|(
 name|expr
 argument_list|,
 operator|(
 operator|(
-name|ProjectRelBase
+name|FilterRelBase
 operator|)
 name|r
 operator|)
@@ -837,7 +838,7 @@ operator|.
 name|getChild
 argument_list|()
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 elseif|else
 if|if
