@@ -86,7 +86,7 @@ specifier|public
 interface|interface
 name|MetaStoreFS
 block|{
-comment|/**    * delete a directory    *    * @param f    * @param recursive    * @return true on success    * @throws MetaException    */
+comment|/**    * delete a directory    *    * @param f    * @param ifPurge    * @param recursive    * @return true on success    * @throws MetaException    */
 specifier|public
 name|boolean
 name|deleteDir
@@ -99,6 +99,9 @@ name|f
 parameter_list|,
 name|boolean
 name|recursive
+parameter_list|,
+name|boolean
+name|ifPurge
 parameter_list|,
 name|Configuration
 name|conf

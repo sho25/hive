@@ -5015,13 +5015,16 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
+comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op. If ifPurge option is specified it is passed to the    * hdfs command that removes table data from warehouse to make it skip trash.    *    * @param tableName    *          table to drop    * @param ifPurge    *          completely purge the table (skipping trash) while removing data from warehouse    * @throws HiveException    *           thrown if the drop fails    */
 specifier|public
 name|void
 name|dropTable
 parameter_list|(
 name|String
 name|tableName
+parameter_list|,
+name|boolean
+name|ifPurge
 parameter_list|)
 throws|throws
 name|HiveException
@@ -5052,6 +5055,27 @@ argument_list|,
 literal|true
 argument_list|,
 literal|true
+argument_list|,
+name|ifPurge
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
+specifier|public
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+name|dropTable
+argument_list|(
+name|tableName
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -5078,10 +5102,12 @@ argument_list|,
 literal|true
 argument_list|,
 literal|true
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Drops the table.    *    * @param dbName    * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception if thrown if this is falser and table doesn't exist    * @throws HiveException    */
+comment|/**    * Drops the table.    *    * @param dbName    * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception is thrown if this is false and the table doesn't exist    * @throws HiveException    */
 specifier|public
 name|void
 name|dropTable
@@ -5101,6 +5127,43 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|dropTable
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+name|deleteData
+argument_list|,
+name|ignoreUnknownTab
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Drops the table.    *    * @param dbName    * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception is thrown if this is false and the table doesn't exist    * @param ifPurge    *          completely purge the table skipping trash while removing data from warehouse    * @throws HiveException    */
+specifier|public
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ignoreUnknownTab
+parameter_list|,
+name|boolean
+name|ifPurge
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
 try|try
 block|{
 name|getMSC
@@ -5115,6 +5178,8 @@ argument_list|,
 name|deleteData
 argument_list|,
 name|ignoreUnknownTab
+argument_list|,
+name|ifPurge
 argument_list|)
 expr_stmt|;
 block|}
@@ -9059,6 +9124,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|//TODO: add support for ifPurge
 try|try
 block|{
 name|Table

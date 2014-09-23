@@ -234,6 +234,17 @@ operator|.
 name|value
 argument_list|)
 block|,
+name|INT_TIMESTAMP_FAMILY
+argument_list|(
+name|INT_FAMILY
+operator|.
+name|value
+operator||
+name|TIMESTAMP
+operator|.
+name|value
+argument_list|)
+block|,
 name|INT_DATETIME_FAMILY
 argument_list|(
 name|INT_FAMILY

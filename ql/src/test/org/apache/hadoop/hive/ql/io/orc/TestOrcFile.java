@@ -15749,11 +15749,11 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// with HIVE-7832, the dictionaries will be disabled after writing the first
-comment|// stripe as there are too many distinct values. Hence only 3 stripes as
+comment|// stripe as there are too many distinct values. Hence only 4 stripes as
 comment|// compared to 25 stripes in version 0.11 (above test case)
 name|assertEquals
 argument_list|(
-literal|3
+literal|4
 argument_list|,
 name|i
 argument_list|)

@@ -322,7 +322,7 @@ specifier|static
 name|Path
 name|baseDfsDir
 decl_stmt|;
-specifier|public
+specifier|protected
 specifier|static
 specifier|final
 name|PathFilter
@@ -4001,6 +4001,8 @@ name|Path
 argument_list|(
 name|locn
 argument_list|)
+argument_list|,
+name|hiddenFileFilter
 argument_list|)
 decl_stmt|;
 for|for

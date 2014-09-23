@@ -5983,6 +5983,21 @@ name|ret
 init|=
 literal|false
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Validating MapWork operator "
+operator|+
+name|op
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|name
+argument_list|()
+argument_list|)
+expr_stmt|;
 switch|switch
 condition|(
 name|op
@@ -6112,6 +6127,9 @@ case|:
 case|case
 name|LIMIT
 case|:
+case|case
+name|EVENT
+case|:
 name|ret
 operator|=
 literal|true
@@ -6145,6 +6163,21 @@ name|ret
 init|=
 literal|false
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Validating ReduceWork operator "
+operator|+
+name|op
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|name
+argument_list|()
+argument_list|)
+expr_stmt|;
 switch|switch
 condition|(
 name|op
@@ -6212,6 +6245,25 @@ break|break;
 case|case
 name|GROUPBY
 case|:
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|physicalContext
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_REDUCE_GROUPBY_ENABLED
+argument_list|)
+condition|)
+block|{
 name|ret
 operator|=
 name|validateGroupByOperator
@@ -6226,6 +6278,14 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|ret
+operator|=
+literal|false
+expr_stmt|;
+block|}
 break|break;
 case|case
 name|FILTER
@@ -6285,6 +6345,9 @@ expr_stmt|;
 break|break;
 case|case
 name|LIMIT
+case|:
+case|case
+name|EVENT
 case|:
 name|ret
 operator|=
@@ -7473,7 +7536,7 @@ block|{
 comment|// TODO: this cannot happen - VectorizationContext throws in such cases.
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"getVectorExpression returned null"
 argument_list|)
@@ -7491,7 +7554,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Failed to vectorize"
 argument_list|,
@@ -7625,9 +7688,8 @@ name|getParameters
 argument_list|()
 operator|!=
 literal|null
-condition|)
-block|{
-return|return
+operator|&&
+operator|!
 name|validateExprNodeDesc
 argument_list|(
 name|aggDesc
@@ -7635,6 +7697,10 @@ operator|.
 name|getParameters
 argument_list|()
 argument_list|)
+condition|)
+block|{
+return|return
+literal|false
 return|;
 block|}
 comment|// See if we can vectorize the aggregation.
@@ -7664,7 +7730,7 @@ block|{
 comment|// TODO: this cannot happen - VectorizationContext throws in such cases.
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"getAggregatorExpression returned null"
 argument_list|)
@@ -7682,7 +7748,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Failed to vectorize"
 argument_list|,
@@ -8144,6 +8210,9 @@ name|LIMIT
 case|:
 case|case
 name|EXTRACT
+case|:
+case|case
+name|EVENT
 case|:
 name|vectorOp
 operator|=

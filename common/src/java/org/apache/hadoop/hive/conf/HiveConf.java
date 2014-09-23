@@ -6077,9 +6077,9 @@ literal|"hive.server2.global.init.file.location"
 argument_list|,
 literal|"${env:HIVE_CONF_DIR}"
 argument_list|,
-literal|"The location of HS2 global init file (.hiverc).\n"
+literal|"Either the location of a HS2 global init file or a directory containing a .hiverc file. If the \n"
 operator|+
-literal|"If the property is reset, the value must be a valid path where the init file is located."
+literal|"property is set, the value must be a valid path to an init file or directory where the init file is located."
 argument_list|)
 block|,
 name|HIVE_SERVER2_TRANSPORT_MODE
@@ -6835,6 +6835,17 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"This flag should be set to true to enable vectorized mode of the reduce-side of query execution.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_REDUCE_GROUPBY_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.reduce.groupby.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable vectorized mode of the reduce-side GROUP BY query execution.\n"
 operator|+
 literal|"The default value is true."
 argument_list|)

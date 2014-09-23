@@ -1152,7 +1152,7 @@ name|rc
 init|=
 name|parseAndAnalyze
 argument_list|(
-literal|"insert into table T values ('abc', 3), ('ghi', 5)"
+literal|"insert into table T values ('abc', 3), ('ghi', null)"
 argument_list|,
 literal|"testInsertValues"
 argument_list|)
