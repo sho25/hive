@@ -6829,6 +6829,17 @@ operator|+
 literal|"The default value is true."
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_REDUCE_GROUPBY_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.reduce.groupby.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable vectorized mode of the reduce-side GROUP BY query execution.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
 name|HIVE_VECTORIZATION_GROUPBY_CHECKINTERVAL
 argument_list|(
 literal|"hive.vectorized.groupby.checkinterval"
