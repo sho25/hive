@@ -6127,6 +6127,9 @@ case|:
 case|case
 name|LIMIT
 case|:
+case|case
+name|EVENT
+case|:
 name|ret
 operator|=
 literal|true
@@ -6342,6 +6345,9 @@ expr_stmt|;
 break|break;
 case|case
 name|LIMIT
+case|:
+case|case
+name|EVENT
 case|:
 name|ret
 operator|=
@@ -8204,6 +8210,9 @@ name|LIMIT
 case|:
 case|case
 name|EXTRACT
+case|:
+case|case
+name|EVENT
 case|:
 name|vectorOp
 operator|=
