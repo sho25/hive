@@ -3030,6 +3030,16 @@ argument_list|,
 literal|"How many rows in the joining tables (except the streaming table) should be cached in memory."
 argument_list|)
 block|,
+comment|// CBO related
+name|HIVE_CBO_ENABLED
+argument_list|(
+literal|"hive.cbo.enable"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Flag to control enabling Cost Based Optimizations using Optiq framework."
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE
