@@ -128,13 +128,6 @@ parameter_list|,
 specifier|final
 name|GroupType
 name|tableSchema
-parameter_list|,
-specifier|final
-name|List
-argument_list|<
-name|TypeInfo
-argument_list|>
-name|hiveColumnTypeInfos
 parameter_list|)
 block|{
 name|this
@@ -147,8 +140,6 @@ argument_list|(
 name|requestedSchema
 argument_list|,
 name|tableSchema
-argument_list|,
-name|hiveColumnTypeInfos
 argument_list|)
 expr_stmt|;
 block|}
