@@ -513,6 +513,11 @@ name|hiveTblMetadata
 decl_stmt|;
 specifier|private
 specifier|final
+name|String
+name|tblAlias
+decl_stmt|;
+specifier|private
+specifier|final
 name|ImmutableList
 argument_list|<
 name|ColumnInfo
@@ -611,7 +616,10 @@ name|RelOptSchema
 name|optiqSchema
 parameter_list|,
 name|String
-name|name
+name|qualifiedTblName
+parameter_list|,
+name|String
+name|tblAlias
 parameter_list|,
 name|RelDataType
 name|rowType
@@ -650,7 +658,7 @@ name|super
 argument_list|(
 name|optiqSchema
 argument_list|,
-name|name
+name|qualifiedTblName
 argument_list|,
 name|rowType
 argument_list|)
@@ -660,6 +668,12 @@ operator|.
 name|hiveTblMetadata
 operator|=
 name|hiveTblMetadata
+expr_stmt|;
+name|this
+operator|.
+name|tblAlias
+operator|=
+name|tblAlias
 expr_stmt|;
 name|this
 operator|.
@@ -979,6 +993,34 @@ parameter_list|()
 block|{
 return|return
 name|hiveTblMetadata
+return|;
+block|}
+specifier|public
+name|String
+name|getTableAlias
+parameter_list|()
+block|{
+comment|// NOTE: Optiq considers tbls to be equal if their names are the same. Hence
+comment|// we need to provide Optiq the fully qualified table name (dbname.tblname)
+comment|// and not the user provided aliases.
+comment|// However in HIVE DB name can not appear in select list; in case of join
+comment|// where table names differ only in DB name, Hive would require user
+comment|// introducing explicit aliases for tbl.
+if|if
+condition|(
+name|tblAlias
+operator|==
+literal|null
+condition|)
+return|return
+name|hiveTblMetadata
+operator|.
+name|getTableName
+argument_list|()
+return|;
+else|else
+return|return
+name|tblAlias
 return|;
 block|}
 specifier|private

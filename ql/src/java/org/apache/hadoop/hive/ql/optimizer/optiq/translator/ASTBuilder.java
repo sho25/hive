@@ -373,6 +373,14 @@ name|getTableName
 argument_list|()
 argument_list|)
 argument_list|)
+decl_stmt|;
+comment|// NOTE: Optiq considers tbls to be equal if their names are the same. Hence
+comment|// we need to provide Optiq the fully qualified table name (dbname.tblname)
+comment|// and not the user provided aliases.
+comment|// However in HIVE DB name can not appear in select list; in case of join
+comment|// where table names differ only in DB name, Hive would require user
+comment|// introducing explicit aliases for tbl.
+name|b
 operator|.
 name|add
 argument_list|(
@@ -382,10 +390,10 @@ name|Identifier
 argument_list|,
 name|hTbl
 operator|.
-name|getName
+name|getTableAlias
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 return|return
 name|b
 operator|.
