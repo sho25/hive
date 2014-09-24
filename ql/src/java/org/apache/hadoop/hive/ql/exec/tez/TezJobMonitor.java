@@ -651,6 +651,11 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+name|long
+name|startTime
+init|=
+literal|0
+decl_stmt|;
 name|shutdownList
 operator|.
 name|add
@@ -832,6 +837,13 @@ name|s
 argument_list|)
 expr_stmt|;
 block|}
+name|startTime
+operator|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+expr_stmt|;
 name|running
 operator|=
 literal|true
@@ -863,11 +875,34 @@ argument_list|,
 name|console
 argument_list|)
 expr_stmt|;
+name|double
+name|duration
+init|=
+operator|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|-
+name|startTime
+operator|)
+operator|/
+literal|1000.0
+decl_stmt|;
 name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Status: Finished successfully"
+literal|"Status: Finished successfully in "
+operator|+
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"%.2f seconds"
+argument_list|,
+name|duration
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|running
