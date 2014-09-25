@@ -1307,11 +1307,6 @@ decl_stmt|;
 name|RexNode
 name|tmpRN
 decl_stmt|;
-name|TypeInfo
-name|tgtDT
-init|=
-literal|null
-decl_stmt|;
 name|List
 argument_list|<
 name|RexNode
@@ -1339,16 +1334,39 @@ operator|>
 name|builder
 argument_list|()
 decl_stmt|;
-comment|// TODO: 1) Expand to other functions as needed 2) What about types other
-comment|// than primitive.
-if|if
-condition|(
+comment|// TODO: 1) Expand to other functions as needed 2) What about types other than primitive.
+name|TypeInfo
+name|tgtDT
+init|=
+literal|null
+decl_stmt|;
+name|GenericUDF
+name|tgtUdf
+init|=
 name|func
 operator|.
 name|getGenericUDF
 argument_list|()
+decl_stmt|;
+name|boolean
+name|isNumeric
+init|=
+name|tgtUdf
 operator|instanceof
 name|GenericUDFBaseNumeric
+decl_stmt|,
+name|isCompare
+init|=
+operator|!
+name|isNumeric
+operator|&&
+name|tgtUdf
+operator|instanceof
+name|GenericUDFBaseCompare
+decl_stmt|;
+if|if
+condition|(
+name|isNumeric
 condition|)
 block|{
 name|tgtDT
@@ -1358,20 +1376,7 @@ operator|.
 name|getTypeInfo
 argument_list|()
 expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|func
-operator|.
-name|getGenericUDF
-argument_list|()
-operator|instanceof
-name|GenericUDFBaseCompare
-condition|)
-block|{
-if|if
-condition|(
+assert|assert
 name|func
 operator|.
 name|getChildren
@@ -1381,6 +1386,25 @@ name|size
 argument_list|()
 operator|==
 literal|2
+assert|;
+comment|// TODO: checking 2 children is useless, compare already does that.
+block|}
+elseif|else
+if|if
+condition|(
+name|isCompare
+operator|&&
+operator|(
+name|func
+operator|.
+name|getChildren
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|2
+operator|)
 condition|)
 block|{
 name|tgtDT
@@ -1417,7 +1441,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-block|}
 for|for
 control|(
 name|ExprNodeDesc
@@ -1452,6 +1475,12 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|isCompare
+condition|)
+block|{
+comment|// For compare, we will convert requisite children
 name|tmpExprNode
 operator|=
 name|ParseUtils
@@ -1466,6 +1495,61 @@ operator|)
 name|tgtDT
 argument_list|)
 expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|isNumeric
+condition|)
+block|{
+comment|// For numeric, we'll do minimum necessary cast - if we cast to the type
+comment|// of expression, bad things will happen.
+name|GenericUDFBaseNumeric
+name|numericUdf
+init|=
+operator|(
+name|GenericUDFBaseNumeric
+operator|)
+name|tgtUdf
+decl_stmt|;
+name|PrimitiveTypeInfo
+name|minArgType
+init|=
+name|numericUdf
+operator|.
+name|deriveMinArgumentCast
+argument_list|(
+name|childExpr
+argument_list|,
+name|tgtDT
+argument_list|)
+decl_stmt|;
+name|tmpExprNode
+operator|=
+name|ParseUtils
+operator|.
+name|createConversionCast
+argument_list|(
+name|childExpr
+argument_list|,
+name|minArgType
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Unexpected "
+operator|+
+name|tgtDT
+operator|+
+literal|" - not a numeric op or compare"
+argument_list|)
+throw|;
+block|}
 block|}
 name|argTypeBldr
 operator|.
@@ -1502,7 +1586,7 @@ name|tmpRN
 argument_list|)
 expr_stmt|;
 block|}
-comment|// This is an explicit cast
+comment|// See if this is an explicit cast.
 name|RexNode
 name|expr
 init|=
@@ -1529,6 +1613,7 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// This is not a cast; process the function.
 name|retType
 operator|=
 name|TypeConverter
