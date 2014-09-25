@@ -296,6 +296,8 @@ name|url
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Connection
 name|connect
@@ -310,6 +312,11 @@ throws|throws
 name|SQLException
 block|{
 return|return
+name|acceptsURL
+argument_list|(
+name|url
+argument_list|)
+condition|?
 operator|new
 name|HiveConnection
 argument_list|(
@@ -317,6 +324,8 @@ name|url
 argument_list|,
 name|info
 argument_list|)
+else|:
+literal|null
 return|;
 block|}
 comment|/**    * Package scoped access to the Driver's Major Version     * @return The Major version number of the driver. -1 if it cannot be determined from the    * manifest.mf file.    */
