@@ -6610,6 +6610,27 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|ast
+operator|==
+literal|null
+condition|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"The abstract syntax tree is null"
+argument_list|)
+expr_stmt|;
+return|return
+name|sb
+operator|.
+name|toString
+argument_list|()
+return|;
+block|}
 name|sb
 operator|.
 name|append
