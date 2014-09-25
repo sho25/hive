@@ -38439,6 +38439,17 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+name|AcidUtils
+operator|.
+name|CONF_ACID_KEY
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Generate the conversion SelectOperator that converts the columns into the    * types that are expected by the table_desc.    */
 name|Operator
