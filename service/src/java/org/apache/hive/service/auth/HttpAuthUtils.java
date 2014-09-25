@@ -391,7 +391,7 @@ name|serverPrincipal
 argument_list|,
 name|clientUGI
 operator|.
-name|getShortUserName
+name|getUserName
 argument_list|()
 argument_list|,
 name|serverHttpUrl
