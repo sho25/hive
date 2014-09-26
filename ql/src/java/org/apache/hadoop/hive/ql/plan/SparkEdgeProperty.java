@@ -46,7 +46,7 @@ name|SHUFFLE_GROUP
 init|=
 literal|1
 decl_stmt|;
-comment|// Shuffle, keys are coming together
+comment|// HashPartition shuffle, keys are not sorted in any way.
 specifier|public
 specifier|static
 name|long
@@ -54,7 +54,15 @@ name|SHUFFLE_SORT
 init|=
 literal|2
 decl_stmt|;
-comment|// Shuffle, keys are sorted
+comment|// RangePartition shuffle, keys are total sorted.
+specifier|public
+specifier|static
+name|long
+name|MR_SHUFFLE_SORT
+init|=
+literal|4
+decl_stmt|;
+comment|// HashPartition shuffle, keys are sorted by partition.
 specifier|private
 name|long
 name|edgeType
@@ -147,15 +155,25 @@ name|SHUFFLE_GROUP
 expr_stmt|;
 block|}
 specifier|public
+name|void
+name|setMRShuffle
+parameter_list|()
+block|{
+name|edgeType
+operator||=
+name|MR_SHUFFLE_SORT
+expr_stmt|;
+block|}
+specifier|public
 name|boolean
-name|isShuffleSort
+name|isMRShuffle
 parameter_list|()
 block|{
 return|return
 operator|(
 name|edgeType
 operator|&
-name|SHUFFLE_SORT
+name|MR_SHUFFLE_SORT
 operator|)
 operator|!=
 literal|0
@@ -170,6 +188,21 @@ name|edgeType
 operator||=
 name|SHUFFLE_SORT
 expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isShuffleSort
+parameter_list|()
+block|{
+return|return
+operator|(
+name|edgeType
+operator|&
+name|SHUFFLE_SORT
+operator|)
+operator|!=
+literal|0
+return|;
 block|}
 specifier|public
 name|long
@@ -225,6 +258,44 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+name|isMRShuffle
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|sb
+operator|.
+name|length
+argument_list|()
+operator|!=
+literal|0
+condition|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|" "
+argument_list|)
+expr_stmt|;
+block|}
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"PARTITION-LEVEL SORT"
+argument_list|)
+expr_stmt|;
+return|return
+name|sb
+operator|.
+name|toString
+argument_list|()
+return|;
+block|}
+if|if
+condition|(
 name|isShuffleSort
 argument_list|()
 condition|)
@@ -254,6 +325,12 @@ argument_list|(
 literal|"SORT"
 argument_list|)
 expr_stmt|;
+return|return
+name|sb
+operator|.
+name|toString
+argument_list|()
+return|;
 block|}
 return|return
 name|sb
