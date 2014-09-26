@@ -4070,31 +4070,6 @@ operator|==
 literal|null
 operator|)
 decl_stmt|;
-name|PlanUtils
-operator|.
-name|addInput
-argument_list|(
-name|inputs
-argument_list|,
-operator|new
-name|ReadEntity
-argument_list|(
-name|parseCtx
-operator|.
-name|getTopToTable
-argument_list|()
-operator|.
-name|get
-argument_list|(
-name|topOp
-argument_list|)
-argument_list|,
-name|parentViewInfo
-argument_list|,
-name|isDirectRead
-argument_list|)
-argument_list|)
-expr_stmt|;
 for|for
 control|(
 name|Partition
@@ -8712,7 +8687,7 @@ return|return
 name|cplan
 return|;
 block|}
-comment|/**    * Create a block level merge task for RCFiles or stripe level merge task for    * ORCFiles    *    * @param fsInputDesc    * @param finalName    * @param inputFormatClass     * @return MergeWork if table is stored as RCFile or ORCFile,    *         null otherwise    */
+comment|/**    * Create a block level merge task for RCFiles or stripe level merge task for    * ORCFiles    *    * @param fsInputDesc    * @param finalName    * @param inputFormatClass    * @return MergeWork if table is stored as RCFile or ORCFile,    *         null otherwise    */
 specifier|public
 specifier|static
 name|MapWork
@@ -10495,6 +10470,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|apply
