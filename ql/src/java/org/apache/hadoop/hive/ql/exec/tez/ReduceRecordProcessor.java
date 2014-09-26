@@ -810,6 +810,11 @@ operator|(
 name|byte
 operator|)
 name|tag
+argument_list|,
+name|redWork
+operator|.
+name|getScratchColumnVectorTypes
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|ois
