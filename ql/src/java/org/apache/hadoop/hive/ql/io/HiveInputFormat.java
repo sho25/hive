@@ -2625,6 +2625,25 @@ name|TableScanOperator
 name|tableScan
 parameter_list|)
 block|{
+comment|// ensure filters are not set from previous pushFilters
+name|jobConf
+operator|.
+name|unset
+argument_list|(
+name|TableScanDesc
+operator|.
+name|FILTER_TEXT_CONF_STR
+argument_list|)
+expr_stmt|;
+name|jobConf
+operator|.
+name|unset
+argument_list|(
+name|TableScanDesc
+operator|.
+name|FILTER_EXPR_CONF_STR
+argument_list|)
+expr_stmt|;
 name|TableScanDesc
 name|scanDesc
 init|=
