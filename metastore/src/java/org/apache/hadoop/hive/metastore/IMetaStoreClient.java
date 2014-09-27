@@ -2837,6 +2837,16 @@ parameter_list|()
 throws|throws
 name|TException
 function_decl|;
+comment|/**    * Get a structure that details valid transactions.    * @param currentTxn The current transaction of the caller.  This will be removed from the    *                   exceptions list so that the caller sees records from his own transaction.    * @return list of valid transactions    * @throws TException    */
+name|ValidTxnList
+name|getValidTxns
+parameter_list|(
+name|long
+name|currentTxn
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
 comment|/**    * Initiate a transaction.    * @param user User who is opening this transaction.  This is the Hive user,    *             not necessarily the OS user.  It is assumed that this user has already been    *             authenticated and authorized at this point.    * @return transaction identifier    * @throws TException    */
 name|long
 name|openTxn

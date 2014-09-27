@@ -1523,7 +1523,9 @@ return|return
 name|client
 operator|.
 name|getValidTxns
-argument_list|()
+argument_list|(
+name|txnId
+argument_list|)
 return|;
 block|}
 catch|catch
