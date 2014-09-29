@@ -3107,6 +3107,8 @@ name|qualified
 argument_list|,
 name|ast
 argument_list|,
+name|partSpec
+argument_list|,
 name|AlterTableTypes
 operator|.
 name|ADDCOLS
@@ -3132,6 +3134,8 @@ name|qualified
 argument_list|,
 name|ast
 argument_list|,
+name|partSpec
+argument_list|,
 name|AlterTableTypes
 operator|.
 name|REPLACECOLS
@@ -3156,6 +3160,8 @@ argument_list|(
 name|qualified
 argument_list|,
 name|ast
+argument_list|,
+name|partSpec
 argument_list|)
 expr_stmt|;
 block|}
@@ -16912,6 +16918,14 @@ name|qualified
 parameter_list|,
 name|ASTNode
 name|ast
+parameter_list|,
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -17203,6 +17217,8 @@ name|AlterTableDesc
 argument_list|(
 name|tblName
 argument_list|,
+name|partSpec
+argument_list|,
 name|unescapeIdentifier
 argument_list|(
 name|oldColName
@@ -17226,7 +17242,7 @@ name|addInputsOutputsAlterTable
 argument_list|(
 name|tblName
 argument_list|,
-literal|null
+name|partSpec
 argument_list|,
 name|alterTblDesc
 argument_list|)
@@ -17589,6 +17605,14 @@ parameter_list|,
 name|ASTNode
 name|ast
 parameter_list|,
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|,
 name|AlterTableTypes
 name|alterType
 parameter_list|)
@@ -17630,6 +17654,8 @@ name|AlterTableDesc
 argument_list|(
 name|tblName
 argument_list|,
+name|partSpec
+argument_list|,
 name|newCols
 argument_list|,
 name|alterType
@@ -17639,7 +17665,7 @@ name|addInputsOutputsAlterTable
 argument_list|(
 name|tblName
 argument_list|,
-literal|null
+name|partSpec
 argument_list|,
 name|alterTblDesc
 argument_list|)
