@@ -7447,25 +7447,6 @@ name|FileSinkOperator
 name|op
 parameter_list|)
 block|{
-comment|// HIVE-7557: For now, turn off dynamic partitioning to give more time to
-comment|// figure out how to make VectorFileSink work correctly with it...
-if|if
-condition|(
-name|op
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getDynPartCtx
-argument_list|()
-operator|!=
-literal|null
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
 return|return
 literal|true
 return|;
