@@ -11881,6 +11881,14 @@ throw|;
 block|}
 block|}
 comment|// Disallow INSERT INTO on bucketized tables
+name|boolean
+name|isAcid
+init|=
+name|isAcidTable
+argument_list|(
+name|tab
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|qb
@@ -11909,10 +11917,7 @@ operator|>
 literal|0
 operator|&&
 operator|!
-name|isAcidTable
-argument_list|(
-name|tab
-argument_list|)
+name|isAcid
 condition|)
 block|{
 throw|throw
@@ -11929,6 +11934,37 @@ literal|"Table: "
 operator|+
 name|tab_name
 argument_list|)
+argument_list|)
+throw|;
+block|}
+comment|// Disallow update and delete on non-acid tables
+if|if
+condition|(
+operator|(
+name|updating
+argument_list|()
+operator|||
+name|deleting
+argument_list|()
+operator|)
+operator|&&
+operator|!
+name|isAcid
+condition|)
+block|{
+comment|// isAcidTable above also checks for whether we are using an acid compliant
+comment|// transaction manager.  But that has already been caught in
+comment|// UpdateDeleteSemanticAnalyzer, so if we are updating or deleting and getting nonAcid
+comment|// here, it means the table itself doesn't support it.
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|ACID_OP_ON_NONACID_TABLE
+argument_list|,
+name|tab_name
 argument_list|)
 throw|;
 block|}
