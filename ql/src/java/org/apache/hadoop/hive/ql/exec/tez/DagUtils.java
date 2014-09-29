@@ -3254,7 +3254,8 @@ name|partitionerConf
 return|;
 block|}
 comment|/*    * Helper to determine the size of the container requested    * from yarn. Falls back to Map-reduce's map size if tez    * container size isn't set.    */
-specifier|private
+specifier|public
+specifier|static
 name|Resource
 name|getContainerResource
 parameter_list|(

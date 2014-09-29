@@ -5060,24 +5060,6 @@ operator|+
 literal|"entries/values can be specified using this config."
 argument_list|)
 block|,
-comment|// to accurately compute statistics for GROUPBY map side parallelism needs to be known
-name|HIVE_STATS_MAP_SIDE_PARALLELISM
-argument_list|(
-literal|"hive.stats.map.parallelism"
-argument_list|,
-literal|1
-argument_list|,
-literal|"Hive/Tez optimizer estimates the data size flowing through each of the operators.\n"
-operator|+
-literal|"For GROUPBY operator, to accurately compute the data size map-side parallelism needs to\n"
-operator|+
-literal|"be known. By default, this value is set to 1 since optimizer is not aware of the number of\n"
-operator|+
-literal|"mappers during compile-time. This Hive config can be used to specify the number of mappers\n"
-operator|+
-literal|"to be used for data size computation of GROUPBY operator."
-argument_list|)
-block|,
 comment|// statistics annotation fetches stats for each partition, which can be expensive. turning
 comment|// this off will result in basic sizes being fetched from namenode instead
 name|HIVE_STATS_FETCH_PARTITION_STATS
