@@ -268,19 +268,15 @@ operator|.
 name|buffer
 argument_list|)
 expr_stmt|;
-comment|// set mapred.task.partition in executor side.
-name|jobConf
+name|SparkUtilities
 operator|.
-name|setInt
+name|setTaskInfoInJobConf
 argument_list|(
-literal|"mapred.task.partition"
+name|jobConf
 argument_list|,
 name|TaskContext
 operator|.
 name|get
-argument_list|()
-operator|.
-name|getPartitionId
 argument_list|()
 argument_list|)
 expr_stmt|;
