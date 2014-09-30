@@ -6007,6 +6007,8 @@ operator|.
 name|close
 argument_list|(
 name|tezSessionState
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

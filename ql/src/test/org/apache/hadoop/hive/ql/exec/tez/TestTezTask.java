@@ -1860,7 +1860,7 @@ name|close
 argument_list|(
 name|eq
 argument_list|(
-literal|false
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;

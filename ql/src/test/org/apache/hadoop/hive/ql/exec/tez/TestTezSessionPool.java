@@ -818,6 +818,8 @@ argument_list|(
 name|session
 argument_list|,
 name|conf
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|Mockito
@@ -909,6 +911,8 @@ argument_list|,
 name|conf
 argument_list|,
 name|extraResources
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|Mockito

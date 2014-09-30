@@ -2266,6 +2266,8 @@ operator|.
 name|conf
 argument_list|,
 name|inputOutputJars
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|console

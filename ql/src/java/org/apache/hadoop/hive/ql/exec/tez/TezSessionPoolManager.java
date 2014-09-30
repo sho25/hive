@@ -762,6 +762,9 @@ name|close
 parameter_list|(
 name|TezSessionState
 name|tezSessionState
+parameter_list|,
+name|boolean
+name|keepTmpDir
 parameter_list|)
 throws|throws
 name|Exception
@@ -791,7 +794,7 @@ name|tezSessionState
 operator|.
 name|close
 argument_list|(
-literal|false
+name|keepTmpDir
 argument_list|)
 expr_stmt|;
 block|}
@@ -1206,6 +1209,8 @@ block|{
 name|close
 argument_list|(
 name|session
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -1229,6 +1234,9 @@ name|sessionState
 parameter_list|,
 name|HiveConf
 name|conf
+parameter_list|,
+name|boolean
+name|keepTmpDir
 parameter_list|)
 throws|throws
 name|Exception
@@ -1240,6 +1248,8 @@ argument_list|,
 name|conf
 argument_list|,
 literal|null
+argument_list|,
+name|keepTmpDir
 argument_list|)
 expr_stmt|;
 block|}
@@ -1256,6 +1266,9 @@ parameter_list|,
 name|String
 index|[]
 name|additionalFiles
+parameter_list|,
+name|boolean
+name|keepTmpDir
 parameter_list|)
 throws|throws
 name|Exception
@@ -1302,6 +1315,8 @@ block|}
 name|close
 argument_list|(
 name|sessionState
+argument_list|,
+name|keepTmpDir
 argument_list|)
 expr_stmt|;
 name|sessionState
