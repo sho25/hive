@@ -943,6 +943,24 @@ name|ql
 operator|.
 name|metadata
 operator|.
+name|InvalidTableException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
 name|Partition
 import|;
 end_import
@@ -12605,6 +12623,8 @@ parameter_list|,
 name|boolean
 name|isColumn
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 comment|// check whether the name starts with table
 comment|// DESCRIBE table
@@ -12684,7 +12704,7 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|HiveException
+name|InvalidTableException
 name|e
 parameter_list|)
 block|{
@@ -12694,6 +12714,25 @@ comment|// do nothing when having exception
 return|return
 literal|null
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+throw|;
 block|}
 return|return
 literal|null
@@ -13002,6 +13041,8 @@ name|String
 argument_list|>
 name|partSpec
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 comment|// if parent has two children
 comment|// it could be DESCRIBE table key
@@ -13203,12 +13244,10 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|HiveException
+name|InvalidTableException
 name|e
 parameter_list|)
 block|{
-comment|// if table not valid
-comment|// throw semantic exception
 throw|throw
 operator|new
 name|SemanticException
@@ -13221,6 +13260,25 @@ name|getMsg
 argument_list|(
 name|tableName
 argument_list|)
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)

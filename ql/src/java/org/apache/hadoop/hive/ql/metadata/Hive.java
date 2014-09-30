@@ -1467,9 +1467,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|util
+name|security
 operator|.
-name|StringUtils
+name|UserGroupInformation
 import|;
 end_import
 
@@ -1481,9 +1481,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|security
+name|util
 operator|.
-name|UserGroupInformation
+name|StringUtils
 import|;
 end_import
 
@@ -2597,7 +2597,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter table."
+literal|"Unable to alter table. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2613,7 +2618,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter table."
+literal|"Unable to alter table. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2716,7 +2726,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter index."
+literal|"Unable to alter index. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2732,7 +2747,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter index."
+literal|"Unable to alter index. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2858,7 +2878,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter partition."
+literal|"Unable to alter partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2874,7 +2899,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter partition."
+literal|"Unable to alter partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3022,7 +3052,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter partition."
+literal|"Unable to alter partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3038,7 +3073,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter partition."
+literal|"Unable to alter partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3267,7 +3307,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to rename partition."
+literal|"Unable to rename partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3283,7 +3328,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to rename partition."
+literal|"Unable to rename partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3299,7 +3349,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to rename partition."
+literal|"Unable to rename partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3345,6 +3400,13 @@ argument_list|(
 literal|"Unable to alter database "
 operator|+
 name|dbName
+operator|+
+literal|". "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3383,6 +3445,13 @@ argument_list|(
 literal|"Unable to alter database "
 operator|+
 name|dbName
+operator|+
+literal|". "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -4992,7 +5061,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Partition or table doesn't exist."
+literal|"Partition or table doesn't exist. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -5008,7 +5082,10 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unknown error. Please check logs."
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -5496,6 +5573,13 @@ argument_list|(
 literal|"Unable to fetch table "
 operator|+
 name|tableName
+operator|+
+literal|". "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -9125,7 +9209,10 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unknown error. Please check logs."
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -9386,7 +9473,10 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unknown error. Please check logs."
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -11969,7 +12059,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"checkPaths: filesystem error in check phase"
+literal|"checkPaths: filesystem error in check phase. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -12323,12 +12418,12 @@ name|destf
 operator|+
 literal|": "
 operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
 name|e
-argument_list|)
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 block|}
@@ -12475,7 +12570,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"addFiles: filesystem error in check phase"
+literal|"addFiles: filesystem error in check phase. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -12627,7 +12727,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"copyFiles: error while moving files!!!"
+literal|"copyFiles: error while moving files!!! "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -13046,7 +13151,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Error moving acid files"
+literal|"Error moving acid files "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
