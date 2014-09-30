@@ -3765,6 +3765,13 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+name|line
+operator|=
+name|line
+operator|.
+name|trim
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|line
