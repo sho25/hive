@@ -1645,6 +1645,8 @@ name|hiveNonPartitionCols
 argument_list|,
 name|nonPartColNamesThatRqrStats
 argument_list|,
+name|nonPartColNamesThatRqrStats
+argument_list|,
 literal|true
 argument_list|,
 literal|true
