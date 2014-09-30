@@ -2267,6 +2267,24 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|mapJoinOp
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Conversion to bucket map join failed."
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
 name|MapJoinDesc
 name|joinDesc
 init|=
