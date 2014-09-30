@@ -5642,6 +5642,15 @@ operator|+
 literal|"org.apache.hadoop.hive.ql.security.authorization.HiveMetastoreAuthorizationProvider. "
 argument_list|)
 block|,
+name|HIVE_METASTORE_AUTHORIZATION_AUTH_READS
+argument_list|(
+literal|"hive.security.metastore.authorization.auth.reads"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If this is true, metastore authorizer authorizes read actions on database, table"
+argument_list|)
+block|,
 name|HIVE_METASTORE_AUTHENTICATOR_MANAGER
 argument_list|(
 literal|"hive.security.metastore.authenticator.manager"

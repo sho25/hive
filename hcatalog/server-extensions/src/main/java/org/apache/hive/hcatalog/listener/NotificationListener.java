@@ -1304,7 +1304,7 @@ name|newTbl
 operator|=
 name|handler
 operator|.
-name|get_table
+name|get_table_core
 argument_list|(
 name|tbl
 operator|.

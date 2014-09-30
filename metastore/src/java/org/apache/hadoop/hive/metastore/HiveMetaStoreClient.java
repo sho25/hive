@@ -137,16 +137,6 @@ name|java
 operator|.
 name|net
 operator|.
-name|URISyntaxException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
 name|UnknownHostException
 import|;
 end_import
@@ -1255,24 +1245,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|PartitionSpec
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|PartitionsByExprRequest
 import|;
 end_import
@@ -1670,26 +1642,6 @@ operator|.
 name|api
 operator|.
 name|UnlockRequest
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|partition
-operator|.
-name|spec
-operator|.
-name|CompositePartitionSpecProxy
 import|;
 end_import
 
@@ -4693,6 +4645,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Drop the table and choose whether to save the data in the trash.    * @param ifPurge completely purge the table (skipping trash) while removing    *                data from warehouse    * @see #dropTable(String, String, boolean, boolean, EnvironmentContext)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|dropTable
@@ -6737,6 +6691,8 @@ argument_list|)
 return|;
 block|}
 comment|/** {@inheritDoc} */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|setPartitionColumnStatistics
