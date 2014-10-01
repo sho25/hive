@@ -864,6 +864,7 @@ return|return
 name|transportFactory
 return|;
 block|}
+comment|/**    * Returns the thrift processor factory for HiveServer2 running in binary mode    * @param service    * @return    * @throws LoginException    */
 specifier|public
 name|TProcessorFactory
 name|getAuthProcFactory
@@ -873,27 +874,6 @@ name|service
 parameter_list|)
 throws|throws
 name|LoginException
-block|{
-if|if
-condition|(
-literal|"http"
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-name|transportMode
-argument_list|)
-condition|)
-block|{
-return|return
-name|HttpAuthUtils
-operator|.
-name|getAuthProcFactory
-argument_list|(
-name|service
-argument_list|)
-return|;
-block|}
-else|else
 block|{
 if|if
 condition|(
@@ -931,7 +911,6 @@ argument_list|(
 name|service
 argument_list|)
 return|;
-block|}
 block|}
 block|}
 specifier|public

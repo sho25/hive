@@ -1359,6 +1359,7 @@ return|return
 name|clientIpAddress
 return|;
 block|}
+comment|/**    * Returns the effective username.    * 1. If hive.server2.allow.user.substitution = false: the username of the connecting user     * 2. If hive.server2.allow.user.substitution = true: the username of the end user,    * that the connecting user is trying to proxy for.     * This includes a check whether the connecting user is allowed to proxy for the end user.    * @param req    * @return    * @throws HiveSQLException    */
 specifier|private
 name|String
 name|getUserName
