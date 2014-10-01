@@ -25,6 +25,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -127,6 +137,20 @@ name|RexNode
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|ImmutableMap
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -145,6 +169,22 @@ init|=
 operator|new
 name|HiveSortRelFactory
 argument_list|()
+decl_stmt|;
+comment|// NOTE: this is to work around Hive Optiq Limitations w.r.t OB.
+comment|// 1. Optiq can not accept expressions in OB; instead it needs to be expressed
+comment|// as VC in input Select.
+comment|// 2. Hive can not preserve ordering through select boundaries.
+comment|// 3. This map is used for outermost OB to migrate the VC corresponding OB
+comment|// expressions from input select.
+comment|// 4. This is used by ASTConverter after we are done with Optiq Planning
+specifier|private
+name|ImmutableMap
+argument_list|<
+name|Integer
+argument_list|,
+name|RexNode
+argument_list|>
+name|mapOfInputRefToRexCall
 decl_stmt|;
 specifier|public
 name|HiveSortRel
@@ -253,6 +293,42 @@ parameter_list|()
 block|{
 return|return
 name|fetch
+return|;
+block|}
+specifier|public
+name|void
+name|setInputRefToCallMap
+parameter_list|(
+name|ImmutableMap
+argument_list|<
+name|Integer
+argument_list|,
+name|RexNode
+argument_list|>
+name|refToCall
+parameter_list|)
+block|{
+name|this
+operator|.
+name|mapOfInputRefToRexCall
+operator|=
+name|refToCall
+expr_stmt|;
+block|}
+specifier|public
+name|Map
+argument_list|<
+name|Integer
+argument_list|,
+name|RexNode
+argument_list|>
+name|getInputRefToCallMap
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|mapOfInputRefToRexCall
 return|;
 block|}
 annotation|@
