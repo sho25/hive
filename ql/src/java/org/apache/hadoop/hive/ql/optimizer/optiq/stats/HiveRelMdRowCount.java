@@ -1234,15 +1234,6 @@ name|getRowCount
 argument_list|(
 name|left
 argument_list|)
-operator|*
-name|RelMetadataQuery
-operator|.
-name|getSelectivity
-argument_list|(
-name|left
-argument_list|,
-name|leftPred
-argument_list|)
 decl_stmt|;
 name|double
 name|rightRowCount
@@ -1252,15 +1243,6 @@ operator|.
 name|getRowCount
 argument_list|(
 name|right
-argument_list|)
-operator|*
-name|RelMetadataQuery
-operator|.
-name|getSelectivity
-argument_list|(
-name|right
-argument_list|,
-name|rightPred
 argument_list|)
 decl_stmt|;
 if|if
@@ -1430,6 +1412,8 @@ argument_list|()
 condition|?
 literal|1.0
 else|:
+name|isPKSideSimpleTree
+condition|?
 name|RelMetadataQuery
 operator|.
 name|getSelectivity
@@ -1438,6 +1422,8 @@ name|left
 argument_list|,
 name|leftPred
 argument_list|)
+else|:
+literal|1.0
 argument_list|)
 decl_stmt|;
 return|return
@@ -1494,6 +1480,8 @@ argument_list|()
 condition|?
 literal|1.0
 else|:
+name|isPKSideSimpleTree
+condition|?
 name|RelMetadataQuery
 operator|.
 name|getSelectivity
@@ -1502,6 +1490,8 @@ name|right
 argument_list|,
 name|rightPred
 argument_list|)
+else|:
+literal|1.0
 argument_list|)
 decl_stmt|;
 return|return
