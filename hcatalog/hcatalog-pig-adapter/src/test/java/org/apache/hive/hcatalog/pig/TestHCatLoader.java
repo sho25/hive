@@ -5452,6 +5452,26 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+comment|// testConvertBooleanToInt() sets HCatConstants.HCAT_DATA_CONVERT_BOOLEAN_TO_INTEGER=true, and
+comment|// might be the last one to call HCatContext.INSTANCE.setConf(). Make sure setting is false.
+name|Properties
+name|properties
+init|=
+operator|new
+name|Properties
+argument_list|()
+decl_stmt|;
+name|properties
+operator|.
+name|setProperty
+argument_list|(
+name|HCatConstants
+operator|.
+name|HCAT_DATA_CONVERT_BOOLEAN_TO_INTEGER
+argument_list|,
+literal|"false"
+argument_list|)
+expr_stmt|;
 name|PigServer
 name|server
 init|=
@@ -5461,6 +5481,8 @@ argument_list|(
 name|ExecType
 operator|.
 name|LOCAL
+argument_list|,
+name|properties
 argument_list|)
 decl_stmt|;
 name|server
