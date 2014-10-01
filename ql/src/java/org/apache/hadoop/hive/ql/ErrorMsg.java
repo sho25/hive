@@ -1942,7 +1942,18 @@ literal|10297
 argument_list|,
 literal|"Attempt to do update or delete on table {0} that does not use "
 operator|+
-literal|"an AcidOutputFormat"
+literal|"an AcidOutputFormat or is not bucketed"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|ACID_NO_SORTED_BUCKETS
+argument_list|(
+literal|10298
+argument_list|,
+literal|"ACID insert, update, delete not supported on tables that are "
+operator|+
+literal|"sorted, table {0}"
 argument_list|,
 literal|true
 argument_list|)

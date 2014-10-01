@@ -703,7 +703,7 @@ name|acidTableName
 operator|+
 literal|" (i int, j int) clustered by (i) into 2 buckets "
 operator|+
-literal|"stored as orc"
+literal|"stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
 block|}
