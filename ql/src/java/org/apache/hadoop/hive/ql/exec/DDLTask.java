@@ -25794,7 +25794,7 @@ name|props
 operator|.
 name|put
 argument_list|(
-name|statVal
+name|stat
 argument_list|,
 literal|"0"
 argument_list|)
