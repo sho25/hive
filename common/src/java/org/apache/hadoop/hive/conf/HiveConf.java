@@ -4543,7 +4543,7 @@ name|HIVEOPTSORTDYNAMICPARTITION
 argument_list|(
 literal|"hive.optimize.sort.dynamic.partition"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"When enabled dynamic partitioning column will be globally sorted.\n"
 operator|+

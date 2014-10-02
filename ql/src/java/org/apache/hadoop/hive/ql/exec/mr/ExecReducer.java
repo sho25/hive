@@ -524,6 +524,28 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
+name|boolean
+name|isInfoEnabled
+init|=
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|boolean
+name|isTraceEnabled
+init|=
+name|LOG
+operator|.
+name|isTraceEnabled
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
 name|String
 name|PLAN_KEY
 init|=
@@ -591,16 +613,6 @@ operator|.
 name|size
 argument_list|()
 argument_list|)
-decl_stmt|;
-specifier|private
-specifier|final
-name|boolean
-name|isLogInfoEnabled
-init|=
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
 decl_stmt|;
 comment|// TODO: move to DynamicSerDe when it's ready
 specifier|private
@@ -715,6 +727,11 @@ decl_stmt|;
 name|ObjectInspector
 name|keyObjectInspector
 decl_stmt|;
+if|if
+condition|(
+name|isInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -804,6 +821,7 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|jc
 operator|=
@@ -1075,13 +1093,6 @@ name|tag
 index|]
 argument_list|)
 expr_stmt|;
-name|reducer
-operator|.
-name|setGroupKeyObjectInspector
-argument_list|(
-name|keyObjectInspector
-argument_list|)
-expr_stmt|;
 name|rowObjectInspector
 index|[
 name|tag
@@ -1334,6 +1345,11 @@ block|}
 else|else
 block|{
 comment|// If a operator wants to do some work at the end of a group
+if|if
+condition|(
+name|isTraceEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|trace
@@ -1341,6 +1357,7 @@ argument_list|(
 literal|"End Group"
 argument_list|)
 expr_stmt|;
+block|}
 name|reducer
 operator|.
 name|endGroup
@@ -1416,6 +1433,11 @@ name|getSize
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isTraceEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|trace
@@ -1423,17 +1445,18 @@ argument_list|(
 literal|"Start Group"
 argument_list|)
 expr_stmt|;
+block|}
+name|reducer
+operator|.
+name|startGroup
+argument_list|()
+expr_stmt|;
 name|reducer
 operator|.
 name|setGroupKeyObject
 argument_list|(
 name|keyObject
 argument_list|)
-expr_stmt|;
-name|reducer
-operator|.
-name|startGroup
-argument_list|()
 expr_stmt|;
 block|}
 comment|// System.err.print(keyObject.toString());
@@ -1546,7 +1569,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|isInfoEnabled
 condition|)
 block|{
 name|cntr
@@ -1570,6 +1593,11 @@ operator|.
 name|getUsed
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|isInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1583,6 +1611,7 @@ operator|+
 name|used_memory
 argument_list|)
 expr_stmt|;
+block|}
 name|nextCntr
 operator|=
 name|getNextCntr
@@ -1762,6 +1791,8 @@ condition|(
 name|oc
 operator|==
 literal|null
+operator|&&
+name|isTraceEnabled
 condition|)
 block|{
 name|LOG
@@ -1782,6 +1813,11 @@ literal|null
 condition|)
 block|{
 comment|// If a operator wants to do some work at the end of a group
+if|if
+condition|(
+name|isTraceEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|trace
@@ -1789,6 +1825,7 @@ argument_list|(
 literal|"End Group"
 argument_list|)
 expr_stmt|;
+block|}
 name|reducer
 operator|.
 name|endGroup
@@ -1797,7 +1834,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|isLogInfoEnabled
+name|isInfoEnabled
 condition|)
 block|{
 name|LOG

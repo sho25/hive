@@ -882,13 +882,6 @@ operator|.
 name|getObjectInspector
 argument_list|()
 expr_stmt|;
-name|reducer
-operator|.
-name|setGroupKeyObjectInspector
-argument_list|(
-name|keyObjectInspector
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|vectorized
@@ -1470,15 +1463,15 @@ argument_list|)
 expr_stmt|;
 name|reducer
 operator|.
+name|startGroup
+argument_list|()
+expr_stmt|;
+name|reducer
+operator|.
 name|setGroupKeyObject
 argument_list|(
 name|keyObject
 argument_list|)
-expr_stmt|;
-name|reducer
-operator|.
-name|startGroup
-argument_list|()
 expr_stmt|;
 block|}
 comment|/* this.keyObject passed via reference */
