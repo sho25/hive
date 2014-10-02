@@ -2799,7 +2799,11 @@ operator|.
 name|PARSE
 argument_list|)
 expr_stmt|;
-comment|// Initialize the transaction manager.  This must be done before analyze is called
+comment|// Initialize the transaction manager.  This must be done before analyze is called.  Also
+comment|// record the valid transactions for this query.  We have to do this at compile time
+comment|// because we use the information in planning the query.  Also,
+comment|// we want to record it at this point so that users see data valid at the point that they
+comment|// submit the query.
 name|SessionState
 operator|.
 name|get
@@ -2809,6 +2813,9 @@ name|initTxnMgr
 argument_list|(
 name|conf
 argument_list|)
+expr_stmt|;
+name|recordValidTxns
+argument_list|()
 expr_stmt|;
 name|perfLogger
 operator|.
@@ -5778,11 +5785,11 @@ block|}
 comment|// Write the current set of valid transactions into the conf file so that it can be read by
 comment|// the input format.
 specifier|private
-name|int
+name|void
 name|recordValidTxns
 parameter_list|()
-block|{
-try|try
+throws|throws
+name|LockException
 block|{
 name|ValidTxnList
 name|txns
@@ -5826,69 +5833,9 @@ operator|+
 name|txnStr
 argument_list|)
 expr_stmt|;
-return|return
-literal|0
-return|;
-block|}
-catch|catch
-parameter_list|(
-name|LockException
-name|e
-parameter_list|)
-block|{
-name|errorMessage
-operator|=
-literal|"FAILED: Error in determing valid transactions: "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
-expr_stmt|;
-name|SQLState
-operator|=
-name|ErrorMsg
-operator|.
-name|findSQLState
-argument_list|(
-name|e
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|downstreamError
-operator|=
-name|e
-expr_stmt|;
-name|console
-operator|.
-name|printError
-argument_list|(
-name|errorMessage
-argument_list|,
-literal|"\n"
-operator|+
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-expr_stmt|;
-return|return
-literal|10
-return|;
-block|}
+comment|// TODO I think when we switch to cross query transactions we need to keep this list in
+comment|// session state rather than agressively encoding it in the conf like this.  We can let the
+comment|// TableScanOperators then encode it in the conf before calling the input formats.
 block|}
 comment|/**    * Acquire read and write locks needed by the statement. The list of objects to be locked are    * obtained from the inputs and outputs populated by the compiler. The lock acuisition scheme is    * pretty simple. If all the locks cannot be obtained, error out. Deadlock is avoided by making    * sure that the locks are lexicographically sorted.    *    * This method also records the list of valid transactions.  This must be done after any    * transactions have been opened and locks acquired.    **/
 specifier|private
@@ -6081,6 +6028,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// TODO Once we move to cross query transactions we need to add the open transaction to
+comment|// our list of valid transactions.  We don't have a way to do that right now.
 block|}
 name|txnMgr
 operator|.
@@ -6094,8 +6043,7 @@ name|userFromUGI
 argument_list|)
 expr_stmt|;
 return|return
-name|recordValidTxns
-argument_list|()
+literal|0
 return|;
 block|}
 catch|catch
