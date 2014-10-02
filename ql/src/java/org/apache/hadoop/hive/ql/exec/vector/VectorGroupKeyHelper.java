@@ -163,6 +163,7 @@ name|finishAdding
 argument_list|()
 expr_stmt|;
 block|}
+comment|/*    * This helper method copies the group keys from one vectorized row batch to another,    * but does not increment the outputBatch.size (i.e. the next output position).    *     * It was designed for VectorGroupByOperator's sorted reduce group batch processing mode    * to copy the group keys at startGroup.    */
 specifier|public
 name|void
 name|copyGroupKey
@@ -179,7 +180,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// Grab the key at index 0.  We don't care about selected or repeating since all keys in the input batch are the same.
 for|for
 control|(
 name|int
@@ -231,6 +231,20 @@ index|[
 name|keyIndex
 index|]
 decl_stmt|;
+comment|// This vectorized code pattern says:
+comment|//    If the input batch has no nulls at all (noNulls is true) OR
+comment|//    the input row is NOT NULL, copy the value.
+comment|//
+comment|//    Otherwise, we have a NULL input value.  The standard way to mark a NULL in the
+comment|//    output batch is: turn off noNulls indicating there is at least one NULL in the batch
+comment|//    and mark that row as NULL.
+comment|//
+comment|//    When a vectorized row batch is reset, noNulls is set to true and the isNull array
+comment|//    is zeroed.
+comment|//
+comment|// We grab the key at index 0.  We don't care about selected or repeating since all keys
+comment|// in the input batch are suppose to be the same.
+comment|//
 if|if
 condition|(
 name|inputColumnVector
@@ -263,13 +277,7 @@ literal|0
 index|]
 expr_stmt|;
 block|}
-elseif|else
-if|if
-condition|(
-name|inputColumnVector
-operator|.
-name|noNulls
-condition|)
+else|else
 block|{
 name|outputColumnVector
 operator|.
@@ -277,20 +285,6 @@ name|noNulls
 operator|=
 literal|false
 expr_stmt|;
-name|outputColumnVector
-operator|.
-name|isNull
-index|[
-name|outputBatch
-operator|.
-name|size
-index|]
-operator|=
-literal|true
-expr_stmt|;
-block|}
-else|else
-block|{
 name|outputColumnVector
 operator|.
 name|isNull
@@ -387,13 +381,7 @@ literal|0
 index|]
 expr_stmt|;
 block|}
-elseif|else
-if|if
-condition|(
-name|inputColumnVector
-operator|.
-name|noNulls
-condition|)
+else|else
 block|{
 name|outputColumnVector
 operator|.
@@ -401,20 +389,6 @@ name|noNulls
 operator|=
 literal|false
 expr_stmt|;
-name|outputColumnVector
-operator|.
-name|isNull
-index|[
-name|outputBatch
-operator|.
-name|size
-index|]
-operator|=
-literal|true
-expr_stmt|;
-block|}
-else|else
-block|{
 name|outputColumnVector
 operator|.
 name|isNull
@@ -572,13 +546,7 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
-elseif|else
-if|if
-condition|(
-name|inputColumnVector
-operator|.
-name|noNulls
-condition|)
+else|else
 block|{
 name|outputColumnVector
 operator|.
@@ -586,20 +554,6 @@ name|noNulls
 operator|=
 literal|false
 expr_stmt|;
-name|outputColumnVector
-operator|.
-name|isNull
-index|[
-name|outputBatch
-operator|.
-name|size
-index|]
-operator|=
-literal|true
-expr_stmt|;
-block|}
-else|else
-block|{
 name|outputColumnVector
 operator|.
 name|isNull
@@ -696,13 +650,7 @@ literal|0
 index|]
 expr_stmt|;
 block|}
-elseif|else
-if|if
-condition|(
-name|inputColumnVector
-operator|.
-name|noNulls
-condition|)
+else|else
 block|{
 name|outputColumnVector
 operator|.
@@ -710,20 +658,6 @@ name|noNulls
 operator|=
 literal|false
 expr_stmt|;
-name|outputColumnVector
-operator|.
-name|isNull
-index|[
-name|outputBatch
-operator|.
-name|size
-index|]
-operator|=
-literal|true
-expr_stmt|;
-block|}
-else|else
-block|{
 name|outputColumnVector
 operator|.
 name|isNull
