@@ -1919,6 +1919,14 @@ range|:
 name|setRCols
 control|)
 block|{
+if|if
+condition|(
+name|columnAccessInfo
+operator|!=
+literal|null
+condition|)
+block|{
+comment|//assuming this means we are not doing Auth
 name|columnAccessInfo
 operator|.
 name|add
@@ -1941,6 +1949,7 @@ argument_list|,
 name|colName
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|// We need to weed ROW__ID out of the input column info, as it doesn't make any sense to
@@ -2139,7 +2148,10 @@ control|)
 block|{
 name|addSetRCols
 argument_list|(
-name|node
+operator|(
+name|ASTNode
+operator|)
+name|n
 argument_list|,
 name|setRCols
 argument_list|)

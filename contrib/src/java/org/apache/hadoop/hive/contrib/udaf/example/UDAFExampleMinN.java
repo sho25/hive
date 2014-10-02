@@ -35,6 +35,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDAF
 import|;
 end_import
@@ -44,6 +62,17 @@ comment|/**  * Returns the min N double values.  */
 end_comment
 
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"example_min_n"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(expr) - Example UDAF that returns the min N double values"
+argument_list|)
 specifier|public
 class|class
 name|UDAFExampleMinN

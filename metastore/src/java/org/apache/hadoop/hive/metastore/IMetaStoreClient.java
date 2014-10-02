@@ -1072,7 +1072,7 @@ name|InvalidOperationException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    */
+comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @param ignoreUnknownTab    *          don't throw if the requested table doesn't exist    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    */
 name|void
 name|dropTable
 parameter_list|(
@@ -1086,7 +1086,34 @@ name|boolean
 name|deleteData
 parameter_list|,
 name|boolean
-name|ignoreUknownTab
+name|ignoreUnknownTab
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
+function_decl|;
+comment|/**    * @param ifPurge    *          completely purge the table (skipping trash) while removing data from warehouse    * @see #dropTable(String, String, boolean, boolean)    */
+specifier|public
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|dbname
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ignoreUnknownTab
+parameter_list|,
+name|boolean
+name|ifPurge
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1116,6 +1143,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * @see #dropTable(String, String, boolean, boolean)    */
 name|void
 name|dropTable
 parameter_list|(
@@ -2806,6 +2834,16 @@ comment|/**    * Get a structure that details valid transactions.    * @return l
 name|ValidTxnList
 name|getValidTxns
 parameter_list|()
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * Get a structure that details valid transactions.    * @param currentTxn The current transaction of the caller.  This will be removed from the    *                   exceptions list so that the caller sees records from his own transaction.    * @return list of valid transactions    * @throws TException    */
+name|ValidTxnList
+name|getValidTxns
+parameter_list|(
+name|long
+name|currentTxn
+parameter_list|)
 throws|throws
 name|TException
 function_decl|;

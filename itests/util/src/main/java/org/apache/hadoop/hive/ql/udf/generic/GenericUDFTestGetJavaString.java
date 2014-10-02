@@ -35,6 +35,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -120,6 +138,17 @@ comment|/**  * A test GenericUDF to return native Java's string type  */
 end_comment
 
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"test_udf_get_java_string"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(str) - GenericUDF to return native Java's string type"
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFTestGetJavaString

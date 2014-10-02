@@ -101,6 +101,7 @@ name|JobProfile
 name|profile
 decl_stmt|;
 specifier|public
+specifier|final
 name|String
 name|id
 decl_stmt|;
@@ -138,9 +139,32 @@ argument_list|>
 name|userargs
 decl_stmt|;
 specifier|public
+name|String
+name|msg
+decl_stmt|;
+specifier|public
 name|QueueStatusBean
-parameter_list|()
-block|{   }
+parameter_list|(
+name|String
+name|jobId
+parameter_list|,
+name|String
+name|errMsg
+parameter_list|)
+block|{
+name|this
+operator|.
+name|id
+operator|=
+name|jobId
+expr_stmt|;
+name|this
+operator|.
+name|msg
+operator|=
+name|errMsg
+expr_stmt|;
+block|}
 comment|/**    * Create a new QueueStatusBean    *    * @param state      store job state    * @param status     job status    * @param profile    job profile    */
 specifier|public
 name|QueueStatusBean

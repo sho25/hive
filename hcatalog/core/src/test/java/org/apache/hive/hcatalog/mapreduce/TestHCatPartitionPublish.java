@@ -833,6 +833,15 @@ argument_list|,
 literal|"100"
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"fs.pfile.impl"
+argument_list|,
+literal|"org.apache.hadoop.fs.ProxyLocalFileSystem"
+argument_list|)
+expr_stmt|;
 name|fs
 operator|=
 name|FileSystem

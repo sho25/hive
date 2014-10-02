@@ -2277,6 +2277,110 @@ name|argList
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Test Beeline could show the query progress for time-consuming query.    * @throws Throwable    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testQueryProgress
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+specifier|final
+name|String
+name|TEST_NAME
+init|=
+literal|"testQueryProgress"
+decl_stmt|;
+specifier|final
+name|String
+name|SCRIPT_TEXT
+init|=
+literal|"set hive.support.concurrency = false;\n"
+operator|+
+literal|"select count(*) from "
+operator|+
+name|tableName
+operator|+
+literal|";\n"
+decl_stmt|;
+specifier|final
+name|String
+name|EXPECTED_PATTERN
+init|=
+literal|"Parsing command"
+decl_stmt|;
+name|testScriptFile
+argument_list|(
+name|TEST_NAME
+argument_list|,
+name|SCRIPT_TEXT
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|true
+argument_list|,
+name|getBaseArgs
+argument_list|(
+name|JDBC_URL
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Test Beeline will hide the query progress when silent option is set.    * @throws Throwable    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testQueryProgressHidden
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+specifier|final
+name|String
+name|TEST_NAME
+init|=
+literal|"testQueryProgress"
+decl_stmt|;
+specifier|final
+name|String
+name|SCRIPT_TEXT
+init|=
+literal|"set hive.support.concurrency = false;\n"
+operator|+
+literal|"!set silent true\n"
+operator|+
+literal|"select count(*) from "
+operator|+
+name|tableName
+operator|+
+literal|";\n"
+decl_stmt|;
+specifier|final
+name|String
+name|EXPECTED_PATTERN
+init|=
+literal|"Parsing command"
+decl_stmt|;
+name|testScriptFile
+argument_list|(
+name|TEST_NAME
+argument_list|,
+name|SCRIPT_TEXT
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|false
+argument_list|,
+name|getBaseArgs
+argument_list|(
+name|JDBC_URL
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
