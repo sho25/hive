@@ -397,6 +397,28 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+comment|// where does this go to?
+name|buffer
+operator|.
+name|writeUTF
+argument_list|(
+operator|(
+operator|(
+name|TezContext
+operator|)
+name|TezContext
+operator|.
+name|get
+argument_list|()
+operator|)
+operator|.
+name|getTezProcessorContext
+argument_list|()
+operator|.
+name|getTaskVertexName
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// add any other header info
 name|getConf
 argument_list|()
