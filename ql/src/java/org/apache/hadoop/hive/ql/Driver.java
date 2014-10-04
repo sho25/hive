@@ -3010,6 +3010,14 @@ name|DRIVER_RUN
 argument_list|)
 argument_list|,
 name|queryId
+argument_list|,
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getCommandType
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|String
