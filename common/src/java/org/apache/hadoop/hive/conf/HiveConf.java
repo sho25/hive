@@ -5953,13 +5953,13 @@ name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
 argument_list|(
 literal|"hive.warehouse.subdir.inherit.perms"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
-literal|"Set this to true if the the table directories should inherit the\n"
+literal|"Set this to false if the table directories should be created\n"
 operator|+
-literal|"permission of the warehouse or database directory instead of being created\n"
+literal|"with the permissions derived from dfs umask instead of\n"
 operator|+
-literal|"with the permissions derived from dfs umask"
+literal|"inheriting the permission of the warehouse or database directory."
 argument_list|)
 block|,
 name|HIVE_INSERT_INTO_EXTERNAL_TABLES
