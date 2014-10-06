@@ -3037,7 +3037,7 @@ literal|"hive.cbo.enable"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Flag to control enabling Cost Based Optimizations using Optiq framework."
+literal|"Flag to control enabling Cost Based Optimizations using Calcite framework."
 argument_list|)
 block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
