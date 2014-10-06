@@ -644,13 +644,6 @@ operator|.
 name|get
 argument_list|(
 name|conf
-operator|.
-name|get
-argument_list|(
-name|Utilities
-operator|.
-name|INPUT_NAME
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|ioContext

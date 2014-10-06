@@ -446,13 +446,8 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
-specifier|final
 name|ExecMapperContext
 name|execContext
-init|=
-operator|new
-name|ExecMapperContext
-argument_list|()
 decl_stmt|;
 specifier|public
 name|void
@@ -503,8 +498,9 @@ operator|=
 name|job
 expr_stmt|;
 name|execContext
-operator|.
-name|setJc
+operator|=
+operator|new
+name|ExecMapperContext
 argument_list|(
 name|jc
 argument_list|)

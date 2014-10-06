@@ -1400,13 +1400,7 @@ name|tag
 index|]
 argument_list|)
 expr_stmt|;
-name|reducer
-operator|.
-name|setGroupKeyObjectInspector
-argument_list|(
-name|keyObjectInspector
-argument_list|)
-expr_stmt|;
+comment|//reducer.setGroupKeyObjectInspector(keyObjectInspector);
 name|rowObjectInspector
 index|[
 name|tag
