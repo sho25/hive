@@ -603,6 +603,20 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|jc
+operator|.
+name|set
+argument_list|(
+name|Utilities
+operator|.
+name|INPUT_NAME
+argument_list|,
+name|mrwork
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// initialize map operator
 name|mo
 operator|.
