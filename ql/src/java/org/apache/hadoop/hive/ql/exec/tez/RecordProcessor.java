@@ -608,11 +608,11 @@ name|l4j
 operator|.
 name|info
 argument_list|(
-literal|"TezProcessor: processed "
+literal|"ExecMapper: processed "
 operator|+
 name|numRows
 operator|+
-literal|" rows/groups: used memory = "
+literal|" rows: used memory = "
 operator|+
 name|used_memory
 argument_list|)
@@ -649,11 +649,11 @@ name|l4j
 operator|.
 name|info
 argument_list|(
-literal|"TezProcessor: processing "
+literal|"ExecMapper: processing "
 operator|+
 name|numRows
 operator|+
-literal|" rows/groups: used memory = "
+literal|" rows: used memory = "
 operator|+
 name|used_memory
 argument_list|)

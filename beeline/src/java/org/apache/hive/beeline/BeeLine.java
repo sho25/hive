@@ -3729,6 +3729,24 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+comment|// for single command execute, disable color
+name|getOpts
+argument_list|()
+operator|.
+name|setColor
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|getOpts
+argument_list|()
+operator|.
+name|setHeaderInterval
+argument_list|(
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Iterator

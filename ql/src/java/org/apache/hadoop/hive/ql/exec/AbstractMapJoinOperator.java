@@ -275,14 +275,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-if|if
-condition|(
-name|conf
-operator|.
-name|getGenJoinKeys
-argument_list|()
-condition|)
-block|{
 name|int
 name|tagLen
 init|=
@@ -328,7 +320,6 @@ argument_list|,
 name|tagLen
 argument_list|)
 expr_stmt|;
-block|}
 name|super
 operator|.
 name|initializeOp

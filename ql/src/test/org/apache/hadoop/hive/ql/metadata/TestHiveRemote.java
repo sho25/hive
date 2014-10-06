@@ -285,14 +285,6 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Cannot control trash in remote metastore, so skip this test    */
-annotation|@
-name|Override
-specifier|public
-name|void
-name|testDropTableTrash
-parameter_list|()
-block|{   }
 comment|/**    * Finds a free port.    *    * @return a free port    * @throws IOException    */
 specifier|private
 name|String

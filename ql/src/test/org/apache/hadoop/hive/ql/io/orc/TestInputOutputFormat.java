@@ -11980,7 +11980,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|225
+literal|227
 argument_list|,
 name|combineSplit
 operator|.

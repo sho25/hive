@@ -1801,6 +1801,13 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
+name|LOG
+operator|.
+name|trace
+argument_list|(
+literal|"Join: Starting new group"
+argument_list|)
+expr_stmt|;
 name|newGroupStarted
 operator|=
 literal|true
@@ -3284,6 +3291,15 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
+name|LOG
+operator|.
+name|trace
+argument_list|(
+literal|"Join Op: endGroup called: numValues="
+operator|+
+name|numAliases
+argument_list|)
+expr_stmt|;
 name|checkAndGenObject
 argument_list|()
 expr_stmt|;
@@ -3788,6 +3804,15 @@ operator|==
 literal|0
 condition|)
 block|{
+name|LOG
+operator|.
+name|trace
+argument_list|(
+literal|"No data for alias="
+operator|+
+name|i
+argument_list|)
+expr_stmt|;
 return|return;
 block|}
 elseif|else
@@ -4048,6 +4073,13 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|LOG
+operator|.
+name|trace
+argument_list|(
+literal|"Join Op close"
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|AbstractRowContainer

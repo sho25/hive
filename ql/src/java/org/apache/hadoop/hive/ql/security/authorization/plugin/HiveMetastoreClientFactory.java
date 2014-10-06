@@ -90,7 +90,7 @@ argument_list|(
 name|value
 operator|=
 block|{
-literal|"Apache Argus (incubating)"
+literal|""
 block|}
 argument_list|)
 annotation|@

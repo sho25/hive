@@ -1063,7 +1063,7 @@ block|}
 name|String
 name|cmd
 init|=
-literal|"select key*1 from "
+literal|"select key from "
 operator|+
 name|tblName
 decl_stmt|;

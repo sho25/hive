@@ -1307,9 +1307,7 @@ name|context
 operator|=
 operator|new
 name|ExecMapperContext
-argument_list|(
-name|job
-argument_list|)
+argument_list|()
 expr_stmt|;
 if|if
 condition|(

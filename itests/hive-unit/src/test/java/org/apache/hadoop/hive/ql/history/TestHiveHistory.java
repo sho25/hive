@@ -896,7 +896,7 @@ expr_stmt|;
 name|String
 name|cmd
 init|=
-literal|"select a.key+1 from src a"
+literal|"select a.key from src a"
 decl_stmt|;
 name|Driver
 name|d

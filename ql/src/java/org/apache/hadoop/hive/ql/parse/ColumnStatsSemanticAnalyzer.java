@@ -315,8 +315,6 @@ block|{
 name|super
 argument_list|(
 name|conf
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -2332,9 +2330,7 @@ name|qbp
 decl_stmt|;
 comment|// initialize QB
 name|init
-argument_list|(
-literal|true
-argument_list|)
+argument_list|()
 expr_stmt|;
 comment|// check if it is no scan. grammar prevents coexit noscan/columns
 name|super

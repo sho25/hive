@@ -45,24 +45,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -184,17 +166,6 @@ comment|/**  * GenericUDTFCount2 outputs the number of rows seen, twice. It's ou
 end_comment
 
 begin_class
-annotation|@
-name|Description
-argument_list|(
-name|name
-operator|=
-literal|"udtfCount2"
-argument_list|,
-name|value
-operator|=
-literal|"_FUNC_(col) - UDF outputs the number of rows seen, twice."
-argument_list|)
 specifier|public
 class|class
 name|GenericUDTFCount2

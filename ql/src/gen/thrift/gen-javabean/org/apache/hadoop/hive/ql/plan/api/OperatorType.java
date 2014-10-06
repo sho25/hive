@@ -185,11 +185,6 @@ name|RCFILEMERGE
 argument_list|(
 literal|23
 argument_list|)
-block|,
-name|MERGEJOIN
-argument_list|(
-literal|24
-argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -378,12 +373,6 @@ literal|23
 case|:
 return|return
 name|RCFILEMERGE
-return|;
-case|case
-literal|24
-case|:
-return|return
-name|MERGEJOIN
 return|;
 default|default:
 return|return

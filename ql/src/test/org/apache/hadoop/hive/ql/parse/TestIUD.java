@@ -93,10 +93,6 @@ name|Test
 import|;
 end_import
 
-begin_comment
-comment|/**  * various Parser tests for INSERT/UPDATE/DELETE  */
-end_comment
-
 begin_class
 specifier|public
 class|class
@@ -388,48 +384,6 @@ operator|+
 literal|"(= "
 operator|+
 literal|"(TOK_TABLE_OR_COL key) 3)) "
-operator|+
-literal|"(TOK_WHERE (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL value))))"
-argument_list|,
-name|ast
-operator|.
-name|toStringTree
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testUpdateWithWhereSingleSetExpr
-parameter_list|()
-throws|throws
-name|ParseException
-block|{
-name|ASTNode
-name|ast
-init|=
-name|parse
-argument_list|(
-literal|"UPDATE src SET key = -3+(5*9)%8, val = cast(6.1 + c as INT), d = d - 1 WHERE value IS NULL"
-argument_list|)
-decl_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"AST doesn't match"
-argument_list|,
-literal|"(TOK_UPDATE_TABLE (TOK_TABNAME src) "
-operator|+
-literal|"(TOK_SET_COLUMNS_CLAUSE "
-operator|+
-literal|"(= (TOK_TABLE_OR_COL key) (+ (- 3) (% (* 5 9) 8))) "
-operator|+
-literal|"(= (TOK_TABLE_OR_COL val) (TOK_FUNCTION TOK_INT (+ 6.1 (TOK_TABLE_OR_COL c)))) "
-operator|+
-literal|"(= (TOK_TABLE_OR_COL d) (- (TOK_TABLE_OR_COL d) 1))) "
 operator|+
 literal|"(TOK_WHERE (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL value))))"
 argument_list|,
@@ -816,7 +770,7 @@ name|ast
 init|=
 name|parse
 argument_list|(
-literal|"insert into table page_view values(-1,2),(3,+4)"
+literal|"insert into table page_view values(1,2),(3,4)"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -833,7 +787,7 @@ literal|"(TOK_VIRTUAL_TABLE "
 operator|+
 literal|"(TOK_VIRTUAL_TABREF TOK_ANONYMOUS) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW (- 1) 2) (TOK_VALUE_ROW 3 (+ 4))))) "
+literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 1 2) (TOK_VALUE_ROW 3 4)))) "
 operator|+
 literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view))) "
 operator|+

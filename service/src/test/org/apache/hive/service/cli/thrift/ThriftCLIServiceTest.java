@@ -751,7 +751,7 @@ expr_stmt|;
 comment|// Execute another query
 name|queryString
 operator|=
-literal|"SELECT ID+1 FROM TEST_EXEC_THRIFT"
+literal|"SELECT ID FROM TEST_EXEC_THRIFT"
 expr_stmt|;
 name|OperationHandle
 name|opHandle
@@ -946,7 +946,7 @@ expr_stmt|;
 comment|// Execute another query
 name|queryString
 operator|=
-literal|"SELECT ID+1 FROM TEST_EXEC_ASYNC_THRIFT"
+literal|"SELECT ID FROM TEST_EXEC_ASYNC_THRIFT"
 expr_stmt|;
 name|System
 operator|.

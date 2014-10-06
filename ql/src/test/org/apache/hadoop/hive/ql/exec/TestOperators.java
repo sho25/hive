@@ -2403,16 +2403,7 @@ expr_stmt|;
 name|IOContext
 operator|.
 name|get
-argument_list|(
-name|hconf
-operator|.
-name|get
-argument_list|(
-name|Utilities
-operator|.
-name|INPUT_NAME
-argument_list|)
-argument_list|)
+argument_list|()
 operator|.
 name|setInputPath
 argument_list|(

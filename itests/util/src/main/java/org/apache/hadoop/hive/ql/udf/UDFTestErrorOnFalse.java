@@ -33,24 +33,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|UDF
 import|;
 end_import
@@ -60,17 +42,6 @@ comment|/**  * A UDF for testing, which throws RuntimeException if  the length o
 end_comment
 
 begin_class
-annotation|@
-name|Description
-argument_list|(
-name|name
-operator|=
-literal|"test_error"
-argument_list|,
-name|value
-operator|=
-literal|"_FUNC_(col) - UDF throws RuntimeException if  expression evaluates to false"
-argument_list|)
 specifier|public
 class|class
 name|UDFTestErrorOnFalse

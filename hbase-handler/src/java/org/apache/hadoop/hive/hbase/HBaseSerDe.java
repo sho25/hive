@@ -383,14 +383,6 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|HBASE_STRUCT_SERIALIZER_CLASS
-init|=
-literal|"hbase.struct.serialization.class"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
 name|HBASE_SCAN_CACHE
 init|=
 literal|"hbase.scan.cache"
@@ -554,11 +546,6 @@ argument_list|,
 name|serdeParams
 operator|.
 name|getKeyFactory
-argument_list|()
-argument_list|,
-name|serdeParams
-operator|.
-name|getValueFactories
 argument_list|()
 argument_list|)
 expr_stmt|;

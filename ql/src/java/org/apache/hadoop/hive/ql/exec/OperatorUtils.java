@@ -320,15 +320,6 @@ range|:
 name|starts
 control|)
 block|{
-if|if
-condition|(
-name|start
-operator|==
-literal|null
-condition|)
-block|{
-continue|continue;
-block|}
 name|findOperators
 argument_list|(
 name|start

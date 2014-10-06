@@ -773,7 +773,7 @@ expr_stmt|;
 comment|// Blocking execute
 name|queryString
 operator|=
-literal|"SELECT ID+1 FROM TEST_EXEC"
+literal|"SELECT ID FROM TEST_EXEC"
 expr_stmt|;
 name|opHandle
 operator|=
@@ -1064,7 +1064,7 @@ expr_stmt|;
 comment|/**      * Execute an async query with default config      */
 name|queryString
 operator|=
-literal|"SELECT ID+1 FROM "
+literal|"SELECT ID FROM "
 operator|+
 name|tableName
 expr_stmt|;
@@ -1090,7 +1090,7 @@ literal|0
 expr_stmt|;
 name|queryString
 operator|=
-literal|"SELECT ID+1 FROM "
+literal|"SELECT ID FROM "
 operator|+
 name|tableName
 expr_stmt|;
@@ -1116,7 +1116,7 @@ literal|500
 expr_stmt|;
 name|queryString
 operator|=
-literal|"SELECT ID+1 FROM "
+literal|"SELECT ID FROM "
 operator|+
 name|tableName
 expr_stmt|;
@@ -1138,7 +1138,7 @@ expr_stmt|;
 comment|/**      * Cancellation test      */
 name|queryString
 operator|=
-literal|"SELECT ID+1 FROM "
+literal|"SELECT ID FROM "
 operator|+
 name|tableName
 expr_stmt|;

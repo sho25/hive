@@ -522,14 +522,6 @@ parameter_list|(
 name|String
 name|tblName
 parameter_list|,
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|partSpec
-parameter_list|,
 name|String
 name|oldColName
 parameter_list|,
@@ -555,12 +547,6 @@ expr_stmt|;
 name|oldName
 operator|=
 name|tblName
-expr_stmt|;
-name|this
-operator|.
-name|partSpec
-operator|=
-name|partSpec
 expr_stmt|;
 name|this
 operator|.
@@ -647,14 +633,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|,
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|partSpec
-parameter_list|,
 name|List
 argument_list|<
 name|FieldSchema
@@ -685,12 +663,6 @@ argument_list|>
 argument_list|(
 name|newCols
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|partSpec
-operator|=
-name|partSpec
 expr_stmt|;
 block|}
 comment|/**    * @param alterType    *          type of alter op    */

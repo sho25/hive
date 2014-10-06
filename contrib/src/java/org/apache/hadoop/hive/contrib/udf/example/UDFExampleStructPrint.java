@@ -45,24 +45,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|UDF
 import|;
 end_import
@@ -72,17 +54,6 @@ comment|/**  * UDFExampleStructPrint.  *  */
 end_comment
 
 begin_class
-annotation|@
-name|Description
-argument_list|(
-name|name
-operator|=
-literal|"example_structprint"
-argument_list|,
-name|value
-operator|=
-literal|"_FUNC_(obj) - Example UDAF that returns contents of an object"
-argument_list|)
 specifier|public
 class|class
 name|UDFExampleStructPrint

@@ -9000,41 +9000,6 @@ operator|)
 operator|)
 return|;
 block|}
-comment|// Do not want to use Guava LongMath.checkedSubtract() here as it will throw
-comment|// ArithmeticException in case of overflow
-specifier|public
-name|boolean
-name|isSafeSubtract
-parameter_list|(
-name|long
-name|left
-parameter_list|,
-name|long
-name|right
-parameter_list|)
-block|{
-return|return
-operator|(
-name|left
-operator|^
-name|right
-operator|)
-operator|>=
-literal|0
-operator||
-operator|(
-name|left
-operator|^
-operator|(
-name|left
-operator|-
-name|right
-operator|)
-operator|)
-operator|>=
-literal|0
-return|;
-block|}
 block|}
 end_class
 

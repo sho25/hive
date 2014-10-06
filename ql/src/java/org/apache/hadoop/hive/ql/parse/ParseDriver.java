@@ -483,7 +483,6 @@ return|;
 block|}
 block|}
 comment|/**    * Tree adaptor for making antlr return ASTNodes instead of CommonTree nodes    * so that the graph walking algorithms and the rules framework defined in    * ql.lib can be used with the AST Nodes.    */
-specifier|public
 specifier|static
 specifier|final
 name|TreeAdaptor

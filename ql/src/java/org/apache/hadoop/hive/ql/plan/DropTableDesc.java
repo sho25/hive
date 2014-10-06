@@ -167,16 +167,13 @@ name|boolean
 name|ifExists
 decl_stmt|;
 name|boolean
-name|ifPurge
-decl_stmt|;
-name|boolean
 name|ignoreProtection
 decl_stmt|;
 specifier|public
 name|DropTableDesc
 parameter_list|()
 block|{   }
-comment|/**    * @param tableName    * @param ifPurge    */
+comment|/**    * @param tableName    */
 specifier|public
 name|DropTableDesc
 parameter_list|(
@@ -188,9 +185,6 @@ name|expectView
 parameter_list|,
 name|boolean
 name|ifExists
-parameter_list|,
-name|boolean
-name|ifPurge
 parameter_list|)
 block|{
 name|this
@@ -216,12 +210,6 @@ operator|.
 name|ifExists
 operator|=
 name|ifExists
-expr_stmt|;
-name|this
-operator|.
-name|ifPurge
-operator|=
-name|ifPurge
 expr_stmt|;
 name|this
 operator|.
@@ -468,32 +456,6 @@ operator|.
 name|ifExists
 operator|=
 name|ifExists
-expr_stmt|;
-block|}
-comment|/**    *  @return whether Purge was specified    */
-specifier|public
-name|boolean
-name|getIfPurge
-parameter_list|()
-block|{
-return|return
-name|ifPurge
-return|;
-block|}
-comment|/**    * @param ifPurge    *          set whether Purge was specified    */
-specifier|public
-name|void
-name|setIfPurge
-parameter_list|(
-name|boolean
-name|ifPurge
-parameter_list|)
-block|{
-name|this
-operator|.
-name|ifPurge
-operator|=
-name|ifPurge
 expr_stmt|;
 block|}
 block|}

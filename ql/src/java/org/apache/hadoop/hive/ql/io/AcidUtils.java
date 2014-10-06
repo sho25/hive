@@ -226,15 +226,6 @@ specifier|public
 class|class
 name|AcidUtils
 block|{
-comment|// This key will be put in the conf file when planning an acid operation
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|CONF_ACID_KEY
-init|=
-literal|"hive.doing.acid"
-decl_stmt|;
 specifier|public
 specifier|static
 specifier|final

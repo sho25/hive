@@ -386,7 +386,7 @@ operator|.
 name|getInetAddress
 argument_list|()
 operator|.
-name|getHostAddress
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;

@@ -1936,17 +1936,6 @@ argument_list|,
 literal|"Values clause with table constructor not yet supported"
 argument_list|)
 block|,
-name|ACID_OP_ON_NONACID_TABLE
-argument_list|(
-literal|10297
-argument_list|,
-literal|"Attempt to do update or delete on table {0} that does not use "
-operator|+
-literal|"an AcidOutputFormat"
-argument_list|,
-literal|true
-argument_list|)
-block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

@@ -35,24 +35,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Description
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -808,21 +790,6 @@ comment|/**  * IF(expr1,expr2,expr3)<br>  * If expr1 is TRUE (expr1<> 0 and expr
 end_comment
 
 begin_class
-annotation|@
-name|Description
-argument_list|(
-name|name
-operator|=
-literal|"if"
-argument_list|,
-name|value
-operator|=
-literal|"IF(expr1,expr2,expr3) - If expr1 is TRUE (expr1<> 0 and expr1<> NULL) then"
-operator|+
-literal|" IF() returns expr2; otherwise it returns expr3. IF() returns a numeric or string value,"
-operator|+
-literal|" depending on the context in which it is used."
-argument_list|)
 annotation|@
 name|VectorizedExpressions
 argument_list|(

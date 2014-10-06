@@ -1895,10 +1895,6 @@ name|Assert
 operator|.
 name|assertNull
 argument_list|(
-literal|"unexpectedly found jar for HadoopShimsSecure class: "
-operator|+
-name|result
-argument_list|,
 name|result
 argument_list|)
 expr_stmt|;

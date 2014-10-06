@@ -892,7 +892,9 @@ specifier|private
 name|ExecMapperContext
 name|execContext
 init|=
-literal|null
+operator|new
+name|ExecMapperContext
+argument_list|()
 decl_stmt|;
 specifier|private
 name|Process
@@ -995,14 +997,6 @@ argument_list|,
 name|ExecDriver
 operator|.
 name|class
-argument_list|)
-expr_stmt|;
-name|execContext
-operator|=
-operator|new
-name|ExecMapperContext
-argument_list|(
-name|job
 argument_list|)
 expr_stmt|;
 comment|//we don't use the HadoopJobExecHooks for local tasks

@@ -760,11 +760,6 @@ case|:
 case|case
 name|HiveParser
 operator|.
-name|TOK_ALTERVIEW
-case|:
-case|case
-name|HiveParser
-operator|.
 name|TOK_CREATEVIEW
 case|:
 case|case
