@@ -6882,6 +6882,17 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVE_HADOOP_CLASSPATH
+argument_list|(
+literal|"hive.hadoop.classpath"
+argument_list|,
+literal|null
+argument_list|,
+literal|"For Windows OS, we need to pass HIVE_HADOOP_CLASSPATH Java parameter while starting HiveServer2 \n"
+operator|+
+literal|"using \"-hiveconf hive.hadoop.classpath=%HIVE_LIB%\"."
+argument_list|)
+block|,
 name|HIVE_RPC_QUERY_PLAN
 argument_list|(
 literal|"hive.rpc.query.plan"
