@@ -555,6 +555,9 @@ name|getAuthorizationProvider
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|setupMetaStoreReadAuthorization
+argument_list|()
+expr_stmt|;
 name|System
 operator|.
 name|setProperty
@@ -733,6 +736,30 @@ operator|new
 name|Driver
 argument_list|(
 name|clientHiveConf
+argument_list|)
+expr_stmt|;
+block|}
+specifier|protected
+name|void
+name|setupMetaStoreReadAuthorization
+parameter_list|()
+block|{
+comment|// read authorization does not work with default/legacy authorization mode
+comment|// It is a chicken and egg problem granting select privilege to database, as the
+comment|// grant statement would invoke get_database which needs select privilege
+name|System
+operator|.
+name|setProperty
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_METASTORE_AUTHORIZATION_AUTH_READS
+operator|.
+name|varname
+argument_list|,
+literal|"false"
 argument_list|)
 expr_stmt|;
 block|}

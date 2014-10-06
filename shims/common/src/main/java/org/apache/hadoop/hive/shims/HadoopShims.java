@@ -1946,6 +1946,22 @@ name|FsPermission
 name|permission
 parameter_list|)
 function_decl|;
+comment|/**    * @return True if the current hadoop supports trash feature.    */
+name|boolean
+name|supportTrashFeature
+parameter_list|()
+function_decl|;
+comment|/**    * @return Path to HDFS trash, if current hadoop supports trash feature.  Null otherwise.    */
+name|Path
+name|getCurrentTrashPath
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|FileSystem
+name|fs
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

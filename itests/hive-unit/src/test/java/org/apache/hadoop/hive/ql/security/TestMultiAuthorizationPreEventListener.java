@@ -508,6 +508,11 @@ argument_list|(
 name|dbName
 argument_list|)
 decl_stmt|;
+name|listSize
+operator|+=
+literal|2
+expr_stmt|;
+comment|// 1 read database auth calls for each authorization provider
 name|Database
 name|dbFromEvent
 init|=

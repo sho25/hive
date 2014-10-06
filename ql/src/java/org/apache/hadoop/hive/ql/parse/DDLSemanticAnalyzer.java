@@ -943,6 +943,24 @@ name|ql
 operator|.
 name|metadata
 operator|.
+name|InvalidTableException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
 name|Partition
 import|;
 end_import
@@ -3107,6 +3125,8 @@ name|qualified
 argument_list|,
 name|ast
 argument_list|,
+name|partSpec
+argument_list|,
 name|AlterTableTypes
 operator|.
 name|ADDCOLS
@@ -3132,6 +3152,8 @@ name|qualified
 argument_list|,
 name|ast
 argument_list|,
+name|partSpec
+argument_list|,
 name|AlterTableTypes
 operator|.
 name|REPLACECOLS
@@ -3156,6 +3178,8 @@ argument_list|(
 name|qualified
 argument_list|,
 name|ast
+argument_list|,
+name|partSpec
 argument_list|)
 expr_stmt|;
 block|}
@@ -6789,6 +6813,22 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|boolean
+name|ifPurge
+init|=
+operator|(
+name|ast
+operator|.
+name|getFirstChildWithType
+argument_list|(
+name|HiveParser
+operator|.
+name|KW_PURGE
+argument_list|)
+operator|!=
+literal|null
+operator|)
+decl_stmt|;
 name|DropTableDesc
 name|dropTblDesc
 init|=
@@ -6800,6 +6840,8 @@ argument_list|,
 name|expectView
 argument_list|,
 name|ifExists
+argument_list|,
+name|ifPurge
 argument_list|)
 decl_stmt|;
 name|rootTasks
@@ -12581,6 +12623,8 @@ parameter_list|,
 name|boolean
 name|isColumn
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 comment|// check whether the name starts with table
 comment|// DESCRIBE table
@@ -12660,7 +12704,7 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|HiveException
+name|InvalidTableException
 name|e
 parameter_list|)
 block|{
@@ -12670,6 +12714,25 @@ comment|// do nothing when having exception
 return|return
 literal|null
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+throw|;
 block|}
 return|return
 literal|null
@@ -12978,6 +13041,8 @@ name|String
 argument_list|>
 name|partSpec
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 comment|// if parent has two children
 comment|// it could be DESCRIBE table key
@@ -13179,12 +13244,10 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|HiveException
+name|InvalidTableException
 name|e
 parameter_list|)
 block|{
-comment|// if table not valid
-comment|// throw semantic exception
 throw|throw
 operator|new
 name|SemanticException
@@ -13197,6 +13260,25 @@ name|getMsg
 argument_list|(
 name|tableName
 argument_list|)
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -16894,6 +16976,14 @@ name|qualified
 parameter_list|,
 name|ASTNode
 name|ast
+parameter_list|,
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -17185,6 +17275,8 @@ name|AlterTableDesc
 argument_list|(
 name|tblName
 argument_list|,
+name|partSpec
+argument_list|,
 name|unescapeIdentifier
 argument_list|(
 name|oldColName
@@ -17208,7 +17300,7 @@ name|addInputsOutputsAlterTable
 argument_list|(
 name|tblName
 argument_list|,
-literal|null
+name|partSpec
 argument_list|,
 name|alterTblDesc
 argument_list|)
@@ -17571,6 +17663,14 @@ parameter_list|,
 name|ASTNode
 name|ast
 parameter_list|,
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|,
 name|AlterTableTypes
 name|alterType
 parameter_list|)
@@ -17612,6 +17712,8 @@ name|AlterTableDesc
 argument_list|(
 name|tblName
 argument_list|,
+name|partSpec
+argument_list|,
 name|newCols
 argument_list|,
 name|alterType
@@ -17621,7 +17723,7 @@ name|addInputsOutputsAlterTable
 argument_list|(
 name|tblName
 argument_list|,
-literal|null
+name|partSpec
 argument_list|,
 name|alterTblDesc
 argument_list|)

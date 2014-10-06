@@ -55,6 +55,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDAF
 import|;
 end_import
@@ -82,6 +100,17 @@ comment|/**  * This is a simple UDAF that concatenates all arguments from differ
 end_comment
 
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"example_group_concat"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(col) - Example UDAF that concatenates all arguments from different rows into a single string"
+argument_list|)
 specifier|public
 class|class
 name|UDAFExampleGroupConcat

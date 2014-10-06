@@ -1210,11 +1210,14 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+name|StringUtils
+operator|.
+name|isNotBlank
+argument_list|(
 name|this
 operator|.
 name|comment
-operator|!=
-literal|null
+argument_list|)
 condition|)
 block|{
 name|newTable

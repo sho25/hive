@@ -1467,9 +1467,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|util
+name|security
 operator|.
-name|StringUtils
+name|UserGroupInformation
 import|;
 end_import
 
@@ -1481,9 +1481,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|security
+name|util
 operator|.
-name|UserGroupInformation
+name|StringUtils
 import|;
 end_import
 
@@ -2349,6 +2349,80 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|createTable
+argument_list|(
+name|tableName
+argument_list|,
+name|columns
+argument_list|,
+name|partCols
+argument_list|,
+name|fileInputFormat
+argument_list|,
+name|fileOutputFormat
+argument_list|,
+name|bucketCount
+argument_list|,
+name|bucketCols
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Create a table metadata and the directory for the table data    * @param tableName table name    * @param columns list of fields of the table    * @param partCols partition keys of the table    * @param fileInputFormat Class of the input format of the table data file    * @param fileOutputFormat Class of the output format of the table data file    * @param bucketCount number of buckets that each partition (or the table itself) should be    *                    divided into    * @param bucketCols Bucket columns    * @param parameters Parameters for the table    * @throws HiveException    */
+specifier|public
+name|void
+name|createTable
+parameter_list|(
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|columns
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partCols
+parameter_list|,
+name|Class
+argument_list|<
+name|?
+extends|extends
+name|InputFormat
+argument_list|>
+name|fileInputFormat
+parameter_list|,
+name|Class
+argument_list|<
+name|?
+argument_list|>
+name|fileOutputFormat
+parameter_list|,
+name|int
+name|bucketCount
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|bucketCols
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|parameters
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
 if|if
 condition|(
 name|columns
@@ -2501,6 +2575,21 @@ argument_list|(
 name|bucketCols
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|parameters
+operator|!=
+literal|null
+condition|)
+block|{
+name|tbl
+operator|.
+name|setParamters
+argument_list|(
+name|parameters
+argument_list|)
+expr_stmt|;
+block|}
 name|createTable
 argument_list|(
 name|tbl
@@ -2597,7 +2686,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter table."
+literal|"Unable to alter table. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2613,7 +2707,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter table."
+literal|"Unable to alter table. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2716,7 +2815,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter index."
+literal|"Unable to alter index. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2732,7 +2836,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter index."
+literal|"Unable to alter index. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2858,7 +2967,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter partition."
+literal|"Unable to alter partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2874,7 +2988,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter partition."
+literal|"Unable to alter partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3022,7 +3141,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter partition."
+literal|"Unable to alter partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3038,7 +3162,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to alter partition."
+literal|"Unable to alter partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3267,7 +3396,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to rename partition."
+literal|"Unable to rename partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3283,7 +3417,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to rename partition."
+literal|"Unable to rename partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3299,7 +3438,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to rename partition."
+literal|"Unable to rename partition. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3345,6 +3489,13 @@ argument_list|(
 literal|"Unable to alter database "
 operator|+
 name|dbName
+operator|+
+literal|". "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -3383,6 +3534,13 @@ argument_list|(
 literal|"Unable to alter database "
 operator|+
 name|dbName
+operator|+
+literal|". "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -4992,7 +5150,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Partition or table doesn't exist."
+literal|"Partition or table doesn't exist. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -5008,20 +5171,26 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unknown error. Please check logs."
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
+comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op. If ifPurge option is specified it is passed to the    * hdfs command that removes table data from warehouse to make it skip trash.    *    * @param tableName    *          table to drop    * @param ifPurge    *          completely purge the table (skipping trash) while removing data from warehouse    * @throws HiveException    *           thrown if the drop fails    */
 specifier|public
 name|void
 name|dropTable
 parameter_list|(
 name|String
 name|tableName
+parameter_list|,
+name|boolean
+name|ifPurge
 parameter_list|)
 throws|throws
 name|HiveException
@@ -5052,6 +5221,27 @@ argument_list|,
 literal|true
 argument_list|,
 literal|true
+argument_list|,
+name|ifPurge
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Drops table along with the data in it. If the table doesn't exist then it    * is a no-op    *    * @param tableName    *          table to drop    * @throws HiveException    *           thrown if the drop fails    */
+specifier|public
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+name|dropTable
+argument_list|(
+name|tableName
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -5078,10 +5268,12 @@ argument_list|,
 literal|true
 argument_list|,
 literal|true
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Drops the table.    *    * @param dbName    * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception if thrown if this is falser and table doesn't exist    * @throws HiveException    */
+comment|/**    * Drops the table.    *    * @param dbName    * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception is thrown if this is false and the table doesn't exist    * @throws HiveException    */
 specifier|public
 name|void
 name|dropTable
@@ -5101,6 +5293,43 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|dropTable
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+name|deleteData
+argument_list|,
+name|ignoreUnknownTab
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Drops the table.    *    * @param dbName    * @param tableName    * @param deleteData    *          deletes the underlying data along with metadata    * @param ignoreUnknownTab    *          an exception is thrown if this is false and the table doesn't exist    * @param ifPurge    *          completely purge the table skipping trash while removing data from warehouse    * @throws HiveException    */
+specifier|public
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ignoreUnknownTab
+parameter_list|,
+name|boolean
+name|ifPurge
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
 try|try
 block|{
 name|getMSC
@@ -5115,6 +5344,8 @@ argument_list|,
 name|deleteData
 argument_list|,
 name|ignoreUnknownTab
+argument_list|,
+name|ifPurge
 argument_list|)
 expr_stmt|;
 block|}
@@ -5431,6 +5662,13 @@ argument_list|(
 literal|"Unable to fetch table "
 operator|+
 name|tableName
+operator|+
+literal|". "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -6072,7 +6310,6 @@ name|currentDb
 argument_list|)
 return|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param holdDDLTime if true, force [re]create the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    */
 specifier|public
 name|void
 name|loadPartition
@@ -6120,6 +6357,68 @@ argument_list|(
 name|tableName
 argument_list|)
 decl_stmt|;
+name|loadPartition
+argument_list|(
+name|loadPath
+argument_list|,
+name|tbl
+argument_list|,
+name|partSpec
+argument_list|,
+name|replace
+argument_list|,
+name|holdDDLTime
+argument_list|,
+name|inheritTableSpecs
+argument_list|,
+name|isSkewedStoreAsSubdir
+argument_list|,
+name|isSrcLocal
+argument_list|,
+name|isAcid
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param holdDDLTime if true, force [re]create the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    */
+specifier|public
+name|Partition
+name|loadPartition
+parameter_list|(
+name|Path
+name|loadPath
+parameter_list|,
+name|Table
+name|tbl
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partSpec
+parameter_list|,
+name|boolean
+name|replace
+parameter_list|,
+name|boolean
+name|holdDDLTime
+parameter_list|,
+name|boolean
+name|inheritTableSpecs
+parameter_list|,
+name|boolean
+name|isSkewedStoreAsSubdir
+parameter_list|,
+name|boolean
+name|isSrcLocal
+parameter_list|,
+name|boolean
+name|isAcid
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
 name|Path
 name|tblDataLocationPath
 init|=
@@ -6127,6 +6426,11 @@ name|tbl
 operator|.
 name|getDataLocation
 argument_list|()
+decl_stmt|;
+name|Partition
+name|newTPart
+init|=
+literal|null
 decl_stmt|;
 try|try
 block|{
@@ -6333,23 +6637,27 @@ name|isAcid
 argument_list|)
 expr_stmt|;
 block|}
-comment|// recreate the partition if it existed before
-if|if
-condition|(
+name|boolean
+name|forceCreate
+init|=
+operator|(
 operator|!
 name|holdDDLTime
-condition|)
-block|{
-name|Partition
+operator|)
+condition|?
+literal|true
+else|:
+literal|false
+decl_stmt|;
 name|newTPart
-init|=
+operator|=
 name|getPartition
 argument_list|(
 name|tbl
 argument_list|,
 name|partSpec
 argument_list|,
-literal|true
+name|forceCreate
 argument_list|,
 name|newPartPath
 operator|.
@@ -6358,7 +6666,14 @@ argument_list|()
 argument_list|,
 name|inheritTableSpecs
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+comment|// recreate the partition if it existed before
+if|if
+condition|(
+operator|!
+name|holdDDLTime
+condition|)
+block|{
 if|if
 condition|(
 name|isSkewedStoreAsSubdir
@@ -6436,6 +6751,11 @@ name|alterPartition
 argument_list|(
 name|tbl
 operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
 name|getTableName
 argument_list|()
 argument_list|,
@@ -6466,13 +6786,15 @@ argument_list|,
 name|inheritTableSpecs
 argument_list|)
 expr_stmt|;
+return|return
+operator|new
+name|Partition
+argument_list|(
+name|tbl
+argument_list|,
 name|newCreatedTpart
-operator|=
-name|newTPart
-operator|.
-name|getTPartition
-argument_list|()
-expr_stmt|;
+argument_list|)
+return|;
 block|}
 block|}
 block|}
@@ -6554,6 +6876,9 @@ name|e
 argument_list|)
 throw|;
 block|}
+return|return
+name|newTPart
+return|;
 block|}
 comment|/**  * Walk through sub-directory tree to construct list bucketing location map.  *  * @param fSta  * @param fSys  * @param skewedColValueLocationMaps  * @param newPartPath  * @param skewedInfo  * @throws IOException  */
 specifier|private
@@ -6960,16 +7285,18 @@ return|return
 name|skewedColValueLocationMaps
 return|;
 block|}
-comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param holdDDLTime    * @return a list of strings with the dynamic partition paths    * @throws HiveException    */
+comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param holdDDLTime    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
 specifier|public
-name|ArrayList
+name|Map
 argument_list|<
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
 name|String
 argument_list|>
+argument_list|,
+name|Partition
 argument_list|>
 name|loadDynamicPartitions
 parameter_list|(
@@ -7020,26 +7347,30 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-name|ArrayList
+name|Map
 argument_list|<
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
 name|String
 argument_list|>
+argument_list|,
+name|Partition
 argument_list|>
-name|fullPartSpecs
+name|partitionsMap
 init|=
 operator|new
-name|ArrayList
-argument_list|<
 name|LinkedHashMap
+argument_list|<
+name|Map
 argument_list|<
 name|String
 argument_list|,
 name|String
 argument_list|>
+argument_list|,
+name|Partition
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -7249,6 +7580,14 @@ literal|'.'
 argument_list|)
 throw|;
 block|}
+name|Table
+name|tbl
+init|=
+name|getTable
+argument_list|(
+name|tableName
+argument_list|)
+decl_stmt|;
 comment|// for each dynamically created DP directory, construct a full partition spec
 comment|// and load the partition based on that
 name|Iterator
@@ -7325,19 +7664,14 @@ argument_list|,
 name|partPath
 argument_list|)
 expr_stmt|;
-name|fullPartSpecs
-operator|.
-name|add
-argument_list|(
-name|fullPartSpec
-argument_list|)
-expr_stmt|;
-comment|// finally load the partition -- move the file to the final table address
+name|Partition
+name|newPartition
+init|=
 name|loadPartition
 argument_list|(
 name|partPath
 argument_list|,
-name|tableName
+name|tbl
 argument_list|,
 name|fullPartSpec
 argument_list|,
@@ -7352,6 +7686,15 @@ argument_list|,
 literal|false
 argument_list|,
 name|isAcid
+argument_list|)
+decl_stmt|;
+name|partitionsMap
+operator|.
+name|put
+argument_list|(
+name|fullPartSpec
+argument_list|,
+name|newPartition
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -7369,7 +7712,7 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-name|fullPartSpecs
+name|partitionsMap
 return|;
 block|}
 catch|catch
@@ -7450,6 +7793,20 @@ argument_list|,
 name|isSrcLocal
 argument_list|,
 name|isAcid
+argument_list|)
+expr_stmt|;
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|put
+argument_list|(
+name|StatsSetupConst
+operator|.
+name|STATS_GENERATED_VIA_STATS_TASK
+argument_list|,
+literal|"true"
 argument_list|)
 expr_stmt|;
 block|}
@@ -8208,68 +8565,6 @@ literal|true
 argument_list|)
 return|;
 block|}
-specifier|private
-specifier|static
-name|void
-name|clearPartitionStats
-parameter_list|(
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|Partition
-name|tpart
-parameter_list|)
-block|{
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|tpartParams
-init|=
-name|tpart
-operator|.
-name|getParameters
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|tpartParams
-operator|==
-literal|null
-condition|)
-block|{
-return|return;
-block|}
-for|for
-control|(
-name|String
-name|statType
-range|:
-name|StatsSetupConst
-operator|.
-name|supportedStats
-control|)
-block|{
-name|tpartParams
-operator|.
-name|remove
-argument_list|(
-name|statType
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 comment|/**    * Returns partition metadata    *    * @param tbl    *          the partition's table    * @param partSpec    *          partition keys and values    * @param forceCreate    *          if this is true and partition doesn't exist then a partition is    *          created    * @param partPath the path where the partition data is located    * @param inheritTableSpecs whether to copy over the table specs for if/of/serde    * @return result partition object or null if there is no partition    * @throws HiveException    */
 specifier|public
 name|Partition
@@ -8727,9 +9022,18 @@ argument_list|(
 name|partPath
 argument_list|)
 expr_stmt|;
-name|clearPartitionStats
-argument_list|(
 name|tpart
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|put
+argument_list|(
+name|StatsSetupConst
+operator|.
+name|STATS_GENERATED_VIA_STATS_TASK
+argument_list|,
+literal|"true"
 argument_list|)
 expr_stmt|;
 name|String
@@ -8955,7 +9259,10 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unknown error. Please check logs."
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -9059,6 +9366,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|//TODO: add support for ifPurge
 try|try
 block|{
 name|Table
@@ -9215,7 +9523,10 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unknown error. Please check logs."
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -11798,7 +12109,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"checkPaths: filesystem error in check phase"
+literal|"checkPaths: filesystem error in check phase. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -12152,12 +12468,12 @@ name|destf
 operator|+
 literal|": "
 operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
 name|e
-argument_list|)
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 block|}
@@ -12304,7 +12620,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"addFiles: filesystem error in check phase"
+literal|"addFiles: filesystem error in check phase. "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -12456,7 +12777,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"copyFiles: error while moving files!!!"
+literal|"copyFiles: error while moving files!!! "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -12875,7 +13201,12 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Error moving acid files"
+literal|"Error moving acid files "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)

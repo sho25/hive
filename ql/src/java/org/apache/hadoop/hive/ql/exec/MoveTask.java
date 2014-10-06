@@ -2507,6 +2507,14 @@ name|dps
 argument_list|)
 expr_stmt|;
 block|}
+name|long
+name|startTime
+init|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+decl_stmt|;
 comment|// load the list of DP partitions and return the list of partition specs
 comment|// TODO: In a follow-up to HIVE-1361, we should refactor loadDynamicPartitions
 comment|// to use Utilities.getFullDPSpecs() to get the list of full partSpecs.
@@ -2514,14 +2522,16 @@ comment|// After that check the number of DPs created to not exceed the limit an
 comment|// iterate over it and call loadPartition() here.
 comment|// The reason we don't do inside HIVE-1361 is the latter is large and we
 comment|// want to isolate any potential issue it may introduce.
-name|ArrayList
+name|Map
 argument_list|<
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
 name|String
 argument_list|>
+argument_list|,
+name|Partition
 argument_list|>
 name|dp
 init|=
@@ -2582,6 +2592,22 @@ operator|.
 name|NOT_ACID
 argument_list|)
 decl_stmt|;
+name|console
+operator|.
+name|printInfo
+argument_list|(
+literal|"\t Time taken for load dynamic partitions : "
+operator|+
+operator|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|-
+name|startTime
+operator|)
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|dp
@@ -2613,34 +2639,45 @@ literal|" To turn off this error, set hive.error.on.empty.partition=false."
 argument_list|)
 throw|;
 block|}
+name|startTime
+operator|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+expr_stmt|;
 comment|// for each partition spec, get the partition
 comment|// and put it to WriteEntity for post-exec hook
 for|for
 control|(
-name|LinkedHashMap
+name|Map
+operator|.
+name|Entry
+argument_list|<
+name|Map
 argument_list|<
 name|String
 argument_list|,
 name|String
 argument_list|>
-name|partSpec
+argument_list|,
+name|Partition
+argument_list|>
+name|entry
 range|:
 name|dp
+operator|.
+name|entrySet
+argument_list|()
 control|)
 block|{
 name|Partition
 name|partn
 init|=
-name|db
+name|entry
 operator|.
-name|getPartition
-argument_list|(
-name|table
-argument_list|,
-name|partSpec
-argument_list|,
-literal|false
-argument_list|)
+name|getValue
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -2840,10 +2877,29 @@ name|printInfo
 argument_list|(
 literal|"\tLoading partition "
 operator|+
-name|partSpec
+name|entry
+operator|.
+name|getKey
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|console
+operator|.
+name|printInfo
+argument_list|(
+literal|"\t Time taken for adding to write entity : "
+operator|+
+operator|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|-
+name|startTime
+operator|)
+argument_list|)
+expr_stmt|;
 name|dc
 operator|=
 literal|null

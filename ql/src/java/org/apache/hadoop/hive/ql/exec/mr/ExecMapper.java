@@ -542,13 +542,10 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
-specifier|final
 name|ExecMapperContext
 name|execContext
 init|=
-operator|new
-name|ExecMapperContext
-argument_list|()
+literal|null
 decl_stmt|;
 annotation|@
 name|Override
@@ -560,6 +557,14 @@ name|JobConf
 name|job
 parameter_list|)
 block|{
+name|execContext
+operator|=
+operator|new
+name|ExecMapperContext
+argument_list|(
+name|job
+argument_list|)
+expr_stmt|;
 comment|// Allocate the bean at the beginning -
 name|memoryMXBean
 operator|=
@@ -1518,6 +1523,8 @@ operator|=
 name|rp
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|func

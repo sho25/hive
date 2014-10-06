@@ -3060,6 +3060,16 @@ argument_list|,
 literal|"How many rows in the joining tables (except the streaming table) should be cached in memory."
 argument_list|)
 block|,
+comment|// CBO related
+name|HIVE_CBO_ENABLED
+argument_list|(
+literal|"hive.cbo.enable"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Flag to control enabling Cost Based Optimizations using Optiq framework."
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE
@@ -4572,7 +4582,7 @@ name|HIVEOPTSORTDYNAMICPARTITION
 argument_list|(
 literal|"hive.optimize.sort.dynamic.partition"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"When enabled dynamic partitioning column will be globally sorted.\n"
 operator|+
@@ -5087,24 +5097,6 @@ operator|+
 literal|"of column statistics and for variable length complex columns like map, the average number of\n"
 operator|+
 literal|"entries/values can be specified using this config."
-argument_list|)
-block|,
-comment|// to accurately compute statistics for GROUPBY map side parallelism needs to be known
-name|HIVE_STATS_MAP_SIDE_PARALLELISM
-argument_list|(
-literal|"hive.stats.map.parallelism"
-argument_list|,
-literal|1
-argument_list|,
-literal|"Hive/Tez optimizer estimates the data size flowing through each of the operators.\n"
-operator|+
-literal|"For GROUPBY operator, to accurately compute the data size map-side parallelism needs to\n"
-operator|+
-literal|"be known. By default, this value is set to 1 since optimizer is not aware of the number of\n"
-operator|+
-literal|"mappers during compile-time. This Hive config can be used to specify the number of mappers\n"
-operator|+
-literal|"to be used for data size computation of GROUPBY operator."
 argument_list|)
 block|,
 comment|// statistics annotation fetches stats for each partition, which can be expensive. turning
@@ -5689,6 +5681,15 @@ operator|+
 literal|"org.apache.hadoop.hive.ql.security.authorization.HiveMetastoreAuthorizationProvider. "
 argument_list|)
 block|,
+name|HIVE_METASTORE_AUTHORIZATION_AUTH_READS
+argument_list|(
+literal|"hive.security.metastore.authorization.auth.reads"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If this is true, metastore authorizer authorizes read actions on database, table"
+argument_list|)
+block|,
 name|HIVE_METASTORE_AUTHENTICATOR_MANAGER
 argument_list|(
 literal|"hive.security.metastore.authenticator.manager"
@@ -5991,13 +5992,13 @@ name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
 argument_list|(
 literal|"hive.warehouse.subdir.inherit.perms"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
-literal|"Set this to true if the the table directories should inherit the\n"
+literal|"Set this to false if the table directories should be created\n"
 operator|+
-literal|"permission of the warehouse or database directory instead of being created\n"
+literal|"with the permissions derived from dfs umask instead of\n"
 operator|+
-literal|"with the permissions derived from dfs umask"
+literal|"inheriting the permission of the warehouse or database directory."
 argument_list|)
 block|,
 name|HIVE_INSERT_INTO_EXTERNAL_TABLES
@@ -6106,9 +6107,9 @@ literal|"hive.server2.global.init.file.location"
 argument_list|,
 literal|"${env:HIVE_CONF_DIR}"
 argument_list|,
-literal|"The location of HS2 global init file (.hiverc).\n"
+literal|"Either the location of a HS2 global init file or a directory containing a .hiverc file. If the \n"
 operator|+
-literal|"If the property is reset, the value must be a valid path where the init file is located."
+literal|"property is set, the value must be a valid path to an init file or directory where the init file is located."
 argument_list|)
 block|,
 name|HIVE_SERVER2_TRANSPORT_MODE
@@ -6866,6 +6867,17 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"This flag should be set to true to enable vectorized mode of the reduce-side of query execution.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_REDUCE_GROUPBY_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.reduce.groupby.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable vectorized mode of the reduce-side GROUP BY query execution.\n"
 operator|+
 literal|"The default value is true."
 argument_list|)

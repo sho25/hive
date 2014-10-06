@@ -75,6 +75,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|IMetaStoreClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|*
@@ -206,7 +222,7 @@ argument_list|>
 name|locks
 decl_stmt|;
 specifier|private
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 decl_stmt|;
 specifier|private
@@ -217,7 +233,7 @@ literal|50
 decl_stmt|;
 name|DbLockManager
 parameter_list|(
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 parameter_list|)
 block|{
@@ -955,7 +971,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Clear the memory of the locks in this object.  This won't clear the locks from the database.    * It is for use with    * {@link #DbLockManager(org.apache.hadoop.hive.metastore.HiveMetaStoreClient).commitTxn} and    * {@link #DbLockManager(org.apache.hadoop.hive.metastore.HiveMetaStoreClient).rollbackTxn}.    */
+comment|/**    * Clear the memory of the locks in this object.  This won't clear the locks from the database.    * It is for use with    * {@link #DbLockManager(org.apache.hadoop.hive.metastore.IMetaStoreClient).commitTxn} and    * {@link #DbLockManager(org.apache.hadoop.hive.metastore.IMetaStoreClient).rollbackTxn}.    */
 name|void
 name|clearLocalLockRecords
 parameter_list|()

@@ -812,6 +812,17 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
+name|boolean
+name|isTraceEnabled
+init|=
+name|LOG
+operator|.
+name|isTraceEnabled
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
 name|long
 name|serialVersionUID
 init|=
@@ -951,6 +962,11 @@ specifier|transient
 name|GenericUDAFEvaluator
 index|[]
 name|aggregationEvaluators
+decl_stmt|;
+specifier|transient
+name|boolean
+index|[]
+name|estimableAggregationEvaluators
 decl_stmt|;
 specifier|protected
 specifier|transient
@@ -2808,7 +2824,7 @@ name|estimateRowSize
 argument_list|()
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|int
@@ -2816,7 +2832,7 @@ name|javaObjectOverHead
 init|=
 literal|64
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|int
@@ -2824,7 +2840,7 @@ name|javaHashEntryOverHead
 init|=
 literal|64
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|int
@@ -2832,7 +2848,7 @@ name|javaSizePrimitiveType
 init|=
 literal|16
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|int
@@ -3240,6 +3256,16 @@ block|}
 comment|// Go over all the aggregation classes and and get the size of the fields of
 comment|// fixed length. Keep track of the variable length
 comment|// fields in these aggregation classes.
+name|estimableAggregationEvaluators
+operator|=
+operator|new
+name|boolean
+index|[
+name|aggregationEvaluators
+operator|.
+name|length
+index|]
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -3282,6 +3308,13 @@ name|agg
 argument_list|)
 condition|)
 block|{
+name|estimableAggregationEvaluators
+index|[
+name|i
+index|]
+operator|=
+literal|true
+expr_stmt|;
 continue|continue;
 block|}
 name|Field
@@ -4468,6 +4501,11 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|isTraceEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|trace
@@ -4495,6 +4533,7 @@ operator|+
 name|minReductionHashAggr
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -5348,12 +5387,10 @@ index|]
 decl_stmt|;
 if|if
 condition|(
-name|GenericUDAFEvaluator
-operator|.
-name|isEstimable
-argument_list|(
-name|agg
-argument_list|)
+name|estimableAggregationEvaluators
+index|[
+name|i
+index|]
 condition|)
 block|{
 name|totalVariableSize
@@ -5419,6 +5456,11 @@ operator|)
 operator|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isTraceEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|trace
@@ -5432,6 +5474,7 @@ operator|+
 name|numEntriesHashTable
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// flush if necessary
 if|if

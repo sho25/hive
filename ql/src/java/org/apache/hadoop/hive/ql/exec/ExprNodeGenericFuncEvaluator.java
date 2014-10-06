@@ -291,6 +291,12 @@ specifier|transient
 name|boolean
 name|isEager
 decl_stmt|;
+specifier|transient
+name|boolean
+name|isConstant
+init|=
+literal|false
+decl_stmt|;
 comment|/**    * Class to allow deferred evaluation for GenericUDF.    */
 class|class
 name|DeferredExprObject
@@ -707,7 +713,6 @@ name|genericUDF
 argument_list|)
 expr_stmt|;
 block|}
-return|return
 name|outputOI
 operator|=
 name|genericUDF
@@ -716,6 +721,21 @@ name|initializeAndFoldConstants
 argument_list|(
 name|childrenOIs
 argument_list|)
+expr_stmt|;
+name|isConstant
+operator|=
+name|ObjectInspectorUtils
+operator|.
+name|isConstantObjectInspector
+argument_list|(
+name|outputOI
+argument_list|)
+operator|&&
+name|isDeterministic
+argument_list|()
+expr_stmt|;
+return|return
+name|outputOI
 return|;
 block|}
 annotation|@
@@ -830,21 +850,9 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|rowObject
-operator|=
-name|row
-expr_stmt|;
 if|if
 condition|(
-name|ObjectInspectorUtils
-operator|.
-name|isConstantObjectInspector
-argument_list|(
-name|outputOI
-argument_list|)
-operator|&&
-name|isDeterministic
-argument_list|()
+name|isConstant
 condition|)
 block|{
 comment|// The output of this UDF is constant, so don't even bother evaluating.
@@ -860,6 +868,10 @@ name|getWritableConstantValue
 argument_list|()
 return|;
 block|}
+name|rowObject
+operator|=
+name|row
+expr_stmt|;
 for|for
 control|(
 name|int

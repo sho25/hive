@@ -512,7 +512,7 @@ block|{
 return|return
 name|handler
 operator|.
-name|get_database
+name|get_database_core
 argument_list|(
 name|dbName
 argument_list|)
