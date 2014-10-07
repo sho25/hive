@@ -61,6 +61,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -408,6 +418,15 @@ name|String
 name|ZOOKEEPER_NAMESPACE
 init|=
 literal|"zooKeeperNamespace"
+decl_stmt|;
+comment|// Default namespace value on ZooKeeper.
+comment|// This value is used if the param "zooKeeperNamespace" is not specified in the JDBC Uri.
+specifier|static
+specifier|final
+name|String
+name|ZOOKEEPER_DEFAULT_NAMESPACE
+init|=
+literal|"hiveserver2"
 decl_stmt|;
 comment|// Non-configurable params:
 comment|// ZOOKEEPER_SESSION_TIMEOUT is not exposed as client configurable
@@ -1569,8 +1588,7 @@ block|{
 name|String
 name|authorities
 decl_stmt|;
-comment|// For a jdbc uri like: jdbc:hive2://host1:port1,host2:port2,host3:port3/
-comment|// Extract the uri host:port list starting after "jdbc:hive2://", till the 1st "/" or EOL
+comment|/**      * For a jdbc uri like:      * jdbc:hive2://<host1>:<port1>,<host2>:<port2>/dbName;sess_var_list?conf_list#var_list      * Extract the uri host:port list starting after "jdbc:hive2://",      * till the 1st "/" or "?" or "#" whichever comes first& in the given order      * Examples:      * jdbc:hive2://host1:port1,host2:port2,host3:port3/db;k1=v1?k2=v2#k3=v3      * jdbc:hive2://host1:port1,host2:port2,host3:port3/;k1=v1?k2=v2#k3=v3      * jdbc:hive2://host1:port1,host2:port2,host3:port3?k2=v2#k3=v3      * jdbc:hive2://host1:port1,host2:port2,host3:port3#k3=v3      */
 name|int
 name|fromIndex
 init|=
@@ -1584,15 +1602,62 @@ decl_stmt|;
 name|int
 name|toIndex
 init|=
+operator|-
+literal|1
+decl_stmt|;
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+name|toIndexChars
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"/"
+argument_list|,
+literal|"?"
+argument_list|,
+literal|"#"
+argument_list|)
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|String
+name|toIndexChar
+range|:
+name|toIndexChars
+control|)
+block|{
+name|toIndex
+operator|=
 name|uri
 operator|.
 name|indexOf
 argument_list|(
-literal|"/"
+name|toIndexChar
 argument_list|,
 name|fromIndex
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+if|if
+condition|(
+name|toIndex
+operator|>
+literal|0
+condition|)
+block|{
+break|break;
+block|}
+block|}
 if|if
 condition|(
 name|toIndex
@@ -1620,14 +1685,7 @@ name|substring
 argument_list|(
 name|fromIndex
 argument_list|,
-name|uri
-operator|.
-name|indexOf
-argument_list|(
-literal|"/"
-argument_list|,
-name|fromIndex
-argument_list|)
+name|toIndex
 argument_list|)
 expr_stmt|;
 block|}
