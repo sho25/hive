@@ -362,6 +362,7 @@ argument_list|(
 name|call
 argument_list|)
 expr_stmt|;
+break|break;
 block|}
 case|case
 name|LESS_THAN_OR_EQUAL
