@@ -6197,7 +6197,11 @@ init|=
 operator|new
 name|JobConf
 argument_list|(
+operator|new
+name|TezConfiguration
+argument_list|(
 name|hiveConf
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|conf
