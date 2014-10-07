@@ -502,12 +502,15 @@ operator|.
 name|toStringTree
 argument_list|()
 decl_stmt|;
+comment|// if any of following tokens are present in AST, bail out
 name|String
 index|[]
 name|tokens
 init|=
 block|{
 literal|"TOK_CHARSETLITERAL"
+block|,
+literal|"TOK_TABLESPLITSAMPLE"
 block|}
 decl_stmt|;
 for|for
