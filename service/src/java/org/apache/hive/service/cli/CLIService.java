@@ -367,6 +367,22 @@ name|TProtocolVersion
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|server
+operator|.
+name|HiveServer2
+import|;
+end_import
+
 begin_comment
 comment|/**  * CLIService.  *  */
 end_comment
@@ -442,9 +458,18 @@ specifier|private
 name|UserGroupInformation
 name|httpUGI
 decl_stmt|;
+comment|// The HiveServer2 instance running this service
+specifier|private
+specifier|final
+name|HiveServer2
+name|hiveServer2
+decl_stmt|;
 specifier|public
 name|CLIService
-parameter_list|()
+parameter_list|(
+name|HiveServer2
+name|hiveServer2
+parameter_list|)
 block|{
 name|super
 argument_list|(
@@ -455,6 +480,12 @@ operator|.
 name|getSimpleName
 argument_list|()
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|hiveServer2
+operator|=
+name|hiveServer2
 expr_stmt|;
 block|}
 annotation|@
@@ -478,7 +509,9 @@ name|sessionManager
 operator|=
 operator|new
 name|SessionManager
-argument_list|()
+argument_list|(
+name|hiveServer2
+argument_list|)
 expr_stmt|;
 name|addService
 argument_list|(

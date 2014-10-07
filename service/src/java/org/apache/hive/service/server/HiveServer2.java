@@ -452,7 +452,9 @@ name|cliService
 operator|=
 operator|new
 name|CLIService
-argument_list|()
+argument_list|(
+name|this
+argument_list|)
 expr_stmt|;
 name|addService
 argument_list|(
@@ -490,13 +492,6 @@ block|}
 name|addService
 argument_list|(
 name|thriftCLIService
-argument_list|)
-expr_stmt|;
-name|thriftCLIService
-operator|.
-name|setHiveServer2
-argument_list|(
-name|this
 argument_list|)
 expr_stmt|;
 name|super
