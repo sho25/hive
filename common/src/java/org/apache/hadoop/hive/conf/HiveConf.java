@@ -1291,21 +1291,21 @@ call|(
 name|long
 call|)
 argument_list|(
-literal|1000
+literal|256
 operator|*
 literal|1000
 operator|*
 literal|1000
 argument_list|)
 argument_list|,
-literal|"size per reducer.The default is 1G, i.e if the input size is 10G, it will use 10 reducers."
+literal|"size per reducer.The default is 256Mb, i.e if the input size is 1G, it will use 4 reducers."
 argument_list|)
 block|,
 name|MAXREDUCERS
 argument_list|(
 literal|"hive.exec.reducers.max"
 argument_list|,
-literal|999
+literal|1009
 argument_list|,
 literal|"max number of reducers will be used. If the one specified in the configuration parameter mapred.reduce.tasks is\n"
 operator|+
