@@ -1169,32 +1169,6 @@ parameter_list|)
 block|{
 comment|//ignore
 block|}
-comment|// In case we need to run some MR jobs, we'll run them under tez MR emulation. The session
-comment|// id is used for tez to reuse the current session rather than start a new one.
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"mapreduce.framework.name"
-argument_list|,
-literal|"yarn-tez"
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"mapreduce.tez.session.tokill-application-id"
-argument_list|,
-name|session
-operator|.
-name|getAppMasterApplicationId
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|openSessions
 operator|.
 name|add
