@@ -37,6 +37,24 @@ name|Test
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|server
+operator|.
+name|HiveServer2
+operator|.
+name|ServerOptionsProcessor
+import|;
+end_import
+
 begin_comment
 comment|/**  * Test ServerOptionsProcessor  *  */
 end_comment
@@ -104,23 +122,11 @@ name|key
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|boolean
-name|isSuccess
-init|=
 name|optProcessor
 operator|.
-name|process
+name|parse
 argument_list|(
 name|args
-argument_list|)
-decl_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-literal|"options processor result"
-argument_list|,
-name|isSuccess
 argument_list|)
 expr_stmt|;
 name|Assert
