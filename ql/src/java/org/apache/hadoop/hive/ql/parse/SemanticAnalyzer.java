@@ -73034,6 +73034,7 @@ argument_list|>
 name|partitionCache
 decl_stmt|;
 specifier|private
+specifier|final
 name|AtomicInteger
 name|noColsMissingStats
 init|=
@@ -76601,6 +76602,38 @@ name|srcRel
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|filterCondn
+operator|instanceof
+name|ExprNodeConstantDesc
+operator|&&
+operator|!
+name|filterCondn
+operator|.
+name|getTypeString
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|serdeConstants
+operator|.
+name|BOOLEAN_TYPE_NAME
+argument_list|)
+condition|)
+block|{
+comment|// queries like select * from t1 where 'foo';
+comment|// Optiq's rule PushFilterThroughProject chokes on it. Arguably, we can insert a cast to
+comment|// boolean in such cases, but since Postgres, Oracle and MS SQL server fail on compile time
+comment|// for such queries, its an arcane corner case, not worth of adding that complexity.
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Filter expression with non-boolean return type."
+argument_list|)
+throw|;
+block|}
 name|ImmutableMap
 argument_list|<
 name|String
