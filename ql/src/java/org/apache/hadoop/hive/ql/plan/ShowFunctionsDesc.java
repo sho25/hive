@@ -77,6 +77,13 @@ decl_stmt|;
 name|String
 name|resFile
 decl_stmt|;
+comment|/**    * whether like keyword is specified    */
+specifier|private
+name|boolean
+name|isLikePattern
+init|=
+literal|false
+decl_stmt|;
 comment|/**    * table name for the result of show tables.    */
 specifier|private
 specifier|static
@@ -166,6 +173,34 @@ operator|=
 name|pattern
 expr_stmt|;
 block|}
+comment|/**    * @param pattern    *          names of tables to show    * @param like    *          is like keyword used    */
+specifier|public
+name|ShowFunctionsDesc
+parameter_list|(
+name|Path
+name|resFile
+parameter_list|,
+name|String
+name|pattern
+parameter_list|,
+name|boolean
+name|isLikePattern
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|resFile
+argument_list|,
+name|pattern
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|isLikePattern
+operator|=
+name|isLikePattern
+expr_stmt|;
+block|}
 comment|/**    * @return the pattern    */
 annotation|@
 name|Explain
@@ -235,6 +270,16 @@ name|resFile
 operator|=
 name|resFile
 expr_stmt|;
+block|}
+comment|/**    * @return isLikePattern    */
+specifier|public
+name|boolean
+name|getIsLikePattern
+parameter_list|()
+block|{
+return|return
+name|isLikePattern
+return|;
 block|}
 block|}
 end_class
