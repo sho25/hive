@@ -74247,7 +74247,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SemanticException
+name|OptiqSemanticException
 argument_list|(
 name|generateErrorMessage
 argument_list|(
@@ -74312,7 +74312,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SemanticException
+name|OptiqSemanticException
 argument_list|(
 name|generateErrorMessage
 argument_list|(
@@ -79463,7 +79463,7 @@ literal|null
 condition|)
 throw|throw
 operator|new
-name|RuntimeException
+name|OptiqSemanticException
 argument_list|(
 literal|"Invalid Column Reference: "
 operator|+
