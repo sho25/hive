@@ -1587,7 +1587,7 @@ name|httpPath
 decl_stmt|;
 name|httpPath
 operator|=
-name|hiveConfMap
+name|sessConfMap
 operator|.
 name|get
 argument_list|(
@@ -2926,7 +2926,7 @@ block|{
 name|String
 name|transportMode
 init|=
-name|hiveConfMap
+name|sessConfMap
 operator|.
 name|get
 argument_list|(

@@ -10837,13 +10837,7 @@ index|[]
 index|[]
 block|{
 block|{
-literal|"jdbc:hive2://server:10002/db;"
-operator|+
-literal|"user=foo;password=bar?"
-operator|+
-literal|"hive.server2.transport.mode=http;"
-operator|+
-literal|"hive.server2.thrift.http.path=hs2"
+literal|"jdbc:hive2://server:10002/db;user=foo;password=bar;transportMode=http;httpPath=hs2"
 block|,
 literal|"server"
 block|,
@@ -10857,13 +10851,7 @@ literal|"hs2"
 block|}
 block|,
 block|{
-literal|"jdbc:hive2://server:10000/testdb;"
-operator|+
-literal|"user=foo;password=bar?"
-operator|+
-literal|"hive.server2.transport.mode=binary;"
-operator|+
-literal|"hive.server2.thrift.http.path="
+literal|"jdbc:hive2://server:10000/testdb;user=foo;password=bar;transportMode=binary;httpPath="
 block|,
 literal|"server"
 block|,
@@ -10875,7 +10863,7 @@ literal|"binary"
 block|,
 literal|""
 block|}
-block|,   }
+block|, }
 decl_stmt|;
 annotation|@
 name|Test
@@ -10964,12 +10952,12 @@ name|assertEquals
 argument_list|(
 name|params
 operator|.
-name|getHiveConfs
+name|getSessionVars
 argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|"hive.server2.transport.mode"
+literal|"transportMode"
 argument_list|)
 argument_list|,
 name|testValues
@@ -10982,12 +10970,12 @@ name|assertEquals
 argument_list|(
 name|params
 operator|.
-name|getHiveConfs
+name|getSessionVars
 argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|"hive.server2.thrift.http.path"
+literal|"httpPath"
 argument_list|)
 argument_list|,
 name|testValues
