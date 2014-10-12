@@ -92,7 +92,11 @@ name|SparkTran
 argument_list|<
 name|BytesWritable
 argument_list|,
+name|BytesWritable
+argument_list|,
 name|HiveKey
+argument_list|,
+name|BytesWritable
 argument_list|>
 block|{
 specifier|private
