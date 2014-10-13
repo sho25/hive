@@ -2270,6 +2270,18 @@ operator|.
 name|MAX_VALUE
 argument_list|)
 expr_stmt|;
+comment|// Turn off the sarg before pushing it to delta.  We never want to push a sarg to a delta as
+comment|// it can produce wrong results (if the latest valid version of the record is filtered out by
+comment|// the sarg) or ArrayOutOfBounds errors (when the sarg is applied to a delete record)
+name|eventOptions
+operator|.
+name|searchArgument
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|deltaDirectory
