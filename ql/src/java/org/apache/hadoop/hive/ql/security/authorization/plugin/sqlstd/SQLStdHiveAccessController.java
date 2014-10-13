@@ -41,6 +41,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -2336,6 +2346,17 @@ condition|(
 operator|!
 name|isUserAdmin
 argument_list|()
+operator|&&
+operator|!
+name|doesUserHasAdminOption
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|roleName
+argument_list|)
+argument_list|)
 condition|)
 block|{
 throw|throw
@@ -2351,6 +2372,10 @@ operator|+
 literal|" allowed get principals in a role. "
 operator|+
 name|ADMIN_ONLY_MSG
+operator|+
+literal|" Otherwise, "
+operator|+
+name|HAS_ADMIN_PRIV_MSG
 argument_list|)
 throw|;
 block|}
