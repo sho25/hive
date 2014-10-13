@@ -1624,12 +1624,11 @@ name|ParsedDelta
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|final
 name|List
 argument_list|<
 name|FileStatus
 argument_list|>
-name|original
+name|originalDirectories
 init|=
 operator|new
 name|ArrayList
@@ -1824,17 +1823,33 @@ block|}
 block|}
 else|else
 block|{
-name|findOriginals
+comment|// This is just the directory.  We need to recurse and find the actual files.  But don't
+comment|// do this until we have determined there is no base.  This saves time.  Plus,
+comment|// it is possible that the cleaner is running and removing these original files,
+comment|// in which case recursing through them could cause us to get an error.
+name|originalDirectories
+operator|.
+name|add
 argument_list|(
-name|fs
-argument_list|,
 name|child
-argument_list|,
-name|original
 argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|final
+name|List
+argument_list|<
+name|FileStatus
+argument_list|>
+name|original
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|FileStatus
+argument_list|>
+argument_list|()
+decl_stmt|;
 comment|// if we have a base, the original files are obsolete.
 if|if
 condition|(
@@ -1843,13 +1858,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|obsolete
-operator|.
-name|addAll
-argument_list|(
-name|original
-argument_list|)
-expr_stmt|;
 comment|// remove the entries so we don't get confused later and think we should
 comment|// use them.
 name|original
@@ -1857,6 +1865,29 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Okay, we're going to need these originals.  Recurse through them and figure out what we
+comment|// really need.
+for|for
+control|(
+name|FileStatus
+name|origDir
+range|:
+name|originalDirectories
+control|)
+block|{
+name|findOriginals
+argument_list|(
+name|fs
+argument_list|,
+name|origDir
+argument_list|,
+name|original
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|Collections
 operator|.

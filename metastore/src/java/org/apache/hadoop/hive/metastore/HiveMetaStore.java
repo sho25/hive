@@ -34055,6 +34055,12 @@ name|MetaStoreThread
 operator|.
 name|BooleanPointer
 argument_list|()
+argument_list|,
+operator|new
+name|MetaStoreThread
+operator|.
+name|BooleanPointer
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|thread

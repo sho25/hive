@@ -5398,6 +5398,23 @@ operator|+
 literal|"compaction is initiated."
 argument_list|)
 block|,
+name|HIVE_COMPACTOR_CLEANER_RUN_INTERVAL
+argument_list|(
+literal|"hive.compactor.cleaner.run.interval"
+argument_list|,
+literal|"5000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time between runs of the cleaner thread"
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(
