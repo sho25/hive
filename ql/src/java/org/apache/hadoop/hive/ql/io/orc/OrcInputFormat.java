@@ -6328,7 +6328,7 @@ operator|(
 operator|(
 name|StructObjectInspector
 operator|)
-name|reader
+name|records
 operator|.
 name|getObjectInspector
 argument_list|()
