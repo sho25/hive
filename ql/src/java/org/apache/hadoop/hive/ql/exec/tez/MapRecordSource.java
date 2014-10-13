@@ -259,11 +259,10 @@ name|IOException
 block|{
 name|execContext
 operator|=
-operator|new
-name|ExecMapperContext
-argument_list|(
-name|jconf
-argument_list|)
+name|mapOp
+operator|.
+name|getExecContext
+argument_list|()
 expr_stmt|;
 name|this
 operator|.
