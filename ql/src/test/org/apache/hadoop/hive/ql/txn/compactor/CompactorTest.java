@@ -2548,6 +2548,12 @@ specifier|final
 name|FileSystem
 name|fs
 decl_stmt|;
+specifier|private
+name|boolean
+name|lastWasDelete
+init|=
+literal|true
+decl_stmt|;
 name|MockRawReader
 parameter_list|(
 name|Configuration
@@ -2610,6 +2616,28 @@ parameter_list|()
 block|{
 return|return
 literal|null
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isDelete
+parameter_list|(
+name|Text
+name|value
+parameter_list|)
+block|{
+comment|// Alternate between returning deleted and not.  This is easier than actually
+comment|// tracking operations. We test that this is getting properly called by checking that only
+comment|// half the records show up in base files after major compactions.
+name|lastWasDelete
+operator|=
+operator|!
+name|lastWasDelete
+expr_stmt|;
+return|return
+name|lastWasDelete
 return|;
 block|}
 annotation|@

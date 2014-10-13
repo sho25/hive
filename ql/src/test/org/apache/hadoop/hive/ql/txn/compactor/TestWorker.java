@@ -3323,7 +3323,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|1248L
+literal|624L
 argument_list|,
 name|buckets
 index|[
@@ -3338,7 +3338,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|1248L
+literal|624L
 argument_list|,
 name|buckets
 index|[
@@ -3707,7 +3707,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|1248L
+literal|624L
 argument_list|,
 name|buckets
 index|[
@@ -3722,7 +3722,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|1248L
+literal|624L
 argument_list|,
 name|buckets
 index|[
@@ -4063,7 +4063,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|208L
+literal|104L
 argument_list|,
 name|buckets
 index|[
@@ -4078,7 +4078,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|208L
+literal|104L
 argument_list|,
 name|buckets
 index|[
@@ -4418,7 +4418,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|1248L
+literal|624L
 argument_list|,
 name|buckets
 index|[
@@ -4433,7 +4433,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|1248L
+literal|624L
 argument_list|,
 name|buckets
 index|[
@@ -4870,9 +4870,9 @@ name|p
 argument_list|,
 literal|23L
 argument_list|,
-literal|24L
+literal|26L
 argument_list|,
-literal|2
+literal|4
 argument_list|)
 expr_stmt|;
 name|burnThroughTransactions
@@ -5045,7 +5045,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-literal|"base_0000024"
+literal|"base_0000026"
 argument_list|)
 condition|)
 block|{
@@ -5171,7 +5171,7 @@ name|getName
 argument_list|()
 argument_list|)
 operator|&&
-literal|1248L
+literal|676L
 operator|==
 name|buckets
 index|[
@@ -5225,7 +5225,7 @@ name|getName
 argument_list|()
 argument_list|)
 operator|&&
-literal|1248L
+literal|676L
 operator|==
 name|buckets
 index|[
