@@ -1123,11 +1123,10 @@ name|this
 operator|.
 name|getExecContext
 argument_list|()
-operator|!=
+operator|==
 literal|null
 operator|)
-operator|&&
-operator|(
+operator|||
 operator|(
 name|this
 operator|.
@@ -1141,7 +1140,6 @@ literal|null
 operator|)
 operator|||
 operator|(
-operator|!
 name|this
 operator|.
 name|getExecContext
@@ -1152,10 +1150,12 @@ argument_list|()
 operator|.
 name|getInputFileChangeSensitive
 argument_list|()
-operator|)
+operator|==
+literal|false
 operator|)
 condition|)
 block|{
+comment|/*        * This early-exit criteria is not applicable if the local work is sensitive to input file changes.        * But the check does no apply if there is no local work, or if this is a reducer vertex (execContext is null).        */
 if|if
 condition|(
 name|hashTblInitedOnce
