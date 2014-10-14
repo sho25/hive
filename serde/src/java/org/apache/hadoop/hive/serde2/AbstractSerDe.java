@@ -85,6 +85,10 @@ name|AbstractSerDe
 implements|implements
 name|SerDe
 block|{
+specifier|protected
+name|String
+name|configErrors
+decl_stmt|;
 comment|/**    * Initialize the SerDe. By default, this will use one set of properties, either the    * table properties or the partition properties. If a SerDe needs access to both sets,    * it should override this method.    *    * Eventually, once all SerDes have implemented this method,    * we should convert it to an abstract method.    *    * @param configuration        Hadoop configuration    * @param tableProperties      Table properties    * @param partitionProperties  Partition properties    * @throws SerDeException    */
 specifier|public
 name|void
@@ -189,6 +193,35 @@ parameter_list|()
 throws|throws
 name|SerDeException
 function_decl|;
+comment|/**    * Get the error messages during the Serde configuration    *    * @return The error messages in the configuration which are empty if no error occurred    */
+specifier|public
+name|String
+name|getConfigurationErrors
+parameter_list|()
+block|{
+if|if
+condition|(
+name|configErrors
+operator|==
+literal|null
+operator|||
+name|configErrors
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return
+literal|""
+return|;
+block|}
+else|else
+block|{
+return|return
+name|configErrors
+return|;
+block|}
+block|}
 block|}
 end_class
 

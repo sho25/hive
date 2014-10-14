@@ -20107,6 +20107,8 @@ argument_list|(
 name|hiveConf
 argument_list|,
 name|tbl
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|ret

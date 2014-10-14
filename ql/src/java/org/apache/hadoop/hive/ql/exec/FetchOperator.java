@@ -1636,7 +1636,7 @@ argument_list|()
 decl_stmt|;
 name|SerDeUtils
 operator|.
-name|initializeSerDe
+name|initializeSerDeWithoutErrorCheck
 argument_list|(
 name|serde
 argument_list|,
