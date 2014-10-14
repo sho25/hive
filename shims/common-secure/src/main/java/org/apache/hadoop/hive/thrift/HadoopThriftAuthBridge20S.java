@@ -2237,7 +2237,7 @@ name|Configuration
 name|conf
 parameter_list|,
 name|Object
-name|hms
+name|rawStore
 parameter_list|)
 throws|throws
 name|IOException
@@ -2290,7 +2290,7 @@ name|dts
 operator|.
 name|setStore
 argument_list|(
-name|hms
+name|rawStore
 argument_list|)
 expr_stmt|;
 name|secretManager

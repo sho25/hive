@@ -1135,7 +1135,7 @@ literal|"hive.exec.scratchdir"
 argument_list|,
 literal|"/tmp/hive"
 argument_list|,
-literal|"HDFS root scratch dir for Hive jobs which gets created with 777 permission. "
+literal|"HDFS root scratch dir for Hive jobs which gets created with write all (733) permission. "
 operator|+
 literal|"For each connecting user, an HDFS scratch dir: ${hive.exec.scratchdir}/<username> is created, "
 operator|+
@@ -1291,21 +1291,21 @@ call|(
 name|long
 call|)
 argument_list|(
-literal|1000
+literal|256
 operator|*
 literal|1000
 operator|*
 literal|1000
 argument_list|)
 argument_list|,
-literal|"size per reducer.The default is 1G, i.e if the input size is 10G, it will use 10 reducers."
+literal|"size per reducer.The default is 256Mb, i.e if the input size is 1G, it will use 4 reducers."
 argument_list|)
 block|,
 name|MAXREDUCERS
 argument_list|(
 literal|"hive.exec.reducers.max"
 argument_list|,
-literal|999
+literal|1009
 argument_list|,
 literal|"max number of reducers will be used. If the one specified in the configuration parameter mapred.reduce.tasks is\n"
 operator|+
@@ -3030,6 +3030,16 @@ argument_list|,
 literal|"How many rows in the joining tables (except the streaming table) should be cached in memory."
 argument_list|)
 block|,
+comment|// CBO related
+name|HIVE_CBO_ENABLED
+argument_list|(
+literal|"hive.cbo.enable"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Flag to control enabling Cost Based Optimizations using Calcite framework."
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE
@@ -4533,7 +4543,7 @@ name|HIVEOPTSORTDYNAMICPARTITION
 argument_list|(
 literal|"hive.optimize.sort.dynamic.partition"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"When enabled dynamic partitioning column will be globally sorted.\n"
 operator|+
@@ -5050,24 +5060,6 @@ operator|+
 literal|"entries/values can be specified using this config."
 argument_list|)
 block|,
-comment|// to accurately compute statistics for GROUPBY map side parallelism needs to be known
-name|HIVE_STATS_MAP_SIDE_PARALLELISM
-argument_list|(
-literal|"hive.stats.map.parallelism"
-argument_list|,
-literal|1
-argument_list|,
-literal|"Hive/Tez optimizer estimates the data size flowing through each of the operators.\n"
-operator|+
-literal|"For GROUPBY operator, to accurately compute the data size map-side parallelism needs to\n"
-operator|+
-literal|"be known. By default, this value is set to 1 since optimizer is not aware of the number of\n"
-operator|+
-literal|"mappers during compile-time. This Hive config can be used to specify the number of mappers\n"
-operator|+
-literal|"to be used for data size computation of GROUPBY operator."
-argument_list|)
-block|,
 comment|// statistics annotation fetches stats for each partition, which can be expensive. turning
 comment|// this off will result in basic sizes being fetched from namenode instead
 name|HIVE_STATS_FETCH_PARTITION_STATS
@@ -5217,13 +5209,20 @@ operator|+
 literal|"that need to execute at least one mapred job."
 argument_list|)
 block|,
+comment|// Zookeeper related configs
 name|HIVE_ZOOKEEPER_QUORUM
 argument_list|(
 literal|"hive.zookeeper.quorum"
 argument_list|,
 literal|""
 argument_list|,
-literal|"The list of ZooKeeper servers to talk to. This is only needed for read/write locks."
+literal|"List of ZooKeeper servers to talk to. This is needed for: "
+operator|+
+literal|"1. Read/write locks - when hive.lock.manager is set to "
+operator|+
+literal|"org.apache.hadoop.hive.ql.lockmgr.zookeeper.ZooKeeperHiveLockManager, "
+operator|+
+literal|"2. When HiveServer2 supports service discovery via Zookeeper."
 argument_list|)
 block|,
 name|HIVE_ZOOKEEPER_CLIENT_PORT
@@ -5232,7 +5231,11 @@ literal|"hive.zookeeper.client.port"
 argument_list|,
 literal|"2181"
 argument_list|,
-literal|"The port of ZooKeeper servers to talk to. This is only needed for read/write locks."
+literal|"The port of ZooKeeper servers to talk to. "
+operator|+
+literal|"If the list of Zookeeper servers specified in hive.zookeeper.quorum,"
+operator|+
+literal|"does not contain port numbers, this value is used."
 argument_list|)
 block|,
 name|HIVE_ZOOKEEPER_SESSION_TIMEOUT
@@ -5393,6 +5396,23 @@ argument_list|,
 literal|"Number of aborted transactions involving a particular table or partition before major\n"
 operator|+
 literal|"compaction is initiated."
+argument_list|)
+block|,
+name|HIVE_COMPACTOR_CLEANER_RUN_INTERVAL
+argument_list|(
+literal|"hive.compactor.cleaner.run.interval"
+argument_list|,
+literal|"5000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time between runs of the cleaner thread"
 argument_list|)
 block|,
 comment|// For HBase storage handler
@@ -5639,6 +5659,15 @@ operator|+
 literal|"org.apache.hadoop.hive.ql.security.authorization.HiveMetastoreAuthorizationProvider. "
 argument_list|)
 block|,
+name|HIVE_METASTORE_AUTHORIZATION_AUTH_READS
+argument_list|(
+literal|"hive.security.metastore.authorization.auth.reads"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If this is true, metastore authorizer authorizes read actions on database, table"
+argument_list|)
+block|,
 name|HIVE_METASTORE_AUTHENTICATOR_MANAGER
 argument_list|(
 literal|"hive.security.metastore.authenticator.manager"
@@ -5883,18 +5912,6 @@ operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
 block|,
-comment|// Hive global init file location
-name|HIVE_GLOBAL_INIT_FILE_LOCATION
-argument_list|(
-literal|"hive.server2.global.init.file.location"
-argument_list|,
-literal|"${env:HIVE_CONF_DIR}"
-argument_list|,
-literal|"The location of HS2 global init file (.hiverc).\n"
-operator|+
-literal|"If the property is reset, the value must be a valid path where the init file is located."
-argument_list|)
-block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
 name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
 argument_list|(
@@ -5953,13 +5970,13 @@ name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
 argument_list|(
 literal|"hive.warehouse.subdir.inherit.perms"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
-literal|"Set this to true if the the table directories should inherit the\n"
+literal|"Set this to false if the table directories should be created\n"
 operator|+
-literal|"permission of the warehouse or database directory instead of being created\n"
+literal|"with the permissions derived from dfs umask instead of\n"
 operator|+
-literal|"with the permissions derived from dfs umask"
+literal|"inheriting the permission of the warehouse or database directory."
 argument_list|)
 block|,
 name|HIVE_INSERT_INTO_EXTERNAL_TABLES
@@ -6017,6 +6034,7 @@ operator|+
 literal|"get old behavior, if desired. See, test-case in patch for HIVE-6689."
 argument_list|)
 block|,
+comment|// HiveServer2 specific configs
 name|HIVE_SERVER2_MAX_START_ATTEMPTS
 argument_list|(
 literal|"hive.server2.max.start.attempts"
@@ -6031,9 +6049,45 @@ argument_list|,
 literal|null
 argument_list|)
 argument_list|,
-literal|"This number of times HiveServer2 will attempt to start before exiting, sleeping 60 seconds between retries. \n"
+literal|"Number of times HiveServer2 will attempt to start before exiting, sleeping 60 seconds "
 operator|+
-literal|"The default of 30 will keep trying for 30 minutes."
+literal|"between retries. \n The default of 30 will keep trying for 30 minutes."
+argument_list|)
+block|,
+name|HIVE_SERVER2_SUPPORT_DYNAMIC_SERVICE_DISCOVERY
+argument_list|(
+literal|"hive.server2.support.dynamic.service.discovery"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether HiveServer2 supports dynamic service discovery for its clients. "
+operator|+
+literal|"To support this, each instance of HiveServer2 currently uses ZooKeeper to register itself, "
+operator|+
+literal|"when it is brought up. JDBC/ODBC clients should use the ZooKeeper ensemble: "
+operator|+
+literal|"hive.zookeeper.quorum in their connection string."
+argument_list|)
+block|,
+name|HIVE_SERVER2_ZOOKEEPER_NAMESPACE
+argument_list|(
+literal|"hive.server2.zookeeper.namespace"
+argument_list|,
+literal|"hiveserver2"
+argument_list|,
+literal|"The parent node in ZooKeeper used by HiveServer2 when supporting dynamic service discovery."
+argument_list|)
+block|,
+comment|// HiveServer2 global init file location
+name|HIVE_SERVER2_GLOBAL_INIT_FILE_LOCATION
+argument_list|(
+literal|"hive.server2.global.init.file.location"
+argument_list|,
+literal|"${env:HIVE_CONF_DIR}"
+argument_list|,
+literal|"Either the location of a HS2 global init file or a directory containing a .hiverc file. If the \n"
+operator|+
+literal|"property is set, the value must be a valid path to an init file or directory where the init file is located."
 argument_list|)
 block|,
 name|HIVE_SERVER2_TRANSPORT_MODE
@@ -6053,6 +6107,15 @@ argument_list|,
 literal|"Transport mode of HiveServer2."
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_BIND_HOST
+argument_list|(
+literal|"hive.server2.thrift.bind.host"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Bind host on which to run the HiveServer2 Thrift service."
+argument_list|)
+block|,
 comment|// http (over thrift) transport settings
 name|HIVE_SERVER2_THRIFT_HTTP_PORT
 argument_list|(
@@ -6060,7 +6123,7 @@ literal|"hive.server2.thrift.http.port"
 argument_list|,
 literal|10001
 argument_list|,
-literal|"Port number when in HTTP mode."
+literal|"Port number of HiveServer2 Thrift interface when hive.server2.transport.mode is 'http'."
 argument_list|)
 block|,
 name|HIVE_SERVER2_THRIFT_HTTP_PATH
@@ -6133,20 +6196,7 @@ literal|"hive.server2.thrift.port"
 argument_list|,
 literal|10000
 argument_list|,
-literal|"Port number of HiveServer2 Thrift interface.\n"
-operator|+
-literal|"Can be overridden by setting $HIVE_SERVER2_THRIFT_PORT"
-argument_list|)
-block|,
-name|HIVE_SERVER2_THRIFT_BIND_HOST
-argument_list|(
-literal|"hive.server2.thrift.bind.host"
-argument_list|,
-literal|""
-argument_list|,
-literal|"Bind host on which to run the HiveServer2 Thrift interface.\n"
-operator|+
-literal|"Can be overridden by setting $HIVE_SERVER2_THRIFT_BIND_HOST"
+literal|"Port number of HiveServer2 Thrift interface when hive.server2.transport.mode is 'binary'."
 argument_list|)
 block|,
 comment|// hadoop.rpc.protection being set to a higher level than HiveServer2
@@ -6797,6 +6847,17 @@ operator|+
 literal|"The default value is true."
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_REDUCE_GROUPBY_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.reduce.groupby.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable vectorized mode of the reduce-side GROUP BY query execution.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
 name|HIVE_VECTORIZATION_GROUPBY_CHECKINTERVAL
 argument_list|(
 literal|"hive.vectorized.groupby.checkinterval"
@@ -6836,6 +6897,17 @@ argument_list|,
 literal|true
 argument_list|,
 literal|""
+argument_list|)
+block|,
+name|HIVE_HADOOP_CLASSPATH
+argument_list|(
+literal|"hive.hadoop.classpath"
+argument_list|,
+literal|null
+argument_list|,
+literal|"For Windows OS, we need to pass HIVE_HADOOP_CLASSPATH Java parameter while starting HiveServer2 \n"
+operator|+
+literal|"using \"-hiveconf hive.hadoop.classpath=%HIVE_LIB%\"."
 argument_list|)
 block|,
 name|HIVE_RPC_QUERY_PLAN

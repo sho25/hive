@@ -180,16 +180,16 @@ init|=
 literal|""
 decl_stmt|;
 block|}
-comment|/**    * Updates the connection URL in hiveConf using the hook    *    * @return true if a new connection URL was loaded into the thread local    *         configuration    */
+comment|/**    * Updates the connection URL in hiveConf using the hook (if a hook has been    * set using hive.metastore.ds.connection.url.hook property)    * @param originalConf - original configuration used to look up hook settings    * @param activeConf - the configuration file in use for looking up db url    * @param badUrl    * @param updateData - hook information    * @return true if a new connection URL was loaded into the thread local    *         configuration    * @throws MetaException    */
 specifier|static
 name|boolean
 name|updateConnectionURL
 parameter_list|(
 name|HiveConf
-name|hiveConf
+name|originalConf
 parameter_list|,
 name|Configuration
-name|conf
+name|activeConf
 parameter_list|,
 name|String
 name|badUrl
@@ -212,7 +212,7 @@ name|MetaStoreInit
 operator|.
 name|getConnectionURL
 argument_list|(
-name|conf
+name|activeConf
 argument_list|)
 decl_stmt|;
 try|try
@@ -223,7 +223,7 @@ name|MetaStoreInit
 operator|.
 name|initConnectionUrlHook
 argument_list|(
-name|hiveConf
+name|originalConf
 argument_list|,
 name|updateData
 argument_list|)
@@ -262,7 +262,7 @@ name|urlHook
 operator|.
 name|getJdoConnectionUrl
 argument_list|(
-name|hiveConf
+name|originalConf
 argument_list|)
 expr_stmt|;
 block|}
@@ -321,7 +321,7 @@ name|connectUrl
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|conf
+name|activeConf
 operator|.
 name|set
 argument_list|(

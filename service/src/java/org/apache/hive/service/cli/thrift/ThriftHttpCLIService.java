@@ -205,6 +205,26 @@ name|hive
 operator|.
 name|service
 operator|.
+name|cli
+operator|.
+name|thrift
+operator|.
+name|TCLIService
+operator|.
+name|Iface
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
 name|server
 operator|.
 name|ThreadFactoryWithGarbageCleanup
@@ -387,10 +407,16 @@ name|super
 argument_list|(
 name|cliService
 argument_list|,
-literal|"ThriftHttpCLIService"
+name|ThriftHttpCLIService
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Configure Jetty to serve http requests. Example of a client connection URL:    * http://localhost:10000/servlets/thrifths2/ A gateway may cause actual target URL to differ,    * e.g. http://gateway:port/hive2/servlets/thrifths2/    */
 annotation|@
 name|Override
 specifier|public
@@ -400,109 +426,13 @@ parameter_list|()
 block|{
 try|try
 block|{
-comment|// Configure Jetty to serve http requests
-comment|// Example of a client connection URL: http://localhost:10000/servlets/thrifths2/
-comment|// a gateway may cause actual target URL to differ, e.g. http://gateway:port/hive2/servlets/thrifths2/
+comment|// Verify config validity
 name|verifyHttpConfiguration
 argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-name|String
-name|portString
-init|=
-name|System
-operator|.
-name|getenv
-argument_list|(
-literal|"HIVE_SERVER2_THRIFT_HTTP_PORT"
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|portString
-operator|!=
-literal|null
-condition|)
-block|{
-name|portNum
-operator|=
-name|Integer
-operator|.
-name|valueOf
-argument_list|(
-name|portString
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|portNum
-operator|=
-name|hiveConf
-operator|.
-name|getIntVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_THRIFT_HTTP_PORT
-argument_list|)
-expr_stmt|;
-block|}
-name|minWorkerThreads
-operator|=
-name|hiveConf
-operator|.
-name|getIntVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_THRIFT_HTTP_MIN_WORKER_THREADS
-argument_list|)
-expr_stmt|;
-name|maxWorkerThreads
-operator|=
-name|hiveConf
-operator|.
-name|getIntVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_THRIFT_HTTP_MAX_WORKER_THREADS
-argument_list|)
-expr_stmt|;
-name|workerKeepAliveTime
-operator|=
-name|hiveConf
-operator|.
-name|getTimeVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_THRIFT_HTTP_WORKER_KEEPALIVE_TIME
-argument_list|,
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-expr_stmt|;
-name|String
-name|httpPath
-init|=
-name|getHttpPath
-argument_list|(
-name|hiveConf
-operator|.
-name|getVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_THRIFT_HTTP_PATH
-argument_list|)
-argument_list|)
-decl_stmt|;
+comment|// HTTP Server
 name|httpServer
 operator|=
 operator|new
@@ -517,6 +447,7 @@ operator|.
 name|Server
 argument_list|()
 expr_stmt|;
+comment|// Server thread pool
 name|String
 name|threadPoolName
 init|=
@@ -568,6 +499,7 @@ argument_list|(
 name|threadPool
 argument_list|)
 expr_stmt|;
+comment|// Connector configs
 name|SelectChannelConnector
 name|connector
 init|=
@@ -575,7 +507,6 @@ operator|new
 name|SelectChannelConnector
 argument_list|()
 decl_stmt|;
-empty_stmt|;
 name|boolean
 name|useSsl
 init|=
@@ -597,37 +528,7 @@ literal|"https"
 else|:
 literal|"http"
 decl_stmt|;
-name|String
-name|authType
-init|=
-name|hiveConf
-operator|.
-name|getVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_AUTHENTICATION
-argument_list|)
-decl_stmt|;
-comment|// Set during the init phase of HiveServer2 if auth mode is kerberos
-comment|// UGI for the hive/_HOST (kerberos) principal
-name|UserGroupInformation
-name|serviceUGI
-init|=
-name|cliService
-operator|.
-name|getServiceUGI
-argument_list|()
-decl_stmt|;
-comment|// UGI for the http/_HOST (SPNego) principal
-name|UserGroupInformation
-name|httpUGI
-init|=
-name|cliService
-operator|.
-name|getHttpUGI
-argument_list|()
-decl_stmt|;
+comment|// Change connector if SSL is used
 if|if
 condition|(
 name|useSsl
@@ -772,6 +673,7 @@ argument_list|(
 name|connector
 argument_list|)
 expr_stmt|;
+comment|// Thrift configs
 name|hiveAuthFactory
 operator|=
 operator|new
@@ -780,24 +682,18 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-name|TProcessorFactory
-name|processorFactory
-init|=
-name|hiveAuthFactory
-operator|.
-name|getAuthProcFactory
-argument_list|(
-name|this
-argument_list|)
-decl_stmt|;
 name|TProcessor
 name|processor
 init|=
-name|processorFactory
+operator|new
+name|TCLIService
 operator|.
-name|getProcessor
+name|Processor
+argument_list|<
+name|Iface
+argument_list|>
 argument_list|(
-literal|null
+name|this
 argument_list|)
 decl_stmt|;
 name|TProtocolFactory
@@ -808,6 +704,37 @@ name|TBinaryProtocol
 operator|.
 name|Factory
 argument_list|()
+decl_stmt|;
+comment|// Set during the init phase of HiveServer2 if auth mode is kerberos
+comment|// UGI for the hive/_HOST (kerberos) principal
+name|UserGroupInformation
+name|serviceUGI
+init|=
+name|cliService
+operator|.
+name|getServiceUGI
+argument_list|()
+decl_stmt|;
+comment|// UGI for the http/_HOST (SPNego) principal
+name|UserGroupInformation
+name|httpUGI
+init|=
+name|cliService
+operator|.
+name|getHttpUGI
+argument_list|()
+decl_stmt|;
+name|String
+name|authType
+init|=
+name|hiveConf
+operator|.
+name|getVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_AUTHENTICATION
+argument_list|)
 decl_stmt|;
 name|TServlet
 name|thriftHttpServlet
@@ -826,6 +753,7 @@ argument_list|,
 name|httpUGI
 argument_list|)
 decl_stmt|;
+comment|// Context handler
 specifier|final
 name|ServletContextHandler
 name|context
@@ -845,6 +773,23 @@ argument_list|(
 literal|"/"
 argument_list|)
 expr_stmt|;
+name|String
+name|httpPath
+init|=
+name|getHttpPath
+argument_list|(
+name|hiveConf
+operator|.
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_THRIFT_HTTP_PATH
+argument_list|)
+argument_list|)
+decl_stmt|;
 name|httpServer
 operator|.
 name|setHandler
@@ -866,6 +811,7 @@ name|httpPath
 argument_list|)
 expr_stmt|;
 comment|// TODO: check defaults: maxTimeout, keepalive, maxBodySize, bodyRecieveDuration, etc.
+comment|// Finally, start the server
 name|httpServer
 operator|.
 name|start
@@ -874,7 +820,16 @@ expr_stmt|;
 name|String
 name|msg
 init|=
-literal|"Started ThriftHttpCLIService in "
+literal|"Started "
+operator|+
+name|ThriftHttpCLIService
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|" in "
 operator|+
 name|schemeName
 operator|+
@@ -890,7 +845,7 @@ literal|" with "
 operator|+
 name|minWorkerThreads
 operator|+
-literal|".."
+literal|"..."
 operator|+
 name|maxWorkerThreads
 operator|+
@@ -917,11 +872,26 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|fatal
 argument_list|(
-literal|"Error: "
+literal|"Error starting HiveServer2: could not start "
+operator|+
+name|ThriftHttpCLIService
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
 argument_list|,
 name|t
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|exit
+argument_list|(
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 block|}

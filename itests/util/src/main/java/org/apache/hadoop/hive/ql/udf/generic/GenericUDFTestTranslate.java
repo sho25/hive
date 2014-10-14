@@ -55,6 +55,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -206,6 +224,17 @@ comment|/**  * Mimics oracle's function translate(str1, str2, str3).  */
 end_comment
 
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"test_translate"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(str1, str2, str3) - Mimics oracle's function translate(str1, str2, str3)"
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFTestTranslate

@@ -198,6 +198,9 @@ parameter_list|,
 name|boolean
 name|recursive
 parameter_list|,
+name|boolean
+name|ifPurge
+parameter_list|,
 name|Configuration
 name|conf
 parameter_list|)
@@ -223,6 +226,24 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
+if|if
+condition|(
+name|ifPurge
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Not moving "
+operator|+
+name|f
+operator|+
+literal|" to trash"
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
 if|if
 condition|(
 name|hadoopShim

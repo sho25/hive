@@ -1837,9 +1837,13 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+operator|!
 name|oldStat
-operator|!=
+operator|.
+name|equals
+argument_list|(
 name|newStat
+argument_list|)
 condition|)
 block|{
 return|return

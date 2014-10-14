@@ -386,11 +386,11 @@ argument_list|,
 literal|"Invalid numerical constant"
 argument_list|)
 block|,
-name|INVALID_ARRAYINDEX_CONSTANT
+name|INVALID_ARRAYINDEX_TYPE
 argument_list|(
 literal|10030
 argument_list|,
-literal|"Non-constant expressions for array indexes not supported"
+literal|"Not proper type for index of ARRAY. Currently, only integer type is supported"
 argument_list|)
 block|,
 name|INVALID_MAPINDEX_CONSTANT
@@ -1934,6 +1934,28 @@ argument_list|(
 literal|10296
 argument_list|,
 literal|"Values clause with table constructor not yet supported"
+argument_list|)
+block|,
+name|ACID_OP_ON_NONACID_TABLE
+argument_list|(
+literal|10297
+argument_list|,
+literal|"Attempt to do update or delete on table {0} that does not use "
+operator|+
+literal|"an AcidOutputFormat or is not bucketed"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|ACID_NO_SORTED_BUCKETS
+argument_list|(
+literal|10298
+argument_list|,
+literal|"ACID insert, update, delete not supported on tables that are "
+operator|+
+literal|"sorted, table {0}"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 comment|//========================== 20000 range starts here ========================//

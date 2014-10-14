@@ -71,7 +71,11 @@ block|,
 name|LOAD_PARTITION_DONE
 block|,
 name|AUTHORIZATION_API_CALL
-block|,   }
+block|,
+name|READ_TABLE
+block|,
+name|READ_DATABASE
+block|}
 specifier|private
 specifier|final
 name|PreEventType

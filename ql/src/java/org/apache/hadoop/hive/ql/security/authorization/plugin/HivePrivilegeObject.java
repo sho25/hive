@@ -71,15 +71,11 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|common
-operator|.
 name|classification
 operator|.
-name|InterfaceAudience
+name|InterfaceStability
 operator|.
-name|LimitedPrivate
+name|Evolving
 import|;
 end_import
 
@@ -97,14 +93,14 @@ name|common
 operator|.
 name|classification
 operator|.
-name|InterfaceStability
+name|InterfaceAudience
 operator|.
-name|Unstable
+name|LimitedPrivate
 import|;
 end_import
 
 begin_comment
-comment|/**  * Represents the object on which privilege is being granted/revoked  */
+comment|/**  * Represents the object on which privilege is being granted/revoked, and objects  * being used in queries.  *  * Check the get* function documentation for information on what value it returns based on  * the {@link HivePrivilegeObjectType}.  *  */
 end_comment
 
 begin_class
@@ -114,11 +110,11 @@ argument_list|(
 name|value
 operator|=
 block|{
-literal|""
+literal|"Apache Argus (incubating)"
 block|}
 argument_list|)
 annotation|@
-name|Unstable
+name|Evolving
 specifier|public
 class|class
 name|HivePrivilegeObject
@@ -488,6 +484,7 @@ literal|0
 operator|)
 return|;
 block|}
+comment|/**    * Note that GLOBAL, PARTITION, COLUMN fields are populated only for Hive's old default    * authorization mode.    * When the authorization manager is an instance of HiveAuthorizerFactory, these types are not    * used.    */
 specifier|public
 enum|enum
 name|HivePrivilegeObjectType
@@ -511,6 +508,7 @@ block|,
 name|FUNCTION
 block|}
 empty_stmt|;
+comment|/**    * When {@link HiveOperationType} is QUERY, this action type is set so that it is possible    * to determine if the action type on this object is an INSERT or INSERT_OVERWRITE    */
 specifier|public
 enum|enum
 name|HivePrivObjectActionType
@@ -520,6 +518,10 @@ block|,
 name|INSERT
 block|,
 name|INSERT_OVERWRITE
+block|,
+name|UPDATE
+block|,
+name|DELETE
 block|}
 empty_stmt|;
 specifier|private
@@ -850,6 +852,7 @@ return|return
 name|type
 return|;
 block|}
+comment|/**    * @return the db name if type is DATABASE, TABLE, or FUNCTION    */
 specifier|public
 name|String
 name|getDbname
@@ -869,6 +872,7 @@ return|return
 name|objectName
 return|;
 block|}
+comment|/**    * See javadoc of {@link HivePrivObjectActionType}    * @return action type    */
 specifier|public
 name|HivePrivObjectActionType
 name|getActionType
@@ -890,6 +894,7 @@ return|return
 name|commandParams
 return|;
 block|}
+comment|/**    * @return  partiton key information. Used only for old default authorization mode.    */
 specifier|public
 name|List
 argument_list|<
@@ -902,7 +907,7 @@ return|return
 name|partKeys
 return|;
 block|}
-comment|/**    * Applicable columns in this object    * In case of DML read operations, this is the set of columns being used.    * Column information is not set for DDL operations and for tables being written into    * @return list of applicable columns    */
+comment|/**    * Applicable columns in this object, when the type is {@link HivePrivilegeObjectType.TABLE}    * In case of DML read operations, this is the set of columns being used.    * Column information is not set for DDL operations and for tables being written into    * @return list of applicable columns    */
 specifier|public
 name|List
 argument_list|<

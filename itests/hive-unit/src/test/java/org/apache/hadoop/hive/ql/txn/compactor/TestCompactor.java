@@ -1948,6 +1948,17 @@ operator|.
 name|BooleanPointer
 argument_list|()
 decl_stmt|;
+name|MetaStoreThread
+operator|.
+name|BooleanPointer
+name|looped
+init|=
+operator|new
+name|MetaStoreThread
+operator|.
+name|BooleanPointer
+argument_list|()
+decl_stmt|;
 name|stop
 operator|.
 name|boolVal
@@ -1959,6 +1970,8 @@ operator|.
 name|init
 argument_list|(
 name|stop
+argument_list|,
+name|looped
 argument_list|)
 expr_stmt|;
 name|t

@@ -1168,6 +1168,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Transform a {@link org.apache.hadoop.hive.metastore.api.GetOpenTxnsResponse} to a    * {@link org.apache.hadoop.hive.common.ValidTxnList}.    * @param txns txn list from the metastore    * @param currentTxn Current transaction that the user has open.  If this is greater than 0 it    *                   will be removed from the exceptions list so that the user sees his own    *                   transaction as valid.    * @return a valid txn list.    */
 specifier|public
 specifier|static
 name|ValidTxnList
@@ -1175,6 +1176,9 @@ name|createValidTxnList
 parameter_list|(
 name|GetOpenTxnsResponse
 name|txns
+parameter_list|,
+name|long
+name|currentTxn
 parameter_list|)
 block|{
 name|long
@@ -1207,6 +1211,16 @@ name|open
 operator|.
 name|size
 argument_list|()
+operator|-
+operator|(
+name|currentTxn
+operator|>
+literal|0
+condition|?
+literal|1
+else|:
+literal|0
+operator|)
 index|]
 decl_stmt|;
 name|int
@@ -1222,6 +1236,17 @@ range|:
 name|open
 control|)
 block|{
+if|if
+condition|(
+name|currentTxn
+operator|>
+literal|0
+operator|&&
+name|currentTxn
+operator|==
+name|txn
+condition|)
+continue|continue;
 name|exceptions
 index|[
 name|i

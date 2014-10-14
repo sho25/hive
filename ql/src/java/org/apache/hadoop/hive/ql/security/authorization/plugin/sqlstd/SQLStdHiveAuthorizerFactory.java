@@ -272,6 +272,8 @@ argument_list|,
 name|authenticator
 argument_list|,
 name|privilegeManager
+argument_list|,
+name|ctx
 argument_list|)
 argument_list|)
 return|;

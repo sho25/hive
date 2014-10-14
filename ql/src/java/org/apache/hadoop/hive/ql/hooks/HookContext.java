@@ -629,15 +629,9 @@ name|getOperationName
 parameter_list|()
 block|{
 return|return
-name|SessionState
+name|queryPlan
 operator|.
-name|get
-argument_list|()
-operator|.
-name|getHiveOperation
-argument_list|()
-operator|.
-name|name
+name|getOperationName
 argument_list|()
 return|;
 block|}

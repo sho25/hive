@@ -680,6 +680,8 @@ name|txnHandler
 operator|.
 name|getOpenTxns
 argument_list|()
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -1006,6 +1008,9 @@ name|init
 parameter_list|(
 name|BooleanPointer
 name|stop
+parameter_list|,
+name|BooleanPointer
+name|looped
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1015,6 +1020,8 @@ operator|.
 name|init
 argument_list|(
 name|stop
+argument_list|,
+name|looped
 argument_list|)
 expr_stmt|;
 name|StringBuilder

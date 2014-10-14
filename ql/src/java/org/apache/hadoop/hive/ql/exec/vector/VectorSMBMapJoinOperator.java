@@ -1602,16 +1602,10 @@ name|allColumnMaps
 init|=
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getScratchColumnMap
 argument_list|(
 name|hconf
 argument_list|)
-operator|.
-name|getMapWork
-argument_list|()
-operator|.
-name|getScratchColumnMap
-argument_list|()
 decl_stmt|;
 name|Map
 argument_list|<

@@ -945,6 +945,17 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|boolean
+name|isLogTraceEnabled
+init|=
+name|LOG
+operator|.
+name|isTraceEnabled
+argument_list|()
+decl_stmt|;
+specifier|private
 specifier|final
 name|FSDataInputStream
 name|file
@@ -18693,15 +18704,12 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogTraceEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"row from "
 operator|+
@@ -18712,7 +18720,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"orc row = "
 operator|+

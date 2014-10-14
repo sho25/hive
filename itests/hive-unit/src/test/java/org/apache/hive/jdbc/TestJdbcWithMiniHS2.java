@@ -2218,7 +2218,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Tests the creation of the root hdfs scratch dir, which should be writable by all (777).    *    * @throws Exception    */
+comment|/**    * Tests the creation of the root hdfs scratch dir, which should be writable by all.    *    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -2338,7 +2338,10 @@ init|=
 operator|new
 name|FsPermission
 argument_list|(
-literal|"777"
+operator|(
+name|short
+operator|)
+literal|00733
 argument_list|)
 decl_stmt|;
 comment|// Verify scratch dir paths and permission

@@ -149,6 +149,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TreeMap
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -1359,6 +1369,24 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * For the block locations returned by getLocations() convert them into a Treemap    *<Offset,blockLocation> by iterating over the list of blockLocation.    * Using TreeMap from offset to blockLocation, makes it O(logn) to get a particular    * block based upon offset.    * @param fs the file system    * @param status the file information    * @return TreeMap<Long, BlockLocation>    * @throws IOException    */
+name|TreeMap
+argument_list|<
+name|Long
+argument_list|,
+name|BlockLocation
+argument_list|>
+name|getLocationsWithOffset
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|FileStatus
+name|status
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Flush and make visible to other users the changes to the given stream.    * @param stream the stream to hflush.    * @throws IOException    */
 specifier|public
 name|void
@@ -1918,6 +1946,66 @@ name|FsPermission
 name|permission
 parameter_list|)
 function_decl|;
+comment|/**    * @return True if the current hadoop supports trash feature.    */
+name|boolean
+name|supportTrashFeature
+parameter_list|()
+function_decl|;
+comment|/**    * @return Path to HDFS trash, if current hadoop supports trash feature.  Null otherwise.    */
+name|Path
+name|getCurrentTrashPath
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|FileSystem
+name|fs
+parameter_list|)
+function_decl|;
+comment|/**    * Returns a shim to wrap KerberosName    */
+specifier|public
+name|KerberosNameShim
+name|getKerberosNameShim
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Shim for KerberosName    */
+specifier|public
+interface|interface
+name|KerberosNameShim
+block|{
+specifier|public
+name|String
+name|getDefaultRealm
+parameter_list|()
+function_decl|;
+specifier|public
+name|String
+name|getServiceName
+parameter_list|()
+function_decl|;
+specifier|public
+name|String
+name|getHostName
+parameter_list|()
+function_decl|;
+specifier|public
+name|String
+name|getRealm
+parameter_list|()
+function_decl|;
+specifier|public
+name|String
+name|getShortName
+parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
+block|}
 block|}
 end_interface
 
